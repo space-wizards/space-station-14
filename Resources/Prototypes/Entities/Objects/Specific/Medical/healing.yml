@@ -229,6 +229,7 @@
   components:
   - type: Stack
     lingering: true
+
 - type: entity
   parent: BaseHealingItem
   id: Tourniquet

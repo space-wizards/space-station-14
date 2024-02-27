@@ -20,6 +20,7 @@ namespace Content.Shared.Examine
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
         [Dependency] protected readonly MobStateSystem MobStateSystem = default!;
 
         public const float MaxRaycastRange = 100;
@@ -186,6 +187,7 @@ namespace Content.Shared.Examine
 
             if (!ignoreInsideBlocker) return false;
 
+            var xfmSys = entMan.System<SharedTransformSystem>();
             foreach (var result in rayResults)
             {
                 if (!entMan.TryGetComponent(result.HitEntity, out OccluderComponent? o))
@@ -194,7 +196,7 @@ namespace Content.Shared.Examine
                 }
 
                 var bBox = o.BoundingBox;
-                bBox = bBox.Translated(entMan.GetComponent<TransformComponent>(result.HitEntity).WorldPosition);
+                bBox = bBox.Translated(xfmSys.GetWorldPosition(result.HitEntity));
 
                 if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
                 {
@@ -210,8 +212,10 @@ namespace Content.Shared.Examine
         public static bool InRangeUnOccluded(EntityUid origin, EntityUid other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
-            var otherPos = entMan.GetComponent<TransformComponent>(other).MapPosition;
+            var xfmSys = entMan.System<SharedTransformSystem>();
+
+            var originPos = xfmSys.GetMapCoordinates(origin);
+            var otherPos = xfmSys.GetMapCoordinates(other);
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
@@ -219,8 +223,10 @@ namespace Content.Shared.Examine
         public static bool InRangeUnOccluded(EntityUid origin, EntityCoordinates other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
-            var otherPos = other.ToMap(entMan);
+            var xfmSys = entMan.System<SharedTransformSystem>();
+
+            var originPos = xfmSys.GetMapCoordinates(origin);
+            var otherPos = other.ToMap(entMan, xfmSys);
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
@@ -228,7 +234,9 @@ namespace Content.Shared.Examine
         public static bool InRangeUnOccluded(EntityUid origin, MapCoordinates other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
+            var xfmSys = entMan.System<SharedTransformSystem>();
+
+            var originPos = xfmSys.GetMapCoordinates(origin);
 
             return InRangeUnOccluded(originPos, other, range, predicate, ignoreInsideBlocker);
         }

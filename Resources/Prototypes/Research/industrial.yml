@@ -120,6 +120,20 @@
   - BorgModuleGrapplingGun
 
 - type: technology
+  id: SpaceScanning
+  name: research-technology-space-scanning
+  icon:
+    sprite: Objects/Tools/handheld_mass_scanner.rsi
+    state: icon
+  discipline: Industrial
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - RadarConsoleCircuitboard
+  - HandHeldMassScanner
+  - BorgModuleGPS
+  
+- type: technology
   id: Shuttlecraft
   name: research-technology-shuttlecraft
   icon:
@@ -130,7 +144,6 @@
   cost: 10000
   recipeUnlocks:
   - ShuttleConsoleCircuitboard
-  - RadarConsoleCircuitboard
   - ThrusterMachineCircuitboard
   - GyroscopeMachineCircuitboard
   - MiniGravityGeneratorCircuitboard

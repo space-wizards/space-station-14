@@ -58,6 +58,7 @@ public sealed class NavMapOverlay : Overlay
     {
         var query = _entManager.GetEntityQuery<NavMapComponent>();
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+        var xformSystem = _entManager.System<SharedTransformSystem>();
         var scale = Matrix3.CreateScale(new Vector2(1f, 1f));
 
         _grids.Clear();
@@ -69,7 +70,7 @@ public sealed class NavMapOverlay : Overlay
                 continue;
 
             // TODO: Faster helper method
-            var (_, _, matrix, invMatrix) = xform.GetWorldPositionRotationMatrixWithInv();
+            var (_, _, matrix, invMatrix) = xformSystem.GetWorldPositionRotationMatrixWithInv(xform);
 
             var localAABB = invMatrix.TransformBox(args.WorldBounds);
             Matrix3.Multiply(in scale, in matrix, out var matty);

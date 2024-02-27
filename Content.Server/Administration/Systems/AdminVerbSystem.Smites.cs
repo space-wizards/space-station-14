@@ -103,7 +103,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
             Act = () =>
             {
-                var coords = Transform(args.Target).MapPosition;
+                var coords = _transformSystem.GetMapCoordinates(args.Target);
                 Timer.Spawn(_gameTiming.TickPeriod,
                     () => _explosionSystem.QueueExplosion(coords, ExplosionSystem.DefaultExplosionPrototypeId,
                         4, 1, 2, maxTileBreak: 0), // it gibs, damage doesn't need to be high.
@@ -134,8 +134,8 @@ public sealed partial class AdminVerbSystem
                     Filter.PvsExcept(args.Target), true, PopupType.MediumCaution);
                 var board = Spawn("ChessBoard", xform.Coordinates);
                 var session = _tabletopSystem.EnsureSession(Comp<TabletopGameComponent>(board));
-                xform.Coordinates = EntityCoordinates.FromMap(_mapManager, session.Position);
-                xform.WorldRotation = Angle.Zero;
+                _transformSystem.SetCoordinates((args.Target, xform, MetaData(args.Target)), EntityCoordinates.FromMap(_mapManager, session.Position));
+                _transformSystem.SetWorldRotation(xform, Angle.Zero);
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-chess-dimension-description")
@@ -407,7 +407,7 @@ public sealed partial class AdminVerbSystem
                 {
                     var xform = Transform(args.Target);
                     var fixtures = Comp<FixturesComponent>(args.Target);
-                    xform.Anchored = false; // Just in case.
+                    _xformSystem.Unanchor(args.Target, xform); // Just in case.
                     _physics.SetBodyType(args.Target, BodyType.Dynamic, manager: fixtures, body: physics);
                     _physics.SetBodyStatus(physics, BodyStatus.InAir);
                     _physics.WakeBody(args.Target, manager: fixtures, body: physics);
@@ -441,7 +441,7 @@ public sealed partial class AdminVerbSystem
                 {
                     var xform = Transform(args.Target);
                     var fixtures = Comp<FixturesComponent>(args.Target);
-                    xform.Anchored = false; // Just in case.
+                    _xformSystem.Unanchor(args.Target, xform); // Just in case.
 
                     _physics.SetBodyType(args.Target, BodyType.Dynamic, body: physics);
                     _physics.SetBodyStatus(physics, BodyStatus.InAir);

@@ -147,7 +147,7 @@
     hasLampOnSpawn: LedLightTube
     damage:
       types:
-        Heat: 5
+        Heat: 2.5
   - type: PointLight
     radius: 15
     energy: 1
@@ -308,6 +308,25 @@
       - On
       - Off
       - Toggle
+
+- type: entity
+  id: PoweredLEDSmallLight
+  suffix: LED
+  parent: PoweredSmallLightEmpty
+  components:
+  - type: Sprite
+    state: base
+  - type: PointLight
+    enabled: true
+    radius: 8
+    energy: 1
+    softness: 1
+    color: "#EEEEFF"
+  - type: PoweredLight
+    hasLampOnSpawn: LedLightBulb
+    damage:
+      types:
+        Heat: 2.5
 
 - type: entity
   id: PoweredSmallLight
