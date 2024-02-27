@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Salvage magnet now has an interface to choose what you want to do.
-    type: Add
-  - message: Magnet asteroids now come in more varieties.
-    type: Tweak
-  id: 5545
-  time: '2024-01-04T03:25:32.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23119
 - author: themias
   changes:
   - message: Added a funny oxygen tank for the clown
@@ -3834,3 +3825,11 @@
   id: 6044
   time: '2024-02-27T01:38:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/19610
+- author: rosieposieeee
+  changes:
+  - message: Added lockable wall buttons and decorative frames for differentiating
+      wall buttons.
+    type: Add
+  id: 6045
+  time: '2024-02-27T07:57:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25631
