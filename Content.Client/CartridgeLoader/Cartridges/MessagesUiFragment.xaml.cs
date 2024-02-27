@@ -13,12 +13,6 @@ public sealed partial class MessagesUiFragment : BoxContainer
     public event Action<string>? OnMessageSent;
     public event Action<string?>? OnButtonPressed;
 
-    private LineEdit Input;
-    private BoxContainer HeaderBox;
-    private Label HeaderLabel;
-    private Button HeaderButton;
-
-
     public MessagesUiFragment()
     {
         RobustXamlLoader.Load(this);
@@ -40,6 +34,7 @@ public sealed partial class MessagesUiFragment : BoxContainer
 
     public void UpdateState(MessagesUiStateMode mode, List<(string,string)>? contents, string? name)
     {
+        MessageContainer.DisposeAllChildren();
         MessageContainer.RemoveAllChildren();
         if (OverContainer.Children.Contains(Input))
             OverContainer.RemoveChild(Input);

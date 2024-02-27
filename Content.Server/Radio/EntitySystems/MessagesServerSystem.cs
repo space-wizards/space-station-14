@@ -17,6 +17,7 @@ public sealed class MessagesServerSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
     [Dependency] private readonly MessagesCartridgeSystem _messagesCartridgeSystem = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
 
     public override void Update(float frameTime)
     {
@@ -46,7 +47,7 @@ public sealed class MessagesServerSystem : EntitySystem
         if (!TryComp(uid, out ApcPowerReceiverComponent? powerReceiver) || !(powerReceiver.Powered))
             return;
 
-        var query = EntityQueryEnumerator<MessagesCartridgeComponent>();
+        var query = _entManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();
         List<(string,string)> toUpdate = new();
 
         bool needDictUpdate = false;
@@ -55,41 +56,62 @@ public sealed class MessagesServerSystem : EntitySystem
         {
             if (Transform(cartUid).MapID != mapId)
                 continue;
-            if ((cartComponent.UserUid == null) || (cartComponent.UserName == null))
-                continue;
             if (cartComponent.EncryptionKey != component.EncryptionKey)
                 continue;
+            if (((cartComponent.UserUid == null) || (cartComponent.UserName == null)))
+                _messagesCartridgeSystem.UpdateName(cartUid, cartComponent);
+            if ((cartComponent.UserUid == null) || (cartComponent.UserName == null))
+                continue;
+
+            if (cartComponent.MessagesQueue.Count > 0)
+            {
+                var messagesToSend = new List<MessagesMessageData>(cartComponent.MessagesQueue);
+                foreach (var message in messagesToSend)
+                {
+                    bool sent = TryToSend(message, mapId, component);
+                    if (sent)
+                    {
+                        cartComponent.MessagesQueue.Remove(message);
+                        cartComponent.Messages.Add(message);
+                        component.Messages.Add(message);
+                    }
+                }
+                _messagesCartridgeSystem.ForceUpdate(cartUid, cartComponent);
+            }
+
             if ((component.NameDict.ContainsKey(cartComponent.UserUid)) && (component.NameDict[cartComponent.UserUid] == cartComponent.UserName))
                 continue;
 
             needDictUpdate = true;
             component.NameDict[cartComponent.UserUid] = cartComponent.UserName;
             toUpdate.Add((cartComponent.UserUid,cartComponent.UserName));
+            foreach (var entry in component.NameDict)
+            {
+                if (!cartComponent.NameDict.Keys.Contains(entry.Key) || cartComponent.NameDict[entry.Key] != entry.Value)
+                {
+                    cartComponent.NameDict[entry.Key] = entry.Value;
+                }
+            }
+            _messagesCartridgeSystem.ForceUpdate(cartUid, cartComponent);
         }
 
         if (needDictUpdate)
         {
-            query = EntityQueryEnumerator<MessagesCartridgeComponent>();
+            query = _entManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();
             while (query.MoveNext(out var cartUid,out var cartComponent))
             {
+                if (Transform(cartUid).MapID != mapId)
+                    continue;
+                if (((cartComponent.UserUid == null) || (cartComponent.UserName == null)) && !(_messagesCartridgeSystem.UpdateName(cartUid, cartComponent)))
+                    continue;
+                if (cartComponent.EncryptionKey != component.EncryptionKey)
+                    continue;
+
                 foreach (var (key,value) in toUpdate)
                 {
                     cartComponent.NameDict[key]=value;
                 }
-            }
-        }
-
-        if ((component.MessagesQueue.Count > 0))
-        {
-            var tempMessagesQueue = new List<MessagesMessageData>(component.MessagesQueue);
-            foreach (var message in tempMessagesQueue)
-            {
-                bool sent=TryToSend(message, mapId, component);
-                if (sent)
-                {
-                    component.MessagesQueue.Remove(message);
-                    component.Messages.Add(message);
-                }
+                _messagesCartridgeSystem.ForceUpdate(cartUid, cartComponent);
             }
         }
     }
@@ -97,7 +119,7 @@ public sealed class MessagesServerSystem : EntitySystem
     public void Sync(EntityUid uid, MessagesServerComponent component)
     {
         var mapId = Transform(uid).MapID;
-        var query = EntityQueryEnumerator<MessagesCartridgeComponent>();
+        var query = _entManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();
         while(query.MoveNext(out var cartUid, out var cartComponent))
         {
             if (Transform(cartUid).MapID != mapId)
@@ -109,7 +131,7 @@ public sealed class MessagesServerSystem : EntitySystem
 
             foreach (var entry in component.NameDict)
             {
-                if (cartComponent.NameDict[entry.Key] != entry.Value)
+                if (cartComponent.NameDict.Keys.Contains(entry.Key) || cartComponent.NameDict[entry.Key] != entry.Value)
                 {
                     cartComponent.NameDict[entry.Key] = entry.Value;
                 }
@@ -136,13 +158,6 @@ public sealed class MessagesServerSystem : EntitySystem
         }
 
         return sent;
-    }
-
-    public void PdaToServerMessage(EntityUid uid, MessagesServerComponent component, MessagesMessageData message)
-    {
-        //component.Messages.Add(message);
-        component.MessagesQueue.Add(message);
-        Update(uid, component);
     }
 
 }

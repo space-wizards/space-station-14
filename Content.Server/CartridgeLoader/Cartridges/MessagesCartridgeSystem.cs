@@ -26,15 +26,14 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly RingerSystem _ringer = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
 
-    //private ISawmill _sawmill = Logger.GetSawmill("pdaMessages");
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeMessageEvent>(OnUiMessage);
         SubscribeLocalEvent<MessagesCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
-        //_sawmill.Debug("System initialised");
     }
 
     /// <summary>
@@ -42,11 +41,6 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     /// </summary>
     private void OnUiReady(EntityUid uid, MessagesCartridgeComponent component, CartridgeUiReadyEvent args)
     {
-        var mapId = Transform(uid).MapID;
-        if ((component.ConnectedId != null) && (TryComp(component.ConnectedId, out IdCardComponent? idCardComponent)))
-            component.UserName = idCardComponent.FullName+"("+idCardComponent.JobTitle+")";
-            if (component.UserUid != null && component.UserName != null)
-                component.NameDict[component.UserUid] = component.UserName;
         UpdateUiState(uid, args.Loader, component);
     }
 
@@ -69,7 +63,6 @@ public sealed class MessagesCartridgeSystem : EntitySystem
             messageData.Content = messageEvent.Parameter;
             messageData.Time = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
             component.MessagesQueue.Add(messageData);
-            Update(uid, component);
         }
         else
         {
@@ -81,71 +74,9 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     }
 
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var cartQuery = EntityQueryEnumerator<MessagesCartridgeComponent>();
-        while (cartQuery.MoveNext(out var uid, out var messagesCartridge))
-        {
-            if (messagesCartridge.NextUpdate > _gameTiming.CurTime)
-                continue;
-            messagesCartridge.NextUpdate = _gameTiming.CurTime + messagesCartridge.UpdateDelay;
-
-            Update(uid, messagesCartridge);
-        }
-    }
-
-    public void Update(EntityUid uid, MessagesCartridgeComponent component)
-    {
-        var mapId = Transform(uid).MapID;
-
-        if (component.UserName == null)
-        {
-            if ((component.ConnectedId != null) && (TryComp(component.ConnectedId, out IdCardComponent? idCardComponent)))
-            {
-                if (idCardComponent.FullName != "")
-                {
-                    component.UserName = $"{idCardComponent.FullName} {idCardComponent.JobTitle})";
-                }
-                else
-                {
-                    component.UserName = $"Unknown  ({idCardComponent.JobTitle})";
-                }
-            }
-            if (component.UserUid != null && component.UserName != null)
-                component.NameDict[component.UserUid] = component.UserName;
-        }
-
-        if ((component.MessagesQueue.Count > 0) || component.DeadConnection)
-        {
-            if (!(GetActiveServer(component, mapId) is var (serverUid, messageServer)))
-            {
-                component.DeadConnection=true;
-                return;
-            }
-            else
-            {
-                if (component.DeadConnection)
-                    PullFromServer(uid, component, messageServer);
-                component.DeadConnection=false;
-            }
-
-
-            var tempMessageQueue = new List<MessagesMessageData>(component.MessagesQueue);
-            foreach (var message in tempMessageQueue)
-            {
-                _messagesServerSystem.PdaToServerMessage(serverUid, messageServer,message);
-                component.MessagesQueue.Remove(message);
-                component.Messages.Add(message);
-                UpdateUiState(uid, Transform(uid).ParentUid, component);
-            }
-        }
-    }
-
     public (EntityUid, MessagesServerComponent)? GetActiveServer(MessagesCartridgeComponent component,MapId mapId)
     {
-        var servers = EntityQueryEnumerator<MessagesServerComponent, ApcPowerReceiverComponent, TransformComponent>();
+        var servers = _entManager.AllEntityQueryEnumerator<MessagesServerComponent, ApcPowerReceiverComponent, TransformComponent>();
         while(servers.MoveNext(out var uid, out var messageServer, out var power, out var transform))
         {
             if (messageServer.EncryptionKey != component.EncryptionKey)
@@ -162,21 +93,30 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
     private string GetName(MessagesCartridgeComponent component, string key)
     {
-        if (!(component.NameDict.ContainsKey(key)))
-        {
-            return "Unknown";
-        }
-        else
-        {
-            if (component.NameDict[key][0] == '(')
-            {
-                return $"Unknown {component.NameDict[key]}";
-            }
-            else
-            {
-                return component.NameDict[key];
-            }
-        }
+        if (!(component.NameDict.Keys.Contains(key)))
+            component.NameDict[key] = "Unknown"; //<todo> localise
+
+        return component.NameDict[key];
+    }
+
+    public void ForceUpdate(EntityUid uid, MessagesCartridgeComponent component)
+    {
+        if (TryComp(Transform(uid).ParentUid, out CartridgeLoaderComponent? loaderComponent))
+            UpdateUiState(uid, Transform(uid).ParentUid, component);
+    }
+
+    public bool UpdateName(EntityUid uid, MessagesCartridgeComponent component)
+    {
+        if ((component.ConnectedId == null) || !(TryComp(component.ConnectedId, out IdCardComponent? idCardComponent)))
+            return false;
+
+        component.UserUid = component.ConnectedId.ToString();
+        string? fullName = idCardComponent.FullName;
+        if (fullName == null)
+            fullName = "Unknown"; //<todo> localise
+        component.UserName = $"{fullName} ({idCardComponent.JobTitle})";
+
+        return true;
     }
 
     private void UpdateUiState(EntityUid uid, EntityUid loaderUid, MessagesCartridgeComponent? component)
@@ -264,14 +204,13 @@ public sealed class MessagesCartridgeSystem : EntitySystem
             _ringer.RingerPlayRingtone(pdaUid, ringer);
 
 
-        if (TryComp(pdaUid, out CartridgeLoaderComponent? loaderUid))
+        if (TryComp(pdaUid, out CartridgeLoaderComponent? loaderComponent))
             UpdateUiState(uid, pdaUid, component);
     }
 
 
     public void PullFromServer(EntityUid uid, MessagesCartridgeComponent component, MessagesServerComponent server)
     {
-        //_sawmill.Debug("Syncing with server");
 
         if (component.ConnectedId == null)
             return;
@@ -279,7 +218,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         if (!(TryComp(component.ConnectedId, out IdCardComponent? idCardComponent)))
             return;
 
-        component.UserName = $"{idCardComponent.FullName} ({idCardComponent.JobTitle})";
+        UpdateName(uid, component);
 
         if (server.NameDict != component.NameDict)
         {
@@ -291,8 +230,6 @@ public sealed class MessagesCartridgeSystem : EntitySystem
                 component.NameDict[key]=server.NameDict[key];
             }
         }
-
-        //_sawmill.Debug("Pulling messages from server");
 
         foreach (var message in server.Messages)
         {

@@ -22,7 +22,6 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     [Dependency] private readonly PdaSystem _pda = default!;
     [Dependency] private readonly MessagesCartridgeSystem _messagesCartridgeSystem = default!;
 
-    //private ISawmill _sawmill = Logger.GetSawmill("pdaMessages");
 
     public override void Initialize()
     {
@@ -319,26 +318,18 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     {
         if (args.Container.ID == PdaComponent.PdaIdSlotId)
         {
-            //_sawmill.Debug("Id insertion detected");
             if ((TryComp(uid, out ContainerManagerComponent? cont)))
             {
-                //_sawmill.Debug("Trying program");
                 if (TryGetProgram<MessagesCartridgeComponent>(uid, out var programUid, out var messagesCartridgeComponent, false, loader, cont))
                 {
-                    //_sawmill.Debug("program found");
                     if ((TryComp(uid, out PdaComponent? pdaComponent)) && (programUid is EntityUid realProgramUid))
                     {
-                        //_sawmill.Debug("pda found");
                         if (TryComp(args.Entity, out IdCardComponent? idCardComponent))
                         {
-                            //_sawmill.Debug("found id");
-                            //_sawmill.Debug("updating cart data");
                             messagesCartridgeComponent.ConnectedId = args.Entity;
                             messagesCartridgeComponent.UserUid = args.Entity.ToString();
-                            //_sawmill.Debug("data updated, looking for server");
                             if (_messagesCartridgeSystem.GetActiveServer(messagesCartridgeComponent,Transform(uid).MapID) is var (_, server))
                             {
-                                //_sawmill.Debug("server found");
                                 _messagesCartridgeSystem.PullFromServer(realProgramUid, messagesCartridgeComponent, server);
                             }
                         }
@@ -358,17 +349,13 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     {
         if (args.Container.ID == PdaComponent.PdaIdSlotId)
         {
-            //_sawmill.Debug("id removal detected");
             if (TryComp(uid, out ContainerManagerComponent? cont))
             {
-                //_sawmill.Debug("trying program");
                 if (TryGetProgram<MessagesCartridgeComponent>(uid, out _, out var messagesCartridgeComponent, false, loader, cont))
                 {
-                    //_sawmill.Debug("got program, updating data");
                     messagesCartridgeComponent.ConnectedId = null;
                     messagesCartridgeComponent.UserUid = null;
                     messagesCartridgeComponent.UserName = null;
-                    //_sawmill.Debug("data updated");
                 }
             }
         }
