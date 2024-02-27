@@ -43,7 +43,7 @@ thief-backpack-category-sleeper-name = sleepwalker's kit
 thief-backpack-category-sleeper-description =
     A set for those who like to sleep in,
     or for everyone around you to sleep.
-    Includes a set of nocturine vials and
+    Includes a set of nocturine vials, hypopen and
     a tank of sleeping gas.
 
 thief-backpack-category-communicator-name = communicator's kit

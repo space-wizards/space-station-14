@@ -65,8 +65,8 @@
   components:
   - type: StealCondition
     stealGroup: Figurines
-    minCollectionSize: 10
-    maxCollectionSize: 50 #will be limited to the number of figures on the station anyway.
+    minCollectionSize: 5
+    maxCollectionSize: 10 #will be limited to the number of figures on the station anyway.
   - type: Objective
     difficulty: 0.25
 
@@ -92,7 +92,7 @@
     minCollectionSize: 3
     maxCollectionSize: 6
   - type: Objective
-    difficulty: 1.0
+    difficulty: 1.3
 
 - type: entity
   noSpawn: true
@@ -104,7 +104,7 @@
     minCollectionSize: 5
     maxCollectionSize: 15
   - type: Objective
-    difficulty: 1.0
+    difficulty: 1.6
 
 - type: entity
   noSpawn: true
@@ -116,7 +116,7 @@
     minCollectionSize: 2
     maxCollectionSize: 5
   - type: Objective
-    difficulty: 1.5
+    difficulty: 1.8
 
 - type: entity
   noSpawn: true
@@ -211,7 +211,7 @@
   - type: StealCondition
     stealGroup: ClothingHeadHatWarden
   - type: Objective
-    difficulty: 1.2
+    difficulty: 1.6
 
 - type: entity                                      #Medical subgroup
   noSpawn: true
@@ -501,7 +501,7 @@
   - type: StealCondition
     stealGroup: AnimalMcGriff
   - type: Objective
-    difficulty: 1
+    difficulty: 1.5
 
 - type: entity
   noSpawn: true
