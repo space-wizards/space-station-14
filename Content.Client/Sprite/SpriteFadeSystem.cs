@@ -15,6 +15,7 @@ public sealed class SpriteFadeSystem : EntitySystem
 
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     private readonly HashSet<FadingSpriteComponent> _comps = new();
 
@@ -39,7 +40,7 @@ public sealed class SpriteFadeSystem : EntitySystem
     {
         base.FrameUpdate(frameTime);
 
-        var player = _playerManager.LocalPlayer?.ControlledEntity;
+        var player = _playerManager.LocalEntity;
         var spriteQuery = GetEntityQuery<SpriteComponent>();
         var change = ChangeRate * frameTime;
 
@@ -48,7 +49,7 @@ public sealed class SpriteFadeSystem : EntitySystem
             spriteQuery.TryGetComponent(player, out var playerSprite))
         {
             var fadeQuery = GetEntityQuery<SpriteFadeComponent>();
-            var mapPos = playerXform.MapPosition;
+            var mapPos = _xformSystem.GetMapCoordinates((player.Value, playerXform));
 
             // Also want to handle large entities even if they may not be clickable.
             foreach (var ent in state.GetClickableEntities(mapPos))

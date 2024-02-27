@@ -116,7 +116,7 @@ namespace Content.Client.Gameplay
             // Check the entities against whether or not we can click them
             var foundEntities = new List<(EntityUid, int, uint, float)>(entities.Count);
             var clickQuery = _entityManager.GetEntityQuery<ClickableComponent>();
-            var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
+            var clickSystem = _entityManager.System<ClickableSystem>();
 
             // TODO: Smelly
             var eye = _eyeManager.CurrentEye;
@@ -124,7 +124,7 @@ namespace Content.Client.Gameplay
             foreach (var entity in entities)
             {
                 if (clickQuery.TryGetComponent(entity.Uid, out var component) &&
-                    component.CheckClick(entity.Component, entity.Transform, xformQuery, coordinates.Position, eye,  out var drawDepthClicked, out var renderOrder, out var bottom))
+                    clickSystem.CheckClick((entity.Uid, component, entity.Component, entity.Transform), coordinates.Position, eye,  out var drawDepthClicked, out var renderOrder, out var bottom))
                 {
                     foundEntities.Add((entity.Uid, drawDepthClicked, renderOrder, bottom));
                 }
@@ -203,7 +203,7 @@ namespace Content.Client.Gameplay
             }; // TODO make entityUid nullable
 
             // client side command handlers will always be sent the local player session.
-            var session = _playerManager.LocalPlayer?.Session;
+            var session = _playerManager.LocalSession;
             if (inputSys.HandleInputCommand(session, func, message))
             {
                 kArgs.Handle();

@@ -54,7 +54,7 @@
     seedId: wheat
   - type: Tag
     tags:
-    - Wheat 
+    - Wheat
 
 - type: entity
   name: oat bushel
@@ -182,11 +182,11 @@
       food:
         reagents:
         - ReagentId: Histamine
-          Quantity: 25
+          Quantity: 3
   - type: Produce
     seedId: nettle
   - type: MeleeChemicalInjector
-    transferAmount: 6 #To OD someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
+    transferAmount: 3 #To OD someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
     solution: food
     pierceArmor: false
   - type: Extractable
@@ -207,22 +207,22 @@
   - type: MeleeWeapon
     damage:
       types:
-        Heat: 7.5
-        Caustic: 7.5
+        Heat: 8.5
+        Caustic: 8.5
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: SulfuricAcid
-          Quantity: 15
+          Quantity: 3
         - ReagentId: FluorosulfuricAcid
-          Quantity: 15
+          Quantity: 3
   - type: Produce
     seedId: deathNettle
   - type: MeleeChemicalInjector
-    transferAmount: 6
+    transferAmount: 2
     solution: food
-    pierceArmor: true # We do a little trolling
+    pierceArmor: false
   - type: Extractable
     grindableSolutionName: food
 
@@ -987,7 +987,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 14
+        maxVol: 18
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
@@ -1000,7 +1000,7 @@
   - type: Produce
     seedId: onionred
   - type: SliceableFood
-    count: 4
+    count: 5
     slice: FoodOnionRedSlice
 
 - type: entity
@@ -1073,7 +1073,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 3
+        maxVol: 5
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
@@ -1096,7 +1096,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 3
+        maxVol: 5
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
@@ -1208,6 +1208,34 @@
   - type: Tag
     tags:
     - Flower # TODO add "RedFlower" or "Poppy" tag, when other color flowers will be
+
+- type: entity
+  name: lily
+  parent: FoodPoppy
+  id: FoodLily
+  description: A beautiful orange flower.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - medicine
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 22
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Bicaridine
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lily.rsi
+  - type: Produce
+    seedId: lily
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Tag
+    tags:
+    - Flower
 
 - type: entity
   name: lingzhi
@@ -1431,6 +1459,34 @@
       reagents:
       - ReagentId: MilkSoy
         Quantity: 5
+
+- type: entity
+  name: spaceman's trumpet
+  description: A vivid flower that smells faintly of freshly cut grass. Touching the flower seems to stain the skin some time after contact, yet most other surfaces seem to be unaffected by this phenomenon.
+  id: FoodSpacemansTrumpet
+  parent: FoodProduceBase
+  components:
+  - type: FlavorProfile
+    flavors:
+      - violets
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 4
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: PolypyryliumOligomers
+          Quantity: 3
+  - type: Produce
+    seedId: spacemansTrumpet
+  - type: Tag
+    tags:
+    - Flower
+  - type: Instrument #hehe trumpet
+    program: 56
 
 - type: entity
   name: koibean

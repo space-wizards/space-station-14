@@ -37,26 +37,13 @@ namespace Content.Shared.Friction
         {
             base.Initialize();
 
+            Subs.CVar(_configManager, CCVars.TileFrictionModifier, value => _frictionModifier = value, true);
+            Subs.CVar(_configManager, CCVars.StopSpeed, value => _stopSpeed = value, true);
             _frictionQuery = GetEntityQuery<TileFrictionModifierComponent>();
             _xformQuery = GetEntityQuery<TransformComponent>();
             _pullerQuery = GetEntityQuery<PullerComponent>();
             _pullableQuery = GetEntityQuery<PullableComponent>();
             _gridQuery = GetEntityQuery<MapGridComponent>();
-
-            _configManager.OnValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier, true);
-            _configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
-        }
-
-        private void SetStopSpeed(float value) => _stopSpeed = value;
-
-        private void SetFrictionModifier(float value) => _frictionModifier = value;
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            _configManager.UnsubValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier);
-            _configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
         }
 
         public override void UpdateBeforeMapSolve(bool prediction, PhysicsMapComponent mapComponent, float frameTime)

@@ -34,11 +34,11 @@ public sealed class RCDSystem : EntitySystem
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     private readonly int RcdModeCount = Enum.GetValues(typeof(RcdMode)).Length;
 
@@ -199,7 +199,7 @@ public sealed class RCDSystem : EntitySystem
                 if (_net.IsServer)
                 {
                     var ent = Spawn("WallSolid", mapGrid.GridTileToLocal(snapPos));
-                    Transform(ent).LocalRotation = Angle.Zero; // Walls always need to point south.
+                    _xformSystem.SetLocalRotation(ent, Angle.Zero); // Walls always need to point south.
                     _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {tile.GridUid}");
                 }
                 break;
@@ -208,7 +208,7 @@ public sealed class RCDSystem : EntitySystem
                 if (_net.IsServer)
                 {
                     var airlock = Spawn("Airlock", mapGrid.GridTileToLocal(snapPos));
-                    Transform(airlock).LocalRotation = Transform(uid).LocalRotation; //Now apply icon smoothing.
+                    _xformSystem.SetLocalRotation(airlock, Transform(uid).LocalRotation); //Now apply icon smoothing.
                     _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {tile.GridUid}");
                 }
                 break;

@@ -40,7 +40,7 @@ public sealed class BluespaceAnomalySystem : EntitySystem
         foreach (var ent in allEnts)
         {
             if (xformQuery.TryGetComponent(ent, out var xf))
-                coords.Add(xf.MapPosition.Position);
+                coords.Add(_xform.GetWorldPosition(xf));
         }
 
         _random.Shuffle(coords);

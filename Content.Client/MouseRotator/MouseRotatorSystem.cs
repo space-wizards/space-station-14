@@ -23,7 +23,7 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
         if (!_timing.IsFirstTimePredicted || !_input.MouseScreenPosition.IsValid)
             return;
 
-        var player = _player.LocalPlayer?.ControlledEntity;
+        var player = _player.LocalEntity;
 
         if (player == null || !TryComp<MouseRotatorComponent>(player, out var rotator))
             return;
@@ -37,7 +37,7 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
         if (mapPos.MapId == MapId.Nullspace)
             return;
 
-        var angle = (mapPos.Position - xform.MapPosition.Position).ToWorldAngle();
+        var angle = (mapPos.Position - _transform.GetMapCoordinates((player.Value, xform)).Position).ToWorldAngle();
 
         var curRot = _transform.GetWorldRotation(xform);
 

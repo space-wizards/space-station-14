@@ -22,7 +22,7 @@
         visible: false
         map: ["enum.WeldableLayers.BaseWelded"]
       - state: locked
-        map: ["enum.StorageVisualLayers.Lock"]
+        map: ["enum.LockVisualLayers.Lock"]
         shader: unshaded
     - type: InteractionOutline
     - type: Physics
@@ -73,6 +73,7 @@
     - type: EntityStorageVisuals
       stateDoorOpen: artifact_container_open
       stateDoorClosed: artifact_container_door
+    - type: LockVisuals
     - type: ItemSlots
     - type: ContainerContainer
       containers:

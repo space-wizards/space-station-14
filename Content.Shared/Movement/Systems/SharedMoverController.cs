@@ -92,20 +92,15 @@ namespace Content.Shared.Movement.Systems
 
             InitializeInput();
             InitializeRelay();
-            _configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
-            _configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
+            Subs.CVar(_configManager, CCVars.RelativeMovement, value => _relativeMovement = value, true);
+            Subs.CVar(_configManager, CCVars.StopSpeed, value => _stopSpeed = value, true);
             UpdatesBefore.Add(typeof(TileFrictionController));
         }
-
-        private void SetRelativeMovement(bool value) => _relativeMovement = value;
-        private void SetStopSpeed(float value) => _stopSpeed = value;
 
         public override void Shutdown()
         {
             base.Shutdown();
             ShutdownInput();
-            _configManager.UnsubValueChanged(CCVars.RelativeMovement, SetRelativeMovement);
-            _configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
         }
 
         public override void UpdateAfterSolve(bool prediction, float frameTime)
@@ -253,7 +248,7 @@ namespace Content.Shared.Movement.Systems
                     // TODO apparently this results in a duplicate move event because "This should have its event run during
                     // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
                     var worldRot = _transform.GetWorldRotation(xform);
-                    _transform.SetLocalRotation(xform, xform.LocalRotation + worldTotal.ToWorldAngle() - worldRot);
+                    _transform.SetLocalRotation(physicsUid, xform.LocalRotation + worldTotal.ToWorldAngle() - worldRot, xform);
                 }
 
                 if (!weightless && MobMoverQuery.TryGetComponent(uid, out var mobMover) &&
