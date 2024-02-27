@@ -22,7 +22,7 @@ public sealed partial class AmbientMusicPrototype : IPrototype
     /// <summary>
     /// Can we interrupt this ambience for a better prototype if possible?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("interruptible")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public bool Interruptible = false;
 
     /// <summary>
