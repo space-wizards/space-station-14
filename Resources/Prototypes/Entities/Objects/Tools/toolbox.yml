@@ -164,6 +164,7 @@
     - SleeperSet
     - CommunicatorSet
     - SmugglerSet
+    - ArenaInspectorSet
   - type: ActivatableUI
     key: enum.ThiefBackpackUIKey.Key
   - type: UserInterface

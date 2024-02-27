@@ -32,7 +32,7 @@ thief-backpack-category-chemistry-description =
     A set for those who love to improve their body.
     It includes a storage implanter,
     a DNA scrambler implanter,
-    a set of chemicals for a rainy day,
+    chemical synthesis kit
     and omega soap.
 
 thief-backpack-category-syndie-name = syndie kit
@@ -51,13 +51,18 @@ thief-backpack-category-sleeper-description =
 thief-backpack-category-communicator-name = communicator's kit
 thief-backpack-category-communicator-description =
     A communication enthusiast's kit. Includes a master key
-    for all station channels, a cybersun pen, a portable
-    crew monitor, a voice chameleon mask and lots of money for business deals.
+    for all station channels, a cybersun pen, a voice chameleon mask 
+    and lots of money for business deals.
 
 thief-backpack-category-smuggler-name = smuggler's kit
 thief-backpack-category-smuggler-description =
     A kit for those who like to have big pockets.
-    Includes a fulton beacon, ten fultons, 3 smoke grenades
-    and an invisible crate. You can't move in them,
+    Includes a fulton beacon, ten fultons, 1 smoke grenades,
+    scram implanter and an invisible crate. You can't move in them,
     but you can quickly hide or carry valuable loot.
-    This kit also has a cool void cloak to go along with it.
+
+thief-backpack-category-zooinspector-name = Arena inspector's kit
+thief-backpack-category-zooinspector-description = 
+    A set for those who like to control other creatures.
+    Includes pet carrier, 3 space carp cube and 
+    abomination cube.

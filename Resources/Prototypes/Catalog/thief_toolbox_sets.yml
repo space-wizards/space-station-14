@@ -42,10 +42,11 @@
   content:
   - StorageImplanter
   - DnaScramblerImplanter
-  - EphedrineChemistryBottle
+  - ChemicalSynthesisKit
+  - HypopenBox
   - SoapOmega
   - Syringe
-  - DrinkVodkaBottleFull
+  - Syringe
 
 - type: thiefBackpackSet
   id: SyndieSet
@@ -75,7 +76,6 @@
   - NocturineChemistryBottle
   - NocturineChemistryBottle
   - NocturineChemistryBottle
-  - HypopenBox
   - NitrousOxideTankFilled
   - BedsheetSyndie
 
@@ -89,8 +89,9 @@
   content:
   - EncryptionKeyStationMaster
   - CyberPen
-  - BriefcaseThiefBribingBundleFilled
   - ClothingMaskGasVoiceChameleon
+  - BriefcaseThiefBribingBundleFilled
+  - MaterialDiamond1
   #- todo Chameleon Stamp
 
 - type: thiefBackpackSet
@@ -101,10 +102,26 @@
     sprite: Clothing/Neck/Cloaks/void.rsi
     state: icon
   content:
-  - InvisibleCrate
-  - ClothingNeckCloakVoid
+  - SmokeGrenade
+  - ScramImplanter
   - FultonBeacon
   - Fulton
-  - SmokeGrenade
-  - SmokeGrenade
-  - SmokeGrenade
+  - ClothingNeckCloakVoid
+  - InvisibleCrate
+
+- type: thiefBackpackSet
+  id: ArenaInspectorSet
+  name: thief-backpack-category-zooinspector-name
+  description: thief-backpack-category-zooinspector-description
+  sprite:
+    sprite: Mobs/Aliens/Carps/space.rsi
+    state: alive
+  content:
+  - PetCarrier
+  - SpaceCarpCube
+  - SpaceCarpCube
+  - SpaceCarpCube
+  - SpaceTickCube
+  - CockroachCube
+  - AbominationCube
+  - ClothingHeadHatCowboyRed
