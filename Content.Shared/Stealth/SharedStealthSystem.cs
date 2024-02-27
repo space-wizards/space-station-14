@@ -10,7 +10,6 @@ namespace Content.Shared.Stealth;
 public abstract class SharedStealthSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -114,7 +113,7 @@ public abstract class SharedStealthSystem : EntitySystem
 
     private void OnMove(EntityUid uid, StealthOnMoveComponent component, ref MoveEvent args)
     {
-        if (args.FromStateHandling)
+        if (_timing.ApplyingState)
             return;
 
         if (args.NewPosition.EntityId != args.OldPosition.EntityId)

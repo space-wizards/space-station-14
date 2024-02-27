@@ -102,7 +102,7 @@
   id: EngineeringRCDAmmo
   icon:
     sprite: Objects/Tools/rcd.rsi
-    state: icon
+    state: ammo
   product: CrateRCDAmmo
   cost: 2500
   category: Engineering
@@ -112,7 +112,7 @@
   id: EngineeringRCD
   icon:
     sprite: Objects/Tools/rcd.rsi
-    state: ammo
+    state: icon
   product: CrateRCD
   cost: 800
   category: Engineering

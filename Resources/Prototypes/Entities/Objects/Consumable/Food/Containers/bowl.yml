@@ -6,6 +6,8 @@
   id: FoodBowlBig
   description: A simple bowl, used for soups and salads.
   components:
+  - type: Item
+    storedRotation: -90
   - type: SolutionContainerManager
     solutions:
       food:

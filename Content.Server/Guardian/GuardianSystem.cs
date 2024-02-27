@@ -34,6 +34,7 @@ namespace Content.Server.Guardian
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
         public override void Initialize()
         {
@@ -211,7 +212,7 @@ namespace Content.Server.Guardian
             var hostXform = Transform(args.Args.Target.Value);
             var host = EnsureComp<GuardianHostComponent>(args.Args.Target.Value);
             // Use map position so it's not inadvertantly parented to the host + if it's in a container it spawns outside I guess.
-            var guardian = Spawn(component.GuardianProto, hostXform.MapPosition);
+            var guardian = Spawn(component.GuardianProto, _xformSystem.GetMapCoordinates(hostXform));
 
             _container.Insert(guardian, host.GuardianContainer);
             host.HostedGuardian = guardian;
@@ -262,7 +263,11 @@ namespace Content.Server.Guardian
             if (args.DamageDelta == null || component.Host == null || component.DamageShare > 0)
                 return;
 
-            _damageSystem.TryChangeDamage(component.Host, args.DamageDelta * component.DamageShare, origin: args.Origin);
+            _damageSystem.TryChangeDamage(
+                component.Host,
+                args.DamageDelta * component.DamageShare,
+                origin: args.Origin,
+                interruptsDoAfters: false);
             _popupSystem.PopupEntity(Loc.GetString("guardian-entity-taking-damage"), component.Host.Value, component.Host.Value);
 
         }

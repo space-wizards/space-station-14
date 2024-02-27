@@ -14,9 +14,9 @@ namespace Content.Shared.Tabletop
     public abstract class SharedTabletopSystem : EntitySystem
     {
         [Dependency] protected readonly ActionBlockerSystem ActionBlockerSystem = default!;
+        [Dependency] protected readonly SharedTransformSystem Transforms = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedTransformSystem _transforms = default!;
         [Dependency] private readonly IMapManager _mapMan = default!;
 
         public override void Initialize()
@@ -41,8 +41,8 @@ namespace Content.Shared.Tabletop
 
             // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
             var transform = EntityManager.GetComponent<TransformComponent>(moved);
-            _transforms.SetParent(moved, transform, _mapMan.GetMapEntityId(transform.MapID));
-            _transforms.SetLocalPositionNoLerp(transform, msg.Coordinates.Position);
+            var coordinates = new EntityCoordinates(_mapMan.GetMapEntityId(transform.MapID), msg.Coordinates.Position);
+            Transforms.SetCoordinates(moved, transform, coordinates);
         }
 
         private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg, EntitySessionEventArgs args)

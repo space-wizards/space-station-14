@@ -9,6 +9,7 @@ public sealed class HTNOverlay : Overlay
 {
     private readonly IEntityManager _entManager = default!;
     private readonly Font _font = default!;
+    private SharedTransformSystem? _xformSystem = null;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
@@ -23,6 +24,10 @@ public sealed class HTNOverlay : Overlay
         if (args.ViewportControl == null)
             return;
 
+        _xformSystem ??= _entManager.SystemOrNull<SharedTransformSystem>();
+        if (_xformSystem is null)
+            return;
+
         var handle = args.ScreenHandle;
 
         foreach (var (comp, xform) in _entManager.EntityQuery<HTNComponent, TransformComponent>(true))
@@ -30,7 +35,7 @@ public sealed class HTNOverlay : Overlay
             if (string.IsNullOrEmpty(comp.DebugText) || xform.MapID != args.MapId)
                 continue;
 
-            var worldPos = xform.WorldPosition;
+            var worldPos = _xformSystem.GetWorldPosition(xform);
 
             if (!args.WorldAABB.Contains(worldPos))
                 continue;

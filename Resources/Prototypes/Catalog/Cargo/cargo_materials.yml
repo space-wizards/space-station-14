@@ -87,7 +87,7 @@
   cost: 1500
   category: Materials
   group: market
-  
+
 - type: cargoProduct
   id: MaterialWaterTank
   icon:

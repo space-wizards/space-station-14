@@ -27,32 +27,41 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
-            var position = system.EntityManager.GetComponent<TransformComponent>(owner).MapPosition;
+            var position = system.TransformSystem.GetMapCoordinates(owner);
 
             var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
 
+            var executions = 1;
+            if (system.EntityManager.TryGetComponent<StackComponent>(owner, out var stack))
+            {
+                executions = stack.Count;
+            }
+
             foreach (var (entityId, minMax) in Spawn)
             {
-                var count = minMax.Min >= minMax.Max
-                    ? minMax.Min
-                    : system.Random.Next(minMax.Min, minMax.Max + 1);
-
-                if (count == 0) continue;
-
-                if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.ComponentFactory))
+                for (var execution = 0; execution < executions; execution++)
                 {
-                    var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
-                    system.StackSystem.SetCount(spawned, count);
+                    var count = minMax.Min >= minMax.Max
+                        ? minMax.Min
+                        : system.Random.Next(minMax.Min, minMax.Max + 1);
 
-                    TransferForensics(spawned, system, owner);
-                }
-                else
-                {
-                    for (var i = 0; i < count; i++)
+                    if (count == 0) continue;
+
+                    if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.ComponentFactory))
                     {
                         var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+                        system.StackSystem.SetCount(spawned, count);
 
                         TransferForensics(spawned, system, owner);
+                    }
+                    else
+                    {
+                        for (var i = 0; i < count; i++)
+                        {
+                            var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+
+                            TransferForensics(spawned, system, owner);
+                        }
                     }
                 }
             }

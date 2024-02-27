@@ -8,7 +8,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: AmePart
+      - id: AmePartFlatpack
         amount: 9
 
 - type: entity
@@ -123,7 +123,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: SolarAssemblyPart
+      - id: SolarAssemblyFlatpack
         amount: 6
 
 - type: entity

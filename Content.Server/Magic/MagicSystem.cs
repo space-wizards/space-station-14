@@ -36,7 +36,6 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly IComponentFactory _compFact = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly DoorBoltSystem _boltsSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
@@ -279,7 +278,7 @@ public sealed class MagicSystem : EntitySystem
         if (transform.MapID != args.Target.GetMapId(EntityManager)) return;
 
         _transformSystem.SetCoordinates(args.Performer, args.Target);
-        transform.AttachToGridOrMap();
+        _transformSystem.AttachToGridOrMap(args.Performer, transform);
         _audio.PlayPvs(args.BlinkSound, args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
         Speak(args);
         args.Handled = true;
@@ -307,7 +306,7 @@ public sealed class MagicSystem : EntitySystem
         foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))
         {
             if (TryComp<DoorBoltComponent>(entity, out var bolts))
-                _boltsSystem.SetBoltsDown(entity, bolts, false);
+                _doorSystem.SetBoltsDown((entity, bolts), false);
 
             if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
                 _doorSystem.StartOpening(entity);
@@ -322,7 +321,7 @@ public sealed class MagicSystem : EntitySystem
         ev.Handled = true;
         Speak(ev);
 
-        var direction = Transform(ev.Target).MapPosition.Position - Transform(ev.Performer).MapPosition.Position;
+        var direction = _transformSystem.GetWorldPosition(ev.Target) - _transformSystem.GetWorldPosition(ev.Performer);
         var impulseVector = direction * 10000;
 
         _physics.ApplyLinearImpulse(ev.Target, impulseVector);

@@ -42,6 +42,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     // how often to recheck possible targets (prevents calling expensive
     // check logic each update)
@@ -109,7 +110,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         UpdatesOutsidePrediction = true;
         UpdatesAfter.Add(typeof(SharedEyeSystem));
 
-        _cfgMan.OnValueChanged(CCVars.DragDropDeadZone, SetDeadZone, true);
+        Subs.CVar(_cfgMan, CCVars.DragDropDeadZone, SetDeadZone, true);
 
         _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();
         _dropTargetOutOfRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetOutOfRange).Instance();
@@ -126,7 +127,6 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
     public override void Shutdown()
     {
-        _cfgMan.UnsubValueChanged(CCVars.DragDropDeadZone, SetDeadZone);
         CommandBinds.Unregister<DragDropSystem>();
         base.Shutdown();
     }
@@ -251,7 +251,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             dragSprite.DrawDepth = (int) DrawDepth.Overlays;
             if (!dragSprite.NoRotation)
             {
-                Transform(_dragShadow.Value).WorldRotation = Transform(_draggedEntity.Value).WorldRotation;
+                _xformSystem.SetWorldRotation(_dragShadow.Value, _xformSystem.GetWorldRotation(_draggedEntity.Value));
             }
 
             // drag initiated
@@ -269,7 +269,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             return false;
         }
 
-        var player = _playerManager.LocalPlayer?.ControlledEntity;
+        var player = _playerManager.LocalEntity;
 
         // still in range of the thing we are dragging?
         if (player == null || !_interactionSystem.InRangeUnobstructed(player.Value, _draggedEntity.Value))
@@ -346,7 +346,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             return false;
         }
 
-        var localPlayer = _playerManager.LocalPlayer?.ControlledEntity;
+        var localPlayer = _playerManager.LocalEntity;
 
         if (localPlayer == null || !Exists(_draggedEntity))
         {
@@ -410,7 +410,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             return;
         }
 
-        var user = _playerManager.LocalPlayer?.ControlledEntity;
+        var user = _playerManager.LocalEntity;
 
         if (user == null)
             return;
@@ -552,7 +552,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         if (Exists(_dragShadow))
         {
             var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
-            Transform(_dragShadow.Value).WorldPosition = mousePos.Position;
+            _xformSystem.SetWorldPosition(_dragShadow.Value, mousePos.Position);
         }
     }
 }

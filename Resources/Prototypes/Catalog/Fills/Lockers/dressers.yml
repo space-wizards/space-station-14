@@ -12,6 +12,8 @@
       - id: ClothingUniformJumpsuitCapFormal
       - id: ClothingUniformJumpskirtCapFormalDress
       - id: ClothingHandsGlovesCaptain
+      - id: ClothingNeckMantleCap
+      - id: ClothingOuterWinterCap
 
 - type: entity
   id: DresserChiefEngineerFilled
@@ -20,10 +22,12 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckMantleCE
       - id: ClothingUniformJumpsuitChiefEngineerTurtle
       - id: ClothingUniformJumpskirtChiefEngineerTurtle
       - id: ClothingNeckCloakCe
       - id: ClothingHeadHatBeretEngineering
+      - id: ClothingOuterWinterCE
 
 - type: entity
   id: DresserChiefMedicalOfficerFilled
@@ -32,9 +36,12 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckMantleCMO
       - id: ClothingCloakCmo
       - id: ClothingOuterCoatLabCmo
       - id: ClothingHeadHatBeretCmo
+      - id: ClothingEyesGlasses
+      - id: ClothingOuterWinterCMO
 
 - type: entity
   id: DresserHeadOfPersonnelFilled
@@ -43,9 +50,11 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckMantleHOP
       - id: ClothingNeckCloakHop
       - id: ClothingHeadHatHopcap
       - id: ClothingOuterWinterHoP
+      - id: ClothingEyesGlasses
 
 - type: entity
   id: DresserHeadOfSecurityFilled
@@ -54,6 +63,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckMantleHOS
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat
       - id: ClothingNeckCloakHos
@@ -61,7 +71,7 @@
       - id: ClothingUniformJumpsuitHoSAlt
       - id: ClothingUniformJumpskirtHosFormal
       - id: ClothingUniformJumpsuitHosFormal
-      - id: ClothingMaskNeckGaiter
+      - id: ClothingOuterWinterHoS
 
 - type: entity
   id: DresserQuarterMasterFilled
@@ -71,10 +81,13 @@
   - type: StorageFill
     contents:
       - id: ClothingNeckCloakQm
-      - id: ClothingHeadsetCargo
+      - id: ClothingHeadHatBeretQM
+      - id: ClothingUniformJumpsuitQMFormal
       - id: ClothingUniformJumpsuitQMTurtleneck
       - id: ClothingUniformJumpskirtQMTurtleneck
       - id: ClothingHandsGlovesColorBrown
+      - id: ClothingNeckMantleQM
+      - id: ClothingOuterWinterQM
 
 - type: entity
   id: DresserResearchDirectorFilled
@@ -83,10 +96,12 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckMantleRD
       - id: ClothingNeckCloakRd
       - id: ClothingHeadHatBeretRND
       - id: ClothingHandsGlovesColorPurple
-      - id: ClothingHeadsetAltScience
+      - id: ClothingEyesGlasses
+      - id: ClothingOuterWinterRD
 
 - type: entity
   id: DresserWardenFilled

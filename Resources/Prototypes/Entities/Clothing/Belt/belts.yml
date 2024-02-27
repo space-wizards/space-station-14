@@ -179,7 +179,7 @@
         - SmokeOnTrigger
         - Flash
         - Handcuff
-        - RangedMagazine
+        - BallisticAmmoProvider
         - Ammo
   - type: ItemMapper
     mapLayers:
@@ -221,10 +221,9 @@
         - WetFloorSign
         - HolosignProjector
         - Plunger
-        - LightReplacer
-        - JanicartKeys
       components:
         - LightReplacer
+    maxItemSize: Large
   - type: ItemMapper
     mapLayers:
       bottle:
@@ -304,6 +303,17 @@
           - Wrench
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
+
+- type: entity
+  parent: ClothingBeltMedical
+  id: ClothingBeltMedicalEMT
+  name: EMT belt
+  description: Perfect for holding various equipment for medical emergencies.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/emt.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/emt.rsi
 
 - type: entity
   parent: ClothingBeltStorageBase
