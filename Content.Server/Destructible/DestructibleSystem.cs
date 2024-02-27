@@ -42,6 +42,7 @@ namespace Content.Server.Destructible
         [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] public readonly IComponentFactory ComponentFactory = default!;
         [Dependency] public readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] public readonly SharedTransformSystem TransformSystem = default!;
 
         public override void Initialize()
         {

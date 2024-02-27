@@ -32,7 +32,7 @@ namespace Content.Shared.Cloning.CloningConsole
         Ready,
         ScannerEmpty,
         ScannerOccupantAlive,
-        OccupantMetaphyiscal,
+        OccupantMetaPhysical,
         ClonerOccupied,
         NoClonerDetected,
         NoMindDetected
