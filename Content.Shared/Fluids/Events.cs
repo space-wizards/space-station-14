@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Fluids;
 
 [Serializable, NetSerializable]
-public sealed partial class AbsorbentDoAfterEvent : DoAfterEvent
+public sealed partial class AbsorbantDoAfterEvent : DoAfterEvent
 {
     [DataField("solution", required: true)]
     public string TargetSolution = default!;
@@ -20,11 +20,11 @@ public sealed partial class AbsorbentDoAfterEvent : DoAfterEvent
     [DataField("transferAmount", required: true)]
     public FixedPoint2 TransferAmount;
 
-    private AbsorbentDoAfterEvent()
+    private AbsorbantDoAfterEvent()
     {
     }
 
-    public AbsorbentDoAfterEvent(string targetSolution, string message, SoundSpecifier sound, FixedPoint2 transferAmount)
+    public AbsorbantDoAfterEvent(string targetSolution, string message, SoundSpecifier sound, FixedPoint2 transferAmount)
     {
         TargetSolution = targetSolution;
         Message = message;
