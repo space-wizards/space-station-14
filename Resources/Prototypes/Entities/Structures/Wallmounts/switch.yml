@@ -807,6 +807,7 @@
 - type: entity
   id: BigRedButtonEmergency
   parent: BigRedButton
+  name: emergency button
   description: Sets the alert level of the station to Code Red. Be careful!
   suffix: Emergency
   components:
