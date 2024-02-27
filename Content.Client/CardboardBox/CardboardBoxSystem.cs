@@ -30,7 +30,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         if (!xformQuery.TryGetComponent(source, out var xform))
             return;
 
-        var sourcePos = _transform.GetMapCoordinates((source, xform));
+        var sourcePos = _transform.GetMapCoordinates(source, xform);
 
         //Any mob that can move should be surprised?
         //God mind rework needs to come faster so it can just check for mind
