@@ -1,0 +1,25 @@
+- type: construction
+  name: wooden barrel
+  id: WoodenBarrel
+  graph: WoodenBarrel
+  startNode: start
+  targetNode: woodenbarrel
+  category: construction-category-storage
+  description: A musty old wooden barrel.
+  icon:
+    sprite: DeltaV/Structures/Storage/barrel.rsi
+    state: base
+  objectType: Structure
+
+- type: construction
+  name: wooden keg
+  id: WoodenKeg
+  graph: WoodenKeg
+  startNode: start
+  targetNode: woodenkeg
+  category: construction-category-storage
+  description: A musty old wooden keg, with a tap attached to the front.
+  icon:
+    sprite: DeltaV/Structures/Storage/keg.rsi
+    state: base
+  objectType: Structure

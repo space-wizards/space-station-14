@@ -1,0 +1,180 @@
+- type: entity
+  parent: CrateGeneric
+  id: WoodenBarrel
+  name: wooden barrel
+  description: A musty old wooden barrel.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/barrel.rsi
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Objects/Storage/barrel.rsi
+    state: base
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: WoodenBarrel
+    node: woodenbarrel
+    containers:
+    - entity_storage
+  - type: StaticPrice
+    price: 50
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.4"
+        density: 125
+        mask:
+        - SmallMobMask #this is so they can go under plastic flaps
+        layer:
+        - MachineLayer
+  - type: Climbable
+
+- type: entity
+  parent: BaseStructureDynamic
+  id: WoodenKeg
+  name: wooden keg
+  description: A musty old wooden keg, with a tap attached to the front.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        canMix: true
+  - type: DrainableSolution
+    solution: tank
+  - type: ExaminableSolution
+    solution: tank
+  - type: UserInterface
+    interfaces:
+      - key: enum.TransferAmountUiKey.Key
+        type: TransferAmountBoundUserInterface
+  - type: DrawableSolution
+    solution: tank
+  - type: InjectableSolution
+    solution: tank
+  - type: Drink
+    solution: tank
+  - type: Spillable
+    solution: tank
+  - type: DumpableSolution
+    solution: tank
+  - type: Sprite
+    sprite: Objects/Storage/keg.rsi
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+  - type: Icon
+    sprite: Objects/Storage/keg.rsi
+    state: base
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpillBehavior
+        solution: tank
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 50
+  - type: Construction
+    graph: WoodenKeg
+    node: woodenkeg
+    containers:
+    - entity_storage
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.4"
+        density: 125
+        mask:
+        - SmallMobMask #this is so they can go under plastic flaps
+        layer:
+        - MachineLayer
+  - type: Transform
+    noRot: true
+
+- type: entity
+  parent: WoodenKeg
+  name: root beer keg
+  description: A musty old wooden keg, with a tap attached to the front. Smells like root beer.
+  id: WoodenKegRootBeer
+  components:
+    - type: Label
+      currentLabel: reagent-name-root-beer
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: RootBeer
+              Quantity: 500
+
+- type: entity
+  parent: WoodenKeg
+  name: beer keg
+  description: A musty old wooden keg, with a tap attached to the front. Smells like beer.
+  id: WoodenKegBeer
+  components:
+    - type: Label
+      currentLabel: reagent-name-beer
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Beer
+              Quantity: 500
+
+- type: entity
+  parent: WoodenKeg
+  name: wine keg
+  description: A musty old wooden keg, with a tap attached to the front. Smells like wine.
+  id: WoodenKegWine
+  components:
+    - type: Label
+      currentLabel: reagent-name-wine
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Wine
+              Quantity: 500

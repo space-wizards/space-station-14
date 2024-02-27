@@ -1,0 +1,54 @@
+- type: constructionGraph
+  id: WoodenBarrel
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: woodenbarrel
+          steps:
+            - material: WoodPlank
+              amount: 5
+              doAfter: 5
+
+    - node: woodenbarrel
+      entity: WoodenBarrel
+      edges:
+        - to: start
+          steps:
+            - tool: Prying
+              doAfter: 2
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 5
+            - !type:EmptyAllContainers
+            - !type:DeleteEntity
+
+- type: constructionGraph
+  id: WoodenKeg
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: woodenkeg
+          steps:
+            - material: WoodPlank
+              amount: 5
+              doAfter: 5
+
+    - node: woodenkeg
+      entity: WoodenKeg
+      edges:
+        - to: start
+          steps:
+            - tool: Prying
+              doAfter: 2
+          conditions:
+            - !type:SolutionEmpty
+              solution: tank
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 5
+            - !type:EmptyAllContainers
+            - !type:DeleteEntity

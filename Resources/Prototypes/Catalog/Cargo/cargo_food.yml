@@ -77,3 +77,33 @@
   cost: 2400
   category: Food
   group: market
+
+- type: cargoProduct
+  id: FoodBeerKeg
+  icon:
+    sprite: Objects/Storage/keg.rsi
+    state: base
+  product: WoodenKegBeer
+  cost: 500
+  category: Food
+  group: market
+
+- type: cargoProduct
+  id: FoodRootBeerKeg
+  icon:
+    sprite: Objects/Storage/keg.rsi
+    state: base
+  product: WoodenKegRootBeer
+  cost: 500
+  category: Food
+  group: market
+
+- type: cargoProduct
+  id: FoodWineBarrel
+  icon:
+    sprite: Objects/Storage/keg.rsi
+    state: base
+  product: WoodenKegWine
+  cost: 500
+  category: Food
+  group: market
