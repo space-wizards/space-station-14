@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Chat.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -15,8 +16,8 @@ namespace Content.Client.Chat.UI
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
         [Dependency] protected readonly IConfigurationManager ConfigManager = default!;
+        private readonly SharedTransformSystem _xformSystem;
 
         public enum SpeechType : byte
         {
