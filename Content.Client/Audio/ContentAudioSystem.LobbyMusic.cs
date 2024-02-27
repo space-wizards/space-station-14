@@ -10,10 +10,12 @@ using Robust.Client.State;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Audio;
 
+// Part of ContentAudioSystem that is responsible for lobby music playing/stopping and round-end sound-effect.
 public sealed partial class ContentAudioSystem
 {
     [Dependency] private readonly IBaseClient _client = default!;
@@ -73,11 +75,11 @@ public sealed partial class ContentAudioSystem
 
         _client.PlayerLeaveServer += OnLeave;
 
-        SubscribeNetworkEvent<LobbySongStoppedEvent>(OnLobbySongStopped);
+        SubscribeNetworkEvent<LobbyMusicStopEvent>(OnLobbySongStopped);
         SubscribeNetworkEvent<LobbyPlaylistChangedEvent>(OnLobbySongChanged);
     }
 
-    private void OnLobbySongStopped(LobbySongStoppedEvent ev)
+    private void OnLobbySongStopped(LobbyMusicStopEvent ev)
     {
         EndLobbyMusic();
     }
@@ -264,7 +266,18 @@ public sealed partial class ContentAudioSystem
         return playlist[nextTrackIndex];
     }
 
+    /// <summary> Container for lobby soundtrack information. </summary>
+    /// <param name="Filename">Soundtrack filename.</param>
+    /// <param name="NextTrackOn">Time (based on <see cref="IGameTiming.CurTime"/>) when this track is going to finish playing and next track have to be started.</param>
+    /// <param name="MusicStreamEntityUid">
+    /// EntityUid of launched soundtrack (from <see cref="SharedAudioSystem.PlayGlobal(string,Robust.Shared.Player.Filter,bool,System.Nullable{Robust.Shared.Audio.AudioParams})"/>).
+    /// </param>
     private sealed record LobbySoundtrackInfo(string Filename, TimeSpan NextTrackOn, EntityUid MusicStreamEntityUid);
 }
 
+/// <summary>
+/// Event of changing lobby soundtrack (or stopping lobby music - will pass null for <paramref name="SoundtrackFilename"/> in that case).
+/// Is used by <see cref="ContentAudioSystem.LobbySoundtrackChanged"/> and <see cref="LobbyState.UpdateLobbySoundtrackInfo"/>.
+/// </summary>
+/// <param name="SoundtrackFilename">Filename of newly set soundtrack, or null if soundtrack playback is stopped.</param>
 public sealed record LobbySoundtrackChangedEvent(string? SoundtrackFilename = null);
