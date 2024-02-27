@@ -51,7 +51,7 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
-    
+
 - type: entity
   parent: BasePlushie
   id: PlushieGhost
@@ -273,6 +273,11 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/weh.ogg
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 30
 
 - type: entity
   parent: PlushieLizard
@@ -311,6 +316,11 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 30
 
 - type: entity
   parent: BasePlushie
@@ -398,6 +408,7 @@
     state: blue
   - type: Item
     heldPrefix: blue
+    storedRotation: -90
   - type: Tag
     tags:
       - PlushieSharkBlue
@@ -467,6 +478,7 @@
     state: carpplush
   - type: Item
     heldPrefix: carpplush
+    storedRotation: -90
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Effects/bite.ogg
@@ -679,7 +691,7 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Human/malescream_5.ogg
-  
+
 - type: entity
   parent: BasePlushie
   id: PlushieMoth
@@ -992,6 +1004,25 @@
     size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: synb
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Tag
+    tags:
+    - Balloon
+
+- type: entity
+  parent: BaseItem
+  id: BalloonNT
+  name: nanotrasen balloon
+  description: Specially designed to inflict maximum psychological damage to Syndicate operatives.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: ntb
+  - type: Item
+    size: Small
+    sprite: Objects/Fun/toys.rsi
+    heldPrefix: ntb
   - type: Damageable
     damageContainer: Inorganic
   - type: Tag

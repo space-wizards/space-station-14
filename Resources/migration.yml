@@ -227,3 +227,6 @@ MonkeyCubeBox: BoxMonkeyCube
 KoboldCubeBox: BoxKoboldCube
 VariantCubeBox: BoxVariantCube
 SyndicateSpongeBox: BoxSyndicateSponge
+
+# 2024-02-26
+CrateBaseWeldable: CrateGenericSteel
