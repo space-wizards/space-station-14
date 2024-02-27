@@ -25,7 +25,7 @@ public sealed partial class HandcuffComponent : Component
     ///     The time it takes for a cuffed entity to uncuff itself.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float BreakoutTime = 30f;
+    public float BreakoutTime = 15f;
 
     /// <summary>
     ///     If an entity being cuffed is stunned, this amount of time is subtracted from the time it takes to add/remove their cuffs.

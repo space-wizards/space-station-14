@@ -66,7 +66,7 @@ public sealed class AirFilterSystem : EntitySystem
         var oxygen = air.GetMoles(filter.Oxygen) / air.TotalMoles;
         var gases = oxygen >= filter.TargetOxygen ? filter.Gases : filter.OverflowGases;
 
-        var coordinates = Transform(uid).MapPosition;
+        var coordinates = _transform.GetMapCoordinates(uid);
         GasMixture? destination = null;
         if (_map.TryFindGridAt(coordinates, out _, out var grid))
         {

@@ -120,7 +120,7 @@
   - type: ResistLocker
   - type: Weldable
   - type: WallMount
-    arc: 180
+    arc: 175
   - type: StaticPrice
     price: 50
   - type: Transform

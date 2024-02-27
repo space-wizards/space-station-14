@@ -171,8 +171,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 human = entityManager.SpawnEntity("HumanDisposalDummy", coordinates);
                 wrench = entityManager.SpawnEntity("WrenchDummy", coordinates);
                 disposalUnit = entityManager.SpawnEntity("DisposalUnitDummy", coordinates);
-                disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy",
-                    entityManager.GetComponent<TransformComponent>(disposalUnit).MapPosition);
+                disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy", xformSystem.GetMapCoordinates(disposalUnit));
 
                 // Test for components existing
                 unitUid = disposalUnit;

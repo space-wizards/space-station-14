@@ -11,6 +11,7 @@ namespace Content.Server.Emp;
 public sealed class EmpSystem : SharedEmpSystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public const string EmpPulseEffectPrototype = "EffectEmpPulse";
 
@@ -102,7 +103,7 @@ public sealed class EmpSystem : SharedEmpSystem
 
     private void HandleEmpTrigger(EntityUid uid, EmpOnTriggerComponent comp, TriggerEvent args)
     {
-        EmpPulse(Transform(uid).MapPosition, comp.Range, comp.EnergyConsumption, comp.DisableDuration);
+        EmpPulse(_xformSystem.GetMapCoordinates(uid), comp.Range, comp.EnergyConsumption, comp.DisableDuration);
         args.Handled = true;
     }
 

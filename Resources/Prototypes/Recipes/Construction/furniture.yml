@@ -358,6 +358,159 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: fancy black table
+  id: TableFancyBlack
+  graph: Table
+  startNode: start
+  targetNode: TableFancyBlack
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/black.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy blue table
+  id: TableFancyBlue
+  graph: Table
+  startNode: start
+  targetNode: TableFancyBlue
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/blue.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy cyan table
+  id: TableFancyCyan
+  graph: Table
+  startNode: start
+  targetNode: TableFancyCyan
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/cyan.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy green table
+  id: TableFancyGreen
+  graph: Table
+  startNode: start
+  targetNode: TableFancyGreen
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/green.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy orange table
+  id: TableFancyOrange
+  graph: Table
+  startNode: start
+  targetNode: TableFancyOrange
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/orange.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy purple table
+  id: TableFancyPurple
+  graph: Table
+  startNode: start
+  targetNode: TableFancyPurple
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/purple.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy pink table
+  id: TableFancyPink
+  graph: Table
+  startNode: start
+  targetNode: TableFancyPink
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/pink.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy red table
+  id: TableFancyRed
+  graph: Table
+  startNode: start
+  targetNode: TableFancyRed
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/red.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy white table
+  id: TableFancyWhite
+  graph: Table
+  startNode: start
+  targetNode: TableFancyWhite
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/white.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: metal counter
   id: TableCounterMetal
   graph: Table
