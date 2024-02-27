@@ -509,6 +509,301 @@
   - type: AccessReader
     access: [["Atmospherics"]]
 
+# big red button
+- type: entity
+  id: BigRedButton
+  name: big red button
+  description: Press it... if you dare.
+  placement:
+    mode: SnapgridCenter
+  noSpawn: true
+  components:
+  - type: Appearance
+  - type: Lock
+  - type: LockVisuals
+  - type: AccessReader
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Specific/big_red_button.rsi
+    layers:
+    - state: base
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    canCollide: false
+  - type: SignalSwitch
+  - type: UseDelay
+    delay: 0.5 # prevent light-toggling auto-clickers.
+  - type: Rotatable
+  - type: Construction
+    graph: SignalSwitchGraph
+    node: SignalSwitchNode
+  - type: Fixtures
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+  - type: WirelessNetworkConnection
+    range: 500
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DeviceLinkSource
+    ports:
+    - On
+    - Off
+    - Status
+    lastSignals:
+      Status: false
+
+- type: entity
+  id: BigRedButtonCaptain
+  parent: BigRedButton
+  suffix: Captain
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
+
+- type: entity
+  id: BigRedButtonHeadOfPersonnel
+  parent: BigRedButton
+  suffix: HeadOfPersonnel
+  components:
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
+
+- type: entity
+  id: BigRedButtonChiefEngineer
+  parent: BigRedButton
+  suffix: ChiefEngineer
+  components:
+  - type: AccessReader
+    access: [["ChiefEngineer"]]
+
+- type: entity
+  id: BigRedButtonChiefMedicalOfficer
+  parent: BigRedButton
+  suffix: ChiefMedicalOfficer
+  components:
+  - type: AccessReader
+    access: [["ChiefMedicalOfficer"]]
+
+- type: entity
+  id: BigRedButtonHeadOfSecurity
+  parent: BigRedButton
+  suffix: HeadOfSecurity
+  components:
+  - type: AccessReader
+    access: [["HeadOfSecurity"]]
+
+- type: entity
+  id: BigRedButtonResearchDirector
+  parent: BigRedButton
+  suffix: ResearchDirector
+  components:
+  - type: AccessReader
+    access: [["ResearchDirector"]]
+
+- type: entity
+  id: BigRedButtonCommand
+  parent: BigRedButton
+  suffix: Command
+  components:
+  - type: AccessReader
+    access: [["Command"]]
+
+- type: entity
+  id: BigRedButtonCryogenics
+  parent: BigRedButton
+  suffix: Cryogenics
+  components:
+  - type: AccessReader
+    access: [["Cryogenics"]]
+
+- type: entity
+  id: BigRedButtonSecurity
+  parent: BigRedButton
+  suffix: Security
+  components:
+  - type: AccessReader
+    access: [["Security"]]
+
+- type: entity
+  id: BigRedButtonDetective
+  parent: BigRedButton
+  suffix: Detective
+  components:
+  - type: AccessReader
+    access: [["Detective"]]
+
+- type: entity
+  id: BigRedButtonArmory
+  parent: BigRedButton
+  suffix: Armory
+  components:
+  - type: AccessReader
+    access: [["Armory"]]
+
+- type: entity
+  id: BigRedButtonBrig
+  parent: BigRedButton
+  suffix: Brig
+  components:
+  - type: AccessReader
+    access: [["Brig"]]
+
+- type: entity
+  id: BigRedButtonLawyer
+  parent: BigRedButton
+  suffix: Lawyer
+  components:
+  - type: AccessReader
+    access: [["Lawyer"]]
+
+- type: entity
+  id: BigRedButtonEngineering
+  parent: BigRedButton
+  suffix: Engineering
+  components:
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  id: BigRedButtonMedical
+  parent: BigRedButton
+  suffix: Medical
+  components:
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  id: BigRedButtonQuartermaster
+  parent: BigRedButton
+  suffix: Quartermaster
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
+
+- type: entity
+  id: BigRedButtonSalvage
+  parent: BigRedButton
+  suffix: Salvage
+  components:
+  - type: AccessReader
+    access: [["Salvage"]]
+
+- type: entity
+  id: BigRedButtonCargo
+  parent: BigRedButton
+  suffix: Cargo
+  components:
+  - type: AccessReader
+    access: [["Cargo"]]
+
+- type: entity
+  id: BigRedButtonResearch
+  parent: BigRedButton
+  suffix: Research
+  components:
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  id: BigRedButtonService
+  parent: BigRedButton
+  suffix: Service
+  components:
+  - type: AccessReader
+    access: [["Service"]]
+
+- type: entity
+  id: BigRedButtonMaintenance
+  parent: BigRedButton
+  suffix: Maintenance
+  components:
+  - type: AccessReader
+    access: [["Maintenance"]]
+
+- type: entity
+  id: BigRedButtonExternal
+  parent: BigRedButton
+  suffix: External
+  components:
+  - type: AccessReader
+    access: [["External"]]
+
+- type: entity
+  id: BigRedButtonJanitor
+  parent: BigRedButton
+  suffix: Janitor
+  components:
+  - type: AccessReader
+    access: [["Janitor"]]
+
+- type: entity
+  id: BigRedButtonTheatre
+  parent: BigRedButton
+  suffix: Theatre
+  components:
+  - type: AccessReader
+    access: [["Theatre"]]
+
+- type: entity
+  id: BigRedButtonBar
+  parent: BigRedButton
+  suffix: Bar
+  components:
+  - type: AccessReader
+    access: [["Bar"]]
+
+- type: entity
+  id: BigRedButtonChemistry
+  parent: BigRedButton
+  suffix: Chemistry
+  components:
+  - type: AccessReader
+    access: [["Chemistry"]]
+
+- type: entity
+  id: BigRedButtonKitchen
+  parent: BigRedButton
+  suffix: Kitchen
+  components:
+  - type: AccessReader
+    access: [["Kitchen"]]
+
+- type: entity
+  id: BigRedButtonChapel
+  parent: BigRedButton
+  suffix: Chapel
+  components:
+  - type: AccessReader
+    access: [["Chapel"]]
+
+- type: entity
+  id: BigRedButtonHydroponics
+  parent: BigRedButton
+  suffix: Hydroponics
+  components:
+  - type: AccessReader
+    access: [["Hydroponics"]]
+
+- type: entity
+  id: BigRedButtonAtmospherics
+  parent: BigRedButton
+  suffix: Atmospherics
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
 # button frames
 
 - type: entity
