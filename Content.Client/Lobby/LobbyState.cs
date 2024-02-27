@@ -52,7 +52,7 @@ namespace Content.Client.Lobby
             var chatController = _userInterfaceManager.GetUIController<ChatUIController>();
             _gameTicker = _entityManager.System<ClientGameTicker>();
             _contentAudioSystem = _entityManager.System<ContentAudioSystem>();
-            _contentAudioSystem.LobbySongChanged += UpdateLobbySongInfo;
+            _contentAudioSystem.LobbySoundtrackChanged += UpdateLobbySoundtrackInfo;
             _characterSetup = new CharacterSetupGui(_entityManager, _resourceCache, _preferencesManager,
                 _prototypeManager, _configurationManager);
             LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
@@ -97,7 +97,7 @@ namespace Content.Client.Lobby
             _gameTicker.InfoBlobUpdated -= UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
-            _contentAudioSystem.LobbySongChanged -= UpdateLobbySongInfo;
+            _contentAudioSystem.LobbySoundtrackChanged -= UpdateLobbySoundtrackInfo;
 
             _voteManager.ClearPopupContainer();
 
@@ -214,15 +214,15 @@ namespace Content.Client.Lobby
             }
         }
 
-        private void UpdateLobbySongInfo(LobbySongChangedEvent ev)
+        private void UpdateLobbySoundtrackInfo(LobbySoundtrackChangedEvent ev)
         {
-            if (ev.SongFilename == null)
+            if (ev.SoundtrackFilename == null)
             {
                 _lobby!.LobbySong.SetMarkup(Loc.GetString("lobby-state-song-no-song-text"));
             }
             else if (
-                ev.SongFilename != null
-                && _resourceCache.TryGetResource<AudioResource>(ev.SongFilename, out var lobbySongResource)
+                ev.SoundtrackFilename != null
+                && _resourceCache.TryGetResource<AudioResource>(ev.SoundtrackFilename, out var lobbySongResource)
                 )
             {
                 var lobbyStream = lobbySongResource.AudioStream;
