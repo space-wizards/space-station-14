@@ -1158,6 +1158,9 @@
   id: Torch
 
 - type: Tag
+  id: ToySidearm
+
+- type: Tag
   id: Trash
 
 - type: Tag
@@ -1171,6 +1174,9 @@
 
 - type: Tag
   id: UraniumGlassShard
+
+- type: Tag
+  id: Utensil
 
 - type: Tag
   id: VimPilot

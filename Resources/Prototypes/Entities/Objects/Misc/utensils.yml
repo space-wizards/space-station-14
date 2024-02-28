@@ -99,7 +99,7 @@
     speedModifier: 0.1 # you can try
 
 - type: entity
-  parent: UtensilBase
+  parent: UtensilBasePlastic
   id: KnifePlastic
   name: plastic knife
   description: That's not a knife. This is a knife.
