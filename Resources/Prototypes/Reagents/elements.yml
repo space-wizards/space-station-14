@@ -76,7 +76,7 @@
         - !type:OrganType
           type: Arachnid
           shouldHave: true
-        amount: 4
+        amount: 0.4
 
 - type: reagent
   id: Fluorine
