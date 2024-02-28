@@ -108,7 +108,7 @@
   id: CrateServiceBureaucracy
   parent: CrateGenericSteel
   name: bureaucracy crate
-  description: Several stacks of paper and a few pens, what more can you ask for.
+  description: Several stacks of paper, a few pens and an office toy. What more could you ask for?
   components:
   - type: StorageFill
     contents:
@@ -122,6 +122,7 @@
     - id: BoxFolderBlue
     - id: BoxFolderRed
     - id: BoxFolderYellow
+    - id: NewtonCradle
 
 - type: entity
   id: CrateServicePersonnel
@@ -166,6 +167,54 @@
       - id: BookMedicalReferenceBook
       - id: BookHowToSurvive
       - id: BookChemicalCompendium
+
+- type: entity
+  id: CrateServiceSodaDispenser
+  parent: CrateGenericSteel
+  name: soda dispenser refill crate
+  description: Contains refills for soda dispensers.
+  components:
+    - type: StorageFill
+      contents:
+      - id: DrinkCoffeeJug
+      - id: DrinkColaBottleFull
+      - id: DrinkCreamCartonXL
+      - id: DrinkDrGibbJug
+      - id: DrinkEnergyDrinkJug
+      - id: DrinkGreenTeaJug
+      - id: DrinkIceJug
+      - id: DrinkJuiceLimeCartonXL
+      - id: DrinkJuiceOrangeCartonXL
+      - id: DrinkLemonLimeJug
+      - id: DrinkRootBeerJug
+      - id: DrinkSodaWaterBottleFull
+      - id: DrinkSpaceMountainWindBottleFull
+      - id: DrinkSpaceUpBottleFull
+      - id: DrinkSugarJug
+      - id: DrinkTeaJug
+      - id: DrinkTonicWaterBottleFull
+      - id: DrinkWaterMelonJuiceJug
+
+- type: entity
+  id: CrateServiceBoozeDispenser
+  parent: CrateGenericSteel
+  name: booze dispenser refill crate
+  description: Contains refills for booze dispensers.
+  components:
+    - type: StorageFill
+      contents:
+      - id: DrinkAleBottleFullGrowler
+      - id: DrinkBeerGrowler
+      - id: DrinkCoffeeLiqueurBottleFull
+      - id: DrinkCognacBottleFull
+      - id: DrinkGinBottleFull
+      - id: DrinkMeadJug
+      - id: DrinkRumBottleFull
+      - id: DrinkTequilaBottleFull
+      - id: DrinkVermouthBottleFull
+      - id: DrinkVodkaBottleFull
+      - id: DrinkWhiskeyBottleFull
+      - id: DrinkWineBottleFull
 
 - type: entity
   id: CrateServiceBox

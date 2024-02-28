@@ -2,7 +2,7 @@ using System.Linq;
 using System.Text;
 using Content.Server.Paper;
 using Content.Server.Popups;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.Hands.EntitySystems;

@@ -115,7 +115,11 @@ namespace Content.Server.Chemistry.ReagentEffects
             var scale = ScaleByQuantity ? args.Quantity : FixedPoint2.New(1);
             scale *= args.Scale;
 
-            args.EntityManager.System<DamageableSystem>().TryChangeDamage(args.SolutionEntity, Damage * scale, IgnoreResistances);
+            args.EntityManager.System<DamageableSystem>().TryChangeDamage(
+                args.SolutionEntity,
+                Damage * scale,
+                IgnoreResistances,
+                interruptsDoAfters: false);
         }
     }
 }

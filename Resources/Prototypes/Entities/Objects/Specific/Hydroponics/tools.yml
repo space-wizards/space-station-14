@@ -16,7 +16,7 @@
     swingLeft: true
     damage:
       types:
-        Slash: 10
+        Slash: 6
   - type: Item
     sprite: Objects/Tools/Hydroponics/hoe.rsi
 
@@ -83,8 +83,8 @@
     swingLeft: true
     damage:
       types:
-        Slash: 10
-        Piercing: 5
+        Slash: 8
+        Piercing: 2
   - type: Item
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
 
@@ -104,8 +104,8 @@
     wideAnimationRotation: 45
     damage:
       types:
-        Blunt: 10
-        Piercing: 5 # I guess you can stab it into them?
+        Blunt: 8
+        Piercing: 2 # I guess you can stab it into them?
   - type: Item
     sprite: Objects/Tools/Hydroponics/spade.rsi
   - type: Shovel

@@ -86,7 +86,6 @@ namespace Content.Server.Kitchen.EntitySystems
 
             SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentStartup>(OnCookStart);
             SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentShutdown>(OnCookStop);
-            SubscribeLocalEvent<ActiveMicrowaveComponent, EntityUnpausedEvent>(OnEntityUnpaused);
             SubscribeLocalEvent<ActiveMicrowaveComponent, EntInsertedIntoContainerMessage>(OnActiveMicrowaveInsert);
             SubscribeLocalEvent<ActiveMicrowaveComponent, EntRemovedFromContainerMessage>(OnActiveMicrowaveRemove);
 
@@ -110,16 +109,6 @@ namespace Content.Server.Kitchen.EntitySystems
 
             SetAppearance(ent.Owner, MicrowaveVisualState.Idle, microwaveComponent);
             microwaveComponent.PlayingStream = _audio.Stop(microwaveComponent.PlayingStream);
-
-            foreach (var solid in microwaveComponent.Storage.ContainedEntities)
-            {
-                RemComp<ActivelyMicrowavedComponent>(solid);
-            }
-        }
-
-        private void OnEntityUnpaused(Entity<ActiveMicrowaveComponent> ent, ref EntityUnpausedEvent args)
-        {
-            ent.Comp.MalfunctionTime += args.PausedTime;
         }
 
         private void OnActiveMicrowaveInsert(Entity<ActiveMicrowaveComponent> ent, ref EntInsertedIntoContainerMessage args)
@@ -332,7 +321,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             ent.Comp.Broken = true;
             SetAppearance(ent, MicrowaveVisualState.Broken, ent.Comp);
-            RemComp<ActiveMicrowaveComponent>(ent);
+            StopCooking(ent);
             _container.EmptyContainer(ent.Comp.Storage);
             UpdateUserInterfaceState(ent, ent.Comp);
         }
@@ -342,7 +331,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!args.Powered)
             {
                 SetAppearance(ent, MicrowaveVisualState.Idle, ent.Comp);
-                RemComp<ActiveMicrowaveComponent>(ent);
+                StopCooking(ent);
             }
             UpdateUserInterfaceState(ent, ent.Comp);
         }
@@ -374,7 +363,8 @@ namespace Content.Server.Kitchen.EntitySystems
                 GetNetEntityArray(component.Storage.ContainedEntities.ToArray()),
                 HasComp<ActiveMicrowaveComponent>(uid),
                 component.CurrentCookTimeButtonIndex,
-                component.CurrentCookTimerTime
+                component.CurrentCookTimerTime,
+                component.CurrentCookTimeEnd
             ));
         }
 
@@ -497,9 +487,19 @@ namespace Content.Server.Kitchen.EntitySystems
             activeComp.CookTimeRemaining = component.CurrentCookTimerTime * component.CookTimeMultiplier;
             activeComp.TotalTime = component.CurrentCookTimerTime; //this doesn't scale so that we can have the "actual" time
             activeComp.PortionedRecipe = portionedRecipe;
+            component.CurrentCookTimeEnd = _gameTiming.CurTime + TimeSpan.FromSeconds(component.CurrentCookTimerTime);
             if (malfunctioning)
                 activeComp.MalfunctionTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.MalfunctionInterval);
             UpdateUserInterfaceState(uid, component);
+        }
+
+        private void StopCooking(Entity<MicrowaveComponent> ent)
+        {
+            RemCompDeferred<ActiveMicrowaveComponent>(ent);
+            foreach (var solid in ent.Comp.Storage.ContainedEntities)
+            {
+                RemCompDeferred<ActivelyMicrowavedComponent>(solid);
+            }
         }
 
         public static (FoodRecipePrototype, int) CanSatisfyRecipe(MicrowaveComponent component, FoodRecipePrototype recipe, Dictionary<string, int> solids, Dictionary<string, FixedPoint2> reagents)
@@ -553,7 +553,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 active.CookTimeRemaining -= frameTime;
 
-                RollMalfunction((uid, active,microwave));
+                RollMalfunction((uid, active, microwave));
 
                 //check if there's still cook time left
                 if (active.CookTimeRemaining > 0)
@@ -564,11 +564,6 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 //this means the microwave has finished cooking.
                 AddTemperature(microwave, Math.Max(frameTime + active.CookTimeRemaining, 0)); //Though there's still a little bit more heat to pump out
-
-                foreach (var solid in microwave.Storage.ContainedEntities)
-                {
-                    EntityManager.RemoveComponentDeferred<ActivelyMicrowavedComponent>(solid);
-                }
 
                 if (active.PortionedRecipe.Item1 != null)
                 {
@@ -581,9 +576,10 @@ namespace Content.Server.Kitchen.EntitySystems
                 }
 
                 _container.EmptyContainer(microwave.Storage);
+                microwave.CurrentCookTimeEnd = TimeSpan.Zero;
                 UpdateUserInterfaceState(uid, microwave);
-                EntityManager.RemoveComponentDeferred<ActiveMicrowaveComponent>(uid);
                 _audio.PlayPvs(microwave.FoodDoneSound, uid);
+                StopCooking((uid, microwave));
             }
         }
 
@@ -618,6 +614,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             ent.Comp.CurrentCookTimeButtonIndex = args.ButtonIndex;
             ent.Comp.CurrentCookTimerTime = args.NewCookTime;
+            ent.Comp.CurrentCookTimeEnd = TimeSpan.Zero;
             _audio.PlayPvs(ent.Comp.ClickSound, ent, AudioParams.Default.WithVolume(-2));
             UpdateUserInterfaceState(ent, ent.Comp);
         }

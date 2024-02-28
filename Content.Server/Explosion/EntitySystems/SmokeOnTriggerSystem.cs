@@ -1,4 +1,5 @@
-using Content.Server.Explosion.Components;
+using Content.Shared.Explosion.Components;
+using Content.Shared.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Coordinates.Helpers;
@@ -10,7 +11,7 @@ namespace Content.Server.Explosion.EntitySystems;
 /// <summary>
 /// Handles creating smoke when <see cref="SmokeOnTriggerComponent"/> is triggered.
 /// </summary>
-public sealed class SmokeOnTriggerSystem : EntitySystem
+public sealed class SmokeOnTriggerSystem : SharedSmokeOnTriggerSystem
 {
     [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly SmokeSystem _smoke = default!;

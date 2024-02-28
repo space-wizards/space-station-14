@@ -13,7 +13,7 @@ public sealed class AdminMessageEui : BaseEui
     [Dependency] private readonly IAdminNotesManager _notesMan = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     private readonly float _closeWait;
-    private AdminMessage? _message;
+    private AdminMessageRecord? _message;
     private DateTime _startTime;
 
     public AdminMessageEui()
@@ -22,7 +22,7 @@ public sealed class AdminMessageEui : BaseEui
         _closeWait = _cfg.GetCVar(CCVars.MessageWaitTime);
     }
 
-    public void SetMessage(AdminMessage message)
+    public void SetMessage(AdminMessageRecord message)
     {
         _message = message;
         _startTime = DateTime.UtcNow;
@@ -37,7 +37,7 @@ public sealed class AdminMessageEui : BaseEui
             _closeWait,
             _message.Message,
             _message.CreatedBy?.LastSeenUserName ?? "[System]",
-            _message.CreatedAt
+            _message.CreatedAt.UtcDateTime
         );
     }
 

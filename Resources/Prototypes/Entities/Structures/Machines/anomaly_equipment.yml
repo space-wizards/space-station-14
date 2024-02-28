@@ -140,7 +140,7 @@
     - state: locked
       shader: unshaded
       visible: false
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
   - type: Transform
     noRot: false
   - type: Fixtures
@@ -203,6 +203,7 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+  - type: LockVisuals
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -296,6 +297,7 @@
         acts: ["Breakage"]
   - type: ActivatableUI
     key: enum.AnomalyGeneratorUiKey.Key
+  - type: ActivatableUIRequiresAccess
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
@@ -318,6 +320,8 @@
   - type: WiresVisuals
   - type: StaticPrice
     price: 5000
+  - type: AccessReader
+    access: [["Research"]]
   - type: GuideHelp
     guides:
     - AnomalousResearch

@@ -64,3 +64,10 @@
   copyright: "Taken from https://github.com/tgstation/tgstation"
   source: "https://github.com/tgstation/tgstation/blob/34d5ab2e46e3fb4dd9d7475f587d33441df9651c/sound/effects"
   
+- files:
+  - spurs1.ogg
+  - spurs2.ogg
+  - spurs3.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/tree/1e8d511946d194f92f744f5f957a7c41683d84a6/sound/effects/footstep"

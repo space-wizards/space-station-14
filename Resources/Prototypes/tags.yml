@@ -248,11 +248,38 @@
   id: Carpet
 
 - type: Tag
+  id: CarpetBlack
+
+- type: Tag
+  id: CarpetBlue
+
+- type: Tag
+  id: CarpetCyan
+
+- type: Tag
+  id: CarpetGreen
+
+- type: Tag
+  id: CarpetOrange
+  
+- type: Tag
+  id: CarpetPurple
+
+- type: Tag
+  id: CarpetPink
+  
+- type: Tag
+  id: CarpetRed
+  
+- type: Tag
+  id: CarpetWhite
+
+- type: Tag
   id: CanPilot
 
 - type: Tag
   id: CannonBall
-  
+
 - type: Tag
   id: CannonRestrict
 
@@ -468,9 +495,6 @@
   id: DrinkBottle
 
 - type: Tag
-  id: DroneUsable
-
-- type: Tag
   id: Duck
 
 - type: Tag
@@ -630,6 +654,9 @@
   id: HidesHair # for headwear.
 
 - type: Tag
+  id: HidesNose # for non-standard noses.
+
+- type: Tag
   id: HighRiskItem
 
 - type: Tag
@@ -687,9 +714,6 @@
   id: IntercomElectronics
 
 - type: Tag
-  id: JanicartKeys
-
-- type: Tag
   id: JawsOfLife
 
 - type: Tag
@@ -715,9 +739,6 @@
 
 - type: Tag
   id: Lemon
-
-- type: Tag
-  id: LightReplacer
 
 - type: Tag
   id: Lime
@@ -854,10 +875,10 @@
   id: Packet
 
 - type: Tag
-  id: Payload # for grenade/bomb crafting
+  id: Paper
 
 - type: Tag
-  id: PaintableAirlock
+  id: Payload # for grenade/bomb crafting
 
 - type: Tag
   id: Pancake
@@ -1023,9 +1044,6 @@
   id: ShellShotgun
 
 - type: Tag
-  id: PelletShotgunFlare
-
-- type: Tag
   id: Shiv
 
 - type: Tag
@@ -1060,6 +1078,9 @@
 
 - type: Tag
   id: Soup
+
+- type: Tag
+  id: SpookyFog
 
 - type: Tag
   id: Spray
@@ -1152,9 +1173,6 @@
   id: UraniumGlassShard
 
 - type: Tag
-  id: VehicleKey
-
-- type: Tag
   id: VimPilot
 
 - type: Tag
@@ -1173,6 +1191,9 @@
   id: WallmountSubstationElectronics
 
 - type: Tag
+  id: WeaponAntiqueLaser
+
+- type: Tag
   id: WeaponPistolCHIMPUpgradeKit
 
 - type: Tag
@@ -1180,6 +1201,9 @@
 
 - type: Tag
   id: WetFloorSign
+
+- type: Tag
+  id: Wheat
 
 - type: Tag
   id: WhitelistChameleon
