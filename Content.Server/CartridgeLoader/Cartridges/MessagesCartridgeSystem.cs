@@ -180,28 +180,36 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
         string name = GetName(component, message.SenderId);
 
-        var wrappedMessage = Loc.GetString("chat-radio-message-wrap",
-            ("color", Color.White),
-            ("fontType", "Default"),
-            ("fontSize", 12),
-            ("verb", "sends"),
-            ("channel", "[PDA]"),
-            ("name", name),
-            ("message", message.Content));
+        //var wrappedMessage = Loc.GetString("chat-radio-message-wrap",
+        //    ("color", Color.White),
+        //    ("fontType", "Default"),
+        //    ("fontSize", 12),
+        //    ("verb", "sends"),
+        //    ("channel", "[PDA]"),
+        //    ("name", name),
+        //    ("message", message.Content));
 
-        var chat = new ChatMessage(
-            ChatChannel.Radio,
-            message.Content,
-            wrappedMessage,
-            NetEntity.Invalid,
-            null);
+        //var chat = new ChatMessage(
+        //    ChatChannel.Radio,
+        //    message.Content,
+        //    wrappedMessage,
+        //    NetEntity.Invalid,
+        //    null);
 
-        var chatMsg = new MsgChatMessage { Message = chat };
+        var subtitleString=Loc.GetString("messages-pda-notification-header");
 
-        if (TryComp(Transform(pdaUid).ParentUid, out ActorComponent? actor))
-            _netMan.ServerSendMessage(chatMsg, actor.PlayerSession.Channel);
-        if (TryComp(pdaUid, out RingerComponent? ringer))
-            _ringer.RingerPlayRingtone(pdaUid, ringer);
+        _cartridgeLoaderSystem.SendNotification(
+            pdaUid,
+            $"{name} {subtitleString} ",
+            message.Content);
+
+        //var chatMsg = new MsgChatMessage { Message = chat };
+
+        //if (_containerSystem.TryGetContainingContainer(ent, out var container)
+        //        && TryComp<ActorComponent>(container.Owner, out var actor))
+        //    _netMan.ServerSendMessage(chatMsg, actor.PlayerSession.Channel);
+        //if (TryComp(pdaUid, out RingerComponent? ringer))
+        //    _ringer.RingerPlayRingtone(pdaUid);
 
 
         if (TryComp(pdaUid, out CartridgeLoaderComponent? loaderComponent))

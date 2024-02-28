@@ -75,7 +75,7 @@
       - CrewManifestCartridge
       - NotekeeperCartridge
       - MessagesCartridge
-      - NewsReadCartridge
+      - NewsReaderCartridge
     cartridgeSlot:
       priority: -1
       name: device-pda-slot-component-slot-name-cartridge
@@ -671,7 +671,7 @@
       - CrewManifestCartridge
       - NotekeeperCartridge
       - MessagesCartridge
-      - NewsReadCartridge
+      - NewsReaderCartridge
       - LogProbeCartridge
 
 - type: entity
