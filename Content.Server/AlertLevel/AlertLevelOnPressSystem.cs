@@ -1,5 +1,5 @@
 using Content.Shared.Interaction;
-using Content.Shared.ChangeAlertLevel;
+using Content.Shared.AlertLevelOnPress;
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
@@ -23,8 +23,9 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using JetBrains.FormatRipper.Elf;
+using Content.Server.DeviceLinking.Systems;
 
-namespace Content.Server.ChangeAlertLevel;
+namespace Content.Server.AlertLevelOnPress;
 
 public sealed class AlertLevelOnPressSystem : EntitySystem
 {
@@ -37,10 +38,10 @@ public sealed class AlertLevelOnPressSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AlertLevelOnPressComponent, ActivateInWorldEvent>(OnButtonPressed);
+        SubscribeLocalEvent<AlertLevelOnPressComponent, SwitchPressedEvent>(OnSwitchPressed);
     }
 
-    private void OnButtonPressed(Entity<AlertLevelOnPressComponent> ent, ref ActivateInWorldEvent args)
+    private void OnSwitchPressed(Entity<AlertLevelOnPressComponent> ent, ref ActivateInWorldEvent args)
     {
         if (_station.GetStationInMap(Transform(ent).MapID) is { } station)
             _alertLevel.SetLevel(station, ent.Comp.AlertLevelOnActivate, true, announce: true, force: false, locked: false);

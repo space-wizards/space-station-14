@@ -38,8 +38,18 @@ public sealed class SignalSwitchSystem : EntitySystem
             _deviceLink.SendSignal(uid, comp.StatusPort, comp.State);
         }
 
+        RaiseLocalEvent(uid, new SwitchPressedEvent());
+
         _audio.PlayPvs(comp.ClickSound, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
 
         args.Handled = true;
+    }
+}
+
+// Event to inform any other systems that may want to know that the signal switch was pressed
+public sealed class SwitchPressedEvent : EntityEventArgs
+{
+    public SwitchPressedEvent()
+    {
     }
 }

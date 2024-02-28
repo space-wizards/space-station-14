@@ -512,10 +512,9 @@
 # big red button
 - type: entity
   id: BigRedButton
+  parent: SignalButton
   name: big red button
   description: Press it... if you dare.
-  placement:
-    mode: SnapgridCenter
   noSpawn: true
   components:
   - type: Appearance
@@ -529,40 +528,8 @@
     - state: base
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    canCollide: false
-  - type: SignalSwitch
-  - type: UseDelay
-    delay: 0.5 # prevent light-toggling auto-clickers.
-  - type: Rotatable
-  - type: Construction
-    graph: SignalSwitchGraph
-    node: SignalSwitchNode
-  - type: Fixtures
-  - type: DeviceNetwork
-    deviceNetId: Wireless
   - type: WirelessNetworkConnection
-    range: 500
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: DeviceLinkSource
-    ports:
-    - On
-    - Off
-    - Status
-    lastSignals:
-      Status: false
+    range: 1000
 
 - type: entity
   id: BigRedButtonCaptain
@@ -805,11 +772,10 @@
     access: [["Atmospherics"]]
 
 - type: entity
-  id: BigRedButtonEmergency
+  id: BigRedButtonEmergencyCommand
+  parent: BigRedButton
   name: emergency button
   description: Sets the alert level of the station to Code Red. Be careful!
-  placement:
-    mode: SnapgridCenter
   components:
   - type: Sprite
     drawdepth: SmallObjects
@@ -818,23 +784,11 @@
     - state: emergency
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
-  - type: UseDelay
-    delay: 0.5 # prevent light-toggling auto-clickers.
   - type: ChangeAlertLevel
     alertLevelOnActivate: red
     textField: An emergency button was pressed. The station has been set to Alert Level Red.
   - type: AccessReader
     access: [["Command"]]
-  - type: Appearance
-  - type: Lock
-  - type: LockVisuals
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    canCollide: false
-  - type: UseDelay
-    delay: 0.5 # prevent light-toggling auto-clickers.
-  - type: Rotatable
 
 # button frames
 
