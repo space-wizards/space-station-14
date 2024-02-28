@@ -3,15 +3,16 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.ChangeAlertLevel
 {
-    public partial class SharedChangeAlertLevelComponent : Component
+    [RegisterComponent]
+    public partial class ChangeAlertLevelComponent : Component
     {
-        [ViewVariables(VVAccess.ReadWrite), DataField(required: true)]
+        [DataField(required: true)]
         public string AlertLevelOnActivate = default!;
 
-        [ViewVariables(VVAccess.ReadWrite), DataField(required: true)]
+        [DataField(required: true)]
         public string TextField = default!;
 
-        [ViewVariables(VVAccess.ReadWrite), DataField]
+        [DataField]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
     }
 }
