@@ -36,7 +36,6 @@ namespace Content.Client.Preferences.UI
         private readonly IClientPreferencesManager _preferencesManager;
         private readonly IEntityManager _entityManager;
         private readonly IPrototypeManager _prototypeManager;
-        private readonly IConfigurationManager _configurationManager;
         private readonly Button _createNewCharacterButton;
         private readonly HumanoidProfileEditor _humanoidProfileEditor;
 
@@ -51,7 +50,6 @@ namespace Content.Client.Preferences.UI
             _entityManager = entityManager;
             _prototypeManager = prototypeManager;
             _preferencesManager = preferencesManager;
-            _configurationManager = configurationManager;
 
             var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var back = new StyleBoxTexture

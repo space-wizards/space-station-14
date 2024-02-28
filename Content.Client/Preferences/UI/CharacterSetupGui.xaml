@@ -40,7 +40,7 @@
                         <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
                     </PanelContainer.PanelOverride>
                 </PanelContainer>
-                <BoxContainer Name="CharEditor" />
+                <BoxContainer Name="CharEditor" HorizontalExpand="True" />
             </BoxContainer>
         </BoxContainer>
     </Control>
