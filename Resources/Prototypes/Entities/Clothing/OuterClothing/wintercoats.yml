@@ -520,3 +520,14 @@
           Quantity: 20
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterWeb
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: FrostCoat
+  name: Frosty Winter Coat
+  description: A delicate, precisely made winter coat with a small label that says "Frostbite-Drago", it seems to be covered in a light layer of frost.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/frostcoat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/frostcoat.rsi
