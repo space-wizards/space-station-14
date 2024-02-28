@@ -51,6 +51,7 @@
     resistance: 2
   - type: InteractionPopup
     interactSuccessString: comp-wall-click
+    messagePerceivedByOthers: comp-wall-click-others
 
 - type: entity
   parent: BaseWall
