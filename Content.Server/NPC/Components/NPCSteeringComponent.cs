@@ -45,9 +45,6 @@ public sealed partial class NPCSteeringComponent : Component
     [DataField("forceMove")]
     public bool ForceMove = false;
 
-    [DataField("lastSteerIndex")]
-    public int LastSteerIndex = -1;
-
     [DataField("lastSteerDirection")]
     public Vector2 LastSteerDirection = Vector2.Zero;
 

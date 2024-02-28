@@ -386,7 +386,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         }
 
         steering.LastSteerDirection = resultDirection;
-        steering.LastSteerIndex = desiredDirection;
         DebugTools.Assert(!float.IsNaN(resultDirection.X));
         SetDirection(mover, steering, resultDirection, false);
     }
