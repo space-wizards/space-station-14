@@ -49,6 +49,8 @@
     price: 75
   - type: RadiationBlocker
     resistance: 2
+  - type: InteractionPopup
+    interactSuccessString: comp-wall-click
 
 - type: entity
   parent: BaseWall
