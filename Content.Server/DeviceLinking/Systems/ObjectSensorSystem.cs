@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
@@ -20,6 +21,7 @@ public sealed class ObjectSensorSystem : EntitySystem
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
@@ -118,17 +120,18 @@ public sealed class ObjectSensorSystem : EntitySystem
             switch (component.Mode)
             {
                 case ObjectSensorMode.Living:
-                    if (TryComp(ent, out MobStateComponent? mobState)
-                        && mobState is { CurrentState: MobState.Alive })
+                    if (_mobState.IsAlive(ent))
                         total++;
                     break;
                 case ObjectSensorMode.Items:
-                    if (TryComp(ent, out ItemComponent? _))
+                    if (HasComp<ItemComponent>(ent))
                         total++;
                     break;
                 case ObjectSensorMode.All:
                     total++;
                     break;
+                default:
+                    throw new NotImplementedException();
             }
         }
 

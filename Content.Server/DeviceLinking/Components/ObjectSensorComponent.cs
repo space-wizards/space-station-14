@@ -27,13 +27,13 @@ public sealed partial class ObjectSensorComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<ToolQualityPrototype> CycleQuality = "Screwing";
 
-    [ViewVariables]
-    public int Contacting = 0;
+    [DataField]
+    public int Contacting;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ObjectSensorMode Mode = ObjectSensorMode.Living;
 
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier CycleSound = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
 }
 
