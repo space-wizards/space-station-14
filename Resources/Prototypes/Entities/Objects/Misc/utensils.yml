@@ -23,8 +23,8 @@
     price: 0
   - type: Tag
     tags:
-     - Plastic
-     - Trash
+    - Plastic
+    - Trash
 
 - type: entity
   parent: UtensilBase
@@ -66,6 +66,9 @@
   name: spoon
   description: There is no spoon.
   components:
+  - type: Tag
+    tags:
+    - Metal
   - type: Sprite
     state: spoon
   - type: Item
