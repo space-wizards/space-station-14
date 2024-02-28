@@ -5,6 +5,8 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using System.Linq;
+using System.Text;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 
 namespace Content.Client.PlantAnalyzer.UI;
@@ -60,32 +62,45 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
 
         PlantName.Text = Loc.GetString("plant-analyzer-window-label-name-scanned-seed", ("seedName", msg.SeedName));
         if (msg.IsTray) PlantName.Text = Loc.GetString("plant-analyzer-window-label-name-scanned-plant", ("seedName", msg.SeedName));
-
         // Basics
-        Yield.Text = Loc.GetString("plant-analyzer-plant-yield-text", ("seedYield", msg.SeedYield));
+        PlantYield.Text = Loc.GetString("plant-analyzer-plant-yield-text", ("seedYield", msg.SeedYield));
         Potency.Text = Loc.GetString("plant-analyzer-plant-potency-text", ("seedPotency", msg.SeedPotency));
-        Repeat.Text = Loc.GetString("plant-analyzer-plant-harvest-text", ("plantHarvestType", msg.Repeat));
+        switch (msg.HarvestType)
+        {
+            case "Repeat":
+                Repeat.Text = Loc.GetString("plant-analyzer-plant-harvest-text", ("plantHarvestType", Loc.GetString("plant-analyzer-harvest-repeat")));
+                break;
+            case "NoRepeat":
+                Repeat.Text = Loc.GetString("plant-analyzer-plant-harvest-text", ("plantHarvestType", Loc.GetString("plant-analyzer-harvest-ephemeral")));
+                break;
+            case "SelfHarvest":
+                Repeat.Text = Loc.GetString("plant-analyzer-plant-harvest-text", ("plantHarvestType", Loc.GetString("plant-analyzer-harvest-autoharvest")));
+                break;
+            default:
+                Repeat.Text = Loc.GetString("plant-analyzer-plant-harvest-text", ("plantHarvestType", ""));
+                break;
+        }
         Endurance.Text = Loc.GetString("plant-analyzer-plant-endurance-text", ("seedEndurance", msg.Endurance));
         Chemicals.Text = Loc.GetString("plant-analyzer-plant-chemistry-text", ("seedChem", msg.SeedChem));
-        Gases.Text = Loc.GetString("plant-analyzer-plant-exude-text", ("exudeGases", msg.ExudeGases));
+        Gases.Text = Loc.GetString("plant-analyzer-plant-exude-text", ("exudeGases", msg.ExudeGases == "" ? Loc.GetString("plant-analyzer-plant-gasses-no") : msg.ExudeGases));
         Lifespan.Text = Loc.GetString("plant-analyzer-plant-lifespan-text", ("lifespan", msg.Lifespan));
         Maturation.Text = Loc.GetString("plant-analyzer-plant-maturation-text", ("maturation", msg.Maturation));
         GrowthStages.Text = Loc.GetString("plant-analyzer-plant-growthstages-text", ("growthStages", msg.GrowthStages));
         // Tolerances
-        NutrientUsage.Text = Loc.GetString("plant-analyzer-tolerance-nutrientusage", ("nutrientUsage", msg.NutrientConsumption));
-        WaterUsage.Text = Loc.GetString("plant-analyzer-tolerance-waterusage", ("waterUsage", msg.WaterConsumption));
-        IdealHeat.Text = Loc.GetString("plant-analyzer-tolerance-idealheat", ("idealHeat", msg.IdealHeat));
-        HeatTolerance.Text = Loc.GetString("plant-analyzer-tolerance-heattoler", ("heatTolerance", msg.HeatTolerance));
-        IdealLight.Text = Loc.GetString("plant-analyzer-tolerance-ideallight", ("idealLight", msg.IdealLight));
-        LightTolerance.Text = Loc.GetString("plant-analyzer-tolerance-lighttoler", ("lighttolerance", msg.LightTolerance));
-        ToxinsTolerance.Text = Loc.GetString("plant-analyzer-tolerance-toxinstoler", ("toxinsTolerance", msg.ToxinsTolerance));
-        LowPressureTolerance.Text = Loc.GetString("plant-analyzer-tolerance-lowpress", ("lowPressureTolerance", msg.LowPresssureTolerance));
-        HighPressureTolerance.Text = Loc.GetString("plant-analyzer-tolerance-highpress", ("highPressureTolerance", msg.HighPressureTolerance));
-        PestTolerance.Text = Loc.GetString("plant-analyzer-tolerance-pesttoler", ("pestTolerance", msg.PestTolerance));
-        WeedTolerance.Text = Loc.GetString("plant-analyzer-tolerance-weedtoler", ("weedTolerance", msg.WeedTolerance));
+        NutrientUsage.Text = Loc.GetString("plant-analyzer-tolerance-nutrientusage", ("nutrientUsage", msg.NutrientConsumption == 0 ? "-" : msg.NutrientConsumption));
+        WaterUsage.Text = Loc.GetString("plant-analyzer-tolerance-waterusage", ("waterUsage", msg.WaterConsumption == 0 ? "-" : msg.WaterConsumption));
+        IdealHeat.Text = Loc.GetString("plant-analyzer-tolerance-idealheat", ("idealHeat", msg.IdealHeat == 0 ? "-" : msg.IdealHeat));
+        HeatTolerance.Text = Loc.GetString("plant-analyzer-tolerance-heattoler", ("heatTolerance", msg.HeatTolerance == 0 ? "-" : msg.HeatTolerance));
+        IdealLight.Text = Loc.GetString("plant-analyzer-tolerance-ideallight", ("idealLight", msg.IdealLight == 0 ? "-" : msg.IdealLight));
+        LightTolerance.Text = Loc.GetString("plant-analyzer-tolerance-lighttoler", ("lightTolerance", msg.LightTolerance == 0 ? "-" : msg.LightTolerance));
+        ToxinsTolerance.Text = Loc.GetString("plant-analyzer-tolerance-toxinstoler", ("toxinsTolerance", msg.ToxinsTolerance == 0 ? "-" : msg.ToxinsTolerance));
+        LowPressureTolerance.Text = Loc.GetString("plant-analyzer-tolerance-lowpress", ("lowPressureTolerance", msg.LowPressureTolerance == 0 ? "-" : msg.LowPressureTolerance)); ;
+        HighPressureTolerance.Text = Loc.GetString("plant-analyzer-tolerance-highpress", ("highPressureTolerance", msg.HighPressureTolerance == 0 ? "-" : msg.HighPressureTolerance));
+        PestTolerance.Text = Loc.GetString("plant-analyzer-tolerance-pesttoler", ("pestTolerance", msg.PestTolerance == 0 ? "-" : msg.PestTolerance));
+        WeedTolerance.Text = Loc.GetString("plant-analyzer-tolerance-weedtoler", ("weedTolerance", msg.WeedTolerance == 0 ? "-" : msg.WeedTolerance));
         // Misc
-        Traits.Text = Loc.GetString("plant-analyzer-plant-mutations-text", ("traits", msg.SeedMutations));
-        PlantSpeciation.Text = Loc.GetString("plant-analyzer-plant-speciation-text", ("speciation", msg.PlantSpeciation));
+        Traits.Text = Loc.GetString("plant-analyzer-plant-mutations-text", ("traits", msg.MutationsList == null ? "-" : msg.MutationsList));
+        PlantSpeciation.Text = Loc.GetString("plant-analyzer-plant-speciation-text", ("speciation", msg.Speciation == null ? "-" : new StringBuilder("").AppendJoin("\n   ", msg.Speciation.Select(item => item.ToString())).ToString()));
         ExtraInfo.Text = "";
     }
 }

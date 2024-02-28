@@ -18,7 +18,7 @@
         type: PlantAnalyzerBoundUserInterface
   - type: PlantAnalyzer
     scanningEndSound:
-    path: "/Audio/Items/Medical/healthscanner.ogg"
+      path: "/Audio/Items/Medical/healthscanner.ogg"
   - type: Appearance
   - type: GenericVisualizer
     visuals:

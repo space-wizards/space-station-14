@@ -20,7 +20,6 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
         {
             Title = Loc.GetString("plant-analyzer-interface-title"),
         };
-        _window.SetHeight = 350;
         _window.OnClose += Close;
         _window.OpenCenteredLeft();
     }
@@ -32,7 +31,6 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
 
         if (message is not PlantAnalyzerScannedSeedPlantInformation cast)
             return;
-        _window.SetHeight = 500;
         _window.Populate(cast);
     }
 

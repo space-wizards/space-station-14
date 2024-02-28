@@ -6,5 +6,4 @@ namespace Content.Shared.PlantAnalyzer;
 [Serializable, NetSerializable]
 public sealed partial class PlantAnalyzerDoAfterEvent : SimpleDoAfterEvent
 {
-    public CancellationTokenWrapper CancellationTokenWrapper { get; set; }
 }

@@ -3,8 +3,8 @@
    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
    Title="{Loc 'plant-analyzer-interface-title'}"
    MinSize="280 350"
-   SetSize="300 500"
-   Margin="10 10 10 10">
+   SetSize="300 510"
+   Margin="5 5 5 5">
     <!-- Margin="left,top,right,bottom" -->
     <GridContainer Rows="3" Name ="GridCont">
         <BoxContainer Name="Toggle" >
@@ -13,13 +13,13 @@
             <Button Name="OffButton" Text="{Loc 'gravity-generator-window-power-off'}" StyleClasses="OpenLeft" />
         </BoxContainer>
         <BoxContainer Name="Top">
-            <Label Name="NoData" Text="{Loc 'plant-analyzer-window-no-seed-information-text'}" Margin="20 10 10 10" />
-        </BoxContainer>
+            <Label Name="NoData" Text="{Loc 'plant-analyzer-window-no-seed-information-text'}" Margin="20 5 10 5" />
+        </BoxContainer>   
         <TabContainer Name="Tabs" Margin="10 5 10 5" HorizontalExpand="True" VerticalExpand="True">
             <ScrollContainer Name="{Loc 'plant-analyzer-window-tab-basics'}" HorizontalExpand="True" VerticalExpand="True">
                 <BoxContainer Orientation="Vertical" Margin="10 0 0 0" HorizontalExpand="True" VerticalExpand="True" >
                     <Label Name="PlantName" Margin="0 5 0 5"/>
-                    <Label Name="Yield" Margin="0 5 0 5"/>
+                    <Label Name="PlantYield" Margin="0 5 0 5"/>
                     <Label Name="Potency" Margin="0 5 0 5"/>
                     <Label Name="Repeat" Margin="0 5 0 5"/>
                     <Label Name="Chemicals" Margin="0 5 0 5"/>
@@ -27,6 +27,7 @@
                     <Label Name="Lifespan" Margin="0 5 0 5" />
                     <Label Name="Maturation" Margin="0 5 0 5" />
                     <Label Name="GrowthStages" Margin="0 5 0 5" />
+                    <Label Name="Endurance" Margin="0 5 0 5"/>
                 </BoxContainer>
             </ScrollContainer>
             <ScrollContainer Name="{Loc 'plant-analyzer-window-tab-tolerances'}" HorizontalExpand="True" VerticalExpand="True">
@@ -48,7 +49,6 @@
                 <BoxContainer Orientation="Vertical" Margin="10 0 0 0" HorizontalExpand="True" VerticalExpand="True">
                     <Label Name="PlantSpeciation" Margin="0 5 0 5"/>
                     <Label Name="Traits" Margin="0 5 0 5"/>
-                    <Label Name="Endurance" Margin="0 5 0 5"/>
                     <Label Name="ExtraInfo" Margin="0 5 0 5"/>
                 </BoxContainer>
             </ScrollContainer>

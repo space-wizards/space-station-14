@@ -3,92 +3,78 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.PlantAnalyzer;
 
 /// <summary>
-///     The information about the last scanned plant/seed is stored here
+///     The information about the last scanned plant/seed is stored here.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfaceMessage
 {
     public readonly NetEntity? TargetEntity;
+    public bool ScanMode;
+    public bool IsTray;
 
     public string SeedName;
-    public string Endurance;
-    public string SeedYield;
-    public string Lifespan;
-    public string Maturation;
-    public string GrowthStages;
-    public string SeedPotency;
-    public string Repeat;
     public string SeedChem;
-    public string SeedMutations;
-    public string PlantSpeciation;
+    public string HarvestType;
     public string ExudeGases;
-    public Boolean IsTray;
-    public Boolean ScanMode;
+    public float Endurance;
+    public float SeedYield;
+    public float Lifespan;
+    public float Maturation;
+    public float GrowthStages;
+    public float SeedPotency;
+    public float NutrientConsumption;
+    public float WaterConsumption;
+    public float IdealHeat;
+    public float HeatTolerance;
+    public float IdealLight;
+    public float LightTolerance;
+    public float ToxinsTolerance;
+    public float LowPressureTolerance;
+    public float HighPressureTolerance;
+    public float PestTolerance;
+    public float WeedTolerance;
 
-    public string NutrientConsumption;
-    public string WaterConsumption;
-    public string IdealHeat;
-    public string HeatTolerance;
-    public string IdealLight;
-    public string LightTolerance;
-    public string ToxinsTolerance;
-    public string LowPresssureTolerance;
-    public string HighPressureTolerance;
-    public string PestTolerance;
-    public string WeedTolerance;
+    public string? MutationsList;
+    public List<string>? Speciation;
 
-    public PlantAnalyzerScannedSeedPlantInformation(NetEntity? targetEntit, string seedName, string seedChem, string plantHarvestType,
-        string exudeGases, List<string> mutationsList, Boolean isTray, List<string> tolerancesList, List<string> generalTraitsList, Boolean scanMode)
+    public PlantAnalyzerScannedSeedPlantInformation(NetEntity? targetEntity, bool scanMode, bool isTray,
+        string seedName, string seedChem, string harvestType, string exudeGases, float endurance,
+        float seedYield, float lifespan, float maturation, float growthStages, float seedPotency,
+        float nutrientConsumption, float waterConsumption, float idealHeat, float heatTolerance,
+        float idealLight, float lightTolerance, float toxinsTolerance, float lowPressureTolerance,
+        float highPressureTolerance, float pestTolerance, float weedTolerance, string? mutationsList, List<string>? speciation)
     {
-        TargetEntity = targetEntit;
+        TargetEntity = targetEntity;
         ScanMode = scanMode;
+        IsTray = isTray;
 
         SeedName = seedName;
         SeedChem = seedChem;
-        Repeat = plantHarvestType;
+        HarvestType = harvestType;
         ExudeGases = exudeGases;
-
-        IsTray = isTray;
-
-        //SeedName = generalTraitsList[0];
-        Endurance = generalTraitsList[1];
-        SeedYield = generalTraitsList[2];
-        Lifespan = generalTraitsList[3];
-        Maturation = generalTraitsList[4];
-        GrowthStages = generalTraitsList[5];
-        SeedPotency = generalTraitsList[6];
-
-        NutrientConsumption = "";
-        WaterConsumption = "";
-        IdealHeat = "";
-        HeatTolerance = "";
-        IdealLight = "";
-        LightTolerance = "";
-        ToxinsTolerance = "";
-        LowPresssureTolerance = "";
-        HighPressureTolerance = "";
-        PestTolerance = "";
-        WeedTolerance = "";
-
-        SeedMutations = "";
-        PlantSpeciation = "";
+        Endurance = endurance;
+        SeedYield = seedYield;
+        Lifespan = lifespan;
+        Maturation = maturation;
+        GrowthStages = growthStages;
+        SeedPotency = seedPotency;
 
         if (scanMode)
         {
-            NutrientConsumption = tolerancesList[0];
-            WaterConsumption = tolerancesList[1];
-            IdealHeat = tolerancesList[2];
-            HeatTolerance = tolerancesList[3];
-            IdealLight = tolerancesList[4];
-            LightTolerance = tolerancesList[5];
-            ToxinsTolerance = tolerancesList[6];
-            LowPresssureTolerance = tolerancesList[7];
-            HighPressureTolerance = tolerancesList[8];
-            PestTolerance = tolerancesList[9];
-            WeedTolerance = tolerancesList[10];
+            NutrientConsumption = nutrientConsumption;
+            WaterConsumption = waterConsumption;
+            IdealHeat = idealHeat;
+            HeatTolerance = heatTolerance;
+            IdealLight = idealLight;
+            LightTolerance = lightTolerance;
+            ToxinsTolerance = toxinsTolerance;
+            LowPressureTolerance = lowPressureTolerance;
+            HighPressureTolerance = highPressureTolerance;
+            PestTolerance = pestTolerance;
+            WeedTolerance = weedTolerance;
 
-            SeedMutations = mutationsList[0];
-            PlantSpeciation = mutationsList[1];
+            MutationsList = mutationsList;
+            Speciation = speciation;
         }
     }
 }
