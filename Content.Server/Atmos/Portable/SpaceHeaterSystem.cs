@@ -1,11 +1,11 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
-using Content.Shared.Atmos.Piping.Portable.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Shared.Atmos.Visuals;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Atmos.Piping.Portable.Components;
+using Content.Shared.Atmos.Visuals;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 
@@ -30,10 +30,10 @@ public sealed class SpaceHeaterSystem : EntitySystem
         SubscribeLocalEvent<SpaceHeaterComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<SpaceHeaterComponent, PowerChangedEvent>(OnPowerChanged);
 
-        SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterToggleMessage>(OnToggle);
-        SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterChangeTemperatureMessage>(OnTemperatureChanged);
         SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterChangeModeMessage>(OnModeChanged);
         SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterChangePowerLevelMessage>(OnPowerLevelChanged);
+        SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterChangeTemperatureMessage>(OnTemperatureChanged);
+        SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterToggleMessage>(OnToggle);
     }
 
     private void OnInit(EntityUid uid, SpaceHeaterComponent spaceHeater, MapInitEvent args)
@@ -66,23 +66,9 @@ public sealed class SpaceHeaterSystem : EntitySystem
             return;
         }
 
-        // First get the heat direction of the thermomachine (if any) and update appeareance accordingly
-        if (thermoMachine.LastEnergyDelta > 0)
-        {
-            spaceHeater.State = SpaceHeaterState.Heating;
-        }
-        else if (thermoMachine.LastEnergyDelta < 0)
-        {
-            spaceHeater.State = SpaceHeaterState.Cooling;
-        }
-        else
-        {
-            spaceHeater.State = SpaceHeaterState.StandBy;
-        }
+        UpdateAppearance(uid);
 
-        UpdateAppearance(uid, spaceHeater.State);
-
-        // Then, if in automatic temperature mode, check if we need to adjust the heat exchange direction
+        // If in automatic temperature mode, check if we need to adjust the heat exchange direction
         if (spaceHeater.Mode == SpaceHeaterMode.Auto)
         {
             var environment = _atmosphereSystem.GetContainingMixture(uid);
@@ -102,7 +88,7 @@ public sealed class SpaceHeaterSystem : EntitySystem
 
     private void OnPowerChanged(EntityUid uid, SpaceHeaterComponent spaceHeater, ref PowerChangedEvent args)
     {
-        UpdateAppearance(uid, spaceHeater.State);
+        UpdateAppearance(uid);
         DirtyUI(uid, spaceHeater);
     }
 
@@ -113,12 +99,8 @@ public sealed class SpaceHeaterSystem : EntitySystem
             return;
 
         _power.TogglePower(uid);
-        if (powerReceiver.PowerDisabled)
-            spaceHeater.State = SpaceHeaterState.Off;
-        else
-            spaceHeater.State = SpaceHeaterState.StandBy;
 
-        UpdateAppearance(uid, spaceHeater.State);
+        UpdateAppearance(uid);
         DirtyUI(uid, spaceHeater);
     }
 
@@ -129,7 +111,7 @@ public sealed class SpaceHeaterSystem : EntitySystem
 
         thermoMachine.TargetTemperature += args.Temperature;
 
-        UpdateAppearance(uid, spaceHeater.State);
+        UpdateAppearance(uid);
         DirtyUI(uid, spaceHeater);
     }
 
@@ -185,14 +167,25 @@ public sealed class SpaceHeaterSystem : EntitySystem
             new SpaceHeaterBoundUserInterfaceState(spaceHeater.MinTemperature, spaceHeater.MaxTemperature, thermoMachine.TargetTemperature, !powerReceiver.PowerDisabled, spaceHeater.Mode, spaceHeater.PowerLevel));
     }
 
-    private void UpdateAppearance(EntityUid uid, SpaceHeaterState state)
+    private void UpdateAppearance(EntityUid uid)
     {
-        if (!_power.IsPowered(uid))
+        if (!_power.IsPowered(uid) || !TryComp<GasThermoMachineComponent>(uid, out var thermoMachine))
         {
             _appearance.SetData(uid, SpaceHeaterVisuals.State, SpaceHeaterState.Off);
             return;
         }
 
-        _appearance.SetData(uid, SpaceHeaterVisuals.State, state);
+        if (thermoMachine.LastEnergyDelta > 0)
+        {
+            _appearance.SetData(uid, SpaceHeaterVisuals.State, SpaceHeaterState.Heating);
+        }
+        else if (thermoMachine.LastEnergyDelta < 0)
+        {
+            _appearance.SetData(uid, SpaceHeaterVisuals.State, SpaceHeaterState.Cooling);
+        }
+        else
+        {
+            _appearance.SetData(uid, SpaceHeaterVisuals.State, SpaceHeaterState.StandBy);
+        }
     }
 }

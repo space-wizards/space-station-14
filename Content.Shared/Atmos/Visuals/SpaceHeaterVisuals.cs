@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Atmos.Visuals;
 
 /// <summary>
-/// Used for the visualizer
+///     Used for the visualizer
 /// </summary>
 [Serializable, NetSerializable]
 public enum SpaceHeaterVisualLayers : byte

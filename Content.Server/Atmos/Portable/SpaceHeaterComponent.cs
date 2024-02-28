@@ -14,12 +14,6 @@ public sealed partial class SpaceHeaterComponent : Component
     public SpaceHeaterMode Mode = SpaceHeaterMode.Auto;
 
     /// <summary>
-    ///     The state the space heater is in. Possible values : Off, StandBy, Heating, Cooling
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SpaceHeaterState State = SpaceHeaterState.Off;
-
-    /// <summary>
     ///     The power level the space heater is currently set to. Possible values : Low, Medium, High
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
