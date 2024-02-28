@@ -1,17 +1,6 @@
 ﻿Entries:
 - author: Emisse
   changes:
-  - message: Holoparasite can wideswing, do structural, and won't out you by randomly
-      attacking before it's possessed.
-    type: Tweak
-  - message: Structural damage has been adjusted to allow more weapons to damage sturdier
-      structures.
-    type: Tweak
-  id: 5553
-  time: '2024-01-04T12:03:28.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23515
-- author: Emisse
-  changes:
   - message: Some syndicate implants have been made cheaper.
     type: Tweak
   id: 5554
@@ -3841,3 +3830,11 @@
   id: 6052
   time: '2024-02-28T22:02:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25647
+- author: c4llv07e
+  changes:
+  - message: Cryo won't remove you from the new body if you chose a new ghost role
+      before cryo deleted your old body.
+    type: Fix
+  id: 6053
+  time: '2024-02-28T22:09:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24991
