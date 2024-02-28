@@ -203,12 +203,6 @@
   heatCapacity: 10000
   
 - type: tile
-  id: FloorBrassFilledOnPlating
-  name: tiles-brass-floor-filled-onplate
-  parent: FloorBrassFilled
-  baseTurf: Plating
-  
-- type: tile
   id: FloorBrassReebe
   name: tiles-brass-floor-reebe
   sprite: /Textures/Tiles/Misc/clockwork/reebe.png
@@ -219,12 +213,6 @@
     collection: FootstepHull
   itemDrop: FloorTileItemBrassReebe
   heatCapacity: 10000
-  
-- type: tile
-  id: FloorBrassReebeOnPlating
-  name: tiles-brass-floor-reebe-onplate
-  parent: FloorBrassReebe
-  baseTurf: Plating
 
 - type: tile
   id: FloorPlastic

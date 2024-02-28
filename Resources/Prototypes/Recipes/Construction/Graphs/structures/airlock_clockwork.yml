@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: ClockworkAirlock
+  id: PinionAirlock
   start: start
   graph:
   - node: start
@@ -14,7 +14,7 @@
         doAfter: 2
 
   - node: assembly
-    entity: ClockworkAirlockAssembly
+    entity: PinionAirlockAssembly
     actions:
     - !type:SnapToGrid {}
     - !type:SetAnchor {}
@@ -40,7 +40,7 @@
         doAfter: 3
 
   - node: wired
-    entity: ClockworkAirlockAssembly
+    entity: PinionAirlockAssembly
     edges:
     - to: electronics
       conditions:
@@ -89,7 +89,7 @@
         doAfter: 5
 
   - node: glassElectronics
-    entity: ClockworkAirlockAssemblyGlass
+    entity: PinionAirlockAssemblyGlass
     edges:
     - to: glassAirlock
       conditions:
@@ -116,7 +116,7 @@
 
 ## Glass airlock
   - node: glassAirlock
-    entity: ClockworkAirlockGlass
+    entity: PinionAirlockGlass
     doNotReplaceInheritingEntities: true
     actions:
     - !type:SetWiresPanelSecurity
@@ -141,7 +141,7 @@
 
 ## Standard airlock
   - node: airlock
-    entity: ClockworkAirlock
+    entity: PinionAirlock
     doNotReplaceInheritingEntities: true
     actions:
     - !type:SetWiresPanelSecurity

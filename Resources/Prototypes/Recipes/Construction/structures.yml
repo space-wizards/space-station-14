@@ -1105,8 +1105,8 @@
 
 - type: construction
   name: pinion airlock
-  id: ClockworkAirlock
-  graph: ClockworkAirlock
+  id: PinionAirlock
+  graph: PinionAirlock
   startNode: start
   targetNode: airlock
   category: construction-category-structures
@@ -1122,8 +1122,8 @@
 
 - type: construction
   name: glass pinion airlock
-  id: ClockworkAirlockGlass
-  graph: ClockworkAirlock
+  id: PinionAirlockGlass
+  graph: PinionAirlock
   startNode: start
   targetNode: glassAirlock
   category: construction-category-structures

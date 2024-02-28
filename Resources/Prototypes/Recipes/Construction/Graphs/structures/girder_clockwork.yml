@@ -42,8 +42,6 @@
             - material: Brass
               amount: 2
               doAfter: 1
-            - tool: Screwing
-              doAfter: 1
 
     - node: clockworkWall
       entity: WallClock

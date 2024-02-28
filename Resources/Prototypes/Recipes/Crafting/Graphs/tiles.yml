@@ -37,13 +37,6 @@
   graph:
     - node: start
       edges:
-        - to: brassPlate
-          completed:
-            - !type:SetStackCount
-              amount: 4
-          steps:
-            - material: Brass
-              amount: 1
         - to: filledPlate
           completed:
             - !type:SetStackCount
@@ -58,9 +51,6 @@
           steps:
             - material: Brass
               amount: 1
-    
-    - node: brassPlate
-      entity: FloorTileItemBrass
     
     - node: filledPlate
       entity: FloorTileItemBrassFilled

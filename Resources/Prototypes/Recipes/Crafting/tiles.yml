@@ -21,17 +21,6 @@
   description: "Four pieces of wooden station flooring."
   icon: { sprite: Objects/Tiles/tile.rsi, state: wood }
   objectType: Item
-
-- type: construction
-  name: brass plate
-  id: TileBrassPlate
-  graph: TilesBrass
-  startNode: start
-  targetNode: brassPlate
-  category: construction-category-tiles
-  description: "Four pieces of brass station plating. Can only be placed on lattices."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: brass }
-  objectType: Item
   
 - type: construction
   name: filled brass plate
@@ -40,7 +29,7 @@
   startNode: start
   targetNode: filledPlate
   category: construction-category-tiles
-  description: "Four pieces of brass station flooring."
+  description: "Four pieces of brass station flooring, only compatible with brass plating."
   icon: { sprite: Objects/Tiles/tile.rsi, state: brass-filled }
   objectType: Item
   
@@ -51,7 +40,7 @@
   startNode: start
   targetNode: reebe
   category: construction-category-tiles
-  description: "Four pieces of smooth brass station flooring."
+  description: "Four pieces of smooth brass station flooring, only compatible with brass plating."
   icon: { sprite: Objects/Tiles/tile.rsi, state: reebe }
   objectType: Item
 

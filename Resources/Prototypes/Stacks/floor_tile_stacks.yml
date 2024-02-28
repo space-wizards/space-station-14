@@ -83,13 +83,6 @@
   itemSize: 5
 
 - type: stack
-  id: FloorTileBrassPlate
-  name: brass plate
-  spawn: FloorTileItemBrass
-  maxCount: 30
-  itemSize: 5
-
-- type: stack
   id: FloorTileBrassFilled
   name: filled brass plate
   spawn: FloorTileItemBrassFilled

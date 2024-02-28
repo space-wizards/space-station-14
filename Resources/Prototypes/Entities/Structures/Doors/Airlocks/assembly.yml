@@ -38,7 +38,7 @@
 
 #Clockwork
 - type: entity
-  id: ClockworkAirlockAssembly
+  id: PinionAirlockAssembly
   name: airlock assembly
   parent: AirlockAssembly
   components:
@@ -46,14 +46,14 @@
     sprite: Structures/Doors/Airlocks/Standard/clockwork_pinion.rsi
     state: "assembly"
   - type: Construction
-    graph: ClockworkAirlock
+    graph: PinionAirlock
     node: assembly
   placement:
     mode: SnapgridCenter
 
 - type: entity
-  parent: ClockworkAirlockAssembly
-  id: ClockworkAirlockAssemblyGlass
+  parent: PinionAirlockAssembly
+  id: PinionAirlockAssemblyGlass
   suffix: Clockwork, Glass
   components:
   - type: Sprite
