@@ -18,7 +18,6 @@ public sealed class IgnitionSourceSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<IgnitionSourceComponent, IsHotEvent>(OnIsHot);
-
         SubscribeLocalEvent<ItemToggleHotComponent, ItemToggledEvent>(OnItemToggle);
     }
 
