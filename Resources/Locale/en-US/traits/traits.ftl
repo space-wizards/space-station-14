@@ -27,7 +27,7 @@ trait-pirate-accent-desc = You can't stop speaking like a pirate!
 trait-accentless-name = Accentless
 trait-accentless-desc = You don't have the accent that your species would usually have
 
-trait-accentless-name = Verb Cutoff
+trait-accentless-name = Southern Speakin'
 trait-accentless-desc = Are you wonderin' what this does?
 
 trait-frontal-lisp-name = Frontal Lisp
