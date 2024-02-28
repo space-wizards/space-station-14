@@ -18,12 +18,6 @@ public sealed class LightningSparkingSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<LightningSparkingComponent, HitByLightningEvent>(OnHitByLightning);
-        SubscribeLocalEvent<LightningSparkingComponent, EntityUnpausedEvent>(OnLightningUnpaused);
-    }
-
-    private void OnLightningUnpaused(EntityUid uid, LightningSparkingComponent component, ref EntityUnpausedEvent args)
-    {
-        component.LightningEndTime += args.PausedTime;
     }
 
     private void OnHitByLightning(Entity<LightningSparkingComponent> uid, ref HitByLightningEvent args)

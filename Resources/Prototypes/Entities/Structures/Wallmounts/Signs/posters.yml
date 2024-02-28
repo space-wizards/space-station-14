@@ -590,6 +590,15 @@
   components:
     - type: Sprite
       state: poster62_contraband
+      
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandMissingSpacepen
+  name: "Missing Spacepen"
+  description: "This poster depicts something you will never find."
+  components:
+    - type: Sprite
+      state: poster63_contraband
 
 # Legit
 - type: entity

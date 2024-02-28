@@ -27,16 +27,18 @@ public abstract class SharedRoleSystem : EntitySystem
     private void OnJobGetAllRoles(EntityUid uid, JobComponent component, ref MindGetAllRolesEvent args)
     {
         var name = "game-ticker-unknown-role";
+        var prototype = "";
         string? playTimeTracker = null;
         if (component.Prototype != null && _prototypes.TryIndex(component.Prototype, out JobPrototype? job))
         {
             name = job.Name;
+            prototype = job.ID;
             playTimeTracker = job.PlayTimeTracker;
         }
 
         name = Loc.GetString(name);
 
-        args.Roles.Add(new RoleInfo(component, name, false, playTimeTracker));
+        args.Roles.Add(new RoleInfo(component, name, false, playTimeTracker, prototype));
     }
 
     protected void SubscribeAntagEvents<T>() where T : AntagonistRoleComponent
@@ -44,13 +46,15 @@ public abstract class SharedRoleSystem : EntitySystem
         SubscribeLocalEvent((EntityUid _, T component, ref MindGetAllRolesEvent args) =>
         {
             var name = "game-ticker-unknown-role";
+            var prototype = "";
             if (component.PrototypeId != null && _prototypes.TryIndex(component.PrototypeId, out AntagPrototype? antag))
             {
                 name = antag.Name;
+                prototype = antag.ID;
             }
             name = Loc.GetString(name);
 
-            args.Roles.Add(new RoleInfo(component, name, true, null));
+            args.Roles.Add(new RoleInfo(component, name, true, null, prototype));
         });
 
         SubscribeLocalEvent((EntityUid _, T _, ref MindIsAntagonistEvent args) => args.IsAntagonist = true);

@@ -12,13 +12,6 @@ public sealed class SolutionRegenerationSystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SolutionRegenerationComponent, EntityUnpausedEvent>(OnUnpaused);
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -51,10 +44,5 @@ public sealed class SolutionRegenerationSystem : EntitySystem
                 _solutionContainer.TryAddSolution(regen.Solution.Value, generated);
             }
         }
-    }
-
-    private void OnUnpaused(Entity<SolutionRegenerationComponent> entity, ref EntityUnpausedEvent args)
-    {
-        entity.Comp.NextRegenTime += args.PausedTime;
     }
 }

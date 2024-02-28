@@ -4,6 +4,7 @@ using Content.Server.IgnitionSource;
 using Content.Server.Stunnable;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
+using Content.Server.Damage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -20,6 +21,7 @@ using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.FixedPoint;
 using Robust.Server.Audio;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -73,6 +75,8 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<IgniteOnMeleeHitComponent, MeleeHitEvent>(OnMeleeHit);
 
             SubscribeLocalEvent<ExtinguishOnInteractComponent, ActivateInWorldEvent>(OnExtinguishActivateInWorld);
+
+            SubscribeLocalEvent<IgniteOnHeatDamageComponent, DamageChangedEvent>(OnDamageChanged);
         }
 
         private void OnMeleeHit(EntityUid uid, IgniteOnMeleeHitComponent component, MeleeHitEvent args)
@@ -316,6 +320,31 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             UpdateAppearance(uid, flammable);
+        }
+
+        private void OnDamageChanged(EntityUid uid, IgniteOnHeatDamageComponent component, DamageChangedEvent args)
+        {
+            // Make sure the entity is flammable
+            if (!TryComp<FlammableComponent>(uid, out var flammable))
+                return;
+
+            // Make sure the damage delta isn't null
+            if (args.DamageDelta == null)
+                return;
+
+            // Check if its' taken any heat damage, and give the value
+            if (args.DamageDelta.DamageDict.TryGetValue("Heat", out FixedPoint2 value))
+            {
+                // Make sure the value is greater than the threshold
+                if(value <= component.Threshold)
+                    return;
+
+                // Ignite that sucker
+                flammable.FireStacks += component.FireStacks;
+                Ignite(uid, uid, flammable);
+            }
+
+
         }
 
         public void Resist(EntityUid uid,
