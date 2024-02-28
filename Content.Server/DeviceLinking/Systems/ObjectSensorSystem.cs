@@ -80,6 +80,8 @@ public sealed class ObjectSensorSystem : EntitySystem
     {
         var component = uid.Comp;
 
+        Logger.Debug($"{uid}, {port}, {signal}");
+
         switch (port)
         {
             case 0:
@@ -139,15 +141,14 @@ public sealed class ObjectSensorSystem : EntitySystem
 
         if (component.Contacting > oldTotal)
         {
-            for (var i = oldTotal; i <= (component.Contacting > 4 ? 4 : component.Contacting); i++)
+            for (var i = oldTotal + 1; i <= (component.Contacting > 4 ? 4 : component.Contacting); i++)
             {
-
                 SetOut(uid, i, true);
             }
         }
         else
         {
-            for (var i = oldTotal; i >= component.Contacting; i--)
+            for (var i = oldTotal; i > component.Contacting; i--)
             {
                 SetOut(uid, i, false);
             }
