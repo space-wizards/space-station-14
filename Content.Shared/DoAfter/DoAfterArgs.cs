@@ -94,8 +94,15 @@ public sealed partial class DoAfterArgs
     /// <summary>
     ///     If do_after stops when the user or target moves
     /// </summary>
-    [DataField("breakOnUserMove")]
+    [DataField]
     public bool BreakOnMove;
+
+    /// <summary>
+    ///     Whether to break on movement when the user is weightless.
+    ///     This does nothing if <see cref="BreakOnMove"/> is false.
+    /// </summary>
+    [DataField]
+    public bool BreakOnWeightlessMove = true;
 
     /// <summary>
     ///     Threshold for user and target movement
@@ -238,6 +245,7 @@ public sealed partial class DoAfterArgs
         NeedHand = other.NeedHand;
         BreakOnHandChange = other.BreakOnHandChange;
         BreakOnMove = other.BreakOnMove;
+        BreakOnWeightlessMove = other.BreakOnWeightlessMove;
         MovementThreshold = other.MovementThreshold;
         DistanceThreshold = other.DistanceThreshold;
         BreakOnDamage = other.BreakOnDamage;
