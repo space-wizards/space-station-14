@@ -73,6 +73,26 @@
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-pink
+        - to: CurtainsPurple
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - tag: CarpetPurple
+              doAfter: 1
+              name: purple carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-purple
+        - to: CurtainsRed
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - tag: CarpetRed
+              doAfter: 1
+              name: red carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-red
               
     - node: Curtains
       entity: HospitalCurtains
