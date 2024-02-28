@@ -98,10 +98,10 @@
   description: A ballistic riot shield built for withstanding bullets, but not much else.
   components:
     - type: Sprite
-      sprite: GreyStation/Objects/Weapons/Melee/shields.rsi
+      sprite: GreyStation/Objects/Weapons/Melee/shields.rsi #GreyStation - Resprite
       state: riot_bullet-icon
     - type: Item
-      sprite: GreyStation/Objects/Weapons/Melee/shields.rsi
+      sprite: GreyStation/Objects/Weapons/Melee/shields.rsi #GreyStation - Resprite
       heldPrefix: riot_bullet
     - type: Blocking
       passiveBlockModifier:
