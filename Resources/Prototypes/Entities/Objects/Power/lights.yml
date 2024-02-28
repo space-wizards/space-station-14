@@ -128,6 +128,21 @@
     lightSoftness: 1.1
 
 - type: entity
+  parent: BaseLightbulb
+  name: led light bulb
+  id: LedLightBulb
+  description: A power efficient light bulb.
+  components:
+  - type: LightBulb
+    bulb: Bulb
+    color: "#EEEEFF"
+    lightEnergy: 1
+    lightRadius: 8
+    lightSoftness: 1
+    BurningTemperature: 350 #LEDs are colder than incandescent bulbs
+    PowerUse: 6 #LEDs are more power efficient than incandescent bulbs
+
+- type: entity
   parent: LightBulb
   name: old incandescent light bulb
   id: LightBulbOld
