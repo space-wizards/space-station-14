@@ -54,7 +54,6 @@ public sealed class ChangeAlertLevelSystem : EntitySystem
 
         if (stationUid != null)
             _alertLevel.SetLevel(stationUid.Value, ent.Comp.AlertLevelOnActivate, playsound, announce, force, locked);
-        Dirty(ent.Owner, ent.Comp);
 
         _audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
 
