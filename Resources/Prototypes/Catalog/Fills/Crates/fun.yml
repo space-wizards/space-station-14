@@ -300,6 +300,7 @@
       - id: MrDips
         orGroup: Giftpool
       - id: RevolverCapGun
+      - id: BalloonNT
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
       - id: BeachBall
