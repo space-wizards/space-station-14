@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: The shotgun cartridge dispensers now function like ammo boxes.
-    type: Tweak
-  id: 5550
-  time: '2024-01-04T05:53:45.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23388
 - author: KittenColony
   changes:
   - message: Added backspikes marking to Lizards
@@ -3838,3 +3831,10 @@
   id: 6049
   time: '2024-02-28T21:53:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25333
+- author: Whisper
+  changes:
+  - message: Iron and copper no longer grant infinite blood!
+    type: Fix
+  id: 6050
+  time: '2024-02-28T21:56:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25678
