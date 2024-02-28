@@ -22,10 +22,11 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using JetBrains.FormatRipper.Elf;
 
 namespace Content.Server.ChangeAlertLevel;
 
-public sealed class ChangeAlertLevelSystem : EntitySystem
+public sealed class AlertLevelOnPressSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
@@ -36,27 +37,12 @@ public sealed class ChangeAlertLevelSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChangeAlertLevelComponent, ActivateInWorldEvent>(OnActivated);
+        SubscribeLocalEvent<AlertLevelOnPressComponent, ActivateInWorldEvent>(OnButtonPressed);
     }
 
-    public void OnActivated(Entity<ChangeAlertLevelComponent> ent, ref ActivateInWorldEvent args)
+    private void OnButtonPressed(Entity<AlertLevelOnPressComponent> ent, ref ActivateInWorldEvent args)
     {
-        if (args.Handled)
-            return;
-
-        var buttonXform = Transform(ent.Owner);
-        var stationUid = _station.GetStationInMap(buttonXform.MapID);
-
-        var playsound = true;
-        var announce = true;
-        var force = false;
-        var locked = false;
-
-        if (stationUid != null)
-            _alertLevel.SetLevel(stationUid.Value, ent.Comp.AlertLevelOnActivate, playsound, announce, force, locked);
-
-        _audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
-
-        args.Handled = true;
+        if (_station.GetStationInMap(Transform(ent).MapID) is { } station)
+            _alertLevel.SetLevel(station, ent.Comp.AlertLevelOnActivate, true, announce: true, force: false, locked: false);
     }
 }

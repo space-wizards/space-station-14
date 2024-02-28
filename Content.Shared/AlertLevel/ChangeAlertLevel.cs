@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.ChangeAlertLevel
 {
     [RegisterComponent]
-    public partial class ChangeAlertLevelComponent : Component
+    public partial class AlertLevelOnPressComponent : Component
     {
         [DataField(required: true)]
         public string AlertLevelOnActivate = default!;
