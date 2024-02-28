@@ -7,8 +7,6 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Physics
-    canCollide: false
   - type: Occluder
   - type: AnimationPlayer
   - type: Fixtures
