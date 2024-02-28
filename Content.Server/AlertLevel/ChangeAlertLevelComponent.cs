@@ -8,6 +8,6 @@ namespace Content.Server.ChangeAlertLevel;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(ChangeAlertLevelSystem))]
-public abstract partial class ChangeAlertLevelComponent : SharedChangeAlertLevelComponent
+public partial class ChangeAlertLevelComponent : SharedChangeAlertLevelComponent
 {
 }

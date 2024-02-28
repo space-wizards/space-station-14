@@ -36,10 +36,10 @@ public sealed class ChangeAlertLevelSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChangeAlertLevelComponent, ActivateInWorldEvent>(OnActivated);
+        SubscribeLocalEvent<SharedChangeAlertLevelComponent, ActivateInWorldEvent>(OnActivated);
     }
 
-    public void OnActivated(Entity<ChangeAlertLevelComponent> ent, ActivateInWorldEvent args)
+    public void OnActivated(Entity<SharedChangeAlertLevelComponent> ent, ref ActivateInWorldEvent args)
     {
         if (args.Handled)
             return;

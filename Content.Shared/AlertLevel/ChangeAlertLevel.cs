@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.ChangeAlertLevel
 {
-    public sealed partial class SharedChangeAlertLevelComponent : Component
+    public partial class SharedChangeAlertLevelComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite), DataField(required: true)]
         public string AlertLevelOnActivate = default!;
