@@ -964,6 +964,9 @@
       state: request
     - map: ["computerLayerKeys"]
       state: tech_key
+  - type: Anchorable
+    flags:
+    - Anchorable
   - type: CargoPalletConsole
   - type: ActivatableUI
     key: enum.CargoPalletConsoleUiKey.Sale
