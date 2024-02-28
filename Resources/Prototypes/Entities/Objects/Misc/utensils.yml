@@ -115,3 +115,8 @@
   - type: Utensil
     types:
     - Knife
+  - type: Tag
+    tags:
+    - Plastic
+    - Trash
+    - Knife

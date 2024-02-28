@@ -20,16 +20,12 @@
       item:
         name: clothing-boots-sidearm
         whitelist:
-          components:
-          - Utensil
           tags:
+          - Knife
           - ToySidearm
         blacklist:
-          requireAll: true
           components:
-          - MeleeWeapon
-          tags:
-          - Metal
+          - Sharp
 
 - type: entity
   parent: ClothingShoesClownBase
