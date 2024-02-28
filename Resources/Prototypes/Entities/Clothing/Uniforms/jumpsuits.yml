@@ -1459,3 +1459,47 @@
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLawyerBrown
+  name: brown lawyer suit
+  description: A subtle brown suit with a green tie, worn by lawyers and 90s movie extras.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerbrown.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerbrown.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLawyerGreen
+  name: green lawyer suit
+  description: A faded green suit with a brown tie, worn by lawyers and 90s movie extras.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/lawyergreen.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/lawyergreen.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLawyerBlackStripe
+  name: pinstriped lawyer suit
+  description: A black pinstriped suit with brown buttons, fit for any self-respecting policymaker.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerblackstripes.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerblackstripes.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLawyerBlueStripe
+  name: brown lawyer suit
+  description: A blue pinstriped suit, usually seen on lawyers and bankers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerbluestripes.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerbluestripes.rsi

@@ -3,16 +3,29 @@
   startingInventory:
     ClothingUniformJumpsuitLawyerBlue: 1
     ClothingUniformJumpskirtLawyerBlue: 1
+    ClothingUniformJumpskirtLawyerBlueAltSkirt: 1
     ClothingUniformJumpsuitLawyerPurple: 1
     ClothingUniformJumpskirtLawyerPurple: 1
+    ClothingUniformJumpskirtLawyerPurpleAltSkirt: 1
     ClothingUniformJumpsuitLawyerRed: 1
     ClothingUniformJumpskirtLawyerRed: 1
+    ClothingUniformJumpskirtLawyerRedAltSkirt: 1
     ClothingUniformJumpsuitLawyerBlack: 1
     ClothingUniformJumpskirtLawyerBlack: 1
+    ClothingUniformJumpskirtLawyerBlackAltSkirt: 1
     ClothingUniformJumpsuitLawyerGood: 1
     ClothingUniformJumpskirtLawyerGood: 1
+    ClothingUniformJumpskirtLawyerPantsuit: 1
+    ClothingUniformJumpsuitLawyerBrown: 1
+    ClothingUniformJumpskirtLawyerBrown: 1
+    ClothingUniformJumpskirtLawyerBrownAltSkirt: 1
+    ClothingUniformJumpsuitLawyerGreen: 1
+    ClothingUniformJumpskirtLawyerGreen: 1
+    ClothingUniformJumpskirtLawyerGreenAltSkirt: 1
     ClothingShoesBootsLaceup: 2
     ClothingHeadsetService: 2
     ClothingNeckLawyerbadge: 2
+    ClothingUniformJumpsuitLawyerBlackStripe: 1
+    ClothingUniformJumpsuitLawyerBlueStripe: 1
   emaggedInventory:
     CyberPen: 1
