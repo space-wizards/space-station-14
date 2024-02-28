@@ -40,7 +40,7 @@
     collection: FootstepSticky
     params:
       volume: 6
-  fizzy: true
+  fizziness: 0.5
 
 - type: reagent
   id: BaseAlcohol

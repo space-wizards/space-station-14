@@ -51,42 +51,49 @@ public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks is the solution is able to be fizzy.
-    /// Returns false if the solution isn't found, is empty, or if none of the reagents are marked as fizzy.
+    /// Calculates how readily the contained solution becomes fizzy.
     /// </summary>
-    private bool SolutionIsFizzy(Entity<PressurizedSolutionComponent> entity)
+    private float SolutionFizzability(Entity<PressurizedSolutionComponent> entity)
     {
         if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var _, out var solution))
-            return false;
+            return 0;
 
         // An empty solution can't be fizzy
         if (solution.Volume <= 0)
-            return false;
+            return 0;
+
+        var totalFizzability = 0f;
 
         // Check each reagent in the solution
         foreach (var reagent in solution.Contents)
         {
-            if (_prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? reagentProto))
+            if (_prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? reagentProto) && reagentProto != null)
             {
-                // If any reagent is marked as fizzy, the solution is considered fizzy
-                if (reagentProto != null && reagentProto.Fizzy)
-                    return true;
+                // What portion of the solution is this reagent?
+                var proportion = (float) (reagent.Quantity / solution.Volume);
+                totalFizzability += reagentProto.Fizziness * proportion;
             }
         }
-        // None of the reagents are marked as fizzy, so the solution isn't fizzy either
-        return false;
+
+        return totalFizzability;
     }
 
     /// <summary>
-    /// Increases the fizziness level of the solution by the given amount.
+    /// Increases the fizziness level of the solution by the given amount,
+    /// scaled by the solution's fizzability.
     /// 0 will result in no change, and 1 will maximize fizziness.
     /// Also rerolls the spray threshold.
     /// </summary>
     private void AddFizziness(Entity<PressurizedSolutionComponent> entity, float amount)
     {
+        var fizzability = SolutionFizzability(entity);
+
         // Can't add fizziness if the solution isn't fizzy
-        if (!SolutionIsFizzy(entity))
+        if (fizzability <= 0)
             return;
+
+        // Scale added fizziness by the solution's fizzability
+        amount *= fizzability;
 
         // Convert fizziness to time
         var duration = amount * entity.Comp.FizzinessMaxDuration;
@@ -156,7 +163,7 @@ public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp))
             return false;
 
-        return SolutionIsFizzy((entity, entity.Comp));
+        return SolutionFizzability((entity, entity.Comp)) > 0;
     }
 
     /// <summary>
@@ -276,7 +283,7 @@ public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
             return;
 
         // If the solution is no longer fizzy, clear any built up fizziness
-        if (!SolutionIsFizzy(entity))
+        if (SolutionFizzability(entity) <= 0)
             TryClearFizziness((entity, entity.Comp));
     }
 

@@ -27,7 +27,7 @@ public sealed partial class PressurizedSolutionComponent : Component
     public SoundSpecifier SpraySound = new SoundPathSpecifier("/Audio/Items/soda_spray.ogg");
 
     /// <summary>
-    /// The longest amount of time that the drink can remain fizzy after being aggitated.
+    /// The longest amount of time that the solution can remain fizzy after being aggitated.
     /// Put another way, how long the solution will remain fizzy when aggitated the maximum amount.
     /// Used to calculate the current fizziness level.
     /// </summary>
@@ -42,17 +42,19 @@ public sealed partial class PressurizedSolutionComponent : Component
 
     /// <summary>
     /// How much to increase the solution's fizziness each time it's shaken.
+    /// This assumes the solution has maximum fizzability.
     /// A value of 1 will maximize it with a single shake, and a value of
     /// 0.5 will increase it by half with each shake.
     /// </summary>
     [DataField]
-    public float FizzinessAddedOnShake = 0.4f;
+    public float FizzinessAddedOnShake = 1.0f;
 
     /// <summary>
     /// How much to increase the solution's fizziness when it lands after being thrown.
+    /// This assumes the solution has maximum fizzability.
     /// </summary>
     [DataField]
-    public float FizzinessAddedOnLand = 0.1f;
+    public float FizzinessAddedOnLand = 0.25f;
 
     /// <summary>
     /// How much to modify the chance of spraying when the entity is opened.
