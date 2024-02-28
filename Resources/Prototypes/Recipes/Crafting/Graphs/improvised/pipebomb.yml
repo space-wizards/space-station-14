@@ -1,0 +1,38 @@
+- type: constructionGraph
+  id: PipeBomb
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: cable
+      steps:
+      - tag: Pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+        name: pipe
+      - tag: Igniter
+        name: an igniter
+        icon:
+          sprite: Objects/Devices/igniter.rsi
+          state: icon
+        doAfter: 1
+  - node: cable
+    entity: PipeBombCable
+    edges:
+    - to: pipebomb
+      steps:
+      - material: Cable
+        amount: 5
+        doAfter: 2
+  - node: pipebomb
+    entity: PipeBomb
+    edges:
+    - to: cable
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 5
+      steps:
+      - tool: Cutting
+        doAfter: 2

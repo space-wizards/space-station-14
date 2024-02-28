@@ -226,3 +226,8 @@ Observationskit: null
 
 # 2024-02-26
 CrateBaseWeldable: CrateGenericSteel
+
+# 2024-02-28
+ImprovisedExplosive: FireBomb
+ImprovisedExplosiveEmpty: FireBombEmpty
+ImprovisedExplosiveFuel: FireBombFuel

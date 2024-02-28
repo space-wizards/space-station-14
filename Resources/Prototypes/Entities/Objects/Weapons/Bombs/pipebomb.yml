@@ -6,6 +6,10 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Bombs/pipebomb.rsi
+    layers:
+    - state: base
+      map: ["enum.TriggerVisualLayers.Base"]
+    - state: wires
   - type: OnUseTimerTrigger
     delay: 5
     examinable: false
@@ -23,3 +27,21 @@
     canCreateVacuum: false
   - type: Appearance
   - type: TimerTriggerVisuals
+  - type: Construction
+    graph: PipeBomb
+    node: pipebomb
+
+- type: entity
+  parent: BaseItem
+  id: PipeBombCable
+  name: pipe bomb
+  description: An improvised explosive made from a pipe. This one has no cable.
+  suffix: Cable
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Bombs/pipebomb.rsi
+    state: base
+  - type: Construction
+    graph: PipeBomb
+    node: cable
+    defaultTarget: pipebomb
