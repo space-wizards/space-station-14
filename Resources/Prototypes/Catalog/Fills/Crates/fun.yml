@@ -288,6 +288,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SnapPopBox
       - id: CrazyGlue
       - id: PlasticBanana
       - id: FunnyPaint
@@ -305,6 +306,7 @@
         prob: 0.5
         orGroup: Dummy
       - id: RevolverCapGun
+      - id: BalloonNT
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
       - id: BeachBall

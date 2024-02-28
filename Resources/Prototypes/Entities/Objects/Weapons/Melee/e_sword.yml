@@ -81,6 +81,8 @@
   - type: Tag
     tags:
       - NoPaint
+  - type: IgnitionSource
+    temperature: 700
 
 - type: entity
   name: pen
