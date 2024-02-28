@@ -1,29 +1,8 @@
-using Content.Shared.Interaction;
-using Content.Shared.AlertLevelOnPress;
 using Content.Server.AlertLevel;
-using Content.Server.Audio;
-using Content.Server.Chat.Systems;
-using Content.Server.Explosion.EntitySystems;
-using Content.Server.Pinpointer;
-using Content.Server.Popups;
-using Content.Server.Station.Systems;
-using Content.Shared.Audio;
-using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Coordinates.Helpers;
-using Content.Shared.DoAfter;
-using Content.Shared.Examine;
-using Content.Shared.Maps;
-using Content.Shared.Nuke;
-using Content.Shared.Popups;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Containers;
-using Robust.Shared.Map;
-using Robust.Shared.Player;
-using Robust.Shared.Random;
-using JetBrains.FormatRipper.Elf;
 using Content.Server.DeviceLinking.Systems;
+using Content.Server.Station.Systems;
+using Content.Shared.Interaction;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.AlertLevelOnPress;
 
@@ -41,7 +20,7 @@ public sealed class AlertLevelOnPressSystem : EntitySystem
         SubscribeLocalEvent<AlertLevelOnPressComponent, SwitchPressedEvent>(OnSwitchPressed);
     }
 
-    private void OnSwitchPressed(Entity<AlertLevelOnPressComponent> ent, ref ActivateInWorldEvent args)
+    private void OnSwitchPressed(Entity<AlertLevelOnPressComponent> ent, ref SwitchPressedEvent args)
     {
         if (_station.GetStationInMap(Transform(ent).MapID) is { } station)
             _alertLevel.SetLevel(station, ent.Comp.AlertLevelOnActivate, true, announce: true, force: false, locked: false);

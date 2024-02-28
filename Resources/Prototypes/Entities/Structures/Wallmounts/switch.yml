@@ -784,7 +784,7 @@
     - state: emergency
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
-  - type: ChangeAlertLevel
+  - type: AlertLevelOnPress
     alertLevelOnActivate: red
     textField: An emergency button was pressed. The station has been set to Alert Level Red.
   - type: AccessReader
