@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Geekyhobo
-  changes:
-  - message: Fixed AGhosts not being able to drop items past the default range.
-    type: Fix
-  id: 5548
-  time: '2024-01-04T05:31:58.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23502
 - author: Dutch-VanDerLinde
   changes:
   - message: Kobold monkies now have a unique name identifier. (KB-####)
@@ -3834,3 +3827,10 @@
   id: 6047
   time: '2024-02-27T19:24:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25646
+- author: metalgearsloth
+  changes:
+  - message: Made NPC movement less janky.
+    type: Fix
+  id: 6048
+  time: '2024-02-28T06:41:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25666
