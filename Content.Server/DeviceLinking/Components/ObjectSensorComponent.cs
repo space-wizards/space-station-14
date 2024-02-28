@@ -12,28 +12,28 @@ namespace Content.Server.DeviceLinking.Components;
 [RegisterComponent, Access(typeof(ObjectSensorSystem))]
 public sealed partial class ObjectSensorComponent : Component
 {
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<SourcePortPrototype> OutputPort1 = "ObjectSensor1Object";
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<SourcePortPrototype> OutputPort2 = "ObjectSensor2Objects";
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<SourcePortPrototype> OutputPort3 = "ObjectSensor3Objects";
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<SourcePortPrototype> OutputPort4OrMore = "ObjectSensor4OrMoreObjects";
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<ToolQualityPrototype> CycleQuality = "Screwing";
 
     [DataField]
     public int Contacting;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ObjectSensorMode Mode = ObjectSensorMode.Living;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public SoundSpecifier CycleSound = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
 }
 
