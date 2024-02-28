@@ -40,6 +40,9 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnAfterInteract(EntityUid uid, SharpComponent component, AfterInteractEvent args)
     {
+        if (args.Handled == true)
+            return;
+
         if (args.Target is null || !args.CanReach)
             return;
 
