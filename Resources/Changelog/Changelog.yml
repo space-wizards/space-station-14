@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Kobold monkies now have a unique name identifier. (KB-####)
-    type: Tweak
-  id: 5549
-  time: '2024-01-04T05:51:09.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23505
 - author: Boaz1111
   changes:
   - message: The shotgun cartridge dispensers now function like ammo boxes.
@@ -3834,3 +3827,14 @@
   id: 6048
   time: '2024-02-28T06:41:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25666
+- author: musicmanvr
+  changes:
+  - message: Added the Syndicate decoy bundle, a creative way to trick your foes.
+    type: Add
+  - message: Snap pops have been added to the toy crate.
+    type: Add
+  - message: Syndicate Commanders now have a trench whistle, Avanti!
+    type: Add
+  id: 6049
+  time: '2024-02-28T21:53:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25333
