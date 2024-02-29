@@ -1,17 +1,14 @@
 using Content.Server.AlertLevel;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Station.Systems;
-using Content.Shared.Interaction;
-using Robust.Shared.Audio.Systems;
+using Content.Shared.AlertLevelOnPress;
 
 namespace Content.Server.AlertLevelOnPress;
 
-public sealed class AlertLevelOnPressSystem : EntitySystem
+public sealed class AlertLevelOnPressSystem : SharedAlertLevelOnPressSystem
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
     [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
