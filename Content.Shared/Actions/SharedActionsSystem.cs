@@ -8,7 +8,6 @@ using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mind;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -30,15 +29,18 @@ public abstract class SharedActionsSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<InstantActionComponent, MapInitEvent>(OnInit);
-        SubscribeLocalEvent<EntityTargetActionComponent, MapInitEvent>(OnInit);
-        SubscribeLocalEvent<WorldTargetActionComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<InstantActionComponent, MapInitEvent>(OnActionMapInit);
+        SubscribeLocalEvent<EntityTargetActionComponent, MapInitEvent>(OnActionMapInit);
+        SubscribeLocalEvent<WorldTargetActionComponent, MapInitEvent>(OnActionMapInit);
+
+        SubscribeLocalEvent<InstantActionComponent, ComponentShutdown>(OnActionShutdown);
+        SubscribeLocalEvent<EntityTargetActionComponent, ComponentShutdown>(OnActionShutdown);
+        SubscribeLocalEvent<WorldTargetActionComponent, ComponentShutdown>(OnActionShutdown);
 
         SubscribeLocalEvent<ActionsComponent, DidEquipEvent>(OnDidEquip);
         SubscribeLocalEvent<ActionsComponent, DidEquipHandEvent>(OnHandEquipped);
@@ -61,10 +63,19 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
     }
 
-    private void OnInit(EntityUid uid, BaseActionComponent component, MapInitEvent args)
+    private void OnActionMapInit(EntityUid uid, BaseActionComponent component, MapInitEvent args)
     {
-        if (component.Charges != null)
-            component.MaxCharges = component.Charges.Value;
+        if (component.Charges == null)
+            return;
+
+        component.MaxCharges ??= component.Charges.Value;
+        Dirty(uid, component);
+    }
+
+    private void OnActionShutdown(EntityUid uid, BaseActionComponent component, ComponentShutdown args)
+    {
+        if (component.AttachedEntity != null && !TerminatingOrDeleted(component.AttachedEntity.Value))
+            RemoveAction(component.AttachedEntity.Value, uid, action: component);
     }
 
     private void OnShutdown(EntityUid uid, ActionsComponent component, ComponentShutdown args)
@@ -562,7 +573,7 @@ public abstract class SharedActionsSystem : EntitySystem
     /// <param name="actionId">Action entity to add</param>
     /// <param name="component">The <see cref="performer"/>'s action component of </param>
     /// <param name="actionPrototypeId">The action entity prototype id to use if <see cref="actionId"/> is invalid.</param>
-    /// <param name="container">The entity that contains/enables this action (e.g., flashlight)..</param>
+    /// <param name="container">The entity that contains/enables this action (e.g., flashlight).</param>
     public bool AddAction(EntityUid performer,
         [NotNullWhen(true)] ref EntityUid? actionId,
         string? actionPrototypeId,
@@ -691,6 +702,24 @@ public abstract class SharedActionsSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    ///     Grants the provided action from the container to the target entity. If the target entity has no action
+    /// component, this will give them one.
+    /// </summary>
+    /// <param name="performer"></param>
+    /// <param name="container"></param>
+    /// <param name="actionId"></param>
+    public void GrantContainedAction(Entity<ActionsComponent?> performer, Entity<ActionsContainerComponent?> container, EntityUid actionId)
+    {
+        if (!Resolve(container, ref container.Comp))
+            return;
+
+        performer.Comp ??= EnsureComp<ActionsComponent>(performer);
+
+        if (TryGetActionData(actionId, out var action))
+            AddActionDirect(performer, actionId, performer.Comp, action);
+    }
+
     public IEnumerable<(EntityUid Id, BaseActionComponent Comp)> GetActions(EntityUid holderId, ActionsComponent? actions = null)
     {
         if (!Resolve(holderId, ref actions, false))
@@ -721,6 +750,18 @@ public abstract class SharedActionsSystem : EntitySystem
             if (action.Container == container)
                 RemoveAction(performer, actionId, comp);
         }
+    }
+
+    /// <summary>
+    ///     Removes a single provided action provided by another entity.
+    /// </summary>
+    public void RemoveProvidedAction(EntityUid performer, EntityUid container, EntityUid actionId, ActionsComponent? comp = null)
+    {
+        if (!Resolve(performer, ref comp, false) || !TryGetActionData(actionId, out var action))
+            return;
+
+        if (action.Container == container)
+            RemoveAction(performer, actionId, comp);
     }
 
     public void RemoveAction(EntityUid? actionId)

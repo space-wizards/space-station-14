@@ -18,17 +18,11 @@ public sealed class LightningArcShooterSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<LightningArcShooterComponent, MapInitEvent>(OnShooterMapInit);
-        SubscribeLocalEvent<LightningArcShooterComponent, EntityUnpausedEvent>(OnShooterUnpaused);
     }
 
     private void OnShooterMapInit(EntityUid uid, LightningArcShooterComponent component, ref MapInitEvent args)
     {
-        component.NextShootTime = _gameTiming.CurTime;
-    }
-
-    private void OnShooterUnpaused(EntityUid uid, LightningArcShooterComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextShootTime += args.PausedTime;
+        component.NextShootTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.ShootMaxInterval);
     }
 
     public override void Update(float frameTime)

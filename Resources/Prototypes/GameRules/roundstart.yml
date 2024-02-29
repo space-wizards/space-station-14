@@ -58,6 +58,8 @@
   parent: BaseGameRule
   noSpawn: true
   components:
+  - type: GameRule
+    minPlayers: 20
   - type: NukeopsRule
     faction: Syndicate
   - type: ThiefRule #the thieves come as an extension of another gamemode
@@ -123,3 +125,22 @@
   noSpawn: true
   components:
   - type: RampingStationEventScheduler
+
+# variation passes
+- type: entity
+  id: BasicRoundstartVariation
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: RoundstartStationVariationRule
+    rules:
+    - id: BasicPoweredLightVariationPass
+    - id: BasicTrashVariationPass
+    - id: SolidWallRustingVariationPass
+    - id: ReinforcedWallRustingVariationPass
+    - id: BasicPuddleMessVariationPass
+      prob: 0.99
+      orGroup: puddleMess
+    - id: BloodbathPuddleMessVariationPass
+      prob: 0.01
+      orGroup: puddleMess

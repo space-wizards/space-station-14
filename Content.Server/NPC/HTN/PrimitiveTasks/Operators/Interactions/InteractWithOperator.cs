@@ -18,8 +18,7 @@ public sealed partial class InteractWithOperator : HTNOperator
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!_entManager.TryGetComponent<UseDelayComponent>(owner, out var useDelay) ||
-            _entManager.System<UseDelaySystem>().IsDelayed((owner, useDelay)) ||
+        if (_entManager.TryGetComponent<UseDelayComponent>(owner, out var useDelay) && _entManager.System<UseDelaySystem>().IsDelayed((owner, useDelay)) ||
             !blackboard.TryGetValue<EntityUid>(TargetKey, out var moveTarget, _entManager) ||
             !_entManager.TryGetComponent<TransformComponent>(moveTarget, out var targetXform))
         {

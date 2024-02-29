@@ -43,10 +43,13 @@ public sealed partial class PuddleSystem
 
     private void OnExamined(Entity<SpillableComponent> entity, ref ExaminedEvent args)
     {
-        args.PushMarkup(Loc.GetString("spill-examine-is-spillable"));
+        using (args.PushGroup(nameof(SpillableComponent)))
+        {
+            args.PushMarkup(Loc.GetString("spill-examine-is-spillable"));
 
-        if (HasComp<MeleeWeaponComponent>(entity))
-            args.PushMarkup(Loc.GetString("spill-examine-spillable-weapon"));
+            if (HasComp<MeleeWeaponComponent>(entity))
+                args.PushMarkup(Loc.GetString("spill-examine-spillable-weapon"));
+        }
     }
 
     private void OnOverflow(Entity<SpillableComponent> entity, ref SolutionContainerOverflowEvent args)

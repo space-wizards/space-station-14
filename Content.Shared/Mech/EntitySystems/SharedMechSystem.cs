@@ -191,7 +191,7 @@ public abstract class SharedMechSystem : EntitySystem
             ? Loc.GetString("mech-equipment-select-popup", ("item", component.CurrentSelectedEquipment))
             : Loc.GetString("mech-equipment-select-none-popup");
 
-        if (_timing.IsFirstTimePredicted)
+        if (_net.IsServer)
             _popup.PopupEntity(popupString, uid);
 
         Dirty(component);

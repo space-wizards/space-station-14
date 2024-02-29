@@ -10,8 +10,6 @@
     sprite: Objects/Devices/encryption_keys.rsi
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
-  - type: StealTarget
-    stealGroup: EncryptionKey
 
 - type: entity
   parent: EncryptionKey
@@ -205,7 +203,7 @@
   parent: EncryptionKey
   id: EncryptionKeySyndie
   name: blood-red encryption key
-  description: An encryption key used by... wait... Who is owner of this chip?
+  description: An encryption key used by... wait... Who is the owner of this chip?
   components:
   - type: EncryptionKey
     channels:

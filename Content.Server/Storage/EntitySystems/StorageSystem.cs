@@ -34,7 +34,10 @@ public sealed partial class StorageSystem : SharedStorageSystem
     {
         base.Initialize();
         SubscribeLocalEvent<StorageComponent, GetVerbsEvent<ActivationVerb>>(AddUiVerb);
-        SubscribeLocalEvent<StorageComponent, BoundUIClosedEvent>(OnBoundUIClosed);
+        Subs.BuiEvents<StorageComponent>(StorageComponent.StorageUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIClosedEvent>(OnBoundUIClosed);
+        });
         SubscribeLocalEvent<StorageComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
@@ -129,7 +132,8 @@ public sealed partial class StorageSystem : SharedStorageSystem
         silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && _useDelay.IsDelayed((uid, useDelay));
         if (!silent)
         {
-            _audio.PlayPvs(storageComp.StorageOpenSound, uid);
+            if (!storageComp.IsUiOpen)
+                _audio.PlayPvs(storageComp.StorageOpenSound, uid);
             if (useDelay != null)
                 _useDelay.TryResetDelay((uid, useDelay));
         }

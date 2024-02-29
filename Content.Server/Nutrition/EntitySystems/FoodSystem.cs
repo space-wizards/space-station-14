@@ -3,6 +3,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Inventory;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Server.Stack;
 using Content.Shared.Administration.Logs;
@@ -422,11 +423,11 @@ public sealed class FoodSystem : EntitySystem
     {
         utensils = new List<EntityUid>();
 
-        if (component.Utensil != UtensilType.None)
+        if (component.Utensil == UtensilType.None)
             return true;
 
         if (!Resolve(user, ref hands, false))
-            return false;
+            return true; //mice
 
         var usedTypes = UtensilType.None;
 

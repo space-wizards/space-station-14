@@ -146,6 +146,20 @@
   itemSize: 5
 
 - type: stack
+  id: FloorTileStackShuttleGrey
+  name: grey shuttle tile
+  spawn: FloorTileItemShuttleGrey
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileStackShuttleBlack
+  name: black shuttle tile
+  spawn: FloorTileItemShuttleBlack
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
   id: FloorTileStackEighties
   name: eighties floor tile
   spawn: FloorTileItemEighties
@@ -226,6 +240,20 @@
   id: FloorCarpetPink
   name: pink carpet tile
   spawn: FloorCarpetItemPink
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorCarpetCyan
+  name: cyan carpet tile
+  spawn: FloorCarpetItemCyan
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorCarpetWhite
+  name: white carpet tile
+  spawn: FloorCarpetItemWhite
   maxCount: 30
   itemSize: 5
 
@@ -439,3 +467,9 @@
   spawn: FloorTileItemAstroIce
   maxCount: 30
   itemSize: 5
+
+- type: stack
+  id: FloorTileWoodLarge
+  name: large wood floor
+  spawn: FloorTileItemWoodLarge
+  maxCount: 30

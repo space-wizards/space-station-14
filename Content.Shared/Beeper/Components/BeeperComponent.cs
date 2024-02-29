@@ -16,25 +16,25 @@ public sealed partial class BeeperComponent : Component
     /// <summary>
     /// Whether or not it's on.
     /// </summary>
-    [DataField("enabled")]
+    [DataField, AutoNetworkedField]
     public bool Enabled = true;
 
     /// <summary>
     /// How much to scale the interval by (< 0 = min, > 1 = max)
     /// </summary>
-    [DataField("intervalScaling"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 IntervalScaling = 0;
 
     /// <summary>
     /// The maximum interval between beeps.
     /// </summary>
-    [DataField("maxBeepInterval"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public TimeSpan MaxBeepInterval = TimeSpan.FromSeconds(1.5f);
 
     /// <summary>
     /// The minimum interval between beeps.
     /// </summary>
-    [DataField("minBeepInterval"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public TimeSpan MinBeepInterval = TimeSpan.FromSeconds(0.25f);
 
     /// <summary>
@@ -55,12 +55,12 @@ public sealed partial class BeeperComponent : Component
     /// <summary>
     /// Is the beep muted
     /// </summary>
-    [DataField("muted"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool IsMuted = false;
 
     /// <summary>
     /// The sound played when the locator beeps.
     /// </summary>
-    [DataField("beepSound"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public SoundSpecifier? BeepSound;
 }

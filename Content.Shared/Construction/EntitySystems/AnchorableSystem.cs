@@ -69,6 +69,9 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (!Valid(uid, userUid, usingUid, false))
             return;
 
+        // Log unanchor attempt (server only)
+        _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to unanchor {ToPrettyString(uid):entity} from {transform.Coordinates:targetlocation}");
+
         _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryUnanchorCompletedEvent());
     }
 
@@ -181,16 +184,10 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (transform.Anchored)
         {
             TryUnAnchor(uid, userUid, usingUid, anchorable, transform, usingTool);
-
-            // Log unanchor attempt (server only)
-            _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to unanchor {ToPrettyString(uid):entity} from {transform.Coordinates:targetlocation}");
         }
         else
         {
             TryAnchor(uid, userUid, usingUid, anchorable, transform, pullable, usingTool);
-
-            // Log anchor attempt (server only)
-            _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to anchor {ToPrettyString(uid):entity} to {transform.Coordinates:targetlocation}");
         }
     }
 
@@ -215,6 +212,9 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         if (!Valid(uid, userUid, usingUid, true, anchorable, usingTool))
             return;
+
+        // Log anchor attempt (server only)
+        _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to anchor {ToPrettyString(uid):entity} to {transform.Coordinates:targetlocation}");
 
         if (TryComp<PhysicsComponent>(uid, out var anchorBody) &&
             !TileFree(transform.Coordinates, anchorBody))
@@ -244,6 +244,12 @@ public sealed partial class AnchorableSystem : EntitySystem
             return false;
 
         if (!Resolve(usingUid, ref usingTool))
+            return false;
+
+        if (anchoring && (anchorable.Flags & AnchorableFlags.Anchorable) == 0x0)
+            return false;
+
+        if (!anchoring && (anchorable.Flags & AnchorableFlags.Unanchorable) == 0x0)
             return false;
 
         BaseAnchoredAttemptEvent attempt =

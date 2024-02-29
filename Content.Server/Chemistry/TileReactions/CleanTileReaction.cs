@@ -34,7 +34,7 @@ public sealed partial class CleanTileReaction : ITileReaction
     FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
     {
         var entMan = IoCManager.Resolve<IEntityManager>();
-        var entities = entMan.System<EntityLookupSystem>().GetEntitiesIntersecting(tile, 0f).ToArray();
+        var entities = entMan.System<EntityLookupSystem>().GetLocalEntitiesIntersecting(tile, 0f).ToArray();
         var puddleQuery = entMan.GetEntityQuery<PuddleComponent>();
         var solutionContainerSystem = entMan.System<SolutionContainerSystem>();
         // Multiply as the amount we can actually purge is higher than the react amount.

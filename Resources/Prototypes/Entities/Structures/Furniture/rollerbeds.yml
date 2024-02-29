@@ -22,7 +22,8 @@
         visible: false
     - type: MovedByPressure
     - type: DamageOnHighSpeedImpact
-      soundHit: /Audio/Effects/bang.ogg
+      soundHit:
+        collection: MetalThud
     - type: InteractionOutline
     - type: Physics
     - type: Fixtures
@@ -69,7 +70,7 @@
             True: {visible: false}
             False: {visible: true}
     - type: StaticPrice
-      price: 200
+      price: 120
 
 - type: entity
   parent: RollerBed

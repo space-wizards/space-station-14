@@ -27,7 +27,6 @@ public sealed class FloorTileSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -35,6 +34,7 @@ public sealed class FloorTileSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStackSystem _stackSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     private static readonly Vector2 CheckRange = new(1f, 1f);
@@ -175,8 +175,8 @@ public sealed class FloorTileSystem : EntitySystem
     {
         _adminLogger.Add(LogType.Tile, LogImpact.Low, $"{ToPrettyString(user):actor} placed tile {_tileDefinitionManager[tileId].Name} at {ToPrettyString(gridUid)} {location}");
 
-        // TODO: Proper predicted RNG.
-        var variant = (byte) (_timing.CurTick.Value % ((ContentTileDefinition) _tileDefinitionManager[tileId]).Variants);
+        var random = new System.Random((int) _timing.CurTick.Value);
+        var variant = _tile.PickVariant((ContentTileDefinition) _tileDefinitionManager[tileId], random);
         mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
 
         _audio.PlayPredicted(placeSound, location, user);

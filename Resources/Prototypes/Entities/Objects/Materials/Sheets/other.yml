@@ -12,7 +12,6 @@
   - type: Tag
     tags:
     - Sheet
-    - DroneUsable
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -23,6 +22,10 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionContainerManager
+    solutions:
+      paper:
+        canReact: false
 
 - type: entity
   parent: SheetOtherBase
@@ -103,6 +106,7 @@
         reagents:
         - ReagentId: Plasma
           Quantity: 10
+        canReact: false
   - type: Tag
     tags:
     - Sheet
@@ -128,7 +132,6 @@
     tags:
     - Plastic
     - Sheet
-    - DroneUsable
   - type: Material
   - type: PhysicalComposition
     materialComposition:
@@ -158,6 +161,7 @@
           Quantity: 5
         - ReagentId: Phosphorus
           Quantity: 5
+        canReact: false
 
 - type: entity
   parent: SheetPlastic
@@ -219,6 +223,7 @@
           Quantity: 8
         - ReagentId: Radium
           Quantity: 2
+        canReact: false
 
 - type: entity
   parent: SheetUranium
@@ -243,7 +248,6 @@
     - type: Tag
       tags:
       - Sheet
-      - DroneUsable
     - type: Material
     - type: PhysicalComposition
       materialComposition:
@@ -268,6 +272,7 @@
             Quantity: 7
           - ReagentId: Fat
             Quantity: 3
+          canReact: false
 
 - type: entity
   parent: MaterialSheetMeat

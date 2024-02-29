@@ -44,7 +44,6 @@ public sealed partial class PathfindingSystem
     {
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
-        SubscribeLocalEvent<GridPathfindingComponent, EntityUnpausedEvent>(OnGridPathPause);
         SubscribeLocalEvent<GridPathfindingComponent, ComponentShutdown>(OnGridPathShutdown);
         SubscribeLocalEvent<CollisionChangeEvent>(OnCollisionChange);
         SubscribeLocalEvent<CollisionLayerChangeEvent>(OnCollisionLayerChange);
@@ -61,10 +60,6 @@ public sealed partial class PathfindingSystem
         DirtyChunk(ev.Entity, Comp<MapGridComponent>(ev.Entity).GridTileToLocal(ev.NewTile.GridIndices));
     }
 
-    private void OnGridPathPause(EntityUid uid, GridPathfindingComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextUpdate += args.PausedTime;
-    }
 
     private void OnGridPathShutdown(EntityUid uid, GridPathfindingComponent component, ComponentShutdown args)
     {
@@ -436,7 +431,7 @@ public sealed partial class PathfindingSystem
                 // var isBorder = x < 0 || y < 0 || x == ChunkSize - 1 || y == ChunkSize - 1;
 
                 tileEntities.Clear();
-                var available = _lookup.GetEntitiesIntersecting(tile, flags: LookupFlags.Dynamic | LookupFlags.Static);
+                var available = _lookup.GetLocalEntitiesIntersecting(tile, flags: LookupFlags.Dynamic | LookupFlags.Static);
 
                 foreach (var ent in available)
                 {

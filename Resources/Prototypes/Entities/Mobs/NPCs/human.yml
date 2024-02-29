@@ -1,5 +1,5 @@
 - type: entity
-  name: Civilian
+  name: civilian
   parent: BaseMobHuman
   id: MobCivilian
   description: A miserable pile of secrets.
@@ -13,7 +13,7 @@
     - NanoTrasen
 
 - type: entity
-  name: Salvager
+  name: salvager
   parent: BaseMobHuman
   id: MobSalvager
   components:
@@ -30,7 +30,7 @@
         task: SimpleHumanoidHostileCompound
 
 - type: entity
-  name: Spirate
+  name: spirate
   parent: BaseMobHuman
   id: MobSpirate
   description: Yarr!

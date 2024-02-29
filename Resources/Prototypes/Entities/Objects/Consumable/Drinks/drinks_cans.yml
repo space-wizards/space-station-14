@@ -274,7 +274,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkFourteenLokoCan
-  name: fourteen loko can
+  name: Fourteen Loko can
   description: The MBO has advised crew members that consumption of Fourteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
   components:
   - type: SolutionContainerManager
@@ -292,7 +292,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkChangelingStingCan
-  name: Changeling sting can
+  name: changeling sting can
   description: You take a tiny sip and feel a burning sensation...
   components:
   - type: SolutionContainerManager
@@ -461,3 +461,41 @@
     sprite: Objects/Consumable/Drinks/pwrgame.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/pwrgame.rsi
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkBeerCan
+  name: beer can
+  description: Small joy, big taste, no worries!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Beer
+          Quantity: 30
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/beer_can.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/beer_can.rsi
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkWineCan
+  name: wine can
+  description: Your way to forgetting all worries and having fun!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Wine
+          Quantity: 30
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/wine_can.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/wine_can.rsi

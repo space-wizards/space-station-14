@@ -18,6 +18,8 @@ public sealed partial class SalvageSystem
 
     private EntityQuery<SalvageMobRestrictionsComponent> _salvMobQuery;
 
+    private List<(Entity<TransformComponent> Entity, EntityUid MapUid, Vector2 LocalPosition)> _detachEnts = new();
+
     private void InitializeMagnet()
     {
         _salvMobQuery = GetEntityQuery<SalvageMobRestrictionsComponent>();
@@ -134,19 +136,27 @@ public sealed partial class SalvageSystem
 
             // Uhh yeah don't delete mobs or whatever
             var mobQuery = AllEntityQuery<HumanoidAppearanceComponent, MobStateComponent, TransformComponent>();
+            _detachEnts.Clear();
 
             while (mobQuery.MoveNext(out var mobUid, out _, out _, out var xform))
             {
                 if (xform.GridUid == null || !data.Comp.ActiveEntities.Contains(xform.GridUid.Value) || xform.MapUid == null)
                     continue;
 
-                _transform.SetParent(mobUid, xform.MapUid.Value);
+                // Can't parent directly to map as it runs grid traversal.
+                _detachEnts.Add(((mobUid, xform), xform.MapUid.Value, _transform.GetWorldPosition(xform)));
+                _transform.DetachParentToNull(mobUid, xform);
             }
 
             // Go and cleanup the active ents.
             foreach (var ent in data.Comp.ActiveEntities)
             {
                 Del(ent);
+            }
+
+            foreach (var entity in _detachEnts)
+            {
+                _transform.SetCoordinates(entity.Entity.Owner, new EntityCoordinates(entity.MapUid, entity.LocalPosition));
             }
 
             data.Comp.ActiveEntities = null;
@@ -167,10 +177,12 @@ public sealed partial class SalvageSystem
             // Fuck with the seed to mix wrecks and asteroids.
             seed = (int) (seed / 10f) * 10;
 
+            
             if (i >= data.Comp.OfferCount / 2)
             {
                 seed++;
             }
+            
 
             data.Comp.Offered.Add(seed);
         }
@@ -305,20 +317,29 @@ public sealed partial class SalvageSystem
             }
         }
 
-        var magnetGridUid = _xformQuery.GetComponent(magnet.Owner).GridUid;
-        Box2 attachedBounds = Box2.Empty;
-        MapId mapId = MapId.Nullspace;
+        var magnetXform = _xformQuery.GetComponent(magnet.Owner);
+        var magnetGridUid = magnetXform.GridUid;
+        var attachedBounds = new Box2Rotated();
+        var mapId = MapId.Nullspace;
+        Angle worldAngle;
 
         if (magnetGridUid != null)
         {
             var magnetGridXform = _xformQuery.GetComponent(magnetGridUid.Value);
-            attachedBounds = _transform.GetWorldMatrix(magnetGridXform)
-                .TransformBox(_gridQuery.GetComponent(magnetGridUid.Value).LocalAABB);
+            var (gridPos, gridRot) = _transform.GetWorldPositionRotation(magnetGridXform);
+            var gridAABB = _gridQuery.GetComponent(magnetGridUid.Value).LocalAABB;
 
+            attachedBounds = new Box2Rotated(gridAABB.Translated(gridPos), gridRot, gridPos);
+
+            worldAngle = (gridRot + magnetXform.LocalRotation) - MathF.PI / 2;
             mapId = magnetGridXform.MapID;
         }
+        else
+        {
+            worldAngle = _random.NextAngle();
+        }
 
-        if (!TryGetSalvagePlacementLocation(mapId, attachedBounds, bounds!.Value, out var spawnLocation, out var spawnAngle))
+        if (!TryGetSalvagePlacementLocation(mapId, attachedBounds, bounds!.Value, worldAngle, out var spawnLocation, out var spawnAngle))
         {
             Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-spawn-no-debris-available");
             _mapManager.DeleteMap(salvMap);
@@ -364,38 +385,42 @@ public sealed partial class SalvageSystem
         RaiseLocalEvent(ref active);
     }
 
-    private bool TryGetSalvagePlacementLocation(MapId mapId, Box2 attachedBounds, Box2 bounds, out MapCoordinates coords, out Angle angle)
+    private bool TryGetSalvagePlacementLocation(MapId mapId, Box2Rotated attachedBounds, Box2 bounds, Angle worldAngle, out MapCoordinates coords, out Angle angle)
     {
-        const float OffsetRadiusMin = 4f;
-        const float OffsetRadiusMax = 16f;
+        // Grid intersection only does AABB atm.
+        var attachedAABB = attachedBounds.CalcBoundingBox();
 
-        var minDistance = (attachedBounds.Height < attachedBounds.Width ? attachedBounds.Width : attachedBounds.Height) / 2f;
+        var minDistance = (attachedAABB.Height < attachedAABB.Width ? attachedAABB.Width : attachedAABB.Height) / 2f;
         var minActualDistance = bounds.Height < bounds.Width ? minDistance + bounds.Width / 2f : minDistance + bounds.Height / 2f;
 
-        var attachedCenter = attachedBounds.Center;
-
-        angle = _random.NextAngle();
+        var attachedCenter = attachedAABB.Center;
+        var fraction = 0.25f;
 
         // Thanks 20kdc
         for (var i = 0; i < 20; i++)
         {
             var randomPos = attachedCenter +
-                            _random.NextAngle().ToVec() * (minActualDistance +
-                                                           _random.NextFloat(OffsetRadiusMin, OffsetRadiusMax));
+                            worldAngle.ToVec() * (minActualDistance * fraction);
             var finalCoords = new MapCoordinates(randomPos, mapId);
 
+            angle = _random.NextAngle();
             var box2 = Box2.CenteredAround(finalCoords.Position, bounds.Size);
             var box2Rot = new Box2Rotated(box2, angle, finalCoords.Position);
 
             // This doesn't stop it from spawning on top of random things in space
             // Might be better like this, ghosts could stop it before
             if (_mapManager.FindGridsIntersecting(finalCoords.MapId, box2Rot).Any())
+            {
+                // Bump it further and further just in case.
+                fraction += 0.25f;
                 continue;
+            }
 
             coords = finalCoords;
             return true;
         }
 
+        angle = Angle.Zero;
         coords = MapCoordinates.Nullspace;
         return false;
     }

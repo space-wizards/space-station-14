@@ -1,5 +1,5 @@
 using Content.Server.Store.Components;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.FixedPoint;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
@@ -36,12 +36,14 @@ public sealed partial class StoreSystem : EntitySystem
 
         InitializeUi();
         InitializeCommand();
+        InitializeRefund();
     }
 
     private void OnMapInit(EntityUid uid, StoreComponent component, MapInitEvent args)
     {
         RefreshAllListings(component);
         InitializeFromPreset(component.Preset, uid, component);
+        component.StartingMap = Transform(uid).MapUid;
     }
 
     private void OnStartup(EntityUid uid, StoreComponent component, ComponentStartup args)
