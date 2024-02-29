@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Client.Humanoid;
 using Content.Client.Info;
 using Content.Client.Info.PlaytimeStats;
+using Content.Client.Lobby;
 using Content.Client.Lobby.UI;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
@@ -178,7 +179,7 @@ namespace Content.Client.Preferences.UI
 
                 if (humanoid != null)
                 {
-                    LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy, humanoid);
+                    UserInterfaceManager.GetUIController<LobbyUIController>().GiveDummyJobClothes(_previewDummy, humanoid);
                 }
 
                 var isSelectedCharacter = profile == preferencesManager.Preferences?.SelectedCharacter;

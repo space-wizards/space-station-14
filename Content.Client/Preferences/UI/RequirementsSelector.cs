@@ -1,9 +1,13 @@
 using System.Numerics;
+using Content.Client.Lobby;
+using Content.Client.Lobby.UI;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Preferences.Loadouts.Effects;
+using Content.Shared.Roles;
 using Robust.Client.Player;
+using Robust.Client.State;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Prototypes;
@@ -99,7 +103,6 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
             Group = _loadoutGroup,
         };
 
-        // TODO: Attach to profile / jobs.
         var collection = IoCManager.Instance!;
         var entManager = collection.Resolve<IEntityManager>();
         var protoManager = collection.Resolve<IPrototypeManager>();
@@ -114,6 +117,9 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
         else
         {
             var session = collection.Resolve<IPlayerManager>().LocalSession!;
+            // TODO: Most of lobby state should be a uicontroller
+            // trying to handle all this shit is a big-ass mess.
+            // Every time I touch it I try to make it slightly better but it needs a howitzer dropped on it.
             var loadout = new RoleLoadout((ProtoId<RoleLoadoutPrototype>) loadoutProto.ID);
             loadout.SetDefault(entManager, protoManager);
             loadout.EnsureValid(session, collection);
@@ -128,6 +134,12 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                     };
 
                     _loadout.RefreshLoadouts(loadout, session, collection);
+
+                    // If it's a job preview then refresh it.
+                    if (Proto is JobPrototype jobProto)
+                    {
+                        UserInterfaceManager.GetUIController<LobbyUIController>().SetDummyJob(jobProto);
+                    }
 
                     _loadout.OnLoadoutPressed += (selectedGroup, selectedLoadout) =>
                     {
@@ -145,6 +157,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                 {
                     _loadout?.Close();
                     _loadout = null;
+                    UserInterfaceManager.GetUIController<LobbyUIController>().SetDummyJob(null);
                 }
             };
         }
