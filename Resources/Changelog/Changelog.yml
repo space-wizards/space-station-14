@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: Flashes cannot be heard from more than a few meters away.
-    type: Tweak
-  id: 5555
-  time: '2024-01-04T12:27:32.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23521
 - author: TheShuEd
   changes:
   - message: Added human plushie
@@ -3838,3 +3831,10 @@
   id: 6054
   time: '2024-02-29T00:44:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25690
+- author: Ubaser
+  changes:
+  - message: Eris UI theme has been removed.
+    type: Remove
+  id: 6055
+  time: '2024-02-29T05:53:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25673
