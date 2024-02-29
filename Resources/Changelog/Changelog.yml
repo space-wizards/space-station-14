@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Added the syndicate scram implanter, which allows you to instantly escape
-      any situation, at a risk.
-    type: Add
-  id: 5558
-  time: '2024-01-04T12:38:03.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23122
-- author: VMSolidus
-  changes:
-  - message: PAI cartridges can now be slotted into PDAs.
-    type: Add
-  id: 5559
-  time: '2024-01-04T12:56:14.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/21086
-- author: Emisse
-  changes:
-  - message: Emergency Eva is slightly faster to move around in.
-    type: Tweak
-  id: 5560
-  time: '2024-01-04T13:08:17.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23522
-- author: Alekshhh
-  changes:
-  - message: Changed plague doctor set visually
-    type: Tweak
-  id: 5561
-  time: '2024-01-04T13:09:11.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23382
 - author: luringens
   changes:
   - message: Diona now drop their items when robusted into a tree.
@@ -3837,3 +3808,39 @@
   id: 6057
   time: '2024-02-29T16:45:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25122
+- author: Aexxie
+  changes:
+  - message: Nutribricks spawn in Survival Kits in place of Tinned Meat.
+    type: Tweak
+  - message: Lizards can now eat Nutribricks.
+    type: Fix
+  - message: Moths can eat Nutribrick wrappers.
+    type: Add
+  id: 6058
+  time: '2024-02-29T21:39:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25659
+- author: Flareguy
+  changes:
+  - message: Big O2 tanks and N2 tanks no longer spawn in any departmental locker.
+      Use tank dispensers to get them instead.
+    type: Tweak
+  - message: Removed all instances where N2 tanks spawned as counterparts to O2 tanks.
+      This includes things like lockers, suit storages, and the emergency toolbox.
+    type: Remove
+  id: 6059
+  time: '2024-02-29T21:40:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25660
+- author: Potato1234_x
+  changes:
+  - message: Added fill levels to bowls, chefs rejoice!
+    type: Add
+  id: 6060
+  time: '2024-02-29T21:41:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25639
+- author: Plykiya
+  changes:
+  - message: Dragging objects over gas pipes no longer slows you down.
+    type: Fix
+  id: 6061
+  time: '2024-02-29T21:41:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25629
