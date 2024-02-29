@@ -3,7 +3,7 @@
   icon:
     sprite: Structures/Shuttles/thruster.rsi
     state: base
-  product: ThrusterUnanchored
+  product: CrateEngineeringThruster
   cost: 1500
   category: Shuttle
   group: market
@@ -13,7 +13,7 @@
   icon:
     sprite: Structures/Shuttles/gyroscope.rsi
     state: base
-  product: GyroscopeUnanchored
+  product: CrateEngineeringGyroscope
   cost: 4000
   category: Shuttle
   group: market
