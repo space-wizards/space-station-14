@@ -74,8 +74,8 @@ public sealed class PryingSystem : EntitySystem
 
         if (!CanPry(target, user, out var message, comp))
         {
-            if (message != null)
-                Popup.PopupEntity(Loc.GetString(message), target, user);
+            if (!string.IsNullOrWhiteSpace(message))
+                Popup.PopupClient(Loc.GetString(message), target, user);
             // If we have reached this point we want the event that caused this
             // to be marked as handled.
             return true;
@@ -162,23 +162,14 @@ public sealed class PryingSystem : EntitySystem
 
         if (!CanPry(uid, args.User, out var message, comp))
         {
-            if (message != null)
-                Popup.PopupEntity(Loc.GetString(message), uid, args.User);
+            if (!string.IsNullOrWhiteSpace(message))
+                Popup.PopupClient(Loc.GetString(message), uid, args.User);
             return;
         }
 
-        // TODO: When we get airlock prediction make this fully predicted.
-        // When that happens also fix the checking function in the Client AirlockSystem.
         if (args.Used != null && comp != null)
         {
-            if (HasComp<AirlockComponent>(uid))
-            {
-                _audioSystem.PlayPvs(comp.UseSound, args.Used.Value);
-            }
-            else
-            {
-                _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User);
-            }
+            _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User);
         }
 
         var ev = new PriedEvent(args.User);

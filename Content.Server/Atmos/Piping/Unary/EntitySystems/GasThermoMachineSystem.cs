@@ -55,6 +55,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, ref AtmosDeviceUpdateEvent args)
         {
+            thermoMachine.LastEnergyDelta = 0f;
             if (!(_power.IsPowered(uid) && TryComp<ApcPowerReceiverComponent>(uid, out var receiver)))
                 return;
 
@@ -100,12 +101,14 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (thermoMachine.Atmospheric)
             {
                 _atmosphereSystem.AddHeat(heatExchangeGasMixture, dQActual);
+                thermoMachine.LastEnergyDelta = dQActual;
             }
             else
             {
                 float dQLeak = dQActual * thermoMachine.EnergyLeakPercentage;
                 float dQPipe = dQActual - dQLeak;
                 _atmosphereSystem.AddHeat(heatExchangeGasMixture, dQPipe);
+                thermoMachine.LastEnergyDelta = dQPipe;
 
                 if (dQLeak != 0f && _atmosphereSystem.GetContainingMixture(uid) is { } containingMixture)
                     _atmosphereSystem.AddHeat(containingMixture, dQLeak);

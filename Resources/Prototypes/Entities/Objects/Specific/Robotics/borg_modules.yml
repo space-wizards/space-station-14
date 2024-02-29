@@ -5,6 +5,8 @@
   description: A piece of tech that gives cyborgs new abilities.
   abstract: true
   components:
+  - type: Item
+    storedRotation: -90
   - type: Sprite
     sprite: Objects/Specific/Robotics/borgmodule.rsi
   - type: BorgModule
@@ -143,6 +145,7 @@
   - type: ItemBorgModule
     items:
     - HandheldGPSBasic
+    - HandHeldMassScannerBorg
     - HandheldStationMapUnpowered
 
 - type: entity
@@ -238,7 +241,7 @@
     - WelderExperimental
     - NetworkConfigurator
     - RemoteSignaller
-    - GasAnalyzer   
+    - GasAnalyzer
     - GeigerCounter
 
 - type: entity
@@ -319,7 +322,7 @@
 
 # medical modules
 - type: entity
-  id: BorgModuleDiagnosis
+  id: BorgModuleDiagnosis # todo: reuse when med refractor is finished
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
   name: diagnosis cyborg module
   components:
@@ -374,6 +377,7 @@
     - state: icon-chemist
   - type: ItemBorgModule
     items:
+    - HandheldHealthAnalyzerUnpowered
     - Beaker
     - Beaker
     - BorgDropper
@@ -489,7 +493,7 @@
     - BikeHorn
     - ClownRecorder
     - BikeHornInstrument
-   
+
 #syndicate modules
 - type: entity
   id: BorgModuleSyndicateWeapon

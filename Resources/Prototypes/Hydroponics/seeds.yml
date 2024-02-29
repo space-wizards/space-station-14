@@ -147,10 +147,10 @@
     - FoodLaughinPeaPod
   lifespan: 25
   growthStages: 3
-  maturation: 8
-  production: 6
+  maturation: 7
+  production: 5
   yield: 3
-  potency: 25
+  potency: 20
   idealLight: 8
   harvestRepeat: Repeat
   nutrientConsumption: 0.6
@@ -159,15 +159,15 @@
     Nutriment:
       Min: 1
       Max: 3
-      PotencyDivisor: 33
+      PotencyDivisor: 7
     Sugar:
       Min: 1
-      Max: 5
-      PotencyDivisor: 50
+      Max: 10
+      PotencyDivisor: 5
     Laughter:
       Min: 1
-      Max: 5
-      PotencyDivisor: 50
+      Max: 10
+      PotencyDivisor: 5
 
 - type: seed
   id: lemon
@@ -933,6 +933,8 @@
   packetPrototype: PoppySeeds
   productPrototypes:
     - FoodPoppy
+  mutationPrototypes:
+    - lily
   lifespan: 25
   maturation: 10
   production: 3
@@ -975,6 +977,34 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+
+- type: seed
+  id: lily
+  name: seeds-lily-name
+  noun: seeds-noun-seeds
+  displayName: seeds-lily-display-name
+  plantRsi: Objects/Specific/Hydroponics/lily.rsi
+  packetPrototype: LilySeeds
+  productPrototypes:
+    - FoodLily
+  mutationPrototypes:
+    - spacemansTrumpet
+  lifespan: 25
+  maturation: 10
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.60
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 2
+      Potencydivisor: 50
+    Bicaridine:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 5
 
 - type: seed
   id: lingzhi
@@ -1203,6 +1233,32 @@
       Min: 1
       Max: 2
       PotencyDivisor: 50
+
+- type: seed
+  id: spacemansTrumpet
+  name: seeds-spacemans-trumpet-name
+  noun: seeds-noun-seeds
+  displayName: seeds-spacemans-trumpet-display-name
+  plantRsi: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
+  packetPrototype: SpacemansTrumpetSeeds
+  productPrototypes:
+    - FoodSpacemansTrumpet
+  growthStages: 4
+  lifespan: 20
+  maturation: 14
+  production: 3
+  yield: 2
+  potency: 10
+  waterConsumption: 0.60
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      Potencydivisor: 50
+    PolypyryliumOligomers:
+      Min: 1
+      Max: 15
+      PotencyDivisor: 5
 
 - type: seed
   id: koibean

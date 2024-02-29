@@ -1,8 +1,9 @@
 # TODO once tiles can be smoothed and carpets ported over to that, add them to the FloorTile outputs
 - type: entity
-  name: red carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemRed
+  suffix: Red
   components:
   - type: Sprite
     state: carpet-red
@@ -13,11 +14,19 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetRed
+  - type: Tag
+    tags: 
+    - CarpetRed
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: Carpet
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
-  name: black carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemBlack
+  suffix: Black
   components:
   - type: Sprite
     state: carpet-black
@@ -28,11 +37,19 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetBlack
+  - type: Tag
+    tags: 
+    - CarpetBlack
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetBlack
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
-  name: blue carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemBlue
+  suffix: Blue
   components:
   - type: Sprite
     state: carpet-blue
@@ -43,11 +60,19 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetBlue
+  - type: Tag
+    tags: 
+    - CarpetBlue
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetBlue
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
-  name: green carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemGreen
+  suffix: Green
   components:
   - type: Sprite
     state: carpet-green
@@ -58,11 +83,19 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetGreen
+  - type: Tag
+    tags: 
+    - CarpetGreen
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetGreen
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
-  name: orange carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemOrange
+  suffix: Orange
   components:
   - type: Sprite
     state: carpet-orange
@@ -73,11 +106,19 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetOrange
+  - type: Tag
+    tags: 
+    - CarpetOrange
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetOrange
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
-  name: sky blue carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemSkyBlue
+  suffix: Sky Blue
   components:
   - type: Sprite
     state: carpet-skyblue
@@ -88,11 +129,16 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetSkyBlue
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetSBlue
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
-  name: purple carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemPurple
+  suffix: Purple
   components:
   - type: Sprite
     state: carpet-purple
@@ -103,11 +149,19 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetPurple
+  - type: Tag
+    tags: 
+    - CarpetPurple
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetPurple
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
-  name: pink carpet
+  name: carpet
   parent: FloorTileItemBase
   id: FloorCarpetItemPink
+  suffix: Pink
   components:
   - type: Sprite
     state: carpet-pink
@@ -118,3 +172,56 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetPink
+  - type: Tag
+    tags: 
+    - CarpetPink
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetPink
+    doAfter: 0.5
+    removeOnInteract: true
+
+- type: entity
+  name: carpet
+  parent: FloorTileItemBase
+  id: FloorCarpetItemCyan
+  suffix: Cyan
+  components:
+  - type: Sprite
+    state: carpet-cyan
+  - type: Item
+    heldPrefix: carpet-cyan
+  - type: FloorTile
+    outputs:
+      - Plating
+  - type: Stack
+    stackType: FloorCarpetCyan
+  - type: Tag
+    tags: 
+    - CarpetCyan
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetCyan
+    doAfter: 0.5
+    removeOnInteract: true
+
+- type: entity
+  name: carpet
+  parent: FloorTileItemBase
+  id: FloorCarpetItemWhite
+  suffix: White
+  components:
+  - type: Sprite
+    state: carpet-white
+  - type: Item
+    heldPrefix: carpet-white
+  - type: FloorTile
+    outputs:
+      - Plating
+  - type: Stack
+    stackType: FloorCarpetWhite
+  - type: Tag
+    tags: 
+    - CarpetWhite
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetWhite
+    doAfter: 0.5
+    removeOnInteract: true
