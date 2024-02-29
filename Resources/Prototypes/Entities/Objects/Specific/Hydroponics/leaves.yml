@@ -70,6 +70,38 @@
     size: Tiny
   - type: StealTarget
     stealGroup: Cannabis
+    
+- type: entity
+  name: rainbow cannabis leaves
+  parent: LeavesCannabis
+  id: LeavesCannabisRainbow
+  description: "Is it supposed to be glowing like that...?"
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/rainbowcannabis.rsi
+  - type: Produce
+    seedId: rainbowCannabis
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+  - type: RgbLightController
+    CycleRate: 0.6
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: SpaceDrugs
+          Quantity: 3
+#       - ReagentId: Lipolicide
+#         Quantity: 3
+        - ReagentId: MindbreakerToxin
+          Quantity: 2
+#       - ReagentId: Happiness
+#         Quantity: 2
+#       - ReagentId: ColorfulReagent
+#         Quantity: 1
+#       - ReagentId: Psicodine
+#         Quantity: 0.6
 
 - type: entity
   name: tobacco leaves
