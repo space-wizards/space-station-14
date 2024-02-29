@@ -15,6 +15,21 @@
     },
     {
       "name": "closed"
+    },
+    {
+      "name": "metal_grey"
+    },
+    {
+      "name": "metal_red"
+    },
+    {
+      "name": "metal_blue"
+    },
+    {
+      "name": "metal_yellow"
+    },
+    {
+      "name": "metal_explosive_label"
     }
   ]
 }

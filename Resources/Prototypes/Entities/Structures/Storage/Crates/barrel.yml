@@ -87,9 +87,6 @@
     layers:
     - state: base
       map: ["enum.StorageVisualLayers.Base"]
-  - type: Icon
-    sprite: Objects/Storage/keg.rsi
-    state: base
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Wood
@@ -133,6 +130,118 @@
         - MachineLayer
   - type: Transform
     noRot: false
+
+- type: entity
+  name: metal barrel
+  parent: WoodenKeg
+  suffix: grey
+  description: A metal keg. It can be filled with liquid.
+  id: MetalBarrelGrey
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpillBehavior
+        solution: tank
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Transform
+    noRot: true
+
+- type: entity
+  parent: MetalBarrelGrey
+  suffix: blue
+  id: MetalBarrelBlue
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_blue
+
+- type: entity
+  parent: MetalBarrelGrey
+  suffix: red
+  id: MetalBarrelRed
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_red
+
+- type: entity
+  parent: MetalBarrelGrey
+  suffix: red
+  id: MetalBarrelYellow
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_yellow
+
+- type: entity
+  parent: MetalBarrelGrey
+  id: MetalBarrelExplosiveEmpty
+  name: explosive barrel
+  suffix: Empty
+  description: The ancient and mysterious symbol on the front is believed to have once meant 'Use me as cover!' in days of yore.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/barrel.rsi
+    layers:
+    - state: metal_red
+    - state: metal_explosive_label
+
+- type: entity
+  parent: MetalBarrelExplosiveEmpty
+  id: MetalBarrelExplosiveFilled
+  suffix: Filled
+  components:
+  - type: Label
+    currentLabel: reagent-name-welding-fuel
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+          - ReagentId: WeldingFuel
+            Quantity: 500
+  - type: DamageOnToolInteract
+    tools:
+    - Welding
+    weldingDamage:
+      types:
+        Heat: 10
+  - type: PacifismDangerousAttack
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 120
+
+- type: entity
+  parent: MetalBarrelGrey
+  id: MetalBarrelCarbon
+  suffix: carbon
+  components:
+    - type: Label
+      currentLabel: reagent-name-carbon
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Carbon
+              Quantity: 500
 
 - type: entity
   parent: WoodenKeg
