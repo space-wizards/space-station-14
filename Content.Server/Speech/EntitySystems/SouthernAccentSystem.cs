@@ -4,6 +4,7 @@ using Content.Server.Speech.Components;
 namespace Content.Server.Speech.EntitySystems;
 
 public sealed class VerbCutoffAccentSystem : EntitySystem
+
 {
     public override void Initialize()
     {
