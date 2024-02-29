@@ -63,7 +63,7 @@ namespace Content.Server.Flash
             args.Handled = true;
             foreach (var e in args.HitEntities)
             {
-                Flash(e, args.User, uid, comp.FlashDuration, comp.SlowTo, melee: true);
+                Flash(e, args.User, (uid, comp), comp.FlashDuration, comp.SlowTo, melee: true);
             }
         }
 
@@ -108,7 +108,7 @@ namespace Content.Server.Flash
 
         public void Flash(EntityUid target,
             EntityUid? user,
-            EntityUid? used,
+            Entity<FlashComponent>? used,
             float flashDuration,
             float slowTo,
             bool displayPopup = true,
@@ -137,8 +137,15 @@ namespace Content.Server.Flash
             flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
             Dirty(target, flashable);
 
-            _stun.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
+            if (melee && used != null)
+            {
+                _stun.TryParalyze(target, used.Value.Comp.MeleeStunDuration, true);
+            }
+            else
+            {
+                _stun.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
                 slowTo, slowTo);
+            }
 
             if (displayPopup && user != null && target != user && Exists(user.Value))
             {
@@ -148,9 +155,12 @@ namespace Content.Server.Flash
 
         }
 
-        public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo = 0.8f, bool displayPopup = false, SoundSpecifier? sound = null)
+        public void FlashArea(Entity<FlashComponent?> source, EntityUid? user, float range, float duration, float slowTo = 0.8f, bool displayPopup = false, SoundSpecifier? sound = null)
         {
-            var transform = EntityManager.GetComponent<TransformComponent>(source);
+            if (!Resolve(source, ref source.Comp))
+                return;
+
+            var transform = Transform(source);
             var mapPosition = _transform.GetMapCoordinates(transform);
             var flashableQuery = GetEntityQuery<FlashableComponent>();
 
@@ -159,19 +169,17 @@ namespace Content.Server.Flash
                 if (!flashableQuery.TryGetComponent(entity, out var flashable))
                     continue;
 
-
+                Log.Debug($"{ToPrettyString(entity)}");
                 // Check for unobstructed entities while ignoring the mobs with flashable components.
-                if (!_interaction.InRangeUnobstructed(entity, mapPosition, range, flashable.CollisionGroup, (e) => e == source))
+                if (!_interaction.InRangeUnobstructed(entity, mapPosition, range, flashable.CollisionGroup, predicate: (e) => flashableQuery.HasComponent(e) || e == source.Owner))
                     continue;
+                Log.Debug($"{ToPrettyString(entity)} in range");
 
                 // They shouldn't have flash removed in between right?
-                Flash(entity, user, source, duration, slowTo, displayPopup, flashableQuery.GetComponent(entity));
+                Flash(entity, user, (source, source.Comp), duration, slowTo, displayPopup, flashableQuery.GetComponent(entity));
             }
 
-            if (sound != null)
-            {
-                _audio.PlayPvs(sound, source, AudioParams.Default.WithVolume(1f).WithMaxDistance(3f));
-            }
+            _audio.PlayPvs(sound, source, AudioParams.Default.WithVolume(1f).WithMaxDistance(3f));
         }
 
         private void OnInventoryFlashAttempt(EntityUid uid, InventoryComponent component, FlashAttemptEvent args)
