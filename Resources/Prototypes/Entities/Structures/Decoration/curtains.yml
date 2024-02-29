@@ -54,6 +54,7 @@
 - type: entity
   id: HospitalCurtains
   parent: BaseCurtains
+  suffix: Hospital
   description: Contains less than 1% mercury.
   components:
   - type: Sprite
@@ -69,7 +70,7 @@
 - type: entity
   id: HospitalCurtainsOpen
   parent: HospitalCurtains
-  suffix: Open
+  suffix: Open, Hospital
   components:
   - type: Door
     state: Open
@@ -84,6 +85,7 @@
 - type: entity
   id: CurtainsBlack
   parent: BaseCurtains
+  suffix: Fancy black
   components:
   - type: Sprite
     snapCardinals: true
@@ -98,7 +100,7 @@
 - type: entity
   id: CurtainsBlackOpen
   parent: CurtainsBlack
-  suffix: Open
+  suffix: Open, Fancy black
   components:
   - type: Door
     state: Open
@@ -113,6 +115,7 @@
 - type: entity
   id: CurtainsBlue
   parent: BaseCurtains
+  suffix: Fancy blue
   components:
   - type: Sprite
     snapCardinals: true
@@ -127,7 +130,7 @@
 - type: entity
   id: CurtainsBlueOpen
   parent: CurtainsBlue
-  suffix: Open
+  suffix: Open, Fancy blue
   components:
   - type: Door
     state: Open
@@ -142,6 +145,7 @@
 - type: entity
   id: CurtainsCyan
   parent: BaseCurtains
+  suffix: Fancy cyan
   components:
   - type: Sprite
     snapCardinals: true
@@ -156,7 +160,7 @@
 - type: entity
   id: CurtainsCyanOpen
   parent: CurtainsCyan
-  suffix: Open
+  suffix: Open, Fancy cyan
   components:
   - type: Door
     state: Open
@@ -171,6 +175,7 @@
 - type: entity
   id: CurtainsGreen
   parent: BaseCurtains
+  suffix: Fancy green
   components:
   - type: Sprite
     snapCardinals: true
@@ -185,7 +190,7 @@
 - type: entity
   id: CurtainsGreenOpen
   parent: CurtainsGreen
-  suffix: Open
+  suffix: Open, Fancy green
   components:
   - type: Door
     state: Open
@@ -200,6 +205,7 @@
 - type: entity
   id: CurtainsOrange
   parent: BaseCurtains
+  suffix: Fancy orange
   components:
   - type: Sprite
     snapCardinals: true
@@ -214,7 +220,7 @@
 - type: entity
   id: CurtainsOrangeOpen
   parent: CurtainsOrange
-  suffix: Open
+  suffix: Open, Fancy orange
   components:
   - type: Door
     state: Open
@@ -229,6 +235,7 @@
 - type: entity
   id: CurtainsPink
   parent: BaseCurtains
+  suffix: Fancy pink
   components:
   - type: Sprite
     snapCardinals: true
@@ -243,7 +250,7 @@
 - type: entity
   id: CurtainsPinkOpen
   parent: CurtainsPink
-  suffix: Open
+  suffix: Open, Fancy pink
   components:
   - type: Door
     state: Open
@@ -258,6 +265,7 @@
 - type: entity
   id: CurtainsPurple
   parent: BaseCurtains
+  suffix: Fancy purple
   components:
   - type: Sprite
     snapCardinals: true
@@ -272,7 +280,7 @@
 - type: entity
   id: CurtainsPurpleOpen
   parent: CurtainsPurple
-  suffix: Open
+  suffix: Open, Fancy purple
   components:
   - type: Door
     state: Open
@@ -287,6 +295,7 @@
 - type: entity
   id: CurtainsRed
   parent: BaseCurtains
+  suffix: Fancy red
   components:
   - type: Sprite
     snapCardinals: true
@@ -301,7 +310,7 @@
 - type: entity
   id: CurtainsRedOpen
   parent: CurtainsRed
-  suffix: Open
+  suffix: Open, Fancy red
   components:
   - type: Door
     state: Open
@@ -316,6 +325,7 @@
 - type: entity
   id: CurtainsWhite
   parent: BaseCurtains
+  suffix: Fancy white
   components:
   - type: Sprite
     snapCardinals: true
@@ -330,7 +340,7 @@
 - type: entity
   id: CurtainsWhiteOpen
   parent: CurtainsWhite
-  suffix: Open
+  suffix: Open, Fancy white
   components:
   - type: Door
     state: Open
