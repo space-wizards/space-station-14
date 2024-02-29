@@ -5,13 +5,11 @@ concurrency:
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 10 * * *'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    environment: publish
     steps:
     - name: Install dependencies
       run: sudo apt-get install -y python3-paramiko python3-lxml
@@ -52,28 +50,30 @@ jobs:
     - name: Upload files to centcomm
       uses: appleboy/scp-action@master
       with:
-        host: centcomm.spacestation14.io
-        username: wizards-build-push
-        key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
+        host: sector-umbra.net
+        port: 3489
+        username: staticfiles
+        key: ${{ secrets.UMBRA_BUILD_PUSH_KEY }}
+        passphrase: ${{ secrets.UMBRA_BUILD_PUSH_PASSPHRASE }}
         source: "release/${{ github.sha }}"
-        target: "/home/wizards-build-push/builds_dir/builds/"
+        target: "/home/staticfiles/builds_dir/builds/"
         strip_components: 1
 
-    - name: Update manifest JSON
-      uses: appleboy/ssh-action@master
-      with:
-        host: centcomm.spacestation14.io
-        username: wizards-build-push
-        key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
-        script: /home/wizards-build-push/push.ps1 ${{ github.sha }}
+    # - name: Update manifest JSON
+    #   uses: appleboy/ssh-action@master
+    #   with:
+    #     host: centcomm.spacestation14.io
+    #     username: wizards-build-push
+    #     key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
+    #     script: /home/wizards-build-push/push.ps1 ${{ github.sha }}
 
-    - name: Publish changelog (Discord)
-      run: Tools/actions_changelogs_since_last_run.py
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DISCORD_WEBHOOK_URL: ${{ secrets.CHANGELOG_DISCORD_WEBHOOK }}
+    # - name: Publish changelog (Discord)
+    #   run: Tools/actions_changelogs_since_last_run.py
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #     DISCORD_WEBHOOK_URL: ${{ secrets.CHANGELOG_DISCORD_WEBHOOK }}
 
-    - name: Publish changelog (RSS)
-      run: Tools/actions_changelog_rss.py
-      env:
-        CHANGELOG_RSS_KEY: ${{ secrets.CHANGELOG_RSS_KEY }}
+    # - name: Publish changelog (RSS)
+    #   run: Tools/actions_changelog_rss.py
+    #   env:
+    #     CHANGELOG_RSS_KEY: ${{ secrets.CHANGELOG_RSS_KEY }}
