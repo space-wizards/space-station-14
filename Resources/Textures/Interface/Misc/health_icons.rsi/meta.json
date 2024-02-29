@@ -8,7 +8,17 @@
     "copyright": "https://github.com/tgstation/tgstation/blob/master/icons/mob/huds/hud.dmi",
     "states": [
         {
-            "name": "Fine"
+            "name": "Healthy"
+        },
+        {
+            "name": "Crit",
+            "delays":
+            [
+                [0.1,0.1,0.1,0.1,0.1,0.1]
+            ]
+        },
+        {
+            "name": "Dead"
         }
     ]
 }

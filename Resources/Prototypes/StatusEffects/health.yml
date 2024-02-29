@@ -1,7 +1,23 @@
 - type: statusIcon
-  id: HealthIconFine
+  id: HealthIconHealthy
   priority: 1
   icon:
     sprite: /Textures/Interface/Misc/health_icons.rsi
-    state: Fine
-  locationPreference: Right
+    state: Healthy
+  locationPreference: Left
+
+- type: statusIcon
+  id: HealthIconCrit
+  priority: 1
+  icon:
+    sprite: /Textures/Interface/Misc/health_icons.rsi
+    state: Crit
+  locationPreference: Left
+
+- type: statusIcon
+  id: HealthIconDead
+  priority: 1
+  icon:
+    sprite: /Textures/Interface/Misc/health_icons.rsi
+    state: Dead
+  locationPreference: Left
