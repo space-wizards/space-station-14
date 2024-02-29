@@ -11,7 +11,7 @@
 - type: entity
   parent: CrateEngineering
   id: CrateEngineeringGyroscope
-  name: thruster crate
+  name: gyroscope crate
   description: Contains a gyroscope flatpack.
   components:
   - type: StorageFill
