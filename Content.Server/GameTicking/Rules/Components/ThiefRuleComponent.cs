@@ -1,8 +1,7 @@
+using Content.Shared.Random;
+using Content.Shared.Roles;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Content.Shared.Roles;
-using Robust.Shared.Player;
-using Content.Shared.Preferences;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
@@ -12,6 +11,18 @@ namespace Content.Server.GameTicking.Rules.Components;
 [RegisterComponent, Access(typeof(ThiefRuleSystem))]
 public sealed partial class ThiefRuleComponent : Component
 {
+    [DataField]
+    public ProtoId<WeightedRandomPrototype> BigObjectiveGroup = "ThiefBigObjectiveGroups";
+
+    [DataField]
+    public ProtoId<WeightedRandomPrototype> SmallObjectiveGroup = "ThiefObjectiveGroups";
+
+    [DataField]
+    public ProtoId<WeightedRandomPrototype> EscapeObjectiveGroup = "ThiefEscapeObjectiveGroups";
+
+    [DataField]
+    public float BigObjectiveChance = 0.7f;
+
     /// <summary>
     /// Add a Pacified comp to thieves
     /// </summary>
@@ -27,8 +38,6 @@ public sealed partial class ThiefRuleComponent : Component
     [DataField]
     public ProtoId<AntagPrototype> ThiefPrototypeId = "Thief";
 
-    public Dictionary<ICommonSession, HumanoidCharacterProfile> StartCandidates = new();
-
     [DataField]
     public float MaxObjectiveDifficulty = 2.5f;
 
@@ -39,7 +48,7 @@ public sealed partial class ThiefRuleComponent : Component
     /// Things that will be given to thieves
     /// </summary>
     [DataField]
-    public List<EntProtoId> StarterItems = new List<EntProtoId> { "ToolboxThief", "ClothingHandsChameleonThief" }; //TO DO - replace to chameleon thieving gloves whem merg
+    public List<EntProtoId> StarterItems = new() { "ToolboxThief", "ClothingHandsChameleonThief" };
 
     /// <summary>
     /// All Thieves created by this rule
