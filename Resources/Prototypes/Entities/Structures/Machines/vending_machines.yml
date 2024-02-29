@@ -296,9 +296,6 @@
   - type: Advertise
     pack: ClothesMateAds
   - type: Speech
-  - type: Tag
-    tags:
-      - DroneUsable
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/clothing.rsi
     layers:
@@ -329,9 +326,6 @@
   - type: Advertise
     pack: ClothesMateAds
   - type: Speech
-  - type: Tag
-    tags:
-    - DroneUsable
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/winterdrobe.rsi
     layers:
@@ -888,7 +882,7 @@
 - type: entity
   parent: VendingMachineSeedsUnlocked
   id: VendingMachineSeeds
-  suffix: Hyroponics
+  suffix: Hydroponics
   components:
   - type: AccessReader
     access: [["Hydroponics"]]
@@ -1103,9 +1097,6 @@
     radius: 1.5
     energy: 1.6
     color: "#c73434"
-  - type: Tag
-    tags:
-      - DroneUsable
 
 - type: entity
   parent: VendingMachine
@@ -1201,9 +1192,6 @@
     radius: 1.5
     energy: 1.6
     color: "#d4ab33"
-  - type: Tag
-    tags:
-      - DroneUsable
 
 - type: entity
   parent: VendingMachine
@@ -1336,12 +1324,20 @@
   parent: VendingMachine
   name: vending machine
   abstract: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
   components:
+  - type: Physics
+    canCollide: false
+  - type: Fixtures
   - type: Sprite
     drawdepth: WallMountedItems
     snapCardinals: false
+  - type: Rotatable
   - type: WallMount
-    arc: 180
+    arc: 175
   - type: Transform
     noRot: false
 

@@ -3,6 +3,8 @@ using Content.Server.UserInterface;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
+using Content.Shared.PowerCell;
+using Content.Shared.Movement.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 
@@ -30,18 +32,10 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
         EntityCoordinates? coordinates = onGrid ? xform.Coordinates : null;
         Angle? angle = onGrid ? xform.LocalRotation : null;
 
-        // Use ourself I guess.
-        if (TryComp<IntrinsicUIComponent>(uid, out var intrinsic))
+        if (component.FollowEntity)
         {
-            foreach (var uiKey in intrinsic.UIs)
-            {
-                if (uiKey.Key?.Equals(RadarConsoleUiKey.Key) == true)
-                {
-                    coordinates = new EntityCoordinates(uid, Vector2.Zero);
-                    angle = Angle.Zero;
-                    break;
-                }
-            }
+            coordinates = new EntityCoordinates(uid, Vector2.Zero);
+            angle = Angle.Zero;
         }
 
         if (_uiSystem.TryGetUi(uid, RadarConsoleUiKey.Key, out var bui))

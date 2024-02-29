@@ -1005,6 +1005,16 @@
   description: flavor-complex-profits
 
 - type: flavor
+  id: weh
+  flavorType: Base
+  description: flavor-weh
+
+- type: flavor
   id: fishops
   flavorType: Complex
   description: flavor-complex-fishops
+
+- type: flavor
+  id: violets
+  flavorType: Complex
+  description: flavor-complex-violets
