@@ -137,7 +137,7 @@ namespace Content.Server.Flash
             flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
             Dirty(target, flashable);
 
-            if (melee && used != null)
+            if (used != null && melee && used.Value.Comp.StunOnMelee)
             {
                 _stun.TryParalyze(target, used.Value.Comp.MeleeStunDuration, true);
             }
@@ -169,11 +169,9 @@ namespace Content.Server.Flash
                 if (!flashableQuery.TryGetComponent(entity, out var flashable))
                     continue;
 
-                Log.Debug($"{ToPrettyString(entity)}");
                 // Check for unobstructed entities while ignoring the mobs with flashable components.
                 if (!_interaction.InRangeUnobstructed(entity, mapPosition, range, flashable.CollisionGroup, predicate: (e) => flashableQuery.HasComponent(e) || e == source.Owner))
                     continue;
-                Log.Debug($"{ToPrettyString(entity)} in range");
 
                 // They shouldn't have flash removed in between right?
                 Flash(entity, user, (source, source.Comp), duration, slowTo, displayPopup, flashableQuery.GetComponent(entity));
