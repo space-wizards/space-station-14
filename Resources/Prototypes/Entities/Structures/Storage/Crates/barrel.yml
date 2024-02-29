@@ -54,7 +54,7 @@
   - type: Climbable
 
 - type: entity
-  parent: BaseStructureDynamic
+  parent: StorageTank
   id: WoodenKeg
   name: wooden keg
   description: A musty old wooden keg, with a tap attached to the front.
@@ -64,8 +64,6 @@
       tank:
         maxVol: 500
         canMix: true
-  - type: DrainableSolution
-    solution: tank
   - type: ExaminableSolution
     solution: tank
   - type: UserInterface
@@ -90,24 +88,6 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Wood
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 30
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:SpillBehavior
-        solution: tank
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MaterialWoodPlank1:
-            min: 1
-            max: 4
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: StaticPrice
     price: 50
   - type: Construction
@@ -115,8 +95,6 @@
     node: woodenkeg
     containers:
     - entity_storage
-  - type: InteractionOutline
-  - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
@@ -144,24 +122,6 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-      - !type:SpillBehavior
-        solution: tank
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Transform
     noRot: true
 
@@ -227,7 +187,7 @@
   - type: PacifismDangerousAttack
   - type: Explosive
     explosionType: Default
-    totalIntensity: 120
+    totalIntensity: 80
 
 - type: entity
   parent: MetalBarrelGrey
