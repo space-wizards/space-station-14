@@ -56,28 +56,22 @@ public sealed class ProgressColorSystem : EntitySystem
     public static Color InterpolateColorGaussian(Color[] colors, double x)
     {
         double r = 0.0, g = 0.0, b = 0.0;
-        var total = 0.0;
+        var total = 0f;
         var step = 1.0 / (colors.Length - 1);
         var mu = 0.0;
         const double sigma2 = 0.035;
 
-        foreach (var _ in colors)
-        {
-            total += Math.Exp(-(x - mu) * (x - mu) / (2.0 * sigma2)) / Math.Sqrt(2.0 * Math.PI * sigma2);
-            mu += step;
-        }
-
-        mu = 0.0;
         foreach(var color in colors)
         {
             var percent = Math.Exp(-(x - mu) * (x - mu) / (2.0 * sigma2)) / Math.Sqrt(2.0 * Math.PI * sigma2);
+            total += (float) percent;
             mu += step;
 
-            r += color.R * percent / total;
-            g += color.G * percent / total;
-            b += color.B * percent / total;
+            r += color.R * percent;
+            g += color.G * percent;
+            b += color.B * percent;
         }
 
-        return new Color((float) r, (float) g, (float) b);
+        return new Color((float) r / total, (float) g / total, (float) b / total);
     }
 }
