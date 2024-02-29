@@ -11,15 +11,24 @@ public sealed class SouthernAccentSystem : EntitySystem
         SubscribeLocalEvent<SouthernAccentComponent, AccentGetEvent>(OnAccent);
     }
 
-    private void OnAccent(EntityUid uid, SouthernAccentComponent component, AccentGetEvent args)
+        private void OnAccent(EntityUid uid, SouthernAccentComponent component, AccentGetEvent args)
     {
         var message = args.Message;
 
+        //nothin'
         message = Regex.Replace(message, "ing", "in'");
-        message = Regex.Replace(message, @"\b(you all)\b", "y'all");
-        message = Regex.Replace(message, @"\b(you guys)\b", "y'all");
-        message = Regex.Replace(message, @"\b(is not)\b", "ain't");
-        message = Regex.Replace(message, @"\b(isn't)\b", "ain't");
+
+        //coulda
+        message = Regex.Replace(message, "d've", "da");
+
+        message = Regex.Replace(message, "and", "an'");
+        
+        message = Regex.Replace(message, "you all", "y'all");
+        message = Regex.Replace(message, "you guys", "y'all");
+
+        message = Regex.Replace(message, "is not", "ain't");
+        message = Regex.Replace(message, "isn't", "ain't");
+
         args.Message = message;
     }
 }
