@@ -152,6 +152,6 @@
   components:
     - type: InstantAction
       checkCanInteract: false
-      icon: Interface/home.png
+      icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
       event: !type:OpenUiActionEvent
         key: enum.StationMapUiKey.Key
