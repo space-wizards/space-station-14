@@ -133,7 +133,10 @@ public abstract partial class SharedBlobSystem : EntitySystem
         if (_net.IsServer)
         {
             Del(blob);
-            SpawnBlobCreated(args.Structure, pos, ent);
+            foreach (var structure in args.Structure)
+            {
+                SpawnBlobCreated(structure, pos, ent);
+            }
         }
 
         args.Handled = true;

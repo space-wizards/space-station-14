@@ -52,7 +52,7 @@
       state: ui_resource
     event:
       !type:BlobCreateStructureEvent
-        structure: BlobStructureResource
+        structure: [ BlobStructureResource ]
         cost: 40
         minRange: 3.5
         rangeComponent: BlobResource
@@ -72,7 +72,7 @@
       state: ui_factory
     event:
       !type:BlobCreateStructureEvent
-      structure: BlobStructureFactory
+      structure: [ BlobStructureFactory ]
       cost: 60
       minRange: 6.5
       rangeComponent: BlobFactory
@@ -92,7 +92,7 @@
       state: ui_node
     event:
       !type:BlobCreateStructureEvent
-      structure: BlobStructureNode
+      structure: [ BlobStructureNode ]
       cost: 50
       minRange: 4.5
       rangeComponent: BlobNode

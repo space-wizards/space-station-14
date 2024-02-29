@@ -1,8 +1,6 @@
 using Content.Shared.Actions;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Blob.Components;
@@ -57,7 +55,7 @@ public sealed partial class BlobCreateStructureEvent : InstantActionEvent
     /// The structure that's created.
     /// </summary>
     [DataField]
-    public EntProtoId Structure;
+    public List<EntProtoId> Structure = new();
 
     /// <summary>
     /// The resource cost of creating the structure.
