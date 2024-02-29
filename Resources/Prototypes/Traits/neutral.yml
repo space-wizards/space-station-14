@@ -18,8 +18,8 @@
       accent: dwarf
 
 - type: trait
-  id: VerbCutoff
-  name: trait-verbcutoff-name
-  description: trait-verbcutoff-desc
+  id: Southern
+  name: trait-southern-name
+  description: trait-southern-desc
   components:
-  - type: VerbCutoffAccent
+  - type: SouthernAccent
