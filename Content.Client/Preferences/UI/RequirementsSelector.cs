@@ -3,6 +3,7 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Preferences.Loadouts.Effects;
+using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Prototypes;
@@ -12,8 +13,6 @@ namespace Content.Client.Preferences.UI;
 
 public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototype
 {
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-
     /// <summary>
     /// Prefix for prototypes.
     /// </summary>
@@ -30,7 +29,6 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
 
     protected RequirementsSelector(string prefix, T proto, ButtonGroup loadoutGroup)
     {
-        IoCManager.InjectDependencies(this);
         _loadoutGroup = loadoutGroup;
         _prefix = prefix;
         Proto = proto;
@@ -102,7 +100,10 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
         };
 
         // TODO: Attach to profile / jobs.
-        _protoManager.TryIndex(_prefix + Proto.ID, out RoleLoadoutPrototype? loadoutProto);
+        var collection = IoCManager.Instance!;
+        var entManager = collection.Resolve<IEntityManager>();
+        var protoManager = collection.Resolve<IPrototypeManager>();
+        protoManager.TryIndex(_prefix + Proto.ID, out RoleLoadoutPrototype? loadoutProto);
 
         // If no loadout found then disabled button
         if (loadoutProto == null)
@@ -112,17 +113,28 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
         // else
         else
         {
+            var session = collection.Resolve<IPlayerManager>().LocalSession!;
             var loadout = new RoleLoadout((ProtoId<RoleLoadoutPrototype>) loadoutProto.ID);
-            loadout.SetDefault(_protoManager);
+            loadout.SetDefault(entManager, protoManager);
+            loadout.EnsureValid(session, collection);
 
             loadoutWindowBtn.OnPressed += args =>
             {
                 if (args.Button.Pressed)
                 {
-                    _loadout = new LoadoutWindow(loadout, loadoutProto, _protoManager)
+                    _loadout = new LoadoutWindow(loadout, loadoutProto, session, collection)
                     {
                         Title = Loc.GetString(_prefix + Proto.ID + "-loadout"),
                     };
+
+                    _loadout.RefreshLoadouts(loadout, session, collection);
+
+                    _loadout.OnLoadoutPressed += (selectedGroup, selectedLoadout) =>
+                    {
+                        loadout.ApplyLoadout(selectedGroup, selectedLoadout, entManager);
+                        _loadout.RefreshLoadouts(loadout, session, collection);
+                    };
+
                     _loadout.OpenCenteredLeft();
                     _loadout.OnClose += () =>
                     {

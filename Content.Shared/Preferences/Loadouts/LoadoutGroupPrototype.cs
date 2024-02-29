@@ -21,7 +21,7 @@ public sealed class LoadoutGroupPrototype : IPrototype
     /// If optional then no loadouts in the group need to be specified.
     /// </summary>
     [DataField]
-    public bool Optional = true;
+    public bool Optional;
 
     [DataField(required: true)]
     public List<ProtoId<LoadoutPrototype>> Loadouts = new();

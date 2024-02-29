@@ -1,6 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Collections;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Preferences.Loadouts.Effects;
 
@@ -22,9 +25,10 @@ public sealed class RoleLoadout
     /// <summary>
     /// Ensures all prototypes exist and effects can be applied.
     /// </summary>
-    public void EnsureValid(IPrototypeManager protoManager)
+    public void EnsureValid(ICommonSession session, IDependencyCollection collection)
     {
         var groupRemove = new ValueList<string>();
+        var protoManager = collection.Resolve<IPrototypeManager>();
 
         foreach (var (group, loadout) in SelectedLoadouts)
         {
@@ -49,7 +53,7 @@ public sealed class RoleLoadout
             // Validate the loadout can be applied (e.g. points).
             if (loadout != null)
             {
-                if (!IsValid(loadout, protoManager))
+                if (!IsValid(session, loadout, collection, out _))
                 {
                     SelectedLoadouts[group] =
                         groupProto.Loadouts.Count > 0 ? groupProto.Loadouts[0] : loadout;
@@ -66,8 +70,7 @@ public sealed class RoleLoadout
     /// <summary>
     /// Resets the selected loadouts to default.
     /// </summary>
-    /// <param name="protoManager"></param>
-    public void SetDefault(IPrototypeManager protoManager)
+    public void SetDefault(IEntityManager entManager, IPrototypeManager protoManager)
     {
         SelectedLoadouts.Clear();
         var roleProto = protoManager.Index(Role);
@@ -93,26 +96,32 @@ public sealed class RoleLoadout
                 selected = groupProto.Loadouts[0];
             }
 
-            SelectedLoadouts[group] = selected;
+            ApplyLoadout(group, selected, entManager);
         }
     }
 
     /// <summary>
     /// Returns whether a loadout is valid or not.
     /// </summary>
-    public bool IsValid(ProtoId<LoadoutPrototype>? loadoutId, IPrototypeManager protoManager)
+    public bool IsValid(ICommonSession session, ProtoId<LoadoutPrototype>? loadoutId, IDependencyCollection collection, [NotNullWhen(false)] out FormattedMessage? reason)
     {
+        reason = null;
+
         if (loadoutId == null)
             return true;
 
+        var protoManager = collection.Resolve<IPrototypeManager>();
+
         if (!protoManager.TryIndex(loadoutId.Value, out var loadoutProto))
         {
+            // Uhh
+            reason = FormattedMessage.FromMarkup("");
             return false;
         }
 
         foreach (var effect in loadoutProto.Effects)
         {
-            if (!effect.Validate())
+            if (!effect.Validate(session, collection!, out reason))
                 return false;
         }
 
