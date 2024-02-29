@@ -148,18 +148,6 @@
    - chittered!
 
 - type: emote
-  id: Weh
-  category: Vocal
-  chatMessages: [weh.]
-  chatTriggers:
-  - weh
-  - weh.
-  - weh!
-  - wehs
-  - wehs.
-  - wehs!
-
-- type: emote
   id: Squeak
   category: Vocal
   chatMessages: [squeaks.]

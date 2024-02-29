@@ -87,11 +87,7 @@
     Crying:
       collection: MaleCry
     Weh:
-<<<<<<< HEAD
-      path: /Audio/Items/Toys/weh.ogg
-=======
       collection: Weh
->>>>>>> 4bb5b23145f37081672072a6be3519a2e1507a76
 
 - type: emoteSounds
   id: MaleSlime
