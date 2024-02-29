@@ -7,5 +7,3 @@
   icon: JobIconVisitor
   setPreference: false
   overrideConsoleVisibility: true
-  access:
-  - Maintenance
