@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Emisse
   changes:
-  - message: Some syndicate implants have been made cheaper.
-    type: Tweak
-  id: 5554
-  time: '2024-01-04T12:24:39.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23513
-- author: Emisse
-  changes:
   - message: Flashes cannot be heard from more than a few meters away.
     type: Tweak
   id: 5555
@@ -3838,3 +3831,10 @@
   id: 6053
   time: '2024-02-28T22:09:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24991
+- author: Nairodian
+  changes:
+  - message: You can now remove the rust from reinforced walls with a welder.
+    type: Fix
+  id: 6054
+  time: '2024-02-29T00:44:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25690
