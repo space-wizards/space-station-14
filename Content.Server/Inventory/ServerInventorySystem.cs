@@ -32,7 +32,7 @@ namespace Content.Server.Inventory
         private void OnOpenSlotStorage(OpenSlotStorageNetworkMessage ev, EntitySessionEventArgs args)
         {
             if (args.SenderSession.AttachedEntity is not { Valid: true } uid)
-                    return;
+                return;
 
             if (TryGetSlotEntity(uid, ev.Slot, out var entityUid) && TryComp<StorageComponent>(entityUid, out var storageComponent))
             {
@@ -48,8 +48,8 @@ namespace Content.Server.Inventory
             var enumerator = new InventorySlotEnumerator(source.Comp);
             while (enumerator.NextItem(out var item, out var slot))
             {
-                if (TryUnequip(source, slot.Name, true, true, inventory: source.Comp))
-                    TryEquip(target, item, slot.Name , true, true, inventory: target.Comp);
+                if (!TryEquip(target, item, slot.Name, true, force: true))
+                    TryUnequip(source, slot.Name, true, force: true);
             }
         }
     }

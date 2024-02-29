@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
+using Content.Shared.Humanoid;
 
 namespace Content.Shared.Polymorph;
 
@@ -122,4 +123,13 @@ public enum PolymorphInventoryChange : byte
     None,
     Drop,
     Transfer,
+}
+
+public struct PolymorphHumanoidData
+{
+    public EntityPrototype? EntityPrototype;
+    public MetaDataComponent? MetaDataComponent;
+    public HumanoidAppearanceComponent? HumanoidAppearanceComponent;
+    public string? DNA;
+    public EntityUid? EntityUid;
 }

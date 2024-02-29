@@ -1,0 +1,77 @@
+- type: listing
+  id: ChangelingDNAExtract
+  name: Extract DNA Sting	
+  description: Silently stings the victim to extract their genetic information. Uses 25 chemicals on sting.
+  productAction: ActionLingStingExtract
+  cost:
+    EvolutionPoints: 1
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ChangelingArmBlade
+  name: Arm Blade
+  description: Transform one of your arms into a grotesque blade made out of bone and flesh. Cuts through people as a hot knife through butter. Uses 20 chemicals on activation.
+  productAction: ActionArmBlade
+  cost:
+    EvolutionPoints: 2
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ChangelingArmor
+  name: Chitinous Armor	
+  description: Inflates your body into an all-consuming chitinous mass of armor. Provides a lot of protection, but slows you down by 35%. Uses 20 chemicals on activation.
+  productAction: ActionLingArmor
+  cost:
+    EvolutionPoints: 1
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ChangelingChameleonSkin
+  name: Chameleon Skin	
+  description: Your skin pigmentation rapidly changes to suit your current environment, becoming invisible after a few seconds of standing still. Uses 25 chemicals on activation.
+  productAction: ActionLingInvisible
+  cost:
+    EvolutionPoints: 2
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ChangelingEMP
+  name: Dissonant Shriek	
+  description: You release a high-frequency sound which disables technology in the surrounding area, including radio headsets. Uses 20 chemicals on activation.
+  productAction: ActionLingEMP
+  cost:
+    EvolutionPoints: 1
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ChangelingLSDSting
+  name: Hallucination Sting
+  description: Silently injects the victim with hallucinogenic chemicals. Uses 5 chemicals on sting.
+  productAction: ActionLingStingLSD
+  cost:
+    EvolutionPoints: 1
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

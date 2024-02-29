@@ -1,0 +1,68 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseChangelingObjective
+  components:
+  - type: Objective
+    issuer: changeling
+  - type: RoleRequirement
+    roles:
+      components:
+      - ChangelingRole
+
+- type: entity
+  noSpawn: true
+  parent: [BaseChangelingObjective, BaseLivingObjective]
+  id: EscapeLingShuttleObjective
+  name: Escape to centcom alive and unrestrained.
+  description: We must get to central command.
+  components:
+  - type: Objective
+    difficulty: 1.2
+    icon:
+      sprite: Structures/Furniture/chairs.rsi
+      state: shuttle
+  - type: EscapeShuttleCondition
+
+- type: entity
+  noSpawn: true
+  parent: [BaseChangelingObjective, BaseKillObjective]
+  id: KillRandomPersonObjectiveLing
+  description: We must kill them.
+  components:
+  - type: Objective
+    difficulty: 1.5
+    unique: false
+  - type: TargetObjective
+    title: objective-condition-kill-person-title
+  - type: PickRandomPerson
+
+- type: entity
+  abstract: true
+  parent: [BaseChangelingObjective, BaseStealObjective]
+  id: BaseChangelingStealObjective
+  components:
+  - type: StealCondition
+    verifyMapExistance: false
+  - type: Objective
+    difficulty: 2.5
+  - type: ObjectiveLimit
+    limit: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseChangelingStealObjective
+  id: CommandIDStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: CommandIDCard
+    descriptionText: We must steal any command member's ID card.
+
+- type: entity
+  noSpawn: true
+  parent: BaseChangelingStealObjective
+  id: SmileExtractStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: MaterialSmileExtract
+    descriptionText: We must steal smile's extract. It contains a compound that will be very useful to the hive.

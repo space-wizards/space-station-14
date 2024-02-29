@@ -229,6 +229,8 @@
       heldPrefix: silver
     - type: PresetIdCard
       job: Quartermaster
+    - type: StealTarget
+      stealGroup: CommandIDCard
 
 - type: entity
   parent: IDCardStandard
@@ -376,6 +378,8 @@
     heldPrefix: silver
   - type: PresetIdCard
     job: HeadOfPersonnel
+  - type: StealTarget
+    stealGroup: CommandIDCard
 
 - type: entity
   parent: IDCardStandard
@@ -390,6 +394,8 @@
     heldPrefix: silver
   - type: PresetIdCard
     job: ChiefEngineer
+  - type: StealTarget
+    stealGroup: CommandIDCard
 
 - type: entity
   parent: IDCardStandard
@@ -404,6 +410,8 @@
     heldPrefix: silver
   - type: PresetIdCard
     job: ChiefMedicalOfficer
+  - type: StealTarget
+    stealGroup: CommandIDCard
 
 - type: entity
   parent: IDCardStandard
@@ -418,6 +426,8 @@
     heldPrefix: silver
   - type: PresetIdCard
     job: ResearchDirector
+  - type: StealTarget
+    stealGroup: CommandIDCard
 
 - type: entity
   parent: IDCardStandard
@@ -432,6 +442,8 @@
     heldPrefix: silver
   - type: PresetIdCard
     job: HeadOfSecurity
+  - type: StealTarget
+    stealGroup: CommandIDCard
 
 - type: entity
   parent: IDCardStandard

@@ -1,0 +1,56 @@
+{
+  "copyright" : "biodegrade, transform and regenerate taken from https://github.com/tgstation/tgstation at https://github.com/tgstation/tgstation/commit/00762e4851d07c5d420de3564c96de8ea884c25e, rest made by xKREKSx (github)",
+  "license" : "CC-BY-SA-3.0",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "transform"
+    },
+    {
+      "name": "stasis"
+    },
+    {
+      "name": "regenerate"
+    },
+    {
+      "name": "absorb_dna"
+    },
+    {
+      "name": "chameleon"
+    },
+    {
+      "name": "emp"
+    },
+    {
+      "name": "cycle"
+    },
+    {
+      "name": "biodegrade"
+    },
+    {
+      "name": "sting_extract"
+    },
+    {
+      "name": "sting_blind"
+    },
+    {
+      "name": "sting_fake_armblade"
+    },
+    {
+      "name": "sting_hallucination"
+    },
+    {
+      "name": "sting_mute"
+    },
+    {
+      "name": "sting_transform"
+    },
+    {
+      "name": "sting_cryo"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+- type: alert
+  id: Chemicals
+  icons:
+  - sprite: /Textures/Interface/Alerts/chemicals_counter.rsi
+    state: chemicals0
+  - sprite: /Textures/Interface/Alerts/chemicals_counter.rsi
+    state: chemicals1
+  - sprite: /Textures/Interface/Alerts/chemicals_counter.rsi
+    state: chemicals2
+  - sprite: /Textures/Interface/Alerts/chemicals_counter.rsi
+    state: chemicals3
+  - sprite: /Textures/Interface/Alerts/chemicals_counter.rsi
+    state: chemicals4
+  - sprite: /Textures/Interface/Alerts/chemicals_counter.rsi
+    state: chemicals5
+  - sprite: /Textures/Interface/Alerts/chemicals_counter.rsi
+    state: chemicals6
+  - sprite: /Textures/Interface/Alerts/chemicals_counter.rsi
+    state: chemicals7
+  name: alerts-changeling-chemicals-name
+  description: alerts-changeling-chemicals-desc
+  minSeverity: 0
+  maxSeverity: 7

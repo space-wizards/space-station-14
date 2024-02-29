@@ -37,7 +37,7 @@ namespace Content.Server.Traitor.Uplink
         /// <param name="uplinkPresetId">The id of the storepreset</param>
         /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
         /// <returns>Whether or not the uplink was added successfully</returns>
-        public bool AddUplink(EntityUid user, FixedPoint2? balance, string uplinkPresetId = "StorePresetUplink", EntityUid? uplinkEntity = null)
+        public bool AddUplink(EntityUid user, FixedPoint2? balance, string uplinkPresetId = "StorePresetUplink", EntityUid? uplinkEntity = null, string currencyPrototype = TelecrystalCurrencyPrototype)
         {
             // Try to find target item
             if (uplinkEntity == null)
@@ -55,7 +55,7 @@ namespace Content.Server.Traitor.Uplink
             if (balance != null)
             {
                 store.Balance.Clear();
-                _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance.Value } }, uplinkEntity.Value, store);
+                _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { currencyPrototype, balance.Value } }, uplinkEntity.Value, store);
             }
 
             // TODO add BUI. Currently can't be done outside of yaml -_-

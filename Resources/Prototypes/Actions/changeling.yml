@@ -1,0 +1,152 @@
+- type: entity
+  id: ActionChangelingEvolutionMenu
+  name: Evolution Menu
+  description: Opens the evolution menu, where you can evolve your body to fit your environment.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/shop.png
+    event: !type:ChangelingEvolutionMenuActionEvent
+
+- type: entity
+  id: ActionChangelingAbsorb
+  name: Absorb DNA
+  description: Absorbs the DNA of the targeted person. They must be in critical or dead and be a humanoid in order to absorb.
+  noSpawn: true
+  components:
+  - type: EntityTargetAction
+    icon:
+      sprite: Interface/Actions/actions_ling.rsi
+      state: absorb_dna
+    whitelist:
+      components:
+      - Body
+    event: !type:LingAbsorbActionEvent
+    useDelay: 5
+    canTargetSelf: false
+
+- type: entity
+  id: ActionChangelingCycleDNA
+  name: Cycle DNA
+  description: Cycles through your available DNA strands.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Interface/Actions/actions_ling.rsi
+      state: cycle
+    event: !type:ChangelingCycleDNAActionEvent
+    useDelay: 1
+
+- type: entity
+  id: ActionChangelingTransform
+  name: Transform
+  description: Transforms your appearance to the selected DNA strand. Uses 5 chemicals.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Interface/Actions/actions_ling.rsi
+      state: transform
+    event: !type:ChangelingTransformActionEvent
+    useDelay: 5
+
+- type: entity
+  id: ActionLingRegenerate
+  name: Regenerate
+  description: Rapidly regenerate, healing major wounds and restoring blood volume. Uses 10 chemicals and can only be used when in a critical condition.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_ling.rsi
+      state: regenerate
+    event: !type:LingRegenerateActionEvent
+    useDelay: 115
+
+- type: entity
+  id: ActionLingStingExtract
+  name: Extract DNA Sting
+  description: Extracts the DNA of the target victim. The victim should not know they've been stung, unless they're another changeling. Uses 25 chemicals.
+  noSpawn: true
+  components:
+  - type: EntityTargetAction
+    icon:
+      sprite: Interface/Actions/actions_ling.rsi
+      state: sting_extract
+    whitelist:
+      components:
+      - Body
+    event: !type:LingStingExtractActionEvent
+    useDelay: 30
+    canTargetSelf: false
+
+- type: entity
+  id: ActionLingStingLSD
+  name: Hallucination Sting
+  description: Injects large doses of hallucinogenic chemicals into the victim after a short delay. The victim should not know they've been stung, unless they're another changeling. Uses 5 chemicals.
+  noSpawn: true
+  components:
+  - type: EntityTargetAction
+    icon:
+      sprite: Interface/Actions/actions_ling.rsi
+      state: sting_hallucination
+    whitelist:
+      components:
+      - Body
+    event: !type:LingStingLSDActionEvent
+    useDelay: 30
+    canTargetSelf: false
+
+- type: entity
+  id: ActionArmBlade
+  name: Toggle Arm Blade
+  description: Transforms one of your free arms into a grotesque blade made out of bone and flesh. It can also be used to pry open doors. Uses 20 chemicals.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Objects/Weapons/Melee/armblade.rsi
+      state: icon
+    event: !type:ArmBladeActionEvent
+    useDelay: 1
+
+- type: entity
+  id: ActionLingArmor
+  name: Toggle Chitinous Armor
+  description: Inflates your body into an all-consuming chitinous mass of armor. Uses 20 chemicals and slows down chemical regeneration by 25% when active.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Clothing/OuterClothing/Armor/lingarmor.rsi
+      state: icon
+    event: !type:LingArmorActionEvent
+    useDelay: 15
+
+- type: entity
+  id: ActionLingInvisible
+  name: Toggle Chameleon Skin
+  description: Your skin pigmentation rapidly changes to suit your current environment, becoming invisible after a few seconds of standing still. Uses 25 chemicals.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Interface/Actions/actions_ling.rsi
+      state: chameleon
+    event: !type:LingInvisibleActionEvent
+    useDelay: 1
+
+- type: entity
+  id: ActionLingEMP
+  name: Activate Dissonant Shriek
+  description: You shift your vocal cords to release a high-frequency sound that overloads nearby electronics. Uses 20 chemicals.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Interface/Actions/actions_ling.rsi
+      state: emp
+    useDelay: 15
+    event: !type:LingEMPActionEvent

@@ -33,3 +33,6 @@ roles-antag-thief-objective = Add some NT property to your personal collection w
 
 roles-antag-terminator-name = Exterminator
 roles-antag-terminator-objective = Kill the target at all costs, the future depends on it.
+
+roles-antag-changeling-name = Changeling
+roles-antag-changeling-objective = Use your special alien abilites to aid in completing your objectives.
