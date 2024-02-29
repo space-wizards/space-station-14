@@ -386,6 +386,12 @@ namespace Content.Server.Database
         public string TraitName { get; set; } = null!;
     }
 
+    #region Loadouts
+
+    
+
+    #endregion
+
     public enum DbPreferenceUnavailableMode
     {
         // These enum values HAVE to match the ones in PreferenceUnavailableMode in Shared.

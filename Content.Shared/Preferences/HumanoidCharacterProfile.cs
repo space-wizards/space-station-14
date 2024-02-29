@@ -5,6 +5,7 @@ using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Preferences.Loadouts.Effects;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
@@ -30,6 +31,10 @@ namespace Content.Shared.Preferences
         private readonly Dictionary<string, JobPriority> _jobPriorities;
         private readonly List<string> _antagPreferences;
         private readonly List<string> _traitPreferences;
+
+        public IReadOnlyDictionary<string, RoleLoadout> Loadouts => _loadouts;
+
+        private Dictionary<string, RoleLoadout> _loadouts = new();
 
         private HumanoidCharacterProfile(
             string name,

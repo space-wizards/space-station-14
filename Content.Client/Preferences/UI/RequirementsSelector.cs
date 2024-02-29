@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Preferences.Loadouts;
+using Content.Shared.Preferences.Loadouts.Effects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Prototypes;
@@ -93,36 +94,39 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
         AddChild(Options);
         AddChild(_lockStripe);
 
-        var loadout = new Button()
+        var loadoutWindowBtn = new Button()
         {
-            ToggleMode = true,
             Text = Loc.GetString("loadout-window"),
             HorizontalExpand = true,
             Group = _loadoutGroup,
         };
 
+        // TODO: Attach to profile / jobs.
         _protoManager.TryIndex(_prefix + Proto.ID, out RoleLoadoutPrototype? loadoutProto);
 
         // If no loadout found then disabled button
         if (loadoutProto == null)
         {
-            loadout.Disabled = true;
+            loadoutWindowBtn.Disabled = true;
         }
         // else
         else
         {
-            loadout.OnPressed += args =>
+            var loadout = new RoleLoadout((ProtoId<RoleLoadoutPrototype>) loadoutProto.ID);
+            loadout.SetDefault(_protoManager);
+
+            loadoutWindowBtn.OnPressed += args =>
             {
                 if (args.Button.Pressed)
                 {
-                    _loadout = new LoadoutWindow(loadoutProto, _protoManager)
+                    _loadout = new LoadoutWindow(loadout, loadoutProto, _protoManager)
                     {
                         Title = Loc.GetString(_prefix + Proto.ID + "-loadout"),
                     };
                     _loadout.OpenCenteredLeft();
                     _loadout.OnClose += () =>
                     {
-                        loadout.Pressed = false;
+                        loadoutWindowBtn.Pressed = false;
                     };
                 }
                 else
@@ -133,7 +137,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
             };
         }
 
-        AddChild(loadout);
+        AddChild(loadoutWindowBtn);
     }
 
     public void LockRequirements(FormattedMessage requirements)
