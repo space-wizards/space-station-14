@@ -40,6 +40,7 @@
 - type: entity
   id: PinionAirlockAssembly
   name: airlock assembly
+  suffix: Pinion, Clockwork
   parent: AirlockAssembly
   components:
   - type: Sprite
@@ -54,7 +55,7 @@
 - type: entity
   parent: PinionAirlockAssembly
   id: PinionAirlockAssemblyGlass
-  suffix: Clockwork, Glass
+  suffix: Pinion, Clockwork, Glass
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/clockwork_pinion.rsi
