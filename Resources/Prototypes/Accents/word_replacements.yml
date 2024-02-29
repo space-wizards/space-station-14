@@ -2,6 +2,12 @@
 
 # this is kind of dumb but localization demands it.
 # i guess you could just specify the prefix ('mobster') and count and let the system fill it
+
+- type: accent
+  id: southern
+  wordReplacements:
+    accent-southern-words-1: accent-southern-words-replace-1
+
 - type: accent
   id: mobster
   wordReplacements:
