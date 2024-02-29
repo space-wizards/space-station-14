@@ -1069,13 +1069,4 @@
   components:
   - type: AccessReader
     access: [["SyndicateAgent"]]
-  - type: DoorBolt
-    BoltsDown: true
 
-- type: entity
-  parent: AirlockHatchSyndicate
-  id: AirlockHatchSyndicateBolted
-  suffix: Syndicate, Bolted, Locked
-  components:
-  - type: DoorBolt
-    BoltsDown: true
