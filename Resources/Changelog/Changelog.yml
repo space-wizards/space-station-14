@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: PrPleGoo
-  changes:
-  - message: added an overlay for the diagnostic hud that displays relative health
-      for inorganics
-    type: Add
-  - message: added an overlay for the medical hud that displays relative health for
-      biologicals
-    type: Add
-  - message: added a `showhealthbars` command that takes damage contained ids as a
-      param
-    type: Add
-  id: 5563
-  time: '2024-01-04T16:48:57.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/21980
-- author: ada-please
-  changes:
-  - message: Oil can now be broken down with a Centrifuge.
-    type: Add
-  id: 5564
-  time: '2024-01-04T22:45:35.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23537
 - author: EmoGarbage404
   changes:
   - message: Increased material discount of hyper convection protolathes and hyper
@@ -3842,3 +3821,18 @@
   id: 6062
   time: '2024-02-29T22:25:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25684
+- author: Nairodian
+  changes:
+  - message: The smooth tail now has a second color layer to customize.
+    type: Tweak
+  id: 6063
+  time: '2024-02-29T22:27:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25685
+- author: Hanzdegloker
+  changes:
+  - message: Commonly used decals should no longer washout the details of the tiles
+      below.
+    type: Tweak
+  id: 6064
+  time: '2024-02-29T22:27:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25689
