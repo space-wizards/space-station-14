@@ -25,7 +25,7 @@
         prob: 0.4
       - id: ClothingUniformJumpsuitOperative
         prob: 0.4
-      - id: ClothingEyesHudSyndicate
+      - id: ClothingHandsGlovesCombat
         prob: 0.2
       - id: ClothingBeltMilitaryWebbing
         prob: 0.2
@@ -45,7 +45,7 @@
         prob: 0.4
       - id: ClothingUniformJumpsuitOperative
         prob: 0.4
-      - id: ClothingEyesHudSyndicate
+      - id: ClothingHandsGlovesCombat
         prob: 0.2
       - id: ClothingBeltMilitaryWebbing
         prob: 0.2
