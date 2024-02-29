@@ -1,12 +1,12 @@
-using Content.Server.Ame.Components;
+using Content.Shared.Ame.Components;
 using Content.Shared.Examine;
 
-namespace Content.Server.Ame.EntitySystems;
+namespace Content.Shared.Ame.EntitySystems;
 
 /// <summary>
-/// Adds fuel level info to examine on fuel jars and handles network state.
+/// Adds details about fuel level when examining antimatter engine fuel containers.
 /// </summary>
-public sealed class AmeFuelSystem : EntitySystem
+public sealed class AmeFuelContainerSystem : EntitySystem
 {
     public override void Initialize()
     {
