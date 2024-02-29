@@ -157,6 +157,13 @@ public sealed class SwapTeleporterSystem : EntitySystem
         var pos = teleEntXform.Coordinates;
         var otherPos = otherTeleEntXform.Coordinates;
 
+        if (_transform.ContainsEntity(teleEnt, (otherTeleEnt, otherTeleEntXform)) ||
+            _transform.ContainsEntity(otherTeleEnt, (teleEnt, teleEntXform)))
+        {
+            Log.Error($"Invalid teleport swap attempt between {ToPrettyString(teleEnt)} and {ToPrettyString(otherTeleEnt)}");
+            return;
+        }
+
         _transform.SetCoordinates(teleEnt, otherPos);
         _transform.SetCoordinates(otherTeleEnt, pos);
     }
