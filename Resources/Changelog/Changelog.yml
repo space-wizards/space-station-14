@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Increased material discount of hyper convection protolathes and hyper
-      convection  autolathes to 50%
-    type: Tweak
-  id: 5565
-  time: '2024-01-05T02:44:11.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23542
 - author: TheShuEd
   changes:
   - message: Added new T2 "Deterrence technologies", it includes 2 new tools to fight
@@ -3836,3 +3828,10 @@
   id: 6064
   time: '2024-02-29T22:27:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25689
+- author: lzk228
+  changes:
+  - message: Added recipe of handheld station map to autolathe.
+    type: Add
+  id: 6065
+  time: '2024-02-29T22:34:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25719
