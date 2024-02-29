@@ -185,3 +185,45 @@
     notifiactionPrefix: prayer-chat-notify-honkmother
     verb: prayer-verbs-call
     verbImage: null
+
+- type: entity
+  parent: SynthesizerInstrument
+  id: BoomboxInstrument
+  name: boombox
+  description: A forgotten street classic.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/boombox.rsi
+  - type: SwappableInstrument
+    instrumentList:
+      # Brass
+      "Trumpet" : {56: 0}
+      "Trombone" : {57: 0}
+      # Percussion
+      "Glockenspiel" : {9: 0}
+      "Xylophone" : {13: 0}
+      "Electro Synthesizer": {62: 0}
+      "Bubbles Synthesizer": {63: 0}
+      # String
+      "Electric Guitar": {27: 0}
+      "Bass Guitar": {33: 0}
+      "Rock Guitar": {29: 0}
+      "Acoustic Guitar": {24: 0}
+      # Structures
+      "Piano": {1: 0}
+      "Vibraphone" : {11: 0}
+      "Minimoog" : {81: 0}
+  - type: Item
+    sprite: Objects/Fun/Instruments/boombox.rsi
+    size: Huge
+  - type: Clothing
+    sprite: Objects/Fun/Instruments/boombox.rsi
+    slots: [Neck]
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: ActivatableUI
+    inHandsOnly: false
+    singleUser: true
+    verbText: verb-instrument-openui
+    key: enum.InstrumentUiKey.Key
