@@ -22,13 +22,16 @@ public enum WarConditionStatus : byte
 public sealed class WarDeclaratorBoundUserInterfaceState : BoundUserInterfaceState
 {
     public WarConditionStatus? Status;
+    public TimeSpan ShuttleDisabledTime;
     public TimeSpan EndTime;
 
-    public WarDeclaratorBoundUserInterfaceState(WarConditionStatus? status, TimeSpan endTime)
+    public WarDeclaratorBoundUserInterfaceState(WarConditionStatus? status, TimeSpan endTime, TimeSpan shuttleDisabledTime)
     {
         Status = status;
         EndTime = endTime;
+        ShuttleDisabledTime = shuttleDisabledTime;
     }
+
 }
 
 [Serializable, NetSerializable]

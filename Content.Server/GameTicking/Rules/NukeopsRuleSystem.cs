@@ -373,25 +373,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         }
     }
 
-    private void OnWarDeclared(ref WarDeclaredEvent ev)
-    {
-        // TODO: this is VERY awful for multi-nukies
-        var query = QueryActiveRules();
-        while (query.MoveNext(out _, out _, out var nukeops, out _))
-        {
-            if (nukeops.WarDeclaredTime != null)
-                continue;
-
-            var newStatus = GetWarCondition(nukeops, ev.Status);
-            ev.Status = newStatus;
-            if (newStatus == WarConditionStatus.WarReady)
-            {
-                nukeops.WarDeclaredTime = Timing.CurTime;
-                DistributeExtraTc(nukeops);
-            }
-        }
-    }
-
     private void OnShuttleCallAttempt(ref CommunicationConsoleCallShuttleAttemptEvent ev)
     {
         var query = QueryActiveRules();
@@ -412,6 +393,31 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         }
     }
 
+    private void OnWarDeclared(ref WarDeclaredEvent ev)
+    {
+        // TODO: this is VERY awful for multi-nukies
+        var query = QueryActiveRules();
+        while (query.MoveNext(out _, out _, out var nukeops, out _))
+        {
+            if (nukeops.WarDeclaredTime != null)
+                continue;
+
+            if (Transform(ev.DeclaratorEntity).MapID != nukeops.NukiePlanet)
+                continue;
+
+            var newStatus = GetWarCondition(nukeops, ev.Status);
+            ev.Status = newStatus;
+            if (newStatus == WarConditionStatus.WarReady)
+            {
+                nukeops.WarDeclaredTime = Timing.CurTime;
+                var timeRemain = nukeops.WarNukieArriveDelay + Timing.CurTime;
+                ev.DeclaratorEntity.Comp.ShuttleDisabledTime = timeRemain;
+
+                DistributeExtraTc(nukeops);
+            }
+        }
+    }
+
     #endregion Event Handlers
 
     /// <summary>
@@ -422,7 +428,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (!nukieRule.CanEnableWarOps)
             return WarConditionStatus.NoWarUnknown;
 
-        // TODO sinful?
         if (EntityQuery<NukeopsRoleComponent>().Count() < nukieRule.WarDeclarationMinOps)
             return WarConditionStatus.NoWarSmallCrew;
 
@@ -682,11 +687,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         var query = EntityQueryEnumerator<NukeOpsShuttleComponent, TransformComponent>();
         while (query.MoveNext(out var grid, out _, out var shuttleTransform))
         {
-            if (shuttleTransform.MapID == ent.Comp.NukiePlanet)
-            {
-                ent.Comp.NukieShuttle = grid;
-                break;
-            }
+            if (shuttleTransform.MapID != ent.Comp.NukiePlanet)
+                continue;
+
+            ent.Comp.NukieShuttle = grid;
+            break;
         }
 
         return true;

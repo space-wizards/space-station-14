@@ -16,6 +16,7 @@ public sealed partial class WarDeclaratorWindow : FancyWindow
     public event Action<string>? OnActivated;
 
     private TimeSpan _endTime;
+    private TimeSpan _shuttleDisabledTime;
     private WarConditionStatus _status;
 
     public WarDeclaratorWindow(IGameTiming gameTiming, ILocalizationManager localizationManager)
@@ -36,18 +37,27 @@ public sealed partial class WarDeclaratorWindow : FancyWindow
 
     public void UpdateState(WarDeclaratorBoundUserInterfaceState state)
     {
-        state.Status ??= WarConditionStatus.NoWarUnknown;
+        if (state.Status == null)
+            return;
 
         WarButton.Disabled = state.Status == WarConditionStatus.WarReady;
 
         _endTime = state.EndTime;
+        _shuttleDisabledTime = state.ShuttleDisabledTime;
         _status = state.Status.Value;
 
-        switch(state.Status)
+        UpdateStatus(state.Status.Value);
+
+    }
+
+    private void UpdateStatus(WarConditionStatus status)
+    {
+        switch (status)
         {
             case WarConditionStatus.WarReady:
+                WarButton.Disabled = true;
                 StatusLabel.Text = Loc.GetString("war-declarator-boost-declared");
-                InfoLabel.Text = Loc.GetString("war-declarator-conditions-delay");
+                UpdateTimer();
                 StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateLow);
                 break;
             case WarConditionStatus.YesWar:
@@ -84,25 +94,24 @@ public sealed partial class WarDeclaratorWindow : FancyWindow
         }
     }
 
-    public void UpdateTimer()
+    private void UpdateTimer()
     {
         switch(_status)
         {
             case WarConditionStatus.YesWar:
                 var timeLeft = _endTime.Subtract(_gameTiming.CurTime);
-
                 if (timeLeft > TimeSpan.Zero)
-                {
                     InfoLabel.Text = Loc.GetString("war-declarator-boost-timer", ("time", timeLeft.ToString("mm\\:ss")));
-                }
                 else
-                {
-                    _status = WarConditionStatus.NoWarTimeout;
-                    StatusLabel.Text = Loc.GetString("war-declarator-boost-impossible");
-                    InfoLabel.Text = Loc.GetString("war-declarator-conditions-time-out");
-                    StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
-                    WarButton.Disabled = true;
-                }
+                    UpdateStatus(WarConditionStatus.NoWarTimeout);
+                break;
+
+            case WarConditionStatus.WarReady:
+                var time = _shuttleDisabledTime.Subtract(_gameTiming.CurTime);
+                if (time > TimeSpan.Zero)
+                    InfoLabel.Text = Loc.GetString("war-declarator-boost-timer", ("time", time.ToString("mm\\:ss")));
+                else
+                    InfoLabel.Text = Loc.GetString("war-declarator-conditions-ready");
                 break;
             default:
                 return;

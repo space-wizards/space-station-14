@@ -29,7 +29,6 @@ public sealed class WarDeclaratorSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<WarDeclaratorComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<WarDeclaratorComponent, EntityUnpausedEvent>(OnEntityUnpaused);
 
         SubscribeLocalEvent<WarDeclaratorComponent, ActivatableUIOpenAttemptEvent>(OnAttemptOpenUI);
         SubscribeLocalEvent<WarDeclaratorComponent, WarDeclaratorActivateMessage>(OnActivated);
@@ -39,11 +38,6 @@ public sealed class WarDeclaratorSystem : EntitySystem
     {
         ent.Comp.Message = Loc.GetString("war-declarator-default-message");
         ent.Comp.DisableAt = _gameTiming.CurTime + TimeSpan.FromMinutes(ent.Comp.WarDeclarationDelay);
-    }
-
-    private void OnEntityUnpaused(Entity<WarDeclaratorComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.DisableAt += args.PausedTime;
     }
 
     private void OnAttemptOpenUI(Entity<WarDeclaratorComponent> ent, ref ActivatableUIOpenAttemptEvent args)
@@ -64,7 +58,7 @@ public sealed class WarDeclaratorSystem : EntitySystem
         if (args.Session.AttachedEntity is not {} playerEntity)
             return;
 
-        var ev = new WarDeclaredEvent(ent.Comp.CurrentStatus);
+        var ev = new WarDeclaredEvent(ent.Comp.CurrentStatus, ent);
         RaiseLocalEvent(ref ev);
 
         if (ent.Comp.DisableAt < _gameTiming.CurTime)
@@ -92,6 +86,6 @@ public sealed class WarDeclaratorSystem : EntitySystem
         _userInterfaceSystem.TrySetUiState(
             ent,
             WarDeclaratorUiKey.Key,
-            new WarDeclaratorBoundUserInterfaceState(status, ent.Comp.DisableAt));
+            new WarDeclaratorBoundUserInterfaceState(status, ent.Comp.DisableAt, ent.Comp.ShuttleDisabledTime));
     }
 }

@@ -1,4 +1,5 @@
-﻿using Content.Shared.NukeOps;
+﻿using Content.Server.GameTicking.Rules;
+using Content.Shared.NukeOps;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -7,8 +8,8 @@ namespace Content.Server.NukeOps;
 /// <summary>
 /// Used with NukeOps game rule to send war declaration announcement
 /// </summary>
-[RegisterComponent]
-[Access(typeof(WarDeclaratorSystem))]
+[RegisterComponent, AutoGenerateComponentPause]
+[Access(typeof(WarDeclaratorSystem), typeof(NukeopsRuleSystem))]
 public sealed partial class WarDeclaratorComponent : Component
 {
     /// <summary>
@@ -51,12 +52,18 @@ public sealed partial class WarDeclaratorComponent : Component
     [DataField]
     public float WarDeclarationDelay = 6.0f;
 
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan DisableAt;
+
+    /// <summary>
+    /// How long the shuttle will be disabled for
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan ShuttleDisabledTime;
 
     [DataField]
     public WarConditionStatus? CurrentStatus;
 }
 
 [ByRefEvent]
-public record struct WarDeclaredEvent(WarConditionStatus? Status);
+public record struct WarDeclaredEvent(WarConditionStatus? Status, Entity<WarDeclaratorComponent> DeclaratorEntity);

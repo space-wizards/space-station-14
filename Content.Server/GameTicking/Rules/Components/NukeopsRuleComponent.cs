@@ -140,7 +140,7 @@ public sealed partial class NukeopsRuleComponent : Component
     public NukeopSpawnPreset AgentSpawnDetails = new() { AntagRoleProto = "NukeopsMedic", GearProto = "SyndicateOperativeMedicFull", NamePrefix = "nukeops-role-agent", NameList = "SyndicateNamesNormal" };
 
     [DataField]
-    public NukeopSpawnPreset OperativeSpawnDetails = new() { AntagRoleProto = "Nukeops", GearProto = "SyndicateOperativeGearFull", NamePrefix = "nukeops-role-operator", NameList = "SyndicateNamesNormal" };
+    public NukeopSpawnPreset OperativeSpawnDetails = new();
 }
 
 /// <summary>
@@ -152,25 +152,25 @@ public sealed partial class NukeopSpawnPreset
 {
 
     [DataField]
-    public ProtoId<AntagPrototype> AntagRoleProto;
+    public ProtoId<AntagPrototype> AntagRoleProto = "Nukeops";
 
     /// <summary>
     /// The equipment set this operative will be given when spawned
     /// </summary>
     [DataField]
-    public ProtoId<StartingGearPrototype> GearProto;
+    public ProtoId<StartingGearPrototype> GearProto = "SyndicateOperativeGearFull";
 
     /// <summary>
     /// The name prefix, ie "Agent"
     /// </summary>
     [DataField]
-    public LocId NamePrefix;
+    public LocId NamePrefix = "nukeops-role-operator";
 
     /// <summary>
     /// The entity name suffix will be chosen from this list randomly
     /// </summary>
     [DataField]
-    public ProtoId<DatasetPrototype> NameList;
+    public ProtoId<DatasetPrototype> NameList = "SyndicateNamesNormal";
 }
 
 public enum WinType : byte
