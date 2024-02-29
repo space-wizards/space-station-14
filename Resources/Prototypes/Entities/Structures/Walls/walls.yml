@@ -564,7 +564,7 @@
     state: rgeneric
   - type: Construction
     graph: Girder
-    node: reinforcedWall
+    node: reinforcedWallRust
   - type: IconSmooth
     key: walls
     base: reinf_over

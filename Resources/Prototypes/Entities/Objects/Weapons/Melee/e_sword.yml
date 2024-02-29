@@ -78,6 +78,8 @@
     malus: 0
   - type: Reflect
     enabled: false
+  - type: IgnitionSource
+    temperature: 700
 
 - type: entity
   name: pen
