@@ -150,7 +150,8 @@
       - id: BirdToyInstrument
       - id: MusicalLungInstrument
       - id: ReverseCymbalsInstrument
-
+      - id: BoomboxInstrument
+        prob: 0.05
 - type: entity
   id: CrateFunArtSupplies
   parent: CrateGenericSteel
