@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Added new T2 "Deterrence technologies", it includes 2 new tools to fight
-      a runaway singularity or tesla. Force barrier holoprojector that sets up a 3-minute
-      force containment field, and portable particle decelerator, capable of damaging
-      a tesla or singularity. Chances are 1 gun will not be enough! You will need
-      a teamwork of several shooters and hunters to destroy a tesla or singularity.
-    type: Add
-  - message: Added in cargo "Particle Decelerators crate" with 3 PD, at cost 15000$
-    type: Add
-  id: 5566
-  time: '2024-01-05T02:48:10.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23444
 - author: Alekshhh
   changes:
   - message: Changed uranium ore visually
@@ -3835,3 +3822,10 @@
   id: 6065
   time: '2024-02-29T22:34:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25719
+- author: MACMAN2003
+  changes:
+  - message: There are now more ways to craft reinforced plasma/uranium glass.
+    type: Tweak
+  id: 6066
+  time: '2024-02-29T22:57:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/22804
