@@ -1,22 +1,37 @@
 using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Preferences.Loadouts;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Preferences.UI;
 
-public abstract class RequirementsSelector<T> : BoxContainer
+public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototype
 {
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+
+    /// <summary>
+    /// Prefix for prototypes.
+    /// </summary>
+    private string _prefix;
+
+    private ButtonGroup _loadoutGroup;
+
     public T Proto { get; }
     public bool Disabled => _lockStripe.Visible;
 
     protected readonly RadioOptions<int> Options;
-    private StripeBack _lockStripe;
+    private readonly StripeBack _lockStripe;
+    private LoadoutWindow? _loadout;
 
-    protected RequirementsSelector(T proto)
+    protected RequirementsSelector(string prefix, T proto, ButtonGroup loadoutGroup)
     {
+        IoCManager.InjectDependencies(this);
+        _loadoutGroup = loadoutGroup;
+        _prefix = prefix;
         Proto = proto;
 
         Options = new RadioOptions<int>(RadioOptionsLayout.Horizontal)
@@ -73,10 +88,52 @@ public abstract class RequirementsSelector<T> : BoxContainer
 
         if (icon != null)
             AddChild(icon);
-                
+
         AddChild(titleLabel);
         AddChild(Options);
         AddChild(_lockStripe);
+
+        var loadout = new Button()
+        {
+            ToggleMode = true,
+            Text = Loc.GetString("loadout-window"),
+            HorizontalExpand = true,
+            Group = _loadoutGroup,
+        };
+
+        _protoManager.TryIndex(_prefix + Proto.ID, out RoleLoadoutPrototype? loadoutProto);
+
+        // If no loadout found then disabled button
+        if (loadoutProto == null)
+        {
+            loadout.Disabled = true;
+        }
+        // else
+        else
+        {
+            loadout.OnPressed += args =>
+            {
+                if (args.Button.Pressed)
+                {
+                    _loadout = new LoadoutWindow(loadoutProto, _protoManager)
+                    {
+                        Title = Loc.GetString(_prefix + Proto.ID + "-loadout"),
+                    };
+                    _loadout.OpenCenteredLeft();
+                    _loadout.OnClose += () =>
+                    {
+                        loadout.Pressed = false;
+                    };
+                }
+                else
+                {
+                    _loadout?.Close();
+                    _loadout = null;
+                }
+            };
+        }
+
+        AddChild(loadout);
     }
 
     public void LockRequirements(FormattedMessage requirements)

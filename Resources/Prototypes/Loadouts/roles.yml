@@ -1,0 +1,29 @@
+- type: roleLoadout
+  id: JobStationEngineer
+  groups:
+  - StationEngineerPDA
+
+- type: loadoutGroup
+  id: StationEngineerPDA
+  name: loadout-station-engineer-pda
+  loadouts:
+  - EngineerPDA
+  - SeniorEngineerPDA
+
+- type: loadout
+  id: EngineerPDA
+  equipment: EngineerPDA
+
+- type: startingGear
+  id: EngineerPDA
+  equipment:
+    id: EngineerPDA
+
+- type: loadout
+  id: SeniorEngineerPDA
+  equipment: SeniorEngineerPDA
+
+- type: startingGear
+  id: SeniorEngineerPDA
+  equipment:
+    id: SeniorEngineerPDA

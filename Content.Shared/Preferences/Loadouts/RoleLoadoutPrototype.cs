@@ -5,7 +5,7 @@ namespace Content.Shared.Preferences.Loadouts;
 /// <summary>
 /// Corresponds to a Job / Antag prototype and specifies loadouts
 /// </summary>
-[Prototype]
+[Prototype("roleLoadout")]
 public sealed class RoleLoadoutPrototype : IPrototype
 {
     /*
@@ -19,5 +19,5 @@ public sealed class RoleLoadoutPrototype : IPrototype
     /// Groups that comprise this role loadout.
     /// </summary>
     [DataField(required: true)]
-    public List<LoadoutGroupPrototype> Groups = new();
+    public List<ProtoId<LoadoutGroupPrototype>> Groups = new();
 }

@@ -5,11 +5,17 @@ namespace Content.Shared.Preferences.Loadouts;
 /// <summary>
 /// Corresponds to a set of loadouts for a particular slot.
 /// </summary>
-[Prototype]
+[Prototype("loadoutGroup")]
 public sealed class LoadoutGroupPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; } = string.Empty;
+
+    /// <summary>
+    /// User-friendly name for the group.
+    /// </summary>
+    [DataField(required: true)]
+    public LocId Name;
 
     /// <summary>
     /// If optional then no loadouts in the group need to be specified.
@@ -18,5 +24,5 @@ public sealed class LoadoutGroupPrototype : IPrototype
     public bool Optional = true;
 
     [DataField(required: true)]
-    public List<LoadoutPrototype> Loadouts = new();
+    public List<ProtoId<LoadoutPrototype>> Loadouts = new();
 }

@@ -1,0 +1,1 @@
+loadout-window = Loadout

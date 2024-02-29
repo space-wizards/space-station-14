@@ -384,13 +384,14 @@ namespace Content.Client.Preferences.UI
             _tabContainer.SetTabTitle(2, Loc.GetString("humanoid-profile-editor-antags-tab"));
 
             _antagPreferences = new List<AntagPreferenceSelector>();
+            var btnGroup = new ButtonGroup();
 
             foreach (var antag in prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => Loc.GetString(a.Name)))
             {
                 if (!antag.SetPreference)
                     continue;
 
-                var selector = new AntagPreferenceSelector(antag);
+                var selector = new AntagPreferenceSelector(antag, btnGroup);
                 _antagList.AddChild(selector);
                 _antagPreferences.Add(selector);
                 if (selector.Disabled)
@@ -569,10 +570,11 @@ namespace Content.Client.Preferences.UI
                     .Where(job => job.SetPreference)
                     .ToArray();
                 Array.Sort(jobs, JobUIComparer.Instance);
+                var jobLoadoutGroup = new ButtonGroup();
 
                 foreach (var job in jobs)
                 {
-                    var selector = new JobPrioritySelector(job, _prototypeManager);
+                    var selector = new JobPrioritySelector(job, jobLoadoutGroup, _prototypeManager);
 
                     if (!_requirements.IsAllowed(job, out var reason))
                     {

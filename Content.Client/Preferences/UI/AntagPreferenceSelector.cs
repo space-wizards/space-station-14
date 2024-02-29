@@ -1,5 +1,6 @@
 using Content.Client.Players.PlayTimeTracking;
 using Content.Shared.Roles;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Preferences.UI;
 
@@ -14,8 +15,8 @@ public sealed class AntagPreferenceSelector : RequirementsSelector<AntagPrototyp
 
     public event Action<bool>? PreferenceChanged;
 
-    public AntagPreferenceSelector(AntagPrototype proto)
-        : base(proto)
+    public AntagPreferenceSelector(AntagPrototype proto, ButtonGroup btnGroup)
+        : base("Antag", proto, btnGroup)
     {
         Options.OnItemSelected += args => PreferenceChanged?.Invoke(Preference);
 

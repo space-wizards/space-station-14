@@ -18,8 +18,8 @@ public sealed class JobPrioritySelector : RequirementsSelector<JobPrototype>
 
     public event Action<JobPriority>? PriorityChanged;
 
-    public JobPrioritySelector(JobPrototype proto, IPrototypeManager protoMan)
-        : base(proto)
+    public JobPrioritySelector(JobPrototype proto, ButtonGroup btnGroup, IPrototypeManager protoMan)
+        : base("Job", proto, btnGroup)
     {
         Options.OnItemSelected += args => PriorityChanged?.Invoke(Priority);
 
