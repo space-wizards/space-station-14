@@ -134,7 +134,6 @@ namespace Content.Server.Body.Systems
                 if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
                     continue;
 
-                var mostToRemove = FixedPoint2.Zero;
                 if (proto.Metabolisms == null)
                 {
                     if (meta.RemoveEmpty)
@@ -154,15 +153,17 @@ namespace Content.Server.Body.Systems
                 if (meta.MetabolismGroups == null)
                     continue;
 
+                var totalRemoved = FixedPoint2.Zero;
                 foreach (var group in meta.MetabolismGroups)
                 {
                     if (!proto.Metabolisms.TryGetValue(group.Id, out var entry))
                         continue;
 
-                    var rate = entry.MetabolismRate * group.MetabolismRateModifier;
+                    var rate = (entry.MetabolismRate * group.MetabolismRateModifier) / proto.Metabolisms.Count;
 
                     // Remove $rate, as long as there's enough reagent there to actually remove that much
-                    mostToRemove = FixedPoint2.Clamp(rate, 0, quantity);
+                    var mostToRemove = FixedPoint2.Clamp(rate, 0, quantity);
+                    totalRemoved += mostToRemove;
 
                     float scale = (float) mostToRemove / (float) rate;
 
@@ -196,9 +197,9 @@ namespace Content.Server.Body.Systems
                 }
 
                 // remove a certain amount of reagent
-                if (mostToRemove > FixedPoint2.Zero)
+                if (totalRemoved > FixedPoint2.Zero)
                 {
-                    solution.RemoveReagent(reagent, mostToRemove);
+                    solution.RemoveReagent(reagent, totalRemoved);
 
                     // We have processed a reagant, so count it towards the cap
                     reagents += 1;
