@@ -73,7 +73,7 @@ namespace Content.Client.Preferences.UI
                 args.Event.Handle();
             };
 
-            _humanoidProfileEditor = new HumanoidProfileEditor(preferencesManager, prototypeManager, entityManager, configurationManager);
+            _humanoidProfileEditor = new HumanoidProfileEditor(preferencesManager, prototypeManager, configurationManager);
             _humanoidProfileEditor.OnProfileChanged += ProfileChanged;
             CharEditor.AddChild(_humanoidProfileEditor);
 

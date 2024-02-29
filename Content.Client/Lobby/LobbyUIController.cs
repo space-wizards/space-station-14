@@ -1,16 +1,14 @@
 using System.Linq;
-using System.Numerics;
 using Content.Client.Humanoid;
+using Content.Client.Inventory;
 using Content.Client.Lobby.UI;
 using Content.Client.Preferences;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid.Prototypes;
-using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -20,8 +18,8 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 {
     [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [UISystemDependency] private HumanoidAppearanceSystem _humanoid = default!;
-    [UISystemDependency] private InventorySystem _inventory = default!;
+    [UISystemDependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
+    [UISystemDependency] private readonly ClientInventorySystem _inventory = default!;
 
     private LobbyCharacterPreviewPanel? _previewPanel;
 
@@ -64,7 +62,11 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
     public void SetDummyJob(JobPrototype? job)
     {
+        if (_dummyJob == job)
+            return;
+
         _dummyJob = job;
+        UpdateCharacterUI();
     }
 
     public void UpdateCharacterUI()
@@ -176,5 +178,10 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
                 }
             }
         }
+    }
+
+    public EntityUid? GetPreviewDummy()
+    {
+        return _previewDummy;
     }
 }

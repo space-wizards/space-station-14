@@ -20,7 +20,6 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -32,7 +31,6 @@ namespace Content.Client.Preferences.UI
     public sealed partial class HumanoidProfileEditor : BoxContainer
     {
         private readonly IClientPreferencesManager _preferencesManager;
-        private readonly IEntityManager _entMan;
         private readonly MarkingManager _markingManager;
         private readonly JobRequirementsManager _requirements;
 
@@ -69,33 +67,26 @@ namespace Content.Client.Preferences.UI
         private Button _previewRotateLeftButton => CSpriteRotateLeft;
         private Button _previewRotateRightButton => CSpriteRotateRight;
         private Direction _previewRotation = Direction.North;
-        private EntityUid? _previewDummy;
 
         private BoxContainer _rgbSkinColorContainer => CRgbSkinColorContainer;
         private ColorSelectorSliders _rgbSkinColorSelector;
 
         private bool _isDirty;
-        private bool _needUpdatePreview;
         public int CharacterSlot;
         public HumanoidCharacterProfile? Profile;
-        private MarkingSet _markingSet = new(); // storing this here feels iffy but a few things need it this high up
 
         public event Action<HumanoidCharacterProfile, int>? OnProfileChanged;
 
-        public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager,
-            IEntityManager entityManager, IConfigurationManager configurationManager)
+        public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager, IConfigurationManager configurationManager)
         {
             RobustXamlLoader.Load(this);
             _prototypeManager = prototypeManager;
-            _entMan = entityManager;
             _preferencesManager = preferencesManager;
             _markingManager = IoCManager.Resolve<MarkingManager>();
 
+            _previewSpriteView.SetEntity(UserInterfaceManager.GetUIController<LobbyUIController>().GetPreviewDummy());
+
             #region Left
-
-            #region Randomize
-
-            #endregion Randomize
 
             #region Name
 
@@ -472,22 +463,15 @@ namespace Content.Client.Preferences.UI
             _previewRotateLeftButton.OnPressed += _ =>
             {
                 _previewRotation = _previewRotation.TurnCw();
-                _needUpdatePreview = true;
+                SetPreviewRotation(_previewRotation);
             };
             _previewRotateRightButton.OnPressed += _ =>
             {
                 _previewRotation = _previewRotation.TurnCcw();
-                _needUpdatePreview = true;
+                SetPreviewRotation(_previewRotation);
             };
 
-            var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
-            var dollProto = _prototypeManager.Index<SpeciesPrototype>(species).DollPrototype;
-
-            if (_previewDummy != null)
-                _entMan.DeleteEntity(_previewDummy!.Value);
-
-            _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
-            _previewSpriteView.SetEntity(_previewDummy);
+            _previewSpriteView.SetEntity(UserInterfaceManager.GetUIController<LobbyUIController>().GetPreviewDummy());
             #endregion Dummy
 
             #endregion Left
@@ -625,19 +609,9 @@ namespace Content.Client.Preferences.UI
                 return;
 
             Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithMarkings(markings.GetForwardEnumerator().ToList()));
-            _needUpdatePreview = true;
+            UpdatePreview();
             IsDirty = true;
         }
-
-        private void OnMarkingColorChange(List<Marking> markings)
-        {
-            if (Profile is null)
-                return;
-
-            Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithMarkings(markings));
-            IsDirty = true;
-        }
-
 
         private void OnSkinColorOnValueChanged()
         {
@@ -698,24 +672,13 @@ namespace Content.Client.Preferences.UI
             if (!disposing)
                 return;
 
-            if (_previewDummy != null)
-                _entMan.DeleteEntity(_previewDummy.Value);
-
             _requirements.Updated -= UpdateRoleRequirements;
             _preferencesManager.OnServerDataLoaded -= LoadServerData;
         }
 
         private void RebuildSpriteView()
         {
-            var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
-            var dollProto = _prototypeManager.Index<SpeciesPrototype>(species).DollPrototype;
-
-            if (_previewDummy != null)
-                _entMan.DeleteEntity(_previewDummy!.Value);
-
-            _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
-            _previewSpriteView.SetEntity(_previewDummy);
-            _needUpdatePreview = true;
+            _previewSpriteView.SetEntity(UserInterfaceManager.GetUIController<LobbyUIController>().GetPreviewDummy());
         }
 
         private void LoadServerData()
@@ -724,7 +687,6 @@ namespace Content.Client.Preferences.UI
             CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
 
             UpdateControls();
-            _needUpdatePreview = true;
         }
 
         private void SetAge(int newAge)
@@ -768,7 +730,7 @@ namespace Content.Client.Preferences.UI
             UpdateSexControls(); // update sex for new species
             RebuildSpriteView(); // they might have different inv so we need a new dummy
             IsDirty = true;
-            _needUpdatePreview = true;
+            UpdatePreview();
         }
 
         private void SetName(string newName)
@@ -799,12 +761,11 @@ namespace Content.Client.Preferences.UI
         {
             IsDirty = false;
 
-            if (Profile != null)
-            {
-                _preferencesManager.UpdateCharacter(Profile, CharacterSlot);
-                OnProfileChanged?.Invoke(Profile, CharacterSlot);
-                _needUpdatePreview = true;
-            }
+            if (Profile == null)
+                return;
+
+            _preferencesManager.UpdateCharacter(Profile, CharacterSlot);
+            OnProfileChanged?.Invoke(Profile, CharacterSlot);
         }
 
         private bool IsDirty
@@ -813,7 +774,6 @@ namespace Content.Client.Preferences.UI
             set
             {
                 _isDirty = value;
-                _needUpdatePreview = true;
                 UpdateSaveButton();
             }
         }
@@ -1099,13 +1059,13 @@ namespace Content.Client.Preferences.UI
             if (Profile is null)
                 return;
 
-            var humanoid = _entMan.System<HumanoidAppearanceSystem>();
-            humanoid.LoadProfile(_previewDummy!.Value, Profile);
+            UserInterfaceManager.GetUIController<LobbyUIController>().UpdateCharacterUI();
+            SetPreviewRotation(_previewRotation);
+        }
 
-            if (ShowClothes.Pressed)
-                UserInterfaceManager.GetUIController<LobbyUIController>().GiveDummyJobClothes(_previewDummy!.Value, Profile);
-
-            _previewSpriteView.OverrideDirection = (Direction) ((int) _previewRotation % 4 * 2);
+        private void SetPreviewRotation(Direction direction)
+        {
+            _previewSpriteView.OverrideDirection = (Direction) ((int) direction % 4 * 2);
         }
 
         public void UpdateControls()
@@ -1133,17 +1093,6 @@ namespace Content.Client.Preferences.UI
             UpdateCMarkingsFacialHair();
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
-        }
-
-        protected override void FrameUpdate(FrameEventArgs args)
-        {
-            base.FrameUpdate(args);
-
-            if (_needUpdatePreview)
-            {
-                UpdatePreview();
-                _needUpdatePreview = false;
-            }
         }
 
         private void UpdateJobPriorities()
