@@ -42,7 +42,7 @@
     removeOnInteract: true
 
 - type: entity
-  parent: FloorTileItemBase
+  parent: FloorCarpetItemRed
   id: FloorCarpetItemBlue
   suffix: Blue
   components:
