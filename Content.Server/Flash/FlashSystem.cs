@@ -63,7 +63,7 @@ namespace Content.Server.Flash
             args.Handled = true;
             foreach (var e in args.HitEntities)
             {
-                Flash(e, args.User, (uid, comp), comp.FlashDuration, comp.SlowTo, melee: true);
+                Flash(e, args.User, uid, comp.FlashDuration, comp.SlowTo, melee: true, stunDuration: comp.StunOnMelee ? comp.MeleeStunDuration : TimeSpan.Zero);
             }
         }
 
@@ -108,12 +108,13 @@ namespace Content.Server.Flash
 
         public void Flash(EntityUid target,
             EntityUid? user,
-            Entity<FlashComponent>? used,
+            EntityUid? used,
             float flashDuration,
             float slowTo,
             bool displayPopup = true,
             FlashableComponent? flashable = null,
-            bool melee = false)
+            bool melee = false,
+            TimeSpan? stunDuration = null)
         {
             if (!Resolve(target, ref flashable, false))
                 return;
@@ -137,9 +138,9 @@ namespace Content.Server.Flash
             flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
             Dirty(target, flashable);
 
-            if (used != null && melee && used.Value.Comp.StunOnMelee)
+            if (stunDuration != null)
             {
-                _stun.TryParalyze(target, used.Value.Comp.MeleeStunDuration, true);
+                _stun.TryParalyze(target, stunDuration.Value, true);
             }
             else
             {
@@ -152,14 +153,10 @@ namespace Content.Server.Flash
                 _popup.PopupEntity(Loc.GetString("flash-component-user-blinds-you",
                     ("user", Identity.Entity(user.Value, EntityManager))), target, target);
             }
-
         }
 
         public void FlashArea(Entity<FlashComponent?> source, EntityUid? user, float range, float duration, float slowTo = 0.8f, bool displayPopup = false, SoundSpecifier? sound = null)
         {
-            if (!Resolve(source, ref source.Comp))
-                return;
-
             var transform = Transform(source);
             var mapPosition = _transform.GetMapCoordinates(transform);
             var flashableQuery = GetEntityQuery<FlashableComponent>();
@@ -174,7 +171,7 @@ namespace Content.Server.Flash
                     continue;
 
                 // They shouldn't have flash removed in between right?
-                Flash(entity, user, (source, source.Comp), duration, slowTo, displayPopup, flashableQuery.GetComponent(entity));
+                Flash(entity, user, source, duration, slowTo, displayPopup, flashableQuery.GetComponent(entity));
             }
 
             _audio.PlayPvs(sound, source, AudioParams.Default.WithVolume(1f).WithMaxDistance(3f));
