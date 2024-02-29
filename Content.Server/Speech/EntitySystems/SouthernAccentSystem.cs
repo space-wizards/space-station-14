@@ -8,7 +8,7 @@ public sealed class SouthernAccentSystem : EntitySystem
     private static readonly Dictionary<string, string> DirectReplacements = new()
     {
         { "you all", "y'all"},
-    }    
+    };    
     
     public override void Initialize()
     {
