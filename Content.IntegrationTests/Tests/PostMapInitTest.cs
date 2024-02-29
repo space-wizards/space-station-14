@@ -31,6 +31,7 @@ namespace Content.IntegrationTests.Tests
         {
             "CentComm",
             "Dart",
+            "NukieOutpost"
         };
 
         private static readonly string[] Grids =
