@@ -125,8 +125,6 @@
       Heat: 1
       Blunt: 2
       Piercing: 3
-  tileBreakChance: [0]
-  tileBreakIntensity: [0]
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 6
