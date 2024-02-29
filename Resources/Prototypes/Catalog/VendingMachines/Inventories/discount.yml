@@ -1,9 +1,0 @@
-﻿- type: vendingMachineInventory
-  id: DiscountDansInventory
-  startingInventory:
-    FoodSnackCheesie: 3
-    FoodSnackChips: 3
-    FoodSnackBoritos: 3
-    FoodSnackPopcorn: 3
-    FoodSnackEnergy: 3
-    CigPackMixed: 2

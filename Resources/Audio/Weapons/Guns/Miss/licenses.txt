@@ -1,2 +1,0 @@
-bullet_miss oggs taken from https://github.com/cmss13-devs/cmss13/tree/0535055a7abcd3016123f2be2cd3db428c122dac/sound/bullets under CC BY-SA 3.0
-energy_miss ogg taken from  https://github.com/cmss13-devs/cmss13/tree/0535055a7abcd3016123f2be2cd3db428c122dac/sound/bullets under CC BY-SA 3.0

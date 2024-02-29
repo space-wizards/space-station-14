@@ -1,1 +1,0 @@
-stamina-resist = Устоял

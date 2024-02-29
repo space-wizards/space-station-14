@@ -1,8 +1,0 @@
-#!/bin/sh
-
-# cd to file containing script or something?
-BASEDIR=$(dirname "$0")
-echo "$BASEDIR"
-cd "$BASEDIR"
-
-exec ../Resources/Robust.Client "$@"

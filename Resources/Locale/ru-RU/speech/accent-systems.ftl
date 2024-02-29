@@ -1,1 +1,0 @@
-skeleton-suffix = АЧК АЧК!

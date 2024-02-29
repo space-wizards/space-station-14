@@ -1,3 +1,0 @@
-announce.ogg taken from /tg/station https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a cut from the beginning of "shuttlerecalled.ogg" used under CC-BY-SA-3.0
-war.ogg taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/07b26ee6b4a11a0607986d322ee007020569feae/sound/effects/siren.ogg used under CC-BY-SA-3.0, volume and pitch changed, merged with redalert.ogg
-aliens.ogg, attention.ogg, meteors.ogg, outbreak7.ogg, power_off.ogg, power_on.ogg, radiation.ogg, shuttle_dock.ogg, shuttlecalled.ogg, shuttlerecalled.ogg, ventclog.ogg, war.ogg, welcome.ogg, by discord:Basia#3911

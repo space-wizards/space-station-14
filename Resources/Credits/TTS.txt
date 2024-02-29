@@ -1,1 +1,0 @@
-﻿Silero.AI for providing API of their TTS (Text-To-Speech)

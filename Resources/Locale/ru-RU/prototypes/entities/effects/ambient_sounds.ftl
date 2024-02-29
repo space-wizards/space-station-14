@@ -1,3 +1,0 @@
-ent-AmbientSoundSourceFlies = { "" }
-    .desc = { "" }
-    .suffix = { "" }

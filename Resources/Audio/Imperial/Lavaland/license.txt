@@ -1,2 +1,0 @@
-﻿Sounds taken from tgstation https://github.com/tgstation/tgstation/tree/master/sound/effects
-License: CC BY-SA 3.0
