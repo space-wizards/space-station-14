@@ -22,21 +22,33 @@ public sealed partial class ExplosionPrototype : IPrototype
     /// <summary>
     ///     Damage to deal to entities. This is scaled by the explosion intensity.
     /// </summary>
-    [DataField("damagePerIntensity", required: true)]
+    [DataField(required: true)]
     public DamageSpecifier DamagePerIntensity = default!;
+
+    /// <summary>
+    ///     If it ignites entities.
+    /// </summary>
+    [DataField]
+    public bool DoesIgnite = false;
+
+    /// <summary>
+    ///     Amount of firestacks applied on ignite.
+    /// </summary>
+    [DataField]
+    public float FireStacksOnIgnite = 1f;
 
     /// <summary>
     ///     This set of points, together with <see cref="_tileBreakIntensity"/> define a function that maps the
     ///     explosion intensity to a tile break chance via linear interpolation.
     /// </summary>
-    [DataField("tileBreakChance")]
+    [DataField]
     private float[] _tileBreakChance = { 0f, 1f };
 
     /// <summary>
     ///     This set of points, together with <see cref="_tileBreakChance"/> define a function that maps the
     ///     explosion intensity to a tile break chance via linear interpolation.
     /// </summary>
-    [DataField("tileBreakIntensity")]
+    [DataField]
     private float[] _tileBreakIntensity = {0f, 15f };
 
     /// <summary>
@@ -47,19 +59,19 @@ public sealed partial class ExplosionPrototype : IPrototype
     ///     If this number is too small, even relatively weak explosions can have a non-zero
     ///     chance to create a space tile.
     /// </remarks>
-    [DataField("tileBreakRerollReduction")]
+    [DataField]
     public float TileBreakRerollReduction = 10f;
 
     /// <summary>
     ///     Color emitted by a point light at the center of the explosion.
     /// </summary>
-    [DataField("lightColor")]
+    [DataField]
     public Color LightColor = Color.Orange;
 
     /// <summary>
     ///     Color used to modulate the fire texture.
     /// </summary>
-    [DataField("fireColor")]
+    [DataField]
     public Color? FireColor;
 
     /// <summary>
@@ -68,33 +80,33 @@ public sealed partial class ExplosionPrototype : IPrototype
     /// <remarks>
     ///     This value is tuned such that a minibomb is considered small, but just about anything larger is normal
     /// </remarks>
-    [DataField("smallSoundIterationThreshold")]
+    [DataField]
     public int SmallSoundIterationThreshold = 6;
 
-    [DataField("sound")]
+    [DataField]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("Explosion");
 
-    [DataField("smallSound")]
+    [DataField]
     public SoundSpecifier SmallSound = new SoundCollectionSpecifier("ExplosionSmall");
 
-    [DataField("soundFar")]
+    [DataField]
     public SoundSpecifier SoundFar = new SoundCollectionSpecifier("ExplosionFar", AudioParams.Default.WithVolume(2f));
 
-    [DataField("smallSoundFar")]
+    [DataField]
     public SoundSpecifier SmallSoundFar = new SoundCollectionSpecifier("ExplosionSmallFar", AudioParams.Default.WithVolume(2f));
 
-    [DataField("texturePath")]
+    [DataField]
     public ResPath TexturePath = new("/Textures/Effects/fire.rsi");
 
     /// <summary>
     ///     How intense does the explosion have to be at a tile to advance to the next fire texture state?
     /// </summary>
-    [DataField("intensityPerState")]
+    [DataField]
     public float IntensityPerState = 12;
 
     // Theres probably a better way to do this. Currently Atmos just hard codes a constant int, so I have no one to
     // steal code from.
-    [DataField("fireStates")]
+    [DataField]
     public int FireStates = 3;
 
     /// <summary>

@@ -4,19 +4,24 @@
   graph:
   - node: start
     edges:
-    - to: cable
+    - to: gunpowder
       steps:
       - tag: Pipe
         icon:
           sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeStraight
         name: pipe
-      - tag: Igniter
-        name: an igniter
-        icon:
-          sprite: Objects/Devices/igniter.rsi
-          state: icon
-        doAfter: 1
+      - material: Steel
+        amount: 1
+        doAfter: 3
+  - node: gunpowder
+    entity: PipeBombGunpowder
+    edges:
+    - to: cable
+      steps:
+      - material: Gunpowder
+        amount: 5
+        doAfter: 3
   - node: cable
     entity: PipeBombCable
     edges:

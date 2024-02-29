@@ -117,3 +117,16 @@
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 6
+
+- type: explosion
+  id: FireBomb
+  damagePerIntensity:
+    types:
+      Heat: 2
+      Blunt: 3
+  tileBreakChance: [0]
+  tileBreakIntensity: [0]
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 6
+  doesIgnite: true

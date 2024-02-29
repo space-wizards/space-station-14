@@ -26,10 +26,10 @@
         volume: 1
   - type: RandomTimerTrigger
     min: 0
-    max: 60
-  - type: Explosive # Weak explosion in a very small radius. Doesn't break underplating.
-    explosionType: Default
-    totalIntensity: 20
+    max: 15
+  - type: Explosive # Weak explosion in a very small radius. Ignites surrounding entities.
+    explosionType: FireBomb
+    totalIntensity: 25
     intensitySlope: 5
     maxIntensity: 3
     canCreateVacuum: false
