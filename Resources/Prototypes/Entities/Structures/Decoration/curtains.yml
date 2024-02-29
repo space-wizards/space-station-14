@@ -7,8 +7,6 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Physics
-    canCollide: false
   - type: Occluder
   - type: AnimationPlayer
   - type: Fixtures
@@ -80,6 +78,8 @@
   - type: Construction
     graph: Curtains
     node: CurtainsOpen
+  - type: Physics
+    canCollide: false
 
 - type: entity
   id: CurtainsBlack
@@ -107,6 +107,8 @@
   - type: Construction
     graph: Curtains
     node: CurtainsBlackOpen
+  - type: Physics
+    canCollide: false
 
 - type: entity
   id: CurtainsBlue
@@ -134,6 +136,8 @@
   - type: Construction
     graph: Curtains
     node: CurtainsBlueOpen
+  - type: Physics
+    canCollide: false
 
 - type: entity
   id: CurtainsCyan
@@ -161,6 +165,8 @@
   - type: Construction
     graph: Curtains
     node: CurtainsCyanOpen
+  - type: Physics
+    canCollide: false
 
 - type: entity
   id: CurtainsGreen
@@ -188,6 +194,8 @@
   - type: Construction
     graph: Curtains
     node: CurtainsGreenOpen
+  - type: Physics
+    canCollide: false
 
 - type: entity
   id: CurtainsOrange
@@ -215,6 +223,8 @@
   - type: Construction
     graph: Curtains
     node: CurtainsOrangeOpen
+  - type: Physics
+    canCollide: false
 
 - type: entity
   id: CurtainsPink
@@ -242,6 +252,8 @@
   - type: Construction
     graph: Curtains
     node: CurtainsPinkOpen
+  - type: Physics
+    canCollide: false
 
 - type: entity
   id: CurtainsPurple
@@ -269,6 +281,8 @@
   - type: Construction
     graph: Curtains
     node: CurtainsPurpleOpen
+  - type: Physics
+    canCollide: false
 
 - type: entity
   id: CurtainsRed
@@ -296,3 +310,34 @@
   - type: Construction
     graph: Curtains
     node: CurtainsRedOpen
+  - type: Physics
+    canCollide: false
+
+- type: entity
+  id: CurtainsWhite
+  parent: BaseCurtains
+  components:
+  - type: Sprite
+    snapCardinals: true
+    sprite: Structures/Decoration/Curtains/white.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Curtains
+    node: CurtainsWhite
+
+- type: entity
+  id: CurtainsWhiteOpen
+  parent: CurtainsWhite
+  suffix: Open
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsWhiteOpen
+  - type: Physics
+    canCollide: false

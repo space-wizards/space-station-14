@@ -93,6 +93,16 @@
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-red
+        - to: CurtainsWhite
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - tag: CarpetWhite
+              doAfter: 1
+              name: white carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-white
               
     - node: Curtains
       entity: HospitalCurtains
@@ -296,6 +306,29 @@
           completed:
             - !type:SpawnPrototype
               prototype: FloorCarpetItemRed
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 1
+              
+    - node: CurtainsWhite
+      entity: CurtainsWhite
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemWhite
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 1
+    - node: CurtainsWhiteOpen
+      entity: CurtainsWhiteOpen
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemWhite
               amount: 1
           steps:
             - tool: Cutting

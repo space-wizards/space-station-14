@@ -818,6 +818,23 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
+    - !type:TileNotBlocked    
+
+- type: construction
+  id: CurtainsWhite
+  name: white curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsWhite
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/white.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
     - !type:TileNotBlocked
 
 - type: construction
