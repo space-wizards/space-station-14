@@ -8,8 +8,8 @@
       department: Command
       time: 54000 # 15 hours
   weight: 20
-  startingGear: CaptainGear
-  icon: "JobIconCaptain"
+  startingGear: BluesheildOfficerGear
+  icon: "JobIconNanotrasen"
   requireAdminNotify: true
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
@@ -28,7 +28,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitCaptain
     back: ClothingBackpackCaptainFilled
-    shoes: ClothingShoesBootsLaceup
+    shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatCaptain
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesCaptain
