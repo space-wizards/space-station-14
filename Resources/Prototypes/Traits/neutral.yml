@@ -18,7 +18,7 @@
       accent: dwarf
 
 - type: trait
-  id: Accentless
+  id: VerbCutoff
   name: trait-verbcutoff-name
   description: trait-verbcutoff-desc
   components:
