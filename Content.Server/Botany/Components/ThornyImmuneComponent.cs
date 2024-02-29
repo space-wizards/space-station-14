@@ -1,10 +1,7 @@
-
-namespace Content.Server.Botany.Components
+namespace Content.Server.Botany.Components;
+[RegisterComponent]
+public sealed partial class ThornyImmuneComponent : Component
 {
-    [RegisterComponent]
-    public sealed partial class ThornyImmuneComponent : Component
-    {
-        [DataField]
-        public bool ThornImmune = true;
-    }
+    [DataField]
+    public bool ThornImmune = true;
 }
