@@ -1,13 +1,11 @@
 using System.Numerics;
 using Content.Client.Lobby;
-using Content.Client.Lobby.UI;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Preferences.Loadouts.Effects;
 using Content.Shared.Roles;
 using Robust.Client.Player;
-using Robust.Client.State;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Prototypes;
@@ -155,14 +153,20 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                 }
                 else
                 {
-                    _loadout?.Close();
-                    _loadout = null;
-                    UserInterfaceManager.GetUIController<LobbyUIController>().SetDummyJob(null);
+                    CloseLoadout();
                 }
             };
         }
 
         AddChild(loadoutWindowBtn);
+    }
+
+    public void CloseLoadout()
+    {
+        _loadout?.Close();
+        _loadout?.Dispose();
+        _loadout = null;
+        UserInterfaceManager.GetUIController<LobbyUIController>().SetDummyJob(null);
     }
 
     public void LockRequirements(FormattedMessage requirements)

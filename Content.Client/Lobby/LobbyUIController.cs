@@ -33,6 +33,9 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     /// </summary>
     private JobPrototype? _dummyJob;
 
+    // TODO: Load the species directly and don't update entity ever.
+    public event Action<EntityUid>? PreviewDummyUpdated;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -85,12 +88,14 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         }
         else
         {
+            EntityManager.DeleteEntity(_previewDummy);
             _previewDummy = EntityManager.SpawnEntity(_prototypeManager.Index<SpeciesPrototype>(selectedCharacter.Species).DollPrototype, MapCoordinates.Nullspace);
             _previewPanel?.SetSprite(_previewDummy.Value);
             _previewPanel?.SetSummaryText(selectedCharacter.Summary);
             _humanoid.LoadProfile(_previewDummy.Value, selectedCharacter);
 
             GiveDummyJobClothes(_previewDummy.Value, selectedCharacter);
+            PreviewDummyUpdated?.Invoke(_previewDummy.Value);
         }
     }
 

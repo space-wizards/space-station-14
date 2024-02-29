@@ -21,7 +21,6 @@ using Robust.Client.Utility;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Direction = Robust.Shared.Maths.Direction;
 
@@ -36,7 +35,7 @@ namespace Content.Client.Preferences.UI
 
         private LineEdit _ageEdit => CAgeEdit;
         private LineEdit _nameEdit => CNameEdit;
-        private TextEdit _flavorTextEdit = null!;
+        private TextEdit? _flavorTextEdit;
         private Button _nameRandomButton => CNameRandomize;
         private Button _randomizeEverythingButton => CRandomizeEverything;
         private RichTextLabel _warningLabel => CWarningLabel;
@@ -83,8 +82,10 @@ namespace Content.Client.Preferences.UI
             _prototypeManager = prototypeManager;
             _preferencesManager = preferencesManager;
             _markingManager = IoCManager.Resolve<MarkingManager>();
+            var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
+            controller.PreviewDummyUpdated += OnDummyUpdate;
 
-            _previewSpriteView.SetEntity(UserInterfaceManager.GetUIController<LobbyUIController>().GetPreviewDummy());
+            _previewSpriteView.SetEntity(controller.GetPreviewDummy());
 
             #region Left
 
@@ -100,8 +101,6 @@ namespace Content.Client.Preferences.UI
             #region Appearance
 
             _tabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
-
-            ShowClothes.OnPressed += ToggleClothes;
 
             #region Sex
 
@@ -471,7 +470,6 @@ namespace Content.Client.Preferences.UI
                 SetPreviewRotation(_previewRotation);
             };
 
-            _previewSpriteView.SetEntity(UserInterfaceManager.GetUIController<LobbyUIController>().GetPreviewDummy());
             #endregion Dummy
 
             #endregion Left
@@ -487,9 +485,9 @@ namespace Content.Client.Preferences.UI
             IsDirty = false;
         }
 
-        private void ToggleClothes(BaseButton.ButtonEventArgs obj)
+        private void OnDummyUpdate(EntityUid value)
         {
-            RebuildSpriteView();
+            _previewSpriteView.SetEntity(value);
         }
 
         private void UpdateRoleRequirements()
@@ -672,13 +670,10 @@ namespace Content.Client.Preferences.UI
             if (!disposing)
                 return;
 
+            var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
+            controller.PreviewDummyUpdated -= OnDummyUpdate;
             _requirements.Updated -= UpdateRoleRequirements;
             _preferencesManager.OnServerDataLoaded -= LoadServerData;
-        }
-
-        private void RebuildSpriteView()
-        {
-            _previewSpriteView.SetEntity(UserInterfaceManager.GetUIController<LobbyUIController>().GetPreviewDummy());
         }
 
         private void LoadServerData()
@@ -728,7 +723,6 @@ namespace Content.Client.Preferences.UI
             OnSkinColorOnValueChanged(); // Species may have special color prefs, make sure to update it.
             CMarkings.SetSpecies(newSpecies); // Repopulate the markings tab as well.
             UpdateSexControls(); // update sex for new species
-            RebuildSpriteView(); // they might have different inv so we need a new dummy
             IsDirty = true;
             UpdatePreview();
         }
@@ -1083,11 +1077,11 @@ namespace Content.Client.Preferences.UI
             UpdateAgeEdit();
             UpdateEyePickers();
             UpdateSaveButton();
+            UpdateLoadouts();
             UpdateJobPriorities();
             UpdateAntagPreferences();
             UpdateTraitPreferences();
             UpdateMarkings();
-            RebuildSpriteView();
             UpdateHairPickers();
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
@@ -1104,6 +1098,14 @@ namespace Content.Client.Preferences.UI
                 var priority = Profile?.JobPriorities.GetValueOrDefault(jobId, JobPriority.Never) ?? JobPriority.Never;
 
                 prioritySelector.Priority = priority;
+            }
+        }
+
+        private void UpdateLoadouts()
+        {
+            foreach (var prioritySelector in _jobPriorities)
+            {
+                prioritySelector.CloseLoadout();
             }
         }
 
