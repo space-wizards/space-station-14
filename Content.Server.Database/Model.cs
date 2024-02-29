@@ -56,8 +56,16 @@ namespace Content.Server.Database
                 .IsUnique();
 
             modelBuilder.Entity<Trait>()
-                        .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.TraitName})
-                        .IsUnique();
+                .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.TraitName})
+                .IsUnique();
+
+            modelBuilder.Entity<RoleLoadout>()
+                .HasIndex(p => new {p.ProfileId, p.RoleName})
+                .IsUnique();
+
+            modelBuilder.Entity<LoadoutGroup>()
+                .HasIndex(p => new { p.RoleLoadoutId, p.GroupName})
+                .IsUnique();
 
             modelBuilder.Entity<Job>()
                 .HasIndex(j => j.ProfileId);
@@ -343,6 +351,11 @@ namespace Content.Server.Database
         public List<Antag> Antags { get; } = new();
         public List<Trait> Traits { get; } = new();
 
+        /// <summary>
+        /// Stored by prototype ID, then by the loadout itself.
+        /// </summary>
+        public Dictionary<string, RoleLoadout> Loadouts { get; } = new();
+
         [Column("pref_unavailable")] public DbPreferenceUnavailableMode PreferenceUnavailable { get; set; }
 
         public int PreferenceId { get; set; }
@@ -388,7 +401,50 @@ namespace Content.Server.Database
 
     #region Loadouts
 
-    
+    public class RoleLoadout
+    {
+        public int Id { get; set; }
+
+        /// <summary>
+        /// The corresponding profile that owns this loadout.
+        /// </summary>
+        public Profile Profile { get; set; } = null!;
+
+        public int ProfileId { get; set; }
+
+        /// <summary>
+        /// The corresponding role prototype on the profile.
+        /// </summary>
+        public string RoleName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Store the saved loadout groups. These may get validated and removed when loaded at runtime.
+        /// </summary>
+        public List<LoadoutGroup> Groups { get; set; } = new();
+    }
+
+    public class LoadoutGroup
+    {
+        public int Id { get; set; }
+
+        /// <summary>
+        /// The corresponding RoleLoadout that owns this.
+        /// </summary>
+        public RoleLoadout RoleLoadout { get; set; } = null!;
+
+        public int RoleLoadoutId { get; set; }
+
+        /// <summary>
+        /// The corresponding group prototype.
+        /// </summary>
+        public string GroupName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Selected loadout prototype. Null if none is set.
+        /// May get validated at runtime and updated to to the default.
+        /// </summary>
+        public string? Loadout;
+    }
 
     #endregion
 

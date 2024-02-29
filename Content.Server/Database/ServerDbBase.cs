@@ -209,6 +209,8 @@ namespace Content.Server.Database
                 }
             }
 
+            var loadout = new Shared.Preferences.Loadouts.Effects.RoleLoadout();
+
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.FlavorText,
@@ -232,7 +234,8 @@ namespace Content.Server.Database
                 jobs,
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
                 antags.ToList(),
-                traits.ToList()
+                traits.ToList(),
+                loadout
             );
         }
 
@@ -284,6 +287,27 @@ namespace Content.Server.Database
                 humanoid.TraitPreferences
                         .Select(t => new Trait {TraitName = t})
             );
+
+            profile.Loadouts.Clear();
+
+            foreach (var (role, loadouts) in humanoid.Loadouts)
+            {
+                var dz = new RoleLoadout()
+                {
+                    RoleName = role,
+                };
+
+                foreach (var (group, loadout) in loadouts.SelectedLoadouts)
+                {
+                    dz.Groups.Add(new LoadoutGroup()
+                    {
+                        GroupName = group,
+                        Loadout = loadout,
+                    });
+                }
+
+                profile.Loadouts[role] = dz;
+            }
 
             return profile;
         }
