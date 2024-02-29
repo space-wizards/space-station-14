@@ -43,6 +43,28 @@
   objectType: Item
 
 - type: construction
+  name: reinforced plasma glass
+  description: A reinforced sheet of translucent plasma.
+  id: SheetRPGlass0
+  graph: Glass
+  startNode: start
+  targetNode: SheetRPGlass0
+  category: construction-category-materials
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: rpglass }
+  objectType: Item
+
+- type: construction
+  name: reinforced plasma glass
+  description: A reinforced sheet of translucent plasma.
+  id: SheetRPGlass1
+  graph: Glass
+  startNode: start
+  targetNode: SheetRPGlass1
+  category: construction-category-materials
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: rpglass }
+  objectType: Item
+
+- type: construction
   name: durathread
   id: MaterialDurathread
   graph: Durathread
@@ -71,6 +93,28 @@
   graph: Glass
   startNode: start
   targetNode: SheetRUGlass
+  category: construction-category-materials
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: ruglass }
+  objectType: Item
+
+- type: construction
+  name: reinforced uranium glass
+  description: A reinforced sheet of uranium glass.
+  id: SheetRUGlass0
+  graph: Glass
+  startNode: start
+  targetNode: SheetRUGlass0
+  category: construction-category-materials
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: ruglass }
+  objectType: Item
+
+- type: construction
+  name: reinforced uranium glass
+  description: A reinforced sheet of uranium glass.
+  id: SheetRUGlass1
+  graph: Glass
+  startNode: start
+  targetNode: SheetRUGlass1
   category: construction-category-materials
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: ruglass }
   objectType: Item
