@@ -46,6 +46,7 @@ public sealed class ChatUIController : UIController
     [Dependency] private readonly IChatManager _manager = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
+    [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IClientNetManager _net = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
@@ -53,12 +54,12 @@ public sealed class ChatUIController : UIController
     [Dependency] private readonly IStateManager _state = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
     [UISystemDependency] private readonly TypingIndicatorSystem? _typingIndicator = default;
     [UISystemDependency] private readonly ChatSystem? _chatSys = default;
-    [UISystemDependency] private readonly TransformSystem? _xformSystem = default!;
 
     [ValidatePrototypeId<ColorPalettePrototype>]
     private const string ChatNamePalette = "ChatNames";
@@ -178,8 +179,8 @@ public sealed class ChatUIController : UIController
         _net.RegisterNetMessage<MsgChatMessage>(OnChatMessage);
         _net.RegisterNetMessage<MsgDeleteChatMessagesBy>(OnDeleteChatMessagesBy);
         SubscribeNetworkEvent<DamageForceSayEvent>(OnDamageForceSay);
-        _config.OnValueChanged(CCVars.ChatEnableColorName, (value) => { _chatNameColorsEnabled = value; });
-        _chatNameColorsEnabled = _config.GetCVar(CCVars.ChatEnableColorName);
+        _cfg.OnValueChanged(CCVars.ChatEnableColorName, (value) => { _chatNameColorsEnabled = value; });
+        _chatNameColorsEnabled = _cfg.GetCVar(CCVars.ChatEnableColorName);
 
         _speechBubbleRoot = new LayoutContainer();
 
@@ -553,7 +554,7 @@ public sealed class ChatUIController : UIController
     private void UpdateQueuedSpeechBubbles(FrameEventArgs delta)
     {
         // Update queued speech bubbles.
-        if (_queuedSpeechBubbles.Count == 0 || _examine is null || _xformSystem is null)
+        if (_queuedSpeechBubbles.Count == 0 || _examine == null)
         {
             return;
         }
@@ -591,7 +592,7 @@ public sealed class ChatUIController : UIController
         var predicate = static (EntityUid uid, (EntityUid compOwner, EntityUid? attachedEntity) data)
             => uid == data.compOwner || uid == data.attachedEntity;
         var playerPos = player != null
-            ? _xformSystem.GetMapCoordinates(player.Value)
+            ? EntityManager.GetComponent<TransformComponent>(player.Value).MapPosition
             : MapCoordinates.Nullspace;
 
         var occluded = player != null && _examine.IsOccluded(player.Value);
@@ -610,7 +611,7 @@ public sealed class ChatUIController : UIController
                 continue;
             }
 
-            var otherPos = _xformSystem.GetMapCoordinates(ent);
+            var otherPos = EntityManager.GetComponent<TransformComponent>(ent).MapPosition;
 
             if (occluded && !ExamineSystemShared.InRangeUnOccluded(
                     playerPos,
@@ -769,7 +770,7 @@ public sealed class ChatUIController : UIController
         ProcessChatMessage(msg);
 
         if ((msg.Channel & ChatChannel.AdminRelated) == 0 ||
-            _config.GetCVar(CCVars.ReplayRecordAdminChat))
+            _cfg.GetCVar(CCVars.ReplayRecordAdminChat))
         {
             _replayRecording.RecordClientMessage(msg);
         }
@@ -780,7 +781,7 @@ public sealed class ChatUIController : UIController
         // color the name unless it's something like "the old man"
         if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Whisper) && _chatNameColorsEnabled)
         {
-            var grammar = EntityManager.GetComponentOrNull<GrammarComponent>(EntityManager.GetEntity(msg.SenderEntity));
+            var grammar = _ent.GetComponentOrNull<GrammarComponent>(_ent.GetEntity(msg.SenderEntity));
             if (grammar != null && grammar.ProperNoun == true)
                 msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
         }
@@ -829,7 +830,7 @@ public sealed class ChatUIController : UIController
                 break;
 
             case ChatChannel.LOOC:
-                if (_config.GetCVar(CCVars.LoocAboveHeadShow))
+                if (_cfg.GetCVar(CCVars.LoocAboveHeadShow))
                     AddSpeechBubble(msg, SpeechBubble.SpeechType.Looc);
                 break;
         }

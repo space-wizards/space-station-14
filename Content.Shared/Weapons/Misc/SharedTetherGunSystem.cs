@@ -220,7 +220,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         _blocker.UpdateCanMove(target);
 
         // Invisible tether entity
-        var tether = Spawn("TetherEntity", TransformSystem.GetMapCoordinates(target));
+        var tether = Spawn("TetherEntity", Transform(target).MapPosition);
         var tetherPhysics = Comp<PhysicsComponent>(tether);
         component.TetherEntity = tether;
         _physics.WakeBody(tether);

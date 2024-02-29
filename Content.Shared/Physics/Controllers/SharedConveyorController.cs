@@ -97,7 +97,7 @@ public abstract class SharedConveyorController : VirtualController
             var itemRelative = conveyorPos - localPos;
 
             localPos += Convey(direction, speed, frameTime, itemRelative);
-            TransformSystem.SetLocalPosition(entity, localPos, transform);
+            transform.LocalPosition = localPos;
 
             // Force it awake for collisionwake reasons.
             Physics.SetAwake(entity, body, true);

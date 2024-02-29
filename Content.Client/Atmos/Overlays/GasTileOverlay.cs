@@ -22,7 +22,6 @@ namespace Content.Client.Atmos.Overlays
     {
         private readonly IEntityManager _entManager;
         private readonly IMapManager _mapManager;
-        private readonly SharedTransformSystem _xformSystem;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
         private readonly ShaderInstance _shader;
@@ -52,7 +51,6 @@ namespace Content.Client.Atmos.Overlays
         {
             _entManager = entManager;
             _mapManager = IoCManager.Resolve<IMapManager>();
-            _xformSystem = _entManager.System<SharedTransformSystem>();
             _shader = protoMan.Index<ShaderPrototype>("unshaded").Instance();
             ZIndex = GasOverlayZIndex;
 
@@ -158,8 +156,7 @@ namespace Content.Client.Atmos.Overlays
                 _fireFrameCounter,
                 _shader,
                 overlayQuery,
-                xformQuery,
-                _xformSystem);
+                xformQuery);
 
             var mapUid = _mapManager.GetMapEntityId(args.MapId);
 
@@ -197,8 +194,7 @@ namespace Content.Client.Atmos.Overlays
                         int[] fireFrameCounter,
                         ShaderInstance shader,
                         EntityQuery<GasTileOverlayComponent> overlayQuery,
-                        EntityQuery<TransformComponent> xformQuery,
-                        SharedTransformSystem xformSystem) state) =>
+                        EntityQuery<TransformComponent> xformQuery) state) =>
                 {
                     if (!state.overlayQuery.TryGetComponent(uid, out var comp) ||
                         !state.xformQuery.TryGetComponent(uid, out var gridXform))
@@ -206,7 +202,7 @@ namespace Content.Client.Atmos.Overlays
                             return true;
                         }
 
-                    var (_, _, worldMatrix, invMatrix) = state.xformSystem.GetWorldPositionRotationMatrixWithInv(gridXform);
+                    var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
                     state.drawHandle.SetTransform(worldMatrix);
                     var floatBounds = invMatrix.TransformBox(in state.WorldBounds).Enlarged(grid.TileSize);
                     var localBounds = new Box2i(
