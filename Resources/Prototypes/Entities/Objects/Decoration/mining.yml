@@ -56,7 +56,10 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: PlacementReplacement
+    key: walls
   - type: Sprite
+    noRot: true
     sprite: Objects/Decoration/mines.rsi
     state: support
   - type: Damageable
@@ -124,7 +127,10 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: PlacementReplacement
+    key: walls
   - type: Sprite
+    noRot: true
     sprite: Objects/Decoration/mines.rsi
     state: support_wall
   - type: Damageable

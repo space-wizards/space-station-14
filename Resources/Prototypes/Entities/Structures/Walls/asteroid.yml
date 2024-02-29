@@ -8,6 +8,8 @@
   name: asteroid rock
   description: A rocky asteroid.
   components:
+  - type: Transform
+    noRot: true
   - type: PlacementReplacement
     key: walls
   - type: IconSmooth
@@ -57,6 +59,9 @@
         - WallLayer
   - type: RadiationBlocker
     resistance: 2
+  - type: Tag
+    tags:
+    - Wall
 
 # Ore veins
 - type: entity
@@ -383,6 +388,8 @@
   name: rock
   suffix: planetmap
   components:
+    - type: Transform
+      noRot: true
     - type: PlacementReplacement
       key: walls
     - type: SoundOnGather
@@ -432,6 +439,9 @@
           state: rock_west
     - type: RadiationBlocker
       resistance: 2
+    - type: Tag
+      tags:
+      - Wall
 
 # Ore veins
 - type: entity

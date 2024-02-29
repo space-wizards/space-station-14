@@ -162,3 +162,81 @@
         SouthEast: BrickTileWhiteInnerSe
         NorthWest: BrickTileWhiteInnerNw
         NorthEast: BrickTileWhiteInnerNe
+
+- type: dungeonConfig
+  id: Mineshaft
+  generator: !type:PrefabDunGen
+    tile: FloorCaveDrought
+    roomWhitelist:
+      - Mineshaft
+    presets:
+      - Bucket
+      - Wow
+      - SpaceShip
+      - Tall
+  postGeneration:
+  
+  - !type:CorridorPostGen
+      tile: FloorCaveDrought
+      width: 3
+      
+  - !type:DungeonEntrancePostGen
+      count: 5
+      tile: FloorCaveDrought
+      entities: 
+        - WoodenSupportBeam
+
+  - !type:EntranceFlankPostGen
+      tile: FloorCaveDrought
+      entities:
+        - WoodenSupportBeam
+  
+  - !type:ExternalWindowPostGen
+      tile: FloorCaveDrought
+      entities:
+        - WoodenSupportWall
+  
+  - !type:WallMountPostGen
+      tile: FloorCaveDrought
+      spawns:
+        # Ore
+        - id: WallRockSalt
+          prob: 0.2
+          orGroup: content
+        - id: WallRockCoal
+          prob: 0.2
+          orGroup: content
+        - id: WallRockTin
+          prob: 0.2
+          orGroup: content
+        - id: WallMining
+          orGroup: content
+          prob: 0.5
+          
+  - !type:BoundaryWallPostGen
+      tile: FloorCaveDrought
+      wall: WallRock
+      cornerWall: WallRock
+
+  - !type:JunctionPostGen
+      tile: FloorCaveDrought
+      width: 1
+      entities:
+        - WoodenSupportBeam
+      
+  - !type:RoomEntrancePostGen
+      tile: FloorCaveDrought
+      entities:
+        - AirlockMining
+
+  - !type:JunctionPostGen
+      tile: FloorCaveDrought
+      width: 3
+      entities:
+        - WoodenSupportBeam
+  
+  - !type:CornerClutterPostGen
+      contents:
+        - id: RandomStalagmiteOrCrystal
+          chance: 0.9
+          amount: 1
