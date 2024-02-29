@@ -59,11 +59,11 @@ namespace Content.Server.Database
                 .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.TraitName})
                 .IsUnique();
 
-            modelBuilder.Entity<RoleLoadout>()
+            modelBuilder.Entity<ProfileRoleLoadout>()
                 .HasIndex(p => new {p.ProfileId, p.RoleName})
                 .IsUnique();
 
-            modelBuilder.Entity<LoadoutGroup>()
+            modelBuilder.Entity<ProfileLoadoutGroup>()
                 .HasIndex(p => new { p.RoleLoadoutId, p.GroupName})
                 .IsUnique();
 
@@ -351,10 +351,7 @@ namespace Content.Server.Database
         public List<Antag> Antags { get; } = new();
         public List<Trait> Traits { get; } = new();
 
-        /// <summary>
-        /// Stored by prototype ID, then by the loadout itself.
-        /// </summary>
-        public Dictionary<string, RoleLoadout> Loadouts { get; } = new();
+        public List<ProfileRoleLoadout> Loadouts { get; } = new();
 
         [Column("pref_unavailable")] public DbPreferenceUnavailableMode PreferenceUnavailable { get; set; }
 
@@ -401,7 +398,10 @@ namespace Content.Server.Database
 
     #region Loadouts
 
-    public class RoleLoadout
+    /// <summary>
+    /// Corresponds to a single role's loadout inside the DB.
+    /// </summary>
+    public class ProfileRoleLoadout
     {
         public int Id { get; set; }
 
@@ -420,17 +420,17 @@ namespace Content.Server.Database
         /// <summary>
         /// Store the saved loadout groups. These may get validated and removed when loaded at runtime.
         /// </summary>
-        public List<LoadoutGroup> Groups { get; set; } = new();
+        public List<ProfileLoadoutGroup> Groups { get; set; } = new();
     }
 
-    public class LoadoutGroup
+    public class ProfileLoadoutGroup
     {
         public int Id { get; set; }
 
         /// <summary>
         /// The corresponding RoleLoadout that owns this.
         /// </summary>
-        public RoleLoadout RoleLoadout { get; set; } = null!;
+        public ProfileRoleLoadout ProfileRoleLoadout { get; set; } = null!;
 
         public int RoleLoadoutId { get; set; }
 
@@ -443,7 +443,7 @@ namespace Content.Server.Database
         /// Selected loadout prototype. Null if none is set.
         /// May get validated at runtime and updated to to the default.
         /// </summary>
-        public string? Loadout;
+        public string? LoadoutName;
     }
 
     #endregion

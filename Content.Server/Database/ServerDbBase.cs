@@ -13,6 +13,7 @@ using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
+using Content.Shared.Preferences.Loadouts.Effects;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
@@ -209,7 +210,19 @@ namespace Content.Server.Database
                 }
             }
 
-            var loadout = new Shared.Preferences.Loadouts.Effects.RoleLoadout();
+            var loadouts = new Dictionary<string, RoleLoadout>();
+
+            foreach (var role in profile.Loadouts)
+            {
+                var loadout = new RoleLoadout(role.RoleName);
+
+                foreach (var group in role.Groups)
+                {
+                    loadout.SelectedLoadouts[group.GroupName] = group.LoadoutName;
+                }
+
+                loadouts[role.RoleName] = loadout;
+            }
 
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
@@ -235,7 +248,7 @@ namespace Content.Server.Database
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
                 antags.ToList(),
                 traits.ToList(),
-                loadout
+                loadouts
             );
         }
 
@@ -292,21 +305,21 @@ namespace Content.Server.Database
 
             foreach (var (role, loadouts) in humanoid.Loadouts)
             {
-                var dz = new RoleLoadout()
+                var dz = new ProfileRoleLoadout()
                 {
                     RoleName = role,
                 };
 
                 foreach (var (group, loadout) in loadouts.SelectedLoadouts)
                 {
-                    dz.Groups.Add(new LoadoutGroup()
+                    dz.Groups.Add(new ProfileLoadoutGroup()
                     {
                         GroupName = group,
-                        Loadout = loadout,
+                        LoadoutName = loadout,
                     });
                 }
 
-                profile.Loadouts[role] = dz;
+                profile.Loadouts.Add(dz);
             }
 
             return profile;
