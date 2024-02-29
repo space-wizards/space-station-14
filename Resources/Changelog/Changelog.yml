@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: luringens
-  changes:
-  - message: Diona now drop their items when robusted into a tree.
-    type: Tweak
-  - message: Diona can be cut free from their robust tree-form.
-    type: Fix
-  id: 5562
-  time: '2024-01-04T13:10:05.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/21636
 - author: PrPleGoo
   changes:
   - message: added an overlay for the diagnostic hud that displays relative health
@@ -3844,3 +3835,10 @@
   id: 6061
   time: '2024-02-29T21:41:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25629
+- author: TheShuEd
+  changes:
+  - message: 9 new colourful curtains. Can be crafted from carpets.
+    type: Add
+  id: 6062
+  time: '2024-02-29T22:25:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25684
