@@ -1,15 +1,15 @@
 - type: entity
   id: PortableScrubber
-  parent: BaseStructureDynamic
+  parent: [BaseMachinePowered, ConstructibleMachine]
   name: portable scrubber
   description: It scrubs, portably!
   components:
   - type: Transform
-    noRot: true
-  - type: InteractionOutline
+    anchored: false
   - type: Physics
     bodyType: Dynamic
-    canCollide: false
+  - type: AtmosDevice
+    joinSystem: true
   - type: Fixtures
     fixtures:
       fix1:
@@ -34,9 +34,6 @@
       shader: unshaded
       visible: false
       map: ["enum.PortableScrubberVisualLayers.IsDraining"]
-  - type: Pullable
-  - type: AtmosDevice
-    joinSystem: true
   - type: PortableScrubber
     gasMixture:
       volume: 1250
@@ -49,7 +46,6 @@
         volume: 1
   - type: ApcPowerReceiver
     powerLoad: 2000
-  - type: ExtensionCableReceiver
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -95,12 +91,108 @@
                 max: 3
               SheetGlass1:
                 min: 1
+                max: 2
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+
+- type: entity
+  id: SpaceHeater
+  parent: [BaseMachinePowered, ConstructibleMachine]
+  name: space heater
+  description: A bluespace technology device that alters local temperature. Commonly referred to as a "Space Heater".
+  suffix: Unanchored
+  components:
+  - type: Transform
+    anchored: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: AtmosDevice
+    joinSystem: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.35,0.15,0.5"
+        density: 100
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: ApcPowerReceiver
+    powerDisabled: true #starts off 
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/Portable/portable_sheater.rsi
+    noRot: true
+    layers:
+    - state: sheaterOff
+      map: ["enum.SpaceHeaterVisualLayers.Main"]
+    - state: sheaterPanelOpen
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SpaceHeaterVisuals.State:
+        SpaceHeaterVisualLayers.Main:
+          Off: { state: sheaterOff }
+          StandBy: { state: sheaterStandby }
+          Heating: { state: sheaterHeat }
+          Cooling: { state: sheaterCool }
+  - type: Machine
+    board: SpaceHeaterMachineCircuitBoard
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: UserInterface
+    interfaces:
+    - key: enum.SpaceHeaterUiKey.Key
+      type: SpaceHeaterBoundUserInterface
+  - type: ActivatableUI
+    inHandsOnly: false
+    key: enum.SpaceHeaterUiKey.Key
+  - type: SpaceHeater
+  - type: GasThermoMachine
+    temperatureTolerance: 0.2
+    atmospheric: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 1
                 max: 3
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
-  - type: CollideOnAnchor
-    enable: true
-  - type: ContainerContainer
-    containers:
-      machine_board: !type:Container
-      machine_parts: !type:Container
+
+- type: entity
+  parent: SpaceHeater
+  id: SpaceHeaterAnchored
+  suffix: Anchored
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+
+- type: entity
+  parent: SpaceHeaterAnchored
+  id: SpaceHeaterEnabled
+  suffix: Anchored, Enabled
+  components:
+  - type: ApcPowerReceiver
+    powerDisabled: false

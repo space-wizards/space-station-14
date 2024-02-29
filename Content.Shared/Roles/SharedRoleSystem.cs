@@ -1,10 +1,11 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Roles;
 
@@ -57,7 +58,7 @@ public abstract class SharedRoleSystem : EntitySystem
             args.Roles.Add(new RoleInfo(component, name, true, null, prototype));
         });
 
-        SubscribeLocalEvent((EntityUid _, T _, ref MindIsAntagonistEvent args) => args.IsAntagonist = true);
+        SubscribeLocalEvent((EntityUid _, T _, ref MindIsAntagonistEvent args) => { args.IsAntagonist = true; args.IsExclusiveAntagonist |= typeof(T).TryGetCustomAttribute<ExclusiveAntagonistAttribute>(out _); });
         _antagTypes.Add(typeof(T));
     }
 
@@ -85,7 +86,7 @@ public abstract class SharedRoleSystem : EntitySystem
         AddComp(mindId, component);
         var antagonist = IsAntagonistRole<T>();
 
-        var mindEv = new MindRoleAddedEvent();
+        var mindEv = new MindRoleAddedEvent(silent);
         RaiseLocalEvent(mindId, ref mindEv);
 
         var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
@@ -154,6 +155,21 @@ public abstract class SharedRoleSystem : EntitySystem
         var ev = new MindIsAntagonistEvent();
         RaiseLocalEvent(mindId.Value, ref ev);
         return ev.IsAntagonist;
+    }
+
+    /// <summary>
+    /// Does this mind possess an exclusive antagonist role
+    /// </summary>
+    /// <param name="mindId">The mind entity</param>
+    /// <returns>True if the mind possesses an exclusive antag role</returns>
+    public bool MindIsExclusiveAntagonist(EntityUid? mindId)
+    {
+        if (mindId == null)
+            return false;
+
+        var ev = new MindIsAntagonistEvent();
+        RaiseLocalEvent(mindId.Value, ref ev);
+        return ev.IsExclusiveAntagonist;
     }
 
     public bool IsAntagonistRole<T>()

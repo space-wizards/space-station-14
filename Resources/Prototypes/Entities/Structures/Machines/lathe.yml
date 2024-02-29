@@ -391,6 +391,7 @@
       - ThermomachineFreezerMachineCircuitBoard
       - HellfireFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
+      - SpaceHeaterMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - CryoPodMachineCircuitboard
