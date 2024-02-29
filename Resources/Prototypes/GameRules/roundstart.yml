@@ -58,6 +58,8 @@
   parent: BaseGameRule
   noSpawn: true
   components:
+  - type: GameRule
+    minPlayers: 20
   - type: NukeopsRule
     faction: Syndicate
   - type: ThiefRule #the thieves come as an extension of another gamemode

@@ -175,15 +175,14 @@
   suffix: DO NOT MAP
   components:
   - type: Tag
-    tags: # ignore "WhitelistChameleon" tag
-      - DroneUsable
+    tags: [] # ignore "WhitelistChameleon" tag
   - type: Sprite
     sprite: Clothing/Head/Hats/catears.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/catears.rsi
   - type: AddAccentClothing
     accent: OwOAccent
-    
+
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatDogEars
@@ -191,9 +190,6 @@
   description: Only for good boys.
   suffix: DO NOT MAP
   components:
-  - type: Tag
-    tags:
-      - DroneUsable
   - type: Sprite
     sprite: Clothing/Head/Hats/dogears.rsi
   - type: Clothing
