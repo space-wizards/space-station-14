@@ -1,5 +1,4 @@
 using Content.Server.Atmos.Components;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Destructible;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
@@ -13,7 +12,6 @@ namespace Content.Server.Explosion.EntitySystems;
 public sealed partial class ExplosionSystem : EntitySystem
 {
     [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
-    [Dependency] private readonly FlammableSystem _flammableSystem = default!;
 
     private readonly Dictionary<string, int> _explosionTypes = new();
 
@@ -157,15 +155,6 @@ public sealed partial class ExplosionSystem : EntitySystem
                 RaiseLocalEvent(uid, ref ev);
 
                 damagePerIntensity += value * Math.Max(0, ev.DamageCoefficient);
-            }
-
-            if (explosionType.DoesIgnite)
-            {
-                if (TryComp<FlammableComponent>(uid, out var flammable))
-                {
-                    flammable.FireStacks += explosionType.FireStacksOnIgnite;
-                    _flammableSystem.Ignite(uid, uid, flammable);
-                }
             }
 
             explosionTolerance[index] = damagePerIntensity > 0
