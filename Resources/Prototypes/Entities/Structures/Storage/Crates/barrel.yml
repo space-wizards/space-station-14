@@ -46,7 +46,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.4"
-        density: 125
+        density: 150
         mask:
         - SmallMobMask #this is so they can go under plastic flaps
         layer:
@@ -126,13 +126,13 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.4"
-        density: 125
+        density: 200
         mask:
         - SmallMobMask #this is so they can go under plastic flaps
         layer:
         - MachineLayer
   - type: Transform
-    noRot: true
+    noRot: false
 
 - type: entity
   parent: WoodenKeg
