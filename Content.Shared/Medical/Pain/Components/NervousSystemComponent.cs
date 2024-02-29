@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Medical.Pain.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NervousSystemComponent : Component
 {
 
@@ -16,7 +16,7 @@ public sealed partial class NervousSystemComponent : Component
     public FixedPoint2 Multiplier = 1f;
 
     [DataField, AutoNetworkedField]
-    public SortedDictionary<FixedPoint2, MedicalConditionThreshold> ConditionThresholds= new();
+    public Dictionary<FixedPoint2, MedicalConditionThreshold> ConditionThresholds = new();
 
     [DataField, AutoNetworkedField]
     public FixedPoint2 NominalMaxPain = 100;
