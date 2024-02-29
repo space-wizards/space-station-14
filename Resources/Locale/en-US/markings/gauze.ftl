@@ -70,9 +70,6 @@ marking-GauzeMothShoulder = Insectoid Shoulder Sling
 marking-GauzeMothBlindfold-gauze_moth_blindfold = Insectoid Blindfold
 marking-GauzeMothBlindfold = Insectoid Blindfold
 
-marking-GauzeMoth-gauze_moth_ = Insectoid
-marking-GauzeMoth = Insectoid
-
 marking-GauzeMothLefteyePatch-gauze_moth_lefteye_2 = Insectoid Gauze eyepatch (Left)
 marking-GauzeMothLefteyePatch = Insectoid Gauze eyepatch (Left)
 
@@ -80,19 +77,19 @@ marking-GauzeMothLefteyePad-gauze_moth_lefteye_1 = Insectoid Gauze eyepad (Left)
 marking-GauzeMothLefteyePad = Insectoid Gauze eyepad (Left)
 
 marking-GauzeMothRighteyePatch-gauze_moth_righteye_2 = Insectoid Gauze eyepatch (Right)
-marking-GauzeMothRighteyePatch = Gauze eyepatch (Right)
+marking-GauzeMothRighteyePatch = Insectoid Gauze eyepatch (Right)
 
 marking-GauzeMothRighteyePad-gauze_moth_righteye_1 = Insectoid Gauze eyepad (Right)
-marking-GauzeMothRighteyePad = Gauze eyepad (Right)
+marking-GauzeMothRighteyePad = Insectoid Gauze eyepad (Right)
 
 marking-GauzeMothUpperArmRight-gauze_moth_upperarm_r = Insectoid Gauze Forearm Wrap (Right)
-marking-GauzeMothUpperArmRight = Gauze Forearm Wrap (Right)
+marking-GauzeMothUpperArmRight = Insectoid Gauze Forearm Wrap (Right)
 
 marking-GauzeMothUpperArmLeft-gauze_moth_upperarm_l = Insectoid Gauze Forearm Wrap (Left)
-marking-GauzeMothUpperArmLeft = Gauze Forearm Wrap (Left)
+marking-GauzeMothUpperArmLeft = Insectoid Gauze Forearm Wrap (Left)
 
 marking-GauzeMothUpperLegRight-gauze_moth_upperleg_r = Insectoid Gauze Thigh Wrap (Right)
-marking-GauzeMothUpperLegRight = Insectoid Gauze Thigh Wrap (Right)
+marking-GauzeMothUpperLegRight = Insectoid Insectoid Gauze Thigh Wrap (Right)
 
 marking-GauzeMothUpperLegLeft-gauze_moth_upperleg_l = Insectoid Gauze Thigh Wrap (Left)
 marking-GauzeMothUpperLegLeft = Insectoid Gauze Thigh Wrap (Left)
