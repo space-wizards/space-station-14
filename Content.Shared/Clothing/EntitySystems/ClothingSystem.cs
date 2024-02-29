@@ -130,7 +130,8 @@ public abstract class ClothingSystem : EntitySystem
         if ((new string[] { "head" }).Contains(args.Slot) && _tagSystem.HasTag(args.Equipment, HairTag))
             ToggleVisualLayer(args.Equipee, HumanoidVisualLayers.Hair, HairTag);
         if ((new string[] { "mask", "head" }).Contains(args.Slot) && _tagSystem.HasTag(args.Equipment, NoseTag))
-            ToggleVisualLayer(args.Equipee, HumanoidVisualLayers.Snout, NoseTag);
+            if (TryComp(args.Equipee, out HumanoidAppearanceComponent? appearance) && appearance.HideNoseOnEquip)
+                ToggleVisualLayer(args.Equipee, HumanoidVisualLayers.Snout, NoseTag);
     }
 
     protected virtual void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
@@ -139,7 +140,8 @@ public abstract class ClothingSystem : EntitySystem
         if ((new string[] { "head" }).Contains(args.Slot) && _tagSystem.HasTag(args.Equipment, HairTag))
             ToggleVisualLayer(args.Equipee, HumanoidVisualLayers.Hair, HairTag);
         if ((new string[] { "mask", "head" }).Contains(args.Slot) && _tagSystem.HasTag(args.Equipment, NoseTag))
-            ToggleVisualLayer(args.Equipee, HumanoidVisualLayers.Snout, NoseTag);
+            if (TryComp(args.Equipee, out HumanoidAppearanceComponent? appearance) && appearance.HideNoseOnEquip)
+                ToggleVisualLayer(args.Equipee, HumanoidVisualLayers.Snout, NoseTag);
     }
 
     private void OnGetState(EntityUid uid, ClothingComponent component, ref ComponentGetState args)
@@ -157,7 +159,8 @@ public abstract class ClothingSystem : EntitySystem
     {
         //TODO: sprites for 'pulled down' state. defaults to invisible due to no sprite with this prefix
         SetEquippedPrefix(ent, args.IsToggled ? args.equippedPrefix : null, ent);
-        ToggleVisualLayer(args.Wearer, HumanoidVisualLayers.Snout, NoseTag);
+        if (TryComp(args.Wearer, out HumanoidAppearanceComponent? appearance) && appearance.HideNoseOnEquip)
+            ToggleVisualLayer(args.Wearer, HumanoidVisualLayers.Snout, NoseTag);
     }
 
     private void OnEquipDoAfter(Entity<ClothingComponent> ent, ref ClothingEquipDoAfterEvent args)

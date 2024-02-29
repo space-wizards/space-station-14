@@ -51,6 +51,9 @@
     accent: dwarf
   - type: Speech
     speechSounds: Bass
+  - type: HumanoidAppearance
+    species: Human
+    hideNoseOnEquip: true
 
 - type: entity
   parent: BaseSpeciesDummy
