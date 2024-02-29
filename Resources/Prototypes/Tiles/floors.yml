@@ -1805,6 +1805,7 @@
     collection: FootstepHull
   itemDrop: FloorTileItemSteel
   heatCapacity: 100000 #/tg/ has this set as "INFINITY." I don't know if that exists here so I've just added an extra 0
+  indestructible: true
 
 - type: tile
   id: FloorReinforcedHardened
@@ -1861,3 +1862,23 @@
   mobFrictionNoInput: 0.05
   mobAcceleration: 2
   itemDrop: FloorTileItemAstroIce
+
+- type: tile
+  id: FloorWoodLarge
+  name: tiles-wood-large
+  sprite: /Textures/Tiles/wood_large.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: FloorTileItemWoodLarge
+  heatCapacity: 10000

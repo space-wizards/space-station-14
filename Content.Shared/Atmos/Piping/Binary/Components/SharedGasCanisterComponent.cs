@@ -21,8 +21,7 @@ namespace Content.Shared.Atmos.Piping.Binary.Components
     public enum GasCanisterVisuals
     {
         PressureState,
-        TankInserted,
-        Locked
+        TankInserted
     }
 
     #endregion
