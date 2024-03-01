@@ -92,8 +92,8 @@
         reagents:
         - ReagentId: SpaceDrugs
           Quantity: 3
-#       - ReagentId: Lipolicide
-#         Quantity: 3
+        - ReagentId: Lipolicide
+          Quantity: 3
         - ReagentId: MindbreakerToxin
           Quantity: 2
 #       - ReagentId: Happiness

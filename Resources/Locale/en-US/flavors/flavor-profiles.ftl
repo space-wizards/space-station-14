@@ -168,6 +168,7 @@ flavor-complex-light = like a light gone out
 flavor-complex-profits = like profits
 flavor-complex-fishops = like the dreaded fishops
 flavor-complex-violets = like violets
+flavor-complex-mothballs = like mothballs
 
 # Drink-specific flavors.
 

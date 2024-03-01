@@ -804,10 +804,10 @@
       Min: 1
       Max: 15
       PotencyDivisor: 10
-#   Lipolicide:
-#     Min: 1
-#     Max: 15
-#     PotencyDivisor: 10
+    Lipolicide:
+      Min: 1
+      Max: 15
+      PotencyDivisor: 10
     MindbreakerToxin:
       Min: 1
       Max: 5
