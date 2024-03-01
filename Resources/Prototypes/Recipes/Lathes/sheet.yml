@@ -128,6 +128,13 @@
     RawBananium: 3000
 
 - type: latheRecipe
+  id: MaterialDiamond
+  result: MaterialDiamond1
+  completetime: 3
+  materials:
+    RawDiamond: 1000
+
+- type: latheRecipe
   id: SheetUranium1
   result: SheetUranium1
   completetime: 2

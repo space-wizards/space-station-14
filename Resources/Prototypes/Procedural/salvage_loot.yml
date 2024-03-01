@@ -180,6 +180,13 @@
       proto: OreBananium
 
 - type: salvageLoot
+  id: OreDiamond
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto: OreDiamond
+
+- type: salvageLoot
   id: OreArtifactFragment
   guaranteed: true
   loots:

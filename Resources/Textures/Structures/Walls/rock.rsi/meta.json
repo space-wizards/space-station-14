@@ -104,7 +104,23 @@
             "name": "rock_copper"
         },
         {
-            "name": "rock_diamond"
+            "name": "rock_diamond",
+            "delays": [
+              [
+               0.4,
+               0.4,
+               0.4,
+               0.4,
+               0.4,
+               0.4,
+               0.4,
+               0.4,
+               0.4,
+               0.4,
+               0.4,
+               0.4
+              ]
+            ]
         },
         {
             "name": "rock_gold"
