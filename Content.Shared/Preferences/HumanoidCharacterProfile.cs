@@ -35,7 +35,7 @@ namespace Content.Shared.Preferences
 
         public IReadOnlyDictionary<string, RoleLoadout> Loadouts => _loadouts;
 
-        private Dictionary<string, RoleLoadout> _loadouts = new();
+        private Dictionary<string, RoleLoadout> _loadouts;
 
         // What in the lord is happening here.
         private HumanoidCharacterProfile(
@@ -69,6 +69,7 @@ namespace Content.Shared.Preferences
             PreferenceUnavailable = preferenceUnavailable;
             _antagPreferences = antagPreferences;
             _traitPreferences = traitPreferences;
+            _loadouts = loadouts;
         }
 
         /// <summary>Copy constructor but with overridable references (to prevent useless copies)</summary>
@@ -386,6 +387,7 @@ namespace Content.Shared.Preferences
 
         public void EnsureValid(ICommonSession session, IDependencyCollection collection)
         {
+            var entManager = collection.Resolve<IEntityManager>();
             var configManager = collection.Resolve<IConfigurationManager>();
             var prototypeManager = collection.Resolve<IPrototypeManager>();
 
@@ -551,6 +553,18 @@ namespace Content.Shared.Preferences
                 loadouts.EnsureValid(session, collection);
             }
 
+            foreach (var roleLoadout in prototypeManager.EnumeratePrototypes<RoleLoadoutPrototype>())
+            {
+                if (_loadouts.ContainsKey(roleLoadout.ID))
+                {
+                    continue;
+                }
+
+                var loadout = new RoleLoadout(roleLoadout.ID);
+                loadout.SetDefault(entManager, prototypeManager);
+                SetLoadout(loadout);
+            }
+
             foreach (var value in toRemove)
             {
                 _loadouts.Remove(value);
@@ -596,6 +610,11 @@ namespace Content.Shared.Preferences
                 _antagPreferences,
                 _traitPreferences
             );
+        }
+
+        public void SetLoadout(RoleLoadout loadout)
+        {
+            _loadouts[loadout.Role.Id] = loadout;
         }
     }
 }

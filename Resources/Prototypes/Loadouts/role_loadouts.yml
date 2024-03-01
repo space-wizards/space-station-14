@@ -1,0 +1,11 @@
+# Engineering
+- type: roleLoadout
+  id: JobStationEngineer
+  groups:
+  - StationEngineerPDA
+
+# Science
+- type: roleLoadout
+  id: JobScientist
+  groups:
+  - ScientistPDA

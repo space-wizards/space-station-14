@@ -1,0 +1,14 @@
+- type: loadoutGroup
+  id: StationEngineerPDA
+  name: loadout-station-engineer-pda
+  loadouts:
+  - EngineerPDA
+  - SeniorEngineerPDA
+
+- type: loadoutGroup
+  id: ScientistPDA
+  name: loadout-station-scientist-pda
+  loadouts:
+  - ScientistPDA
+  - SeniorResearcherPDA
+

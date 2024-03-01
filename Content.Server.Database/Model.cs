@@ -60,12 +60,16 @@ namespace Content.Server.Database
                 .IsUnique();
 
             modelBuilder.Entity<ProfileRoleLoadout>()
-                .HasIndex(p => new {p.ProfileId, p.RoleName})
-                .IsUnique();
+                .HasOne(e => e.Profile)
+                .WithMany(e => e.Loadouts)
+                .HasForeignKey(e => e.ProfileId)
+                .IsRequired();
 
             modelBuilder.Entity<ProfileLoadoutGroup>()
-                .HasIndex(p => new { p.RoleLoadoutId, p.GroupName})
-                .IsUnique();
+                .HasOne(e => e.ProfileRoleLoadout)
+                .WithMany(e => e.Groups)
+                .HasForeignKey(e => e.ProfileRoleLoadoutId)
+                .IsRequired();
 
             modelBuilder.Entity<Job>()
                 .HasIndex(j => j.ProfileId);
@@ -405,12 +409,9 @@ namespace Content.Server.Database
     {
         public int Id { get; set; }
 
-        /// <summary>
-        /// The corresponding profile that owns this loadout.
-        /// </summary>
-        public Profile Profile { get; set; } = null!;
-
         public int ProfileId { get; set; }
+
+        public Profile Profile { get; set; } = null!;
 
         /// <summary>
         /// The corresponding role prototype on the profile.
@@ -427,12 +428,12 @@ namespace Content.Server.Database
     {
         public int Id { get; set; }
 
+        public int ProfileRoleLoadoutId { get; set; }
+
         /// <summary>
         /// The corresponding RoleLoadout that owns this.
         /// </summary>
         public ProfileRoleLoadout ProfileRoleLoadout { get; set; } = null!;
-
-        public int RoleLoadoutId { get; set; }
 
         /// <summary>
         /// The corresponding group prototype.

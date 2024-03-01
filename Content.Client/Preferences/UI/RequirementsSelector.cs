@@ -15,11 +15,6 @@ namespace Content.Client.Preferences.UI;
 
 public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototype
 {
-    /// <summary>
-    /// Prefix for prototypes.
-    /// </summary>
-    private string _prefix;
-
     private ButtonGroup _loadoutGroup;
 
     public T Proto { get; }
@@ -29,10 +24,14 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
     private readonly StripeBack _lockStripe;
     private LoadoutWindow? _loadout;
 
-    protected RequirementsSelector(string prefix, T proto, ButtonGroup loadoutGroup)
+    /// <summary>
+    /// Raised if a loadout has been updated.
+    /// </summary>
+    public event Action<RoleLoadout>? LoadoutUpdated;
+
+    protected RequirementsSelector(T proto, ButtonGroup loadoutGroup)
     {
         _loadoutGroup = loadoutGroup;
-        _prefix = prefix;
         Proto = proto;
 
         Options = new RadioOptions<int>(RadioOptionsLayout.Horizontal)
@@ -71,7 +70,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
     /// <summary>
     /// Actually adds the controls, must be called in the inheriting class' constructor.
     /// </summary>
-    protected void Setup((string, int)[] items, string title, int titleSize, string? description, TextureRect? icon = null)
+    protected void Setup(RoleLoadout? loadout, (string, int)[] items, string title, int titleSize, string? description, TextureRect? icon = null)
     {
         foreach (var (text, value) in items)
         {
@@ -104,10 +103,9 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
         var collection = IoCManager.Instance!;
         var entManager = collection.Resolve<IEntityManager>();
         var protoManager = collection.Resolve<IPrototypeManager>();
-        protoManager.TryIndex(_prefix + Proto.ID, out RoleLoadoutPrototype? loadoutProto);
 
         // If no loadout found then disabled button
-        if (loadoutProto == null)
+        if (loadout == null)
         {
             loadoutWindowBtn.Disabled = true;
         }
@@ -118,17 +116,13 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
             // TODO: Most of lobby state should be a uicontroller
             // trying to handle all this shit is a big-ass mess.
             // Every time I touch it I try to make it slightly better but it needs a howitzer dropped on it.
-            var loadout = new RoleLoadout((ProtoId<RoleLoadoutPrototype>) loadoutProto.ID);
-            loadout.SetDefault(entManager, protoManager);
-            loadout.EnsureValid(session, collection);
-
             loadoutWindowBtn.OnPressed += args =>
             {
                 if (args.Button.Pressed)
                 {
-                    _loadout = new LoadoutWindow(loadout, loadoutProto, session, collection)
+                    _loadout = new LoadoutWindow(loadout, protoManager.Index(loadout.Role), session, collection)
                     {
-                        Title = Loc.GetString(_prefix + Proto.ID + "-loadout"),
+                        Title = Loc.GetString(Proto.ID + "-loadout"),
                     };
 
                     _loadout.RefreshLoadouts(loadout, session, collection);
@@ -143,6 +137,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                     {
                         loadout.ApplyLoadout(selectedGroup, selectedLoadout, entManager);
                         _loadout.RefreshLoadouts(loadout, session, collection);
+                        LoadoutUpdated?.Invoke(loadout);
                     };
 
                     _loadout.OpenCenteredLeft();
