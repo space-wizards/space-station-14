@@ -117,7 +117,7 @@
   description: A metal keg. It can be filled with liquid.
   components:
   - type: Sprite
-    sprite: Objects/Storage/metal_grey.rsi
+    sprite: Objects/Storage/barrel.rsi
     state: metal_grey
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -131,7 +131,7 @@
   suffix: blue
   components:
   - type: Sprite
-    sprite: Objects/Storage/metal_blue.rsi
+    sprite: Objects/Storage/barrel.rsi
     state: metal_blue
 
 - type: entity
@@ -140,7 +140,7 @@
   suffix: red
   components:
   - type: Sprite
-    sprite: Objects/Storage/metal_red.rsi
+    sprite: Objects/Storage/barrel.rsi
     state: metal_red
 
 - type: entity
@@ -149,7 +149,7 @@
   suffix: red
   components:
   - type: Sprite
-    sprite: Objects/Storage/metal_yellow.rsi
+    sprite: Objects/Storage/barrel.rsi
     state: metal_yellow
 
 - type: entity
