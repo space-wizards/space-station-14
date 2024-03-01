@@ -275,7 +275,7 @@
       - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
-      - id: BookSecretDocuments
+      - id: BookSecretDocumentsZipped
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -299,7 +299,7 @@
       - id: SecurityTechFabCircuitboard
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
-      - id: BookSecretDocuments
+      - id: BookSecretDocumentsZipped
 
 - type: entity
   id: LockerFreezerVaultFilled
