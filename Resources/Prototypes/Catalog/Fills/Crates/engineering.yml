@@ -194,13 +194,3 @@
     contents:
     - id: WeaponParticleDecelerator
       amount: 3
-
-- type: entity
-  id: CrateSpaceHeater
-  parent: CrateGenericSteel
-  name: space heater crate
-  description: A crate containing a single space heater flatpack.
-  components:
-  - type: StorageFill
-    contents:
-    - id: SpaceHeaterFlatpack
