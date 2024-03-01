@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Alekshhh
-  changes:
-  - message: Changed uranium ore visually
-    type: Tweak
-  id: 5567
-  time: '2024-01-05T03:35:52.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23526
 - author: EmoGarbage404
   changes:
   - message: The flatpacker now consumes boards when packing them.
@@ -3829,3 +3822,10 @@
   id: 6066
   time: '2024-02-29T22:57:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/22804
+- author: deltanedas
+  changes:
+  - message: Acidifiers and microbombs now require confirmation before gibbing you.
+    type: Tweak
+  id: 6067
+  time: '2024-03-01T02:48:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24609
