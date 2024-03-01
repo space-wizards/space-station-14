@@ -86,6 +86,8 @@
   parent: BaseSubGamemodesRule
   noSpawn: true
   components:
+  - type: GameRule
+    minPlayers: 1
   - type: TraitorRule
 
 - type: entity
