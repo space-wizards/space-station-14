@@ -3,13 +3,6 @@
   name: job-name-detective
   description: job-description-detective
   playTimeTracker: JobDetective
-  requirements:
-  - !type:DepartmentTimeRequirement
-    department: Security
-    time: 36000 # 10 hours
-  - !type:DepartmentTimeRequirement
-    department: Civilian
-    time: 18000 # 5 hours
   startingGear: DetectiveGear
   icon: "JobIconDetective"
   supervisors: job-supervisors-hop
