@@ -61,11 +61,6 @@ public sealed class SlipperySystem : EntitySystem
     private void OnThrownSlipAttempt(EntityUid uid, ThrownItemComponent comp, ref SlipCausingAttemptEvent args)
     {
         args.Cancelled = true;
-
-        //TODO: If it's after 2024 April and this popup is still here, remove it
-        // Only here so people who don't read even the changelog won't think soap suddenly broke
-        if (_netManager.IsServer)
-            _popup.PopupEntity(Loc.GetString("thrown-slippery-missed"), uid, PopupType.Medium);
     }
 
     private bool CanSlip(EntityUid uid, EntityUid toSlip)
