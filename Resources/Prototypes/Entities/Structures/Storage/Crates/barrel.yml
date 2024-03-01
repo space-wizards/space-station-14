@@ -110,14 +110,14 @@
     noRot: false
 
 - type: entity
+  id: MetalBarrelGrey
   name: metal barrel
   parent: WoodenKeg
   suffix: grey
   description: A metal keg. It can be filled with liquid.
-  id: MetalBarrelGrey
   components:
   - type: Sprite
-    sprite: Objects/Storage/barrel.rsi
+    sprite: Objects/Storage/metal_grey.rsi
     state: metal_grey
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -126,35 +126,35 @@
     noRot: true
 
 - type: entity
+  id: MetalBarrelBlue
   parent: MetalBarrelGrey
   suffix: blue
-  id: MetalBarrelBlue
   components:
   - type: Sprite
-    sprite: Objects/Storage/barrel.rsi
+    sprite: Objects/Storage/metal_blue.rsi
     state: metal_blue
 
 - type: entity
+  id: MetalBarrelRed
   parent: MetalBarrelGrey
   suffix: red
-  id: MetalBarrelRed
   components:
   - type: Sprite
-    sprite: Objects/Storage/barrel.rsi
+    sprite: Objects/Storage/metal_red.rsi
     state: metal_red
 
 - type: entity
+  id: MetalBarrelYellow
   parent: MetalBarrelGrey
   suffix: red
-  id: MetalBarrelYellow
   components:
   - type: Sprite
-    sprite: Objects/Storage/barrel.rsi
+    sprite: Objects/Storage/metal_yellow.rsi
     state: metal_yellow
 
 - type: entity
-  parent: MetalBarrelGrey
   id: MetalBarrelExplosiveEmpty
+  parent: MetalBarrelGrey
   name: explosive barrel
   suffix: Empty
   description: The ancient and mysterious symbol on the front is believed to have once meant 'Use me as cover!' in days of yore.
@@ -166,8 +166,8 @@
     - state: metal_explosive_label
 
 - type: entity
-  parent: MetalBarrelExplosiveEmpty
   id: MetalBarrelExplosiveFilled
+  parent: MetalBarrelExplosiveEmpty
   suffix: Filled
   components:
   - type: Label
