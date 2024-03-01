@@ -444,7 +444,7 @@ namespace Content.Server.Database
         /// Selected loadout prototype. Null if none is set.
         /// May get validated at runtime and updated to to the default.
         /// </summary>
-        public string? LoadoutName;
+        public string? LoadoutName { get; set; } = null;
     }
 
     #endregion

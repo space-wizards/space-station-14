@@ -608,7 +608,8 @@ namespace Content.Shared.Preferences
                 PreferenceUnavailable,
                 _jobPriorities,
                 _antagPreferences,
-                _traitPreferences
+                _traitPreferences,
+                _loadouts
             );
         }
 
