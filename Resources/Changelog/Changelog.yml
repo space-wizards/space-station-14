@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: The flatpacker now consumes boards when packing them.
-    type: Tweak
-  id: 5568
-  time: '2024-01-05T05:01:25.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23552
 - author: Ubaser
   changes:
   - message: Moths have a new variety of wing and antennae, Underwing.
@@ -3829,3 +3822,10 @@
   id: 6067
   time: '2024-03-01T02:48:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24609
+- author: exincore
+  changes:
+  - message: Chameleon gear now only reveals its menu button to its wearer.
+    type: Tweak
+  id: 6068
+  time: '2024-03-01T12:49:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25746
