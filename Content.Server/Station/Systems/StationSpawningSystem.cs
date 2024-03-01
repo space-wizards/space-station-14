@@ -86,7 +86,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
         if (station != null && profile != null)
         {
-            /// Try to call the character's preferred spawner first.
+            // Try to call the character's preferred spawner first.
             if (_spawnerCallbacks.TryGetValue(profile.SpawnPriority, out var preferredSpawner))
             {
                 preferredSpawner(ev);
@@ -101,9 +101,11 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             }
             else
             {
-                /// Call all of them in the typical order.
+                // Call all of them in the typical order.
                 foreach (var typicalSpawner in _spawnerCallbacks.Values)
+                {
                     typicalSpawner(ev);
+                }
             }
         }
 

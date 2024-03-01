@@ -543,6 +543,7 @@ namespace Content.Client.Preferences.UI
                     selector.LoadoutUpdated += args =>
                     {
                         Profile?.SetLoadout(args);
+                        UserInterfaceManager.GetUIController<LobbyUIController>().UpdateCharacterUI();
                         IsDirty = true;
                     };
 

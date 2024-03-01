@@ -125,11 +125,8 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                 if (args.Button.Pressed)
                 {
                     // We only create a loadout when necessary to avoid unnecessary DB entries.
-                    if (_loadout == null)
-                    {
-                        _loadout = new RoleLoadout("Job" + Proto.ID);
-                        _loadout.SetDefault(entManager, protoManager);
-                    }
+                    _loadout ??= new RoleLoadout("Job" + Proto.ID);
+                    _loadout.SetDefault(entManager, protoManager);
 
                     _loadoutWindow = new LoadoutWindow(_loadout, protoManager.Index(_loadout.Role), session, collection)
                     {
@@ -141,13 +138,16 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                     // If it's a job preview then refresh it.
                     if (Proto is JobPrototype jobProto)
                     {
-                        UserInterfaceManager.GetUIController<LobbyUIController>().SetDummyJob(jobProto);
+                        var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
+                        controller.SetDummyJob(jobProto, _loadout);
                     }
 
                     _loadoutWindow.OnLoadoutPressed += (selectedGroup, selectedLoadout) =>
                     {
                         _loadout.ApplyLoadout(selectedGroup, selectedLoadout, entManager);
                         _loadoutWindow.RefreshLoadouts(_loadout, session, collection);
+                        var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
+                        controller.UpdateCharacterUI();
                         LoadoutUpdated?.Invoke(_loadout);
                     };
 
@@ -172,7 +172,8 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
         _loadoutWindow?.Close();
         _loadoutWindow?.Dispose();
         _loadoutWindow = null;
-        UserInterfaceManager.GetUIController<LobbyUIController>().SetDummyJob(null);
+        var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
+        controller.SetDummyJob(null, null);
     }
 
     public void LockRequirements(FormattedMessage requirements)

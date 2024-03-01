@@ -2,7 +2,11 @@
 - type: roleLoadout
   id: JobStationEngineer
   groups:
-  - StationEngineerPDA
+  - StationEngineerHead
+  - StationEngineerJumpsuit
+  - StationEngineerBackpack
+  - StationEngineerOuterClothing
+  - StationEngineerID
 
 # Science
 - type: roleLoadout

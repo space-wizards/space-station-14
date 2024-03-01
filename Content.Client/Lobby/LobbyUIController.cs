@@ -3,9 +3,12 @@ using Content.Client.Humanoid;
 using Content.Client.Inventory;
 using Content.Client.Lobby.UI;
 using Content.Client.Preferences;
+using Content.Client.Station;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
+using Content.Shared.Preferences.Loadouts;
+using Content.Shared.Preferences.Loadouts.Effects;
 using Content.Shared.Roles;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -20,8 +23,14 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [UISystemDependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [UISystemDependency] private readonly ClientInventorySystem _inventory = default!;
+    [UISystemDependency] private readonly StationSpawningSystem _spawn = default!;
 
     private LobbyCharacterPreviewPanel? _previewPanel;
+
+    /*
+     * Each character profile has its own dummy. There is also a dummy for the lobby screen + character editor
+     * that is shared too.
+     */
 
     /// <summary>
     /// Preview dummy for role gear.
@@ -63,11 +72,8 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         UpdateCharacterUI();
     }
 
-    public void SetDummyJob(JobPrototype? job)
+    public void SetDummyJob(JobPrototype? job, RoleLoadout? loadout)
     {
-        if (_dummyJob == job)
-            return;
-
         _dummyJob = job;
         UpdateCharacterUI();
     }
@@ -94,7 +100,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             _previewPanel?.SetSummaryText(selectedCharacter.Summary);
             _humanoid.LoadProfile(_previewDummy.Value, selectedCharacter);
 
-            GiveDummyJobClothes(_previewDummy.Value, selectedCharacter);
+            GiveDummyJobClothesLoadout(_previewDummy.Value, selectedCharacter);
             PreviewDummyUpdated?.Invoke(_previewDummy.Value);
         }
     }
@@ -102,22 +108,37 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     /// <summary>
     /// Applies the highest priority job's clothes to the dummy.
     /// </summary>
-    public void GiveDummyJobClothes(EntityUid dummy, HumanoidCharacterProfile profile)
+    public void GiveDummyJobClothesLoadout(EntityUid dummy, HumanoidCharacterProfile profile)
     {
-        JobPrototype job;
-
-        if (_dummyJob != null)
-        {
-            job = _dummyJob;
-        }
-        else
-        {
-            var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
-            // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract (what is resharper smoking?)
-            job = _prototypeManager.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
-        }
-
+        var job = _dummyJob ?? GetPreferredJob(profile);
+        var loadout = profile.GetLoadoutOrDefault("Job" + job.ID, EntityManager, _prototypeManager);
         GiveDummyJobClothes(dummy, profile, job);
+        GiveDummyLoadout(dummy, loadout);
+    }
+
+    /// <summary>
+    /// Gets the highest priority job for the profile.
+    /// </summary>
+    public JobPrototype GetPreferredJob(HumanoidCharacterProfile profile)
+    {
+        var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
+        // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract (what is resharper smoking?)
+        return _prototypeManager.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
+    }
+
+    public void GiveDummyLoadout(EntityUid uid, RoleLoadout? loadout)
+    {
+        if (loadout == null)
+            return;
+
+        foreach (var group in loadout.SelectedLoadouts.Values)
+        {
+            if (group == null)
+                continue;
+
+            var loadoutProto = _prototypeManager.Index<LoadoutPrototype>(group);
+            _spawn.EquipStartingGear(uid, _prototypeManager.Index(loadoutProto.Equipment));
+        }
     }
 
     /// <summary>
@@ -151,10 +172,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
                     if (itemType != string.Empty)
                     {
                         var item = EntityManager.SpawnEntity(itemType, MapCoordinates.Nullspace);
-                        if (!_inventory.TryEquip(dummy, item, slot.Name, true, true))
-                        {
-                            EntityManager.DeleteEntity(item);
-                        }
+                        _inventory.TryEquip(dummy, item, slot.Name, true, true);
                     }
                 }
             }
@@ -177,10 +195,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             if (itemType != string.Empty)
             {
                 var item = EntityManager.SpawnEntity(itemType, MapCoordinates.Nullspace);
-                if (!_inventory.TryEquip(dummy, item, slot.Name, true, true))
-                {
-                    EntityManager.DeleteEntity(item);
-                }
+                _inventory.TryEquip(dummy, item, slot.Name, true, true);
             }
         }
     }

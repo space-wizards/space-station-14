@@ -172,7 +172,11 @@ namespace Content.Client.Preferences.UI
 
                 if (humanoid != null)
                 {
-                    UserInterfaceManager.GetUIController<LobbyUIController>().GiveDummyJobClothes(_previewDummy, humanoid);
+                    var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
+                    var job = controller.GetPreferredJob(humanoid);
+                    var loadout = humanoid.GetLoadoutOrDefault("Job" + job.ID, entityManager, prototypeManager);
+                    controller.GiveDummyJobClothes(_previewDummy, humanoid, job);
+                    controller.GiveDummyLoadout(_previewDummy, loadout);
                 }
 
                 var isSelectedCharacter = profile == preferencesManager.Preferences?.SelectedCharacter;

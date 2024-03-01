@@ -1,0 +1,31 @@
+# Science
+- type: loadoutEffectGroup
+  id: SeniorResearcher
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Science
+      time: 216000 #60 hrs
+
+# PDA
+- type: loadout
+  id: ScientistPDA
+  equipment: ScientistPDA
+
+- type: startingGear
+  id: ScientistPDA
+  equipment:
+    id: SciencePDA
+
+- type: loadout
+  id: SeniorResearcherPDA
+  equipment: SeniorResearcherPDA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorResearcher
+
+- type: startingGear
+  id: SeniorResearcherPDA
+  equipment:
+    id: SeniorResearcherPDA

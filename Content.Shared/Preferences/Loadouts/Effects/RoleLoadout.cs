@@ -70,9 +70,11 @@ public sealed class RoleLoadout
     /// <summary>
     /// Resets the selected loadouts to default.
     /// </summary>
-    public void SetDefault(IEntityManager entManager, IPrototypeManager protoManager)
+    public void SetDefault(IEntityManager entManager, IPrototypeManager protoManager, bool force = false)
     {
-        SelectedLoadouts.Clear();
+        if (force)
+            SelectedLoadouts.Clear();
+
         var roleProto = protoManager.Index(Role);
 
         for (var i = roleProto.Groups.Count - 1; i >= 0; i--)
@@ -95,6 +97,9 @@ public sealed class RoleLoadout
             {
                 selected = groupProto.Loadouts[0];
             }
+
+            if (SelectedLoadouts.ContainsKey(group))
+                continue;
 
             ApplyLoadout(group, selected, entManager);
         }

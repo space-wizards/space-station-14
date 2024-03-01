@@ -366,7 +366,6 @@ namespace Content.Shared.Preferences
 
         public void EnsureValid(ICommonSession session, IDependencyCollection collection)
         {
-            var entManager = collection.Resolve<IEntityManager>();
             var configManager = collection.Resolve<IConfigurationManager>();
             var prototypeManager = collection.Resolve<IPrototypeManager>();
 
@@ -564,6 +563,18 @@ namespace Content.Shared.Preferences
         public void SetLoadout(RoleLoadout loadout)
         {
             _loadouts[loadout.Role.Id] = loadout;
+        }
+
+        public RoleLoadout GetLoadoutOrDefault(string id, IEntityManager entManager, IPrototypeManager protoManager)
+        {
+            if (!_loadouts.TryGetValue(id, out var loadout))
+            {
+                loadout = new RoleLoadout(id);
+                loadout.SetDefault(entManager, protoManager, force: true);
+            }
+
+            loadout.SetDefault(entManager, protoManager);
+            return loadout;
         }
     }
 }

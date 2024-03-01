@@ -1,10 +1,45 @@
+# Engineer
 - type: loadoutGroup
-  id: StationEngineerPDA
-  name: loadout-station-engineer-pda
+  id: StationEngineerHead
+  name: loadout-station-engineer-head
   loadouts:
-  - EngineerPDA
+  - StationEngineerHead
+  - SeniorEngineerBeret
+
+- type: loadoutGroup
+  id: StationEngineerJumpsuit
+  name: loadout-station-engineer-jumpsuit
+  loadouts:
+  - StationEngineerJumpsuit
+  - StationEngineerJumpskirt
+  - SeniorEngineerJumpsuit
+  - SeniorEngineerJumpskirt
+
+- type: loadoutGroup
+  id: StationEngineerBackpack
+  name: loadout-station-engineer-backpack
+  loadouts:
+  - StationEngineerBackpack
+  - StationEngineerSatchel
+  - StationEngineerDuffel
+  - SeniorEngineerBackpack
+  - SeniorEngineerSatchel
+  - SeniorEngineerDuffel
+
+- type: loadoutGroup
+  id: StationEngineerOuterClothing
+  name: loadout-station-engineer-outerclothing
+  loadouts:
+  - StationEngineerOuterVest
+
+- type: loadoutGroup
+  id: StationEngineerID
+  name: loadout-station-engineer-id
+  loadouts:
+  - StationEngineerPDA
   - SeniorEngineerPDA
 
+# Science
 - type: loadoutGroup
   id: ScientistPDA
   name: loadout-station-scientist-pda
