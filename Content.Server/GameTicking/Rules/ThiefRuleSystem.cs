@@ -39,10 +39,6 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         var query = QueryActiveRules();
         while (query.MoveNext(out _, out var comp, out _))
         {
-            //Chance to not launch the game rule
-            if (!_random.Prob(comp.RuleChance))
-                continue;
-
             //Get all players eligible for this role, allow selecting existing antags
             //TO DO: When voxes specifies are added, increase their chance of becoming a thief by 4 times >:)
             var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.ThiefPrototypeId, acceptableAntags: AntagAcceptability.All, allowNonHumanoids: true);
