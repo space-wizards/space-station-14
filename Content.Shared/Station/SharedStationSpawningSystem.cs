@@ -16,14 +16,13 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     /// </summary>
     /// <param name="entity">Entity to load out.</param>
     /// <param name="startingGear">Starting gear to use.</param>
-    /// <param name="profile">Character profile to use, if any.</param>
-    public void EquipStartingGear(EntityUid entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
+    public void EquipStartingGear(EntityUid entity, StartingGearPrototype startingGear)
     {
         if (InventorySystem.TryGetSlots(entity, out var slotDefinitions))
         {
             foreach (var slot in slotDefinitions)
             {
-                var equipmentStr = startingGear.GetGear(slot.Name, profile);
+                var equipmentStr = startingGear.GetGear(slot.Name);
                 if (!string.IsNullOrEmpty(equipmentStr))
                 {
                     var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);

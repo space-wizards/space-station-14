@@ -134,7 +134,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         EntityUid? station,
         EntityUid? entity = null)
     {
-        _prototypeManager.TryIndex(job?.Prototype ?? string.Empty, out JobPrototype? prototype);
+        _prototypeManager.TryIndex(job?.Prototype ?? string.Empty, out var prototype);
 
         // If we're not spawning a humanoid, we're gonna exit early without doing all the humanoid stuff.
         if (prototype?.JobEntity != null)
@@ -173,10 +173,22 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             profile = HumanoidCharacterProfile.RandomWithSpecies(speciesId);
         }
 
+        if (profile?.Loadouts.TryGetValue("Job" + prototype?.ID, out var loadout) == true)
+        {
+            foreach (var group in loadout.SelectedLoadouts)
+            {
+                if (group.Value == null)
+                    continue;
+
+                var startingGear = _prototypeManager.Index<StartingGearPrototype>(group.Value);
+                EquipStartingGear(entity.Value, startingGear);
+            }
+        }
+
         if (prototype?.StartingGear != null)
         {
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(prototype.StartingGear);
-            EquipStartingGear(entity.Value, startingGear, profile);
+            EquipStartingGear(entity.Value, startingGear);
             if (profile != null)
                 EquipIdCard(entity.Value, profile.Name, prototype, station);
         }

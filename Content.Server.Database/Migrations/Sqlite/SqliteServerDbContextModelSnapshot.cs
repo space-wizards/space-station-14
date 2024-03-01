@@ -681,20 +681,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("age");
 
-                    b.Property<string>("Backpack")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("backpack");
-
                     b.Property<string>("CharacterName")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("char_name");
-
-                    b.Property<string>("Clothing")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("clothing");
 
                     b.Property<string>("EyeColor")
                         .IsRequired()

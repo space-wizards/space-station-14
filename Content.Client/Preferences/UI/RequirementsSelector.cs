@@ -22,7 +22,9 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
 
     protected readonly RadioOptions<int> Options;
     private readonly StripeBack _lockStripe;
-    private LoadoutWindow? _loadout;
+    private LoadoutWindow? _loadoutWindow;
+
+    private RoleLoadout? _loadout;
 
     /// <summary>
     /// Raised if a loadout has been updated.
@@ -72,6 +74,8 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
     /// </summary>
     protected void Setup(RoleLoadout? loadout, (string, int)[] items, string title, int titleSize, string? description, TextureRect? icon = null)
     {
+        _loadout = loadout;
+
         foreach (var (text, value) in items)
         {
             Options.AddItem(Loc.GetString(text), value);
@@ -105,7 +109,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
         var protoManager = collection.Resolve<IPrototypeManager>();
 
         // If no loadout found then disabled button
-        if (loadout == null)
+        if (!protoManager.HasIndex<RoleLoadoutPrototype>("Job" + Proto.ID))
         {
             loadoutWindowBtn.Disabled = true;
         }
@@ -120,12 +124,19 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
             {
                 if (args.Button.Pressed)
                 {
-                    _loadout = new LoadoutWindow(loadout, protoManager.Index(loadout.Role), session, collection)
+                    // We only create a loadout when necessary to avoid unnecessary DB entries.
+                    if (_loadout == null)
+                    {
+                        _loadout = new RoleLoadout("Job" + Proto.ID);
+                        _loadout.SetDefault(entManager, protoManager);
+                    }
+
+                    _loadoutWindow = new LoadoutWindow(_loadout, protoManager.Index(_loadout.Role), session, collection)
                     {
                         Title = Loc.GetString(Proto.ID + "-loadout"),
                     };
 
-                    _loadout.RefreshLoadouts(loadout, session, collection);
+                    _loadoutWindow.RefreshLoadouts(_loadout, session, collection);
 
                     // If it's a job preview then refresh it.
                     if (Proto is JobPrototype jobProto)
@@ -133,15 +144,15 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                         UserInterfaceManager.GetUIController<LobbyUIController>().SetDummyJob(jobProto);
                     }
 
-                    _loadout.OnLoadoutPressed += (selectedGroup, selectedLoadout) =>
+                    _loadoutWindow.OnLoadoutPressed += (selectedGroup, selectedLoadout) =>
                     {
-                        loadout.ApplyLoadout(selectedGroup, selectedLoadout, entManager);
-                        _loadout.RefreshLoadouts(loadout, session, collection);
-                        LoadoutUpdated?.Invoke(loadout);
+                        _loadout.ApplyLoadout(selectedGroup, selectedLoadout, entManager);
+                        _loadoutWindow.RefreshLoadouts(_loadout, session, collection);
+                        LoadoutUpdated?.Invoke(_loadout);
                     };
 
-                    _loadout.OpenCenteredLeft();
-                    _loadout.OnClose += () =>
+                    _loadoutWindow.OpenCenteredLeft();
+                    _loadoutWindow.OnClose += () =>
                     {
                         loadoutWindowBtn.Pressed = false;
                     };
@@ -158,9 +169,9 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
 
     public void CloseLoadout()
     {
-        _loadout?.Close();
-        _loadout?.Dispose();
-        _loadout = null;
+        _loadoutWindow?.Close();
+        _loadoutWindow?.Dispose();
+        _loadoutWindow = null;
         UserInterfaceManager.GetUIController<LobbyUIController>().SetDummyJob(null);
     }
 

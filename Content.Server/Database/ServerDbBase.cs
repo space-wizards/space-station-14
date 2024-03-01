@@ -185,14 +185,6 @@ namespace Content.Server.Database
             if (Enum.TryParse<Sex>(profile.Sex, true, out var sexVal))
                 sex = sexVal;
 
-            var clothing = ClothingPreference.Jumpsuit;
-            if (Enum.TryParse<ClothingPreference>(profile.Clothing, true, out var clothingVal))
-                clothing = clothingVal;
-
-            var backpack = BackpackPreference.Backpack;
-            if (Enum.TryParse<BackpackPreference>(profile.Backpack, true, out var backpackVal))
-                backpack = backpackVal;
-
             var spawnPriority = (SpawnPriorityPreference) profile.SpawnPriority;
 
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
@@ -246,8 +238,6 @@ namespace Content.Server.Database
                     Color.FromHex(profile.SkinColor),
                     markings
                 ),
-                clothing,
-                backpack,
                 spawnPriority,
                 jobs,
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
@@ -280,8 +270,6 @@ namespace Content.Server.Database
             profile.FacialHairColor = appearance.FacialHairColor.ToHex();
             profile.EyeColor = appearance.EyeColor.ToHex();
             profile.SkinColor = appearance.SkinColor.ToHex();
-            profile.Clothing = humanoid.Clothing.ToString();
-            profile.Backpack = humanoid.Backpack.ToString();
             profile.SpawnPriority = (int) humanoid.SpawnPriority;
             profile.Markings = markings;
             profile.Slot = slot;

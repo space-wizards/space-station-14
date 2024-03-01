@@ -47,8 +47,6 @@ namespace Content.Client.Preferences.UI
         private OptionButton _sexButton => CSexButton;
         private OptionButton _genderButton => CPronounsButton;
         private Slider _skinColor => CSkin;
-        private OptionButton _clothingButton => CClothingButton;
-        private OptionButton _backpackButton => CBackpackButton;
         private OptionButton _spawnPriorityButton => CSpawnPriorityButton;
         private SingleMarkingPicker _hairPicker => CHairStylePicker;
         private SingleMarkingPicker _facialHairPicker => CFacialHairPicker;
@@ -283,33 +281,6 @@ namespace Content.Client.Preferences.UI
             };
 
             #endregion Hair
-
-            #region Clothing
-
-            _clothingButton.AddItem(Loc.GetString("humanoid-profile-editor-preference-jumpsuit"), (int) ClothingPreference.Jumpsuit);
-            _clothingButton.AddItem(Loc.GetString("humanoid-profile-editor-preference-jumpskirt"), (int) ClothingPreference.Jumpskirt);
-
-            _clothingButton.OnItemSelected += args =>
-            {
-                _clothingButton.SelectId(args.Id);
-                SetClothing((ClothingPreference) args.Id);
-            };
-
-            #endregion Clothing
-
-            #region Backpack
-
-            _backpackButton.AddItem(Loc.GetString("humanoid-profile-editor-preference-backpack"), (int) BackpackPreference.Backpack);
-            _backpackButton.AddItem(Loc.GetString("humanoid-profile-editor-preference-satchel"), (int) BackpackPreference.Satchel);
-            _backpackButton.AddItem(Loc.GetString("humanoid-profile-editor-preference-duffelbag"), (int) BackpackPreference.Duffelbag);
-
-            _backpackButton.OnItemSelected += args =>
-            {
-                _backpackButton.SelectId(args.Id);
-                SetBackpack((BackpackPreference) args.Id);
-            };
-
-            #endregion Backpack
 
             #region SpawnPriority
 
@@ -747,18 +718,6 @@ namespace Content.Client.Preferences.UI
             IsDirty = true;
         }
 
-        private void SetClothing(ClothingPreference newClothing)
-        {
-            Profile = Profile?.WithClothingPreference(newClothing);
-            IsDirty = true;
-        }
-
-        private void SetBackpack(BackpackPreference newBackpack)
-        {
-            Profile = Profile?.WithBackpackPreference(newBackpack);
-            IsDirty = true;
-        }
-
         private void SetSpawnPriority(SpawnPriorityPreference newSpawnPriority)
         {
             Profile = Profile?.WithSpawnPriorityPreference(newSpawnPriority);
@@ -918,26 +877,6 @@ namespace Content.Client.Preferences.UI
             _genderButton.SelectId((int) Profile.Gender);
         }
 
-        private void UpdateClothingControls()
-        {
-            if (Profile == null)
-            {
-                return;
-            }
-
-            _clothingButton.SelectId((int) Profile.Clothing);
-        }
-
-        private void UpdateBackpackControls()
-        {
-            if (Profile == null)
-            {
-                return;
-            }
-
-            _backpackButton.SelectId((int) Profile.Backpack);
-        }
-
         private void UpdateSpawnPriorityControls()
         {
             if (Profile == null)
@@ -1085,8 +1024,6 @@ namespace Content.Client.Preferences.UI
             UpdateGenderControls();
             UpdateSkinColor();
             UpdateSpecies();
-            UpdateClothingControls();
-            UpdateBackpackControls();
             UpdateSpawnPriorityControls();
             UpdateAgeEdit();
             UpdateEyePickers();

@@ -55,8 +55,6 @@ namespace Content.IntegrationTests.Tests.Preferences
                     Color.Beige,
                     new ()
                 ),
-                ClothingPreference.Jumpskirt,
-                BackpackPreference.Backpack,
                 SpawnPriorityPreference.None,
                 new Dictionary<string, JobPriority>
                 {
