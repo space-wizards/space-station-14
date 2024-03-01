@@ -369,6 +369,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> SecretWeightPrototype =
             CVarDef.Create("game.secret_weight_prototype", "Secret", CVar.SERVERONLY);
 
+        /// <summary>
+        /// The id of the sound collection to randomly choose a sound from and play when the round ends.
+        /// </summary>
+        public static readonly CVarDef<string> RoundEndSoundCollection =
+            CVarDef.Create("game.round_end_sound_collection", "RoundEnd", CVar.SERVERONLY);
+
         /*
          * Discord
          */

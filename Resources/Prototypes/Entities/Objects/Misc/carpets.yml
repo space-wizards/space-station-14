@@ -23,8 +23,7 @@
     removeOnInteract: true
 
 - type: entity
-  name: carpet
-  parent: FloorTileItemBase
+  parent: FloorCarpetItemRed
   id: FloorCarpetItemBlack
   suffix: Black
   components:
@@ -32,9 +31,6 @@
     state: carpet-black
   - type: Item
     heldPrefix: carpet-black
-  - type: FloorTile
-    outputs:
-      - Plating
   - type: Stack
     stackType: FloorCarpetBlack
   - type: Tag
@@ -46,8 +42,7 @@
     removeOnInteract: true
 
 - type: entity
-  name: carpet
-  parent: FloorTileItemBase
+  parent: FloorCarpetItemRed
   id: FloorCarpetItemBlue
   suffix: Blue
   components:
@@ -55,9 +50,6 @@
     state: carpet-blue
   - type: Item
     heldPrefix: carpet-blue
-  - type: FloorTile
-    outputs:
-      - Plating
   - type: Stack
     stackType: FloorCarpetBlue
   - type: Tag
@@ -69,8 +61,7 @@
     removeOnInteract: true
 
 - type: entity
-  name: carpet
-  parent: FloorTileItemBase
+  parent: FloorCarpetItemRed
   id: FloorCarpetItemGreen
   suffix: Green
   components:
@@ -78,9 +69,6 @@
     state: carpet-green
   - type: Item
     heldPrefix: carpet-green
-  - type: FloorTile
-    outputs:
-      - Plating
   - type: Stack
     stackType: FloorCarpetGreen
   - type: Tag
@@ -92,8 +80,7 @@
     removeOnInteract: true
 
 - type: entity
-  name: carpet
-  parent: FloorTileItemBase
+  parent: FloorCarpetItemRed
   id: FloorCarpetItemOrange
   suffix: Orange
   components:
@@ -101,9 +88,6 @@
     state: carpet-orange
   - type: Item
     heldPrefix: carpet-orange
-  - type: FloorTile
-    outputs:
-      - Plating
   - type: Stack
     stackType: FloorCarpetOrange
   - type: Tag
@@ -115,8 +99,7 @@
     removeOnInteract: true
 
 - type: entity
-  name: carpet
-  parent: FloorTileItemBase
+  parent: FloorCarpetItemRed
   id: FloorCarpetItemSkyBlue
   suffix: Sky Blue
   components:
@@ -124,9 +107,6 @@
     state: carpet-skyblue
   - type: Item
     heldPrefix: carpet-skyblue
-  - type: FloorTile
-    outputs:
-      - Plating
   - type: Stack
     stackType: FloorCarpetSkyBlue
   - type: SpawnAfterInteract #Nuke after convert to FloorTile
@@ -135,8 +115,7 @@
     removeOnInteract: true
 
 - type: entity
-  name: carpet
-  parent: FloorTileItemBase
+  parent: FloorCarpetItemRed
   id: FloorCarpetItemPurple
   suffix: Purple
   components:
@@ -144,9 +123,6 @@
     state: carpet-purple
   - type: Item
     heldPrefix: carpet-purple
-  - type: FloorTile
-    outputs:
-      - Plating
   - type: Stack
     stackType: FloorCarpetPurple
   - type: Tag
@@ -158,8 +134,7 @@
     removeOnInteract: true
 
 - type: entity
-  name: carpet
-  parent: FloorTileItemBase
+  parent: FloorCarpetItemRed
   id: FloorCarpetItemPink
   suffix: Pink
   components:
@@ -167,9 +142,6 @@
     state: carpet-pink
   - type: Item
     heldPrefix: carpet-pink
-  - type: FloorTile
-    outputs:
-      - Plating
   - type: Stack
     stackType: FloorCarpetPink
   - type: Tag
@@ -181,8 +153,7 @@
     removeOnInteract: true
 
 - type: entity
-  name: carpet
-  parent: FloorTileItemBase
+  parent: FloorCarpetItemRed
   id: FloorCarpetItemCyan
   suffix: Cyan
   components:
@@ -190,9 +161,6 @@
     state: carpet-cyan
   - type: Item
     heldPrefix: carpet-cyan
-  - type: FloorTile
-    outputs:
-      - Plating
   - type: Stack
     stackType: FloorCarpetCyan
   - type: Tag
@@ -204,8 +172,7 @@
     removeOnInteract: true
 
 - type: entity
-  name: carpet
-  parent: FloorTileItemBase
+  parent: FloorCarpetItemRed
   id: FloorCarpetItemWhite
   suffix: White
   components:
@@ -213,9 +180,6 @@
     state: carpet-white
   - type: Item
     heldPrefix: carpet-white
-  - type: FloorTile
-    outputs:
-      - Plating
   - type: Stack
     stackType: FloorCarpetWhite
   - type: Tag

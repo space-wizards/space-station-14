@@ -160,6 +160,7 @@
       - CellRechargerCircuitboard
       - BorgChargerCircuitboard
       - WeaponCapacitorRechargerCircuitboard
+      - HandheldStationMap
   - type: EmagLatheRecipes
     emagStaticRecipes:
        - CartridgePistol
