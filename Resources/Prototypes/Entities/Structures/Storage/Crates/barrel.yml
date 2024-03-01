@@ -149,7 +149,7 @@
 - type: entity
   id: MetalBarrelYellow
   parent: MetalBarrelGrey
-  suffix: red
+  suffix: yellow
   components:
   - type: Sprite
     sprite: Objects/Storage/barrel.rsi
@@ -195,9 +195,15 @@
 
 - type: entity
   parent: MetalBarrelGrey
+  name: chemical barrel
   id: MetalBarrelCarbon
   suffix: carbon
   components:
+  - type: Sprite
+    sprite: Objects/Storage/barrel.rsi
+    layers:
+    - state: metal_grey
+    - state: metal_explosive_label
     - type: Label
       currentLabel: reagent-name-carbon
     - type: SolutionContainerManager
