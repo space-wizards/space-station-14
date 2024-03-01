@@ -96,8 +96,8 @@
           Quantity: 3
         - ReagentId: MindbreakerToxin
           Quantity: 2
-#       - ReagentId: Happiness
-#         Quantity: 2
+        - ReagentId: Happiness
+          Quantity: 2
 #       - ReagentId: ColorfulReagent
 #         Quantity: 1
         - ReagentId: Psicodine

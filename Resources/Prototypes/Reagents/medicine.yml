@@ -1205,10 +1205,6 @@
         visualType: Medium
         messages: [ "mannitol-effect-enlightened" ]
         probability: 0.2
-      - !type:GenericStatusEffect
-        conditions:
-        - !type:ReagentThreshold
-          min: 15
 
 - type: reagent
   id: Psicodine

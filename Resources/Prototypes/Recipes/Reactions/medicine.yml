@@ -599,3 +599,30 @@
       amount: 2
   products:
       Aloxadone: 4
+      
+- type: reaction
+  id: Lipolicide
+  reactants:
+    Ephedrine:
+      amount: 1
+    Diethylamine:
+      amount: 1
+    Mercury:
+      amount: 1
+  products:
+    Lipolicide: 3
+
+- type: reaction
+  id: Happiness
+  reactants:
+    NitrousOxide:
+      amount: 2
+    Epinephrine:
+      amount: 1
+    Ethanol:
+      amount: 1
+    Plasma:
+      amount: 5
+      catalyst: true
+  products:
+    Happiness: 4
