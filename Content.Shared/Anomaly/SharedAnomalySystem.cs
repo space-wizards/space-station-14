@@ -46,10 +46,6 @@ public abstract class SharedAnomalySystem : EntitySystem
         SubscribeLocalEvent<AnomalyComponent, MeleeThrowOnHitStartEvent>(OnAnomalyThrowStart);
         SubscribeLocalEvent<AnomalyComponent, MeleeThrowOnHitEndEvent>(OnAnomalyThrowEnd);
 
-        SubscribeLocalEvent<AnomalyComponent, EntityUnpausedEvent>(OnAnomalyUnpause);
-        SubscribeLocalEvent<AnomalyPulsingComponent, EntityUnpausedEvent>(OnPulsingUnpause);
-        SubscribeLocalEvent<AnomalySupercriticalComponent, EntityUnpausedEvent>(OnSupercriticalUnpause);
-
         _sawmill = Logger.GetSawmill("anomaly");
     }
 
@@ -87,23 +83,6 @@ public abstract class SharedAnomalySystem : EntitySystem
             return;
         Audio.PlayPvs(component.AnomalyContactDamageSound, source);
         Popup.PopupEntity(Loc.GetString("anomaly-component-contact-damage"), target, target);
-    }
-
-    private void OnAnomalyUnpause(EntityUid uid, AnomalyComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextPulseTime += args.PausedTime;
-        Dirty(uid, component);
-    }
-
-    private void OnPulsingUnpause(EntityUid uid, AnomalyPulsingComponent component, ref EntityUnpausedEvent args)
-    {
-        component.EndTime += args.PausedTime;
-    }
-
-    private void OnSupercriticalUnpause(EntityUid uid, AnomalySupercriticalComponent component, ref EntityUnpausedEvent args)
-    {
-        component.EndTime += args.PausedTime;
-        Dirty(uid, component);
     }
 
     public void DoAnomalyPulse(EntityUid uid, AnomalyComponent? component = null)

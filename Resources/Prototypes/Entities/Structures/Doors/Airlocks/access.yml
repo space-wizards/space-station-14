@@ -1155,3 +1155,14 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsArmory ]
+
+#Airtight hatch
+
+- type: entity
+  parent: AirlockHatch
+  id: AirlockHatchSyndicate
+  suffix: Syndicate, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSyndicateAgent ]

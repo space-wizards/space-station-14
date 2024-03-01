@@ -249,6 +249,14 @@
 
 - type: entity
   parent: DoorElectronics
+  id: DoorElectronicsSyndicateAgent
+  suffix: SyndicateAgent, Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: DoorElectronics
   id: DoorElectronicsRnDMed
   suffix: Medical/Science, Locked
   components:

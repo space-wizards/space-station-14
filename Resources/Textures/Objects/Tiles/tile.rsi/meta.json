@@ -133,6 +133,12 @@
       "name": "carpet-pink"
     },
     {
+      "name": "carpet-cyan"
+    },
+    {
+      "name": "carpet-white"
+    },
+    {
       "name": "hydro"
     },
     {
@@ -304,6 +310,22 @@
       "directions": 4
     },
     {
+      "name": "carpet-cyan-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "carpet-cyan-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "carpet-white-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "carpet-white-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "grass-inhand-left",
       "directions": 4
     },
@@ -414,6 +436,9 @@
     {
       "name": "hydro-inhand-left",
       "directions": 4
+    },
+    {
+      "name": "wood-large"
     }
   ]
 }
