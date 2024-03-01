@@ -25,13 +25,6 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem<RampingS
         return component.MaxChaos / component.EndTime * roundTime + component.StartingChaos;
     }
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<GetSeverityModifierEvent>(OnGetSeverityModifier);
-    }
-
     protected override void Started(EntityUid uid, RampingStationEventSchedulerComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
@@ -70,19 +63,6 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem<RampingS
 
             PickNextEventTime(uid, scheduler);
             _event.RunRandomEvent();
-        }
-    }
-
-    private void OnGetSeverityModifier(GetSeverityModifierEvent ev)
-    {
-        var query = EntityQueryEnumerator<RampingStationEventSchedulerComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var scheduler, out var gameRule))
-        {
-            if (!GameTicker.IsGameRuleActive(uid, gameRule))
-                return;
-
-            ev.Modifier *= GetChaosModifier(uid, scheduler);
-            Logger.Info($"Ramping set modifier to {ev.Modifier}");
         }
     }
 

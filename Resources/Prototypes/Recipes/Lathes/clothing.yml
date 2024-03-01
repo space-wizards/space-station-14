@@ -1157,3 +1157,66 @@
   completetime: 2
   materials:
     Cloth: 200
+
+- type: latheRecipe
+  id: Carpet
+  result: FloorCarpetItemRed
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetBlack
+  result: FloorCarpetItemBlack
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetPink
+  result: FloorCarpetItemPink
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetBlue
+  result: FloorCarpetItemBlue
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetGreen
+  result: FloorCarpetItemGreen
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetOrange
+  result: FloorCarpetItemOrange
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetPurple
+  result: FloorCarpetItemPurple
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetCyan
+  result: FloorCarpetItemCyan
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetWhite
+  result: FloorCarpetItemWhite
+  completetime: 1
+  materials:
+    Cloth: 100

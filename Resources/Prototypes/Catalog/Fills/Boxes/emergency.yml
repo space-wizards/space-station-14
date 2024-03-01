@@ -10,7 +10,7 @@
       - id: EmergencyOxygenTankFilled
       - id: EmergencyMedipen
       - id: Flare
-      - id: FoodTinMRE
+      - id: FoodSnackNutribrick
       - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
