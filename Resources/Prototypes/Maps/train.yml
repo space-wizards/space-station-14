@@ -2,8 +2,8 @@
   id: Train
   mapName: 'Train'
   mapPath: /Maps/train.yml
-  minPlayers: 10
-  maxPlayers: 50
+  minPlayers: 0
+  maxPlayers: 70
   stations:
     Train:
       stationProto: StandardNanotrasenStation
