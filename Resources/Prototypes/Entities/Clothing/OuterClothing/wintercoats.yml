@@ -471,19 +471,6 @@
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
-  id: ClothingOuterWinterWardenUnarmored
-  name: warden's winter coat
-  description: A sturdy coat, a warm coat, but not an armored coat.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/WinterCoats/coatwarden.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/WinterCoats/coatwarden.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterWarden
-
-- type: entity
-  parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterSyndieCap
   name: syndicate's winter coat
   description: "The syndicate's winter coat is made of durable fabric, with gilded patterns, and coarse wool."
