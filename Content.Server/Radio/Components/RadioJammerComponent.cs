@@ -29,5 +29,5 @@ public sealed partial class RadioJammerComponent : Component
     public List<RadioJamSetting> Settings = new();
 
     [DataField]
-    public byte SelectedPowerLevel = 1;
+    public int SelectedPowerLevel = 1;
 }
