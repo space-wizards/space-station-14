@@ -1,10 +1,11 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Ame;
+namespace Content.Shared.Ame.Components;
 
 [Virtual]
 public partial class SharedAmeControllerComponent : Component
 {
+    public const string FuelSlotId = "fuelSlot";
 }
 
 [Serializable, NetSerializable]

@@ -92,6 +92,7 @@ namespace Content.Client.Cargo.UI
                 // else if category and not search
                 if (search.Length == 0 && _category == null ||
                     search.Length != 0 && prototype.Name.ToLowerInvariant().Contains(search) ||
+                    search.Length != 0 && prototype.Description.ToLowerInvariant().Contains(search) ||
                     search.Length == 0 && _category != null && prototype.Category.Equals(_category))
                 {
                     var button = new CargoProductRow
