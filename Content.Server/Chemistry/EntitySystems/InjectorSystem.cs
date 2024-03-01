@@ -178,6 +178,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
         DoAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, actualDelay, new InjectorDoAfterEvent(), injector.Owner, target: target, used: injector.Owner)
         {
             BreakOnMove = true,
+            BreakOnWeightlessMove = false,
             BreakOnDamage = true,
             MovementThreshold = 0.1f,
         });
