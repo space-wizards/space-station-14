@@ -64,7 +64,7 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
             }
         }
 
-        if (TryComp<BorgChassisComponent>(uid, out var borgComp))
+        if (TryComp<BorgChassisComponent>(uid, out var borgComp) && !HasComp<ShowSyndicateIconsComponent>(uid))
         {
             jobIconToGet = borgComp.BorgJobIcon;
         }
