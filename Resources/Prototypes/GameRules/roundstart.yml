@@ -5,6 +5,17 @@
   components:
   - type: GameRule
 
+# a rule that has common subgamemode rules, roundstart is fairly normal so there is time for them to play out
+- type: entity
+  abstract: true
+  parent: BaseGameRule
+  id: BaseSubGamemodesRule
+  components:
+  - type: SubGamemodes
+    rules:
+    - id: Thief
+      prob: 0.5
+
 - type: entity
   id: DeathMatch31
   parent: BaseGameRule
@@ -55,15 +66,13 @@
 
 - type: entity
   id: Nukeops
-  parent: BaseGameRule
+  parent: BaseSubGamemodesRule
   noSpawn: true
   components:
   - type: GameRule
     minPlayers: 20
   - type: NukeopsRule
     faction: Syndicate
-  - type: ThiefRule #the thieves come as an extension of another gamemode
-    ruleChance: 0.5
 
 - type: entity
   id: Pirates
@@ -74,21 +83,17 @@
 
 - type: entity
   id: Traitor
-  parent: BaseGameRule
+  parent: BaseSubGamemodesRule
   noSpawn: true
   components:
   - type: TraitorRule
-  - type: ThiefRule #the thieves come as an extension of another gamemode
-    ruleChance: 0.5
 
 - type: entity
   id: Revolutionary
-  parent: BaseGameRule
+  parent: BaseSubGamemodesRule
   noSpawn: true
   components:
   - type: RevolutionaryRule
-  - type: ThiefRule #the thieves come as an extension of another gamemode
-    ruleChance: 0.5
 
 - type: entity
   id: Sandbox
