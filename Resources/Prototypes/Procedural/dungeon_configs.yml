@@ -235,5 +235,4 @@
   - !type:CornerClutterPostGen
       contents:
         - id: RandomStalagmiteOrCrystal
-          chance: 0.9
           amount: 1
