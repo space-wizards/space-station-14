@@ -4,14 +4,12 @@
 #Asteroid rock
 - type: entity
   id: AsteroidRock
-  parent: BaseStructure
+  parent: BaseWall
   name: asteroid rock
   description: A rocky asteroid.
   components:
   - type: Transform
     noRot: true
-  - type: PlacementReplacement
-    key: walls
   - type: IconSmooth
     key: walls
     mode: NoSprite
@@ -44,24 +42,6 @@
           path: /Audio/Effects/break_stone.ogg
           params:
             volume: -6
-  - type: Occluder
-  - type: Airtight
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-        density: 100
-        mask:
-        - FullTileMask
-        layer:
-        - WallLayer
-  - type: RadiationBlocker
-    resistance: 2
-  - type: Tag
-    tags:
-    - Wall
 
 # Ore veins
 - type: entity
@@ -384,14 +364,12 @@
 # Rocks and ore veins
 - type: entity
   id: WallRock
-  parent: BaseStructure
+  parent: BaseWall
   name: rock
   suffix: planetmap
   components:
     - type: Transform
       noRot: true
-    - type: PlacementReplacement
-      key: walls
     - type: SoundOnGather
     - type: Gatherable
       whitelist:
@@ -408,19 +386,6 @@
           behaviors:
             - !type:DoActsBehavior
               acts: ["Destruction"]
-    - type: Occluder
-    - type: Airtight
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
-          density: 100
-          mask:
-            - FullTileMask
-          layer:
-            - WallLayer
     - type: IconSmooth
       key: walls
       mode: NoSprite
@@ -437,11 +402,6 @@
           state: rock_north
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_west
-    - type: RadiationBlocker
-      resistance: 2
-    - type: Tag
-      tags:
-      - Wall
 
 # Ore veins
 - type: entity

@@ -173,7 +173,7 @@ public sealed partial class DungeonJob
             if (found)
                 continue;
 
-            _entManager.SpawnEntity("CableApcExtension", _grid.GridTileToLocal(tile));
+            _entManager.SpawnEntity(gen.Entity, _grid.GridTileToLocal(tile));
         }
     }
 

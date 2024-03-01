@@ -190,7 +190,12 @@
       tile: FloorCaveDrought
       entities:
         - WoodenSupportBeam
-  
+      
+  - !type:RoomEntrancePostGen
+      tile: FloorCaveDrought
+      entities:
+        - WoodenSupportBeam
+
   - !type:ExternalWindowPostGen
       tile: FloorCaveDrought
       entities:
@@ -210,8 +215,7 @@
           prob: 0.2
           orGroup: content
         - id: WallMining
-          orGroup: content
-          prob: 0.5
+          prob: 0.8
           
   - !type:BoundaryWallPostGen
       tile: FloorCaveDrought
@@ -223,12 +227,10 @@
       width: 1
       entities:
         - WoodenSupportBeam
-      
-  - !type:RoomEntrancePostGen
-      tile: FloorCaveDrought
-      entities:
-        - AirlockMining
 
+  - !type:AutoCablingPostGen
+      entity: Catwalk
+    
   - !type:JunctionPostGen
       tile: FloorCaveDrought
       width: 3
