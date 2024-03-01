@@ -29,6 +29,7 @@
 - type: loadoutGroup
   id: StationEngineerOuterClothing
   name: loadout-station-engineer-outerclothing
+  optional: true
   loadouts:
   - StationEngineerOuterVest
 
