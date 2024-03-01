@@ -262,3 +262,11 @@
   offset: 14,32
   tags:
     - Mineshaft
+
+- type: dungeonRoom
+  id: Mineshaft13x3c
+  size: 13,3
+  atlas: /Maps/Dungeon/mineshaft.yml
+  offset: 28,32
+  tags:
+    - Mineshaft
