@@ -1,4 +1,38 @@
 - type: entity
+  id: RandomWoodenSupport
+  name: wooden support spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Decoration/mines.rsi
+        state: support
+  - type: RandomSpawner
+    prototypes:
+      - WoodenSupport
+      - WoodenSupportBeam
+      - WoodenSupportBeam
+      - WoodenSupportBeam
+    chance: 0.9
+
+- type: entity
+  id: RandomWoodenWall
+  name: wooden wall spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Decoration/mines.rsi
+        state: support_wall
+  - type: RandomSpawner
+    prototypes:
+      - WoodenSupportWall
+      - WoodenSupportWallBroken
+    chance: 0.9
+
+- type: entity
   id: RandomStalagmiteOrCrystal
   name: stalagmite or crystal spawner
   parent: MarkerBase

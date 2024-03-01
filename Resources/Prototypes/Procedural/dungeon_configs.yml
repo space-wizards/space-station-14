@@ -184,49 +184,44 @@
       count: 5
       tile: FloorCaveDrought
       entities: 
-        - WoodenSupportBeam
+        - RandomWoodenWall
+
+  - !type:RoomEntrancePostGen
+      tile: FloorCaveDrought
+      entities:
+        - RandomWoodenWall
 
   - !type:EntranceFlankPostGen
       tile: FloorCaveDrought
       entities:
-        - WoodenSupportBeam
+        - RandomWoodenWall
       
-  - !type:RoomEntrancePostGen
-      tile: FloorCaveDrought
-      entities:
-        - WoodenSupportBeam
-
   - !type:ExternalWindowPostGen
       tile: FloorCaveDrought
       entities:
-        - WoodenSupportWall
+        - RandomWoodenWall
   
   - !type:WallMountPostGen
       tile: FloorCaveDrought
       spawns:
         # Ore
         - id: WallRockSalt
-          prob: 0.2
+          prob: 0.6
           orGroup: content
         - id: WallRockCoal
-          prob: 0.2
+          prob: 0.6
           orGroup: content
         - id: WallRockTin
-          prob: 0.2
+          prob: 0.4
           orGroup: content
         - id: WallMining
           prob: 0.8
+          orGroup: content
           
   - !type:BoundaryWallPostGen
       tile: FloorCaveDrought
       wall: WallRock
       cornerWall: WallRock
-
-  - !type:JunctionPostGen
-      tile: FloorCaveDrought
-      width: 1
-      entities:
-        - WoodenSupportBeam
 
   - !type:AutoCablingPostGen
       entity: Catwalk
@@ -235,7 +230,7 @@
       tile: FloorCaveDrought
       width: 3
       entities:
-        - WoodenSupportBeam
+        - RandomWoodenSupport
   
   - !type:CornerClutterPostGen
       contents:

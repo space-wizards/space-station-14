@@ -30,7 +30,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 10
       behaviors:
       - !type:DoActsBehavior
           acts: [ "Destruction" ]
@@ -58,6 +58,9 @@
   components:
   - type: PlacementReplacement
     key: walls
+  - type: Tag
+    tags:
+    - Wooden
   - type: Sprite
     noRot: true
     sprite: Objects/Decoration/mines.rsi
@@ -88,7 +91,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 50
       behaviors:
       - !type:DoActsBehavior
           acts: [ "Destruction" ]
@@ -129,6 +132,10 @@
   components:
   - type: PlacementReplacement
     key: walls
+  - type: Tag
+    tags:
+    - Wall
+    - Wooden
   - type: Sprite
     noRot: true
     sprite: Objects/Decoration/mines.rsi
@@ -153,7 +160,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 250
+        damage: 75
       behaviors:
       - !type:DoActsBehavior
           acts: [ "Destruction" ]
@@ -174,7 +181,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 50
       behaviors:
       - !type:DoActsBehavior
           acts: [ "Destruction" ]
