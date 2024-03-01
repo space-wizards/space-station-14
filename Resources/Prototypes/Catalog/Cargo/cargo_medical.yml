@@ -147,3 +147,223 @@
   cost: 750
   category: Medical
   group: market
+
+- type: cargoProduct
+  id: CargoBarrelCarbon
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelCarbon
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelIodine
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelIodine
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelFluorine
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelFluorine
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelChlorine
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelChlorine
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelAluminium
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelAluminium
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelPhosphorus
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelPhosphorus
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelSulfur
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelSulfur
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelSilicon
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelSilicon
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelHydrogen
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelHydrogen
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelLithium
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelLithium
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelSodium
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelSodium
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelPotassium
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelPotassium
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelRadium
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelRadium
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelIron
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelIron
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelCopper
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelCopper
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelGold
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelGold
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelMercury
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelMercury
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelSilver
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelSilver
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelEthanol
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelEthanol
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelSugar
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelSugar
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelNitrogen
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelNitrogen
+  cost: 1000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CargoBarrelOxygen
+  icon:
+    sprite: Objects/Storage/barrel.rsi
+    state: metal_grey
+  product: ChemicalBarrelOxygen
+  cost: 1000
+  category: Medical
+  group: market

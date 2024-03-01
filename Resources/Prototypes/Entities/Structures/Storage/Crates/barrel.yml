@@ -157,7 +157,7 @@
     - state: metal_yellow
 
 - type: entity
-  id: MetalBarrelExplosiveEmpty
+  id: ChemicalBarrelExplosiveEmpty
   parent: MetalBarrelGrey
   name: explosive barrel
   suffix: Empty
@@ -170,10 +170,12 @@
     - state: metal_explosive_label
 
 - type: entity
-  id: MetalBarrelExplosiveFilled
-  parent: MetalBarrelExplosiveEmpty
+  id: ChemicalBarrelExplosiveFilled
+  parent: ChemicalBarrelExplosiveEmpty
   suffix: Filled
   components:
+  - type: StaticPrice
+    price: 300
   - type: Label
     currentLabel: reagent-name-welding-fuel
   - type: SolutionContainerManager
@@ -195,10 +197,12 @@
 
 - type: entity
   parent: MetalBarrelGrey
-  name: chemical barrel
-  id: MetalBarrelCarbon
-  suffix: carbon
+  id: ChemicalBarrelCarbon
+  name: chemical barrel (carbon)
+  noSpawn: true
   components:
+  - type: StaticPrice
+    price: 500
   - type: Sprite
     sprite: Objects/Storage/barrel.rsi
     layers:
@@ -211,6 +215,321 @@
         tank:
           reagents:
             - ReagentId: Carbon
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelIodine
+  name: chemical barrel (iodine)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-iodine
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Iodine
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelFluorine
+  name: chemical barrel (fluorine)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-fluorine
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Fluorine
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelChlorine
+  name: chemical barrel (chlorine)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-chlorine
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Chlorine
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelAluminium
+  name: chemical barrel (aluminium)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-aluminium
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Aluminium
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelPhosphorus
+  name: chemical barrel (phosphorus)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-phosphorus
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Phosphorus
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelSulfur
+  name: chemical barrel (sulfur)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-sulfur
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Sulfur
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelSilicon
+  name: chemical barrel (silicon)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-silicon
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Silicon
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelHydrogen
+  name: chemical barrel (hydrogen)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-hydrogen
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Hydrogen
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelLithium
+  name: chemical barrel (lithium)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-lithium
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Lithium
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelSodium
+  name: chemical barrel (sodium)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-sodium
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Sodium
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelPotassium
+  name: chemical barrel (potassium)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-potassium
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Potassium
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelRadium
+  name: chemical barrel (radium)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-radium
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Radium
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelIron
+  name: chemical barrel (iron)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-iron
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Iron
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelCopper
+  name: chemical barrel (copper)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-copper
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Copper
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelGold
+  name: chemical barrel (gold)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-gold
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Gold
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelMercury
+  name: chemical barrel (mercury)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-mercury
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Mercury
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelSilver
+  name: chemical barrel (silver)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-silver
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Silver
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelEthanol
+  name: chemical barrel (ethanol)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-ethanol
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Ethanol
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelSugar
+  name: chemical barrel (sugar)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-sugar
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Sugar
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelNitrogen
+  name: chemical barrel (nitrogen)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-nitrogen
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Nitrogen
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelOxygen
+  name: chemical barrel (oxygen)
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: reagent-name-oxygen
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Oxygen
               Quantity: 500
 
 - type: entity
