@@ -820,10 +820,10 @@
 #     Min: 0
 #     Max: 5
 #     PotencyDivisor: 20
-#   Psicodine:
-#     Min: 0
-#     Max: 5
-#     PotencyDivisor: 33
+    Psicodine:
+      Min: 0
+      Max: 5
+      PotencyDivisor: 33
 
 - type: seed
   id: tobacco

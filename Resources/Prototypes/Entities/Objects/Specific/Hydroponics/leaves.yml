@@ -100,8 +100,8 @@
 #         Quantity: 2
 #       - ReagentId: ColorfulReagent
 #         Quantity: 1
-#       - ReagentId: Psicodine
-#         Quantity: 0.6
+        - ReagentId: Psicodine
+          Quantity: 0.6
 
 - type: entity
   name: tobacco leaves
