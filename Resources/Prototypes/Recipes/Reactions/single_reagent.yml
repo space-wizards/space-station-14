@@ -26,12 +26,12 @@
   minTemp: 377
   reactants:
     Sap:
-      amount: 4
+      amount: 1.6
   effects:
   - !type:CreateGas
     gas: WaterVapor
   products:
-    Syrup: 0.1 #based on real syrup production
+    Syrup: 0.04
 
 # Holy - TODO: make it so only the chaplain can use the bible to start these reactions, not anyone with a bible
 
