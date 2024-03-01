@@ -27,7 +27,6 @@ public sealed partial class HyposprayComponent : Component
     /// Whether or not the hypo is able to inject only into mobs. On false you can inject into beakers/jugs
     /// </summary>
     [AutoNetworkedField]
-    [DataField]
     public HyposprayToggleMode ToggleMode = HyposprayToggleMode.All;
 }
 
