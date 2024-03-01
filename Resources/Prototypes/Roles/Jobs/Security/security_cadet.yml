@@ -18,6 +18,7 @@
   - Security
   - Brig
   - Maintenance
+  - Cryogenics
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
