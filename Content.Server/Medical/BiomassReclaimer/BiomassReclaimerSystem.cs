@@ -80,7 +80,9 @@ namespace Content.Server.Medical.BiomassReclaimer
                     continue;
                 }
 
-                _material.SpawnMultipleFromMaterial(reclaimer.CurrentExpectedYield, "Biomass", Transform(uid).Coordinates);
+                var actualYield = (int) (reclaimer.CurrentExpectedYield); // can only have integer biomass
+                reclaimer.CurrentExpectedYield = reclaimer.CurrentExpectedYield - actualYield; // store non-integer leftovers
+                _material.SpawnMultipleFromMaterial(actualYield, "Biomass", Transform(uid).Coordinates);
 
                 reclaimer.BloodReagent = null;
                 reclaimer.SpawnedEntities.Clear();
@@ -211,19 +213,10 @@ namespace Content.Server.Medical.BiomassReclaimer
             var expectedYield = physics.FixturesMass * component.YieldPerUnitMass;
             if (HasComp<ProduceComponent>(toProcess))
                 expectedYield *= component.ProduceYieldMultiplier;
-
-            if (expectedYield > 0)
-            {
-                component.BiomassAccumulator += expectedYield;
-                component.CurrentExpectedYield = (int) component.BiomassAccumulator;
-                component.BiomassAccumulator -= component.CurrentExpectedYield; // yield an integer amount of biomass and store the rest
-            }
-            else
-            {
-                component.CurrentExpectedYield = 0;
-            }
+            component.CurrentExpectedYield += expectedYield;
 
             component.ProcessingTimer = physics.FixturesMass * component.ProcessingTimePerUnitMass;
+
             QueueDel(toProcess);
         }
 

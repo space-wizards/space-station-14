@@ -13,12 +13,6 @@ namespace Content.Server.Medical.BiomassReclaimer
         public float RandomMessTimer = 0f;
 
         /// <summary>
-        /// Makes the reclaimer store non-integer biomass leftovers, since biomass can only stack to integer amounts.
-        /// </summary>
-        [ViewVariables, DataField]
-        public float BiomassAccumulator = 0f;
-
-        /// <summary>
         /// The interval for <see cref="RandomMessTimer"/>.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField]
@@ -34,9 +28,10 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// <summary>
         /// Amount of biomass that the mob being processed will yield.
         /// This is calculated from the YieldPerUnitMass.
+        /// Also stores non-integer leftovers.
         /// </summary>
         [ViewVariables]
-        public int CurrentExpectedYield = default;
+        public float CurrentExpectedYield = 0f;
 
         /// <summary>
         /// The reagent that will be spilled while processing a mob.
