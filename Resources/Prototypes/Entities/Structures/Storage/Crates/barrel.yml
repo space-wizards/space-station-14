@@ -118,7 +118,8 @@
   components:
   - type: Sprite
     sprite: Objects/Storage/barrel.rsi
-    state: metal_grey
+    layers:
+    - state: metal_grey
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
@@ -132,7 +133,8 @@
   components:
   - type: Sprite
     sprite: Objects/Storage/barrel.rsi
-    state: metal_blue
+    layers:
+    - state: metal_blue
 
 - type: entity
   id: MetalBarrelRed
@@ -141,7 +143,8 @@
   components:
   - type: Sprite
     sprite: Objects/Storage/barrel.rsi
-    state: metal_red
+    layers:
+    - state: metal_red
 
 - type: entity
   id: MetalBarrelYellow
@@ -150,7 +153,8 @@
   components:
   - type: Sprite
     sprite: Objects/Storage/barrel.rsi
-    state: metal_yellow
+    layers:
+    - state: metal_yellow
 
 - type: entity
   id: MetalBarrelExplosiveEmpty
