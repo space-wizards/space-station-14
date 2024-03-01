@@ -3129,7 +3129,7 @@
   - type: InventorySlots
   - type: Strippable
   - type: Bloodstream
-    bloodReagent: Water
+    bloodReagent: Sap
     bloodMaxVolume: 60
   - type: UserInterface
     interfaces:
@@ -3186,4 +3186,3 @@
   components:
   - type: ReplacementAccent
     accent: nymph
-    
