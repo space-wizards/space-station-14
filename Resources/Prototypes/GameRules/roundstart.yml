@@ -71,6 +71,8 @@
   parent: BaseSubGamemodesRule
   noSpawn: true
   components:
+  - type: GameRule
+    minPlayers: 20
   - type: NukeopsRule
     faction: Syndicate
 

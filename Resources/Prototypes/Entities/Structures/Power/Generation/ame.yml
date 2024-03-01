@@ -50,6 +50,12 @@
   - type: Anchorable
   - type: Pullable
   - type: AmeController
+    fuelSlot:
+      whitelist:
+        components:
+        - AmeFuelContainer
+      whitelistFailPopup: ame-controller-component-interact-using-whitelist-fail
+      swap: false
   - type: Explosive
     explosionType: Default
     intensitySlope: 5
@@ -86,9 +92,10 @@
     state: static
   - type: PowerSupplier
     supplyRate: 0
+  - type: ItemSlots
   - type: ContainerContainer
     containers:
-      AmeFuel: !type:ContainerSlot {}
+      fuelSlot: !type:ContainerSlot
   - type: GuideHelp
     guides: [ AME, Power ]
   - type: Electrified

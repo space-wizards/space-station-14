@@ -34,7 +34,6 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly BodySystem _bobby = default!;
     [Dependency] private readonly DockingSystem _dockSystem = default!;
     [Dependency] private readonly DoorSystem _doors = default!;
-    [Dependency] private readonly DoorBoltSystem _bolts = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
@@ -68,13 +67,6 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
         SubscribeLocalEvent<FixturesComponent, GridFixtureChangeEvent>(OnGridFixtureChange);
     }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        ShutdownGridFills();
-    }
-
 
     public override void Update(float frameTime)
     {

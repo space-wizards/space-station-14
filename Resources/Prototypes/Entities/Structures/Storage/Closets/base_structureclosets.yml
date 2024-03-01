@@ -116,7 +116,7 @@
   - type: ResistLocker
   - type: Weldable
   - type: WallMount
-    arc: 180
+    arc: 175
   - type: StaticPrice
     price: 50
   - type: Transform
@@ -180,6 +180,7 @@
   components:
   - type: AccessReader
   - type: Lock
+  - type: LockVisuals
   - type: Sprite
     sprite: Structures/Storage/wall_locker.rsi
     layers:
@@ -188,7 +189,7 @@
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
     - state: welded
       visible: false
@@ -222,7 +223,7 @@
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
@@ -282,7 +283,6 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBase: base
-    stateLocked: locked
-    stateUnlocked: unlocked
     stateDoorOpen: base
     stateDoorClosed: door
+  - type: LockVisuals
