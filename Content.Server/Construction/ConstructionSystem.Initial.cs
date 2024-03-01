@@ -32,7 +32,6 @@ namespace Content.Server.Construction
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -83,7 +82,7 @@ namespace Content.Server.Construction
                 }
             }
 
-            var pos = _xformSystem.GetMapCoordinates(user);
+            var pos = Transform(user).MapPosition;
 
             foreach (var near in _lookupSystem.GetEntitiesInRange(pos, 2f, LookupFlags.Contained | LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate))
             {
@@ -528,12 +527,10 @@ namespace Content.Server.Construction
             // ikr
             var xform = Transform(structure);
             var wasAnchored = xform.Anchored;
-            if (wasAnchored)
-                _xformSystem.Unanchor(structure, xform);
-            _xformSystem.SetCoordinates((structure, xform, MetaData(structure)), GetCoordinates(ev.Location));
-            _xformSystem.SetLocalRotation(structure, constructionPrototype.CanRotate ? ev.Angle : Angle.Zero, xform);
-            if (wasAnchored)
-                _xformSystem.AnchorEntity((structure, xform));
+            xform.Anchored = false;
+            xform.Coordinates = GetCoordinates(ev.Location);
+            xform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
+            xform.Anchored = wasAnchored;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack, GetNetEntity(structure)));
             _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");

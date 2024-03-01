@@ -31,7 +31,6 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     private EntityQuery<CarpRiftsConditionComponent> _objQuery;
 
@@ -159,7 +158,7 @@ public sealed partial class DragonSystem : EntitySystem
         }
 
         // cant put a rift on solars
-        foreach (var tile in grid.GetTilesIntersecting(new Circle(_xformSystem.GetWorldPosition(xform), RiftTileRadius), false))
+        foreach (var tile in grid.GetTilesIntersecting(new Circle(xform.WorldPosition, RiftTileRadius), false))
         {
             if (!tile.IsSpace(_tileDef))
                 continue;
@@ -168,7 +167,7 @@ public sealed partial class DragonSystem : EntitySystem
             return;
         }
 
-        var carpUid = Spawn(component.RiftPrototype, _xformSystem.GetMapCoordinates((uid, xform)));
+        var carpUid = Spawn(component.RiftPrototype, xform.MapPosition);
         component.Rifts.Add(carpUid);
         Comp<DragonRiftComponent>(carpUid).Dragon = uid;
     }

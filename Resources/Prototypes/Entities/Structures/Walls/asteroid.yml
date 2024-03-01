@@ -6,7 +6,6 @@
   id: AsteroidRock
   parent: BaseStructure
   name: asteroid rock
-  suffix: Low Ore Yield
   description: A rocky asteroid.
   components:
   - type: PlacementReplacement
@@ -191,7 +190,7 @@
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_asteroid_west
         - state: rock_silver
-        
+
 - type: entity
   id: AsteroidRockSilverCrab
   parent: AsteroidRockSilver
@@ -223,7 +222,7 @@
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_asteroid_west
         - state: rock_tin
-        
+
 - type: entity
   id: AsteroidRockTinCrab
   parent: AsteroidRockTin

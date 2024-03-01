@@ -160,6 +160,7 @@
   recipeUnlocks:
   - HellfireFreezerMachineCircuitBoard
   - PortableScrubberMachineCircuitBoard
+  - SpaceHeaterMachineCircuitBoard
   - HolofanProjector
 
 - type: technology

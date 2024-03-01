@@ -14,7 +14,6 @@ public sealed partial class NpcFactionSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     private ISawmill _sawmill = default!;
 
