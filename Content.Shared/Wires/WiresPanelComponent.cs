@@ -33,13 +33,13 @@ public sealed partial class WiresPanelComponent : Component
     /// <summary>
     /// Amount of times in seconds it takes to open
     /// </summary>
-    [DataField]
+    [DataField("time")]
     public TimeSpan OpenDelay = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// The tool quality needed to open this panel.
     /// </summary>
-    [DataField]
+    [DataField("toolquality")]
     public ProtoId<ToolQualityPrototype> OpeningTool = "Screwing";
 
     /// <summary>
