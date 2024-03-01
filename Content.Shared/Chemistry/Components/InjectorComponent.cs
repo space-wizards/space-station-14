@@ -54,7 +54,7 @@ public sealed partial class InjectorComponent : Component
     /// </summary>
     [DataField("maxTransferAmount")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 MaximumTransferAmount = FixedPoint2.New(50);
+    public FixedPoint2 MaximumTransferAmount = FixedPoint2.New(15);
 
     /// <summary>
     /// Amount to inject or draw on each usage. If the injector is inject only, it will
