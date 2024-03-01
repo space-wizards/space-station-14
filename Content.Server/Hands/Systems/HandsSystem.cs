@@ -38,7 +38,6 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
         public override void Initialize()
         {
@@ -199,7 +198,7 @@ namespace Content.Server.Hands.Systems
                 throwEnt = splitStack.Value;
             }
 
-            var direction = coordinates.ToMapPos(EntityManager) - _xformSystem.GetWorldPosition(player);
+            var direction = coordinates.ToMapPos(EntityManager) - Transform(player).WorldPosition;
             if (direction == Vector2.Zero)
                 return true;
 

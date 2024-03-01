@@ -44,7 +44,7 @@ public sealed class ThrowingSystem : EntitySystem
         float pushbackRatio = PushbackDefault,
         bool playSound = true)
     {
-        var thrownPos = _transform.GetMapCoordinates(uid);
+        var thrownPos = Transform(uid).MapPosition;
         var mapPos = coordinates.ToMap(EntityManager, _transform);
 
         if (mapPos.MapId != thrownPos.MapId)

@@ -278,7 +278,7 @@ public sealed class MagicSystem : EntitySystem
         if (transform.MapID != args.Target.GetMapId(EntityManager)) return;
 
         _transformSystem.SetCoordinates(args.Performer, args.Target);
-        _transformSystem.AttachToGridOrMap(args.Performer, transform);
+        transform.AttachToGridOrMap();
         _audio.PlayPvs(args.BlinkSound, args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
         Speak(args);
         args.Handled = true;
@@ -321,7 +321,7 @@ public sealed class MagicSystem : EntitySystem
         ev.Handled = true;
         Speak(ev);
 
-        var direction = _transformSystem.GetWorldPosition(ev.Target) - _transformSystem.GetWorldPosition(ev.Performer);
+        var direction = Transform(ev.Target).MapPosition.Position - Transform(ev.Performer).MapPosition.Position;
         var impulseVector = direction * 10000;
 
         _physics.ApplyLinearImpulse(ev.Target, impulseVector);

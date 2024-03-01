@@ -8,7 +8,6 @@ namespace Content.Shared.Placeable
     public sealed class PlaceableSurfaceSystem : EntitySystem
     {
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
         public override void Initialize()
         {
@@ -61,11 +60,9 @@ namespace Content.Shared.Placeable
                 return;
 
             if (surface.PlaceCentered)
-            {
-                _xformSystem.SetLocalPosition(args.Used, Transform(uid).LocalPosition + surface.PositionOffset);
-            }
+                Transform(args.Used).LocalPosition = Transform(uid).LocalPosition + surface.PositionOffset;
             else
-                _xformSystem.SetCoordinates(args.Used, args.ClickLocation);
+                Transform(args.Used).Coordinates = args.ClickLocation;
 
             args.Handled = true;
         }

@@ -70,7 +70,7 @@ namespace Content.Shared.Interaction
             if (!Resolve(user, ref xform))
                 return false;
 
-            var diff = coordinates - _transform.GetMapCoordinates((user, xform)).Position;
+            var diff = coordinates - xform.MapPosition.Position;
             if (diff.LengthSquared() <= 0.01f)
                 return true;
 

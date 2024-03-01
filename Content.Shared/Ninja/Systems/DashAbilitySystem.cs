@@ -80,7 +80,7 @@ public sealed class DashAbilitySystem : EntitySystem
             return;
         }
 
-        var origin = _transform.GetMapCoordinates(user);
+        var origin = Transform(user).MapPosition;
         var target = args.Target.ToMap(EntityManager, _transform);
         // prevent collision with the user duh
         if (!_interaction.InRangeUnobstructed(origin, target, 0f, CollisionGroup.Opaque, uid => uid == user))

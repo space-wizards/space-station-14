@@ -74,7 +74,7 @@
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
-      - NewsReadCartridge
+      - NewsReaderCartridge
     cartridgeSlot:
       priority: -1
       name: device-pda-slot-component-slot-name-cartridge
@@ -669,7 +669,7 @@
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
-      - NewsReadCartridge
+      - NewsReaderCartridge
       - LogProbeCartridge
 
 - type: entity
