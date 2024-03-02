@@ -261,16 +261,16 @@
 
 - type: Tag
   id: CarpetOrange
-  
+
 - type: Tag
   id: CarpetPurple
 
 - type: Tag
   id: CarpetPink
-  
+
 - type: Tag
   id: CarpetRed
-  
+
 - type: Tag
   id: CarpetWhite
 
@@ -993,6 +993,9 @@
   id: ReinforcedGlassShard
 
 - type: Tag
+  id: ReptilianFood
+
+- type: Tag
   id: RifleStock
 
 - type: Tag
@@ -1066,6 +1069,9 @@
 
 - type: Tag
   id: SmallMech
+
+- type: Tag
+  id: SnapPop
 
 - type: Tag
   id: Smokable
