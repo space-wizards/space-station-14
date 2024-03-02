@@ -115,6 +115,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 8.5 #fuck you saveload test fail
         reagents:
         - ReagentId: SpaceDrugs
           Quantity: 2.4
