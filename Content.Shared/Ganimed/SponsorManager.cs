@@ -11,9 +11,10 @@ public sealed class SponsorManager
 		new Dictionary<string, DateTime>(){
 			{"JustHuman", new DateTime(2024, 02, 01)},
 			{"EugeneOM", new DateTime(2024, 02, 01)},
-			{"Safno_S", new DateTime(2024, 02, 01)},
+			{"Safno_S", new DateTime(2024, 03, 01)},
 			{"Inkvizitor", new DateTime(2024, 02, 24)},
 			{"Hyper_B", new DateTime(2024, 02,26)},
+            {"Gorox", new DateTime(2024, 03, 02),
 			{"watrushechnik", new DateTime(2024, 02, 09)},
 		};
 
