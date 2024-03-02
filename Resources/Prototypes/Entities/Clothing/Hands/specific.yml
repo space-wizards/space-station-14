@@ -30,3 +30,7 @@
   - type: Thieving
     stripTimeReduction: 2
     stealthy: true
+  # insulated so engi thieves don't have to conveniently never touch electricity ever
+  - type: Insulated
+  - type: GloveHeatResistance
+    heatResistance: 1400
