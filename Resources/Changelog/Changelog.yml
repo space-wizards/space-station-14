@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SpeltIncorrectyl
-  changes:
-  - message: Due to budget constraints, microwaves can no longer contain an infinite
-      number of items. Now the limit is 10.
-    type: Fix
-  id: 5572
-  time: '2024-01-05T20:03:49.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23577
 - author: GreyMario
   changes:
   - message: Chemistry bottles have been properly washed so you can actually see the
@@ -3828,3 +3820,11 @@
   id: 6071
   time: '2024-03-02T06:42:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25766
+- author: EmoGarbage404
+  changes:
+  - message: Space heaters machine boards are now printable round start and can additionally
+      be ordered by cargo.
+    type: Tweak
+  id: 6072
+  time: '2024-03-02T06:43:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25735
