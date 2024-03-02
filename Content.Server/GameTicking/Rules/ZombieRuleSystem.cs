@@ -22,6 +22,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Globalization;
+using Content.Server.Roles.Jobs;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -41,6 +42,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly JobSystem _jobs = default!;
 
     public override void Initialize()
     {
@@ -245,7 +247,12 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     private void InfectInitialPlayers(ZombieRuleComponent component)
     {
         //Get all players with initial infected enabled, and exclude those with the ZombieImmuneComponent
-        var eligiblePlayers = _antagSelection.GetEligiblePlayers(_playerManager.Sessions, component.PatientZeroPrototypeId, includeAllJobs: true, customExcludeCondition: x => HasComp<ZombieImmuneComponent>(x) || HasComp<InitialInfectedExemptComponent>(x));
+        var eligiblePlayers = _antagSelection.GetEligiblePlayers(
+            _playerManager.Sessions
+            ,component.PatientZeroPrototypeId,
+            includeAllJobs: true,
+            customExcludeCondition: player => HasComp<ZombieImmuneComponent>(player) || HasComp<InitialInfectedExemptComponent>(player) || !_jobs.CanBeAntag(player)
+            );
         //And get all players, excluding ZombieImmune - to fill any leftover initial infected slots
         var allPlayers = _antagSelection.GetEligiblePlayers(_playerManager.Sessions, component.PatientZeroPrototypeId, acceptableAntags: Shared.Antag.AntagAcceptability.All, includeAllJobs: true, ignorePreferences: true, customExcludeCondition: HasComp<ZombieImmuneComponent>);
 
