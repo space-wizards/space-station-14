@@ -5,11 +5,10 @@
   components:
   - type: GameRule
 
-# a rule that has common subgamemode rules, roundstart is fairly normal so there is time for them to play out
 - type: entity
-  abstract: true
+  noSpawn: true
   parent: BaseGameRule
-  id: BaseSubGamemodesRule
+  id: SubGamemodesRule
   components:
   - type: SubGamemodes
     rules:
@@ -66,7 +65,7 @@
 
 - type: entity
   id: Nukeops
-  parent: BaseSubGamemodesRule
+  parent: BaseGameRule
   noSpawn: true
   components:
   - type: GameRule
@@ -83,14 +82,14 @@
 
 - type: entity
   id: Traitor
-  parent: BaseSubGamemodesRule
+  parent: BaseGameRule
   noSpawn: true
   components:
   - type: TraitorRule
 
 - type: entity
   id: Revolutionary
-  parent: BaseSubGamemodesRule
+  parent: BaseGameRule
   noSpawn: true
   components:
   - type: RevolutionaryRule
