@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Epinephrine no longer removes itself in the chemstream.
-    type: Fix
-  id: 5574
-  time: '2024-01-05T23:26:54.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23579
 - author: BurninDreamer
   changes:
   - message: Rigged boxing gloves had their weapon stats reduced from 30 stamina damage
@@ -3828,3 +3821,10 @@
   id: 6073
   time: '2024-03-02T13:57:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24899
+- author: Errant
+  changes:
+  - message: Breathing tritium or plasma now displays a HUD alert.
+    type: Add
+  id: 6074
+  time: '2024-03-02T14:07:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24484
