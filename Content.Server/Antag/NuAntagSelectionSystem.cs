@@ -75,6 +75,26 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
         }
     }
 
+    protected override void Added(EntityUid uid, AntagSelectionComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    {
+        base.Added(uid, component, gameRule, args);
+
+        for (var i = 0; i < component.Definitions.Count; i++)
+        {
+            var def = component.Definitions[i];
+
+            if (def.MinRange != null)
+            {
+                def.Min = def.MinRange.Value.Next(_random);
+            }
+
+            if (def.MaxRange != null)
+            {
+                def.Max = def.MaxRange.Value.Next(_random);
+            }
+        }
+    }
+
     protected override void Started(EntityUid uid, AntagSelectionComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
@@ -111,15 +131,15 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
         var countOffset = 0;
         foreach (var otherDef in ent.Comp.Definitions)
         {
-            countOffset += Math.Clamp(playerPool.Count / otherDef.PlayerRatio, otherDef.MinAntags, otherDef.MaxAntags) * otherDef.PlayerRatio;
+            countOffset += Math.Clamp(playerPool.Count / otherDef.PlayerRatio, otherDef.Min, otherDef.Max) * otherDef.PlayerRatio;
         }
         // make sure we don't double-count the current selection
-        countOffset -= Math.Clamp((playerPool.Count + countOffset) / def.PlayerRatio, def.MinAntags, def.MaxAntags) * def.PlayerRatio;
+        countOffset -= Math.Clamp((playerPool.Count + countOffset) / def.PlayerRatio, def.Min, def.Max) * def.PlayerRatio;
 
 
         //TODO: add in an option for having player-less antags.
         // even better, make it a config so you can specify half player, half ghost role.
-        var count = Math.Clamp((playerPool.Count - countOffset) / def.PlayerRatio, def.MinAntags, def.MaxAntags);
+        var count = Math.Clamp((playerPool.Count - countOffset) / def.PlayerRatio, def.Min, def.Max);
         for (var i = 0; i < count; i++)
         {
             MakeAntag(ent, playerPool.PickAndTake(_random), def);
@@ -298,6 +318,30 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
             output.Add((mind, data, name));
         }
         return output;
+    }
+
+    public List<Entity<MindComponent>> GetAntagMinds(Entity<AntagSelectionComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return new();
+
+        var output = new List<Entity<MindComponent>>();
+        foreach (var (mind, _) in ent.Comp.SelectedMinds)
+        {
+            if (!TryComp<MindComponent>(mind, out var mindComp) || mindComp.OriginalOwnerUserId == null)
+                continue;
+
+            output.Add((mind, mindComp));
+        }
+        return output;
+    }
+
+    public List<EntityUid> GetAntagMindUids(Entity<AntagSelectionComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return new();
+
+        return ent.Comp.SelectedMinds.Select(p => p.Item1).ToList();
     }
 }
 

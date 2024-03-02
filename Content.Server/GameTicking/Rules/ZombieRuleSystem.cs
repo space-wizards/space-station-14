@@ -1,4 +1,3 @@
-using Content.Server.Actions;
 using Content.Server.Antag;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
@@ -12,12 +11,8 @@ using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Roles;
 using Content.Shared.Zombies;
-using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Globalization;
 
@@ -25,20 +20,14 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly NuAntagSelectionSystem _nuAntag = default!;
-    [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
@@ -51,7 +40,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
-        foreach (var zombie in EntityQuery<ZombieRuleComponent>())
+        var query = EntityQueryEnumerator<ZombieRuleComponent>();
+        while (query.MoveNext(out var uid, out var zombie))
         {
             // This is just the general condition thing used for determining the win/lose text
             var fraction = GetInfectedFraction(true, true);
@@ -67,8 +57,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             else
                 ev.AddLine(Loc.GetString("zombie-round-end-amount-all"));
 
-            ev.AddLine(Loc.GetString("zombie-round-end-initial-count", ("initialCount", zombie.InitialInfectedNames.Count)));
-            foreach (var (_, data, entName) in _nuAntag.GetAntagSessionData(zombie.Owner))
+            var antags = _nuAntag.GetAntagSessionData(uid);
+            ev.AddLine(Loc.GetString("zombie-round-end-initial-count", ("initialCount", antags.Count)));
+            foreach (var (_, data, entName) in antags)
             {
                 ev.AddLine(Loc.GetString("zombie-round-end-user-was-initial",
                     ("name", entName),
@@ -78,7 +69,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             var healthy = GetHealthyHumans();
             // Gets a bunch of the living players and displays them if they're under a threshold.
             // InitialInfected is used for the threshold because it scales with the player count well.
-            if (healthy.Count <= 0 || healthy.Count > 2 * zombie.InitialInfectedNames.Count)
+            if (healthy.Count <= 0 || healthy.Count > 2 * antags.Count)
                 continue;
             ev.AddLine("");
             ev.AddLine(Loc.GetString("zombie-round-end-survivor-count", ("count", healthy.Count)));
@@ -126,25 +117,16 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     {
         base.Started(uid, component, gameRule, args);
 
-        var delay = _random.Next(component.MinStartDelay, component.MaxStartDelay);
-        component.StartTime = _timing.CurTime + delay;
+        component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
     }
 
     protected override void ActiveTick(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
-
-        if (component.StartTime.HasValue && component.StartTime < _timing.CurTime)
-        {
-            component.StartTime = null;
-            component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
-        }
-
-        if (component.NextRoundEndCheck.HasValue && component.NextRoundEndCheck < _timing.CurTime)
-        {
-            CheckRoundEnd(component);
-            component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
-        }
+        if (!component.NextRoundEndCheck.HasValue || component.NextRoundEndCheck > _timing.CurTime)
+            return;
+        CheckRoundEnd(component);
+        component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
     }
 
     private void OnZombifySelf(EntityUid uid, PendingZombieComponent component, ZombifySelfActionEvent args)

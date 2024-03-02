@@ -20,6 +20,8 @@ public sealed partial class GameRuleComponent : Component
     /// </summary>
     [DataField]
     public int MinPlayers;
+
+    //todo we need a delayed start param for this
 }
 
 /// <summary>

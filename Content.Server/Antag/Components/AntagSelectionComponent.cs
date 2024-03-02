@@ -1,3 +1,4 @@
+using Content.Server.Destructible.Thresholds;
 using Content.Shared.Antag;
 using Content.Shared.Roles;
 using Content.Shared.Whitelist;
@@ -37,10 +38,16 @@ public partial struct AntagSelectionDefinition
     public AntagAcceptability MultiAntagSetting = AntagAcceptability.None;
 
     [DataField]
-    public int MinAntags = 1;
+    public int Min = 1;
 
     [DataField]
-    public int MaxAntags = 1;
+    public int Max = 1;
+
+    [DataField]
+    public MinMax? MinRange;
+
+    [DataField]
+    public MinMax? MaxRange;
 
     //todo implement a max range thing? make both of these ranges?
 
