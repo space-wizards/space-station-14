@@ -454,9 +454,9 @@
   description: A sturdy, utilitarian winter coat designed to protect a warden from any brig-bound threats and hypothermic events.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/WinterCoats/coatwarden.rsi
+    sprite: Clothing/OuterClothing/WinterCoats/coatwardenarmored.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/WinterCoats/coatwarden.rsi
+    sprite: Clothing/OuterClothing/WinterCoats/coatwardenarmored.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -466,6 +466,19 @@
         Heat: 0.7
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterWarden
+
+- type: entity
+  parent: ClothingOuterWinterCoatToggleable
+  id: ClothingOuterWinterWardenUnarmored
+  name: warden's winter coat
+  description: A sturdy coat, a warm coat, but not an armored coat.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatwarden.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatwarden.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterWarden
 

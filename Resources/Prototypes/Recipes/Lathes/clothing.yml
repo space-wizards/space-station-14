@@ -651,6 +651,14 @@
     Durathread: 300
 
 - type: latheRecipe
+  id: ClothingOuterWinterWardenUnarmored
+  result: ClothingOuterWinterWardenUnarmored
+  completetime: 3.2
+  materials:
+    Cloth: 500
+    Durathread: 300
+
+- type: latheRecipe
   id: ClothingOuterWinterQM
   result: ClothingOuterWinterQM
   completetime: 3.2
