@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Strol20
-  changes:
-  - message: The hud diagnostic drivers have been updated and can now show the health
-      of Borgs
-    type: Add
-  id: 5571
-  time: '2024-01-05T17:00:40.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23580
 - author: SpeltIncorrectyl
   changes:
   - message: Due to budget constraints, microwaves can no longer contain an infinite
@@ -3829,3 +3821,10 @@
   id: 6070
   time: '2024-03-01T22:50:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25676
+- author: rosieposieeee
+  changes:
+  - message: Added additional signage to help the crew navigate.
+    type: Add
+  id: 6071
+  time: '2024-03-02T06:42:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25766
