@@ -248,8 +248,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     {
         //Get all players with initial infected enabled, and exclude those with the ZombieImmuneComponent and roles with CanBeAntag = False
         var eligiblePlayers = _antagSelection.GetEligiblePlayers(
-            _playerManager.Sessions
-            ,component.PatientZeroPrototypeId,
+            _playerManager.Sessions,
+            component.PatientZeroPrototypeId,
             includeAllJobs: false,
             customExcludeCondition: player => HasComp<ZombieImmuneComponent>(player) || HasComp<InitialInfectedExemptComponent>(player) 
             );
