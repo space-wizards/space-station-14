@@ -54,9 +54,24 @@ public sealed partial class BonkSystem : EntitySystem
         var userName = Identity.Entity(user, EntityManager);
         var bonkableName = Identity.Entity(bonkableUid, EntityManager);
 
-        _popupSystem.PopupEntity(Loc.GetString("bonkable-success-message-others", ("user", userName), ("bonkable", bonkableName)), user, Filter.PvsExcept(user), true);
+        if (user == source)
+        {
+            // Non-local, non-bonking players
+            _popupSystem.PopupEntity(Loc.GetString("bonkable-success-message-others", ("user", userName), ("bonkable", bonkableName)), user, Filter.PvsExcept(user), true);
+            // Local, bonking player
+            _popupSystem.PopupClient(Loc.GetString("bonkable-success-message-user", ("user", userName), ("bonkable", bonkableName)), user, user);
+        }
+        else if (source != null)
+        {
+            // Local, non-bonking player (dragger)
+            _popupSystem.PopupClient(Loc.GetString("bonkable-success-message-others", ("user", userName), ("bonkable", bonkableName)), user, source.Value);
+            // Non-local, non-bonking players
+            _popupSystem.PopupEntity(Loc.GetString("bonkable-success-message-others", ("user", userName), ("bonkable", bonkableName)), user, Filter.Pvs(user).RemoveWhereAttachedEntity(e => e == user || e == source.Value), true);
+            // Non-local, bonking player
+            _popupSystem.PopupEntity(Loc.GetString("bonkable-success-message-user", ("user", userName), ("bonkable", bonkableName)), user, user);
+        }
 
-        _popupSystem.PopupEntity(Loc.GetString("bonkable-success-message-user", ("user", userName), ("bonkable", bonkableName)), user, user);
+
 
         if (source != null)
             _audioSystem.PlayPredicted(bonkableComponent.BonkSound, bonkableUid, source);
