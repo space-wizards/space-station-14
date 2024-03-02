@@ -49,6 +49,7 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
     private void AddVerbs()
     {
         SpeechVerbSelector.Clear();
+
         AddVerb("chat-speech-verb-name-none", null);
         foreach (var (name, id) in _verbs)
         {
@@ -72,6 +73,13 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
         NameSelector.Text = name;
         _verb = verb;
 
-        AddVerbs();
+        for (int id = 0; id < SpeechVerbSelector.ItemCount; id++)
+        {
+            if (string.Equals(verb, SpeechVerbSelector.GetItemMetadata(id)))
+            {
+                SpeechVerbSelector.SelectId(id);
+                break;
+            }
+        }
     }
 }
