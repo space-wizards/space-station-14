@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Arachnids may now click and chitter.
-    type: Tweak
-  id: 5576
-  time: '2024-01-06T01:32:11.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23548
 - author: EmoGarbage404
   changes:
   - message: Fixed inconsistency in iron ore naming in various places.
@@ -3827,3 +3820,11 @@
   id: 6075
   time: '2024-03-02T14:23:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25760
+- author: Fildrance
+  changes:
+  - message: fixed lobby music restarting after volume change in options. Lobby music
+      is also not being looped by default - all lobby songs will play in shuffle mode.
+    type: Fix
+  id: 6076
+  time: '2024-03-02T20:40:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25530
