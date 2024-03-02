@@ -6,9 +6,11 @@ using Content.Shared.Database;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.Preferences;
+using Content.Shared.Speech;
 using Content.Shared.VoiceMask;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.VoiceMask;
 
@@ -17,11 +19,13 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerNameEvent>(OnSpeakerNameTransform);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeNameMessage>(OnChangeName);
+        SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeVerbMessage>(OnChangeVerb);
         SubscribeLocalEvent<VoiceMaskComponent, WearerMaskToggledEvent>(OnMaskToggled);
         SubscribeLocalEvent<VoiceMaskerComponent, GotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<VoiceMaskerComponent, GotUnequippedEvent>(OnUnequip);
@@ -53,6 +57,21 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         TrySetLastKnownName(uid, message.Name);
 
         UpdateUI(uid, component);
+    }
+
+    private void OnChangeVerb(Entity<VoiceMaskComponent> ent, ref VoiceMaskChangeVerbMessage msg)
+    {
+        if (msg.Verb is {} id && !_proto.HasIndex<SpeechVerbPrototype>(id))
+            return;
+
+        ent.Comp.SpeechVerb = msg.Verb;
+        // verb is only important to metagamers so no need to log as opposed to name
+
+        _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-success"), ent, msg.Session);
+
+        TrySetLastSpeechVerb(ent, msg.Verb);
+
+        UpdateUI(ent, ent.Comp);
     }
 
     private void OnSpeakerNameTransform(EntityUid uid, VoiceMaskComponent component, TransformSpeakerNameEvent args)
@@ -95,6 +114,6 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         }
 
         if (_uiSystem.TryGetUi(owner, VoiceMaskUIKey.Key, out var bui))
-            _uiSystem.SetUiState(bui, new VoiceMaskBuiState(component.VoiceName));
+            _uiSystem.SetUiState(bui, new VoiceMaskBuiState(component.VoiceName, component.SpeechVerb));
     }
 }
