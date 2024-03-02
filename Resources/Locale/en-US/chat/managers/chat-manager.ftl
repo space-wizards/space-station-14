@@ -58,6 +58,7 @@ chat-speech-verb-suffix-question = ?
 chat-speech-verb-suffix-stutter = -
 chat-speech-verb-suffix-mumble = ..
 
+chat-speech-verb-name-none = None
 chat-speech-verb-name-default = Default
 chat-speech-verb-default = says
 chat-speech-verb-name-exclamation = Exclaiming
