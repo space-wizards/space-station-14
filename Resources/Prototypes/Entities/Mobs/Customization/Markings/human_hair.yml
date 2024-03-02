@@ -27,6 +27,20 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: antenna
 - type: marking
+  id: HumanHairAsukaLengly
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: asuka_lengly
+- type: marking
+  id: HumanHairAyanamiRey
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: ayanami_rey
+- type: marking
   id: HumanHairBalding
   bodyPart: Hair
   markingCategory: Hair
