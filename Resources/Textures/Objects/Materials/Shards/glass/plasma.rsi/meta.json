@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Icon from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/b5b4edd4e46efc2ee2d3c1ce5aff82d80ddc461e, reshaded plasma varient by Sphiral",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "p-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "p-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "p-shard3"
+    },
+    {
+      "name": "p-shard2"
+    },
+    {
+      "name": "p-shard1"
+    }
+  ]
+}
