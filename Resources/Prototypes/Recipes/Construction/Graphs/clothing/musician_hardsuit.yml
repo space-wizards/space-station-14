@@ -1,0 +1,93 @@
+- type: constructionGraph
+  id: MusicianHardsuit
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: addInstruments
+          steps:
+            - material: Cloth
+              amount: 5
+              doAfter: 1
+            - tag: SuitEVA
+              name: an EVA suit
+              icon:
+                sprite: Clothing/OuterClothing/Suits/eva.rsi
+                state: icon
+              doAfter: 1
+            - tag: HelmetEVA
+              name: an EVA helmet
+              icon:
+                sprite: Clothing/Head/Helmets/eva.rsi
+                state: icon
+              doAfter: 1
+            - tag: DawInstrumentMachineCircuitboard
+              name: a Digital Audio Workstation Machine Board
+              icon:
+                sprite: Objects/Misc/module.rsi
+                state: generic
+              doAfter: 1
+
+    - node: addInstruments
+      entity: ClothingOuterHardsuitMusicianConstruction
+      edges:
+        - to: Musician Hardsuit
+          steps:
+            - tag: KeyedInstrument
+              name: a Keyed Instrument
+              icon:
+                sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+                state: icon
+              doAfter: 1
+              completed:
+              - !type:PlaySound
+                sound: /Audio/Machines/button.ogg
+            - tag: StringInstrument
+              name: a String Instrument
+              icon:
+                sprite: Objects/Fun/Instruments/guitar.rsi
+                state: icon
+              doAfter: 1
+              completed:
+              - !type:PlaySound
+                sound: /Audio/Machines/button.ogg
+            - tag: PercussionInstrument
+              name: a Percussion Instrument
+              icon:
+                sprite: Objects/Fun/Instruments/glockenspiel.rsi
+                state: icon
+              doAfter: 1
+              completed:
+              - !type:PlaySound
+                sound: /Audio/Machines/button.ogg
+            - tag: BrassInstrument
+              name: a Brass Instrument
+              icon:
+                sprite: Objects/Fun/Instruments/trumpet.rsi
+                state: icon
+              doAfter: 1
+              completed:
+              - !type:PlaySound
+                sound: /Audio/Machines/button.ogg
+            - tag: WoodwindInstrument
+              name: a Woodwind Instrument
+              icon:
+                sprite: Objects/Fun/Instruments/saxophone.rsi
+                state: icon
+              doAfter: 1
+              completed:
+              - !type:PlaySound
+                sound: /Audio/Machines/button.ogg
+            - material: Plasteel
+              amount: 5
+              doAfter: 1
+            - tool: Welding
+              doAfter: 0.25
+            - material: Cable
+              amount: 5
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 0.25
+
+    - node: Musician Hardsuit
+      entity: ClothingOuterHardsuitMusician

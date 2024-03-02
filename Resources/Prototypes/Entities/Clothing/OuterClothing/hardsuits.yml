@@ -964,3 +964,50 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSanta
+
+#Musician's Hardsuit
+- type: entity #Construction entity so that you don't have to have an inventory full of items
+  parent: BaseItem
+  id: ClothingOuterHardsuitMusicianConstruction
+  name: musician hardsuit shell
+  description: A custom-made incomplete musician hardsuit.
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/musician.rsi
+    state: icon-incomplete
+  - type: Construction
+    graph: MusicianHardsuit
+    node: addInstruments
+
+- type: entity
+  parent: ClothingOuterHardsuitClown
+  id: ClothingOuterHardsuitMusician
+  name: musician hardsuit
+  description: A custom-made musician hardsuit.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/musician.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/musician.rsi
+  - type: Construction
+    graph: MusicianHardsuit
+    node: Musician Hardsuit
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMusician
+  - type: Instrument
+    allowPercussion: true
+    allowProgramChange: true
+  - type: ActivatableUI
+    allowSpectator: false # otherwise they can play client-side music
+    inHandsOnly: false
+    singleUser: true
+    requireHands: false
+    rightClickOnly: true
+    verbText: verb-instrument-openui
+    key: enum.InstrumentUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface

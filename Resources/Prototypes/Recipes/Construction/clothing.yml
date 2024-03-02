@@ -21,6 +21,17 @@
   objectType: Item
 
 - type: construction
+  name: musician hardsuit
+  id: MusicianHardsuit
+  graph: MusicianHardsuit
+  startNode: start
+  targetNode: Musician Hardsuit
+  category: construction-category-clothing
+  description: A modified hardsuit fit for a musician.
+  icon: { sprite: Clothing/OuterClothing/Hardsuits/musician.rsi, state: icon }
+  objectType: Item
+
+- type: construction
   name: bone armor
   id: BoneArmor
   graph: BoneArmor
