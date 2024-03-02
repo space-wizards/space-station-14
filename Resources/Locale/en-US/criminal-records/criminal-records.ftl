@@ -31,6 +31,7 @@ criminal-records-console-wanted = {$name} is wanted by {$officer} for: {$reason}
 criminal-records-console-detained = {$name} has been detained by {$officer}.
 criminal-records-console-released = {$name} has been released by {$officer}.
 criminal-records-console-not-wanted = {$name} is no longer wanted.
+criminal-records-console-unknown-officer = <unknown officer>
 
 ## Filters
 

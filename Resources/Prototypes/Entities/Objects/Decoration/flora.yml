@@ -173,6 +173,17 @@
   parent: BaseRock
   id: FloraStalagmite1
   components:
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 5
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: GlassBreak
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
     state: stalagmite1
@@ -216,6 +227,55 @@
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
     state: stalagmite6
+
+- type: entity
+  parent: FloraStalagmite1
+  id: FloraGreyStalagmite1
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite1
+
+- type: entity
+  parent: FloraGreyStalagmite1
+  id: FloraGreyStalagmite2
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite2
+
+- type: entity
+  parent: FloraGreyStalagmite1
+  id: FloraGreyStalagmite3
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite3
+
+- type: entity
+  parent: FloraGreyStalagmite1
+  id: FloraGreyStalagmite4
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite4
+
+- type: entity
+  parent: FloraGreyStalagmite1
+  id: FloraGreyStalagmite5
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite5
+
+- type: entity
+  parent: FloraGreyStalagmite1
+  id: FloraGreyStalagmite6
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite6
+
 
 - type: entity
   parent: BaseTree
@@ -483,4 +543,88 @@
   id: ShadowTree06
   components:
   - type: Sprite
+    state: tree06
+
+- type: entity
+  parent: BaseTree
+  id: LightTree01
+  name: glowing tree
+  description: a marvelous tree filled with strange energy.
+  components:
+  - type: PointLight
+    radius: 2.0
+    energy: 4.5
+    color: "#6270bb"
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
+    state: tree01
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/tree_fell.ogg
+          params:
+            volume: 5
+            variation: 0.05
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Log:
+            min: 0
+            max: 1
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MobLuminousObject:
+            min: 0
+            max: 1
+
+- type: entity
+  parent: LightTree01
+  id: LightTree02
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
+    state: tree02
+
+- type: entity
+  parent: LightTree01
+  id: LightTree03
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
+    state: tree03
+
+- type: entity
+  parent: LightTree01
+  id: LightTree04
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
+    state: tree04
+
+- type: entity
+  parent: LightTree01
+  id: LightTree05
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
+    state: tree05
+
+- type: entity
+  parent: LightTree01
+  id: LightTree06
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
     state: tree06

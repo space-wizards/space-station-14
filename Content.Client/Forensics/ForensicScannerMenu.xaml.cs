@@ -29,7 +29,7 @@ namespace Content.Client.Forensics
             {
                 Print.Disabled = true;
                 Clear.Disabled = true;
-                Name.Text = string.Empty;
+                NameLabel.Text = string.Empty;
                 Diagnostics.Text = string.Empty;
                 return;
             }
@@ -37,7 +37,7 @@ namespace Content.Client.Forensics
             Print.Disabled = (msg.PrintReadyAt > _gameTiming.CurTime);
             Clear.Disabled = false;
 
-            Name.Text = msg.LastScannedName;
+            NameLabel.Text = msg.LastScannedName;
 
             var text = new StringBuilder();
 

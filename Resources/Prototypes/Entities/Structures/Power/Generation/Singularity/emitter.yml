@@ -31,10 +31,10 @@
       shader: unshaded
       visible: false
       map: ["enum.EmitterVisualLayers.Lights"]
-    - state: lock
+    - state: locked
       shader: unshaded
       visible: false
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
   - type: Emitter
   - type: Gun
     showExamineText: false
@@ -83,6 +83,7 @@
   - type: Appearance
   - type: Lock
     locked: false
+  - type: LockVisuals
   - type: AccessReader
     access: [[ "Engineering" ]]
   - type: Machine
