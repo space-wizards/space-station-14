@@ -136,10 +136,10 @@
     - FoodLaughinPeaPod
   lifespan: 25
   growthStages: 3
-  maturation: 8
-  production: 6
+  maturation: 7
+  production: 5
   yield: 3
-  potency: 25
+  potency: 20
   idealLight: 8
   harvestRepeat: Repeat
   nutrientConsumption: 0.6
@@ -150,10 +150,10 @@
       Max: 3
     Sugar:
       Min: 1
-      Max: 5
+      Max: 10
     Laughter:
       Min: 1
-      Max: 5
+      Max: 10
 
 - type: seed
   id: lemon
