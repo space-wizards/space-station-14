@@ -22,7 +22,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Globalization;
-using Content.Server.Roles.Jobs;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -42,7 +41,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly JobSystem _jobs = default!;
 
     public override void Initialize()
     {
