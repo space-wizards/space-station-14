@@ -132,7 +132,7 @@
   - RadarConsoleCircuitboard
   - HandHeldMassScanner
   - BorgModuleGPS
-  
+
 - type: technology
   id: Shuttlecraft
   name: research-technology-shuttlecraft
