@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: BurninDreamer
-  changes:
-  - message: Rigged boxing gloves had their weapon stats reduced from 30 stamina damage
-      to 24 and their attack speed from 1.5/s to 1.2/s
-    type: Tweak
-  id: 5575
-  time: '2024-01-05T23:27:33.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23576
 - author: Dutch-VanDerLinde
   changes:
   - message: Arachnids may now click and chitter.
@@ -3828,3 +3820,10 @@
   id: 6074
   time: '2024-03-02T14:07:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24484
+- author: waylon531
+  changes:
+  - message: Nutribrick and MRE wrappers can now be put in trash bags
+    type: Tweak
+  id: 6075
+  time: '2024-03-02T14:23:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25760
