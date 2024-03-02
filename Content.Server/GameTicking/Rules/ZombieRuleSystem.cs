@@ -246,15 +246,23 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     /// </remarks>
     private void InfectInitialPlayers(ZombieRuleComponent component)
     {
-        //Get all players with initial infected enabled, and exclude those with the ZombieImmuneComponent
+        //Get all players with initial infected enabled, and exclude those with the ZombieImmuneComponent and roles with CanBeAntag = False
         var eligiblePlayers = _antagSelection.GetEligiblePlayers(
             _playerManager.Sessions
             ,component.PatientZeroPrototypeId,
             includeAllJobs: true,
             customExcludeCondition: player => HasComp<ZombieImmuneComponent>(player) || HasComp<InitialInfectedExemptComponent>(player) || !_jobs.CanBeAntag(player)
             );
-        //And get all players, excluding ZombieImmune - to fill any leftover initial infected slots
-        var allPlayers = _antagSelection.GetEligiblePlayers(_playerManager.Sessions, component.PatientZeroPrototypeId, acceptableAntags: Shared.Antag.AntagAcceptability.All, includeAllJobs: true, ignorePreferences: true, customExcludeCondition: HasComp<ZombieImmuneComponent>);
+
+        //And get all players, excluding ZombieImmune and roles with CanBeAntag = False - to fill any leftover initial infected slots
+        var allPlayers = _antagSelection.GetEligiblePlayers(
+            _playerManager.Sessions,
+            component.PatientZeroPrototypeId,
+            acceptableAntags: Shared.Antag.AntagAcceptability.All,
+            includeAllJobs: true,
+            ignorePreferences: true,
+            customExcludeCondition: player => HasComp<ZombieImmuneComponent>(player) || !_jobs.CanBeAntag(player) 
+            );
 
         //If there are no players to choose, abort
         if (allPlayers.Count == 0)
