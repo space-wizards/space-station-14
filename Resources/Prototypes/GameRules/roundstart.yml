@@ -64,6 +64,18 @@
     faction: Syndicate
   - type: ThiefRule #the thieves come as an extension of another gamemode
     ruleChance: 0.5
+#  - type: GenericAntagRule
+#    definitions:
+#    - prefRoles: [ NukeopsCommander ]
+#      fallbackRoles: [ Nukeops, NukeopsMedic ]
+#      max: 1
+#    - prefRoles: [ NukeopsMedic ]
+#      fallbackRoles: [ Nukeops, NukeopsCommander ]
+#      max: 1
+#    - prefRoles: [ Nukeops ]
+#      fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
+#      min: 0
+#      max: 3
 
 - type: entity
   id: Pirates
@@ -86,9 +98,24 @@
   parent: BaseGameRule
   noSpawn: true
   components:
+  - type: GameRule
+    minPlayers: 15
   - type: RevolutionaryRule
-  - type: ThiefRule #the thieves come as an extension of another gamemode
-    ruleChance: 0.5
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ HeadRev ]
+      max: 3
+      playerRatio: 15
+      briefing:
+        text: head-rev-role-greeting
+        color: CornflowerBlue
+        sound: "/Audio/Ambience/Antag/headrev_start.ogg"
+      components:
+      - type: Revolutionary
+      - type: HeadRevolutionary
+      mindComponents:
+      - type: RevolutionaryRole
+        prototype: HeadRev
 
 - type: entity
   id: Sandbox
@@ -109,7 +136,29 @@
   parent: BaseGameRule
   noSpawn: true
   components:
+  - type: GameRule
+    minPlayers: 20
   - type: ZombieRule
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ InitialInfected ]
+      max: 6
+      playerRatio: 10
+      blacklist:
+        components:
+        - ZombieImmune
+        - InitialInfectedExempt
+      briefing:
+        text: zombie-patientzero-role-greeting
+        color: Plum
+        sound: "/Audio/Ambience/Antag/zombie_start.ogg"
+      components:
+      - type: PendingZombie
+      - type: ZombifyOnDeath
+      - type: IncurableZombie
+      mindComponents:
+      - type: InitialInfectedRole
+        prototype: InitialInfected
 
 # event schedulers
 - type: entity

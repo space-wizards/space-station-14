@@ -15,6 +15,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Server.Chat.Managers;
 using Content.Shared.Chat;
 using Robust.Shared.Enums;
 
@@ -22,6 +23,8 @@ namespace Content.Server.Antag;
 
 public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
 {
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
@@ -226,7 +229,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
             if (eligiblePlayers.Count == 0)
                 break;
 
-            chosenPlayers.Add(RobustRandom.PickAndTake(eligiblePlayers));
+            chosenPlayers.Add(_robustRandom.PickAndTake(eligiblePlayers));
         }
 
         return chosenPlayers;
@@ -273,7 +276,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
             if (eligiblePlayers.Count == 0)
                 break;
 
-            chosenPlayers.Add(RobustRandom.PickAndTake(eligiblePlayers));
+            chosenPlayers.Add(_robustRandom.PickAndTake(eligiblePlayers));
         }
 
         return chosenPlayers;
@@ -337,11 +340,14 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="briefingColor">The color the briefing should be, null for default</param>
     /// <param name="briefingSound">The sound to briefing/greeting sound to play</param>
 
-    public void SendBriefing(ICommonSession session, string briefing, Color? briefingColor, SoundSpecifier? briefingSound)
+    public void SendBriefing(ICommonSession? session, string briefing, Color? briefingColor, SoundSpecifier? briefingSound)
     {
+        if (session == null)
+            return;
+
         _audioSystem.PlayGlobal(briefingSound, session);
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", briefing));
-        ChatManager.ChatMessageToOne(ChatChannel.Server, briefing, wrappedMessage, default, false, session.Channel, briefingColor);
+        _chatManager.ChatMessageToOne(ChatChannel.Server, briefing, wrappedMessage, default, false, session.Channel, briefingColor);
     }
     #endregion
 }

@@ -22,9 +22,30 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     {
         base.Initialize();
 
+        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<T, GameRuleAddedEvent>(OnGameRuleAdded);
         SubscribeLocalEvent<T, GameRuleStartedEvent>(OnGameRuleStarted);
         SubscribeLocalEvent<T, GameRuleEndedEvent>(OnGameRuleEnded);
+    }
+
+    private void OnStartAttempt(RoundStartAttemptEvent args)
+    {
+        if (args.Forced || args.Cancelled)
+            return;
+
+        var query = QueryActiveRules();
+        while (query.MoveNext(out var uid, out _, out _, out var gameRule))
+        {
+            var minPlayers = gameRule.MinPlayers;
+            if (args.Players.Length >= minPlayers)
+                continue;
+
+            ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
+                ("readyPlayersCount", args.Players.Length),
+                ("minimumPlayers", minPlayers),
+                ("presetName", ToPrettyString(uid))));
+            args.Cancel();
+        }
     }
 
     private void OnGameRuleAdded(EntityUid uid, T component, ref GameRuleAddedEvent args)

@@ -79,7 +79,6 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
 
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayerSpawningEvent);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextEvent);
-        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
     }
 
     private void OnRoundEndTextEvent(RoundEndTextAppendEvent ev)
@@ -152,6 +151,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
         }
     }
 
+    //todo migrate
     private void OnPlayerSpawningEvent(RulePlayerSpawningEvent ev)
     {
         var query = EntityQueryEnumerator<PiratesRuleComponent, GameRuleComponent>();
@@ -290,31 +290,6 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
         if (mind.Session != null)
         {
             _audioSystem.PlayGlobal(pirateRule.PirateAlertSound, mind.Session);
-        }
-    }
-
-    private void OnStartAttempt(RoundStartAttemptEvent ev)
-    {
-        var query = EntityQueryEnumerator<PiratesRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var pirates, out var gameRule))
-        {
-            if (!GameTicker.IsGameRuleActive(uid, gameRule))
-                return;
-
-            var minPlayers = _cfg.GetCVar(CCVars.PiratesMinPlayers);
-            if (!ev.Forced && ev.Players.Length < minPlayers)
-            {
-                _chatManager.SendAdminAnnouncement(Loc.GetString("nukeops-not-enough-ready-players",
-                    ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers)));
-                ev.Cancel();
-                return;
-            }
-
-            if (ev.Players.Length == 0)
-            {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-no-one-ready"));
-                ev.Cancel();
-            }
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 [RegisterComponent, Access(typeof(ZombieRuleSystem))]
 public sealed partial class ZombieRuleComponent : Component
 {
+    //todo replace this shit because it's very strange TBH
     [DataField]
     public Dictionary<string, string> InitialInfectedNames = new();
 

@@ -47,7 +47,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
 
@@ -78,15 +77,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             DoTraitorStart(component);
             component.SelectionStatus = TraitorRuleComponent.SelectionState.Started;
         }
-    }
-
-    /// <summary>
-    /// Check for enough players
-    /// </summary>
-    /// <param name="ev"></param>
-    private void OnStartAttempt(RoundStartAttemptEvent ev)
-    {
-        TryRoundStartAttempt(ev, Loc.GetString("traitor-title"));
     }
 
     private void MakeCodewords(TraitorRuleComponent component)

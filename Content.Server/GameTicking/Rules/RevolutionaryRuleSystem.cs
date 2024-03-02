@@ -40,6 +40,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 {
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly NuAntagSelectionSystem _antag = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly EuiManager _euiMan = default!;
     [Dependency] private readonly MindSystem _mind = default!;
@@ -60,21 +61,12 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
-        SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
+        SubscribeLocalEvent<RevolutionaryRuleComponent, AfterAntagEntitySelectedEvent>(AfterHeadRevSelected);
         SubscribeLocalEvent<CommandStaffComponent, MobStateChangedEvent>(OnCommandMobStateChanged);
         SubscribeLocalEvent<HeadRevolutionaryComponent, MobStateChangedEvent>(OnHeadRevMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<RevolutionaryRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<HeadRevolutionaryComponent, AfterFlashedEvent>(OnPostFlash);
-    }
-
-    //Set miniumum players
-    protected override void Added(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
-    {
-        base.Added(uid, component, gameRule, args);
-
-        gameRule.MinPlayers = component.MinPlayers;
     }
 
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -103,32 +95,22 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         var revsLost = CheckRevsLose();
         var commandLost = CheckCommandLose();
         var query = AllEntityQuery<RevolutionaryRuleComponent>();
-        while (query.MoveNext(out var headrev))
+        while (query.MoveNext(out var uid, out var headrev))
         {
             // This is (revsLost, commandsLost) concatted together
             // (moony wrote this comment idk what it means)
             var index = (commandLost ? 1 : 0) | (revsLost ? 2 : 0);
             ev.AddLine(Loc.GetString(Outcomes[index]));
 
-            ev.AddLine(Loc.GetString("rev-headrev-count", ("initialCount", headrev.HeadRevs.Count)));
-            foreach (var player in headrev.HeadRevs)
+            var sessionData = _antag.GetAntagSessionData(uid);
+            ev.AddLine(Loc.GetString("rev-headrev-count", ("initialCount", sessionData.Count)));
+            foreach (var (mind, data, name) in sessionData)
             {
-                // TODO: when role entities are a thing this has to change
-                var count = CompOrNull<RevolutionaryRoleComponent>(player.Value)?.ConvertedCount ?? 0;
-
-                _mind.TryGetSession(player.Value, out var session);
-                var username = session?.Name;
-                if (username != null)
-                {
-                    ev.AddLine(Loc.GetString("rev-headrev-name-user",
-                    ("name", player.Key),
-                    ("username", username), ("count", count)));
-                }
-                else
-                {
-                    ev.AddLine(Loc.GetString("rev-headrev-name",
-                    ("name", player.Key), ("count", count)));
-                }
+                var count = CompOrNull<RevolutionaryRoleComponent>(mind)?.ConvertedCount ?? 0;
+                ev.AddLine(Loc.GetString("rev-headrev-name-user",
+                ("name", name),
+                ("username", data.UserName),
+                ("count", count)));
 
                 // TODO: someone suggested listing all alive? revs maybe implement at some point
             }
@@ -144,55 +126,15 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         args.Append(Loc.GetString(head ? "head-rev-briefing" : "rev-briefing"));
     }
 
-    //Check for enough players to start rule
-    private void OnStartAttempt(RoundStartAttemptEvent ev)
+    private void AfterHeadRevSelected(Entity<RevolutionaryRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
     {
-        TryRoundStartAttempt(ev, Loc.GetString("roles-antag-rev-name"));
+        GiveHeadRev(args.EntityUid, ent.Comp);
     }
 
-    private void OnPlayerJobAssigned(RulePlayerJobsAssignedEvent ev)
-    {
-        var query = QueryActiveRules();
-        while (query.MoveNext(out var uid, out var activeGameRule, out var comp, out var gameRule))
-        {
-            var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.HeadRevPrototypeId);
-
-            if (eligiblePlayers.Count == 0)
-                continue;
-
-            var headRevCount = _antagSelection.CalculateAntagCount(ev.Players.Length, comp.PlayersPerHeadRev, comp.MaxHeadRevs);
-
-            var headRevs = _antagSelection.ChooseAntags(headRevCount, eligiblePlayers);
-
-            GiveHeadRev(headRevs, comp.HeadRevPrototypeId, comp);
-        }
-    }
-
-    private void GiveHeadRev(IEnumerable<EntityUid> chosen, ProtoId<AntagPrototype> antagProto, RevolutionaryRuleComponent comp)
-    {
-        foreach (var headRev in chosen)
-            GiveHeadRev(headRev, antagProto, comp);
-    }
-    private void GiveHeadRev(EntityUid chosen, ProtoId<AntagPrototype> antagProto, RevolutionaryRuleComponent comp)
+    private void GiveHeadRev(EntityUid chosen, RevolutionaryRuleComponent comp)
     {
         RemComp<CommandStaffComponent>(chosen);
-
-        var inCharacterName = MetaData(chosen).EntityName;
-
-        if (!_mind.TryGetMind(chosen, out var mind, out _))
-            return;
-
-        if (!_role.MindHasRole<RevolutionaryRoleComponent>(mind))
-        {
-            _role.MindAddRole(mind, new RevolutionaryRoleComponent { PrototypeId = antagProto }, silent: true);
-        }
-
-        comp.HeadRevs.Add(inCharacterName, mind);
         _inventory.SpawnItemsOnEntity(chosen, comp.StartingGear);
-        var revComp = EnsureComp<RevolutionaryComponent>(chosen);
-        EnsureComp<HeadRevolutionaryComponent>(chosen);
-
-        _antagSelection.SendBriefing(chosen, Loc.GetString("head-rev-role-greeting"), Color.CornflowerBlue, revComp.RevStartSound);
     }
 
     /// <summary>
@@ -248,7 +190,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             revRule = Comp<RevolutionaryRuleComponent>(ruleEnt);
         }
 
-        GiveHeadRev(entity, revRule.HeadRevPrototypeId, revRule);
+        GiveHeadRev(entity, revRule);
     }
 
     //TODO: Enemies of the revolution
