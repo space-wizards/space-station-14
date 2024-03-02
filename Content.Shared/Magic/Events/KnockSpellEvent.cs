@@ -5,13 +5,13 @@ namespace Content.Shared.Magic.Events;
 
 public sealed partial class KnockSpellEvent : InstantActionEvent, ISpeakSpell
 {
-    // TODO: Move to magic component
     /// <summary>
     /// The range this spell opens doors in
-    /// 4f is the default
+    /// 10f is the default
+    ///   Should be able to open all doors/lockers in visible sight
     /// </summary>
     [DataField("range")]
-    public float Range = 4f;
+    public float Range = 10f;
 
     // TODO: Move to magic component
     [DataField("speech")]

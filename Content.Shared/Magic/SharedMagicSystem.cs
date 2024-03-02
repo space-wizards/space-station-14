@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
@@ -9,6 +10,7 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Lock;
 using Content.Shared.Magic.Components;
 using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
@@ -51,6 +53,7 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly LockSystem _lock = default!;
 
     public override void Initialize()
     {
@@ -218,7 +221,6 @@ public abstract class SharedMagicSystem : EntitySystem
             }
             case TargetInFront:
             {
-                // This is shit but you get the idea.
                 var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
 
                 if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
@@ -372,7 +374,7 @@ public abstract class SharedMagicSystem : EntitySystem
     }
 
     /// <summary>
-    /// Opens all doors within range
+    /// Opens all doors and locks within range
     /// </summary>
     /// <param name="args"></param>
     private void OnKnockSpell(KnockSpellEvent args)
@@ -387,15 +389,19 @@ public abstract class SharedMagicSystem : EntitySystem
         var transform = Transform(args.Performer);
         var coords = transform.Coordinates;
 
-        // TODO: Can probably use in range for teleport spells as well
         // Look for doors and don't open them if they're already open.
         // Magic doesn't respect locks, it just opens
-        foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))
+        foreach (var target in _lookup.GetEntitiesInRange(coords, args.Range))
         {
-            // TODO: See about unlocking lockers too
+            // TODO: coords still unlocks all in range regardless of opaque, target entity limits the range severely
+            if (!_interaction.InRangeUnobstructed(args.Performer, target, range: args.Range, collisionMask: CollisionGroup.Opaque))
+                continue;
 
-            if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
-                _door.StartOpening(entity);
+            if (TryComp<DoorComponent>(target, out var doorComp) && doorComp.State is not DoorState.Open)
+                _door.StartOpening(target);
+
+            if (TryComp<LockComponent>(target, out var lockComp) && lockComp.Locked)
+                _lock.Unlock(target, args.Performer, lockComp);
         }
     }
 
