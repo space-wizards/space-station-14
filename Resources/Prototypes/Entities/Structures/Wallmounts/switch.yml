@@ -509,7 +509,6 @@
   - type: AccessReader
     access: [["Atmospherics"]]
 
-# big red button
 - type: entity
   id: BigRedButton
   parent: SignalButton
