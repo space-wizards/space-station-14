@@ -29,6 +29,12 @@
       "name": "metal_yellow"
     },
     {
+      "name": "metal_green"
+    },
+    {
+      "name": "metal_warning_label"
+    },
+    {
       "name": "metal_explosive_label"
     }
   ]

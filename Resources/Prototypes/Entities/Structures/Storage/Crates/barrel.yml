@@ -157,6 +157,16 @@
     - state: metal_yellow
 
 - type: entity
+  id: MetalBarrelGreen
+  parent: MetalBarrelGrey
+  suffix: green
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/barrel.rsi
+    layers:
+    - state: metal_green
+
+- type: entity
   id: ChemicalBarrelExplosiveEmpty
   parent: MetalBarrelGrey
   name: explosive barrel
@@ -199,15 +209,14 @@
   parent: MetalBarrelGrey
   id: ChemicalBarrelCarbon
   name: chemical barrel (carbon)
-  noSpawn: true
   components:
-  - type: StaticPrice
-    price: 500
-  - type: Sprite
-    sprite: Objects/Storage/barrel.rsi
-    layers:
-    - state: metal_grey
-    - state: metal_explosive_label
+    - type: StaticPrice
+      price: 500
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_grey
+      - state: metal_warning_label
     - type: Label
       currentLabel: reagent-name-carbon
     - type: SolutionContainerManager
@@ -221,10 +230,14 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelIodine
   name: chemical barrel (iodine)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-iodine
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_red
+      - state: metal_warning_label
     - type: SolutionContainerManager
       solutions:
         tank:
@@ -236,10 +249,14 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelFluorine
   name: chemical barrel (fluorine)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-fluorine
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_blue
+      - state: metal_warning_label
     - type: SolutionContainerManager
       solutions:
         tank:
@@ -251,10 +268,14 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelChlorine
   name: chemical barrel (chlorine)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-chlorine
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_green
+      - state: metal_warning_label
     - type: SolutionContainerManager
       solutions:
         tank:
@@ -266,7 +287,6 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelAluminium
   name: chemical barrel (aluminium)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-aluminium
@@ -281,10 +301,14 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelPhosphorus
   name: chemical barrel (phosphorus)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-phosphorus
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_red
+      - state: metal_warning_label
     - type: SolutionContainerManager
       solutions:
         tank:
@@ -296,10 +320,14 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelSulfur
   name: chemical barrel (sulfur)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-sulfur
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_yellow
+      - state: metal_warning_label
     - type: SolutionContainerManager
       solutions:
         tank:
@@ -311,7 +339,6 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelSilicon
   name: chemical barrel (silicon)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-silicon
@@ -326,10 +353,14 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelHydrogen
   name: chemical barrel (hydrogen)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-hydrogen
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_red
+      - state: metal_warning_label
     - type: SolutionContainerManager
       solutions:
         tank:
@@ -341,7 +372,6 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelLithium
   name: chemical barrel (lithium)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-lithium
@@ -356,7 +386,6 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelSodium
   name: chemical barrel (sodium)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-sodium
@@ -371,10 +400,14 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelPotassium
   name: chemical barrel (potassium)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-potassium
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_yellow
+      - state: metal_warning_label
     - type: SolutionContainerManager
       solutions:
         tank:
@@ -386,10 +419,14 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelRadium
   name: chemical barrel (radium)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-radium
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_green
+      - state: metal_warning_label
     - type: SolutionContainerManager
       solutions:
         tank:
@@ -401,7 +438,6 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelIron
   name: chemical barrel (iron)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-iron
@@ -416,10 +452,14 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelCopper
   name: chemical barrel (copper)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-copper
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_red
+      - state: metal_warning_label
     - type: SolutionContainerManager
       solutions:
         tank:
@@ -431,10 +471,14 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelGold
   name: chemical barrel (gold)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-gold
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_yellow
+      - state: metal_warning_label
     - type: SolutionContainerManager
       solutions:
         tank:
@@ -446,7 +490,6 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelMercury
   name: chemical barrel (mercury)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-mercury
@@ -461,7 +504,6 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelSilver
   name: chemical barrel (silver)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-silver
@@ -476,10 +518,14 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelEthanol
   name: chemical barrel (ethanol)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-ethanol
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_blue
+      - state: metal_warning_label
     - type: SolutionContainerManager
       solutions:
         tank:
@@ -491,10 +537,14 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelSugar
   name: chemical barrel (sugar)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-sugar
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_blue
+      - state: metal_warning_label
     - type: SolutionContainerManager
       solutions:
         tank:
@@ -506,10 +556,14 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelNitrogen
   name: chemical barrel (nitrogen)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-nitrogen
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_red
+      - state: metal_warning_label
     - type: SolutionContainerManager
       solutions:
         tank:
@@ -521,10 +575,14 @@
   parent: ChemicalBarrelCarbon
   id: ChemicalBarrelOxygen
   name: chemical barrel (oxygen)
-  noSpawn: true
   components:
     - type: Label
       currentLabel: reagent-name-oxygen
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_blue
+      - state: metal_warning_label
     - type: SolutionContainerManager
       solutions:
         tank:
