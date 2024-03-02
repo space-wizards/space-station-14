@@ -615,7 +615,7 @@
 - type: reaction
   id: Happiness
   reactants:
-    NitrousOxide:
+    Laughter:
       amount: 2
     Epinephrine:
       amount: 1
