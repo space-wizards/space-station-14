@@ -17,7 +17,7 @@ public sealed class HyposprayStatusControl : Control
 
     private FixedPoint2 PrevVolume;
     private FixedPoint2 PrevMaxVolume;
-    private HyposprayToggleMode PrevToggleMode;
+    private bool PrevOnlyAffectsMobs;
 
     public HyposprayStatusControl(Entity<HyposprayComponent> parent, SharedSolutionContainerSystem solutionContainers)
     {
@@ -37,18 +37,17 @@ public sealed class HyposprayStatusControl : Control
         // only updates the UI if any of the details are different than they previously were
         if (PrevVolume == solution.Volume
             && PrevMaxVolume == solution.MaxVolume
-            && PrevToggleMode == _parent.Comp.ToggleMode)
+            && PrevOnlyAffectsMobs == _parent.Comp.OnlyAffectsMobs)
             return;
 
         PrevVolume = solution.Volume;
         PrevMaxVolume = solution.MaxVolume;
-        PrevToggleMode = _parent.Comp.ToggleMode;
+        PrevOnlyAffectsMobs = _parent.Comp.OnlyAffectsMobs;
 
-        var modeStringLocalized = Loc.GetString(_parent.Comp.ToggleMode switch
+        var modeStringLocalized = Loc.GetString(_parent.Comp.OnlyAffectsMobs switch
         {
-            HyposprayToggleMode.All => "hypospray-all-mode-text",
-            HyposprayToggleMode.OnlyMobs => "hypospray-mobs-only-mode-text",
-            _ => "hypospray-invalid-text"
+            false => "hypospray-all-mode-text",
+            true => "hypospray-mobs-only-mode-text",
         });
 
         _label.SetMarkup(Loc.GetString("hypospray-volume-label",

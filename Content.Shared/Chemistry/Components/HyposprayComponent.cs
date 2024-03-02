@@ -24,25 +24,9 @@ public sealed partial class HyposprayComponent : Component
     public SoundSpecifier InjectSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
 
     /// <summary>
-    /// Whether or not the hypo is able to inject only into mobs. On false you can inject into beakers/jugs
+    /// Decides whether you can inject everything or just mobs.
+    /// When you can only affect mobs, you're capable of drawing from beakers.
     /// </summary>
     [AutoNetworkedField]
-    public HyposprayToggleMode ToggleMode = HyposprayToggleMode.All;
-}
-
-/// <summary>
-/// Possible modes for an <see cref="HyposprayComponent"/>.
-/// </summary>
-[Serializable, NetSerializable]
-public enum HyposprayToggleMode : byte
-{
-    /// <summary>
-    /// The hypospray will inject all targets
-    /// </summary>
-    All,
-
-    /// <summary>
-    /// The hypospray will inject mobs and draw from containers
-    /// </summary>
-    OnlyMobs
+    public bool OnlyAffectsMobs = false;
 }

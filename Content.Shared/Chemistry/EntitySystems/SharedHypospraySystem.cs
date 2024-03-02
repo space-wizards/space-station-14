@@ -44,27 +44,14 @@ public abstract class SharedHypospraySystem : EntitySystem
 
     private void ToggleMode(Entity<HyposprayComponent> entity, EntityUid user)
     {
-        string msg;
-        switch (entity.Comp.ToggleMode)
-        {
-            case HyposprayToggleMode.All:
-                SetMode(entity, HyposprayToggleMode.OnlyMobs);
-                msg = "hypospray-verb-mode-inject-mobs-only";
-                break;
-            case HyposprayToggleMode.OnlyMobs:
-                SetMode(entity, HyposprayToggleMode.All);
-                msg = "hypospray-verb-mode-inject-all";
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-
+        SetMode(entity, !entity.Comp.OnlyAffectsMobs);
+        string msg = entity.Comp.OnlyAffectsMobs ? "hypospray-verb-mode-inject-mobs-only" : "hypospray-verb-mode-inject-all";
         _popup.PopupClient(Loc.GetString(msg), entity, user);
     }
 
-    public void SetMode(Entity<HyposprayComponent> entity, HyposprayToggleMode mode)
+    public void SetMode(Entity<HyposprayComponent> entity, bool onlyAffectsMobs)
     {
-        entity.Comp.ToggleMode = mode;
+        entity.Comp.OnlyAffectsMobs = onlyAffectsMobs;
         Dirty(entity);
     }
 }
