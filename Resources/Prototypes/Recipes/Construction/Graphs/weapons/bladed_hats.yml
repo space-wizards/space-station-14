@@ -37,7 +37,7 @@
       - tag: BrimFlatcapBrown
         name: a brown flatcap
         icon:
-          sprite: Clothing/Head/Hats/Brownflatcap.rsi
+          sprite: Clothing/Head/Hats/brownflatcap.rsi
           state: icon
   - node: icon
     entity: BladedFlatcapBrown
