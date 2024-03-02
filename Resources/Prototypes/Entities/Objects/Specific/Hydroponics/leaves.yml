@@ -163,7 +163,7 @@
     color: white
   - type: Construction
     graph: smokeableGroundCannabisRainbow
-    node: ground
+    node: groundRainbow
 
 - type: entity
   name: tobacco leaves
