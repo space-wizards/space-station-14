@@ -117,6 +117,9 @@
     {
       "name": "silver-inhand-right",
       "directions": 4
-    }
+    },
+    {
+      "name": "silver-gold"
+    },
   ]
 }

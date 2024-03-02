@@ -6,7 +6,14 @@
     "x": 32,
     "y": 32
   },
-  "states": [
+  "states": [    
+    {
+      "name": "any-glass"
+    },
+    {
+      "name": "any-rglass"
+    },
+
     {
       "name": "glass"
     },
