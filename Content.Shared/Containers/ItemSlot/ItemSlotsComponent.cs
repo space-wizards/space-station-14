@@ -193,11 +193,25 @@ namespace Content.Shared.Containers.ItemSlots
         public bool EjectOnBreak = false;
 
         /// <summary>
-        ///     If this is not an empty string, this will generate a popup when someone attempts to insert a bad item
+        ///     If this is not an empty string, a popup will be generated when someone attempts to insert a bad item
         ///     into this slot. This string will be passed through localization.
         /// </summary>
         [DataField("whitelistFailPopup")]
         public string WhitelistFailPopup = string.Empty;
+
+        /// <summary>
+        ///     If this is not an empty string, a popup will be generated when someone attempts to insert a valid item,
+        ///     or eject an item from the slot while the slot is locked. This string will be passed through localization.
+        /// </summary>
+        [DataField("lockedFailPopup")]
+        public string LockedFailPopup = string.Empty;
+
+        /// <summary>
+        ///     If this is not an empty string, a popup will be generated when someone successfully inserts a valid item.
+        ///     This will also be used for insertions resulting from swapping. This string will be passed through localization.
+        /// </summary>
+        [DataField("insertSuccessPopup")]
+        public string InsertSuccessPopup = string.Empty;
 
         /// <summary>
         ///     If the user interacts with an entity with an already-filled item slot, should they attempt to swap out the item?
@@ -244,6 +258,8 @@ namespace Content.Shared.Containers.ItemSlots
             InsertVerbText = other.InsertVerbText;
             EjectVerbText = other.EjectVerbText;
             WhitelistFailPopup = other.WhitelistFailPopup;
+            LockedFailPopup = other.LockedFailPopup;
+            InsertSuccessPopup = other.InsertSuccessPopup;
             Swap = other.Swap;
             Priority = other.Priority;
         }
