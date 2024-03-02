@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: GreyMario
-  changes:
-  - message: Chemistry bottles have been properly washed so you can actually see the
-      chemicals clearly through the glass.
-    type: Tweak
-  id: 5573
-  time: '2024-01-05T22:01:04.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23581
 - author: Ubaser
   changes:
   - message: Epinephrine no longer removes itself in the chemstream.
@@ -3828,3 +3820,11 @@
   id: 6072
   time: '2024-03-02T06:43:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25735
+- author: Krunk
+  changes:
+  - message: Picking up and dumping trash is less arduous for tiny, plentiful items,
+      such as bullets.
+    type: Tweak
+  id: 6073
+  time: '2024-03-02T13:57:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24899
