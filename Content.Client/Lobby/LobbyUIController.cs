@@ -111,9 +111,13 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     public void GiveDummyJobClothesLoadout(EntityUid dummy, HumanoidCharacterProfile profile)
     {
         var job = _dummyJob ?? GetPreferredJob(profile);
-        var loadout = profile.GetLoadoutOrDefault("Job" + job.ID, EntityManager, _prototypeManager);
         GiveDummyJobClothes(dummy, profile, job);
-        GiveDummyLoadout(dummy, loadout);
+
+        if (_prototypeManager.HasIndex<RoleLoadoutPrototype>("Job" + job.ID))
+        {
+            var loadout = profile.GetLoadoutOrDefault("Job" + job.ID, EntityManager, _prototypeManager);
+            GiveDummyLoadout(dummy, loadout);
+        }
     }
 
     /// <summary>
@@ -133,10 +137,9 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
         foreach (var group in loadout.SelectedLoadouts.Values)
         {
-            if (group == null)
+            if (group == null || !_prototypeManager.TryIndex<LoadoutPrototype>(group.Value, out var loadoutProto))
                 continue;
 
-            var loadoutProto = _prototypeManager.Index<LoadoutPrototype>(group);
             _spawn.EquipStartingGear(uid, _prototypeManager.Index(loadoutProto.Equipment));
         }
     }
