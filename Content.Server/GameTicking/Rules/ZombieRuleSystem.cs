@@ -250,8 +250,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var eligiblePlayers = _antagSelection.GetEligiblePlayers(
             _playerManager.Sessions
             ,component.PatientZeroPrototypeId,
-            includeAllJobs: true,
-            customExcludeCondition: player => HasComp<ZombieImmuneComponent>(player) || HasComp<InitialInfectedExemptComponent>(player) || !_jobs.CanBeAntag(player)
+            includeAllJobs: false,
+            customExcludeCondition: player => HasComp<ZombieImmuneComponent>(player) || HasComp<InitialInfectedExemptComponent>(player) 
             );
 
         //And get all players, excluding ZombieImmune and roles with CanBeAntag = False - to fill any leftover initial infected slots
@@ -259,9 +259,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             _playerManager.Sessions,
             component.PatientZeroPrototypeId,
             acceptableAntags: Shared.Antag.AntagAcceptability.All,
-            includeAllJobs: true,
+            includeAllJobs: false ,
             ignorePreferences: true,
-            customExcludeCondition: player => HasComp<ZombieImmuneComponent>(player) || !_jobs.CanBeAntag(player) 
+            customExcludeCondition: HasComp<ZombieImmuneComponent> 
             );
 
         //If there are no players to choose, abort
