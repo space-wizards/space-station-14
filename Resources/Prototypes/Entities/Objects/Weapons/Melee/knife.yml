@@ -164,9 +164,9 @@
   - type: Construction
     graph: BladedFlatcapBrown
   - type: Sprite
-    sprite: Clothing/Head/Hats/brownflatcap.rsi
+    sprite: Clothing/Head/Hats/Brownflatcap.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/brownflatcap.rsi
+    sprite: Clothing/Head/Hats/Brownflatcap.rsi
 
 - type: entity
   name: shiv
