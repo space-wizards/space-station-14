@@ -41,6 +41,9 @@
       ]
     },
     {
+      "name": "powderpile_rainbow"
+    },
+    {
       "name": "produce",
       "delays": 
 	  [

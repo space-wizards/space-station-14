@@ -764,6 +764,8 @@
   packetPrototype: CannabisSeeds
   productPrototypes:
     - LeavesCannabis
+  mutationPrototypes:
+    - rainbowCannabis
   harvestRepeat: Repeat
   lifespan: 75
   maturation: 8
@@ -785,7 +787,7 @@
   name: seeds-rainbow-cannabis-name
   noun: seeds-noun-seeds
   displayName: seeds-rainbow-cannabis-display-name
-  plantRsi: Objects/Specific/Hydroponics/rainbowcannabis.rsi
+  plantRsi: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
   packetPrototype: RainbowCannabisSeeds
   productPrototypes:
     - LeavesCannabisRainbow

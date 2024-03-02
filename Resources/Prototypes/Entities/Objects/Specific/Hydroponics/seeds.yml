@@ -294,7 +294,7 @@
     - type: Seed
       seedId: rainbowCannabis
     - type: Sprite
-      sprite: Objects/Specific/Hydroponics/rainbowcannabis.rsi
+      sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
 
 - type: entity
   parent: SeedBase
