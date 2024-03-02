@@ -47,10 +47,6 @@ public sealed class SignalSwitchSystem : EntitySystem
     }
 }
 
+[ByRefEvent]
 // Event to inform any other systems that may want to know that the signal switch was pressed
-public record class SwitchPressedEvent : EntityEventArgs
-{
-    public SwitchPressedEvent()
-    {
-    }
-}
+public record struct SwitchPressedEvent();

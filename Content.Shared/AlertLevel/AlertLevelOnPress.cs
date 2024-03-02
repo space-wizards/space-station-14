@@ -1,5 +1,4 @@
 using Robust.Shared.Prototypes;
-using Content.Server.AlertLevel;
 
 namespace Content.Shared.AlertLevelOnPress;
 
@@ -12,5 +11,5 @@ public abstract partial class SharedAlertLevelOnPressSystem : EntitySystem
 public sealed partial class AlertLevelOnPressComponent : Component
 {
     [DataField(required: true)]
-    public ProtoId<AlertLevelPrototype> AlertLevelOnActivate = string.Empty;
+    public string AlertLevelOnActivate = string.Empty;
 }
