@@ -53,7 +53,7 @@ public sealed class ObjectiveLimitSystem : EntitySystem
         if (!Resolve(mindId, ref mind))
             return false;
 
-        foreach (var objective in mind.AllObjectives)
+        foreach (var objective in mind.Objectives)
         {
             if (Prototype(objective)?.ID == proto)
                 return true;

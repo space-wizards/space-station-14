@@ -18,7 +18,6 @@ namespace Content.Server.Remotes
     public sealed class DoorRemoteSystem : EntitySystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly DoorBoltSystem _bolts = default!;
         [Dependency] private readonly AirlockSystem _airlock = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
@@ -105,7 +104,7 @@ namespace Content.Server.Remotes
                     {
                         if (!boltsComp.BoltWireCut)
                         {
-                            _bolts.SetBoltsWithAudio(args.Target.Value, boltsComp, !boltsComp.BoltsDown);
+                            _doorSystem.SetBoltsDown((args.Target.Value, boltsComp), !boltsComp.BoltsDown, args.User);
                             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");
                         }
                     }

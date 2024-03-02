@@ -487,11 +487,12 @@ public sealed class ChatUIController : UIController
 
         if (_state.CurrentState is GameplayStateBase)
         {
-            // can always hear local / radio / emote when in the game
+            // can always hear local / radio / emote / notifications when in the game
             FilterableChannels |= ChatChannel.Local;
             FilterableChannels |= ChatChannel.Whisper;
             FilterableChannels |= ChatChannel.Radio;
             FilterableChannels |= ChatChannel.Emotes;
+            FilterableChannels |= ChatChannel.Notifications;
 
             // Can only send local / radio / emote when attached to a non-ghost entity.
             // TODO: this logic is iffy (checking if controlling something that's NOT a ghost), is there a better way to check this?
@@ -587,7 +588,7 @@ public sealed class ChatUIController : UIController
             CreateSpeechBubble(entity, msg);
         }
 
-        var player = _player.LocalPlayer?.ControlledEntity;
+        var player = _player.LocalEntity;
         var predicate = static (EntityUid uid, (EntityUid compOwner, EntityUid? attachedEntity) data)
             => uid == data.compOwner || uid == data.attachedEntity;
         var playerPos = player != null
@@ -644,7 +645,7 @@ public sealed class ChatUIController : UIController
     private bool TryGetRadioChannel(string text, out RadioChannelPrototype? radioChannel)
     {
         radioChannel = null;
-        return _player.LocalPlayer?.ControlledEntity is EntityUid { Valid: true } uid
+        return _player.LocalEntity is EntityUid { Valid: true } uid
            && _chatSys != null
            && _chatSys.TryProccessRadioMessage(uid, text, out _, out radioChannel, quiet: true);
     }

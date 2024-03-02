@@ -175,8 +175,6 @@ ClothingBackpackSatchelSecurityFilledDetective: ClothingBackpackSatchelFilledDet
 FoodBoxDonkpocketGondola: FoodBoxDonkpocketPizza
 
 # 2024-01-31
-HandheldCrewMonitorEmpty: null
-HandheldCrewMonitor: null
 SpyCrewMonitor: null
 SpyCrewMonitorEmpty: null
 SyndiCrewMonitor: null
@@ -214,3 +212,17 @@ VehicleJanicartDestroyed: null
 # 2024-02-01
 YellowOxygenTank: OxygenTank
 YellowOxygenTankFilled: OxygenTankFilled
+
+# 2024-02-19
+Drone: null
+SpawnMobDrone: null
+Onestar: null # I dont think this is even mapped, but just in case
+
+# 2024-02-22
+SolarAssemblyPart: SolarAssemblyFlatpack
+AmePart: AmePartFlatpack
+AmePartStealObjective: AmePartFlatpackStealObjective
+Observationskit: null
+
+# 2024-02-26
+CrateBaseWeldable: CrateGenericSteel
