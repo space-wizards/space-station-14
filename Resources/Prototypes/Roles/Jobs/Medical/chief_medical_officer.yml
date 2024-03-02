@@ -20,6 +20,7 @@
   - Brig
   - Paramedic # DeltaV - Add Paramedic access
   - Psychologist # DeltaV - Add Psychologist access
+  - Cryogenics
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

@@ -398,3 +398,14 @@
     sprite: Clothing/OuterClothing/Coats/space_asshole.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/space_asshole.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatExpensive
+  name: expensive coat
+  description: Very fluffy pink coat, made out of very expensive fur (clearly).
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
