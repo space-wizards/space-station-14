@@ -37,10 +37,12 @@ public partial struct AntagSelectionDefinition
     public AntagAcceptability MultiAntagSetting = AntagAcceptability.None;
 
     [DataField]
-    public int Min = 1;
+    public int MinAntags = 1;
 
     [DataField]
-    public int Max = 1;
+    public int MaxAntags = 1;
+
+    //todo implement a max range thing? make both of these ranges?
 
     [DataField]
     public int PlayerRatio = 10;
@@ -65,6 +67,9 @@ public partial struct AntagSelectionDefinition
 
     [DataField(serverOnly: true)]
     public ComponentRegistry MindComponents = new();
+
+    [DataField]
+    public List<EntProtoId> Equipment = new();
 
     [DataField]
     public BriefingData? Briefing;

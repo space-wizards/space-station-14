@@ -116,6 +116,9 @@
         text: head-rev-role-greeting
         color: CornflowerBlue
         sound: "/Audio/Ambience/Antag/headrev_start.ogg"
+      equipment:
+      - Flash
+      - ClothingEyesGlassesSunglasses
       components:
       - type: Revolutionary
       - type: HeadRevolutionary

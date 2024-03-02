@@ -3,6 +3,7 @@ using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Inventory;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
@@ -27,6 +28,7 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
     [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly IServerPreferencesManager _pref = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
+    [Dependency] private readonly ServerInventorySystem _inventory = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly RoleSystem _role = default!;
 
@@ -109,15 +111,15 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
         var countOffset = 0;
         foreach (var otherDef in ent.Comp.Definitions)
         {
-            countOffset += Math.Clamp(playerPool.Count / otherDef.PlayerRatio, otherDef.Min, otherDef.Max) * otherDef.PlayerRatio;
+            countOffset += Math.Clamp(playerPool.Count / otherDef.PlayerRatio, otherDef.MinAntags, otherDef.MaxAntags) * otherDef.PlayerRatio;
         }
         // make sure we don't double-count the current selection
-        countOffset -= Math.Clamp((playerPool.Count + countOffset) / def.PlayerRatio, def.Min, def.Max) * def.PlayerRatio;
+        countOffset -= Math.Clamp((playerPool.Count + countOffset) / def.PlayerRatio, def.MinAntags, def.MaxAntags) * def.PlayerRatio;
 
 
         //TODO: add in an option for having player-less antags.
         // even better, make it a config so you can specify half player, half ghost role.
-        var count = Math.Clamp((playerPool.Count - countOffset) / def.PlayerRatio, def.Min, def.Max);
+        var count = Math.Clamp((playerPool.Count - countOffset) / def.PlayerRatio, def.MinAntags, def.MaxAntags);
         for (var i = 0; i < count; i++)
         {
             MakeAntag(ent, playerPool.PickAndTake(_random), def);
@@ -172,9 +174,10 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
             ent.Comp.SelectedMinds.Add((mind, Name(player)));
         }
 
+        _inventory.SpawnItemsOnEntity(player, def.Equipment);
+
         var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent);
         RaiseLocalEvent(ent, ref afterEv, true);
-
 
         if (def.Briefing is { } briefing)
         {
@@ -226,6 +229,8 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
 
         if (ent.Comp.SelectedSessions.Contains(session))
             return false;
+
+        //todo: we need some way to check that we're not getting the same role twice. (double picking thieves of zombies through midrounds)
 
         switch (def.MultiAntagSetting)
         {

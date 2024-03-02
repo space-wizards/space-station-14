@@ -34,6 +34,21 @@
   id: Thief
   components:
   - type: ThiefRule
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Thief ]
+      max: 3 #todo random range 1-3
+      playerRatio: 1
+      allowNonHumans: true
+      multiAntagSetting: All
+      equipment:
+      - ToolboxThief
+      - ClothingHandsChameleonThief
+      components:
+      - type: Pacified
+      mindComponents:
+      - type: ThiefRole
+        prototype: Thief
 
 - type: entity
   noSpawn: true
