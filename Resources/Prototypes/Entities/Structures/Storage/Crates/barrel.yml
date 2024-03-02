@@ -113,7 +113,6 @@
   id: MetalBarrelGrey
   name: metal barrel
   parent: WoodenKeg
-  suffix: grey
   description: A metal keg. It can be filled with liquid.
   components:
   - type: Sprite
@@ -129,7 +128,6 @@
 - type: entity
   id: MetalBarrelBlue
   parent: MetalBarrelGrey
-  suffix: blue
   components:
   - type: Sprite
     sprite: Objects/Storage/barrel.rsi
@@ -139,7 +137,6 @@
 - type: entity
   id: MetalBarrelRed
   parent: MetalBarrelGrey
-  suffix: red
   components:
   - type: Sprite
     sprite: Objects/Storage/barrel.rsi
@@ -149,7 +146,6 @@
 - type: entity
   id: MetalBarrelYellow
   parent: MetalBarrelGrey
-  suffix: yellow
   components:
   - type: Sprite
     sprite: Objects/Storage/barrel.rsi
@@ -159,7 +155,6 @@
 - type: entity
   id: MetalBarrelGreen
   parent: MetalBarrelGrey
-  suffix: green
   components:
   - type: Sprite
     sprite: Objects/Storage/barrel.rsi
