@@ -160,6 +160,7 @@
       - CellRechargerCircuitboard
       - BorgChargerCircuitboard
       - WeaponCapacitorRechargerCircuitboard
+      - HandheldStationMap
   - type: EmagLatheRecipes
     emagStaticRecipes:
        - CartridgePistol
@@ -386,6 +387,7 @@
     - ElectricGrillMachineCircuitboard
     - BoozeDispenserMachineCircuitboard
     - SodaDispenserMachineCircuitboard
+    - SpaceHeaterMachineCircuitBoard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - HellfireFreezerMachineCircuitBoard

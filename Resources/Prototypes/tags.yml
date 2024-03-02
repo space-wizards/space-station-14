@@ -999,6 +999,9 @@
   id: ReinforcedGlassShard
 
 - type: Tag
+  id: ReptilianFood
+
+- type: Tag
   id: RifleStock
 
 - type: Tag
@@ -1072,6 +1075,9 @@
 
 - type: Tag
   id: SmallMech
+
+- type: Tag
+  id: SnapPop
 
 - type: Tag
   id: Smokable
