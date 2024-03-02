@@ -168,7 +168,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         // TODO: Re-use existing xform query for these calculations.
         if (args.BreakOnMove && !(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User, xform: userXform)))
         {
-            // Whether the target has moved too much from their original position.
+            // Whether the user has moved too much from their original position.
             if (!userXform.Coordinates.InRange(EntityManager, _transform, doAfter.UserPosition, args.MovementThreshold))
                 return true;
 
@@ -197,7 +197,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         // Whether the distance between the tool and the user has grown too much.
-        // No I am not sure why this is here, I am keeping it because it was here before.
         if (args.Used != null)
         {
             if (args.DistanceThreshold != null)
