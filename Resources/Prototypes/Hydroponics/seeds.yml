@@ -17,10 +17,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 4
+      PotencyAddend: 3
     Flour:
       Min: 5
-      Max: 8
+      PotencyAddend: 3
 
 - type: seed
   id: oat
@@ -41,10 +41,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 4
+      PotencyAddend: 3
     Oats:
       Min: 5
-      Max: 8
+      PotencyAddend: 3
 
 - type: seed
   id: banana
@@ -68,10 +68,10 @@
   chemicals:
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Nutriment:
       Min: 1
-      Max: 2
+      PotencyAddend: 1
 
 - type: seed
   id: mimana
@@ -93,10 +93,10 @@
   chemicals:
     MuteToxin:
       Min: 1
-      Max: 5
+      PotencyAddend: 4
     Nutriment:
       Min: 1
-      Max: 2
+      PotencyAddend: 1
 
 - type: seed
   id: carrots
@@ -117,13 +117,13 @@
   chemicals:
     JuiceCarrot:
       Min: 1
-      Max: 5
+      PotencyAddend: 4
     Oculine:
       Min: 2
-      Max: 6
+      PotencyAddend: 4
     Vitamin:
       Min: 1
-      Max: 4
+      PotencyAddend: 3
 
 - type: seed
   id: laughinPea
@@ -147,13 +147,13 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Sugar:
       Min: 1
-      Max: 10
+      PotencyAddend: 9
     Laughter:
       Min: 1
-      Max: 10
+      PotencyAddend: 9
 
 - type: seed
   id: lemon
@@ -176,10 +176,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 4
+      PotencyAddend: 3
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: lemoon
@@ -200,10 +200,10 @@
   chemicals:
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Milk:
       Min: 8
-      Max: 18
+      PotencyAddend: 10
 
 - type: seed
   id: lime
@@ -224,10 +224,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 4
+      PotencyAddend: 3
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: orange
@@ -248,10 +248,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 4
+      PotencyAddend: 3
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: pineapple
@@ -273,13 +273,13 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
     Water:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Vitamin:
       Min: 1
-      Max: 2
+      PotencyAddend: 1
 
 - type: seed
   id: potato
@@ -300,10 +300,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: sugarcane
@@ -325,7 +325,7 @@
   chemicals:
     Sugar:
       Min: 5
-      Max: 5
+      PotencyAddend: 0
 
 - type: seed
   id: towercap
@@ -398,13 +398,13 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 7
+      PotencyAddend: 6
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Water:
       Min: 1
-      Max: 4
+      PotencyAddend: 3
 
 - type: seed
   id: blueTomato
@@ -430,13 +430,13 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 4
+      PotencyAddend: 3
     SpaceLube:
       Min: 5
-      Max: 10
+      PotencyAddend: 5
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: bloodTomato
@@ -462,10 +462,10 @@
   chemicals:
     Blood:
       Min: 1
-      Max: 10
+      PotencyAddend: 9
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: eggplant
@@ -489,10 +489,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: cabbage
@@ -512,10 +512,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: garlic
@@ -535,13 +535,13 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Allicin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: apple
@@ -562,10 +562,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: corn
@@ -588,10 +588,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 4
+      PotencyAddend: 3
     Cornmeal:
       Min: 5
-      Max: 10
+      PotencyAddend: 5
 
 - type: seed
   id: onion
@@ -616,13 +616,13 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Allicin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: onionred
@@ -645,13 +645,13 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Allicin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: chanterelle
@@ -675,7 +675,7 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: eggy
@@ -698,7 +698,7 @@
   chemicals:
     Egg:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
 
 - type: seed
   id: cannabis
@@ -722,7 +722,7 @@
   chemicals:
     THC:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
 
 - type: seed
   id: tobacco
@@ -746,7 +746,7 @@
   chemicals:
     Nicotine:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
 
 - type: seed
   id: nettle
@@ -771,7 +771,7 @@
   chemicals:
     Histamine:
       Min: 1
-      Max: 14
+      PotencyAddend: 13
 
 - type: seed
   id: deathNettle
@@ -795,10 +795,10 @@
   chemicals:
     SulfuricAcid:
       Min: 1
-      Max: 9
+      PotencyAddend: 8
     FluorosulfuricAcid:
       Min: 1
-      Max: 9
+      PotencyAddend: 8
 
 - type: seed
   id: chili
@@ -822,13 +822,13 @@
   chemicals:
     CapsaicinOil:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
     Nutriment:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: chilly
@@ -850,13 +850,13 @@
   chemicals:
     Frostoil:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
     Nutriment:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: poppy
@@ -879,10 +879,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 2
+      PotencyAddend: 1
     Bicaridine:
       Min: 1
-      Max: 11
+      PotencyAddend: 10
 
 - type: seed
   id: aloe
@@ -903,10 +903,10 @@
   chemicals:
     Aloe:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
     Dermaline:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
 
 - type: seed
   id: lily
@@ -929,10 +929,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 2
+      PotencyAddend: 1
     Bicaridine:
       Min: 1
-      Max: 11
+      PotencyAddend: 10
 
 - type: seed
   id: lingzhi
@@ -953,10 +953,10 @@
   chemicals:
     Ultravasculine:
       Min: 1
-      Max: 11
+      PotencyAddend: 10
     Epinephrine:
       Min: 1
-      Max: 11
+      PotencyAddend: 10
 
 - type: seed
   id: ambrosiaVulgaris
@@ -979,19 +979,19 @@
   chemicals:
     Nutriment:
       Min: 2
-      Max: 2
+      PotencyAddend: 0
     Bicaridine:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Kelotane:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Desoxyephedrine:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
     Vitamin:
       Min: 1
-      Max: 2
+      PotencyAddend: 1
 
 - type: seed
   id: ambrosiaDeus
@@ -1012,16 +1012,16 @@
   chemicals:
     Nutriment:
       Min: 2
-      Max: 2
+      PotencyAddend: 0
     Omnizine: # Don't kill me
       Min: 1
-      Max: 2
+      PotencyAddend: 1
     SpaceDrugs:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Desoxyephedrine:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
 
 - type: seed
   id: galaxythistle
@@ -1042,7 +1042,7 @@
   chemicals:
     Stellibinin:
       Min: 1
-      Max: 13
+      PotencyAddend: 12
 
 - type: seed
   id: flyAmanita
@@ -1064,10 +1064,10 @@
   chemicals:
     Amatoxin:
       Min: 1
-      Max: 13
+      PotencyAddend: 12
     Nutriment: ## yumby :)
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: gatfruit
@@ -1088,10 +1088,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Sulfur:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: rice
@@ -1114,10 +1114,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 4
+      PotencyAddend: 3
     Rice:
       Min: 5
-      Max: 8
+      PotencyAddend: 3
 
 - type: seed
   id: soybeans
@@ -1141,7 +1141,7 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 2
+      PotencyAddend: 1
 
 - type: seed
   id: spacemansTrumpet
@@ -1162,10 +1162,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 2
+      PotencyAddend: 1
     PolypyryliumOligomers:
       Min: 1
-      Max: 11
+      PotencyAddend: 10
 
 - type: seed
   id: koibean
@@ -1187,10 +1187,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 4
+      PotencyAddend: 3
     CarpoToxin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: grape
@@ -1210,10 +1210,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 4
+      PotencyAddend: 3
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: watermelon
@@ -1233,13 +1233,13 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
     Water:
       Min: 1
-      Max: 6
+      PotencyAddend: 5
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
 
 - type: seed
   id: cocoa
@@ -1262,10 +1262,10 @@
   chemicals:
     Vitamin:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Nutriment:
       Min: 1
-      Max: 2
+      PotencyAddend: 1
 
 - type: seed
   id: berries
@@ -1286,10 +1286,10 @@
   chemicals:
     Nutriment:
       Min: 2
-      Max: 4
+      PotencyAddend: 2
     Vitamin:
       Min: 1
-      Max: 2
+      PotencyAddend: 1
 
 - type: seed
   id: bungo
@@ -1313,10 +1313,10 @@
   chemicals:
     Nutriment:
       Min: 5
-      Max: 10
+      PotencyAddend: 5
     Enzyme:
       Min: 5
-      Max: 10
+      PotencyAddend: 5
 
 - type: seed
   id: pea
@@ -1342,10 +1342,10 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 3
+      PotencyAddend: 2
     Vitamin:
       Min: 1
-      Max: 2
+      PotencyAddend: 1
 
 - type: seed
   id: pumpkin
@@ -1366,10 +1366,10 @@
   chemicals:
     PumpkinFlesh:
       Min: 1
-      Max: 11
+      PotencyAddend: 10
     Vitamin:
       Min: 1
-      Max: 4
+      PotencyAddend: 3
 
 - type: seed
   id: cotton
@@ -1391,5 +1391,5 @@
   chemicals:
     Fiber:
       Min: 5
-      Max: 8
+      PotencyAddend: 3
 
