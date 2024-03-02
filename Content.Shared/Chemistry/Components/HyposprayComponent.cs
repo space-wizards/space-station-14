@@ -28,5 +28,6 @@ public sealed partial class HyposprayComponent : Component
     /// When you can only affect mobs, you're capable of drawing from beakers.
     /// </summary>
     [AutoNetworkedField]
+    [DataField(required: true)]
     public bool OnlyAffectsMobs = false;
 }
