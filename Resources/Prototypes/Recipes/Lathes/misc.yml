@@ -170,3 +170,11 @@
   completetime: 2
   materials:
     Steel: 100
+
+- type: latheRecipe
+  id: HandheldStationMap
+  result: HandheldStationMapEmpty
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 100
