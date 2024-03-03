@@ -14,7 +14,19 @@
       "name": "cover_base"
     },
     {
-      "name": "wingette"
+      "name": "cover_old"
+    },
+    {
+      "name": "decor_wingette"
+    },
+    {
+      "name": "decor_bottom"
+    },
+    {
+      "name": "decor_middle"
+    },
+    {
+      "name": "decor_vertical_middle"
     },
     {
       "name": "icon_apple"
@@ -27,6 +39,9 @@
     },
     {
       "name": "icon_cabbage"
+    },
+    {
+      "name": "icon_chemical"
     },
     {
       "name": "icon_corner"
@@ -45,6 +60,12 @@
     },
     {
       "name": "icon_text"
+    },
+    {
+      "name": "icon_text2"
+    },
+    {
+      "name": "icon_text3"
     },
     {
       "name": "icon_stunbaton"

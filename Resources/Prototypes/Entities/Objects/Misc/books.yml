@@ -10,10 +10,12 @@
     - state: paper
     - state: cover_base
       color: "#332d27"
-      map: [ "enum.DamageStateVisualLayers.Base" ]
-    - state: wingette
+      map: [ "cover" ]
+    - state: decor_wingette
       color: "#453f3a"
+      map: [ "decor" ]
     - state: icon_text
+      map: [ "icon" ]
   - type: Paper
     contentSize: 12000
   - type: ActivatableUI
@@ -43,7 +45,7 @@
     - state: paper
     - state: cover_base
       color: "#0a2a6b"
-    - state: wingette
+    - state: decor_wingette
       color: "#082561"
     - state: icon_text 
       color: gold
@@ -69,7 +71,7 @@
     - state: paper
     - state: cover_base
       color: black
-    - state: wingette
+    - state: decor_wingette
       color: "#bbbbbb"
     - state: icon_glow
       color: red
@@ -95,7 +97,7 @@
     - state: paper
     - state: cover_base
       color: "#004848"
-    - state: wingette
+    - state: decor_wingette
       color: "#006666"
     - state: icon_bar
   - type: Tag
@@ -118,7 +120,7 @@
     - state: paper
     - state: cover_base
       color: "#e22541"
-    - state: wingette
+    - state: decor_wingette
     - state: icon_apple
   - type: Tag
     tags:
@@ -140,7 +142,7 @@
     - state: paper
     - state: cover_base
       color: "#0e5a24"
-    - state: wingette
+    - state: decor_wingette
       color: "#2fa151"
     - state: icon_cabbage
     - state: icon_corner
@@ -165,7 +167,7 @@
     - state: paper
     - state: cover_base
       color: "#6c4718"
-    - state: wingette
+    - state: decor_wingette
       color: "#b5913c"
     - state: icon_wrench
     - state: icon_corner
@@ -190,7 +192,7 @@
     - state: paper
     - state: cover_base
       color: "#6c4718"
-    - state: wingette
+    - state: decor_wingette
       color: "#b5913c"
     - state: icon_dna
   - type: Tag
@@ -213,7 +215,7 @@
     - state: paper
     - state: cover_base
       color: "#ab1515"
-    - state: wingette
+    - state: decor_wingette
       color: "#e05334"
     - state: icon_stunbaton
   - type: Tag
@@ -241,7 +243,7 @@
     - state: paper
     - state: cover_base
       color: "#550c82"
-    - state: wingette
+    - state: decor_wingette
     - state: icon_bucket
   - type: Tag
     tags:
@@ -263,7 +265,7 @@
     - state: paper
     - state: cover_base
       color: "#52320b"
-    - state: wingette
+    - state: decor_wingette
       color: "#e69a3e"
     - state: icon_glow
     - state: icon_diamond
@@ -286,7 +288,12 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_medical
+    - state: paper
+    - state: cover_base
+      color: "#cccccc"
+    - state: decor_wingette
+      color: "#f7f7f7"
+    - state: icon_medical
   - type: Tag
     tags:
     - Book
@@ -304,7 +311,15 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_engineering
+    - state: paper
+    - state: cover_old
+      color: "#6c4718"
+    - state: decor_wingette
+      color: "#b5913c"
+    - state: icon_glow
+      color: red
+    - state: icon_wrench
+    - state: blood
   - type: Tag
     tags:
     - Book
@@ -322,7 +337,12 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_chemistry
+    - state: paper
+    - state: cover_base
+      color: "#2a7b74"
+    - state: decor_wingette
+      color: "#2a7b74"
+    - state: icon_chemical
   - type: Tag
     tags:
     - Book
@@ -334,20 +354,33 @@
 - type: entity
   parent: BookBase
   id: BookRandom
-  suffix: random
+  suffix: random visual
   components:
   - type: RandomSprite
     available:
-      - enum.DamageStateVisualLayers.Base:
-          book0: ""
-          book1: ""
-          book2: ""
-          book3: ""
-          book4: ""
-          book5: ""
-          book6: ""
-          book7: ""
-          book8: ""
+      - cover:
+          cover_base: Sixteen
+          cover_old: Sixteen
+        decor:
+          decor_wingette: Sixteen
+          decor_bottom: Sixteen
+          decor_middle: Sixteen
+          icon_corner: Sixteen
+          decor_vertical_middle: Sixteen
+          blood: ""
+        icon:
+          icon_apple: ""
+          icon_cabbage: ""
+          icon_bar: ""
+          icon_bucket: ""
+          icon_chemical: ""
+          icon_diamond: ""
+          icon_dna: Sixteen
+          icon_glow: Sixteen
+          icon_skull: ""
+          icon_text: ""
+          icon_text2: ""
+          icon_text3: "" 
 
 - type: entity
   parent: BookBase
