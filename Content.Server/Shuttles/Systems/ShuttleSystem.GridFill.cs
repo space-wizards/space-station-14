@@ -216,6 +216,17 @@ public sealed partial class ShuttleSystem
                     valid = true;
                 }
             }
+
+            foreach (var compReg in component.AddComponents.Values)
+            {
+                var compType = compReg.Component.GetType();
+
+                if (HasComp(ent[0], compType))
+                    continue;
+
+                var comp = _factory.GetComponent(compType);
+                AddComp(ent[0], comp, true);
+            }
         }
 
         if (!valid)

@@ -23,7 +23,6 @@ namespace Content.Server.Shuttles.Systems
     public sealed partial class DockingSystem : SharedDockingSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly DoorBoltSystem _bolts = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
@@ -312,7 +311,7 @@ namespace Content.Server.Shuttles.Systems
                     doorA.ChangeAirtight = false;
                     if (TryComp<DoorBoltComponent>(dockAUid, out var airlockA))
                     {
-                        _bolts.SetBoltsWithAudio(dockAUid, airlockA, true);
+                        _doorSystem.SetBoltsDown((dockAUid, airlockA), true);
                     }
                 }
             }
@@ -324,7 +323,7 @@ namespace Content.Server.Shuttles.Systems
                     doorB.ChangeAirtight = false;
                     if (TryComp<DoorBoltComponent>(dockBUid, out var airlockB))
                     {
-                        _bolts.SetBoltsWithAudio(dockBUid, airlockB, true);
+                        _doorSystem.SetBoltsDown((dockBUid, airlockB), true);
                     }
                 }
             }
@@ -377,7 +376,7 @@ namespace Content.Server.Shuttles.Systems
                 return;
 
             if (TryComp<DoorBoltComponent>(dockUid, out var airlock))
-                _bolts.SetBoltsWithAudio(dockUid, airlock, false);
+                _doorSystem.SetBoltsDown((dockUid, airlock), false);
 
             if (TryComp(dockUid, out DoorComponent? door) && _doorSystem.TryClose(dockUid, door))
                 door.ChangeAirtight = true;

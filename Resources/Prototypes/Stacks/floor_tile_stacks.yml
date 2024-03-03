@@ -244,6 +244,20 @@
   itemSize: 5
 
 - type: stack
+  id: FloorCarpetCyan
+  name: cyan carpet tile
+  spawn: FloorCarpetItemCyan
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorCarpetWhite
+  name: white carpet tile
+  spawn: FloorCarpetItemWhite
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
   id: FloorTileStackCarpetClown
   name: clown carpet tile
   spawn: FloorTileItemCarpetClown
@@ -453,3 +467,9 @@
   spawn: FloorTileItemAstroIce
   maxCount: 30
   itemSize: 5
+
+- type: stack
+  id: FloorTileWoodLarge
+  name: large wood floor
+  spawn: FloorTileItemWoodLarge
+  maxCount: 30

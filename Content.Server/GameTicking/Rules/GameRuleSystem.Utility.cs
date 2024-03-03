@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Components;
 using Robust.Shared.Collections;
