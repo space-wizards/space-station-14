@@ -1,4 +1,4 @@
-- type: librarianBookDiscipline
+- type: encryptedBookDiscipline
   id: Mysticism
   name: lib-book-discipline-mysticism
   color: "#802f6a"
@@ -105,7 +105,7 @@
   - lib-book-discipline-mysticism-gibberish-49
   - lib-book-discipline-mysticism-gibberish-50
 
-- type: librarianBookDiscipline
+- type: encryptedBookDiscipline
   id: Technology
   name: lib-book-discipline-technology
   color: "#a88940"
@@ -212,7 +212,7 @@
   - lib-book-discipline-technology-gibberish-49
   - lib-book-discipline-technology-gibberish-50
 
-- type: librarianBookDiscipline
+- type: encryptedBookDiscipline
   id: Biology
   name: lib-book-discipline-biology
   color: "#4ede9f"
@@ -319,7 +319,7 @@
   - lib-book-discipline-biology-gibberish-49
   - lib-book-discipline-biology-gibberish-50
 
-- type: librarianBookDiscipline
+- type: encryptedBookDiscipline
   id: Military
   name: lib-book-discipline-military
   color: "#a32121"
@@ -426,7 +426,7 @@
   - lib-book-discipline-military-gibberish-49
   - lib-book-discipline-military-gibberish-50
 
-- type: librarianBookDiscipline
+- type: encryptedBookDiscipline
   id: Social
   name: lib-book-discipline-social
   color: "#e3ace2"

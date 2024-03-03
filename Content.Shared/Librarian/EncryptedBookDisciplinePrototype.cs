@@ -2,8 +2,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Librarian;
 
-[Prototype("librarianBookDiscipline")]
-public sealed partial class LibrarianBookDisciplinePrototype : IPrototype
+[Prototype("encryptedBookDiscipline")]
+public sealed partial class EncryptedBookDisciplinePrototype : IPrototype
 {
     [IdDataField] public string ID { get; private set; } = default!;
     [DataField] public string Name = string.Empty;
