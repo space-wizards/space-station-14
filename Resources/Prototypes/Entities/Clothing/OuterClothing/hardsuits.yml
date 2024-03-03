@@ -503,7 +503,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
   - type: Tag
     tags:
-    - SuitEVA
+    - MonkeyWearable
 
 # Syndicate Medic Hardsuit
 - type: entity
@@ -520,7 +520,8 @@
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieMedic
   - type: Tag
     tags:
-    - NotMonkeyWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Syndicate Elite Hardsuit
 - type: entity
@@ -807,7 +808,8 @@
     clothingPrototype: ClothingHeadHelmetHardsuitERTSecurity
   - type: Tag
     tags:
-    - NotMonkeyWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #ERT Janitor Hardsuit
 - type: entity

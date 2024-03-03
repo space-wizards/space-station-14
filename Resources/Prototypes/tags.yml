@@ -899,9 +899,6 @@
   id: MonkeyWearable
 
 - type: Tag
-  id: NotMonkeyWearable
-
-- type: Tag
   id: Pickaxe
 
 - type: Tag

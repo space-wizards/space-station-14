@@ -60,7 +60,4 @@
     displayName: Suit
     whitelist:
       tags:
-        - SuitEVA
-    blacklist:
-      tags:
-        - NotMonkeyWearable
+        - MonkeyWearable
