@@ -7,8 +7,13 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book0
+    - state: paper
+    - state: cover_base
+      color: "#332d27"
       map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: wingette
+      color: "#453f3a"
+    - state: icon_text
   - type: Paper
     contentSize: 12000
   - type: ActivatableUI
@@ -35,7 +40,15 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book0 # placeholder(?). if only we have a better sprite that fits this.
+    - state: paper
+    - state: cover_base
+      color: "#0a2a6b"
+    - state: wingette
+      color: "#082561"
+    - state: icon_text 
+      color: gold
+    - state: icon_glow
+      color: "#42b6f5"
   - type: Tag
     tags:
     - Book
@@ -53,7 +66,15 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book7
+    - state: paper
+    - state: cover_base
+      color: black
+    - state: wingette
+      color: "#bbbbbb"
+    - state: icon_glow
+      color: red
+    - state: icon_corner
+      color: red
   - type: Tag
     tags:
     - Book
@@ -71,7 +92,12 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_bar
+    - state: paper
+    - state: cover_base
+      color: "#004848"
+    - state: wingette
+      color: "#006666"
+    - state: icon_bar
   - type: Tag
     tags:
     - Book
@@ -89,7 +115,11 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_cooking
+    - state: paper
+    - state: cover_base
+      color: "#e22541"
+    - state: wingette
+    - state: icon_apple
   - type: Tag
     tags:
     - Book
@@ -107,7 +137,14 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_hydroponics_pod_people
+    - state: paper
+    - state: cover_base
+      color: "#0e5a24"
+    - state: wingette
+      color: "#2fa151"
+    - state: icon_cabbage
+    - state: icon_corner
+      color: gold
   - type: Tag
     tags:
     - Book
@@ -125,7 +162,14 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_engineering
+    - state: paper
+    - state: cover_base
+      color: "#6c4718"
+    - state: wingette
+      color: "#b5913c"
+    - state: icon_wrench
+    - state: icon_corner
+      color: gold
   - type: Tag
     tags:
     - Book
