@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: VigersRay
-  changes:
-  - message: Added loggin tips.
-    type: Add
-  id: 5580
-  time: '2024-01-06T06:06:49.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22234
 - author: MrFippik
   changes:
   - message: Input port of the network system in timer
@@ -3825,3 +3818,11 @@
   id: 6079
   time: '2024-03-03T06:45:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25700
+- author: deltanedas
+  changes:
+  - message: No more raiding the jani vend for galoshes, which are back to normal
+      speed.
+    type: Remove
+  id: 6080
+  time: '2024-03-03T07:07:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25795
