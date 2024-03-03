@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Reptilians now have a new large tail marking to choose from!
-    type: Add
-  id: 5583
-  time: '2024-01-06T07:07:09.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23551
 - author: DrMelon
   changes:
   - message: Climbing onto tables is once again a dangerous prospect for a Clown.
@@ -3824,3 +3817,10 @@
   id: 6082
   time: '2024-03-03T08:31:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25781
+- author: SlamBamActionman
+  changes:
+  - message: Arachnids are no longer perma-pied and can clean it off.
+    type: Fix
+  id: 6083
+  time: '2024-03-03T08:54:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25713
