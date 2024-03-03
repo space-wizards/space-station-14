@@ -83,6 +83,10 @@
               amount: 1
 
         - to: SheetRUGlass0
+          completed:
+            - !type:SetStackCount
+              amount: 1
+          steps:
             - material: UraniumGlass
               amount: 1
             - material: MetalRod
