@@ -447,21 +447,20 @@ public sealed partial class ShuttleSystem
             var config = _dockSystem.GetDockingConfigAt(uid, target.EntityId, target, entity.Comp1.TargetAngle);
             MapCoordinates mapCoordinates;
             Angle targetAngle;
+            mapCoordinates = _transform.ToMapCoordinates(target);
 
             // Couldn't dock somehow so just fallback to regular position FTL.
             if (config == null)
             {
-                mapCoordinates = _transform.ToMapCoordinates(target);
                 targetAngle = entity.Comp1.TargetAngle;
+                target = new EntityCoordinates(_mapManager.GetMapEntityId(mapCoordinates.MapId), mapCoordinates.Position);
+                _transform.SetCoordinates(uid, xform, target, rotation: targetAngle);
             }
             else
             {
-                mapCoordinates = _transform.ToMapCoordinates(config.Coordinates);
-                targetAngle = config.Angle;
+                FTLDock((uid, xform), config);
             }
 
-            target = new EntityCoordinates(_mapManager.GetMapEntityId(mapCoordinates.MapId), mapCoordinates.Position);
-            _transform.SetCoordinates(uid, xform, target, rotation: targetAngle);
             mapId = mapCoordinates.MapId;
         }
         // Position ftl
