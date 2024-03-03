@@ -28,7 +28,7 @@ namespace Content.Client.GameTicking.Managers
         /// <summary>
         /// The current round-end window. Could be used to support re-opening the window after closing it.
         /// </summary>
-        private RoundEndSummaryWindow? _window;
+        public RoundEndSummaryWindow? _window;
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
