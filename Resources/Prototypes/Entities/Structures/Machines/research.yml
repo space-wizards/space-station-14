@@ -15,7 +15,6 @@
   - type: TechnologyDatabase
     supportedDisciplines:
     - Industrial
-    - Biochemical
     - Arsenal
     - Experimental
     - CivilianServices
@@ -45,7 +44,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -112,7 +111,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:

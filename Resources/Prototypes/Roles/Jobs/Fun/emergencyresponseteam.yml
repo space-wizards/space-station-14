@@ -27,7 +27,7 @@
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityFilled
-    pocket1: WeaponPistolMk58Nonlethal
+    pocket1: WeaponPistolN1984Nonlethal
     pocket2: FlashlightSeclite
 
 - type: startingGear
@@ -44,7 +44,7 @@
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityFilled
-    pocket1: WeaponPistolMk58Nonlethal
+    pocket1: WeaponPistolN1984Nonlethal
     pocket2: FlashlightSeclite
 
 - type: startingGear
@@ -212,8 +212,7 @@
     id: ERTMedicPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltMedicalFilled
-    pocket1: HandheldHealthAnalyzer
-    pocket2: Flare
+    pocket1: Flare
 
 - type: startingGear
   id: ERTMedicalGearEVA
@@ -229,8 +228,7 @@
     id: ERTMedicPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltMedicalFilled
-    pocket1: HandheldHealthAnalyzer
-    pocket2: Flare
+    pocket1: Flare
 
 # Janitor
 - type: job

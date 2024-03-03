@@ -4,6 +4,8 @@
   name: holographic sign projector
   description: A handy-dandy holographic projector that displays a janitorial sign.
   components:
+  - type: Item
+    storedRotation: -90
   - type: HolosignProjector
   - type: UseDelay
   - type: ContainerContainer
@@ -72,7 +74,7 @@
       tags:
         - HolofanProjector
     - type: StaticPrice
-      price: 250
+      price: 130
 
 - type: entity
   parent: Holoprojector
@@ -90,7 +92,7 @@
       tags:
         - HolofanProjector
     - type: StaticPrice
-      price: 80
+      price: 50
 
 - type: entity
   parent: HoloprojectorSecurity

@@ -268,7 +268,7 @@
   id: BorgChassisSyndicateAssault
   parent: BaseBorgChassisSyndicate
   name: syndicate assault cyborg
-  description: A lean, mean killing machine with access to a varity of deadly modules.
+  description: A lean, mean killing machine with access to a variety of deadly modules.
   components:
     - type: Sprite
       layers:
@@ -281,6 +281,8 @@
           shader: unshaded
           map: ["light"]
           visible: false
+    - type: PointLight
+      color: "#dd200b"
     - type: BorgChassis
       maxModules: 3
       moduleWhitelist:

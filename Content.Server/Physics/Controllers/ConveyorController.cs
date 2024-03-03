@@ -125,7 +125,7 @@ public sealed class ConveyorController : SharedConveyorController
 
         if (beltTileRef != null)
         {
-            var intersecting = Lookup.GetEntitiesIntersecting(beltTileRef.Value, 0f);
+            var intersecting = Lookup.GetLocalEntitiesIntersecting(beltTileRef.Value, 0f);
 
             foreach (var entity in intersecting)
             {

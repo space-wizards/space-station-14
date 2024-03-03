@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from TG at commit https://github.com/tgstation/tgstation/commit/45b5bc20fbc0bdeb04e169f7aaa7ea8e14b4990b#diff-5d71c782b900bc77b4d1c5798be8d3e3c67dbc5ef5b3203c4995f01df471a633",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full",
+      "directions": 4
+    },
+    {
+      "name": "bench_solo_base",
+      "directions": 4
+    },
+    {
+      "name": "bench_solo_cover",
+      "directions": 4
+    }
+  ]
+}

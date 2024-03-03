@@ -17,8 +17,7 @@
     quickEquip: false
     slots:
       - Belt
-  - type: TilePrying
-  - type: LatticeCutting
+  - type: ToolTileCompatible
   - type: Tool
     qualities:
       - Prying
@@ -58,6 +57,11 @@
     sprite: Objects/Tools/jaws_of_life.rsi
     state: syn_jaws_pry
   - type: Item
+    inhandVisuals:
+      left:
+      - state: syn_inhand-left
+      right:
+      - state: syn_inhand-right
     size: Normal
   - type: Tool
     qualities:

@@ -55,6 +55,7 @@
   - type: SolutionInjectOnCollide
     transferAmount: 2
     blockSlots: OUTERCLOTHING
+    fixtureId: "throw-fixture"
   - type: SolutionTransfer
     maxTransferAmount: 2
   - type: Damageable
@@ -125,6 +126,7 @@
   - type: SolutionInjectOnCollide
     transferAmount: 7
     blockSlots: NONE
+    fixtureId: "throw-fixture"
   - type: SolutionTransfer
     maxTransferAmount: 7
 

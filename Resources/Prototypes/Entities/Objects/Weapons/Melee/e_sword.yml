@@ -78,6 +78,8 @@
     malus: 0
   - type: Reflect
     enabled: false
+  - type: IgnitionSource
+    temperature: 700
 
 - type: entity
   name: pen
@@ -213,7 +215,7 @@
         shader: unshaded
 
 - type: entity
-  name: Double Bladed Energy Sword
+  name: double-bladed energy sword
   parent: EnergySword
   id: EnergySwordDouble
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
