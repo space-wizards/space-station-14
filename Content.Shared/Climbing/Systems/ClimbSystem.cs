@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
@@ -13,7 +12,6 @@ using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Events;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
@@ -64,22 +62,12 @@ public sealed partial class ClimbSystem : VirtualController
         SubscribeLocalEvent<ClimbingComponent, ClimbDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
         SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
-        SubscribeLocalEvent<ClimbingComponent, EntityUnpausedEvent>(OnClimbableUnpaused);
 
         SubscribeLocalEvent<ClimbableComponent, CanDropTargetEvent>(OnCanDragDropOn);
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
         SubscribeLocalEvent<ClimbableComponent, DragDropTargetEvent>(OnClimbableDragDrop);
 
         SubscribeLocalEvent<GlassTableComponent, ClimbedOnEvent>(OnGlassClimbed);
-    }
-
-    private void OnClimbableUnpaused(EntityUid uid, ClimbingComponent component, ref EntityUnpausedEvent args)
-    {
-        if (component.NextTransition == null)
-            return;
-
-        component.NextTransition = component.NextTransition.Value + args.PausedTime;
-        Dirty(uid, component);
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -353,7 +341,8 @@ public sealed partial class ClimbSystem : VirtualController
     {
         if (args.OurFixtureId != ClimbingFixtureName
             || !component.IsClimbing
-            || component.NextTransition != null)
+            || component.NextTransition != null
+            || args.OurFixture.Contacts.Count > 1)
         {
             return;
         }

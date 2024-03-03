@@ -170,33 +170,7 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
-            // No slots at the trade station
-            _listEnts.Clear();
-            GetTradeStations(stationData, ref _listEnts);
-            EntityUid? tradeDestination = null;
-
-            // Try to fulfill from any station where possible, if the pad is not occupied.
-            foreach (var trade in _listEnts)
-            {
-                var tradePads = GetCargoPallets(trade);
-                _random.Shuffle(tradePads);
-
-                var freePads = GetFreeCargoPallets(trade, tradePads);
-
-                foreach (var pad in freePads)
-                {
-                    var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
-
-                    if (FulfillOrder(order, coordinates, orderDatabase.PrinterOutput))
-                    {
-                        tradeDestination = trade;
-                        break;
-                    }
-                }
-
-                if (tradeDestination != null)
-                    break;
-            }
+            var tradeDestination = TryFulfillOrder(stationData, order, orderDatabase);
 
             if (tradeDestination == null)
             {
@@ -219,6 +193,43 @@ namespace Content.Server.Cargo.Systems
             orderDatabase.Orders.Remove(order);
             DeductFunds(bank, cost);
             UpdateOrders(station.Value, orderDatabase);
+        }
+
+        private EntityUid? TryFulfillOrder(StationDataComponent stationData, CargoOrderData order, StationCargoOrderDatabaseComponent orderDatabase)
+        {
+            // No slots at the trade station
+            _listEnts.Clear();
+            GetTradeStations(stationData, ref _listEnts);
+            EntityUid? tradeDestination = null;
+
+            // Try to fulfill from any station where possible, if the pad is not occupied.
+            foreach (var trade in _listEnts)
+            {
+                var tradePads = GetCargoPallets(trade);
+                _random.Shuffle(tradePads);
+
+                var freePads = GetFreeCargoPallets(trade, tradePads);
+                if (freePads.Count >= order.OrderQuantity) //check if the station has enough free pallets
+                {
+                    foreach (var pad in freePads)
+                    {
+                        var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
+
+                        if (FulfillOrder(order, coordinates, orderDatabase.PrinterOutput))
+                        {
+                            tradeDestination = trade;
+                            order.NumDispatched++;
+                            if (order.OrderQuantity <= order.NumDispatched) //Spawn a crate on free pellets until the order is fulfilled.
+                                break;
+                        }
+                    }
+                }
+
+                if (tradeDestination != null)
+                    break;
+            }
+
+            return tradeDestination;
         }
 
         private void GetTradeStations(StationDataComponent data, ref List<EntityUid> ents)
@@ -370,7 +381,8 @@ namespace Content.Server.Cargo.Systems
             string sender,
             string description,
             string dest,
-            StationCargoOrderDatabaseComponent component
+            StationCargoOrderDatabaseComponent component,
+            StationDataComponent stationData
         )
         {
             DebugTools.Assert(_protoMan.HasIndex<EntityPrototype>(spawnId));
@@ -386,7 +398,7 @@ namespace Content.Server.Cargo.Systems
                 $"AddAndApproveOrder {description} added order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}]");
 
             // Add it to the list
-            return TryAddOrder(dbUid, order, component);
+            return TryAddOrder(dbUid, order, component) && TryFulfillOrder(stationData, order, component).HasValue;
         }
 
         private bool TryAddOrder(EntityUid dbUid, CargoOrderData data, StationCargoOrderDatabaseComponent component)

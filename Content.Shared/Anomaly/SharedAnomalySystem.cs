@@ -27,7 +27,7 @@ public abstract class SharedAnomalySystem : EntitySystem
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
-    [Dependency] protected readonly ISharedAdminLogManager Log = default!;
+    [Dependency] protected readonly ISharedAdminLogManager AdminLog = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
@@ -45,10 +45,6 @@ public abstract class SharedAnomalySystem : EntitySystem
         SubscribeLocalEvent<AnomalyComponent, AttackedEvent>(OnAttacked);
         SubscribeLocalEvent<AnomalyComponent, MeleeThrowOnHitStartEvent>(OnAnomalyThrowStart);
         SubscribeLocalEvent<AnomalyComponent, MeleeThrowOnHitEndEvent>(OnAnomalyThrowEnd);
-
-        SubscribeLocalEvent<AnomalyComponent, EntityUnpausedEvent>(OnAnomalyUnpause);
-        SubscribeLocalEvent<AnomalyPulsingComponent, EntityUnpausedEvent>(OnPulsingUnpause);
-        SubscribeLocalEvent<AnomalySupercriticalComponent, EntityUnpausedEvent>(OnSupercriticalUnpause);
 
         _sawmill = Logger.GetSawmill("anomaly");
     }
@@ -89,23 +85,6 @@ public abstract class SharedAnomalySystem : EntitySystem
         Popup.PopupEntity(Loc.GetString("anomaly-component-contact-damage"), target, target);
     }
 
-    private void OnAnomalyUnpause(EntityUid uid, AnomalyComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextPulseTime += args.PausedTime;
-        Dirty(component);
-    }
-
-    private void OnPulsingUnpause(EntityUid uid, AnomalyPulsingComponent component, ref EntityUnpausedEvent args)
-    {
-        component.EndTime += args.PausedTime;
-    }
-
-    private void OnSupercriticalUnpause(EntityUid uid, AnomalySupercriticalComponent component, ref EntityUnpausedEvent args)
-    {
-        component.EndTime += args.PausedTime;
-        Dirty(component);
-    }
-
     public void DoAnomalyPulse(EntityUid uid, AnomalyComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -132,7 +111,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         var stability = Random.NextFloat(minStability, maxStability);
         ChangeAnomalyStability(uid, stability, component);
 
-        Log.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {ToPrettyString(uid)} pulsed with severity {component.Severity}.");
+        AdminLog.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {ToPrettyString(uid)} pulsed with severity {component.Severity}.");
         if (_net.IsServer)
             Audio.PlayPvs(component.PulseSound, uid);
 
@@ -154,14 +133,14 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (HasComp<AnomalySupercriticalComponent>(uid))
             return;
 
-        Log.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ToPrettyString(uid)} began to go supercritical.");
+        AdminLog.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ToPrettyString(uid)} began to go supercritical.");
         if (_net.IsServer)
             _sawmill.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(uid)}");
 
-        var super = EnsureComp<AnomalySupercriticalComponent>(uid);
+        var super = AddComp<AnomalySupercriticalComponent>(uid);
         super.EndTime = Timing.CurTime + super.SupercriticalDuration;
         Appearance.SetData(uid, AnomalyVisuals.Supercritical, true);
-        Dirty(super);
+        Dirty(uid, super);
     }
 
     /// <summary>
@@ -201,7 +180,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         // Logging before resolve, in case the anomaly has deleted itself.
         if (_net.IsServer)
             _sawmill.Info($"Ending anomaly. Entity: {ToPrettyString(uid)}");
-        Log.Add(LogType.Anomaly, LogImpact.Extreme, $"Anomaly {ToPrettyString(uid)} went supercritical.");
+        AdminLog.Add(LogType.Anomaly, LogImpact.Extreme, $"Anomaly {ToPrettyString(uid)} went supercritical.");
 
         if (!Resolve(uid, ref component))
             return;
@@ -231,7 +210,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         var newVal = component.Stability + change;
 
         component.Stability = Math.Clamp(newVal, 0, 1);
-        Dirty(component);
+        Dirty(uid, component);
 
         var ev = new AnomalyStabilityChangedEvent(uid, component.Stability, component.Severity);
         RaiseLocalEvent(uid, ref ev, true);
@@ -254,7 +233,7 @@ public abstract class SharedAnomalySystem : EntitySystem
             StartSupercriticalEvent(uid);
 
         component.Severity = Math.Clamp(newVal, 0, 1);
-        Dirty(component);
+        Dirty(uid, component);
 
         var ev = new AnomalySeverityChangedEvent(uid, component.Stability, component.Severity);
         RaiseLocalEvent(uid, ref ev, true);
@@ -280,7 +259,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         }
 
         component.Health = Math.Clamp(newVal, 0, 1);
-        Dirty(component);
+        Dirty(uid, component);
 
         var ev = new AnomalyHealthChangedEvent(uid, component.Health);
         RaiseLocalEvent(uid, ref ev, true);
@@ -377,9 +356,9 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         var physQuery = GetEntityQuery<PhysicsComponent>();
         var resultList = new List<TileRef>();
-        while (resultList.Count() < amount)
+        while (resultList.Count < amount)
         {
-            if (tilerefs.Count() == 0)
+            if (tilerefs.Count == 0)
                 break;
 
             var tileref = _random.Pick(tilerefs);
@@ -414,6 +393,7 @@ public abstract class SharedAnomalySystem : EntitySystem
                     continue;
                 }
             }
+
             resultList.Add(tileref);
         }
         return resultList;
@@ -426,7 +406,7 @@ public partial record struct AnomalySpawnSettings()
     /// <summary>
     /// should entities block spawning?
     /// </summary>
-    public bool CanSpawnOnEntities { get; set; } = true;
+    public bool CanSpawnOnEntities { get; set; } = false;
 
     /// <summary>
     /// The minimum number of entities that spawn per pulse

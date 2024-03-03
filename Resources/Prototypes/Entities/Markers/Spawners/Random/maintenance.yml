@@ -32,6 +32,7 @@
         - Basketball
         - Football
         - BalloonCorgi
+        - BalloonNT
         - PonderingOrb
         - Skub
         - DrinkMugDog
@@ -151,7 +152,7 @@
       rareChance: 0.08
       prototypes:
         - FlashlightLantern
-        - YellowOxygenTankFilled
+        - OxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
         - ToolboxEmergencyFilled
         - ToolboxArtisticFilled
@@ -228,7 +229,7 @@
       rareChance: 0.05
       prototypes:
         - FlashlightLantern
-        - YellowOxygenTankFilled
+        - OxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
         - NitrogenTankFilled
         - DoubleEmergencyNitrogenTankFilled

@@ -24,10 +24,10 @@
           tankInserted:
             False: { state: can-open, visible: false }
             True: { state: can-open, visible: true }
-        enum.GasCanisterVisuals.Locked:
+        enum.LockVisuals.Locked:
           locked:
-            False: { state: can-unlocked, shader: "unshaded" }
-            True: { state: can-locked, shader: "unshaded" }
+            False: { state: unlocked, shader: "unshaded" }
+            True: { state: locked, shader: "unshaded" }
         enum.GasCanisterVisuals.PressureState:
           pressureLight:
             0: { state: can-o0, shader: "unshaded" }

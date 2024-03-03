@@ -11,6 +11,7 @@ salvage-magnet-resources = {$resource ->
     [OreIron] Iron
     [OreCoal] Coal
     [OreQuartz] Quartz
+    [OreSalt] Salt
     [OreGold] Gold
     [OreSilver] Silver
     [OrePlasma] Plasma
@@ -69,3 +70,4 @@ salvage-map-proto-AsteroidBase = Asteroid Base
 salvage-map-proto-RuinCargoBase = Ruined Cargo Storage
 salvage-map-proto-SecurityChunk = Security Department Chunk
 salvage-map-proto-EngineeringChunk = Engineering Department Chunk
+salvage-map-proto-OutpostArm = Overrun Outpost Arm

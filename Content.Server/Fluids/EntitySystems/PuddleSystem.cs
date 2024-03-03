@@ -5,12 +5,12 @@ using Content.Server.Fluids.Components;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.Effects;
-using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
@@ -66,13 +66,13 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [ValidatePrototypeId<ReagentPrototype>]
     private const string CopperBlood = "CopperBlood";
 
-    private static string[] _standoutReagents = new[] { Blood, Slime, CopperBlood };
+    private static string[] _standoutReagents = [Blood, Slime, CopperBlood];
 
-    public static float PuddleVolume = 1000;
+    public static readonly float PuddleVolume = 1000;
 
     // Using local deletion queue instead of the standard queue so that we can easily "undelete" if a puddle
     // loses & then gains reagents in a single tick.
-    private HashSet<EntityUid> _deletionQueue = new();
+    private HashSet<EntityUid> _deletionQueue = [];
 
     private EntityQuery<PuddleComponent> _puddleQuery;
 
@@ -90,7 +90,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
-        SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
         SubscribeLocalEvent<PuddleComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
         SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnPuddleInit);
         SubscribeLocalEvent<PuddleComponent, SpreadNeighborsEvent>(OnPuddleSpread);
@@ -98,7 +97,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         SubscribeLocalEvent<EvaporationComponent, MapInitEvent>(OnEvaporationMapInit);
 
-        InitializeSpillable();
         InitializeTransfers();
     }
 
@@ -292,7 +290,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     {
         // Reactive entities have a chance to get a touch reaction from slipping on a puddle
         // (i.e. it is implied they fell face first onto it or something)
-        if (!HasComp<ReactiveComponent>(args.Slipped))
+        if (!HasComp<ReactiveComponent>(args.Slipped) || HasComp<SlidingComponent>(args.Slipped))
             return;
 
         // Eventually probably have some system of 'body coverage' to tweak the probability but for now just 0.5
@@ -447,31 +445,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         }
     }
 
-    private void HandlePuddleExamined(Entity<PuddleComponent> entity, ref ExaminedEvent args)
-    {
-        using (args.PushGroup(nameof(PuddleComponent)))
-        {
-            if (TryComp<StepTriggerComponent>(entity, out var slippery) && slippery.Active)
-            {
-                args.PushMarkup(Loc.GetString("puddle-component-examine-is-slipper-text"));
-            }
-
-            if (HasComp<EvaporationComponent>(entity) &&
-                _solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName,
-                    ref entity.Comp.Solution, out var solution))
-            {
-                if (CanFullyEvaporate(solution))
-                    args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating"));
-                else if (solution.GetTotalPrototypeQuantity(EvaporationReagents) > FixedPoint2.Zero)
-                    args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-partial"));
-                else
-                    args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
-            }
-            else
-                args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
-        }
-    }
-
     private void OnAnchorChanged(Entity<PuddleComponent> entity, ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
@@ -505,10 +478,13 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         Solution addedSolution,
         bool sound = true,
         bool checkForOverflow = true,
-        PuddleComponent? puddleComponent = null)
+        PuddleComponent? puddleComponent = null,
+        SolutionContainerManagerComponent? sol = null)
     {
-        if (!Resolve(puddleUid, ref puddleComponent))
+        if (!Resolve(puddleUid, ref puddleComponent, ref sol))
             return false;
+
+        _solutionContainerSystem.EnsureAllSolutions((puddleUid, sol));
 
         if (addedSolution.Volume == 0 ||
             !_solutionContainerSystem.ResolveSolution(puddleUid, puddleComponent.SolutionName,

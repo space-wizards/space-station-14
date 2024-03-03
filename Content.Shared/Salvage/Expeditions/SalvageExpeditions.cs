@@ -47,7 +47,7 @@ public sealed class ClaimSalvageMessage : BoundUserInterfaceMessage
 /// <summary>
 /// Added per station to store data on their available salvage missions.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class SalvageExpeditionDataComponent : Component
 {
     /// <summary>
@@ -66,6 +66,7 @@ public sealed partial class SalvageExpeditionDataComponent : Component
     /// Nexy time salvage missions are offered.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("nextOffer", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan NextOffer;
 
     [ViewVariables]

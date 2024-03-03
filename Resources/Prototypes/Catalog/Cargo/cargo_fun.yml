@@ -104,7 +104,7 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_lizard
   product: CrateFunLizardPlushieBulk
-  cost: 2500
+  cost: 500
   category: Fun
   group: market
 
@@ -114,16 +114,6 @@
     sprite: Objects/Fun/dice.rsi
     state: d6_6
   product: CrateFunBoardGames
-  cost: 1500
-  category: Fun
-  group: market
-
-- type: cargoProduct
-  id: FunATV
-  icon:
-    sprite: Objects/Vehicles/atv.rsi
-    state: vehicle
-  product: CrateFunATV
   cost: 1500
   category: Fun
   group: market

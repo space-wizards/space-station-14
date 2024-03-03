@@ -9,7 +9,6 @@
       state: net_wired
     - type: Tag
       tags:
-        - DroneUsable
         - MailingUnitElectronics
     - type: StaticPrice
       price: 55
