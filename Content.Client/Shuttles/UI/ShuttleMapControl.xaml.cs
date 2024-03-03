@@ -206,6 +206,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     private List<IMapObject> GetViewportMapObjects(Matrix3 matty, List<IMapObject> mapObjects)
     {
         var results = new List<IMapObject>();
+        var viewBox = SizeBox.Scale(1.2f);
 
         foreach (var mapObj in mapObjects)
         {
@@ -215,7 +216,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             relativePos = relativePos with { Y = -relativePos.Y };
             var uiPosition = ScalePosition(relativePos);
 
-            if (!PixelRect.Contains(uiPosition.Floored()))
+            if (!viewBox.Contains(uiPosition.Floored()))
                 continue;
 
             results.Add(mapObj);

@@ -128,7 +128,7 @@ public sealed partial class ShuttleConsoleSystem
         }
 
         // Check shuttle can FTL to this target.
-        if (!_shuttle.CanFTLTo(shuttleUid.Value, targetMap, beacon))
+        if (!_shuttle.CanFTLTo(shuttleUid.Value, targetMap))
         {
             return;
         }

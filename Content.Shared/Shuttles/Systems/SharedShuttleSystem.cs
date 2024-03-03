@@ -32,6 +32,29 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns whether an entity can FTL to the specified map.
+    /// </summary>
+    public bool CanFTLTo(EntityUid shuttleUid, MapId targetMap)
+    {
+        var mapUid = _mapManager.GetMapEntityId(targetMap);
+        var shuttleMap = _xformQuery.GetComponent(shuttleUid).MapID;
+
+        if (shuttleMap == targetMap)
+            return true;
+
+        if (!TryComp<FTLDestinationComponent>(mapUid, out var destination) ||
+            !destination.Enabled)
+        {
+            return false;
+        }
+
+        if (HasComp<FTLMapComponent>(mapUid))
+            return false;
+
+        return destination.Whitelist?.IsValid(shuttleUid, EntityManager) != false;
+    }
+
+    /// <summary>
     /// Gets the list of map objects relevant for the specified map.
     /// </summary>
     public IEnumerable<(ShuttleExclusionObject Exclusion, MapCoordinates Coordinates)> GetExclusions(MapId mapId, List<ShuttleExclusionObject> exclusions)

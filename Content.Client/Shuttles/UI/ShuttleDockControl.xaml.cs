@@ -114,9 +114,7 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
         offsetMatrix = offsetMatrix.Invert();
 
         // Draw nearby grids
-        var boundsEnlargement = (Vector2.One * MinimapScale).Floored();
-
-        var controlBounds = UIBox2i.FromDimensions(PixelPosition - boundsEnlargement, PixelSize + boundsEnlargement * 2);
+        var controlBounds = SizeBox.Scale(1.25f);
         _grids.Clear();
         _mapManager.FindGridsIntersecting(gridXform.MapID, new Box2(mapPos.Position - WorldRangeVector, mapPos.Position + WorldRangeVector), ref _grids);
 

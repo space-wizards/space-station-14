@@ -256,24 +256,16 @@ public sealed partial class MapScreen : BoxContainer
 
         var mapComps = _entManager.AllEntityQueryEnumerator<MapComponent, TransformComponent, MetaDataComponent>();
         MapId ourMap = MapId.Nullspace;
-        var destQuery = _entManager.GetEntityQuery<FTLDestinationComponent>();
 
         if (_entManager.TryGetComponent(_shuttleEntity, out TransformComponent? shuttleXform))
         {
             ourMap = shuttleXform.MapID;
         }
 
-        while (mapComps.MoveNext(out var mapUid, out var mapComp, out var mapXform, out var mapMetadata))
+        while (mapComps.MoveNext(out var mapComp, out var mapXform, out var mapMetadata))
         {
-            // If it's our map OR a valid FTL destination then show it
-            // Also exclude FTL (this also inadervtantly fixes ordering conditions upon coming out of FTL).
-            if (ourMap != mapXform.MapID &&
-                (!destQuery.TryGetComponent(mapUid, out var mapDest) ||
-                 mapDest.Whitelist?.IsValid(_shuttleEntity.Value, _entManager) == false) ||
-                _entManager.HasComponent<FTLMapComponent>(mapUid))
-            {
-                continue;
-            }
+            if (!_shuttles.CanFTLTo(_shuttleEntity.Value, mapComp.MapId))
+               continue;
 
             var mapName = mapMetadata.EntityName;
 
@@ -473,9 +465,17 @@ public sealed partial class MapScreen : BoxContainer
                 child.Orphan();
             }
 
-            foreach (var control in _mapObjectControls.OrderBy(x => x.Value))
+            _sortChildren.Sort((x, y) =>
             {
-                gridContents.AddChild(control.Key);
+                var xText = _mapObjectControls[x];
+                var yText = _mapObjectControls[y];
+
+                return string.Compare(xText, yText, StringComparison.CurrentCultureIgnoreCase);
+            });
+
+            foreach (var control in _sortChildren)
+            {
+                gridContents.AddChild(control);
             }
         }
     }

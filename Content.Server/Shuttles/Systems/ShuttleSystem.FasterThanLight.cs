@@ -94,13 +94,12 @@ public sealed partial class ShuttleSystem
         {
             var gridXform = _xformQuery.GetComponent(gridUid);
 
-            if (gridXform.MapUid == null ||
-                HasComp<FTLDestinationComponent>(gridXform.MapUid))
+            if (gridXform.MapUid == null)
             {
                 continue;
             }
 
-            AddComp<FTLDestinationComponent>(gridXform.MapUid.Value);
+            TryAddFTLDestination(gridXform.MapID, true, out _);
         }
     }
 
@@ -230,27 +229,6 @@ public sealed partial class ShuttleSystem
 
         reason = null;
         return true;
-    }
-
-    /// <summary>
-    /// Returns whether an entity can FTL to the specified map.
-    /// </summary>
-    public bool CanFTLTo(EntityUid shuttleUid, MapId targetMap, bool beacon)
-    {
-        var mapUid = _mapManager.GetMapEntityId(targetMap);
-        var shuttleMap = _xformQuery.GetComponent(shuttleUid).MapID;
-
-        if (shuttleMap == targetMap)
-            return true;
-
-        if (!TryComp<FTLDestinationComponent>(mapUid, out var destination) ||
-            !destination.Enabled ||
-            destination.BeaconsOnly && !beacon)
-        {
-            return false;
-        }
-
-        return destination.Whitelist?.IsValid(shuttleUid, EntityManager) != false;
     }
 
     /// <summary>
