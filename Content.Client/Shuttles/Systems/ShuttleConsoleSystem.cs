@@ -35,7 +35,7 @@ namespace Content.Client.Shuttles.Systems
         protected override void HandlePilotShutdown(EntityUid uid, PilotComponent component, ComponentShutdown args)
         {
             base.HandlePilotShutdown(uid, component, args);
-            if (_playerManager.LocalPlayer?.ControlledEntity != uid) return;
+            if (_playerManager.LocalEntity != uid) return;
 
             _input.Contexts.SetActiveContext("human");
         }

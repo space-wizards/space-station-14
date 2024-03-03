@@ -36,7 +36,6 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly IComponentFactory _compFact = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly DoorBoltSystem _boltsSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
@@ -307,7 +306,7 @@ public sealed class MagicSystem : EntitySystem
         foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))
         {
             if (TryComp<DoorBoltComponent>(entity, out var bolts))
-                _boltsSystem.SetBoltsDown(entity, bolts, false);
+                _doorSystem.SetBoltsDown((entity, bolts), false);
 
             if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
                 _doorSystem.StartOpening(entity);

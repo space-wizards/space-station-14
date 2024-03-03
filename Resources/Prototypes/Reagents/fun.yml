@@ -41,7 +41,6 @@
         conditions:
         - !type:OrganType
           type: Moth
-     
 
 - type: reagent
   id: BuzzochloricBees
@@ -222,13 +221,13 @@
     entity: IceCrust
     maxOnTileWhitelist:
       tags: [ Ice ]
-  - !type:ExtinguishTileReaction { } 
+  - !type:ExtinguishTileReaction { }
   reactiveEffects:
     Acidic:
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true 
+        scaleByQuantity: true
         ignoreResistances: false
         damage:
           types:
@@ -236,7 +235,7 @@
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
-          min: 160.15 
+          min: 160.15
         amount: -30000
     Extinguish:
       methods: [ Touch ]
@@ -298,3 +297,54 @@
         messages: [ "fresium-effect-frozen"]
         probability: 0.4
 
+- type: reagent
+  id: Laughter
+  name: reagent-name-laughter
+  group: Special
+  desc: reagent-desc-laughter
+  physicalDesc: reagent-physical-desc-funny
+  flavor: funny
+  color: "#FF4DD2"
+  slippery: true #clown juice gotta slip
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:Emote
+        emote: Laugh
+        probability: 0.3
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "laughter-effect-control-laughter" ]
+        probability: 0.2
+
+- type: reagent
+  id: JuiceThatMakesYouWeh
+  name: reagent-name-weh
+  group: Toxins
+  desc: reagent-desc-weh
+  physicalDesc: reagent-physical-desc-vibrant
+  flavor: weh
+  color: "#59b23a"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.25
+      effects:
+      - !type:Emote
+        emote: Weh
+        showInChat: true
+        probability: 0.5
+      - !type:Polymorph
+        prototype: ArtifactLizard # Does the same thing as the original YML I made for this reagent.
+        conditions:
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
+        - !type:ReagentThreshold
+          min: 50
+      - !type:AdjustReagent
+        reagent: JuiceThatMakesYouWeh
+        amount: -20
+        conditions:
+        - !type:ReagentThreshold
+          min: 50

@@ -624,3 +624,10 @@
   - type: NavMapBeacon
     text: station-beacon-cryosleep
 
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePod
+  suffix: Escape Pod
+  components:
+  - type: NavMapBeacon
+    text: station-beacon-escape-pod

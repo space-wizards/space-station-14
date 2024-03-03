@@ -84,9 +84,8 @@
       - id: EmergencyMedipen #You never know what people are going to latejoin into
 
 - type: entity
-  id: ClothingBeltParamedicFilled
-  parent: ClothingBeltMedical #in the future, make this a seperate prototype so it can have a unique, darker sprite
-  name: EMT belt
+  id: ClothingBeltMedicalEMTFilled
+  parent: ClothingBeltMedicalEMT
   suffix: Paramedic,Filled
   components:
   - type: StorageFill
