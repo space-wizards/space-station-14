@@ -16,6 +16,8 @@
       map: [ "decor" ]
     - state: icon_text
       map: [ "icon" ]
+    - state: overlay_null
+      map: [ "overlay" ]
   - type: Paper
     contentSize: 12000
   - type: ActivatableUI
@@ -319,7 +321,7 @@
     - state: icon_glow
       color: red
     - state: icon_wrench
-    - state: blood
+    - state: overlay_blood
   - type: Tag
     tags:
     - Book
@@ -361,26 +363,39 @@
       - cover:
           cover_base: Sixteen
           cover_old: Sixteen
+          cover_strong: Sixteen
         decor:
           decor_wingette: Sixteen
           decor_bottom: Sixteen
           decor_middle: Sixteen
           icon_corner: Sixteen
           decor_vertical_middle: Sixteen
-          blood: ""
         icon:
           icon_apple: ""
-          icon_cabbage: ""
+          icon_atmos: ""
           icon_bar: ""
+          icon_borg: ""
           icon_bucket: ""
+          icon_cabbage: ""
           icon_chemical: ""
           icon_diamond: ""
           icon_dna: Sixteen
+          icon_fish: ""
           icon_glow: Sixteen
+          icon_magnifier: ""
+          icon_medical: ""
+          icon_pentagramm: Sixteen
           icon_skull: ""
+          icon_stunbaton: ""
           icon_text: ""
           icon_text2: ""
           icon_text3: "" 
+          icon_time: Sixteen
+          icon_wrench: Sixteen
+        overlay:
+          overlay_blood: ""
+          overlay_dirt: ""
+          overlay_null: ""
 
 - type: entity
   parent: BookBase
@@ -397,7 +412,7 @@
     - state: decor_wingette
       color: "#d61818"
     - state: icon_text3
-    - state: blood
+    - state: overlay_blood
     - type: MeleeWeapon
       damage:
         types:
@@ -421,7 +436,7 @@
       color: black
     - state: icon_text3
     - state: icon_stunbaton
-    - state: blood
+    - state: overlay_blood
     - type: MeleeWeapon
       damage:
         types:

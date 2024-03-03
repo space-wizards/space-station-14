@@ -8,16 +8,19 @@
   },
   "states": [
     {
-      "name": "paper"
-    },
-    {
       "name": "cover_base"
     },
     {
       "name": "cover_old"
     },
     {
+      "name": "cover_strong"
+    },
+    {
       "name": "decor_wingette"
+    },
+    {
+      "name": "decor_wingette_flat"
     },
     {
       "name": "decor_bottom"
@@ -38,6 +41,15 @@
       "name": "icon_bar"
     },
     {
+      "name": "icon_borg",
+      "delays": [
+        [
+          6,
+          0.3
+        ]
+      ]
+    },
+    {
       "name": "icon_bucket"
     },
     {
@@ -56,10 +68,25 @@
       "name": "icon_dna"
     },
     {
+      "name": "icon_fish"
+    },
+    {
       "name": "icon_glow"
     },
     {
+      "name": "icon_magnifier"
+    },
+    {
+      "name": "icon_medical"
+    },
+    {
+      "name": "icon_pentagramm"
+    },
+    {
       "name": "icon_skull"
+    },
+    {
+      "name": "icon_stunbaton"
     },
     {
       "name": "icon_text"
@@ -71,13 +98,33 @@
       "name": "icon_text3"
     },
     {
-      "name": "icon_stunbaton"
+      "name": "icon_time"
     },
     {
       "name": "icon_wrench"
     },
     {
-      "name": "blood"
+      "name": "overlay_blood"
+    },
+    {
+      "name": "overlay_dirt"
+    },
+    {
+      "name": "overlay_null"
+    },
+    {
+      "name": "paper"
+    },
+    {
+      "name": "paper_blood",
+      "delays": [
+        [
+          5,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     }
   ]
 }

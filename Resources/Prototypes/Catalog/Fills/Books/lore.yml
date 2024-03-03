@@ -10,7 +10,13 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_demonomicon
+    - state: paper_blood
+    - state: cover_strong
+      color: "#645a5a" 
+    - state: decor_wingette_flat
+      color: "#4d0303"
+    - state: icon_pentagramm
+      color: "#f7e19f"
 
 - type: entity
   name: demonomicon
@@ -59,7 +65,15 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_chemistry
+    - state: paper
+    - state: cover_old
+      color: "#2a7b74"
+    - state: decor_middle
+      color: "#850c36"
+    - state: decor_wingette
+      color: "#850c36"
+    - state: icon_chemical
+    - state: overlay_blood
   - type: Paper
     content: book-text-chemistry-insane
 
@@ -73,7 +87,16 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_hydroponics_pod_people
+    - state: paper
+    - state: cover_strong
+      color: "#86b82a"
+    - state: decor_middle
+      color: "#80babf"
+    - state: decor_wingette
+      color: "#a7d7db"
+    - state: icon_cabbage
+    - state: icon_text2
+      color: gold
   - type: Paper
     content: book-text-botanics
 
@@ -87,7 +110,15 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book5
+    - state: paper_blood
+    - state: cover_old
+      color: "#645a5a" 
+    - state: decor_wingette
+      color: "#4d0303"
+    - state: icon_text3
+      color: "#f7e19f"
+    - state: icon_diamond
+    - state: overlay_blood
   - type: Paper
     content: book-text-gnome
 
@@ -101,7 +132,14 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_fish
+    - state: paper
+    - state: cover_base
+      color: "#4ed1e6" 
+    - state: decor_bottom
+      color: "#2373a8" 
+    - state: icon_fish
+    - state: icon_corner
+      color: gold
   - type: Paper
     content: book-text-fishing
 
@@ -115,7 +153,16 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_detective
+    - state: paper
+    - state: cover_strong
+      color: "#b0213e" 
+    - state: decor_vertical_middle
+      color: "#36040c" 
+    - state: decor_wingette
+      color: "#6e0e1e" 
+    - state: icon_magnifier
+    - state: icon_corner
+      color: gold
   - type: Paper
     content: book-text-detective
 
