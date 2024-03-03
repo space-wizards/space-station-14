@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: Fixed the round restarted announcements, so you may now hear the glory
-      of "Yeah, there we go, APC destroyed, mission accomplished!" and the rest as
-      you are kicked to the lobby screen.
-    type: Fix
-  id: 5578
-  time: '2024-01-06T03:15:28.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23387
 - author: Dygon
   changes:
   - message: The construction module for cyborgs now also gives access to steel tiles.
@@ -3826,3 +3817,10 @@
   id: 6077
   time: '2024-03-02T23:57:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25696
+- author: Emisse
+  changes:
+  - message: Rev's reenabled
+    type: Tweak
+  id: 6078
+  time: '2024-03-03T00:30:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25704
