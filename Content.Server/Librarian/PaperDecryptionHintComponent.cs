@@ -9,8 +9,11 @@ namespace Content.Server.Librarian.Components;
 /// A component storing randomized pairs to keywords.
 /// </summary>
 [RegisterComponent, Access(typeof(BooksEncryptionSystem))]
-public sealed partial class BooksEncryptionComponent : Component
+public sealed partial class PaperDecryptionHintComponent : Component
 {
+    [DataField(required: true)]
+    public ProtoId<EncryptedBookDisciplinePrototype> Discipline;
+
     [DataField]
-    public Dictionary<EncryptedBookDisciplinePrototype,List<(string, string)>> KeywordPairs = new();
+    public int Hints = 3;
 }

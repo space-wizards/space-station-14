@@ -1,0 +1,89 @@
+- type: dataset
+  id: book_hint_book
+  values:
+  - book
+  - folio
+  - collection
+  - notes
+  - manuscript
+  - records
+ 
+- type: dataset
+  id: book_hint_appearance
+  values:
+  - ancient
+  - shabby
+  - dirty
+  - new
+  - unusual
+  - mysterious
+  - attractive
+  - nasty
+  - dusty
+  - scary
+  - bloody
+
+- type: dataset
+  id: book_hint_mysticism_second
+  values:
+  - about the Loch Ness monster
+  - on the atrocities of the Revenants
+  - about a witch cult
+  - on the god of machinery
+  - about the god of blood and suffering
+  - on the Illuminati
+  - on the life of albert einstein
+  - on ghosts
+  - about predicting the future
+
+- type: dataset
+  id: book_hint_technology_second
+  values:
+  - about a runaway Tesla
+  - on AME construction
+  - on the 14 wonders of the galaxy
+  - on copromatism
+  - on probability theory
+  - on the dangers of supermatter
+  - on the life of Albert Einstein.
+  - about building a Trojan horse.
+  - on the effect of cats on the singularity.
+
+- type: dataset
+  id: book_hint_biology_second
+  values:
+  - on the benefits of bloodletting
+  - on the evils of alcohol
+  - on the benefits of alcohol
+  - on the mysteries of the vow of silence
+  - on the weirdness of phantom pains.
+  - with a knowledge base of skin diseases.
+  - on the difficulties of communicating with the Unathas
+  - about catgirls and catnip
+  - on how to break a leg
+
+- type: dataset
+  id: book_hint_military_second
+  values:
+  - on the rules of marching
+  - with tips on shooting from the shoulder
+  - with instructions on how to assemble a machine gun
+  - about experiments with explosive mixtures
+  - about commanding a battle shuttle
+  - on the construction of battle turrets
+  - of anti-clown advice
+  - with tips on camouflage in zero gravity
+  - describing the device of a stun baton
+
+- type: dataset
+  id: book_hint_social_second
+  values:
+  - with the success story of an unknown businessman
+  - about the history of the formation of the rules of the game of chess
+  - about advertising
+  - about the latest events on Earth
+  - about friendship
+  - on communication with sloths
+  - on the dangers of smoking
+  - about a healthy lifestyle
+  - with instructions for photo processing

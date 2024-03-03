@@ -368,3 +368,100 @@
         - state: book5
     - type: Paper
       content: book-text-atmos-vents
+
+# Librarian reference book
+
+- type: entity
+  parent: BookBase
+  id: BookHintMysticism
+  name: mysticism hint book
+  description: The secrets of mystical stories lurk in this book.
+  components: 
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+      - state: book6
+  - type: PaperDecryptionHint
+    discipline: Mysticism
+  - type: RandomMetadata
+    nameSegments: 
+    - an
+    - book_hint_appearance
+    - book_hint_book
+    - book_hint_mysticism_second
+
+- type: entity
+  parent: BookBase
+  id: BookHintTechnology
+  name: technology hint book
+  description: The secrets of technology lurk in this book.
+  components: 
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+      - state: book3
+  - type: PaperDecryptionHint
+    discipline: Technology
+  - type: RandomMetadata
+    nameSegments: 
+    - an
+    - book_hint_appearance
+    - book_hint_book
+    - book_hint_technology_second
+    
+- type: entity
+  parent: BookBase
+  id: BookHintBiology
+  name: biology hint book
+  description: The secrets of biology lurk in this book.
+  components: 
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+      - state: book5
+  - type: PaperDecryptionHint
+    discipline: Biology
+  - type: RandomMetadata
+    nameSegments: 
+    - an
+    - book_hint_appearance
+    - book_hint_book
+    - book_hint_biology_second
+    
+- type: entity
+  parent: BookBase
+  id: BookHintMilitary
+  name: military hint book
+  description: The secrets of military lurk in this book.
+  components: 
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+      - state: book2
+  - type: PaperDecryptionHint
+    discipline: Military
+  - type: RandomMetadata
+    nameSegments: 
+    - an
+    - book_hint_appearance
+    - book_hint_book
+    - book_hint_military_second
+    
+- type: entity
+  parent: BookBase
+  id: BookHintSocial
+  name: social hint book
+  description: The secrets of military lurk in this book.
+  components: 
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+      - state: book8
+  - type: PaperDecryptionHint
+    discipline: Social
+  - type: RandomMetadata
+    nameSegments: 
+    - an
+    - book_hint_appearance
+    - book_hint_book
+    - book_hint_social_second
