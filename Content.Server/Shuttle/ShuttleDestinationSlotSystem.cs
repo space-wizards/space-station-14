@@ -11,6 +11,7 @@ using Robust.Shared.Random;
 using Content.Server.Station.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
+using Content.Shared.Shuttles.Components;
 
 namespace Content.Server.Shuttle;
 
@@ -100,7 +101,7 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
         {
             _console.RefreshDroneConsoles();
 
-            if (consoleId != null && consoleId.Entity != null)
+            if (consoleId.Entity != null)
             {
                 if (TryComp(consoleId.Entity.Value, out ShuttleConsoleComponent? remoteConsoleComp))
                 {
@@ -122,7 +123,7 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
         {
             _console.RefreshDroneConsoles();
 
-            if (consoleId != null && consoleId.Entity != null)
+            if (consoleId.Entity != null)
             {
                 if (TryComp(consoleId.Entity.Value, out ShuttleConsoleComponent? remoteConsoleComp))
                 {
