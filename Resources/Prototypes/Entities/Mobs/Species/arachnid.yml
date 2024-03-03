@@ -38,6 +38,10 @@
       - !type:WearableReaction
         slot: head
         prototypeID: WaterDropletHat
+    - reagents: [Water, SpaceCleaner]
+      methods: [Touch]
+      effects:
+      - !type:WashCreamPieReaction
   # Damage (Self)
   - type: Bloodstream
     bloodReagent: CopperBlood
