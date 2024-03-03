@@ -23,10 +23,19 @@
       "name": "icon_bar"
     },
     {
+      "name": "icon_bucket"
+    },
+    {
       "name": "icon_cabbage"
     },
     {
       "name": "icon_corner"
+    },
+    {
+      "name": "icon_diamond"
+    },
+    {
+      "name": "icon_dna"
     },
     {
       "name": "icon_glow"
@@ -36,6 +45,9 @@
     },
     {
       "name": "icon_text"
+    },
+    {
+      "name": "icon_stunbaton"
     },
     {
       "name": "icon_wrench"

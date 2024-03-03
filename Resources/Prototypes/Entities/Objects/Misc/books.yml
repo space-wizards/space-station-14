@@ -187,7 +187,12 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_science
+    - state: paper
+    - state: cover_base
+      color: "#6c4718"
+    - state: wingette
+      color: "#b5913c"
+    - state: icon_dna
   - type: Tag
     tags:
     - Book
@@ -205,7 +210,12 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_security
+    - state: paper
+    - state: cover_base
+      color: "#ab1515"
+    - state: wingette
+      color: "#e05334"
+    - state: icon_stunbaton
   - type: Tag
     tags:
     - Book
@@ -228,7 +238,11 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book0 # no janitorial book sprite so this is a placeholder
+    - state: paper
+    - state: cover_base
+      color: "#550c82"
+    - state: wingette
+    - state: icon_bucket
   - type: Tag
     tags:
     - Book
@@ -246,7 +260,15 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book0 # no salvage book sprite so this is a placeholder
+    - state: paper
+    - state: cover_base
+      color: "#52320b"
+    - state: wingette
+      color: "#e69a3e"
+    - state: icon_glow
+    - state: icon_diamond
+    - state: icon_text
+      color: "#fcdf74"
   - type: Tag
     tags:
     - Book
