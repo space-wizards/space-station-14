@@ -255,8 +255,8 @@ namespace Content.Shared.Containers.ItemSlots
             if (slot.ContainerSlot == null)
                 return false;
 
-            if ((slot.Whitelist != null && !slot.Whitelist.IsValid(usedUid)) ||
-                (slot.Blacklist != null && slot.Blacklist.IsValid(usedUid)))
+            if ((!slot.Whitelist?.IsValid(usedUid) ?? false) ||
+                (slot.Blacklist?.IsValid(usedUid) ?? false))
             {
                 if (popup.HasValue && !string.IsNullOrWhiteSpace(slot.WhitelistFailPopup))
                     _popupSystem.PopupClient(Loc.GetString(slot.WhitelistFailPopup), uid, popup.Value);
