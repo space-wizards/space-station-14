@@ -23,18 +23,22 @@ public sealed class BooksEncryptionSystem : EntitySystem
 
     private void OnMapinit(Entity<BooksEncryptionComponent> encrypt, ref MapInitEvent ev)
     {
+        // Reshuffling
         var disciplines = new List<EncryptedBookDisciplinePrototype>();
         foreach (var item in _proto.EnumeratePrototypes<EncryptedBookDisciplinePrototype>())
         {
+            var pairs = new Dictionary<string, string>();
             var keywordCount = item.Keywords.Count;
+            Log.Warning($"Discipline: {Loc.GetString(item.Name)}");
             for (int i = 0; i < keywordCount; i++)
             {
-                encrypt.Comp.KeywordPair.Add(_random.PickAndTake(item.Keywords), _random.PickAndTake(item.Gibberish));
+                var keyword = _random.PickAndTake(item.Keywords);
+                var gibberish = _random.PickAndTake(item.Gibberish);
+                pairs.Add(keyword, gibberish);
+                Log.Warning($"Now {Loc.GetString(keyword)} is {Loc.GetString(gibberish)}.");
             }
-        }
-        foreach (var item in encrypt.Comp.KeywordPair)
-        {
-            Log.Warning($"Now {Loc.GetString(item.Key)} is {Loc.GetString(item.Value)}.");
+
+            encrypt.Comp.KeywordPairs.Add(item, pairs);
         }
     }
 }
