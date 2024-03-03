@@ -1,0 +1,13 @@
+<BoxContainer Name="Container" xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         Orientation="Vertical"
+         Margin="5 0 0 5">
+    <PanelContainer Margin="10" SetSize="64 64">
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
+        </PanelContainer.PanelOverride>
+        <SpriteView Name="Sprite" Scale="2 2"/>
+    </PanelContainer>
+    <Button Name="SelectButton"/>
+</BoxContainer>

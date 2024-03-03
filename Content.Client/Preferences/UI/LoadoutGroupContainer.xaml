@@ -1,12 +1,14 @@
 <BoxContainer xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
-         Margin="10">
+         Margin="10 10 10 0">
+    <!-- Buffer space so we have 10 margin between controls but also 10 to the borders -->
+    <Control Margin="0 5"/>
     <PanelContainer StyleClasses="AngleRect" HorizontalExpand="True">
         <BoxContainer Orientation="Vertical"
                       HorizontalExpand="True">
             <Label Name="GroupName" Margin="0 0 0 5"/>
-            <customControls:HSeparator Margin="5"/>
+            <customControls:HSeparator/>
             <ScrollContainer VScrollEnabled="False"
                              HorizontalExpand="True"
                              VerticalExpand="True"

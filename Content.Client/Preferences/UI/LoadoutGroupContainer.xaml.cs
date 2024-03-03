@@ -30,7 +30,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
     /// </summary>
     public void RefreshLoadouts(RoleLoadout loadout, ICommonSession session, IDependencyCollection collection)
     {
-        GroupName.Text = _groupProto.ID;
+        GroupName.Text = $"loadout-group-{_groupProto.ID}";
         LoadoutsContainer.DisposeAllChildren();
         var btnGroup = new ButtonGroup(false);
         // Didn't use options because this is more robust in future.
@@ -41,23 +41,19 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
 
         if (_groupProto.Optional)
         {
-            var btn = new Button()
-            {
-                Text = Loc.GetString("loadout-none"),
-                ToggleMode = true,
-                Group = btnGroup,
-            };
+            var loadoutContainer = new LoadoutContainer(null, btnGroup, false, null);
+            loadoutContainer.Text = Loc.GetString("loadout-none");
 
             if (selected == null)
             {
-                btn.Pressed = true;
+                loadoutContainer.Pressed = true;
             }
 
-            btn.OnPressed += args =>
+            loadoutContainer.OnLoadoutPressed += args =>
             {
                 OnLoadoutPressed?.Invoke(null);
             };
-            LoadoutsContainer.AddChild(btn);
+            LoadoutsContainer.AddChild(loadoutContainer);
         }
 
         foreach (var role in _groupProto.Loadouts)
@@ -66,33 +62,21 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                 continue;
 
             var enabled = loadout.IsValid(session, role, collection, out var reason);
-
-            var btn = new Button()
-            {
-                Text = loadoutSystem.GetName(loadProto),
-                Disabled = !enabled,
-                ToggleMode = true,
-                Group = btnGroup,
-            };
-
-            if (!enabled && reason != null)
-            {
-                var tooltip = new Tooltip();
-                tooltip.SetMessage(reason);
-                btn.TooltipSupplier = _ => tooltip;
-            }
+            var loadoutContainer = new LoadoutContainer(role, btnGroup, !enabled, reason);
 
             // If there's no selection in the loadout or
             if (selected?.Id == role.Id)
             {
-                btn.Pressed = true;
+                loadoutContainer.Pressed = true;
             }
 
-            btn.OnPressed += args =>
+            loadoutContainer.Text = loadoutSystem.GetName(loadProto);
+
+            loadoutContainer.OnLoadoutPressed += args =>
             {
-                OnLoadoutPressed?.Invoke(role);
+                OnLoadoutPressed?.Invoke(args);
             };
-            LoadoutsContainer.AddChild(btn);
+            LoadoutsContainer.AddChild(loadoutContainer);
         }
     }
 }
