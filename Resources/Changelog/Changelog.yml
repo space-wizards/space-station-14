@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Examining entities is now predicted, meaning that you will be shown most
-      information immediately.
-    type: Add
-  - message: Fixed a bug where power cells would list their charge twice.
-    type: Fix
-  id: 5582
-  time: '2024-01-06T06:53:13.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23565
 - author: Ubaser
   changes:
   - message: Reptilians now have a new large tail marking to choose from!
@@ -3827,3 +3817,10 @@
   id: 6081
   time: '2024-03-03T07:39:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24430
+- author: Errant-4
+  changes:
+  - message: Toggling your own internals no longer requires a delay.
+    type: Tweak
+  id: 6082
+  time: '2024-03-03T08:31:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25781
