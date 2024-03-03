@@ -203,7 +203,7 @@ public partial class MapGridControl : LayoutContainer
     protected void DrawBacking(DrawingHandleScreen handle)
     {
         var backing = BackingColor;
-        handle.DrawRect(new UIBox2(0f, Height, Width, 0f), backing);
+        handle.DrawRect(PixelSizeBox, backing);
     }
 
     protected void DrawNoSignal(DrawingHandleScreen handle)
