@@ -42,7 +42,6 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedGunSystem _gunSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedChatSystem _chat = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -396,14 +395,13 @@ public abstract class SharedMagicSystem : EntitySystem
 
     #endregion
 
-    // TODO: Refactor into an event
     // When any spell is cast it will raise this as an event, so then it can be played in server or something. At least until chat gets moved to shared
     protected void Speak(BaseActionEvent args)
     {
-        /*if (args is not ISpeakSpell speak || string.IsNullOrWhiteSpace(speak.Speech))
+        if (args is not ISpeakSpell speak || string.IsNullOrWhiteSpace(speak.Speech))
             return;
 
-        _chat.TrySendInGameICMessage(args.Performer, Loc.GetString(speak.Speech),
-            InGameICChatType.Speak, false);*/
+        var ev = new SpeakSpellEvent(args.Performer, speak.Speech);
+        RaiseLocalEvent(ref ev);
     }
 }
