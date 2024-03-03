@@ -135,15 +135,12 @@
       offset: 0.2
       chance: 0.05
       prototypes:
-      - FloraTree01
-      - FloraTree02
-      - FloraTree03
-      - FloraTree04
-      - FloraTree05
-      - FloraTree06
-      - FloraTreeLarge01
-      - FloraTreeLarge02
-      - FloraTreeLarge03
+      - LightTree01
+      - LightTree02
+      - LightTree03
+      - LightTree04
+      - LightTree05
+      - LightTree06
       - CrystalCyan
       rarePrototypes:
       - AnomalyFloraBulb
@@ -154,13 +151,15 @@
   parent: KudzuFlowerFriendly
   components:
     - type: Kudzu
-      spreadChance: 0.4
+      spreadChance: 0.2
     - type: RandomSpawner
-      chance: 0.1
+      chance: 0.05
       rarePrototypes:
+      - AnomalyFloraBulb
       - AnomalyFloraBulb
       - MobLuminousEntity
       - MobLuminousObject
+      - MobLuminousPerson
 
 - type: entity
   id: FleshKudzu

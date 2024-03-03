@@ -364,7 +364,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: ComputerMassMediaCircuitboard
-  name: mass-media console board
+  name: news manager console board
   description: Write your message to the world!
   components:
     - type: Sprite
