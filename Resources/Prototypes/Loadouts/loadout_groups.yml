@@ -41,10 +41,90 @@
   - SeniorEngineerPDA
 
 # Science
+
+- type: loadoutGroup
+  id: ScientistHead
+  name: loadout-scientist-head
+  optional: true
+  loadouts:
+  - ScientificBeret
+
+- type: loadoutGroup
+  id: ScientistNeck
+  name: loadout-scientist-neck
+  optional: true
+  loadouts:
+  - ScientistTie
+
+- type: loadoutGroup
+  id: ScientistJumpsuit
+  name: loadout-scientist-jumpsuit
+  loadouts:
+  - ScientistJumpsuit
+  - ScientistJumpskirt
+  - SeniorResearcherJumpsuit
+  - SeniorResearcherJumpskirt
+
+- type: loadoutGroup
+  id: ScientistBackpack
+  name: loadout-scientist-backpack
+  loadouts:
+  - ScientistBackpack
+  - ScientistSatchel
+  - ScientistDuffel
+  - SeniorResearcherBackpack
+  - SeniorResearcherSatchel
+  - SeniorResearcherDuffel
+
+- type: loadoutGroup
+  id: ScientistOuterClothing
+  name: loadout-scientist-outerclothing
+  optional: true
+  loadouts:
+  - RegularLabCoat
+  - ScienceLabCoat
+  - SeniorResearcherLabCoat
+
 - type: loadoutGroup
   id: ScientistPDA
-  name: loadout-station-scientist-pda
+  name: loadout-scientist-id
   loadouts:
   - ScientistPDA
   - SeniorResearcherPDA
 
+# Security
+- type: loadoutGroup
+  id: SecurityHead
+  name: loadout-security-head
+  optional: true
+  loadouts:
+  - SecurityHelmet
+  - SecurityBeret
+  - SecurityHat
+
+- type: loadoutGroup
+  id: SecurityJumpsuit
+  name: loadout-security-jumpsuit
+  loadouts:
+  - SecurityJumpsuit
+  - SecurityJumpskirt
+  - SeniorOfficerJumpsuit
+  - SeniorOfficerJumpskirt
+
+- type: loadoutGroup
+  id: SecurityBackpack
+  name: loadout-security-backpack
+  loadouts:
+  - SecurityBackpack
+  - SecuritySatchel
+  - SecurityDuffel
+  - SeniorOfficerBackpack
+  - SeniorOfficerSatchel
+  - SeniorOfficerDuffel
+
+- type: loadoutGroup
+  id: SecurityPDA
+  name: loadout-security-id
+  loadouts:
+  - SecurityPDA
+  - SeniorOfficerPDA

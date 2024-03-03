@@ -1,4 +1,4 @@
-# Science
+# Senior Time
 - type: loadoutEffectGroup
   id: SeniorResearcher
   effects:
@@ -8,7 +8,170 @@
       department: Science
       time: 216000 #60 hrs
 
-# PDA
+# Head
+
+- type: loadout
+  id: ScientificBeret
+  equipment: ScientificBeret
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorResearcher
+
+- type: startingGear
+  id: ScientificBeret
+  equipment:
+    head: ClothingHeadHatBeretRND
+
+# Neck
+
+- type: loadout
+  id: ScientistTie
+  equipment: ScientistTie
+
+- type: startingGear
+  id: ScientistTie
+  equipment:
+    neck: ClothingNeckTieSci
+
+# Jumpsuit
+- type: loadout
+  id: ScientistJumpsuit
+  equipment: ScientistJumpsuit
+
+- type: startingGear
+  id: ScientistJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitScientist
+
+- type: loadout
+  id: ScientistJumpskirt
+  equipment: ScientistJumpskirt
+
+- type: startingGear
+  id: ScientistJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtScientist
+
+- type: loadout
+  id: SeniorResearcherJumpsuit
+  equipment: SeniorResearcherJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorResearcher
+
+- type: startingGear
+  id: SeniorResearcherJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSeniorResearcher
+
+- type: loadout
+  id: SeniorResearcherJumpskirt
+  equipment: SeniorResearcherJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorResearcher
+
+- type: startingGear
+  id: SeniorResearcherJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSeniorResearcher
+
+# Back
+- type: loadout
+  id: ScientistBackpack
+  equipment: ScientistBackpack
+
+- type: startingGear
+  id: ScientistBackpack
+  equipment:
+    back: ClothingBackpackScienceFilled
+
+- type: loadout
+  id: ScientistSatchel
+  equipment: ScientistSatchel
+
+- type: startingGear
+  id: ScientistSatchel
+  equipment:
+    back: ClothingBackpackSatchelScienceFilled
+
+- type: loadout
+  id: ScientistDuffel
+  equipment: ScientistDuffel
+
+- type: startingGear
+  id: ScientistDuffel
+  equipment:
+    back: ClothingBackpackDuffelScienceFilled
+
+- type: loadout
+  id: SeniorResearcherBackpack
+  equipment: SeniorResearcherBackpack
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorResearcher
+
+- type: startingGear
+  id: SeniorResearcherBackpack
+  equipment:
+    back: ClothingBackpackScienceFilled
+
+- type: loadout
+  id: SeniorResearcherSatchel
+  equipment: SeniorResearcherSatchel
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorResearcher
+
+- type: startingGear
+  id: SeniorResearcherSatchel
+  equipment:
+    back: ClothingBackpackSatchelScienceFilled
+
+- type: loadout
+  id: SeniorResearcherDuffel
+  equipment: SeniorResearcherDuffel
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorResearcher
+
+- type: startingGear
+  id: SeniorResearcherDuffel
+  equipment:
+    back: ClothingBackpackDuffelScienceFilled
+
+# OuterClothing
+- type: loadout
+  id: RegularLabCoat
+  equipment: RegularLabCoat
+
+- type: startingGear
+  id: RegularLabCoat
+  equipment:
+    outerClothing: ClothingOuterCoatLab
+
+- type: loadout
+  id: ScienceLabCoat
+  equipment: ScienceLabCoat
+
+- type: startingGear
+  id: ScienceLabCoat
+  equipment:
+    outerClothing: ClothingOuterCoatRnd
+
+- type: loadout
+  id: SeniorResearcherLabCoat
+  equipment: SeniorResearcherLabCoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorResearcher
+
+- type: startingGear
+  id: SeniorResearcherLabCoat
+  equipment:
+    back: ClothingOuterCoatLabSeniorResearcher
+
+# ID
 - type: loadout
   id: ScientistPDA
   equipment: ScientistPDA
