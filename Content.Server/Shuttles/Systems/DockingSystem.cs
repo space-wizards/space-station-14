@@ -437,6 +437,10 @@ namespace Content.Server.Shuttles.Systems
 
             var xformA = Transform(dockA);
             var xformB = Transform(dockB);
+
+            if (!xformA.Anchored || !xformB.Anchored)
+                return false;
+
             var (worldPosA, worldRotA) = XformSystem.GetWorldPositionRotation(xformA);
             var (worldPosB, worldRotB) = XformSystem.GetWorldPositionRotation(xformB);
 
