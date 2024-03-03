@@ -316,7 +316,7 @@ public sealed partial class ShuttleSystem
         _thruster.DisableLinearThrusters(shuttle);
         _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.North);
         _thruster.SetAngularThrust(shuttle, false);
-        _dockSystem.SetDocks(uid, false);
+        _dockSystem.UndockDocks(uid);
 
         component = AddComp<FTLComponent>(uid);
         component.State = FTLState.Starting;
@@ -420,7 +420,6 @@ public sealed partial class ShuttleSystem
         var comp = entity.Comp1;
         DoTheDinosaur(xform);
         _dockSystem.SetDockBolts(entity, false);
-        _dockSystem.SetDocks(entity, true);
 
         _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
         _physics.SetAngularVelocity(uid, 0f, body: body);
@@ -446,14 +445,24 @@ public sealed partial class ShuttleSystem
                  !HasComp<MapComponent>(target.EntityId))
         {
             var config = _dockSystem.GetDockingConfigAt(uid, target.EntityId, target, entity.Comp1.TargetAngle);
+            MapCoordinates mapCoordinates;
+            Angle targetAngle;
 
             // Couldn't dock somehow so just fallback to regular position FTL.
             if (config == null)
             {
-                _transform.SetCoordinates(uid, xform, target, rotation: entity.Comp1.TargetAngle);
+                mapCoordinates = _transform.ToMapCoordinates(target);
+                targetAngle = entity.Comp1.TargetAngle;
+            }
+            else
+            {
+                mapCoordinates = _transform.ToMapCoordinates(config.Coordinates);
+                targetAngle = config.Angle;
             }
 
-            mapId = target.GetMapId(EntityManager);
+            target = new EntityCoordinates(_mapManager.GetMapEntityId(mapCoordinates.MapId), mapCoordinates.Position);
+            _transform.SetCoordinates(uid, xform, target, rotation: targetAngle);
+            mapId = mapCoordinates.MapId;
         }
         // Position ftl
         else

@@ -94,12 +94,12 @@ public sealed partial class DockingSystem
        EntityUid gridDockUid,
        DockingComponent gridDock)
    {
-       var shuttleDocks = new List<(EntityUid, DockingComponent)>(1)
+       var shuttleDocks = new List<Entity<DockingComponent>>(1)
        {
            (shuttleDockUid, shuttleDock)
        };
 
-       var gridDocks = new List<(EntityUid, DockingComponent)>(1)
+       var gridDocks = new List<Entity<DockingComponent>>(1)
        {
            (gridDockUid, gridDock)
        };
@@ -149,8 +149,8 @@ public sealed partial class DockingSystem
    private List<DockingConfig> GetDockingConfigs(
        EntityUid shuttleUid,
        EntityUid targetGrid,
-       List<(EntityUid, DockingComponent)> shuttleDocks,
-       List<(EntityUid, DockingComponent)> gridDocks)
+       List<Entity<DockingComponent>> shuttleDocks,
+       List<Entity<DockingComponent>> gridDocks)
    {
        var validDockConfigs = new List<DockingConfig>();
 
@@ -274,8 +274,8 @@ public sealed partial class DockingSystem
    private DockingConfig? GetDockingConfigPrivate(
        EntityUid shuttleUid,
        EntityUid targetGrid,
-       List<(EntityUid, DockingComponent)> shuttleDocks,
-       List<(EntityUid, DockingComponent)> gridDocks,
+       List<Entity<DockingComponent>> shuttleDocks,
+       List<Entity<DockingComponent>> gridDocks,
        string? priorityTag = null)
    {
        var validDockConfigs = GetDockingConfigs(shuttleUid, targetGrid, shuttleDocks, gridDocks);
@@ -345,19 +345,11 @@ public sealed partial class DockingSystem
        return true;
    }
 
-   public List<(EntityUid Uid, DockingComponent Component)> GetDocks(EntityUid uid)
+   public List<Entity<DockingComponent>> GetDocks(EntityUid uid)
    {
-       var result = new List<(EntityUid Uid, DockingComponent Component)>();
-       var query = AllEntityQuery<DockingComponent, TransformComponent>();
+       _dockingSet.Clear();
+       _lookup.GetChildEntities(uid, _dockingSet);
 
-       while (query.MoveNext(out var dockUid, out var dock, out var xform))
-       {
-           if (xform.ParentUid != uid || !dock.Enabled)
-               continue;
-
-           result.Add((dockUid, dock));
-       }
-
-       return result;
+       return _dockingSet.ToList();
    }
 }
