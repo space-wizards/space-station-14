@@ -1,6 +1,6 @@
 using Content.Shared.FixedPoint;
 
-namespace Content.Server.Fluids.Components;
+namespace Content.Shared.Fluids.Components;
 
 [RegisterComponent]
 public sealed partial class SpillableComponent : Component
@@ -12,15 +12,15 @@ public sealed partial class SpillableComponent : Component
     ///     Should this item be spilled when worn as clothing?
     ///     Doesn't count for pockets or hands.
     /// </summary>
-    [DataField("spillWorn")]
+    [DataField]
     public bool SpillWorn = true;
 
-    [DataField("spillDelay")]
+    [DataField]
     public float? SpillDelay;
 
     /// <summary>
     ///     At most how much reagent can be splashed on someone at once?
     /// </summary>
-    [DataField("maxMeleeSpillAmount")]
+    [DataField]
     public FixedPoint2 MaxMeleeSpillAmount = FixedPoint2.New(20);
 }
