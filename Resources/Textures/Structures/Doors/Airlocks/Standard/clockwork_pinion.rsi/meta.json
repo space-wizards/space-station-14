@@ -106,7 +106,7 @@
       ]
     },
     {
-      "name": "panel_closed",
+      "name": "panel_open",
       "delays": [
         [
           0.4,
@@ -121,15 +121,7 @@
           0.1,
           0.1,
           0.07,
-          0.4
-        ]
-      ]
-    },
-    {
-      "name": "panel_open",
-      "delays": [
-        [
-          1
+          0.1
         ]
       ]
     },
