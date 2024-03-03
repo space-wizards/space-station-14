@@ -1,11 +1,9 @@
 ﻿using System.Numerics;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Coordinates.Helpers;
-using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
@@ -14,7 +12,6 @@ using Content.Shared.Lock;
 using Content.Shared.Magic.Components;
 using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
-using Content.Shared.Mind;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Speech.Muting;
@@ -61,7 +58,6 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<MagicComponent, MapInitEvent>(OnInit, after: new []{typeof(SharedActionsSystem)});
         SubscribeLocalEvent<MagicComponent, BeforeCastSpellEvent>(OnBeforeCastSpell);
 
-        // TODO: Magic Caster Comp?
         // TODO: More spells
         SubscribeLocalEvent<InstantSpawnSpellEvent>(OnInstantSpawn);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
@@ -197,9 +193,6 @@ public abstract class SharedMagicSystem : EntitySystem
     /// <summary>
     ///     Gets spawn positions listed on <see cref="InstantSpawnSpellEvent"/>
     /// </summary>
-    /// <param name="casterXform"></param>
-    /// <param name="data"></param>
-    /// <returns></returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     private List<EntityCoordinates> GetInstantSpawnPositions(TransformComponent casterXform, MagicInstantSpawnData data)
     {
@@ -385,16 +378,12 @@ public abstract class SharedMagicSystem : EntitySystem
         args.Handled = true;
         Speak(args);
 
-        //Get the position of the player
         var transform = Transform(args.Performer);
-        var coords = transform.Coordinates;
 
-        // Look for doors and don't open them if they're already open.
-        // Magic doesn't respect locks, it just opens
-        foreach (var target in _lookup.GetEntitiesInRange(coords, args.Range))
+        // Look for doors and lockers, and don't open/unlock them if they're already opened/unlocked.
+        foreach (var target in _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(args.Performer, transform), args.Range, flags: LookupFlags.Dynamic | LookupFlags.Static))
         {
-            // TODO: coords still unlocks all in range regardless of opaque, target entity limits the range severely
-            if (!_interaction.InRangeUnobstructed(args.Performer, target, range: args.Range, collisionMask: CollisionGroup.Opaque))
+            if (!_interaction.InRangeUnobstructed(args.Performer, target, range: 0, collisionMask: CollisionGroup.Opaque))
                 continue;
 
             if (TryComp<DoorComponent>(target, out var doorComp) && doorComp.State is not DoorState.Open)
