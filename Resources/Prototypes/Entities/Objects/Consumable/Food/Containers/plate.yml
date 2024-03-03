@@ -86,7 +86,7 @@
     state: plate-small
   - type: Item
     storedOffset: 0,-3
-# Needs the full thing because inherting is dumb sometimes.
+# Needs the full thing because inheriting is dumb sometimes.
   - type: Destructible
     thresholds:
     - trigger:

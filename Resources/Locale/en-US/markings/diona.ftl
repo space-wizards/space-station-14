@@ -25,8 +25,8 @@ marking-DionaBrushHead = Diona Brush (Lians)
 marking-DionaCornflowerHead-cornflower = Diona Cornflowers (Flowers)
 marking-DionaCornflowerHead = Diona Cornflowers (Flowers)
 
-marking-DionaFicusHead-ficus = Diona Ficus (Leafs)
-marking-DionaFicusHead = Diona Ficus (Leafs)
+marking-DionaFicusHead-ficus = Diona Ficus (Leaves)
+marking-DionaFicusHead = Diona Ficus (Leaves)
 
 marking-DionaGarlandHead-garland = Diona Garland (Flowers)
 marking-DionaGarlandHead = Diona Garland (Flowers)
@@ -34,11 +34,11 @@ marking-DionaGarlandHead = Diona Garland (Flowers)
 marking-DionaKingHead-king = Diona Flowerking (Flower)
 marking-DionaKingHead = Diona Flowerking (Flower)
 
-marking-DionaLaurelHead-laurel = Diona Laurel (Leafs)
-marking-DionaLaurelHead = Diona Laurel (Leafs)
+marking-DionaLaurelHead-laurel = Diona Laurel (Leaves)
+marking-DionaLaurelHead = Diona Laurel (Leaves)
 
-marking-DionaLeafyHeadTop-leafy = Diona Leafy (Leafs)
-marking-DionaLeafyHeadTop = Diona Leafy (Leafs)
+marking-DionaLeafyHeadTop-leafy = Diona Leafy (Leaves)
+marking-DionaLeafyHeadTop = Diona Leafy (Leaves)
 
 marking-DionaLotusHead-lotus = Diona Lotus (Flower)
 marking-DionaLotusHead = Diona Lotus (Flower)
@@ -49,8 +49,8 @@ marking-DionaMeadowHeadTop = Diona Meadow
 marking-DionaOakHead-oak = Diona Oak (Snag)
 marking-DionaOakHead = Diona Oak (Snag)
 
-marking-DionaPalmHead-palm = Diona Palmhead (Leafs)
-marking-DionaPalmHead = Diona Palmhead (Leafs)
+marking-DionaPalmHead-palm = Diona Palmhead (Leaves)
+marking-DionaPalmHead = Diona Palmhead (Leaves)
 
 marking-DionaRootHead-root = Diona Root (Roots)
 marking-DionaRootHead = Diona Root (Roots)

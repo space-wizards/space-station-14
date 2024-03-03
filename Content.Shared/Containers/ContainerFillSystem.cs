@@ -22,11 +22,11 @@ public sealed class ContainerFillSystem : EntitySystem
         var xform = Transform(uid);
         var coords = new EntityCoordinates(uid, Vector2.Zero);
 
-        foreach (var (contaienrId, prototypes) in component.Containers)
+        foreach (var (containerId, prototypes) in component.Containers)
         {
-            if (!_containerSystem.TryGetContainer(uid, contaienrId, out var container, containerComp))
+            if (!_containerSystem.TryGetContainer(uid, containerId, out var container, containerComp))
             {
-                Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} is missing a container ({contaienrId}).");
+                Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} is missing a container ({containerId}).");
                 continue;
             }
 

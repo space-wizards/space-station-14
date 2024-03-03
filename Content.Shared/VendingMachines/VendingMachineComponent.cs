@@ -26,7 +26,7 @@ namespace Content.Shared.VendingMachines
 
         /// <summary>
         /// Used by the server to determine how long the vending machine stays in the "Eject" state.
-        /// The selected item is dispensed afer this delay.
+        /// The selected item is dispensed after this delay.
         /// Used by the client to determine how long the deny animation should be played.
         /// </summary>
         [DataField("ejectDelay")]

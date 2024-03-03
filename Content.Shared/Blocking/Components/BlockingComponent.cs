@@ -37,10 +37,10 @@ public sealed partial class BlockingComponent : Component
     public IPhysShape Shape = new PhysShapeCircle(0.5f);
 
     /// <summary>
-    /// The damage modifer to use while passively blocking
+    /// The damage Modifier to use while passively blocking
     /// </summary>
     [DataField("passiveBlockModifier", required: true)]
-    public DamageModifierSet PassiveBlockDamageModifer = default!;
+    public DamageModifierSet PassiveBlockDamageModifier = default!;
 
     /// <summary>
     /// The damage modifier to use while actively blocking.

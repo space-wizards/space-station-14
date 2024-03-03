@@ -62,10 +62,10 @@ admin-smite-terminate-description = Creates a Terminator ghost role with the sol
 
 ## Tricks descriptions
 
-admin-trick-unbolt-description = Unbolts the targetted airlock.
-admin-trick-bolt-description = Bolts the targetted airlock.
-admin-trick-emergency-access-on-description = Turns on emergency access for the targetted airlock.
-admin-trick-emergency-access-off-description = Turns off emergency access for the targetted airlock.
+admin-trick-unbolt-description = Unbolts the targeted airlock.
+admin-trick-bolt-description = Bolts the targeted airlock.
+admin-trick-emergency-access-on-description = Turns on emergency access for the targeted airlock.
+admin-trick-emergency-access-off-description = Turns off emergency access for the targeted airlock.
 admin-trick-make-indestructible-description = Makes the given object indestructible, effectively godmode.
 admin-trick-make-vulnerable-description = Makes the given object vulnerable again, turning off godmode.
 admin-trick-block-unanchoring-description = Prevents unanchoring the given object.
@@ -91,5 +91,5 @@ admin-trick-halt-movement-description = Halts the movement of the target object,
 admin-trick-unpause-map-description = Unpause the selected map. NOTE THIS CAN CAUSE BAD BEHAVIOR WITH STORAGE MAPS!
 admin-trick-pause-map-description = Pause the selected map. Note this doesn't entirely stop player movement!
 admin-trick-snap-joints-description = Remove all physics joints from an object. Unfortunately does not snap every bone in their body.
-admin-trick-minigun-fire-description = Makes the targetted gun fire like a minigun (very fast).
+admin-trick-minigun-fire-description = Makes the targeted gun fire like a minigun (very fast).
 admin-trick-set-bullet-amount-description = Quickly set the amount of unspawned bullets in a gun.

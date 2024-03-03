@@ -173,7 +173,7 @@ namespace Content.Client.Inventory
         private void SlotPressed(GUIBoundKeyEventArgs ev, SlotControl slot)
         {
             // TODO: allow other interactions? Verbs? But they should then generate a pop-up and/or have a delay so the
-            // user that is being stripped can prevent the verbs from being exectuted.
+            // user that is being stripped can prevent the verbs from being executed.
             // So for now: only stripping & examining
             if (ev.Function == EngineKeyFunctions.Use)
             {

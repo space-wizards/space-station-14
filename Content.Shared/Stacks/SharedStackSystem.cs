@@ -60,7 +60,7 @@ namespace Content.Shared.Stacks
 
             var localRotation = Transform(args.Used).LocalRotation;
 
-            if (!TryMergeStacks(uid, args.Used, out var transfered, stack, recipientStack))
+            if (!TryMergeStacks(uid, args.Used, out var transferred, stack, recipientStack))
                 return;
 
             args.Handled = true;
@@ -78,10 +78,10 @@ namespace Content.Shared.Stacks
                 popupPos = userCoords;
             }
 
-            switch (transfered)
+            switch (transferred)
             {
                 case > 0:
-                    Popup.PopupCoordinates($"+{transfered}", popupPos, Filter.Local(), false);
+                    Popup.PopupCoordinates($"+{transferred}", popupPos, Filter.Local(), false);
 
                     if (GetAvailableSpace(recipientStack) == 0)
                     {

@@ -32,7 +32,7 @@ public sealed class GuidebookSystem : EntitySystem
     [Dependency] private readonly TagSystem _tags = default!;
 
     public event Action<List<string>, List<string>?, string?, bool, string?>? OnGuidebookOpen;
-    public const string GuideEmbedTag = "GuideEmbeded";
+    public const string GuideEmbedTag = "GuideEmbedded";
 
     private EntityUid _defaultUser;
 

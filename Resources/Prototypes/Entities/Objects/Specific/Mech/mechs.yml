@@ -276,7 +276,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
-  # TOOD: buzz / chime actions
+  # TODO: buzz / chime actions
   # TODO: builtin flashlight
 
 - type: entity

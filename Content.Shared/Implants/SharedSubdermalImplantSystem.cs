@@ -77,9 +77,9 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
         var entCoords = Transform(component.ImplantedEntity.Value).Coordinates;
 
-        var containedEntites = storageImplant.ContainedEntities.ToArray();
+        var containedEntities = storageImplant.ContainedEntities.ToArray();
 
-        foreach (var entity in containedEntites)
+        foreach (var entity in containedEntities)
         {
             if (Terminating(entity))
                 continue;

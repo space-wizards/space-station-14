@@ -2,7 +2,7 @@
 #Consider porting the barricade kit from /vg/ if you do make them constructible, along with their HP values. Or don't.
 
 #Base barricade
-#A lot of components here are intentionally ommitted in case someone wants to make barricades that are made out of things other than wood.
+#A lot of components here are intentionally omitted in case someone wants to make barricades that are made out of things other than wood.
 - type: entity
   id: BaseBarricade
   description: A barricade made out of wood planks. It looks like it can take a few solid hits.

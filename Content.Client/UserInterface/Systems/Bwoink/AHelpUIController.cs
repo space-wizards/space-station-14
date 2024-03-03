@@ -92,7 +92,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     public void OnSystemLoaded(BwoinkSystem system)
     {
         _bwoinkSystem = system;
-        _bwoinkSystem.OnBwoinkTextMessageRecieved += ReceivedBwoink;
+        _bwoinkSystem.OnBwoinkTextMessageReceived+= ReceivedBwoink;
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenAHelp,
@@ -105,7 +105,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
         CommandBinds.Unregister<AHelpUIController>();
 
         DebugTools.Assert(_bwoinkSystem != null);
-        _bwoinkSystem!.OnBwoinkTextMessageRecieved -= ReceivedBwoink;
+        _bwoinkSystem!.OnBwoinkTextMessageReceived -= ReceivedBwoink;
         _bwoinkSystem = null;
     }
 

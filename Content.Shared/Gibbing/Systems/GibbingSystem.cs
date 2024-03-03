@@ -37,7 +37,7 @@ public sealed class GibbingSystem : EntitySystem
     /// <param name="launchCone">The cone we are launching giblets in (if we are launching them!)</param>
     /// <param name="launchGibs">Should we launch giblets or just drop them</param>
     /// <param name="launchDirection">The direction to launch giblets (if we are launching them!)</param>
-    /// <param name="launchImpulse">The impluse to launch giblets at(if we are launching them!)</param>
+    /// <param name="launchImpulse">The impulse to launch giblets at(if we are launching them!)</param>
     /// /// <param name="logMissingGibable">Should we log if we are missing a gibbableComp when we call this function</param>
     /// <param name="launchImpulseVariance">The variation in giblet launch impulse (if we are launching them!)</param>
     /// <returns>True if successful, false if not</returns>
@@ -72,7 +72,7 @@ public sealed class GibbingSystem : EntitySystem
     /// <param name="launchCone">The cone we are launching giblets in (if we are launching them!)</param>
     /// <param name="launchGibs">Should we launch giblets or just drop them</param>
     /// <param name="launchDirection">The direction to launch giblets (if we are launching them!)</param>
-    /// <param name="launchImpulse">The impluse to launch giblets at(if we are launching them!)</param>
+    /// <param name="launchImpulse">The impulse to launch giblets at(if we are launching them!)</param>
     /// <param name="launchImpulseVariance">The variation in giblet launch impulse (if we are launching them!)</param>
     /// <param name="logMissingGibable">Should we log if we are missing a gibbableComp when we call this function</param>
     /// <returns>True if successful, false if not</returns>

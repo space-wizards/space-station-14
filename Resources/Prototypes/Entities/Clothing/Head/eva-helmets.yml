@@ -3,7 +3,7 @@
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetEVA
   name: EVA helmet
-  description: An old-but-gold helmet designed for extravehicular activites. Infamous for making security officers paranoid.
+  description: An old-but-gold helmet designed for extravehicular activities. Infamous for making security officers paranoid.
   components:
   - type: BreathMask
   - type: Sprite
@@ -20,7 +20,7 @@
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetEVALarge
   name: EVA helmet
-  description: An old-but-gold helmet designed for extravehicular activites.
+  description: An old-but-gold helmet designed for extravehicular activities.
   components:
   - type: BreathMask
   - type: Sprite

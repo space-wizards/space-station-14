@@ -8,7 +8,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Replay.Spectator;
 
-// This partial class has methods for spawning a spectator ghost and "possessing" entitites.
+// This partial class has methods for spawning a spectator ghost and "possessing" entities.
 public sealed partial class ReplaySpectatorSystem
 {
     private void OnGetAlternativeVerbs(GetVerbsEvent<AlternativeVerb> ev)

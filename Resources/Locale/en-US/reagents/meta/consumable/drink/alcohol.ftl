@@ -2,7 +2,7 @@ reagent-name-absinthe = absinthe
 reagent-desc-absinthe = A anise-flavoured spirit derived from botanicals.
 
 reagent-name-ale = ale
-reagent-desc-ale = A dark alchoholic beverage made by malted barley and yeast.
+reagent-desc-ale = A dark alcoholic beverage made by malted barley and yeast.
 
 reagent-name-beer = beer
 reagent-desc-beer = An alcoholic beverage made from malted grains, hops, yeast, and water.
@@ -53,7 +53,7 @@ reagent-name-whiskey = whiskey
 reagent-desc-whiskey = A type of distilled alcoholic beverage made from fermented grain mash.
 
 reagent-name-wine = wine
-reagent-desc-wine = An premium alchoholic beverage made from distilled grape juice.
+reagent-desc-wine = An premium alcoholic beverage made from distilled grape juice.
 
 reagent-name-champagne = champagne
 reagent-desc-champagne = A premium sparkling wine
@@ -143,7 +143,7 @@ reagent-name-hippies-delight = hippies delight
 reagent-desc-hippies-delight = You just don't get it maaaan.
 
 reagent-name-hooch = hooch
-reagent-desc-hooch = Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?
+reagent-desc-hooch = Either someone's failure at cocktail making or attempt in alcohol production. In any case, do you really want to drink that?
 
 reagent-name-iced-beer = iced beer
 reagent-desc-iced-beer = A beer which is so cold the air around it freezes.

@@ -19,7 +19,7 @@
   parent: PresentRandom
   id: MysteryFigureBox
   name: mystery spacemen minifigure box
-  description: A box containing a mystery minifigure. The side of the box depicts a few blacked-out 'rare' figures, including one with a large, non-humanoid shilouette.
+  description: A box containing a mystery minifigure. The side of the box depicts a few blacked-out 'rare' figures, including one with a large, non-humanoid silhouette.
   components:
   - type: Sprite
     sprite: Objects/Fun/figurines.rsi

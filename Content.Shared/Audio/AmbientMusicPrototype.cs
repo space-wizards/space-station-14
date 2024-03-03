@@ -22,8 +22,8 @@ public sealed partial class AmbientMusicPrototype : IPrototype
     /// <summary>
     /// Can we interrupt this ambience for a better prototype if possible?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("interruptable")]
-    public bool Interruptable = false;
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public bool Interruptible = false;
 
     /// <summary>
     /// Do we fade-in. Useful for songs.

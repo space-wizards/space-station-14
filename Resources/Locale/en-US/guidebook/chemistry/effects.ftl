@@ -333,7 +333,7 @@ reagent-effect-guidebook-cause-zombie-infection =
         *[other] give
     } an individual the zombie infection
 
-reagent-effect-guidebook-innoculate-zombie-infection =
+reagent-effect-guidebook-inoculate-zombie-infection =
     { $chance ->
         [1] Cures
         *[other] cure

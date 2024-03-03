@@ -176,7 +176,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         using (args.PushGroup(nameof(RadioMicrophoneComponent)))
         {
             args.PushMarkup(Loc.GetString("handheld-radio-component-on-examine", ("frequency", proto.Frequency)));
-            args.PushMarkup(Loc.GetString("handheld-radio-component-chennel-examine",
+            args.PushMarkup(Loc.GetString("handheld-radio-component-channel-examine",
                 ("channel", proto.LocalizedName)));
         }
     }

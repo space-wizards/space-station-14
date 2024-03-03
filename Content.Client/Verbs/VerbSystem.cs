@@ -61,7 +61,7 @@ namespace Content.Client.Verbs
             if (player == null)
                 return false;
 
-            // If FOV drawing is disabled, we will modify the visibility option to ignore visiblity checks.
+            // If FOV drawing is disabled, we will modify the visibility option to ignore visibility checks.
             var visibility = _eyeManager.CurrentEye.DrawFov
                 ? Visibility
                 : Visibility | MenuVisibility.NoFov;

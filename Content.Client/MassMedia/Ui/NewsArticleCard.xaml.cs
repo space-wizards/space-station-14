@@ -11,7 +11,7 @@ public sealed partial class NewsArticleCard : Control
     private TimeSpan? _publicationTime;
 
     public Action? OnDeletePressed;
-    public int ArtcileNumber;
+    public int ArticleNumber;
 
     public string? Title
     {

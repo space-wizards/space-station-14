@@ -283,7 +283,7 @@
   parent: BasePDA
   id: MimePDA
   name: mime PDA
-  description: Suprisingly not on mute.
+  description: Surprisingly not on mute.
   components:
   - type: Pda
     id: MimeIDCard

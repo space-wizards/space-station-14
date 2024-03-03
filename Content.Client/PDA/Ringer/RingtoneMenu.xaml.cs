@@ -62,7 +62,7 @@ namespace Content.Client.PDA.Ringer
         }
 
         /// <summary>
-        /// Determines whether or not the characters inputed are authorized
+        /// Determines whether or not the characters inputted are authorized
         /// </summary>
         public static bool IsNote(string input)
         {

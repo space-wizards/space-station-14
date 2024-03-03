@@ -185,15 +185,15 @@ public sealed partial class NPCCombatSystem
             if (!Enabled || !_gun.CanShoot(gun))
                 continue;
 
-            EntityCoordinates targetCordinates;
+            EntityCoordinates targetCoordinates;
 
             if (_mapManager.TryFindGridAt(xform.MapID, targetPos, out var gridUid, out var mapGrid))
             {
-                targetCordinates = new EntityCoordinates(gridUid, mapGrid.WorldToLocal(targetSpot));
+                targetCoordinates = new EntityCoordinates(gridUid, mapGrid.WorldToLocal(targetSpot));
             }
             else
             {
-                targetCordinates = new EntityCoordinates(xform.MapUid!.Value, targetSpot);
+                targetCoordinates = new EntityCoordinates(xform.MapUid!.Value, targetSpot);
             }
 
             comp.Status = CombatStatus.Normal;
@@ -203,7 +203,7 @@ public sealed partial class NPCCombatSystem
                 return;
             }
 
-            _gun.AttemptShoot(uid, gunUid, gun, targetCordinates);
+            _gun.AttemptShoot(uid, gunUid, gun, targetCoordinates);
         }
     }
 }

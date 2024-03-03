@@ -101,16 +101,17 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
                 SensorsTable.AddChild(spacer);
             }
 
-            var deparmentLabel = new RichTextLabel()
+            var departmentLabel = new RichTextLabel()
             {
                 Margin = new Thickness(10, 0),
                 HorizontalExpand = true,
             };
 
-            deparmentLabel.SetMessage(department);
-            deparmentLabel.StyleClasses.Add(StyleNano.StyleClassTooltipActionDescription);
+            departmentLabel.SetMessage(department);
+            departmentLabel.StyleClasses.Add(StyleNano.StyleClassTooltipActionDescription);
 
-            SensorsTable.AddChild(deparmentLabel);
+            SensorsTable.AddChild(departmentLabel);
+            _rowsContent.Add(departmentLabel);
 
             PopulateDepartmentList(departmentSensors);
         }
@@ -127,16 +128,17 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
             SensorsTable.AddChild(spacer);
 
-            var deparmentLabel = new RichTextLabel()
+            var departmentLabel = new RichTextLabel()
             {
                 Margin = new Thickness(10, 0),
                 HorizontalExpand = true,
             };
 
-            deparmentLabel.SetMessage(Loc.GetString("crew-monitoring-user-interface-no-department"));
-            deparmentLabel.StyleClasses.Add(StyleNano.StyleClassTooltipActionDescription);
+            departmentLabel.SetMessage(Loc.GetString("crew-monitoring-user-interface-no-department"));
+            departmentLabel.StyleClasses.Add(StyleNano.StyleClassTooltipActionDescription);
 
-            SensorsTable.AddChild(deparmentLabel);
+            SensorsTable.AddChild(departmentLabel);
+            _rowsContent.Add(departmentLabel);
 
             PopulateDepartmentList(remainingSensors);
         }

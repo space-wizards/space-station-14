@@ -12,7 +12,7 @@ public sealed partial class NewsReaderUiFragment : BoxContainer
     public event Action? OnNextButtonPressed;
     public event Action? OnPrevButtonPressed;
 
-    public event Action? OnNotificationSwithPressed;
+    public event Action? OnNotificationSwitchPressed;
 
     public NewsReaderUiFragment()
     {
@@ -20,7 +20,7 @@ public sealed partial class NewsReaderUiFragment : BoxContainer
 
         Next.OnPressed += _ => OnNextButtonPressed?.Invoke();
         Prev.OnPressed += _ => OnPrevButtonPressed?.Invoke();
-        NotificationSwitch.OnPressed += _ => OnNotificationSwithPressed?.Invoke();
+        NotificationSwitch.OnPressed += _ => OnNotificationSwitchPressed?.Invoke();
     }
 
     public void UpdateState(NewsArticle article, int targetNum, int totalNum, bool notificationOn)

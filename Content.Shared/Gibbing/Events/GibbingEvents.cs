@@ -8,7 +8,7 @@ namespace Content.Shared.Gibbing.Events;
 /// Called just before we actually gib the target entity
 /// </summary>
 /// <param name="Target">The entity being gibed</param>
-/// <param name="GibType">What type of gibbing is occuring</param>
+/// <param name="GibType">What type of gibbing is occurring</param>
 /// <param name="AllowedContainers">Containers we are allow to gib</param>
 /// <param name="ExcludedContainers">Containers we are allow not allowed to gib</param>
 [ByRefEvent] public record struct AttemptEntityContentsGibEvent(
@@ -24,7 +24,7 @@ namespace Content.Shared.Gibbing.Events;
 /// </summary>
 /// <param name="Target">The entity being gibed</param>
 /// <param name="GibletCount">how many giblets to spawn</param>
-/// <param name="GibType">What type of gibbing is occuring</param>
+/// <param name="GibType">What type of gibbing is occurring</param>
 [ByRefEvent] public record struct AttemptEntityGibEvent(EntityUid Target, int GibletCount, GibType GibType);
 
 /// <summary>

@@ -222,7 +222,7 @@
   name: sweet pea donut
   parent: FoodDonutBase
   id: FoodDonutSweetpea
-  description: Goes great with a bottle of Bastion Burbon!
+  description: Goes great with a bottle of Bastion Bourbon!
   components:
   - type: Sprite
     state: laugh
@@ -418,7 +418,7 @@
   name: sweet pea jelly-donut
   parent: FoodDonutBase
   id: FoodDonutJellySweetpea
-  description: Goes great with a bottle of Bastion Burbon!
+  description: Goes great with a bottle of Bastion Bourbon!
   components:
   - type: Sprite
     state: jelly-laugh
