@@ -31,9 +31,9 @@
         - LowImpassable
   - type: PointLight
     radius: 10
-    energy: 0.8
-    softness: 1
-    offset: "0, -0.5"
+    energy: 2.5
+    softness: 0.9
+    color: "#EEEEFF"
   - type: Anchorable
   - type: InteractionOutline
   - type: Damageable
@@ -122,6 +122,35 @@
     enabled: true
   - type: PoweredLight
     hasLampOnSpawn: LightTube
+    damage:
+      types:
+        Heat: 20
+  - type: StaticPrice
+    price: 25
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -15
+    range: 3
+    sound:
+      path: /Audio/Ambience/Objects/light_hum.ogg
+
+- type: entity
+  id: PoweredLEDLightPostSmall
+  name: post light
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: LED
+  parent: PoweredLightPostSmallEmpty
+  components:
+  - type: Sprite
+    state: base
+  - type: PointLight
+    enabled: true
+    radius: 15
+    energy: 1
+    softness: 0.9
+    color: "#EEEEFF"
+  - type: PoweredLight
+    hasLampOnSpawn: LedLightTube
     damage:
       types:
         Heat: 20
