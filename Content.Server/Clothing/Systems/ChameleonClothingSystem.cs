@@ -33,7 +33,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void OnVerb(EntityUid uid, ChameleonClothingComponent component, GetVerbsEvent<InteractionVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (!args.CanAccess || !args.CanInteract || component.User != args.User)
             return;
 
         args.Verbs.Add(new InteractionVerb()

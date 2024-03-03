@@ -352,6 +352,13 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!action.Enabled)
             return;
 
+        // check for action use prevention
+        // TODO: make code below use this event with a dedicated component
+        var attemptEv = new ActionAttemptEvent(user);
+        RaiseLocalEvent(actionEnt, ref attemptEv);
+        if (attemptEv.Cancelled)
+            return;
+
         var curTime = GameTiming.CurTime;
         // TODO: Check for charge recovery timer
         if (action.Cooldown.HasValue && action.Cooldown.Value.End > curTime)
