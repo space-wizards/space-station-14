@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dygon
-  changes:
-  - message: The construction module for cyborgs now also gives access to steel tiles.
-    type: Tweak
-  id: 5579
-  time: '2024-01-06T05:02:31.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23598
 - author: VigersRay
   changes:
   - message: Added loggin tips.
@@ -3824,3 +3817,11 @@
   id: 6078
   time: '2024-03-03T00:30:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25704
+- author: EmoGarbage404
+  changes:
+  - message: Fixed issues where using the Quantum Spin Inverted would bug out the
+      character's physics.
+    type: Fix
+  id: 6079
+  time: '2024-03-03T06:45:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25700
