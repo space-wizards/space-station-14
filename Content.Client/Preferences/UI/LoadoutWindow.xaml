@@ -17,6 +17,7 @@
                               Orientation="Vertical"
                               VerticalExpand="True"
                               HorizontalExpand="True">
+                    <Control Margin="0 5"/>
                 </BoxContainer>
             </ScrollContainer>
         </PanelContainer>

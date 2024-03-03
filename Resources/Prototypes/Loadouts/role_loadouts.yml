@@ -2,6 +2,7 @@
 - type: roleLoadout
   id: JobStationEngineer
   groups:
+  - Trinkets
   - StationEngineerHead
   - StationEngineerJumpsuit
   - StationEngineerBackpack
@@ -12,6 +13,7 @@
 - type: roleLoadout
   id: JobScientist
   groups:
+  - Trinkets
   - ScientistHead
   - ScientistNeck
   - ScientistJumpsuit
@@ -23,6 +25,7 @@
 - type: roleLoadout
   id: JobSecurityOfficer
   groups:
+  - Trinkets
   - SecurityHead
   - SecurityJumpsuit
   - SecurityBackpack

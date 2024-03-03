@@ -172,8 +172,6 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
         _loadoutWindow?.Close();
         _loadoutWindow?.Dispose();
         _loadoutWindow = null;
-        var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
-        controller.SetDummyJob(null, null);
     }
 
     public void LockRequirements(FormattedMessage requirements)

@@ -1,0 +1,9 @@
+- type: loadout
+  id: PlushieLizard
+  equipment: PlushieLizard
+
+- type: startingGear
+  id: PlushieLizard
+  storage:
+    back:
+    - PlushieLizard

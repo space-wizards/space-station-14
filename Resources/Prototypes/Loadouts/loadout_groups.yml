@@ -1,14 +1,22 @@
+# Miscellaneous
+- type: loadoutGroup
+  id: Trinkets
+  name: loadout-group-trinkets
+  optional: true
+  loadouts:
+  - PlushieLizard
+
 # Engineer
 - type: loadoutGroup
   id: StationEngineerHead
-  name: loadout-station-engineer-head
+  name: loadout-group-station-engineer-head
   loadouts:
   - StationEngineerHead
   - SeniorEngineerBeret
 
 - type: loadoutGroup
   id: StationEngineerJumpsuit
-  name: loadout-station-engineer-jumpsuit
+  name: loadout-group-station-engineer-jumpsuit
   loadouts:
   - StationEngineerJumpsuit
   - StationEngineerJumpskirt
@@ -17,7 +25,7 @@
 
 - type: loadoutGroup
   id: StationEngineerBackpack
-  name: loadout-station-engineer-backpack
+  name: loadout-group-station-engineer-backpack
   loadouts:
   - StationEngineerBackpack
   - StationEngineerSatchel
@@ -28,14 +36,14 @@
 
 - type: loadoutGroup
   id: StationEngineerOuterClothing
-  name: loadout-station-engineer-outerclothing
+  name: loadout-group-station-engineer-outerclothing
   optional: true
   loadouts:
   - StationEngineerOuterVest
 
 - type: loadoutGroup
   id: StationEngineerID
-  name: loadout-station-engineer-id
+  name: loadout-group-station-engineer-id
   loadouts:
   - StationEngineerPDA
   - SeniorEngineerPDA
@@ -44,21 +52,21 @@
 
 - type: loadoutGroup
   id: ScientistHead
-  name: loadout-scientist-head
+  name: loadout-group-scientist-head
   optional: true
   loadouts:
   - ScientificBeret
 
 - type: loadoutGroup
   id: ScientistNeck
-  name: loadout-scientist-neck
+  name: loadout-group-scientist-neck
   optional: true
   loadouts:
   - ScientistTie
 
 - type: loadoutGroup
   id: ScientistJumpsuit
-  name: loadout-scientist-jumpsuit
+  name: loadout-group-scientist-jumpsuit
   loadouts:
   - ScientistJumpsuit
   - ScientistJumpskirt
@@ -67,7 +75,7 @@
 
 - type: loadoutGroup
   id: ScientistBackpack
-  name: loadout-scientist-backpack
+  name: loadout-group-scientist-backpack
   loadouts:
   - ScientistBackpack
   - ScientistSatchel
@@ -78,7 +86,7 @@
 
 - type: loadoutGroup
   id: ScientistOuterClothing
-  name: loadout-scientist-outerclothing
+  name: loadout-group-scientist-outerclothing
   optional: true
   loadouts:
   - RegularLabCoat
@@ -87,7 +95,7 @@
 
 - type: loadoutGroup
   id: ScientistPDA
-  name: loadout-scientist-id
+  name: loadout-group-scientist-id
   loadouts:
   - ScientistPDA
   - SeniorResearcherPDA
@@ -95,7 +103,7 @@
 # Security
 - type: loadoutGroup
   id: SecurityHead
-  name: loadout-security-head
+  name: loadout-group-security-head
   optional: true
   loadouts:
   - SecurityHelmet
@@ -104,7 +112,7 @@
 
 - type: loadoutGroup
   id: SecurityJumpsuit
-  name: loadout-security-jumpsuit
+  name: loadout-group-security-jumpsuit
   loadouts:
   - SecurityJumpsuit
   - SecurityJumpskirt
@@ -113,7 +121,7 @@
 
 - type: loadoutGroup
   id: SecurityBackpack
-  name: loadout-security-backpack
+  name: loadout-group-security-backpack
   loadouts:
   - SecurityBackpack
   - SecuritySatchel
@@ -124,7 +132,7 @@
 
 - type: loadoutGroup
   id: SecurityPDA
-  name: loadout-security-id
+  name: loadout-group-security-id
   loadouts:
   - SecurityPDA
   - SeniorOfficerPDA

@@ -1,3 +1,4 @@
+using Content.Client.Lobby;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Preferences.Loadouts.Effects;
@@ -31,6 +32,13 @@ public sealed partial class LoadoutWindow : FancyWindow
                 OnLoadoutPressed?.Invoke(group, args);
             };
         }
+    }
+
+    public override void Close()
+    {
+        base.Close();
+        var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
+        controller.SetDummyJob(null, null);
     }
 
     public void RefreshLoadouts(RoleLoadout loadout, ICommonSession session, IDependencyCollection collection)

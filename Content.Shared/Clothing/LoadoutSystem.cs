@@ -34,7 +34,7 @@ public sealed class LoadoutSystem : EntitySystem
         if (!_protoMan.TryIndex(loadout.Equipment, out var gear))
             return null;
 
-        var count = gear.Equipment.Count + gear.Inhand.Count;
+        var count = gear.Equipment.Count + gear.Inhand.Count + gear.Storage.Values.Sum(x => x.Count);
 
         if (count == 1)
         {
@@ -46,6 +46,15 @@ public sealed class LoadoutSystem : EntitySystem
             if (gear.Inhand.Count == 1 && _protoMan.TryIndex<EntityPrototype>(gear.Inhand[0], out proto))
             {
                 return proto.ID;
+            }
+
+            // Storage moment
+            foreach (var ents in gear.Storage.Values)
+            {
+                foreach (var ent in ents)
+                {
+                    return ent;
+                }
             }
         }
 

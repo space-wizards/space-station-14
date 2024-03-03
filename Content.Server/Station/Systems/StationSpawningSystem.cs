@@ -175,6 +175,15 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             profile = HumanoidCharacterProfile.RandomWithSpecies(speciesId);
         }
 
+        if (prototype?.StartingGear != null)
+        {
+            var startingGear = _prototypeManager.Index<StartingGearPrototype>(prototype.StartingGear);
+            EquipStartingGear(entity.Value, startingGear);
+            if (profile != null)
+                EquipIdCard(entity.Value, profile.Name, prototype, station);
+        }
+
+        // Run loadouts after so stuff like storage loadouts can get
         if (profile?.Loadouts.TryGetValue("Job" + prototype?.ID, out var loadout) == true)
         {
             foreach (var group in loadout.SelectedLoadouts)
@@ -185,14 +194,6 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
                 var startingGear = _prototypeManager.Index<StartingGearPrototype>(group.Value);
                 EquipStartingGear(entity.Value, startingGear);
             }
-        }
-
-        if (prototype?.StartingGear != null)
-        {
-            var startingGear = _prototypeManager.Index<StartingGearPrototype>(prototype.StartingGear);
-            EquipStartingGear(entity.Value, startingGear);
-            if (profile != null)
-                EquipIdCard(entity.Value, profile.Name, prototype, station);
         }
 
         if (profile != null)

@@ -12,6 +12,12 @@ namespace Content.Shared.Roles
         [DataField]
         public List<EntProtoId> Inhand = new(0);
 
+        /// <summary>
+        /// Inserts entities into the specified slot's storage (if it does have storage).
+        /// </summary>
+        [DataField]
+        public Dictionary<string, List<EntProtoId>> Storage = new();
+
         [ViewVariables]
         [IdDataField]
         public string ID { get; private set; } = string.Empty;
