@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MrFippik
-  changes:
-  - message: Input port of the network system in timer
-    type: Add
-  id: 5581
-  time: '2024-01-06T06:41:57.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/20026
 - author: mirrorcult
   changes:
   - message: Examining entities is now predicted, meaning that you will be shown most
@@ -3826,3 +3819,11 @@
   id: 6080
   time: '2024-03-03T07:07:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25795
+- author: metalgearsloth
+  changes:
+  - message: 'Reworked shuttle consoles, including: manual FTL jumps, new map screen,
+      fixed performance issues, new docking screen.'
+    type: Tweak
+  id: 6081
+  time: '2024-03-03T07:39:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24430
