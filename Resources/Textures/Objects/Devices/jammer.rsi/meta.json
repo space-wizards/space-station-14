@@ -10,6 +10,24 @@
         {
             "name": "jammer",
             "directions": 1
+        },
+        {
+            "name": "jammer_high_charge",
+            "directions": 1
+        },
+        {
+            "name": "jammer_medium_charge",
+            "directions": 1
+        },
+        {
+            "name": "jammer_low_charge",
+            "directions": 1,
+	     "delays": [
+		[
+		  0.3,
+		  0.3
+		]
+	     ]
         }
     ]
 }

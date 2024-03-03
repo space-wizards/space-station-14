@@ -1,13 +1,15 @@
 using Content.Server.Radio.EntitySystems;
+using Content.Shared.RadioJammer;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Radio.Components;
 
 /// <summary>
 /// When activated (<see cref="ActiveRadioJammerComponent"/>) prevents from sending messages in range
 /// </summary>
-[RegisterComponent]
+[NetworkedComponent, RegisterComponent]
 [Access(typeof(JammerSystem))]
-public sealed partial class RadioJammerComponent : Component
+public sealed partial class RadioJammerComponent : SharedRadioJammerComponent
 {
     [DataDefinition]
     public partial struct RadioJamSetting

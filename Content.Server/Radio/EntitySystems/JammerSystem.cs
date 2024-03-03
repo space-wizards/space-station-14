@@ -5,11 +5,14 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Verbs;
+using Content.Shared.RadioJammer;
 
 namespace Content.Server.Radio.EntitySystems;
 
 public sealed class JammerSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -31,11 +34,30 @@ public sealed class JammerSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var _, out var jam))
         {
-
-            if (_powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
-                !battery.TryUseCharge(GetCurrentWattage(jam) * frameTime))
+            if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             {
-                RemComp<ActiveRadioJammerComponent>(uid);
+                if (!battery.TryUseCharge(GetCurrentWattage(jam) * frameTime))
+                {
+                    ChangeLEDState(false, uid, jam);
+                    RemComp<ActiveRadioJammerComponent>(uid);
+                }
+                else
+                {
+                    var percentCharged = battery.CurrentCharge / battery.MaxCharge;
+                    if (percentCharged > .50)
+                    {
+                        ChangeChargeLevel(RadioJammerChargeLevel.High, uid, jam, null);
+                    }
+                    else if (percentCharged < .15)
+                    {
+                        ChangeChargeLevel(RadioJammerChargeLevel.Low, uid, jam, null);
+                    }
+                    else
+                    {
+                        ChangeChargeLevel(RadioJammerChargeLevel.Medium, uid, jam, null);
+                    }
+                }
+
             }
 
         }
@@ -43,16 +65,17 @@ public sealed class JammerSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, RadioJammerComponent comp, ActivateInWorldEvent args)
     {
-
         var activated = !HasComp<ActiveRadioJammerComponent>(uid) &&
             _powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
             battery.CurrentCharge > GetCurrentWattage(comp);
         if (activated)
         {
+            ChangeLEDState(true, uid, comp);
             EnsureComp<ActiveRadioJammerComponent>(uid);
         }
         else
         {
+            ChangeLEDState(false, uid, comp);
             RemComp<ActiveRadioJammerComponent>(uid);
         }
         var state = Loc.GetString(activated ? "radio-jammer-component-on-state" : "radio-jammer-component-off-state");
@@ -64,7 +87,10 @@ public sealed class JammerSystem : EntitySystem
     private void OnPowerCellChanged(EntityUid uid, ActiveRadioJammerComponent comp, PowerCellChangedEvent args)
     {
         if (args.Ejected)
+        {
+            ChangeLEDState(false, uid, EntityManager.GetComponentOrNull<RadioJammerComponent>(uid));
             RemComp<ActiveRadioJammerComponent>(uid);
+        }
     }
 
     private void OnExamine(EntityUid uid, RadioJammerComponent comp, ExaminedEvent args)
@@ -133,4 +159,15 @@ public sealed class JammerSystem : EntitySystem
     {
         return jammer.Settings[jammer.SelectedPowerLevel].Range;
     }
+    private void ChangeLEDState(bool isLEDOn, EntityUid uid, RadioJammerComponent? component = null,
+        AppearanceComponent? appearance = null)
+    {
+        _appearance.SetData(uid, RadioJammerVisuals.LEDOn, isLEDOn, appearance);
+    }
+    private void ChangeChargeLevel(RadioJammerChargeLevel chargeLevel, EntityUid uid, RadioJammerComponent? component = null,
+        AppearanceComponent? appearance = null)
+    {
+        _appearance.SetData(uid, RadioJammerVisuals.ChargeLevel, chargeLevel, appearance);
+    }
+
 }
