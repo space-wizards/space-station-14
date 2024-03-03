@@ -3,6 +3,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Server.Station.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Ghost;
@@ -77,12 +78,30 @@ public sealed partial class ShuttleSystem
 
     private void InitializeFTL()
     {
+        SubscribeLocalEvent<StationPostInitEvent>(OnStationPostInit);
         _bodyQuery = GetEntityQuery<BodyComponent>();
         _buckleQuery = GetEntityQuery<BuckleComponent>();
         _ghostQuery = GetEntityQuery<GhostComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _statusQuery = GetEntityQuery<StatusEffectsComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
+    }
+
+    private void OnStationPostInit(ref StationPostInitEvent ev)
+    {
+        // Add all grid maps as ftl destinations that anyone can FTL to.
+        foreach (var gridUid in ev.Station.Comp.Grids)
+        {
+            var gridXform = _xformQuery.GetComponent(gridUid);
+
+            if (gridXform.MapUid == null ||
+                HasComp<FTLDestinationComponent>(gridXform.MapUid))
+            {
+                continue;
+            }
+
+            AddComp<FTLDestinationComponent>(gridXform.MapUid.Value);
+        }
     }
 
     /// <summary>

@@ -25,7 +25,6 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
-        [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
         [Dependency] private readonly PathfindingSystem _pathfinding = default!;
         [Dependency] private readonly ShuttleConsoleSystem _console = default!;
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
@@ -33,14 +32,13 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         private const string DockingJoint = "docking";
-        private const float DockingRadius = 0.20f;
 
         private EntityQuery<MapGridComponent> _gridQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
         private EntityQuery<TransformComponent> _xformQuery;
 
-        private HashSet<Entity<DockingComponent>> _dockingSet = new();
-        private HashSet<Entity<DockingComponent, DoorBoltComponent>> _dockingBoltSet = new();
+        private readonly HashSet<Entity<DockingComponent>> _dockingSet = new();
+        private readonly HashSet<Entity<DockingComponent, DoorBoltComponent>> _dockingBoltSet = new();
 
         public override void Initialize()
         {
@@ -85,7 +83,7 @@ namespace Content.Server.Shuttles.Systems
             foreach (var entity in _dockingBoltSet)
             {
                 _doorSystem.TryClose(entity);
-                _bolts.SetBoltsWithAudio(entity.Owner, entity.Comp2, enabled);
+                _doorSystem.SetBoltsDown((entity.Owner, entity.Comp2), enabled);
             }
         }
 
