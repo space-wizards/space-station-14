@@ -214,7 +214,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 Insert(uid, slot, args.Used, args.User, excludeUserAudio: true);
 
-                if (!string.IsNullOrWhiteSpace(slot.InsertSuccessPopup))
+                if (slot.InsertSuccessPopup.HasValue)
                     _popupSystem.PopupClient(Loc.GetString(slot.InsertSuccessPopup), uid, args.User);
 
                 args.Handled = true;
@@ -258,14 +258,14 @@ namespace Content.Shared.Containers.ItemSlots
             if ((!slot.Whitelist?.IsValid(usedUid) ?? false) ||
                 (slot.Blacklist?.IsValid(usedUid) ?? false))
             {
-                if (popup.HasValue && !string.IsNullOrWhiteSpace(slot.WhitelistFailPopup))
+                if (popup.HasValue && slot.WhitelistFailPopup.HasValue)
                     _popupSystem.PopupClient(Loc.GetString(slot.WhitelistFailPopup), uid, popup.Value);
                 return false;
             }
 
             if (slot.Locked)
             {
-                if (popup.HasValue && !string.IsNullOrWhiteSpace(slot.LockedFailPopup))
+                if (popup.HasValue && slot.LockedFailPopup.HasValue)
                     _popupSystem.PopupClient(Loc.GetString(slot.LockedFailPopup), uid, popup.Value);
                 return false;
             }
@@ -347,7 +347,7 @@ namespace Content.Shared.Containers.ItemSlots
         {
             if (slot.Locked)
             {
-                if (popup.HasValue && !string.IsNullOrWhiteSpace(slot.LockedFailPopup))
+                if (popup.HasValue && slot.LockedFailPopup.HasValue)
                     _popupSystem.PopupClient(Loc.GetString(slot.LockedFailPopup), uid, popup.Value);
                 return false;
             }

@@ -193,25 +193,24 @@ namespace Content.Shared.Containers.ItemSlots
         public bool EjectOnBreak = false;
 
         /// <summary>
-        ///     If this is not an empty string, a popup will be generated when someone attempts to insert a bad item
-        ///     into this slot. This string will be passed through localization.
+        ///     When specified, a popup will be generated whenever someone attempts to insert a bad item into this slot.
         /// </summary>
         [DataField]
-        public string WhitelistFailPopup = string.Empty;
+        public LocId? WhitelistFailPopup;
 
         /// <summary>
-        ///     If this is not an empty string, a popup will be generated when someone attempts to insert a valid item,
-        ///     or eject an item from the slot while the slot is locked. This string will be passed through localization.
+        ///     When specified, a popup will be generated whenever someone attempts to insert a valid item, or eject an item
+        ///     from the slot while that slot is locked.
         /// </summary>
         [DataField]
-        public string LockedFailPopup = string.Empty;
+        public LocId? LockedFailPopup;
 
         /// <summary>
-        ///     If this is not an empty string, a popup will be generated when someone successfully inserts a valid item.
-        ///     This will also be used for insertions resulting from swapping. This string will be passed through localization.
+        ///     When specified, a popup will be generated whenever someone successfully inserts a valid item into this slot.
+        ///     This is also used for insertions resulting from swapping.
         /// </summary>
         [DataField]
-        public string InsertSuccessPopup = string.Empty;
+        public LocId? InsertSuccessPopup;
 
         /// <summary>
         ///     If the user interacts with an entity with an already-filled item slot, should they attempt to swap out the item?
