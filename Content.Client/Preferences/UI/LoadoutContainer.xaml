@@ -1,14 +1,14 @@
 <BoxContainer Name="Container" xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-         Orientation="Vertical"
+         Orientation="Horizontal"
          MouseFilter="Pass"
-         Margin="5 0 0 5">
-    <PanelContainer Margin="10" SetSize="64 64">
+         Margin="5 0 0 10">
+    <Button Name="SelectButton" Margin="0 0 10 0" HorizontalExpand="True"/>
+    <PanelContainer SetSize="64 64" HorizontalAlignment="Right">
         <PanelContainer.PanelOverride>
             <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
         </PanelContainer.PanelOverride>
-        <SpriteView Name="Sprite" Scale="2 2"/>
+        <SpriteView Name="Sprite" Scale="4 4"/>
     </PanelContainer>
-    <Button Name="SelectButton"/>
 </BoxContainer>
