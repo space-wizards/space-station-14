@@ -36,7 +36,7 @@ public sealed partial class ShuttleSystem
     public const float DefaultTravelTime = 20f;
     public const float DefaultArrivalTime = 5f;
     private const float FTLCooldown = 10f;
-    public const float FTLMassLimit = 100000f;
+    public const float FTLMassLimit = 300f;
 
     // I'm too lazy to make CVars.
 
@@ -68,9 +68,11 @@ public sealed partial class ShuttleSystem
     private const int FTLProximityIterations = 3;
 
     private readonly HashSet<EntityUid> _lookupEnts = new();
+    private readonly HashSet<EntityUid> _immuneEnts = new();
 
     private EntityQuery<BodyComponent> _bodyQuery;
     private EntityQuery<BuckleComponent> _buckleQuery;
+    private EntityQuery<FTLBeaconComponent> _beaconQuery;
     private EntityQuery<GhostComponent> _ghostQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<StatusEffectsComponent> _statusQuery;
@@ -81,6 +83,7 @@ public sealed partial class ShuttleSystem
         SubscribeLocalEvent<StationPostInitEvent>(OnStationPostInit);
         _bodyQuery = GetEntityQuery<BodyComponent>();
         _buckleQuery = GetEntityQuery<BuckleComponent>();
+        _beaconQuery = GetEntityQuery<FTLBeaconComponent>();
         _ghostQuery = GetEntityQuery<GhostComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _statusQuery = GetEntityQuery<StatusEffectsComponent>();
@@ -206,7 +209,7 @@ public sealed partial class ShuttleSystem
             return false;
         }
 
-        if (TryComp(shuttleUid, out PhysicsComponent? shuttlePhysics) && shuttlePhysics.Mass > 300f)
+        if (TryComp(shuttleUid, out PhysicsComponent? shuttlePhysics) && shuttlePhysics.Mass > FTLMassLimit)
         {
             reason = Loc.GetString("shuttle-console-mass");
             return false;
@@ -822,7 +825,6 @@ public sealed partial class ShuttleSystem
         // Flatten anything not parented to a grid.
         var transform = _physics.GetPhysicsTransform(uid, xform);
         var aabbs = new List<Box2>(manager.Fixtures.Count);
-        var immune = new HashSet<EntityUid>();
         var tileSet = new List<(Vector2i, Tile)>();
 
         foreach (var fixture in manager.Fixtures.Values)
@@ -842,16 +844,17 @@ public sealed partial class ShuttleSystem
             tileSet.Clear();
             _biomes.ReserveTiles(xform.MapUid.Value, aabb, tileSet);
             _lookupEnts.Clear();
+            _immuneEnts.Clear();
             _lookup.GetEntitiesIntersecting(xform.MapUid.Value, aabb, _lookupEnts, LookupFlags.Uncontained);
 
             foreach (var ent in _lookupEnts)
             {
-                if (ent == uid || immune.Contains(ent))
+                if (ent == uid || _immuneEnts.Contains(ent))
                 {
                     continue;
                 }
 
-                if (_ghostQuery.HasComponent(ent))
+                if (_ghostQuery.HasComponent(ent) || _beaconQuery.HasComponent(ent))
                 {
                     continue;
                 }
@@ -859,7 +862,7 @@ public sealed partial class ShuttleSystem
                 if (_bodyQuery.TryGetComponent(ent, out var mob))
                 {
                     var gibs = _bobby.GibBody(ent, body: mob);
-                    immune.UnionWith(gibs);
+                    _immuneEnts.UnionWith(gibs);
                     continue;
                 }
 
