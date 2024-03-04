@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: a powerful tesla gun can be found on planets!
-    type: Add
-  id: 5586
-  time: '2024-01-06T07:18:35.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23175
 - author: ZeroNationality
   changes:
   - message: Added a static station map for the pAI to use to guide their owner
@@ -3826,3 +3819,10 @@
   id: 6085
   time: '2024-03-04T05:07:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25480
+- author: metalgearsloth
+  changes:
+  - message: Fix expedition FTL.
+    type: Fix
+  id: 6086
+  time: '2024-03-04T06:24:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25823
