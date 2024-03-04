@@ -3,17 +3,14 @@ using Content.Shared.Librarian;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Librarian.Components;
+namespace Content.Server.BookEncryption.Components;
 
 /// <summary>
 /// A component storing randomized pairs to keywords.
 /// </summary>
 [RegisterComponent, Access(typeof(BooksEncryptionSystem))]
-public sealed partial class PaperDecryptionHintComponent : Component
+public sealed partial class BooksEncryptionComponent : Component
 {
-    [DataField(required: true)]
-    public ProtoId<EncryptedBookDisciplinePrototype> Discipline;
-
     [DataField]
-    public int Hints = 3;
+    public Dictionary<EncryptedBookDisciplinePrototype,List<(string, string)>> KeywordPairs = new();
 }

@@ -1,4 +1,4 @@
-namespace Content.Server.Librarian.Components;
+namespace Content.Server.BookEncryption.Components;
 
 /// <summary>
 ///     Randomizes the book story by creating it from list of dataset prototypes or strings.

@@ -1,11 +1,11 @@
 
-using Content.Server.Librarian.Components;
+using Content.Server.BookEncryption.Components;
 using Content.Server.Paper;
 using Content.Shared.Librarian;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.Librarian;
+namespace Content.Server.BookEncryption;
 
 
 public sealed class BooksEncryptionSystem : EntitySystem
@@ -33,8 +33,8 @@ public sealed class BooksEncryptionSystem : EntitySystem
         paper.Content += $"\n\n";
         paper.Content += Loc.GetString("lib-book-hint") + "\n";
 
-
-        for (int i = 0; i < hint.Comp.Hints; i++)
+        var hintCount = _random.Next(hint.Comp.MinHints, hint.Comp.MaxHints);
+        for (int i = 0; i < hintCount; i++)
         {
             var pair = GetHint(hint.Comp.Discipline);
             var textVariant = _random.Next(1, 4);

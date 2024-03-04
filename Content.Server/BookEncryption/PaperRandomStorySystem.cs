@@ -1,9 +1,9 @@
 
-using Content.Server.Librarian.Components;
+using Content.Server.BookEncryption.Components;
 using Content.Server.Paper;
 using Content.Server.RandomMetadata;
 
-namespace Content.Server.Librarian;
+namespace Content.Server.BookEncryption;
 
 public sealed class PaperRandomStorySystem : EntitySystem
 {
