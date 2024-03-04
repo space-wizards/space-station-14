@@ -1,4 +1,4 @@
-using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Nutrition.EntitySystems;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
