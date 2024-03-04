@@ -37,7 +37,7 @@ public sealed partial class LoadoutContainer : BoxContainer
         {
             var tooltip = new Tooltip();
             tooltip.SetMessage(reason);
-            TooltipSupplier = _ => tooltip;
+            SelectButton.TooltipSupplier = _ => tooltip;
         }
 
         if (proto != null && _protoManager.TryIndex(proto, out var loadProto))

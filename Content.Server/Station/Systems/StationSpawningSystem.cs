@@ -186,6 +186,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         // Run loadouts after so stuff like storage loadouts can get
         if (profile?.Loadouts.TryGetValue("Job" + prototype?.ID, out var loadout) == true)
         {
+            // TODO: Order by roleloadoutprototype
             foreach (var group in loadout.SelectedLoadouts)
             {
                 if (group.Value == null)

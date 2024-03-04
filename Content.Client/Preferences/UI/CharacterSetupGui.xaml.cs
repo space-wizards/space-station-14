@@ -177,7 +177,7 @@ namespace Content.Client.Preferences.UI
                     var job = controller.GetPreferredJob(humanoid);
                     controller.GiveDummyJobClothes(_previewDummy, humanoid, job);
 
-                    if (prototypeManager.HasIndex<LoadoutPrototype>("Job" + job.ID))
+                    if (prototypeManager.HasIndex<RoleLoadoutPrototype>("Job" + job.ID))
                     {
                         var loadout = humanoid.GetLoadoutOrDefault("Job" + job.ID, entityManager, prototypeManager);
                         controller.GiveDummyLoadout(_previewDummy, loadout);
