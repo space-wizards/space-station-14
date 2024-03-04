@@ -56,6 +56,9 @@
       ]
     },
     {
+      "name": "icon_briefcase"
+    },
+    {
       "name": "icon_bucket"
     },
     {
@@ -74,6 +77,9 @@
       "name": "icon_dna"
     },
     {
+      "name": "icon_eye"
+    },
+    {
       "name": "icon_fish"
     },
     {
@@ -83,13 +89,31 @@
       "name": "icon_hacking"
     },
     {
+      "name": "icon_ian"
+    },
+    {
       "name": "icon_law"
+    },
+    {
+      "name": "icon_letter_N"
+    },
+    {
+      "name": "icon_letter_P"
+    },
+    {
+      "name": "icon_lightning"
     },
     {
       "name": "icon_magnifier"
     },
     {
       "name": "icon_medical"
+    },
+    {
+      "name": "icon_medical_cross"
+    },
+    {
+      "name": "icon_mount"
     },
     {
       "name": "icon_nuclear"
@@ -101,10 +125,31 @@
       "name": "icon_pentagramm"
     },
     {
+      "name": "icon_planet"
+    },
+    {
+      "name": "icon_possum"
+    },
+    {
+      "name": "icon_question"
+    },
+    {
+      "name": "icon_scmmd"
+    },
+    {
       "name": "icon_skull"
     },
     {
+      "name": "icon_stars"
+    },
+    {
+      "name": "icon_stars2"
+    },
+    {
       "name": "icon_stunbaton"
+    },
+    {
+      "name": "icon_temple"
     },
     {
       "name": "icon_text"
@@ -117,6 +162,9 @@
     },
     {
       "name": "icon_time"
+    },
+    {
+      "name": "icon_tree"
     },
     {
       "name": "icon_wrench"

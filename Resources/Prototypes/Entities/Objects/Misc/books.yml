@@ -296,6 +296,7 @@
     - state: decor_wingette
       color: "#f7f7f7"
     - state: icon_medical
+      color: "#58abcc"
   - type: Tag
     tags:
     - Book
@@ -370,12 +371,12 @@
           decor_middle: Sixteen
           icon_corner: Sixteen
           decor_vertical_middle: Sixteen
+          icon_mount: ""
         icon:
           icon_apple: ""
           icon_atmos: ""
-          icon_aurora: Sixteen
           icon_bar: ""
-          icon_biohazard: ""
+          icon_biohazard: Sixteen
           icon_borg: ""
           icon_bucket: ""
           icon_cabbage: ""
@@ -398,6 +399,22 @@
           icon_text3: "" 
           icon_time: Sixteen
           icon_wrench: "" 
+          # really
+          icon_aurora: Sixteen
+          icon_briefcase: ""
+          icon_eye: ""
+          icon_ian: ""
+          icon_letter_N: ""
+          icon_letter_P: ""
+          icon_lightning: ""
+          icon_planet: ""
+          icon_possum: ""
+          icon_question: Sixteen
+          icon_scmmd: ""
+          icon_stars: Sixteen
+          icon_stars2: Sixteen
+          icon_temple: Sixteen
+          icon_tree: ""
         overlay:
           overlay_blood: ""
           overlay_dirt: Sixteen
