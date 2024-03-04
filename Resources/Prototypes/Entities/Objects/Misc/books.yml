@@ -534,7 +534,6 @@
   parent: BookRandomStory
   id: BookHintMysticism
   name: mysticism hint book
-  description: The secrets of mystical stories lurk in this book.
   components:
   - type: PaperDecryptionHint
     discipline: Mysticism
@@ -543,7 +542,6 @@
   parent: BookRandomStory
   id: BookHintTechnology
   name: technology hint book
-  description: The secrets of technology lurk in this book.
   components: 
   - type: PaperDecryptionHint
     discipline: Technology
@@ -552,7 +550,6 @@
   parent: BookRandomStory
   id: BookHintBiology
   name: biology hint book
-  description: The secrets of biology lurk in this book.
   components: 
   - type: PaperDecryptionHint
     discipline: Biology
@@ -561,7 +558,6 @@
   parent: BookRandomStory
   id: BookHintMilitary
   name: military hint book
-  description: The secrets of military lurk in this book.
   components: 
   - type: PaperDecryptionHint
     discipline: Military
@@ -570,7 +566,6 @@
   parent: BookRandomStory
   id: BookHintSocial
   name: social hint book
-  description: The secrets of military lurk in this book.
   components:
   - type: PaperDecryptionHint
     discipline: Social

@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Librarian;
+namespace Content.Shared.BookEncryption;
 
 [Prototype("encryptedBookDiscipline")]
 public sealed partial class EncryptedBookDisciplinePrototype : IPrototype

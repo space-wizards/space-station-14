@@ -1,7 +1,7 @@
 
 using Content.Server.BookEncryption.Components;
 using Content.Server.Paper;
-using Content.Shared.Librarian;
+using Content.Shared.BookEncryption;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
