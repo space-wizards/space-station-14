@@ -8,6 +8,9 @@
   },
   "states": [
     {
+      "name": "book_icon"
+    },
+    {
       "name": "cover_base"
     },
     {

@@ -13,7 +13,7 @@
     programName: notekeeper-program-name
     icon:
       sprite:  Objects/Misc/books.rsi
-      state: book6
+      state: book_icon
   - type: NotekeeperCartridge
 
 - type: entity
