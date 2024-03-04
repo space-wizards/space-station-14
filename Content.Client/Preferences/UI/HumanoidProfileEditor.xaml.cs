@@ -1,11 +1,13 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.Guidebook;
 using Content.Client.Humanoid;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
@@ -115,6 +117,8 @@ namespace Content.Client.Preferences.UI
             _preferencesManager = preferencesManager;
             _configurationManager = configurationManager;
             _markingManager = IoCManager.Resolve<MarkingManager>();
+
+            SpeciesInfoButton.OnPressed += OnSpeciesInfoButtonPressed;
 
             #region Left
 
@@ -523,8 +527,24 @@ namespace Content.Client.Preferences.UI
 
             preferencesManager.OnServerDataLoaded += LoadServerData;
 
+            UpdateSpeciesGuidebookIcon();
 
             IsDirty = false;
+        }
+
+        private void OnSpeciesInfoButtonPressed(BaseButton.ButtonEventArgs args)
+        {
+            var guidebookController = UserInterfaceManager.GetUIController<GuidebookUIController>();
+            var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
+            _prototypeManager.TryIndex<GuideEntryPrototype>("Species", out var guideSpecies);
+
+            if (_prototypeManager.TryIndex<GuideEntryPrototype>(species, out var guide))
+            {
+                var dict = new Dictionary<string, GuideEntry>();
+                // TODO: Load all species guidebooks, with the current species being open
+                dict.Add(species, guide);
+                guidebookController.ToggleGuidebook(dict, includeChildren:true, selected: species);
+            }
         }
 
         private void ToggleClothes(BaseButton.ButtonEventArgs obj)
@@ -793,6 +813,7 @@ namespace Content.Client.Preferences.UI
             CMarkings.SetSpecies(newSpecies); // Repopulate the markings tab as well.
             UpdateSexControls(); // update sex for new species
             RebuildSpriteView(); // they might have different inv so we need a new dummy
+            UpdateSpeciesGuidebookIcon();
             IsDirty = true;
             _needUpdatePreview = true;
         }
@@ -942,6 +963,18 @@ namespace Content.Client.Preferences.UI
                 }
             }
 
+        }
+
+        public void UpdateSpeciesGuidebookIcon()
+        {
+            var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
+            var style = "SpeciesInfoDefault";
+            if (_prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesProto))
+                style = speciesProto.GuideBookIcon;
+
+            SpeciesInfoButton.StyleClasses.Clear();
+            SpeciesInfoButton.StyleClasses.Add(style);
+            SpeciesInfoButton.ToolTip = Loc.GetString("humanoid-profile-editor-guidebook-button-tooltip");
         }
 
         private void UpdateMarkings()
