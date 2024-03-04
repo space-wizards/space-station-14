@@ -24,7 +24,7 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
         _window.OnClose += Close;
         _window.Input.OnKeyBindDown += args => // Solution while TextEdit don't have events
         {
-            if (args.Function == EngineKeyFunctions.TextSubmit)
+            if (args.Function == EngineKeyFunctions.MultilineTextSubmit)
             {
                 var text = Rope.Collapse(_window.Input.TextRope);
                 Input_OnTextEntered(text);
