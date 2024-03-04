@@ -1,5 +1,10 @@
 lib-book-hint = After carefully studying this book, you can find out that:
 
+lib-book-hint-text1 = Apparently, [bold]{$Gibberish}[/bold] stands for [bold]{$Keyword}[/bold] from another language.
+lib-book-hint-text2 = It turned out that the [bold]{$Keyword}[/bold] had an ancient name that sounded like [bold]{$Gibberish}[/bold].
+lib-book-hint-text3 = It seems [bold]{$Keyword}[/bold] used to have a second meaning, sounding like [bold]{$Gibberish}[/bold].
+lib-book-hint-text4 = The word [bold]{$Gibberish}[/bold] has found a new old meaning. it means [bold]{$Keyword}[/bold].
+
 lib-book-discipline-mysticism = Mysticism
 lib-book-discipline-technology = Technology
 lib-book-discipline-biology = Biology

@@ -383,6 +383,7 @@
         icon:
           icon_biohazard: Sixteen
           icon_borg: ""
+          icon_banana: ""
           icon_glow: Sixteen
           icon_hacking: ""
           icon_law: Sixteen
@@ -392,7 +393,6 @@
           icon_aurora: Sixteen
           icon_briefcase: ""
           icon_eye: ""
-          icon_ian: ""
           icon_letter_N: ""
           icon_letter_P: ""
           icon_lightning: ""
@@ -431,11 +431,13 @@
     - "about a"
     - book_character_trait
     - book_character
+    - and
+    - book_character_trait
+    - book_character
     - "."
     - "Due to"
     - book_event
-    - ","
-    - book_character
+    - ", they"
     - book_event_trait
     - book_action
     - book_character

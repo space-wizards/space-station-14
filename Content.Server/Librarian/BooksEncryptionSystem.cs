@@ -31,13 +31,14 @@ public sealed class BooksEncryptionSystem : EntitySystem
         if (!TryComp<PaperComponent>(hint, out var paper))
             return;
         paper.Content += $"\n\n";
-        paper.Content += Loc.GetString("lib-book-hint");
+        paper.Content += Loc.GetString("lib-book-hint") + "\n";
 
 
         for (int i = 0; i < hint.Comp.Hints; i++)
         {
             var pair = GetHint(hint.Comp.Discipline);
-            paper.Content += $"\n {Loc.GetString(pair.Item1)} is {Loc.GetString(pair.Item2)}!";
+            var textVariant = _random.Next(1, 4);
+            paper.Content += Loc.GetString($"lib-book-hint-text{textVariant}", ("Gibberish", Loc.GetString(pair.Item2)), ("Keyword", Loc.GetString(pair.Item1))) + "\n";
         }
     }
 
