@@ -51,7 +51,7 @@
       color: "#082561"
     - state: icon_text 
       color: gold
-    - state: icon_glow
+    - state: icon_planet
       color: "#42b6f5"
   - type: Tag
     tags:
@@ -367,39 +367,23 @@
           cover_strong: Sixteen
         decor:
           decor_wingette: Sixteen
+          decor_wingette_circle: Sixteen
           decor_bottom: Sixteen
           decor_middle: Sixteen
-          icon_corner: Sixteen
+          decor_spine: Sixteen
+          decor_diagonal: Sixteen
           decor_vertical_middle: Sixteen
+          icon_corner: Sixteen
           icon_mount: ""
         icon:
-          icon_apple: ""
-          icon_atmos: ""
-          icon_bar: ""
           icon_biohazard: Sixteen
           icon_borg: ""
-          icon_bucket: ""
-          icon_cabbage: ""
-          icon_chemical: ""
-          icon_diamond: ""
-          icon_dna: Sixteen
-          icon_fish: ""
           icon_glow: Sixteen
           icon_hacking: ""
           icon_law: Sixteen
           icon_magnifier: ""
-          icon_medical: ""
           icon_nuclear: ""
-          icon_origami: ""
-          icon_pentagramm: Sixteen
-          icon_skull: ""
-          icon_stunbaton: ""
-          icon_text: ""
-          icon_text2: ""
-          icon_text3: "" 
           icon_time: Sixteen
-          icon_wrench: "" 
-          # really
           icon_aurora: Sixteen
           icon_briefcase: ""
           icon_eye: ""
@@ -415,57 +399,19 @@
           icon_stars2: Sixteen
           icon_temple: Sixteen
           icon_tree: ""
+          icon_pentagramm: Sixteen
+          icon_fish: ""
+          icon_origami: ""
+          icon_skull: ""
+          icon_text: ""
+          icon_text2: ""
+          icon_text3: "" 
         overlay:
           overlay_blood: ""
           overlay_dirt: Sixteen
+          detail_bookmark: Sixteen
+          detail_rivets: Sixteen
           overlay_null: ""
-
-- type: entity
-  parent: BookBase
-  id: BookEscalation
-  name: Robert's Rules of Escalation
-  description: The book is stained with blood. It seems to have been used more as a weapon than reading material.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/books.rsi
-    layers:
-    - state: paper
-    - state: cover_old
-      color: "#820707"
-    - state: decor_wingette
-      color: "#d61818"
-    - state: icon_text3
-    - state: overlay_blood
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 6
-  - type: Paper
-    content: book-text-escalation
-
-- type: entity
-  parent: BookBase
-  id: BookEscalationSecurity
-  name: "Robert's Rules of Escalation: Security Edition"
-  description: The book is stained with blood. It seems to have been used more as a weapon than reading material.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/books.rsi
-    layers:
-    - state: paper
-    - state: cover_base
-      color: "#820707"
-    - state: decor_wingette
-      color: black
-    - state: icon_text3
-    - state: icon_stunbaton
-    - state: overlay_blood
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 6
-  - type: Paper
-    content: book-text-escalation-security
 
 - type: entity
   parent: BookBase

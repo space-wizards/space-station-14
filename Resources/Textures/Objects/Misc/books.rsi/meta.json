@@ -23,13 +23,28 @@
       "name": "decor_wingette_flat"
     },
     {
+      "name": "decor_wingette_circle"
+    },
+    {
       "name": "decor_bottom"
+    },
+    {
+      "name": "decor_diagonal"
     },
     {
       "name": "decor_middle"
     },
     {
+      "name": "decor_spine"
+    },
+    {
       "name": "decor_vertical_middle"
+    },
+    {
+      "name": "detail_bookmark"
+    },
+    {
+      "name": "detail_rivets"
     },
     {
       "name": "icon_apple"
@@ -102,6 +117,42 @@
     },
     {
       "name": "icon_lightning"
+    },
+    {
+      "name": "icon_magic"
+    },
+    {
+      "name": "icon_magic_fireball",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "icon_magic_forcewall",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "icon_magic_knock",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     },
     {
       "name": "icon_magnifier"
