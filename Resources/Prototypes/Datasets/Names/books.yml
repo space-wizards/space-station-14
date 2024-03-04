@@ -7,6 +7,12 @@
   - notes
   - manuscript
   - records
+  - tome
+  - journal
+  - archives
+  - codex
+  - memories
+  - compendium
 
 - type: dataset
   id: book_genre
@@ -17,6 +23,14 @@
   - poetry
   - novella
   - chronicle
+  - science-fiction
+  - fantasy story
+  - romance
+  - thriller
+  - historical fiction
+  - biography
+  - adventure
+  - drama
 
 - type: dataset
   id: book_hint_appearance
@@ -39,6 +53,16 @@
   - crooked
   - crumpled
   - dirty
+  - elegant
+  - ornate
+  - weathered
+  - chrisp
+  - lavish
+  - tattered
+  - polished
+  - embossed
+  - mismatched
+  - gilded
 
 - type: dataset
   id: book_character
@@ -74,9 +98,12 @@
   - space dragon
   - revolutionary
   - nuclear operative
-  - ghosts
-  - witch cult
-  - illuminati
+  - narsie cultist
+  - ratwar cultist
+  - greytider
+  - arachnid
+  - vox
+  - dwarf
 
 - type: dataset
   id: book_character_trait
@@ -93,6 +120,25 @@
   - rich
   - poor
   - popular
+  - absent-minded
+  - stern
+  - сharismatic
+  - stoic
+  - looking extremely cute
+  - looking like a dwarf
+  - smelling of beer
+  - radiating joy
+  - painfully beautiful
+  - partially robotic
+  - being a hologram
+  - actually being a robot
+  - exuding confidence despite fear
+  - laughing hysterically
+  - trembling with fear
+  - staggering drunkenly
+  - limping painfully
+  - fidgeting nervously
+  - with cat ears
 
 - type: dataset
   id: book_event
@@ -184,9 +230,12 @@
   - in the evacpod
   - a neighboring country
   - on the wing of an airplane
-  - in quantum space, on a wizard shuttle
-  - on a mountain of corpses, in the subconscious
-  - in a shadow dimension, on a destroyed station
+  - in quantum space
+  - on a wizard shuttle
+  - on a mountain of corpses
+  - in the subconscious
+  - in a shadow dimension
+  - on a destroyed station
   - sandwiched between Tesla and the singularity
 
 - type: dataset
