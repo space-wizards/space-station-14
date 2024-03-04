@@ -4,6 +4,13 @@
 * text=auto
 
 ###############################################################################
+# Use LF line ending in code files
+###############################################################################
+*.cs   text eol=lf
+*.yml  text eol=lf
+*.json text eol=lf
+
+###############################################################################
 # Set default behavior for command prompt diff.
 #
 # This is need for earlier builds of msysgit that does not have it on by
