@@ -452,7 +452,7 @@
         solution: tank
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
   - type: NodeContainer
     nodes:
       pipe:

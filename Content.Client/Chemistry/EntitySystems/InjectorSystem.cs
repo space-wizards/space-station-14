@@ -2,37 +2,19 @@ using Content.Client.Chemistry.Components;
 using Content.Client.Chemistry.UI;
 using Content.Client.Items;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.GameStates;
 
 namespace Content.Client.Chemistry.EntitySystems;
 
-public sealed class InjectorSystem : EntitySystem
+public sealed class InjectorSystem : SharedInjectorSystem
 {
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<InjectorComponent, ComponentHandleState>(OnHandleInjectorState);
-        SubscribeLocalEvent<InjectorComponent, ItemStatusCollectMessage>(OnItemInjectorStatus);
+        Subs.ItemStatus<InjectorComponent>(ent => new InjectorStatusControl(ent, SolutionContainers));
         SubscribeLocalEvent<HyposprayComponent, ComponentHandleState>(OnHandleHyposprayState);
-        SubscribeLocalEvent<HyposprayComponent, ItemStatusCollectMessage>(OnItemHyposprayStatus);
-    }
-
-    private void OnHandleInjectorState(EntityUid uid, InjectorComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not SharedInjectorComponent.InjectorComponentState state)
-        {
-            return;
-        }
-
-        component.CurrentVolume = state.CurrentVolume;
-        component.TotalVolume = state.TotalVolume;
-        component.CurrentMode = state.CurrentMode;
-        component.UiUpdateNeeded = true;
-    }
-
-    private void OnItemInjectorStatus(EntityUid uid, InjectorComponent component, ItemStatusCollectMessage args)
-    {
-        args.Controls.Add(new InjectorStatusControl(component));
+        Subs.ItemStatus<HyposprayComponent>(ent => new HyposprayStatusControl(ent));
     }
 
     private void OnHandleHyposprayState(EntityUid uid, HyposprayComponent component, ref ComponentHandleState args)
@@ -43,10 +25,5 @@ public sealed class InjectorSystem : EntitySystem
         component.CurrentVolume = cState.CurVolume;
         component.TotalVolume = cState.MaxVolume;
         component.UiUpdateNeeded = true;
-    }
-
-    private void OnItemHyposprayStatus(EntityUid uid, HyposprayComponent component, ItemStatusCollectMessage args)
-    {
-        args.Controls.Add(new HyposprayStatusControl(component));
     }
 }

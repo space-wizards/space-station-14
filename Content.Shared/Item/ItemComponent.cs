@@ -54,6 +54,12 @@ public sealed partial class ItemComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float StoredRotation = 0;
+
+    /// <summary>
+    /// An additional offset, in pixels, applied to the visual depiction of the item when displayed in the storage UI.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Vector2i StoredOffset;
 }
 
 /// <summary>

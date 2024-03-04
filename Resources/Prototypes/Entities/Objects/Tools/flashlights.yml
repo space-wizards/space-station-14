@@ -7,7 +7,6 @@
   - type: Tag
     tags:
     - Flashlight
-    - DroneUsable
   - type: HandheldLight
     addPrefix: false
     blinkingBehaviourId: blinking

@@ -5,6 +5,8 @@
   description: A piece of tech that gives cyborgs new abilities.
   abstract: true
   components:
+  - type: Item
+    storedRotation: -90
   - type: Sprite
     sprite: Objects/Specific/Robotics/borgmodule.rsi
   - type: BorgModule
@@ -143,6 +145,7 @@
   - type: ItemBorgModule
     items:
     - HandheldGPSBasic
+    - HandHeldMassScannerBorg
     - HandheldStationMapUnpowered
 
 - type: entity
@@ -205,6 +208,7 @@
     - Shovel
     - OreBag
     - Crowbar
+    - RadioHandheld
 
 - type: entity
   id: BorgModuleGrapplingGun
@@ -219,6 +223,7 @@
     items:
     - WeaponGrapplingGun
     - WeaponCrusherDagger
+    - HandheldGPSBasic
 
 # engineering modules
 - type: entity
@@ -235,22 +240,9 @@
     - Omnitool
     - WelderExperimental
     - NetworkConfigurator
-
-- type: entity
-  id: BorgModuleGasAnalyzer
-  parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
-  name: gas analyzer cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: engineering
-    - state: icon-gas-analyzer
-  - type: ItemBorgModule
-    items:
+    - RemoteSignaller
     - GasAnalyzer
-    - trayScanner
-    - Crowbar
-    - Wrench
+    - GeigerCounter
 
 - type: entity
   id: BorgModuleConstruction
@@ -326,10 +318,11 @@
     - AdvMopItem
     - HoloprojectorBorg
     - SprayBottleSpaceCleaner
+    - Dropper
 
 # medical modules
 - type: entity
-  id: BorgModuleDiagnosis
+  id: BorgModuleDiagnosis # todo: reuse when med refractor is finished
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
   name: diagnosis cyborg module
   components:
@@ -384,6 +377,7 @@
     - state: icon-chemist
   - type: ItemBorgModule
     items:
+    - HandheldHealthAnalyzerUnpowered
     - Beaker
     - Beaker
     - BorgDropper
@@ -417,6 +411,8 @@
     items:
     - AnomalyScanner
     - AnomalyLocatorUnpowered
+    - RemoteSignaller
+    - Multitool
 
 # service modules
 - type: entity
@@ -435,7 +431,7 @@
     - HandLabeler
     - Lighter
     - DrinkShaker
-    - Syringe
+    - BorgDropper
 
 - type: entity
   id: BorgModuleMusique
@@ -497,7 +493,7 @@
     - BikeHorn
     - ClownRecorder
     - BikeHornInstrument
-   
+
 #syndicate modules
 - type: entity
   id: BorgModuleSyndicateWeapon

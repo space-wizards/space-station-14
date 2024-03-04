@@ -9,10 +9,13 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
 using Content.Shared.GameTicking;
+using Content.Shared.Roles;
 using Content.Shared.StationRecords;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.CrewManifest;
 
@@ -22,6 +25,7 @@ public sealed class CrewManifestSystem : EntitySystem
     [Dependency] private readonly StationRecordsSystem _recordsSystem = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     /// <summary>
     ///     Cached crew manifest entries. The alternative is to outright
@@ -37,10 +41,11 @@ public sealed class CrewManifestSystem : EntitySystem
         SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(AfterGeneralRecordCreated);
         SubscribeLocalEvent<RecordModifiedEvent>(OnRecordModified);
         SubscribeLocalEvent<RecordRemovedEvent>(OnRecordRemoved);
-        SubscribeLocalEvent<CrewManifestViewerComponent, BoundUIClosedEvent>(OnBoundUiClose);
-        SubscribeLocalEvent<CrewManifestViewerComponent, CrewManifestOpenUiMessage>(OpenEuiFromBui);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeNetworkEvent<RequestCrewManifestMessage>(OnRequestCrewManifest);
+
+        SubscribeLocalEvent<CrewManifestViewerComponent, BoundUIClosedEvent>(OnBoundUiClose);
+        SubscribeLocalEvent<CrewManifestViewerComponent, CrewManifestOpenUiMessage>(OpenEuiFromBui);
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
@@ -91,6 +96,9 @@ public sealed class CrewManifestSystem : EntitySystem
 
     private void OnBoundUiClose(EntityUid uid, CrewManifestViewerComponent component, BoundUIClosedEvent ev)
     {
+        if (!Equals(ev.UiKey, component.OwnerKey))
+            return;
+
         var owningStation = _stationSystem.GetOwningStation(uid);
         if (owningStation == null || ev.Session is not { } session)
         {
@@ -124,6 +132,14 @@ public sealed class CrewManifestSystem : EntitySystem
 
     private void OpenEuiFromBui(EntityUid uid, CrewManifestViewerComponent component, CrewManifestOpenUiMessage msg)
     {
+        if (!msg.UiKey.Equals(component.OwnerKey))
+        {
+            Log.Error(
+                "{User} tried to open crew manifest from wrong UI: {Key}. Correct owned is {ExpectedKey}",
+                msg.Session, msg.UiKey, component.OwnerKey);
+            return;
+        }
+
         var owningStation = _stationSystem.GetOwningStation(uid);
         if (owningStation == null || msg.Session is not { } session)
         {
@@ -210,15 +226,26 @@ public sealed class CrewManifestSystem : EntitySystem
 
         var entries = new CrewManifestEntries();
 
+        var entriesSort = new List<(JobPrototype? job, CrewManifestEntry entry)>();
         foreach (var recordObject in iter)
         {
             var record = recordObject.Item2;
             var entry = new CrewManifestEntry(record.Name, record.JobTitle, record.JobIcon, record.JobPrototype);
 
-            entries.Entries.Add(entry);
+            _prototypeManager.TryIndex(record.JobPrototype, out JobPrototype? job);
+            entriesSort.Add((job, entry));
         }
 
-        entries.Entries = entries.Entries.OrderBy(e => e.JobTitle).ThenBy(e => e.Name).ToList();
+        entriesSort.Sort((a, b) =>
+        {
+            var cmp = JobUIComparer.Instance.Compare(a.job, b.job);
+            if (cmp != 0)
+                return cmp;
+
+            return string.Compare(a.entry.Name, b.entry.Name, StringComparison.CurrentCultureIgnoreCase);
+        });
+
+        entries.Entries = entriesSort.Select(x => x.entry).ToArray();
         _cachedEntries[station] = entries;
     }
 }

@@ -214,7 +214,6 @@
   conditions:
     - !type:TileNotBlocked
 
-
 - type: construction
   name: diagonal shuttle wall
   id: DiagonalShuttleWall
@@ -716,6 +715,21 @@
   canBuildInImpassable: true
 
 - type: construction
+  name: blast door
+  id: BlastDoor
+  graph: BlastDoor
+  startNode: start
+  targetNode: blastdoor
+  category: construction-category-structures
+  description: This one says 'BLAST DONGER'.
+  icon:
+    sprite: Structures/Doors/Shutters/blastdoor.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
   name: catwalk
   id: Catwalk
   graph: Catwalk
@@ -1006,7 +1020,7 @@
   startNode: start
   targetNode: windoor
   category: construction-category-structures
-  description: It opens, it closes, and you can see through it!
+  description: It opens, it closes, and you can see through it! And it can be made of Plasma, Uranium, or normal Glass!
   icon:
     sprite: Structures/Doors/Windoors/windoor.rsi
     state: closed
@@ -1023,7 +1037,7 @@
   startNode: start
   targetNode: windoorSecure
   category: construction-category-structures
-  description: It opens, it closes, and you can see through it! This one looks tough.
+  description: It's tough, it's a door, and you can see through it! And it can be made of Plasma, Uranium, or normal Glass!
   icon:
     sprite: Structures/Doors/Windoors/windoor.rsi
     state: closed

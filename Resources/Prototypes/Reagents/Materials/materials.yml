@@ -110,6 +110,7 @@
 
 - type: material
   id: Coal
+  stackEntity: Coal1
   name: materials-coal
   unit: materials-unit-piece
   icon: { sprite: Objects/Materials/ore.rsi, state: coal }
