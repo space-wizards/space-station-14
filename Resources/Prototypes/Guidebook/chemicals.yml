@@ -1,0 +1,60 @@
+- type: guideEntry
+  id: Chemicals
+  name: guide-entry-chemicals
+  text: "/ServerInfo/Guidebook/Chemicals.xml"
+  children:
+  - Elements
+  - Medicine
+  - Narcotics
+  - Pyrotechnic
+  - Toxins
+  - Foods
+  - Botanical
+  - Biological
+  - Others
+  filterEnabled: True
+
+- type: guideEntry
+  id: Elements
+  name: guide-entry-elements
+  text: "/ServerInfo/Guidebook/Chemical Tabs/Elements.xml"
+
+- type: guideEntry
+  id: Medicine
+  name: guide-entry-medicine
+  text: "/ServerInfo/Guidebook/Medical/Medicine.xml"
+
+- type: guideEntry
+  id: Narcotics
+  name: guide-entry-narcotics
+  text: "/ServerInfo/Guidebook/Chemical Tabs/Narcotics.xml"
+
+- type: guideEntry
+  id: Pyrotechnic
+  name: guide-entry-pyrotechnics
+  text: "/ServerInfo/Guidebook/Chemical Tabs/Pyrotechnic.xml"
+
+- type: guideEntry
+  id: Toxins
+  name: guide-entry-toxins
+  text: "/ServerInfo/Guidebook/Chemical Tabs/Toxins.xml"
+
+- type: guideEntry
+  id: Foods
+  name: guide-entry-foods
+  text: "/ServerInfo/Guidebook/Chemical Tabs/Foods.xml"
+
+- type: guideEntry
+  id: Botanical
+  name: guide-entry-botanical
+  text: "/ServerInfo/Guidebook/Medical/Botanicals.xml"
+
+- type: guideEntry
+  id: Biological
+  name: guide-entry-biological
+  text: "/ServerInfo/Guidebook/Chemical Tabs/Biological.xml"
+
+- type: guideEntry
+  id: Others
+  name: guide-entry-others
+  text: "/ServerInfo/Guidebook/Chemical Tabs/Other.xml"
