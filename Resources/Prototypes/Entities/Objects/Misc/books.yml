@@ -193,9 +193,9 @@
     layers:
     - state: paper
     - state: cover_base
-      color: "#6c4718"
-    - state: decor_wingette
-      color: "#b5913c"
+      color: "#542485"
+    - state: decor_wingette_circle
+      color: "#be69f0"
     - state: icon_dna
   - type: Tag
     tags:
