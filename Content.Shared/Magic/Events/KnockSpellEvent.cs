@@ -13,7 +13,6 @@ public sealed partial class KnockSpellEvent : InstantActionEvent, ISpeakSpell
     [DataField("range")]
     public float Range = 10f;
 
-    // TODO: Move to magic component
     [DataField("speech")]
     public string? Speech { get; private set; }
 }

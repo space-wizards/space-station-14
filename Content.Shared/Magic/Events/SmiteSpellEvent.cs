@@ -11,7 +11,6 @@ public sealed partial class SmiteSpellEvent : EntityTargetActionEvent, ISpeakSpe
     [DataField("deleteNonBrainParts")]
     public bool DeleteNonBrainParts = true;
 
-    // TODO: Move to magic component
     [DataField("speech")]
     public string? Speech { get; private set; }
 }

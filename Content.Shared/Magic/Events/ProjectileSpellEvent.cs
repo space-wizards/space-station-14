@@ -4,17 +4,14 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Magic.Events;
 
-// TODO: Might need to be combined into InstantSpawnSpellEvent
 public sealed partial class ProjectileSpellEvent : WorldTargetActionEvent, ISpeakSpell
 {
-    // TODO: Move to magic component
     /// <summary>
     /// What entity should be spawned.
     /// </summary>
     [DataField("prototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype = default!;
 
-    // TODO: Move to magic component
     [DataField("speech")]
     public string? Speech { get; private set; }
 }

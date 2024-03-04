@@ -15,7 +15,6 @@ public sealed partial class InstantSpawnSpellEvent : InstantActionEvent, ISpeakS
     [DataField("preventCollide")]
     public bool PreventCollideWithCaster = true;
 
-    // TODO: Move to magic component
     [DataField("speech")]
     public string? Speech { get; private set; }
 
