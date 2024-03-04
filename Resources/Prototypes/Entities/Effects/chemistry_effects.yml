@@ -76,6 +76,8 @@
     animationState: foam-dissolve
   - type: Slippery
   - type: StepTrigger
+  - type: ScoopableSolution
+    solution: solutionArea
 
 - type: entity
   id: MetalFoam
