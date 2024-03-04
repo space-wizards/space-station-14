@@ -11,6 +11,10 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
+/// <summary>
+/// Allows an entity to transfer solutions with a customizable amount per click.
+/// Also provides <see cref="Transfer"/> API for other systems.
+/// </summary>
 public sealed class SolutionTransferSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
@@ -149,7 +153,8 @@ public sealed class SolutionTransferSystem : EntitySystem
         }
     }
 
-    /// Transfer from a solution to another.
+    /// <summary>
+    /// Transfer from a solution to another, allowing either entity to cancel it and show a popup.
     /// </summary>
     /// <returns>The actual amount transferred.</returns>
     public FixedPoint2 Transfer(EntityUid user,
@@ -206,6 +211,7 @@ public sealed class SolutionTransferSystem : EntitySystem
 /// <summary>
 /// Raised when attempting to transfer from one solution to another.
 /// Raised on both the source and target entities so either can cancel the transfer.
+/// To not mispredict this should always be cancelled in shared code and not server or client.
 /// </summary>
 [ByRefEvent]
 public record struct SolutionTransferAttemptEvent(EntityUid From, EntityUid To, string? CancelReason = null)
