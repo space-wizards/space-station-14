@@ -210,6 +210,10 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
         foreach (var mapObj in mapObjects)
         {
+            // If it's a grid-map skip it.
+            if (mapObj is GridMapObject gridObj && EntManager.HasComponent<MapComponent>(gridObj.Entity))
+                continue;
+
             var mapCoords = _shuttles.GetMapCoordinates(mapObj);
 
             var relativePos = matty.Transform(mapCoords.Position);
