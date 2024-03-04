@@ -2,7 +2,6 @@
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Power.Components;
 using Content.Server.Station.Systems;
-using Robust.Shared.Timing;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
@@ -49,7 +48,7 @@ public sealed class SingletonDeviceNetServerSystem : EntitySystem
 
         (EntityUid id, SingletonDeviceNetServerComponent server, DeviceNetworkComponent device)? last = default;
 
-        while (servers.MoveNext(out var uid, out var server, out var device, out var _))
+        while (servers.MoveNext(out var uid, out var server, out var device, out _))
         {
             if (!_stationSystem.GetOwningStation(uid)?.Equals(stationId) ?? true)
                 continue;

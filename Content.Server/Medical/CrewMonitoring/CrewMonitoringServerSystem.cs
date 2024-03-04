@@ -2,6 +2,7 @@
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.SuitSensors;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Medical.SuitSensor;
 using Robust.Shared.Timing;
 
@@ -23,7 +24,6 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         SubscribeLocalEvent<CrewMonitoringServerComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<CrewMonitoringServerComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<CrewMonitoringServerComponent, DeviceNetServerDisconnectedEvent>(OnDisconnected);
-
     }
 
     public override void Update(float frameTime)
