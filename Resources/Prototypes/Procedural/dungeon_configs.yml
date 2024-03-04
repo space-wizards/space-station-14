@@ -162,3 +162,77 @@
         SouthEast: BrickTileWhiteInnerSe
         NorthWest: BrickTileWhiteInnerNw
         NorthEast: BrickTileWhiteInnerNe
+
+- type: dungeonConfig
+  id: Mineshaft
+  generator: !type:PrefabDunGen
+    tile: FloorCaveDrought
+    roomWhitelist:
+      - Mineshaft
+    presets:
+      - Bucket
+      - Wow
+      - SpaceShip
+      - Tall
+  postGeneration:
+  
+  - !type:CorridorPostGen
+      tile: FloorCaveDrought
+      width: 3
+      
+  - !type:DungeonEntrancePostGen
+      count: 5
+      tile: FloorCaveDrought
+      entities: 
+        - RandomWoodenWall
+
+  - !type:RoomEntrancePostGen
+      tile: FloorCaveDrought
+      entities:
+        - RandomWoodenWall
+
+  - !type:EntranceFlankPostGen
+      tile: FloorCaveDrought
+      entities:
+        - RandomWoodenWall
+      
+  - !type:ExternalWindowPostGen
+      tile: FloorCaveDrought
+      entities:
+        - RandomWoodenWall
+  
+  - !type:WallMountPostGen
+      tile: FloorCaveDrought
+      spawns:
+        # Ore
+        - id: WallRockSalt
+          prob: 0.6
+          orGroup: content
+        - id: WallRockCoal
+          prob: 0.6
+          orGroup: content
+        - id: WallRockTin
+          prob: 0.4
+          orGroup: content
+        - id: WallMining
+          prob: 0.8
+          orGroup: content
+          
+  - !type:BoundaryWallPostGen
+      tile: FloorCaveDrought
+      wall: WallRock
+      cornerWall: WallRock
+
+  - !type:AutoCablingPostGen
+      entity: Catwalk
+    
+  - !type:JunctionPostGen
+      tile: FloorCaveDrought
+      width: 3
+      entities:
+        - RandomWoodenSupport
+  
+  - !type:CornerClutterPostGen
+      contents:
+        - id: RandomStalagmiteOrCrystal
+          amount: 1

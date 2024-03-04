@@ -104,9 +104,8 @@ public sealed class InternalsSystem : EntitySystem
     private void StartToggleInternalsDoAfter(EntityUid user, EntityUid target, InternalsComponent internals)
     {
         // Is the target not you? If yes, use a do-after to give them time to respond.
-        // If not, do a short delay. There's no reason it should be beyond 1 second.
         var isUser = user == target;
-        var delay = !isUser ? internals.Delay : 1.0f;
+        var delay = !isUser ? internals.Delay : 0f;
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new InternalsDoAfterEvent(), target, target: target)
         {
