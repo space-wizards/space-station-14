@@ -14,15 +14,10 @@ namespace Content.Shared.Flash.Components
 
         /// <summary>
         /// How long a target is stunned when a melee flash is used.
+        /// If null, melee flashes will not stun at all
         /// </summary>
         [DataField]
-        public TimeSpan MeleeStunDuration = TimeSpan.FromSeconds(1.5);
-
-        /// <summary>
-        /// If true, melee hits will do a hard stun.
-        /// </summary>
-        [DataField]
-        public bool StunOnMelee = true;
+        public TimeSpan? MeleeStunDuration = TimeSpan.FromSeconds(1.5);
 
         [DataField("range")]
         [ViewVariables(VVAccess.ReadWrite)]
