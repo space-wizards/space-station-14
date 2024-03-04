@@ -925,14 +925,3 @@
       - state: equipped-INNERCLOTHING-jumpskirt
       - state: equipped-INNERCLOTHING-shirt
         color: "#b30000"
-
-- type: entity
-  parent: ClothingUniformSkirtBase
-  id: ClothingUniformJumpskirtSchool
-  name: school skirt
-  description: Stylish and comfortable school skirt.
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/schoolskirt.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/schoolskirt.rsi

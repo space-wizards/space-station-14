@@ -130,25 +130,3 @@
     event: !type:ToggleClothingSpeedEvent
     icon: { sprite: Clothing/Shoes/Boots/speedboots.rsi, state: icon }
     iconOn: { sprite: Clothing/Shoes/Boots/speedboots.rsi, state: icon-on }
-
-- type: entity
-  parent: ClothingShoesBaseButcherable
-  id: ClothingShoesSchoolBlack
-  name: school black shoes
-  description: Stylish and comfortable school shoes in dark color with stockings.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/Misc/schoolblackshoes.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/Misc/schoolblackshoes.rsi
-
-- type: entity
-  parent: ClothingShoesBaseButcherable
-  id: ClothingShoesSchoolWhite
-  name: school white shoes
-  description: Stylish and comfortable school shoes in light color with stockings.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/Misc/schoolwhiteshoes.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/Misc/schoolwhiteshoes.rsi
