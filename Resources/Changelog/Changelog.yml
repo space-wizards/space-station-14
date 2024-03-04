@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ZeroNationality
-  changes:
-  - message: Added a static station map for the pAI to use to guide their owner
-    type: Add
-  id: 5587
-  time: '2024-01-06T07:31:21.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23499
 - author: Nimfar11
   changes:
   - message: Adds medhud to the lockers of medics and CMO.
@@ -3826,3 +3819,10 @@
   id: 6086
   time: '2024-03-04T06:24:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25823
+- author: Nairodian
+  changes:
+  - message: Welding masks can now be made in the Autolathe.
+    type: Add
+  id: 6087
+  time: '2024-03-04T22:36:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25842
