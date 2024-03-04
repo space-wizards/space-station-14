@@ -40,8 +40,6 @@
   - dirty
   - unusual
   - faded
-  - attractive
-  - unattractive
   - nasty
   - dusty
   - scary
@@ -63,6 +61,7 @@
   - embossed
   - mismatched
   - gilded
+  - strange
 
 - type: dataset
   id: book_character
