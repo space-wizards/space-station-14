@@ -147,6 +147,7 @@
       - id: AccessConfigurator
       - id: RCD
       - id: RCDAmmo
+      - id: PortablePowerMonitor
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -167,7 +168,8 @@
       - id: AccessConfigurator
       - id: RCD
       - id: RCDAmmo
-
+      - id: PortablePowerMonitor
+      
 - type: entity
   id: LockerChiefMedicalOfficerFilledHardsuit
   suffix: Filled, Hardsuit

@@ -13,6 +13,14 @@
   sprite:
     sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
     state: scanner
+    
+    
+- type: stealTargetGroup
+  id: PortablePowerMonitor
+  name: portable power monitor
+  sprite:
+    sprite: Objects/Tools/portable_power_monitor.rsi
+    state: icon-on
 
 - type: stealTargetGroup
   id: ClothingOuterHardsuitRd

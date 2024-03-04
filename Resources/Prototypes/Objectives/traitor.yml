@@ -229,6 +229,17 @@
     stealGroup: ClothingShoesBootsMagAdv
     owner: job-name-ce
 
+- type: entity
+  noSpawn: true
+  parent: BaseTraitorStealObjective
+  id: PowerMonitorStealObjective
+  components:
+  - type: NotJobRequirement
+    job: ChiefEngineer
+  - type: StealCondition
+    stealGroup: PortablePowerMonitor
+    owner: job-name-ce
+
 ## qm
 
 - type: entity

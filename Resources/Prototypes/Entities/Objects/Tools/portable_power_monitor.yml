@@ -1,0 +1,62 @@
+- type: entity
+  name: portable power monitor
+  suffix: DO NOT MAP
+  parent: [ BaseItem, PowerCellSlotSmallItem]
+  id: PortablePowerMonitor
+  description: Handheld device that monitors power levels across the station.
+  components:
+  - type: Item
+  - type: Sprite
+    sprite: Objects/Tools/portable_power_monitor.rsi
+    state: icon
+    layers:
+      - state: icon
+      - state: screen
+        shader: unshaded
+        visible: true
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerCellSlotVisuals.Enabled:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: PowerCellDraw
+    drawRate: 2
+  - type: StaticPrice
+    price: 500
+  - type: PowerMonitoringConsole
+  - type: PowerMonitoringCableNetworks
+  - type: ActivatableUIRequiresPowerCell
+  - type: ActivatableUI
+    closeOnHandDeselect: false
+    key: enum.PowerMonitoringConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PowerMonitoringConsoleUiKey.Key
+      type: PowerMonitoringConsoleBoundUserInterface
+  - type: Tag
+    tags:
+    - HighRiskItem
+  - type: StealTarget
+    stealGroup: PortablePowerMonitor
+    
+- type: entity
+  id: PortablePowerMonitorEmpty
+  parent: PortablePowerMonitor
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+  - type: Sprite
+    sprite: Objects/Tools/portable_power_monitor.rsi
+    state: icon
+    layers:
+      - state: icon
+      - state: screen
+        shader: unshaded
+        visible: false
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
