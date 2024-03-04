@@ -6,9 +6,9 @@
   - type: StorageFill
     contents:
       - id: BookRandom
-        prob: 0.4
-        amount: 1
-        maxAmount: 4
+        prob: 0.6
+        amount: 2
+        maxAmount: 8
       - id: BookSpaceEncyclopedia
         orGroup: BookPool
       - id: BookTheBookOfControl

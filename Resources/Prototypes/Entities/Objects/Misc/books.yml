@@ -358,7 +358,12 @@
   parent: BookBase
   id: BookRandom
   suffix: random visual
+  description: Each book is unique! What is hidden in this one?
   components:
+  - type: RandomMetadata
+    nameSegments: 
+    - book_hint_appearance
+    - book_type
   - type: RandomSprite
     available:
       - cover:

@@ -1,5 +1,5 @@
 - type: dataset
-  id: book_hint_book
+  id: book_type
   values:
   - book
   - folio
@@ -7,83 +7,183 @@
   - notes
   - manuscript
   - records
- 
+
+- type: dataset
+  id: book_genre
+  values:
+  - detective
+  - comedy
+  - horror
+  - poetry
+  - novella
+  - chronicle
+
 - type: dataset
   id: book_hint_appearance
   values:
   - ancient
   - shabby
   - dirty
-  - new
   - unusual
-  - mysterious
+  - faded
   - attractive
+  - unattractive
   - nasty
   - dusty
   - scary
   - bloody
 
 - type: dataset
-  id: book_hint_mysticism_second
+  id: book_character
   values:
-  - about the Loch Ness monster
-  - on the atrocities of the Revenants
-  - about a witch cult
-  - on the god of machinery
-  - about the god of blood and suffering
-  - on the Illuminati
-  - on the life of albert einstein
-  - on ghosts
-  - about predicting the future
+  - clown
+  - mime
+  - reporter
+  - butcher
+  - bartender
+  - janitor
+  - engineer
+  - scientist
+  - guard
+  - doctor
+  - chemist
+  - prisoner
+  - researcher
+  - trader
+  - captain
+  - unath
+  - niana
+  - diona
+  - catgirl
+  - cat
+  - Ian
+  - dog
+  - Morty
+  - Sloth
+  - syndicate agent
+  - revenant
+  - rat king
+  - ninja
+  - space dragon
+  - revolutionary
+  - nuclear operative
+  - ghosts
+  - witch cult
+  - illuminati
 
 - type: dataset
-  id: book_hint_technology_second
+  id: book_character_trait
   values:
-  - about a runaway Tesla
-  - on AME construction
-  - on the 14 wonders of the galaxy
-  - on copromatism
-  - on probability theory
-  - on the dangers of supermatter
-  - on the life of Albert Einstein.
-  - about building a Trojan horse.
-  - on the effect of cats on the singularity.
+  - stupid
+  - smart
+  - funny
+  - attractive  
+  - charming
+  - nasty
+  - dying
+  - old
+  - young
+  - rich
+  - poor
+  - popular
 
 - type: dataset
-  id: book_hint_biology_second
+  id: book_event
   values:
-  - on the benefits of bloodletting
-  - on the evils of alcohol
-  - on the benefits of alcohol
-  - on the mysteries of the vow of silence
-  - on the weirdness of phantom pains.
-  - with a knowledge base of skin diseases.
-  - on the difficulties of communicating with the Unathas
-  - about catgirls and catnip
-  - on how to break a leg
+  - the invasion of zombies
+  - the explosion of a nuclear bomb
+  - mass murder
+  - depressurization
+  - blackout
+  - starvation
+  - disease
+  - sudden love
+  - a rush of inspiration
+  - mystical phenomena
+  - divine intervention
+  - selfish motives
+  - deception
+  - resurrection from the dead
+  - the terrible torture
+  - teslaloose
+  - the prediction of the future
+  - AME explosion
+  
+- type: dataset
+  id: book_event_trait
+  values:
+  - scary
+  - disgusting
+  - wonderful
+  - cute
+  - boring
+  - unusual
+  - funny
+  - very funny
+  - impressive
+  - uninteresting
+  - sad
+  - very sad
 
 - type: dataset
-  id: book_hint_military_second
+  id: book_action
   values:
-  - on the rules of marching
-  - with tips on shooting from the shoulder
-  - with instructions on how to assemble a machine gun
-  - about experiments with explosive mixtures
-  - about commanding a battle shuttle
-  - on the construction of battle turrets
-  - of anti-clown advice
-  - with tips on camouflage in zero gravity
-  - describing the device of a stun baton
+  - kisses
+  - hugs
+  - kills
+  - tortures
+  - tickles
+  - cheats
+  - teaches
+  - watches
+  - talks
+  - plays
+  - uses
+  - abandons
+  - marries
+  - unites
+  - scares
+  - ignores
 
 - type: dataset
-  id: book_hint_social_second
+  id: book_location
   values:
-  - with the success story of an unknown businessman
-  - about the history of the formation of the rules of the game of chess
-  - about advertising
-  - about the latest events on Earth
-  - about friendship
-  - on communication with sloths
-  - on the dangers of smoking
-  - about a healthy lifestyle
-  - with instructions for photo processing
+  - in an underground complex
+  - on an expedition
+  - in outer space
+  - in a reporter's office
+  - in the garden
+  - in the kitchen
+  - under the bar counter
+  - in the library
+  - in technical corridors
+  - on the bridge
+  - in the bathroom
+  - in a crate
+  - in a locker
+  - on the Barratry station
+  - in the church hall
+  - in the crematorium
+  - next to the anomaly
+  - on the evacuation shuttle
+  - in the snow
+  - in the forest
+  - in the desert
+  - on social networks
+  - on the top of the mountain
+  - in the car
+  - in the evacpod
+
+- type: dataset
+  id: book_story_element
+  values:
+  - a plot
+  - an unexpected twist
+  - a beginning
+  - a climax
+  - a denouement
+  - an ending
+  - a moral
+  - a theme
+  - a literary style
+  - pictures
