@@ -222,7 +222,6 @@
   id: Experiment
   proto: Experiment
   biomes:
-    - Caves
     #- LowDesert
     - Snow
     - Grasslands
@@ -232,3 +231,9 @@
   proto: LavaBrig
   biomes:
     - Lava
+
+- type: salvageDungeonMod
+  id: Mineshaft
+  proto: Mineshaft
+  biomes:
+    - Caves

@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: DrMelon
-  changes:
-  - message: Climbing onto tables is once again a dangerous prospect for a Clown.
-    type: Fix
-  id: 5584
-  time: '2024-01-06T07:07:26.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23583
-- author: TheShuEd
-  changes:
-  - message: Removed Encryption key thief steal objective.
-    type: Remove
-  id: 5585
-  time: '2024-01-06T07:12:34.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23572
-- author: TheShuEd
-  changes:
-  - message: a powerful tesla gun can be found on planets!
-    type: Add
-  id: 5586
-  time: '2024-01-06T07:18:35.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23175
 - author: ZeroNationality
   changes:
   - message: Added a static station map for the pAI to use to guide their owner
@@ -3824,3 +3803,26 @@
   id: 6083
   time: '2024-03-03T08:54:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25713
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Monkeys and kobolds can now wear blood-red hardsuits.
+    type: Add
+  id: 6084
+  time: '2024-03-04T03:56:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/22273
+- author: Plykiya
+  changes:
+  - message: Syringes now prevent injecting on empty and drawing on full.
+    type: Tweak
+  - message: You can now tell if you are being drawn from or injected by a syringe.
+    type: Tweak
+  id: 6085
+  time: '2024-03-04T05:07:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25480
+- author: metalgearsloth
+  changes:
+  - message: Fix expedition FTL.
+    type: Fix
+  id: 6086
+  time: '2024-03-04T06:24:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25823
