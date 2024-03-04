@@ -118,6 +118,8 @@ namespace Content.Client.Preferences.UI
             _configurationManager = configurationManager;
             _markingManager = IoCManager.Resolve<MarkingManager>();
 
+            SpeciesInfoButton.ToolTip = Loc.GetString("humanoid-profile-editor-guidebook-button-tooltip");
+
             #region Left
 
             #region Randomize
@@ -973,7 +975,6 @@ namespace Content.Client.Preferences.UI
 
             SpeciesInfoButton.StyleClasses.Clear();
             SpeciesInfoButton.StyleClasses.Add(style);
-            SpeciesInfoButton.ToolTip = Loc.GetString("humanoid-profile-editor-guidebook-button-tooltip");
         }
 
         private void UpdateMarkings()

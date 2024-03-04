@@ -12,7 +12,7 @@
   naming: First
   sexes:
     - Unsexed
-  guideBookIcon: SpeciesInfoWarning
+
 
 - type: speciesBaseSprites
   id: MobVoxSprites
