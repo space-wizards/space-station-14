@@ -16,6 +16,7 @@
   entityWhitelist:
     tags:
     - SpiderCraft
+  needLearn: true
   conditions:
     - !type:TileNotBlocked
 
@@ -37,6 +38,7 @@
   entityWhitelist:
     tags:
     - SpiderCraft
+  needLearn: true
   conditions:
     - !type:TileNotBlocked
 
@@ -58,6 +60,7 @@
   entityWhitelist:
     tags:
     - SpiderCraft
+  needLearn: true
   conditions:
     - !type:TileNotBlocked
 
@@ -78,6 +81,7 @@
   entityWhitelist:
     tags:
     - SpiderCraft
+  needLearn: true
 
 - type: construction
   name: web crate
@@ -97,6 +101,7 @@
   entityWhitelist:
     tags:
     - SpiderCraft
+  needLearn: true
 
 - type: construction
   name: web door
@@ -115,5 +120,6 @@
   entityWhitelist:
     tags:
     - SpiderCraft
+  needLearn: true
   conditions:
     - !type:TileNotBlocked

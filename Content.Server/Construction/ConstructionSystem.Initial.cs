@@ -14,6 +14,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Mind;
 using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
@@ -32,6 +33,8 @@ namespace Content.Server.Construction
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly SharedLearningRecipesSystem _learningRecipes = default!;
+        [Dependency] private readonly SharedMindSystem _mind = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -339,6 +342,12 @@ namespace Content.Server.Construction
                 return false;
             }
 
+            if (constructionPrototype.NeedLearn && !_learningRecipes.IsUserRecipeLeared(user, constructionPrototype.ID))
+            {
+                _popup.PopupEntity(Loc.GetString("construction-system-cannot-start-need-learn"), user, user);
+                return false;
+            }
+
             var startNode = constructionGraph.Nodes[constructionPrototype.StartNode];
             var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
             var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
@@ -415,6 +424,12 @@ namespace Content.Server.Construction
             if (constructionPrototype.EntityWhitelist != null && !constructionPrototype.EntityWhitelist.IsValid(user))
             {
                 _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
+                return;
+            }
+
+            if (constructionPrototype.NeedLearn && !_learningRecipes.IsUserRecipeLeared(user, constructionPrototype.ID))
+            {
+                _popup.PopupEntity(Loc.GetString("construction-system-cannot-start-need-learn"), user, user);
                 return;
             }
 

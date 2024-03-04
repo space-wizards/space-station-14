@@ -28,6 +28,7 @@ namespace Content.Client.Construction
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedLearningRecipesSystem _learningRecipes = default!;
 
         private readonly Dictionary<int, EntityUid> _ghosts = new();
         private readonly Dictionary<string, ConstructionGuide> _guideCache = new();
@@ -167,6 +168,11 @@ namespace Content.Client.Construction
 
             TryStartConstruction(args.EntityUid);
             return true;
+        }
+
+        public bool IsUserRecipeLeared(EntityUid user, string recipe)
+        {
+            return _learningRecipes.IsUserRecipeLeared(user, recipe);
         }
 
         /// <summary>
