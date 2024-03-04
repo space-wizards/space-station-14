@@ -198,7 +198,7 @@ public sealed class SolutionTransferSystem : EntitySystem
 
         var actualAmount = FixedPoint2.Min(amount, FixedPoint2.Min(sourceSolution.Volume, targetSolution.AvailableVolume));
 
-        var solution = _solution.Drain(sourceEntity, source, actualAmount);
+        var solution = _solution.SplitSolution(source, actualAmount);
         _solution.Refill(targetEntity, target, solution);
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
