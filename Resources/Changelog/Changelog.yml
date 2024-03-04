@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nimfar11
-  changes:
-  - message: Adds medhud to the lockers of medics and CMO.
-    type: Add
-  id: 5588
-  time: '2024-01-06T07:35:33.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23591
 - author: yathxyz
   changes:
   - message: provide non-flake solution by pinning nixpkgs
@@ -3826,3 +3819,11 @@
   id: 6087
   time: '2024-03-04T22:36:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25842
+- author: Lawdog
+  changes:
+  - message: Changed the max volume of shot glasses from 7u to 5u to better represent
+      drinking shots in real life
+    type: Tweak
+  id: 6088
+  time: '2024-03-04T23:51:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25847
