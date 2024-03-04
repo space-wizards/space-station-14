@@ -2737,14 +2737,14 @@ entities:
     - type: Transform
       pos: -2.5,5.5
       parent: 2
-- proto: WaterTankHighCapacity
+- proto: WaterTankHighCapacityFull
   entities:
   - uid: 395
     components:
     - type: Transform
       pos: -7.5,-4.5
       parent: 2
-- proto: WeldingFuelTankHighCapacity
+- proto: WeldingFuelTankHighCapacityFull
   entities:
   - uid: 394
     components:

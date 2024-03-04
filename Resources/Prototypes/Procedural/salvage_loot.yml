@@ -100,8 +100,8 @@
           cost: 5
           prob: 0.5
         - proto: ThrusterUnanchored
-        - proto: WaterTankHighCapacity
-        - proto: WeldingFuelTankHighCapacity
+        - proto: WaterTankHighCapacityFull
+        - proto: WeldingFuelTankHighCapacityFull
           cost: 3
         - proto: WeaponTeslaGun
           prob: 0.1
