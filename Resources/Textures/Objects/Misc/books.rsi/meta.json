@@ -41,6 +41,9 @@
       "name": "icon_bar"
     },
     {
+      "name": "icon_biohazard"
+    },
+    {
       "name": "icon_borg",
       "delays": [
         [
@@ -74,10 +77,22 @@
       "name": "icon_glow"
     },
     {
+      "name": "icon_hacking"
+    },
+    {
+      "name": "icon_law"
+    },
+    {
       "name": "icon_magnifier"
     },
     {
       "name": "icon_medical"
+    },
+    {
+      "name": "icon_nuclear"
+    },
+    {
+      "name": "icon_origami"
     },
     {
       "name": "icon_pentagramm"

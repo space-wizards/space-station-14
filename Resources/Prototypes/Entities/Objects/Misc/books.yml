@@ -374,6 +374,7 @@
           icon_apple: ""
           icon_atmos: ""
           icon_bar: ""
+          icon_biohazard: ""
           icon_borg: ""
           icon_bucket: ""
           icon_cabbage: ""
@@ -382,8 +383,12 @@
           icon_dna: Sixteen
           icon_fish: ""
           icon_glow: Sixteen
+          icon_hacking: ""
+          icon_law: Sixteen
           icon_magnifier: ""
           icon_medical: ""
+          icon_nuclear: ""
+          icon_origami: ""
           icon_pentagramm: Sixteen
           icon_skull: ""
           icon_stunbaton: ""
@@ -391,7 +396,7 @@
           icon_text2: ""
           icon_text3: "" 
           icon_time: Sixteen
-          icon_wrench: Sixteen
+          icon_wrench: "" 
         overlay:
           overlay_blood: ""
           overlay_dirt: ""
