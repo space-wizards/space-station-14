@@ -504,6 +504,8 @@
   - type: Tag
     tags:
     - MonkeyWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 # Syndicate Medic Hardsuit
 - type: entity
