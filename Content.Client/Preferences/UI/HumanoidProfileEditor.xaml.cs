@@ -118,8 +118,6 @@ namespace Content.Client.Preferences.UI
             _configurationManager = configurationManager;
             _markingManager = IoCManager.Resolve<MarkingManager>();
 
-            SpeciesInfoButton.OnPressed += OnSpeciesInfoButtonPressed;
-
             #region Left
 
             #region Randomize
@@ -527,6 +525,8 @@ namespace Content.Client.Preferences.UI
 
             preferencesManager.OnServerDataLoaded += LoadServerData;
 
+            SpeciesInfoButton.OnPressed += OnSpeciesInfoButtonPressed;
+
             UpdateSpeciesGuidebookIcon();
 
             IsDirty = false;
@@ -536,14 +536,16 @@ namespace Content.Client.Preferences.UI
         {
             var guidebookController = UserInterfaceManager.GetUIController<GuidebookUIController>();
             var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
-            _prototypeManager.TryIndex<GuideEntryPrototype>("Species", out var guideSpecies);
-
+            var page = "Species";
             if (_prototypeManager.TryIndex<GuideEntryPrototype>(species, out var guide))
+                page = species;
+
+            if (_prototypeManager.TryIndex<GuideEntryPrototype>("Species", out var guideRoot))
             {
                 var dict = new Dictionary<string, GuideEntry>();
-                // TODO: Load all species guidebooks, with the current species being open
-                dict.Add(species, guide);
-                guidebookController.ToggleGuidebook(dict, includeChildren:true, selected: species);
+                dict.Add("Species", guideRoot);
+                //TODO: Don't close the guidebook if its already open, just go to the correct page
+                guidebookController.ToggleGuidebook(dict, includeChildren:true, selected: page);
             }
         }
 
