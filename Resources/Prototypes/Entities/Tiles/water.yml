@@ -17,17 +17,13 @@
     drawdepth: BelowFloor
     layers:
       - state: shoreline_water
-  - type: SolutionContainerVisuals
-    maxFillLevels: 1
-    fillBaseName: sink-fill-
-    solutionName: drainBuffer
   - type: SolutionContainerManager
     solutions:
-      tank:
-        maxVol: 500
+      pool:
+        maxVol: 9999999 #.inf seems to break the whole yaml file, but would definitely be preferable. 
         reagents:
         - ReagentId: Water
-          Quantity: 500 
+          Quantity: 9999999
   - type: SolutionRegeneration
     solution: tank
     generated:
@@ -35,7 +31,7 @@
       - ReagentId: Water
         Quantity: 100
   - type: DrainableSolution
-    solution: tank
+    solution: pool
   - type: SlowContacts
     walkSpeedModifier: 0.5
     sprintSpeedModifier: 0.5
