@@ -4,7 +4,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Magic.Components;
 
 /// <summary>
-/// Spellbooks for having an entity learn spells as long as they've read the book and it's in their hand.
+///     Spellbooks can grant one or more spells to the user. If marked as <see cref="LearnPermanently"/> it will teach
+///     the performer the spells and wipe the book.
+///     Default behavior requires the book to be held in hand
 /// </summary>
 [RegisterComponent, Access(typeof(SharedSpellbookSystem))]
 public sealed partial class SpellbookComponent : Component

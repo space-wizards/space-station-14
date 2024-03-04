@@ -30,8 +30,6 @@ public sealed class SharedSpellbookSystem : EntitySystem
             if (spell == null)
                 continue;
 
-            // TODO: Just remove the charges from the spellbook?
-            // Or just remove this since charges won't matter on the master spellbook
             int? charge = charges;
             if (_actions.GetCharges(spell) != null)
                 charge = _actions.GetCharges(spell);
