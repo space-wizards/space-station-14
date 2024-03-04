@@ -17,6 +17,25 @@
     drawdepth: BelowFloor
     layers:
       - state: shoreline_water
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: sink-fill-
+    solutionName: drainBuffer
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Water
+          Quantity: 500 
+  - type: SolutionRegeneration
+    solution: tank
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 100
+  - type: DrainableSolution
+    solution: tank
   - type: SlowContacts
     walkSpeedModifier: 0.5
     sprintSpeedModifier: 0.5
