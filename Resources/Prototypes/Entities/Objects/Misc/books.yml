@@ -373,6 +373,7 @@
         icon:
           icon_apple: ""
           icon_atmos: ""
+          icon_aurora: Sixteen
           icon_bar: ""
           icon_biohazard: ""
           icon_borg: ""
@@ -399,7 +400,7 @@
           icon_wrench: "" 
         overlay:
           overlay_blood: ""
-          overlay_dirt: ""
+          overlay_dirt: Sixteen
           overlay_null: ""
 
 - type: entity

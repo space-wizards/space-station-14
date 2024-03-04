@@ -278,9 +278,14 @@
   description: The book is in excellent condition, with a shiny cover depicting a spaceship hovering above a planet, perhaps with the Earth in the background. The title "Journey Beyond - The Starship Aurora Mission" is written in bold, silver letters. The cover also features a quote from a review, "A breathtaking tale of human achievement and exploration" to entice potential readers.
   components:
     - type: Sprite
-      sprite: Objects/Misc/authorbooks.rsi
+      sprite: Objects/Misc/books.rsi
       layers:
-        - state: book_aurora
+      - state: paper
+      - state: cover_strong
+        color: "#12073d"
+      - state: decor_vertical_middle
+        color: "#131380" 
+      - state: icon_aurora
     - type: Paper
       content: book-text-aurora
 
