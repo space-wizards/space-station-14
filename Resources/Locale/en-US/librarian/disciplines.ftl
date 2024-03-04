@@ -1,3 +1,5 @@
+lib-book-hint = After carefully studying this book, you can find out that:
+
 lib-book-discipline-mysticism = Mysticism
 lib-book-discipline-technology = Technology
 lib-book-discipline-biology = Biology

@@ -32,6 +32,13 @@
   - dusty
   - scary
   - bloody
+  - bright
+  - dubious
+  - intriguing
+  - ugly
+  - crooked
+  - crumpled
+  - dirty
 
 - type: dataset
   id: book_character
@@ -144,6 +151,7 @@
   - unites
   - scares
   - ignores
+  - takes revenge
 
 - type: dataset
   id: book_location
@@ -177,13 +185,13 @@
 - type: dataset
   id: book_story_element
   values:
-  - a plot
-  - an unexpected twist
-  - a beginning
-  - a climax
-  - a denouement
-  - an ending
-  - a moral
-  - a theme
-  - a literary style
-  - pictures
+  - A plot
+  - An unexpected twist
+  - A beginning
+  - A climax
+  - A denouement
+  - An ending
+  - A moral
+  - A theme
+  - A literary style
+  - Pictures

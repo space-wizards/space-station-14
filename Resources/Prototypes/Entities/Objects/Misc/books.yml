@@ -419,6 +419,34 @@
           overlay_null: ""
 
 - type: entity
+  parent: BookRandom
+  id: BookRandomStory
+  suffix: random visual, random story
+  components:
+  - type: PaperRandomStory
+    storySegments:
+     # To do (TheShuEd): English is not my native language. Someone, make the text generation more correct and cool.
+    - "This is a"
+    - book_genre
+    - "about a"
+    - book_character_trait
+    - book_character
+    - "."
+    - "Due to"
+    - book_event
+    - ","
+    - book_character
+    - book_event_trait
+    - book_action
+    - book_character
+    - book_location
+    - ". \n\n"
+    - book_story_element
+    - "is"
+    - book_event_trait
+    - "."
+
+- type: entity
   parent: BookBase
   id: BookAtmosDistro
   name: "Newton's Guide to Atmos: The Distro"
@@ -501,76 +529,46 @@
 # Librarian reference book
 
 - type: entity
-  parent: BookRandom
+  parent: BookRandomStory
   id: BookHintMysticism
   name: mysticism hint book
   description: The secrets of mystical stories lurk in this book.
   components:
   - type: PaperDecryptionHint
     discipline: Mysticism
-  - type: RandomMetadata
-    nameSegments: 
-    - an
-    - book_hint_appearance
-    - book_hint_book
-    - book_hint_mysticism_second
 
 - type: entity
-  parent: BookRandom
+  parent: BookRandomStory
   id: BookHintTechnology
   name: technology hint book
   description: The secrets of technology lurk in this book.
   components: 
   - type: PaperDecryptionHint
     discipline: Technology
-  - type: RandomMetadata
-    nameSegments: 
-    - an
-    - book_hint_appearance
-    - book_hint_book
-    - book_hint_technology_second
     
 - type: entity
-  parent: BookRandom
+  parent: BookRandomStory
   id: BookHintBiology
   name: biology hint book
   description: The secrets of biology lurk in this book.
   components: 
   - type: PaperDecryptionHint
     discipline: Biology
-  - type: RandomMetadata
-    nameSegments: 
-    - an
-    - book_hint_appearance
-    - book_hint_book
-    - book_hint_biology_second
     
 - type: entity
-  parent: BookRandom
+  parent: BookRandomStory
   id: BookHintMilitary
   name: military hint book
   description: The secrets of military lurk in this book.
   components: 
   - type: PaperDecryptionHint
     discipline: Military
-  - type: RandomMetadata
-    nameSegments: 
-    - an
-    - book_hint_appearance
-    - book_hint_book
-    - book_hint_military_second
     
 - type: entity
-  parent: BookRandom
+  parent: BookRandomStory
   id: BookHintSocial
   name: social hint book
   description: The secrets of military lurk in this book.
   components:
   - type: PaperDecryptionHint
     discipline: Social
-  - type: RandomMetadata
-    nameSegments: 
-    - an
-    - book_hint_appearance
-    - book_hint_book
-    - book_hint_social_second

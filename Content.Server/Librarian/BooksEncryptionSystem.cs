@@ -22,14 +22,17 @@ public sealed class BooksEncryptionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BooksEncryptionComponent, MapInitEvent>(OnMapinit);
-        SubscribeLocalEvent<PaperDecryptionHintComponent, MapInitEvent>(OnPaperInit);
+        SubscribeLocalEvent<BooksEncryptionComponent, MapInitEvent>(OnMapinit, after: new[] { typeof(PaperRandomStorySystem) });
+        SubscribeLocalEvent<PaperDecryptionHintComponent, MapInitEvent>(OnPaperInit, after: new[] { typeof(PaperRandomStorySystem) });
     }
 
     private void OnPaperInit(Entity<PaperDecryptionHintComponent> hint, ref MapInitEvent args)
     {
         if (!TryComp<PaperComponent>(hint, out var paper))
             return;
+        paper.Content += $"\n\n";
+        paper.Content += Loc.GetString("lib-book-hint");
+
 
         for (int i = 0; i < hint.Comp.Hints; i++)
         {
