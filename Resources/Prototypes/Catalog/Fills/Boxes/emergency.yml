@@ -31,7 +31,7 @@
       - id: EmergencyMedipen
       - id: SpaceMedipen
       - id: Flare
-      - id: FoodTinMRE
+      - id: FoodSnackNutribrick
       - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
@@ -52,7 +52,7 @@
       - id: EmergencyMedipen
       - id: SpaceMedipen
       - id: Flare
-      - id: FoodTinMRE
+      - id: FoodSnackNutribrick
       - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
@@ -73,7 +73,7 @@
       - id: EmergencyMedipen
       - id: SpaceMedipen
       - id: Flare
-      - id: FoodTinMRE
+      - id: FoodSnackNutribrick
       - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
@@ -100,7 +100,7 @@
       - id: EmergencyMedipen
       - id: SpaceMedipen
       - id: Flare
-      - id: FoodTinMRE
+      - id: FoodSnackNutribrick
       - id: DrinkWaterBottleFull
   - type: Tag
     tags:
@@ -119,7 +119,7 @@
       - id: EmergencyMedipen
       - id: SpaceMedipen
       - id: Flare
-      - id: FoodTinMRE
+      - id: FoodSnackNutribrick
   - type: Sprite
     layers:
       - state: internals
