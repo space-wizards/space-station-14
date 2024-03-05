@@ -178,3 +178,11 @@
   materials:
     Steel: 300
     Plastic: 100
+
+- type: latheRecipe
+  id: ClothingHeadHatWelding
+  result: ClothingHeadHatWelding
+  completetime: 2
+  materials:
+    Steel: 400
+    Glass: 200

@@ -24,6 +24,9 @@ entities:
     components:
     - type: MetaData
       name: GX-13 Infiltrator
+    - type: Tag
+      tags:
+      - Syndicate
     - type: Transform
       pos: 0.64252126,4.1776605
       parent: invalid

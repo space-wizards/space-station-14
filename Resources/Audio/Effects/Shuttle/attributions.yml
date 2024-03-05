@@ -9,3 +9,9 @@
   copyright: '"hyperspace_progress.ogg" by /tg/station. Modified for looping by metalgearsloth.'
   license: CC-BY-SA-3.0
   source: https://github.com/tgstation/tgstation/tree/71a79f1f75902d2ccab27cbffb971b12b7ab042d/sound/runtime/hyperspace
+
+- files:
+  - radar_ping.ogg
+  copyright: User unfa from freesound.org Remixed to mono and .ogg by metalgearsloth.
+  license: CC0-1.0
+  source: https://freesound.org/people/unfa/sounds/215415/
