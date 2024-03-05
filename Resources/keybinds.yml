@@ -371,17 +371,23 @@ binds:
 - function: TextNewline
   type: State
   key: Return
-  canRepeat: true
   mod1: Shift
+  canRepeat: true
 - function: TextNewline
   type: State
   key: NumpadEnter
-  canRepeat: true
   mod1: Shift
+  canRepeat: true
 - function: TextSubmit
   type: State
   key: Return
 - function: TextSubmit
+  type: State
+  key: NumpadEnter
+- function: MultilineTextSubmit
+  type: State
+  key: Return
+- function: MultilineTextSubmit
   type: State
   key: NumpadEnter
 - function: TextSelectAll
