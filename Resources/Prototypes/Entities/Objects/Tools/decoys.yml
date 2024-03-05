@@ -40,6 +40,9 @@
     folded: true
   - type: PowerCellSlot
     cellSlotId: cell_slot
+  - type: Body
+    prototype: Decoy
+  - type: Buckle # pour one out for a syndie homie
   - type: ItemSlots
     slots:
       cell_slot:
