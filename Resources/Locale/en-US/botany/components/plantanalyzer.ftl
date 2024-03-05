@@ -4,7 +4,9 @@ plant-analyzer-window-label-trademark = NanoTrasen™ prototype:
 plant-analyzer-window-tab-basics = Basics
 plant-analyzer-window-tab-tolerances = Tolerances
 plant-analyzer-window-tab-mutations = Mutations
-plant-analyzer-windwo-scanmode = Advanced scan mode:
+plant-analyzer-window-scanmode = Advanced scan mode:
+plant-analyzer-window-mode-on = On
+plant-analyzer-window-mode-off = Off
 
 plant-analyzer-window-label-name-scanned-plant = Scanned plant: {$seedName}
 plant-analyzer-window-label-name-scanned-seed = Scanned seed: {$seedName}
@@ -44,5 +46,5 @@ plant-analyzer-mutation-bioluminescent = Bioluminescent
 plant-analyzer-mutation-canscream = Mandragora
 
 plant-analyzer-harvest-repeat = Perennial
-plant-analyzer-harvest-ephemeral = Ephemeral
-plant-analyzer-harvest-autoharvest = Autoharvest
+plant-analyzer-harvest-norepeat = Ephemeral
+plant-analyzer-harvest-selfharvest = Autoharvest

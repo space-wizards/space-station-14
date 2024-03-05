@@ -17,6 +17,9 @@
       - key: enum.PlantAnalyzerUiKey.Key
         type: PlantAnalyzerBoundUserInterface
   - type: PlantAnalyzer
+    settings:
+      scanDelay: 20
+      advScanDelay: 40
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
   - type: Appearance

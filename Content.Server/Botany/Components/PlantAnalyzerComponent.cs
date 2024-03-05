@@ -1,5 +1,5 @@
-using Robust.Shared.Audio;
 using Content.Shared.DoAfter;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Botany.Components;
 
@@ -9,30 +9,25 @@ namespace Content.Server.Botany.Components;
 [RegisterComponent]
 public sealed partial class PlantAnalyzerComponent : Component
 {
-    /// <summary>
-    ///     How long it takes to scan.
-    /// </summary>
-    [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float ScanDelay = 20f;
+    [DataDefinition]
+    public partial struct PlantAnalyzerSetting
+    {
+        [DataField]
+        public bool AdvancedScan;
 
-    [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float AdvScanDelay = 40f;
+        [DataField]
+        public float ScanDelay;
 
-    /// <summary>
-    ///     Which scan mode to use.
-    /// </summary>
-    [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool AdvancedScan = false;
+        [DataField]
+        public float AdvScanDelay;
+    }
+
+    [DataField, ViewVariables]
+    public PlantAnalyzerSetting Settings = new();
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public DoAfterId? DoAfter;
 
-    /// <summary>
-    ///     Sound played on scanning end.
-    /// </summary>
     [DataField]
     public SoundSpecifier? ScanningEndSound;
 }

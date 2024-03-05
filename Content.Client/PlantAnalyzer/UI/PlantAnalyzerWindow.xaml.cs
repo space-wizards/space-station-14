@@ -49,7 +49,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         }
         NoData.Visible = false;
 
-        if (msg.ScanMode) // Switch display to the settings of the received msg.
+        if (msg.ScanMode)
         {
             OnButton.ToggleMode = true;
             OnButton.Pressed = true;
@@ -65,21 +65,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         // Basics
         PlantYield.Text = Loc.GetString("plant-analyzer-plant-yield-text", ("seedYield", msg.SeedYield));
         Potency.Text = Loc.GetString("plant-analyzer-plant-potency-text", ("seedPotency", msg.SeedPotency));
-        switch (msg.HarvestType)
-        {
-            case "Repeat":
-                Repeat.Text = Loc.GetString("plant-analyzer-plant-harvest-text", ("plantHarvestType", Loc.GetString("plant-analyzer-harvest-repeat")));
-                break;
-            case "NoRepeat":
-                Repeat.Text = Loc.GetString("plant-analyzer-plant-harvest-text", ("plantHarvestType", Loc.GetString("plant-analyzer-harvest-ephemeral")));
-                break;
-            case "SelfHarvest":
-                Repeat.Text = Loc.GetString("plant-analyzer-plant-harvest-text", ("plantHarvestType", Loc.GetString("plant-analyzer-harvest-autoharvest")));
-                break;
-            default:
-                Repeat.Text = Loc.GetString("plant-analyzer-plant-harvest-text", ("plantHarvestType", ""));
-                break;
-        }
+        Repeat.Text = Loc.GetString("plant-analyzer-plant-harvest-text",("plantHarvestType", Loc.GetString(new StringBuilder("plant-analyzer-harvest-").Append(msg.HarvestType.ToString()).ToString())));
         Endurance.Text = Loc.GetString("plant-analyzer-plant-endurance-text", ("seedEndurance", msg.Endurance));
         Chemicals.Text = Loc.GetString("plant-analyzer-plant-chemistry-text", ("seedChem", msg.SeedChem));
         Gases.Text = Loc.GetString("plant-analyzer-plant-exude-text", ("exudeGases", msg.ExudeGases == "" ? Loc.GetString("plant-analyzer-plant-gasses-no") : msg.ExudeGases));
@@ -101,6 +87,5 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         // Misc
         Traits.Text = Loc.GetString("plant-analyzer-plant-mutations-text", ("traits", msg.MutationsList == null ? "-" : msg.MutationsList));
         PlantSpeciation.Text = Loc.GetString("plant-analyzer-plant-speciation-text", ("speciation", msg.Speciation == null ? "-" : new StringBuilder("").AppendJoin("\n   ", msg.Speciation.Select(item => item.ToString())).ToString()));
-        ExtraInfo.Text = "";
     }
 }

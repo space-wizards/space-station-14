@@ -14,11 +14,11 @@ namespace Content.Server.Botany.Systems;
 
 public sealed class PlantAnalyzerSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly PowerCellSystem _cell = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -36,9 +36,9 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         if (ent.Comp.DoAfter != null)
             return;
 
-        if (ent.Comp.AdvancedScan)
+        if (ent.Comp.Settings.AdvancedScan)
         {
-            var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.AdvScanDelay, new PlantAnalyzerDoAfterEvent(), ent, target: args.Target, used: ent)
+            var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.Settings.AdvScanDelay, new PlantAnalyzerDoAfterEvent(), ent, target: args.Target, used: ent)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -48,7 +48,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         }
         else
         {
-            var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.ScanDelay, new PlantAnalyzerDoAfterEvent(), ent, target: args.Target, used: ent)
+            var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.Settings.ScanDelay, new PlantAnalyzerDoAfterEvent(), ent, target: args.Target, used: ent)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -61,7 +61,8 @@ public sealed class PlantAnalyzerSystem : EntitySystem
     private void OnDoAfter(Entity<PlantAnalyzerComponent> ent, ref PlantAnalyzerDoAfterEvent args)
     {
         ent.Comp.DoAfter = null;
-        if (ent.Comp.AdvancedScan) // Double charge use for advanced scan.
+        // Double charge use for advanced scan.
+        if (ent.Comp.Settings.AdvancedScan)
         {
             if (!_cell.TryUseActivatableCharge(ent, user: args.User))
                 return;
@@ -95,25 +96,25 @@ public sealed class PlantAnalyzerSystem : EntitySystem
 
         if (seedcomponent != null)
         {
-            if (seedcomponent.Seed != null) // If unique seed.
+            if (seedcomponent.Seed != null)
             {
                 var seedData = seedcomponent.Seed;
-                var state = ObtainingGeneDataSeed(seedData, target, false, ent.Comp.AdvancedScan);
+                var state = ObtainingGeneDataSeed(seedData, target, false, ent.Comp.Settings.AdvancedScan);
                 _uiSystem.SendUiMessage(ui, state);
             }
-            else if (seedcomponent.SeedId != null && _prototypeManager.TryIndex(seedcomponent.SeedId, out SeedPrototype? protoSeed)) // Get the seed protoype.
+            else if (seedcomponent.SeedId != null && _prototypeManager.TryIndex(seedcomponent.SeedId, out SeedPrototype? protoSeed))
             {
                 var seedProtoId = protoSeed;
-                var state = ObtainingGeneDataSeedProt(protoSeed, target, ent.Comp.AdvancedScan);
+                var state = ObtainingGeneDataSeedProt(protoSeed, target, ent.Comp.Settings.AdvancedScan);
                 _uiSystem.SendUiMessage(ui, state);
             }
         }
-        else if (plantcomp != null) // If we poke the plantholder, it checks the plantholder seed.
+        else if (plantcomp != null)
         {
             var seedData = plantcomp.Seed;
             if (seedData != null)
             {
-                var state = ObtainingGeneDataSeed(seedData, target, true, ent.Comp.AdvancedScan);  // SeedData is a unique seed in a tray.
+                var state = ObtainingGeneDataSeed(seedData, target, true, ent.Comp.Settings.AdvancedScan);
                 _uiSystem.SendUiMessage(ui, state);
             }
         }
@@ -125,9 +126,9 @@ public sealed class PlantAnalyzerSystem : EntitySystem
     public PlantAnalyzerScannedSeedPlantInformation ObtainingGeneDataSeedProt(SeedPrototype seedProto, EntityUid target, Boolean scanMode)
     {
         string plantHarvestType = "";
-        if (seedProto.HarvestRepeat == HarvestType.Repeat) plantHarvestType = HarvestType.Repeat.ToString();
-        if (seedProto.HarvestRepeat == HarvestType.NoRepeat) plantHarvestType = HarvestType.NoRepeat.ToString();
-        if (seedProto.HarvestRepeat == HarvestType.SelfHarvest) plantHarvestType = HarvestType.SelfHarvest.ToString();
+        if (seedProto.HarvestRepeat == HarvestType.Repeat) plantHarvestType = HarvestType.Repeat.ToString().ToLower();
+        if (seedProto.HarvestRepeat == HarvestType.NoRepeat) plantHarvestType = HarvestType.NoRepeat.ToString().ToLower();
+        if (seedProto.HarvestRepeat == HarvestType.SelfHarvest) plantHarvestType = HarvestType.SelfHarvest.ToString().ToLower();
 
         string exudeGases = new StringBuilder("").AppendJoin("\n   ", seedProto.ExudeGasses.Select(item => item.Key.ToString())).ToString();
         string seedChem = new StringBuilder("\n   ").AppendJoin("\n   ", seedProto.Chemicals.Select(item => item.Key.ToString())).ToString();
@@ -148,9 +149,9 @@ public sealed class PlantAnalyzerSystem : EntitySystem
     public PlantAnalyzerScannedSeedPlantInformation ObtainingGeneDataSeed(SeedData seed, EntityUid target, bool trayChecker, Boolean scanMode)
     {
         string plantHarvestType = "";
-        if (seed.HarvestRepeat == HarvestType.Repeat) plantHarvestType = HarvestType.Repeat.ToString();
-        if (seed.HarvestRepeat == HarvestType.NoRepeat) plantHarvestType = HarvestType.NoRepeat.ToString();
-        if (seed.HarvestRepeat == HarvestType.SelfHarvest) plantHarvestType = HarvestType.SelfHarvest.ToString();
+        if (seed.HarvestRepeat == HarvestType.Repeat) plantHarvestType = HarvestType.Repeat.ToString().ToLower();
+        if (seed.HarvestRepeat == HarvestType.NoRepeat) plantHarvestType = HarvestType.NoRepeat.ToString().ToLower();
+        if (seed.HarvestRepeat == HarvestType.SelfHarvest) plantHarvestType = HarvestType.SelfHarvest.ToString().ToLower();
 
         string exudeGases = new StringBuilder("").AppendJoin("\n   ", seed.ExudeGasses.Select(item => item.Key.ToString())).ToString();
         string seedChem = new StringBuilder("\n   ").AppendJoin("\n   ", seed.Chemicals.Select(item => item.Key.ToString())).ToString();
@@ -191,6 +192,6 @@ public sealed class PlantAnalyzerSystem : EntitySystem
     {
         if (ent.Comp.DoAfter != null)
             return;
-        ent.Comp.AdvancedScan = isAdvMode;
+        ent.Comp.Settings.AdvancedScan = isAdvMode;
     }
 }
