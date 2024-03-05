@@ -480,8 +480,10 @@ public sealed partial class ShuttleSystem
             {
                 Disable(uid, component: body);
             }
-
-            Enable(uid, component: body, shuttle: entity.Comp2);
+            else
+            {
+                Enable(uid, component: body, shuttle: entity.Comp2);
+            }
         }
 
         _thruster.DisableLinearThrusters(entity.Comp2);
