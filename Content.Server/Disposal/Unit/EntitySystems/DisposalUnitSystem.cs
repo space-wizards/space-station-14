@@ -68,7 +68,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<DisposalUnitComponent, AnchorStateChangedEvent>(OnAnchorChanged);
-        SubscribeLocalEvent<DisposalUnitComponent, EntityUnpausedEvent>(OnUnpaused);
         // TODO: Predict me when hands predicted
         SubscribeLocalEvent<DisposalUnitComponent, ContainerRelayMovementEntityEvent>(OnMovement);
         SubscribeLocalEvent<DisposalUnitComponent, PowerChangedEvent>(OnPowerChange);
@@ -101,14 +100,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             component.Powered,
             component.Engaged,
             GetNetEntityList(component.RecentlyEjected));
-    }
-
-    private void OnUnpaused(EntityUid uid, SharedDisposalUnitComponent component, ref EntityUnpausedEvent args)
-    {
-        if (component.NextFlush != null)
-            component.NextFlush = component.NextFlush.Value + args.PausedTime;
-
-        component.NextPressurized += args.PausedTime;
     }
 
     private void AddDisposalAltVerbs(EntityUid uid, SharedDisposalUnitComponent component, GetVerbsEvent<AlternativeVerb> args)

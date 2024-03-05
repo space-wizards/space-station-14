@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Components;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
@@ -115,7 +115,14 @@ public sealed class InjectorSystem : SharedInjectorSystem
     private void InjectDoAfter(Entity<InjectorComponent> injector, EntityUid target, EntityUid user)
     {
         // Create a pop-up for the user
-        Popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
+        if (injector.Comp.ToggleState == InjectorToggleMode.Draw)
+        {
+            Popup.PopupEntity(Loc.GetString("injector-component-drawing-user"), target, user);
+        }
+        else
+        {
+            Popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
+        }
 
         if (!SolutionContainers.TryGetSolution(injector.Owner, InjectorComponent.SolutionName, out _, out var solution))
             return;
@@ -131,8 +138,17 @@ public sealed class InjectorSystem : SharedInjectorSystem
         {
             // Create a pop-up for the target
             var userName = Identity.Entity(user, EntityManager);
-            Popup.PopupEntity(Loc.GetString("injector-component-injecting-target",
-                ("user", userName)), user, target);
+            if (injector.Comp.ToggleState == InjectorToggleMode.Draw)
+            {
+                Popup.PopupEntity(Loc.GetString("injector-component-drawing-target",
+    ("user", userName)), user, target);
+            }
+            else
+            {
+                Popup.PopupEntity(Loc.GetString("injector-component-injecting-target",
+    ("user", userName)), user, target);
+            }
+
 
             // Check if the target is incapacitated or in combat mode and modify time accordingly.
             if (MobState.IsIncapacitated(target))
