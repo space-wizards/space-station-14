@@ -309,6 +309,7 @@ public sealed partial class EmergencyShuttleSystem
     private void CleanupEmergencyConsole()
     {
         _announced = false;
+        _roundEndCancelToken?.Cancel();
         _roundEndCancelToken = null;
         ShuttlesLeft = false;
         _launchedShuttles = false;

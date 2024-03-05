@@ -93,7 +93,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     private void OnRoundStart(RoundStartingEvent ev)
     {
         CleanupEmergencyConsole();
-        _roundEndCancelToken?.Cancel();
         _roundEndCancelToken = new CancellationTokenSource();
     }
 
