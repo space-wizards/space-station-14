@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: iacore
-  changes:
-  - message: Nanotrasen has added screw holes to some metal constructions. (computer
-      frame, machine frame, rack and meat spike are now deconstructed by screwing,
-      also while unanchored.)
-    type: Tweak
-  id: 5591
-  time: '2024-01-06T08:28:57.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/21051
 - author: Velcroboy
   changes:
   - message: Added recipe for Diphenhydramine.
@@ -3828,3 +3819,10 @@
   id: 6090
   time: '2024-03-05T04:34:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25785
+- author: Whisper
+  changes:
+  - message: Glass shards can be added to flatcaps to create bladed flatcaps!
+    type: Add
+  id: 6091
+  time: '2024-03-05T20:57:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25780
