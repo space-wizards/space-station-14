@@ -5,7 +5,8 @@
     <GuideEntityEmbed Entity="MobReptilian" Caption=""/>
   </Box>
 
-  They can eat raw meat without any ill effects, but some foods like chocolate and onion poisons them. They prefer a somewhat higher temperature range than humans.
+  They can ONLY eat fruits and meat, but can eat raw meat and drink blood without any ill effects.
+  They prefer a somewhat higher temperature range than humans.
   They can drag objects with their tail, keeping both their hands free.
 
   Their unarmed claw attacks deal Slash damage instead of Blunt.
