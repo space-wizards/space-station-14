@@ -1,7 +1,7 @@
 namespace Content.Server.Paper;
 
 /// <summary>
-///     Randomizes the book story by creating it from list of dataset prototypes or strings.
+///    Adds randomly generated stories to Paper component
 /// </summary>
 [RegisterComponent, Access(typeof(PaperRandomStorySystem))]
 public sealed partial class PaperRandomStoryComponent : Component

@@ -19,7 +19,6 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Construction
 {
     /// <summary>
-    /// 
     /// The client-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
@@ -170,9 +169,9 @@ namespace Content.Client.Construction
             return true;
         }
 
-        /// Creates a construction ghost at the given location.
-        /// </summar
         /// <summary>
+        /// Creates a construction ghost at the given location.
+        /// </summary>
         public void SpawnGhost(ConstructionPrototype prototype, EntityCoordinates loc, Direction dir)
             => TrySpawnGhost(prototype, loc, dir, out _);
 
