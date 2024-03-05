@@ -218,6 +218,12 @@
   id: Briefcase
 
 - type: Tag
+  id: BrimFlatcapBrown
+
+- type: Tag
+  id: BrimFlatcapGrey
+
+- type: Tag
   id: Brutepack
 
 - type: Tag
