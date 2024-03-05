@@ -1,14 +1,14 @@
-﻿using Content.Server.Chat.Managers;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Players;
 using Content.Server.Station.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
-using Robust.Server.GameObjects;
+using Content.Shared.Players;
 using Robust.Server.Player;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -136,7 +136,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
 
         var msg = Loc.GetString("rule-respawn-in-seconds", ("second", component.RespawnDelay.TotalSeconds));
         var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
-        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, respawnTracker, false, actor.PlayerSession.ConnectedClient, Color.LimeGreen);
+        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, respawnTracker, false, actor.PlayerSession.Channel, Color.LimeGreen);
         component.RespawnQueue[actor.PlayerSession.UserId] = _timing.CurTime + component.RespawnDelay;
         return true;
     }

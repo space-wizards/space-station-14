@@ -1,8 +1,10 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Gravity;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
+using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -21,6 +23,7 @@ namespace Content.Shared.Throwing
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
         private const string ThrowingFixture = "throw-fixture";
 
@@ -32,7 +35,7 @@ namespace Content.Shared.Throwing
             SubscribeLocalEvent<ThrownItemComponent, StartCollideEvent>(HandleCollision);
             SubscribeLocalEvent<ThrownItemComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<ThrownItemComponent, ThrownEvent>(ThrowItem);
-            SubscribeLocalEvent<ThrownItemComponent, EntityUnpausedEvent>(OnThrownUnpaused);
+
             SubscribeLocalEvent<PullStartedMessage>(HandlePullStarted);
         }
 
@@ -41,7 +44,7 @@ namespace Content.Shared.Throwing
             component.ThrownTime ??= _gameTiming.CurTime;
         }
 
-        private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
+        private void ThrowItem(EntityUid uid, ThrownItemComponent component, ref ThrownEvent @event)
         {
             if (!EntityManager.TryGetComponent(uid, out FixturesComponent? fixturesComponent) ||
                 fixturesComponent.Fixtures.Count != 1 ||
@@ -53,14 +56,6 @@ namespace Content.Shared.Throwing
             var fixture = fixturesComponent.Fixtures.Values.First();
             var shape = fixture.Shape;
             _fixtures.TryCreateFixture(uid, shape, ThrowingFixture, hard: false, collisionMask: (int) CollisionGroup.ThrownItem, manager: fixturesComponent, body: body);
-        }
-
-        private void OnThrownUnpaused(EntityUid uid, ThrownItemComponent component, ref EntityUnpausedEvent args)
-        {
-            if (component.LandTime != null)
-            {
-                component.LandTime = component.LandTime.Value + args.PausedTime;
-            }
         }
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, ref StartCollideEvent args)
@@ -99,6 +94,9 @@ namespace Content.Shared.Throwing
             if (TryComp<PhysicsComponent>(uid, out var physics))
             {
                 _physics.SetBodyStatus(physics, BodyStatus.OnGround);
+
+                if (physics.Awake)
+                    _broadphase.RegenerateContacts(uid, physics);
             }
 
             if (EntityManager.TryGetComponent(uid, out FixturesComponent? manager))
@@ -111,13 +109,13 @@ namespace Content.Shared.Throwing
                 }
             }
 
-            EntityManager.EventBus.RaiseLocalEvent(uid, new StopThrowEvent {User = thrownItemComponent.Thrower}, true);
+            EntityManager.EventBus.RaiseLocalEvent(uid, new StopThrowEvent { User = thrownItemComponent.Thrower }, true);
             EntityManager.RemoveComponent<ThrownItemComponent>(uid);
         }
 
         public void LandComponent(EntityUid uid, ThrownItemComponent thrownItem, PhysicsComponent physics, bool playSound)
         {
-            if (thrownItem.Landed || thrownItem.Deleted || Deleted(uid))
+            if (thrownItem.Landed || thrownItem.Deleted || _gravity.IsWeightless(uid) || Deleted(uid))
                 return;
 
             thrownItem.Landed = true;

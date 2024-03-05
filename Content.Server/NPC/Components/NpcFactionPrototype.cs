@@ -7,7 +7,7 @@ namespace Content.Server.NPC.Components
     /// Contains data about this faction's relations with other factions.
     /// </summary>
     [Prototype("npcFaction")]
-    public sealed class NpcFactionPrototype : IPrototype
+    public sealed partial class NpcFactionPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataField]

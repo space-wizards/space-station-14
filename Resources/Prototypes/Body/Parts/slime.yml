@@ -1,7 +1,7 @@
 # TODO BODY: Part damage
 - type: entity
   id: PartSlime
-  parent: [BaseItem, PartBase]
+  parent: [BaseItem, BasePart]
   name: "slime body part"
   abstract: true
 

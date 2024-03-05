@@ -11,6 +11,43 @@ public abstract partial class SharedShuttleSystem
 
     protected virtual void UpdateIFFInterfaces(EntityUid gridUid, IFFComponent component) {}
 
+    public Color GetIFFColor(EntityUid gridUid, bool self = false, IFFComponent? component = null)
+    {
+        if (self)
+        {
+            return IFFComponent.SelfColor;
+        }
+
+        if (!Resolve(gridUid, ref component, false))
+        {
+            return IFFComponent.IFFColor;
+        }
+
+        return component.Color;
+    }
+
+    public string? GetIFFLabel(EntityUid gridUid, bool self = false, IFFComponent? component = null)
+    {
+        if (!IFFComponent.ShowIFFDefault)
+        {
+            return null;
+        }
+
+        var entName = MetaData(gridUid).EntityName;
+
+        if (self)
+        {
+            return entName;
+        }
+
+        if (Resolve(gridUid, ref component, false) && (component.Flags & (IFFFlags.HideLabel | IFFFlags.Hide)) != 0x0)
+        {
+            return null;
+        }
+
+        return string.IsNullOrEmpty(entName) ? Loc.GetString("shuttle-console-unknown") : entName;
+    }
+
     /// <summary>
     /// Sets the color for this grid to appear as on radar.
     /// </summary>

@@ -11,8 +11,6 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
-
         private const int HotspotSoundCooldownCycles = 200;
 
         private int _hotspotSoundCooldown = 0;
@@ -81,12 +79,12 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (_hotspotSoundCooldown++ == 0 && !string.IsNullOrEmpty(HotspotSound))
             {
-                var coordinates = tile.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager);
+                var coordinates = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
+
                 // A few details on the audio parameters for fire.
                 // The greater the fire state, the lesser the pitch variation.
                 // The greater the fire state, the greater the volume.
-                SoundSystem.Play(HotspotSound, Filter.Pvs(coordinates),
-                    coordinates, AudioHelpers.WithVariation(0.15f/tile.Hotspot.State).WithVolume(-5f + 5f * tile.Hotspot.State));
+                _audio.PlayPvs(HotspotSound, coordinates, AudioParams.Default.WithVariation(0.15f/tile.Hotspot.State).WithVolume(-5f + 5f * tile.Hotspot.State));
             }
 
             if (_hotspotSoundCooldown > HotspotSoundCooldownCycles)
@@ -166,8 +164,10 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             var fireEvent = new TileFireEvent(tile.Hotspot.Temperature, tile.Hotspot.Volume);
+            _entSet.Clear();
+            _lookup.GetLocalEntitiesIntersecting(tile.GridIndex, tile.GridIndices, _entSet, 0f);
 
-            foreach (var entity in _lookup.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices, 0f))
+            foreach (var entity in _entSet)
             {
                 RaiseLocalEvent(entity, ref fireEvent);
             }

@@ -1,12 +1,11 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Audio;
-using Content.Server.Construction;
 using Content.Server.Power.Components;
 using Content.Shared.Database;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 
 namespace Content.Server.Gravity
 {
@@ -27,7 +26,6 @@ namespace Content.Server.Gravity
             SubscribeLocalEvent<GravityGeneratorComponent, ComponentShutdown>(OnComponentShutdown);
             SubscribeLocalEvent<GravityGeneratorComponent, EntParentChangedMessage>(OnParentChanged); // Or just anchor changed?
             SubscribeLocalEvent<GravityGeneratorComponent, InteractHandEvent>(OnInteractHand);
-            SubscribeLocalEvent<GravityGeneratorComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<GravityGeneratorComponent, SharedGravityGeneratorComponent.SwitchGeneratorMessage>(
                 OnSwitchGenerator);
         }
@@ -139,7 +137,7 @@ namespace Content.Server.Gravity
                 return;
 
             if (session is { AttachedEntity: { } })
-                _adminLogger.Add(LogType.Action, on ? LogImpact.Medium : LogImpact.High, $"{ToPrettyString(session.AttachedEntity.Value):player} set ${ToPrettyString(uid):target} to {(on ? "on" : "off")}");
+                _adminLogger.Add(LogType.Action, on ? LogImpact.Medium : LogImpact.High, $"{session:player} set ${ToPrettyString(uid):target} to {(on ? "on" : "off")}");
 
             component.SwitchedOn = on;
             UpdatePowerState(component, powerReceiver);
@@ -254,12 +252,6 @@ namespace Content.Server.Gravity
             {
                 MakeOn((uid, grav), appearance);
             }
-        }
-
-        private void OnRefreshParts(EntityUid uid, GravityGeneratorComponent component, RefreshPartsEvent args)
-        {
-            var maxChargeMultipler = args.PartRatings[component.MachinePartMaxChargeMultiplier];
-            component.MaxCharge = maxChargeMultipler * 1;
         }
 
         private void MakeBroken(Entity<GravityGeneratorComponent> ent, AppearanceComponent? appearance)

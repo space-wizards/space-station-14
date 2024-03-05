@@ -10,8 +10,11 @@ reagent-desc-oats = Used for a variety of tasty purposes.
 reagent-name-enzyme = universal enzyme
 reagent-desc-enzyme = Used in cooking various dishes.
 
-reagent-name-egg = egg
-reagent-desc-egg = Used for baking.
+reagent-name-egg = cooked egg
+reagent-desc-egg = Cooked chicken embryo, delicious.
+
+reagent-name-raw-egg = raw egg
+reagent-desc-raw-egg = Used for baking.
 
 reagent-name-sugar = sugar
 reagent-desc-sugar = Tasty spacey sugar!

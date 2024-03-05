@@ -73,6 +73,9 @@
       behaviors:
       - !type:ChangeConstructionNodeBehavior
         node: machineFrame
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Machine

@@ -1,5 +1,7 @@
 using Content.Shared.Examine;
 using Content.Shared.Weapons.Ranged.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -19,17 +21,8 @@ public sealed class RechargeBasicEntityAmmoSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RechargeBasicEntityAmmoComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<RechargeBasicEntityAmmoComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<RechargeBasicEntityAmmoComponent, ExaminedEvent>(OnExamined);
-    }
-
-    private void OnUnpaused(EntityUid uid, RechargeBasicEntityAmmoComponent component, ref EntityUnpausedEvent args)
-    {
-        if (component.NextCharge == null)
-            return;
-
-        component.NextCharge = component.NextCharge.Value + args.PausedTime;
     }
 
     public override void Update(float frameTime)

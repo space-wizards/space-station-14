@@ -7,7 +7,7 @@ The AME is one of the simplest engines available. You put together the multi-til
 <Box>Required parts:</Box>
 <Box>
 <GuideEntityEmbed Entity="AmeController"/>
-<GuideEntityEmbed Entity="AmePart"/>
+<GuideEntityEmbed Entity="AmePartFlatpack"/>
 <GuideEntityEmbed Entity="AmeJar"/>
 </Box>
 

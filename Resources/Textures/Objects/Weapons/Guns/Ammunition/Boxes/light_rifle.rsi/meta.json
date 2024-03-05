@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/89456d18dd3e7c330839121e3c6bc8c609700137/icons/obj/ammo.dmi",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/89456d18dd3e7c330839121e3c6bc8c609700137/icons/obj/ammo.dmi , tweaked by Alekshhh",
   "size": {
     "x": 32,
     "y": 32
@@ -27,6 +27,9 @@
     },
     {
       "name": "rubber"
+    },
+    {
+      "name": "uranium"
     }
   ]
 }

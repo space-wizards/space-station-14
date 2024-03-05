@@ -4,6 +4,8 @@
   name: welding mask
   abstract: true
   components:
+  - type: Item
+    storedRotation: 0
   - type: IngestionBlocker
   - type: FlashImmunity
   - type: IdentityBlocker
@@ -14,6 +16,9 @@
       Glass: 100
   - type: StaticPrice
     price: 50
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: WeldingMaskBase

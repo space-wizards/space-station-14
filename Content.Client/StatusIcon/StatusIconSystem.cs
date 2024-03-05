@@ -1,10 +1,7 @@
 using Content.Shared.CCVar;
-using Content.Shared.Ghost;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Robust.Shared.Configuration;
 
 namespace Content.Client.StatusIcon;
@@ -16,10 +13,6 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
 {
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
-    [Dependency] private readonly IPlayerManager _playerMan = default!;
-
-    private EntityQuery<GhostComponent> _ghostQuery;
-    private EntityQuery<SpriteComponent> _spriteQuery;
 
     private bool _globalEnabled;
     private bool _localEnabled;
@@ -27,8 +20,8 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        _ghostQuery = GetEntityQuery<GhostComponent>();
-        _spriteQuery = GetEntityQuery<SpriteComponent>();
+        Subs.CVar(_configuration, CCVars.LocalStatusIconsEnabled, OnLocalStatusIconChanged, true);
+        Subs.CVar(_configuration, CCVars.GlobalStatusIconsEnabled, OnGlobalStatusIconChanged, true);
 
         _configuration.OnValueChanged(CCVars.LocalStatusIconsEnabled, OnLocalStatusIconChanged, true);
         _configuration.OnValueChanged(CCVars.GlobalStatusIconsEnabled, OnGlobalStatusIconChanged, true);

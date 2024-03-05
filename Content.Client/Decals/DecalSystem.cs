@@ -15,6 +15,9 @@ namespace Content.Client.Decals
 
         private DecalOverlay _overlay = default!;
 
+        private HashSet<uint> _removedUids = new();
+        private readonly List<Vector2i> _removedChunks = new();
+
         public override void Initialize()
         {
             base.Initialize();
@@ -47,16 +50,8 @@ namespace Content.Client.Decals
         protected override void OnDecalRemoved(EntityUid gridId, uint decalId, DecalGridComponent component, Vector2i indices, DecalChunk chunk)
         {
             base.OnDecalRemoved(gridId, decalId, component, indices, chunk);
-
-            if (!component.DecalZIndexIndex.Remove(decalId, out var zIndex))
-                return;
-
-            if (!component.DecalRenderIndex.TryGetValue(zIndex, out var renderIndex))
-                return;
-
-            renderIndex.Remove(decalId);
-            if (renderIndex.Count == 0)
-                component.DecalRenderIndex.Remove(zIndex);
+            DebugTools.Assert(chunk.Decals.ContainsKey(decalId));
+            chunk.Decals.Remove(decalId);
         }
 
         private void OnHandleState(EntityUid gridUid, DecalGridComponent gridComp, ref ComponentHandleState args)
@@ -65,13 +60,14 @@ namespace Content.Client.Decals
                 return;
 
             // is this a delta or full state?
-            var removedChunks = new List<Vector2i>();
+            _removedChunks.Clear();
+
             if (!state.FullState)
             {
                 foreach (var key in gridComp.ChunkCollection.ChunkCollection.Keys)
                 {
                     if (!state.AllChunks!.Contains(key))
-                        removedChunks.Add(key);
+                        _removedChunks.Add(key);
                 }
             }
             else
@@ -79,12 +75,12 @@ namespace Content.Client.Decals
                 foreach (var key in gridComp.ChunkCollection.ChunkCollection.Keys)
                 {
                     if (!state.Chunks.ContainsKey(key))
-                        removedChunks.Add(key);
+                        _removedChunks.Add(key);
                 }
             }
 
-            if (removedChunks.Count > 0)
-                RemoveChunks(gridUid, gridComp, removedChunks);
+            if (_removedChunks.Count > 0)
+                RemoveChunks(gridUid, gridComp, _removedChunks);
 
             if (state.Chunks.Count > 0)
                 UpdateChunks(gridUid, gridComp, state.Chunks);
@@ -129,17 +125,16 @@ namespace Content.Client.Decals
         private void UpdateChunks(EntityUid gridId, DecalGridComponent gridComp, Dictionary<Vector2i, DecalChunk> updatedGridChunks)
         {
             var chunkCollection = gridComp.ChunkCollection.ChunkCollection;
-            var renderIndex = gridComp.DecalRenderIndex;
-            var zIndexIndex = gridComp.DecalZIndexIndex;
 
             // Update any existing data / remove decals we didn't receive data for.
             foreach (var (indices, newChunkData) in updatedGridChunks)
             {
                 if (chunkCollection.TryGetValue(indices, out var chunk))
                 {
-                    var removedUids = new HashSet<uint>(chunk.Decals.Keys);
-                    removedUids.ExceptWith(newChunkData.Decals.Keys);
-                    foreach (var removedUid in removedUids)
+                    _removedUids.Clear();
+                    _removedUids.UnionWith(chunk.Decals.Keys);
+                    _removedUids.ExceptWith(newChunkData.Decals.Keys);
+                    foreach (var removedUid in _removedUids)
                     {
                         OnDecalRemoved(gridId, removedUid, gridComp, indices, chunk);
                         gridComp.DecalIndex.Remove(removedUid);
@@ -150,11 +145,6 @@ namespace Content.Client.Decals
 
                 foreach (var (uid, decal) in newChunkData.Decals)
                 {
-                    if (zIndexIndex.TryGetValue(uid, out var zIndex))
-                        renderIndex[zIndex].Remove(uid);
-
-                    renderIndex.GetOrNew(decal.ZIndex)[uid] = decal;
-                    zIndexIndex[uid] = decal.ZIndex;
                     gridComp.DecalIndex[uid] = indices;
                 }
             }
@@ -166,7 +156,8 @@ namespace Content.Client.Decals
 
             foreach (var index in chunks)
             {
-                if (!chunkCollection.TryGetValue(index, out var chunk)) continue;
+                if (!chunkCollection.TryGetValue(index, out var chunk))
+                    continue;
 
                 foreach (var decalId  in chunk.Decals.Keys)
                 {

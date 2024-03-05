@@ -1,13 +1,17 @@
 using System.Numerics;
+using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Throwing;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
@@ -34,6 +38,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
         SubscribeLocalEvent<EmbeddableProjectileComponent, RemoveEmbeddedProjectileEvent>(OnEmbedRemove);
+        SubscribeLocalEvent<EmbeddableProjectileComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
     }
 
     private void OnEmbedActivate(EntityUid uid, EmbeddableProjectileComponent component, ActivateInWorldEvent args)
@@ -93,22 +98,22 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (!component.EmbedOnThrow)
             return;
 
-        Embed(uid, args.Target, component);
+        Embed(uid, args.Target, null, component);
     }
 
     private void OnEmbedProjectileHit(EntityUid uid, EmbeddableProjectileComponent component, ref ProjectileHitEvent args)
     {
-        Embed(uid, args.Target, component);
+        Embed(uid, args.Target, args.Shooter, component);
 
         // Raise a specific event for projectiles.
-        if (TryComp<ProjectileComponent>(uid, out var projectile))
+        if (TryComp(uid, out ProjectileComponent? projectile))
         {
             var ev = new ProjectileEmbedEvent(projectile.Shooter!.Value, projectile.Weapon!.Value, args.Target);
             RaiseLocalEvent(uid, ref ev);
         }
     }
 
-    private void Embed(EntityUid uid, EntityUid target, EmbeddableProjectileComponent component)
+    private void Embed(EntityUid uid, EntityUid target, EntityUid? user, EmbeddableProjectileComponent component)
     {
         TryComp<PhysicsComponent>(uid, out var physics);
         _physics.SetLinearVelocity(uid, Vector2.Zero, body: physics);
@@ -118,13 +123,13 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
         if (component.Offset != Vector2.Zero)
         {
-            _transform.SetLocalPosition(xform, xform.LocalPosition + xform.LocalRotation.RotateVec(component.Offset));
+            _transform.SetLocalPosition(uid, xform.LocalPosition + xform.LocalRotation.RotateVec(component.Offset),
+                xform);
         }
 
-        if (component.Sound != null)
-        {
-            _audio.PlayPredicted(component.Sound, uid, null);
-        }
+        _audio.PlayPredicted(component.Sound, uid, null);
+        var ev = new EmbedEvent(user, target);
+        RaiseLocalEvent(uid, ref ev);
     }
 
     private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
@@ -148,6 +153,14 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     private sealed partial class RemoveEmbeddedProjectileEvent : DoAfterEvent
     {
         public override DoAfterEvent Clone() => this;
+    }
+
+    /// <summary>
+    /// Prevent players with the Pacified status effect from throwing embeddable projectiles.
+    /// </summary>
+    private void OnAttemptPacifiedThrow(Entity<EmbeddableProjectileComponent> ent, ref AttemptPacifiedThrowEvent args)
+    {
+        args.Cancel("pacified-cannot-throw-embed");
     }
 }
 

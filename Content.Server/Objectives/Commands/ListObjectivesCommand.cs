@@ -18,7 +18,7 @@ namespace Content.Server.Objectives.Commands
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
             if (player == null || !_players.TryGetSessionByUsername(args[0], out player))
             {
                 shell.WriteError(LocalizationManager.GetString("shell-target-player-does-not-exist"));

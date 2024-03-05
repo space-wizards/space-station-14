@@ -7,6 +7,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.NetworkConfigurator;
 
@@ -160,7 +161,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
     /// </summary>
     private sealed class LinksRender : Control
     {
-        public readonly List<(string, string)> Links = new();
+        public readonly List<(ProtoId<SourcePortPrototype>, ProtoId<SinkPortPrototype>)> Links = new();
         public readonly Dictionary<string, Button> SourceButtons = new();
         public readonly Dictionary<string, Button> SinkButtons = new();
         private readonly BoxContainer _leftButtonContainer;

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: FloorTileItemBase
   description: These could work as a pretty decent throwing weapon.
@@ -8,22 +8,20 @@
     sprite: Objects/Tiles/tile.rsi
   - type: Item
     sprite: Objects/Tiles/tile.rsi
+    size: Normal
   - type: DamageOtherOnHit
     damage:
       types:
         Blunt: 5
   - type: Stack
     count: 1
-  - type: Tag
-    tags:
-      - DroneUsable
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 40
+        damage: 30
       behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
@@ -32,7 +30,10 @@
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand
@@ -288,6 +289,70 @@
       - FloorBlue
   - type: Stack
     stackType: FloorTileBlue
+
+- type: entity
+  name: lime tile
+  parent: FloorTileItemBase
+  id: FloorTileItemLime
+  components:
+  - type: Sprite
+    state: lime
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelLime
+  - type: Stack
+    stackType: FloorTileLime
+
+- type: entity
+  name: mining tile
+  parent: FloorTileItemBase
+  id: FloorTileItemMining
+  components:
+  - type: Sprite
+    state: mining
+  - type: Item
+    heldPrefix: mining
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorMining
+  - type: Stack
+    stackType: FloorTileMining
+
+- type: entity
+  name: dark mining tile
+  parent: FloorTileItemBase
+  id: FloorTileItemMiningDark
+  components:
+  - type: Sprite
+    state: miningdark
+  - type: Item
+    heldPrefix: miningdark
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorMiningDark
+  - type: Stack
+    stackType: FloorTileMiningDark
+
+- type: entity
+  name: light mining tile
+  parent: FloorTileItemBase
+  id: FloorTileItemMiningLight
+  components:
+  - type: Sprite
+    state: mininglight
+  - type: Item
+    heldPrefix: mininglight
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorMiningLight
+  - type: Stack
+    stackType: FloorTileMiningLight
 
 # Departamental
 - type: entity
@@ -677,6 +742,38 @@
   - type: Stack
     stackType: FloorTileStackShuttleRed
 
+- type: entity
+  name: grey shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleGrey
+  components:
+  - type: Sprite
+    state: shuttlegrey
+  - type: Item
+    heldPrefix: shuttlegrey
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorShuttleGrey
+  - type: Stack
+    stackType: FloorTileStackShuttleGrey
+
+- type: entity
+  name: black shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleBlack
+  components:
+  - type: Sprite
+    state: shuttleblack
+  - type: Item
+    heldPrefix: shuttleblack
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorShuttleBlack
+  - type: Stack
+    stackType: FloorTileStackShuttleBlack
+
 # Materials
 - type: entity
   name: gold floor
@@ -742,6 +839,24 @@
       - FloorBlueCircuit
   - type: Stack
     stackType: FloorTileBCircuit
+
+# Circuits stacks
+
+- type: entity
+  parent: FloorTileItemGCircuit
+  id: FloorTileItemGCircuit4
+  suffix: 4
+  components:
+  - type: Stack
+    count: 4
+
+- type: entity
+  parent: FloorTileItemBCircuit
+  id: FloorTileItemBCircuit4
+  suffix: 4
+  components:
+  - type: Stack
+    count: 4
 
 # Terrain
 - type: entity
@@ -875,3 +990,58 @@
   - type: Construction
     graph: WebObjects
     node: tile
+
+# Faux science tiles
+
+- type: entity
+  id: FloorTileItemAstroGrass
+  parent: FloorTileItemBase
+  name: astro-grass
+  description: Fake grass that covers up wires and even comes with realistic NanoTrimmings!
+  components:
+  - type: Sprite
+    state: astrograss
+  - type: Item
+    heldPrefix: grass
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroGrass
+  - type: Stack
+    stackType: FloorTileAstroGrass
+
+- type: entity
+  id: FloorTileItemAstroIce
+  parent: FloorTileItemBase
+  name: astro-ice
+  description: Fake ice that's as slippery as the real thing, while being easily removable!
+  components:
+  - type: Sprite
+    state: astroice
+  - type: Item
+    heldPrefix: snow
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroIce
+  - type: Stack
+    stackType: FloorTileAstroIce
+
+- type: entity
+  name: large wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodLarge
+  components:
+  - type: Sprite
+    state: wood-large
+  - type: Item
+    heldPrefix: wood
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodLarge
+  - type: Stack
+    stackType: FloorTileWoodLarge
+  - type: Construction
+    graph: TileWoodLarge
+    node: woodtilelarge

@@ -15,10 +15,10 @@ public sealed class SpawnPointSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<PlayerSpawningEvent>(OnSpawnPlayer);
+        SubscribeLocalEvent<PlayerSpawningEvent>(OnPlayerSpawning);
     }
 
-    private void OnSpawnPlayer(PlayerSpawningEvent args)
+    private void OnPlayerSpawning(PlayerSpawningEvent args)
     {
         if (args.SpawnResult != null)
             return;
@@ -39,7 +39,7 @@ public sealed class SpawnPointSystem : EntitySystem
 
             if (_gameTicker.RunLevel != GameRunLevel.InRound &&
                 spawnPoint.SpawnType == SpawnPointType.Job &&
-                (args.Job == null || spawnPoint.Job?.ID == args.Job.PrototypeId))
+                (args.Job == null || spawnPoint.Job?.ID == args.Job.Prototype))
             {
                 possiblePositions.Add(xform.Coordinates);
             }

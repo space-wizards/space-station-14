@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Pulling.Components
 {
     // Before you try to add another type than SharedPullingStateManagementSystem, consider the can of worms you may be opening!
-    [NetworkedComponent()]
+    [NetworkedComponent, AutoGenerateComponentState]
     [Access(typeof(SharedPullingStateManagementSystem))]
     [RegisterComponent]
     public sealed partial class SharedPullableComponent : Component
@@ -13,11 +13,13 @@ namespace Content.Shared.Pulling.Components
         /// <summary>
         /// The current entity pulling this component.
         /// </summary>
+        [DataField, AutoNetworkedField]
         public EntityUid? Puller { get; set; }
 
         /// <summary>
         /// The pull joint.
         /// </summary>
+        [DataField, AutoNetworkedField]
         public string? PullJointId { get; set; }
 
         public bool BeingPulled => Puller != null;
@@ -38,17 +40,6 @@ namespace Content.Shared.Pulling.Components
         [Access(typeof(SharedPullingSystem), Other = AccessPermissions.ReadExecute)]
         [ViewVariables]
         public bool PrevFixedRotation;
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class PullableComponentState : ComponentState
-    {
-        public readonly NetEntity? Puller;
-
-        public PullableComponentState(NetEntity? puller)
-        {
-            Puller = puller;
-        }
     }
 
     /// <summary>

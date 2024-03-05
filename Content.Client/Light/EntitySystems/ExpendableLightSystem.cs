@@ -2,6 +2,8 @@ using Content.Client.Light.Components;
 using Content.Shared.Light.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Client.Light.EntitySystems;
 
@@ -19,7 +21,7 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
 
     private void OnLightShutdown(EntityUid uid, ExpendableLightComponent component, ComponentShutdown args)
     {
-        component.PlayingStream?.Stop();
+        component.PlayingStream = _audioSystem.Stop(component.PlayingStream);
     }
 
     protected override void OnAppearanceChange(EntityUid uid, ExpendableLightComponent comp, ref AppearanceChangeEvent args)
@@ -48,12 +50,10 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
         switch (state)
         {
             case ExpendableLightState.Lit:
-                comp.PlayingStream?.Stop();
+                _audioSystem.Stop(comp.PlayingStream);
                 comp.PlayingStream = _audioSystem.PlayPvs(
-                    comp.LoopedSound,
-                    uid,
-                    SharedExpendableLightComponent.LoopedSoundParams
-                );
+                    comp.LoopedSound, uid, SharedExpendableLightComponent.LoopedSoundParams)?.Entity;
+
                 if (args.Sprite.LayerMapTryGet(ExpendableLightVisualLayers.Overlay, out var layerIdx, true))
                 {
                     if (!string.IsNullOrWhiteSpace(comp.IconStateLit))
@@ -73,7 +73,7 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
 
                 break;
             case ExpendableLightState.Dead:
-                comp.PlayingStream?.Stop();
+                comp.PlayingStream = _audioSystem.Stop(comp.PlayingStream);
                 if (args.Sprite.LayerMapTryGet(ExpendableLightVisualLayers.Overlay, out layerIdx, true))
                 {
                     if (!string.IsNullOrWhiteSpace(comp.IconStateSpent))

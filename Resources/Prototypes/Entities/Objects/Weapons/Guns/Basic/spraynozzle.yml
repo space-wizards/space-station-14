@@ -9,7 +9,7 @@
     state: icon
   - type: Item
     sprite: Objects/Weapons/Guns/Basic/spraynozzle.rsi
-    size: 30
+    size: Normal
   - type: Gun
     cameraRecoilScalar: 0 #no recoil
     fireRate: 4

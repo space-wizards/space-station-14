@@ -62,6 +62,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpillBehavior
         solution: beaker
       - !type:SpawnEntitiesBehavior
@@ -156,6 +158,11 @@
     solution: beaker
   - type: StaticPrice
     price: 10
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beaker
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
 
 - type: entity
   name: cryoxadone beaker
@@ -187,7 +194,7 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Item
-    size: 10
+    size: Normal
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
   - type: SolutionContainerManager
     solutions:
@@ -198,8 +205,10 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: beakerlarge
+    inHandsMaxFillLevels: 4
+    inHandsFillBaseName: -fill-
   - type: StaticPrice
-    price: 40
+    price: 20
 
 - type: entity
   name: cryostasis beaker
@@ -275,6 +284,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: dropper
+    inHandsMaxFillLevels: 1
+    inHandsFillBaseName: -fill-
   - type: StaticPrice
     price: 40
 
@@ -317,9 +328,8 @@
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: "syringe_base0"
   - type: Item
-    size: 3
+    size: Tiny
     sprite: Objects/Specific/Chemistry/syringe.rsi
-    heldPrefix: 0
   - type: SolutionContainerManager
     solutions:
       injector:
@@ -330,12 +340,14 @@
     solution: injector
   - type: Spillable
     solution: injector
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: injector
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: syringe
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
   - type: Tag
     tags:
     - Syringe
@@ -384,6 +396,38 @@
     - Trash
 
 - type: entity
+  id: SyringeCryostasis
+  parent: BaseSyringe
+  name: cryostasis syringe
+  description: A syringe used to contain chemicals or solutions without reactions.
+  components:
+  - type: Sprite
+    layers:
+    - state: syringe1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+    - state: cryo_base0
+      map: ["enum.SolutionContainerLayers.Base"]
+  - type: Icon
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: cryo_base0
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 10
+        canReact: false
+  - type: Injector
+    injectOnly: false
+    minTransferAmount: 5
+    maxTransferAmount: 10
+    transferAmount: 10
+  - type: Tag
+    tags:
+    - Syringe
+    - Trash
+
+
+- type: entity
   name: pill
   parent: BaseItem
   id: Pill
@@ -393,7 +437,7 @@
     sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill
   - type: Item
-    size: 1
+    size: Tiny
     sprite: Objects/Specific/Chemistry/pills.rsi
   - type: Pill
   - type: Food
@@ -410,7 +454,6 @@
         maxVol: 20
   - type: SolutionSpiker
     sourceSolution: food
-  - type: DeleteOnTrigger
   - type: Extractable
     grindableSolutionName: food
   - type: StaticPrice
@@ -436,24 +479,23 @@
   name: pill canister
   id: PillCanister
   parent: BaseStorageItem
-  description: Holds up to 9 pills.
+  description: Holds up to 10 pills.
   components:
+  - type: Item
+    size: Tiny
+    sprite: Objects/Specific/Chemistry/pills_canister.rsi
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
     state: pill_canister
-  - type: Item
-    sprite: Objects/Specific/Chemistry/pills_canister.rsi
   - type: Tag
     tags:
       - PillCanister
   - type: Storage
-    capacity: 9
+    grid:
+    - 0,0,4,1
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 1
     storageInsertSound: /Audio/Effects/pill_insert.ogg
     storageRemoveSound: /Audio/Effects/pill_remove.ogg
-    whitelist:
-      components:
-      - Pill
   - type: Dumpable

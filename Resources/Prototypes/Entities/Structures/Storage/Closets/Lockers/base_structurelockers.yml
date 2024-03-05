@@ -5,6 +5,7 @@
   components:
   - type: AccessReader
   - type: Lock
+  - type: LockVisuals
   - type: Sprite
     sprite: Structures/Storage/closet.rsi
     noRot: true
@@ -14,7 +15,7 @@
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
     - state: welded
       visible: false
@@ -35,7 +36,9 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -48,8 +51,8 @@
   abstract: true
   components:
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:

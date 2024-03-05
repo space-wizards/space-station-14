@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Players;
+﻿using Robust.Shared.Player;
 
 namespace Content.Shared.Players;
 
@@ -8,5 +8,5 @@ namespace Content.Shared.Players;
 /// </summary>
 public abstract class SharedPlayerSystem : EntitySystem
 {
-    public abstract PlayerData? ContentData(ICommonSession? session);
+    public abstract ContentPlayerData? ContentData(ICommonSession? session);
 }

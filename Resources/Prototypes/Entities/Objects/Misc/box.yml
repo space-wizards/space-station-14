@@ -7,9 +7,13 @@
     sprite: Objects/Storage/boxes.rsi
   - type: Item
     sprite: Objects/Storage/boxes.rsi
-    size: 30
+    size: Large
+    shape:
+    - 0,0,2,2
   - type: Storage
-    capacity: 30
+    maxItemSize: Small
+    grid:
+    - 0,0,2,2
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

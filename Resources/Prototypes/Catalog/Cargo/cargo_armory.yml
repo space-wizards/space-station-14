@@ -41,7 +41,7 @@
 - type: cargoProduct
   id: ArmoryLaser
   icon:
-    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
     state: icon
   product: CrateArmoryLaser
   cost: 4800

@@ -15,6 +15,7 @@ using Content.Shared.Atmos.Piping.Unary.Visuals;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Audio;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Tools.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -45,7 +46,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentScrubberComponent, WeldableChangedEvent>(OnWeldChanged);
         }
 
-        private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, AtmosDeviceUpdateEvent args)
+        private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, ref AtmosDeviceUpdateEvent args)
         {
             if (_weldable.IsWelded(uid))
             {
@@ -67,8 +68,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (xform.GridUid == null)
                 return;
 
-            var position = _transformSystem.GetGridOrMapTilePosition(uid, xform);
-
+            var position = _transformSystem.GetGridTilePositionOrDefault((uid,xform));
             var environment = _atmosphereSystem.GetTileMixture(xform.GridUid, xform.MapUid, position, true);
 
             Scrub(timeDelta, scrubber, environment, outlet);
@@ -91,7 +91,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void Scrub(float timeDelta, GasVentScrubberComponent scrubber, GasMixture? tile, PipeNode outlet)
         {
-            Scrub(timeDelta, scrubber.TransferRate, scrubber.PumpDirection, scrubber.FilterGases, tile, outlet.Air);
+            Scrub(timeDelta, scrubber.TransferRate*_atmosphereSystem.PumpSpeedup(), scrubber.PumpDirection, scrubber.FilterGases, tile, outlet.Air);
         }
 
         /// <summary>

@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Roles
 {
     [Prototype("startingGear")]
-    public sealed class StartingGearPrototype : IPrototype
+    public sealed partial class StartingGearPrototype : IPrototype
     {
         [DataField]
         public Dictionary<string, EntProtoId> Equipment = new();

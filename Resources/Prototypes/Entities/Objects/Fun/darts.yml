@@ -40,9 +40,8 @@
       types:
         Piercing: 4
   - type: Item
-    size: 2
+    size: Tiny
     sprite: Objects/Fun/Darts/dart_red.rsi
-  - type: ItemCooldown
   - type: SolutionContainerManager
     solutions:
       melee:
@@ -56,6 +55,7 @@
   - type: SolutionInjectOnCollide
     transferAmount: 2
     blockSlots: OUTERCLOTHING
+    fixtureId: "throw-fixture"
   - type: SolutionTransfer
     maxTransferAmount: 2
   - type: Damageable
@@ -86,7 +86,7 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: dart
-    
+
 - type: entity
   parent: Dart
   id: DartBlue
@@ -95,7 +95,7 @@
     sprite: Objects/Fun/Darts/dart_blue.rsi
   - type: Item
     sprite: Objects/Fun/Darts/dart_blue.rsi
-     
+
 - type: entity
   parent: Dart
   id: DartPurple
@@ -104,7 +104,7 @@
     sprite: Objects/Fun/Darts/dart_purple.rsi
   - type: Item
     sprite: Objects/Fun/Darts/dart_purple.rsi
-     
+
 - type: entity
   parent: Dart
   id: DartYellow
@@ -113,6 +113,22 @@
     sprite: Objects/Fun/Darts/dart_yellow.rsi
   - type: Item
     sprite: Objects/Fun/Darts/dart_yellow.rsi
+
+- type: entity
+  parent: Dart
+  id: HypoDart
+  suffix: HypoDart
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 7
+  - type: SolutionInjectOnCollide
+    transferAmount: 7
+    blockSlots: NONE
+    fixtureId: "throw-fixture"
+  - type: SolutionTransfer
+    maxTransferAmount: 7
 
 - type: entity
   name: dartboard
@@ -174,3 +190,19 @@
           path: /Audio/Effects/tree_fell.ogg
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  parent: BaseItem
+  id: HypoDartBox
+  name: hypodart box
+  suffix: HypoDart
+  description: A small box containing an hypodart. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Darts/dartbox.rsi
+    state: icon
+  - type: SpawnItemsOnUse
+    items:
+    - id: HypoDart
+    sound:
+      path: /Audio/Effects/unwrap.ogg

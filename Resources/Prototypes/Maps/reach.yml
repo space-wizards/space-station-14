@@ -1,0 +1,36 @@
+- type: gameMap
+  id: Reach
+  mapName: 'Reach'
+  mapPath: /Maps/reach.yml
+  minPlayers: 0
+  maxPlayers: 7
+  stations:
+    Reach:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Reach Transport {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'SC'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency.yml
+        - type: StationJobs
+          overflowJobs:
+            - Passenger
+          availableJobs:
+            Captain: [ 1, 1 ]
+            HeadOfSecurity: [ 1, 1 ]
+            SecurityOfficer: [ 1, 3 ]
+            CargoTechnician: [ 1, 2 ]
+            Bartender: [ 1, 1 ]
+            Botanist: [ 1, 1 ]
+            Chef: [ 1, 1 ]
+            MedicalDoctor: [ 1, 2 ]
+            Chemist: [ 1, 1 ]
+            Janitor: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            AtmosphericTechnician: [ 1, 1 ]
+            StationEngineer: [ 1, 2 ]
+            Passenger: [ -1, -1 ]
+

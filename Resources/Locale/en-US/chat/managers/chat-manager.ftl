@@ -21,11 +21,11 @@ chat-manager-whisper-headset-on-message = You can't whisper on the radio!
 chat-manager-server-wrap-message = [bold]{$message}[/bold]
 chat-manager-sender-announcement-wrap-message = [font size=14][bold]{$sender} Announcement:[/font][font size=12]
                                                 {$message}[/bold][/font]
-chat-manager-entity-say-wrap-message = [bold]{$entityName}[/bold] {$verb}, [font={$fontType} size={$fontSize}]"{$message}"[/font]
-chat-manager-entity-say-bold-wrap-message = [bold]{$entityName}[/bold] {$verb}, [font={$fontType} size={$fontSize}][bold]"{$message}"[/bold][/font]
+chat-manager-entity-say-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent]{$message}[/BubbleContent]"[/font]
+chat-manager-entity-say-bold-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent][bold]{$message}[/bold][/BubbleContent]"[/font]
 
-chat-manager-entity-whisper-wrap-message = [font size=11][italic]{$entityName} whispers, "{$message}"[/italic][/font]
-chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic]Someone whispers, "{$message}"[/italic][/font]
+chat-manager-entity-whisper-wrap-message = [font size=11][italic][BubbleHeader][Name]{$entityName}[/Name][/BubbleHeader] whispers,"[BubbleContent]{$message}[/BubbleContent]"[/italic][/font]
+chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic][BubbleHeader]Someone[/BubbleHeader] whispers, "[BubbleContent]{$message}[/BubbleContent]"[/italic][/font]
 
 # THE() is not used here because the entity and its name can technically be disconnected if a nameOverride is passed...
 chat-manager-entity-me-wrap-message = [italic]{ PROPER($entity) ->
@@ -37,8 +37,8 @@ chat-manager-entity-looc-wrap-message = LOOC: [bold]{$entityName}:[/bold] {$mess
 chat-manager-send-ooc-wrap-message = OOC: [bold]{$playerName}:[/bold] {$message}
 chat-manager-send-ooc-patron-wrap-message = OOC: [bold][color={$patronColor}]{$playerName}[/color]:[/bold] {$message}
 
-chat-manager-send-dead-chat-wrap-message = {$deadChannelName}: [bold]{$playerName}:[/bold] {$message}
-chat-manager-send-admin-dead-chat-wrap-message = {$adminChannelName}: [bold]({$userName}):[/bold] {$message}
+chat-manager-send-dead-chat-wrap-message = {$deadChannelName}: [bold][BubbleHeader]{$playerName}[/BubbleHeader]:[/bold] [BubbleContent]{$message}[/BubbleContent]
+chat-manager-send-admin-dead-chat-wrap-message = {$adminChannelName}: [bold]([BubbleHeader]{$userName}[/BubbleHeader]):[/bold] [BubbleContent]{$message}[/BubbleContent]
 chat-manager-send-admin-chat-wrap-message = {$adminChannelName}: [bold]{$playerName}:[/bold] {$message}
 chat-manager-send-admin-announcement-wrap-message = [bold]{$adminChannelName}: {$message}[/bold]
 
@@ -46,6 +46,9 @@ chat-manager-send-hook-ooc-wrap-message = OOC: [bold](D){$senderName}:[/bold] {$
 
 chat-manager-dead-channel-name = DEAD
 chat-manager-admin-channel-name = ADMIN
+
+chat-manager-rate-limited = You are sending messages too quickly!
+chat-manager-rate-limit-admin-announcement = Player { $player } breached chat rate limits. Watch them if this is a regular occurence.
 
 ## Speech verbs for chat
 
@@ -89,6 +92,10 @@ chat-speech-verb-skeleton-1 = rattles
 chat-speech-verb-skeleton-2 = clacks
 chat-speech-verb-skeleton-3 = gnashes
 
+chat-speech-verb-vox-1 = screeches
+chat-speech-verb-vox-2 = shrieks
+chat-speech-verb-vox-3 = croaks
+
 chat-speech-verb-canine-1 = barks
 chat-speech-verb-canine-2 = woofs
 chat-speech-verb-canine-3 = howls
@@ -110,3 +117,7 @@ chat-speech-verb-ghost-1 = complains
 chat-speech-verb-ghost-2 = breathes
 chat-speech-verb-ghost-3 = hums
 chat-speech-verb-ghost-4 = mutters
+
+chat-speech-verb-electricity-1 = crackles
+chat-speech-verb-electricity-2 = buzzes
+chat-speech-verb-electricity-3 = screeches

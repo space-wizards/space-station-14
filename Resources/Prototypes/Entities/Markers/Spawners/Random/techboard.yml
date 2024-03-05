@@ -1,0 +1,32 @@
+﻿- type: entity
+  id: RandomBoard
+  name: random board spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Misc/module.rsi
+      state: boris
+  - type: RandomSpawner
+    prototypes:
+    - AirAlarmElectronics
+    - FireAlarmElectronics
+    - DoorElectronics
+    - FirelockElectronics
+    - IntercomElectronics
+    - APCElectronics
+    - SignalTimerElectronics
+    - APECircuitboard
+    - SMESMachineCircuitboard
+    - SubstationMachineCircuitboard
+    - TelecomServerCircuitboard
+    chance: 0.95
+    rarePrototypes:
+    - CommsComputerCircuitboard
+    - ShuttleConsoleCircuitboard
+    - ComputerMassMediaCircuitboard
+    - AutolatheMachineCircuitboard
+    - ProtolatheMachineCircuitboard
+    - SalvageMagnetMachineCircuitboard
+    rareChance: 0.05

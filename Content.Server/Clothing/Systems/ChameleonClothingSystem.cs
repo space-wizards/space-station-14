@@ -5,6 +5,7 @@ using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -32,7 +33,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void OnVerb(EntityUid uid, ChameleonClothingComponent component, GetVerbsEvent<InteractionVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (!args.CanAccess || !args.CanInteract || component.User != args.User)
             return;
 
         args.Verbs.Add(new InteractionVerb()

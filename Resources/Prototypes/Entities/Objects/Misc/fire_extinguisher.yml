@@ -11,7 +11,7 @@
           map: [ "enabled" ]
   - type: Item
     sprite: Objects/Misc/fire_extinguisher.rsi
-    size: 10
+    size: Normal
   - type: SolutionContainerManager
     solutions:
       spray:
@@ -24,7 +24,7 @@
   - type: DrainableSolution
     solution: spray
   - type: SolutionTransfer
-  - type: ItemCooldown
+  - type: UseDelay
   - type: Spray
     transferAmount: 10
     pushbackAmount: 60

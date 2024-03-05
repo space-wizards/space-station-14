@@ -1,14 +1,12 @@
-using Robust.Server.Player;
-using Robust.Shared.Reflection;
-using Robust.Shared.Serialization;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Server.UserInterface
 {
     [RegisterComponent]
-    public sealed partial class ActivatableUIComponent : Component,
-            ISerializationHooks
+    public sealed partial class ActivatableUIComponent : Component
     {
-        [ViewVariables]
+        [DataField(required: true, customTypeSerializer:typeof(EnumSerializer))]
         public Enum? Key { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -21,9 +19,6 @@ namespace Content.Server.UserInterface
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
         public bool AdminOnly { get; set; } = false;
-
-        [DataField("key", required: true)]
-        private string _keyRaw = default!;
 
         [DataField]
         public LocId VerbText = "ui-verb-toggle-open";
@@ -65,14 +60,7 @@ namespace Content.Server.UserInterface
         ///     NOTE: DO NOT DIRECTLY SET, USE ActivatableUISystem.SetCurrentSingleUser
         /// </summary>
         [ViewVariables]
-        public IPlayerSession? CurrentSingleUser;
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            var reflectionManager = IoCManager.Resolve<IReflectionManager>();
-            if (reflectionManager.TryParseEnumReference(_keyRaw, out var key))
-                Key = key;
-        }
+        public ICommonSession? CurrentSingleUser;
     }
 }
 

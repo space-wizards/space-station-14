@@ -6,15 +6,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="ImGui.NET" Version="1.87.3" />
-      <PackageReference Include="OpenTK" Version="4.7.2" />
-      <PackageReference Include="Veldrid" Version="4.8.0" />
-      <PackageReference Include="Veldrid.SPIRV" Version="1.0.15" />
+      <PackageReference Include="ImGui.NET" />
+      <PackageReference Include="OpenTK" />
+      <PackageReference Include="Veldrid" />
+      <PackageReference Include="Veldrid.SPIRV" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Content.Server\Content.Server.csproj" />
       <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj" />
+      <ProjectReference Include="..\RobustToolbox\Robust.UnitTesting\Robust.UnitTesting.csproj" />
     </ItemGroup>
 
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />

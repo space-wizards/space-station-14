@@ -2,11 +2,11 @@ using System.IO;
 using System.Linq;
 using Content.Shared.Actions;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -41,8 +41,8 @@ namespace Content.Client.Actions
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ActionsComponent, PlayerAttachedEvent>(OnPlayerAttached);
-            SubscribeLocalEvent<ActionsComponent, PlayerDetachedEvent>(OnPlayerDetached);
+            SubscribeLocalEvent<ActionsComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<ActionsComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
             SubscribeLocalEvent<ActionsComponent, ComponentHandleState>(HandleComponentState);
 
             SubscribeLocalEvent<InstantActionComponent, ComponentHandleState>(OnInstantHandleState);
@@ -78,28 +78,32 @@ namespace Content.Client.Actions
 
         private void BaseHandleState<T>(EntityUid uid, BaseActionComponent component, BaseActionComponentState state) where T : BaseActionComponent
         {
+            // TODO ACTIONS use auto comp states
             component.Icon = state.Icon;
             component.IconOn = state.IconOn;
             component.IconColor = state.IconColor;
-            component.Keywords = new HashSet<string>(state.Keywords);
+            component.Keywords.Clear();
+            component.Keywords.UnionWith(state.Keywords);
             component.Enabled = state.Enabled;
             component.Toggled = state.Toggled;
             component.Cooldown = state.Cooldown;
             component.UseDelay = state.UseDelay;
             component.Charges = state.Charges;
+            component.MaxCharges = state.MaxCharges;
+            component.RenewCharges = state.RenewCharges;
             component.Container = EnsureEntity<T>(state.Container, uid);
             component.EntityIcon = EnsureEntity<T>(state.EntityIcon, uid);
             component.CheckCanInteract = state.CheckCanInteract;
             component.ClientExclusive = state.ClientExclusive;
             component.Priority = state.Priority;
             component.AttachedEntity = EnsureEntity<T>(state.AttachedEntity, uid);
+            component.RaiseOnUser = state.RaiseOnUser;
             component.AutoPopulate = state.AutoPopulate;
             component.Temporary = state.Temporary;
             component.ItemIconStyle = state.ItemIconStyle;
             component.Sound = state.Sound;
 
-            if (_playerManager.LocalPlayer?.ControlledEntity == component.AttachedEntity)
-                ActionsUpdated?.Invoke();
+            UpdateAction(uid, component);
         }
 
         protected override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
@@ -108,7 +112,7 @@ namespace Content.Client.Actions
                 return;
 
             base.UpdateAction(actionId, action);
-            if (_playerManager.LocalPlayer?.ControlledEntity != action.AttachedEntity)
+            if (_playerManager.LocalEntity != action.AttachedEntity)
                 return;
 
             ActionsUpdated?.Invoke();
@@ -141,7 +145,7 @@ namespace Content.Client.Actions
                 _added.Add((actionId, action));
             }
 
-            if (_playerManager.LocalPlayer?.ControlledEntity != uid)
+            if (_playerManager.LocalEntity != uid)
                 return;
 
             foreach (var action in _removed)
@@ -174,7 +178,7 @@ namespace Content.Client.Actions
         protected override void ActionAdded(EntityUid performer, EntityUid actionId, ActionsComponent comp,
             BaseActionComponent action)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity != performer)
+            if (_playerManager.LocalEntity != performer)
                 return;
 
             OnActionAdded?.Invoke(actionId);
@@ -182,7 +186,7 @@ namespace Content.Client.Actions
 
         protected override void ActionRemoved(EntityUid performer, EntityUid actionId, ActionsComponent comp, BaseActionComponent action)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity != performer)
+            if (_playerManager.LocalEntity != performer)
                 return;
 
             OnActionRemoved?.Invoke(actionId);
@@ -190,18 +194,18 @@ namespace Content.Client.Actions
 
         public IEnumerable<(EntityUid Id, BaseActionComponent Comp)> GetClientActions()
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user)
+            if (_playerManager.LocalEntity is not { } user)
                 return Enumerable.Empty<(EntityUid, BaseActionComponent)>();
 
             return GetActions(user);
         }
 
-        private void OnPlayerAttached(EntityUid uid, ActionsComponent component, PlayerAttachedEvent args)
+        private void OnPlayerAttached(EntityUid uid, ActionsComponent component, LocalPlayerAttachedEvent args)
         {
             LinkAllActions(component);
         }
 
-        private void OnPlayerDetached(EntityUid uid, ActionsComponent component, PlayerDetachedEvent? args = null)
+        private void OnPlayerDetached(EntityUid uid, ActionsComponent component, LocalPlayerDetachedEvent? args = null)
         {
             UnlinkAllActions();
         }
@@ -213,7 +217,7 @@ namespace Content.Client.Actions
 
         public void LinkAllActions(ActionsComponent? actions = null)
         {
-             if (_playerManager.LocalPlayer?.ControlledEntity is not { } user ||
+             if (_playerManager.LocalEntity is not { } user ||
                  !Resolve(user, ref actions, false))
              {
                  return;
@@ -230,7 +234,7 @@ namespace Content.Client.Actions
 
         public void TriggerAction(EntityUid actionId, BaseActionComponent action)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user ||
+            if (_playerManager.LocalEntity is not { } user ||
                 !TryComp(user, out ActionsComponent? actions))
             {
                 return;
@@ -258,7 +262,7 @@ namespace Content.Client.Actions
         /// </summary>
         public void LoadActionAssignments(string path, bool userData)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user)
+            if (_playerManager.LocalEntity is not { } user)
                 return;
 
             var file = new ResPath(path).ToRootedPath();

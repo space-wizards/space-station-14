@@ -1,16 +1,19 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Content.Server.Botany.Components;
+﻿using Content.Server.Botany.Components;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
     [ImplicitDataDefinitionForInheritors]
     public abstract partial class PlantAdjustAttribute : ReagentEffect
     {
-        [DataField("amount")] public float Amount { get; protected set; } = 1;
-        [DataField("prob")] public float Prob { get; protected set; } = 1; // = (80);
+        [DataField]
+        public float Amount { get; protected set; } = 1;
+
+        [DataField]
+        public float Prob { get; protected set; } = 1; // = (80);
 
         /// <summary>
         ///     Checks if the plant holder can metabolize the reagent or not. Checks if it has an alive plant by default.

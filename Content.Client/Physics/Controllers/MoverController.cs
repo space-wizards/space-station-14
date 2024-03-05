@@ -1,10 +1,10 @@
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Pulling.Components;
-using Robust.Client.GameObjects;
 using Robust.Client.Physics;
 using Robust.Client.Player;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Physics.Controllers
@@ -17,10 +17,10 @@ namespace Content.Client.Physics.Controllers
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<RelayInputMoverComponent, PlayerAttachedEvent>(OnRelayPlayerAttached);
-            SubscribeLocalEvent<RelayInputMoverComponent, PlayerDetachedEvent>(OnRelayPlayerDetached);
-            SubscribeLocalEvent<InputMoverComponent, PlayerAttachedEvent>(OnPlayerAttached);
-            SubscribeLocalEvent<InputMoverComponent, PlayerDetachedEvent>(OnPlayerDetached);
+            SubscribeLocalEvent<RelayInputMoverComponent, LocalPlayerAttachedEvent>(OnRelayPlayerAttached);
+            SubscribeLocalEvent<RelayInputMoverComponent, LocalPlayerDetachedEvent>(OnRelayPlayerDetached);
+            SubscribeLocalEvent<InputMoverComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<InputMoverComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
             SubscribeLocalEvent<InputMoverComponent, UpdateIsPredictedEvent>(OnUpdatePredicted);
             SubscribeLocalEvent<MovementRelayTargetComponent, UpdateIsPredictedEvent>(OnUpdateRelayTargetPredicted);
@@ -30,13 +30,13 @@ namespace Content.Client.Physics.Controllers
         private void OnUpdatePredicted(EntityUid uid, InputMoverComponent component, ref UpdateIsPredictedEvent args)
         {
             // Enable prediction if an entity is controlled by the player
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
+            if (uid == _playerManager.LocalEntity)
                 args.IsPredicted = true;
         }
 
         private void OnUpdateRelayTargetPredicted(EntityUid uid, MovementRelayTargetComponent component, ref UpdateIsPredictedEvent args)
         {
-            if (component.Source == _playerManager.LocalPlayer?.ControlledEntity)
+            if (component.Source == _playerManager.LocalEntity)
                 args.IsPredicted = true;
         }
 
@@ -45,7 +45,7 @@ namespace Content.Client.Physics.Controllers
             // Enable prediction if an entity is being pulled by the player.
             // Disable prediction if an entity is being pulled by some non-player entity.
 
-            if (component.Puller == _playerManager.LocalPlayer?.ControlledEntity)
+            if (component.Puller == _playerManager.LocalEntity)
                 args.IsPredicted = true;
             else if (component.Puller != null)
                 args.BlockPrediction = true;
@@ -54,7 +54,7 @@ namespace Content.Client.Physics.Controllers
             // What if the entity is being pulled by a vehicle controlled by the player?
         }
 
-        private void OnRelayPlayerAttached(EntityUid uid, RelayInputMoverComponent component, PlayerAttachedEvent args)
+        private void OnRelayPlayerAttached(EntityUid uid, RelayInputMoverComponent component, LocalPlayerAttachedEvent args)
         {
             Physics.UpdateIsPredicted(uid);
             Physics.UpdateIsPredicted(component.RelayEntity);
@@ -62,7 +62,7 @@ namespace Content.Client.Physics.Controllers
                 SetMoveInput(inputMover, MoveButtons.None);
         }
 
-        private void OnRelayPlayerDetached(EntityUid uid, RelayInputMoverComponent component, PlayerDetachedEvent args)
+        private void OnRelayPlayerDetached(EntityUid uid, RelayInputMoverComponent component, LocalPlayerDetachedEvent args)
         {
             Physics.UpdateIsPredicted(uid);
             Physics.UpdateIsPredicted(component.RelayEntity);
@@ -70,12 +70,12 @@ namespace Content.Client.Physics.Controllers
                 SetMoveInput(inputMover, MoveButtons.None);
         }
 
-        private void OnPlayerAttached(EntityUid uid, InputMoverComponent component, PlayerAttachedEvent args)
+        private void OnPlayerAttached(EntityUid uid, InputMoverComponent component, LocalPlayerAttachedEvent args)
         {
             SetMoveInput(component, MoveButtons.None);
         }
 
-        private void OnPlayerDetached(EntityUid uid, InputMoverComponent component, PlayerDetachedEvent args)
+        private void OnPlayerDetached(EntityUid uid, InputMoverComponent component, LocalPlayerDetachedEvent args)
         {
             SetMoveInput(component, MoveButtons.None);
         }
@@ -84,7 +84,7 @@ namespace Content.Client.Physics.Controllers
         {
             base.UpdateBeforeSolve(prediction, frameTime);
 
-            if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} player)
+            if (_playerManager.LocalEntity is not {Valid: true} player)
                 return;
 
             if (RelayQuery.TryGetComponent(player, out var relayMover))

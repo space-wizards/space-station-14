@@ -1,4 +1,4 @@
-﻿- type: alert
+- type: alert
   id: Essence
   category: Health #it's like ghostie health
   icons:
@@ -36,13 +36,13 @@
     state: essence15
   - sprite: /Textures/Interface/Alerts/essence_counter.rsi
     state: essence16
-  name: Essence
-  description: The power of souls. It sustains you and is used for abilities. It regenerates slowly over time.
+  name: alerts-revenant-essence-name
+  description: alerts-revenant-essence-desc
   minSeverity: 0
   maxSeverity: 16
 
 - type: alert
   id: Corporeal
   icons: [ /Textures/Mobs/Ghosts/revenant.rsi/icon.png ]
-  name: "Corporeal"
-  description: You have manifested physically. People around you can see and hurt you.
+  name: alerts-revenant-corporeal-name
+  description: alerts-revenant-corporeal-desc

@@ -1,9 +1,13 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_single.yml
+
 - type: entity
   name: taco shell
   parent: FoodMealBase
   id: FoodTacoShell
   description: A taco shell, easy to hold, but falls on its side when put down.
   components:
+  - type: Item
+    storedRotation: -90
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/taco.rsi
@@ -42,6 +46,10 @@
           Quantity: 4
   - type: Item
     sprite: Objects/Consumable/Food/taco.rsi
+    storedRotation: -90
+  - type: Tag
+    tags:
+      - Meat
 
 - type: entity
   name: beef taco
@@ -143,3 +151,20 @@
         - ReagentId: Vitamin
           Quantity: 6
 
+- type: entity
+  name: soft taco
+  parent: FoodMealBase
+  id: FoodMealSoftTaco
+  description: Take a bite!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - tomato
+      - meaty
+      - onion
+  - type: Sprite
+    state: softtaco
+  - type: Tag
+    tags:
+      - Meat

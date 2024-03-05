@@ -1,16 +1,16 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.StatusEffect;
-using Robust.Server.GameObjects;
+using Robust.Server.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -27,6 +27,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly ThirstSystem _thirst = default!;
+        [Dependency] private readonly ForensicsSystem _forensics = default!;
 
         /// <summary>
         /// Make an entity vomit, if they have a stomach.
@@ -57,36 +58,37 @@ namespace Content.Server.Medical
             // Empty the stomach out into it
             foreach (var stomach in stomachList)
             {
-                if (_solutionContainer.TryGetSolution(stomach.Comp.Owner, StomachSystem.DefaultSolutionName,
-                        out var sol))
+                if (_solutionContainer.ResolveSolution(stomach.Comp.Owner, StomachSystem.DefaultSolutionName, ref stomach.Comp.Solution, out var sol))
                 {
                     solution.AddSolution(sol, _proto);
                     sol.RemoveAllSolution();
-                    _solutionContainer.UpdateChemicals(stomach.Comp.Owner, sol);
+                    _solutionContainer.UpdateChemicals(stomach.Comp.Solution.Value);
                 }
             }
             // Adds a tiny amount of the chem stream from earlier along with vomit
             if (TryComp<BloodstreamComponent>(uid, out var bloodStream))
             {
-                var chemMultiplier = 0.1;
-                var vomitMultiplier = 0.9;
+                const float chemMultiplier = 0.1f;
 
-                // Makes a vomit solution the size of 90% of the chemicals removed from the chemstream
-                var vomitAmount = new Solution("Vomit", solutionSize * vomitMultiplier);
+                var vomitAmount = solutionSize;
 
                 // Takes 10% of the chemicals removed from the chem stream
-                var vomitChemstreamAmount = _solutionContainer.SplitSolution(uid, bloodStream.ChemicalSolution, solutionSize * chemMultiplier);
+                if (_solutionContainer.ResolveSolution(uid, bloodStream.ChemicalSolutionName, ref bloodStream.ChemicalSolution))
+                {
+                    var vomitChemstreamAmount = _solutionContainer.SplitSolution(bloodStream.ChemicalSolution.Value, vomitAmount);
+                    vomitChemstreamAmount.ScaleSolution(chemMultiplier);
+                    solution.AddSolution(vomitChemstreamAmount, _proto);
 
-                _solutionContainer.SplitSolution(uid, bloodStream.ChemicalSolution, solutionSize * vomitMultiplier);
-                solution.AddSolution(vomitAmount, _proto);
-                solution.AddSolution(vomitChemstreamAmount, _proto);
+                    vomitAmount -= (float) vomitChemstreamAmount.Volume;
+                }
+
+                // Makes a vomit solution the size of 90% of the chemicals removed from the chemstream
+                solution.AddReagent("Vomit", vomitAmount); // TODO: Dehardcode vomit prototype
             }
 
             if (_puddle.TrySpillAt(uid, solution, out var puddle, false))
             {
-                var forensics = EnsureComp<ForensicsComponent>(puddle);
-                if (TryComp<DnaComponent>(uid, out var dna))
-                    forensics.DNAs.Add(dna.DNA);
+                _forensics.TransferDna(puddle, uid, false);
             }
 
             // Force sound to play as spill doesn't work if solution is empty.

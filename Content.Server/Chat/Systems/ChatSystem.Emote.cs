@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -7,44 +8,36 @@ namespace Content.Server.Chat.Systems;
 // emotes using emote prototype
 public partial class ChatSystem
 {
-    private readonly Dictionary<string, EmotePrototype> _wordEmoteDict = new();
+    private FrozenDictionary<string, EmotePrototype> _wordEmoteDict = FrozenDictionary<string, EmotePrototype>.Empty;
 
-    private void InitializeEmotes()
+    protected override void OnPrototypeReload(PrototypesReloadedEventArgs obj)
     {
-        _prototypeManager.PrototypesReloaded += OnPrototypeReloadEmotes;
-        CacheEmotes();
-    }
-
-    private void ShutdownEmotes()
-    {
-        _prototypeManager.PrototypesReloaded -= OnPrototypeReloadEmotes;
-    }
-
-    private void OnPrototypeReloadEmotes(PrototypesReloadedEventArgs obj)
-    {
-        CacheEmotes();
+        base.OnPrototypeReload(obj);
+        if (obj.WasModified<EmotePrototype>())
+            CacheEmotes();
     }
 
     private void CacheEmotes()
     {
-        _wordEmoteDict.Clear();
+        var dict = new Dictionary<string, EmotePrototype>();
         var emotes = _prototypeManager.EnumeratePrototypes<EmotePrototype>();
         foreach (var emote in emotes)
         {
             foreach (var word in emote.ChatTriggers)
             {
                 var lowerWord = word.ToLower();
-                if (_wordEmoteDict.ContainsKey(lowerWord))
+                if (dict.TryGetValue(lowerWord, out var value))
                 {
-                    var existingId = _wordEmoteDict[lowerWord].ID;
-                    var errMsg = $"Duplicate of emote word {lowerWord} in emotes {emote.ID} and {existingId}";
-                    Logger.Error(errMsg);
+                    var errMsg = $"Duplicate of emote word {lowerWord} in emotes {emote.ID} and {value.ID}";
+                    Log.Error(errMsg);
                     continue;
                 }
 
-                _wordEmoteDict.Add(lowerWord, emote);
+                dict.Add(lowerWord, emote);
             }
         }
+
+        _wordEmoteDict = dict.ToFrozenDictionary();
     }
 
     /// <summary>

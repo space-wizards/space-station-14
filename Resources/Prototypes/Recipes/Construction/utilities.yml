@@ -243,6 +243,37 @@
   mirror: DisposalRouter
 
 - type: construction
+  name: disposal signal router
+  description: A signal-controlled three-way router.
+  id: DisposalSignalRouter
+  graph: DisposalPipe
+  startNode: start
+  targetNode: signal_router
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: signal-router-free
+  mirror: DisposalSignalRouterFlipped
+
+- type: construction
+  hide: true
+  name: disposal signal router
+  description: A signal-controlled three-way router.
+  id: DisposalSignalRouterFlipped
+  graph: DisposalPipe
+  startNode: start
+  targetNode: signal_router_flipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: signal-router-flipped-free
+  mirror: DisposalSignalRouter
+
+- type: construction
   name: disposal junction
   description: A three-way junction. The arrow indicates where items exit.
   id: DisposalJunction
@@ -444,9 +475,8 @@
   - sprite: Structures/Piping/Atmospherics/vent.rsi
     state: vent_off
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
-    
+
 - type: construction
   name: passive vent
   description: Unpowered vent that equalises gases on both sides.
@@ -466,9 +496,8 @@
   - sprite: Structures/Piping/Atmospherics/vent.rsi
     state: vent_off
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
-    
+
 - type: construction
   name: air scrubber
   description: Sucks gas into connected pipes.
@@ -488,9 +517,8 @@
   - sprite: Structures/Piping/Atmospherics/scrubber.rsi
     state: scrub_off
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
-    
+
 - type: construction
   name: air injector
   description: Injects air into the atmosphere.
@@ -510,9 +538,8 @@
   - sprite: Structures/Piping/Atmospherics/outletinjector.rsi
     state: injector
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
-    
+
 # ATMOS BINARY
 - type: construction
   name: gas pump
@@ -533,7 +560,6 @@
   - sprite: Structures/Piping/Atmospherics/pump.rsi
     state: pumpPressure
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -555,7 +581,6 @@
   - sprite: Structures/Piping/Atmospherics/pump.rsi
     state: pumpVolume
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -577,7 +602,6 @@
   - sprite: Structures/Piping/Atmospherics/pump.rsi
     state: pumpPassiveGate
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -599,7 +623,6 @@
   - sprite: Structures/Piping/Atmospherics/pump.rsi
     state: pumpManualValve
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -621,7 +644,6 @@
   - sprite: Structures/Piping/Atmospherics/pump.rsi
     state: pumpSignalValve
   conditions:
-  - !type:TileNotBlocked {}
   - !type:NoUnstackableInTile
 
 - type: construction
@@ -643,7 +665,6 @@
   - sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
     state: gasCanisterPort
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -664,8 +685,6 @@
     state: pipeStraight
   - sprite: Structures/Piping/Atmospherics/vent.rsi
     state: vent_off
-  conditions:
-    - !type:TileNotBlocked {}
 
 - type: construction
   id: HeatExchanger
@@ -680,8 +699,6 @@
   icon:
     sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
     state: heStraight
-  conditions:
-    - !type:TileNotBlocked {}
 
 # ATMOS TRINARY
 - type: construction
@@ -699,7 +716,6 @@
     state: gasFilter
   mirror: GasFilterFlipped
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -718,7 +734,6 @@
     state: gasFilterF
   mirror: GasFilter
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -736,7 +751,6 @@
     state: gasMixer
   mirror: GasMixerFlipped
   conditions:
-    - !type:TileNotBlocked {}
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -755,7 +769,6 @@
     state: gasMixerF
   mirror: GasMixer
   conditions:
-    - !type:TileNotBlocked
     - !type:NoUnstackableInTile
 
 - type: construction
@@ -772,7 +785,6 @@
     sprite: Structures/Piping/Atmospherics/pneumaticvalve.rsi
     state: off
   conditions:
-    - !type:TileNotBlocked
     - !type:NoUnstackableInTile
 
 # INTERCOM
@@ -821,8 +833,8 @@
   category: construction-category-utilities
   description: "A wallmounted timer for sending timed signals to things. This one has a screen for displaying text."
   icon:
-    sprite: Structures/Wallmounts/textscreen.rsi
-    state: textscreen
+    sprite: Structures/Wallmounts/signalscreen.rsi
+    state: signalscreen
   objectType: Structure
   canRotate: false
   placementMode: SnapgridCenter
@@ -839,8 +851,8 @@
   category: construction-category-utilities
   description: "A wallmounted timer for sending timed signals to things. This one has a screen for displaying text and requires security access to use."
   icon:
-    sprite: Structures/Wallmounts/textscreen.rsi
-    state: textscreen
+    sprite: Structures/Wallmounts/signalscreen.rsi
+    state: signalscreen
   objectType: Structure
   canRotate: false
   placementMode: SnapgridCenter

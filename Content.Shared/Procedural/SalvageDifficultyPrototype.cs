@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Procedural;
 
 [Prototype("salvageDifficulty")]
-public sealed class SalvageDifficultyPrototype : IPrototype
+public sealed partial class SalvageDifficultyPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = string.Empty;
 

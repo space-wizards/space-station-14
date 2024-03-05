@@ -8,21 +8,6 @@
   },
   "states": [
     {
-      "name": "crystal_green"
-    },
-    {
-      "name": "crystal_pink"
-    },
-    {
-      "name": "crystal_orange"
-    },
-    {
-      "name": "crystal_blue"
-    },
-    {
-      "name": "crystal_cyan"
-    },
-    {
       "name": "crystal_grey"
     }
   ]

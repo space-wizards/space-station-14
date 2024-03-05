@@ -14,7 +14,7 @@ public sealed partial class RandomSpawnsLoot : IDungeonLoot
 }
 
 [DataDefinition]
-public partial record struct RandomSpawnLootEntry : IBudgetEntry
+public partial record struct RandomSpawnLootEntry() : IBudgetEntry
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Proto { get; set; } = string.Empty;

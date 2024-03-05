@@ -13,15 +13,12 @@
       state: item_wall
     - type: Item
       sprite: Objects/Misc/inflatable_wall.rsi
-      size: 10
+      size: Small
     - type: SpawnAfterInteract
       prototype: InflatableWall
       doAfter: 1
       removeOnInteract: true
     - type: Clickable
-    - type: Tag
-      tags:
-        - DroneUsable
 # TODO: Add stack sprites + visuals.
 
 - type: entity
@@ -39,15 +36,12 @@
       state: item_door
     - type: Item
       sprite: Objects/Misc/inflatable_door.rsi
-      size: 4
+      size: Small
     - type: SpawnAfterInteract
       prototype: InflatableDoor
       doAfter: 1
       removeOnInteract: true
     - type: Clickable
-    - type: Tag
-      tags:
-        - DroneUsable
 # TODO: Add stack sprites + visuals.
 
 - type: entity
@@ -57,8 +51,6 @@
   components:
     - type: Sprite
       state: item_wall
-    - type: Item
-      size: 5
     - type: Stack
       count: 5
 
@@ -69,8 +61,6 @@
   components:
     - type: Sprite
       state: item_wall
-    - type: Item
-      size: 1
     - type: Stack
       count: 1
 
@@ -81,7 +71,5 @@
   components:
     - type: Sprite
       state: item_door
-    - type: Item
-      size: 1
     - type: Stack
       count: 1

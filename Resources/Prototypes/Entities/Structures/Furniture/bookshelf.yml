@@ -13,7 +13,7 @@
       - map: ["enum.StorageFillLayers.Fill"]
   - type: Appearance
   - type: StorageFillVisualizer
-    maxFillLevels: 20
+    maxFillLevels: 21
     fillBaseName: book
   - type: Damageable
     damageModifierSet: Wood
@@ -26,7 +26,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/woodhit.ogg
+          collection: WoodDestroyHeavy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank:
@@ -47,7 +47,9 @@
   - type: Pullable
   - type: Occluder
   - type: Storage
-    capacity: 200
+    grid:
+    - 0,0,15,3
+    maxItemSize: Normal
     whitelist:
       tags:
         - Document

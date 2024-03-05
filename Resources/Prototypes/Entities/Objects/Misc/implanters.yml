@@ -12,6 +12,14 @@
       containers:
         implanter_slot: !type:ContainerSlot { }
     - type: Implanter
+      whitelist:
+        components:
+        - Body # no chair microbomb
+      blacklist:
+        components:
+        - Guardian # no holoparasite macrobomb wombo combo
+        tags:
+        - Unimplantable
       currentMode: Draw
       implanterSlot:
         name: Implant
@@ -33,6 +41,7 @@
     - type: Item
       sprite: Objects/Specific/Medical/implanter.rsi
       heldPrefix: 0
+      size: Small
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -53,6 +62,16 @@
     - type: Tag
       tags:
         - Trash
+
+- type: entity
+  parent: Implanter
+  id: ImplanterAdmeme
+  suffix: Admeme
+  components:
+  - type: Implanter
+    # go wild with sentient chairs with macrobombs
+    whitelist: null
+    blacklist: null
 
 - type: entity
   id: BaseImplantOnlyImplanter
@@ -81,7 +100,6 @@
   components:
     - type: Item
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
-      size: 3
     - type: Sprite
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
       state: implanter1
@@ -173,6 +191,14 @@
       implant: EmpImplant
 
 - type: entity
+  id: ScramImplanter
+  name: scram implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+    - type: Implanter
+      implant: ScramImplant
+
+- type: entity
   id: DnaScramblerImplanter
   name: DNA scrambler implanter
   parent: BaseImplantOnlyImplanterSyndi
@@ -205,6 +231,14 @@
   components:
     - type: Implanter
       implant: DeathRattleImplant
+
+- type: entity
+  id: DeathAcidifierImplanter
+  name: death acidifier implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: DeathAcidifierImplant
 
 # Security and Command implanters
 

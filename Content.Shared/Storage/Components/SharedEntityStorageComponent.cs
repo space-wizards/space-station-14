@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Physics;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
@@ -14,7 +14,7 @@ public abstract partial class SharedEntityStorageComponent : Component
     public readonly float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
 
     public static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
-    public TimeSpan LastInternalOpenAttempt;
+    public TimeSpan NextInternalOpenAttempt;
 
     /// <summary>
     ///     Collision masks that get removed when the storage gets opened.
@@ -63,6 +63,12 @@ public abstract partial class SharedEntityStorageComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float EnteringRange = 0.18f;
+
+    /// <summary>
+    /// If true, there may be mobs inside the container, even if the container is an Item
+    /// </summary>
+    [DataField]
+    public bool ItemCanStoreMobs = false;
 
     /// <summary>
     /// Whether or not to show the contents when the storage is closed
@@ -133,13 +139,16 @@ public sealed class EntityStorageComponentState : ComponentState
 
     public float EnteringRange;
 
-    public EntityStorageComponentState(bool open, int capacity, bool isCollidableWhenOpen, bool openOnMove, float enteringRange)
+    public TimeSpan NextInternalOpenAttempt;
+
+    public EntityStorageComponentState(bool open, int capacity, bool isCollidableWhenOpen, bool openOnMove, float enteringRange, TimeSpan nextInternalOpenAttempt)
     {
         Open = open;
         Capacity = capacity;
         IsCollidableWhenOpen = isCollidableWhenOpen;
         OpenOnMove = openOnMove;
         EnteringRange = enteringRange;
+        NextInternalOpenAttempt = nextInternalOpenAttempt;
     }
 }
 

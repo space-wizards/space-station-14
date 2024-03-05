@@ -32,6 +32,7 @@
         - FoodPacketSemkiTrash
         - FoodPacketSusTrash
         - FoodPacketSyndiTrash
+        - BrokenBottle
       chance: 0.5
       offset: 0.2
   placement:

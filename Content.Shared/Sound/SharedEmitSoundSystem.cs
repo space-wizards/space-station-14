@@ -7,6 +7,7 @@ using Content.Shared.Sound.Components;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
@@ -33,7 +34,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<EmitSoundOnSpawnComponent, ComponentInit>(OnEmitSpawnOnInit);
+        SubscribeLocalEvent<EmitSoundOnSpawnComponent, MapInitEvent>(OnEmitSpawnOnInit);
         SubscribeLocalEvent<EmitSoundOnLandComponent, LandEvent>(OnEmitSoundOnLand);
         SubscribeLocalEvent<EmitSoundOnUseComponent, UseInHandEvent>(OnEmitSoundOnUseInHand);
         SubscribeLocalEvent<EmitSoundOnThrowComponent, ThrownEvent>(OnEmitSoundOnThrown);
@@ -41,11 +42,10 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         SubscribeLocalEvent<EmitSoundOnPickupComponent, GotEquippedHandEvent>(OnEmitSoundOnPickup);
         SubscribeLocalEvent<EmitSoundOnDropComponent, DroppedEvent>(OnEmitSoundOnDrop);
 
-        SubscribeLocalEvent<EmitSoundOnCollideComponent, EntityUnpausedEvent>(OnEmitSoundUnpaused);
         SubscribeLocalEvent<EmitSoundOnCollideComponent, StartCollideEvent>(OnEmitSoundOnCollide);
     }
 
-    private void OnEmitSpawnOnInit(EntityUid uid, EmitSoundOnSpawnComponent component, ComponentInit args)
+    private void OnEmitSpawnOnInit(EntityUid uid, EmitSoundOnSpawnComponent component, MapInitEvent args)
     {
         TryEmitSound(uid, component, predict: false);
     }
@@ -78,7 +78,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
             args.Handled = true;
     }
 
-    private void OnEmitSoundOnThrown(EntityUid uid, BaseEmitSoundComponent component, ThrownEvent args)
+    private void OnEmitSoundOnThrown(EntityUid uid, BaseEmitSoundComponent component, ref ThrownEvent args)
     {
         TryEmitSound(uid, component, args.User, false);
     }
@@ -118,11 +118,6 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         }
     }
 
-    private void OnEmitSoundUnpaused(EntityUid uid, EmitSoundOnCollideComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextSound += args.PausedTime;
-    }
-
     private void OnEmitSoundOnCollide(EntityUid uid, EmitSoundOnCollideComponent component, ref StartCollideEvent args)
     {
         if (!args.OurFixture.Hard ||
@@ -142,8 +137,11 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         var fraction = MathF.Min(1f, (physics.LinearVelocity.Length() - component.MinimumVelocity) / MaxVolumeVelocity);
         var volume = MinVolume + (MaxVolume - MinVolume) * fraction;
         component.NextSound = _timing.CurTime + EmitSoundOnCollideComponent.CollideCooldown;
+        var sound = component.Sound;
 
-        if (_netMan.IsServer)
-            _audioSystem.PlayPvs(component.Sound, uid, AudioParams.Default.WithVolume(volume));
+        if (_netMan.IsServer && sound != null)
+        {
+            _audioSystem.PlayPvs(_audioSystem.GetSound(sound), uid, AudioParams.Default.WithVolume(volume));
+        }
     }
 }

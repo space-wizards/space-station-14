@@ -1,6 +1,8 @@
 using Content.Shared.Damage;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
@@ -18,7 +20,6 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<DamageMarkerOnCollideComponent, StartCollideEvent>(OnMarkerCollide);
-        SubscribeLocalEvent<DamageMarkerComponent, EntityUnpausedEvent>(OnMarkerUnpaused);
         SubscribeLocalEvent<DamageMarkerComponent, AttackedEvent>(OnMarkerAttacked);
     }
 
@@ -50,11 +51,6 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
 
             RemCompDeferred<DamageMarkerComponent>(uid);
         }
-    }
-
-    private void OnMarkerUnpaused(EntityUid uid, DamageMarkerComponent component, ref EntityUnpausedEvent args)
-    {
-        component.EndTime += args.PausedTime;
     }
 
     private void OnMarkerCollide(EntityUid uid, DamageMarkerOnCollideComponent component, ref StartCollideEvent args)

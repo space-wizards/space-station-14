@@ -248,7 +248,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterHospitalGown
-  name: Hospital Gown
+  name: hospital gown
   description: Made from the wool of slaughtered baby lambs.  The cruelty makes it softer.
   components:
   - type: Sprite
@@ -289,6 +289,8 @@
         color: "#670a09"
       - state: equipped-OUTERCLOTHING-lines
         color: "#000000"
+  - type: TemperatureProtection
+    coefficient: 0.3
 
 - type: entity
   parent: ClothingOuterBase
@@ -323,6 +325,8 @@
         color: "#3232a6"
       - state: equipped-OUTERCLOTHING-lines
         color: "#000000"
+  - type: TemperatureProtection
+    coefficient: 0.3
 
 - type: entity
   parent: ClothingOuterBase
@@ -357,3 +361,16 @@
         color: "#164d0f"
       - state: equipped-OUTERCLOTHING-lines
         color: "#000000"
+  - type: TemperatureProtection
+    coefficient: 0.3
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterRedRacoon
+  name: red racoon suit
+  description: Fluffy suit of red racoon!
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/red_racoon.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Misc/red_racoon.rsi

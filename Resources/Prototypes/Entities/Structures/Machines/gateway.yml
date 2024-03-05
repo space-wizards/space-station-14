@@ -50,20 +50,8 @@
   components:
   - type: ActivatableUI
     key: enum.GatewayUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.GatewayUiKey.Key
       type: GatewayBoundUserInterface
-  - type: ApcPowerReceiver
-    powerLoad: 3000
-  - type: ExtensionCableReceiver
   - type: Gateway
-
-- type: entity
-  parent: BaseGateway
-  id: GatewayDestination
-  suffix: Destination
-  components:
-  - type: GatewayDestination
-    name: Unknown

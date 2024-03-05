@@ -3,6 +3,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -21,6 +22,7 @@ public abstract class SharedItemCabinetSystem : EntitySystem
         SubscribeLocalEvent<ItemCabinetComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<ItemCabinetComponent, ComponentRemove>(OnComponentRemove);
         SubscribeLocalEvent<ItemCabinetComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<ItemCabinetComponent, AfterAutoHandleStateEvent>(OnComponentHandleState);
 
         SubscribeLocalEvent<ItemCabinetComponent, ActivateInWorldEvent>(OnActivateInWorld);
         SubscribeLocalEvent<ItemCabinetComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleOpenVerb);
@@ -45,6 +47,11 @@ public abstract class SharedItemCabinetSystem : EntitySystem
     {
         UpdateAppearance(uid, cabinet);
         _itemSlots.SetLock(uid, cabinet.CabinetSlot, !cabinet.Opened);
+    }
+
+    private void OnComponentHandleState(Entity<ItemCabinetComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        UpdateAppearance(ent, ent);
     }
 
     protected virtual void UpdateAppearance(EntityUid uid, ItemCabinetComponent? cabinet = null)
@@ -117,7 +124,7 @@ public abstract class SharedItemCabinetSystem : EntitySystem
             return;
 
         cabinet.Opened = !cabinet.Opened;
-        Dirty(cabinet);
+        Dirty(uid, cabinet);
         _itemSlots.SetLock(uid, cabinet.CabinetSlot, !cabinet.Opened);
 
         if (_timing.IsFirstTimePredicted)

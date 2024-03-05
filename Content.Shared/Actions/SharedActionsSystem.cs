@@ -7,11 +7,14 @@ using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Mind;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Rejuvenate;
 
 namespace Content.Shared.Actions;
 
@@ -31,10 +34,21 @@ public abstract class SharedActionsSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<InstantActionComponent, MapInitEvent>(OnActionMapInit);
+        SubscribeLocalEvent<EntityTargetActionComponent, MapInitEvent>(OnActionMapInit);
+        SubscribeLocalEvent<WorldTargetActionComponent, MapInitEvent>(OnActionMapInit);
+
+        SubscribeLocalEvent<InstantActionComponent, ComponentShutdown>(OnActionShutdown);
+        SubscribeLocalEvent<EntityTargetActionComponent, ComponentShutdown>(OnActionShutdown);
+        SubscribeLocalEvent<WorldTargetActionComponent, ComponentShutdown>(OnActionShutdown);
+
         SubscribeLocalEvent<ActionsComponent, DidEquipEvent>(OnDidEquip);
         SubscribeLocalEvent<ActionsComponent, DidEquipHandEvent>(OnHandEquipped);
         SubscribeLocalEvent<ActionsComponent, DidUnequipEvent>(OnDidUnequip);
         SubscribeLocalEvent<ActionsComponent, DidUnequipHandEvent>(OnHandUnequipped);
+        SubscribeLocalEvent<ActionsComponent, RejuvenateEvent>(OnRejuventate);
+
+        SubscribeLocalEvent<ActionsComponent, ComponentShutdown>(OnShutdown);
 
         SubscribeLocalEvent<ActionsComponent, ComponentGetState>(OnActionsGetState);
 
@@ -47,6 +61,29 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<WorldTargetActionComponent, GetActionDataEvent>(OnGetActionData);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
+    }
+
+    private void OnActionMapInit(EntityUid uid, BaseActionComponent component, MapInitEvent args)
+    {
+        if (component.Charges == null)
+            return;
+
+        component.MaxCharges ??= component.Charges.Value;
+        Dirty(uid, component);
+    }
+
+    private void OnActionShutdown(EntityUid uid, BaseActionComponent component, ComponentShutdown args)
+    {
+        if (component.AttachedEntity != null && !TerminatingOrDeleted(component.AttachedEntity.Value))
+            RemoveAction(component.AttachedEntity.Value, uid, action: component);
+    }
+
+    private void OnShutdown(EntityUid uid, ActionsComponent component, ComponentShutdown args)
+    {
+        foreach (var act in component.Actions)
+        {
+            RemoveAction(uid, act, component);
+        }
     }
 
     private void OnInstantGetState(EntityUid uid, InstantActionComponent component, ref ComponentGetState args)
@@ -85,7 +122,9 @@ public abstract class SharedActionsSystem : EntitySystem
         if (result != null)
             return true;
 
-        Log.Error($"Failed to get action from action entity: {ToPrettyString(uid.Value)}");
+        if (logError)
+            Log.Error($"Failed to get action from action entity: {ToPrettyString(uid.Value)}");
+
         return false;
     }
 
@@ -115,6 +154,27 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(actionId.Value, action);
     }
 
+    public void SetCooldown(EntityUid? actionId, TimeSpan cooldown)
+    {
+        var start = GameTiming.CurTime;
+        SetCooldown(actionId, start, start + cooldown);
+    }
+
+    public void ClearCooldown(EntityUid? actionId)
+    {
+        if (actionId == null)
+            return;
+
+        if (!TryGetActionData(actionId, out var action))
+            return;
+
+        if (action.Cooldown is not { } cooldown)
+            return;
+
+        action.Cooldown = (cooldown.Start, GameTiming.CurTime);
+        Dirty(actionId.Value, action);
+    }
+
     public void StartUseDelay(EntityUid? actionId)
     {
         if (actionId == null)
@@ -125,6 +185,39 @@ public abstract class SharedActionsSystem : EntitySystem
 
         action.Cooldown = (GameTiming.CurTime, GameTiming.CurTime + action.UseDelay.Value);
         Dirty(actionId.Value, action);
+    }
+
+    public void SetUseDelay(EntityUid? actionId, TimeSpan? delay)
+    {
+        if (!TryGetActionData(actionId, out var action) || action.UseDelay == delay)
+            return;
+
+        action.UseDelay = delay;
+        UpdateAction(actionId, action);
+        Dirty(actionId.Value, action);
+    }
+
+    public void ReduceUseDelay(EntityUid? actionId, TimeSpan? lowerDelay)
+    {
+        if (!TryGetActionData(actionId, out var action))
+            return;
+
+        if (action.UseDelay != null && lowerDelay != null)
+            action.UseDelay = action.UseDelay - lowerDelay;
+
+        if (action.UseDelay < TimeSpan.Zero)
+            action.UseDelay = null;
+
+        UpdateAction(actionId, action);
+        Dirty(actionId.Value, action);
+    }
+
+    private void OnRejuventate(EntityUid uid, ActionsComponent component, RejuvenateEvent args)
+    {
+        foreach (var act in component.Actions)
+        {
+            ClearCooldown(act);
+        }
     }
 
     #region ComponentStateManagement
@@ -172,6 +265,51 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(actionId.Value, action);
     }
 
+    public int? GetCharges(EntityUid? actionId)
+    {
+        if (!TryGetActionData(actionId, out var action))
+            return null;
+
+        return action.Charges;
+    }
+
+    public void AddCharges(EntityUid? actionId, int addCharges)
+    {
+        if (!TryGetActionData(actionId, out var action) || action.Charges == null || addCharges < 1)
+            return;
+
+        action.Charges += addCharges;
+        UpdateAction(actionId, action);
+        Dirty(actionId.Value, action);
+    }
+
+    public void RemoveCharges(EntityUid? actionId, int? removeCharges)
+    {
+        if (!TryGetActionData(actionId, out var action) || action.Charges == null)
+            return;
+
+        if (removeCharges == null)
+            action.Charges = removeCharges;
+        else
+            action.Charges -= removeCharges;
+
+        if (action.Charges is < 0)
+            action.Charges = null;
+
+        UpdateAction(actionId, action);
+        Dirty(actionId.Value, action);
+    }
+
+    public void ResetCharges(EntityUid? actionId)
+    {
+        if (!TryGetActionData(actionId, out var action))
+            return;
+
+        action.Charges = action.MaxCharges;
+        UpdateAction(actionId, action);
+        Dirty(actionId.Value, action);
+    }
+
     private void OnActionsGetState(EntityUid uid, ActionsComponent component, ref ComponentGetState args)
     {
         args.State = new ActionsComponentState(GetNetEntitySet(component.Actions));
@@ -211,13 +349,24 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         DebugTools.Assert(action.AttachedEntity == user);
-
         if (!action.Enabled)
             return;
 
+        // check for action use prevention
+        // TODO: make code below use this event with a dedicated component
+        var attemptEv = new ActionAttemptEvent(user);
+        RaiseLocalEvent(actionEnt, ref attemptEv);
+        if (attemptEv.Cancelled)
+            return;
+
         var curTime = GameTiming.CurTime;
+        // TODO: Check for charge recovery timer
         if (action.Cooldown.HasValue && action.Cooldown.Value.End > curTime)
             return;
+
+        // TODO: Replace with individual charge recovery when we have the visuals to aid it
+        if (action is { Charges: < 1, RenewCharges: true })
+            ResetCharges(actionEnt);
 
         BaseActionEvent? performEvent = null;
 
@@ -258,7 +407,7 @@ public abstract class SharedActionsSystem : EntitySystem
                 }
 
                 var entityCoordinatesTarget = GetCoordinates(netCoordinatesTarget);
-                _rotateToFaceSystem.TryFaceCoordinates(user, entityCoordinatesTarget.Position);
+                _rotateToFaceSystem.TryFaceCoordinates(user, entityCoordinatesTarget.ToMapPos(EntityManager, _transformSystem));
 
                 if (!ValidateWorldTarget(user, entityCoordinatesTarget, worldAction))
                     return;
@@ -359,7 +508,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         var toggledBefore = action.Toggled;
 
-        // Note that attached entity is allowed to be null here.
+        // Note that attached entity and attached container are allowed to be null here.
         if (action.AttachedEntity != null && action.AttachedEntity != performer)
         {
             Log.Error($"{ToPrettyString(performer)} is attempting to perform an action {ToPrettyString(actionId)} that is attached to another entity {ToPrettyString(action.AttachedEntity.Value)}");
@@ -370,7 +519,12 @@ public abstract class SharedActionsSystem : EntitySystem
         {
             // This here is required because of client-side prediction (RaisePredictiveEvent results in event re-use).
             actionEvent.Handled = false;
-            RaiseLocalEvent(action.Container ?? performer, (object) actionEvent, broadcast: true);
+            var target = performer;
+
+            if (!action.RaiseOnUser && action.Container != null && !HasComp<MindComponent>(action.Container))
+                target = action.Container.Value;
+
+            RaiseLocalEvent(target, (object) actionEvent, broadcast: true);
             handled = actionEvent.Handled;
         }
 
@@ -388,12 +542,12 @@ public abstract class SharedActionsSystem : EntitySystem
         {
             dirty = true;
             action.Charges--;
-            if (action.Charges == 0)
+            if (action is { Charges: 0, RenewCharges: false })
                 action.Enabled = false;
         }
 
         action.Cooldown = null;
-        if (action.UseDelay != null)
+        if (action is { UseDelay: not null, Charges: null or < 1 })
         {
             dirty = true;
             action.Cooldown = (curTime, curTime + action.UseDelay.Value);
@@ -426,7 +580,7 @@ public abstract class SharedActionsSystem : EntitySystem
     /// <param name="actionId">Action entity to add</param>
     /// <param name="component">The <see cref="performer"/>'s action component of </param>
     /// <param name="actionPrototypeId">The action entity prototype id to use if <see cref="actionId"/> is invalid.</param>
-    /// <param name="container">The entity that contains/enables this action (e.g., flashlight)..</param>
+    /// <param name="container">The entity that contains/enables this action (e.g., flashlight).</param>
     public bool AddAction(EntityUid performer,
         [NotNullWhen(true)] ref EntityUid? actionId,
         string? actionPrototypeId,
@@ -494,6 +648,9 @@ public abstract class SharedActionsSystem : EntitySystem
                           (TryComp(action.Container, out ActionsContainerComponent? containerComp)
                            && containerComp.Container.Contains(actionId)));
 
+        if (action.AttachedEntity != null)
+            RemoveAction(action.AttachedEntity.Value, actionId, action: action);
+
         DebugTools.AssertOwner(performer, comp);
         comp ??= EnsureComp<ActionsComponent>(performer);
         action.AttachedEntity = performer;
@@ -532,6 +689,44 @@ public abstract class SharedActionsSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    ///     Grants all actions currently contained in some action-container. If the target entity has no action
+    /// component, this will give them one.
+    /// </summary>
+    /// <param name="performer">Entity to receive the actions</param>
+    /// <param name="container">The entity that contains thee actions.</param>
+    public void GrantContainedActions(Entity<ActionsComponent?> performer, Entity<ActionsContainerComponent?> container)
+    {
+        if (!Resolve(container, ref container.Comp))
+            return;
+
+        performer.Comp ??= EnsureComp<ActionsComponent>(performer);
+
+        foreach (var actionId in container.Comp.Container.ContainedEntities)
+        {
+            if (TryGetActionData(actionId, out var action))
+                AddActionDirect(performer, actionId, performer.Comp, action);
+        }
+    }
+
+    /// <summary>
+    ///     Grants the provided action from the container to the target entity. If the target entity has no action
+    /// component, this will give them one.
+    /// </summary>
+    /// <param name="performer"></param>
+    /// <param name="container"></param>
+    /// <param name="actionId"></param>
+    public void GrantContainedAction(Entity<ActionsComponent?> performer, Entity<ActionsContainerComponent?> container, EntityUid actionId)
+    {
+        if (!Resolve(container, ref container.Comp))
+            return;
+
+        performer.Comp ??= EnsureComp<ActionsComponent>(performer);
+
+        if (TryGetActionData(actionId, out var action))
+            AddActionDirect(performer, actionId, performer.Comp, action);
+    }
+
     public IEnumerable<(EntityUid Id, BaseActionComponent Comp)> GetActions(EntityUid holderId, ActionsComponent? actions = null)
     {
         if (!Resolve(holderId, ref actions, false))
@@ -564,6 +759,18 @@ public abstract class SharedActionsSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    ///     Removes a single provided action provided by another entity.
+    /// </summary>
+    public void RemoveProvidedAction(EntityUid performer, EntityUid container, EntityUid actionId, ActionsComponent? comp = null)
+    {
+        if (!Resolve(performer, ref comp, false) || !TryGetActionData(actionId, out var action))
+            return;
+
+        if (action.Container == container)
+            RemoveAction(performer, actionId, comp);
+    }
+
     public void RemoveAction(EntityUid? actionId)
     {
         if (actionId == null)
@@ -588,7 +795,12 @@ public abstract class SharedActionsSystem : EntitySystem
 
         if (action.AttachedEntity != performer)
         {
-            Log.Error($"Attempted to remove an action {ToPrettyString(actionId)} from an entity that it was never attached to: {ToPrettyString(performer)}");
+            DebugTools.Assert(!Resolve(performer, ref comp, false)
+                              || comp.LifeStage >= ComponentLifeStage.Stopping
+                              || !comp.Actions.Contains(actionId.Value));
+
+            if (!GameTiming.ApplyingState)
+                Log.Error($"Attempted to remove an action {ToPrettyString(actionId)} from an entity that it was never attached to: {ToPrettyString(performer)}");
             return;
         }
 

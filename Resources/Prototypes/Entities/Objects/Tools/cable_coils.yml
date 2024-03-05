@@ -4,7 +4,7 @@
 
 - type: entity
   id: CableStack
-  noSpawn: true
+  abstract: true
   parent: BaseItem
   name: cable stack
   suffix: Full
@@ -12,14 +12,13 @@
   - type: Tag
     tags:
     - CableCoil
-    - DroneUsable
   - type: Stack
     stackType: Cable
   - type: Sprite
     sprite: Objects/Tools/cable-coils.rsi
   - type: Item
     sprite: Objects/Tools/cable-coils.rsi
-    size: 30
+    size: Normal
   - type: CablePlacer
   - type: Clickable
   - type: StaticPrice
@@ -52,6 +51,18 @@
     cablePrototypeID: CableHV
     blockingWireType: HighVoltage
   - type: Appearance
+  - type: Extractable
+    grindableSolutionName: hvcable
+  - type: SolutionContainerManager
+    solutions:
+      hvcable:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 3
+        - ReagentId: Copper
+          Quantity: 2
+        - ReagentId: Carbon #steel-reinforced
+          Quantity: 1
 
 - type: entity
   parent: CableHVStack
@@ -62,8 +73,6 @@
     state: coilhv-10
   - type: Stack
     count: 10
-  - type: Item
-    size: 10
 
 - type: entity
   parent: CableHVStack10
@@ -83,8 +92,6 @@
     state: coilhv-10
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: CableStack
@@ -111,6 +118,16 @@
     cablePrototypeID: CableMV
     blockingWireType: MediumVoltage
   - type: Appearance
+  - type: Extractable
+    grindableSolutionName: mvcable
+  - type: SolutionContainerManager
+    solutions:
+      mvcable:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 3
+        - ReagentId: Copper
+          Quantity: 2
 
 - type: entity
   parent: CableMVStack
@@ -121,8 +138,6 @@
     state: coilmv-10
   - type: Stack
     count: 10
-  - type: Item
-    size: 10
 
 - type: entity
   parent: CableMVStack10
@@ -142,8 +157,6 @@
     state: coilmv-10
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: CableStack
@@ -169,6 +182,16 @@
     cablePrototypeID: CableApcExtension
     blockingWireType: Apc
   - type: Appearance
+  - type: Extractable
+    grindableSolutionName: lvcable
+  - type: SolutionContainerManager
+    solutions:
+      lvcable:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 3
+        - ReagentId: Copper
+          Quantity: 2
 
 - type: entity
   parent: CableApcStack
@@ -179,8 +202,6 @@
       state: coillv-10
     - type: Stack
       count: 10
-    - type: Item
-      size: 10
 
 - type: entity
   parent: CableApcStack10
@@ -200,5 +221,3 @@
     state: coillv-10
   - type: Stack
     count: 1
-  - type: Item
-    size: 1

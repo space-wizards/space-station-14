@@ -4,6 +4,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Standing;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -16,6 +17,7 @@ public partial class MobStateSystem : EntitySystem
     [Dependency] private readonly StandingStateSystem _standing = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     private ISawmill _sawmill = default!;
 
     public override void Initialize()

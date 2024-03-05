@@ -1,0 +1,99 @@
+- type: entity
+  abstract: true
+  id: MobNarsieBase
+  name: Nar'Sie
+  description: Your mind begins to bubble and ooze as it tries to comprehend what it sees.
+  components:
+  - type: Sprite
+    sprite: Mobs/Demons/narsie.rsi
+    drawdepth: Ghosts
+    scale: 2.0,2.0
+    layers:
+    - state: narsie
+      shader: unshaded
+
+# spawn animation, spawns actual narsie when it ends
+- type: entity
+  parent: MobNarsieBase
+  id: MobNarsieSpawn
+  suffix: Spawn
+  components:
+  - type: Sprite
+    layers:
+    - state: spawn
+      shader: unshaded
+  # spawn animation lasts 3.5 seconds
+  - type: TimedDespawn
+    lifetime: 3.5
+  - type: SpawnOnDespawn
+    prototype: MobNarsie
+
+- type: entity
+  parent: [MobNarsieBase, BaseMob]
+  id: MobNarsie
+  components:
+  - type: AnnounceOnSpawn
+    message: narsie-has-risen
+    sender: narsie-has-risen-sender
+    sound:
+      path: /Audio/Misc/narsie_rises.ogg
+    color: red
+  - type: CargoSellBlacklist
+  # big nar'sie needs to see the universe
+  - type: ContentEye
+    maxZoom: 2.0,2.0
+  - type: Fixtures
+    fixtures:
+      EventHorizonCollider:
+        shape:
+          !type:PhysShapeCircle
+            radius: 5
+        hard: false
+        restitution: 0.8
+        density: 99999
+        mask:
+        - AllMask
+        layer:
+        - AllMask
+      EventHorizonConsumer:
+        shape:
+          !type:PhysShapeCircle
+            radius: 5
+        hard: false
+        mask:
+        - AllMask
+        layer:
+        - AllMask
+  - type: Input
+    context: "ghost"
+  - type: MovementIgnoreGravity
+  # narnar hears all
+  - type: IntrinsicRadioReceiver
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+    - Command
+    - CentCom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Syndicate
+    globalReceive: true
+  - type: Physics
+    bodyType: Dynamic
+    bodyStatus: InAir
+  - type: CanMoveInAir
+  # singulose components
+  - type: EventHorizon
+    radius: 5
+    canBreachContainment: true
+  - type: GravityWell
+    baseRadialAcceleration: 6
+    maxRange: 8
+  - type: WarpPoint
+    follow: true
+    location: Nar'Sie

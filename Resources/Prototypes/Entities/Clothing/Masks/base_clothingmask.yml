@@ -5,6 +5,8 @@
   components:
   - type: Sprite
     state: icon
+  - type: Item
+    size: Small
   - type: Clothing
     slots: [mask]
 
@@ -25,3 +27,26 @@
     icon: { sprite: Clothing/Mask/gas.rsi, state: icon }
     iconOn: Interface/Default/blocked.png
     event: !type:ToggleMaskEvent
+
+- type: entity
+  id: ClothingMaskBaseButcherable
+  parent: ClothingMaskBase
+  abstract: true
+  components:
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 1
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: Tag
+    tags:
+      - ClothMade

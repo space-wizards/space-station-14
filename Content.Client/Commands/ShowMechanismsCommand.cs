@@ -1,30 +1,26 @@
-﻿using Content.Shared.Body.Organ;
-using Robust.Client.Console;
+using Content.Shared.Body.Organ;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;
 
-namespace Content.Client.Commands
+namespace Content.Client.Commands;
+
+public sealed class ShowMechanismsCommand : LocalizedCommands
 {
-    public sealed class ShowMechanismsCommand : IConsoleCommand
+    [Dependency] private readonly IEntityManager _entManager = default!;
+
+    public const string CommandName = "showmechanisms";
+
+    public override string Command => CommandName;
+
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public const string CommandName = "showmechanisms";
+        var query = _entManager.AllEntityQueryEnumerator<OrganComponent, SpriteComponent>();
 
-        // ReSharper disable once StringLiteralTypo
-        public string Command => CommandName;
-        public string Description => "Makes mechanisms visible, even when they shouldn't be.";
-        public string Help => $"{Command}";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        while (query.MoveNext(out _, out var sprite))
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var query = entityManager.AllEntityQueryEnumerator<OrganComponent, SpriteComponent>();
-
-            while (query.MoveNext(out _, out var sprite))
-            {
-                sprite.ContainerOccluded = false;
-            }
-
-            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("showcontainedcontext");
+            sprite.ContainerOccluded = false;
         }
     }
 }

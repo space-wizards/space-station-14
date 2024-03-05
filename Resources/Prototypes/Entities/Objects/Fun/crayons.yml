@@ -9,7 +9,7 @@
     sprite: Objects/Fun/crayons.rsi
   - type: Item
     sprite: Objects/Fun/crayons.rsi
-    size: 1
+    size: Tiny
   - type: Tag
     tags:
     - Write
@@ -235,10 +235,12 @@
     sprite: Objects/Fun/crayons.rsi
     state: box
   - type: Storage
-    capacity: 7
+    grid:
+    - 0,0,7,0
+    maxItemSize: Tiny
   - type: Item
     sprite: Objects/Fun/crayons.rsi
-    size: 7
+    size: Small
     heldPrefix: box
   - type: StorageFill
     contents:
@@ -249,6 +251,7 @@
     - id: CrayonBlue
     - id: CrayonPurple
     - id: CrayonBlack
+    - id: CrayonWhite
   - type: ItemMapper
     mapLayers:
       black_box:
@@ -279,4 +282,8 @@
         whitelist:
           tags:
           - CrayonYellow
+      white_box:
+        whitelist:
+          tags:
+          - CrayonWhite
   - type: Appearance

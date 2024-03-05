@@ -1,4 +1,4 @@
-﻿- type: construction
+- type: construction
   name: baseball bat
   id: bat
   graph: WoodenBat
@@ -125,6 +125,19 @@
   objectType: Item
 
 - type: construction
+  name: flower wreath
+  id: flowerwreath
+  graph: flowerwreath
+  startNode: start
+  targetNode: flowerwreath
+  category: construction-category-clothing
+  description: "A wreath of colourful flowers."
+  icon:
+    sprite: Clothing/Neck/Misc/flower-wreath.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
   name: damp rag
   id: rag
   graph: Rag
@@ -162,3 +175,42 @@
   icon:
     sprite: Objects/Misc/rifle_stock.rsi
     state: icon
+
+- type: construction
+  name: improvised explosive device
+  id: improvisedexplosive
+  graph: ImprovisedExplosive
+  startNode: start
+  targetNode: ied
+  category: construction-category-weapons
+  objectType: Item
+  description: A weak, improvised incendiary device.
+  icon:
+    sprite: Objects/Weapons/Bombs/ied.rsi
+    state: icon
+
+- type: construction
+  name: cotton woven cloth
+  id: CottonWovenCloth
+  graph: CottonObjects
+  startNode: start
+  targetNode: cottoncloth
+  category: construction-category-misc
+  description: "A homemade piece of cotton cloth, it feels coarse."
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: cloth_3
+  objectType: Item
+
+- type: construction
+  name: straw hat
+  id: strawHat
+  graph: StrawHat
+  startNode: start
+  targetNode: strawhat
+  category: construction-category-clothing
+  description: A fancy hat for hot days! Not recommended to wear near fires.
+  icon:
+    sprite: Clothing/Head/Hats/straw_hat.rsi
+    state: icon
+  objectType: Item

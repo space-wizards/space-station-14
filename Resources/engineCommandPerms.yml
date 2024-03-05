@@ -39,6 +39,7 @@
   - addview
   - removeview
   - hwid
+  - showaudio
   - showpos
   - showray
   - showchunkbb
@@ -66,6 +67,7 @@
   - scene
   - replay_recording_stats
   - print_pvs_ack
+  - merge_grids
 
 
 - Flags: MAPPING
@@ -111,7 +113,6 @@
   Commands:
   - gc_mode
   - gc
-  - loglevel
   - saveconfig
   - testlog
   - sudo

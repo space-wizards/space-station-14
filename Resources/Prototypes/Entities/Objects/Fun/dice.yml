@@ -4,7 +4,6 @@
   id: BaseDice
   components:
   - type: Dice
-  - type: ItemCooldown
   - type: UseDelay
   - type: Sprite
     sprite: Objects/Fun/dice.rsi
@@ -13,12 +12,12 @@
     tags:
     - Dice
   - type: Item
-    size: 2
+    size: Tiny
 
 - type: entity
   parent: BaseDice
   id: PercentileDie
-  name: Percentile Die
+  name: percentile die
   description: A die with ten sides. Works better for d100 rolls than a golf ball.
   components:
   - type: Dice
@@ -61,9 +60,10 @@
   components:
   - type: Dice
     sides: 10
-    currentValue: 10
+    offset: 1
+    currentValue: 0
   - type: Sprite
-    state: d10_10
+    state: d10_0
 
 - type: entity
   parent: BaseDice

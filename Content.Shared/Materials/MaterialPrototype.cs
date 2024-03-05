@@ -9,7 +9,7 @@ namespace Content.Shared.Materials
     ///     Properties should be intrinsic (or at least as much is necessary for game purposes).
     /// </summary>
     [Prototype("material")]
-    public sealed class MaterialPrototype : IPrototype, IInheritingPrototype
+    public sealed partial class MaterialPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
         [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<MaterialPrototype>))]

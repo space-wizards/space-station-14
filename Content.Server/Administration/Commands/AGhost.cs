@@ -2,7 +2,6 @@
 using Content.Shared.Administration;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
@@ -18,7 +17,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
             if (player == null)
             {
                 shell.WriteLine("Nah");
@@ -47,7 +46,7 @@ namespace Content.Server.Administration.Commands
             var coordinates = player.AttachedEntity != null
                 ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
                 : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
-            var ghost = _entities.SpawnEntity("AdminObserver", coordinates);
+            var ghost = _entities.SpawnEntity(GameTicker.AdminObserverPrototypeName, coordinates);
             _entities.GetComponent<TransformComponent>(ghost).AttachToGridOrMap();
 
             if (canReturn)

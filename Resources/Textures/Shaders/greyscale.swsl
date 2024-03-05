@@ -1,6 +1,5 @@
 ﻿void fragment() {
     highp vec4 color = zTexture(UV);
-    highp float grey = dot(color.rgb, vec3(0.299, 0.587, 0.114));
 
-    COLOR = vec4(vec3(grey), color.a);
+    COLOR = vec4(vec3(zGrayscale(color.rgb)), color.a);
 }

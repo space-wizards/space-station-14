@@ -18,6 +18,9 @@
   - Security
   - Brig
   - Maintenance
+  - Service
+  - External
+  - Cryogenics
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -31,7 +34,9 @@
     outerClothing: ClothingOuterArmorBasic
     id: SecurityCadetPDA
     ears: ClothingHeadsetSecurity
+    belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58Nonlethal
+    pocket2: BookSecurity
   innerClothingSkirt: ClothingUniformJumpskirtColorRed
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled

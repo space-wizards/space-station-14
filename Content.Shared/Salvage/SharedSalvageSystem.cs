@@ -15,7 +15,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Salvage;
 
-public abstract class SharedSalvageSystem : EntitySystem
+public abstract partial class SharedSalvageSystem : EntitySystem
 {
     [Dependency] protected readonly IConfigurationManager CfgManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;

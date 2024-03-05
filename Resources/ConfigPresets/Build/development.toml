@@ -5,6 +5,9 @@ lobbyenabled = false
 map = "Dev"
 role_timers = false
 
+[gateway]
+generator_enabled = false
+
 [physics]
 # Makes mapping annoying
 grid_splitting = false

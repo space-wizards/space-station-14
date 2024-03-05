@@ -8,7 +8,7 @@
     mode: SnapgridCenter
   components:
   - type: Item
-    size: 10
+    size: Normal
   - type: Transform
     anchored: true
   - type: Damageable
@@ -21,12 +21,29 @@
   - type: Rotatable
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: # for nukes
         !type:DamageTrigger
-        damage: 100
+        damage: 200
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+    - trigger: # regular damage trigger (replace with broken pipe)
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          GasPipeBroken:
+            min: 1
+            max: 1
+        offset: 0
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     drawdepth: ThinPipe
@@ -42,12 +59,6 @@
   - type: Physics
     canCollide: false
     bodyType: static
-  - type: AmbientSound
-    enabled: false
-    volume: -15
-    range: 2
-    sound:
-      path: /Audio/Ambience/Objects/gas_hiss.ogg
   - type: StaticPrice
     price: 11
 
@@ -149,3 +160,28 @@
   - type: Construction
     graph: GasPipe
     node: fourway
+
+- type: entity
+  id: GasPipeBroken
+  parent: GasPipeBase
+  name: broken pipe
+  description: It used to hold gas.
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    drawdepth: ThinPipe
+    state: pipeBroken
+    layers:
+      - state: pipeBroken
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: Construction
+    graph: GasPipe
+    node: broken
+  - type: Destructible
+    thresholds: # override parent to avoid recursive destruction
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]

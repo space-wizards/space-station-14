@@ -44,6 +44,9 @@ public partial class RadiationSystem
         var sourcesData = new ValueList<(EntityUid, RadiationSourceComponent, TransformComponent, Vector2)>();
         while (sources.MoveNext(out var uid, out var source, out var sourceTrs))
         {
+            if (!source.Enabled)
+                continue;
+
             var worldPos = _transform.GetWorldPosition(sourceTrs, transformQuery);
             var data = (uid, source, sourceTrs, worldPos);
             sourcesData.Add(data);

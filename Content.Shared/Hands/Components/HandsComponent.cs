@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Hands.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 [Access(typeof(SharedHandsSystem))]
 public sealed partial class HandsComponent : Component
 {
@@ -57,6 +57,19 @@ public sealed partial class HandsComponent : Component
     ///     Used by the client.
     /// </summary>
     public readonly Dictionary<HandLocation, HashSet<string>> RevealedLayers = new();
+
+    /// <summary>
+    ///     The time at which throws will be allowed again.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [AutoPausedField]
+    public TimeSpan NextThrowTime;
+
+    /// <summary>
+    ///     The minimum time inbetween throws.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan ThrowCooldown = TimeSpan.FromSeconds(0.5f);
 }
 
 [Serializable, NetSerializable]
@@ -97,8 +110,9 @@ public sealed class HandsComponentState : ComponentState
 
     public HandsComponentState(HandsComponent handComp)
     {
+        // cloning lists because of test networking.
         Hands = new(handComp.Hands.Values);
-        HandNames = handComp.SortedHands;
+        HandNames = new(handComp.SortedHands);
         ActiveHand = handComp.ActiveHand?.Name;
     }
 }

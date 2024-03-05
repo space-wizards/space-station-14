@@ -5,9 +5,11 @@ using Content.Server.Maps;
 using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.Ghost;
 using Content.Shared.Voting;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Enums;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Voting.Managers
@@ -21,7 +23,7 @@ namespace Content.Server.Voting.Managers
             {StandardVoteType.Map, CCVars.VoteMapEnabled},
         };
 
-        public void CreateStandardVote(IPlayerSession? initiator, StandardVoteType voteType)
+        public void CreateStandardVote(ICommonSession? initiator, StandardVoteType voteType)
         {
             if (initiator != null)
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{initiator} initiated a {voteType.ToString()} vote");
@@ -47,70 +49,122 @@ namespace Content.Server.Voting.Managers
             TimeoutStandardVote(voteType);
         }
 
-        private void CreateRestartVote(IPlayerSession? initiator)
+        private void CreateRestartVote(ICommonSession? initiator)
         {
-            var alone = _playerManager.PlayerCount == 1 && initiator != null;
-            var options = new VoteOptions
+
+            var playerVoteMaximum = _cfg.GetCVar(CCVars.VoteRestartMaxPlayers);
+            var totalPlayers = _playerManager.Sessions.Count(session => session.Status != SessionStatus.Disconnected);
+
+            var ghostVotePercentageRequirement = _cfg.GetCVar(CCVars.VoteRestartGhostPercentage);
+            var ghostCount = 0;
+            
+            foreach (var player in _playerManager.Sessions)
             {
-                Title = Loc.GetString("ui-vote-restart-title"),
-                Options =
+                _playerManager.UpdateState(player);
+                if (player.Status != SessionStatus.Disconnected && _entityManager.HasComponent<GhostComponent>(player.AttachedEntity))
                 {
-                    (Loc.GetString("ui-vote-restart-yes"), "yes"),
-                    (Loc.GetString("ui-vote-restart-no"), "no"),
-                    (Loc.GetString("ui-vote-restart-abstain"), "abstain")
-                },
-                Duration = alone
-                    ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
-                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerRestart)),
-                InitiatorTimeout = TimeSpan.FromMinutes(5)
-            };
-
-            if (alone)
-                options.InitiatorTimeout = TimeSpan.FromSeconds(10);
-
-            WirePresetVoteInitiator(options, initiator);
-
-            var vote = CreateVote(options);
-
-            vote.OnFinished += (_, _) =>
-            {
-                var votesYes = vote.VotesPerOption["yes"];
-                var votesNo = vote.VotesPerOption["no"];
-                var total = votesYes + votesNo;
-
-                var ratioRequired = _cfg.GetCVar(CCVars.VoteRestartRequiredRatio);
-                if (total > 0 && votesYes / (float) total >= ratioRequired)
-                {
-                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote succeeded: {votesYes}/{votesNo}");
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
-                    var roundEnd = _entityManager.EntitySysManager.GetEntitySystem<RoundEndSystem>();
-                    roundEnd.EndRound();
+                    ghostCount++;
                 }
-                else
-                {
-                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote failed: {votesYes}/{votesNo}");
-                    _chatManager.DispatchServerAnnouncement(
-                        Loc.GetString("ui-vote-restart-failed", ("ratio", ratioRequired)));
-                }
-            };
-
-            if (initiator != null)
-            {
-                // Cast yes vote if created the vote yourself.
-                vote.CastVote(initiator, 0);
             }
 
-            foreach (var player in _playerManager.ServerSessions)
+            var ghostPercentage = 0.0;
+            if (totalPlayers > 0)
             {
-                if (player != initiator)
-                {
-                    // Everybody else defaults to an abstain vote to say they don't mind.
-                    vote.CastVote(player, 2);
-                }
+                ghostPercentage = ((double)ghostCount / totalPlayers) * 100;
+            }
+
+            var roundedGhostPercentage = (int)Math.Round(ghostPercentage);
+
+            if (totalPlayers <= playerVoteMaximum || roundedGhostPercentage >= ghostVotePercentageRequirement)
+            {
+                StartVote(initiator);
+            }
+            else
+            {
+                NotifyNotEnoughGhostPlayers(ghostVotePercentageRequirement, roundedGhostPercentage);
             }
         }
 
-        private void CreatePresetVote(IPlayerSession? initiator)
+        private void StartVote(ICommonSession? initiator)
+        {
+            var alone = _playerManager.PlayerCount == 1 && initiator != null;
+                var options = new VoteOptions
+                {
+                    Title = Loc.GetString("ui-vote-restart-title"),
+                    Options =
+                    {
+                        (Loc.GetString("ui-vote-restart-yes"), "yes"),
+                        (Loc.GetString("ui-vote-restart-no"), "no"),
+                        (Loc.GetString("ui-vote-restart-abstain"), "abstain")
+                    },
+                    Duration = alone
+                        ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
+                        : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerRestart)),
+                    InitiatorTimeout = TimeSpan.FromMinutes(5)
+                };
+
+                if (alone)
+                    options.InitiatorTimeout = TimeSpan.FromSeconds(10);
+
+                WirePresetVoteInitiator(options, initiator);
+
+                var vote = CreateVote(options);
+
+                vote.OnFinished += (_, _) =>
+                {
+                    var votesYes = vote.VotesPerOption["yes"];
+                    var votesNo = vote.VotesPerOption["no"];
+                    var total = votesYes + votesNo;
+
+                    var ratioRequired = _cfg.GetCVar(CCVars.VoteRestartRequiredRatio);
+                    if (total > 0 && votesYes / (float) total >= ratioRequired)
+                    {
+                        // Check if an admin is online, and ignore the passed vote if the cvar is enabled
+                        if (_cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline) && _adminMgr.ActiveAdmins.Count() != 0)
+                        {
+                            _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote attempted to pass, but an admin was online. {votesYes}/{votesNo}");
+                        }
+                        else // If the cvar is disabled or there's no admins on, proceed as normal
+                        {
+                            _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote succeeded: {votesYes}/{votesNo}");
+                            _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
+                            var roundEnd = _entityManager.EntitySysManager.GetEntitySystem<RoundEndSystem>();
+                            roundEnd.EndRound();
+                        }
+                    }
+                    else
+                    {
+                        _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote failed: {votesYes}/{votesNo}");
+                        _chatManager.DispatchServerAnnouncement(
+                            Loc.GetString("ui-vote-restart-failed", ("ratio", ratioRequired)));
+                    }
+                };
+
+                if (initiator != null)
+                {
+                    // Cast yes vote if created the vote yourself.
+                    vote.CastVote(initiator, 0);
+                }
+
+                foreach (var player in _playerManager.Sessions)
+                {
+                    if (player != initiator)
+                    {
+                        // Everybody else defaults to an abstain vote to say they don't mind.
+                        vote.CastVote(player, 2);
+                    }
+                }
+        }
+
+        private void NotifyNotEnoughGhostPlayers(int ghostPercentageRequirement, int roundedGhostPercentage)
+        {
+            // Logic to notify that there are not enough ghost players to start a vote
+            _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote failed: Current Ghost player percentage:{roundedGhostPercentage.ToString()}% does not meet {ghostPercentageRequirement.ToString()}%");
+            _chatManager.DispatchServerAnnouncement(
+                Loc.GetString("ui-vote-restart-fail-not-enough-ghost-players", ("ghostPlayerRequirement", ghostPercentageRequirement)));
+        }
+
+        private void CreatePresetVote(ICommonSession? initiator)
         {
             var presets = GetGamePresets();
 
@@ -156,7 +210,7 @@ namespace Content.Server.Voting.Managers
             };
         }
 
-        private void CreateMapVote(IPlayerSession? initiator)
+        private void CreateMapVote(ICommonSession? initiator)
         {
             var maps = _gameMapManager.CurrentlyEligibleMaps().ToDictionary(map => map, map => map.MapName);
 

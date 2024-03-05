@@ -1,5 +1,4 @@
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
@@ -25,7 +24,7 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
         _window.OnClose += Close;
         _window.Input.OnKeyBindDown += args => // Solution while TextEdit don't have events
         {
-            if (args.Function == EngineKeyFunctions.TextSubmit)
+            if (args.Function == EngineKeyFunctions.MultilineTextSubmit)
             {
                 var text = Rope.Collapse(_window.Input.TextRope);
                 Input_OnTextEntered(text);
@@ -49,15 +48,12 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
 
     private void Input_OnTextEntered(string text)
     {
-        if (!string.IsNullOrEmpty(text))
-        {
-            SendMessage(new PaperInputTextMessage(text));
+        SendMessage(new PaperInputTextMessage(text));
 
-            if (_window != null)
-            {
-                _window.Input.TextRope = Rope.Leaf.Empty;
-                _window.Input.CursorPosition = new TextEdit.CursorPos(0, TextEdit.LineBreakBias.Top);
-            }
+        if (_window != null)
+        {
+            _window.Input.TextRope = Rope.Leaf.Empty;
+            _window.Input.CursorPosition = new TextEdit.CursorPos(0, TextEdit.LineBreakBias.Top);
         }
     }
 

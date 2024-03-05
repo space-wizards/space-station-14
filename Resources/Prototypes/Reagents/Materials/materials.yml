@@ -35,6 +35,14 @@
   price: 0.15 # 1-1 mix of plastic and cloth.
 
 - type: material
+  id: Paper
+  stackEntity: SheetPaper1
+  name: materials-paper
+  icon: { sprite: Objects/Materials/Sheets/other.rsi, state: paper }
+  color: "#d9d9d9"
+  price: 0.05 #same as wood
+
+- type: material
   id: Plasma
   stackEntity: SheetPlasma1
   name: materials-plasma
@@ -98,4 +106,13 @@
   unit: materials-unit-piece
   icon: { sprite: Objects/Materials/materials.rsi, state: bones }
   color: "#896f5e"
+  price: 0
+
+- type: material
+  id: Coal
+  stackEntity: Coal1
+  name: materials-coal
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/ore.rsi, state: coal }
+  color: "#404040"
   price: 0

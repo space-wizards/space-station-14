@@ -12,9 +12,11 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
@@ -90,20 +92,15 @@ namespace Content.Shared.Movement.Systems
 
             InitializeInput();
             InitializeRelay();
-            _configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
-            _configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
+            Subs.CVar(_configManager, CCVars.RelativeMovement, value => _relativeMovement = value, true);
+            Subs.CVar(_configManager, CCVars.StopSpeed, value => _stopSpeed = value, true);
             UpdatesBefore.Add(typeof(TileFrictionController));
         }
-
-        private void SetRelativeMovement(bool value) => _relativeMovement = value;
-        private void SetStopSpeed(float value) => _stopSpeed = value;
 
         public override void Shutdown()
         {
             base.Shutdown();
             ShutdownInput();
-            _configManager.UnsubValueChanged(CCVars.RelativeMovement, SetRelativeMovement);
-            _configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
         }
 
         public override void UpdateAfterSolve(bool prediction, float frameTime)
@@ -189,8 +186,8 @@ namespace Content.Shared.Movement.Systems
 
             // Don't bother getting the tiledef here if we're weightless or in-air
             // since no tile-based modifiers should be applying in that situation
-            if (_mapManager.TryFindGridAt(xform.MapPosition, out var grid, out var gridComp)
-                && _mapSystem.TryGetTileRef(grid, gridComp, xform.Coordinates, out var tile)
+            if (TryComp(xform.GridUid, out MapGridComponent? gridComp)
+                && _mapSystem.TryGetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates, out var tile)
                 && !(weightless || physicsComponent.BodyStatus == BodyStatus.InAir))
             {
                 tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];

@@ -1,9 +1,11 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.UserInterface;
+using Content.Server.DeviceLinking.Events;
+using Content.Shared.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.MachineLinking;
 using Content.Shared.TextScreen;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.DeviceLinking.Systems;
@@ -17,6 +19,11 @@ public sealed class SignalTimerSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
+    /// <summary>
+    /// Per-tick timer cache.
+    /// </summary>
+    private List<Entity<SignalTimerComponent>> _timers = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -27,11 +34,13 @@ public sealed class SignalTimerSystem : EntitySystem
         SubscribeLocalEvent<SignalTimerComponent, SignalTimerTextChangedMessage>(OnTextChangedMessage);
         SubscribeLocalEvent<SignalTimerComponent, SignalTimerDelayChangedMessage>(OnDelayChangedMessage);
         SubscribeLocalEvent<SignalTimerComponent, SignalTimerStartMessage>(OnTimerStartMessage);
+        SubscribeLocalEvent<SignalTimerComponent, SignalReceivedEvent>(OnSignalReceived);
     }
 
     private void OnInit(EntityUid uid, SignalTimerComponent component, ComponentInit args)
     {
         _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
+        _signalSystem.EnsureSinkPorts(uid, component.Trigger);
     }
 
     private void OnAfterActivatableUIOpen(EntityUid uid, SignalTimerComponent component, AfterActivatableUIOpenEvent args)
@@ -50,13 +59,20 @@ public sealed class SignalTimerSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    ///     Finishes a timer, triggering its main port, and removing its <see cref="ActiveSignalTimerComponent"/>.
+    /// </summary>
     public void Trigger(EntityUid uid, SignalTimerComponent signalTimer)
     {
         RemComp<ActiveSignalTimerComponent>(uid);
 
-        _signalSystem.InvokePort(uid, signalTimer.TriggerPort);
+        if (TryComp<AppearanceComponent>(uid, out var appearance))
+        {
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, signalTimer.Label, appearance);
+        }
 
-        _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
+        _audio.PlayPvs(signalTimer.DoneSound, uid);
+        _signalSystem.InvokePort(uid, signalTimer.TriggerPort);
 
         if (_ui.TryGetUi(uid, SignalTimerUiKey.Key, out var bui))
         {
@@ -78,17 +94,24 @@ public sealed class SignalTimerSystem : EntitySystem
 
     private void UpdateTimer()
     {
+        _timers.Clear();
+
         var query = EntityQueryEnumerator<ActiveSignalTimerComponent, SignalTimerComponent>();
         while (query.MoveNext(out var uid, out var active, out var timer))
         {
             if (active.TriggerTime > _gameTiming.CurTime)
                 continue;
 
-            Trigger(uid, timer);
+            _timers.Add((uid, timer));
+        }
 
-            if (timer.DoneSound == null)
+        foreach (var timer in _timers)
+        {
+            // Exploded or the likes.
+            if (!Exists(timer.Owner))
                 continue;
-            _audio.PlayPvs(timer.DoneSound, uid);
+
+            Trigger(timer.Owner, timer.Comp);
         }
     }
 
@@ -96,7 +119,6 @@ public sealed class SignalTimerSystem : EntitySystem
     ///     Checks if a UI <paramref name="message"/> is allowed to be sent by the user.
     /// </summary>
     /// <param name="uid">The entity that is interacted with.</param>
-    /// <param name="message"></param>
     private bool IsMessageValid(EntityUid uid, BoundUserInterfaceMessage message)
     {
         if (message.Session.AttachedEntity is not { Valid: true } mob)
@@ -108,53 +130,65 @@ public sealed class SignalTimerSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    ///     Called by <see cref="SignalTimerTextChangedMessage"/> to both
+    ///     change the default component label, and propagate that change to the TextScreen.
+    /// </summary>
     private void OnTextChangedMessage(EntityUid uid, SignalTimerComponent component, SignalTimerTextChangedMessage args)
     {
         if (!IsMessageValid(uid, args))
             return;
 
         component.Label = args.Text[..Math.Min(5, args.Text.Length)];
-        _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
+
+        if (!HasComp<ActiveSignalTimerComponent>(uid))
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
     }
 
+    /// <summary>
+    ///     Called by <see cref="SignalTimerDelayChangedMessage"/> to change the <see cref="SignalTimerComponent"/>
+    ///     delay, and propagate that change to a textscreen.
+    /// </summary>
     private void OnDelayChangedMessage(EntityUid uid, SignalTimerComponent component, SignalTimerDelayChangedMessage args)
     {
         if (!IsMessageValid(uid, args))
             return;
 
         component.Delay = args.Delay.TotalSeconds;
+        _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, component.Delay);
     }
 
+    /// <summary>
+    ///     Called by <see cref="SignalTimerStartMessage"/> to instantiate an <see cref="ActiveSignalTimerComponent"/>,
+    ///     clear <see cref="TextScreenVisuals.ScreenText"/>, propagate those changes, and invoke the start port.
+    /// </summary>
     private void OnTimerStartMessage(EntityUid uid, SignalTimerComponent component, SignalTimerStartMessage args)
     {
         if (!IsMessageValid(uid, args))
             return;
+        OnStartTimer(uid, component);
+    }
 
+    private void OnSignalReceived(EntityUid uid, SignalTimerComponent component, ref SignalReceivedEvent args)
+    {
+        if (args.Port == component.Trigger)
+        {
+            OnStartTimer(uid, component);
+        }
+    }
+
+    public void OnStartTimer(EntityUid uid, SignalTimerComponent component)
+    {
         TryComp<AppearanceComponent>(uid, out var appearance);
+        var timer = EnsureComp<ActiveSignalTimerComponent>(uid);
+        timer.TriggerTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.Delay);
 
-        if (!HasComp<ActiveSignalTimerComponent>(uid))
+        if (appearance != null)
         {
-            var activeTimer = EnsureComp<ActiveSignalTimerComponent>(uid);
-            activeTimer.TriggerTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.Delay);
-
-            if (appearance != null)
-            {
-                _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer, appearance);
-                _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, activeTimer.TriggerTime, appearance);
-                _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label, appearance);
-            }
-
-            _signalSystem.InvokePort(uid, component.StartPort);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, timer.TriggerTime, appearance);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, string.Empty, appearance);
         }
-        else
-        {
-            RemComp<ActiveSignalTimerComponent>(uid);
 
-            if (appearance != null)
-            {
-                _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text, appearance);
-                _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label, appearance);
-            }
-        }
+        _signalSystem.InvokePort(uid, component.StartPort);
     }
 }

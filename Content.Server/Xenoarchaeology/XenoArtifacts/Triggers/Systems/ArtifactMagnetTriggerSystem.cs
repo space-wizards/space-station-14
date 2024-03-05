@@ -6,11 +6,13 @@ using Content.Shared.Clothing;
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
 /// <summary>
-/// This handles...
+/// This handles artifacts that are activated by magnets, both salvage and magboots.
 /// </summary>
 public sealed class ArtifactMagnetTriggerSystem : EntitySystem
 {
     [Dependency] private readonly ArtifactSystem _artifact = default!;
+
+    private readonly List<EntityUid> _toActivate = new();
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -22,20 +24,20 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var artifactQuery = EntityQuery<ArtifactMagnetTriggerComponent, TransformComponent>().ToHashSet();
-        if (!artifactQuery.Any())
+        if (!EntityQuery<ArtifactMagnetTriggerComponent>().Any())
             return;
 
-        List<EntityUid> toActivate = new();
+        _toActivate.Clear();
 
         //assume that there's more instruments than artifacts
         var query = EntityQueryEnumerator<MagbootsComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var magboot, out var magXform))
+        while (query.MoveNext(out _, out var magboot, out var magXform))
         {
             if (!magboot.On)
                 continue;
 
-            foreach (var (trigger, xform) in artifactQuery)
+            var artiQuery = EntityQueryEnumerator<ArtifactMagnetTriggerComponent, TransformComponent>();
+            while (artiQuery.MoveNext(out var artifactUid, out var trigger, out var xform))
             {
                 if (!magXform.Coordinates.TryDistance(EntityManager, xform.Coordinates, out var distance))
                     continue;
@@ -43,21 +45,20 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
                 if (distance > trigger.Range)
                     continue;
 
-                toActivate.Add(uid);
+                _toActivate.Add(artifactUid);
             }
         }
 
-        foreach (var a in toActivate)
+        foreach (var a in _toActivate)
         {
             _artifact.TryActivateArtifact(a);
         }
     }
 
-    private void OnMagnetActivated(SalvageMagnetActivatedEvent ev)
+    private void OnMagnetActivated(ref SalvageMagnetActivatedEvent ev)
     {
         var magXform = Transform(ev.Magnet);
 
-        var toActivate = new List<EntityUid>();
         var query = EntityQueryEnumerator<ArtifactMagnetTriggerComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var artifact, out var xform))
         {
@@ -67,10 +68,10 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
             if (distance > artifact.Range)
                 continue;
 
-            toActivate.Add(uid);
+            _toActivate.Add(uid);
         }
 
-        foreach (var a in toActivate)
+        foreach (var a in _toActivate)
         {
             _artifact.TryActivateArtifact(a);
         }

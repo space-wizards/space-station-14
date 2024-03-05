@@ -8,7 +8,7 @@
 - type: ninjaHackingThreat
   id: Dragon
   announcement: terror-dragon
-  rule: Dragon
+  rule: DragonSpawn
 
 - type: ninjaHackingThreat
   id: Revenant

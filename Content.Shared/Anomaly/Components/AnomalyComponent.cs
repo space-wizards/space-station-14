@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Anomaly.Components;
@@ -13,7 +14,7 @@ namespace Content.Shared.Anomaly.Components;
 ///
 /// Anomalies and their related components were designed here: https://hackmd.io/@ss14-design/r1sQbkJOs
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(SharedAnomalySystem))]
 public sealed partial class AnomalyComponent : Component
 {
@@ -85,7 +86,7 @@ public sealed partial class AnomalyComponent : Component
     /// <summary>
     /// The time at which the next artifact pulse will occur.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextPulseTime = TimeSpan.Zero;
 
@@ -126,7 +127,7 @@ public sealed partial class AnomalyComponent : Component
     /// The sound plays when an anomaly goes supercritical
     /// </summary>
     [DataField]
-    public SoundSpecifier? SupercriticalSound = new SoundCollectionSpecifier("explosion");
+    public SoundSpecifier? SupercriticalSound = new SoundCollectionSpecifier("Explosion");
     #endregion
 
     /// <summary>
@@ -208,6 +209,18 @@ public sealed partial class AnomalyComponent : Component
     [DataField]
     public SoundSpecifier AnomalyContactDamageSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
+    /// <summary>
+    /// A prototype entity that appears when an anomaly supercrit collapse.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntProtoId? CorePrototype;
+
+    /// <summary>
+    /// A prototype entity that appears when an anomaly decays.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntProtoId? CoreInertPrototype;
+
     #region Floating Animation
     /// <summary>
     /// How long it takes to go from the bottom of the animation to the top.
@@ -230,16 +243,17 @@ public sealed partial class AnomalyComponent : Component
 /// <summary>
 /// Event raised at regular intervals on an anomaly to do whatever its effect is.
 /// </summary>
+/// <param name="Anomaly">The anomaly pulsing</param>
 /// <param name="Stability"></param>
 /// <param name="Severity"></param>
 [ByRefEvent]
-public readonly record struct AnomalyPulseEvent(float Stability, float Severity);
+public readonly record struct AnomalyPulseEvent(EntityUid Anomaly, float Stability, float Severity);
 
 /// <summary>
 /// Event raised on an anomaly when it reaches a supercritical point.
 /// </summary>
 [ByRefEvent]
-public readonly record struct AnomalySupercriticalEvent;
+public readonly record struct AnomalySupercriticalEvent(EntityUid Anomaly);
 
 /// <summary>
 /// Event broadcast after an anomaly goes supercritical
@@ -254,13 +268,13 @@ public readonly record struct AnomalyShutdownEvent(EntityUid Anomaly, bool Super
 /// </summary>
 /// <param name="Anomaly">The anomaly being changed</param>
 [ByRefEvent]
-public readonly record struct AnomalySeverityChangedEvent(EntityUid Anomaly, float Severity);
+public readonly record struct AnomalySeverityChangedEvent(EntityUid Anomaly, float Stability, float Severity);
 
 /// <summary>
 /// Event broadcast when an anomaly's stability is changed.
 /// </summary>
 [ByRefEvent]
-public readonly record struct AnomalyStabilityChangedEvent(EntityUid Anomaly, float Stability);
+public readonly record struct AnomalyStabilityChangedEvent(EntityUid Anomaly, float Stability, float Severity);
 
 /// <summary>
 /// Event broadcast when an anomaly's health is changed.

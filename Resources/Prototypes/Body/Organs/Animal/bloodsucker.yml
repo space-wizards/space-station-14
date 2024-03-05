@@ -1,0 +1,26 @@
+﻿- type: entity
+  id: OrganBloodsuckerStomach
+  parent: OrganAnimalStomach
+  name: stomach
+  noSpawn: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Bloodsucker ]
+
+- type: entity
+  id: OrganBloodsuckerLiver
+  parent: OrganAnimalLiver
+  name: liver
+  noSpawn: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Bloodsucker ]
+
+- type: entity
+  id: OrganBloodsuckerHeart
+  parent: OrganAnimalHeart
+  name: heart
+  noSpawn: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Bloodsucker ]

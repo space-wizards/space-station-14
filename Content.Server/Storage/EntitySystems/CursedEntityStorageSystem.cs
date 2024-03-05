@@ -2,16 +2,18 @@ using System.Linq;
 using Content.Server.Storage.Components;
 using Content.Shared.Audio;
 using Content.Shared.Storage.Components;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Storage.EntitySystems;
 
 public sealed class CursedEntityStorageSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -44,9 +46,10 @@ public sealed class CursedEntityStorageSystem : EntitySystem
 
         foreach (var entity in storage.Contents.ContainedEntities.ToArray())
         {
-            storage.Contents.Remove(entity);
+            _container.Remove(entity, storage.Contents);
             _entityStorage.AddToContents(entity, lockerEnt);
         }
-        SoundSystem.Play(component.CursedSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f, _random));
+
+        _audio.PlayPvs(component.CursedSound, uid, AudioHelpers.WithVariation(0.125f, _random));
     }
 }

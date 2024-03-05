@@ -26,6 +26,7 @@ using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
@@ -39,7 +40,6 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IChatManager _chat = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly HandsSystem _hands = default!;
         [Dependency] private readonly SharedJobSystem _jobs = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
@@ -49,6 +49,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly PlayTimeTrackingManager _playTime = default!;
         [Dependency] private readonly SharedRoleSystem _role = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
 
@@ -69,13 +70,13 @@ namespace Content.Server.Administration.Systems
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _adminManager.OnPermsChanged += OnAdminPermsChanged;
 
-            _config.OnValueChanged(CCVars.PanicBunkerEnabled, OnPanicBunkerChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerDisableWithAdmins, OnPanicBunkerDisableWithAdminsChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerEnableWithoutAdmins, OnPanicBunkerEnableWithoutAdminsChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerCountDeadminnedAdmins, OnPanicBunkerCountDeadminnedAdminsChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerShowReason, OnShowReasonChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerMinAccountAge, OnPanicBunkerMinAccountAgeChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerMinOverallHours, OnPanicBunkerMinOverallHoursChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerEnabled, OnPanicBunkerChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerDisableWithAdmins, OnPanicBunkerDisableWithAdminsChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerEnableWithoutAdmins, OnPanicBunkerEnableWithoutAdminsChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerCountDeadminnedAdmins, OnPanicBunkerCountDeadminnedAdminsChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerShowReason, OnShowReasonChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerMinAccountAge, OnPanicBunkerMinAccountAgeChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerMinOverallHours, OnPanicBunkerMinOverallHoursChanged, true);
 
             SubscribeLocalEvent<IdentityChangedEvent>(OnIdentityChanged);
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
@@ -105,11 +106,11 @@ namespace Content.Server.Administration.Systems
 
             foreach (var admin in _adminManager.ActiveAdmins)
             {
-                RaiseNetworkEvent(updateEv, admin.ConnectedClient);
+                RaiseNetworkEvent(updateEv, admin.Channel);
             }
         }
 
-        public void UpdatePlayerList(IPlayerSession player)
+        public void UpdatePlayerList(ICommonSession player)
         {
             _playerList[player.UserId] = GetPlayerInfo(player.Data, player);
 
@@ -120,7 +121,7 @@ namespace Content.Server.Administration.Systems
 
             foreach (var admin in _adminManager.ActiveAdmins)
             {
-                RaiseNetworkEvent(playerInfoChangedEvent, admin.ConnectedClient);
+                RaiseNetworkEvent(playerInfoChangedEvent, admin.Channel);
             }
         }
 
@@ -156,7 +157,7 @@ namespace Content.Server.Administration.Systems
 
             if (!obj.IsAdmin)
             {
-                RaiseNetworkEvent(new FullPlayerListEvent(), obj.Player.ConnectedClient);
+                RaiseNetworkEvent(new FullPlayerListEvent(), obj.Player.Channel);
                 return;
             }
 
@@ -187,14 +188,6 @@ namespace Content.Server.Administration.Systems
             base.Shutdown();
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
             _adminManager.OnPermsChanged -= OnAdminPermsChanged;
-
-            _config.UnsubValueChanged(CCVars.PanicBunkerEnabled, OnPanicBunkerChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerDisableWithAdmins, OnPanicBunkerDisableWithAdminsChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerEnableWithoutAdmins, OnPanicBunkerEnableWithoutAdminsChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerCountDeadminnedAdmins, OnPanicBunkerCountDeadminnedAdminsChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerShowReason, OnShowReasonChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerMinAccountAge, OnPanicBunkerMinAccountAgeChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerMinOverallHours, OnPanicBunkerMinOverallHoursChanged);
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -203,16 +196,16 @@ namespace Content.Server.Administration.Systems
             UpdatePanicBunker();
         }
 
-        private void SendFullPlayerList(IPlayerSession playerSession)
+        private void SendFullPlayerList(ICommonSession playerSession)
         {
             var ev = new FullPlayerListEvent();
 
             ev.PlayersInfo = _playerList.Values.ToList();
 
-            RaiseNetworkEvent(ev, playerSession.ConnectedClient);
+            RaiseNetworkEvent(ev, playerSession.Channel);
         }
 
-        private PlayerInfo GetPlayerInfo(IPlayerData data, IPlayerSession? session)
+        private PlayerInfo GetPlayerInfo(SessionData data, ICommonSession? session)
         {
             var name = data.UserName;
             var entityName = string.Empty;
@@ -326,7 +319,7 @@ namespace Content.Server.Administration.Systems
         ///     chat messages and showing a popup to other players.
         ///     Their items are dropped on the ground.
         /// </summary>
-        public void Erase(IPlayerSession player)
+        public void Erase(ICommonSession player)
         {
             var entity = player.AttachedEntity;
             _chat.DeleteMessagesBy(player);
@@ -340,7 +333,7 @@ namespace Content.Server.Administration.Systems
                     _popup.PopupCoordinates(Loc.GetString("admin-erase-popup", ("user", name)), coordinates, PopupType.LargeCaution);
                     var filter = Filter.Pvs(coordinates, 1, EntityManager, _playerManager);
                     var audioParams = new AudioParams().WithVolume(3);
-                    _audio.Play("/Audio/Effects/pop_high.ogg", filter, coordinates, true, audioParams);
+                    _audio.PlayStatic("/Audio/Effects/pop_high.ogg", filter, coordinates, true, audioParams);
                 }
 
                 foreach (var item in _inventory.GetHandOrInventoryEntities(entity.Value))
@@ -348,7 +341,7 @@ namespace Content.Server.Administration.Systems
                     if (TryComp(item, out PdaComponent? pda) &&
                         TryComp(pda.ContainedId, out StationRecordKeyStorageComponent? keyStorage) &&
                         keyStorage.Key is { } key &&
-                        _stationRecords.TryGetRecord(key.OriginStation, key, out GeneralStationRecord? record))
+                        _stationRecords.TryGetRecord(key, out GeneralStationRecord? record))
                     {
                         if (TryComp(entity, out DnaComponent? dna) &&
                             dna.DNA != record.DNA)
@@ -362,20 +355,17 @@ namespace Content.Server.Administration.Systems
                             continue;
                         }
 
-                        _stationRecords.RemoveRecord(key.OriginStation, key);
+                        _stationRecords.RemoveRecord(key);
                         Del(item);
                     }
                 }
 
-                if (TryComp(entity.Value, out InventoryComponent? inventory) &&
-                    _inventory.TryGetSlots(entity.Value, out var slots, inventory))
+                if (_inventory.TryGetContainerSlotEnumerator(entity.Value, out var enumerator))
                 {
-                    foreach (var slot in slots)
+                    while (enumerator.NextItem(out var item, out var slot))
                     {
-                        if (_inventory.TryUnequip(entity.Value, entity.Value, slot.Name, out var item, true, true))
-                        {
-                            _physics.ApplyAngularImpulse(item.Value, ThrowingSystem.ThrowAngularImpulse);
-                        }
+                        if (_inventory.TryUnequip(entity.Value, entity.Value, slot.Name, true, true))
+                            _physics.ApplyAngularImpulse(item, ThrowingSystem.ThrowAngularImpulse);
                     }
                 }
 

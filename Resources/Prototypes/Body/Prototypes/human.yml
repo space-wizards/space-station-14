@@ -13,10 +13,10 @@
     torso:
       part: TorsoHuman
       connections:
-      - left_arm
       - right_arm
-      - left_leg
+      - left_arm
       - right_leg
+      - left_leg
       organs:
         heart: OrganHumanHeart
         lungs: OrganHumanLungs

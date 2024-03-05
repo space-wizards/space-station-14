@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
-using Robust.Server.Player;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Database;
@@ -25,7 +25,7 @@ public sealed class UserDbDataManager
 
     // TODO: Ideally connected/disconnected would be subscribed to IPlayerManager directly,
     // but this runs into ordering issues with game ticker.
-    public void ClientConnected(IPlayerSession session)
+    public void ClientConnected(ICommonSession session)
     {
         DebugTools.Assert(!_users.ContainsKey(session.UserId), "We should not have any cached data on client connect.");
 
@@ -36,7 +36,7 @@ public sealed class UserDbDataManager
         _users.Add(session.UserId, data);
     }
 
-    public void ClientDisconnected(IPlayerSession session)
+    public void ClientDisconnected(ICommonSession session)
     {
         _users.Remove(session.UserId, out var data);
         if (data == null)
@@ -49,24 +49,24 @@ public sealed class UserDbDataManager
         _playTimeTracking.ClientDisconnected(session);
     }
 
-    private async Task Load(IPlayerSession session, CancellationToken cancel)
+    private async Task Load(ICommonSession session, CancellationToken cancel)
     {
         await Task.WhenAll(
             _prefs.LoadData(session, cancel),
             _playTimeTracking.LoadData(session, cancel));
     }
 
-    public Task WaitLoadComplete(IPlayerSession session)
+    public Task WaitLoadComplete(ICommonSession session)
     {
         return _users[session.UserId].Task;
     }
 
-    public bool IsLoadComplete(IPlayerSession session)
+    public bool IsLoadComplete(ICommonSession session)
     {
         return GetLoadTask(session).IsCompleted;
     }
 
-    public Task GetLoadTask(IPlayerSession session)
+    public Task GetLoadTask(ICommonSession session)
     {
         return _users[session.UserId].Task;
     }

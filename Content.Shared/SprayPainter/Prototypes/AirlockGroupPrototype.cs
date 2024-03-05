@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.SprayPainter.Prototypes;
 
 [Prototype("AirlockGroup")]
-public sealed class AirlockGroupPrototype : IPrototype
+public sealed partial class AirlockGroupPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

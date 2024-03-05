@@ -124,3 +124,38 @@
               node: start
             - !type:DoActsBehavior
               acts: ["Destruction"]
+
+- type: entity
+  id: GrilleDiagonal
+  parent: Grille
+  name: diagonal grille
+  components:
+    - type: Sprite
+      drawdepth: Walls
+      sprite: Structures/Walls/grille.rsi
+      layers:
+        - state: grille_diagonal
+        - state: electrified_diagonal
+          sprite: Effects/electricity.rsi
+          map: ["enum.ElectrifiedLayers.Powered"]
+          shader: unshaded
+          visible: false
+    - type: Icon
+      sprite: Structures/Walls/grille.rsi
+      state: grille_diagonal
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PolygonShape
+              vertices:
+              - "-0.5,-0.5"
+              - "0.5,0.5"
+              - "0.5,-0.5"
+          mask:
+          - FullTileMask
+          layer:
+          - WallLayer
+    - type: Construction
+      graph: GrilleDiagonal
+      node: grilleDiagonal

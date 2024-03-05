@@ -35,6 +35,15 @@
   description: alerts-low-oxygen-desc
 
 - type: alert
+  id: LowNitrogen
+  category: Breathing
+  icons:
+    - sprite: /Textures/Interface/Alerts/breathing.rsi
+      state: not_enough_nitro
+  name: alerts-low-nitrogen-name
+  description: alerts-low-nitrogen-desc
+
+- type: alert
   id: Toxins
   category: Toxins
   icons:
@@ -196,6 +205,24 @@
   description: alerts-health-desc
   minSeverity: 0
   maxSeverity: 4
+
+- type: alert
+  id: BorgCrit
+  category: Health
+  icons:
+  - sprite: /Textures/Interface/Alerts/borg_critical.rsi
+    state: critical
+  name: alerts-crit-name
+  description: alerts-crit-desc
+
+- type: alert
+  id: BorgDead
+  category: Health
+  icons:
+  - sprite: /Textures/Interface/Alerts/borg_dead.rsi
+    state: dead
+  name: alerts-dead-name
+  description: alerts-dead-desc
 
 - type: alert
   id: BorgBattery

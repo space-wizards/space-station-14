@@ -13,3 +13,8 @@ stat-lathe-values = Lathe sell prices
 stat-lathe-id = ID
 stat-lathe-cost = Cost
 stat-lathe-sell = Sell price
+
+# Item Sizes
+stat-item-values = Item sizes
+stat-item-id = ID
+stat-item-price = Size

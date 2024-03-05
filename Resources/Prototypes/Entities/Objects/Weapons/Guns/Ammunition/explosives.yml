@@ -10,7 +10,7 @@
     tags:
       - CartridgeRocket
   - type: Item
-    size: 5
+    size: Small
   - type: CartridgeAmmo
     proto: BulletRocket
     deleteOnSpawn: true
@@ -30,7 +30,7 @@
       tags:
         - CartridgeRocket
     - type: Item
-      size: 5
+      size: Small
     - type: CartridgeAmmo
       proto: BulletWeakRocket
       deleteOnSpawn: true
@@ -52,7 +52,7 @@
     tags:
     - Grenade
   - type: Item
-    size: 5
+    size: Small
   - type: Sprite
 
 - type: entity
@@ -122,12 +122,44 @@
   - type: SpentAmmoVisuals
     state: frag
     suffix: false
+    
+- type: entity
+  id: GrenadeEMP
+  name: EMP grenade
+  parent: BaseGrenade
+  components:
+  - type: CartridgeAmmo
+    proto: BulletGrenadeEMP
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    layers:
+    - state: emp
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+    state: frag
+    suffix: false
 
+# Cannon Balls
+
+- type: entity
+  id: BaseCannonBall
+  name: base cannon ball
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - CannonBall
+  - type: Item
+    size: Small
+  - type: Sprite
+  
 - type: entity
   id: CannonBall
   name: cannonball
   suffix: Pirate
-  parent: BaseGrenade
+  parent: BaseCannonBall
   components:
   - type: CartridgeAmmo
     proto: BulletCannonBall
@@ -135,3 +167,33 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     state: ball
+
+- type: entity
+  id: CannonBallGrapeshot
+  name: grapeshot
+  suffix: Pirate
+  parent: BaseCannonBall
+  components:
+  - type: CartridgeAmmo
+    proto: PelletGrapeshot
+    count: 5
+    spread: 40
+    deleteOnSpawn: true
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: grapeshot
+
+- type: entity
+  id: CannonBallGlassshot
+  name: glassshot
+  suffix: Pirate
+  parent: BaseCannonBall
+  components:
+  - type: CartridgeAmmo
+    proto: PelletGlass
+    count: 5
+    spread: 10
+    deleteOnSpawn: true
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: glassshot

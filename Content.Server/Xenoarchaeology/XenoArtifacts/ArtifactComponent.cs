@@ -64,7 +64,7 @@ public sealed partial class ArtifactComponent : Component
     /// The base amount of research points for each artifact node.
     /// </summary>
     [DataField("pointsPerNode"), ViewVariables(VVAccess.ReadWrite)]
-    public int PointsPerNode = 5000;
+    public int PointsPerNode = 6500;
 
     /// <summary>
     /// Research points which have been "consumed" from the theoretical max value of the artifact.

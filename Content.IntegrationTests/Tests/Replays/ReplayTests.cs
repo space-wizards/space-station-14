@@ -14,7 +14,11 @@ public sealed class ReplayTests
     [Test]
     public async Task AutoRecordReplayTest()
     {
-        var settings = new PoolSettings {DummyTicker = false};
+        var settings = new PoolSettings
+        {
+            DummyTicker = false,
+            Dirty = true
+        };
         await using var pair = await PoolManager.GetServerClient(settings);
         var server = pair.Server;
 

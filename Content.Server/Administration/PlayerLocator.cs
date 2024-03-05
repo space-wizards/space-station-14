@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -44,13 +44,15 @@ namespace Content.Server.Administration
         Task<LocatedPlayerData?> LookupIdAsync(NetUserId userId, CancellationToken cancel = default);
     }
 
-    internal sealed class PlayerLocator : IPlayerLocator, IDisposable
+    internal sealed class PlayerLocator : IPlayerLocator, IDisposable, IPostInjectInit
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
 
         private readonly HttpClient _httpClient = new();
+        private ISawmill _sawmill = default!;
 
         public PlayerLocator()
         {
@@ -67,8 +69,8 @@ namespace Content.Server.Administration
             if (_playerManager.TryGetSessionByUsername(playerName, out var session))
             {
                 var userId = session.UserId;
-                var address = session.ConnectedClient.RemoteEndPoint.Address;
-                var hwId = session.ConnectedClient.UserData.HWId;
+                var address = session.Channel.RemoteEndPoint.Address;
+                var hwId = session.Channel.UserData.HWId;
                 return new LocatedPlayerData(userId, address, hwId, session.Name);
             }
 
@@ -87,7 +89,7 @@ namespace Content.Server.Administration
 
             if (!resp.IsSuccessStatusCode)
             {
-                Logger.ErrorS("PlayerLocate", "Auth server returned bad response {StatusCode}!", resp.StatusCode);
+                _sawmill.Error("Auth server returned bad response {StatusCode}!", resp.StatusCode);
                 return null;
             }
 
@@ -95,7 +97,7 @@ namespace Content.Server.Administration
 
             if (responseData == null)
             {
-                Logger.ErrorS("PlayerLocate", "Auth server returned null response!");
+                _sawmill.Error("Auth server returned null response!");
                 return null;
             }
 
@@ -107,8 +109,8 @@ namespace Content.Server.Administration
             // Check people currently on the server, the easiest case.
             if (_playerManager.TryGetSessionById(userId, out var session))
             {
-                var address = session.ConnectedClient.RemoteEndPoint.Address;
-                var hwId = session.ConnectedClient.UserData.HWId;
+                var address = session.Channel.RemoteEndPoint.Address;
+                var hwId = session.Channel.UserData.HWId;
                 return new LocatedPlayerData(userId, address, hwId, session.Name);
             }
 
@@ -127,7 +129,7 @@ namespace Content.Server.Administration
 
             if (!resp.IsSuccessStatusCode)
             {
-                Logger.ErrorS("PlayerLocate", "Auth server returned bad response {StatusCode}!", resp.StatusCode);
+                _sawmill.Error("Auth server returned bad response {StatusCode}!", resp.StatusCode);
                 return null;
             }
 
@@ -135,7 +137,7 @@ namespace Content.Server.Administration
 
             if (responseData == null)
             {
-                Logger.ErrorS("PlayerLocate", "Auth server returned null response!");
+                _sawmill.Error("Auth server returned null response!");
                 return null;
             }
 
@@ -162,6 +164,11 @@ namespace Content.Server.Administration
         void IDisposable.Dispose()
         {
             _httpClient.Dispose();
+        }
+
+        void IPostInjectInit.PostInject()
+        {
+            _sawmill = _logManager.GetSawmill("PlayerLocate");
         }
     }
 }

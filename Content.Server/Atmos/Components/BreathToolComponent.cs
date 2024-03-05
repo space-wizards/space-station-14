@@ -13,7 +13,7 @@ namespace Content.Server.Atmos.Components
         /// Tool is functional only in allowed slots
         /// </summary>
         [DataField("allowedSlots")]
-        public SlotFlags AllowedSlots = SlotFlags.MASK;
+        public SlotFlags AllowedSlots = SlotFlags.MASK | SlotFlags.HEAD;
         public bool IsFunctional;
         public EntityUid? ConnectedInternalsEntity;
     }

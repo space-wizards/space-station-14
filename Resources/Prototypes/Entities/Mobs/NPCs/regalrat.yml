@@ -182,8 +182,15 @@
     drawdepth: SmallMobs
     sprite: Mobs/Animals/mouse.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: mouse-3
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: mouse-moving-3
+    noMovementLayers:
+      movement:
+        state: mouse-3
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -289,7 +296,7 @@
 - type: entity
   id: ActionRatKingDomain
   name: Rat King's Domain
-  description: Spend some hunger to release a cloud of miasma into the air.
+  description: Spend some hunger to release a cloud of ammonia into the air.
   noSpawn: true
   components:
   - type: InstantAction

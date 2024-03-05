@@ -38,13 +38,13 @@ public sealed partial class BuyerJobCondition : ListingCondition
 
         if (Blacklist != null)
         {
-            if (job?.PrototypeId != null && Blacklist.Contains(job.PrototypeId))
+            if (job?.Prototype != null && Blacklist.Contains(job.Prototype))
                 return false;
         }
 
         if (Whitelist != null)
         {
-            if (job?.PrototypeId == null || !Whitelist.Contains(job.PrototypeId))
+            if (job?.Prototype == null || !Whitelist.Contains(job.Prototype))
                 return false;
         }
 

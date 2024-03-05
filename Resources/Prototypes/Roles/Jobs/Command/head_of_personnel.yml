@@ -34,6 +34,7 @@
   - Chapel
   - Hydroponics
   - External
+  - Cryogenics
   # I mean they'll give themselves the rest of the access levels *anyways*.
   # As of 15/03/23 they can't do that so here's MOST of the rest of the access levels.
   # Head level access that isn't their own was deliberately left out, get AA from the captain instead.
@@ -44,6 +45,7 @@
   - Salvage
   - Security
   - Brig
+  - Lawyer
   - Cargo
   - Atmospherics
   - Medical
@@ -62,6 +64,7 @@
     shoes: ClothingShoesColorBrown
     head: ClothingHeadHatHopcap
     id: HoPPDA
+    gloves: ClothingHandsGlovesHop
     ears: ClothingHeadsetAltCommand
     belt: BoxFolderClipboard
   innerClothingSkirt: ClothingUniformJumpskirtHoP

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.NodeContainer;
@@ -9,6 +10,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -21,6 +23,11 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
+
+        /// <summary>
+        /// Minimum moles of a gas to be sent to the client.
+        /// </summary>
+        private const float UIMinMoles = 0.01f;
 
         public override void Initialize()
         {
@@ -253,7 +260,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var gas = _atmo.GetGas(i);
 
-                if (mixture?.Moles[i] <= Atmospherics.GasMinMoles)
+                if (mixture?.Moles[i] <= UIMinMoles)
                     continue;
 
                 if (mixture != null)
@@ -263,7 +270,9 @@ namespace Content.Server.Atmos.EntitySystems
                 }
             }
 
-            return gases.ToArray();
+            var gasesOrdered = gases.OrderByDescending(gas => gas.Amount);
+
+            return gasesOrdered.ToArray();
         }
     }
 }

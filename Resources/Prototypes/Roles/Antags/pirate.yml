@@ -5,7 +5,7 @@
     back: ClothingBackpackPirateFilled
     head: ClothingHeadBandBlack
     shoes: ClothingShoesBootsLaceup
-    id: PassengerPDA
+    id: PiratePDA
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
   innerClothingSkirt: ClothingUniformJumpsuitPirate
@@ -19,7 +19,7 @@
     back: ClothingBackpackPirateFilled
     head: ClothingHeadHatPirate
     shoes: ClothingShoesBootsLaceup
-    id: PassengerPDA
+    id: PiratePDA
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
     pocket2: EnergyCutlass
@@ -35,7 +35,7 @@
     back: ClothingBackpackPirateFilled
     head: ClothingHeadHatPirateTricord
     shoes: ClothingShoesBootsLaceup
-    id: PassengerPDA
+    id: PiratePDA
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
     outerClothing: ClothingOuterCoatGentle
