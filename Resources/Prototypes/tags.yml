@@ -758,6 +758,9 @@
 - type: Tag
   id: MimeHappyHonk
 
+- type: Tag
+  id: Mineshaft
+
 # Magazines ordered by slot then caliber
 
 - type: Tag
@@ -1075,6 +1078,9 @@
 
 - type: Tag
   id: Smokable
+
+- type: Tag
+  id: SnowyLabs
 
 - type: Tag
   id: Soap

@@ -127,4 +127,13 @@
   cost: 15000
   category: Engineering
   group: market
-  
+
+- type: cargoProduct
+  id: EngineeringSpaceHeater
+  icon:
+    sprite: Structures/Piping/Atmospherics/Portable/portable_sheater.rsi
+    state: sheaterOff
+  product: SpaceHeaterAnchored
+  cost: 300
+  category: Engineering
+  group: market
