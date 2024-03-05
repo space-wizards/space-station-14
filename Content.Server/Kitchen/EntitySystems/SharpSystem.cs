@@ -78,7 +78,8 @@ public sealed class SharpSystem : EntitySystem
                 NeedHand = true
             };
 
-        return _doAfterSystem.TryStartDoAfter(doAfter);
+        _doAfterSystem.TryStartDoAfter(doAfter);
+        return true;
     }
 
     private void OnDoAfter(EntityUid uid, SharpComponent component, DoAfterEvent args)
