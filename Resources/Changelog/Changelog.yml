@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: The Syndicate now provides singularity-attracting beacons to syndicate
-      agents.
-    type: Add
-  id: 5590
-  time: '2024-01-06T08:21:24.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/18486
 - author: iacore
   changes:
   - message: Nanotrasen has added screw holes to some metal constructions. (computer
@@ -3828,3 +3820,11 @@
   id: 6089
   time: '2024-03-05T03:13:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25148
+- author: Brandon-Huu
+  changes:
+  - message: Removed the ability for command or any antag-safe role to be initial
+      infected in zombie mode
+    type: Remove
+  id: 6090
+  time: '2024-03-05T04:34:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25785
