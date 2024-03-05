@@ -114,7 +114,7 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
         offsetMatrix = offsetMatrix.Invert();
 
         // Draw nearby grids
-        var controlBounds = SizeBox.Scale(1.25f);
+        var controlBounds = PixelSizeBox;
         _grids.Clear();
         _mapManager.FindGridsIntersecting(gridXform.MapID, new Box2(mapPos.Position - WorldRangeVector, mapPos.Position + WorldRangeVector), ref _grids);
 
@@ -297,7 +297,7 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
                 {
                     // Because it's being layed out top-down we have to arrange for first frame.
                     container.Arrange(PixelRect);
-                    var containerPos = scaledPos - container.DesiredSize / 2 - new Vector2(0f, 0.75f) * MinimapScale;
+                    var containerPos = scaledPos / UIScale - container.DesiredSize / 2 - new Vector2(0f, 0.75f) * MinimapScale;
                     SetPosition(container, containerPos);
                 }
 
