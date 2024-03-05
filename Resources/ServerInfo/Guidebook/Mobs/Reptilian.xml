@@ -5,13 +5,11 @@
     <GuideEntityEmbed Entity="MobReptilian" Caption=""/>
   </Box>
 
-  Reptilians can eat raw meat without any ill effects.
+  They can eat raw meat without any ill effects, but some foods like chocolate and onion poisons them. They prefer a somewhat higher temperature range than humans.
+  They can drag objects with their tail, keeping both their hands free.
 
-  Reptilians can drag objects with their tail, freeing up their both their hands.
+  Their unarmed claw attacks deal Slash damage instead of Blunt.
 
-  They take +30% Cold damage and prefer a higher temperature range.
-
-  They use their claws to fight unarmed, dealing 5 Slash damage.
-
+  They take [color=#ffa500]30% more Cold damage.[/color]
 
 </Document>

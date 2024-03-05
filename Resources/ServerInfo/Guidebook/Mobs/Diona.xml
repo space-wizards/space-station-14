@@ -6,24 +6,11 @@
   </Box>
 
   They can't wear shoes, but are not slowed by Kudzu.
-
   They get hungry and thirsty slower.
-
-  -30% Blunt damage, -20% Slash damage
-
-  +50% Heat damage, +20% Shock damage
-
-  They catch on fire easily
-
-  Metabolize many reagents on physical contact
-
+  Their "blood" is normal water.
   Weed killer poisons them, while Robust Harvest heals them.
 
-  Their blood is water.
-
-  They can't wear shoes, but are not slowed by Kudzu.
-
-
+  They take [color=#1e90ff]30% less Blunt damage and 20% less Slash damage[/color]; but [color=#ffa500]50% more Heat damage, 20% more Shock damage, and they easily catch on fire.[/color]
 
   ## Diona Nymphs
   <Box>
@@ -31,10 +18,8 @@
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
   </Box>
-  After death, a Diona can voluntarily destroy their body, releasing their "internal organs" as three Nymphs, with the player taking control of the Brain Nymph.
+  After death, a Diona can voluntarily destroy their own body, releasing their "internal organs" as three Nymphs, with the player taking control of the Brain Nymph.
   It can talk but has no hands or inventory, and can't do much.
 
-After 10 minutes a Nymph can reform into a full Diona. This will be a new randomised body with a new name, and there will be no evidence beyond their word that they are the same Diona.
-
-
+  After 10 minutes, a Nymph can reform into a whole Diona. This will be a new randomised body with a random name, and there will be little to no evidence beyond their word about who they were before.
 </Document>

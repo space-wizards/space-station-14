@@ -5,10 +5,9 @@
     <GuideEntityEmbed Entity="MobSlimePerson" Caption=""/>
   </Box>
 
-  Their body can process 6 reagents at the same time, instead of just 2.
+  They breathe nitrogen instead of oxygen, which is abundant in the station air, but harder to find compressed into gas tanks. They exhale nitrous oxide and are unaffected by it.
+  Their body can process 6 reagents at the same time instead of just 2.
 
-  -80% Cellular damage, -40% Blunt, -20% Poison
-
-  +50% Cold damage, +20% Slash, +20% Piercing
+  They take [color=#1e90ff]80% less Cellular damage, 40% less Blunt damage and 20% less Poison damage[/color], but [color=#ffa500]50% more Cold damage, 20% more Slash damage and 20% more Piercing damage[/color].
 
 </Document>

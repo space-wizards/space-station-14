@@ -5,12 +5,20 @@
     <GuideEntityEmbed Entity="MobArachnid" Caption=""/>
   </Box>
 
-  Can create Websilk, at the cost of hunger. They (and only they) can craft websilk into various items from jumpskirts to entire walls.
+  They have two additional Pocket slots in their inventory. They can eat raw meat without any ill effects, but some foods like chocolate and onion poisons them.
 
-  Two additional Pocket slots in their inventory.
+  Their unarmed attacks deal Piercing damage instead of Blunt.
 
-  They can eat raw meat without any ill effects.
+  ## Sericulture
 
-  Unarmed attack deals 5 Piercing
+  <Box>
+    <GuideEntityEmbed Entity="MaterialWebSilk" Caption=""/>
+    <GuideEntityEmbed Entity="ClothingUniformJumpskirtWeb" Caption=""/>
+    <GuideEntityEmbed Entity="WebShield" Caption=""/>
+    <GuideEntityEmbed Entity="WallWeb" Caption=""/>
+  </Box>
+
+  Arachnids can create Websilk at the cost of getting more hungry. They (and only they) can craft bundles of websilk into various items from clothing and shields to entire walls.
+
 
 </Document>

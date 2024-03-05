@@ -5,10 +5,9 @@
     <GuideEntityEmbed Entity="MobMoth" Caption=""/>
   </Box>
 
-  They can ONLY eat cotton, fabrics and clothing.
+  They can eat cotton, fabrics and clothing, but virtually none of the food that others would consider "edible". They prefer a somewhat lower temperature range than humans.
+  Their wings give them better acceleration if there is no gravity on the station, but they still can't move without equipment when floating out in space.
 
-  Their wings give them better acceleration if the station losed gravity, but they still can't maneuver when floating off of a mapgrid.
-
-  -30% Cold damage, +30% Heat damage. They catch on fire more easily.
+  They take [color=#1e90ff]30% less Cold damage[/color] but [color=#ffa500]30% more Heat damage, and catch on fire more easily[/color].
 
 </Document>
