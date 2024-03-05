@@ -38,8 +38,8 @@ public sealed class SharedRecipeUnlockSystem : EntitySystem
 
         args.Verbs.Add(new()
         {
-            Text = Loc.GetString("lib-book-encrypted-book-verb-text"),
-            Message = Loc.GetString("lib-book-encrypted-book-verb-message"),
+            Text = Loc.GetString("paper-recipe-learning-verb-text"),
+            Message = Loc.GetString("paper-recipe-learning-verb-message"),
             Act = () => LearnRecipes(learned, recipeTeacher.Comp.Recipes),
             CloseMenu = true
         });

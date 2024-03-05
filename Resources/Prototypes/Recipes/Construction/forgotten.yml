@@ -1,2 +1,14 @@
 
 # "Forgotten" - catergories for things whose crafts are initially unknown to players and they must first learn them through books
+
+- type: construction
+  name: fire amulet
+  id: AmuletFireProtection
+  graph: AmuletFireProtection
+  startNode: start
+  targetNode: result
+  category: construction-category-forgotten
+  description: Crumbs of unknown energies will keep you out of the fire.
+  icon: { sprite: Clothing/Neck/Misc/amulet_red.rsi, state: icon }
+  objectType: Item
+  needLearn: true

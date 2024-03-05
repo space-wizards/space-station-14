@@ -1,0 +1,14 @@
+- type: constructionGraph
+  id: AmuletFireProtection
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: result
+      steps:
+        - material: MetalRod
+          amount: 2
+          doAfter: 2
+  
+  - node: result
+    entity: ClothingNeckAmuletFireProtection
