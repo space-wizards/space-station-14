@@ -188,9 +188,3 @@ public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, Projectile
 /// </summary>
 [ByRefEvent]
 public record struct ProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null);
-
-/// <summary>
-/// Raised after a projectile has dealt it's damage.
-/// </summary>
-[ByRefEvent]
-public record struct AfterProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, Fixture Fixture);
