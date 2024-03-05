@@ -1,54 +1,4 @@
 ﻿Entries:
-- author: DrMelon
-  changes:
-  - message: Climbing onto tables is once again a dangerous prospect for a Clown.
-    type: Fix
-  id: 5584
-  time: '2024-01-06T07:07:26.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23583
-- author: TheShuEd
-  changes:
-  - message: Removed Encryption key thief steal objective.
-    type: Remove
-  id: 5585
-  time: '2024-01-06T07:12:34.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23572
-- author: TheShuEd
-  changes:
-  - message: a powerful tesla gun can be found on planets!
-    type: Add
-  id: 5586
-  time: '2024-01-06T07:18:35.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23175
-- author: ZeroNationality
-  changes:
-  - message: Added a static station map for the pAI to use to guide their owner
-    type: Add
-  id: 5587
-  time: '2024-01-06T07:31:21.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23499
-- author: Nimfar11
-  changes:
-  - message: Adds medhud to the lockers of medics and CMO.
-    type: Add
-  id: 5588
-  time: '2024-01-06T07:35:33.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23591
-- author: yathxyz
-  changes:
-  - message: provide non-flake solution by pinning nixpkgs
-    type: Fix
-  id: 5589
-  time: '2024-01-06T08:07:08.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23368
-- author: Ilya246
-  changes:
-  - message: The Syndicate now provides singularity-attracting beacons to syndicate
-      agents.
-    type: Add
-  id: 5590
-  time: '2024-01-06T08:21:24.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/18486
 - author: iacore
   changes:
   - message: Nanotrasen has added screw holes to some metal constructions. (computer
@@ -3824,3 +3774,57 @@
   id: 6083
   time: '2024-03-03T08:54:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25713
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Monkeys and kobolds can now wear blood-red hardsuits.
+    type: Add
+  id: 6084
+  time: '2024-03-04T03:56:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/22273
+- author: Plykiya
+  changes:
+  - message: Syringes now prevent injecting on empty and drawing on full.
+    type: Tweak
+  - message: You can now tell if you are being drawn from or injected by a syringe.
+    type: Tweak
+  id: 6085
+  time: '2024-03-04T05:07:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25480
+- author: metalgearsloth
+  changes:
+  - message: Fix expedition FTL.
+    type: Fix
+  id: 6086
+  time: '2024-03-04T06:24:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25823
+- author: Nairodian
+  changes:
+  - message: Welding masks can now be made in the Autolathe.
+    type: Add
+  id: 6087
+  time: '2024-03-04T22:36:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25842
+- author: Lawdog
+  changes:
+  - message: Changed the max volume of shot glasses from 7u to 5u to better represent
+      drinking shots in real life
+    type: Tweak
+  id: 6088
+  time: '2024-03-04T23:51:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25847
+- author: deltanedas
+  changes:
+  - message: Rehydrated mobs (carp) now keep their forensics data from their cube/plushie
+      form.
+    type: Tweak
+  id: 6089
+  time: '2024-03-05T03:13:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25148
+- author: Brandon-Huu
+  changes:
+  - message: Removed the ability for command or any antag-safe role to be initial
+      infected in zombie mode
+    type: Remove
+  id: 6090
+  time: '2024-03-05T04:34:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25785
