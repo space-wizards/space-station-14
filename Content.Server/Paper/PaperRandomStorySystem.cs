@@ -1,6 +1,3 @@
-
-using Content.Server.BookEncryption.Components;
-using Content.Server.Paper;
 using Content.Server.RandomMetadata;
 
 namespace Content.Server.Paper;

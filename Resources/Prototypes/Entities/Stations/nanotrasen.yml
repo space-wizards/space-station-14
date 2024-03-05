@@ -25,7 +25,6 @@
     - BaseStationSiliconLawCrewsimov
     - BaseStationAllEventsEligible
     - BaseStationNanotrasen
-    - BaseStationForgottenKnowledge
   noSpawn: true
   components:
     - type: Transform

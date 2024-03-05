@@ -5,14 +5,6 @@
   id: BaseMobArachnid
   abstract: true
   components:
-  - type: AutoLearnRecipes
-    recipes:
-    - WallWeb
-    - TableWeb
-    - WebBed
-    - ChairWeb
-    - CrateWeb
-    - WebDoor
   - type: Body
     prototype: Arachnid
     requiredLegs: 2 # It would be funny if arachnids could use their little back limbs to move around once they lose their legs, but just something to consider post-woundmed

@@ -19,6 +19,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Construction
 {
     /// <summary>
+    /// 
     /// The client-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
@@ -28,7 +29,6 @@ namespace Content.Client.Construction
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedLearningRecipesSystem _learningRecipes = default!;
 
         private readonly Dictionary<int, EntityUid> _ghosts = new();
         private readonly Dictionary<string, ConstructionGuide> _guideCache = new();
@@ -170,14 +170,9 @@ namespace Content.Client.Construction
             return true;
         }
 
-        public bool IsUserRecipeLeared(EntityUid user, string recipe)
-        {
-            return _learningRecipes.IsUserRecipeLeared(user, recipe);
-        }
-
-        /// <summary>
         /// Creates a construction ghost at the given location.
-        /// </summary>
+        /// </summar
+        /// <summary>
         public void SpawnGhost(ConstructionPrototype prototype, EntityCoordinates loc, Direction dir)
             => TrySpawnGhost(prototype, loc, dir, out _);
 

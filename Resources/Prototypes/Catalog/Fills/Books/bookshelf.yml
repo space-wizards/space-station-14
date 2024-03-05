@@ -9,18 +9,6 @@
         prob: 0.6
         amount: 2
         maxAmount: 6
-      - id: BookHintMysticism
-        prob: 0.25
-        orGroup: BookCryptHint
-      - id: BookHintTechnology
-        prob: 0.5
-        orGroup: BookCryptHint
-      - id: BookHintBiology
-        prob: 0.5
-        orGroup: BookCryptHint
-      - id: BookHintSocial
-        prob: 0.75
-        orGroup: BookCryptHint
       - id: BookSpaceEncyclopedia
         orGroup: BookPool
       - id: BookTheBookOfControl

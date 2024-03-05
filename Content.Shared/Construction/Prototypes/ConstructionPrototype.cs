@@ -72,12 +72,6 @@ public sealed partial class ConstructionPrototype : IPrototype
     [DataField("entityWhitelist")]
     public EntityWhitelist? EntityWhitelist = null;
 
-    /// <summary>
-    /// Should the player learn the crafting of this item?
-    /// </summary>
-    [DataField]
-    public bool NeedLearn = false;
-
     [DataField("category")] public string Category { get; private set; } = "";
 
     [DataField("objectType")] public ConstructionType Type { get; private set; } = ConstructionType.Structure;
