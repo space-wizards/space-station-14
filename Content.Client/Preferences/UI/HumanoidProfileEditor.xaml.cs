@@ -539,7 +539,7 @@ namespace Content.Client.Preferences.UI
             var guidebookController = UserInterfaceManager.GetUIController<GuidebookUIController>();
             var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
             var page = "Species";
-            if (_prototypeManager.TryIndex<GuideEntryPrototype>(species, out var guide))
+            if (_prototypeManager.HasIndex<GuideEntryPrototype>(species))
                 page = species;
 
             if (_prototypeManager.TryIndex<GuideEntryPrototype>("Species", out var guideRoot))
@@ -968,12 +968,20 @@ namespace Content.Client.Preferences.UI
 
         public void UpdateSpeciesGuidebookIcon()
         {
-            var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
-            var style = "SpeciesInfoDefault";
-            if (_prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesProto))
-                style = speciesProto.GuideBookIcon;
-
             SpeciesInfoButton.StyleClasses.Clear();
+
+            var species = Profile?.Species;
+            if (species is null)
+                return;
+
+            if (!_prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesProto))
+                return;
+
+            // Don't display the info button if no guide entry is found
+            if (!_prototypeManager.HasIndex<GuideEntryPrototype>(species))
+                return;
+
+            var style = speciesProto.GuideBookIcon;
             SpeciesInfoButton.StyleClasses.Add(style);
         }
 
