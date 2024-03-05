@@ -1,9 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: ChemDrobeAds
-  advertisements:
+  messages:
     - advertisement-chemdrobe-1
     - advertisement-chemdrobe-2
     - advertisement-chemdrobe-3
-  thankyous:
-    - vending-machine-thanks
-

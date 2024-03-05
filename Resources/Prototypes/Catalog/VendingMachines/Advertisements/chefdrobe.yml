@@ -1,8 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: ChefDrobeAds
-  advertisements:
+  messages:
     - advertisement-chefdrobe-1
     - advertisement-chefdrobe-2
     - advertisement-chefdrobe-3
-  thankyous:
-    - vending-machine-thanks

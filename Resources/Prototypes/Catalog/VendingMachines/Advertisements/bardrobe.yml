@@ -1,7 +1,5 @@
-- type: advertisementsPack
+- type: messagePack
   id: BarDrobeAds
-  advertisements:
+  messages:
     - advertisement-bardrobe-1
     - advertisement-bardrobe-2
-  thankyous:
-    - vending-machine-thanks

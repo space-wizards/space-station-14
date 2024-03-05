@@ -1,6 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: BoozeOMatAds
-  advertisements:
+  messages:
   - advertisement-boozeomat-1
   - advertisement-boozeomat-2
   - advertisement-boozeomat-3
@@ -20,8 +20,3 @@
   - advertisement-boozeomat-17
   - advertisement-boozeomat-18
   - advertisement-boozeomat-19
-  thankyous:
-  - vending-machine-thanks
-  - thankyou-boozeomat-1
-  - thankyou-boozeomat-2
-  - thankyou-boozeomat-3

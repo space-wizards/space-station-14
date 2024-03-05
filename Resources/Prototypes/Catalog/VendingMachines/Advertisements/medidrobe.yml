@@ -1,8 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: MediDrobeAds
-  advertisements:
+  messages:
     - advertisement-medidrobe-1
     - advertisement-medidrobe-2
     - advertisement-medidrobe-3
-  thankyous:
-    - vending-machine-thanks

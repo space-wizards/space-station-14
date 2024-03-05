@@ -1,6 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: DinnerwareAds
-  advertisements:
+  messages:
     - advertisement-dinnerware-1
     - advertisement-dinnerware-2
     - advertisement-dinnerware-3
@@ -11,5 +11,3 @@
     - advertisement-dinnerware-8
     - advertisement-dinnerware-9
     - advertisement-dinnerware-10
-  thankyous:
-    - vending-machine-thanks

@@ -1,6 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: GoodCleanFunAds
-  advertisements:
+  messages:
   - advertisement-goodcleanfun-1
   - advertisement-goodcleanfun-2
   - advertisement-goodcleanfun-3
@@ -11,9 +11,3 @@
   - advertisement-goodcleanfun-8
   - advertisement-goodcleanfun-9
   - advertisement-goodcleanfun-10
-  thankyous:
-  - vending-machine-thanks
-  - thankyou-goodcleanfun-1
-  - thankyou-goodcleanfun-2
-  - thankyou-goodcleanfun-3
-  - thankyou-goodcleanfun-4
