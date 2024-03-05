@@ -1,14 +1,21 @@
 - type: constructionGraph
-  id: AmuletFireProtection
+  id: MysticAmuletProtection
   start: start
   graph:
   - node: start
     edges:
-    - to: result
+    - to: fire
+      steps:
+        - material: MetalRod
+          amount: 2
+          doAfter: 2
+    - to: cold
       steps:
         - material: MetalRod
           amount: 2
           doAfter: 2
   
-  - node: result
+  - node: fire
     entity: ClothingNeckAmuletFireProtection
+  - node: cold
+    entity: ClothingNeckAmuletColdProtection

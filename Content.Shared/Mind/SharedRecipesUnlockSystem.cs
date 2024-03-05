@@ -13,6 +13,7 @@ namespace Content.Shared.Mind;
 public sealed class SharedRecipeUnlockSystem : EntitySystem
 {
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {
@@ -35,14 +36,17 @@ public sealed class SharedRecipeUnlockSystem : EntitySystem
         var learned = EnsureComp<MindLearnedRecipesComponent>(mind.Value);
         if (learned == null)
             return;
-
-        args.Verbs.Add(new()
+        foreach (var item in recipeTeacher.Comp.Recipes)
         {
-            Text = Loc.GetString("paper-recipe-learning-verb-text"),
-            Message = Loc.GetString("paper-recipe-learning-verb-message"),
-            Act = () => LearnRecipes(learned, recipeTeacher.Comp.Recipes),
-            CloseMenu = true
-        });
+            args.Verbs.Add(new()
+            {
+                Text = Loc.GetString("paper-recipe-learning-verb-text", ("item",_proto.Index(item).Name)),
+                Message = Loc.GetString("paper-recipe-learning-verb-message"),
+                Act = () => LearnRecipes(learned, item),
+                CloseMenu = true
+            });
+        }
+
     }
 
     private void OnMindAdded(Entity<AutoLearnRecipesComponent> autoLearn, ref MindAddedMessage args)
@@ -59,12 +63,15 @@ public sealed class SharedRecipeUnlockSystem : EntitySystem
     public void LearnRecipes(MindLearnedRecipesComponent comp, List<ProtoId<ConstructionPrototype>> recipes)
     {
         foreach (var item in recipes)
-        {
-            if (comp.LearnedRecipes.Contains(item))
-                return;
+            LearnRecipes(comp, item);
+    }
 
-            comp.LearnedRecipes.Add(item);
-        }
+    public void LearnRecipes(MindLearnedRecipesComponent comp, ProtoId<ConstructionPrototype> recipe)
+    {
+        if (comp.LearnedRecipes.Contains(recipe))
+            return;
+
+        comp.LearnedRecipes.Add(recipe);
     }
 
     public bool IsMindRecipeLeared(EntityUid mind, string recipe, MindLearnedRecipesComponent? comp = null)

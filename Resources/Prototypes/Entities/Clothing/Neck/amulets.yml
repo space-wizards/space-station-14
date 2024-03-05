@@ -5,9 +5,9 @@
   description: Crumbs of unknown energies will keep you out of the fire.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/amulet_red.rsi
+    sprite: Clothing/Neck/Misc/amulet_fire.rsi
   - type: Clothing
-    sprite: Clothing/Neck/Misc/amulet_red.rsi
+    sprite: Clothing/Neck/Misc/amulet_fire.rsi
   - type: TemperatureProtection
     coefficient: 0.005
   - type: Armor 
@@ -15,5 +15,25 @@
       coefficients:
         Heat: 0.90
   - type: Construction
-    graph: ClothingNeckAmuletFireProtection
-    node: result
+    graph: MysticAmuletProtection
+    node: fire
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckAmuletColdProtection
+  name: mystical amulet
+  description: Crumbs of unknown energies will keep you out of the cosmic cold.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/amulet_cold.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/amulet_cold.rsi
+  - type: TemperatureProtection
+    coefficient: 0.005
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Cold: 0.90
+  - type: Construction
+    graph: MysticAmuletProtection
+    node: cold

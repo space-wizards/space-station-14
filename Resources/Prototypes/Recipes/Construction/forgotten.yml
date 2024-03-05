@@ -4,11 +4,23 @@
 - type: construction
   name: fire amulet
   id: AmuletFireProtection
-  graph: AmuletFireProtection
+  graph: MysticAmuletProtection
   startNode: start
-  targetNode: result
+  targetNode: fire
   category: construction-category-forgotten
   description: Crumbs of unknown energies will keep you out of the fire.
-  icon: { sprite: Clothing/Neck/Misc/amulet_red.rsi, state: icon }
+  icon: { sprite: Clothing/Neck/Misc/amulet_fire.rsi, state: icon }
+  objectType: Item
+  needLearn: true
+
+- type: construction
+  name: cold amulet
+  id: AmuletColdProtection
+  graph: MysticAmuletProtection
+  startNode: start
+  targetNode: cold
+  category: construction-category-forgotten
+  description: Crumbs of unknown energies will keep you out of the cosmic cold.
+  icon: { sprite: Clothing/Neck/Misc/amulet_cold.rsi, state: icon }
   objectType: Item
   needLearn: true
