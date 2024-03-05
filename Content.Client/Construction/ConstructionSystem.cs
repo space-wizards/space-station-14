@@ -7,6 +7,7 @@ using Content.Shared.Examine;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Wall;
+using Content.Shared.Mind;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -28,6 +29,7 @@ namespace Content.Client.Construction
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedRecipeUnlockSystem _recipeUnlock = default!;
 
         private readonly Dictionary<int, EntityUid> _ghosts = new();
         private readonly Dictionary<string, ConstructionGuide> _guideCache = new();
@@ -167,6 +169,11 @@ namespace Content.Client.Construction
 
             TryStartConstruction(args.EntityUid);
             return true;
+        }
+
+        public bool IsUserRecipeLeared(EntityUid user, string recipe)
+        {
+            return _recipeUnlock.IsUserRecipeLeared(user, recipe);
         }
 
         /// <summary>

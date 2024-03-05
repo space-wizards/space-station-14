@@ -14,6 +14,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Mind;
 using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
@@ -32,6 +33,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly SharedRecipeUnlockSystem _recipeUnlock = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -333,6 +335,12 @@ namespace Content.Server.Construction
                 return false;
             }
 
+            if (constructionPrototype.NeedLearn && !_recipeUnlock.IsUserRecipeLeared(user, constructionPrototype.ID))
+            {
+                _popup.PopupEntity(Loc.GetString("construction-system-cannot-start-need-learn"), user, user);
+                return false;
+            }
+
             if (constructionPrototype.EntityWhitelist != null && !constructionPrototype.EntityWhitelist.IsValid(user))
             {
                 _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
@@ -409,6 +417,12 @@ namespace Content.Server.Construction
             if (args.SenderSession.AttachedEntity is not {Valid: true} user)
             {
                 Log.Error($"Client sent {nameof(TryStartStructureConstructionMessage)} with no attached entity!");
+                return;
+            }
+
+            if (constructionPrototype.NeedLearn && !_recipeUnlock.IsUserRecipeLeared(user, constructionPrototype.ID))
+            {
+                _popup.PopupEntity(Loc.GetString("construction-system-cannot-start-need-learn"), user, user);
                 return;
             }
 
