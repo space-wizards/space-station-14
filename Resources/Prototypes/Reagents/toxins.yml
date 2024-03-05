@@ -425,12 +425,12 @@
   color: "#D6CE7B"
   metabolisms:
     Poison:
-      metabolismRate: 0.65
+      metabolismRate: 0.2
       effects:
       - !type:HealthChange
         damage:
           types:
-            Poison: 4.10
+            Poison: 3
 
 - type: reagent
   id: VentCrud
