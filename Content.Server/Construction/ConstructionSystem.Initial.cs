@@ -336,15 +336,15 @@ namespace Content.Server.Construction
                 return false;
             }
 
-            if (constructionPrototype.EntityWhitelist != null && !constructionPrototype.EntityWhitelist.IsValid(user))
-            {
-                _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
-                return false;
-            }
-
             if (constructionPrototype.NeedLearn && !_learningRecipes.IsUserRecipeLeared(user, constructionPrototype.ID))
             {
                 _popup.PopupEntity(Loc.GetString("construction-system-cannot-start-need-learn"), user, user);
+                return false;
+            }
+
+            if (constructionPrototype.EntityWhitelist != null && !constructionPrototype.EntityWhitelist.IsValid(user))
+            {
+                _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
                 return false;
             }
 
@@ -421,15 +421,15 @@ namespace Content.Server.Construction
                 return;
             }
 
-            if (constructionPrototype.EntityWhitelist != null && !constructionPrototype.EntityWhitelist.IsValid(user))
-            {
-                _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
-                return;
-            }
-
             if (constructionPrototype.NeedLearn && !_learningRecipes.IsUserRecipeLeared(user, constructionPrototype.ID))
             {
                 _popup.PopupEntity(Loc.GetString("construction-system-cannot-start-need-learn"), user, user);
+                return;
+            }
+
+            if (constructionPrototype.EntityWhitelist != null && !constructionPrototype.EntityWhitelist.IsValid(user))
+            {
+                _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
                 return;
             }
 

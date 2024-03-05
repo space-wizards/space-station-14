@@ -4,7 +4,7 @@ namespace Content.Shared.Construction.Components;
 ///     Stores data on all studied recipes of this mind
 /// </summary>
 [RegisterComponent, Access(typeof(SharedLearningRecipesSystem))]
-public sealed partial class LearnedRecipesComponent : Component
+public sealed partial class MindLearnedRecipesComponent : Component
 {
     [DataField]
     public List<string> LearnedRecipes = new();

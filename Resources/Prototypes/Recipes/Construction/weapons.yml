@@ -52,6 +52,7 @@
   description: A crude spear for when you need to put holes in somebody.
   icon: { sprite: Objects/Weapons/Melee/spear.rsi, state: spear }
   objectType: Item
+  needLearn: true
 
 - type: construction
   name: crude reinforced spear
@@ -63,6 +64,7 @@
   description: A crude reinforced spear for when you need to put holes in somebody.
   icon: { sprite: Objects/Weapons/Melee/reinforced_spear.rsi, state: spear }
   objectType: Item
+  needLearn: true
 
 - type: construction
   name: crude plasma spear
@@ -74,6 +76,7 @@
   description: A crude plasma spear for when you need to put holes in somebody.
   icon: { sprite: Objects/Weapons/Melee/plasma_spear.rsi, state: spear }
   objectType: Item
+  needLearn: true
 
 - type: construction
   name: crude uranium spear
@@ -85,6 +88,7 @@
   description: A crude uranium spear for when you need to put holes in somebody.
   icon: { sprite: Objects/Weapons/Melee/uranium_spear.rsi, state: spear }
   objectType: Item
+  needLearn: true
 
 - type: construction
   name: makeshift bola
@@ -151,3 +155,4 @@
   description: Bones and silk combined together.
   icon: { sprite: Objects/Weapons/Melee/bone_spear.rsi, state: spear }
   objectType: Item
+  needLearn: true

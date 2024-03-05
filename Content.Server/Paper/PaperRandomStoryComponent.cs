@@ -1,4 +1,4 @@
-namespace Content.Server.BookEncryption.Components;
+namespace Content.Server.Paper;
 
 /// <summary>
 ///     Randomizes the book story by creating it from list of dataset prototypes or strings.

@@ -1,3 +1,6 @@
+lib-book-encrypted-book-verb-text = Learn the knowledge
+lib-book-encrypted-book-verb-message = Learning the knowledge hidden here will allow you to learn something new
+
 lib-book-hint = After carefully studying this book, you can find out that:
 
 lib-book-hint-text1 = Apparently, [bold]{$Gibberish}[/bold] stands for [bold]{$Keyword}[/bold] from another language.

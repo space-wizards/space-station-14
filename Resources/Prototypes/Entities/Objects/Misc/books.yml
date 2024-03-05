@@ -569,3 +569,18 @@
   components:
   - type: PaperDecryptionHint
     discipline: Social
+
+- type: entity
+  parent: BookRandom
+  id: BookEncrptionTest
+  name: spears
+  components:
+  - type: Paper
+    content: "nope, its secret :3"
+  - type: RecipeTeacher
+    recipes:
+    - Spear
+    - SpearReinforced
+    - SpearPlasma
+    - SpearUranium
+    - SpearBone
