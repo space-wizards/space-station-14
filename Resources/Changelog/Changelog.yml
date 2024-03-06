@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Bhijn and Myr
-  changes:
-  - message: NPCs are now capable of interacting with the world again. Or in laymen's
-      terms, monkeys and kobolds will now be able to pick up weapons they see.
-    type: Fix
-  id: 5598
-  time: '2024-01-06T20:32:51.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23638
 - author: Ubaser
   changes:
   - message: Trench coats can be located in the WinterDrobe.
@@ -3828,3 +3820,10 @@
   id: 6097
   time: '2024-03-06T01:37:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25825
+- author: Ko4erga
+  changes:
+  - message: '"Post light" updated.'
+    type: Tweak
+  id: 6098
+  time: '2024-03-06T01:39:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25814
