@@ -50,24 +50,43 @@
     - state: mask_null
       map: [ "decor" ]
 
+
 - type: entity
   parent: ClothingUniformRandom
-  id: ClothingUniformJumpsuitRandom
+  id: ClothingRandomSpawner
+  name: random jumpsuit spawner
+  components:
+  - type: RandomSpawner
+    prototypes:
+    - ClothingUniformRandomArmless
+    - ClothingUniformRandomStandart
+    - ClothingUniformRandomBra
+
+- type: entity
+  parent: ClothingUniformRandom
+  id: ClothingUniformRandomArmless
   name: colorful jumpsuit
   components:
   - type: RandomSprite
     available:
       - torso:
-          base_torso_standart: Advanced
           base_torso_armless: Advanced
-          mask_null: ""
         leg:
           base_leg_standart: Advanced
           base_leg_short: Advanced
+          base_leg_skirt: Advanced
+          base_leg_skirt_long: Advanced
+        decor:
+          decor_torso_armless1: Advanced
+          decor_torso_armless2: Advanced
+          decor_torso_armless3: Advanced
+          decor_torso_armless4: Advanced
+          decor_torso_armless5: Advanced
+          mask_null: ""
 
 - type: entity
   parent: ClothingUniformRandom
-  id: ClothingUniformJumpskirtRandom
+  id: ClothingUniformRandomStandart
   name: colorful jumpskirt
   components:
   - type: RandomSprite
@@ -80,16 +99,22 @@
           base_leg_skirt: Advanced
           base_leg_skirt_long: Advanced
         decor:
+          decor_torso_armless1: Advanced
+          decor_torso_armless2: Advanced
+          decor_torso_armless3: Advanced
+          decor_torso_armless4: Advanced
+          decor_torso_armless5: Advanced
           decor_torso_standart1: Advanced
           decor_torso_standart2: Advanced
           decor_torso_standart3: Advanced
           decor_torso_standart4: Advanced
           decor_torso_standart5: Advanced
           decor_torso_standart6: Advanced
+          mask_null: ""
 
 - type: entity
   parent: ClothingUniformRandom
-  id: ClothingUniformBraRandom
+  id: ClothingUniformRandomBra
   name: colorful bra
   components:
   - type: RandomSprite

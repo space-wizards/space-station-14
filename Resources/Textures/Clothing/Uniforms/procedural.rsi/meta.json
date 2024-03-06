@@ -36,6 +36,26 @@
       "directions": 4
     },
     {
+      "name": "decor_torso_armless1",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_armless2",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_armless3",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_armless4",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_armless5",
+      "directions": 4
+    },
+    {
       "name": "decor_torso_bra1",
       "directions": 4
     },
