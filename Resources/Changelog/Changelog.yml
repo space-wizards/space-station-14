@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: tday
-  changes:
-  - message: Tabletop Centrifuges will now only accept vials.
-    type: Tweak
-  id: 5594
-  time: '2024-01-06T09:22:35.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23538
 - author: MACMAN2003
   changes:
   - message: The uniform printer can now print command hats and departmental berets!
@@ -3826,3 +3819,10 @@
   id: 6093
   time: '2024-03-06T01:17:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25861
+- author: lzk228
+  changes:
+  - message: Livestock crate and artifact container now can go under plastic flaps.
+    type: Tweak
+  id: 6094
+  time: '2024-03-06T01:33:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25862
