@@ -371,6 +371,9 @@
 - type: Tag
   id: CluwneHorn
 
+- type: Tag
+  id: CoordinatesDisk
+
 - type: Tag #Ohioans die happy
   id: Corn
 
@@ -460,9 +463,6 @@
 
 - type: Tag
   id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
-
-- type: Tag
-  id: Disk
 
 - type: Tag
   id: DockArrivals

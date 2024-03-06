@@ -11,7 +11,7 @@
     price: 100
   - type: Tag
     tags:
-    - Disk
+    - CoordinatesDisk
   - type: DamageOtherOnHit
     damage:
       types:

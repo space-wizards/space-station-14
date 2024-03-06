@@ -39,13 +39,46 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         var mapUid = _mapManager.GetMapEntityId(targetMap);
         var shuttleMap = _xformQuery.GetComponent(shuttleUid).MapID;
 
+        Logger.GetSawmill("Test").Debug(shuttleUid.ToString());
+
         if (shuttleMap == targetMap)
             return true;
 
-        if (!TryComp<FTLDestinationComponent>(mapUid, out var destination) ||
-            !destination.Enabled)
-        {
+        if (!TryComp<FTLDestinationComponent>(mapUid, out var destination))
             return false;
+
+        if (!destination.Enabled)
+            return false;
+
+        if (destination.RequireCoordinateDisk)
+        {
+            Logger.GetSawmill("Test").Debug("RequireCoordinateDisk"!);
+            if (!TryComp<SharedShuttleDestinationSlotComponent>(shuttleUid, out var slot) || !slot.DiskSlot.HasItem)
+            {
+                Logger.GetSawmill("Test").Debug("WEH"!);
+                return false;
+            }
+            else if (slot.DiskSlot.Item is { Valid: true } disk)
+            {
+                Logger.GetSawmill("Test").Debug("WEH2"!);
+                SharedShuttleDestinationCoordinatesComponent? diskCoordinates = null;
+                if (!Resolve(disk, ref diskCoordinates))
+                {
+                    return false;
+                }
+
+                EntityUid? diskCoords = diskCoordinates.Destination;
+
+                if (diskCoords == null || !TryComp<FTLDestinationComponent>(diskCoords.Value, out var diskDestination) || diskDestination != destination)
+                {
+                    return false;
+                }
+                Logger.GetSawmill("Test").Debug("WEH100"!);
+            } else
+            {
+                Logger.GetSawmill("Test").Debug("Disknotfound"!);
+                return false;
+            }
         }
 
         if (HasComp<FTLMapComponent>(mapUid))

@@ -24,6 +24,7 @@ using Content.Shared.Random;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Modifiers;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
@@ -34,6 +35,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Coordinates;
+using Content.Shared.Shuttles.Components;
 
 namespace Content.Server.Salvage;
 
@@ -99,6 +101,8 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         MetaDataComponent? metadata = null;
         var grid = _entManager.EnsureComponent<MapGridComponent>(mapUid);
         var random = new Random(_missionParams.Seed);
+        var destComp = _entManager.AddComponent<FTLDestinationComponent>(mapUid);
+        destComp.BeaconsOnly = true;
 
         // Setup mission configs
         // As we go through the config the rating will deplete so we'll go for most important to least important.
@@ -158,7 +162,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         // Don't want consoles to have the incorrect name until refreshed.
         _metaData.SetEntityName(FTLDestination, SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _missionParams.Seed));
-        _entManager.GetComponent<FTLDestinationComponent>(FTLDestination).RequireCoordinateDisk = true;
+        destComp.RequireCoordinateDisk = true;
         _entManager.InitializeAndStartEntity(FTLDestination);
 
         var landingPadRadius = 24;

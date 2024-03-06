@@ -1,18 +1,16 @@
-using Content.Server.Shuttles.Components;
 using Content.Shared.Containers.ItemSlots;
-using Robust.Shared.Prototypes;
 
-namespace Content.Server.Shuttle.Components;
+namespace Content.Shared.Shuttles.Components;
 
 /// <summary>
 /// Enables a shuttle/pod to travel to a destination with an item inserted
 /// </summary>
 [RegisterComponent]
-public sealed partial class ShuttleDestinationSlotComponent : Component
+public sealed partial class SharedShuttleDestinationSlotComponent : Component
 {
     [DataField]
     public ItemSlot DiskSlot = new();
 
     [DataField]
-    public string DiskSlotId = "Coordinate Disk";
+    public string DiskSlotId = "Disk";
 }

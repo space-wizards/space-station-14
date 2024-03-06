@@ -1,17 +1,12 @@
 using Content.Shared.Containers.ItemSlots;
-using Content.Server.Shuttle.Components;
-using Content.Server.Shuttles;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Content.Server.Station.Systems;
-using Content.Server.Shuttles.Components;
-using Content.Server.Shuttles.Systems;
 using Content.Shared.Shuttles.Components;
+using Content.Server.Shuttles.Systems;
 
 namespace Content.Server.Shuttle;
 
@@ -24,24 +19,24 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ShuttleDestinationSlotComponent, MapInitEvent>(OnInit);
-        SubscribeLocalEvent<ShuttleDestinationSlotComponent, ComponentShutdown>(OnRemove);
-        SubscribeLocalEvent<ShuttleDestinationSlotComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
-        SubscribeLocalEvent<ShuttleDestinationSlotComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
+        SubscribeLocalEvent<SharedShuttleDestinationSlotComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<SharedShuttleDestinationSlotComponent, ComponentShutdown>(OnRemove);
+        SubscribeLocalEvent<SharedShuttleDestinationSlotComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
+        SubscribeLocalEvent<SharedShuttleDestinationSlotComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
     }
 
-    private void OnInit(EntityUid uid, ShuttleDestinationSlotComponent component, MapInitEvent args)
+    private void OnInit(EntityUid uid, SharedShuttleDestinationSlotComponent component, MapInitEvent args)
     {
         _itemSlots.AddItemSlot(uid, component.DiskSlotId, component.DiskSlot);
     }
 
 
-    private void OnRemove(EntityUid uid, ShuttleDestinationSlotComponent component, ComponentShutdown args)
+    private void OnRemove(EntityUid uid, SharedShuttleDestinationSlotComponent component, ComponentShutdown args)
     {
         _itemSlots.RemoveItemSlot(uid, component.DiskSlot);
     }
 
-    private void OnItemSlotChanged(EntityUid uid, ShuttleDestinationSlotComponent component, ContainerModifiedMessage args)
+    private void OnItemSlotChanged(EntityUid uid, SharedShuttleDestinationSlotComponent component, ContainerModifiedMessage args)
     {
         if (!component.Initialized)
             return;
@@ -53,7 +48,7 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
         {
             if (component.DiskSlot.Item is { Valid: true } disk)
             {
-                ShuttleDestinationCoordinatesComponent? diskCoordinates = null;
+                /*SharedShuttleDestinationCoordinatesComponent? diskCoordinates = null;
                 if (!Resolve(disk, ref diskCoordinates))
                 {
                     return;
@@ -65,16 +60,16 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
                 {
                     if (HasComp<FTLDestinationComponent>(diskCoords.Value))
                     {
-                        EnableDestination(uid, diskCoords.Value);
+                        EnableDestination(uid, diskCoords.Value);*/
                         _console.RefreshShuttleConsoles();
-                    }
-                }
+                    /*}
+                }*/
             }
         } else
         {
             if (args.Entity is { Valid: true } disk)
             {
-                ShuttleDestinationCoordinatesComponent? diskCoordinates = null;
+                /*SharedShuttleDestinationCoordinatesComponent? diskCoordinates = null;
                 if (!Resolve(disk, ref diskCoordinates))
                 {
                     return;
@@ -86,15 +81,15 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
                 {
                     if (HasComp<FTLDestinationComponent>(diskCoords.Value))
                     {
-                        DisableDestination(uid, diskCoords.Value);
+                        DisableDestination(uid, diskCoords.Value);*/
                         _console.RefreshShuttleConsoles();
-                    }
-                }
+                    /*}
+                }*/
             }
         }
     }
 
-    private void EnableDestination(EntityUid uid, EntityUid destination)
+    /*private void EnableDestination(EntityUid uid, EntityUid destination)
     {
         // Drone consoles adds the destination to the shuttle's console component, to allow control from both consoles
         if (TryComp(uid, out DroneConsoleComponent? consoleId))
@@ -137,7 +132,7 @@ public sealed class ShuttleDestinationSlotSystem : EntitySystem
         {
             consoleComp.FTLWhitelist.Remove(destination);
         }
-    }
+    }*/
 }
 
 
