@@ -140,6 +140,12 @@
           prob: 0.20
         - id: DrinkSpaceLube
           prob: 0.20
+        - id: ClothingUniformRandomArmless
+          prob: 0.05
+        - id: ClothingUniformRandomStandart
+          prob: 0.05
+        - id: ClothingUniformRandomBra
+          prob: 0.05
         - id: BarberScissors
           prob: 0.05
         # Syndicate loot

@@ -82,6 +82,7 @@
     ClothingHandsGlovesColorGreen: 2
     ClothingHandsGlovesColorOrange: 2
     ClothingHandsGlovesColorPurple: 2
+    ClothingRandomSpawner: 8
   contrabandInventory:
     ClothingMaskNeckGaiter: 2
     ClothingUniformJumpsuitTacticool: 1

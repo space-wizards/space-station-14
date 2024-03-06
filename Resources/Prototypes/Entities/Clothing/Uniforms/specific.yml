@@ -54,7 +54,7 @@
 - type: entity
   parent: ClothingUniformRandom
   id: ClothingRandomSpawner
-  name: random jumpsuit spawner
+  name: random color suit
   components:
   - type: RandomSpawner
     prototypes:
