@@ -128,9 +128,21 @@ public sealed class InjectorSystem : SharedInjectorSystem
             return;
 
         var actualDelay = MathHelper.Max(injector.Comp.Delay, TimeSpan.FromSeconds(1));
+        float amountToInject;
+        if (injector.Comp.ToggleState == InjectorToggleMode.Draw)
+        {
+            // additional delay is based on actual volume left to draw in syringe when smaller than transfer amount
+            amountToInject = Math.Min(injector.Comp.TransferAmount.Float(), (solution.MaxVolume - solution.Volume).Float());
+        }
+        else
+        {
+            // additional delay is based on actual volume left to inject in syringe when smaller than transfer amount
+            amountToInject = Math.Min(injector.Comp.TransferAmount.Float(), solution.Volume.Float());
+        }
 
-        // Injections take 0.5 seconds longer per additional 5u
-        actualDelay += TimeSpan.FromSeconds(injector.Comp.TransferAmount.Float() / injector.Comp.Delay.TotalSeconds - 0.5f);
+        // Injections take 0.5 seconds longer per 5u of possible space/content
+        actualDelay += TimeSpan.FromSeconds(amountToInject / 10);
+
 
         var isTarget = user != target;
 
