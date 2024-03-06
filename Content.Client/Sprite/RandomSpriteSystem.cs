@@ -77,6 +77,5 @@ public sealed class RandomSpriteSystem : SharedRandomSpriteSystem
             sprite.LayerSetState(index, layer.Value.State);
             sprite.LayerSetColor(index, layer.Value.Color ?? Color.White);
         }
-
     }
 }
