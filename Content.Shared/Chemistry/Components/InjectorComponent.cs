@@ -30,7 +30,7 @@ public sealed partial class InjectorComponent : Component
     /// Whether or not the injector is able to draw from containers or if it's a single use
     /// device that can only inject.
     /// </summary>
-    [DataField("injectOnly")]
+    [DataField]
     public bool InjectOnly;
 
     /// <summary>
@@ -39,7 +39,7 @@ public sealed partial class InjectorComponent : Component
     /// <remarks>
     ///     for example: droppers would ignore mobs
     /// </remarks>
-    [DataField("ignoreMobs")]
+    [DataField]
     public bool IgnoreMobs;
 
     /// <summary>
@@ -61,7 +61,7 @@ public sealed partial class InjectorComponent : Component
     /// attempt to inject it's entire contents upon use.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("transferAmount")]
+    [DataField]
     [AutoNetworkedField]
     public FixedPoint2 TransferAmount = FixedPoint2.New(5);
 
@@ -73,7 +73,7 @@ public sealed partial class InjectorComponent : Component
     /// in combat mode.
     /// </remarks>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("delay")]
+    [DataField]
     public TimeSpan Delay = TimeSpan.FromSeconds(5);
 
     /// <summary>

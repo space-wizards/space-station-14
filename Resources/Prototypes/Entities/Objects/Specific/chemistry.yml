@@ -365,6 +365,17 @@
     - Trash
 
 - type: entity
+  parent: BaseSyringe
+  id: PrefilledSyringe
+  components:
+  - type: Injector
+    toggleState: Inject
+  - type: Tag
+    tags:
+    - Syringe
+    - Trash
+
+- type: entity
   id: SyringeBluespace
   parent: BaseSyringe
   name: bluespace syringe
