@@ -41,7 +41,7 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
     {
         foreach (var verb in proto.EnumeratePrototypes<SpeechVerbPrototype>())
         {
-            _verbs.Add((verb.Name, verb.ID));
+            _verbs.Add((Loc.GetString(verb.Name), verb.ID));
         }
         _verbs.Sort((a, b) => a.Item1.CompareTo(b.Item1));
     }
@@ -50,7 +50,7 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
     {
         SpeechVerbSelector.Clear();
 
-        AddVerb("chat-speech-verb-name-none", null);
+        AddVerb((Loc.GetString("chat-speech-verb-name-none"), null);
         foreach (var (name, id) in _verbs)
         {
             AddVerb(name, id);
@@ -60,7 +60,7 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
     private void AddVerb(string name, string? verb)
     {
         var id = SpeechVerbSelector.ItemCount;
-        SpeechVerbSelector.AddItem(Loc.GetString(name));
+        SpeechVerbSelector.AddItem(name);
         if (verb is {} metadata)
             SpeechVerbSelector.SetItemMetadata(id, metadata);
 
