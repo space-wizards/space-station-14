@@ -24,6 +24,6 @@ public sealed class PaperRandomStorySystem : EntitySystem
 
         var story = _randomMeta.GetRandomFromSegments(paperStory.Comp.StorySegments, paperStory.Comp.StorySeparator);
 
-        paper.Content += $"\n {story}";
+        paper.Content += $"\n{story}";
     }
 }
