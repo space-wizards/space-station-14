@@ -51,6 +51,23 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: brass chair
+  id: ChairBrass
+  graph: Seat
+  startNode: start
+  targetNode: chairBrass
+  category: construction-category-furniture
+  description: You sit in this. Either by will or force.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: brass_chair
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: office chair
   id: ChairOfficeLight
   graph: Seat
@@ -316,6 +333,23 @@
   description: A square piece of plasma glass, standing on four metal legs. Pretty!
   icon:
     sprite: Structures/Furniture/Tables/plasma.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: brass table
+  id: TableBrass
+  graph: Table
+  startNode: start
+  targetNode: TableBrass
+  category: construction-category-furniture
+  description: A shiny, corrosion resistant brass table. Steampunk!
+  icon:
+    sprite: Structures/Furniture/Tables/brass.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter

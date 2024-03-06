@@ -17,6 +17,7 @@ internal sealed class ChargerSystem : EntitySystem
 {
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
@@ -201,11 +202,11 @@ internal sealed class ChargerSystem : EntitySystem
         if (!SearchForBattery(targetEntity, out var heldBattery))
             return;
 
-        heldBattery.CurrentCharge += component.ChargeRate * frameTime;
+        _battery.SetCharge(targetEntity, heldBattery.CurrentCharge + component.ChargeRate * frameTime, heldBattery);
         // Just so the sprite won't be set to 99.99999% visibility
         if (heldBattery.MaxCharge - heldBattery.CurrentCharge < 0.01)
         {
-            heldBattery.CurrentCharge = heldBattery.MaxCharge;
+            _battery.SetCharge(targetEntity, heldBattery.MaxCharge, heldBattery);
         }
 
         UpdateStatus(uid, component);
