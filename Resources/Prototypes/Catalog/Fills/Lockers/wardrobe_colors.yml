@@ -75,11 +75,13 @@
       - id: ClothingOuterCoatGentle
         prob: 0.3
       - id: ClothingUniformRandomArmless
-        amount: 3
+        amount: 2
       - id: ClothingUniformRandomStandart
-        amount: 3
+        amount: 2
       - id: ClothingUniformRandomBra
-        amount: 3
+        amount: 2
+      - id: ClothingUniformRandomShorts
+        amount: 2
 
 - type: entity
   id: WardrobeYellowFilled

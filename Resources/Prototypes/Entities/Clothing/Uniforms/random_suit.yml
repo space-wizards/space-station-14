@@ -30,13 +30,14 @@
 - type: entity
   parent: ClothingUniformRandom
   id: ClothingRandomSpawner
-  name: random color suit
+  name: random colorful suit
   components:
   - type: RandomSpawner
     prototypes:
     - ClothingUniformRandomArmless
     - ClothingUniformRandomStandart
     - ClothingUniformRandomBra
+    - ClothingUniformRandomShorts
 
 - type: entity
   parent: ClothingUniformRandom
@@ -111,3 +112,18 @@
           decor_torso_bra4: Sixteen
           decor_torso_bra5: Sixteen
           mask_null: ""
+
+- type: entity
+  parent: ClothingUniformRandom
+  id: ClothingUniformRandomShorts
+  name: colorful jumpsuit bottom
+  components:
+  - type: RandomSprite
+    available:
+      - torso:
+          mask_null: ""
+        leg:
+          base_leg_standart: Sixteen
+          base_leg_short: Sixteen
+          base_leg_skirt: Sixteen
+          base_leg_skirt_long: Sixteen
