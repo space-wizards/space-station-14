@@ -1062,9 +1062,7 @@ public abstract class SharedStorageSystem : EntitySystem
             for (int i = 0; i < list.Count; i++)
             {
                 var saved = list[i];
-                if (saved.Position != location.Position)
-                    continue;
-
+                
                 if (saved == location)
                 {
                     list.Remove(location);
