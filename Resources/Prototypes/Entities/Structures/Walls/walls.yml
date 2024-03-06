@@ -94,6 +94,9 @@
     sprite: Structures/Walls/clock.rsi
   - type: Icon
     sprite: Structures/Walls/clock.rsi
+  - type: Construction
+    graph: ClockworkGirder
+    node: clockworkWall
   - type: Destructible
     thresholds:
     - trigger:
@@ -102,7 +105,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          Girder:
+          ClockworkGirder:
             min: 1
             max: 1
       - !type:DoActsBehavior

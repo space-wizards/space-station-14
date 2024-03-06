@@ -88,6 +88,26 @@
     - type: AnimationPlayer
 
 - type: entity
+  id: ClockworkGrille
+  parent: Grille
+  name: clockwork grille
+  description: a flimsy framework of iron rods assembled in traditional Ratvarian fashion.
+  components:
+    - type: Sprite
+      drawdepth: Walls
+      sprite: Structures/Walls/clockwork_grille.rsi
+      state: ratvargrille
+      layers:
+        - state: ratvargrille
+    - type: Icon
+      sprite: Structures/Walls/clockwork_grille.rsi
+      state: ratvargrille
+    - type: Construction
+      graph: ClockGrille
+      node: clockGrille
+      deconstructionTarget: start
+
+- type: entity
   id: GrilleBroken
   parent: BaseStructure
   name: grille
@@ -126,6 +146,23 @@
               acts: ["Destruction"]
 
 - type: entity
+  id: ClockworkGrilleBroken
+  parent: GrilleBroken
+  name: clockwork grille
+  description: A flimsy framework of iron rods assembled in traditional Ratvarian fashion. It has seen better days.
+  components:
+    - type: Sprite
+      drawdepth: Walls
+      sprite: Structures/Walls/clockwork_grille.rsi
+      state: brokenratvargrille
+    - type: Icon
+      sprite: Structures/Walls/clockwork_grille.rsi
+      state: brokenratvargrille
+    - type: Construction
+      graph: ClockGrille
+      node: clockGrilleBroken
+
+- type: entity
   id: GrilleDiagonal
   parent: Grille
   name: diagonal grille
@@ -159,3 +196,39 @@
     - type: Construction
       graph: GrilleDiagonal
       node: grilleDiagonal
+
+- type: entity
+  id: ClockworkGrilleDiagonal
+  parent: ClockworkGrille
+  name: diagonal clockwork grille
+  components:
+    - type: Sprite
+      drawdepth: Walls
+      sprite: Structures/Walls/clockwork_grille.rsi
+      layers:
+        - state: ratvargrille_diagonal
+        - state: electrified_diagonal
+          sprite: Effects/electricity.rsi
+          map: ["enum.ElectrifiedLayers.Powered"]
+          shader: unshaded
+          visible: false
+    - type: Icon
+      sprite: Structures/Walls/clockwork_grille.rsi
+      state: ratvargrille_diagonal
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PolygonShape
+              vertices:
+              - "-0.5,-0.5"
+              - "0.5,0.5"
+              - "0.5,-0.5"
+          mask:
+          - FullTileMask
+          layer:
+          - WallLayer
+    - type: Construction
+      graph: GrilleDiagonal
+      node: clockworkGrilleDiagonal
+      
