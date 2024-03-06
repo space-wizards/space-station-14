@@ -189,7 +189,7 @@
   parent: SignalSwitch
   components:
   - type: WallMount
-    arc: 180
+    arc: 175
   - type: Construction
     graph: SignalSwitchDirectionalGraph
     node: SignalSwitchDirectionalNode
@@ -201,7 +201,7 @@
   parent: SignalButton
   components:
   - type: WallMount
-    arc: 180
+    arc: 175
   - type: Construction
     graph: SignalButtonDirectionalGraph
     node: SignalButtonDirectionalNode
@@ -213,7 +213,342 @@
   parent: ApcNetSwitch
   components:
   - type: WallMount
-    arc: 180
+    arc: 175
   - type: Construction
     graph: LightSwitchDirectionalGraph
     node: LightSwitchDirectionalNode
+
+# lockable buttons
+
+- type: entity
+  id: LockableButton
+  name: lockable button
+  parent: SignalButtonDirectional
+  noSpawn: true
+  components:
+  - type: Appearance
+  - type: Lock
+  - type: LockVisuals
+  - type: AccessReader
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/locked_switch.rsi
+    layers:
+    - state: base
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+
+- type: entity
+  id: LockableButtonCaptain
+  suffix: Captain
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
+
+- type: entity
+  id: LockableButtonHeadOfPersonnel
+  suffix: HeadOfPersonnel
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
+
+- type: entity
+  id: LockableButtonChiefEngineer
+  suffix: ChiefEngineer
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["ChiefEngineer"]]
+
+- type: entity
+  id: LockableButtonChiefMedicalOfficer
+  suffix: ChiefMedicalOfficer
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["ChiefMedicalOfficer"]]
+
+- type: entity
+  id: LockableButtonHeadOfSecurity
+  suffix: HeadOfSecurity
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["HeadOfSecurity"]]
+
+- type: entity
+  id: LockableButtonResearchDirector
+  suffix: ResearchDirector
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["ResearchDirector"]]
+
+- type: entity
+  id: LockableButtonCommand
+  suffix: Command
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Command"]]
+
+- type: entity
+  id: LockableButtonCryogenics
+  suffix: Cryogenics
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Cryogenics"]]
+
+- type: entity
+  id: LockableButtonSecurity
+  suffix: Security
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Security"]]
+
+- type: entity
+  id: LockableButtonDetective
+  suffix: Detective
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Detective"]]
+
+- type: entity
+  id: LockableButtonArmory
+  suffix: Armory
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Armory"]]
+
+- type: entity
+  id: LockableButtonBrig
+  suffix: Brig
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Brig"]]
+
+- type: entity
+  id: LockableButtonLawyer
+  suffix: Lawyer
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Lawyer"]]
+
+- type: entity
+  id: LockableButtonEngineering
+  suffix: Engineering
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  id: LockableButtonMedical
+  suffix: Medical
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  id: LockableButtonQuartermaster
+  suffix: Quartermaster
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
+
+- type: entity
+  id: LockableButtonSalvage
+  suffix: Salvage
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Salvage"]]
+
+- type: entity
+  id: LockableButtonCargo
+  suffix: Cargo
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Cargo"]]
+
+- type: entity
+  id: LockableButtonResearch
+  suffix: Research
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  id: LockableButtonService
+  suffix: Service
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Service"]]
+
+- type: entity
+  id: LockableButtonMaintenance
+  suffix: Maintenance
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Maintenance"]]
+
+- type: entity
+  id: LockableButtonExternal
+  suffix: External
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["External"]]
+
+- type: entity
+  id: LockableButtonJanitor
+  suffix: Janitor
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Janitor"]]
+
+- type: entity
+  id: LockableButtonTheatre
+  suffix: Theatre
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Theatre"]]
+
+- type: entity
+  id: LockableButtonBar
+  suffix: Bar
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Bar"]]
+
+- type: entity
+  id: LockableButtonChemistry
+  suffix: Chemistry
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Chemistry"]]
+
+- type: entity
+  id: LockableButtonKitchen
+  suffix: Kitchen
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Kitchen"]]
+
+- type: entity
+  id: LockableButtonChapel
+  suffix: Chapel
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Chapel"]]
+
+- type: entity
+  id: LockableButtonHydroponics
+  suffix: Hydroponics
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Hydroponics"]]
+
+- type: entity
+  id: LockableButtonAtmospherics
+  suffix: Atmospherics
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+# button frames
+
+- type: entity
+  id: ButtonFrame
+  name: button frame
+  noSpawn: true
+  description: It's a frame to help distinguish switches visually.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+  components:
+  - type: Clickable
+  - type: WallMount
+    arc: 360
+  - type: Physics
+    canCollide: false
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: grey
+  - type: Rotatable
+  - type: Fixtures
+
+- type: entity
+  id: ButtonFrameGrey
+  parent: ButtonFrame
+  suffix: grey
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: grey
+
+- type: entity
+  id: ButtonFrameCaution
+  parent: ButtonFrame
+  suffix: caution
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: caution
+
+- type: entity
+  id: ButtonFrameCautionSecurity
+  parent: ButtonFrame
+  suffix: caution
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: caution_security
+
+- type: entity
+  id: ButtonFrameExit
+  parent: ButtonFrame
+  suffix: exit
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: exit
+
+- type: entity
+  id: ButtonFrameJanitor
+  parent: ButtonFrame
+  suffix: janitor
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: janitor

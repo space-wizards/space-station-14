@@ -104,8 +104,6 @@
   - RipleyPeripheralsElectronics
   - MechEquipmentGrabber
 
-# Tier 2
-
 - type: technology
   id: Grappling
   name: research-technology-grappling
@@ -113,11 +111,27 @@
     sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
     state: base
   discipline: Industrial
-  tier: 2
+  tier: 1
   cost: 5000
   recipeUnlocks:
   - WeaponGrapplingGun
   - BorgModuleGrapplingGun
+
+# Tier 2
+
+- type: technology
+  id: SpaceScanning
+  name: research-technology-space-scanning
+  icon:
+    sprite: Objects/Tools/handheld_mass_scanner.rsi
+    state: icon
+  discipline: Industrial
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - RadarConsoleCircuitboard
+  - HandHeldMassScanner
+  - BorgModuleGPS
 
 - type: technology
   id: Shuttlecraft
@@ -130,7 +144,6 @@
   cost: 10000
   recipeUnlocks:
   - ShuttleConsoleCircuitboard
-  - RadarConsoleCircuitboard
   - ThrusterMachineCircuitboard
   - GyroscopeMachineCircuitboard
   - MiniGravityGeneratorCircuitboard

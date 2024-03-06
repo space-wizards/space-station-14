@@ -9,15 +9,14 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
-using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.Spillable;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
-using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Player;
 
@@ -28,28 +27,18 @@ public sealed partial class PuddleSystem
     [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
-    private void InitializeSpillable()
+    protected override void InitializeSpillable()
     {
-        SubscribeLocalEvent<SpillableComponent, ExaminedEvent>(OnExamined);
+        base.InitializeSpillable();
+
         SubscribeLocalEvent<SpillableComponent, LandEvent>(SpillOnLand);
-        // openable handles the event if its closed
-        SubscribeLocalEvent<SpillableComponent, MeleeHitEvent>(SplashOnMeleeHit, after: new[] { typeof(OpenableSystem) });
+        // Openable handles the event if it's closed
+        SubscribeLocalEvent<SpillableComponent, MeleeHitEvent>(SplashOnMeleeHit, after: [typeof(OpenableSystem)]);
         SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<SpillableComponent, SolutionContainerOverflowEvent>(OnOverflow);
         SubscribeLocalEvent<SpillableComponent, SpillDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<SpillableComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
-    }
-
-    private void OnExamined(Entity<SpillableComponent> entity, ref ExaminedEvent args)
-    {
-        using (args.PushGroup(nameof(SpillableComponent)))
-        {
-            args.PushMarkup(Loc.GetString("spill-examine-is-spillable"));
-
-            if (HasComp<MeleeWeaponComponent>(entity))
-                args.PushMarkup(Loc.GetString("spill-examine-spillable-weapon"));
-        }
     }
 
     private void OnOverflow(Entity<SpillableComponent> entity, ref SolutionContainerOverflowEvent args)
