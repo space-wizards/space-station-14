@@ -1,4 +1,5 @@
 stamp-component-stamped-name-default = A very important person
+stamp-component-stamped-name-detective = Detective
 stamp-component-stamped-name-mime = Mime
 stamp-component-stamped-name-captain = Captain
 stamp-component-stamped-name-centcom = CentCom

@@ -173,6 +173,17 @@
   parent: BaseRock
   id: FloraStalagmite1
   components:
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 5
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: GlassBreak
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
     state: stalagmite1
@@ -216,6 +227,55 @@
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
     state: stalagmite6
+
+- type: entity
+  parent: FloraStalagmite1
+  id: FloraGreyStalagmite1
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite1
+
+- type: entity
+  parent: FloraGreyStalagmite1
+  id: FloraGreyStalagmite2
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite2
+
+- type: entity
+  parent: FloraGreyStalagmite1
+  id: FloraGreyStalagmite3
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite3
+
+- type: entity
+  parent: FloraGreyStalagmite1
+  id: FloraGreyStalagmite4
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite4
+
+- type: entity
+  parent: FloraGreyStalagmite1
+  id: FloraGreyStalagmite5
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite5
+
+- type: entity
+  parent: FloraGreyStalagmite1
+  id: FloraGreyStalagmite6
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: grey_stalagmite6
+
 
 - type: entity
   parent: BaseTree

@@ -1,5 +1,6 @@
 using Content.Server.Actions;
 using Content.Server.Popups;
+using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
 using Content.Shared.Actions;
 using Content.Shared.Examine;
@@ -25,6 +26,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
+        [Dependency] private readonly BatterySystem _battery = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedPointLightSystem _lights = default!;
@@ -268,7 +270,7 @@ namespace Content.Server.Light.EntitySystems
                 _appearance.SetData(uid, HandheldLightVisuals.Power, HandheldLightPowerStates.Dying, appearanceComponent);
             }
 
-            if (component.Activated && !battery.TryUseCharge(component.Wattage * frameTime))
+            if (component.Activated && !_battery.TryUseCharge(uid, component.Wattage * frameTime, battery))
                 TurnOff(uid, false);
 
             UpdateLevel(uid);

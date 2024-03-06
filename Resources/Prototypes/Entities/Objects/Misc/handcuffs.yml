@@ -17,6 +17,7 @@
     tags:
     - Handcuffs
   - type: MeleeWeapon
+    wideAnimationRotation: 90
     resetOnHandSelected: false
     animation: WeaponArcDisarm
     damage:
@@ -35,7 +36,7 @@
   parent: Handcuffs
   components:
   - type: Handcuff
-    breakoutTime: 15
+    breakoutTime: 3
     cuffedRSI: Objects/Misc/cablecuffs.rsi
     bodyIconState: body-overlay
     color: forestgreen
@@ -77,7 +78,7 @@
     size: Tiny
     storedRotation: 0
   - type: Handcuff
-    breakoutTime: 20  # halfway between improvised cablecuffs and metal ones
+    breakoutTime: 3
     cuffedRSI: Objects/Misc/cablecuffs.rsi  # cablecuffs will look fine
     bodyIconState: body-overlay
     breakOnRemove: true
