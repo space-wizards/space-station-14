@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Velcroboy
-  changes:
-  - message: Added recipe for Diphenhydramine.
-    type: Add
-  id: 5592
-  time: '2024-01-06T08:29:35.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23006
 - author: TheShuEd
   changes:
   - message: Fixed barber scissor infinity range issue.
@@ -3826,3 +3819,10 @@
   id: 6091
   time: '2024-03-05T20:57:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25780
+- author: MACMAN2003
+  changes:
+  - message: Added clockwork structures and brass to build them with.
+    type: Add
+  id: 6092
+  time: '2024-03-06T00:25:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24673
