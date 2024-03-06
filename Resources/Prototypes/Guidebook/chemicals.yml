@@ -20,7 +20,7 @@
   text: "/ServerInfo/Guidebook/Chemical Tabs/Elements.xml"
 
 - type: guideEntry
-  id: Medicine
+  id: Medicinal
   name: guide-entry-medicine
   text: "/ServerInfo/Guidebook/Medical/Medicine.xml"
 
