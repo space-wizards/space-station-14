@@ -102,3 +102,13 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from tgstation, modified by themias (github) for ss14"
   source: "https://github.com/tgstation/tgstation/tree/85a0925051bb00e7a950ee66cb7f87982cd22439/sound/effects/shovel_dig.ogg"
+
+- files: ["sheath.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation."
+  source: "https://github.com/tgstation/tgstation/blob/a7f525bce9a359ab5282fc754078cd4b5678a006/sound/items/sheath.ogg"
+
+- files: ["unsheath.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation."
+  source: "https://github.com/tgstation/tgstation/blob/a7f525bce9a359ab5282fc754078cd4b5678a006/sound/items/unsheath.ogg"

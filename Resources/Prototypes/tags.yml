@@ -281,6 +281,9 @@
   id: CarpetWhite
 
 - type: Tag
+  id: CaneBlade
+
+- type: Tag
   id: CanPilot
 
 - type: Tag
