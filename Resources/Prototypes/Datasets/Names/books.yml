@@ -17,7 +17,7 @@
 - type: dataset
   id: book_genre
   values:
-  - detective
+  - work of crime fiction
   - comedy
   - horror
   - poetry
