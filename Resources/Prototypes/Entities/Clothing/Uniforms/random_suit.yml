@@ -46,18 +46,19 @@
   - type: RandomSprite
     available:
       - torso:
-          base_torso_armless: Advanced
+          base_torso_armless: Sixteen
         leg:
-          base_leg_standart: Advanced
-          base_leg_short: Advanced
-          base_leg_skirt: Advanced
-          base_leg_skirt_long: Advanced
+          base_leg_standart: Sixteen
+          base_leg_short: Sixteen
+          base_leg_skirt: Sixteen
+          base_leg_skirt_long: Sixteen
         decor:
-          decor_torso_armless1: Advanced
-          decor_torso_armless2: Advanced
-          decor_torso_armless3: Advanced
-          decor_torso_armless4: Advanced
-          decor_torso_armless5: Advanced
+          decor_torso_armless1: Sixteen
+          decor_torso_armless2: Sixteen
+          decor_torso_armless3: Sixteen
+          decor_torso_armless4: Sixteen
+          decor_torso_armless5: Sixteen
+          decor_torso_armless6: Sixteen
           mask_null: ""
 
 - type: entity
@@ -68,24 +69,25 @@
   - type: RandomSprite
     available:
       - torso:
-          base_torso_standart: Advanced
+          base_torso_standart: Sixteen
         leg:
-          base_leg_standart: Advanced
-          base_leg_short: Advanced
-          base_leg_skirt: Advanced
-          base_leg_skirt_long: Advanced
+          base_leg_standart: Sixteen
+          base_leg_short: Sixteen
+          base_leg_skirt: Sixteen
+          base_leg_skirt_long: Sixteen
         decor:
-          decor_torso_armless1: Advanced
-          decor_torso_armless2: Advanced
-          decor_torso_armless3: Advanced
-          decor_torso_armless4: Advanced
-          decor_torso_armless5: Advanced
-          decor_torso_standart1: Advanced
-          decor_torso_standart2: Advanced
-          decor_torso_standart3: Advanced
-          decor_torso_standart4: Advanced
-          decor_torso_standart5: Advanced
-          decor_torso_standart6: Advanced
+          decor_torso_armless1: Sixteen
+          decor_torso_armless2: Sixteen
+          decor_torso_armless3: Sixteen
+          decor_torso_armless4: Sixteen
+          decor_torso_armless5: Sixteen
+          decor_torso_armless6: Sixteen
+          decor_torso_standart1: Sixteen
+          decor_torso_standart2: Sixteen
+          decor_torso_standart3: Sixteen
+          decor_torso_standart4: Sixteen
+          decor_torso_standart5: Sixteen
+          decor_torso_standart6: Sixteen
           mask_null: ""
 
 - type: entity
@@ -96,16 +98,16 @@
   - type: RandomSprite
     available:
       - torso:
-          base_torso_bra: Advanced
+          base_torso_bra: Sixteen
         leg:
-          base_leg_standart: Advanced
-          base_leg_short: Advanced
-          base_leg_skirt: Advanced
-          base_leg_skirt_long: Advanced
+          base_leg_standart: Sixteen
+          base_leg_short: Sixteen
+          base_leg_skirt: Sixteen
+          base_leg_skirt_long: Sixteen
         decor:
-          decor_torso_bra1: Advanced
-          decor_torso_bra2: Advanced
-          decor_torso_bra3: Advanced
-          decor_torso_bra4: Advanced
-          decor_torso_bra5: Advanced
+          decor_torso_bra1: Sixteen
+          decor_torso_bra2: Sixteen
+          decor_torso_bra3: Sixteen
+          decor_torso_bra4: Sixteen
+          decor_torso_bra5: Sixteen
           mask_null: ""
