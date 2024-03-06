@@ -1,16 +1,14 @@
 using Content.Server.Emp;
 using Content.Server.Power.Components;
-using Content.Shared.Examine;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rounding;
 using Robust.Shared.Containers;
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Kitchen.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Popups;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.PowerCell;
 
@@ -22,7 +20,6 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
     [Dependency] private readonly ActivatableUISystem _activatable = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _sharedAppearanceSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly RiggableSystem _riggableSystem = default!;
@@ -32,20 +29,18 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         base.Initialize();
 
         SubscribeLocalEvent<PowerCellComponent, ChargeChangedEvent>(OnChargeChanged);
-        SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
         SubscribeLocalEvent<PowerCellComponent, EmpAttemptEvent>(OnCellEmpAttempt);
 
         SubscribeLocalEvent<PowerCellDrawComponent, ChargeChangedEvent>(OnDrawChargeChanged);
         SubscribeLocalEvent<PowerCellDrawComponent, PowerCellChangedEvent>(OnDrawCellChanged);
 
         // funny
-        SubscribeLocalEvent<PowerCellSlotComponent, ExaminedEvent>(OnCellSlotExamined);
         SubscribeLocalEvent<PowerCellSlotComponent, BeingMicrowavedEvent>(OnSlotMicrowaved);
     }
 
     private void OnSlotMicrowaved(EntityUid uid, PowerCellSlotComponent component, BeingMicrowavedEvent args)
     {
-        if (!_itemSlotsSystem.TryGetSlot(uid, component.CellSlotId, out var slot))
+        if (!ItemSlots.TryGetSlot(uid, component.CellSlotId, out var slot))
             return;
 
         if (slot.Item == null)
@@ -69,7 +64,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         // If this power cell is inside a cell-slot, inform that entity that the power has changed (for updating visuals n such).
         if (_containerSystem.TryGetContainingContainer(uid, out var container)
             && TryComp(container.Owner, out PowerCellSlotComponent? slot)
-            && _itemSlotsSystem.TryGetSlot(container.Owner, slot.CellSlotId, out var itemSlot))
+            && ItemSlots.TryGetSlot(container.Owner, slot.CellSlotId, out var itemSlot))
         {
             if (itemSlot.Item == uid)
                 RaiseLocalEvent(container.Owner, new PowerCellChangedEvent(false));
@@ -183,64 +178,11 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         return true;
     }
 
-    public bool TryGetBatteryFromSlot(EntityUid uid, [NotNullWhen(true)] out BatteryComponent? battery, PowerCellSlotComponent? component = null)
-    {
-        return TryGetBatteryFromSlot(uid, out _, out battery, component);
-    }
-
-    public bool TryGetBatteryFromSlot(EntityUid uid,
-        [NotNullWhen(true)] out EntityUid? batteryEnt,
-        [NotNullWhen(true)] out BatteryComponent? battery,
-        PowerCellSlotComponent? component = null)
-    {
-        if (!Resolve(uid, ref component, false))
-        {
-            batteryEnt = null;
-            battery = null;
-            return false;
-        }
-
-        if (_itemSlotsSystem.TryGetSlot(uid, component.CellSlotId, out ItemSlot? slot))
-        {
-            batteryEnt = slot.Item;
-            return TryComp(slot.Item, out battery);
-        }
-
-        batteryEnt = null;
-        battery = null;
-        return false;
-    }
-
-    private void OnCellExamined(EntityUid uid, PowerCellComponent component, ExaminedEvent args)
-    {
-        TryComp<BatteryComponent>(uid, out var battery);
-        OnBatteryExamined(uid, battery, args);
-    }
-
     private void OnCellEmpAttempt(EntityUid uid, PowerCellComponent component, EmpAttemptEvent args)
     {
         var parent = Transform(uid).ParentUid;
         // relay the attempt event to the slot so it can cancel it
         if (HasComp<PowerCellSlotComponent>(parent))
             RaiseLocalEvent(parent, args);
-    }
-
-    private void OnCellSlotExamined(EntityUid uid, PowerCellSlotComponent component, ExaminedEvent args)
-    {
-        TryGetBatteryFromSlot(uid, out var battery);
-        OnBatteryExamined(uid, battery, args);
-    }
-
-    private void OnBatteryExamined(EntityUid uid, BatteryComponent? component, ExaminedEvent args)
-    {
-        if (component != null)
-        {
-            var charge = component.CurrentCharge / component.MaxCharge * 100;
-            args.PushMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{charge:F0}")));
-        }
-        else
-        {
-            args.PushMarkup(Loc.GetString("power-cell-component-examine-details-no-battery"));
-        }
     }
 }

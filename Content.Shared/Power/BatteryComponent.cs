@@ -1,13 +1,13 @@
-using Content.Server.Power.EntitySystems;
+using Content.Shared.Power.EntitySystems;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Power.Components
+namespace Content.Shared.Power.Components
 {
     /// <summary>
     ///     Battery node on the pow3r network. Needs other components to connect to actual networks.
     /// </summary>
-    [RegisterComponent]
-    [Virtual]
-    [Access(typeof(BatterySystem))]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [Virtual, Access(typeof(SharedBatterySystem))]
     public partial class BatteryComponent : Component
     {
         public string SolutionName = "battery";
@@ -15,13 +15,13 @@ namespace Content.Server.Power.Components
         /// <summary>
         /// Maximum charge of the battery in joules (ie. watt seconds)
         /// </summary>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public float MaxCharge;
 
         /// <summary>
         /// Current charge of the battery in joules (ie. watt seconds)
         /// </summary>
-        [DataField("startingCharge")]
+        [DataField("startingCharge"), AutoNetworkedField]
         public float CurrentCharge;
 
         /// <summary>

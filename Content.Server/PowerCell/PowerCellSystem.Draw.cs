@@ -1,4 +1,4 @@
-using Content.Server.Power.Components;
+using Content.Shared.Power.Components;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 
@@ -67,7 +67,7 @@ public sealed partial class PowerCellSystem
         {
             component.CanDraw = canDraw;
             component.CanUse = canUse;
-            Dirty(component);
+            Dirty(uid, component);
         }
     }
 
@@ -80,7 +80,7 @@ public sealed partial class PowerCellSystem
         {
             component.CanDraw = canDraw;
             component.CanUse = canUse;
-            Dirty(component);
+            Dirty(uid, component);
         }
     }
 }

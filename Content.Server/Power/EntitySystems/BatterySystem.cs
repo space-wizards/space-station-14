@@ -1,7 +1,8 @@
 using Content.Server.Cargo.Systems;
 using Content.Server.Emp;
 using Content.Server.Power.Components;
-using Content.Shared.Examine;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
@@ -9,13 +10,12 @@ using Robust.Shared.Utility;
 namespace Content.Server.Power.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class BatterySystem : EntitySystem
+    public sealed class BatterySystem : SharedBatterySystem
     {
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ExaminableBatteryComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<PowerNetworkBatteryComponent, RejuvenateEvent>(OnNetBatteryRejuvenate);
             SubscribeLocalEvent<BatteryComponent, RejuvenateEvent>(OnBatteryRejuvenate);
             SubscribeLocalEvent<BatteryComponent, PriceCalculationEvent>(CalculateBatteryPrice);
@@ -33,27 +33,6 @@ namespace Content.Server.Power.EntitySystems
         private void OnBatteryRejuvenate(EntityUid uid, BatteryComponent component, RejuvenateEvent args)
         {
             SetCharge(uid, component.MaxCharge, component);
-        }
-
-        private void OnExamine(EntityUid uid, ExaminableBatteryComponent component, ExaminedEvent args)
-        {
-            if (!TryComp<BatteryComponent>(uid, out var batteryComponent))
-                return;
-            if (args.IsInDetailsRange)
-            {
-                var effectiveMax = batteryComponent.MaxCharge;
-                if (effectiveMax == 0)
-                    effectiveMax = 1;
-                var chargeFraction = batteryComponent.CurrentCharge / effectiveMax;
-                var chargePercentRounded = (int) (chargeFraction * 100);
-                args.PushMarkup(
-                    Loc.GetString(
-                        "examinable-battery-component-examine-detail",
-                        ("percent", chargePercentRounded),
-                        ("markupPercentColor", "green")
-                    )
-                );
-            }
         }
 
         private void PreSync(NetworkBatteryPreSync ev)
@@ -111,6 +90,9 @@ namespace Content.Server.Power.EntitySystems
             var newValue = Math.Clamp(0, battery.CurrentCharge - value, battery.MaxCharge);
             var delta = newValue - battery.CurrentCharge;
             battery.CurrentCharge = newValue;
+
+            Dirty(uid, battery);
+
             var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
             RaiseLocalEvent(uid, ref ev);
             return delta;
@@ -127,6 +109,8 @@ namespace Content.Server.Power.EntitySystems
             if (MathHelper.CloseTo(battery.MaxCharge, old))
                 return;
 
+            Dirty(uid, battery);
+
             var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
             RaiseLocalEvent(uid, ref ev);
         }
@@ -140,6 +124,8 @@ namespace Content.Server.Power.EntitySystems
             battery.CurrentCharge = MathHelper.Clamp(value, 0, battery.MaxCharge);
             if (MathHelper.CloseTo(battery.CurrentCharge, old))
                 return;
+
+            Dirty(uid, battery);
 
             var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
             RaiseLocalEvent(uid, ref ev);

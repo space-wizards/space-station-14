@@ -1,4 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Examine;
+using Content.Shared.Power.Components;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Containers;
@@ -9,7 +12,7 @@ namespace Content.Shared.PowerCell;
 public abstract class SharedPowerCellSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] protected readonly ItemSlotsSystem ItemSlots = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
@@ -19,11 +22,14 @@ public abstract class SharedPowerCellSystem : EntitySystem
         SubscribeLocalEvent<PowerCellSlotComponent, EntInsertedIntoContainerMessage>(OnCellInserted);
         SubscribeLocalEvent<PowerCellSlotComponent, EntRemovedFromContainerMessage>(OnCellRemoved);
         SubscribeLocalEvent<PowerCellSlotComponent, ContainerIsInsertingAttemptEvent>(OnCellInsertAttempt);
+
+        SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
+        SubscribeLocalEvent<PowerCellSlotComponent, ExaminedEvent>(OnCellSlotExamined);
     }
 
     private void OnRejuvenate(EntityUid uid, PowerCellSlotComponent component, RejuvenateEvent args)
     {
-        if (!_itemSlots.TryGetSlot(uid, component.CellSlotId, out var itemSlot) || !itemSlot.Item.HasValue)
+        if (!ItemSlots.TryGetSlot(uid, component.CellSlotId, out var itemSlot) || !itemSlot.Item.HasValue)
             return;
 
         // charge entity batteries and remove booby traps.
@@ -93,4 +99,57 @@ public abstract class SharedPowerCellSystem : EntitySystem
         PowerCellDrawComponent? battery = null,
         PowerCellSlotComponent? cell = null,
         EntityUid? user = null);
+
+
+    public bool TryGetBatteryFromSlot(EntityUid uid, [NotNullWhen(true)] out BatteryComponent? battery, PowerCellSlotComponent? component = null)
+    {
+        return TryGetBatteryFromSlot(uid, out _, out battery, component);
+    }
+
+    public bool TryGetBatteryFromSlot(EntityUid uid,
+        [NotNullWhen(true)] out EntityUid? batteryEnt,
+        [NotNullWhen(true)] out BatteryComponent? battery,
+        PowerCellSlotComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+        {
+            batteryEnt = null;
+            battery = null;
+            return false;
+        }
+
+        if (ItemSlots.TryGetSlot(uid, component.CellSlotId, out var slot))
+        {
+            batteryEnt = slot.Item;
+            return TryComp(slot.Item, out battery);
+        }
+
+        batteryEnt = null;
+        battery = null;
+        return false;
+    }
+
+    private void OnCellExamined(EntityUid uid, PowerCellComponent component, ExaminedEvent args)
+    {
+        TryComp<BatteryComponent>(uid, out var battery);
+        OnBatteryExamined(uid, battery, args);
+    }
+    private void OnCellSlotExamined(EntityUid uid, PowerCellSlotComponent component, ExaminedEvent args)
+    {
+        TryGetBatteryFromSlot(uid, out var battery);
+        OnBatteryExamined(uid, battery, args);
+    }
+
+    private void OnBatteryExamined(EntityUid uid, BatteryComponent? component, ExaminedEvent args)
+    {
+        if (component != null)
+        {
+            var charge = component.CurrentCharge / component.MaxCharge * 100;
+            args.PushMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{charge:F0}")));
+        }
+        else
+        {
+            args.PushMarkup(Loc.GetString("power-cell-component-examine-details-no-battery"));
+        }
+    }
 }

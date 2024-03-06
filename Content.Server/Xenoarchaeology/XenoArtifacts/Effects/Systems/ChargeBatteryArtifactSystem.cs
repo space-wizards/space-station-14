@@ -2,6 +2,7 @@
 using Content.Server.Power.EntitySystems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+using Content.Shared.Power.Components;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;

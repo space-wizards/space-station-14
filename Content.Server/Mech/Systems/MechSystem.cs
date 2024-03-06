@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Mech.Components;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
@@ -11,6 +10,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
+using Content.Shared.Power.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Components;
@@ -114,7 +114,7 @@ public sealed partial class MechSystem : SharedMechSystem
         component.Energy = battery.CurrentCharge;
         component.MaxEnergy = battery.MaxCharge;
 
-        Dirty(component);
+        Dirty(uid, component);
         _actionBlocker.UpdateCanMove(uid);
     }
 
@@ -144,7 +144,7 @@ public sealed partial class MechSystem : SharedMechSystem
         component.Energy = component.MaxEnergy;
 
         _actionBlocker.UpdateCanMove(uid);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnRemoveEquipmentMessage(EntityUid uid, MechComponent component, MechEquipmentRemoveMessage args)
@@ -345,7 +345,7 @@ public sealed partial class MechSystem : SharedMechSystem
         {
             _sawmill.Debug($"Battery charge was not equal to mech charge. Battery {batteryComp.CurrentCharge}. Mech {component.Energy}");
             component.Energy = batteryComp.CurrentCharge;
-            Dirty(component);
+            Dirty(uid, component);
         }
         _actionBlocker.UpdateCanMove(uid);
         return true;
@@ -365,7 +365,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
         _actionBlocker.UpdateCanMove(uid);
 
-        Dirty(component);
+        Dirty(uid, component);
         UpdateUserInterface(uid, component);
     }
 
@@ -380,7 +380,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
         _actionBlocker.UpdateCanMove(uid);
 
-        Dirty(component);
+        Dirty(uid, component);
         UpdateUserInterface(uid, component);
     }
 

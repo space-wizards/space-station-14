@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Storage.Components;
 using Robust.Server.Containers;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.Power.EntitySystems;
 
