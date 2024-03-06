@@ -172,8 +172,7 @@ binds:
   key: MouseRight
 - function: SaveItemLocation
   type: State
-  key: MouseLeft
-  mod1: Shift
+  key: MouseMiddle
 - function: Drop
   type: State
   key: Q

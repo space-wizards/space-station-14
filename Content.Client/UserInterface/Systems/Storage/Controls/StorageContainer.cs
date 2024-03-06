@@ -12,6 +12,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Storage.Controls;
 
@@ -360,12 +361,26 @@ public sealed class StorageContainer : BaseWindow
             if (!_entity.TryGetComponent(currentEnt, out MetaDataComponent? meta) || meta.EntityName != locations.Key)
                 continue;
 
+            float spot = 0;
+            var marked = new List<Control>();
+
             foreach (var location in locations.Value)
             {
-                if (TryGetBackgroundCell(location.Position.X, location.Position.Y, out var cell))
-                {
-                    cell.ModulateSelfOverride = Color.FromHex("#2222CC");
-                }
+                var shape = itemSystem.GetAdjustedItemShape(currentEnt, location);
+                var bound = shape.GetBoundingBox();
+
+                if (!storageSystem.ItemFitsInGridLocation(currentEnt, StorageEntity.Value, location))
+                    continue;
+
+                spot += 1;
+
+                for (var y = bound.Bottom; y <= bound.Top; y++)
+                    for (var x = bound.Left; x <= bound.Right; x++)
+                        if (TryGetBackgroundCell(x, y, out var cell) && shape.Contains(x, y) && !marked.Contains(cell))
+                        {
+                            marked.Add(cell);
+                            cell.ModulateSelfOverride = Color.FromHsv((0.18f, 1 / spot, 0.5f / spot + 0.5f, 1f));
+                        }
             }
         }
 
