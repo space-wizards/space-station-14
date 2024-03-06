@@ -50,7 +50,7 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
     {
         SpeechVerbSelector.Clear();
 
-        AddVerb((Loc.GetString("chat-speech-verb-name-none"), null);
+        AddVerb(Loc.GetString("chat-speech-verb-name-none"), null);
         foreach (var (name, id) in _verbs)
         {
             AddVerb(name, id);
