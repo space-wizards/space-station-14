@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Malo
-  changes:
-  - message: Bullet types (rubber, practice, normal) can now be visually distinguished
-      from each other!
-    type: Tweak
-  id: 5603
-  time: '2024-01-07T02:36:51.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/21068
 - author: metalgearsloth
   changes:
   - message: Fix salvage magnet UI being different on different PCs.
@@ -3817,3 +3809,11 @@
   id: 6102
   time: '2024-03-06T01:44:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25855
+- author: Brandon-Huu
+  changes:
+  - message: The Syndicate is now supplying barber scissors in the Hristov bundle
+      to make your disguises even balde- better.
+    type: Tweak
+  id: 6103
+  time: '2024-03-06T02:03:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25695
