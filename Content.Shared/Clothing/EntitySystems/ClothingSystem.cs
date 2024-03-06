@@ -217,5 +217,39 @@ public abstract class ClothingSystem : EntitySystem
         Dirty(uid, clothing);
     }
 
+    public void SetLayerColor(ClothingComponent clothing, string mapKey, Color? color)
+    {
+        if (clothing.Layers == null)
+            return;
+
+        foreach (var layer in clothing.Layers)
+        {
+            if (layer.MapKeys == null)
+                return;
+
+            if (!layer.MapKeys.Contains(mapKey))
+                continue;
+
+            layer.Color = color;
+        }
+
+    }
+    public void SetLayerState(ClothingComponent clothing, string mapKey, string state)
+    {
+        if (clothing.Layers == null)
+            return;
+
+        foreach (var layer in clothing.Layers)
+        {
+            if (layer.MapKeys == null)
+                return;
+
+            if (!layer.MapKeys.Contains(mapKey))
+                continue;
+
+            layer.State = state;
+        }
+    }
+
     #endregion
 }
