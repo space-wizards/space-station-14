@@ -601,11 +601,11 @@
 - type: listing
   id: UplinkSyndicateMartyrModule
   name: uplink-syndicate-martyr-module-name
-  description: uplink-syndicate-martyr-module-desc # borg law 2 explode
+  description: uplink-syndicate-martyr-module-desc
   productEntity: BorgModuleMartyr
   icon: { sprite: /Textures/Objects/Specific/Robotics/borgmodule.rsi, state: syndicateborgbomb }
   cost:
-    Telecrystal: 8
+    Telecrystal: 4
   categories:
     - UplinkUtility
 
