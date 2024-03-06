@@ -339,7 +339,7 @@ public sealed class StorageContainer : BaseWindow
             return;
         }
 
-        if (!_entity.TryGetComponent(currentEnt, out ItemComponent? itemComp))
+        if (!_entity.TryGetComponent<ItemComponent>(currentEnt, out var itemComp))
             return;
 
         var origin = GetMouseGridPieceLocation((currentEnt, itemComp), currentLocation);
@@ -358,7 +358,7 @@ public sealed class StorageContainer : BaseWindow
 
         foreach (var locations in storageComponent.SavedLocations)
         {
-            if (!_entity.TryGetComponent(currentEnt, out MetaDataComponent? meta) || meta.EntityName != locations.Key)
+            if (!_entity.TryGetComponent<MetaDataComponent>(currentEnt, out var meta) || meta.EntityName != locations.Key)
                 continue;
 
             float spot = 0;
@@ -375,12 +375,16 @@ public sealed class StorageContainer : BaseWindow
                 spot += 1;
 
                 for (var y = bound.Bottom; y <= bound.Top; y++)
+                {
                     for (var x = bound.Left; x <= bound.Right; x++)
+                    {
                         if (TryGetBackgroundCell(x, y, out var cell) && shape.Contains(x, y) && !marked.Contains(cell))
                         {
                             marked.Add(cell);
                             cell.ModulateSelfOverride = Color.FromHsv((0.18f, 1 / spot, 0.5f / spot + 0.5f, 1f));
                         }
+                    }
+                }
             }
         }
 
