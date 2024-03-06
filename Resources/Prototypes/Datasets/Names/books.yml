@@ -84,12 +84,12 @@
   - lizard
   - moth
   - diona
-  - catgirl
+  - cat-girl
   - cat
-  - Ian
+  - corgi
   - dog
-  - Morty
-  - Sloth
+  - opossum
+  - sloth
   - syndicate agent
   - revenant
   - rat king
@@ -123,108 +123,107 @@
   - stern
   - сharismatic
   - stoic
-  - looking extremely cute
-  - looking like a dwarf
-  - smelling of beer
-  - radiating joy
+  - cute
+  - dwarven
+  - beer-smelling 
+  - joyful
   - painfully beautiful
-  - partially robotic
-  - being a hologram
-  - actually being a robot
-  - laughing hysterically
+  - robotic
+  - holographic
+  - hysterically laughing
 
 - type: dataset
   id: book_event
   values:
-  - the invasion of zombies
-  - the explosion of a nuclear bomb
-  - mass murder
-  - depressurization
-  - blackout
-  - starvation
-  - disease
-  - sudden love
+  - a zombie outbreak
+  - a nuclear  explosion
+  - a mass murder
+  - a sudden depressurization
+  - a blackout
+  - the starvation of the main characters
+  - a wasting illness
+  - love at first sight
   - a rush of inspiration
-  - mystical phenomena
+  - the occurrence of some mystical phenomena
   - divine intervention
-  - selfish motives
-  - deception
-  - resurrection from the dead
-  - the terrible torture
-  - teslaloose
-  - the prediction of the future
-  - AME explosion
-  - meeting with a catgirl
-  - drinking too much alcohol
-  - eating too much pizza
-  - quarreling with all his friends
-  - the destruction of his native home
+  - the characters' own selfish motives
+  - an unforeseen deception
+  - the resurrection of one of these characters from the dead
+  - the terrible torture of the protagonist
+  - the inadvertent loosing of a gravitational singularity
+  - a psychic prediction of future events
+  - an antimatter explosion
+  - a chance meeting with a cat-girl
+  - drinking far too much alcohol
+  - eating way too much pizza
+  - having a quarrel with a close friend
+  - the sudden loss of their home in a fiery blaze
   - the loss of a PDA
   
 - type: dataset
   id: book_event_trait
   values:
-  - scary
+  - terrifying
   - disgusting
   - wonderful
   - cute
   - boring
-  - unusual
-  - funny
-  - very funny
+  - strange
+  - amusing
+  - whimsical
   - impressive
   - uninteresting
   - sad
-  - very sad
+  - rather depressing
 
 - type: dataset
   id: book_action
   values:
-  - kissing
-  - strangles to death
-  - blows to pieces
-  - wins at chess
-  - loses at chess
-  - reveals secrets
-  - brazenly uses for his own purposes
-  - throws at the altar
-  - marries
-  - joins forces and defeats a common enemy
-  - forces to escape
-  - gives a valuable gift
+  - share in a kiss with a
+  - strangle to death a
+  - manage to blow apart a
+  - manage to win a game of chess against a
+  - narrowly lose a game of chess against a
+  - reveal the hidden secrets of a
+  - manipulate a
+  - sacrifice upon an altar a
+  - attend the wedding of a
+  - join forces to defeat their common enemy, a
+  - are forced to work together to escape a
+  - give a valuable gift to
 
 - type: dataset
   id: book_location
   values:
   - in an underground complex
-  - on an expedition
-  - in outer space
-  - in a reporter's office
-  - in the garden
-  - in the kitchen
-  - under the bar counter
-  - in the library
-  - in technical corridors
-  - on the bridge
-  - in the bathroom
-  - in a crate
-  - in a locker
-  - on the Barratry station
-  - in the church hall
-  - in the crematorium
-  - next to the anomaly
-  - on the evacuation shuttle
-  - in the snow
-  - in the forest
-  - in the desert
-  - on social networks
-  - on the top of the mountain
-  - in the car
-  - in the evacpod
-  - a neighboring country
-  - on the wing of an airplane
-  - in quantum space
-  - on a wizard shuttle
+  - while on an expedition
+  - while trapped in outer space
+  - while in a news office
+  - in a hidden garden
+  - in the kitchen of a local restaurant
+  - under the counter of the local sports bar 
+  - in an ancient library
+  - while deep in bowels of the space station's maintenance corridors
+  - on the bridge of a starship
+  - while a grungy public bathroom
+  - while trapped inside a crate
+  - while stuck inside a locker
+  - while stationed on Barratry
+  - while in the hall of rustic church
+  - while in a crematorium
+  - standing too close to an anomaly
+  - while huddling on the evacuation shuttle
+  - standing in freshly fallen snow
+  - lost in the woods
+  - iin the harsh desert
+  - worrying about their social media networks
+  - atop of a mountain
+  - while driving a car
+  - in an escape pod
+  - while abroad in a fictional country
+  - clinging to the wing of an inflight airplane
+  - inside a pocket dimension
+  - onboard a Wizard Federation shuttle
   - standing atop of a mountain of corpses
   - while psychically projected into their subconscious
   - while trapped in a shadow dimension
@@ -234,13 +233,12 @@
 - type: dataset
   id: book_story_element
   values:
-  - A plot
-  - An unexpected twist
-  - A beginning
-  - A climax
-  - A denouement
-  - An ending
-  - A moral
-  - A theme
-  - A literary style
-  - Pictures
+  - The plot
+  - The twist
+  - The climax
+  - The final act
+  - The ending
+  - The moral of the story
+  - The theme of this work
+  - The literary style
+  - The illustrations
