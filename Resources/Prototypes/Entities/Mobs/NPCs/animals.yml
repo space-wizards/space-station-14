@@ -1353,6 +1353,7 @@
     damage:
       types:
         Slash: 5
+        Piercing: 4
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 285
