@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Fixed barber scissor infinity range issue.
-    type: Fix
-  id: 5593
-  time: '2024-01-06T09:19:45.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22895
 - author: tday
   changes:
   - message: Tabletop Centrifuges will now only accept vials.
@@ -3826,3 +3819,10 @@
   id: 6092
   time: '2024-03-06T00:25:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24673
+- author: deepdarkdepths
+  changes:
+  - message: Added the paramedic's cap to the uniform printer.
+    type: Add
+  id: 6093
+  time: '2024-03-06T01:17:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25861
