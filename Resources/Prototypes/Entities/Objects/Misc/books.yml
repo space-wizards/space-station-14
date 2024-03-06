@@ -438,14 +438,14 @@
     - "Due to"
     - book_event
     - ", they"
-    - book_event_trait
+    - book_action_trait
     - book_action
     - book_character
     - book_location
     - ". \n\n"
     - book_story_element
     - "is"
-    - book_event_trait
+    - book_story_element_trait
     - "."
     
 - type: entity

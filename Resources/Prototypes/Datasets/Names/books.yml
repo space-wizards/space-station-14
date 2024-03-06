@@ -159,22 +159,6 @@
   - having a quarrel with a close friend
   - the sudden loss of their home in a fiery blaze
   - the loss of a PDA
-  
-- type: dataset
-  id: book_event_trait
-  values:
-  - terrifying
-  - disgusting
-  - wonderful
-  - cute
-  - boring
-  - strange
-  - amusing
-  - whimsical
-  - impressive
-  - uninteresting
-  - sad
-  - rather depressing
 
 - type: dataset
   id: book_action
@@ -191,6 +175,24 @@
   - join forces to defeat their common enemy, a
   - are forced to work together to escape a
   - give a valuable gift to
+
+- type: dataset
+  id: book_action_trait
+  values:
+  - terribly 
+  - disgustingly 
+  - marvelously
+  - nicely
+  - weirdly
+  - amusingly
+  - amusing
+  - fancifully
+  - impressively
+  - irresponsibly 
+  - severely 
+  - ruthlessly 
+  - playfully 
+  - thoughtfully
 
 - type: dataset
   id: book_location
@@ -242,3 +244,19 @@
   - The theme of this work
   - The literary style
   - The illustrations
+
+- type: dataset
+  id: book_story_element_trait
+  values:
+  - terrifying
+  - disgusting
+  - wonderful
+  - cute
+  - boring
+  - strange
+  - amusing
+  - whimsical
+  - impressive
+  - uninteresting
+  - sad
+  - rather depressing
