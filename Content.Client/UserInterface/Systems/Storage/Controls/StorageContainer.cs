@@ -338,7 +338,7 @@ public sealed class StorageContainer : BaseWindow
             return;
         }
 
-        if (!_entity.TryGetComponent<ItemComponent>(currentEnt, out var itemComp))
+        if (!_entity.TryGetComponent(currentEnt, out ItemComponent? itemComp))
             return;
 
         var origin = GetMouseGridPieceLocation((currentEnt, itemComp), currentLocation);
@@ -354,6 +354,20 @@ public sealed class StorageContainer : BaseWindow
             (StorageEntity.Value, storageComponent),
             origin,
             currentLocation.Rotation);
+
+        foreach (var locations in storageComponent.SavedLocations)
+        {
+            if (!_entity.TryGetComponent(currentEnt, out MetaDataComponent? meta) || meta.EntityName != locations.Key)
+                continue;
+
+            foreach (var location in locations.Value)
+            {
+                if (TryGetBackgroundCell(location.Position.X, location.Position.Y, out var cell))
+                {
+                    cell.ModulateSelfOverride = Color.FromHex("#2222CC");
+                }
+            }
+        }
 
         var validColor = usingInHand ? Color.Goldenrod : Color.FromHex("#1E8000");
 
