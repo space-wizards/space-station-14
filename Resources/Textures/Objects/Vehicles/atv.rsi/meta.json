@@ -8,7 +8,7 @@
   "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a, resprited by decortes (discord)",
   "states": [
     {
-      "name": "Vehicle",
+      "name": "vehicle",
       "directions": 4,
       "delays": [
         [
