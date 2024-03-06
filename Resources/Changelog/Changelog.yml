@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: Bhijn and Myr
-  changes:
-  - message: Mobs are no longer instantly gibbed when microwaved.
-    type: Tweak
-  - message: Microwaves now heat their contents in real-time.
-    type: Tweak
-  - message: Microwaves are now capable of properly heating their contents, such that
-      microwaveable mobs will still reliably die as expected when microwaved. (They
-      just won't be gibbed.)
-    type: Tweak
-  id: 5601
-  time: '2024-01-07T01:16:40.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/21887
-- author: TheShuEd
-  changes:
-  - message: Added new ghost role to be bought at uplink for 10 TC. Syndie Cat, implanted
-      with microbomb.
-    type: Add
-  id: 5602
-  time: '2024-01-07T01:52:41.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22554
 - author: Malo
   changes:
   - message: Bullet types (rubber, practice, normal) can now be visually distinguished
@@ -3823,3 +3802,18 @@
   id: 6100
   time: '2024-03-06T01:42:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25772
+- author: Errant
+  changes:
+  - message: Debug coordinates are now automatically enabled on the F3 overlay upon
+      readmin.
+    type: Fix
+  id: 6101
+  time: '2024-03-06T01:43:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25063
+- author: metalgearsloth
+  changes:
+  - message: Pod launches will now be offset slightly.
+    type: Add
+  id: 6102
+  time: '2024-03-06T01:44:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25855
