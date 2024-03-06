@@ -35,10 +35,8 @@ public sealed class PettableFriendSystem : EntitySystem
         if (args.Handled || !_exceptionQuery.TryGetComponent(uid, out var exceptionComp))
             return;
 
-        if (_useDelayQuery.TryGetComponent(uid, out var useDelay) && _useDelay.ActiveDelay(uid, useDelay))
+        if (_useDelayQuery.TryGetComponent(uid, out var useDelay) && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
-
-        _useDelay.BeginDelay(uid, useDelay);
 
         var exception = (uid, exceptionComp);
         if (_factionException.IsIgnored(exception, user))
