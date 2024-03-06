@@ -67,6 +67,9 @@
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
   - type: Tag
     tags:
     - SuitEVA
@@ -86,7 +89,7 @@
     sprite: Clothing/OuterClothing/Suits/ancient_voidsuit.rsi
   - type: ClothingSpeedModifier
     walkModifier: 0.85
-    sprintModifier: 0.85
+    sprintModifier: 0.9
   - type: HeldSpeedModifier
 
 #Paramedic Voidsuit
@@ -105,8 +108,8 @@
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+    walkModifier: 0.85
+    sprintModifier: 0.85
   - type: HeldSpeedModifier
   - type: TemperatureProtection
     coefficient: 0.1
