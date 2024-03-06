@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by TheShuEd for Space Station 14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base_leg_short",
+      "directions": 4
+    },
+    {
+      "name": "base_leg_skirt",
+      "directions": 4
+    },
+    {
+      "name": "base_leg_skirt_long",
+      "directions": 4
+    },
+    {
+      "name": "base_leg_standart",
+      "directions": 4
+    },
+    {
+      "name": "base_torso_armless",
+      "directions": 4
+    },
+    {
+      "name": "base_torso_bra",
+      "directions": 4
+    },
+    {
+      "name": "base_torso_standart",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_bra1",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_bra2",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_bra3",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_bra4",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_bra5",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart1",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart2",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart3",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart4",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart5",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart6",
+      "directions": 4
+    },
+    {
+      "name": "mask_null",
+      "directions": 4
+    }
+  ]
+}
