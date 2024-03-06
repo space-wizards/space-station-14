@@ -1,9 +1,22 @@
 - type: entity
-  abstract: true
+  id: LightPostSmall
+  name: post light
+  description: "An always powered light."
+  suffix: Always Powered
   parent: BaseStructure
-  id: BaseLightStructure
   components:
-  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Lighting/LightPosts/small_light_post.rsi
+    snapCardinals: true
+    drawdepth: Objects
+    noRot: true
+    layers:
+    - map: ["enum.PoweredLightLayers.Base"]
+      state: base
+    - map: ["enum.PoweredLightLayers.Glow"]
+      state: glow
+      shader: unshaded
+    state: base
   - type: Fixtures
     fixtures:
       fix1:
@@ -16,6 +29,13 @@
         layer:
         - MidImpassable
         - LowImpassable
+  - type: PointLight
+    radius: 10
+    energy: 2.5
+    softness: 0.9
+    color: "#EEEEFF"
+  - type: Anchorable
+  - type: InteractionOutline
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -44,40 +64,15 @@
           collection: MetalGlassBreak
 
 - type: entity
-  parent: BaseLightStructure
-  id: LightPostSmall
-  name: post light
-  description: "An always powered light."
-  suffix: Always Powered
-  components:
-  - type: Construction
-    graph: LightFixture
-    node: groundLight
-  - type: Sprite
-    sprite: Structures/Lighting/LightPosts/small_light_post.rsi
-    snapCardinals: true
-    layers:
-    - state: on
-      map: ["enum.PoweredLightLayers.Base"]
-    state: on
-  - type: PointLight
-    radius: 10
-    energy: 0.8
-    softness: 1
-    offset: "0, -0.5"
-
-- type: entity
   id: PoweredLightPostSmallEmpty
   name: post light
   description: "A small light post."
   suffix: Empty
-  parent: BaseLightStructure
+  parent: LightPostSmall
   components:
   - type: Sprite
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
-    layers:
-    - state: off
-      map: ["enum.PoweredLightLayers.Base"]
+    state: empty
   - type: PointLight
     enabled: false
   - type: PoweredLight
@@ -107,6 +102,12 @@
   - type: PoweredLightVisuals
     blinkingSound:
       path: "/Audio/Machines/light_tube_on.ogg"
+    spriteStateMap:
+      empty: empty
+      off: base
+      on: base
+      broken: broken
+      burned: burned
 
 - type: entity
   id: PoweredLightPostSmall
@@ -116,16 +117,43 @@
   parent: PoweredLightPostSmallEmpty
   components:
   - type: Sprite
-    layers:
-    - state: off
-      map: [ "enum.PoweredLightLayers.Base" ]
+    state: base
+  - type: PointLight
+    enabled: true
   - type: PoweredLight
     hasLampOnSpawn: LightTube
     damage:
       types:
         Heat: 20
+  - type: StaticPrice
+    price: 25
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -15
+    range: 3
+    sound:
+      path: /Audio/Ambience/Objects/light_hum.ogg
+
+- type: entity
+  id: PoweredLEDLightPostSmall
+  name: post light
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: LED
+  parent: PoweredLightPostSmallEmpty
+  components:
+  - type: Sprite
+    state: base
   - type: PointLight
     enabled: true
+    radius: 15
+    energy: 1
+    softness: 0.9
+    color: "#EEEEFF"
+  - type: PoweredLight
+    hasLampOnSpawn: LedLightTube
+    damage:
+      types:
+        Heat: 20
   - type: StaticPrice
     price: 25
   - type: AmbientOnPowered
