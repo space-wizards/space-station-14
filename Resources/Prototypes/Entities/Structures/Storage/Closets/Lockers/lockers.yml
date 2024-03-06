@@ -156,7 +156,7 @@
     stateDoorOpen: freezer_open
     stateDoorClosed: freezer_door
   - type: ExplosionResistance
-    damageCoefficient: 0.01
+    damageCoefficient: 0.50
   - type: AntiRottingContainer
 
 - type: entity

@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "taken from tgstation https://github.com/tgstation/tgstation/blob/master/icons/obj/machines/engine/energy_ball.dmi",
+  "size": {
+    "x": 96,
+    "y": 96
+  },
+  "states": [
+    {
+      "name": "energy_ball",
+      "delays": [
+        [
+          0.120000005,
+          0.04,
+          0.120000005,
+          0.08,
+          0.04,
+          0.120000005,
+          0.04,
+          0.120000005,
+          0.08,
+          0.04,
+          0.120000005,
+          0.04
+        ]
+      ]
+    },
+    {
+      "name": "energy_ball_fast",
+      "delays": [
+        [
+          0.05,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08
+        ]
+      ]
+    }
+  ]
+}

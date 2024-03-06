@@ -20,10 +20,19 @@
         - ClothingNeckCloakMoth
         - ClothingNeckCloakVoid
         - ClothingNeckCloakGoliathCloak
+        - ClothingNeckCloakAce
+        - ClothingNeckCloakAro
+        - ClothingNeckCloakBi
+        - ClothingNeckCloakIntersex
+        - ClothingNeckCloakLesbian
+        - ClothingNeckCloakGay
+        - ClothingNeckCloakEnby
+        - ClothingNeckCloakPan
         - ToySkeleton
         - Basketball
         - Football
         - BalloonCorgi
+        - BalloonNT
         - PonderingOrb
         - Skub
         - DrinkMugDog
@@ -54,6 +63,8 @@
         - ClothingShoesCult
         - ClothingUniformJumpsuitAncient
         - ClothingUniformJumpsuitPirate
+        - ClothingShoesBootsCowboyFancy
+        - ClothingHeadHatCowboyBountyHunter
       rareChance: 0.01
       prototypes:
         - Lighter
@@ -114,6 +125,7 @@
         - ClothingShoesBootsWork
         - ClothingShoesTourist
         - ClothingUniformJumpsuitLoungewear
+        - ClothingHeadHatCowboyRed
       chance: 0.6
       offset: 0.0
 
@@ -140,12 +152,13 @@
       rareChance: 0.08
       prototypes:
         - FlashlightLantern
-        - YellowOxygenTankFilled
+        - OxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
         - ToolboxEmergencyFilled
         - ToolboxArtisticFilled
         - NitrogenTankFilled
         - DoubleEmergencyNitrogenTankFilled
+        - EmergencyFunnyOxygenTankFilled
         - ToolboxElectricalFilled
         - ToolboxMechanicalFilled
         - ClothingBeltUtility
@@ -216,7 +229,7 @@
       rareChance: 0.05
       prototypes:
         - FlashlightLantern
-        - YellowOxygenTankFilled
+        - OxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
         - NitrogenTankFilled
         - DoubleEmergencyNitrogenTankFilled

@@ -24,6 +24,6 @@ food-system-verb-eat = Eat
 
 ## Force feeding
 
-food-system-force-feed = {CAPITALIZE(THE($user))} is trying feed you something!
+food-system-force-feed = {CAPITALIZE(THE($user))} is trying to feed you something!
 food-system-force-feed-success = {CAPITALIZE(THE($user))} forced you to eat something! {$flavors}
 food-system-force-feed-success-user = You successfully feed {THE($target)}

@@ -1,4 +1,5 @@
 using Content.Server.Animals.Systems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
@@ -20,10 +21,16 @@ public sealed partial class WoolyComponent : Component
     public ProtoId<ReagentPrototype> ReagentId = "Fiber";
 
     /// <summary>
-    ///     The solution to add reagent to.
+    ///     The name of <see cref="Solution"/>.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public string Solution = "wool";
+    public string SolutionName = "wool";
+
+    /// <summary>
+    ///     The solution to add reagent to.
+    /// </summary>
+    [DataField]
+    public Entity<SolutionComponent>? Solution;
 
     /// <summary>
     ///     The amount of reagent to be generated on update.

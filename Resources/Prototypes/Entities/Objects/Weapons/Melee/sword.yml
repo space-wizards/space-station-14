@@ -159,3 +159,35 @@
     size: Normal
     sprite: Objects/Weapons/Melee/cutlass.rsi
   - type: DisarmMalus
+
+- type: entity
+  name: The Throngler
+  parent: BaseItem
+  id: Throngler
+  description: Why would you make this?
+  components:
+    - type: Sharp
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/Throngler2.rsi
+      state: icon
+    - type: MeleeWeapon
+      wideAnimationRotation: -135
+      attackRate: 10
+      damage:
+        types:
+          Structure: 150
+          Slash: 20 #Horror
+          Blunt: 20
+          Heat: 20
+          Piercing: 20
+          Radiation: 10
+      soundHit:
+        path: /Audio/Effects/explosion_small1.ogg
+    - type: Reflect
+      enabled: true
+      reflectProb: .25
+      spread: 90
+    - type: Item
+      size: Ginormous
+      sprite: Objects/Weapons/Melee/Throngler-in-hand.rsi
+    - type: DisarmMalus

@@ -17,6 +17,8 @@
   - type: Tag
     tags:
     - Figurine
+  - type: StealTarget
+    stealGroup: Figurines
 
 - type: entity
   parent: BaseFigurine
@@ -26,7 +28,7 @@
   components:
   - type: Sprite
     state: hop
-    
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurinePassenger
@@ -35,7 +37,7 @@
   components:
   - type: Sprite
     state: passenger
-    
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineGreytider
@@ -157,8 +159,8 @@
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineSalvage
-  name: salvage technican figure
-  description: A figurine depicting a Salvage Technician holding a survival knife.
+  name: salvage specialist figure
+  description: A figurine depicting a Salvage Specialist holding a survival knife.
   components:
   - type: Sprite
     state: salvage
@@ -315,7 +317,7 @@
   components:
   - type: Sprite
     state: nukie
- 
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineNukieElite
@@ -333,7 +335,7 @@
   components:
   - type: Sprite
     state: nukie_commander
- 
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineFootsoldier
@@ -342,7 +344,7 @@
   components:
   - type: Sprite
     state: footsoldier
- 
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineWizard
@@ -351,7 +353,7 @@
   components:
   - type: Sprite
     state: wizard
- 
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineWizardFake
@@ -371,7 +373,7 @@
   components:
   - type: Sprite
     state: spacedragon
- 
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineQueen
@@ -407,7 +409,7 @@
   components:
   - type: Sprite
     state: mouse
-    
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineSlime
@@ -425,7 +427,7 @@
   components:
   - type: Sprite
     state: hamlet
- 
+
 #TODO: Convert these to the new figurine sprite template and rename their sprite name.
 #Yes, these are humanoids, but they need to be updated first.
 

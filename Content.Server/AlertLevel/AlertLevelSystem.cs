@@ -23,15 +23,7 @@ public sealed class AlertLevelSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialize);
-
-        _prototypeManager.PrototypesReloaded += OnPrototypeReload;
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _prototypeManager.PrototypesReloaded -= OnPrototypeReload;
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
     }
 
     public override void Update(float time)
@@ -176,7 +168,7 @@ public sealed class AlertLevelSystem : EntitySystem
             if (detail.Sound != null)
             {
                 var filter = _stationSystem.GetInOwningStation(station);
-                _audio.PlayGlobal(detail.Sound.GetSound(), filter, true, detail.Sound.Params);
+                _audio.PlayGlobal(detail.Sound, filter, true, detail.Sound.Params);
             }
             else
             {

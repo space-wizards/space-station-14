@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Bed.Sleep;
+using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Emoting;
 using Content.Shared.Hands;
@@ -8,6 +9,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared.Pointing;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Speech;
 using Content.Shared.Standing;
@@ -37,8 +39,10 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, PointAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, TryingToSleepEvent>(OnSleepAttempt);
         SubscribeLocalEvent<MobStateComponent, CombatModeShouldHandInteractEvent>(OnCombatModeShouldHandInteract);
+        SubscribeLocalEvent<MobStateComponent, AttemptPacifiedAttackEvent>(OnAttemptPacifiedAttack);
     }
 
     private void OnStateExitSubscribers(EntityUid target, MobStateComponent component, MobState state)
@@ -164,6 +168,11 @@ public partial class MobStateSystem
         // for non-dead mobs
         if (!IsDead(uid, component))
             args.Cancelled = true;
+    }
+
+    private void OnAttemptPacifiedAttack(Entity<MobStateComponent> ent, ref AttemptPacifiedAttackEvent args)
+    {
+        args.Cancelled = true;
     }
 
     #endregion

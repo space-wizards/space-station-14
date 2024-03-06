@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
@@ -18,29 +19,31 @@ using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage.EntitySystems;
 
 public abstract class SharedStorageSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private   readonly IPrototypeManager _prototype = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
+    [Dependency] protected readonly ActionBlockerSystem ActionBlocker = default!;
+    [Dependency] private   readonly EntityLookupSystem _entityLookupSystem = default!;
+    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private   readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] protected readonly SharedEntityStorageSystem EntityStorage = default!;
     [Dependency] private   readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] protected readonly SharedItemSystem ItemSystem = default!;
     [Dependency] private   readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private   readonly SharedHandsSystem _sharedHandsSystem = default!;
-    [Dependency] protected readonly ActionBlockerSystem ActionBlocker = default!;
-    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] protected   readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private   readonly SharedStackSystem _stack = default!;
+    [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private   readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
 
@@ -51,7 +54,14 @@ public abstract class SharedStorageSystem : EntitySystem
     [ValidatePrototypeId<ItemSizePrototype>]
     public const string DefaultStorageMaxItemSize = "Normal";
 
+    public const float AreaInsertDelayPerItem = 0.075f;
+
+    private ItemSizePrototype _defaultStorageMaxItemSize = default!;
+
     public bool CheckingCanInsert;
+
+    private readonly List<ItemSizePrototype> _sortedSizes = new();
+    private FrozenDictionary<string, ItemSizePrototype> _nextSmallest = FrozenDictionary<string, ItemSizePrototype>.Empty;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -61,7 +71,10 @@ public abstract class SharedStorageSystem : EntitySystem
         _itemQuery = GetEntityQuery<ItemComponent>();
         _stackQuery = GetEntityQuery<StackComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
+        _prototype.PrototypesReloaded += OnPrototypesReloaded;
 
+        SubscribeLocalEvent<StorageComponent, ComponentGetState>(OnStorageGetState);
+        SubscribeLocalEvent<StorageComponent, ComponentHandleState>(OnStorageHandleState);
         SubscribeLocalEvent<StorageComponent, ComponentInit>(OnComponentInit, before: new[] { typeof(SharedContainerSystem) });
         SubscribeLocalEvent<StorageComponent, GetVerbsEvent<UtilityVerb>>(AddTransferVerbs);
         SubscribeLocalEvent<StorageComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ItemSlotsSystem) });
@@ -82,6 +95,76 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeAllEvent<StorageSetItemLocationEvent>(OnSetItemLocation);
         SubscribeAllEvent<StorageInsertItemIntoLocationEvent>(OnInsertItemIntoLocation);
         SubscribeAllEvent<StorageRemoveItemEvent>(OnRemoveItem);
+        UpdatePrototypeCache();
+    }
+
+    private void OnStorageGetState(EntityUid uid, StorageComponent component, ref ComponentGetState args)
+    {
+        var storedItems = new Dictionary<NetEntity, ItemStorageLocation>();
+
+        foreach (var (ent, location) in component.StoredItems)
+        {
+            storedItems[GetNetEntity(ent)] = location;
+        }
+
+        args.State = new StorageComponentState()
+        {
+            Grid = new List<Box2i>(component.Grid),
+            IsUiOpen = component.IsUiOpen,
+            MaxItemSize = component.MaxItemSize,
+            StoredItems = storedItems
+        };
+    }
+
+    private void OnStorageHandleState(EntityUid uid, StorageComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not StorageComponentState state)
+            return;
+
+        component.Grid.Clear();
+        component.Grid.AddRange(state.Grid);
+        component.IsUiOpen = state.IsUiOpen;
+        component.MaxItemSize = state.MaxItemSize;
+
+        component.StoredItems.Clear();
+
+        foreach (var (nent, location) in state.StoredItems)
+        {
+            var ent = EnsureEntity<StorageComponent>(nent, uid);
+            component.StoredItems[ent] = location;
+        }
+    }
+
+    public override void Shutdown()
+    {
+        _prototype.PrototypesReloaded -= OnPrototypesReloaded;
+    }
+
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (args.ByType.ContainsKey(typeof(ItemSizePrototype))
+            || (args.Removed?.ContainsKey(typeof(ItemSizePrototype)) ?? false))
+        {
+            UpdatePrototypeCache();
+        }
+    }
+
+    private void UpdatePrototypeCache()
+    {
+        _defaultStorageMaxItemSize = _prototype.Index<ItemSizePrototype>(DefaultStorageMaxItemSize);
+        _sortedSizes.Clear();
+        _sortedSizes.AddRange(_prototype.EnumeratePrototypes<ItemSizePrototype>());
+        _sortedSizes.Sort();
+
+        var nextSmallest = new KeyValuePair<string, ItemSizePrototype>[_sortedSizes.Count];
+        for (var i = 0; i < _sortedSizes.Count; i++)
+        {
+            var k = _sortedSizes[i].ID;
+            var v = _sortedSizes[Math.Max(i - 1, 0)];
+            nextSmallest[i] = new(k, v);
+        }
+
+        _nextSmallest = nextSmallest.ToFrozenDictionary();
     }
 
     private void OnComponentInit(EntityUid uid, StorageComponent storageComp, ComponentInit args)
@@ -177,11 +260,14 @@ public abstract class SharedStorageSystem : EntitySystem
         if (storageComp.AreaInsert && (args.Target == null || !HasComp<ItemComponent>(args.Target.Value)))
         {
             var validStorables = new List<EntityUid>();
+            var delay = 0f;
 
             foreach (var entity in _entityLookupSystem.GetEntitiesInRange(args.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.Dynamic | LookupFlags.Sundries))
             {
                 if (entity == args.User
-                    || !_itemQuery.HasComponent(entity)
+                    // || !_itemQuery.HasComponent(entity)
+                    || !TryComp<ItemComponent>(entity, out var itemComp) // Need comp to get item size to get weight
+                    || !_prototype.TryIndex(itemComp.Size, out var itemSize)
                     || !CanInsert(uid, entity, out _, storageComp)
                     || !_interactionSystem.InRangeUnobstructed(args.User, entity))
                 {
@@ -189,12 +275,13 @@ public abstract class SharedStorageSystem : EntitySystem
                 }
 
                 validStorables.Add(entity);
+                delay += itemSize.Weight * AreaInsertDelayPerItem;
             }
 
             //If there's only one then let's be generous
             if (validStorables.Count > 1)
             {
-                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, 0.2f * validStorables.Count, new AreaPickupDoAfterEvent(GetNetEntityList(validStorables)), uid, target: uid)
+                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay, new AreaPickupDoAfterEvent(GetNetEntityList(validStorables)), uid, target: uid)
                 {
                     BreakOnDamage = true,
                     BreakOnUserMove = true,
@@ -457,7 +544,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Container.ID != StorageComponent.ContainerId)
             return;
 
-        if (!entity.Comp.StoredItems.ContainsKey(GetNetEntity(args.Entity)))
+        if (!entity.Comp.StoredItems.ContainsKey(args.Entity))
         {
             if (!TryGetAvailableGridSpace((entity.Owner, entity.Comp), (args.Entity, null), out var location))
             {
@@ -465,7 +552,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 return;
             }
 
-            entity.Comp.StoredItems[GetNetEntity(args.Entity)] = location.Value;
+            entity.Comp.StoredItems[args.Entity] = location.Value;
             Dirty(entity, entity.Comp);
         }
 
@@ -482,7 +569,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Container.ID != StorageComponent.ContainerId)
             return;
 
-        entity.Comp.StoredItems.Remove(GetNetEntity(args.Entity));
+        entity.Comp.StoredItems.Remove(args.Entity);
         Dirty(entity, entity.Comp);
 
         UpdateAppearance((entity, entity.Comp, null));
@@ -601,7 +688,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return true;
         }
 
-        var maxSize = ItemSystem.GetSizePrototype(GetMaxItemSize((uid, storageComp)));
+        var maxSize = GetMaxItemSize((uid, storageComp));
         if (ItemSystem.GetSizePrototype(item.Size) > maxSize)
         {
             reason = "comp-storage-too-big";
@@ -609,13 +696,13 @@ public abstract class SharedStorageSystem : EntitySystem
         }
 
         if (TryComp<StorageComponent>(insertEnt, out var insertStorage)
-            && ItemSystem.GetSizePrototype(GetMaxItemSize((insertEnt, insertStorage))) >= maxSize)
+            && GetMaxItemSize((insertEnt, insertStorage)) >= maxSize)
         {
             reason = "comp-storage-too-big";
             return false;
         }
 
-        if (!ignoreLocation && !storageComp.StoredItems.ContainsKey(GetNetEntity(insertEnt)))
+        if (!ignoreLocation && !storageComp.StoredItems.ContainsKey(insertEnt))
         {
             if (!TryGetAvailableGridSpace((uid, storageComp), (insertEnt, item), out _))
             {
@@ -658,7 +745,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!ItemFitsInGridLocation(insertEnt, uid, location))
             return false;
 
-        uid.Comp.StoredItems[GetNetEntity(insertEnt)] = location;
+        uid.Comp.StoredItems[insertEnt] = location;
         Dirty(uid, uid.Comp);
 
         if (Insert(uid,
@@ -673,7 +760,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return true;
         }
 
-        uid.Comp.StoredItems.Remove(GetNetEntity(insertEnt));
+        uid.Comp.StoredItems.Remove(insertEnt);
         return false;
     }
 
@@ -787,7 +874,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         if (!_sharedHandsSystem.CanDrop(player, toInsert.Value, hands))
         {
-            _popupSystem.PopupClient(Loc.GetString("comp-storage-cant-drop"), uid, player);
+            _popupSystem.PopupClient(Loc.GetString("comp-storage-cant-drop", ("entity", toInsert.Value)), uid, player);
             return false;
         }
 
@@ -829,7 +916,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!ItemFitsInGridLocation(itemEnt, storageEnt, location.Position, location.Rotation))
             return false;
 
-        storageEnt.Comp.StoredItems[GetNetEntity(itemEnt)] = location;
+        storageEnt.Comp.StoredItems[itemEnt] = location;
         Dirty(storageEnt, storageEnt.Comp);
         return true;
     }
@@ -850,11 +937,32 @@ public abstract class SharedStorageSystem : EntitySystem
 
         var storageBounding = storageEnt.Comp.Grid.GetBoundingBox();
 
+        Angle startAngle;
+        if (storageEnt.Comp.DefaultStorageOrientation == null)
+        {
+            startAngle = Angle.FromDegrees(-itemEnt.Comp.StoredRotation);
+        }
+        else
+        {
+            if (storageBounding.Width < storageBounding.Height)
+            {
+                startAngle = storageEnt.Comp.DefaultStorageOrientation == StorageDefaultOrientation.Horizontal
+                    ? Angle.Zero
+                    : Angle.FromDegrees(90);
+            }
+            else
+            {
+                startAngle = storageEnt.Comp.DefaultStorageOrientation == StorageDefaultOrientation.Vertical
+                    ? Angle.Zero
+                    : Angle.FromDegrees(90);
+            }
+        }
+
         for (var y = storageBounding.Bottom; y <= storageBounding.Top; y++)
         {
             for (var x = storageBounding.Left; x <= storageBounding.Right; x++)
             {
-                for (var angle = Angle.FromDegrees(-itemEnt.Comp.StoredRotation); angle <= Angle.FromDegrees(360 - itemEnt.Comp.StoredRotation); angle += Math.PI / 2f)
+                for (var angle = startAngle; angle <= Angle.FromDegrees(360 - startAngle); angle += Math.PI / 2f)
                 {
                     var location = new ItemStorageLocation(angle, (x, y));
                     if (ItemFitsInGridLocation(itemEnt, storageEnt, location))
@@ -936,10 +1044,8 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!validGrid)
             return false;
 
-        foreach (var (netEnt, storedItem) in storageEnt.Comp.StoredItems)
+        foreach (var (ent, storedItem) in storageEnt.Comp.StoredItems)
         {
-            var ent = GetEntity(netEnt);
-
             if (ent == itemEnt.Owner)
                 continue;
 
@@ -1009,25 +1115,21 @@ public abstract class SharedStorageSystem : EntitySystem
         return sum;
     }
 
-    public ProtoId<ItemSizePrototype> GetMaxItemSize(Entity<StorageComponent?> uid)
+    public ItemSizePrototype GetMaxItemSize(Entity<StorageComponent?> uid)
     {
         if (!Resolve(uid, ref uid.Comp))
-            return DefaultStorageMaxItemSize;
+            return _defaultStorageMaxItemSize;
 
         // If we specify a max item size, use that
         if (uid.Comp.MaxItemSize != null)
-            return uid.Comp.MaxItemSize.Value;
+            return _prototype.Index(uid.Comp.MaxItemSize.Value);
 
         if (!_itemQuery.TryGetComponent(uid, out var item))
-            return DefaultStorageMaxItemSize;
-        var size = ItemSystem.GetSizePrototype(item.Size);
+            return _defaultStorageMaxItemSize;
 
         // if there is no max item size specified, the value used
-        // is one below the item size of the storage entity, clamped at ItemSize.Tiny
-        var sizes = _prototype.EnumeratePrototypes<ItemSizePrototype>().ToList();
-        sizes.Sort();
-        var currentSizeIndex = sizes.IndexOf(size);
-        return sizes[Math.Max(currentSizeIndex - 1, 0)].ID;
+        // is one below the item size of the storage entity.
+        return _nextSmallest[item.Size];
     }
 
     private void OnStackCountChanged(EntityUid uid, MetaDataComponent component, StackCountChangedEvent args)
@@ -1045,4 +1147,16 @@ public abstract class SharedStorageSystem : EntitySystem
     /// </summary>
     public abstract void PlayPickupAnimation(EntityUid uid, EntityCoordinates initialCoordinates,
         EntityCoordinates finalCoordinates, Angle initialRotation, EntityUid? user = null);
+
+    [Serializable, NetSerializable]
+    protected sealed class StorageComponentState : ComponentState
+    {
+        public bool IsUiOpen;
+
+        public Dictionary<NetEntity, ItemStorageLocation> StoredItems = new();
+
+        public List<Box2i> Grid = new();
+
+        public ProtoId<ItemSizePrototype>? MaxItemSize;
+    }
 }

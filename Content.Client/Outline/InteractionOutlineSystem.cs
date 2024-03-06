@@ -40,15 +40,8 @@ public sealed class InteractionOutlineSystem : EntitySystem
     {
         base.Initialize();
 
-        _configManager.OnValueChanged(CCVars.OutlineEnabled, SetCvarEnabled);
+        Subs.CVar(_configManager, CCVars.OutlineEnabled, SetCvarEnabled);
         UpdatesAfter.Add(typeof(SharedEyeSystem));
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _configManager.UnsubValueChanged(CCVars.OutlineEnabled, SetCvarEnabled);
     }
 
     public void SetCvarEnabled(bool cvarEnabled)
@@ -94,8 +87,8 @@ public sealed class InteractionOutlineSystem : EntitySystem
             return;
 
         // If there is no local player, there is no session, and therefore nothing to do here.
-        var localPlayer = _playerManager.LocalPlayer;
-        if (localPlayer == null)
+        var localSession = _playerManager.LocalSession;
+        if (localSession == null)
             return;
 
         // TODO InteractionOutlineComponent
@@ -135,9 +128,9 @@ public sealed class InteractionOutlineSystem : EntitySystem
         }
 
         var inRange = false;
-        if (localPlayer.ControlledEntity != null && !Deleted(entityToClick))
+        if (localSession.AttachedEntity != null && !Deleted(entityToClick))
         {
-            inRange = _interactionSystem.InRangeUnobstructed(localPlayer.ControlledEntity.Value, entityToClick.Value);
+            inRange = _interactionSystem.InRangeUnobstructed(localSession.AttachedEntity.Value, entityToClick.Value);
         }
 
         InteractionOutlineComponent? outline;

@@ -47,7 +47,7 @@
         Oxygen: stationOxygen
         Nitrogen: ignore
         CarbonDioxide: stationCO2
-        Plasma: danger # everything below is usually bad
+        Plasma: stationPlasma # everything below is usually bad
         Tritium: danger
         WaterVapor: stationWaterVapor
         Ammonia: stationAmmonia
@@ -138,7 +138,7 @@
         Oxygen: stationOxygen
         Nitrogen: ignore
         CarbonDioxide: stationCO2
-        Plasma: danger # everything below is usually bad
+        Plasma: stationPlasma # everything below is usually bad
         Tritium: danger
         WaterVapor: stationWaterVapor
         Ammonia: stationAmmonia
@@ -298,6 +298,8 @@
       board: ThermomachineFreezerMachineCircuitBoard
     - type: DeviceNetwork
       prefix: device-address-prefix-freezer
+    - type: StealTarget
+      stealGroup: FreezerHeater
 
 - type: entity
   parent: GasThermoMachineFreezer
@@ -341,6 +343,8 @@
       board: ThermomachineHeaterMachineCircuitBoard
     - type: DeviceNetwork
       prefix: device-address-prefix-heater
+    - type: StealTarget
+      stealGroup: FreezerHeater
 
 - type: entity
   parent: GasThermoMachineHeater
@@ -351,6 +355,36 @@
     enabled: true
   - type: ApcPowerReceiver
     powerDisabled: false
+
+- type: entity
+  parent: GasThermoMachineFreezer
+  id: GasThermoMachineHellfireFreezer
+  name: hellfire freezer
+  description: An advanced machine that cools gas in connected pipes. Has the side effect of chilling the surrounding area. Cold as Hell!
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/hellfirethermomachine.rsi
+  - type: GasThermoMachine
+    minTemperature: 23.15
+    heatCapacity: 40000
+    energyLeakPercentage: 0.15
+  - type: Machine
+    board: HellfireFreezerMachineCircuitBoard
+
+- type: entity
+  parent: GasThermoMachineHeater
+  id: GasThermoMachineHellfireHeater
+  name: hellfire heater
+  description: An advanced machine that heats gas in connected pipes. Has the side effect of leaking heat into the surrounding area. Hot as Hell!
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/hellfirethermomachine.rsi
+  - type: GasThermoMachine
+    maxTemperature: 1193.15
+    heatCapacity: 40000
+    energyLeakPercentage: 0.15
+  - type: Machine
+    board: HellfireHeaterMachineCircuitBoard
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
@@ -418,7 +452,7 @@
         solution: tank
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
   - type: NodeContainer
     nodes:
       pipe:

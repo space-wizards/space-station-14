@@ -8,9 +8,8 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: cpuboard
-    - type: Tag
-      tags:
-        - DroneUsable
+    - type: Item
+      storedRotation: -90
     - type: StaticPrice
       price: 100
     - type: PhysicalComposition
@@ -84,9 +83,6 @@
       prototype: ComputerCargoOrders
     - type: StaticPrice
       price: 750
-    - type: Tag
-      tags:
-      - DroneUsable
 
 - type: entity
   id: CargoBountyComputerCircuitboard
@@ -99,9 +95,6 @@
   - type: ComputerBoard
     prototype: ComputerCargoBounty
   - type: StaticPrice
-  - type: Tag
-    tags:
-    - DroneUsable
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -124,6 +117,8 @@
       state: cpu_supply
     - type: ComputerBoard
       prototype: ComputerSalvageExpedition
+    - type: StealTarget
+      stealGroup: SalvageExpeditionsComputerCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -133,6 +128,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerShuttleCargo
+    - type: StealTarget
+      stealGroup: CargoShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -142,6 +139,8 @@
   components:
     - type: ComputerBoard
       prototype: ComputerShuttleSalvage
+    - type: StealTarget
+      stealGroup: SalvageShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -153,7 +152,6 @@
       prototype: ComputerSurveillanceCameraMonitor
     - type: Tag
       tags:
-        - DroneUsable
         - SurveillanceCameraMonitorCircuitboard
 
 - type: entity
@@ -175,7 +173,6 @@
       prototype: ComputerTelevision
     - type: Tag
       tags:
-        - DroneUsable
         - ComputerTelevisionCircuitboard
 
 - type: entity
@@ -234,7 +231,6 @@
       price: 750
     - type: Tag
       tags:
-      - DroneUsable
       - HighRiskItem
 
 - type: entity
@@ -368,7 +364,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: ComputerMassMediaCircuitboard
-  name: mass-media console board
+  name: news manager console board
   description: Write your message to the world!
   components:
     - type: Sprite

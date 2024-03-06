@@ -21,6 +21,7 @@ analysis-console-info-edges = EDGES: {$edges}
 analysis-console-info-value = UNEXTRACTED_VALUE: {$value}
 
 analysis-console-info-scanner = Scanning...
+analysis-console-info-scanner-paused = Paused.
 analysis-console-progress-text = {$seconds ->
     [one] T-{$seconds} second
     *[other] T-{$seconds} seconds

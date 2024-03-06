@@ -1,12 +1,14 @@
 ﻿<BoxContainer xmlns="https://spacestation14.io"
               Orientation="Horizontal"
               HorizontalAlignment="Stretch"
-              HorizontalExpand="True">
-    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
+              HorizontalExpand="True"
+              Margin="0 0 0 5">
+    <BoxContainer Name="ReactantsContainer" Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
         <RichTextLabel Name="ReactantsLabel"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Access="Public"/>
+                       Access="Public"
+                       Visible="False"/>
     </BoxContainer>
     <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextureRect TexturePath="/Textures/Interface/Misc/beakerlarge.png"
@@ -22,6 +24,7 @@
         <RichTextLabel Name="ProductsLabel"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Access="Public"/>
+                       Access="Public"
+                       Visible="False"/>
     </BoxContainer>
 </BoxContainer>

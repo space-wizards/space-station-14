@@ -12,7 +12,6 @@
     - state: base
     - state: green_bit
       shader: unshaded
-  - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
@@ -40,7 +39,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:DumpRestockInventory
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -96,8 +95,8 @@
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockCondimentStation
-  name: Condiment Station restock box
-  description: Refill the Condiment Station. Mmmm, cold sauce.
+  name: condiment station restock box
+  description: Refill the condiment station. Mmmm, cold sauce.
   components:
   - type: VendingMachineRestock
     canRestock:

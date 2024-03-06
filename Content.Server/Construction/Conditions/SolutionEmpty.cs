@@ -1,4 +1,4 @@
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 
@@ -19,7 +19,7 @@ public sealed partial class SolutionEmpty : IGraphCondition
     public bool Condition(EntityUid uid, IEntityManager entMan)
     {
         var containerSys = entMan.System<SolutionContainerSystem>();
-        if (!containerSys.TryGetSolution(uid, Solution, out var solution))
+        if (!containerSys.TryGetSolution(uid, Solution, out _, out var solution))
             return false;
 
         return solution.Volume == 0;
@@ -31,7 +31,7 @@ public sealed partial class SolutionEmpty : IGraphCondition
         var uid = args.Examined;
 
         var containerSys = entMan.System<SolutionContainerSystem>();
-        if (!containerSys.TryGetSolution(uid, Solution, out var solution))
+        if (!containerSys.TryGetSolution(uid, Solution, out _, out var solution))
             return false;
 
         // already empty so dont show examine

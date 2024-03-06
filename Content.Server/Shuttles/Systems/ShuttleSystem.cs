@@ -25,6 +25,7 @@ namespace Content.Server.Shuttles.Systems;
 [UsedImplicitly]
 public sealed partial class ShuttleSystem : SharedShuttleSystem
 {
+    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -32,14 +33,11 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly BiomeSystem _biomes = default!;
     [Dependency] private readonly BodySystem _bobby = default!;
     [Dependency] private readonly DockingSystem _dockSystem = default!;
-    [Dependency] private readonly DoorSystem _doors = default!;
-    [Dependency] private readonly DoorBoltSystem _bolts = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
@@ -63,28 +61,14 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
         SubscribeLocalEvent<ShuttleComponent, ComponentShutdown>(OnShuttleShutdown);
 
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
         SubscribeLocalEvent<FixturesComponent, GridFixtureChangeEvent>(OnGridFixtureChange);
     }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        ShutdownGridFills();
-    }
-
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
         UpdateHyperspace(frameTime);
-    }
-
-    private void OnRoundRestart(RoundRestartCleanupEvent ev)
-    {
-        CleanupHyperspace();
     }
 
     private void OnGridFixtureChange(EntityUid uid, FixturesComponent manager, GridFixtureChangeEvent args)

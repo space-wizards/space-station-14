@@ -18,7 +18,7 @@
           radius: 0.1
         density: 190
         mask:
-        - Impassable
+        - HighImpassable
   - type: Sprite
     drawdepth: Overdoors
     offset: "0.0,0.3"
@@ -234,6 +234,8 @@
   components:
   - type: Sprite
     state: plant-25
+  - type: StealTarget
+    stealGroup: PlantRD
 
 - type: entity
   id: PottedPlant26

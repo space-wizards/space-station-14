@@ -15,6 +15,7 @@ using Content.Shared.Atmos.Piping.Unary.Visuals;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Audio;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Tools.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -45,7 +46,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentScrubberComponent, WeldableChangedEvent>(OnWeldChanged);
         }
 
-        private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, AtmosDeviceUpdateEvent args)
+        private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, ref AtmosDeviceUpdateEvent args)
         {
             if (_weldable.IsWelded(uid))
             {

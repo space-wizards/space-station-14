@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: BaseStationNanotrasen
   components:
@@ -10,6 +10,7 @@
   id: StandardNanotrasenStation
   parent:
     - BaseStation
+    - BaseStationNews
     - BaseStationCargo
     - BaseStationJobsSpawning
     - BaseStationRecords
@@ -19,6 +20,7 @@
     - BaseStationCentcomm
     - BaseStationEvacuation
     - BaseStationAlertLevels
+    - BaseStationMagnet
     - BaseStationExpeditions
     - BaseStationSiliconLawCrewsimov
     - BaseStationAllEventsEligible

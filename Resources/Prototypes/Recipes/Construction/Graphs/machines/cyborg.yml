@@ -196,3 +196,12 @@
 
   - node: service
     entity: BorgChassisService
+
+  - node: syndicateassault
+    entity: BorgChassisSyndicateAssault
+
+  - node: syndicatemedical
+    entity: BorgChassisSyndicateMedical
+
+  - node: syndicatesaboteur
+    entity: BorgChassisSyndicateSaboteur

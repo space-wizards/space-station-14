@@ -143,7 +143,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (!_inventorySystem.TryUnequip(Transform(uid).ParentUid, toggleCom.Slot, force: true))
             return;
 
-        toggleCom.Container.Insert(uid, EntityManager);
+        _containerSystem.Insert(uid, toggleCom.Container);
         args.Handled = true;
     }
 
@@ -170,12 +170,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         // "outside" of the container or not. This means that if a hardsuit takes too much damage, the helmet will also
         // automatically be deleted.
 
-        // remove action.
-        if (_actionsSystem.TryGetActionData(component.ActionEntity, out var action) &&
-            action.AttachedEntity != null)
-        {
-            _actionsSystem.RemoveAction(action.AttachedEntity.Value, component.ActionEntity);
-        }
+        _actionsSystem.RemoveAction(component.ActionEntity);
 
         if (component.ClothingUid != null && !_netMan.IsClient)
             QueueDel(component.ClothingUid.Value);
@@ -199,13 +194,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (toggleComp.LifeStage > ComponentLifeStage.Running)
             return;
 
-        // remove action.
-        if (_actionsSystem.TryGetActionData(toggleComp.ActionEntity, out var action) &&
-            action.AttachedEntity != null)
-        {
-            _actionsSystem.RemoveAction(action.AttachedEntity.Value, toggleComp.ActionEntity);
-        }
-
+        _actionsSystem.RemoveAction(toggleComp.ActionEntity);
         RemComp(component.AttachedUid, toggleComp);
     }
 
@@ -229,8 +218,8 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
         // As unequipped gets called in the middle of container removal, we cannot call a container-insert without causing issues.
         // So we delay it and process it during a system update:
-        if (toggleComp.ClothingUid != null)
-            toggleComp.Container?.Insert(toggleComp.ClothingUid.Value);
+        if (toggleComp.ClothingUid != null && toggleComp.Container != null)
+            _containerSystem.Insert(toggleComp.ClothingUid.Value, toggleComp.Container);
     }
 
     /// <summary>
@@ -302,7 +291,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
             var attachedClothing = EnsureComp<AttachedClothingComponent>(component.ClothingUid.Value);
             attachedClothing.AttachedUid = uid;
             Dirty(component.ClothingUid.Value, attachedClothing);
-            component.Container.Insert(component.ClothingUid.Value, EntityManager, ownerTransform: xform);
+            _containerSystem.Insert(component.ClothingUid.Value, component.Container, containerXform: xform);
             Dirty(uid, component);
         }
 

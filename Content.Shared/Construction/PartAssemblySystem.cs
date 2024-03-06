@@ -77,7 +77,7 @@ public sealed class PartAssemblySystem : EntitySystem
             return false;
 
         component.CurrentAssembly = assemblyId;
-        component.PartsContainer.Insert(part);
+        _container.Insert(part, component.PartsContainer);
         var ev = new PartAssemblyPartInsertedEvent();
         RaiseLocalEvent(uid, ev);
         return true;

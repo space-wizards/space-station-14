@@ -10,6 +10,7 @@
 
 - type: reaction
   id: CelluloseBreakdown
+  source: true
   requiredMixerCategories:
   - Electrolysis
   reactants:
@@ -31,17 +32,13 @@
 
 - type: reaction
   id: Phenol
-  minTemp: 325
-  maxTemp: 480
   reactants:
-    Oxygen:
+    Hydroxide:
       amount: 1
-    Hydrogen:
-      amount: 1
-    Carbon:
+    Benzene:
       amount: 1
   products:
-    Phenol: 3
+    Phenol: 2
 
 - type: reaction
   id: Acetone
@@ -84,7 +81,7 @@
       amount: 1
     Sulfur:
       amount: 1
-    Oxygen:
+    Oxygen: 
       amount: 2
   products:
     SulfuricAcid: 3
@@ -221,6 +218,7 @@
 
 - type: reaction
   id: TableSaltBreakdown
+  source: true
   requiredMixerCategories:
   - Electrolysis
   reactants:
@@ -260,9 +258,9 @@
   reactants:
     WeldingFuel:
       amount: 1
-    Carbon:
-      amount: 1
     Hydrogen:
+      amount: 1
+    Carbon:
       amount: 1
   products:
     Oil: 3
@@ -380,10 +378,8 @@
   impact: Medium
   reactants:
     Uranium:
-      amount: 2
-    Hydrogen:
       amount: 1
-    Oxygen:
+    Epinephrine:
       amount: 1
   products:
     NorepinephricAcid: 2
@@ -426,6 +422,50 @@
       amount: 1
   products:
     SodiumCarbonate: 4
+
+- type: reaction
+  id: Benzene
+  minTemp: 310
+  reactants:
+    Hydrogen:
+      amount: 1
+    Carbon:
+      amount: 1
+  products:
+    Benzene: 1
+
+- type: reaction
+  minTemp: 310
+  id: Hydroxide
+  priority: -1 #needs to be here due to how sulfuric acid reaction words
+  reactants:
+    Oxygen:
+      amount: 1
+    Hydrogen:
+      amount: 1
+  products:
+    Hydroxide: 2
+
+- type: reaction
+  id: SodiumHydroxide
+  reactants:
+    Hydroxide:
+      amount: 1
+    Sodium:
+      amount: 1
+  products:
+    SodiumHydroxide: 2
+
+- type: reaction
+  minTemp: 310
+  id: Fersilicite
+  reactants:
+    Iron:
+      amount: 1
+    Silicon:
+      amount: 1
+  products:
+    Fersilicite: 2
 
 - type: reaction
   id: SodiumPolyacrylate

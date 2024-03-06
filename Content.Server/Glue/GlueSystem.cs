@@ -1,16 +1,15 @@
 using Content.Server.Administration.Logs;
-using Content.Shared.Popups;
-using Content.Shared.Item;
-using Content.Shared.Glue;
-using Content.Shared.Interaction;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition.EntitySystems;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.Glue;
 using Content.Shared.Hands;
-using Robust.Shared.Timing;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
-using Robust.Shared.Audio;
+using Content.Shared.Item;
+using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Glue;
 
@@ -33,7 +32,7 @@ public sealed class GlueSystem : SharedGlueSystem
     }
 
     // When glue bottle is used on item it will apply the glued and unremoveable components.
-    private void OnInteract(EntityUid uid, GlueComponent component, AfterInteractEvent args)
+    private void OnInteract(Entity<GlueComponent> entity, ref AfterInteractEvent args)
     {
         if (args.Handled)
             return;
@@ -41,10 +40,10 @@ public sealed class GlueSystem : SharedGlueSystem
         if (!args.CanReach || args.Target is not { Valid: true } target)
             return;
 
-        if (TryGlue(uid, component, target, args.User))
+        if (TryGlue(entity, target, args.User))
         {
             args.Handled = true;
-            _audio.PlayPvs(component.Squeeze, uid);
+            _audio.PlayPvs(entity.Comp.Squeeze, entity);
             _popup.PopupEntity(Loc.GetString("glue-success", ("target", target)), args.User, args.User, PopupType.Medium);
         }
         else
@@ -53,7 +52,7 @@ public sealed class GlueSystem : SharedGlueSystem
         }
     }
 
-    private bool TryGlue(EntityUid uid, GlueComponent component, EntityUid target, EntityUid actor)
+    private bool TryGlue(Entity<GlueComponent> glue, EntityUid target, EntityUid actor)
     {
         // if item is glued then don't apply glue again so it can be removed for reasonable time
         if (HasComp<GluedComponent>(target) || !HasComp<ItemComponent>(target))
@@ -61,13 +60,13 @@ public sealed class GlueSystem : SharedGlueSystem
             return false;
         }
 
-        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
+        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(glue.Owner, glue.Comp.Solution, out _, out var solution))
         {
-            var quantity = solution.RemoveReagent(component.Reagent, component.ConsumptionUnit);
+            var quantity = solution.RemoveReagent(glue.Comp.Reagent, glue.Comp.ConsumptionUnit);
             if (quantity > 0)
             {
-                EnsureComp<GluedComponent>(target).Duration = quantity.Double() * component.DurationPerUnit;
-                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} glued {ToPrettyString(target):subject} with {ToPrettyString(uid):tool}");
+                EnsureComp<GluedComponent>(target).Duration = quantity.Double() * glue.Comp.DurationPerUnit;
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} glued {ToPrettyString(target):subject} with {ToPrettyString(glue.Owner):tool}");
                 return true;
             }
         }
@@ -78,29 +77,33 @@ public sealed class GlueSystem : SharedGlueSystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<GluedComponent, UnremoveableComponent>();
-        while (query.MoveNext(out var uid, out var glue, out _))
+        var query = EntityQueryEnumerator<GluedComponent, UnremoveableComponent, MetaDataComponent>();
+        while (query.MoveNext(out var uid, out var glue, out var _, out var meta))
         {
             if (_timing.CurTime < glue.Until)
                 continue;
 
-            _metaData.SetEntityName(uid, glue.BeforeGluedEntityName);
+            // Instead of string matching, just reconstruct the expected name and compare
+            if (meta.EntityName == Loc.GetString("glued-name-prefix", ("target", glue.BeforeGluedEntityName)))
+                _metaData.SetEntityName(uid, glue.BeforeGluedEntityName);
+
             RemComp<UnremoveableComponent>(uid);
             RemComp<GluedComponent>(uid);
         }
     }
 
-    private void OnGluedInit(EntityUid uid, GluedComponent component, ComponentInit args)
+    private void OnGluedInit(Entity<GluedComponent> entity, ref ComponentInit args)
     {
-        var meta = MetaData(uid);
+        var meta = MetaData(entity);
         var name = meta.EntityName;
-        component.BeforeGluedEntityName = meta.EntityName;
-        _metaData.SetEntityName(uid, Loc.GetString("glued-name-prefix", ("target", name)));
+        entity.Comp.BeforeGluedEntityName = meta.EntityName;
+        _metaData.SetEntityName(entity.Owner, Loc.GetString("glued-name-prefix", ("target", name)));
     }
 
-    private void OnHandPickUp(EntityUid uid, GluedComponent component, GotEquippedHandEvent args)
+    private void OnHandPickUp(Entity<GluedComponent> entity, ref GotEquippedHandEvent args)
     {
-        EnsureComp<UnremoveableComponent>(uid);
-        component.Until = _timing.CurTime + component.Duration;
+        var comp = EnsureComp<UnremoveableComponent>(entity);
+        comp.DeleteOnDrop = false;
+        entity.Comp.Until = _timing.CurTime + entity.Comp.Duration;
     }
 }

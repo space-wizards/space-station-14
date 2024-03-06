@@ -1,3 +1,8 @@
+- files: [rumble.ogg]
+  copyright: "Made by Uzbazur freesound.org, modified by brainfood1183 (github)"
+  license: "CC-BY-4.0"
+  source: "https://freesound.org/people/Uzbazur/sounds/221872/"
+
 - files: [fireball.ogg]
   copyright: '"fireball.ogg" by /tg/station'
   license: CC-BY-SA-3.0
@@ -15,4 +20,3 @@
   copyright: '"ForceWall.ogg", "Knock.ogg", and "blink.ogg" by Citadel Station 13'
   license: CC-BY-SA-3.0
   source: https://github.com/Citadel-Station-13/Citadel-Station-13/commit/35a1723e98a60f375df590ca572cc90f1bb80bd5
-

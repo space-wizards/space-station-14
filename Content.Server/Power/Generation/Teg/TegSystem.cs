@@ -7,6 +7,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Examine;
 using Content.Shared.Power.Generation.Teg;
 using Content.Shared.Rounding;
@@ -97,7 +98,7 @@ public sealed class TegSystem : EntitySystem
         }
     }
 
-    private void GeneratorUpdate(EntityUid uid, TegGeneratorComponent component, AtmosDeviceUpdateEvent args)
+    private void GeneratorUpdate(EntityUid uid, TegGeneratorComponent component, ref AtmosDeviceUpdateEvent args)
     {
         var tegGroup = GetNodeGroup(uid);
         if (tegGroup is not { IsFullyBuilt: true })

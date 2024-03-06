@@ -8,7 +8,6 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
-using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Robust.Shared.Timing;
 
@@ -24,7 +23,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedInteractionSystem Interaction = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
@@ -110,7 +108,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         target = args.Target;
         return _timing.IsFirstTimePredicted
             && !_combatMode.IsInCombatMode(uid)
-            && !_useDelay.ActiveDelay(uid)
             && TryComp<HandsComponent>(uid, out var hands)
             && hands.ActiveHandEntity == null
             && Interaction.InRangeUnobstructed(uid, target);
