@@ -35,6 +35,12 @@ namespace Content.Shared.Power.Components
         /// </summary>
         [DataField]
         public float PricePerJoule = 0.0001f;
+
+        /// <summary>
+        /// The earliest time that <see cref="BatterySystem.SetCharge"/> or <see cref="BatterySystem.SetCharge"/> can next cause a network state update.
+        /// This is to avoid spamming state updates every tick, since charge level tends to change often.
+        /// </summary>
+        public TimeSpan NextSyncTime = TimeSpan.Zero;
     }
 
     /// <summary>

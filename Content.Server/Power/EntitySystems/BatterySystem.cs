@@ -5,6 +5,7 @@ using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems
@@ -12,6 +13,13 @@ namespace Content.Server.Power.EntitySystems
     [UsedImplicitly]
     public sealed class BatterySystem : SharedBatterySystem
     {
+        /// <summary>
+        /// Minimum delay between network state updates caused by <see cref="SetCharge"/> or <see cref="UseCharge"/>.
+        /// </summary>
+        private readonly TimeSpan _syncDelay = TimeSpan.FromSeconds(1);
+
+        [Dependency] private readonly IGameTiming _timing = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -82,16 +90,26 @@ namespace Content.Server.Power.EntitySystems
             UseCharge(uid, args.EnergyConsumption, component);
         }
 
+        private void DirtyWithRateLimit(EntityUid uid, BatteryComponent battery)
+        {
+            // Limit network state update rate
+            if (_timing.CurTime > battery.NextSyncTime)
+            {
+                Dirty(uid, battery);
+                battery.NextSyncTime = _timing.CurTime + _syncDelay;
+            }
+        }
+
         public float UseCharge(EntityUid uid, float value, BatteryComponent? battery = null)
         {
-            if (value <= 0 ||  !Resolve(uid, ref battery) || battery.CurrentCharge == 0)
+            if (value <= 0 || !Resolve(uid, ref battery) || battery.CurrentCharge == 0)
                 return 0;
 
             var newValue = Math.Clamp(0, battery.CurrentCharge - value, battery.MaxCharge);
             var delta = newValue - battery.CurrentCharge;
             battery.CurrentCharge = newValue;
 
-            Dirty(uid, battery);
+            DirtyWithRateLimit(uid, battery);
 
             var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
             RaiseLocalEvent(uid, ref ev);
@@ -125,7 +143,7 @@ namespace Content.Server.Power.EntitySystems
             if (MathHelper.CloseTo(battery.CurrentCharge, old))
                 return;
 
-            Dirty(uid, battery);
+            DirtyWithRateLimit(uid, battery);
 
             var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
             RaiseLocalEvent(uid, ref ev);
