@@ -198,7 +198,7 @@
 - type: entity
   id: CabinetCloset
   parent: ClosetSteelBase
-  name: wooden closet
+  name: wardrobe
   description: That's a fine wood.
   components:
   - type: Appearance
