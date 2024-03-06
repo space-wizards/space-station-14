@@ -373,6 +373,7 @@
   - type: Tag
     tags:
     - Syringe
+    - Trash
 
 - type: entity
   id: SyringeBluespace
