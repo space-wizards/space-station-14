@@ -1,0 +1,141 @@
+- type: entity
+  id: ClockworkWindow
+  name: clockwork window
+  description: Don't smudge up the brass down there.
+  parent: Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/clockwork_window.rsi
+  - type: Icon
+    sprite: Structures/Windows/clockwork_window.rsi
+  - type: Repairable
+    fuelCost: 10
+    doAfterDelay: 2
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: RGlass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassClockwork:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    base: cwindow
+  - type: Construction
+    graph: Window
+    node: clockworkWindow
+  - type: Appearance
+  - type: DamageVisuals
+    thresholds: [4, 8, 12]
+    damageDivisor: 4
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks.rsi
+
+- type: entity
+  id: WindowClockworkDirectional
+  parent: WindowDirectional
+  name: directional clockwork window
+  description: Don't smudge up the brass down there.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/directional.rsi
+    state: clock_window
+  - type: Icon
+    sprite: Structures/Windows/directional.rsi
+    state: clock_window
+  - type: Construction
+    graph: WindowDirectional
+    node: windowClockworkDirectional
+  - type: Appearance
+  - type: DamageVisuals
+    thresholds: [4, 8, 12]
+    damageDivisor: 10
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional.rsi
+  - type: Damageable
+    damageModifierSet: RGlass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassClockwork:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 22
+
+- type: entity
+  parent: ClockworkWindow
+  id: ClockworkWindowDiagonal
+  suffix: diagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/clockwork_diagonal.rsi
+    state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: windows
+    base: state
+  - type: Icon
+    sprite: Structures/Windows/clockwork_diagonal.rsi
+    state: state0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PolygonShape
+            vertices:
+            - "-0.5,-0.5"
+            - "0.5,0.5"
+            - "0.5,-0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: DamageVisuals
+    damageOverlay:
+      sprite: Structures/Windows/cracks_diagonal.rsi
+  - type: Construction
+    graph: WindowDiagonal
+    node: clockworkWindowDiagonal

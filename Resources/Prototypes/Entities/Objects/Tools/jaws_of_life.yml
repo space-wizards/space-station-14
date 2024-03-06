@@ -43,6 +43,7 @@
         useSound: /Audio/Items/jaws_cut.ogg
         changeSound: /Audio/Items/change_jaws.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: 90
     damage:
       types:
         Blunt: 10

@@ -300,6 +300,7 @@
       layers:
         - state: book2
     - type: MeleeWeapon
+      wideAnimationRotation: 180
       damage:
         types:
           Blunt: 6
@@ -317,6 +318,7 @@
       layers:
         - state: book2
     - type: MeleeWeapon
+      wideAnimationRotation: 180
       damage:
         types:
           Blunt: 6
