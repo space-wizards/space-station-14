@@ -59,7 +59,7 @@
     sprite: Objects/Weapons/Melee/cleaver.rsi
     state: butch
   - type: MeleeWeapon
-    wideAnimationRotation: -135
+    wideAnimationRotation: -115
     attackRate: 1.5
     damage:
       types:
@@ -129,6 +129,44 @@
         Slash: 15
   - type: Item
     sprite: Objects/Weapons/Melee/kukri_knife.rsi
+
+- type: entity
+  parent: ClothingHeadHatGreyFlatcap
+  id: BladedFlatcapGrey
+  name: grey flatcap
+  description: Fashionable for both the working class and old man Jenkins. It has glass shards hidden in the brim.
+  suffix: Bladed
+  components:
+  - type: Construction
+    graph: BladedFlatcapGrey
+    node: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    attackRate: 1.2
+    damage:
+      types:
+        Slash: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 10
+  - type: Sprite
+    sprite: Clothing/Head/Hats/greyflatcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/greyflatcap.rsi
+
+- type: entity
+  parent: BladedFlatcapGrey
+  id: BladedFlatcapBrown
+  name: brown flatcap
+  description: Stupid clown! You made me look bad! It has glass shards hidden in the brim.
+  components:
+  - type: Construction
+    graph: BladedFlatcapBrown
+  - type: Sprite
+    sprite: Clothing/Head/Hats/brownflatcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/brownflatcap.rsi
 
 - type: entity
   name: shiv
