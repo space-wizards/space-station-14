@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: MACMAN2003
-  changes:
-  - message: The uniform printer can now print command hats and departmental berets!
-    type: Add
-  id: 5595
-  time: '2024-01-06T14:54:58.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23556
-- author: Ubaser
-  changes:
-  - message: You can obtain Flippo lighters in the cig vend.
-    type: Fix
-  id: 5596
-  time: '2024-01-06T14:56:41.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23620
 - author: Alekshhh
   changes:
   - message: Changed ores visually.
@@ -3826,3 +3812,19 @@
   id: 6094
   time: '2024-03-06T01:33:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25862
+- author: PJB3005
+  changes:
+  - message: Saving paper is on ctrl+enter again. Also there's a visible "save" button
+      now.
+    type: Tweak
+  id: 6095
+  time: '2024-03-06T01:35:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25870
+- author: ps3moira
+  changes:
+  - message: Changed brick, wood, and web walls to be unable to conjoin with different
+      walls.
+    type: Tweak
+  id: 6096
+  time: '2024-03-06T01:36:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25674
