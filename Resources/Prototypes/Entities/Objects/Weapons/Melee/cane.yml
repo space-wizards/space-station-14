@@ -64,6 +64,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/cane.rsi
     state: cane-empty
+  - type: ContainerContainer
   - type: ItemSlots
     slots:
       item:
