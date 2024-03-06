@@ -1062,15 +1062,12 @@ public abstract class SharedStorageSystem : EntitySystem
             for (int i = 0; i < list.Count; i++)
             {
                 var saved = list[i];
-                if (saved.Position != location.Position)
-                    continue;
-
-                // already been saved, just update the rotation (if it changed)if it has then just update its rotation if changed
-                if (saved.Position == location.Position)
+                
+                if (saved == location)
+                {
+                    list.Remove(location);
                     return;
-
-                saved.Direction = location.Direction;
-                break;
+                }
             }
 
             list.Add(location);
