@@ -31,8 +31,8 @@ public sealed class ThiefFultonSystem : EntitySystem
     private void OnExamined(Entity<ThiefFultonComponent> fulton, ref ExaminedEvent args)
     {
         args.PushText(Loc.GetString(fulton.Comp.LinkedOwner == null
-                ? "thief-fulton-examined-unsetted"
-                : "thief-fulton-examined-setted"));
+                ? "thief-fulton-examined-unset"
+                : "thief-fulton-examined-set"));
     }
 
     private void OnFolded(Entity<ThiefFultonComponent> fulton, ref FoldedEvent args)
