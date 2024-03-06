@@ -87,8 +87,12 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         List<PrototypeLayerData>? layers = null;
 
+        //if there are layers manually set by the user here, we use them
+        if (item.Layers != null)
+            layers = item.Layers;
+
         // first attempt to get species specific data.
-        if (inventory.SpeciesId != null)
+        if (layers == null && inventory.SpeciesId != null)
             item.ClothingVisuals.TryGetValue($"{args.Slot}-{inventory.SpeciesId}", out layers);
 
         // if that returned nothing, attempt to find generic data
@@ -281,6 +285,9 @@ public sealed class ClientClothingSystem : ClothingSystem
                 // note that every insertion requires reshuffling & remapping all the existing layers.
                 sprite.AddBlankLayer(index);
                 sprite.LayerMapSet(key, index);
+
+                if (layerData.Color != null)
+                    sprite.LayerSetColor(key, layerData.Color.Value);
             }
             else
                 index = sprite.LayerMapReserveBlank(key);

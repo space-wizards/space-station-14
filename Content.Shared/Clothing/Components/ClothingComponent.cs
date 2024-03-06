@@ -55,6 +55,10 @@ public sealed partial class ClothingComponent : Component
     public string? RsiPath;
 
     [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    public List<PrototypeLayerData>? Layers;
+
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("maleMask")]
     public ClothingMask MaleMask = ClothingMask.UniformFull;
 
