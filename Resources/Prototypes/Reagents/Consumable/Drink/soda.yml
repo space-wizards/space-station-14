@@ -165,6 +165,13 @@
         damage:
           types:
             Poison: 1
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Slime
+        damage:
+          types:
+            Poison: -1
 
 - type: reagent
   id: ShamblersJuice
