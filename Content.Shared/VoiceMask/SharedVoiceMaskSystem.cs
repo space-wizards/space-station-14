@@ -17,6 +17,7 @@ public sealed class VoiceMaskBuiState : BoundUserInterfaceState
     public VoiceMaskBuiState(string name, string? verb)
     {
         Name = name;
+        Verb = verb;
     }
 }
 
