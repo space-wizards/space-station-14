@@ -31,6 +31,11 @@
   - type: StationLimitedNetwork
   - type: StaticPrice
     price: 500
+  - type: Tag
+    tags:
+    - HighRiskItem
+  - type: StealTarget
+    stealGroup: HandheldCrewMonitor
 
 - type: entity
   id: HandheldCrewMonitorEmpty
