@@ -1,20 +1,6 @@
 ﻿Entries:
 - author: Bhijn and Myr
   changes:
-  - message: You can now gently the kobolds (and monkeys, too!)
-    type: Add
-  - message: Kobolds now have their own unique speech!
-    type: Tweak
-  - message: All monkeys and monkey-likes (kobolds, for instance) can now pilot VIM
-    type: Tweak
-  - message: Kobolds no longer instantly die at 40 damage, but rather, fall into crit
-      at that threshold. They now die at 80 damage.
-    type: Tweak
-  id: 5600
-  time: '2024-01-07T01:08:51.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23642
-- author: Bhijn and Myr
-  changes:
   - message: Mobs are no longer instantly gibbed when microwaved.
     type: Tweak
   - message: Microwaves now heat their contents in real-time.
@@ -3828,3 +3814,12 @@
   id: 6099
   time: '2024-03-06T01:41:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25864
+- author: Just_Art
+  changes:
+  - message: Added bob 5 hair!
+    type: Add
+  - message: Added long hair with bundles!
+    type: Add
+  id: 6100
+  time: '2024-03-06T01:42:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25772
