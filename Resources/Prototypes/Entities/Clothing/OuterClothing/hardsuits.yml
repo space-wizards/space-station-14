@@ -549,7 +549,7 @@
         Blunt: 0.6
         Slash: 0.6
         Piercing: 0.6
-        Heat: 0.4
+        Heat: 0.2
         Radiation: 0.01
         Caustic: 0.5
   - type: Item
