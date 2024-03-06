@@ -425,7 +425,6 @@
   components:
   - type: PaperRandomStory
     storySegments:
-     # To do (TheShuEd): English is not my native language. Someone, make the text generation more correct and cool.
     - "This is a"
     - book_genre
     - "about a"
