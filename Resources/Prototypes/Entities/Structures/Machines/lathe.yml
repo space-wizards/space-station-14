@@ -161,6 +161,7 @@
       - BorgChargerCircuitboard
       - WeaponCapacitorRechargerCircuitboard
       - HandheldStationMap
+      - ClothingHeadHatWelding
   - type: EmagLatheRecipes
     emagStaticRecipes:
        - CartridgePistol
@@ -387,11 +388,11 @@
     - ElectricGrillMachineCircuitboard
     - BoozeDispenserMachineCircuitboard
     - SodaDispenserMachineCircuitboard
+    - SpaceHeaterMachineCircuitBoard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - HellfireFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
-      - SpaceHeaterMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - CryoPodMachineCircuitboard
@@ -958,6 +959,7 @@
       - ClothingHeadHatWarden
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
+      - ClothingHeadHatParamedicsoft
       # Winter outfits
       - ClothingOuterWinterCap
       - ClothingOuterWinterCE
