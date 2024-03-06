@@ -68,6 +68,11 @@
     containers:
       storagebase: !type:Container
         ents: []
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+
   - type: ItemSlots
     slots:
       item:
