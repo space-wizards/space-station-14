@@ -1,0 +1,34 @@
+﻿- type: entity
+  id: BaseClockworkWindoor
+  name: clockwork windoor
+  parent: BaseWindoor
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Windoors/clockwork_windoor.rsi
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassClockwork:
+            min: 1
+            max: 2
+          SheetBrass1:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Windoor
+    node: windoorClockwork
+    containers:
+    - board

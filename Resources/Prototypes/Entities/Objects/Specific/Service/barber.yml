@@ -16,7 +16,7 @@
     - key: enum.MagicMirrorUiKey.Key
       type: MagicMirrorBoundUserInterface
   - type: MeleeWeapon
-    wideAnimationRotation: -90
+    wideAnimationRotation: -135
     attackRate: 1
     damage:
       types:
