@@ -184,3 +184,66 @@
         acts: [ "Destruction" ]
   - type: CableVisualizer
     statePrefix: lvcable_
+
+# Explosive cable below
+
+- type: entity
+  id: CableDet
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+    noRot: true
+  # TODO: Remove both of these, same with CollideOnAnchor
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+  - type: Sprite
+    color: Yellow
+    sprite: Structures/Power/Cables/mv_cable.rsi
+    state: mvcable_0
+  - type: Icon
+    color: Yellow
+    sprite: Structures/Power/Cables/mv_cable.rsi
+    state: mvcable_4
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 22
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:ExplodeBehavior
+  - type: CollideOnAnchor
+  - type: Appearance
+  - type: CableVis
+    node: cordage
+  - type: NodeContainer
+    nodes:
+      cordage:
+        !type:CableNode
+        nodeGroupID: MVPower #This makes them join MV cables, but were only using the visualizer.
+  - type: CableVisualizer
+    statePrefix: mvcable_
+  - type: Explosive
+    explosionType: DemolitionCharge
+    totalIntensity: 10
+    intensitySlope: 5
+    maxIntensity: 5
+    canCreateVacuum: false
+  - type: TriggerOnSignal
+  - type: DeviceLinkSink
+    ports:
+      - Trigger
+  - type: ExplodeOnTrigger
+  - type: Construction
+    graph: DetCable
+    node: detonationCable

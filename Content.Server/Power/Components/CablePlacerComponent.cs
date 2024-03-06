@@ -12,5 +12,8 @@ namespace Content.Server.Power.Components
 
         [DataField("blockingWireType")]
         public CableType BlockingCableType = CableType.HighVoltage;
+
+        [DataField]
+        public bool OverTile = false;
     }
 }
