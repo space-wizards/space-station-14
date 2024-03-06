@@ -119,8 +119,8 @@
         Radiation: 0.3 #salv is supposed to have radiation hazards in the future
         Caustic: 0.8
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSpatio
@@ -150,8 +150,8 @@
         Radiation: 0.3
         Caustic: 0.7
   - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.85
+    walkModifier: 0.75
+    sprintModifier: 0.75
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
@@ -546,10 +546,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.45
-        Slash: 0.45
-        Piercing: 0.45
-        Heat: 0.4
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.4
+        Heat: 0.6
         Radiation: 0.01
         Caustic: 0.5
   - type: Item
@@ -856,7 +856,7 @@
         Caustic: 0.1
   - type: ClothingSpeedModifier
     walkModifier: 1.0
-    sprintModifier: 0.9
+    sprintModifier: 1.0
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
