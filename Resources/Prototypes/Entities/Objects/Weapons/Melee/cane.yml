@@ -65,6 +65,9 @@
     sprite: Objects/Weapons/Melee/cane.rsi
     state: cane-empty
   - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
   - type: ItemSlots
     slots:
       item:
@@ -88,7 +91,6 @@
   parent: CaneSheath
   suffix: Filled
   components:
-  - type: ContainerContainer
   - type: ContainerFill
     containers:
       item:
