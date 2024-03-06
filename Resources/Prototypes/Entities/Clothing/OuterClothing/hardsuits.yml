@@ -86,12 +86,12 @@
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
-        Shock: 0.8
+        Shock: 0.6
         Caustic: 0.5
         Radiation: 0.2
   - type: ClothingSpeedModifier
-    walkModifier: 0.7
-    sprintModifier: 0.7
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
@@ -120,7 +120,7 @@
         Caustic: 0.8
   - type: ClothingSpeedModifier
     walkModifier: 0.9
-    sprintModifier: 0.8
+    sprintModifier: 0.9
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSpatio
@@ -150,8 +150,8 @@
         Radiation: 0.3
         Caustic: 0.7
   - type: ClothingSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.75
+    walkModifier: 0.8
+    sprintModifier: 0.85
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
@@ -238,8 +238,8 @@
         Slash: 0.8
         Piercing: 0.7
   - type: ClothingSpeedModifier
-    walkModifier: 0.65
-    sprintModifier: 0.65
+    walkModifier: 0.7
+    sprintModifier: 0.8
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
@@ -293,8 +293,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
-        Slash: 0.8
+        Blunt: 0.75
+        Slash: 0.75
         Piercing: 0.6
         Heat: 0.5
         Radiation: 0.5
@@ -546,10 +546,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.6
-        Heat: 0.2
+        Blunt: 0.45
+        Slash: 0.45
+        Piercing: 0.45
+        Heat: 0.4
         Radiation: 0.01
         Caustic: 0.5
   - type: Item
@@ -583,7 +583,7 @@
         Blunt: 0.4
         Slash: 0.4
         Piercing: 0.3
-        Heat: 0.5
+        Heat: 0.45
         Radiation: 0.25
         Caustic: 0.4
   - type: ClothingSpeedModifier
@@ -612,7 +612,7 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.2
+        Blunt: 0.15
         Slash: 0.2
         Piercing: 0.2
         Heat: 0.2
@@ -620,7 +620,7 @@
         Caustic: 0.2
   - type: ClothingSpeedModifier
     walkModifier: 0.9
-    sprintModifier: 0.65
+    sprintModifier: 0.625
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
@@ -649,10 +649,10 @@
         Piercing: 0.4
         Heat: 0.25
         Radiation: 0.25
-        Caustic: 0.75
+        Caustic: 0.65
   - type: ClothingSpeedModifier
     walkModifier: 0.8
-    sprintModifier: 0.8
+    sprintModifier: 0.9
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWizard
@@ -740,7 +740,7 @@
       coefficients:
         Blunt: 0.7
         Slash: 0.8
-        Piercing: 0.85
+        Piercing: 0.8
         Heat: 0.4
         Caustic: 0.75
   - type: ClothingSpeedModifier
@@ -856,7 +856,7 @@
         Caustic: 0.1
   - type: ClothingSpeedModifier
     walkModifier: 1.0
-    sprintModifier: 1.0
+    sprintModifier: 0.9
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
@@ -892,7 +892,7 @@
         Caustic: 0.1
   - type: ClothingSpeedModifier
     walkModifier: 1.0
-    sprintModifier: 1.0
+    sprintModifier: 0.95
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURN
@@ -917,13 +917,13 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9
+        Blunt: 0.85
         Slash: 0.9
-        Piercing: 0.9
+        Piercing: 0.85
         Caustic: 0.8
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+    walkModifier: 1.0
+    sprintModifier: 0.7969 #funny number for funny suit
   - type: HeldSpeedModifier
   - type: Construction
     graph: ClownHardsuit
