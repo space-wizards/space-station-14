@@ -33,6 +33,7 @@
   name: random colorful suit
   components:
   - type: RandomSpawner
+    offset: 0
     prototypes:
     - ClothingUniformRandomArmless
     - ClothingUniformRandomStandart
