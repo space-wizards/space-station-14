@@ -79,23 +79,6 @@
     {
       "name": "old-radio-inhand-right",
       "directions": 4
-    },
-    {
-      "name": "securitywalkietalkie"
-    },
-    {
-      "name": "securitywalkietalkie-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "securitywalkietalkie-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "securitywalkietalkie-off"
-    },
-    {
-      "name": "securitywalkietalkie-on"
     }
   ]
 }

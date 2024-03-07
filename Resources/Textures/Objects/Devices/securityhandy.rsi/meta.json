@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "license": null,
+  "copyright": null,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "walkietalkie"
+    },
+    {
+      "name": "walkietalkie-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "walkietalkie-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "walkietalkie-off"
+    },
+    {
+      "name": "walkietalkie-on"
+    }
+  ]
+}
