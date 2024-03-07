@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: The syndicate observational kit sunglasses now looks and acts like normal
-      sunglasses on top of its special feature.
-    type: Fix
-  id: 5606
-  time: '2024-01-07T06:24:36.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23621
 - author: metalgearsloth
   changes:
   - message: Disable magnet wrecks TEMPORARILY pending further re-balancing.
@@ -3817,3 +3809,10 @@
   id: 6105
   time: '2024-03-07T17:53:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25882
+- author: Beck Thompson
+  changes:
+  - message: Lawdrobe has some new items and new ads!
+    type: Add
+  id: 6106
+  time: '2024-03-07T19:18:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25299
