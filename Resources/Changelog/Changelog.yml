@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Minty642
-  changes:
-  - message: Add more food recipes related to cargo bounties on Guidebook
-    type: Tweak
-  id: 5608
-  time: '2024-01-07T06:39:56.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23659
 - author: metalgearsloth
   changes:
   - message: Fix salvage magnet deleting mobs.
@@ -3816,3 +3809,10 @@
   id: 6107
   time: '2024-03-07T19:37:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24650
+- author: Nimfar11
+  changes:
+  - message: Slimes can now drink FourteenLoko without harming their bodies.
+    type: Tweak
+  id: 6108
+  time: '2024-03-07T20:50:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25889
