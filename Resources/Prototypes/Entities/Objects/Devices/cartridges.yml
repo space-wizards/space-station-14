@@ -54,6 +54,24 @@
 
 - type: entity
   parent: BaseItem
+  id: CriminalRecordsCartridge
+  name: criminal records cartridge
+  description: A program for viewing current criminal records
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-y
+    - type: UIFragment
+      ui: !type:CriminalRecordsCartridgeUi
+    - type: Cartridge
+      programName: criminal-records-program-name
+      icon:
+        sprite: Interface/Misc/program_icons.rsi
+        state: crew_manifest
+    - type: CriminalRecordsCartridge
+
+- type: entity
+  parent: BaseItem
   id: NetProbeCartridge
   name: NetProbe cartridge
   description: A program for getting the address and frequency of network devices
