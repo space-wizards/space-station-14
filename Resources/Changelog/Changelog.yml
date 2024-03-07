@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Aexxie
-  changes:
-  - message: Added the Central Commander's cloak
-    type: Add
-  id: 5611
-  time: '2024-01-07T07:12:12.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23666
 - author: Froozigiusz
   changes:
   - message: You can now dip onion rings.
@@ -3816,3 +3809,10 @@
   id: 6110
   time: '2024-03-07T21:02:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25876
+- author: TheShuEd
+  changes:
+  - message: Removed Hamlet, Smile and Pun Pun from Thief objectives
+    type: Remove
+  id: 6111
+  time: '2024-03-07T23:53:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25921
