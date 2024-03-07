@@ -24,12 +24,5 @@ public abstract class SharedCognislimeSystem : EntitySystem
         public readonly EntityUid User;
         public readonly EntityUid Target;
         public readonly EntityUid Cognislime;
-
-        public AddCognislimeDoAfterEvent(EntityUid user, EntityUid target, EntityUid cognislime)
-        {
-            User = user;
-            Target = target;
-            Cognislime = cognislime;
-        }
     }
 }
