@@ -22,12 +22,12 @@
         {
             "name": "jammer_low_charge",
             "directions": 1,
-	     "delays": [
-		[
-		  0.3,
-		  0.3
-		]
-	     ]
+        "delays": [
+            [
+            0.3,
+            0.3
+            ]
+        ]
         }
     ]
 }
