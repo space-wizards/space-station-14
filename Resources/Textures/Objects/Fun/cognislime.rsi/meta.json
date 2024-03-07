@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Taken from goonstation at commit https://github.com/goonstation/goonstation/pull/210/commits/d188de4d110a4f433ce3d30211be30d8257dc4c3 and modified by (in order) HoofedEar, Alekshhh, and Interrobang01",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cognislime"
+    }
+  ]
+}

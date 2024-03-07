@@ -6,7 +6,7 @@
   components:
   - type: Cognislime
   - type: Sprite
-    sprite: Objects/Misc/skub.rsi
-    state: icon
+    sprite: Objects/Fun/cognislime.rsi
+    state: cognislime
   - type: Item
-    sprite: Objects/Misc/skub.rsi
+    sprite: Objects/Fun/cognislime.rsi
