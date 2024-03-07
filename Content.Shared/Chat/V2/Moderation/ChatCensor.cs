@@ -44,6 +44,19 @@ public static class ChatCensor
     }
 
     /// <summary>
+    /// Resets the build state to zero, allowing for different rules to be provided to the next censor(s) built.
+    /// </summary>
+    /// <returns>True if the builder had any setup prior to the reset.</returns>
+    public static bool Reset()
+    {
+        var notEmpty = _censors.Count > 0;
+
+        _censors = new List<Censor>();
+
+        return notEmpty;
+    }
+
+    /// <summary>
     /// A censor that does nothing.
     /// </summary>
     /// <param name="input"></param>
