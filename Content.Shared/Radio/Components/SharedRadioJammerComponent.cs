@@ -1,6 +1,9 @@
 using Robust.Shared.Serialization;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.RadioJammer;
+
+[NetworkedComponent]
 
 public abstract partial class SharedRadioJammerComponent : Component
 {

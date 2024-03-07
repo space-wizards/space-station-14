@@ -1,9 +1,8 @@
 using Content.Shared.RadioJammer;
-using Robust.Shared.GameStates;
 
 namespace Content.Client.RadioJammer;
 
-[NetworkedComponent, RegisterComponent]
+[RegisterComponent]
 public sealed partial class RadioJammerComponent : SharedRadioJammerComponent
 {
 }
