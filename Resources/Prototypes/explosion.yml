@@ -93,7 +93,7 @@
       Heat: 12
       Blunt: 12
       Piercing: 12
-      Structural: 40
+      Structural: 30
   tileBreakChance: [ 0, 0.5, 1 ]
   tileBreakIntensity: [ 1, 5, 10 ]
   tileBreakRerollReduction: 3
@@ -109,7 +109,7 @@
       Heat: 15
       Blunt: 15
       Piercing: 6
-      Structural: 15
+      Structural: 40
   tileBreakChance: [ 0.75, 0.95, 1 ]
   tileBreakIntensity: [ 1, 10, 15 ]
   tileBreakRerollReduction: 30

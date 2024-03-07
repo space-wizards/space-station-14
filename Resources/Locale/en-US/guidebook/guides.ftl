@@ -13,6 +13,7 @@ guide-entry-portable-generator = Portable Generators
 guide-entry-ame = Antimatter Engine (AME)
 guide-entry-singularity = Singularity
 guide-entry-teg = Thermo-electric Generator (TEG)
+guide-entry-rtg = RTG
 guide-entry-controls = Controls
 guide-entry-radio = Radio
 guide-entry-jobs = Jobs
@@ -46,8 +47,9 @@ guide-entry-machine-upgrading = Machine Upgrading
 guide-entry-robotics = Robotics
 guide-entry-cyborgs = Cyborgs
 guide-entry-security = Security
-guide-entry-dna = DNA
+guide-entry-forensics = Forensics
 guide-entry-defusal = Large Bomb Defusal
+guide-entry-criminal-records = Criminal Records
 
 guide-entry-antagonists = Antagonists
 guide-entry-nuclear-operatives = Nuclear Operatives
@@ -58,3 +60,4 @@ guide-entry-minor-antagonists = Minor Antagonists
 guide-entry-space-ninja = Space Ninja
 
 guide-entry-writing = Writing
+guide-entry-glossary = Glossary

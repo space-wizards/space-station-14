@@ -12,23 +12,23 @@
     fuelCost: 15
     doAfterDelay: 3
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: RGlass
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1000
+        damage: 200
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 500
+        damage: 100
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: GlassBreak
+          collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassReinforced:
@@ -44,7 +44,7 @@
   - type: Appearance
   - type: DamageVisuals
     thresholds: [4, 8, 12]
-    damageDivisor: 36
+    damageDivisor: 6
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
@@ -54,7 +54,6 @@
 - type: entity
   parent: ShuttleWindow
   id: MiningWindowDiagonal
-  name: diagonal mining window
   suffix: diagonal
   placement:
     mode: SnapgridCenter

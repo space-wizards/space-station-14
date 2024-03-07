@@ -1,3 +1,5 @@
+# Food
+
 - type: reaction
   id: ProteinCooking
   impact: Low
@@ -18,6 +20,8 @@
   products:
     EggCooked: 0.5
 
+# Holy - TODO: make it so only the chaplain can use the bible to start these reactions, not anyone with a bible
+
 - type: reaction
   id: BloodToWine
   impact: Low
@@ -28,3 +32,14 @@
       amount: 1
   products:
     Wine: 1
+
+- type: reaction
+  id: WatertoHolyWater
+  impact: Low
+  requiredMixerCategories:
+  - Holy
+  reactants:
+    Water:
+      amount: 1
+  products:
+    Holywater: 1

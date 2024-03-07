@@ -76,7 +76,7 @@
         - !type:OrganType
           type: Arachnid
           shouldHave: true
-        amount: 4
+        amount: 0.4
 
 - type: reagent
   id: Fluorine
@@ -167,7 +167,7 @@
         - !type:OrganType
           type: Arachnid
           shouldHave: false
-        amount: 4
+        amount: 0.4
 
 - type: reagent
   id: Lithium
@@ -194,7 +194,7 @@
         emote: Laugh
         probability: 0.05
 
-  # TODO: cause confusion and some brain damage
+  # TODO: cause some brain damage when woundmed, and generally reduce the stutter/scrambledaccent unless high doses
 
 - type: reagent
   id: Mercury
@@ -213,6 +213,9 @@
         damage:
           types:
             Poison: 1
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: ScrambledAccent
 
 - type: reagent
   id: Potassium

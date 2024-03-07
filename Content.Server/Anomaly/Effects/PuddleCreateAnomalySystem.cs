@@ -1,7 +1,7 @@
 using Content.Server.Anomaly.Components;
-using Content.Shared.Anomaly.Components;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
+using Content.Shared.Anomaly.Components;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -19,21 +19,21 @@ public sealed class PuddleCreateAnomalySystem : EntitySystem
         SubscribeLocalEvent<PuddleCreateAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical, before: new[] { typeof(InjectionAnomalySystem) });
     }
 
-    private void OnPulse(EntityUid uid, PuddleCreateAnomalyComponent component, ref AnomalyPulseEvent args)
+    private void OnPulse(Entity<PuddleCreateAnomalyComponent> entity, ref AnomalyPulseEvent args)
     {
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var sol))
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var sol, out _))
             return;
 
-        var xform = Transform(uid);
-        var puddleSol = _solutionContainer.SplitSolution(uid, sol, component.MaxPuddleSize * args.Severity);
-        _puddle.TrySplashSpillAt(uid, xform.Coordinates, puddleSol, out _);
+        var xform = Transform(entity.Owner);
+        var puddleSol = _solutionContainer.SplitSolution(sol.Value, entity.Comp.MaxPuddleSize * args.Severity);
+        _puddle.TrySplashSpillAt(entity.Owner, xform.Coordinates, puddleSol, out _);
     }
-    private void OnSupercritical(EntityUid uid, PuddleCreateAnomalyComponent component, ref AnomalySupercriticalEvent args)
+    private void OnSupercritical(Entity<PuddleCreateAnomalyComponent> entity, ref AnomalySupercriticalEvent args)
     {
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var sol))
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var sol))
             return;
-        var buffer = sol;
-        var xform = Transform(uid);
-        _puddle.TrySpillAt(xform.Coordinates, buffer, out _);
+
+        var xform = Transform(entity.Owner);
+        _puddle.TrySpillAt(xform.Coordinates, sol, out _);
     }
 }

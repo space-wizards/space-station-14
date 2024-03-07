@@ -1,6 +1,7 @@
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Humanoid;
+using Content.Shared.Clothing;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Humanoid;
@@ -8,6 +9,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
 
@@ -21,6 +23,7 @@ public class IdentitySystem : SharedIdentitySystem
     [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
 
     private HashSet<EntityUid> _queuedIdentityUpdates = new();
@@ -33,6 +36,7 @@ public class IdentitySystem : SharedIdentitySystem
         SubscribeLocalEvent<IdentityComponent, DidEquipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
+        SubscribeLocalEvent<IdentityComponent, WearerMaskToggledEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
     }
 
@@ -57,7 +61,7 @@ public class IdentitySystem : SharedIdentitySystem
         var ident = Spawn(null, Transform(uid).Coordinates);
 
         QueueIdentityUpdate(uid);
-        component.IdentityEntitySlot.Insert(ident);
+        _container.Insert(ident, component.IdentityEntitySlot);
     }
 
     /// <summary>

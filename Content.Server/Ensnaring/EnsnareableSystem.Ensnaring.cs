@@ -91,7 +91,7 @@ public sealed partial class EnsnareableSystem
         }
 
         component.Ensnared = target;
-        ensnareable.Container.Insert(ensnare);
+        _container.Insert(ensnare, ensnareable.Container);
         ensnareable.IsEnsnared = true;
         Dirty(ensnareable);
 
@@ -147,7 +147,7 @@ public sealed partial class EnsnareableSystem
 
         var target = component.Ensnared.Value;
 
-        ensnareable.Container.Remove(ensnare, force: true);
+        _container.Remove(ensnare, ensnareable.Container, force: true);
         ensnareable.IsEnsnared = ensnareable.Container.ContainedEntities.Count > 0;
         Dirty(ensnareable);
         component.Ensnared = null;

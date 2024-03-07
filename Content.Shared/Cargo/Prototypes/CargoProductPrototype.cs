@@ -1,12 +1,22 @@
 ﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Cargo.Prototypes
 {
-    [Prototype("cargoProduct")]
-    public sealed partial class CargoProductPrototype : IPrototype
+    [Prototype]
+    public sealed partial class CargoProductPrototype : IPrototype, IInheritingPrototype
     {
+        /// <inheritdoc />
+        [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<CargoProductPrototype>))]
+        public string[]? Parents { get; }
+
+        /// <inheritdoc />
+        [NeverPushInheritance]
+        [AbstractDataField]
+        public bool Abstract { get; }
+
         [DataField("name")] private string _name = string.Empty;
 
         [DataField("description")] private string _description = string.Empty;
@@ -58,31 +68,31 @@ namespace Content.Shared.Cargo.Prototypes
         /// <summary>
         ///     Texture path used in the CargoConsole GUI.
         /// </summary>
-        [DataField("icon")]
+        [DataField]
         public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
 
         /// <summary>
-        ///     The prototype name of the product.
+        ///     The entity prototype ID of the product.
         /// </summary>
-        [DataField("product", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string Product { get; private set; } = string.Empty;
+        [DataField]
+        public EntProtoId Product { get; private set; } = string.Empty;
 
         /// <summary>
         ///     The point cost of the product.
         /// </summary>
-        [DataField("cost")]
-        public int PointCost { get; private set; }
+        [DataField]
+        public int Cost { get; private set; }
 
         /// <summary>
         ///     The prototype category of the product. (e.g. Engineering, Medical)
         /// </summary>
-        [DataField("category")]
+        [DataField]
         public string Category { get; private set; } = string.Empty;
 
         /// <summary>
         ///     The prototype group of the product. (e.g. Contraband)
         /// </summary>
-        [DataField("group")]
-        public string Group { get; private set; } = string.Empty;
+        [DataField]
+        public string Group { get; private set; } = "market";
     }
 }

@@ -15,6 +15,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -116,6 +117,13 @@ namespace Content.Server.Ghost
 
         private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, ref MoveInputEvent args)
         {
+            // If they haven't actually moved then ignore it.
+            if ((args.Component.HeldMoveButtons &
+                 (MoveButtons.Down | MoveButtons.Left | MoveButtons.Up | MoveButtons.Right)) == 0x0)
+            {
+                return;
+            }
+
             // Let's not ghost if our mind is visiting...
             if (HasComp<VisitingMindComponent>(uid))
                 return;
@@ -256,7 +264,7 @@ namespace Content.Server.Ghost
             }
 
             var response = new GhostWarpsResponseEvent(GetPlayerWarps(entity).Concat(GetLocationWarps()).ToList());
-            RaiseNetworkEvent(response, args.SenderSession.ConnectedClient);
+            RaiseNetworkEvent(response, args.SenderSession.Channel);
         }
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)

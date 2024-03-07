@@ -10,7 +10,7 @@ namespace Content.Shared.Weapons.Melee;
 /// <summary>
 /// When given to a mob lets them do unarmed attacks, or when given to an item lets someone wield it to do attacks.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class MeleeWeaponComponent : Component
 {
     // TODO: This is becoming bloated as shit.
@@ -33,6 +33,7 @@ public sealed partial class MeleeWeaponComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     [ViewVariables(VVAccess.ReadWrite)]
+    [AutoPausedField]
     public TimeSpan NextAttack;
 
     /// <summary>
@@ -61,10 +62,16 @@ public sealed partial class MeleeWeaponComponent : Component
     public bool Attacking = false;
 
     /// <summary>
+    /// If true, attacks will be repeated automatically without requiring the mouse button to be lifted.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool AutoAttack;
+
+    /// <summary>
     /// Base damage for this weapon. Can be modified via heavy damage or other means.
     /// </summary>
-    [DataField(required:true)]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true)]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public DamageSpecifier Damage = default!;
 
     [DataField]
@@ -113,7 +120,7 @@ public sealed partial class MeleeWeaponComponent : Component
     /// This gets played whenever a melee attack is done. This is predicted by the client.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("soundSwing")]
+    [DataField("soundSwing"), AutoNetworkedField]
     public SoundSpecifier SwingSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg")
     {
         Params = AudioParams.Default.WithVolume(-3f).WithVariation(0.025f),
@@ -124,15 +131,15 @@ public sealed partial class MeleeWeaponComponent : Component
     // If overwatch and apex do this then we probably should too.
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("soundHit")]
+    [DataField("soundHit"), AutoNetworkedField]
     public SoundSpecifier? HitSound;
 
     /// <summary>
     /// Plays if no damage is done to the target entity.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("soundNoDamage")]
-    public SoundSpecifier NoDamageSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/tap.ogg");
+    [DataField("soundNoDamage"), AutoNetworkedField]
+    public SoundSpecifier NoDamageSound { get; set; } = new SoundCollectionSpecifier("WeakHit");
 }
 
 /// <summary>

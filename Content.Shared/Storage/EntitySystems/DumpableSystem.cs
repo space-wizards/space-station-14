@@ -2,12 +2,13 @@ using System.Linq;
 using Content.Shared.Disposal;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Placeable;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -15,6 +16,7 @@ namespace Content.Shared.Storage.EntitySystems;
 
 public sealed class DumpableSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -40,6 +42,12 @@ public sealed class DumpableSystem : EntitySystem
             return;
 
         if (!_disposalUnitSystem.HasDisposals(args.Target) && !HasComp<PlaceableSurfaceComponent>(args.Target))
+            return;
+
+        if (!TryComp<StorageComponent>(uid, out var storage))
+            return;
+
+        if (!storage.Container.ContainedEntities.Any())
             return;
 
         StartDoAfter(uid, args.Target.Value, args.User, component);
@@ -103,12 +111,25 @@ public sealed class DumpableSystem : EntitySystem
         }
     }
 
-    public void StartDoAfter(EntityUid storageUid, EntityUid? targetUid, EntityUid userUid, DumpableComponent dumpable)
+    private void StartDoAfter(EntityUid storageUid, EntityUid? targetUid, EntityUid userUid, DumpableComponent dumpable)
     {
         if (!TryComp<StorageComponent>(storageUid, out var storage))
             return;
 
-        float delay = storage.Container.ContainedEntities.Count * (float) dumpable.DelayPerItem.TotalSeconds * dumpable.Multiplier;
+        var delay = 0f;
+
+        foreach (var entity in storage.Container.ContainedEntities)
+        {
+            if (!TryComp<ItemComponent>(entity, out var itemComp) ||
+                !_prototypeManager.TryIndex(itemComp.Size, out var itemSize))
+            {
+                continue;
+            }
+
+            delay += itemSize.Weight;
+        }
+
+        delay *= (float) dumpable.DelayPerItem.TotalSeconds * dumpable.Multiplier;
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, delay, new DumpableDoAfterEvent(), storageUid, target: targetUid, used: storageUid)
         {
@@ -136,7 +157,7 @@ public sealed class DumpableSystem : EntitySystem
         {
             var transform = Transform(entity);
             _container.AttachParentToContainerOrGrid((entity, transform));
-            _transformSystem.SetLocalPositionRotation(transform, transform.LocalPosition + _random.NextVector2Box() / 2, _random.NextAngle());
+            _transformSystem.SetLocalPositionRotation(entity, transform.LocalPosition + _random.NextVector2Box() / 2, _random.NextAngle(), transform);
         }
 
         if (args.Args.Target == null)

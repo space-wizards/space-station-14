@@ -5,29 +5,26 @@ using Robust.Shared.Animations;
 
 namespace Content.Client.Rotation;
 
-public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsComponent>
+public sealed class RotationVisualizerSystem : SharedRotationVisualsSystem
 {
-    public void SetHorizontalAngle(EntityUid uid, Angle angle, RotationVisualsComponent? component = null)
+
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly AnimationPlayerSystem _animation = default!;
+
+    public override void Initialize()
     {
-        if (!Resolve(uid, ref component))
-            return;
+        base.Initialize();
 
-        if (component.HorizontalRotation.Equals(angle))
-            return;
-
-        component.HorizontalRotation = angle;
-        Dirty(component);
+        SubscribeLocalEvent<RotationVisualsComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    protected override void OnAppearanceChange(EntityUid uid, RotationVisualsComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(EntityUid uid, RotationVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        base.OnAppearanceChange(uid, component, ref args);
-
         if (args.Sprite == null)
             return;
 
         // If not defined, defaults to standing.
-        AppearanceSystem.TryGetData<RotationState>(uid, RotationVisuals.RotationState, out var state, args.Component);
+        _appearance.TryGetData<RotationState>(uid, RotationVisuals.RotationState, out var state, args.Component);
 
         switch (state)
         {
@@ -53,9 +50,9 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
         var animationComp = EnsureComp<AnimationPlayerComponent>(uid);
         const string animationKey = "rotate";
         // Stop the current rotate animation and then start a new one
-        if (AnimationSystem.HasRunningAnimation(animationComp, animationKey))
+        if (_animation.HasRunningAnimation(animationComp, animationKey))
         {
-            AnimationSystem.Stop(animationComp, animationKey);
+            _animation.Stop(animationComp, animationKey);
         }
 
         var animation = new Animation
@@ -77,6 +74,6 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
             }
         };
 
-        AnimationSystem.Play((uid, animationComp), animation, animationKey);
+        _animation.Play((uid, animationComp), animation, animationKey);
     }
 }

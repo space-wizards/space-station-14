@@ -30,15 +30,15 @@ public sealed class ActionContainerSystem : EntitySystem
         SubscribeLocalEvent<ActionsContainerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ActionsContainerComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
         SubscribeLocalEvent<ActionsContainerComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
+        SubscribeLocalEvent<ActionsContainerComponent, ActionAddedEvent>(OnActionAdded);
         SubscribeLocalEvent<ActionsContainerComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<ActionsContainerComponent, MindRemovedMessage>(OnMindRemoved);
     }
 
     private void OnMindAdded(EntityUid uid, ActionsContainerComponent component, MindAddedMessage args)
     {
-        if(!_mind.TryGetMind(uid, out var mindId, out _))
+        if (!_mind.TryGetMind(uid, out var mindId, out _))
             return;
-
         if (!TryComp<ActionsContainerComponent>(mindId, out var mindActionContainerComp))
             return;
 
@@ -143,20 +143,15 @@ public sealed class ActionContainerSystem : EntitySystem
             return;
 
         DebugTools.AssertEqual(action.Container, newContainer);
-        DebugTools.AssertNull(action.AttachedEntity);
-
-        if (attached != null)
-            _actions.AddActionDirect(attached.Value, actionId, action: action);
-
         DebugTools.AssertEqual(action.AttachedEntity, attached);
     }
 
     /// <summary>
     /// Transfers all actions from one container to another, while keeping the attached entity the same.
     /// </summary>
-    /// &lt;remarks&gt;
+    /// <remarks>
     /// While the attached entity should be the same at the end, this will actually remove and then re-grant the action.
-    /// &lt;/remarks&gt;
+    /// </remarks>
     public void TransferAllActions(
         EntityUid from,
         EntityUid to,
@@ -175,6 +170,61 @@ public sealed class ActionContainerSystem : EntitySystem
     }
 
     /// <summary>
+    /// Transfers an actions from one container to another, while changing the attached entity.
+    /// </summary>
+    /// <remarks>
+    /// This will actually remove and then re-grant the action.
+    /// Useful where you need to transfer from one container to another but also change the attached entity (ie spellbook > mind > user)
+    /// </remarks>
+    public void TransferActionWithNewAttached(
+        EntityUid actionId,
+        EntityUid newContainer,
+        EntityUid newAttached,
+        BaseActionComponent? action = null,
+        ActionsContainerComponent? container = null)
+    {
+        if (!_actions.ResolveActionData(actionId, ref action))
+            return;
+
+        if (action.Container == newContainer)
+            return;
+
+        var attached = newAttached;
+        if (!AddAction(newContainer, actionId, action, container))
+            return;
+
+        DebugTools.AssertEqual(action.Container, newContainer);
+        _actions.AddActionDirect(newAttached, actionId, action: action);
+
+        DebugTools.AssertEqual(action.AttachedEntity, attached);
+    }
+
+    /// <summary>
+    /// Transfers all actions from one container to another, while changing the attached entity.
+    /// </summary>
+    /// <remarks>
+    /// This will actually remove and then re-grant the action.
+    /// Useful where you need to transfer from one container to another but also change the attached entity (ie spellbook > mind > user)
+    /// </remarks>
+    public void TransferAllActionsWithNewAttached(
+        EntityUid from,
+        EntityUid to,
+        EntityUid newAttached,
+        ActionsContainerComponent? oldContainer = null,
+        ActionsContainerComponent? newContainer = null)
+    {
+        if (!Resolve(from, ref oldContainer) || !Resolve(to, ref newContainer))
+            return;
+
+        foreach (var action in oldContainer.Container.ContainedEntities.ToArray())
+        {
+            TransferActionWithNewAttached(action, to, newAttached, container: newContainer);
+        }
+
+        DebugTools.AssertEqual(oldContainer.Container.Count, 0);
+    }
+
+    /// <summary>
     /// Adds a pre-existing action to an action container. If the action is already in some container it will first remove it.
     /// </summary>
     public bool AddAction(EntityUid uid, EntityUid actionId, BaseActionComponent? action = null, ActionsContainerComponent? comp = null)
@@ -187,7 +237,7 @@ public sealed class ActionContainerSystem : EntitySystem
 
         DebugTools.AssertOwner(uid, comp);
         comp ??= EnsureComp<ActionsContainerComponent>(uid);
-        if (!comp.Container.Insert(actionId))
+        if (!_container.Insert(actionId, comp.Container))
         {
             Log.Error($"Failed to insert action {ToPrettyString(actionId)} into {ToPrettyString(uid)}");
             return false;
@@ -239,7 +289,7 @@ public sealed class ActionContainerSystem : EntitySystem
         if (_timing.ApplyingState && component.NetSyncEnabled)
             return; // The game state should handle the container removal & action deletion.
 
-        component.Container.Shutdown();
+        _container.ShutdownContainer(component.Container);
     }
 
     private void OnEntityInserted(EntityUid uid, ActionsContainerComponent component, EntInsertedIntoContainerMessage args)
@@ -250,11 +300,11 @@ public sealed class ActionContainerSystem : EntitySystem
         if (!_actions.TryGetActionData(args.Entity, out var data))
             return;
 
-        DebugTools.Assert(data.AttachedEntity == null || data.Container != EntityUid.Invalid);
-        DebugTools.Assert(data.Container == null || data.Container == uid);
-
-        data.Container = uid;
-        Dirty(uid, component);
+        if (data.Container != uid)
+        {
+            data.Container = uid;
+            Dirty(args.Entity, data);
+        }
 
         var ev = new ActionAddedEvent(args.Entity, data);
         RaiseLocalEvent(uid, ref ev);
@@ -265,21 +315,23 @@ public sealed class ActionContainerSystem : EntitySystem
         if (args.Container.ID != ActionsContainerComponent.ContainerId)
             return;
 
-        // Actions should only be getting removed while terminating or moving outside of PVS range.
-        DebugTools.Assert(Terminating(args.Entity)
-                          || _netMan.IsServer // I love gibbing code
-                          || _timing.ApplyingState);
-
         if (!_actions.TryGetActionData(args.Entity, out var data, false))
             return;
 
-        // No event - the only entity that should care about this is the entity that the action was provided to.
-        if (data.AttachedEntity != null)
-            _actions.RemoveAction(data.AttachedEntity.Value, args.Entity, null, data);
-
         var ev = new ActionRemovedEvent(args.Entity, data);
         RaiseLocalEvent(uid, ref ev);
+
+        if (data.Container == null)
+            return;
+
         data.Container = null;
+        Dirty(args.Entity, data);
+    }
+
+    private void OnActionAdded(EntityUid uid, ActionsContainerComponent component, ActionAddedEvent args)
+    {
+        if (TryComp<MindComponent>(uid, out var mindComp) && mindComp.OwnedEntity != null && HasComp<ActionsContainerComponent>(mindComp.OwnedEntity.Value))
+            _actions.GrantContainedAction(mindComp.OwnedEntity.Value, uid, args.Action);
     }
 }
 

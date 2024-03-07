@@ -74,8 +74,8 @@ public sealed class PryingSystem : EntitySystem
 
         if (!CanPry(target, user, out var message, comp))
         {
-            if (message != null)
-                Popup.PopupEntity(Loc.GetString(message), target, user);
+            if (!string.IsNullOrWhiteSpace(message))
+                Popup.PopupClient(Loc.GetString(message), target, user);
             // If we have reached this point we want the event that caused this
             // to be marked as handled.
             return true;
@@ -158,10 +158,19 @@ public sealed class PryingSystem : EntitySystem
         if (args.Target is null)
             return;
 
-        PryingComponent? comp = null;
+        TryComp<PryingComponent>(args.Used, out var comp);
 
-        if (args.Used != null && Resolve(args.Used.Value, ref comp))
+        if (!CanPry(uid, args.User, out var message, comp))
+        {
+            if (!string.IsNullOrWhiteSpace(message))
+                Popup.PopupClient(Loc.GetString(message), uid, args.User);
+            return;
+        }
+
+        if (args.Used != null && comp != null)
+        {
             _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User);
+        }
 
         var ev = new PriedEvent(args.User);
         RaiseLocalEvent(uid, ref ev);

@@ -56,6 +56,18 @@
   - type: BureaucraticErrorRule
 
 - type: entity
+  id: ClericalError
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-clerical-error-announcement
+    minimumPlayers: 15
+    weight: 5
+    duration: 1
+  - type: ClericalErrorRule
+
+- type: entity
   parent: BaseGameRule
   id: ClosetSkeleton
   noSpawn: true
@@ -128,7 +140,7 @@
     endAnnouncement: station-event-gas-leak-end-announcement
     earliestStart: 10
     minimumPlayers: 5
-    weight: 5
+    weight: 10
     startDelay: 20
   - type: GasLeakRule
 
@@ -170,6 +182,10 @@
   noSpawn: true
   components:
   - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    startDelay: 10
     earliestStart: 30
     minimumPlayers: 35
     weight: 5
@@ -192,6 +208,10 @@
   noSpawn: true
   components:
   - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    startDelay: 10
     weight: 5
     duration: 50
   - type: VentCrittersRule
@@ -261,6 +281,19 @@
     doorToggleChancePerSecond: 0.001
 
 - type: entity
+  parent: BaseGameRule
+  id: TerminatorSpawn
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 8
+    duration: 1
+    earliestStart: 30
+    minimumPlayers: 20
+  - type: RandomSpawnRule
+    prototype: SpawnPointGhostTerminator
+
+- type: entity
   id: VentClog
   parent: BaseGameRule
   noSpawn: true
@@ -282,7 +315,10 @@
   noSpawn: true
   components:
   - type: StationEvent
-    id: VentCritters
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    startDelay: 10
     earliestStart: 15
     minimumPlayers: 15
     weight: 5
@@ -302,6 +338,10 @@
   noSpawn: true
   components:
   - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    startDelay: 10
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
@@ -321,6 +361,10 @@
   noSpawn: true
   components:
   - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    startDelay: 10
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
@@ -336,6 +380,10 @@
   noSpawn: true
   components:
   - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    startDelay: 10
     earliestStart: 20
     minimumPlayers: 15
     weight: 1
@@ -352,6 +400,7 @@
   components:
   - type: StationEvent
     earliestStart: 50
+    minimumPlayers: 15
     weight: 5
     duration: 1
   - type: ZombieRule
@@ -411,11 +460,19 @@
   id: IonStorm
   components:
   - type: StationEvent
-    weight: 5
+    weight: 10
     earliestStart: 20
-    reoccurrenceDelay: 60
-    startAnnouncement: station-event-ion-storm-start-announcement
-    startAudio:
-      path: /Audio/Announcements/ion_storm.ogg
+    reoccurrenceDelay: 20
     duration: 1
   - type: IonStormRule
+
+- type: entity
+  id: MimicVendorRule
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      earliestStart: 0
+      minimumPlayers: 20
+      weight: 5
+    - type: MobReplacementRule

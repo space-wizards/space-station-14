@@ -11,6 +11,9 @@
       "name": "gun_sight"
     },
     {
+      "name": "gun_bolt_sight"
+    },
+    {
       "name": "melee_sight"
     }
   ]

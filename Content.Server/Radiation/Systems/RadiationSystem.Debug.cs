@@ -34,7 +34,7 @@ public partial class RadiationSystem
         }
 
         var ev = new OnRadiationOverlayToggledEvent(isEnabled);
-        RaiseNetworkEvent(ev, session.ConnectedClient);
+        RaiseNetworkEvent(ev, session.Channel);
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ public partial class RadiationSystem
         {
             if (session.Status != SessionStatus.InGame)
                 _debugSessions.Remove(session);
-            RaiseNetworkEvent(ev, session.ConnectedClient);
+            RaiseNetworkEvent(ev, session.Channel);
         }
     }
 

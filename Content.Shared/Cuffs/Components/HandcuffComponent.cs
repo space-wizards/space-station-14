@@ -25,7 +25,7 @@ public sealed partial class HandcuffComponent : Component
     ///     The time it takes for a cuffed entity to uncuff itself.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float BreakoutTime = 30f;
+    public float BreakoutTime = 15f;
 
     /// <summary>
     ///     If an entity being cuffed is stunned, this amount of time is subtracted from the time it takes to add/remove their cuffs.
@@ -45,14 +45,12 @@ public sealed partial class HandcuffComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId? BrokenPrototype;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public DamageSpecifier DamageOnResist = new()
-    {
-        DamageDict = new()
-             {
-                 { "Blunt", 3.0 },
-             }
-    };
+    /// <summary>
+    /// Whether or not these cuffs are in the process of being removed.
+    /// Used simply to prevent spawning multiple <see cref="BrokenPrototype"/>.
+    /// </summary>
+    [DataField]
+    public bool Removing;
 
     /// <summary>
     ///     The path of the RSI file used for the player cuffed overlay.

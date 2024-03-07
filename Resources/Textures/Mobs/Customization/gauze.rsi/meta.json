@@ -58,6 +58,38 @@
 	{
 	  "name": "gauze_lowerleg_l",
 	  "directions": 4
-	}
+	},
+	{
+	  "name": "gauze_boxerwrap_r",
+	  "directions": 4
+	},
+	{
+	  "name": "gauze_boxerwrap_l",
+	  "directions": 4
+	},
+	{
+      "name": "gauze_blindfold",
+      "directions": 4
+    },
+	{
+      "name": "gauze_lizardblindfold",
+      "directions": 4
+    },
+	{
+      "name": "gauze_lizardrighteye",
+      "directions": 4
+    },
+    {
+      "name": "gauze_lizardlefteye",
+      "directions": 4
+    },
+    {
+      "name": "gauze_lizardfoot_r",
+      "directions": 4
+    },
+    {
+      "name": "gauze_lizardfoot_l",
+      "directions": 4
+    }
   ]
 }

@@ -8,10 +8,6 @@
   - type: HumanoidAppearance
     species: Reptilian
   - type: Hunger
-    starvationDamage:
-      types:
-        Cold: 0.5
-        Bloodloss: 0.5
   - type: Puller
     needsHands: false
   - type: Thirst
@@ -21,16 +17,19 @@
   - type: Body
     prototype: Reptilian
     requiredLegs: 2
-  - type: Perishable
   - type: Butcherable
     butcheringType: Spike
     spawned:
     - id: FoodMeatLizard
       amount: 5
+  - type: Inventory
+    speciesId: reptilian
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard
     speechVerb: Reptilian
+  - type: TypingIndicator
+    proto: lizard
   - type: Vocal
     sounds:
       Male: UnisexReptilian
@@ -43,10 +42,10 @@
     soundHit:
       path: /Audio/Weapons/pierce.ogg
     angle: 30
-    animation: WeaponArcPunch
+    animation: WeaponArcClaw
     damage:
       types:
-        Piercing: 5
+        Slash: 5
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285
@@ -57,7 +56,8 @@
         Cold : 0.1 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat : 0.1 #per second, scales with temperature & other constants
+        Heat : 1.5 #per second, scales with temperature & other constants
+  - type: Wagging
 
 - type: entity
   parent: BaseSpeciesDummy

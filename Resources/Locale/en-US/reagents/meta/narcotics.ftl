@@ -16,10 +16,10 @@ reagent-desc-thc = The main psychoactive compound in cannabis.
 reagent-name-thc-oil = THC oil
 reagent-desc-thc-oil = Pure THC oil, extracted from the leaves of the cannabis plant. Much stronger than its natural form and can be used to numb chronic pain in patients.
 
-reagent-name-bananadine = Bananadine
+reagent-name-bananadine = bananadine
 reagent-desc-bananadine = A mild psychedelic that is found in small traces in banana peels.
 
-reagent-name-nicotine = Nicotine
+reagent-name-nicotine = nicotine
 reagent-desc-nicotine = Dangerous and highly addictive, but that's what the propaganda says.
 
 reagent-name-impedrezene = impedrezene
@@ -36,3 +36,6 @@ reagent-desc-mute-toxin = A thick chemical that coats the vocal cords, making th
 
 reagent-name-norepinephric-acid = norepinephric acid
 reagent-desc-norepinephric-acid = A smooth chemical that blocks the optical receptors, rendering the user blind during metabolization.
+
+reagent-name-tear-gas = tear gas
+reagent-desc-tear-gas = A chemical that causes severe irritation and crying, commonly used in riot control.

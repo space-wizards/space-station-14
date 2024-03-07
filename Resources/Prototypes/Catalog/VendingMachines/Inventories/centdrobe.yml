@@ -7,6 +7,7 @@
     ClothingEyesGlassesSunglasses: 3
     ClothingUniformJumpsuitCentcomOfficer: 3
     ClothingUniformJumpsuitCentcomOfficial: 3
+    ClothingUniformJumpsuitCentcomAgent: 3
     ClothingUniformJumpsuitCentcomFormal: 3
     ClothingUniformJumpskirtCentcomFormalDress: 3
     ClothingHeadHatCentcom: 3
@@ -14,5 +15,6 @@
     ClothingMaskGasCentcom: 3
     ClothingHeadsetCentCom: 3
     ClothingOuterWinterCentcom: 3
+    ClothingOuterCoatExpensive: 1
     ClothingNeckScarfStripedCentcom: 3
-    
+    ClothingNeckCloakCentcom: 3

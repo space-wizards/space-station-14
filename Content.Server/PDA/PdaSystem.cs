@@ -1,5 +1,6 @@
 using Content.Server.AlertLevel;
 using Content.Server.CartridgeLoader;
+using Content.Server.Chat.Managers;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.Instruments;
 using Content.Server.Light.EntitySystems;
@@ -10,10 +11,14 @@ using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.CartridgeLoader;
+using Content.Shared.Chat;
 using Content.Shared.Light.Components;
 using Content.Shared.PDA;
+using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.PDA
 {
@@ -24,8 +29,10 @@ namespace Content.Server.PDA
         [Dependency] private readonly RingerSystem _ringer = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly StoreSystem _store = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
+        [Dependency] private readonly ContainerSystem _containerSystem = default!;
 
         public override void Initialize()
         {
@@ -40,6 +47,8 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PdaComponent, PdaShowMusicMessage>(OnUiMessage);
             SubscribeLocalEvent<PdaComponent, PdaShowUplinkMessage>(OnUiMessage);
             SubscribeLocalEvent<PdaComponent, PdaLockUplinkMessage>(OnUiMessage);
+
+            SubscribeLocalEvent<PdaComponent, CartridgeLoaderNotificationSentEvent>(OnNotification);
 
             SubscribeLocalEvent<StationRenamedEvent>(OnStationRenamed);
             SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
@@ -64,7 +73,7 @@ namespace Content.Server.PDA
 
         protected override void OnItemRemoved(EntityUid uid, PdaComponent pda, EntRemovedFromContainerMessage args)
         {
-            if (args.Container.ID != pda.IdSlot.ID && args.Container.ID != pda.PenSlot.ID)
+            if (args.Container.ID != pda.IdSlot.ID && args.Container.ID != pda.PenSlot.ID && args.Container.ID != pda.PaiSlot.ID)
                 return;
 
             // TODO: This is super cursed just use compstates please.
@@ -106,6 +115,28 @@ namespace Content.Server.PDA
             }
         }
 
+        private void OnNotification(Entity<PdaComponent> ent, ref CartridgeLoaderNotificationSentEvent args)
+        {
+            _ringer.RingerPlayRingtone(ent.Owner);
+
+            if (!_containerSystem.TryGetContainingContainer(ent, out var container)
+                || !TryComp<ActorComponent>(container.Owner, out var actor))
+                return;
+
+            var message = FormattedMessage.EscapeText(args.Message);
+            var wrappedMessage = Loc.GetString("pda-notification-message",
+                ("header", args.Header),
+                ("message", message));
+
+            _chatManager.ChatMessageToOne(
+                ChatChannel.Notifications,
+                message,
+                wrappedMessage,
+                EntityUid.Invalid,
+                false,
+                actor.PlayerSession.Channel);
+        }
+
         /// <summary>
         /// Send new UI state to clients, call if you modify something like uplink.
         /// </summary>
@@ -137,6 +168,7 @@ namespace Content.Server.PDA
                 GetNetEntity(loader.ActiveProgram),
                 pda.FlashlightOn,
                 pda.PenSlot.HasItem,
+                pda.PaiSlot.HasItem,
                 new PdaIdInfoText
                 {
                     ActualOwnerName = pda.OwnerName,

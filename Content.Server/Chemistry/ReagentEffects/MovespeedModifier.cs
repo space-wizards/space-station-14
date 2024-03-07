@@ -15,19 +15,19 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// <summary>
         /// How much the entities' walk speed is multiplied by.
         /// </summary>
-        [DataField("walkSpeedModifier")]
+        [DataField]
         public float WalkSpeedModifier { get; set; } = 1;
 
         /// <summary>
         /// How much the entities' run speed is multiplied by.
         /// </summary>
-        [DataField("sprintSpeedModifier")]
+        [DataField]
         public float SprintSpeedModifier { get; set; } = 1;
 
         /// <summary>
         /// How long the modifier applies (in seconds) when metabolized.
         /// </summary>
-        [DataField("statusLifetime")]
+        [DataField]
         public float StatusLifetime = 2f;
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

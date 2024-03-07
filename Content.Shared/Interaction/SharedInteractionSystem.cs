@@ -6,7 +6,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
-using Content.Shared.DragDrop;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
@@ -21,7 +20,6 @@ using Content.Shared.Popups;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Tag;
-using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Wall;
@@ -67,8 +65,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
 
-        private const CollisionGroup InRangeUnobstructedMask
-            = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
+        private const CollisionGroup InRangeUnobstructedMask = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
 
         public const float InteractionRange = 1.5f;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
@@ -169,7 +166,6 @@ namespace Content.Shared.Interaction
             else if (_net.IsServer)
                 QueueDel(uid);
         }
-
 
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
@@ -953,7 +949,7 @@ namespace Content.Shared.Interaction
             UseDelayComponent? delayComponent = null;
             if (checkUseDelay
                 && TryComp(used, out delayComponent)
-                && delayComponent.ActiveDelay)
+                && _useDelay.IsDelayed((used, delayComponent)))
                 return false;
 
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, used))
@@ -977,7 +973,8 @@ namespace Content.Shared.Interaction
                 return false;
 
             DoContactInteraction(user, used, activateMsg);
-            _useDelay.BeginDelay(used, delayComponent);
+            if (delayComponent != null)
+                _useDelay.TryResetDelay((used, delayComponent));
             if (!activateMsg.WasLogged)
                 _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
             return true;
@@ -1002,7 +999,7 @@ namespace Content.Shared.Interaction
 
             if (checkUseDelay
                 && TryComp(used, out delayComponent)
-                && delayComponent.ActiveDelay)
+                && _useDelay.IsDelayed((used, delayComponent)))
                 return true; // if the item is on cooldown, we consider this handled.
 
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, used))
@@ -1016,7 +1013,8 @@ namespace Content.Shared.Interaction
             if (useMsg.Handled)
             {
                 DoContactInteraction(user, used, useMsg);
-                _useDelay.BeginDelay(used, delayComponent);
+                if (delayComponent != null && useMsg.ApplyDelay)
+                    _useDelay.TryResetDelay((used, delayComponent));
                 return true;
             }
 

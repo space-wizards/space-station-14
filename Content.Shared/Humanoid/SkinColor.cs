@@ -5,6 +5,8 @@ public static class SkinColor
     public const float MaxTintedHuesSaturation = 0.1f;
     public const float MinTintedHuesLightness = 0.85f;
 
+    public const float MinHuesLightness = 0.175f;
+
     public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
 
     /// <summary>
@@ -138,13 +140,35 @@ public static class SkinColor
         return Color.ToHsl(color).Y <= MaxTintedHuesSaturation && Color.ToHsl(color).Z >= MinTintedHuesLightness;
     }
 
+    /// <summary>
+    ///     This takes in a color, and returns a color guaranteed to be above MinHuesLightness
+    /// </summary>
+    /// <param name="color"></param>
+    /// <returns>Either the color as-is if it's above MinHuesLightness, or the color with luminosity increased above MinHuesLightness</returns> 
+    public static Color MakeHueValid(Color color)
+    {
+        var manipulatedColor = Color.ToHsv(color);
+        manipulatedColor.Z = Math.Max(manipulatedColor.Z, MinHuesLightness);
+        return Color.FromHsv(manipulatedColor);
+    }
+
+    /// <summary>
+    ///     Verify if this color is above a minimum luminosity
+    /// </summary>
+    /// <param name="color"></param>
+    /// <returns>True if valid, false if not</returns>
+    public static bool VerifyHues(Color color)
+    {
+        return Color.ToHsv(color).Z >= MinHuesLightness;
+    }
+
     public static bool VerifySkinColor(HumanoidSkinColor type, Color color)
     {
         return type switch
         {
             HumanoidSkinColor.HumanToned => VerifyHumanSkinTone(color),
             HumanoidSkinColor.TintedHues => VerifyTintedHues(color),
-            HumanoidSkinColor.Hues => true,
+            HumanoidSkinColor.Hues => VerifyHues(color),
             _ => false,
         };
     }
@@ -155,6 +179,7 @@ public static class SkinColor
         {
             HumanoidSkinColor.HumanToned => ValidHumanSkinTone,
             HumanoidSkinColor.TintedHues => ValidTintedHuesSkinTone(color),
+            HumanoidSkinColor.Hues => MakeHueValid(color),
             _ => color
         };
     }

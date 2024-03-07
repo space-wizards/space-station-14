@@ -40,7 +40,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         SubscribeLocalEvent<GhostComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
         SubscribeLocalEvent<StationDataComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
         SubscribeLocalEvent<EventHorizonComponent, MapInitEvent>(OnHorizonMapInit);
-        SubscribeLocalEvent<EventHorizonComponent, EntityUnpausedEvent>(OnHorizonUnpaused);
         SubscribeLocalEvent<EventHorizonComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<EventHorizonComponent, EntGotInsertedIntoContainerMessage>(OnEventHorizonContained);
         SubscribeLocalEvent<EventHorizonContainedEvent>(OnEventHorizonContained);
@@ -55,11 +54,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     private void OnHorizonMapInit(EntityUid uid, EventHorizonComponent component, MapInitEvent args)
     {
         component.NextConsumeWaveTime = _timing.CurTime;
-    }
-
-    private void OnHorizonUnpaused(EntityUid uid, EventHorizonComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextConsumeWaveTime += args.PausedTime;
     }
 
     public override void Shutdown()
@@ -215,7 +209,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
             var target_container = outerContainer;
             while (target_container != null)
             {
-                if (target_container.Insert(entity))
+                if (_containerSystem.Insert(entity, target_container))
                     break;
 
                 _containerSystem.TryGetContainingContainer(target_container.Owner, out target_container);
@@ -325,8 +319,10 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (!Resolve(uid, ref xform, ref eventHorizon))
             return;
 
-        ConsumeEntitiesInRange(uid, range, xform, eventHorizon);
-        ConsumeTilesInRange(uid, range, xform, eventHorizon);
+        if (eventHorizon.ConsumeEntities)
+            ConsumeEntitiesInRange(uid, range, xform, eventHorizon);
+        if (eventHorizon.ConsumeTiles)
+            ConsumeTilesInRange(uid, range, xform, eventHorizon);
     }
 
     #endregion Consume

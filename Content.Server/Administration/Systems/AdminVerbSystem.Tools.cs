@@ -12,6 +12,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -40,7 +41,7 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
-    [Dependency] private readonly DoorBoltSystem _boltsSystem = default!;
+    [Dependency] private readonly DoorSystem _door = default!;
     [Dependency] private readonly AirlockSystem _airlockSystem = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
     [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
@@ -52,6 +53,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly BatterySystem _batterySystem = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+    [Dependency] private readonly GunSystem _gun = default!;
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
@@ -76,7 +78,7 @@ public sealed partial class AdminVerbSystem
                         : new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/bolt.png")),
                     Act = () =>
                     {
-                        _boltsSystem.SetBoltsWithAudio(args.Target, bolts, !bolts.BoltsDown);
+                        _door.SetBoltsDown((args.Target, bolts), !bolts.BoltsDown);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString(bolts.BoltsDown
@@ -170,7 +172,6 @@ public sealed partial class AdminVerbSystem
                     Act = () =>
                     {
                         _batterySystem.SetCharge(args.Target, battery.MaxCharge, battery);
-                        Dirty(args.Target, battery);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-refill-battery-description"),
@@ -186,7 +187,6 @@ public sealed partial class AdminVerbSystem
                     Act = () =>
                     {
                         _batterySystem.SetCharge(args.Target, 0, battery);
-                        Dirty(args.Target, battery);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-drain-battery-description"),
@@ -556,7 +556,6 @@ public sealed partial class AdminVerbSystem
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
                         _batterySystem.SetCharge(ent, battery.MaxCharge, battery);
-                        Dirty(ent, battery);
                     }
                 },
                 Impact = LogImpact.Extreme,
@@ -578,7 +577,6 @@ public sealed partial class AdminVerbSystem
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
                         _batterySystem.SetCharge(ent, 0, battery);
-                        Dirty(ent, battery);
                     }
                 },
                 Impact = LogImpact.Extreme,
@@ -701,7 +699,8 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Weapons/Guns/HMGs/minigun.rsi"), "icon"),
                 Act = () =>
                 {
-                    gun.FireRate = 15;
+                    EnsureComp<AdminMinigunComponent>(args.Target);
+                    _gun.RefreshModifiers((args.Target, gun));
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-minigun-fire-description"),
@@ -772,18 +771,20 @@ public sealed partial class AdminVerbSystem
         {
             foreach (var grid in station.Grids)
             {
-                foreach (var ent in Transform(grid).ChildEntities)
+                var enumerator = Transform(grid).ChildEnumerator;
+                while (enumerator.MoveNext(out var ent))
                 {
                     yield return ent;
                 }
             }
         }
-
         else if (HasComp<MapComponent>(target))
         {
-            foreach (var possibleGrid in Transform(target).ChildEntities)
+            var enumerator = Transform(target).ChildEnumerator;
+            while (enumerator.MoveNext(out var possibleGrid))
             {
-                foreach (var ent in Transform(possibleGrid).ChildEntities)
+                var enumerator2 = Transform(possibleGrid).ChildEnumerator;
+                while (enumerator2.MoveNext(out var ent))
                 {
                     yield return ent;
                 }
@@ -791,7 +792,8 @@ public sealed partial class AdminVerbSystem
         }
         else
         {
-            foreach (var ent in Transform(target).ChildEntities)
+            var enumerator = Transform(target).ChildEnumerator;
+            while (enumerator.MoveNext(out var ent))
             {
                 yield return ent;
             }

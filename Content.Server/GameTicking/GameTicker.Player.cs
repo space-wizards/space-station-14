@@ -66,6 +66,8 @@ namespace Content.Server.GameTicking
                         ? Loc.GetString("player-first-join-message", ("name", args.Session.Name))
                         : Loc.GetString("player-join-message", ("name", args.Session.Name)));
 
+                    RaiseNetworkEvent(GetConnectionStatusMsg(), session.Channel);
+
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                     {
                         _roundStartCountdownHasNotStartedYetDueToNoPlayers = false;
@@ -166,7 +168,7 @@ namespace Content.Server.GameTicking
             _playerGameStatuses[session.UserId] = PlayerGameStatus.JoinedGame;
             _db.AddRoundPlayers(RoundId, session.UserId);
 
-            RaiseNetworkEvent(new TickerJoinGameEvent(), session.ConnectedClient);
+            RaiseNetworkEvent(new TickerJoinGameEvent(), session.Channel);
         }
 
         private void PlayerJoinLobby(ICommonSession session)
@@ -174,7 +176,7 @@ namespace Content.Server.GameTicking
             _playerGameStatuses[session.UserId] = LobbyEnabled ? PlayerGameStatus.NotReadyToPlay : PlayerGameStatus.ReadyToPlay;
             _db.AddRoundPlayers(RoundId, session.UserId);
 
-            var client = session.ConnectedClient;
+            var client = session.Channel;
             RaiseNetworkEvent(new TickerJoinLobbyEvent(), client);
             RaiseNetworkEvent(GetStatusMsg(session), client);
             RaiseNetworkEvent(GetInfoMsg(), client);

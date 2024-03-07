@@ -5,6 +5,8 @@
   id: FoodBowlBase
   abstract: true
   components:
+  - type: Item
+    storedRotation: -90
   - type: Food
     trash: FoodBowlBig
     utensil: Spoon
@@ -48,6 +50,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -8
       - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
