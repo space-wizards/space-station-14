@@ -87,12 +87,8 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         List<PrototypeLayerData>? layers = null;
 
-        //if there are layers manually set by the user here, we use them
-        if (item.Layers != null)
-            layers = item.Layers;
-
         // first attempt to get species specific data.
-        if (layers == null && inventory.SpeciesId != null)
+        if (inventory.SpeciesId != null)
             item.ClothingVisuals.TryGetValue($"{args.Slot}-{inventory.SpeciesId}", out layers);
 
         // if that returned nothing, attempt to find generic data

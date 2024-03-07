@@ -43,13 +43,16 @@ public sealed class RandomSpriteSystem : SharedRandomSpriteSystem
         if (!Resolve(uid, ref clothing, false))
             return;
 
-        if (clothing.Layers == null)
+        if (clothing.ClothingVisuals == null)
             return;
 
-        foreach (var keyColorPair in component.Selected)
+        foreach (var slotPair in clothing.ClothingVisuals)
         {
-            _clothing.SetLayerColor(clothing, keyColorPair.Key, keyColorPair.Value.Color);
-            _clothing.SetLayerState(clothing, keyColorPair.Key, keyColorPair.Value.State);
+            foreach (var keyColorPair in component.Selected)
+            {
+                _clothing.SetLayerColor(clothing, slotPair.Key, keyColorPair.Key, keyColorPair.Value.Color);
+                _clothing.SetLayerState(clothing, slotPair.Key, keyColorPair.Key, keyColorPair.Value.State);
+            }
         }
     }
 
