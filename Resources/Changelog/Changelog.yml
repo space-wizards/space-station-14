@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix salvage magnet deleting mobs.
-    type: Fix
-  id: 5609
-  time: '2024-01-07T06:40:49.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23657
-- author: Ubaser
-  changes:
-  - message: You can now craft flower wreaths.
-    type: Add
-  id: 5610
-  time: '2024-01-07T07:03:46.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23662
 - author: Aexxie
   changes:
   - message: Added the Central Commander's cloak
@@ -3816,3 +3802,17 @@
   id: 6108
   time: '2024-03-07T20:50:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25889
+- author: NakataRin
+  changes:
+  - message: Evacuation shuttle arrives 10 minutes on green alert now.
+    type: Tweak
+  id: 6109
+  time: '2024-03-07T21:01:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25906
+- author: Admiral-Obvious-001
+  changes:
+  - message: Zombies are now tougher to kill.
+    type: Tweak
+  id: 6110
+  time: '2024-03-07T21:02:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25876
