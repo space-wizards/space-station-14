@@ -1,5 +1,5 @@
 # Error messages
-cognislime-invalid = You can't use this on that.
+cognislime-invalid = You can't make that sentient.
 
 # Success messages
 cognislime-applying = You begin to apply the cognislime.

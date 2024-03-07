@@ -20,8 +20,8 @@ namespace Content.Server.Cognislime;
 /// </summary>
 public sealed class CognislimeSystem : SharedCognislimeSystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

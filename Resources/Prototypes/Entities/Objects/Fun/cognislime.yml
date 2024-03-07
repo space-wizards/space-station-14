@@ -9,10 +9,9 @@
     sprite: Objects/Fun/cognislime.rsi
     state: cognislime
   - type: Item
-    sprite: Objects/Fun/cognislime.rsi
 
 - type: entity
-  parent: BaseItem
+  parent: Cognislime
   id: CognislimeCrystalline
   name: crystalline cognislime
   description: A purer but smaller form of cognislime granting mobility to objects it's used on, as long as they're small enough.
@@ -25,5 +24,3 @@
   - type: Sprite
     sprite: Objects/Fun/cognislime.rsi
     state: cognislime_crystalline
-  - type: Item
-    sprite: Objects/Fun/cognislime.rsi
