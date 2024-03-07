@@ -18,11 +18,4 @@ public abstract class SharedCognislimeSystem : EntitySystem
     public sealed partial class CognislimeDoAfterEvent : SimpleDoAfterEvent
     {
     }
-
-    public sealed class AddCognislimeDoAfterEvent : CancellableEntityEventArgs
-    {
-        public readonly EntityUid User;
-        public readonly EntityUid Target;
-        public readonly EntityUid Cognislime;
-    }
 }
