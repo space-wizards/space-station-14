@@ -126,6 +126,8 @@ namespace Content.Server.Zombies
             melee.Animation = zombiecomp.AttackAnimation;
             melee.WideAnimation = zombiecomp.AttackAnimation;
             melee.Range = 1.2f;
+            melee.AltDisarm = false;
+            melee.HitSound = zombiecomp.BiteSound;
 
             if (mobState.CurrentState == MobState.Alive)
             {
