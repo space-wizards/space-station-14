@@ -29,6 +29,7 @@ public sealed partial class CognislimeComponent : Component
             "EntityStorage",
             "Item",
             "ReagentTank",
+            "Singularity",
         ]
     };
 
