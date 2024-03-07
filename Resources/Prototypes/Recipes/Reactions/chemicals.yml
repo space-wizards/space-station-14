@@ -509,5 +509,7 @@
   reactants:
     Cognizine:
       amount: 1
+    Water:
+      amount: 1
   products:
     Cognigrime: 1
