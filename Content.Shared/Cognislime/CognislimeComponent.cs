@@ -19,10 +19,10 @@ public sealed partial class CognislimeComponent : Component
     public bool CanSpeak = true;
 
     [DataField("canMove")]
-    public bool CanMove;
+    public bool CanMove = false;
 
     [DataField("canAttack")]
-    public bool CanAttack;
+    public bool CanAttack = false;
 
     [DataField("whitelist")]
     public EntityWhitelist? Whitelist = new()
