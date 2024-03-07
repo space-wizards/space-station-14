@@ -52,7 +52,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: RadioSecurity
+      - id: RadioHandheldSecurity
         prob: 0.5
       - id: FlashlightSeclite
         prob: 0.8
