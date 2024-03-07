@@ -116,9 +116,16 @@ namespace Content.Server.Power.Pow3r
                 var batterySpace = (battery.Capacity - battery.CurrentStorage) * (1 / battery.Efficiency);
                 batterySpace = Math.Max(0, batterySpace);
 
-                var chargeRate = Math.Min(battery.MaxChargeRate, batterySpace) + battery.LoadingNetworkDemand / battery.Efficiency;
+                // Checking batterySpace here ensures we never request more than our remaining charge space with a slight buffer
+                // while still requesting extra power when the battery is low to reach max charge. While batterySpace is energy
+                // and battery.MaxChargeRate is power, using the former as a limit prevents too much overdraw from suppliers
+                // while giving the battery a buffer to recharge itself and prevent flickering when the load drops and causes the battery
+                // supply to ramp.
+                //     As suggested above, the clean solution here is likely altering the order of operations for battery loads so they aren't
+                // combined into a single pass.
+                var chargeRate = Math.Min(battery.MaxChargeRate, batterySpace);
 
-                battery.DesiredPower = chargeRate;
+                battery.DesiredPower = chargeRate + battery.LoadingNetworkDemand / battery.Efficiency;
                 DebugTools.Assert(battery.DesiredPower >= 0);
                 demand += battery.DesiredPower;
             }
@@ -165,15 +172,15 @@ namespace Content.Server.Power.Pow3r
                     if (!battery.Enabled || !battery.CanDischarge || battery.Paused)
                         continue;
 
-                    var scaledSpace = battery.CurrentStorage * frameTime;
+                    var scaledSpace = battery.CurrentStorage / frameTime;
                     var supplyCap = Math.Min(battery.MaxSupply,
                         battery.SupplyRampPosition + battery.SupplyRampTolerance);
                     var supplyAndPassthrough = supplyCap + battery.CurrentReceiving * battery.Efficiency;
 
-                    battery.AvailableSupply = Math.Min(battery.CurrentStorage, supplyAndPassthrough);
+                    battery.AvailableSupply = Math.Min(scaledSpace, supplyAndPassthrough);
                     battery.LoadingNetworkDemand = unmet;
 
-                    battery.MaxEffectiveSupply = Math.Min(battery.CurrentStorage, battery.MaxSupply + battery.CurrentReceiving * battery.Efficiency);
+                    battery.MaxEffectiveSupply = Math.Min(battery.CurrentStorage / frameTime, battery.MaxSupply + battery.CurrentReceiving * battery.Efficiency);
                     totalBatterySupply += battery.AvailableSupply;
                     totalMaxBatterySupply += battery.MaxEffectiveSupply;
                 }
