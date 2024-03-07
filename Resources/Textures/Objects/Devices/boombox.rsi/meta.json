@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by BeatusCrow P.S. The sprite is taken from the assembly of the Armored Warfare game KAG",
+  "size": {
+    "x": 16,
+    "y": 16
+  },
+  "states": [
+    {
+      "name": "boombox"
+    }
+  ]
+}
