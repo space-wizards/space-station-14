@@ -21,6 +21,9 @@ public sealed partial class CognislimeComponent : Component
     [DataField("canMove")]
     public bool CanMove;
 
+    [DataField("canAttack")]
+    public bool CanAttack;
+
     [DataField("whitelist")]
     public EntityWhitelist? Whitelist = new()
     {

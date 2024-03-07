@@ -8,6 +8,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Speech;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Cognislime;
+using Content.Shared.CombatMode;
 using Content.Shared.Whitelist;
 using Content.Shared.Interaction.Components;
 using Content.Server.Ghost.Roles.Components;
@@ -64,6 +65,11 @@ public sealed class CognislimeSystem : SharedCognislimeSystem
         {
             EnsureComp<SpeechComponent>(target);
             EnsureComp<EmotingComponent>(target);
+        }
+
+        if (component.CanAttack)
+        {
+            EnsureComp<CombatModeComponent>(target);
         }
 
         QueueDel(uid);
