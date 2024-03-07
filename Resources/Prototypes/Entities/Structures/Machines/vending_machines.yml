@@ -1465,7 +1465,7 @@
   - type: Advertise
     pack: LawDrobeAds
   - type: SpeakOnUIClosed
-    pack: GenericVendGoodbyes
+    pack: LawDrobeGoodbyes
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/lawdrobe.rsi
     layers:
