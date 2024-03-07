@@ -7,17 +7,16 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Speech;
 using Content.Shared.IdentityManagement;
-using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Cognislime;
 using Content.Shared.Whitelist;
 using Content.Shared.Interaction.Components;
-using Robust.Shared.Physics;
+using Content.Server.Ghost.Roles.Components;
 using Content.Server.Resist;
 
 namespace Content.Server.Cognislime;
 
 /// <summary>
-/// Makes stuff sentient.
+/// Makes objects sentient.
 /// </summary>
 public sealed partial class CognislimeSystem : SharedCognislimeSystem
 {

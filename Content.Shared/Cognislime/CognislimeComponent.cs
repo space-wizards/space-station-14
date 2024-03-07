@@ -1,18 +1,16 @@
 using Content.Shared.Whitelist;
-using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cognislime;
 
 /// <summary>
-/// Makes the target sentient.
+/// Makes objects the entity is applied to sentient and a ghost role.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class CognislimeComponent : Component
 {
     /// <summary>
-    /// How long it takes to apply the slime to an entity.
+    /// How long it takes to apply the item to an entity.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("applyDuration"), AutoNetworkedField]
     public TimeSpan ApplyCognislimeDuration = TimeSpan.FromSeconds(3);
