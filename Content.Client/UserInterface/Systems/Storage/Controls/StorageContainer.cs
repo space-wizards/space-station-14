@@ -369,10 +369,10 @@ public sealed class StorageContainer : BaseWindow
                 var shape = itemSystem.GetAdjustedItemShape(currentEnt, location);
                 var bound = shape.GetBoundingBox();
 
-                if (!storageSystem.ItemFitsInGridLocation(currentEnt, StorageEntity.Value, location))
-                    continue;
+                var spotFree = storageSystem.ItemFitsInGridLocation(currentEnt, StorageEntity.Value, location);
 
-                spot += 1;
+                if (spotFree)
+                    spot++;
 
                 for (var y = bound.Bottom; y <= bound.Top; y++)
                 {
@@ -381,7 +381,7 @@ public sealed class StorageContainer : BaseWindow
                         if (TryGetBackgroundCell(x, y, out var cell) && shape.Contains(x, y) && !marked.Contains(cell))
                         {
                             marked.Add(cell);
-                            cell.ModulateSelfOverride = Color.FromHsv((0.18f, 1 / spot, 0.5f / spot + 0.5f, 1f));
+                            cell.ModulateSelfOverride = spotFree ? Color.FromHsv((0.18f, 1 / spot, 0.5f / spot + 0.5f, 1f)) : Color.FromHex("#2222CC");
                         }
                     }
                 }
