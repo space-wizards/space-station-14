@@ -6,6 +6,7 @@ using Content.Shared.Emoting;
 using Content.Shared.Mind.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Speech;
+using Content.Shared.IdentityManagement;
 using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Cognislime;
 using Content.Shared.Whitelist;
@@ -38,6 +39,7 @@ public sealed partial class CognislimeSystem : SharedCognislimeSystem
 
         if (!CheckTarget(args.Target.Value, component.Whitelist, component.Blacklist))
         {
+            _popup.PopupEntity(Loc.GetString("cognislime-invalid"), args.Target.Value, args.User);
             return;
         }
 
@@ -63,7 +65,7 @@ public sealed partial class CognislimeSystem : SharedCognislimeSystem
         };
 
         if (_doAfter.TryStartDoAfter(args))
-            _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
+            _popup.PopupEntity(Loc.GetString("cognislime-applying"), target, user);
     }
     public void ApplyCognislime(EntityUid uid, CognislimeComponent component, CognislimeDoAfterEvent args)
     {
@@ -71,6 +73,8 @@ public sealed partial class CognislimeSystem : SharedCognislimeSystem
             return;
 
         var target = args.Target.Value;
+
+        _popup.PopupEntity(Loc.GetString("cognislime-applied", ("target", Identity.Entity(target, EntityManager))), target, args.User);
 
         EntityManager.EnsureComponent<MindContainerComponent>(target);
         EntityManager.EnsureComponent<ExaminerComponent>(target);
