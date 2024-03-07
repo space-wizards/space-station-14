@@ -1,47 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix dungeons not spawning on expeditions.
-    type: Fix
-  id: 5605
-  time: '2024-01-07T03:23:53.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23654
-- author: Ubaser
-  changes:
-  - message: The syndicate observational kit sunglasses now looks and acts like normal
-      sunglasses on top of its special feature.
-    type: Fix
-  id: 5606
-  time: '2024-01-07T06:24:36.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23621
-- author: metalgearsloth
-  changes:
-  - message: Disable magnet wrecks TEMPORARILY pending further re-balancing.
-    type: Tweak
-  id: 5607
-  time: '2024-01-07T06:36:18.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23664
-- author: Minty642
-  changes:
-  - message: Add more food recipes related to cargo bounties on Guidebook
-    type: Tweak
-  id: 5608
-  time: '2024-01-07T06:39:56.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23659
-- author: metalgearsloth
-  changes:
-  - message: Fix salvage magnet deleting mobs.
-    type: Fix
-  id: 5609
-  time: '2024-01-07T06:40:49.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23657
-- author: Ubaser
-  changes:
-  - message: You can now craft flower wreaths.
-    type: Add
-  id: 5610
-  time: '2024-01-07T07:03:46.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23662
 - author: Aexxie
   changes:
   - message: Added the Central Commander's cloak
@@ -3817,3 +3774,45 @@
   id: 6104
   time: '2024-03-06T17:19:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25883
+- author: Doctor-Cpu
+  changes:
+  - message: Cargo palllets can no longer be ordered from cargo request terminal
+    type: Remove
+  id: 6105
+  time: '2024-03-07T17:53:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25882
+- author: Beck Thompson
+  changes:
+  - message: Lawdrobe has some new items and new ads!
+    type: Add
+  id: 6106
+  time: '2024-03-07T19:18:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25299
+- author: Blackern5000
+  changes:
+  - message: Salvagers can now pull in overgrown floral anomalies.
+    type: Add
+  id: 6107
+  time: '2024-03-07T19:37:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24650
+- author: Nimfar11
+  changes:
+  - message: Slimes can now drink FourteenLoko without harming their bodies.
+    type: Tweak
+  id: 6108
+  time: '2024-03-07T20:50:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25889
+- author: NakataRin
+  changes:
+  - message: Evacuation shuttle arrives 10 minutes on green alert now.
+    type: Tweak
+  id: 6109
+  time: '2024-03-07T21:01:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25906
+- author: Admiral-Obvious-001
+  changes:
+  - message: Zombies are now tougher to kill.
+    type: Tweak
+  id: 6110
+  time: '2024-03-07T21:02:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25876
