@@ -508,8 +508,6 @@
   minTemp: 300
   reactants:
     Cognizine:
-      amount: 10
-    Slime:
-      amount: 6
+      amount: 1
   products:
-    Cognigrime: 5
+    Cognigrime: 1

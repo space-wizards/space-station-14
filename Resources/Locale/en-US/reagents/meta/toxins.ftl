@@ -77,4 +77,4 @@ reagent-name-tazinide = tazinide
 reagent-desc-tazinide = A highly dangerous metallic mixture which can interfere with most movement through an electrifying current.
 
 reagent-name-cognigrime = cognigrime
-reagent-desc-cognigrime = Inert slag of cognislime. This is useless unless properly cooled and catalyzed with plasma.
+reagent-desc-cognigrime = Inert slag of cognizine. This is useless, unless you make into cognislime.

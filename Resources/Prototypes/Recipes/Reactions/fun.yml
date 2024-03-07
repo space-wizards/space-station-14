@@ -190,6 +190,8 @@
   reactants:
     Cognigrime:
       amount: 10
+    Slime:
+      amount: 6
     Plasma:
       amount: 1
       catalyst: true
