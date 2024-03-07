@@ -32,6 +32,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         SubscribeLocalEvent<ThiefRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<ThiefRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
     }
 
     private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
@@ -100,6 +101,27 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         _inventory.SpawnItemsOnEntity(thief, thiefRule.StarterItems);
 
         thiefRule.ThievesMinds.Add(mindId);
+    }
+    
+    private void HandleLatejoin(PlayerSpawnCompleteEvent ev)
+    {
+      var query = QueryActiveRules();
+      while (query.MoveNext(out _, out var comp, out _))
+      {
+        if (comp.ThievesMinds.Count >= comp.MaxAllowThief)
+          continue;
+
+        if (!ev.LateJoin)
+          continue;
+        
+        if(!_antagSelection.IsPlayerEligible(ev.Player, comp.ThiefPrototypeId))
+          continue;
+        
+        if (_random.Prob(0.90f))
+          continue;
+
+        MakeThief(ev.Mob, comp, comp.PacifistThieves);
+      }
     }
 
     public void AdminMakeThief(EntityUid entity, bool addPacified)
