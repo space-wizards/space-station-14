@@ -42,7 +42,7 @@ public sealed class JammerSystem : EntitySystem
                 if (!_battery.TryUseCharge(batteryUid.Value, GetCurrentWattage(jam) * frameTime, battery))
                 {
                     ChangeLEDState(false, uid, jam);
-                    RemComp<ActiveRadioJammerComponent>(uid);
+                    RemCompDeferred<ActiveRadioJammerComponent>(uid);
                 }
                 else
                 {
@@ -79,7 +79,7 @@ public sealed class JammerSystem : EntitySystem
         else
         {
             ChangeLEDState(false, uid, comp);
-            RemComp<ActiveRadioJammerComponent>(uid);
+            RemCompDeferred<ActiveRadioJammerComponent>(uid);
         }
         var state = Loc.GetString(activated ? "radio-jammer-component-on-state" : "radio-jammer-component-off-state");
         var message = Loc.GetString("radio-jammer-component-on-use", ("state", state));
@@ -92,7 +92,7 @@ public sealed class JammerSystem : EntitySystem
         if (args.Ejected)
         {
             ChangeLEDState(false, uid, EntityManager.GetComponentOrNull<RadioJammerComponent>(uid));
-            RemComp<ActiveRadioJammerComponent>(uid);
+            RemCompDeferred<ActiveRadioJammerComponent>(uid);
         }
     }
 
