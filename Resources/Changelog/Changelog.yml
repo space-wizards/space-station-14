@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Disable magnet wrecks TEMPORARILY pending further re-balancing.
-    type: Tweak
-  id: 5607
-  time: '2024-01-07T06:36:18.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23664
 - author: Minty642
   changes:
   - message: Add more food recipes related to cargo bounties on Guidebook
@@ -3816,3 +3809,10 @@
   id: 6106
   time: '2024-03-07T19:18:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25299
+- author: Blackern5000
+  changes:
+  - message: Salvagers can now pull in overgrown floral anomalies.
+    type: Add
+  id: 6107
+  time: '2024-03-07T19:37:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24650
