@@ -2,7 +2,7 @@
   parent: BaseItem
   id: Cognislime
   name: cognislime
-  description: Cognizine, but it's slime. Geddit?
+  description: An enigmatic substance capable of granting sentience to any object.
   components:
   - type: Cognislime
   - type: Sprite
@@ -15,7 +15,7 @@
   parent: BaseItem
   id: CognislimeCrystalline
   name: crystalline cognislime
-  description: A purer form of cognislime granting mobility to objects it's used on.
+  description: A purer but smaller form of cognislime granting mobility to objects it's used on, as long as they're small enough.
   components:
   - type: Cognislime
     canMove: true
