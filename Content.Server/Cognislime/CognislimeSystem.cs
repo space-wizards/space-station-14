@@ -75,32 +75,32 @@ public sealed class CognislimeSystem : SharedCognislimeSystem
 
         _popup.PopupEntity(Loc.GetString("cognislime-applied", ("target", Identity.Entity(target, EntityManager))), target, args.User);
 
-        EntityManager.EnsureComponent<MindContainerComponent>(target);
-        EntityManager.EnsureComponent<ExaminerComponent>(target);
+        EnsureComp<MindContainerComponent>(target);
+        EnsureComp<ExaminerComponent>(target);
 
-        if (!EntityManager.HasComponent<GhostRoleComponent>(target))
+        if (!HasComp<GhostRoleComponent>(target))
         {
-            var ghostRole = EntityManager.AddComponent<GhostRoleComponent>(target);
-            ghostRole.RoleName = EntityManager.GetComponent<MetaDataComponent>(target).EntityName;
+            var ghostRole = AddComp<GhostRoleComponent>(target);
+            ghostRole.RoleName = Name(target);
             ghostRole.RoleDescription = Loc.GetString("ghost-role-information-cognislime-description");
-            EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(target);
+            EnsureComp<GhostTakeoverAvailableComponent>(target);
         }
 
         if (component.CanMove)
         {
-            EntityManager.EnsureComponent<InputMoverComponent>(target);
-            EntityManager.EnsureComponent<MobMoverComponent>(target);
-            EntityManager.EnsureComponent<MovementSpeedModifierComponent>(target);
-            EntityManager.EnsureComponent<CanEscapeInventoryComponent>(target);
-            EntityManager.RemoveComponent<BlockMovementComponent>(target);
+            EnsureComp<InputMoverComponent>(target);
+            EnsureComp<MobMoverComponent>(target);
+            EnsureComp<MovementSpeedModifierComponent>(target);
+            EnsureComp<CanEscapeInventoryComponent>(target);
+            RemComp<BlockMovementComponent>(target);
 
             // Todo: change fixtures so affected entities can't do stuff like push tanks by walking into them
         }
 
         if (component.CanSpeak)
         {
-            EntityManager.EnsureComponent<SpeechComponent>(target);
-            EntityManager.EnsureComponent<EmotingComponent>(target);
+            EnsureComp<SpeechComponent>(target);
+            EnsureComp<EmotingComponent>(target);
         }
 
         QueueDel(uid);

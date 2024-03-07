@@ -6,40 +6,40 @@ namespace Content.Shared.Cognislime;
 /// <summary>
 /// Makes objects the entity is applied to sentient and a ghost role.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class CognislimeComponent : Component
 {
     /// <summary>
     /// How long it takes to apply the item to an entity.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("applyDuration"), AutoNetworkedField]
+    [DataField("applyDuration")]
     public TimeSpan ApplyCognislimeDuration = TimeSpan.FromSeconds(3);
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("canSpeak"), AutoNetworkedField]
+    [DataField("canSpeak")]
     public bool CanSpeak = true;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("canMove"), AutoNetworkedField]
-    public bool CanMove = false;
+    [DataField("canMove")]
+    public bool CanMove;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("whitelist"), AutoNetworkedField]
+    [DataField("whitelist")]
     public EntityWhitelist? Whitelist = new()
     {
-        Components = new[]
-        {
+        Components =
+        [
             "EntityStorage",
             "Item",
             "ReagentTank",
-        }
+        ]
     };
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("blacklist"), AutoNetworkedField]
+    [DataField("blacklist")]
     public EntityWhitelist? Blacklist = new()
     {
-        Components = new[]
-        {
+        Components =
+        [
             "PAI",
             "MindContainer",
             "BorgBrain",
-        }
+        ]
     };
 }
