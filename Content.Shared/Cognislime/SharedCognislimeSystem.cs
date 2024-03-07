@@ -1,8 +1,8 @@
 using Content.Shared.DoAfter;
-using Robust.Shared.Serialization;
 using Content.Shared.Interaction;
-using Content.Shared.Whitelist;
 using Content.Shared.Popups;
+using Content.Shared.Whitelist;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cognislime;
 
@@ -17,14 +17,14 @@ public abstract class SharedCognislimeSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CognislimeComponent, AfterInteractEvent>(OnCognislimeAfterInteract);
+        SubscribeLocalEvent<CognislimeComponent, AfterInteractEvent>(OnAfterInteractEvent);
     }
-    public void OnCognislimeAfterInteract(EntityUid uid, CognislimeComponent component, AfterInteractEvent args)
+    public void OnAfterInteractEvent(Entity<CognislimeComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Target == null || args.Handled || !args.CanReach)
             return;
 
-        if (!CheckTarget(args.Target.Value, component.Whitelist, component.Blacklist))
+        if (!CheckTarget(args.Target.Value, ent.Comp.Whitelist, ent.Comp.Blacklist))
         {
             _popup.PopupEntity(Loc.GetString("cognislime-invalid"), args.Target.Value, args.User);
             return;
@@ -32,7 +32,7 @@ public abstract class SharedCognislimeSystem : EntitySystem
 
         args.Handled = true;
 
-        TryApplyCognizine(component, args.User, args.Target.Value, uid);
+        TryApplyCognizine(ent.Comp, args.User, args.Target.Value, ent);
     }
     public bool CheckTarget(EntityUid target, EntityWhitelist? whitelist, EntityWhitelist? blacklist)
     {

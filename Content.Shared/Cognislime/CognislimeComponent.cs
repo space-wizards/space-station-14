@@ -6,7 +6,7 @@ namespace Content.Shared.Cognislime;
 /// <summary>
 /// Makes objects the entity is applied to sentient and a ghost role.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedCognislimeSystem))]
 public sealed partial class CognislimeComponent : Component
 {
     /// <summary>
