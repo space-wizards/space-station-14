@@ -18,7 +18,7 @@ namespace Content.Server.Cognislime;
 /// <summary>
 /// Makes objects sentient.
 /// </summary>
-public sealed partial class CognislimeSystem : SharedCognislimeSystem
+public sealed class CognislimeSystem : SharedCognislimeSystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
