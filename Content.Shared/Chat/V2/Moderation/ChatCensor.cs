@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Content.Server.Chat.V2.Moderation;
+namespace Content.Shared.Chat.V2.Moderation;
 
 /// <summary>
 /// Censors a chat string. Returns true if the chat was censored.

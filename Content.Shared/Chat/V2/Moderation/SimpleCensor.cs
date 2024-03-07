@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Unicode;
 
-namespace Content.Server.Chat.V2.Moderation;
+namespace Content.Shared.Chat.V2.Moderation;
 
 /// <summary>
 /// A basic censor. Mostly built from reference from Go-Away. Not bullet-proof.
