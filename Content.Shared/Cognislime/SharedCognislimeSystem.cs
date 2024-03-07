@@ -19,7 +19,7 @@ public abstract class SharedCognislimeSystem : EntitySystem
 
         SubscribeLocalEvent<CognislimeComponent, AfterInteractEvent>(OnAfterInteractEvent);
     }
-    public void OnAfterInteractEvent(Entity<CognislimeComponent> ent, ref AfterInteractEvent args)
+    private void OnAfterInteractEvent(Entity<CognislimeComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Target == null || args.Handled || !args.CanReach)
             return;
