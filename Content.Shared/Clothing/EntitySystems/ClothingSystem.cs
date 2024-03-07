@@ -217,12 +217,12 @@ public abstract class ClothingSystem : EntitySystem
         Dirty(uid, clothing);
     }
 
-    public void SetLayerColor(ClothingComponent clothing, string mapKey, Color? color)
+    public void SetLayerColor(ClothingComponent clothing, string slot, string mapKey, Color? color)
     {
-        if (clothing.Layers == null)
+        if (clothing.ClothingVisuals == null)
             return;
 
-        foreach (var layer in clothing.Layers)
+        foreach (var layer in clothing.ClothingVisuals[slot])
         {
             if (layer.MapKeys == null)
                 return;
@@ -232,14 +232,13 @@ public abstract class ClothingSystem : EntitySystem
 
             layer.Color = color;
         }
-
     }
-    public void SetLayerState(ClothingComponent clothing, string mapKey, string state)
+    public void SetLayerState(ClothingComponent clothing, string slot, string mapKey, string state)
     {
-        if (clothing.Layers == null)
+        if (clothing.ClothingVisuals == null)
             return;
 
-        foreach (var layer in clothing.Layers)
+        foreach (var layer in clothing.ClothingVisuals[slot])
         {
             if (layer.MapKeys == null)
                 return;

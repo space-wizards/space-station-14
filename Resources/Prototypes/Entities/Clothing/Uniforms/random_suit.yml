@@ -19,13 +19,14 @@
   - type: Clothing
     femaleMask: UniformTop
     sprite: Clothing/Uniforms/procedural.rsi
-    layers:
-    - state: base_torso_standart
-      map: [ "torso" ]
-    - state: base_leg_standart
-      map: [ "leg" ]
-    - state: mask_null
-      map: [ "decor" ]
+    clothingVisuals:
+      suitstorage:
+      - state: base_torso_standart
+        map: [ "torso" ]
+      - state: base_leg_standart
+        map: [ "leg" ]
+      - state: mask_null
+        map: [ "decor" ]
 
 - type: entity
   parent: ClothingUniformRandom
