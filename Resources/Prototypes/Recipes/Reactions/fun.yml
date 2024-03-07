@@ -171,3 +171,14 @@
   products:
     Laughter: 2
 
+- type: reaction
+  id: Cognislime
+  quantized: true
+  reactants:
+    Cognizine:
+      amount: 10
+    Slime:
+      amount: 6
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: Cognislime
