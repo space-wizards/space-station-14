@@ -9,7 +9,7 @@ namespace Content.Shared.Cognislime;
 /// <summary>
 /// Makes objects sentient.
 /// </summary>
-public abstract class SharedCognislimeSystem : EntitySystem
+public abstract partial class SharedCognislimeSystem : EntitySystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
