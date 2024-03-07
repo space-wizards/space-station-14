@@ -75,3 +75,6 @@ reagent-desc-vestine = Has an adverse reaction within the body causing major jit
 
 reagent-name-tazinide = tazinide
 reagent-desc-tazinide = A highly dangerous metallic mixture which can interfere with most movement through an electrifying current.
+
+reagent-name-cognigrime = cognigrime
+reagent-desc-cognigrime = Inert slag of cognislime. This is useless unless properly cooled and catalyzed with plasma.

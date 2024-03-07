@@ -180,5 +180,19 @@
     Slime:
       amount: 6
   effects:
-    - !type:CreateEntityReactionEffect
-      entity: Cognislime
+  - !type:CreateEntityReactionEffect
+    entity: Cognislime
+
+- type: reaction
+  id: CognislimeCrystalline
+  quantized: true
+  maxTemp: 290
+  reactants:
+    Cognigrime:
+      amount: 10
+    Plasma:
+      amount: 1
+      catalyst: true
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: CognislimeCrystalline

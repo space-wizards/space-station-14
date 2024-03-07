@@ -9,6 +9,9 @@
   "states": [
     {
       "name": "cognislime"
+    },
+    {
+      "name": "cognislime_crystalline"
     }
   ]
 }

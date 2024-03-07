@@ -637,3 +637,18 @@
       - !type:Electrocute
         probability: 0.8
 
+- type: reagent
+  id: Cognigrime
+  name: reagent-name-cognigrime
+  group: Toxins
+  desc: reagent-desc-cognigrime
+  physicalDesc: reagent-physical-desc-enigmatic
+  flavor: bitter
+  color: "#b17262"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 4

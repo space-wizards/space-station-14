@@ -501,3 +501,15 @@
       amount: 1
   products:
     Tazinide: 1
+
+- type: reaction
+  id: Cognigrime
+  priority: 20
+  minTemp: 300
+  reactants:
+    Cognizine:
+      amount: 10
+    Slime:
+      amount: 6
+  products:
+    Cognigrime: 5

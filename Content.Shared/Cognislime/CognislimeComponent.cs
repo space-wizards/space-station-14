@@ -39,7 +39,7 @@ public sealed partial class CognislimeComponent : Component
     {
         Components = new[]
         {
-            "NukeDisk",
+            "PAI",
         }
     };
 }
