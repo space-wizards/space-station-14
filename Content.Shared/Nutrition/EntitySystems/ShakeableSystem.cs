@@ -62,14 +62,25 @@ public sealed partial class ShakeableSystem : EntitySystem
         if (!CanShake(entity, user))
             return false;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, entity.Comp.ShakeDuration, new ShakeDoAfterEvent(), entity)
+        var doAfterArgs = new DoAfterArgs(EntityManager,
+            user,
+            entity.Comp.ShakeDuration,
+            new ShakeDoAfterEvent(),
+            eventTarget: entity,
+            target: user,
+            used: entity)
         {
+            NeedHand = true,
             BreakOnDamage = true,
+            DistanceThreshold = 1,
+            MovementThreshold = 0.01f,
+            BreakOnHandChange = entity.Comp.RequireInHand,
         };
         if (entity.Comp.RequireInHand)
             doAfterArgs.BreakOnHandChange = true;
 
-        _doAfter.TryStartDoAfter(doAfterArgs);
+        if (!_doAfter.TryStartDoAfter(doAfterArgs))
+            return false;
 
         var userName = Identity.Entity(user, EntityManager);
         var shakeableName = Identity.Entity(entity, EntityManager);
