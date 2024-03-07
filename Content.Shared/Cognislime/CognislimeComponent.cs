@@ -38,6 +38,8 @@ public sealed partial class CognislimeComponent : Component
         Components = new[]
         {
             "PAI",
+            "MindContainer",
+            "BorgBrain",
         }
     };
 }
