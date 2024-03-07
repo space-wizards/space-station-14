@@ -381,7 +381,9 @@ public sealed class StorageContainer : BaseWindow
                         if (TryGetBackgroundCell(x, y, out var cell) && shape.Contains(x, y) && !marked.Contains(cell))
                         {
                             marked.Add(cell);
-                            cell.ModulateSelfOverride = spotFree ? Color.FromHsv((0.18f, 1 / spot, 0.5f / spot + 0.5f, 1f)) : Color.FromHex("#2222CC");
+                            cell.ModulateSelfOverride = spotFree
+                                ? Color.FromHsv((0.18f, 1 / spot, 0.5f / spot + 0.5f, 1f))
+                                : Color.FromHex("#2222CC");
                         }
                     }
                 }
