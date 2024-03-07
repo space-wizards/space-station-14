@@ -17,8 +17,8 @@ public sealed class CriminalRecordsCartridgeSystem : EntitySystem
   [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
   [Dependency] private readonly StationSystem _stationSystem = default!;
 
-  //[ValidateProtoTypeId<EntityPrototype>]
-  //private const string CartridgePrototypeName = "CriminalRecordsCartridge";
+  [ValidatePrototypeId<EntityPrototype>]
+  private const string CartridgePrototypeName = "CriminalRecordsCartridge";
 
   public override void Initialize()
   {
