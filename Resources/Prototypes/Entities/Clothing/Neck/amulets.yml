@@ -22,7 +22,7 @@
   id: ClothingNeckAmuletColdProtection
   name: mystical amulet
   suffix: Cold
-  description: Crumbs of unknown energies will keep you out of the cosmic cold.
+  description: Crumbs of unknown energies will protect you from the cosmic cold.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/amulet_cold.rsi
