@@ -295,6 +295,8 @@ public abstract class SharedMagicSystem : EntitySystem
         if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
             return;
 
+        // TODO: Merge with projectile?
+
         var targetMapCoords = args.Target;
 
         WorldSpawnSpellHelper(args.Contents, targetMapCoords, args.Performer, args.Lifetime, args.Offset);
@@ -328,21 +330,21 @@ public abstract class SharedMagicSystem : EntitySystem
 
     private void SpawnSpellHelper(string? proto, EntityCoordinates position, EntityUid performer, float? lifetime = null, bool preventCollide = false)
     {
-        if (_net.IsServer)
+        if (!_net.IsServer)
+            return;
+
+        var ent = Spawn(proto, position.SnapToGrid(EntityManager, _mapManager));
+
+        if (lifetime != null)
         {
-            var ent = Spawn(proto, position.SnapToGrid(EntityManager, _mapManager));
+            var comp = EnsureComp<TimedDespawnComponent>(ent);
+            comp.Lifetime = lifetime.Value;
+        }
 
-            if (lifetime != null)
-            {
-                var comp = EnsureComp<TimedDespawnComponent>(ent);
-                comp.Lifetime = lifetime.Value;
-            }
-
-            if (preventCollide)
-            {
-                var comp = EnsureComp<PreventCollideComponent>(ent);
-                comp.Uid = performer;
-            }
+        if (preventCollide)
+        {
+            var comp = EnsureComp<PreventCollideComponent>(ent);
+            comp.Uid = performer;
         }
     }
 
