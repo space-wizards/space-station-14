@@ -453,6 +453,7 @@
     earliestStart: 45
     minimumPlayers: 20
   - type: ImmovableRodRule
+    rodRandomPrototypes: [ "ImmovableRodMop", "ImmovableRodShark", "ImmovableRodClown", "ImmovableRodBanana", "ImmovableRodHammer", "ImmovableRodThrongler", "ImmovableRodGibstick" ]
 
 - type: entity
   noSpawn: true

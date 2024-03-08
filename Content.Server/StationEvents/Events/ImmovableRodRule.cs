@@ -23,7 +23,7 @@ public sealed class ImmovableRodRule : StationEventSystem<ImmovableRodRuleCompon
 
         var protoName = component.RodPrototype;
 
-        if (_random.Prob(component.RodRandomProbability))
+        if (_random.Prob(component.RodRandomProbability) && component.RodRandomPrototypes.Count != 0)
         {
             protoName = _random.Pick(component.RodRandomPrototypes);
         }
