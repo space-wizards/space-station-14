@@ -335,7 +335,7 @@ namespace Content.Server.Construction
                 return false;
             }
 
-            if (constructionPrototype.NeedLearn && !_recipeUnlock.IsUserRecipeLeared(user, constructionPrototype.ID))
+            if (constructionPrototype.NeedLearn && !_recipeUnlock.IsUserRecipeLearned(user, constructionPrototype.ID))
             {
                 _popup.PopupEntity(Loc.GetString("construction-system-cannot-start-need-learn"), user, user);
                 return false;
