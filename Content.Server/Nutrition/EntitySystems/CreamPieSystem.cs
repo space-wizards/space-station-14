@@ -33,6 +33,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // activate BEFORE entity is deleted and trash is spawned
             SubscribeLocalEvent<CreamPieComponent, ConsumeDoAfterEvent>(OnConsume, before: [typeof(FoodSystem)]);
+            SubscribeLocalEvent<CreamPieComponent, SliceFoodEvent>(OnSlice);
 
             SubscribeLocalEvent<CreamPiedComponent, RejuvenateEvent>(OnRejuvenate);
         }
@@ -58,6 +59,11 @@ namespace Content.Server.Nutrition.EntitySystems
         }
 
         private void OnConsume(Entity<CreamPieComponent> entity, ref ConsumeDoAfterEvent args)
+        {
+            ActivatePayload(entity);
+        }
+
+        private void OnSlice(Entity<CreamPieComponent> entity, ref SliceFoodEvent args)
         {
             ActivatePayload(entity);
         }
