@@ -173,7 +173,7 @@ namespace Content.Client.Construction
 
         public bool IsUserRecipeLearned(EntityUid user, string recipe)
         {
-            return _recipeUnlock.IsUserRecipeLeared(user, recipe);
+            return _recipeUnlock.IsUserRecipeLearned(user, recipe);
         }
 
         /// <summary>
