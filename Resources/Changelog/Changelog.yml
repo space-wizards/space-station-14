@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Froozigiusz
-  changes:
-  - message: You can now dip onion rings.
-    type: Fix
-  id: 5612
-  time: '2024-01-07T09:07:03.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23582
 - author: metalgearsloth
   changes:
   - message: Fix audio fades and ambient music overlapping.
@@ -3816,3 +3809,10 @@
   id: 6111
   time: '2024-03-07T23:53:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25921
+- author: MACMAN2003
+  changes:
+  - message: Diagonal windows no longer space you when in a pressurized environment.
+    type: Fix
+  id: 6112
+  time: '2024-03-08T07:50:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25926
