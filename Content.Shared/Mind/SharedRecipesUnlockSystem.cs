@@ -110,7 +110,7 @@ public sealed class SharedRecipeUnlockSystem : EntitySystem
         comp.LearnedRecipes.Add(recipe);
     }
 
-    public bool IsMindRecipeLeared(EntityUid mind, string recipe, MindLearnedRecipesComponent? comp = null)
+    public bool IsMindRecipeLearned(EntityUid mind, string recipe, MindLearnedRecipesComponent? comp = null)
     {
         if (comp == null)
             comp = EnsureComp<MindLearnedRecipesComponent>(mind);
