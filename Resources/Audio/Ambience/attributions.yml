@@ -118,6 +118,6 @@
   source: "https://freesound.org/people/dimbark1/sounds/316797/"
   
 - files: ["alarm.ogg"]
-  license: "Pixabay Content License"
-  copyright: "Taken from pixabay.com"
+  license: "CC-BY-NC-4.0"
+  copyright: "Created by Pixabay. Taken from pixabay.com"
   source: "https://pixabay.com/sound-effects/industrial-alarm-95068/"
