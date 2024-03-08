@@ -44,7 +44,7 @@
   startNode: start
   targetNode: poison
   category: construction-category-forgotten
-  description: Crumbs of unknown energies will keep you from the poisons.
+  description: Crumbs of unknown energies will protect you from poison.
   icon: { sprite: Clothing/Neck/Misc/amulet_poison.rsi, state: icon }
   objectType: Item
   needLearn: true
