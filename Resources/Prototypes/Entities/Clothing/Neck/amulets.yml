@@ -58,7 +58,7 @@
   id: ClothingNeckAmuletShockProtection
   name: mystical amulet
   suffix: Shock
-  description: Crumbs of unknown energies will keep you from electricy.
+  description: Crumbs of unknown energies will protect you from electricity.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/amulet_shock.rsi
