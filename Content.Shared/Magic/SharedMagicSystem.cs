@@ -354,7 +354,7 @@ public abstract class SharedMagicSystem : EntitySystem
         ev.Handled = true;
         Speak(ev);
 
-        var direction = Transform(ev.Target).MapPosition.Position - Transform(ev.Performer).MapPosition.Position;
+        var direction = _transform.GetMapCoordinates(ev.Target, Transform(ev.Target)).Position - _transform.GetMapCoordinates(ev.Performer, Transform(ev.Performer)).Position;
         var impulseVector = direction * 10000;
 
         _physics.ApplyLinearImpulse(ev.Target, impulseVector);
