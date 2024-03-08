@@ -41,7 +41,7 @@
   id: ClothingNeckAmuletPoisonProtection
   name: mystical amulet
   suffix: Poison
-  description: Crumbs of unknown energies will keep you from the poisons.
+  description: Crumbs of unknown energies will protect you from poison.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/amulet_poison.rsi
