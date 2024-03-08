@@ -7,3 +7,5 @@
     recipes:
     - AmuletFireProtection
     - AmuletColdProtection
+    - AmuletShockProtection
+    - AmuletPoisonProtection

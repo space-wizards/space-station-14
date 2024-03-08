@@ -7,15 +7,41 @@
     - to: fire
       steps:
         - material: MetalRod
+          amount: 5
+          doAfter: 4
+        - material: Gold
           amount: 2
-          doAfter: 2
+          doAfter: 4
     - to: cold
       steps:
         - material: MetalRod
+          amount: 5
+          doAfter: 4
+        - material: Silver
           amount: 2
-          doAfter: 2
+          doAfter: 4
+    - to: poison
+      steps:
+        - material: MetalRod
+          amount: 5
+          doAfter: 4
+        - material: Uranium
+          amount: 2
+          doAfter: 4
+    - to: shock
+      steps:
+        - material: MetalRod
+          amount: 5
+          doAfter: 4
+        - material: Bananium
+          amount: 2
+          doAfter: 4
   
   - node: fire
     entity: ClothingNeckAmuletFireProtection
   - node: cold
     entity: ClothingNeckAmuletColdProtection
+  - node: poison
+    entity: ClothingNeckAmuletPoisonProtection
+  - node: shock
+    entity: ClothingNeckAmuletShockProtection

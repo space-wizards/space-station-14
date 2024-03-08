@@ -24,3 +24,27 @@
   icon: { sprite: Clothing/Neck/Misc/amulet_cold.rsi, state: icon }
   objectType: Item
   needLearn: true
+
+- type: construction
+  name: shock amulet
+  id: AmuletShockProtection
+  graph: MysticAmuletProtection
+  startNode: start
+  targetNode: shock
+  category: construction-category-forgotten
+  description: Crumbs of unknown energies will keep you from electricy.
+  icon: { sprite: Clothing/Neck/Misc/amulet_shock.rsi, state: icon }
+  objectType: Item
+  needLearn: true
+
+- type: construction
+  name: poison amulet
+  id: AmuletPoisonProtection
+  graph: MysticAmuletProtection
+  startNode: start
+  targetNode: poison
+  category: construction-category-forgotten
+  description: Crumbs of unknown energies will keep you from the poisons.
+  icon: { sprite: Clothing/Neck/Misc/amulet_poison.rsi, state: icon }
+  objectType: Item
+  needLearn: true
