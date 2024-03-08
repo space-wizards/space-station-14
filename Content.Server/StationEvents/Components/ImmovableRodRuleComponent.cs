@@ -20,5 +20,5 @@ public sealed partial class ImmovableRodRuleComponent : Component
     ///     Probability for rod to be a variant.
     /// </summary>
     [DataField]
-    public float RodRandomProbability = 0.1f;
+    public float RodRandomProbability = 0.05f;
 }
