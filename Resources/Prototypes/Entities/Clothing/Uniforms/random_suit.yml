@@ -65,6 +65,8 @@
           decor_torso_armless6: Sixteen
           decor_torso_armless7: Sixteen
           decor_torso_armless8: Sixteen
+          decor_torso_armless9: Sixteen
+          decor_torso_armless10: Sixteen
           mask_null: ""
 
 - type: entity
@@ -91,6 +93,8 @@
           decor_torso_armless6: Sixteen
           decor_torso_armless7: Sixteen
           decor_torso_armless8: Sixteen
+          decor_torso_armless9: Sixteen
+          decor_torso_armless10: Sixteen
           decor_torso_standart1: Sixteen
           decor_torso_standart2: Sixteen
           decor_torso_standart3: Sixteen
@@ -99,6 +103,7 @@
           decor_torso_standart6: Sixteen
           decor_torso_standart7: Sixteen
           decor_torso_standart8: Sixteen
+          decor_torso_standart9: Sixteen
           mask_null: ""
 
 - type: entity

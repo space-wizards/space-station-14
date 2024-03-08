@@ -72,6 +72,14 @@
       "directions": 4
     },
     {
+      "name": "decor_torso_armless9",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_armless10",
+      "directions": 4
+    },
+    {
       "name": "decor_torso_bra1",
       "directions": 4
     },
@@ -121,6 +129,10 @@
     },
     {
       "name": "decor_torso_standart8",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart9",
       "directions": 4
     },
     {
