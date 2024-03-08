@@ -19,5 +19,5 @@ public sealed partial class PaperRecipeTeacherComponent : Component
     public float DoAfter = 7f;
 
     [DataField]
-    public LocId PopupText = "paper-recipe-leaning-start";
+    public LocId PopupText = "paper-recipe-learning-start";
 }
