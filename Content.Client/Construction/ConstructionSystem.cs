@@ -171,7 +171,7 @@ namespace Content.Client.Construction
             return true;
         }
 
-        public bool IsUserRecipeLeared(EntityUid user, string recipe)
+        public bool IsUserRecipeLearned(EntityUid user, string recipe)
         {
             return _recipeUnlock.IsUserRecipeLeared(user, recipe);
         }
