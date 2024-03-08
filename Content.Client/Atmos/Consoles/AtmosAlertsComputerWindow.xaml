@@ -1,0 +1,108 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+               xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+               Title="{Loc 'atmos-alerts-window-title'}"
+               Resizable="False"
+               SetSize="1120 750"
+               MinSize="1120 750">
+    <BoxContainer Orientation="Vertical">
+        <!-- Main display -->
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
+            <!-- Nav map -->
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+                <ui:NavMapControl Name="NavMap" Margin="5 5" VerticalExpand="True" HorizontalExpand="True">
+
+                    <!-- System warning -->
+                    <PanelContainer Name="SystemWarningPanel"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    HorizontalExpand="True"
+                                    Margin="0 48 0 0"
+                                    Visible="False">
+                        <RichTextLabel Name="SystemWarningLabel" Margin="12 8 12 8"/>
+                    </PanelContainer>
+
+                </ui:NavMapControl>
+
+                <!-- Nav map legend -->
+                <BoxContainer Orientation="Horizontal" Margin="0 10 0 10">
+                    <Label Text="{Loc 'atmos-alerts-window-label-alert-types'}"
+                           Margin="20 0 5 0"/>
+                    <TextureRect Stretch="KeepAspectCentered"
+                                TexturePath="/Textures/Interface/NavMap/beveled_circle.png"
+                                Modulate="#5A5A5A"
+                                SetSize="16 16"
+                                Margin="20 0 5 0"/>
+                    <Label Text="{Loc 'atmos-alerts-window-invalid-state'}"/>
+                    <TextureRect Stretch="KeepAspectCentered"
+                                TexturePath="/Textures/Interface/NavMap/beveled_circle.png"
+                                Modulate="#32cd32"
+                                SetSize="16 16"
+                                Margin="20 0 5 0"/>
+                    <Label Text="{Loc 'atmos-alerts-window-normal-state'}"/>
+                    <TextureRect Stretch="KeepAspectCentered"
+                                TexturePath="/Textures/Interface/NavMap/beveled_triangle.png"
+                                SetSize="16 16"
+                                Modulate="#ffb648"
+                                Margin="20 0 5 0"/>
+                    <Label Text="{Loc 'atmos-alerts-window-warning-state'}"/>
+                    <TextureRect Stretch="KeepAspectCentered"
+                                TexturePath="/Textures/Interface/NavMap/beveled_square.png"
+                                SetSize="16 16"
+                                Modulate="#ff4343"
+                                Margin="20 0 5 0"/>
+                    <Label Text="{Loc 'atmos-alerts-window-danger-state'}"/>
+                </BoxContainer>
+            </BoxContainer>
+
+            <!-- Atmosphere status -->
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" SetWidth="440" Margin="0 0 10 10">
+
+                <!-- Station name -->
+                <controls:StripeBack>
+                    <PanelContainer>
+                        <RichTextLabel Name="StationName" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 5 0 3"/>
+                    </PanelContainer>
+                </controls:StripeBack>
+
+                <!-- Alarm status (entries added by C# code) -->
+                <TabContainer Name="MasterTabContainer" VerticalExpand="True" HorizontalExpand="True" Margin="0 10 0 0">
+                    <ScrollContainer HorizontalExpand="True" Margin="8, 8, 8, 8">
+                        <BoxContainer Name="AlertsTable" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 0 10"/>
+                    </ScrollContainer>
+                    <ScrollContainer HorizontalExpand="True" Margin="8, 8, 8, 8">
+                        <BoxContainer Name="AirAlarmsTable" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 0 10"/>
+                    </ScrollContainer>
+                    <ScrollContainer HorizontalExpand="True" Margin="8, 8, 8, 8">
+                        <BoxContainer Name="FireAlarmsTable" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 0 10"/>
+                    </ScrollContainer>
+                </TabContainer>
+
+                <!-- Overlay toggles -->
+                <BoxContainer Orientation="Vertical" Margin="0 10 0 0">
+                    <Label Text="{Loc 'atmos-alerts-window-toggle-overlays'}" Margin="0 0 0 5"/>
+                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                        <CheckBox Name="ShowInactiveAlarms" Text="{Loc 'atmos-alerts-window-invalid-state'}" Pressed="False" HorizontalExpand="True"/>
+                        <CheckBox Name="ShowNormalAlarms" Text="{Loc 'atmos-alerts-window-normal-state'}" Pressed="False" HorizontalExpand="True"/>
+                        <CheckBox Name="ShowWarningAlarms" Text="{Loc 'atmos-alerts-window-warning-state'}" Pressed="True" HorizontalExpand="True"/>
+                        <CheckBox Name="ShowDangerAlarms" Text="{Loc 'atmos-alerts-window-danger-state'}" Pressed="True" HorizontalExpand="True"/>
+                    </BoxContainer>
+                </BoxContainer>
+            </BoxContainer>
+
+        </BoxContainer>
+
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'atmos-alerts-window-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'atmos-alerts-window-flavor-right'}" StyleClasses="WindowFooterText"
+                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
