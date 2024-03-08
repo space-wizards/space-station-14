@@ -73,7 +73,7 @@ public sealed partial class ConstructionPrototype : IPrototype
     public EntityWhitelist? EntityWhitelist = null;
 
     /// <summary>
-    /// Should the player learn the crafting of this item?
+    /// Does the player need to learn the recipe to be able to craft this item?
     /// </summary>
     [DataField]
     public bool NeedLearn = false;
