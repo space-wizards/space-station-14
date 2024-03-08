@@ -32,7 +32,7 @@
   startNode: start
   targetNode: shock
   category: construction-category-forgotten
-  description: Crumbs of unknown energies will keep you from electricy.
+  description: Crumbs of unknown energies will protect you from electricity.
   icon: { sprite: Clothing/Neck/Misc/amulet_shock.rsi, state: icon }
   objectType: Item
   needLearn: true
