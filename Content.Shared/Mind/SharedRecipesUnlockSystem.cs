@@ -59,7 +59,7 @@ public sealed class SharedRecipeUnlockSystem : EntitySystem
         {
             args.Verbs.Add(new()
             {
-                Text = Loc.GetString("paper-recipe-learning-verb-text", ("item",_proto.Index(item).Name)),
+                Text = Loc.GetString("paper-recipe-learning-verb-text", ("item", _proto.Index(item).Name)),
                 Message = Loc.GetString("paper-recipe-learning-verb-message"),
                 Act = () => TryLearnRecipe(user, recipeTeacher.Comp, item),
                 CloseMenu = true,
