@@ -118,7 +118,7 @@ public sealed class SharedRecipeUnlockSystem : EntitySystem
         return comp.LearnedRecipes.Contains(recipe);
     }
 
-    public bool IsUserRecipeLeared(EntityUid user, string recipe, MindLearnedRecipesComponent? comp = null)
+    public bool IsUserRecipeLearned(EntityUid user, string recipe, MindLearnedRecipesComponent? comp = null)
     {
         var mind = _mind.GetMind(user);
         if (mind == null)
