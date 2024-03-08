@@ -20,7 +20,7 @@
   startNode: start
   targetNode: cold
   category: construction-category-forgotten
-  description: Crumbs of unknown energies will keep you out of the cosmic cold.
+  description: Crumbs of unknown energies will protect you from the cosmic cold.
   icon: { sprite: Clothing/Neck/Misc/amulet_cold.rsi, state: icon }
   objectType: Item
   needLearn: true
