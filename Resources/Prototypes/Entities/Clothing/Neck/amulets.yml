@@ -2,7 +2,7 @@
   parent: ClothingNeckBase
   id: ClothingNeckAmuletFireProtection
   name: mystical amulet
-  description: Crumbs of unknown energies will keep you out of the fire.
+  description: Crumbs of unknown energies will protect you from fire.
   suffix: Fire
   components:
   - type: Sprite
