@@ -51,6 +51,23 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: brass chair
+  id: ChairBrass
+  graph: Seat
+  startNode: start
+  targetNode: chairBrass
+  category: construction-category-furniture
+  description: You sit in this. Either by will or force.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: brass_chair
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: office chair
   id: ChairOfficeLight
   graph: Seat
@@ -316,6 +333,23 @@
   description: A square piece of plasma glass, standing on four metal legs. Pretty!
   icon:
     sprite: Structures/Furniture/Tables/plasma.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: brass table
+  id: TableBrass
+  graph: Table
+  startNode: start
+  targetNode: TableBrass
+  category: construction-category-furniture
+  description: A shiny, corrosion resistant brass table. Steampunk!
+  icon:
+    sprite: Structures/Furniture/Tables/brass.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -676,7 +710,160 @@
   targetNode: Curtains
   category: construction-category-furniture
   icon:
-    sprite: Structures/Decoration/curtains.rsi
+    sprite: Structures/Decoration/Curtains/hospital.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  id: CurtainsBlack
+  name: black curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsBlack
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/black.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked  
+
+- type: construction
+  id: CurtainsBlue
+  name: blue curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsBlue
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/blue.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked  
+    
+- type: construction
+  id: CurtainsCyan
+  name: cyan curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsCyan
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/cyan.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  id: CurtainsGreen
+  name: green curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsGreen
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/green.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  id: CurtainsOrange
+  name: orange curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsOrange
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/orange.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  id: CurtainsPink
+  name: pink curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsPink
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/pink.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  id: CurtainsPurple
+  name: purple curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsPurple
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/purple.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  id: CurtainsRed
+  name: red curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsRed
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/red.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked    
+
+- type: construction
+  id: CurtainsWhite
+  name: white curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsWhite
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/white.rsi
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter

@@ -75,6 +75,8 @@
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
     storedRotation: 90
   - type: MeleeWeapon
+    wideAnimationRotation: 90
+    swingLeft: true
     attackRate: 1.5
     damage:
       types:

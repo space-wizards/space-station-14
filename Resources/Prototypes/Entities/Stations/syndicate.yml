@@ -1,0 +1,16 @@
+- type: entity
+  abstract: true
+  id: BaseStationSyndicate
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+
+- type: entity
+  id: StandardNukieOutpost
+  parent:
+  - BaseStation
+  - BaseStationSyndicate
+  noSpawn: true
+  components:
+    - type: Transform
