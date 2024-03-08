@@ -8,7 +8,7 @@
   startNode: start
   targetNode: fire
   category: construction-category-forgotten
-  description: Crumbs of unknown energies will keep you out of the fire.
+  description: Crumbs of unknown energies will protect you from fire.
   icon: { sprite: Clothing/Neck/Misc/amulet_fire.rsi, state: icon }
   objectType: Item
   needLearn: true
