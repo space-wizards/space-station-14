@@ -128,9 +128,8 @@
   parent: PoweredLightPostSmallEmpty
   components:
   - type: Sprite
-    layers:
-    - state: off
-      map: [ "enum.PoweredLightLayers.Base" ]
+    sprite: Structures/Lighting/LightPosts/small_light_post.rsi
+    state: empty
   - type: PoweredLight
     hasLampOnSpawn: ColoredLightTubeRed
     damage:
@@ -147,9 +146,8 @@
   parent: LightPostSmall
   components:
   - type: Sprite
-    layers:
-    - state: off
-      map: [ "enum.PoweredLightLayers.Base" ]
+    sprite: Structures/Lighting/LightPosts/small_light_post.rsi
+    state: empty
   - type: PointLight
     radius: 10
     energy: 0.9
