@@ -27,5 +27,11 @@
     ClothingNeckLawyerbadge: 2
     ClothingUniformJumpsuitLawyerBlackStripe: 1
     ClothingUniformJumpsuitLawyerBlueStripe: 1
-  emaggedInventory:
+    LuxuryPen: 2
+ contrabandInventory:
+    ClothingOuterRobesJudge: 1
+    ClothingHeadHatPwig: 1
+    # "Legally" obtained currency
+    SpaceCash100: 2
+ emaggedInventory:
     CyberPen: 1
