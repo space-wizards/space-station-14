@@ -3,6 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Atmos.Components;
 
 [RegisterComponent, NetworkedComponent]
+[Access([])]
 public sealed partial class AtmosAlertsDeviceComponent : Component
 {
     /// <summary>

@@ -1,3 +1,4 @@
+using Content.Shared.Atmos.Consoles;
 using Content.Shared.Atmos.Monitor;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -6,9 +7,15 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Atmos.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-//[Access(typeof(AtmosMonitoringConsoleSystem))]
+[Access(typeof(SharedAtmosAlertsComputerSystem))]
 public sealed partial class AtmosAlertsComputerComponent : Component
 {
+    /// <summary>
+    /// The current entity of interest (selected via the console UI)
+    /// </summary>
+    [ViewVariables]
+    public NetEntity? FocusDevice;
+
     /// <summary>
     /// A list of all the atmos devices that will be used to populate the nav map
     /// </summary>
@@ -16,15 +23,9 @@ public sealed partial class AtmosAlertsComputerComponent : Component
     public HashSet<AtmosAlertsDeviceNavMapData> AtmosDevices = new();
 
     /// <summary>
-    /// The current entity of interest (selected on the console UI)
-    /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public EntityUid? FocusDevice;
-
-    /// <summary>
     /// A list of all the air alarms that have had their alerts silenced on this particular console
     /// </summary>
-    [DataField]
+    [ViewVariables, AutoNetworkedField]
     public HashSet<NetEntity> SilencedDevices = new();
 }
 

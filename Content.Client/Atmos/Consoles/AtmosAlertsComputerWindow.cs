@@ -129,16 +129,10 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
             return;
 
         if (toggleState)
-        {
-            console.SilencedDevices.Add(netEntity);
             _deviceSilencingProgress[netEntity] = SilencingDuration;
-        }
 
         else
-        {
-            console.SilencedDevices.Remove(netEntity);
             _deviceSilencingProgress.Remove(netEntity);
-        }
 
         // Update values and UI elements
         foreach (AtmosAlarmEntryContainer entryContainer in AlertsTable.Children)
@@ -170,9 +164,11 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         _airAlarms = airAlarms;
         _fireAlarms = fireAlarms;
 
-        var allAlarms = airAlarms.Concat(fireAlarms).ToArray();
+        var allAlarms = airAlarms.Concat(fireAlarms);
+        var silenced = console.SilencedDevices;
+
         _activeAlarms = allAlarms.Where(x => x.AlarmState > AtmosAlarmType.Normal &&
-            (!console.SilencedDevices.Contains(x.NetEntity) || _deviceSilencingProgress.ContainsKey(x.NetEntity)));
+            (!silenced.Contains(x.NetEntity) || _deviceSilencingProgress.ContainsKey(x.NetEntity)));
 
         // Reset nav map values
         NavMap.TrackedCoordinates.Clear();
@@ -351,12 +347,13 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         }
 
         var entryContainer = tableChild as AtmosAlarmEntryContainer;
+        var silenced = console.SilencedDevices;
 
         if (entryContainer == null)
             return;
 
         entryContainer.UpdateEntry(entry, entry.NetEntity == _trackedEntity, focusData);
-        entryContainer.SilenceCheckBox.Pressed = console.SilencedDevices.Contains(entry.NetEntity);
+        entryContainer.SilenceCheckBox.Pressed = (silenced.Contains(entry.NetEntity) || _deviceSilencingProgress.ContainsKey(entry.NetEntity));
         entryContainer.SilenceAlarmProgressBar.Visible = (table == AlertsTable && _deviceSilencingProgress.ContainsKey(entry.NetEntity));
     }
 

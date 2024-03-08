@@ -3,6 +3,7 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Consoles;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Pinpointer;
@@ -14,7 +15,7 @@ using System.Linq;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
-public sealed class AtmosAlertsComputerSystem : EntitySystem
+public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
 {
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly AirAlarmSystem _airAlarmSystem = default!;
@@ -33,10 +34,7 @@ public sealed class AtmosAlertsComputerSystem : EntitySystem
         // Console events
         SubscribeLocalEvent<AtmosAlertsComputerComponent, ComponentInit>(OnConsoleInit);
         SubscribeLocalEvent<AtmosAlertsComputerComponent, EntParentChangedMessage>(OnConsoleParentChanged);
-
-        // UI events
         SubscribeLocalEvent<AtmosAlertsComputerComponent, AtmosAlertsComputerFocusChangeMessage>(OnFocusChangedMessage);
-        SubscribeLocalEvent<AtmosAlertsComputerComponent, AtmosAlertsComputerDeviceSilencedMessage>(OnDeviceSilencedMessage);
 
         // Grid events
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
@@ -57,16 +55,7 @@ public sealed class AtmosAlertsComputerSystem : EntitySystem
 
     private void OnFocusChangedMessage(EntityUid uid, AtmosAlertsComputerComponent component, AtmosAlertsComputerFocusChangeMessage args)
     {
-        component.FocusDevice = EntityManager.GetEntity(args.FocusDevice);
-    }
-
-    private void OnDeviceSilencedMessage(EntityUid uid, AtmosAlertsComputerComponent component, AtmosAlertsComputerDeviceSilencedMessage args)
-    {
-        if (args.SilenceDevice)
-            component.SilencedDevices.Add(args.AtmosDevice);
-
-        else
-            component.SilencedDevices.Remove(args.AtmosDevice);
+        component.FocusDevice = args.FocusDevice;
     }
 
     private void OnGridSplit(ref GridSplitEvent args)
@@ -198,7 +187,7 @@ public sealed class AtmosAlertsComputerSystem : EntitySystem
         EnsureComp<NavMapComponent>(gridUid);
 
         // Gathering remaining data to be send to the client
-        var focusAlarmData = GetFocusAlarmData(uid, component, gridUid);
+        var focusAlarmData = GetFocusAlarmData(uid, GetEntity(component.FocusDevice), gridUid);
 
         // Set the UI state
         _userInterfaceSystem.SetUiState(bui,
@@ -243,36 +232,35 @@ public sealed class AtmosAlertsComputerSystem : EntitySystem
         return alarmStateData;
     }
 
-    private AtmosAlertsFocusDeviceData? GetFocusAlarmData(EntityUid uid, AtmosAlertsComputerComponent component, EntityUid gridUid)
+    private AtmosAlertsFocusDeviceData? GetFocusAlarmData(EntityUid uid, EntityUid? focusDevice, EntityUid gridUid)
     {
-        if (component.FocusDevice == null)
+        if (focusDevice == null)
             return null;
 
-        var ent = component.FocusDevice.Value;
-        var entXform = Transform(component.FocusDevice.Value);
+        var focusDeviceXform = Transform(focusDevice.Value);
 
-        if (!entXform.Anchored ||
-            entXform.GridUid != gridUid ||
-            !TryComp<AirAlarmComponent>(ent, out var entAirAlarm))
+        if (!focusDeviceXform.Anchored ||
+            focusDeviceXform.GridUid != gridUid ||
+            !TryComp<AirAlarmComponent>(focusDevice.Value, out var focusDeviceAirAlarm))
         {
             return null;
         }
 
-        if (!_userInterfaceSystem.TryGetUi(ent, SharedAirAlarmInterfaceKey.Key, out var bui) ||
+        if (!_userInterfaceSystem.TryGetUi(focusDevice.Value, SharedAirAlarmInterfaceKey.Key, out var bui) ||
             bui.SubscribedSessions.Count == 0)
         {
-            _atmosDevNet.Register(component.FocusDevice.Value, null);
-            _atmosDevNet.Sync(component.FocusDevice.Value, null);
+            _atmosDevNet.Register(focusDevice.Value, null);
+            _atmosDevNet.Sync(focusDevice.Value, null);
 
-            foreach ((var address, var _) in entAirAlarm.SensorData)
+            foreach ((var address, var _) in focusDeviceAirAlarm.SensorData)
                 _atmosDevNet.Register(uid, null);
         }
 
-        var temperatureData = (_airAlarmSystem.CalculateTemperatureAverage(entAirAlarm), AtmosAlarmType.Normal);
-        var pressureData = (_airAlarmSystem.CalculatePressureAverage(entAirAlarm), AtmosAlarmType.Normal);
+        var temperatureData = (_airAlarmSystem.CalculateTemperatureAverage(focusDeviceAirAlarm), AtmosAlarmType.Normal);
+        var pressureData = (_airAlarmSystem.CalculatePressureAverage(focusDeviceAirAlarm), AtmosAlarmType.Normal);
         var gasData = new Dictionary<Gas, (float, float, AtmosAlarmType)>();
 
-        foreach ((var address, var sensorData) in entAirAlarm.SensorData)
+        foreach ((var address, var sensorData) in focusDeviceAirAlarm.SensorData)
         {
             if (sensorData.TemperatureThreshold.CheckThreshold(sensorData.Temperature, out var temperatureState) &&
                 (int) temperatureState > (int) temperatureData.Item2)
@@ -286,13 +274,13 @@ public sealed class AtmosAlertsComputerSystem : EntitySystem
                 pressureData = (pressureData.Item1, pressureState);
             }
 
-            if (entAirAlarm.SensorData.Sum(g => g.Value.TotalMoles) > 1e-8)
+            if (focusDeviceAirAlarm.SensorData.Sum(g => g.Value.TotalMoles) > 1e-8)
             {
                 foreach ((var gas, var threshold) in sensorData.GasThresholds)
                 {
                     if (!gasData.ContainsKey(gas))
                     {
-                        float mol = _airAlarmSystem.CalculateGasMolarConcentrationAverage(entAirAlarm, gas, out var percentage);
+                        float mol = _airAlarmSystem.CalculateGasMolarConcentrationAverage(focusDeviceAirAlarm, gas, out var percentage);
 
                         if (mol < 1e-8)
                             continue;
@@ -309,7 +297,7 @@ public sealed class AtmosAlertsComputerSystem : EntitySystem
             }
         }
 
-        return new AtmosAlertsFocusDeviceData(GetNetEntity(component.FocusDevice.Value), temperatureData, pressureData, gasData);
+        return new AtmosAlertsFocusDeviceData(GetNetEntity(focusDevice.Value), temperatureData, pressureData, gasData);
     }
 
     private HashSet<AtmosAlertsDeviceNavMapData> GetAllAtmosDeviceNavMapData(EntityUid gridUid)
