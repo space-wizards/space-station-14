@@ -124,7 +124,7 @@ public sealed class SharedRecipeUnlockSystem : EntitySystem
         if (mind == null)
             return false;
 
-        return IsMindRecipeLeared(mind.Value, recipe);
+        return IsMindRecipeLearned(mind.Value, recipe);
     }
 }
 
