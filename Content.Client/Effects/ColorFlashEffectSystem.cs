@@ -125,7 +125,11 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
                 AddComp(ent, comp);
             }
 
-            comp.Color = sprite.Color;
+            // TODO: create new sprite layer for the effect?
+            //
+            // bandaid fix for entities becoming red permanently
+            // don't store current sprite color, just reset sprite color to white (normal) every time animation ends
+            // comp.Color = sprite.Color;
             _animation.Play((ent, player), animation, AnimationKey);
         }
     }
