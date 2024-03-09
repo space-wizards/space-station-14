@@ -14,7 +14,7 @@
       department: Security
       time: 54000 # 15 hours
   weight: 20
-  startingGear: CaptainGear
+  startingGear: BlueshieldOfficerGear
   icon: "JobIconNanotrasen"
   requireAdminNotify: true
   joinNotifyCrew: true
@@ -30,7 +30,7 @@
       - type: CommandStaff
 
 - type: startingGear
-  id: CaptainGear
+  id: BlueshieldOfficerGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlue
     back: ClothingBackpackCaptainFilled
