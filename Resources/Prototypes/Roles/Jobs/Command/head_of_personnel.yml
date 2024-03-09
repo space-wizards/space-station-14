@@ -45,6 +45,7 @@
   - Atmospherics
   - Medical
   - Library
+  - Quartermaster
   special:
   - !type:AddComponentSpecial
     components:
