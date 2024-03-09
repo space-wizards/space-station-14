@@ -58,17 +58,11 @@ public sealed partial class ArticleEditorPanel : Control
         {
             control.ModulateSelfOverride = Color.Red;
             control.ToolTip = Loc.GetString("news-writer-text-length-exceeded");
-
-            ButtonPublish.Disabled = true;
-            ButtonPreview.Disabled = true;
         }
         else
         {
             control.ModulateSelfOverride = null;
             control.ToolTip = string.Empty;
-
-            ButtonPublish.Disabled = false;
-            ButtonPreview.Disabled = false;
         }
 
         //Return if the control is Title, continue only if content
