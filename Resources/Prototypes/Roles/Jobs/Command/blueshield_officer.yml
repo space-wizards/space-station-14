@@ -18,7 +18,7 @@
   icon: "JobIconNanotrasen"
   requireAdminNotify: true
   joinNotifyCrew: true
-  supervisors: job-supervisors-centcom
+  supervisors: job-supervisors-captain
   canBeAntag: false
   accessGroups:
   - AllAccess
@@ -41,7 +41,7 @@
     outerClothing: ClothingOuterArmorCaptainCarapace
     id: ERTSecurityPDA
     ears: ClothingHeadsetCentCom
-    belt: ClothingBeltSheathFilled
+    belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58Nonlethal
     pocket2: DeathAcidifierImplanter
   innerClothingSkirt: ClothingUniformJumpskirtColorBlue
