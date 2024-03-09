@@ -134,7 +134,6 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         else
             _deviceSilencingProgress.Remove(netEntity);
 
-        // Update values and UI elements
         foreach (AtmosAlarmEntryContainer entryContainer in AlertsTable.Children)
         {
             if (entryContainer.NetEntity == netEntity)
@@ -160,7 +159,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
             focusData = null;
         }
 
-        // Retain alarm data for use between updates
+        // Retain alarm data for use inbetween updates
         _airAlarms = airAlarms;
         _fireAlarms = fireAlarms;
 
@@ -170,7 +169,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         _activeAlarms = allAlarms.Where(x => x.AlarmState > AtmosAlarmType.Normal &&
             (!silenced.Contains(x.NetEntity) || _deviceSilencingProgress.ContainsKey(x.NetEntity)));
 
-        // Reset nav map values
+        // Reset nav map data
         NavMap.TrackedCoordinates.Clear();
         NavMap.TrackedEntities.Clear();
 

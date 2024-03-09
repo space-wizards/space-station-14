@@ -88,6 +88,9 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
         if (gridUid == null)
             return;
 
+        if (!TryGetAtmosDeviceNavMapData(uid, component, xform, gridUid.Value, out var data))
+            return;
+
         var netEntity = EntityManager.GetNetEntity(uid);
 
         var query = AllEntityQuery<AtmosAlertsComputerComponent, TransformComponent>();
@@ -96,7 +99,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
             if (gridUid != entXform.GridUid)
                 continue;
 
-            if (args.Anchored && TryGetAtmosDeviceNavMapData(uid, component, xform, gridUid.Value, out var data))
+            if (args.Anchored)
                 entConsole.AtmosDevices.Add(data.Value);
 
             else if (!args.Anchored)
@@ -116,6 +119,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
         {
             _updateTimer -= UpdateTime;
 
+            // Keep a list of UI entries for each gridUid, in case multiple consoles stand on the same grid
             var airAlarmEntriesForEachGrid = new Dictionary<EntityUid, AtmosAlertsComputerEntry[]>();
             var fireAlarmEntriesForEachGrid = new Dictionary<EntityUid, AtmosAlertsComputerEntry[]>();
 
@@ -125,7 +129,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
                 if (entXform?.GridUid == null)
                     continue;
 
-                // Save a list of the console UI entries for each grid, in case multiple consoles stand on the same one
+                // Make a list of alarm state data for all the air and fire alarms on the grid
                 if (!airAlarmEntriesForEachGrid.TryGetValue(entXform.GridUid.Value, out var airAlarmEntries))
                 {
                     airAlarmEntries = GetAlarmStateData(entXform.GridUid.Value, AtmosAlertsComputerGroup.AirAlarm).ToArray();
@@ -138,7 +142,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
                     fireAlarmEntriesForEachGrid[entXform.GridUid.Value] = fireAlarmEntries;
                 }
 
-                // Determine the highest level of alert the console detected (from non-silenced devices)
+                // Determine the highest level of alert for the console (based on non-silenced alarms)
                 var highestAlert = AtmosAlarmType.Invalid;
 
                 foreach (var entry in airAlarmEntries)
@@ -157,7 +161,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
                 if (TryComp<AppearanceComponent>(ent, out var appearance))
                     _appearance.SetData(ent, AtmosAlertsComputerVisuals.ComputerLayerScreen, (int) highestAlert, appearance);
 
-                // If the console UI is open, send its data to each subscribed session
+                // If the console UI is open, send UI data to each subscribed session
                 if (!_userInterfaceSystem.TryGetUi(ent, AtmosAlertsComputerUiKey.Key, out var bui))
                     continue;
 
@@ -211,8 +215,8 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
             if (entDevice.Group != group)
                 continue;
 
-            // If emagged, change the alarm type to inactive, I guess?
-            var alarmState = (entAtmosAlarmable.LastAlarmState == AtmosAlarmType.Emagged) ? AtmosAlarmType.Invalid : entAtmosAlarmable.LastAlarmState;
+            // If emagged, change the alarm type to normal
+            var alarmState = (entAtmosAlarmable.LastAlarmState == AtmosAlarmType.Emagged) ? AtmosAlarmType.Normal : entAtmosAlarmable.LastAlarmState;
 
             // Unpowered alarms can't sound
             if (TryComp<ApcPowerReceiverComponent>(ent, out var entAPCPower) && !entAPCPower.Powered)
@@ -246,6 +250,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
             return null;
         }
 
+        // Force update the sensors attached to the alarm
         if (!_userInterfaceSystem.TryGetUi(focusDevice.Value, SharedAirAlarmInterfaceKey.Key, out var bui) ||
             bui.SubscribedSessions.Count == 0)
         {
@@ -256,6 +261,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
                 _atmosDevNet.Register(uid, null);
         }
 
+        // Get the sensor data
         var temperatureData = (_airAlarmSystem.CalculateTemperatureAverage(focusDeviceAirAlarm), AtmosAlarmType.Normal);
         var pressureData = (_airAlarmSystem.CalculatePressureAverage(focusDeviceAirAlarm), AtmosAlarmType.Normal);
         var gasData = new Dictionary<Gas, (float, float, AtmosAlarmType)>();
