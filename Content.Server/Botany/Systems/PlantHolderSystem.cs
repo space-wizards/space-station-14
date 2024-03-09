@@ -159,7 +159,6 @@ public sealed class PlantHolderSystem : EntitySystem
                 if (!_botany.TryGetSeed(seeds, out var seed))
                     return;
 
-                float? seedHealth = seeds.HealthOverride;
                 var name = Loc.GetString(seed.Name);
                 var noun = Loc.GetString(seed.Noun);
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
@@ -169,9 +168,9 @@ public sealed class PlantHolderSystem : EntitySystem
                 component.Seed = seed;
                 component.Dead = false;
                 component.Age = 1;
-                if (seedHealth is float realSeedHealth)
+                if (seeds.HealthOverride != null)
                 {
-                    component.Health = realSeedHealth;
+                    component.Health = seeds.HealthOverride.Value;
                 }
                 else
                 {
@@ -287,15 +286,19 @@ public sealed class PlantHolderSystem : EntitySystem
                 return;
             }
 
-            component.Health -= (_random.Next(3, 5) * 10); //Clippers remove part of a plant, damaging it
+            component.Health -= (_random.Next(3, 5) * 10);
 
-            float? nullHealthOverride = null;
-            if (!component.Harvest)  //If plant is not harvestable, sets nullHealthOverride to null. Makes it so clipping a harvestable plant does not yield damaged seeds.
+            float? healthOverride;
+            if (component.Harvest)
             {
-                nullHealthOverride = component.Health;
+                healthOverride = null;
+            }
+            else
+            {
+                healthOverride = component.Health;
             }
             component.Seed.Unique = false;
-            var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User, nullHealthOverride);
+            var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User, healthOverride);
             _randomHelper.RandomOffset(seed, 0.25f);
             var displayName = Loc.GetString(component.Seed.DisplayName);
             _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
