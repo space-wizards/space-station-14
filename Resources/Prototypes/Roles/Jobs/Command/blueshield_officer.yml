@@ -14,7 +14,7 @@
       department: Security
       time: 54000 # 15 hours
   weight: 20
-  startingGear: BlueshieldOfficerGear
+  startingGear: CaptainGear
   icon: "JobIconNanotrasen"
   requireAdminNotify: true
   joinNotifyCrew: true
