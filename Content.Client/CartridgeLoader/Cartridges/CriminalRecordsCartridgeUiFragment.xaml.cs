@@ -15,11 +15,16 @@ namespace Content.Client.CartridgeLoader.Cartridges;
 [GenerateTypedNameReferences]
 public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
+    private readonly IEntityManager _entManager;
+    private readonly IPrototypeManager _prototypeManager;
+    private readonly SpriteSystem _spriteSystem;
     public CriminalRecordsCartridgeUiFragment()
     {
         RobustXamlLoader.Load(this);
+
+        _entManager = IoCManager.Resolve<IEntityManager>();
+        _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+        _spriteSystem = _entManager.System<SpriteSystem>();
 
         Orientation = LayoutOrientation.Vertical;
         HorizontalExpand = true;
@@ -76,13 +81,13 @@ public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
             ClipText = true,
         };
 
-        jobContainer.AddChild(jobLabel);
 
         if (!_prototypeManager.TryIndex<StatusIconPrototype>(
               stationRecord.JobIcon,
               out var proto
               ))
         {
+            jobContainer.AddChild(jobLabel);
             return;
         }
 
@@ -95,6 +100,7 @@ public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
         };
 
         jobContainer.AddChild(jobIcon);
+        jobContainer.AddChild(jobLabel);
     }
 
 }
