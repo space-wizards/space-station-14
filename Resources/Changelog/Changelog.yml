@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added hellfire freezers and hellfire heaters. These are significantly
-      more efficient, at the cost of leaking cold and heat into the surrounding atmosphere.
-      Research them in advanced atmospherics technology today.
-    type: Add
-  id: 5614
-  time: '2024-01-07T13:55:22.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23543
 - author: Ubaser
   changes:
   - message: You can now butcher gloves.
@@ -3816,3 +3807,10 @@
   id: 6113
   time: '2024-03-09T01:44:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25765
+- author: Plykiya
+  changes:
+  - message: Pre-filled syringes start in inject mode now.
+    type: Tweak
+  id: 6114
+  time: '2024-03-09T10:19:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25881
