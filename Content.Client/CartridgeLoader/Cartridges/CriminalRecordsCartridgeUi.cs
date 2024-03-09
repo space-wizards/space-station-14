@@ -27,11 +27,4 @@ public sealed partial class CriminalRecordsCartridgeUi : UIFragment
 
         _fragment?.UpdateState(uiState);
     }
-
-    //private void SendNotekeeperMessage(NotekeeperUiAction action, string note, BoundUserInterface userInterface)
-    //{
-     //   var notekeeperMessage = new NotekeeperUiMessageEvent(action, note);
-      //  var message = new CartridgeUiMessage(notekeeperMessage);
-       // userInterface.SendMessage(message);
-    //}
 }

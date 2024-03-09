@@ -10,9 +10,6 @@ namespace Content.Client.CartridgeLoader.Cartridges;
 public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
 {
 
-    //public event Action<string>? OnNoteAdded;
-    //public event Action<string>? OnNoteRemoved;
-
     public CriminalRecordsCartridgeUiFragment()
     {
         RobustXamlLoader.Load(this);
@@ -69,27 +66,4 @@ public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
       Wanted.AddChild(row);
     }
     
-    /*
-    private void AddNote(string note)
-    {
-        var row = new BoxContainer();
-        row.HorizontalExpand = true;
-        row.Orientation = LayoutOrientation.Horizontal;
-        row.Margin = new Thickness(4);
-
-        var label = new Label();
-        label.Text = note;
-        label.HorizontalExpand = true;
-        label.ClipText = true;
-
-        var removeButton = new TextureButton();
-        removeButton.AddStyleClass("windowCloseButton");
-        removeButton.OnPressed += _ => OnNoteRemoved?.Invoke(label.Text);
-
-        row.AddChild(label);
-        row.AddChild(removeButton);
-
-        MessageContainer.AddChild(row);
-    }
-    */
 }
