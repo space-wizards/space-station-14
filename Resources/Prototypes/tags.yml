@@ -218,6 +218,12 @@
   id: Briefcase
 
 - type: Tag
+  id: BrimFlatcapBrown
+
+- type: Tag
+  id: BrimFlatcapGrey
+
+- type: Tag
   id: Brutepack
 
 - type: Tag
@@ -349,6 +355,9 @@
 
 - type: Tag
   id: Cleaver
+
+- type: Tag
+  id: ClockworkGlassShard
 
 - type: Tag
   id: ClothMade

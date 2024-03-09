@@ -137,6 +137,17 @@
     node: stoolBar
 
 - type: entity
+  name: brass chair
+  id: ChairBrass
+  parent: StoolBase
+  components:
+  - type: Sprite
+    state: brass_chair
+  - type: Construction
+    graph: Seat
+    node: chairBrass
+
+- type: entity
   name: white office chair
   id: ChairOfficeLight
   parent: OfficeChairBase
