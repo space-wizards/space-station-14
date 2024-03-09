@@ -38,12 +38,12 @@
     head: ClothingHeadHelmetBasic
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitERTLeader
+    outerClothing: ClothingOuterArmorCaptainCarapace
     id: ERTSecurityPDA
     ears: ClothingHeadsetCentCom
     belt: ClothingBeltSheathFilled
     pocket1: WeaponPistolMk58Nonlethal
-    pocket2: EnergyShield
+    pocket2: DeathAcidifierImplanter
   innerClothingSkirt: ClothingUniformJumpskirtColorBlue
   satchel: ClothingBackpackSatchelCaptainFilled
   duffelbag: ClothingBackpackDuffelCaptainFilled
