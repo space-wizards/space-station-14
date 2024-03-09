@@ -30,8 +30,8 @@ public sealed class JammerSystem : EntitySystem
         var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent>();
         while (query.MoveNext(out var uid, out var _, out var jam))
         {
-            if (_powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
-                !_battery.TryUseCharge(uid, jam.Wattage * frameTime, battery))
+            if (_powerCell.TryGetBatteryFromSlot(uid, out var batteryUid, out var battery) &&
+                !_battery.TryUseCharge(batteryUid.Value, jam.Wattage * frameTime, battery))
             {
                 RemComp<ActiveRadioJammerComponent>(uid);
             }
