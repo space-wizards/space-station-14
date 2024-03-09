@@ -69,7 +69,7 @@
   noSpawn: true
   components:
   - type: StationEvent
-    startAnnouncement: station-event-clerical-error-announcement
+    startAnnouncement: station-event-mouse-migration-announcement
     minimumPlayers: 15
     weight: 5
     duration: 1
@@ -201,10 +201,15 @@
   noSpawn: true
   components:
   - type: StationEvent
+    startAnnouncement: station-event-mouse-migration-announcement
     earliestStart: 30
     minimumPlayers: 35
     weight: 5
     duration: 50
+    startAudio:
+      path: /Audio/Announcements/infestation.ogg
+      params:
+        volume: -4
   - type: VentCrittersRule
     entries:
     - id: MobMouse
@@ -223,8 +228,13 @@
   noSpawn: true
   components:
   - type: StationEvent
+    startAnnouncement: station-event-mouse-migration-announcement
     weight: 5
     duration: 50
+    startAudio:
+      path: /Audio/Announcements/infestation.ogg
+      params:
+        volume: -4
   - type: VentCrittersRule
     entries:
     - id: MobCockroach
@@ -244,7 +254,7 @@
     startAudio:
       path: /Audio/Announcements/power_off.ogg
       params:
-       volume: -4
+        volume: -4
     startDelay: 24
     duration: 60
     maxDuration: 120
@@ -352,6 +362,9 @@
   noSpawn: true
   components:
   - type: StationEvent
+    startAnnouncement: station-event-mouse-migration-announcement
+    startAudio:
+      path: /Audio/Announcements/infestation.ogg
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
@@ -371,6 +384,9 @@
   noSpawn: true
   components:
   - type: StationEvent
+    startAnnouncement: station-event-mouse-migration-announcement
+    startAudio:
+      path: /Audio/Announcements/infestation.ogg
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
@@ -386,6 +402,9 @@
   noSpawn: true
   components:
   - type: StationEvent
+    startAnnouncement: station-event-mouse-migration-announcement
+    startAudio:
+      path: /Audio/Announcements/infestation.ogg
     earliestStart: 20
     minimumPlayers: 15
     weight: 1

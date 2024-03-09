@@ -116,3 +116,15 @@
     - type: Item
       sprite: Ganimed/Objects/pillows.rsi
       heldPrefix: icon-five
+
+- type: entity
+  parent: Pillow1
+  id: Pillow6
+  description: Large pillow with a person printed on top of it's covers. The cat looks slimy.
+  components:
+    - type: Sprite
+      sprite: Ganimed/Objects/pillows.rsi
+      state: icon-six
+    - type: Item
+      sprite: Ganimed/Objects/pillows.rsi
+      heldPrefix: icon-six
