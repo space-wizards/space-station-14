@@ -60,10 +60,7 @@ namespace Content.Server.Shuttles.Systems
             SubscribeLocalEvent<ShuttleConsoleComponent, UndockRequestMessage>(OnRequestUndock);
         }
 
-        /// <summary>
-        /// Sets the docks for the provided entity as enabled or disabled.
-        /// </summary>
-        public void SetDocks(EntityUid gridUid, bool enabled)
+        public void UndockDocks(EntityUid gridUid)
         {
             _dockingSet.Clear();
             _lookup.GetChildEntities(gridUid, _dockingSet);
@@ -71,7 +68,6 @@ namespace Content.Server.Shuttles.Systems
             foreach (var dock in _dockingSet)
             {
                 Undock(dock);
-                dock.Comp.Enabled = enabled;
             }
         }
 
@@ -165,8 +161,6 @@ namespace Content.Server.Shuttles.Systems
             if (!EntityManager.GetComponent<TransformComponent>(uid).Anchored)
                 return;
 
-            SetDockingEnabled((uid, component), true);
-
             // This little gem is for docking deserialization
             if (component.DockedWith != null)
             {
@@ -184,16 +178,10 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnAnchorChange(Entity<DockingComponent> entity, ref AnchorStateChangedEvent args)
         {
-            if (args.Anchored)
+            if (!args.Anchored)
             {
-                SetDockingEnabled(entity, true);
+                Undock(entity);
             }
-            else
-            {
-                SetDockingEnabled(entity, false);
-            }
-
-            _console.RefreshShuttleConsoles();
         }
 
         private void OnDockingReAnchor(Entity<DockingComponent> entity, ref ReAnchorEvent args)
@@ -210,19 +198,6 @@ namespace Content.Server.Shuttles.Systems
             Undock(entity);
             Dock((uid, component), (otherDock.Value, other));
             _console.RefreshShuttleConsoles();
-        }
-
-        public void SetDockingEnabled(Entity<DockingComponent> entity, bool value)
-        {
-            if (entity.Comp.Enabled == value)
-                return;
-
-            entity.Comp.Enabled = value;
-
-            if (!entity.Comp.Enabled && entity.Comp.DockedWith != null)
-            {
-                Undock(entity);
-            }
         }
 
         /// <summary>
@@ -402,7 +377,15 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnRequestDock(EntityUid uid, ShuttleConsoleComponent component, DockRequestMessage args)
         {
-            var shuttleUid = Transform(uid).GridUid;
+            var console = _console.GetDroneConsole(uid);
+
+            if (console == null)
+            {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
+                return;
+            }
+
+            var shuttleUid = Transform(console.Value).GridUid;
 
             if (!CanShuttleDock(shuttleUid))
             {
@@ -454,9 +437,7 @@ namespace Content.Server.Shuttles.Systems
         /// </summary>
         public bool CanDock(Entity<DockingComponent> dockA, Entity<DockingComponent> dockB)
         {
-            if (!dockA.Comp.Enabled ||
-                !dockB.Comp.Enabled ||
-                dockA.Comp.DockedWith != null ||
+            if (dockA.Comp.DockedWith != null ||
                 dockB.Comp.DockedWith != null)
             {
                 return false;
@@ -464,6 +445,10 @@ namespace Content.Server.Shuttles.Systems
 
             var xformA = Transform(dockA);
             var xformB = Transform(dockB);
+
+            if (!xformA.Anchored || !xformB.Anchored)
+                return false;
+
             var (worldPosA, worldRotA) = XformSystem.GetWorldPositionRotation(xformA);
             var (worldPosB, worldRotB) = XformSystem.GetWorldPositionRotation(xformB);
 

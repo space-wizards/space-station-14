@@ -1,10 +1,10 @@
-using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Chemistry.Components;
+namespace Content.Shared.Chemistry.Components;
 
 /// <summary>
 /// Basically, monkey cubes.
@@ -16,20 +16,20 @@ public sealed partial class RehydratableComponent : Component
     /// <summary>
     /// The reagent that must be present to count as hydrated.
     /// </summary>
-    [DataField("catalyst", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string CatalystPrototype = "Water";
+    [DataField("catalyst")]
+    public ProtoId<ReagentPrototype> CatalystPrototype = "Water";
 
     /// <summary>
     /// The minimum amount of catalyst that must be present to be hydrated.
     /// </summary>
-    [DataField("catalystMinimum"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public FixedPoint2 CatalystMinimum = FixedPoint2.Zero;
 
     /// <summary>
     /// The entity to create when hydrated.
     /// </summary>
-    [DataField("possibleSpawns"), ViewVariables(VVAccess.ReadWrite)]
-    public List<string> PossibleSpawns = new();
+    [DataField(required: true)]
+    public List<EntProtoId> PossibleSpawns = new();
 }
 
 /// <summary>

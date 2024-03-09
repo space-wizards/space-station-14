@@ -5,7 +5,7 @@
     state: base
   product: CrateEngineeringThruster
   cost: 1500
-  category: Shuttle
+  category: cargoproduct-category-name-shuttle
   group: market
 
 - type: cargoProduct
@@ -15,7 +15,7 @@
     state: base
   product: CrateEngineeringGyroscope
   cost: 4000
-  category: Shuttle
+  category: cargoproduct-category-name-shuttle
   group: market
 
 # - type: cargoProduct
@@ -25,6 +25,6 @@
     # state: avionics-systems
   # product: CrateEngineeringShuttle
   # cost: 3000
-  # category: Shuttle
+  # category: cargoproduct-category-name-shuttle
   # group: market
 #  locked: true   # only the QM has permission to order by default

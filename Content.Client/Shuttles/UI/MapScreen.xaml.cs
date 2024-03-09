@@ -150,8 +150,12 @@ public sealed partial class MapScreen : BoxContainer
                 _ftlStyle.BackgroundColor = Color.FromHex("#B02E26");
                 MapRadar.InFtl = false;
                 break;
+            // Fallback in case no FTL state or the likes.
             default:
-                throw new NotImplementedException();
+                SetFTLAllowed(false);
+                _ftlStyle.BackgroundColor = Color.FromHex("#B02E26");
+                MapRadar.InFtl = false;
+                break;
         }
 
         if (IsFTLBlocked())
