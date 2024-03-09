@@ -239,3 +239,14 @@ BookChemistryInsane: BookRandomStory
 BookGnominomicon: BookRandomStory
 BookFishing: BookRandomStory
 BookDetective: BookRandomStory
+
+# 2024-03-07
+AirlockExternalEasyPry: AirlockExternal
+AirlockExternalGlassEasyPry: AirlockExternalGlass
+AirlockGlassShuttleEasyPry: AirlockGlassShuttle
+AirlockShuttleEasyPry: AirlockShuttle
+AirlockExternalEasyPryLocked: AirlockExternalLocked
+AirlockExternalGlassEasyPryLocked: AirlockExternalGlassLocked
+AirlockGlassShuttleEasyPryLocked: AirlockExternalGlassShuttleLocked
+AirlockShuttleEasyPryLocked: AirlockExternalShuttleLocked
+
