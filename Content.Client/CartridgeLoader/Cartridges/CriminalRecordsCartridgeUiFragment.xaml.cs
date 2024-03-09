@@ -3,67 +3,98 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.CriminalRecords;
+using Content.Shared.StationRecords;
+using System.Numerics;
+using Content.Shared.StatusIcon;
+using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes;
+
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
 [GenerateTypedNameReferences]
 public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
 {
-
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
     public CriminalRecordsCartridgeUiFragment()
     {
         RobustXamlLoader.Load(this);
+
         Orientation = LayoutOrientation.Vertical;
         HorizontalExpand = true;
         VerticalExpand = true;
 
-        UpdateState(new CriminalRecordsCartridgeUiState(new List<(string,CriminalRecord)>(), new List<(string,CriminalRecord)>()));
+        UpdateState(new CriminalRecordsCartridgeUiState(new List<(GeneralStationRecord, CriminalRecord)>(), new List<(GeneralStationRecord, CriminalRecord)>()));
     }
 
-    
+
     public void UpdateState(CriminalRecordsCartridgeUiState state)
     {
-      foreach(var (name,record) in state.Wanted){
-        AddCriminal(name, record);
-      }
+        foreach (var (stationRecord, criminalRecord) in state.Wanted)
+        {
+            AddCriminal(stationRecord, criminalRecord);
+        }
 
-      foreach(var (name,record) in state.Detained){
-        AddDetained(name,record);
-      }
+        foreach (var (name, record) in state.Detained)
+        {
+        }
     }
 
-    
-
-    private void AddDetained(string name, CriminalRecord record)
+    private void AddCriminal(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
     {
-      var row = new BoxContainer();
-      row.HorizontalExpand = true;
-      row.Orientation = LayoutOrientation.Horizontal;
-      row.Margin = new Thickness(4);
-      
-      var criminalName = new Label();
-      criminalName.Text = name;
-      criminalName.HorizontalExpand = true;
-      criminalName.ClipText = true;
-      
-      row.AddChild(criminalName);
-      Detained.AddChild(row);
+        var row = new BoxContainer()
+        {
+            Orientation = LayoutOrientation.Horizontal,
+            HorizontalExpand = true,
+            Margin = new Thickness(4),
+        };
+
+        Wanted.AddChild(row);
+
+        var nameLabel = new Label()
+        {
+            Text = stationRecord.Name,
+            HorizontalExpand = true,
+            ClipText = true,
+        };
+
+        row.AddChild(nameLabel);
+
+        var jobContainer = new BoxContainer()
+        {
+            Orientation = LayoutOrientation.Horizontal,
+            HorizontalExpand = true,
+        };
+
+        row.AddChild(jobContainer);
+
+        var jobLabel = new Label()
+        {
+            Text = stationRecord.JobTitle,
+            HorizontalExpand = true,
+            ClipText = true,
+        };
+
+        jobContainer.AddChild(jobLabel);
+
+        if (!_prototypeManager.TryIndex<StatusIconPrototype>(
+              stationRecord.JobIcon,
+              out var proto
+              ))
+        {
+            return;
+        }
+
+        var jobIcon = new TextureRect()
+        {
+            TextureScale = new Vector2(2f, 2f),
+            VerticalAlignment = VAlignment.Center,
+            Texture = _spriteSystem.Frame0(proto.Icon),
+            Margin = new Thickness(5, 0, 5, 0),
+        };
+
+        jobContainer.AddChild(jobIcon);
     }
 
-    private void AddCriminal(string name, CriminalRecord record)
-    {
-      var row = new BoxContainer();
-      row.HorizontalExpand = true;
-      row.Orientation = LayoutOrientation.Horizontal;
-      row.Margin = new Thickness(4);
-      
-      var criminalName = new Label();
-      criminalName.Text = name;
-      criminalName.HorizontalExpand = true;
-      criminalName.ClipText = true;
-      
-      row.AddChild(criminalName);
-      Wanted.AddChild(row);
-    }
-    
 }

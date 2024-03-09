@@ -1,5 +1,6 @@
 using Robust.Shared.Serialization;
 using Content.Shared.CriminalRecords;
+using Content.Shared.StationRecords;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
@@ -7,13 +8,13 @@ namespace Content.Shared.CartridgeLoader.Cartridges;
 public sealed class CriminalRecordsCartridgeUiState : BoundUserInterfaceState
 {
 
-  public List<(string,CriminalRecord)> Wanted;
-  public List<(string,CriminalRecord)> Detained;
+    public List<(GeneralStationRecord, CriminalRecord)> Wanted;
+    public List<(GeneralStationRecord, CriminalRecord)> Detained;
 
-  public CriminalRecordsCartridgeUiState(List<(string,CriminalRecord)> wanted, List<(string,CriminalRecord)> detained)
-  {
-    Wanted = wanted;
-    Detained = detained;   
-  }
+    public CriminalRecordsCartridgeUiState(List<(GeneralStationRecord, CriminalRecord)> wanted, List<(GeneralStationRecord, CriminalRecord)> detained)
+    {
+        Wanted = wanted;
+        Detained = detained;
+    }
 
 }
