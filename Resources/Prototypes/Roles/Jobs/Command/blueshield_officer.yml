@@ -7,6 +7,12 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 54000 # 15 hours
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 54000 # 15 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 54000 # 15 hours
   weight: 20
   startingGear: BlueshieldOfficerGear
   icon: "JobIconNanotrasen"
