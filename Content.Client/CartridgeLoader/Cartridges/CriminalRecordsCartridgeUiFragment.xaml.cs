@@ -2,6 +2,7 @@
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Content.Shared.CartridgeLoader.Cartridges;
+using Content.Shared.CriminalRecords;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
@@ -18,22 +19,56 @@ public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
         Orientation = LayoutOrientation.Vertical;
         HorizontalExpand = true;
         VerticalExpand = true;
-      /*
-        Input.OnTextEntered += _ =>
-        {
-            //AddNote(Input.Text);
-            //OnNoteAdded?.Invoke(Input.Text);
-            Input.Clear();
-        };
 
-        UpdateState(new List<string>());
-        */
+        UpdateState(new CriminalRecordsCartridgeUiState(new List<(string,CriminalRecord)>(), new List<(string,CriminalRecord)>()));
     }
 
     
     public void UpdateState(CriminalRecordsCartridgeUiState state)
     {
+      foreach(var (name,record) in state.Wanted){
+        AddCriminal(name, record);
+      }
+
+      foreach(var (name,record) in state.Detained){
+        AddDetained(name,record);
+      }
     }
+
+    
+
+    private void AddDetained(string name, CriminalRecord record)
+    {
+      var row = new BoxContainer();
+      row.HorizontalExpand = true;
+      row.Orientation = LayoutOrientation.Horizontal;
+      row.Margin = new Thickness(4);
+      
+      var criminalName = new Label();
+      criminalName.Text = name;
+      criminalName.HorizontalExpand = true;
+      criminalName.ClipText = true;
+      
+      row.AddChild(criminalName);
+      Detained.AddChild(row);
+    }
+
+    private void AddCriminal(string name, CriminalRecord record)
+    {
+      var row = new BoxContainer();
+      row.HorizontalExpand = true;
+      row.Orientation = LayoutOrientation.Horizontal;
+      row.Margin = new Thickness(4);
+      
+      var criminalName = new Label();
+      criminalName.Text = name;
+      criminalName.HorizontalExpand = true;
+      criminalName.ClipText = true;
+      
+      row.AddChild(criminalName);
+      Wanted.AddChild(row);
+    }
+    
     /*
     private void AddNote(string note)
     {

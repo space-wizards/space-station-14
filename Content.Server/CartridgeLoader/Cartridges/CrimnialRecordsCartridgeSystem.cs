@@ -1,11 +1,19 @@
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
+using Content.Shared.CriminalRecords;
+using Content.Shared.Security;
+using Content.Shared.StationRecords;
+using Content.Server.StationRecords.Systems;
+using Content.Server.StationRecords;
+using Content.Server.Station.Systems;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
 public sealed class CriminalRecordsCartridgeSystem : EntitySystem
 {
   [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
+  [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
+  [Dependency] private readonly StationSystem _stationSystem = default!;
 
   public override void Initialize()
   {
@@ -41,7 +49,41 @@ public sealed class CriminalRecordsCartridgeSystem : EntitySystem
     EntityUid loaderUid
     )
   {
-    var state = new CriminalRecordsCartridgeUiState();
+
+    if(!Resolve(uid, ref criminalRecordsCartridge))
+      return;
+
+    var owningStation = _stationSystem.GetOwningStation(uid);
+
+    if (owningStation is null)
+      return;
+
+    var records = _stationRecords.GetRecordsOfType<CriminalRecord>(owningStation.Value); 
+
+    List<(string,CriminalRecord)> wanted = new List<(string,CriminalRecord)>();
+    List<(string,CriminalRecord)> detained = new List<(string,CriminalRecord)>();
+
+    foreach(var (id,record) in records)
+    {
+      var name = "Unknown";
+
+      if(_stationRecords.TryGetRecord<GeneralStationRecord>(new StationRecordKey(id, owningStation.Value),  out var stationRecord))
+        name = stationRecord.Name;
+
+      switch (record.Status)
+      {
+        case SecurityStatus.Wanted:
+          wanted.Add((name,record));
+          break;
+        case SecurityStatus.Detained:
+          detained.Add((name,record));
+          break;
+        default:
+          break;
+      }
+    }
+
+    var state = new CriminalRecordsCartridgeUiState(wanted,detained);
     _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, state);
   }
 }
