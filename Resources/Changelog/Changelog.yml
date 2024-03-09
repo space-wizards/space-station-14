@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix audio fades and ambient music overlapping.
-    type: Fix
-  id: 5613
-  time: '2024-01-07T13:23:22.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23684
 - author: EmoGarbage404
   changes:
   - message: Added hellfire freezers and hellfire heaters. These are significantly
@@ -3816,3 +3809,10 @@
   id: 6112
   time: '2024-03-08T07:50:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25926
+- author: mryikes
+  changes:
+  - message: New Nuke Detonation Song "Clearly Nuclear".
+    type: Add
+  id: 6113
+  time: '2024-03-09T01:44:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25765
