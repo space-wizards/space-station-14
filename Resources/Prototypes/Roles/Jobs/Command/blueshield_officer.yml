@@ -8,7 +8,7 @@
       department: Command
       time: 54000 # 15 hours
   weight: 20
-  startingGear: BluesheildOfficerGear
+  startingGear: BlueshieldOfficerGear
   icon: "JobIconNanotrasen"
   requireAdminNotify: true
   joinNotifyCrew: true
