@@ -1,7 +1,7 @@
 - type: job
   id: BlueshieldOfficer
   name: Blueshield Officer
-  description: job-description-bso
+  description: "Protect the Heads from the fate of death!
   playTimeTracker: JobBlueshieldOfficer
   requirements:
     - !type:DepartmentTimeRequirement
@@ -41,6 +41,9 @@
     outerClothing: ClothingOuterHardsuitERTLeader
     id: ERTSecurityPDA
     ears: ClothingHeadsetCentCom
+    belt: ClothingBeltSheathFilled
+    pocket1: WeaponPistolMk58Nonlethal
+    pocket2: EnergyShield
   innerClothingSkirt: ClothingUniformJumpskirtColorBlue
   satchel: ClothingBackpackSatchelCaptainFilled
   duffelbag: ClothingBackpackDuffelCaptainFilled
