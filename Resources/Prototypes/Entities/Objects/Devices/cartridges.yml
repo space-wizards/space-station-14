@@ -18,6 +18,24 @@
 
 - type: entity
   parent: BaseItem
+  id: CriminalRecordsCartridge
+  name: criminal records cartridge
+  description: A program for keeping up to date with criminal records
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-y
+  - type: UIFragment
+    ui: !type:CriminalRecordsCartridgeUi
+  - type: Cartridge
+    programName: criminal-records-program-name
+    icon:
+      sprite:  Objects/Misc/books.rsi
+      state: book4
+  - type: CriminalRecordsCartridge
+
+- type: entity
+  parent: BaseItem
   id: NewsReaderCartridge
   name: news cartridge
   description: A program for reading news

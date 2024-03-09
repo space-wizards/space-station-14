@@ -74,6 +74,7 @@
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
+      - CriminalRecordsCartridge
       - NewsReaderCartridge
     cartridgeSlot:
       priority: -1
