@@ -11,9 +11,9 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Examine;
-using static Content.Server.Remotes.DoorRemoteComponent;
+using static Content.Shared.Remotes.DoorRemoteComponent;
 
-namespace Content.Server.Remotes
+namespace Content.Shared.Remotes
 {
     public sealed class DoorRemoteSystem : EntitySystem
     {
