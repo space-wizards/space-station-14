@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: You can now butcher gloves.
-    type: Tweak
-  id: 5615
-  time: '2024-01-07T17:54:16.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23216
 - author: Adrian16199
   changes:
   - message: Ties are now craftable in uniform printer.
@@ -3814,3 +3807,14 @@
   id: 6114
   time: '2024-03-09T10:19:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25881
+- author: EmoGarbage404
+  changes:
+  - message: Added a new "colorblind friendly" toggle in the accessibility menu. This
+      allows you to toggle between a standard and colorblind-friendly palette for
+      things like progress bars and the medical HUD.
+    type: Add
+  - message: The medical HUD is now bright, even in low light levels.
+    type: Tweak
+  id: 6115
+  time: '2024-03-09T11:43:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25318
