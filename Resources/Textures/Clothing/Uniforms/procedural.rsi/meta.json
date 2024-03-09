@@ -32,6 +32,10 @@
       "directions": 4
     },
     {
+      "name": "base_torso_shirt",
+      "directions": 4
+    },
+    {
       "name": "base_torso_standart",
       "directions": 4
     },
@@ -97,6 +101,18 @@
     },
     {
       "name": "decor_torso_bra5",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_shirt1",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_shirt2",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_shirt3",
       "directions": 4
     },
     {

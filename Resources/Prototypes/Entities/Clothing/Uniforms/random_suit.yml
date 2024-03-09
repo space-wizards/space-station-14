@@ -16,6 +16,8 @@
       map: [ "leg" ]
     - state: mask_null
       map: [ "decor" ]
+    - state: mask_null
+      map: [ "overlay" ]
   - type: Clothing
     femaleMask: UniformTop
     maleMask: UniformTop
@@ -28,6 +30,8 @@
         map: [ "leg" ]
       - state: mask_null
         map: [ "decor" ]
+      - state: mask_null
+        map: [ "overlay" ]
 
 - type: entity
   parent: ClothingUniformRandom
@@ -41,6 +45,7 @@
     - ClothingUniformRandomStandart
     - ClothingUniformRandomBra
     - ClothingUniformRandomShorts
+    - ClothingUniformRandomShirt
 
 - type: entity
   parent: ClothingUniformRandom
@@ -142,3 +147,23 @@
           base_leg_short: Sixteen
           base_leg_skirt: Sixteen
           base_leg_skirt_long: Sixteen
+
+- type: entity
+  parent: ClothingUniformRandom
+  id: ClothingUniformRandomShirt
+  name: colorful costume
+  components:
+  - type: RandomSprite
+    available:
+      - torso:
+          base_torso_armless: Sixteen
+          mask_null: ""
+        leg:
+          base_leg_standart: Sixteen
+          base_leg_short: Sixteen
+        decor:
+          base_torso_shirt: Sixteen
+        overlay:
+          decor_torso_shirt1: Sixteen
+          decor_torso_shirt2: Sixteen
+          decor_torso_shirt3: Sixteen

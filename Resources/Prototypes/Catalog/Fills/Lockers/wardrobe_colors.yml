@@ -42,6 +42,8 @@
         amount: 5
       - id: ClothingUniformRandomShorts
         amount: 5
+      - id: ClothingUniformRandomShirt
+        amount: 5
 
 - type: entity
   id: WardrobeYellowFilled
