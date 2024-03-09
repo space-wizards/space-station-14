@@ -27,6 +27,6 @@ public sealed partial class FTLDestinationComponent : Component
     /// <summary>
     /// Shuttles must use a corresponding CD to travel to this location.
     /// </summary>
-    [DataField]
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public bool RequireCoordinateDisk = false;
 }

@@ -52,7 +52,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     private readonly SharedTransformSystem _xforms;
 
     public readonly EntityUid Station;
-    public EntityUid FTLDestination;
+    public readonly EntityUid? CoordinatesDisk;
     private readonly SalvageMissionParams _missionParams;
 
     private readonly ISawmill _sawmill;
@@ -70,7 +70,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         MetaDataSystem metaData,
         SharedTransformSystem xform,
         EntityUid station,
-        EntityUid ftlDestination,
+        EntityUid? coordinatesDisk,
         SalvageMissionParams missionParams,
         CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
@@ -84,7 +84,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         _metaData = metaData;
         _xforms = xform;
         Station = station;
-        FTLDestination = ftlDestination;
+        CoordinatesDisk = coordinatesDisk;
         _missionParams = missionParams;
         _sawmill = logManager.GetSawmill("salvage_job");
 #if !DEBUG
@@ -103,6 +103,18 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         var random = new Random(_missionParams.Seed);
         var destComp = _entManager.AddComponent<FTLDestinationComponent>(mapUid);
         destComp.BeaconsOnly = true;
+        destComp.RequireCoordinateDisk = true;
+        destComp.Enabled = true;
+        _metaData.SetEntityName(mapUid, SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _missionParams.Seed));
+        _entManager.AddComponent<FTLBeaconComponent>(mapUid);
+
+        // Saving the mission mapUid to a CD is made optional, in case one is somehow made in a process without a CD entity
+        if (CoordinatesDisk.HasValue)
+        {
+            var cd = _entManager.EnsureComponent<SharedShuttleDestinationCoordinatesComponent>(CoordinatesDisk.Value);
+            cd.Destination = mapUid;
+            _entManager.Dirty(CoordinatesDisk.Value, cd);
+        }
 
         // Setup mission configs
         // As we go through the config the rating will deplete so we'll go for most important to least important.
@@ -156,14 +168,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         expedition.Station = Station;
         expedition.EndTime = _timing.CurTime + mission.Duration;
         expedition.MissionParams = _missionParams;
-
-        // Assign coordinates to FTL destination
-        _xforms.SetCoordinates(FTLDestination, new EntityCoordinates(mapUid, grid.TileSizeHalfVector));
-
-        // Don't want consoles to have the incorrect name until refreshed.
-        _metaData.SetEntityName(FTLDestination, SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _missionParams.Seed));
-        destComp.RequireCoordinateDisk = true;
-        _entManager.InitializeAndStartEntity(FTLDestination);
 
         var landingPadRadius = 24;
         var minDungeonOffset = landingPadRadius + 4;

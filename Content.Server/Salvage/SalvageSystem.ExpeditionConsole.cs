@@ -21,14 +21,13 @@ public sealed partial class SalvageSystem
         if (!data.Missions.TryGetValue(args.Index, out var missionparams))
             return;
 
-        var job = SpawnMission(missionparams, station.Value);
+        var cdUid = Spawn(CoordinatesDisk, Transform(uid).Coordinates);
+        SpawnMission(missionparams, station.Value, cdUid);
 
         data.ActiveMission = args.Index;
         var mission = GetMission(_prototypeManager.Index<SalvageDifficultyPrototype>(missionparams.Difficulty), missionparams.Seed);
         data.NextOffer = _timing.CurTime + mission.Duration + TimeSpan.FromSeconds(1);
 
-        var cdUid = Spawn(CoordinatesDisk, Transform(uid).Coordinates);
-        EnsureComp<SharedShuttleDestinationCoordinatesComponent>(cdUid).Destination = job.FTLDestination;
         _labelSystem.Label(cdUid, GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), missionparams.Seed));
         _audio.PlayPvs(component.PrintSound, uid);
 

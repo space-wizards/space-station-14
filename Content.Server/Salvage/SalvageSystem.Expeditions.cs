@@ -149,10 +149,8 @@ public sealed partial class SalvageSystem
         return new SalvageExpeditionConsoleState(component.NextOffer, component.Claimed, component.Cooldown, component.ActiveMission, missions);
     }
 
-    private SpawnSalvageMissionJob SpawnMission(SalvageMissionParams missionParams, EntityUid station)
+    private void SpawnMission(SalvageMissionParams missionParams, EntityUid station, EntityUid? coordinatesDisk)
     {
-        var ftlDestination = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates());
-        
         var cancelToken = new CancellationTokenSource();
         var job = new SpawnSalvageMissionJob(
             SalvageJobTime,
@@ -167,13 +165,12 @@ public sealed partial class SalvageSystem
             _metaData,
             _transform,
             station,
-            ftlDestination,
+            coordinatesDisk,
             missionParams,
             cancelToken.Token);
 
         _salvageJobs.Add((job, cancelToken));
         _salvageQueue.EnqueueJob(job);
-        return job;
     }
 
     private void OnStructureExamine(EntityUid uid, SalvageStructureComponent component, ExaminedEvent args)

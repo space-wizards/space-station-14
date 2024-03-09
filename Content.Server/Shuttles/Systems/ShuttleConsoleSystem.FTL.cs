@@ -44,6 +44,10 @@ public sealed partial class ShuttleConsoleSystem
         }
 
         var nCoordinates = new NetCoordinates(GetNetEntity(targetXform.ParentUid), targetXform.LocalPosition);
+        if (targetXform.ParentUid == EntityUid.Invalid)
+        {
+            nCoordinates = new NetCoordinates(GetNetEntity(beaconEnt), targetXform.LocalPosition);
+        }
 
         // Check target exists
         if (!_shuttle.CanFTLBeacon(nCoordinates))
@@ -128,7 +132,7 @@ public sealed partial class ShuttleConsoleSystem
         }
 
         // Check shuttle can FTL to this target.
-        if (!_shuttle.CanFTLTo(shuttleUid.Value, targetMap))
+        if (!_shuttle.CanFTLTo(shuttleUid.Value, targetMap, ent))
         {
             return;
         }

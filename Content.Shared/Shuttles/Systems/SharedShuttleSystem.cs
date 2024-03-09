@@ -1,3 +1,4 @@
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.UI.MapObjects;
@@ -10,7 +11,8 @@ namespace Content.Shared.Shuttles.Systems;
 
 public abstract partial class SharedShuttleSystem : EntitySystem
 {
-    [Dependency] private   readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] protected readonly SharedMapSystem Maps = default!;
     [Dependency] protected readonly SharedTransformSystem XformSystem = default!;
 
@@ -34,12 +36,10 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     /// <summary>
     /// Returns whether an entity can FTL to the specified map.
     /// </summary>
-    public bool CanFTLTo(EntityUid shuttleUid, MapId targetMap)
+    public bool CanFTLTo(EntityUid shuttleUid, MapId targetMap, EntityUid consoleUid)
     {
         var mapUid = _mapManager.GetMapEntityId(targetMap);
         var shuttleMap = _xformQuery.GetComponent(shuttleUid).MapID;
-
-        Logger.GetSawmill("Test").Debug(shuttleUid.ToString());
 
         if (shuttleMap == targetMap)
             return true;
@@ -47,20 +47,18 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         if (!TryComp<FTLDestinationComponent>(mapUid, out var destination))
             return false;
 
-        if (!destination.Enabled)
-            return false;
-
         if (destination.RequireCoordinateDisk)
         {
-            Logger.GetSawmill("Test").Debug("RequireCoordinateDisk"!);
-            if (!TryComp<SharedShuttleDestinationSlotComponent>(shuttleUid, out var slot) || !slot.DiskSlot.HasItem)
+            if (!TryComp<ItemSlotsComponent>(consoleUid, out var slot))
             {
-                Logger.GetSawmill("Test").Debug("WEH"!);
                 return false;
             }
-            else if (slot.DiskSlot.Item is { Valid: true } disk)
+            else if (!_itemSlots.TryGetSlot(consoleUid, SharedShuttleConsoleComponent.DiskSlotName, out ItemSlot? itemSlot) || !itemSlot.HasItem)
             {
-                Logger.GetSawmill("Test").Debug("WEH2"!);
+                return false;
+            }
+            else if (itemSlot.Item is { Valid: true } disk)
+            {
                 SharedShuttleDestinationCoordinatesComponent? diskCoordinates = null;
                 if (!Resolve(disk, ref diskCoordinates))
                 {
@@ -73,13 +71,15 @@ public abstract partial class SharedShuttleSystem : EntitySystem
                 {
                     return false;
                 }
-                Logger.GetSawmill("Test").Debug("WEH100"!);
-            } else
+            }
+            else
             {
-                Logger.GetSawmill("Test").Debug("Disknotfound"!);
                 return false;
             }
         }
+
+        if (!destination.Enabled)
+            return false;
 
         if (HasComp<FTLMapComponent>(mapUid))
             return false;
