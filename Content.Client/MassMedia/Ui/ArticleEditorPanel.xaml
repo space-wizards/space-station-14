@@ -46,6 +46,8 @@
                         StyleClasses="ButtonColorRed" Text="{Loc news-write-ui-cancel-text}"/>
             </Control>
             <Control HorizontalExpand="True"/>
+              <Label Name="CharCount"  Margin="17 10 0 9" VerticalAlignment="Center"/>
+            <Control HorizontalExpand="True"/>
             <BoxContainer Orientation="Horizontal">
                 <Button Name="ButtonPreview" SetHeight="32" SetWidth="85"
                         StyleClasses="OpenRight" Text="{Loc news-write-ui-preview-text}"/>

@@ -20,6 +20,8 @@ public sealed partial class ArticleEditorPanel : Control
     public ArticleEditorPanel()
     {
         RobustXamlLoader.Load(this);
+        
+        CharCount.Text = "0/" + SharedNewsSystem.MaxContentLength;
 
         ButtonPublish.StyleClasses.Add(StyleBase.ButtonOpenLeft);
         ButtonPublish.StyleClasses.Add(StyleNano.StyleClassButtonColorGreen);
@@ -62,6 +64,11 @@ public sealed partial class ArticleEditorPanel : Control
             control.ModulateSelfOverride = null;
             control.ToolTip = string.Empty;
         }
+
+        //Return if the control is Title, continue only if content
+        if (maxLength == SharedNewsSystem.MaxTitleLength) { return; } 
+
+        CharCount.Text = length + "/" + maxLength;
     }
 
     private void OnPreview(BaseButton.ButtonEventArgs eventArgs)
