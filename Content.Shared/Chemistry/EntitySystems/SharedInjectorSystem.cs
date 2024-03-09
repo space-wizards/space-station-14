@@ -60,7 +60,7 @@ public abstract class SharedInjectorSystem : EntitySystem
                 Dirty(entity);
             },
 
-            Priority = 1
+            Priority = priority
         };
         args.Verbs.Add(toggleVerb);
 
