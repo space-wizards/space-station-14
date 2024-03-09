@@ -14,7 +14,7 @@
     whitelist:
       tags:
         - Document
-        - Disk
+        - CoordinatesDisk
     storageOpenSound: /Audio/Machines/screwdriveropen.ogg
     storageCloseSound: /Audio/Machines/screwdriverclose.ogg
     storageInsertSound: /Audio/Items/crowbar.ogg
