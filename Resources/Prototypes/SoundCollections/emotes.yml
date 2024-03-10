@@ -1,13 +1,28 @@
 - type: soundCollection
   id: MaleLaugh
   files:
-    - /Audio/Voice/Human/manlaugh1.ogg
-    - /Audio/Voice/Human/manlaugh2.ogg
+    - /Audio/Voice/Human/laugh_male-1.ogg
+    - /Audio/Voice/Human/laugh_male-2.ogg
+    - /Audio/Voice/Human/laugh_male-3.ogg
+    - /Audio/Voice/Human/laugh_male-4.ogg
+    - /Audio/Voice/Human/laugh_male-5.ogg
+    - /Audio/Voice/Human/laugh_male-6.ogg
+    - /Audio/Voice/Human/laugh_male-7.ogg
+    - /Audio/Voice/Human/laugh_male-8.ogg
+    - /Audio/Voice/Human/laugh_male-9.ogg
 
 - type: soundCollection
   id: FemaleLaugh
   files:
-    - /Audio/Voice/Human/womanlaugh.ogg
+    - /Audio/Voice/Human/laugh_female-1.ogg
+    - /Audio/Voice/Human/laugh_female-2.ogg
+    - /Audio/Voice/Human/laugh_female-3.ogg
+    - /Audio/Voice/Human/laugh_female-4.ogg
+    - /Audio/Voice/Human/laugh_female-5.ogg
+    - /Audio/Voice/Human/laugh_female-6.ogg
+    - /Audio/Voice/Human/laugh_female-7.ogg
+    - /Audio/Voice/Human/laugh_female-8.ogg
+    - /Audio/Voice/Human/laugh_female-9.ogg
 
 - type: soundCollection
   id: Claps
