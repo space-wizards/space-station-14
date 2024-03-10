@@ -144,3 +144,6 @@
 
 - type: playTimeTracker
   id: JobBlueshieldOfficer
+
+- type: playTimeTracker
+  id: JobNanotrasenRepresentative
