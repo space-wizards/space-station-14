@@ -13,6 +13,7 @@ using Content.Shared.Rejuvenate;
 using Robust.Server.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.Rotting;
 
@@ -196,7 +197,8 @@ public sealed class RottingSystem : SharedRottingSystem
         {
             total = perishable.RotAccumulator - time;
         }
-        // Also no RottingComponent, either just removed or not present at start
+        // Either just removed or not present at start
+        DebugTools.Assert(!HasComp<RottingComponent>(uid));
         if (total.TotalSeconds < 0)
             perishable.RotAccumulator = TimeSpan.Zero;
         else
