@@ -5,19 +5,13 @@
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
       <controls:StripeBack>
         <PanelContainer>
-          <Label Align="Center" Text="{Loc 'criminal-records-wanted-heading'}"/>
+          <Label Align="Center" Text="{Loc 'criminal-records-cartridge-heading'}"/>
         </PanelContainer>
       </controls:StripeBack>
-      <ScrollContainer HorizontalExpand="True" VerticalExpand="True" >
-        <GridContainer Margin="10 0 0 0" HorizontalExpand="True" Columns="2" Name="Wanted"/>
-      </ScrollContainer>
-      <controls:StripeBack>
-        <PanelContainer>
-          <Label Align="Center" Text="{Loc 'criminal-records-detained-heading'}"/>
-        </PanelContainer>
-      </controls:StripeBack>
-      <ScrollContainer HorizontalExpand="True" VerticalExpand="True" >
-        <GridContainer Margin="10 0 0 0" HorizontalExpand="True" Columns="2" Name="Detained"/>
-      </ScrollContainer>
+      <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" >
+          <GridContainer Margin="10 0 0 0" HorizontalExpand="True" Columns="3" Name="Criminals"/>
+        </ScrollContainer>
+      </BoxContainer>
     </BoxContainer>
 </cartridges:CriminalRecordsCartridgeUiFragment>

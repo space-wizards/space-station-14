@@ -38,19 +38,11 @@ public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
     {
         foreach (var (stationRecord, criminalRecord) in state.Criminals)
         {
-            if (criminalRecord.Status == SecurityStatus.Wanted)
-            {
-                AddCriminal(stationRecord, criminalRecord, Wanted);
-            }
-            else
-            {
-                AddCriminal(stationRecord, criminalRecord, Detained);
-            }
+            AddCriminal(stationRecord, criminalRecord);
         }
-
     }
 
-    private void AddCriminal(GeneralStationRecord stationRecord, CriminalRecord criminalRecord, GridContainer gridContainer)
+    private void AddCriminal(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
     {
         var nameLabel = new Label()
         {
@@ -65,8 +57,16 @@ public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
             HorizontalExpand = true,
         };
 
-        gridContainer.AddChild(nameLabel);
-        gridContainer.AddChild(jobContainer);
+        var statusLabel = new Label()
+        {
+            Text = Enum.GetName(typeof(SecurityStatus), criminalRecord.Status),
+            HorizontalExpand = true,
+            ClipText = true,
+        };
+
+        Criminals.AddChild(nameLabel);
+        Criminals.AddChild(jobContainer);
+        Criminals.AddChild(statusLabel);
 
         var jobLabel = new Label()
         {
