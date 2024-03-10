@@ -371,6 +371,13 @@ public abstract class SharedActionsSystem : EntitySystem
 
         BaseActionEvent? performEvent = null;
 
+        if (action.CheckMobState != null)
+        {
+            if (!TryComp<MobStateComponent>(user, out var mobState) ||
+                mobState.CurrentState != action.CheckMobState)
+                return;
+        }
+
         // Validate request by checking action blockers and the like:
         switch (action)
         {
@@ -427,13 +434,6 @@ public abstract class SharedActionsSystem : EntitySystem
             case InstantActionComponent instantAction:
                 if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
                     return;
-
-                if (action.CheckMobState != null)
-                {
-                    if (!TryComp<MobStateComponent>(user, out var mobState) ||
-                        mobState.CurrentState != action.CheckMobState)
-                        return;
-                }
 
                 _adminLogger.Add(LogType.Action,
                     $"{ToPrettyString(user):user} is performing the {name:action} action provided by {ToPrettyString(action.Container ?? user):provider}.");
