@@ -134,7 +134,7 @@ public sealed class RottingSystem : SharedRottingSystem
     {
         if (perishable.Comp.RotAfter.TotalSeconds == 0 || perishable.Comp.RotAccumulator.TotalSeconds == 0)
             return 0;
-        return (int)(1 + maxStages * perishable.Comp.RotAccumulator.TotalSeconds / perishable.Comp.RotAfter.TotalSeconds);
+        return (int) (1 + maxStages * perishable.Comp.RotAccumulator.TotalSeconds / perishable.Comp.RotAfter.TotalSeconds);
     }
 
     private void OnRejuvenate(EntityUid uid, RottingComponent component, RejuvenateEvent args)
