@@ -193,8 +193,6 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            Logger.Debug($"{comp.PalletType}");
-
             if (sellOnly)
             {
                 if (comp.PalletType != "sell" && sellOnly)
