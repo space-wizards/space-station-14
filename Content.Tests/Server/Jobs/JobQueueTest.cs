@@ -185,17 +185,10 @@ public sealed class JobQueueTest : RobustUnitTest
         }
     }
 
-    private sealed class LongJob : Job<string>
+    private sealed class LongJob(DebugStopwatch stopwatchA, DebugStopwatch stopwatchB, CancellationToken cancel = default) : Job<string>(0.95, stopwatchA, cancel)
     {
-        private readonly DebugStopwatch _stopwatch;
-        private readonly DebugStopwatch _stopwatchB;
-
-        public LongJob(DebugStopwatch stopwatchA, DebugStopwatch stopwatchB, CancellationToken cancel = default) :
-            base(0.95, stopwatchA, cancel)
-        {
-            _stopwatch = stopwatchA;
-            _stopwatchB = stopwatchB;
-        }
+        private readonly DebugStopwatch _stopwatch = stopwatchA;
+        private readonly DebugStopwatch _stopwatchB = stopwatchB;
 
         protected override async Task<string> Process()
         {
@@ -217,23 +210,14 @@ public sealed class JobQueueTest : RobustUnitTest
         }
     }
 
-    private sealed class LongJobQueue : JobQueue
+    private sealed class LongJobQueue(IStopwatch swB) : JobQueue(swB)
     {
-        public LongJobQueue(IStopwatch swB) : base(swB)
-        {
-        }
-
         public override double MaxTime => 0.9;
     }
 
-    private sealed class WaitingJob : Job<string>
+    private sealed class WaitingJob(Task t) : Job<string>(0)
     {
-        private readonly Task _t;
-
-        public WaitingJob(Task t) : base(0)
-        {
-            _t = t;
-        }
+        private readonly Task _t = t;
 
         protected override async Task<string> Process()
         {

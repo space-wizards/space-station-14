@@ -46,6 +46,6 @@ public class ContentUnitTest : RobustUnitTest
 
         l.Add(typeof(ContentUnitTest).Assembly);
 
-        return l.ToArray();
+        return [.. l];
     }
 }

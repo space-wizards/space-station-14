@@ -24,7 +24,7 @@ public sealed class ComponentStateNullTest
         }
     }
 
-    private static IReflectionManager ReflectionManagerFactory()
+    private static FullReflectionManager ReflectionManagerFactory()
     {
         AppDomain.CurrentDomain.Load("Robust.Client");
         AppDomain.CurrentDomain.Load("Content.Client");

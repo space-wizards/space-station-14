@@ -1,11 +1,11 @@
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using System.Collections.Generic;
-using Content.Shared.FixedPoint;
 
 namespace Content.Tests.Shared;
 
@@ -16,7 +16,6 @@ namespace Content.Tests.Shared;
 [TestOf(typeof(DamageGroupPrototype))]
 public sealed class DamageTest : ContentUnitTest
 {
-
     private static readonly Dictionary<string, float> ResistanceCoefficientDict = new()
     {
         // "missing" blunt entry

@@ -62,7 +62,8 @@ public sealed class ListContainerTest : RobustUnitTest
         var root = new Control { MinSize = new Vector2(x, y) };
         var listContainer = new ListContainer { SeparationOverride = 3 };
         root.AddChild(listContainer);
-        listContainer.GenerateItem += (_, button) => {
+        listContainer.GenerateItem += (_, button) =>
+        {
             button.AddChild(new Control { MinSize = new Vector2(10, 10) });
         };
 
@@ -71,7 +72,7 @@ public sealed class ListContainerTest : RobustUnitTest
         root.Arrange(new UIBox2(0, 0, x, y));
 
         list.Add(new(0));
-        list.Add(new (1));
+        list.Add(new(1));
         listContainer.PopulateList(list);
         root.Arrange(new UIBox2(0, 0, x, y));
 
@@ -91,11 +92,12 @@ public sealed class ListContainerTest : RobustUnitTest
         var root = new Control { MinSize = new Vector2(50, 60) };
         var listContainer = new ListContainer { SeparationOverride = 3 };
         root.AddChild(listContainer);
-        listContainer.GenerateItem += (_, button) => {
+        listContainer.GenerateItem += (_, button) =>
+        {
             button.AddChild(new Control { MinSize = new Vector2(10, 10) });
         };
 
-        var list = new List<TestListData> {new(0), new(1), new(2), new(3), new(4), new(5)};
+        var list = new List<TestListData> { new(0), new(1), new(2), new(3), new(4), new(5) };
         listContainer.PopulateList(list);
         root.Arrange(new UIBox2(0, 0, 50, 60));
 
@@ -137,11 +139,12 @@ public sealed class ListContainerTest : RobustUnitTest
         var root = new Control { MinSize = new Vector2(50, 60) };
         var listContainer = new ListContainer { SeparationOverride = 3 };
         root.AddChild(listContainer);
-        listContainer.GenerateItem += (_, button) => {
+        listContainer.GenerateItem += (_, button) =>
+        {
             button.AddChild(new Control { MinSize = new Vector2(10, 10) });
         };
 
-        var list = new List<TestListData> {new(0), new(1), new(2), new(3), new(4), new(5)};
+        var list = new List<TestListData> { new(0), new(1), new(2), new(3), new(4), new(5) };
         listContainer.PopulateList(list);
         root.Arrange(new UIBox2(0, 0, 50, 60));
 
@@ -165,7 +168,7 @@ public sealed class ListContainerTest : RobustUnitTest
         // Test that 6th button is visible when scrolled
         scrollbar.Value = 6;
         listContainer.Arrange(root.SizeBox);
-        children = listContainer.Children.ToList();
+        children = [.. listContainer.Children];
         Assert.Multiple(() =>
         {
             // 6 Buttons, 1 Scrollbar
@@ -191,7 +194,8 @@ public sealed class ListContainerTest : RobustUnitTest
         var root = new Control { MinSize = new Vector2(50, 60) };
         var listContainer = new ListContainer { SeparationOverride = 3 };
         root.AddChild(listContainer);
-        listContainer.GenerateItem += (_, button) => {
+        listContainer.GenerateItem += (_, button) =>
+        {
             button.AddChild(new Control { MinSize = new Vector2(10, 10) });
         };
 
@@ -223,7 +227,7 @@ public sealed class ListContainerTest : RobustUnitTest
         scrollValue = 10;
         scrollbar.Value = scrollValue;
         listContainer.Arrange(root.SizeBox);
-        children = listContainer.Children.ToList();
+        children = [.. listContainer.Children];
         Assert.Multiple(() =>
         {
             // 5 Buttons, 1 Scrollbar
@@ -252,7 +256,7 @@ public sealed class ListContainerTest : RobustUnitTest
         var listContainer = new ListContainer
         {
             SeparationOverride = 0,
-            GenerateItem = (_, button) => { button.AddChild(new Control {MinSize = new Vector2(10, 10)}); }
+            GenerateItem = (_, button) => { button.AddChild(new Control { MinSize = new Vector2(10, 10) }); }
         };
         root.AddChild(listContainer);
         var button = new ContainerButton
@@ -261,7 +265,7 @@ public sealed class ListContainerTest : RobustUnitTest
         };
         root.AddChild(button);
 
-        var list = new List<TestListData> {new(0), new(1), new(2), new(3), new(4), new(5)};
+        var list = new List<TestListData> { new(0), new(1), new(2), new(3), new(4), new(5) };
         listContainer.PopulateList(list);
         root.Arrange(new UIBox2(0, 0, 50, height));
 
@@ -286,11 +290,12 @@ public sealed class ListContainerTest : RobustUnitTest
         var root = new Control { MinSize = new Vector2(50, height) };
         var listContainer = new ListContainer { SeparationOverride = 0, Toggle = true };
         root.AddChild(listContainer);
-        listContainer.GenerateItem += (_, button) => {
+        listContainer.GenerateItem += (_, button) =>
+        {
             button.AddChild(new Control { MinSize = new Vector2(10, 10) });
         };
 
-        var list = new List<TestListData> {new(0), new(1), new(2), new(3), new(4), new(5)};
+        var list = new List<TestListData> { new(0), new(1), new(2), new(3), new(4), new(5) };
         listContainer.PopulateList(list);
         root.Arrange(new UIBox2(0, 0, 50, height));
 
@@ -308,7 +313,7 @@ public sealed class ListContainerTest : RobustUnitTest
         Assert.That(oldButton.Disposed);
         scrollbar.Value = 0;
         listContainer.Arrange(root.SizeBox);
-        children = listContainer.Children.ToList();
+        children = [.. listContainer.Children];
         if (children[0] is not ListContainerButton newButton)
             throw new Exception("First child of ListContainer is not a button");
 
