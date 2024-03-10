@@ -193,22 +193,17 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            if (sellOnly)
+            if (sellOnly && comp.PalletType != "sell" && comp.PalletType != "both")
             {
-                if (comp.PalletType != "sell" && sellOnly)
-                {
-                    continue;
-                }
+                continue;
             }
-            if (buyOnly)
+            if (buyOnly && comp.PalletType != "buy" && comp.PalletType != "both")
             {
-                if (comp.PalletType != "buy" && buyOnly)
-                {
-                    continue;
-                }
+                continue;
             }
 
             _pads.Add((uid, comp, compXform));
+
         }
 
         return _pads;
