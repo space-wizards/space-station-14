@@ -285,6 +285,19 @@
 
 - type: entity
   parent: CrateBaseSecure
+  id: CrateContrabandStorageSecure
+  name: contraband storage crate
+  description: A crate for storing contraband permanently removed from suspects or prisoners.
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/sec_gear.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/sec_gear.rsi
+  - type: AccessReader
+    access: [["Armory"]]
+
+- type: entity
+  parent: CrateBaseSecure
   id: CrateCommandSecure
   name: command crate
   components:
