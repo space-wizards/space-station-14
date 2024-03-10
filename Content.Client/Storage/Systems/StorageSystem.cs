@@ -26,7 +26,7 @@ public sealed class StorageSystem : SharedStorageSystem
 
         SubscribeLocalEvent<StorageComponent, ComponentShutdown>(OnShutdown);
         SubscribeNetworkEvent<PickupAnimationEvent>(HandlePickupAnimation);
-        SubscribeNetworkEvent<AnimateInsertingEntitiesEvent>(HandleAnimatingInsertingEntities);
+        SubscribeAllEvent<AnimateInsertingEntitiesEvent>(HandleAnimatingInsertingEntities);
     }
 
     public override void UpdateUI(Entity<StorageComponent?> entity)
