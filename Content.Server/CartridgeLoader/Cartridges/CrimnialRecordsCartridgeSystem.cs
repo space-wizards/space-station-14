@@ -59,31 +59,23 @@ public sealed class CriminalRecordsCartridgeSystem : EntitySystem
 
         var records = _stationRecords.GetRecordsOfType<CriminalRecord>(owningStation.Value);
 
-        var wanted = new List<(GeneralStationRecord, CriminalRecord)>();
-        var detained = new List<(GeneralStationRecord, CriminalRecord)>();
+        var criminals = new List<(GeneralStationRecord, CriminalRecord)>();
 
-        foreach (var (id, criminalRecord) in records)
+        foreach (var (stationRecordKey, criminalRecord) in records)
         {
-
-            if (!_stationRecords.TryGetRecord<GeneralStationRecord>(new StationRecordKey(id, owningStation.Value), out var stationRecord))
+            if (criminalRecord.Status == SecurityStatus.None)
             {
                 return;
             }
 
-            switch (criminalRecord.Status)
+            if (!_stationRecords.TryGetRecord<GeneralStationRecord>(new StationRecordKey(stationRecordKey, owningStation.Value), out var stationRecord))
             {
-                case SecurityStatus.Wanted:
-                    wanted.Add((stationRecord, criminalRecord));
-                    break;
-                case SecurityStatus.Detained:
-                    detained.Add((stationRecord, criminalRecord));
-                    break;
-                default:
-                    break;
+                return;
             }
+            criminals.Add((stationRecord, criminalRecord));
         }
 
-        var state = new CriminalRecordsCartridgeUiState(wanted, detained);
+        var state = new CriminalRecordsCartridgeUiState(criminals);
         _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, state);
     }
 }

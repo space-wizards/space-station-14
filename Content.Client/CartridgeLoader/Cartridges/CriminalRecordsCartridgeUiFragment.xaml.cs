@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.CriminalRecords;
+using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Content.Shared.StatusIcon;
 
@@ -29,27 +30,27 @@ public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
         HorizontalExpand = true;
         VerticalExpand = true;
 
-        UpdateState(new CriminalRecordsCartridgeUiState(
-              new List<(GeneralStationRecord, CriminalRecord)>(),
-              new List<(GeneralStationRecord, CriminalRecord)>()
-              ));
+        UpdateState(new CriminalRecordsCartridgeUiState(new List<(GeneralStationRecord, CriminalRecord)>()));
     }
 
 
     public void UpdateState(CriminalRecordsCartridgeUiState state)
     {
-        foreach (var (stationRecord, criminalRecord) in state.Wanted)
+        foreach (var (stationRecord, criminalRecord) in state.Criminals)
         {
-            AddWanted(stationRecord, criminalRecord);
+            if (criminalRecord.Status == SecurityStatus.Wanted)
+            {
+                AddCriminal(stationRecord, criminalRecord, Wanted);
+            }
+            else
+            {
+                AddCriminal(stationRecord, criminalRecord, Detained);
+            }
         }
 
-        foreach (var (stationRecord, criminalRecord) in state.Detained)
-        {
-            AddDetained(stationRecord, criminalRecord);
-        }
     }
 
-    private void AddWanted(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
+    private void AddCriminal(GeneralStationRecord stationRecord, CriminalRecord criminalRecord, GridContainer gridContainer)
     {
         var nameLabel = new Label()
         {
@@ -58,15 +59,14 @@ public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
             ClipText = true,
         };
 
-        Wanted.AddChild(nameLabel);
-
         var jobContainer = new BoxContainer()
         {
             Orientation = LayoutOrientation.Horizontal,
             HorizontalExpand = true,
         };
 
-        Wanted.AddChild(jobContainer);
+        gridContainer.AddChild(nameLabel);
+        gridContainer.AddChild(jobContainer);
 
         var jobLabel = new Label()
         {
@@ -96,53 +96,4 @@ public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
         jobContainer.AddChild(jobIcon);
         jobContainer.AddChild(jobLabel);
     }
-
-    private void AddDetained(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
-    {
-        var nameLabel = new Label()
-        {
-            Text = stationRecord.Name,
-            HorizontalExpand = true,
-            ClipText = true,
-        };
-
-        Detained.AddChild(nameLabel);
-
-        var jobContainer = new BoxContainer()
-        {
-            Orientation = LayoutOrientation.Horizontal,
-            HorizontalExpand = true,
-        };
-
-        Detained.AddChild(jobContainer);
-
-        var jobLabel = new Label()
-        {
-            Text = stationRecord.JobTitle,
-            HorizontalExpand = true,
-            ClipText = true,
-        };
-
-
-        if (!_prototypeManager.TryIndex<StatusIconPrototype>(
-              stationRecord.JobIcon,
-              out var proto
-              ))
-        {
-            jobContainer.AddChild(jobLabel);
-            return;
-        }
-
-        var jobIcon = new TextureRect()
-        {
-            TextureScale = new Vector2(2f, 2f),
-            VerticalAlignment = VAlignment.Center,
-            Texture = _spriteSystem.Frame0(proto.Icon),
-            Margin = new Thickness(5, 0, 5, 0),
-        };
-
-        jobContainer.AddChild(jobIcon);
-        jobContainer.AddChild(jobLabel);
-    }
-
 }

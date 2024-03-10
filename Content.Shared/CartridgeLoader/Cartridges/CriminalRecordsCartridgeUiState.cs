@@ -8,16 +8,10 @@ namespace Content.Shared.CartridgeLoader.Cartridges;
 public sealed class CriminalRecordsCartridgeUiState : BoundUserInterfaceState
 {
 
-    public List<(GeneralStationRecord, CriminalRecord)> Wanted;
-    public List<(GeneralStationRecord, CriminalRecord)> Detained;
-
-    public CriminalRecordsCartridgeUiState(
-        List<(GeneralStationRecord, CriminalRecord)> wanted,
-        List<(GeneralStationRecord, CriminalRecord)> detained
-        )
+    public List<(GeneralStationRecord, CriminalRecord)> Criminals;
+    public CriminalRecordsCartridgeUiState(List<(GeneralStationRecord, CriminalRecord)> criminals)
     {
-        Wanted = wanted;
-        Detained = detained;
+        Criminals = criminals;
     }
 
 }
