@@ -48,6 +48,10 @@ public sealed partial class LoadoutContainer : BoxContainer
             {
                 _entity = _entManager.SpawnEntity(ent, MapCoordinates.Nullspace);
                 Sprite.SetEntity(_entity);
+
+                var spriteTooltip = new Tooltip();
+                spriteTooltip.SetMessage(FormattedMessage.FromUnformatted(_entManager.GetComponent<MetaDataComponent>(_entity.Value).EntityDescription));
+                Sprite.TooltipSupplier = _ => spriteTooltip;
             }
         }
     }

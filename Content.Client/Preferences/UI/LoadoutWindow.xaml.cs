@@ -24,7 +24,7 @@ public sealed partial class LoadoutWindow : FancyWindow
         foreach (var group in proto.Groups)
         {
             var container = new LoadoutGroupContainer(loadout, protoManager.Index(group), session, collection);
-            LoadoutGroupsContainer.AddChild(container);
+            LoadoutGroupsContainer.AddTab(container, Loc.GetString($"loadout-group-{group.Id}"));
             _groups.Add(container);
 
             container.OnLoadoutPressed += args =>

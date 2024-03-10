@@ -30,7 +30,6 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
     /// </summary>
     public void RefreshLoadouts(RoleLoadout loadout, ICommonSession session, IDependencyCollection collection)
     {
-        GroupName.Text = $"loadout-group-{_groupProto.ID}";
         LoadoutsContainer.DisposeAllChildren();
         var btnGroup = new ButtonGroup(false);
         // Didn't use options because this is more robust in future.
