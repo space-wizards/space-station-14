@@ -9,6 +9,6 @@ public sealed partial class CargoPalletComponent : Component
     /// <summary>
     /// Whether the pad is a buy pad, a sell pad, or both.
     /// </summary>
-    [DataField("pallettype", required: false)]
+    [DataField]
     public string PalletType;
 }
