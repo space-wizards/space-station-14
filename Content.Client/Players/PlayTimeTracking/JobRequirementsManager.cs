@@ -108,6 +108,9 @@ public sealed class JobRequirementsManager
         if (requirements == null)
             return true;
 
+        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
+            return true;
+
         var reasons = new List<string>();
         foreach (var requirement in requirements)
         {
