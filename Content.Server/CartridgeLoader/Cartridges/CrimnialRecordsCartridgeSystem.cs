@@ -51,14 +51,11 @@ public sealed class CriminalRecordsCartridgeSystem : EntitySystem
         foreach (var (stationRecordKey, criminalRecord) in records)
         {
             if (criminalRecord.Status == SecurityStatus.None)
-            {
                 return;
-            }
 
             if (!_stationRecords.TryGetRecord<GeneralStationRecord>(new StationRecordKey(stationRecordKey, owningStation.Value), out var stationRecord))
-            {
                 return;
-            }
+
             criminals.Add((stationRecord, criminalRecord));
         }
 
