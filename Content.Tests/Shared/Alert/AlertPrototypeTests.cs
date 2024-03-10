@@ -10,7 +10,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Tests.Shared.Alert;
 
-[TestFixture, TestOf(typeof(AlertPrototype))]
+[TestFixture, TestOf(typeof(AlertPrototype)), Parallelizable(ParallelScope.Self)]
 public sealed class AlertPrototypeTests : ContentUnitTest
 {
     private const string Prototypes = @"

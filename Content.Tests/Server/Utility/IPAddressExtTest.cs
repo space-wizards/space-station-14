@@ -4,9 +4,9 @@ using NUnit.Framework;
 
 namespace Content.Tests.Server.Utility;
 
+[TestFixture, TestOf(typeof(IPAddress)), Parallelizable(ParallelScope.All)]
 public sealed class IPAddressExtTest
 {
-    [Test]
     [TestCase("192.168.5.85/24", "192.168.5.1")]
     [TestCase("192.168.5.85/24", "192.168.5.254")]
     [TestCase("10.128.240.50/30", "10.128.240.48")]
@@ -19,7 +19,6 @@ public sealed class IPAddressExtTest
         Assert.That(ipAddressObj.IsInSubnet(netMask), Is.True);
     }
 
-    [Test]
     [TestCase("192.168.5.85/24", "192.168.4.254")]
     [TestCase("192.168.5.85/24", "191.168.5.254")]
     [TestCase("10.128.240.50/30", "10.128.240.47")]
@@ -33,7 +32,6 @@ public sealed class IPAddressExtTest
     }
 
     // ReSharper disable StringLiteralTypo
-    [Test]
     [TestCase("2001:db8:abcd:0012::0/64", "2001:0DB8:ABCD:0012:0000:0000:0000:0000")]
     [TestCase("2001:db8:abcd:0012::0/64", "2001:0DB8:ABCD:0012:FFFF:FFFF:FFFF:FFFF")]
     [TestCase("2001:db8:abcd:0012::0/64", "2001:0DB8:ABCD:0012:0001:0000:0000:0000")]
@@ -45,7 +43,6 @@ public sealed class IPAddressExtTest
         Assert.That(ipAddressObj.IsInSubnet(netMask), Is.True);
     }
 
-    [Test]
     [TestCase("2001:db8:abcd:0012::0/64", "2001:0DB8:ABCD:0011:FFFF:FFFF:FFFF:FFFF")]
     [TestCase("2001:db8:abcd:0012::0/64", "2001:0DB8:ABCD:0013:0000:0000:0000:0000")]
     [TestCase("2001:db8:abcd:0012::0/64", "2001:0DB8:ABCD:0013:0001:0000:0000:0000")]

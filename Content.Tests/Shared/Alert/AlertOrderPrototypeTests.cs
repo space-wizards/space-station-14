@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.Manager;
 
 namespace Content.Tests.Shared.Alert;
 
-[TestFixture, TestOf(typeof(AlertOrderPrototype))]
+[TestFixture, TestOf(typeof(AlertOrderPrototype)), Parallelizable(ParallelScope.Self)]
 public sealed class AlertOrderPrototypeTests : ContentUnitTest
 {
     private const string TestPrototypes = @"

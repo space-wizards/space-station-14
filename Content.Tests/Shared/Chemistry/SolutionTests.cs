@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Tests.Shared.Chemistry;
 
-[TestFixture, Parallelizable, TestOf(typeof(Solution))]
+[TestFixture, TestOf(typeof(Solution)), Parallelizable(ParallelScope.Self)]
 public sealed class SolutionTests : ContentUnitTest
 {
     [OneTimeSetUp]
@@ -349,7 +349,6 @@ public sealed class SolutionTests : ContentUnitTest
         });
     }
 
-    [Test]
     [TestCase(0.03f, 0.01f, 0.02f)]
     [TestCase(0.03f, 0.02f, 0.01f)]
     public void SplitSolutionTinyFractionalBigSmall(float initial, float reduce, float remainder)
@@ -369,7 +368,6 @@ public sealed class SolutionTests : ContentUnitTest
         });
     }
 
-    [Test]
     [TestCase(2)]
     [TestCase(10)]
     [TestCase(100)]

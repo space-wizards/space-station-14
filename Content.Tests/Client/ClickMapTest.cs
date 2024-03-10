@@ -5,7 +5,7 @@ using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Tests.Client;
 
-[TestFixture]
+[TestFixture, TestOf(typeof(ClickMapManager)), Parallelizable(ParallelScope.All)]
 public sealed class ClickMapTest
 {
     [Test]

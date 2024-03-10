@@ -7,10 +7,9 @@ using Robust.UnitTesting;
 
 namespace Content.Tests.Shared;
 
-[TestFixture]
+[TestFixture, TestOf(typeof(Span<Direction>)), Parallelizable(ParallelScope.Self)]
 public sealed class DirectionRandomizerTest : RobustUnitTest
 {
-    [Test]
     [TestCase(new[]
     {
         Direction.East,

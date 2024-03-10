@@ -10,7 +10,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Tests.Shared.Chemistry;
 
-[TestFixture, TestOf(typeof(ReagentPrototype))]
+[TestFixture, TestOf(typeof(ReagentPrototype)), Parallelizable(ParallelScope.Self)]
 public sealed class ReagentPrototype_Tests : ContentUnitTest
 {
     [Test]

@@ -8,7 +8,7 @@ using Robust.Shared.Reflection;
 
 namespace Content.Tests.Shared.Gamestates;
 
-[TestFixture]
+[TestFixture, TestOf(typeof(Component)), Parallelizable(ParallelScope.All)]
 public sealed class ComponentStateNullTest
 {
     [Test]

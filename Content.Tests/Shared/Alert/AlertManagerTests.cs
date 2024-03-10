@@ -12,7 +12,7 @@ using Robust.UnitTesting;
 
 namespace Content.Tests.Shared.Alert;
 
-[TestFixture, TestOf(typeof(AlertsSystem))]
+[TestFixture, TestOf(typeof(AlertsSystem)), Parallelizable(ParallelScope.Self)]
 public sealed class AlertManagerTests : RobustUnitTest
 {
     private const string TestPrototypes = @"

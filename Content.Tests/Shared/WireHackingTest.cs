@@ -6,10 +6,11 @@ using Robust.UnitTesting;
 
 namespace Content.Tests.Shared;
 
-// Making sure nobody forgets to set values for these wire colors/letters.
-// Also a thinly veiled excuse to bloat the test count.
+/// <summary>
+/// Test that wire enums are setup properly.
+/// </summary>
 
-[TestFixture]
+[TestFixture, TestOf(typeof(WireColor)), TestOf(typeof(WireLetter)), Parallelizable(ParallelScope.Self)]
 public sealed class WireHackingTest : RobustUnitTest
 {
     private static readonly IEnumerable<WireColor> ColorValues = (WireColor[]) Enum.GetValues(typeof(WireColor));

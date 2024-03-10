@@ -1,19 +1,19 @@
 using Content.Shared.Humanoid;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Tests.Shared.Preferences.Humanoid;
 
-[TestFixture]
+[TestFixture, TestOf(typeof(SkinColor)), Parallelizable(ParallelScope.All)]
 public sealed class SkinTonesTest
 {
+    public static IEnumerable<int> TestData => Enumerable.Range(0, 101);
+
     [Test]
-    public void TestHumanSkinToneValidity()
+    public void TestHumanSkinToneValidity([ValueSource(nameof(TestData))] int tone)
     {
-        for (var i = 0; i <= 100; i++)
-        {
-            var color = SkinColor.HumanSkinTone(i);
-            Assert.That(SkinColor.VerifyHumanSkinTone(color));
-        }
+        Assert.That(SkinColor.VerifyHumanSkinTone(SkinColor.HumanSkinTone(tone)));
     }
 
     [Test]

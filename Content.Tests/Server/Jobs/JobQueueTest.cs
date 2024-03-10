@@ -9,13 +9,11 @@ using Robust.UnitTesting;
 
 namespace Content.Tests.Server.Jobs;
 
-[TestFixture]
-[TestOf(typeof(Job<>))]
-[TestOf(typeof(JobQueue))]
+[TestFixture, TestOf(typeof(Job<>)), TestOf(typeof(JobQueue)), Parallelizable(ParallelScope.Self)]
 public sealed class JobQueueTest : RobustUnitTest
 {
     /// <summary>
-    ///     Test a job that immediately exits with a value.
+    /// Test a job that immediately exits with a value.
     /// </summary>
     [Test]
     public void TestImmediateJob()

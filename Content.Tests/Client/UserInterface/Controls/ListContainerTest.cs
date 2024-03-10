@@ -12,8 +12,7 @@ using Robust.UnitTesting;
 
 namespace Content.Tests.Client.UserInterface.Controls;
 
-[TestFixture]
-[TestOf(typeof(ListContainer))]
+[TestFixture, TestOf(typeof(ListContainer)), Parallelizable(ParallelScope.Self)]
 public sealed class ListContainerTest : RobustUnitTest
 {
     public override UnitTestProject Project => UnitTestProject.Client;

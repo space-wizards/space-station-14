@@ -5,9 +5,7 @@ using NUnit.Framework;
 
 namespace Content.Tests.Shared.Preferences.Job;
 
-[TestFixture]
-[TestOf(typeof(JobPriority))]
-[TestOf(typeof(DbJobPriority))]
+[TestFixture, TestOf(typeof(JobPriority)), TestOf(typeof(DbJobPriority)), Parallelizable(ParallelScope.All)]
 public sealed class JobPriorityTest
 {
     [Test]

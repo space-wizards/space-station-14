@@ -4,9 +4,7 @@ using NUnit.Framework;
 
 namespace Content.Tests.Shared.Utility;
 
-[Parallelizable]
-[TestFixture]
-[TestOf(typeof(ContentHelpers))]
+[TestFixture, TestOf(typeof(ContentHelpers)), Parallelizable(ParallelScope.All)]
 public sealed class ContentHelpers_Test
 {
     public static readonly IEnumerable<(double val, double max, int levels, int expected)> TestData =
@@ -82,7 +80,6 @@ public sealed class ContentHelpers_Test
             (320, 6, 5, 5),
         };
 
-    [Parallelizable]
     [Test]
     public void Test([ValueSource(nameof(TestData))] (double val, double max, int levels, int expected) data)
     {
@@ -90,7 +87,6 @@ public sealed class ContentHelpers_Test
         Assert.That(ContentHelpers.RoundToLevels(val, max, levels), Is.EqualTo(expected));
     }
 
-    [Parallelizable]
     [Test]
     public void TestNearest([ValueSource(nameof(TestNear))] (double val, double max, int size, int expected) data)
     {
@@ -98,8 +94,6 @@ public sealed class ContentHelpers_Test
         Assert.That(ContentHelpers.RoundToNearestLevels(val, max, size), Is.EqualTo(expected));
     }
 
-    [Parallelizable]
-    [Test]
     // Testing odd max on even levels
     [TestCase(0, 5, 2, ExpectedResult = 0)]
     [TestCase(1, 5, 2, ExpectedResult = 0)]

@@ -3,10 +3,9 @@ using NUnit.Framework;
 
 namespace Content.Tests.Shared.Localizations;
 
-[TestFixture]
+[TestFixture, TestOf(typeof(UserInputParser)), Parallelizable(ParallelScope.All)]
 public sealed class UserInputParserTest
 {
-    [Test]
     [TestCase("1234.56", 1234.56f, true)]
     [TestCase("1234,56", 1234.56f, true)]
     [TestCase(" +1234.56 ", 1234.56f, true)]
@@ -25,7 +24,6 @@ public sealed class UserInputParserTest
         });
     }
 
-    [Test]
     [TestCase("1234.56", 1234.56d, true)]
     [TestCase("1234,56", 1234.56d, true)]
     [TestCase(" +1234.56 ", 1234.56d, true)]

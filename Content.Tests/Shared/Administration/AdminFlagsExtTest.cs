@@ -1,34 +1,29 @@
-using System;
 using Content.Shared.Administration;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Content.Tests.Shared.Administration;
 
-[TestFixture]
-[Parallelizable(ParallelScope.All)]
+[TestFixture, TestOf(typeof(AdminFlags)), Parallelizable(ParallelScope.All)]
 public sealed class AdminFlagsExtTest
 {
-    [Test]
-    [TestCase("ADMIN", AdminFlags.Admin)]
-    [TestCase("ADMIN,DEBUG", AdminFlags.Admin | AdminFlags.Debug)]
-    [TestCase("ADMIN,DEBUG,HOST", AdminFlags.Admin | AdminFlags.Debug | AdminFlags.Host)]
-    [TestCase("", AdminFlags.None)]
-    public void TestNamesToFlags(string namesConcat, AdminFlags flags)
+    public static readonly IEnumerable<(string[] names, AdminFlags flags)> TestData = new[]
     {
-        var names = namesConcat.Split(",", StringSplitOptions.RemoveEmptyEntries);
+        (System.Array.Empty<string>(), AdminFlags.None),
+        (new string[1] { "ADMIN" }, AdminFlags.Admin),
+        (new string[2] { "ADMIN", "DEBUG" }, AdminFlags.Admin | AdminFlags.Debug),
+        (new string[3] { "ADMIN", "DEBUG", "HOST" }, AdminFlags.Admin | AdminFlags.Debug | AdminFlags.Host)
+    };
 
-        Assert.That(AdminFlagsHelper.NamesToFlags(names), Is.EqualTo(flags));
+    [Test]
+    public void TestNamesToFlags([ValueSource(nameof(TestData))] (string[] names, AdminFlags flags) data)
+    {
+        Assert.That(AdminFlagsHelper.NamesToFlags(data.names), Is.EqualTo(data.flags));
     }
 
     [Test]
-    [TestCase("ADMIN", AdminFlags.Admin)]
-    [TestCase("ADMIN,DEBUG", AdminFlags.Admin | AdminFlags.Debug)]
-    [TestCase("ADMIN,DEBUG,HOST", AdminFlags.Admin | AdminFlags.Debug | AdminFlags.Host)]
-    [TestCase("", AdminFlags.None)]
-    public void TestFlagsToNames(string namesConcat, AdminFlags flags)
+    public void TestFlagsToNames([ValueSource(nameof(TestData))] (string[] names, AdminFlags flags) data)
     {
-        var names = namesConcat.Split(",", StringSplitOptions.RemoveEmptyEntries);
-
-        Assert.That(AdminFlagsHelper.FlagsToNames(flags), Is.EquivalentTo(names));
+        Assert.That(AdminFlagsHelper.FlagsToNames(data.flags), Is.EquivalentTo(data.names));
     }
 }

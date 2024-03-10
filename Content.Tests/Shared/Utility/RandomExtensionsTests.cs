@@ -9,8 +9,7 @@ using Robust.Shared.Serialization.Manager;
 
 namespace Content.Tests.Shared.Utility;
 
-[TestFixture]
-[TestOf(typeof(SharedRandomExtensions))]
+[TestFixture, TestOf(typeof(SharedRandomExtensions)), Parallelizable(ParallelScope.Self)]
 public sealed class RandomExtensionsTests : ContentUnitTest
 {
     private const string TestDatasetId = "TestDataset";

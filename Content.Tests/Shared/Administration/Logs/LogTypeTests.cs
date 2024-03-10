@@ -5,19 +5,15 @@ using NUnit.Framework;
 
 namespace Content.Tests.Shared.Administration.Logs;
 
-[TestFixture]
+[TestFixture, TestOf(typeof(LogType)), Parallelizable(ParallelScope.All)]
 public sealed class LogTypeTests
 {
     [Test]
     public void Unique()
     {
-        var types = Enum.GetValues<LogType>();
-        var duplicates = types
-            .GroupBy(x => x)
-            .Where(g => g.Count() > 1)
-            .Select(g => g.Key)
-            .ToArray();
+        var logTypes = Enum.GetValues<LogType>();
+        var uniqueValuesCount = logTypes.ToHashSet().Count;
 
-        Assert.That(duplicates, Is.Empty, $"{nameof(LogType)} has duplicate values for: " + string.Join(", ", duplicates));
+        Assert.That(logTypes.Count, Is.EqualTo(uniqueValuesCount), $"Detected duplicate values in {nameof(LogType)} Enum.");
     }
 }

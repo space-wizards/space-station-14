@@ -10,10 +10,7 @@ using System.Collections.Generic;
 namespace Content.Tests.Shared;
 
 // Basic tests of various damage prototypes and classes.
-[TestFixture]
-[TestOf(typeof(DamageSpecifier))]
-[TestOf(typeof(DamageModifierSetPrototype))]
-[TestOf(typeof(DamageGroupPrototype))]
+[TestFixture, TestOf(typeof(DamageSpecifier)), TestOf(typeof(DamageModifierSetPrototype)), TestOf(typeof(DamageGroupPrototype)), Parallelizable(ParallelScope.Self)]
 public sealed class DamageTest : ContentUnitTest
 {
     private static readonly Dictionary<string, float> ResistanceCoefficientDict = new()
