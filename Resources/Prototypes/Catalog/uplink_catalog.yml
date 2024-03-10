@@ -1640,19 +1640,3 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-
-- type: listing
-  id: UplinkThrongler
-  name: The Throngler
-  description: You're never gonna get it. You're never gonna get it. Please don't get it...
-  productEntity: Throngler
-  cost:
-    Telecrystal: 100
-  categories:
-  - UplinkWeapons
-  restockTime: 10
-  conditions:
-  - !type:StoreWhitelistCondition
-    blacklist:
-      tags:
-      - NukeOpsUplink
