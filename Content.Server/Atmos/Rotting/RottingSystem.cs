@@ -174,11 +174,7 @@ public sealed class RottingSystem : SharedRottingSystem
             return;
 
         TimeSpan total;
-        if (!TryComp<RottingComponent>(uid, out var rotting))
-        {
-            total = perishable.RotAccumulator - time;
-        }
-        else
+        if (TryComp<RottingComponent>(uid, out var rotting))
         {
             total = rotting.TotalRotTime + perishable.RotAccumulator - time;
 
@@ -196,6 +192,11 @@ public sealed class RottingSystem : SharedRottingSystem
                 return;
             }
         }
+        else // No RottingComponent
+        {
+            total = perishable.RotAccumulator - time;
+        }
+        // Also no RottingComponent, either just removed or not present at start
         if (total.TotalSeconds < 0)
             perishable.RotAccumulator = TimeSpan.Zero;
         else
