@@ -16,6 +16,7 @@
     - /Audio/Voice/Human/femalescream_3.ogg
     - /Audio/Voice/Human/femalescream_4.ogg
     - /Audio/Voice/Human/femalescream_5.ogg
+    - /Audio/Voice/Human/femalescream_6.ogg
 
 - type: soundCollection
   id: ZombieScreams

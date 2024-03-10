@@ -1,8 +1,6 @@
 # species
 - type: emoteSounds
   id: MaleHuman
-  params:
-    variation: 0.125
   sounds:
     Scream:
       collection: MaleScreams
@@ -24,8 +22,13 @@
       collection: MaleYawn
     Snore:
       collection: Snores
+      params:
+        volume: -10
+
     Honk:
       collection: BikeHorn
+      params:
+        variation: 0.125
     Sigh:
       collection: MaleSigh
     Crying:
@@ -35,8 +38,6 @@
 
 - type: emoteSounds
   id: FemaleHuman
-  params:
-    variation: 0.125
   sounds:
     Scream:
       collection: FemaleScreams
@@ -58,8 +59,13 @@
       collection: FemaleYawn
     Snore:
       collection: Snores
+      params:
+        volume: -10
     Honk:
       collection: CluwneHorn
+      params:
+        variation: 0.125
+
     Sigh:
       collection: FemaleSigh
     Crying:
@@ -69,8 +75,6 @@
 
 - type: emoteSounds
   id: UnisexReptilian
-  params:
-    variation: 0.125
   sounds:
     Scream:
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
@@ -78,6 +82,8 @@
       path: /Audio/Animals/lizard_happy.ogg
     Honk:
       collection: BikeHorn
+      params:
+        variation: 0.125
     Whistle:
       collection: Whistles
     Crying:
@@ -108,16 +114,18 @@
       collection: MaleYawn
     Snore:
       collection: Snores
+      params:
+        volume: -10
     Honk:
       collection: BikeHorn
+      params:
+        variation: 0.125
     Sigh:
       collection: MaleSigh
     Crying:
       collection: MaleCry
     Whistle:
       collection: Whistles
-  params:
-    variation: 0.125
 
 - type: emoteSounds
   id: FemaleSlime
@@ -144,23 +152,23 @@
       collection: FemaleYawn
     Snore:
       collection: Snores
+      params:
+        volume: -10
     Honk:
       collection: CluwneHorn
+      params:
+        variation: 0.125
     Sigh:
       collection: FemaleSigh
     Crying:
       collection: FemaleCry
     Whistle:
       collection: Whistles
-  params:
-    variation: 0.125
 
 - type: emoteSounds
   id: UnisexVox
   sound:
     path: /Audio/Voice/Vox/shriek1.ogg
-    params:
-      variation: 0.125
 
 - type: emoteSounds
   id: UnisexDiona
@@ -171,14 +179,12 @@
       collection: DionaLaugh
     Honk:
       collection: BikeHorn
-  params:
-    variation: 0.125
+      params:
+        variation: 0.125
 
 
 - type: emoteSounds
   id: UnisexArachnid
-  params:
-    variation: 0.125
   sounds:
     Scream:
       path: /Audio/Voice/Arachnid/arachnid_scream.ogg
@@ -208,16 +214,18 @@
       collection: MaleYawn
     Snore:
       collection: Snores
+      params:
+        volume: -10
     Sigh:
       collection: MaleSigh
     Honk:
       collection: BikeHorn
+      params:
+        variation: 0.125
     Crying:
       collection: MaleCry
     Whistle:
       collection: Whistles
-  params:
-    variation: 0.125
     pitch: 0.75
 
 - type: emoteSounds
@@ -243,22 +251,22 @@
       collection: FemaleYawn
     Snore:
       collection: Snores
+      params:
+        volume: -10
     Sigh:
       collection: FemaleSigh
     Honk:
       collection: BikeHorn
+      params:
+        variation: 0.125
     Crying:
       collection: FemaleCry
     Whistle:
       collection: Whistles
-  params:
-    variation: 0.125
     pitch: 0.75
 
 - type: emoteSounds
   id: UnisexMoth
-  params:
-    variation: 0.125
   sounds:
     Scream:
       path: /Audio/Voice/Moth/moth_scream.ogg
@@ -297,8 +305,6 @@
   id: Zombie
   sound:
     collection: ZombieScreams
-    params:
-      variation: 0.125
 
 - type: emoteSounds
   id: Skeleton
