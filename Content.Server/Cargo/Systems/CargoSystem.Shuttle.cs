@@ -177,9 +177,12 @@ public sealed partial class CargoSystem
         return space;
     }
 
-    private List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent PalletXform)> GetCargoPallets(EntityUid gridUid)
+    /// GetCargoPallets(gridUid, true, false) to return only sell pads
+    /// GetCargoPallets(gridUid, false, true) to return only buy pads
+    private List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent PalletXform)> GetCargoPallets(EntityUid gridUid, bool sellOnly = false, bool buyOnly = false)
     {
         _pads.Clear();
+
         var query = AllEntityQuery<CargoPalletComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out var comp, out var compXform))
@@ -188,6 +191,23 @@ public sealed partial class CargoSystem
                 !compXform.Anchored)
             {
                 continue;
+            }
+
+            Logger.Debug($"{comp.PalletType}");
+
+            if (sellOnly)
+            {
+                if (comp.PalletType != "sell" && sellOnly)
+                {
+                    continue;
+                }
+            }
+            if (buyOnly)
+            {
+                if (comp.PalletType != "buy" && buyOnly)
+                {
+                    continue;
+                }
             }
 
             _pads.Add((uid, comp, compXform));
@@ -250,7 +270,7 @@ public sealed partial class CargoSystem
         amount = 0;
         toSell = new HashSet<EntityUid>();
 
-        foreach (var (palletUid, _, _) in GetCargoPallets(gridUid))
+        foreach (var (palletUid, _, _) in GetCargoPallets(gridUid, true, false))
         {
             // Containers should already get the sell price of their children so can skip those.
             _setEnts.Clear();
