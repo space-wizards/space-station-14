@@ -1,16 +1,17 @@
 ﻿using Content.Server.Body.Systems;
 using Content.Server.Kitchen.Components;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Body.Components;
+using Content.Shared.Destructible;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Kitchen;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
-using Content.Shared.Destructible;
-using Content.Shared.DoAfter;
-using Content.Shared.Kitchen;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -31,7 +32,7 @@ public sealed class SharpSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharpComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<SharpComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(UtensilSystem)]);
         SubscribeLocalEvent<SharpComponent, SharpDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<ButcherableComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
@@ -39,31 +40,32 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnAfterInteract(EntityUid uid, SharpComponent component, AfterInteractEvent args)
     {
-        if (args.Target is null || !args.CanReach)
+        if (args.Handled || args.Target is null || !args.CanReach)
             return;
 
-        TryStartButcherDoafter(uid, args.Target.Value, args.User);
+        if (TryStartButcherDoafter(uid, args.Target.Value, args.User))
+            args.Handled = true;
     }
 
-    private void TryStartButcherDoafter(EntityUid knife, EntityUid target, EntityUid user)
+    private bool TryStartButcherDoafter(EntityUid knife, EntityUid target, EntityUid user)
     {
         if (!TryComp<ButcherableComponent>(target, out var butcher))
-            return;
+            return false;
 
         if (!TryComp<SharpComponent>(knife, out var sharp))
-            return;
+            return false;
 
         if (butcher.Type != ButcheringType.Knife)
         {
             _popupSystem.PopupEntity(Loc.GetString("butcherable-different-tool", ("target", target)), knife, user);
-            return;
+            return false;
         }
 
         if (TryComp<MobStateComponent>(target, out var mobState) && !_mobStateSystem.IsDead(target, mobState))
-            return;
+            return false;
 
         if (!sharp.Butchering.Add(target))
-            return;
+            return false;
 
         var doAfter =
             new DoAfterArgs(EntityManager, user, sharp.ButcherDelayModifier * butcher.ButcherDelay, new SharpDoAfterEvent(), knife, target: target, used: knife)
@@ -75,6 +77,7 @@ public sealed class SharpSystem : EntitySystem
             };
 
         _doAfterSystem.TryStartDoAfter(doAfter);
+        return true;
     }
 
     private void OnDoAfter(EntityUid uid, SharpComponent component, DoAfterEvent args)
