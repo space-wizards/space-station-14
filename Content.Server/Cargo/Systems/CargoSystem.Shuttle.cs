@@ -173,7 +173,7 @@ public sealed partial class CargoSystem
     /// </summary>
     private int GetCargoSpace(EntityUid gridUid)
     {
-        var space = GetCargoPallets(gridUid).Count;
+        var space = GetCargoPallets(gridUid, false, true).Count;
         return space;
     }
 
