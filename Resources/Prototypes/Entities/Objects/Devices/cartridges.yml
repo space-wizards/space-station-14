@@ -30,8 +30,8 @@
   - type: Cartridge
     programName: criminal-records-program-name
     icon:
-      sprite:  Objects/Misc/books.rsi
-      state: book4
+      sprite: Objects/Specific/Security/barrier.rsi 
+      state: idle
   - type: CriminalRecordsCartridge
 
 - type: entity

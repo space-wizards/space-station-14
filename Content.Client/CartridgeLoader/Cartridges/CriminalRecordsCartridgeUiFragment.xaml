@@ -3,23 +3,21 @@
                                  xmlns="https://spacestation14.io" Margin="1 0 2 0">
     <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
-            <BoxContainer Orientation="Vertical" Name="MessageContainer" HorizontalExpand="True" VerticalExpand="True">
-        <controls:StripeBack>
-          <PanelContainer>
-            <Label Align="Center" Text="Wanted Criminals"/>
-          </PanelContainer>
-        </controls:StripeBack>
-        <ScrollContainer Name="Wanted" HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
-        </ScrollContainer>
-        <controls:StripeBack>
-          <PanelContainer>
-            <Label Align="Center" Text="Detained Inmates"/>
-          </PanelContainer>
-        </controls:StripeBack>
-        <ScrollContainer Name="Detained" HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
-        </ScrollContainer>
-            </BoxContainer>
-        </ScrollContainer>
+      <controls:StripeBack>
+        <PanelContainer>
+          <Label Align="Center" Text="Wanted Criminals"/>
+        </PanelContainer>
+      </controls:StripeBack>
+      <ScrollContainer HorizontalExpand="True" VerticalExpand="True" >
+        <GridContainer HorizontalExpand="True" Columns="2" Name="Wanted"/>
+      </ScrollContainer>
+      <controls:StripeBack>
+        <PanelContainer>
+          <Label Align="Center" Text="Detained Inmates"/>
+        </PanelContainer>
+      </controls:StripeBack>
+      <ScrollContainer HorizontalExpand="True" VerticalExpand="True" >
+        <GridContainer HorizontalExpand="True" Columns="2" Name="Detained"/>
+      </ScrollContainer>
     </BoxContainer>
 </cartridges:CriminalRecordsCartridgeUiFragment>

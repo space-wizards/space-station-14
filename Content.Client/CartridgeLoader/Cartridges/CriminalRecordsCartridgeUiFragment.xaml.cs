@@ -30,7 +30,10 @@ public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
         HorizontalExpand = true;
         VerticalExpand = true;
 
-        UpdateState(new CriminalRecordsCartridgeUiState(new List<(GeneralStationRecord, CriminalRecord)>(), new List<(GeneralStationRecord, CriminalRecord)>()));
+        UpdateState(new CriminalRecordsCartridgeUiState(
+              new List<(GeneralStationRecord, CriminalRecord)>(), 
+              new List<(GeneralStationRecord, CriminalRecord)>()
+              ));
     }
 
 
@@ -38,25 +41,17 @@ public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
     {
         foreach (var (stationRecord, criminalRecord) in state.Wanted)
         {
-            AddCriminal(stationRecord, criminalRecord);
+            AddWanted(stationRecord, criminalRecord);
         }
 
-        foreach (var (name, record) in state.Detained)
+        foreach (var (stationRecord, criminalRecord) in state.Detained)
         {
+          AddDetained(stationRecord,criminalRecord);
         }
     }
 
-    private void AddCriminal(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
+    private void AddWanted(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
     {
-        var row = new BoxContainer()
-        {
-            Orientation = LayoutOrientation.Horizontal,
-            HorizontalExpand = true,
-            Margin = new Thickness(4),
-        };
-
-        Wanted.AddChild(row);
-
         var nameLabel = new Label()
         {
             Text = stationRecord.Name,
@@ -64,7 +59,7 @@ public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
             ClipText = true,
         };
 
-        row.AddChild(nameLabel);
+        Wanted.AddChild(nameLabel);
 
         var jobContainer = new BoxContainer()
         {
@@ -72,7 +67,55 @@ public sealed partial class CriminalRecordsCartridgeUiFragment : BoxContainer
             HorizontalExpand = true,
         };
 
-        row.AddChild(jobContainer);
+        Wanted.AddChild(jobContainer);
+
+        var jobLabel = new Label()
+        {
+            Text = stationRecord.JobTitle,
+            HorizontalExpand = true,
+            ClipText = true,
+        };
+
+
+        if (!_prototypeManager.TryIndex<StatusIconPrototype>(
+              stationRecord.JobIcon,
+              out var proto
+              ))
+        {
+            jobContainer.AddChild(jobLabel);
+            return;
+        }
+
+        var jobIcon = new TextureRect()
+        {
+            TextureScale = new Vector2(2f, 2f),
+            VerticalAlignment = VAlignment.Center,
+            Texture = _spriteSystem.Frame0(proto.Icon),
+            Margin = new Thickness(5, 0, 5, 0),
+        };
+
+        jobContainer.AddChild(jobIcon);
+        jobContainer.AddChild(jobLabel);
+    }
+
+    private void AddDetained(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
+    {
+        var nameLabel = new Label()
+        {
+            Text = stationRecord.Name,
+            HorizontalExpand = true,
+            ClipText = true,
+        };
+
+        Detained.AddChild(nameLabel);
+
+        var jobContainer = new BoxContainer()
+        {
+            Orientation = LayoutOrientation.Horizontal,
+            HorizontalExpand = true,
+        };
+
+        Detained.AddChild(jobContainer);
 
         var jobLabel = new Label()
         {
