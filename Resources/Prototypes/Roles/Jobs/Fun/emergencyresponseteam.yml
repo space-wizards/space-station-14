@@ -92,7 +92,7 @@
     jumpsuit: ClothingUniformJumpsuitERTChaplain
     back: ClothingBackpackERTChaplainFilled
     shoes: ClothingShoesLeather
-    head: ClothingHeadHatFez # !! need to make!
+    head: ClothingHeadHatFez
     eyes: ClothingEyesGlasses
     neck: ClothingNeckStoleChaplain
     gloves: ClothingHandsGlovesCombat
