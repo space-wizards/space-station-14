@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: GreyMario
-  changes:
-  - message: Recipes added for the Baklava and Frosty Pies and the Chocolate Lava,
-      Golden Apple Streusel, and Mime Tarts.
-    type: Add
-  id: 5617
-  time: '2024-01-07T20:20:14.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23266
 - author: Dygon
   changes:
   - message: The cyborg cleaning module's holofan battery now recharges and can't
@@ -3818,3 +3810,10 @@
   id: 6116
   time: '2024-03-10T15:41:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25965
+- author: DoutorWhite
+  changes:
+  - message: Prevents rendering from crashing in certain scenarios
+    type: Fix
+  id: 6117
+  time: '2024-03-10T17:07:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25960
