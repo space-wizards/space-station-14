@@ -17,7 +17,6 @@ public sealed class CriminalRecordsCartridgeSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<CriminalRecordsCartridgeComponent, CartridgeMessageEvent>(OnUiMessage);
         SubscribeLocalEvent<CriminalRecordsCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
     }
 
@@ -28,18 +27,6 @@ public sealed class CriminalRecordsCartridgeSystem : EntitySystem
       )
     {
         UpdateUiState(uid, criminalRecordsCartridge, args.Loader);
-    }
-
-    private void OnUiMessage(
-      EntityUid uid,
-      CriminalRecordsCartridgeComponent criminalRecordsCartridge,
-      CartridgeMessageEvent args
-      )
-    {
-        if (args is not CriminalRecordsCartridgeUiMessageEvent message)
-            return;
-
-        UpdateUiState(uid, criminalRecordsCartridge, GetEntity(args.LoaderUid));
     }
 
     private void UpdateUiState(
