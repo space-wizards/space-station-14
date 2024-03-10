@@ -12,7 +12,7 @@
   icon: "JobIconNanotrasen"
   requireAdminNotify: true
   joinNotifyCrew: true
-  supervisors: job-supervisors-centcom
+  supervisors: job-supervisors-captain
   canBeAntag: false
   accessGroups:
   - AllAccess
@@ -27,7 +27,7 @@
   id: NanotrasenRepresentativeGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitJournalist
-    back: ClothingBackpackSatchelLeather
+    back: ClothingBackpackCaptainFilled
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatSyndieMAA
     eyes: ClothingEyesGlasses  
@@ -35,6 +35,6 @@
     ears: ClothingHeadsetCentCom
     pocket1: BoxFolderCentComClipboard
     pocket2: PhoneInstrument
-  innerClothingSkirt: ClothingUniformJumpsuitJournalist
+  innerClothingSkirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchel
   duffelbag: ClothingBackpackDuffel
