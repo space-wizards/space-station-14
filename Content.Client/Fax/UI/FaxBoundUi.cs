@@ -52,8 +52,11 @@ public sealed class FaxBoundUi : BoundUserInterface
         }
 
         using var reader = new StreamReader(file);
+        var label = (reader.Peek() == '#') ? (await reader.ReadLineAsync())?[1..].Trim() : null;
         var content = await reader.ReadToEndAsync();
-        SendMessage(new FaxFileMessage(content[..Math.Min(content.Length, FaxFileMessageValidation.MaxContentSize)], _window.OfficePaper));
+        SendMessage(new FaxFileMessage(label?[..Math.Min(label.Length, FaxFileMessageValidation.MaxLabelSize)],
+            content[..Math.Min(content.Length, FaxFileMessageValidation.MaxContentSize)],
+            _window.OfficePaper));
     }
 
     private void OnSendButtonPressed()
