@@ -287,7 +287,7 @@
   parent: CrateBaseSecure
   id: CrateContrabandStorageSecure
   name: contraband storage crate
-  description: A crate for storing contraband permanently removed from suspects or prisoners.
+  description: A crate for storing contraband confiscated from suspects or prisoners.
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/sec_gear.rsi
