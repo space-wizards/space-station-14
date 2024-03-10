@@ -2,19 +2,14 @@
 
 namespace Content.Shared.Chat.V2.Moderation;
 
-public sealed class RegexCensor
+public sealed class RegexCensor(Regex censorInstruction) : IChatCensor
 {
-    private Regex _censorInstruction;
-
-    public RegexCensor(Regex censorInstruction)
-    {
-        _censorInstruction = censorInstruction;
-    }
+    private readonly Regex _censorInstruction = censorInstruction;
 
     public bool Censor(string input, out string output, char replaceWith = '*')
     {
         output = _censorInstruction.Replace(input, replaceWith.ToString());
 
-        return !string.IsNullOrEmpty(output);
+        return !string.Equals(input, output);
     }
 }

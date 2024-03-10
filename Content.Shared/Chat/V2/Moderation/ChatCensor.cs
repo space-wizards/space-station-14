@@ -2,19 +2,36 @@
 
 namespace Content.Shared.Chat.V2.Moderation;
 
-/// <summary>
-/// Censors a chat string. Returns true if the chat was censored.
-/// </summary>
-public delegate bool Censor(string input, out string output, char replaceWith = '*');
-
-public static class ChatCensor
+public interface IChatCensor
 {
-    // SINGLETON PATTERN HO!
+    public bool Censor(string input, out string output, char replaceWith = '*');
+}
 
-    public static Censor Censor { get; private set; } = NoOpCensor;
-    private static List<Censor> _censors = new();
+public sealed class CompoundChatCensor(IEnumerable<IChatCensor> censors) : IChatCensor
+{
+    public bool Censor(string input, out string output, char replaceWith = '*')
+    {
+        var censored = false;
 
-    public static void With(Censor censor)
+        foreach (var censor in censors)
+        {
+            if (censor.Censor(input, out output, replaceWith))
+            {
+                censored = true;
+            }
+        }
+
+        output = input;
+
+        return censored;
+    }
+}
+
+public sealed class ChatCensorFactory
+{
+    private List<IChatCensor> _censors = new();
+
+    public void With(IChatCensor censor)
     {
         _censors.Add(censor);
     }
@@ -22,51 +39,21 @@ public static class ChatCensor
     /// <summary>
     /// Builds a ChatCensor that combines all the censors that have been added to this.
     /// </summary>
-    public static void Build()
+    public IChatCensor Build()
     {
-        // Copy over so the factory can be used again without pollution.
-        // Closures, yippee.
-        var censors = new List<Censor>(_censors);
-
-        Censor = (string input, out string output, char with) =>
-        {
-            var censored = false;
-
-            foreach (var _ in censors.Where(censor => censor(input, out input, with)))
-            {
-                censored = true;
-            }
-
-            output = input;
-
-            return censored;
-        };
+        return new CompoundChatCensor(_censors.ToArray());
     }
 
     /// <summary>
     /// Resets the build state to zero, allowing for different rules to be provided to the next censor(s) built.
     /// </summary>
     /// <returns>True if the builder had any setup prior to the reset.</returns>
-    public static bool Reset()
+    public bool Reset()
     {
         var notEmpty = _censors.Count > 0;
 
-        _censors = new List<Censor>();
+        _censors = new List<IChatCensor>();
 
         return notEmpty;
-    }
-
-    /// <summary>
-    /// A censor that does nothing.
-    /// </summary>
-    /// <param name="input"></param>
-    /// <param name="output"></param>
-    /// <param name="_"></param>
-    /// <returns></returns>
-    static bool NoOpCensor(string input, out string output, char _ = '*')
-    {
-        output = input;
-
-        return false;
     }
 }
