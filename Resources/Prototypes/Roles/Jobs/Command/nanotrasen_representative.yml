@@ -30,12 +30,9 @@
     back: ClothingBackpackSatchelLeather
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatSyndieMAA
-    eyes: ClothingEyesGlasses
-    gloves: 
-    outerClothing: 
+    eyes: ClothingEyesGlasses  
     id: CentcomPDA
     ears: ClothingHeadsetCentCom
-    belt: ClothingBeltSecurityFilled
     pocket1: BoxFolderCentComClipboard
     pocket2: PhoneInstrument
   innerClothingSkirt: ClothingUniformJumpsuitJournalist
