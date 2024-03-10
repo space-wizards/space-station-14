@@ -1641,3 +1641,8 @@
   categories:
   - UplinkWeapons
   restockTime: 10
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
