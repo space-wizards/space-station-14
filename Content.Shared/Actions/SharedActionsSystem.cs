@@ -8,6 +8,7 @@ using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mind;
+using Content.Shared.Mobs.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -426,6 +427,13 @@ public abstract class SharedActionsSystem : EntitySystem
             case InstantActionComponent instantAction:
                 if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
                     return;
+
+                if (action.CheckMobState != null)
+                {
+                    if (!TryComp<MobStateComponent>(user, out var mobState) ||
+                        mobState.CurrentState != action.CheckMobState)
+                        return;
+                }
 
                 _adminLogger.Add(LogType.Action,
                     $"{ToPrettyString(user):user} is performing the {name:action} action provided by {ToPrettyString(action.Container ?? user):provider}.");

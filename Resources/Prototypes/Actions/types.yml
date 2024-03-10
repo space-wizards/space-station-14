@@ -99,6 +99,7 @@
   - type: InstantAction
     charges: 3
     checkCanInteract: false
+    checkMobState: Alive
     itemIconStyle: BigAction
     priority: -20
     icon:
@@ -143,6 +144,8 @@
   noSpawn: true
   components:
   - type: InstantAction
+    checkCanInteract: false
+    checkMobState: Alive
     charges: 2
     useDelay: 5
     itemIconStyle: BigAction

@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Audio;
+﻿using Content.Shared.Mobs;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -119,6 +120,11 @@ public abstract partial class BaseActionComponent : Component
     [DataField("checkCanInteract")] public bool CheckCanInteract = true;
 
     /// <summary>
+    /// If not null, determines whether the action system should block this action if the user is not in the correct MobState
+    /// </summary>
+    [DataField] public MobState? CheckMobState;
+
+    /// <summary>
     ///     If true, this will cause the action to only execute locally without ever notifying the server.
     /// </summary>
     [DataField("clientExclusive")] public bool ClientExclusive = false;
@@ -177,6 +183,7 @@ public abstract class BaseActionComponentState : ComponentState
     public NetEntity? Container;
     public NetEntity? EntityIcon;
     public bool CheckCanInteract;
+    public MobState? CheckMobState;
     public bool ClientExclusive;
     public int Priority;
     public NetEntity? AttachedEntity;
@@ -204,6 +211,7 @@ public abstract class BaseActionComponentState : ComponentState
         MaxCharges = component.MaxCharges;
         RenewCharges = component.RenewCharges;
         CheckCanInteract = component.CheckCanInteract;
+        CheckMobState = component.CheckMobState;
         ClientExclusive = component.ClientExclusive;
         Priority = component.Priority;
         AutoPopulate = component.AutoPopulate;
