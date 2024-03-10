@@ -1293,7 +1293,17 @@
   - UplinkWearables
 
  # Pointless
- 
+
+- type: listing
+  id: UplinkBarberScissors
+  name: uplink-barber-scissors-name
+  description: uplink-barber-scissors-desc
+  productEntity: BarberScissors
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkPointless
+
 - type: listing
   id: UplinkSnackBox
   name: uplink-snack-box-name
