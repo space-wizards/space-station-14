@@ -784,7 +784,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         var flushTime = TimeSpan.FromSeconds(Math.Min((component.NextFlush ?? TimeSpan.MaxValue).TotalSeconds, automaticTime.TotalSeconds));
 
         component.NextFlush = flushTime;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     public void AfterInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid inserted, EntityUid? user = null, bool doInsert = false)
