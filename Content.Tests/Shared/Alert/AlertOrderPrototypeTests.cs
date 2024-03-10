@@ -7,12 +7,12 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
-namespace Content.Tests.Shared.Alert
+namespace Content.Tests.Shared.Alert;
+
+[TestFixture, TestOf(typeof(AlertOrderPrototype))]
+public sealed class AlertOrderPrototypeTests : ContentUnitTest
 {
-    [TestFixture, TestOf(typeof(AlertOrderPrototype))]
-    public sealed class AlertOrderPrototypeTests : ContentUnitTest
-    {
-        const string PROTOTYPES = @"
+    private const string TestPrototypes = @"
 - type: alertOrder
   id: testAlertOrder
   order:
@@ -71,38 +71,39 @@ namespace Content.Tests.Shared.Alert
   icons: []
 ";
 
-        [Test]
-        public void TestAlertOrderPrototype()
+    [Test]
+    public void TestAlertOrderPrototype()
+    {
+        IoCManager.Resolve<ISerializationManager>().Initialize();
+        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+        prototypeManager.Initialize();
+        prototypeManager.LoadFromStream(new StringReader(TestPrototypes));
+        prototypeManager.ResolveResults();
+
+        var alertOrder = prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
+
+        var alerts = prototypeManager.EnumeratePrototypes<AlertPrototype>();
+
+        // ensure they sort according to our expected criteria
+        var expectedOrder = new List<AlertType>
         {
-            IoCManager.Resolve<ISerializationManager>().Initialize();
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            prototypeManager.Initialize();
-            prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
-            prototypeManager.ResolveResults();
-
-            var alertOrder = prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
-
-            var alerts = prototypeManager.EnumeratePrototypes<AlertPrototype>();
-
-            // ensure they sort according to our expected criteria
-            var expectedOrder = new List<AlertType>();
-            expectedOrder.Add(AlertType.Handcuffed);
-            expectedOrder.Add(AlertType.Ensnared);
-            expectedOrder.Add(AlertType.HighPressure);
+            AlertType.Handcuffed,
+            AlertType.Ensnared,
+            AlertType.HighPressure,
             // stuff with only category + same category ordered by enum value
-            expectedOrder.Add(AlertType.Peckish);
-            expectedOrder.Add(AlertType.Hot);
-            expectedOrder.Add(AlertType.Stun);
-            expectedOrder.Add(AlertType.LowPressure);
-            expectedOrder.Add(AlertType.Cold);
+            AlertType.Peckish,
+            AlertType.Hot,
+            AlertType.Stun,
+            AlertType.LowPressure,
+            AlertType.Cold,
             // stuff at end of list ordered by enum value
-            expectedOrder.Add(AlertType.Weightless);
-            expectedOrder.Add(AlertType.PilotingShuttle);
+            AlertType.Weightless,
+            AlertType.PilotingShuttle
+        };
 
-            var actual = alerts.ToList();
-            actual.Sort(alertOrder);
+        var actual = alerts.ToList();
+        actual.Sort(alertOrder);
 
-            Assert.That(actual.Select(a => a.AlertType).ToList(), Is.EqualTo(expectedOrder));
-        }
+        Assert.That(actual.Select(a => a.AlertType).ToList(), Is.EqualTo(expectedOrder));
     }
 }

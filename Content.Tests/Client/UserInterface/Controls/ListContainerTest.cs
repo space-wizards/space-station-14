@@ -32,21 +32,26 @@ public sealed class ListContainerTest : RobustUnitTest
         var root = new Control { MinSize = new Vector2(50, 60) };
         var listContainer = new ListContainer { SeparationOverride = 3 };
         root.AddChild(listContainer);
-        listContainer.GenerateItem += (_, button) => {
+        listContainer.GenerateItem += (_, button) =>
+        {
             button.AddChild(new Control { MinSize = new Vector2(10, 10) });
         };
 
-        var list = new List<TestListData> {new(0), new(1)};
+        var list = new List<TestListData> { new(0), new(1) };
         listContainer.PopulateList(list);
         root.Arrange(new UIBox2(0, 0, 50, 60));
 
         Assert.That(listContainer.ChildCount, Is.EqualTo(3));
         var children = listContainer.Children.ToList();
-        Assert.That(children[0].Height, Is.EqualTo(10));
-        Assert.That(children[1].Height, Is.EqualTo(10));
 
-        Assert.That(children[0].Position.Y, Is.EqualTo(0));
-        Assert.That(children[1].Position.Y, Is.EqualTo(13)); // Item height + separation
+        Assert.Multiple(() =>
+        {
+            Assert.That(children[0].Height, Is.EqualTo(10));
+            Assert.That(children[1].Height, Is.EqualTo(10));
+
+            Assert.That(children[0].Position.Y, Is.EqualTo(0));
+            Assert.That(children[1].Position.Y, Is.EqualTo(13)); // Item height + separation
+        });
     }
 
     [Test]
@@ -94,10 +99,14 @@ public sealed class ListContainerTest : RobustUnitTest
         listContainer.PopulateList(list);
         root.Arrange(new UIBox2(0, 0, 50, 60));
 
-        // 6 ControlData
-        Assert.That(listContainer.Data.Count, Is.EqualTo(6));
-        // 5 Buttons, 1 Scrollbar
-        Assert.That(listContainer.ChildCount, Is.EqualTo(6));
+        Assert.Multiple(() =>
+        {
+            // 6 ControlData
+            Assert.That(listContainer.Data, Has.Count.EqualTo(6));
+
+            // 5 Buttons, 1 Scrollbar
+            Assert.That(listContainer.ChildCount, Is.EqualTo(6));
+        });
 
         var children = listContainer.Children.ToList();
         foreach (var child in children)
@@ -107,11 +116,14 @@ public sealed class ListContainerTest : RobustUnitTest
             Assert.That(child.Height, Is.EqualTo(10));
         }
 
-        Assert.That(children[0].Position.Y, Is.EqualTo(0));
-        Assert.That(children[1].Position.Y, Is.EqualTo(13));
-        Assert.That(children[2].Position.Y, Is.EqualTo(26));
-        Assert.That(children[3].Position.Y, Is.EqualTo(39));
-        Assert.That(children[4].Position.Y, Is.EqualTo(52));
+        Assert.Multiple(() =>
+        {
+            Assert.That(children[0].Position.Y, Is.EqualTo(0));
+            Assert.That(children[1].Position.Y, Is.EqualTo(13));
+            Assert.That(children[2].Position.Y, Is.EqualTo(26));
+            Assert.That(children[3].Position.Y, Is.EqualTo(39));
+            Assert.That(children[4].Position.Y, Is.EqualTo(52));
+        });
     }
 
     [Test]
@@ -139,27 +151,33 @@ public sealed class ListContainerTest : RobustUnitTest
         scrollbar.Value = 5;
         listContainer.Arrange(root.SizeBox);
         var children = listContainer.Children.ToList();
-        // 5 Buttons, 1 Scrollbar
-        Assert.That(listContainer.ChildCount, Is.EqualTo(6));
-        Assert.That(children[0].Position.Y, Is.EqualTo(-5));
-        Assert.That(children[1].Position.Y, Is.EqualTo(8));
-        Assert.That(children[2].Position.Y, Is.EqualTo(21));
-        Assert.That(children[3].Position.Y, Is.EqualTo(34));
-        Assert.That(children[4].Position.Y, Is.EqualTo(47));
+        Assert.Multiple(() =>
+        {
+            // 5 Buttons, 1 Scrollbar
+            Assert.That(listContainer.ChildCount, Is.EqualTo(6));
+            Assert.That(children[0].Position.Y, Is.EqualTo(-5));
+            Assert.That(children[1].Position.Y, Is.EqualTo(8));
+            Assert.That(children[2].Position.Y, Is.EqualTo(21));
+            Assert.That(children[3].Position.Y, Is.EqualTo(34));
+            Assert.That(children[4].Position.Y, Is.EqualTo(47));
+        });
 
         // Test that 6th button is visible when scrolled
         scrollbar.Value = 6;
         listContainer.Arrange(root.SizeBox);
         children = listContainer.Children.ToList();
-        // 6 Buttons, 1 Scrollbar
-        Assert.That(listContainer.ChildCount, Is.EqualTo(7));
-        Assert.That(Math.Abs(scrollbar.Value - 6), Is.LessThan(0.01f));
-        Assert.That(children[0].Position.Y, Is.EqualTo(-6));
-        Assert.That(children[1].Position.Y, Is.EqualTo(7));
-        Assert.That(children[2].Position.Y, Is.EqualTo(20));
-        Assert.That(children[3].Position.Y, Is.EqualTo(33));
-        Assert.That(children[4].Position.Y, Is.EqualTo(46));
-        Assert.That(children[5].Position.Y, Is.EqualTo(59));
+        Assert.Multiple(() =>
+        {
+            // 6 Buttons, 1 Scrollbar
+            Assert.That(listContainer.ChildCount, Is.EqualTo(7));
+            Assert.That(Math.Abs(scrollbar.Value - 6), Is.LessThan(0.01f));
+            Assert.That(children[0].Position.Y, Is.EqualTo(-6));
+            Assert.That(children[1].Position.Y, Is.EqualTo(7));
+            Assert.That(children[2].Position.Y, Is.EqualTo(20));
+            Assert.That(children[3].Position.Y, Is.EqualTo(33));
+            Assert.That(children[4].Position.Y, Is.EqualTo(46));
+            Assert.That(children[5].Position.Y, Is.EqualTo(59));
+        });
     }
 
     [Test]
@@ -177,7 +195,7 @@ public sealed class ListContainerTest : RobustUnitTest
             button.AddChild(new Control { MinSize = new Vector2(10, 10) });
         };
 
-        var list = new List<TestListData> {new(0), new(1), new(2), new(3), new(4), new(5)};
+        var list = new List<TestListData> { new(0), new(1), new(2), new(3), new(4), new(5) };
         listContainer.PopulateList(list);
         root.Arrange(new UIBox2(0, 0, 50, 60));
 
@@ -189,28 +207,34 @@ public sealed class ListContainerTest : RobustUnitTest
         scrollbar.Value = scrollValue;
         listContainer.Arrange(root.SizeBox);
         var children = listContainer.Children.ToList();
-        // 6 Buttons, 1 Scrollbar
-        Assert.That(listContainer.ChildCount, Is.EqualTo(7));
-        Assert.That(children[0].Position.Y, Is.EqualTo(-9));
-        Assert.That(children[1].Position.Y, Is.EqualTo(4));
-        Assert.That(children[2].Position.Y, Is.EqualTo(17));
-        Assert.That(children[3].Position.Y, Is.EqualTo(30));
-        Assert.That(children[4].Position.Y, Is.EqualTo(43));
-        Assert.That(children[5].Position.Y, Is.EqualTo(56));
+        Assert.Multiple(() =>
+        {
+            // 6 Buttons, 1 Scrollbar
+            Assert.That(listContainer.ChildCount, Is.EqualTo(7));
+            Assert.That(children[0].Position.Y, Is.EqualTo(-9));
+            Assert.That(children[1].Position.Y, Is.EqualTo(4));
+            Assert.That(children[2].Position.Y, Is.EqualTo(17));
+            Assert.That(children[3].Position.Y, Is.EqualTo(30));
+            Assert.That(children[4].Position.Y, Is.EqualTo(43));
+            Assert.That(children[5].Position.Y, Is.EqualTo(56));
+        });
 
         // Test that 6th button is visible when scrolled
         scrollValue = 10;
         scrollbar.Value = scrollValue;
         listContainer.Arrange(root.SizeBox);
         children = listContainer.Children.ToList();
-        // 5 Buttons, 1 Scrollbar
-        Assert.That(listContainer.ChildCount, Is.EqualTo(6));
-        Assert.That(Math.Abs(scrollbar.Value - scrollValue), Is.LessThan(0.01f));
-        Assert.That(children[0].Position.Y, Is.EqualTo(3));
-        Assert.That(children[1].Position.Y, Is.EqualTo(16));
-        Assert.That(children[2].Position.Y, Is.EqualTo(29));
-        Assert.That(children[3].Position.Y, Is.EqualTo(42));
-        Assert.That(children[4].Position.Y, Is.EqualTo(55));
+        Assert.Multiple(() =>
+        {
+            // 5 Buttons, 1 Scrollbar
+            Assert.That(listContainer.ChildCount, Is.EqualTo(6));
+            Assert.That(Math.Abs(scrollbar.Value - scrollValue), Is.LessThan(0.01f));
+            Assert.That(children[0].Position.Y, Is.EqualTo(3));
+            Assert.That(children[1].Position.Y, Is.EqualTo(16));
+            Assert.That(children[2].Position.Y, Is.EqualTo(29));
+            Assert.That(children[3].Position.Y, Is.EqualTo(42));
+            Assert.That(children[4].Position.Y, Is.EqualTo(55));
+        });
     }
 
     /// <summary>
@@ -242,14 +266,17 @@ public sealed class ListContainerTest : RobustUnitTest
         root.Arrange(new UIBox2(0, 0, 50, height));
 
         var children = listContainer.Children.ToList();
-        // 6 Buttons, 1 Scrollbar
-        Assert.That(listContainer.ChildCount, Is.EqualTo(6));
-        Assert.That(children[0].Position.Y, Is.EqualTo(0));
-        Assert.That(children[1].Position.Y, Is.EqualTo(10));
-        Assert.That(children[2].Position.Y, Is.EqualTo(20));
-        Assert.That(children[3].Position.Y, Is.EqualTo(30));
-        Assert.That(children[4].Position.Y, Is.EqualTo(40));
-        Assert.That(button.Position.Y, Is.EqualTo(50));
+        Assert.Multiple(() =>
+        {
+            // 6 Buttons, 1 Scrollbar
+            Assert.That(listContainer.ChildCount, Is.EqualTo(6));
+            Assert.That(children[0].Position.Y, Is.EqualTo(0));
+            Assert.That(children[1].Position.Y, Is.EqualTo(10));
+            Assert.That(children[2].Position.Y, Is.EqualTo(20));
+            Assert.That(children[3].Position.Y, Is.EqualTo(30));
+            Assert.That(children[4].Position.Y, Is.EqualTo(40));
+            Assert.That(button.Position.Y, Is.EqualTo(50));
+        });
     }
 
     [Test]
@@ -284,7 +311,11 @@ public sealed class ListContainerTest : RobustUnitTest
         children = listContainer.Children.ToList();
         if (children[0] is not ListContainerButton newButton)
             throw new Exception("First child of ListContainer is not a button");
-        Assert.That(newButton.Pressed);
-        Assert.That(newButton.Disposed == false);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(newButton.Pressed);
+            Assert.That(newButton.Disposed, Is.EqualTo(false));
+        });
     }
 }

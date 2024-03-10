@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Shared.Database;
 using NUnit.Framework;
@@ -18,6 +18,6 @@ public sealed class LogTypeTests
             .Select(g => g.Key)
             .ToArray();
 
-        Assert.That(duplicates.Length, Is.Zero, $"{nameof(LogType)} has duplicate values for: " + string.Join(", ", duplicates));
+        Assert.That(duplicates, Is.Empty, $"{nameof(LogType)} has duplicate values for: " + string.Join(", ", duplicates));
     }
 }
