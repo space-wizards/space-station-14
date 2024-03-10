@@ -11,7 +11,10 @@ public sealed class CriminalRecordsCartridgeUiState : BoundUserInterfaceState
     public List<(GeneralStationRecord, CriminalRecord)> Wanted;
     public List<(GeneralStationRecord, CriminalRecord)> Detained;
 
-    public CriminalRecordsCartridgeUiState(List<(GeneralStationRecord, CriminalRecord)> wanted, List<(GeneralStationRecord, CriminalRecord)> detained)
+    public CriminalRecordsCartridgeUiState(
+        List<(GeneralStationRecord, CriminalRecord)> wanted,
+        List<(GeneralStationRecord, CriminalRecord)> detained
+        )
     {
         Wanted = wanted;
         Detained = detained;

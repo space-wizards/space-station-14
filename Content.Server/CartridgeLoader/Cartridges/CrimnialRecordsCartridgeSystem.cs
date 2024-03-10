@@ -3,9 +3,7 @@ using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.CriminalRecords;
 using Content.Shared.StationRecords;
 using Content.Shared.Security;
-using Content.Shared.StationRecords;
 using Content.Server.StationRecords.Systems;
-using Content.Server.StationRecords;
 using Content.Server.Station.Systems;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
@@ -66,10 +64,12 @@ public sealed class CriminalRecordsCartridgeSystem : EntitySystem
 
         foreach (var (id, criminalRecord) in records)
         {
-            var name = "Unknown";
 
             if (!_stationRecords.TryGetRecord<GeneralStationRecord>(new StationRecordKey(id, owningStation.Value), out var stationRecord))
-            { return; }
+            {
+                return;
+            }
+
             switch (criminalRecord.Status)
             {
                 case SecurityStatus.Wanted:
