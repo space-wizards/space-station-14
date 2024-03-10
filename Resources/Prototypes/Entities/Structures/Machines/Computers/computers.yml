@@ -74,6 +74,11 @@
         whitelist:
           components:
           - ShuttleDestinationCoordinates
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+        ents: []
+      disk_slot: !type:ContainerSlot {}
 
 - type: entity
   parent: BaseComputerShuttle
