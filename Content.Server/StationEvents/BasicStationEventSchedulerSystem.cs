@@ -6,6 +6,7 @@ using Content.Server.StationEvents.Components;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 
@@ -20,11 +21,20 @@ namespace Content.Server.StationEvents
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly EventManagerSystem _event = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
+
+        protected override void Started(EntityUid uid, BasicStationEventSchedulerComponent eventComp, GameRuleComponent gameRule, GameRuleStartedEvent args)
+        {
+            base.Started(uid, eventComp, gameRule, args);
+
+            ResetTimer(eventComp);
+            eventComp.NextEventTime += eventComp.MinimumTimeUntilFirstEvent;
+        }
 
         protected override void Ended(EntityUid uid, BasicStationEventSchedulerComponent component, GameRuleComponent gameRule,
             GameRuleEndedEvent args)
         {
-            component.TimeUntilNextEvent = BasicStationEventSchedulerComponent.MinimumTimeUntilFirstEvent;
+            component.NextEventTime = component.MinimumTimeUntilFirstEvent;
         }
 
 
@@ -41,11 +51,8 @@ namespace Content.Server.StationEvents
                 if (!GameTicker.IsGameRuleActive(uid, gameRule))
                     continue;
 
-                if (eventScheduler.TimeUntilNextEvent > 0)
-                {
-                    eventScheduler.TimeUntilNextEvent -= frameTime;
-                    return;
-                }
+                if (eventScheduler.NextEventTime > _timing.CurTime)
+                    continue;
 
                 _event.RunRandomEvent();
                 ResetTimer(eventScheduler);
@@ -57,8 +64,8 @@ namespace Content.Server.StationEvents
         /// </summary>
         private void ResetTimer(BasicStationEventSchedulerComponent component)
         {
-            // 5 - 25 minutes. TG does 3-10 but that's pretty frequent
-            component.TimeUntilNextEvent = _random.Next(300, 1500);
+            var randTime = _random.Next(component.MinimumTimeBetweenEvents, component.MaximumTimeBetweenEvents);
+            component.NextEventTime = _timing.CurTime + randTime;
         }
     }
 
