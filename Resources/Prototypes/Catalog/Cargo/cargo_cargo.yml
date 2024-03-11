@@ -5,7 +5,7 @@
     state: orebox
   product: OreBox
   cost: 500
-  category: Cargo
+  category: cargoproduct-category-name-cargo
   group: market
 
 - type: cargoProduct
@@ -15,5 +15,5 @@
     state: icon
   product: CrateCargoLuxuryHardsuit
   cost: 15000
-  category: Cargo
+  category: cargoproduct-category-name-cargo
   group: market

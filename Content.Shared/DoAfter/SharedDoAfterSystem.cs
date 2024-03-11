@@ -157,7 +157,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         if (doAfter.Delay <= TimeSpan.Zero)
         {
-            Logger.Warning("Awaited instant DoAfters are not supported fully supported");
+            Log.Warning("Awaited instant DoAfters are not supported fully supported");
             return DoAfterStatus.Finished;
         }
 
