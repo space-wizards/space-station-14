@@ -1,0 +1,40 @@
+- type: statusIcon
+  id: SecurityIcon
+  abstract: true
+  priority: 1
+  locationPreference: Left
+
+- type: statusIcon
+  parent: SecurityIcon
+  id: SecurityIconDischarged
+  icon:
+    sprite: Interface/Misc/security_icons.rsi
+    state: hud_discharged
+
+- type: statusIcon
+  parent: SecurityIcon
+  id: SecurityIconIncarcerated
+  icon:
+    sprite: Interface/Misc/security_icons.rsi
+    state: hud_incarcerated
+
+- type: statusIcon
+  parent: SecurityIcon
+  id: SecurityIconParoled
+  icon:
+    sprite: Interface/Misc/security_icons.rsi
+    state: hud_paroled
+
+- type: statusIcon
+  parent: SecurityIcon
+  id: SecurityIconSuspected
+  icon:
+    sprite: Interface/Misc/security_icons.rsi
+    state: hud_suspected
+
+- type: statusIcon
+  parent: SecurityIcon
+  id: SecurityIconWanted
+  icon:
+    sprite: Interface/Misc/security_icons.rsi
+    state: hud_wanted
