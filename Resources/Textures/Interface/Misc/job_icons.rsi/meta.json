@@ -186,6 +186,30 @@
             "name": "BridgeOfficer"
         },
         {
+            "name": "ERTLeader"
+        },
+        {
+            "name": "ERTOfficer"
+        },
+        {
+            "name": "ERTMedical"
+        },
+        {
+            "name": "ERTEngineer"
+        },
+        {
+            "name": "ERTJanitor"
+        },
+        {
+            "name": "ERTChaplain"
+        },
+        {
+            "name": "SRT"
+        },
+        {
+            "name": "DeathSquad"
+        },
+        {
             "name": "IAA"
 		},
 		{
