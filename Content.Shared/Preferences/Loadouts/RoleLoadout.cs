@@ -15,7 +15,7 @@ public sealed class RoleLoadout
 {
     public readonly ProtoId<RoleLoadoutPrototype> Role;
 
-    public Dictionary<ProtoId<LoadoutGroupPrototype>, ProtoId<LoadoutPrototype>?> SelectedLoadouts = new();
+    public Dictionary<ProtoId<LoadoutGroupPrototype>, List<Loadout>> SelectedLoadouts = new();
 
     public RoleLoadout(ProtoId<RoleLoadoutPrototype> role)
     {
@@ -142,16 +142,5 @@ public sealed class RoleLoadout
 
         var ev = new RoleLoadoutUpdatedEvent();
         entManager.EventBus.RaiseEvent(EventSource.Local, ref ev);
-    }
-
-    /// <summary>
-    /// Raised whenever a role loadout updates.
-    /// </summary>
-    [ByRefEvent]
-    public record struct RoleLoadoutUpdatedEvent
-    {
-        // Add any metadata you need here like points updates or whatever.
-        // Then Validate will get run after on each effect.
-
     }
 }

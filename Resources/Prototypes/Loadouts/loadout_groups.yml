@@ -2,7 +2,7 @@
 - type: loadoutGroup
   id: Trinkets
   name: loadout-group-trinkets
-  optional: true
+  minLimit: 0
   loadouts:
   - PlushieLizard
 
@@ -37,7 +37,7 @@
 - type: loadoutGroup
   id: StationEngineerOuterClothing
   name: loadout-group-station-engineer-outerclothing
-  optional: true
+  minLimit: 0
   loadouts:
   - StationEngineerOuterVest
 
@@ -53,14 +53,14 @@
 - type: loadoutGroup
   id: ScientistHead
   name: loadout-group-scientist-head
-  optional: true
+  minLimit: 0
   loadouts:
   - ScientificBeret
 
 - type: loadoutGroup
   id: ScientistNeck
   name: loadout-group-scientist-neck
-  optional: true
+  minLimit: 0
   loadouts:
   - ScientistTie
 
@@ -87,7 +87,7 @@
 - type: loadoutGroup
   id: ScientistOuterClothing
   name: loadout-group-scientist-outerclothing
-  optional: true
+  minLimit: 0
   loadouts:
   - RegularLabCoat
   - ScienceLabCoat
@@ -104,7 +104,7 @@
 - type: loadoutGroup
   id: SecurityHead
   name: loadout-group-security-head
-  optional: true
+  minLimit: 0
   loadouts:
   - SecurityHelmet
   - SecurityBeret

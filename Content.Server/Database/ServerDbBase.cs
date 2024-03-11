@@ -44,6 +44,7 @@ namespace Content.Server.Database
                 .Include(p => p.Profiles)
                     .ThenInclude(h => h.Loadouts)
                     .ThenInclude(l => l.Groups)
+                    .ThenInclude(group => group.Loadouts)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId);
 
@@ -94,6 +95,7 @@ namespace Content.Server.Database
                 .Include(p => p.Traits)
                 .Include(p => p.Loadouts)
                     .ThenInclude(l => l.Groups)
+                    .ThenInclude(group => group.Loadouts)
                 .AsSplitQuery()
                 .SingleOrDefault(h => h.Slot == slot);
 
@@ -215,7 +217,11 @@ namespace Content.Server.Database
 
                 foreach (var group in role.Groups)
                 {
-                    loadout.SelectedLoadouts[group.GroupName] = group.LoadoutName;
+                    var groupLoadouts = loadout.SelectedLoadouts.GetOrNew(group.GroupName);
+                    foreach (var profLoadout in group.Loadouts)
+                    {
+                        groupLoadouts.Add(profLoadout);
+                    }
                 }
 
                 loadouts[role.RoleName] = loadout;
@@ -303,13 +309,19 @@ namespace Content.Server.Database
                     RoleName = role,
                 };
 
-                foreach (var (group, loadout) in loadouts.SelectedLoadouts)
+                foreach (var (group, groupLoadouts) in loadouts.SelectedLoadouts)
                 {
-                    dz.Groups.Add(new ProfileLoadoutGroup()
+                    var profileGroup = new ProfileLoadoutGroup()
                     {
                         GroupName = group,
-                        LoadoutName = loadout,
-                    });
+                    };
+
+                    foreach (var loadout in groupLoadouts)
+                    {
+                        profileGroup.Loadouts.Add(loadout);
+                    }
+
+                    dz.Groups.Add(profileGroup);
                 }
 
                 profile.Loadouts.Add(dz);

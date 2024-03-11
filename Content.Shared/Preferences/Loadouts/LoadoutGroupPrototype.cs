@@ -18,10 +18,16 @@ public sealed class LoadoutGroupPrototype : IPrototype
     public LocId Name;
 
     /// <summary>
-    /// If optional then no loadouts in the group need to be specified.
+    /// Minimum number of loadouts that need to be specified for this category.
     /// </summary>
     [DataField]
-    public bool Optional;
+    public int MinLimit = 1;
+
+    /// <summary>
+    /// Maximum limit for the category.
+    /// </summary>
+    [DataField]
+    public int? MaxLimit;
 
     [DataField(required: true)]
     public List<ProtoId<LoadoutPrototype>> Loadouts = new();

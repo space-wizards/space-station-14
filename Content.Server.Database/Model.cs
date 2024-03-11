@@ -71,6 +71,12 @@ namespace Content.Server.Database
                 .HasForeignKey(e => e.ProfileRoleLoadoutId)
                 .IsRequired();
 
+            modelBuilder.Entity<ProfileLoadout>()
+                .HasOne(e => e.ProfileLoadoutGroup)
+                .WithMany(e => e.Loadouts)
+                .HasForeignKey(e => e.ProfileLoadoutGroupId)
+                .IsRequired();
+
             modelBuilder.Entity<Job>()
                 .HasIndex(j => j.ProfileId);
 
@@ -422,6 +428,9 @@ namespace Content.Server.Database
         public List<ProfileLoadoutGroup> Groups { get; set; } = new();
     }
 
+    /// <summary>
+    /// Corresponds to a loadout group prototype with the specified loadouts attached.
+    /// </summary>
     public class ProfileLoadoutGroup
     {
         public int Id { get; set; }
@@ -442,7 +451,28 @@ namespace Content.Server.Database
         /// Selected loadout prototype. Null if none is set.
         /// May get validated at runtime and updated to to the default.
         /// </summary>
-        public string? LoadoutName { get; set; } = null;
+        public List<ProfileLoadout> Loadouts { get; set; } = new();
+    }
+
+    /// <summary>
+    /// Corresponds to a selected loadout.
+    /// </summary>
+    public class ProfileLoadout
+    {
+        public int Id { get; set; }
+
+        public int ProfileLoadoutGroupId { get; set; }
+
+        public ProfileLoadoutGroup ProfileLoadoutGroup { get; set; } = null!;
+
+        /// <summary>
+        /// Corresponding loadout prototype.
+        /// </summary>
+        public string LoadoutName = string.Empty;
+
+        /*
+         * Insert extra data here like custom descriptions or colors or whatever.
+         */
     }
 
     #endregion
