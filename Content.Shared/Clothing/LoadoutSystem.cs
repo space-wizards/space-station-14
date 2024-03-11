@@ -26,6 +26,14 @@ public sealed class LoadoutSystem : EntitySystem
         SubscribeLocalEvent<LoadoutComponent, MapInitEvent>(OnMapInit);
     }
 
+    public static string GetJobPrototype(string? loadout)
+    {
+        if (string.IsNullOrEmpty(loadout))
+            return string.Empty;
+
+        return "Job" + loadout;
+    }
+
     /// <summary>
     /// Tries to get the first entity prototype for operations such as sprite drawing.
     /// </summary>

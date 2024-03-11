@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Access.Systems;
 using Content.Server.DetailExaminable;
 using Content.Server.Humanoid;
@@ -10,10 +11,12 @@ using Content.Server.Station.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Clothing;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
@@ -184,16 +187,21 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         }
 
         // Run loadouts after so stuff like storage loadouts can get
-        if (profile?.Loadouts.TryGetValue("Job" + prototype?.ID, out var loadout) == true)
-        {
-            // TODO: Order by roleloadoutprototype
-            foreach (var group in loadout.SelectedLoadouts)
-            {
-                if (group.Value == null)
-                    continue;
+        var jobLoadout = LoadoutSystem.GetJobPrototype(prototype?.ID);
 
-                var startingGear = _prototypeManager.Index<StartingGearPrototype>(group.Value);
-                EquipStartingGear(entity.Value, startingGear);
+        if (profile?.Loadouts.TryGetValue(jobLoadout, out var loadout) == true)
+        {
+            if (_prototypeManager.TryIndex(jobLoadout, out RoleLoadoutPrototype? loadoutProto))
+            {
+                // Order loadout selections by the order they appear on the prototype.
+                foreach (var group in loadout.SelectedLoadouts.OrderBy(x => loadoutProto.Groups.FindIndex(e => e == x.Key)))
+                {
+                    if (group.Value == null)
+                        continue;
+
+                    var startingGear = _prototypeManager.Index<StartingGearPrototype>(group.Value);
+                    EquipStartingGear(entity.Value, startingGear);
+                }
             }
         }
 

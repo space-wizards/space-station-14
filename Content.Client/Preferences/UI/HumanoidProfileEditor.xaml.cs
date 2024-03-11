@@ -82,6 +82,9 @@ namespace Content.Client.Preferences.UI
 
         public event Action<HumanoidCharacterProfile, int>? OnProfileChanged;
 
+        [ValidatePrototypeId<GuideEntryPrototype>]
+        private const string DefaultSpeciesGuidebook = "Species";
+
         public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager, IConfigurationManager configurationManager)
         {
             RobustXamlLoader.Load(this);
@@ -93,8 +96,6 @@ namespace Content.Client.Preferences.UI
             controller.PreviewDummyUpdated += OnDummyUpdate;
 
             _previewSpriteView.SetEntity(controller.GetPreviewDummy());
-
-            SpeciesInfoButton.ToolTip = Loc.GetString("humanoid-profile-editor-guidebook-button-tooltip");
 
             #region Left
 
@@ -474,14 +475,14 @@ namespace Content.Client.Preferences.UI
         {
             var guidebookController = UserInterfaceManager.GetUIController<GuidebookUIController>();
             var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
-            var page = "Species";
+            var page = DefaultSpeciesGuidebook;
             if (_prototypeManager.HasIndex<GuideEntryPrototype>(species))
                 page = species;
 
-            if (_prototypeManager.TryIndex<GuideEntryPrototype>("Species", out var guideRoot))
+            if (_prototypeManager.TryIndex<GuideEntryPrototype>(DefaultSpeciesGuidebook, out var guideRoot))
             {
                 var dict = new Dictionary<string, GuideEntry>();
-                dict.Add("Species", guideRoot);
+                dict.Add(DefaultSpeciesGuidebook, guideRoot);
                 //TODO: Don't close the guidebook if its already open, just go to the correct page
                 guidebookController.ToggleGuidebook(dict, includeChildren:true, selected: page);
             }
@@ -888,7 +889,7 @@ namespace Content.Client.Preferences.UI
             if (!_prototypeManager.HasIndex<GuideEntryPrototype>(species))
                 return;
 
-            var style = speciesProto.GuideBookIcon;
+            const string style = "SpeciesInfoDefault";
             SpeciesInfoButton.StyleClasses.Add(style);
         }
 
