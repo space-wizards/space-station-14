@@ -123,6 +123,9 @@ namespace Content.Shared.VendingMachines
         public float DenyAccumulator = 0f;
         public float DispenseOnHitAccumulator = 0f;
 
+        [DataField("initialStockQuality")]
+        public float InitialStockQuality = 1.0f;
+
         /// <summary>
         ///     While disabled by EMP it randomly ejects items
         /// </summary>
