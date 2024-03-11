@@ -115,3 +115,13 @@
   license: "CC-BY-SA-3.0"
   copyright: "taken at https://github.com/ParadiseSS13/Paradise/commit/43889a89d5a9378fd120d627f74613edb1841a66"
   source: "https://github.com/ParadiseSS13/Paradise"
+
+- files: ["latticeTrain.png"]
+  license: "CC0-1.0"
+  copyright: "Created by TheShuEd (github) for space-station-14."
+  source: "https://github.com/space-wizards/space-station-14/pull/24927"
+
+- files: ["wood_large.png"]
+  license: "CC0-1.0"
+  copyright: "Created by ps3moira (github) for space-station-14."
+  source: "https://github.com/space-wizards/space-station-14/"
