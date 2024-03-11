@@ -409,3 +409,59 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: IAA
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconERTLeader
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: ERTLeader
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconERTEngineer
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: ERTEngineer
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconERTMedical
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: ERTMedical
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconERTOfficer
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: ERTOfficer
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconERTJanitor
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: ERTJanitor
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconERTChaplain
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: ERTChaplain
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconSRT
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: SRT
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconDeathSquad
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: DeathSquad
