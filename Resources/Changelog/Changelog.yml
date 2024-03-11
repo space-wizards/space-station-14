@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Dygon
-  changes:
-  - message: The cyborg cleaning module's holofan battery now recharges and can't
-      be ejected anymore.
-    type: Fix
-  id: 5618
-  time: '2024-01-07T21:26:15.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23696
 - author: Naive817
   changes:
   - message: Syndicate has fielded cyborgs for testing. They are loaded with syndicate
@@ -3817,3 +3809,11 @@
   id: 6117
   time: '2024-03-10T17:07:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25960
+- author: nikthechampiongr
+  changes:
+  - message: Shields will no longer absorb asphyxiation damage, or any other damage
+      they themselves can't take.
+    type: Fix
+  id: 6118
+  time: '2024-03-11T01:55:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25972
