@@ -27,6 +27,7 @@ using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Medical.BiomassReclaimer
@@ -47,6 +48,9 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly MaterialStorageSystem _material = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
+
+        [ValidatePrototypeId<EntityPrototype>]
+        public const string BiomassPrototype = "Biomass";
 
         public override void Update(float frameTime)
         {
@@ -82,7 +86,7 @@ namespace Content.Server.Medical.BiomassReclaimer
 
                 var actualYield = (int) (reclaimer.CurrentExpectedYield); // can only have integer biomass
                 reclaimer.CurrentExpectedYield = reclaimer.CurrentExpectedYield - actualYield; // store non-integer leftovers
-                _material.SpawnMultipleFromMaterial(actualYield, "Biomass", Transform(uid).Coordinates);
+                _material.SpawnMultipleFromMaterial(actualYield, BiomassPrototype, Transform(uid).Coordinates);
 
                 reclaimer.BloodReagent = null;
                 reclaimer.SpawnedEntities.Clear();
