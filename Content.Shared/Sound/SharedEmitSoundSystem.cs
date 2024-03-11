@@ -103,22 +103,22 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         TryEmitSound(uid, component, args.User);
     }
 
-    protected void TryEmitSound(EntityUid uid, BaseEmitSoundComponent component, EntityUid? user = null, bool predict = true)
+    protected bool TryEmitSound(EntityUid uid, BaseEmitSoundComponent component, EntityUid? user = null, bool predict = true)
     {
         if (component.Sound == null)
-            return;
+            return false;
 
         var emitterEv = new EmitSoundAttemptEvent(user);
         RaiseLocalEvent(uid, ref emitterEv);
         if (emitterEv.Cancelled)
-            return;
+            return false;
 
         if (user != null)
         {
             var userEv = new UseSoundEmitterAttemptEvent(uid);
             RaiseLocalEvent(user.Value, ref userEv);
             if (userEv.Cancelled)
-                return;
+                return false;
         }
 
         if (predict)
@@ -130,6 +130,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
             // don't predict sounds that client couldn't have played already
             _audioSystem.PlayPvs(component.Sound, uid);
         }
+        return true;
     }
 
     private void OnEmitSoundOnCollide(EntityUid uid, EmitSoundOnCollideComponent component, ref StartCollideEvent args)

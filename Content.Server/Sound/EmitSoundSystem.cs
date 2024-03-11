@@ -27,9 +27,11 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
 
             if (Random.Prob(soundSpammer.PlayChance))
             {
-                if (soundSpammer.PopUp != null)
+                if (TryEmitSound(uid, soundSpammer, predict: false) && soundSpammer.PopUp != null)
+                {
+                    // Only display popup if sound is emitted successfully
                     Popup.PopupEntity(Loc.GetString(soundSpammer.PopUp), uid);
-                TryEmitSound(uid, soundSpammer, predict: false);
+                }
             }
         }
     }
