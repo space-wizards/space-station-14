@@ -19,7 +19,7 @@ namespace Content.Server.Ghost.Roles.Components
         [ViewVariables]
         public int CurrentTakeovers = 0;
 
-        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField]
         public string? Prototype;
 
         [DataField]

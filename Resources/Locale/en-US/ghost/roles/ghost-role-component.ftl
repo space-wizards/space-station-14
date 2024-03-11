@@ -224,3 +224,7 @@ ghost-role-information-syndicate-reinforcement-rules = Normal syndicate antagoni
 ghost-role-information-syndicate-monkey-reinforcement-name = Syndicate Monkey Agent
 ghost-role-information-syndicate-monkey-reinforcement-description = Someone needs reinforcements. You, a trained monkey, will help them.
 ghost-role-information-syndicate-monkey-reinforcement-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+
+ghost-role-information-syndicate-kobold-reinforcement-name = Syndicate Kobold Agent
+ghost-role-information-syndicate-kobold-reinforcement-description = Someone needs reinforcements. You, a trained kobold, will help them.
+ghost-role-information-syndicate-kobold-reinforcement-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.

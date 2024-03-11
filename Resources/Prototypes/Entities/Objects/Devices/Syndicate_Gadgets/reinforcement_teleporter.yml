@@ -39,7 +39,7 @@
     rules: ghost-role-information-syndicate-monkey-reinforcement-rules
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgent
-    selectablePrototypes: ["MobKoboldSyndicateAgent", "MobMonkeySyndicateAgent"]
+    selectablePrototypes: ["SyndicateMonkey", "SyndicateKobold"]
 
 - type: entity
   parent: ReinforcementRadioSyndicateMonkey
@@ -48,7 +48,7 @@
   components:
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgentNukeops
-    selectablePrototypes: ["MobKoboldSyndicateAgentNukeops", "MobMonkeySyndicateAgentNukeops"]
+    selectablePrototypes: ["SyndicateMonkeyNukeops", "SyndicateKoboldNukeops"]
 
 - type: entity
   parent: ReinforcementRadioSyndicate

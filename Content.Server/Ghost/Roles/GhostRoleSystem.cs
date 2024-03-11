@@ -419,7 +419,7 @@ namespace Content.Server.Ghost.Roles
         private void OnVerb(EntityUid uid, GhostRoleMobSpawnerComponent component, GetVerbsEvent<Verb> args)
         {
             var prototypes = component.SelectablePrototypes;
-            if (prototypes.Count > 1)
+            if (prototypes.Count <= 1)
                 return;
 
             if (!args.CanAccess || !args.CanInteract || args.Hands == null)
@@ -427,40 +427,54 @@ namespace Content.Server.Ghost.Roles
 
             var verbs = new List<Verb>();
 
-            foreach (var prototype in prototypes)
+            foreach (var prototypeID in prototypes)
             {
-                var verb = CreateVerb(uid, component, args.User, prototype);
-                verbs.Add(verb);
+                _prototype.TryIndex<GhostRolePrototype>(prototypeID, out var prototype);
+
+                if (prototype != null)
+                {
+                    var verb = CreateVerb(uid, component, args.User, prototype);
+                    verbs.Add(verb);
+                }
             }
 
             args.Verbs.UnionWith(verbs);
         }
 
-        private Verb CreateVerb(EntityUid uid, GhostRoleMobSpawnerComponent component, EntityUid userUid, string mode)
+        private Verb CreateVerb(EntityUid uid, GhostRoleMobSpawnerComponent component, EntityUid userUid, GhostRolePrototype prototype)
         {
-            var verbText = mode;
-            _prototype.TryIndex<EntityPrototype>(mode, out var prototype);
+            var verbText = "placeholder";
 
-            if (prototype != null)
-            {
+            if (prototype.Name != null)
                 verbText = prototype.Name;
-            }
 
             return new Verb()
             {
-                Text = verbText,
-                Disabled = component.Prototype == mode,
+                Text = Loc.GetString(verbText),
+                Disabled = component.Prototype == prototype.EntityPrototype,
                 Category = VerbCategory.SelectType,
-                Act = () => SetMode(uid, mode, verbText, component, userUid)
+                Act = () => SetMode(uid, prototype, verbText, component, userUid)
             };
         }
 
-        public void SetMode(EntityUid uid, string prototype, string verbText, GhostRoleMobSpawnerComponent? component, EntityUid? userUid = null)
+        public void SetMode(EntityUid uid, GhostRolePrototype prototype, string verbText, GhostRoleMobSpawnerComponent? component, EntityUid? userUid = null)
         {
             if (!Resolve(uid, ref component))
                 return;
 
-            component.Prototype = prototype;
+            var ghostrolecomp = EnsureComp<GhostRoleComponent>(uid);
+
+            if (prototype.Description == null)
+                return;
+            if (prototype.Rules == null)
+                return;
+
+            component.Prototype = prototype.EntityPrototype;
+            ghostrolecomp.RoleName = verbText;
+            ghostrolecomp.RoleDescription = prototype.Description;
+            ghostrolecomp.RoleRules = prototype.Rules;
+
+            // Dirty(ghostrolecomp);
 
             if (userUid != null)
             {

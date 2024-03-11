@@ -1,0 +1,27 @@
+- type: ghostrole
+  id: SyndicateKobold
+  name: ghost-role-information-syndicate-kobold-reinforcement-name
+  description: ghost-role-information-syndicate-kobold-reinforcement-description
+  rules: ghost-role-information-syndicate-kobold-reinforcement-rules
+  entityPrototype: MobKoboldSyndicateAgent
+
+- type: ghostrole
+  id: SyndicateKoboldNukeops
+  name: ghost-role-information-syndicate-kobold-reinforcement-name
+  description: ghost-role-information-syndicate-kobold-reinforcement-description
+  rules: ghost-role-information-syndicate-kobold-reinforcement-rules
+  entityPrototype: MobKoboldSyndicateAgentNukeops
+
+- type: ghostrole
+  id: SyndicateMonkey
+  name: ghost-role-information-syndicate-monkey-reinforcement-name
+  description: ghost-role-information-syndicate-monkey-reinforcement-description
+  rules: ghost-role-information-syndicate-monkey-reinforcement-name
+  entityPrototype: MobMonkeySyndicateAgent
+
+- type: ghostrole
+  id: SyndicateMonkeyNukeops
+  name: ghost-role-information-syndicate-monkey-reinforcement-name
+  description: ghost-role-information-syndicate-monkey-reinforcement-description
+  rules: ghost-role-information-syndicate-monkey-reinforcement-name
+  entityPrototype: MobMonkeySyndicateAgentNukeops
