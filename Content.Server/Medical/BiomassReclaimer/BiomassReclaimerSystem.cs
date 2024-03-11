@@ -18,6 +18,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Jittering;
 using Content.Shared.Medical;
 using Content.Shared.Mind;
+using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
