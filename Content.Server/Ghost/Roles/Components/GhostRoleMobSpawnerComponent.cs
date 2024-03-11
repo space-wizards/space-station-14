@@ -10,10 +10,12 @@ namespace Content.Server.Ghost.Roles.Components
     [Access(typeof(GhostRoleSystem))]
     public sealed partial class GhostRoleMobSpawnerComponent : Component
     {
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("deleteOnSpawn")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("deleteOnSpawn")]
         public bool DeleteOnSpawn = true;
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("availableTakeovers")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("availableTakeovers")]
         public int AvailableTakeovers = 1;
 
         [ViewVariables]
@@ -21,6 +23,10 @@ namespace Content.Server.Ghost.Roles.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? Prototype { get; private set; }
+        public string? Prototype;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("selectablePrototypes")]
+        public List<string> SelectablePrototypes = new List<string>();
     }
 }
