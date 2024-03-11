@@ -24,6 +24,6 @@ namespace Content.Server.Ghost.Roles.Components
         public string? Prototype;
 
         [DataField]
-        public List<string> SelectablePrototypes = new List<string>();
+        public List<string> SelectablePrototypes = [];
     }
 }
