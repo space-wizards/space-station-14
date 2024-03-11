@@ -1454,11 +1454,6 @@
       path: /Audio/Animals/lizard_happy.ogg
     interactFailureSound:
       path: /Audio/Items/wirecutter.ogg
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      40: Critical
-      80: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.5
     baseSprintSpeed: 5
