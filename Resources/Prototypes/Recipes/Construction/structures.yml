@@ -35,6 +35,24 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: wall gear
+  id: ClockworkGirder
+  graph: ClockworkGirder
+  startNode: start
+  targetNode: clockGirder
+  category: construction-category-structures
+  description: A large gear with mounting brackets for additional plating.
+  icon:
+    sprite: /Textures/Structures/Walls/clock.rsi
+    state: wall_gear
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: wall
   id: Wall
   graph: Girder
@@ -63,6 +81,24 @@
   icon:
     sprite: Structures/Walls/solid.rsi
     state: rgeneric
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked    
+
+- type: construction
+  name: clock wall
+  id: WallClock
+  graph: ClockworkGirder
+  startNode: start
+  targetNode: clockworkWall
+  category: construction-category-structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/clock.rsi
+    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -287,6 +323,24 @@
   canRotate: false
 
 - type: construction
+  name: clockwork grille
+  id: ClockGrille
+  graph: ClockGrille
+  startNode: start
+  targetNode: clockGrille
+  category: construction-category-structures
+  description: A flimsy framework of iron rods assembled in traditional ratvarian fashion.
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+  icon:
+    sprite: Structures/Walls/clockwork_grille.rsi
+    state: ratvargrille
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
   name: diagonal grille
   id: GrilleDiagonal
   graph: GrilleDiagonal
@@ -300,6 +354,23 @@
   icon:
     sprite: Structures/Walls/grille.rsi
     state: grille_diagonal
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: diagonal clockwork grille
+  id: ClockworkGrilleDiagonal
+  graph: GrilleDiagonal
+  startNode: start
+  targetNode: clockworkGrilleDiagonal
+  category: construction-category-structures
+  description: A flimsy framework of iron rods assembled in traditional ratvarian fashion.
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+  icon:
+    sprite: Structures/Walls/clockwork_grille.rsi
+    state: ratvargrille_diagonal
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -395,6 +466,43 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+
+- type: construction
+  name: clockwork window
+  id: ClockworkWindow
+  graph: Window
+  startNode: start
+  targetNode: clockworkWindow
+  category: construction-category-structures
+  description: Clear and tough, with a golden tint.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/clockwork_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
+  name: diagonal clockwork window
+  id: ClockworkWindowDiagonal
+  graph: WindowDiagonal
+  startNode: start
+  targetNode: clockworkWindowDiagonal
+  category: construction-category-structures
+  description: Clear and tough, with a golden tint.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/clockwork_diagonal.rsi
+    state: state0
+  objectType: Structure
+  placementMode: SnapgridCenter
 
 - type: construction
   name: plasma window
@@ -522,6 +630,24 @@
   icon:
     sprite: Structures/Windows/directional.rsi
     state: reinforced_window
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: directional clockwork window
+  id: WindowClockworkDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: windowClockworkDirectional
+  category: construction-category-structures
+  description: Clear and tough, with a golden tint.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/directional.rsi
+    state: clock_window
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -978,6 +1104,40 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: pinion airlock
+  id: PinionAirlock
+  graph: PinionAirlock
+  startNode: start
+  targetNode: airlock
+  category: construction-category-structures
+  description: It opens, it closes, and maybe crushes you.
+  icon:
+    sprite: Structures/Doors/Airlocks/Standard/clockwork_pinion.rsi
+    state: assembly
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: glass pinion airlock
+  id: PinionAirlockGlass
+  graph: PinionAirlock
+  startNode: start
+  targetNode: glassAirlock
+  category: construction-category-structures
+  description: It opens, it closes, and maybe crushes you.
+  icon:
+    sprite: Structures/Doors/Airlocks/Glass/clockwork_pinion.rsi
+    state: assembly
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: shuttle airlock
   id: AirlockShuttle
   graph: AirlockShuttle
@@ -1047,6 +1207,22 @@
   conditions:
     - !type:TileNotBlocked
 
+- type: construction
+  name: clockwork windoor
+  id: ClockworkWindoor
+  graph: Windoor
+  startNode: start
+  targetNode: windoorClockwork
+  category: construction-category-structures
+  description: It opens, it closes, and you can see through it! This one looks tough.
+  icon:
+    sprite: Structures/Doors/Windoors/clockwork_windoor.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
 
 #lighting
 - type: construction
@@ -1098,7 +1274,7 @@
   description: A ground light fixture. Use light bulbs.
   icon:
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
-    state: off
+    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false

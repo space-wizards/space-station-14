@@ -210,7 +210,7 @@ namespace Content.Server.Strip
 
             if (!_inventorySystem.TryGetSlot(target, slot, out var slotDef))
             {
-                Logger.Error($"{ToPrettyString(user)} attempted to place an item in a non-existent inventory slot ({slot}) on {ToPrettyString(target)}");
+                Log.Error($"{ToPrettyString(user)} attempted to place an item in a non-existent inventory slot ({slot}) on {ToPrettyString(target)}");
                 return;
             }
 
@@ -347,7 +347,7 @@ namespace Content.Server.Strip
 
             if (!_inventorySystem.TryGetSlot(target, slot, out var slotDef))
             {
-                Logger.Error($"{ToPrettyString(user)} attempted to take an item from a non-existent inventory slot ({slot}) on {ToPrettyString(target)}");
+                Log.Error($"{ToPrettyString(user)} attempted to take an item from a non-existent inventory slot ({slot}) on {ToPrettyString(target)}");
                 return;
             }
 
