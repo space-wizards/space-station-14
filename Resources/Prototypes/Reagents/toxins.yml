@@ -638,11 +638,11 @@
         probability: 0.8
 
 - type: reagent
-  id: Toxin
+  id: lingium
   name: reagent-name-lingium
   group: Toxins
   desc: reagent-desc-lingium
-  flavor: strange
+  flavor: bitter
   color: "#437298"
   physicalDesc: reagent-physical-desc-opaque
   plantMetabolism:
