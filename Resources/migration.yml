@@ -166,10 +166,10 @@ ClothingHeadHelmetVoidParamed: null
 # 2024-01-19
 DefaultStationBeaconTeslaEngine: null
 
-#2024-01-27
-ClothingBackpackSecurityFilledDetective: ClothingBackpackFilledDetective
-ClothingBackpackDuffelSecurityFilledDetective: ClothingBackpackDuffelFilledDetective
-ClothingBackpackSatchelSecurityFilledDetective: ClothingBackpackSatchelFilledDetective
+# 2024-01-27 (Reverted on 2024-03-10)
+# ClothingBackpackSecurityFilledDetective: ClothingBackpackFilledDetective
+# ClothingBackpackDuffelSecurityFilledDetective: ClothingBackpackDuffelFilledDetective
+# ClothingBackpackSatchelSecurityFilledDetective: ClothingBackpackSatchelFilledDetective
 
 # 2024-01-28
 FoodBoxDonkpocketGondola: FoodBoxDonkpocketPizza
@@ -236,3 +236,8 @@ AirlockExternalEasyPryLocked: AirlockExternalLocked
 AirlockExternalGlassEasyPryLocked: AirlockExternalGlassLocked
 AirlockGlassShuttleEasyPryLocked: AirlockExternalGlassShuttleLocked
 AirlockShuttleEasyPryLocked: AirlockExternalShuttleLocked
+
+#2024-03-10
+ClothingBackpackFilledDetective: ClothingBackpackSecurityFilledDetective
+ClothingBackpackDuffelFilledDetective: ClothingBackpackDuffelSecurityFilledDetective
+ClothingBackpackSatchelFilledDetective: ClothingBackpackSatchelSecurityFilledDetective
