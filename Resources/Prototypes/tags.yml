@@ -357,6 +357,9 @@
   id: Cleaver
 
 - type: Tag
+  id: ClockworkGlassShard
+
+- type: Tag
   id: ClothMade
 
 - type: Tag

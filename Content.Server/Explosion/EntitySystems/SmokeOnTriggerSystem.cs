@@ -37,7 +37,7 @@ public sealed class SmokeOnTriggerSystem : SharedSmokeOnTriggerSystem
         var ent = Spawn(comp.SmokePrototype, coords.SnapToGrid());
         if (!TryComp<SmokeComponent>(ent, out var smoke))
         {
-            Logger.Error($"Smoke prototype {comp.SmokePrototype} was missing SmokeComponent");
+            Log.Error($"Smoke prototype {comp.SmokePrototype} was missing SmokeComponent");
             Del(ent);
             return;
         }
