@@ -18,7 +18,7 @@ public sealed partial class SilencedComponent : Component
     /// Can this entity make footstep sounds?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool AllowFootsteps;
+    public bool AllowFootsteps = true;
 
     /// <summary>
     /// Can this entity make sounds while eating?
