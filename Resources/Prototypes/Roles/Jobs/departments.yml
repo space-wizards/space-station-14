@@ -12,6 +12,7 @@
   - ResearchDirector
   - IAA
   - BlueShield
+  - BridgeOfficer
 
 - type: department
   id: Cargo
@@ -109,3 +110,4 @@
   - Prisoner
   - BlueShield
   - Coroner
+  - BridgeOfficer
