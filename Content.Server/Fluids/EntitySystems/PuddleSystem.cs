@@ -11,7 +11,6 @@ using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.Effects;
-using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
@@ -67,13 +66,13 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [ValidatePrototypeId<ReagentPrototype>]
     private const string CopperBlood = "CopperBlood";
 
-    private static string[] _standoutReagents = new[] { Blood, Slime, CopperBlood };
+    private static string[] _standoutReagents = [Blood, Slime, CopperBlood];
 
-    public static float PuddleVolume = 1000;
+    public static readonly float PuddleVolume = 1000;
 
     // Using local deletion queue instead of the standard queue so that we can easily "undelete" if a puddle
     // loses & then gains reagents in a single tick.
-    private HashSet<EntityUid> _deletionQueue = new();
+    private HashSet<EntityUid> _deletionQueue = [];
 
     private EntityQuery<PuddleComponent> _puddleQuery;
 
@@ -91,7 +90,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
-        SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
         SubscribeLocalEvent<PuddleComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
         SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnPuddleInit);
         SubscribeLocalEvent<PuddleComponent, SpreadNeighborsEvent>(OnPuddleSpread);
@@ -99,7 +97,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         SubscribeLocalEvent<EvaporationComponent, MapInitEvent>(OnEvaporationMapInit);
 
-        InitializeSpillable();
         InitializeTransfers();
     }
 
@@ -445,31 +442,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         else
         {
             RemComp<SlowContactsComponent>(uid);
-        }
-    }
-
-    private void HandlePuddleExamined(Entity<PuddleComponent> entity, ref ExaminedEvent args)
-    {
-        using (args.PushGroup(nameof(PuddleComponent)))
-        {
-            if (TryComp<StepTriggerComponent>(entity, out var slippery) && slippery.Active)
-            {
-                args.PushMarkup(Loc.GetString("puddle-component-examine-is-slipper-text"));
-            }
-
-            if (HasComp<EvaporationComponent>(entity) &&
-                _solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName,
-                    ref entity.Comp.Solution, out var solution))
-            {
-                if (CanFullyEvaporate(solution))
-                    args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating"));
-                else if (solution.GetTotalPrototypeQuantity(EvaporationReagents) > FixedPoint2.Zero)
-                    args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-partial"));
-                else
-                    args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
-            }
-            else
-                args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
         }
     }
 
