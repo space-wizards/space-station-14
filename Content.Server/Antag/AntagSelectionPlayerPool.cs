@@ -29,6 +29,7 @@ public sealed class AntagSelectionPlayerPool(
     /// </summary>
     private readonly List<ICommonSession> _rawPool = rawPool;
 
+    //todo a version of this that doesn't throw would be nice
     public ICommonSession PickAndTake(IRobustRandom random)
     {
         if (_primaryPool.Count != 0)

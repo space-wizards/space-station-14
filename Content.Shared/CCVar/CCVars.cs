@@ -425,30 +425,15 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> TraitorPlayersPerTraitor =
             CVarDef.Create("traitor.players_per_traitor", 10);
 
-        public static readonly CVarDef<int> TraitorCodewordCount =
-            CVarDef.Create("traitor.codeword_count", 4);
-
-        public static readonly CVarDef<int> TraitorStartingBalance =
-            CVarDef.Create("traitor.starting_balance", 20);
-
         public static readonly CVarDef<int> TraitorMaxDifficulty =
             CVarDef.Create("traitor.max_difficulty", 5);
 
         public static readonly CVarDef<int> TraitorMaxPicks =
             CVarDef.Create("traitor.max_picks", 20);
 
-        public static readonly CVarDef<float> TraitorStartDelay =
-            CVarDef.Create("traitor.start_delay", 4f * 60f);
-
-        public static readonly CVarDef<float> TraitorStartDelayVariance =
-            CVarDef.Create("traitor.start_delay_variance", 3f * 60f);
-
         /*
          * Pirates
          */
-
-        public static readonly CVarDef<int> PiratesMinPlayers =
-            CVarDef.Create("pirates.min_players", 25);
 
         public static readonly CVarDef<int> PiratesMaxOps =
             CVarDef.Create("pirates.max_pirates", 6);

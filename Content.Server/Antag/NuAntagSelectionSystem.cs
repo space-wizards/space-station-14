@@ -4,6 +4,7 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Inventory;
+using Content.Server.Mind;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
@@ -30,6 +31,7 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly ServerInventorySystem _inventory = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly RoleSystem _role = default!;
 
     /// <inheritdoc/>
@@ -39,6 +41,7 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
 
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayerSpawning);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnJobsAssigned);
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnSpawnComplete);
     }
 
     private void OnPlayerSpawning(RulePlayerSpawningEvent args)
@@ -72,6 +75,22 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
 
             ChooseAntags((uid, comp));
             comp.SelectionsComplete = true;
+        }
+    }
+
+    private void OnSpawnComplete(PlayerSpawnCompleteEvent args)
+    {
+        if (!args.LateJoin)
+            return;
+
+        var query = QueryActiveRules();
+        while (query.MoveNext(out var uid, out _, out var antag, out _))
+        {
+            foreach (var def in antag.Definitions)
+            {
+                if (!def.LateJoinAntagonists)
+                    continue;
+            }
         }
     }
 
@@ -125,21 +144,10 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
 
     public void ChooseAntags(Entity<AntagSelectionComponent> ent, ref List<ICommonSession> pool, AntagSelectionDefinition def)
     {
-        var playerPool = GetPlayerPool(ent, pool, def);
-
-        // factor in other definitions' affect on the count.
-        var countOffset = 0;
-        foreach (var otherDef in ent.Comp.Definitions)
-        {
-            countOffset += Math.Clamp(playerPool.Count / otherDef.PlayerRatio, otherDef.Min, otherDef.Max) * otherDef.PlayerRatio;
-        }
-        // make sure we don't double-count the current selection
-        countOffset -= Math.Clamp((playerPool.Count + countOffset) / def.PlayerRatio, def.Min, def.Max) * def.PlayerRatio;
-
-
         //TODO: add in an option for having player-less antags.
         // even better, make it a config so you can specify half player, half ghost role.
-        var count = Math.Clamp((playerPool.Count - countOffset) / def.PlayerRatio, def.Min, def.Max);
+        var playerPool = GetPlayerPool(ent, pool, def);
+        var count = GetTargetAntagCount(ent, playerPool, def);
         for (var i = 0; i < count; i++)
         {
             MakeAntag(ent, playerPool.PickAndTake(_random), def);
@@ -213,11 +221,8 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
         var rawList = new List<ICommonSession>(sessions);
         foreach (var session in sessions)
         {
-            if (session.GetMind() is { } mind && TryComp<MindComponent>(mind, out var mindComp))
-            {
-                if (!IsSessionValid(ent, session, (mind, mindComp), def))
-                    continue;
-            }
+            if (!IsSessionValid(ent, session, def))
+                continue;
 
             if (!IsEntityValid(session.AttachedEntity, def))
                 continue;
@@ -242,8 +247,25 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
         return new AntagSelectionPlayerPool(primaryList, secondaryList, fallbackList, rawList);
     }
 
-    public bool IsSessionValid(Entity<AntagSelectionComponent> ent, ICommonSession session, Entity<MindComponent> mind, AntagSelectionDefinition def)
+    public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool? pool, AntagSelectionDefinition def)
     {
+        var poolSize = pool?.Count ?? _playerManager.Sessions.Length;
+        // factor in other definitions' affect on the count.
+        var countOffset = 0;
+        foreach (var otherDef in ent.Comp.Definitions)
+        {
+            countOffset += Math.Clamp(poolSize / otherDef.PlayerRatio, otherDef.Min, otherDef.Max) * otherDef.PlayerRatio;
+        }
+        // make sure we don't double-count the current selection
+        countOffset -= Math.Clamp((poolSize + countOffset) / def.PlayerRatio, def.Min, def.Max) * def.PlayerRatio;
+
+        return Math.Clamp((poolSize - countOffset) / def.PlayerRatio, def.Min, def.Max);
+    }
+
+    public bool IsSessionValid(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSelectionDefinition def, EntityUid? mind = null)
+    {
+        mind ??= session.GetMind();
+
         if (session.Status is SessionStatus.Disconnected or SessionStatus.Zombie)
             return false;
 

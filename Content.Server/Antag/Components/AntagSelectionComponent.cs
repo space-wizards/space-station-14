@@ -54,6 +54,12 @@ public partial struct AntagSelectionDefinition
     [DataField]
     public int PlayerRatio = 10;
 
+    /// <summary>
+    /// If true, players that latejoin into a round have a chance of being converted into antagonists.
+    /// </summary>
+    [DataField]
+    public bool LateJoinAntagonists = false;
+
     //todo: find out how to do this with minimal boilerplate: filler department, maybe?
     //public HashSet<ProtoId<JobPrototype>> JobBlacklist = new()
 

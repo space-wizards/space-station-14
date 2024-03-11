@@ -30,16 +30,13 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly NuAntagSelectionSystem _antag = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     private int PlayersPerTraitor => _cfg.GetCVar(CCVars.TraitorPlayersPerTraitor);
     private int MaxTraitors => _cfg.GetCVar(CCVars.TraitorMaxTraitors);
@@ -70,11 +67,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
     private void MakeCodewords(TraitorRuleComponent component)
     {
-        var codewordCount = _cfg.GetCVar(CCVars.TraitorCodewordCount);
         var adjectives = _prototypeManager.Index(component.CodewordAdjectives).Values;
         var verbs = _prototypeManager.Index(component.CodewordVerbs).Values;
         var codewordPool = adjectives.Concat(verbs).ToList();
-        var finalCodewordCount = Math.Min(codewordCount, codewordPool.Count);
+        var finalCodewordCount = Math.Min(component.CodewordCount, codewordPool.Count);
         component.Codewords = new string[finalCodewordCount];
         for (var i = 0; i < finalCodewordCount; i++)
         {
@@ -94,7 +90,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         if (giveUplink)
         {
             // Calculate the amount of currency on the uplink.
-            var startingBalance = _cfg.GetCVar(CCVars.TraitorStartingBalance);
+            var startingBalance = component.StartingBalance;
             if (_jobs.MindTryGetJob(mindId, out _, out var prototype))
                 startingBalance = Math.Max(startingBalance - prototype.AntagAdvantage, 0);
 
