@@ -636,7 +636,7 @@
       effects:
       - !type:Electrocute
         probability: 0.8
-
+# ADMIN ONLY CHEM DONT SEND ME TO THE CODE GUILLOTINE
 - type: reagent
   id: lingium
   name: reagent-name-lingium
@@ -644,7 +644,7 @@
   desc: reagent-desc-lingium
   flavor: bitter
   color: "#437298"
-  physicalDesc: reagent-physical-desc-opaque
+  physicalDesc: reagent-physical-desc-exotic-smelling
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
