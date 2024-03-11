@@ -210,6 +210,10 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
         foreach (var mapObj in mapObjects)
         {
+            // If it's a grid-map skip it.
+            if (mapObj is GridMapObject gridObj && EntManager.HasComponent<MapComponent>(gridObj.Entity))
+                continue;
+
             var mapCoords = _shuttles.GetMapCoordinates(mapObj);
 
             var relativePos = matty.Transform(mapCoords.Position);
@@ -341,7 +345,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             // Rudimentary IFF for now, if IFF hiding on then we don't show on the map at all
             if (grid.Owner != _shuttleEntity &&
                 EntManager.TryGetComponent(grid, out iffComp) &&
-                (iffComp.Flags & (IFFFlags.Hide | IFFFlags.HideLabel)) != 0x0)
+                (iffComp.Flags & IFFFlags.Hide) != 0x0)
             {
                 continue;
             }
@@ -363,6 +367,9 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             AddMapObject(existingEdges, existingVerts, mapObject);
 
             // Text
+            if (iffComp != null && (iffComp.Flags & IFFFlags.HideLabel) != 0x0)
+                continue;
+
             // Force drawing it at this point.
             var iffText = _shuttles.GetIFFLabel(grid, self: true, component: iffComp);
 

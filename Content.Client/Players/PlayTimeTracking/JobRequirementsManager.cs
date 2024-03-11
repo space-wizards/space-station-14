@@ -89,12 +89,6 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
             return false;
         }
 
-        if (job.Requirements == null ||
-            !_cfg.GetCVar(CCVars.GameRoleTimers))
-        {
-            return true;
-        }
-
         var player = _playerManager.LocalSession;
         if (player == null)
             return true;
@@ -106,7 +100,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     {
         reason = null;
 
-        if (requirements == null)
+        if (requirements == null || !_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
 
         var reasons = new List<string>();
