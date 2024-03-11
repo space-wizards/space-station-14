@@ -1,48 +1,6 @@
 ﻿Entries:
 - author: Dygon
   changes:
-  - message: The cyborg cleaning module's holofan battery now recharges and can't
-      be ejected anymore.
-    type: Fix
-  id: 5618
-  time: '2024-01-07T21:26:15.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23696
-- author: Naive817
-  changes:
-  - message: Syndicate has fielded cyborgs for testing. They are loaded with syndicate
-      laws and have no access.
-    type: Add
-  - message: Nuclear operatives can now call in an well-armed assault cyborg for a
-      hefty price (65 TC). Comes with an Operative module complete with Emag and pinpointer,
-      a L6C ROW module, an Esword module, a positronic brain & a hyper capacity powercell
-    type: Add
-  id: 5619
-  time: '2024-01-07T22:12:08.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/19733
-- author: DoutorWhite
-  changes:
-  - message: Now the round duration should be correct on all interfaces after reconnecting.
-    type: Fix
-  id: 5620
-  time: '2024-01-08T00:30:10.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23707
-- author: EmoGarbage404
-  changes:
-  - message: Fixed grappling hooks being able to fire multiple hooks.
-    type: Fix
-  id: 5621
-  time: '2024-01-08T01:15:46.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23709
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Syndicate cyborgs can now see who syndicate agents are, and they now
-      have a lock on their chassis that needs syndicate access to open.
-    type: Tweak
-  id: 5622
-  time: '2024-01-08T03:48:57.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23710
-- author: Dygon
-  changes:
   - message: Incendiary projectiles and lava are less flammable.
     type: Tweak
   - message: Incendiary projectiles no longer ignite entities while flying past them.
@@ -3817,3 +3775,43 @@
   id: 6117
   time: '2024-03-10T17:07:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25960
+- author: nikthechampiongr
+  changes:
+  - message: Shields will no longer absorb asphyxiation damage, or any other damage
+      they themselves can't take.
+    type: Fix
+  id: 6118
+  time: '2024-03-11T01:55:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25972
+- author: metalgearsloth
+  changes:
+  - message: Remove the buttons for generated debris from shuttle maps.
+    type: Tweak
+  id: 6119
+  time: '2024-03-11T02:11:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25897
+- author: Errant
+  changes:
+  - message: Species info is now available in the Guidebook and in the character editor.
+    type: Add
+  id: 6120
+  time: '2024-03-11T03:01:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25844
+- author: Dygon
+  changes:
+  - message: 'The following criminal record statuses have been added: Suspect, Discharged,
+      Paroled.'
+    type: Add
+  - message: Security huds now show an icon on entities that have a visible name linked
+      to a criminal record.
+    type: Add
+  id: 6121
+  time: '2024-03-11T03:12:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25192
+- author: Lank
+  changes:
+  - message: The detective is no longer independent, and again works under Security.
+    type: Tweak
+  id: 6122
+  time: '2024-03-11T03:33:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25986

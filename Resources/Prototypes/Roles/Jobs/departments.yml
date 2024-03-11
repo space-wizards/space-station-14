@@ -30,7 +30,6 @@
   - Reporter
   - Visitor
   - Zookeeper
-  - Detective
   - ServiceWorker
   - MartialArtist # Nyanotrasen - MartialArtist, see Resources/Prototypes/Nyanotrasen/Roles/Jobs/Wildcards/martialartist.yml
   - Prisoner # Nyanotrasen - Prisoner, see Resources/Prototypes/Nyanotrasen/Roles/Jobs/Wildcards/prisoner.yml
@@ -83,6 +82,7 @@
   - HeadOfSecurity
   - SecurityCadet
   - SecurityOfficer
+  - Detective
   - Warden
   - PrisonGuard # Nyanotrasen - PrisonGuard, see Resources/Prototypes/Nyanotrasen/Roles/Jobs/Security/prisonguard.yml
 
