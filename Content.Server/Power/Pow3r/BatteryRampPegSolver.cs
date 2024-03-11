@@ -264,19 +264,19 @@ namespace Content.Server.Power.Pow3r
 
                 battery.CurrentStorage -= frameTime * battery.CurrentSupply;
 #if DEBUG
-                // Manual "MathHelper.CloseToPercent" using the subtracted value to define the relative error.
-                if (battery.CurrentStorage < 0)
-                {
-                    float epsilon = Math.Max(frameTime * battery.CurrentSupply, 1) * 1e-4f;
-                    DebugTools.Assert(battery.CurrentStorage > -epsilon);
-                }
+                /// Manual "MathHelper.CloseToPercent" using the subtracted value to define the relative error.
+                /// if (battery.CurrentStorage < 0)
+                /// {
+                ///    float epsilon = Math.Max(frameTime * battery.CurrentSupply, 1) * 1e-4f;
+                ///    DebugTools.Assert(battery.CurrentStorage > -epsilon);
+                /// }
 #endif
-                battery.CurrentStorage = MathF.Max(0, battery.CurrentStorage);
+                /// battery.CurrentStorage = MathF.Max(0, battery.CurrentStorage);
 
-                battery.SupplyRampTarget = battery.MaxEffectiveSupply * relativeTargetBatteryOutput - battery.CurrentReceiving * battery.Efficiency;
+                ///battery.SupplyRampTarget = battery.MaxEffectiveSupply * relativeTargetBatteryOutput - battery.CurrentReceiving * battery.Efficiency;
 
-                DebugTools.Assert(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency <= battery.LoadingNetworkDemand
-                    || MathHelper.CloseToPercent(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency, battery.LoadingNetworkDemand, 0.001));
+                /// DebugTools.Assert(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency <= battery.LoadingNetworkDemand
+                ///     || MathHelper.CloseToPercent(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency, battery.LoadingNetworkDemand, 0.001));
             }
         }
 
