@@ -1,0 +1,11 @@
+- type: entity
+  noSpawn: true
+  parent: BaseBullet
+  id: BulletDebug
+  name: bullet (faithful)
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 9999
+        Blunt: 9999
