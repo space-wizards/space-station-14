@@ -5,10 +5,10 @@
   playTimeTracker: JobBridgeOfficer
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 172800 #48 hrs   
+      time: 144000 #40 hrs   
     - !type:DepartmentTimeRequirement
-      department: Command
-      time: 43200 #12 hours
+      department: Security
+      time: 21600 #6 hours
   startingGear: BridgeOfficerGear
   icon: "JobIconBridgeOfficer"
   supervisors: job-supervisors-command
@@ -31,5 +31,7 @@
     id: BridgeOfficerPDA
     ears: ClothingHeadsetCommand
     neck: ClothingNeckNanoTrasenPin
+    belt: ClothingBeltSecurityFilled
+    pocket1: WeaponDisabler
   satchel: ClothingBackpackSatchelSecurity
   duffelbag: ClothingBackpackDuffelSecurity
