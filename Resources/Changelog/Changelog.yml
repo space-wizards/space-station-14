@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: notquitehadouken
-  changes:
-  - message: The reticle around your cursor will change depending on if the gun you're
-      holding is bolted or not.
-    type: Tweak
-  - message: The "Gun not bolted" text that shows up whenever you try to fire a gun
-      with an open bolt now shows up on your cursor instead of your character.
-    type: Tweak
-  id: 5625
-  time: '2024-01-08T06:23:41.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23711
 - author: Ubaser
   changes:
   - message: Variant cube boxes are given to the chef instead of monkey cube boxes,
@@ -3813,3 +3802,10 @@
   id: 6124
   time: '2024-03-11T21:59:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/23731
+- author: SlamBamActionman
+  changes:
+  - message: Moths eating lizard plushies will now start to Weh!
+    type: Tweak
+  id: 6125
+  time: '2024-03-11T23:05:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26003
