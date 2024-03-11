@@ -76,6 +76,21 @@
   copyright: "Taken from BeeStation"
   source: "https://github.com/BeeStation/BeeStation-Hornet/commit/5228e20df942bb45e9469358022e2451bb9c0efe"
 
+- files: ["bluedanube_1.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from a Musopen recording"
+  source: "https://musopen.org/music/9862-the-blue-danube-op-314/"
+
+- files: ["bluedanube_2.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from a Musopen recording"
+  source: "https://musopen.org/music/9862-the-blue-danube-op-314/"
+
+- files: ["bluedanube_3.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from a Musopen recording"
+  source: "https://musopen.org/music/9862-the-blue-danube-op-314/"
+
 - files: ["constellations.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from BeeStation"

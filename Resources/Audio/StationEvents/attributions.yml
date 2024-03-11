@@ -7,3 +7,18 @@
   license: "CC-BY-3.0"
   copyright: "Created by mryikes"
   source: "https://www.youtube.com/watch?v=chix8uz-oUQ"
+
+- files: ["rhapsodyno2.ogg"]
+  license: "Public Domain"
+  copyright: "Public domain recording by the United States Navy Band"
+  source: "https://imslp.org/wiki/File:PMLP12453-Hungarian_Rhapsody_No_2.mp3"
+
+- files: ["diesirae.ogg"]
+  license: "Public Domain"
+  copyright: "Public domain recording"
+  source: "https://imslp.org/wiki/File:PMLP02751-Mozart_-_Requiem_-_03_(Karajan,_1962).flac"
+
+- files: ["atomicamnesiammx.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Atomic Amnesia MMX by Philip Dyer."
+  source: "https://soundcloud.com/3kliksphilip/atomic-amnesia-mmx-1"
