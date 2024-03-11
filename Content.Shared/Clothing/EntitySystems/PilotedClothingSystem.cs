@@ -75,7 +75,7 @@ public sealed partial class PilotedClothingSystem : EntitySystem
     }
 
     /// <summary>
-    /// Attempt to establish movement/interaction relay connection(s) from Pilot to Wearer.
+    /// Attempts to establish movement/interaction relay connection(s) from Pilot to Wearer.
     /// If either is missing, fails and returns false.
     /// </summary>
     private bool StartPiloting(Entity<PilotedClothingComponent> entity)
@@ -115,42 +115,63 @@ public sealed partial class PilotedClothingSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Removes components from the Pilot and Wearer to stop the control relay.
+    /// Returns false if a connection does not already exist.
+    /// </summary>
     private bool StopPiloting(Entity<PilotedClothingComponent> entity)
     {
         if (entity.Comp.Pilot == null || entity.Comp.Wearer == null)
             return false;
 
-        // Break the relay connection by removing components.
+        // Clean up components on the Pilot
         var pilotEnt = _entMan.GetEntity(entity.Comp.Pilot.Value);
         RemCompDeferred<RelayInputMoverComponent>(pilotEnt);
         RemCompDeferred<InteractionRelayComponent>(pilotEnt);
 
+        // Clean up components on the Wearer
         var wearerEnt = _entMan.GetEntity(entity.Comp.Wearer.Value);
         RemCompDeferred<MovementRelayTargetComponent>(wearerEnt);
         RemCompDeferred<PilotedByClothingComponent>(wearerEnt);
 
+        // Raise an event on the Pilot
         var pilotEv = new StoppedPilotingClothingEvent(entity, wearerEnt);
         RaiseLocalEvent(pilotEnt, ref pilotEv);
 
+        // Raise an event on the Wearer
         var wearerEv = new StoppedBeingPilotedByClothing(entity, pilotEnt);
         RaiseLocalEvent(wearerEnt, ref wearerEv);
 
         entity.Comp.Pilot = null;
         entity.Comp.Wearer = null;
-
         Dirty(entity);
+
         return true;
     }
 }
 
+/// <summary>
+/// Raised on the Pilot when they gain control of the Wearer.
+/// </summary>
 [ByRefEvent]
 public record struct StartedPilotingClothingEvent(EntityUid Clothing, EntityUid Wearer);
 
+/// <summary>
+/// Raised on the Pilot when they lose control of the Wearer,
+/// due to the Pilot exiting the clothing or the clothing being unequipped by the Wearer.
+/// </summary>
 [ByRefEvent]
 public record struct StoppedPilotingClothingEvent(EntityUid Clothing, EntityUid Wearer);
 
+/// <summary>
+/// Raised on the Wearer when the Pilot gains control of them.
+/// </summary>
 [ByRefEvent]
 public record struct StartingBeingPilotedByClothing(EntityUid Clothing, EntityUid Pilot);
 
+/// <summary>
+/// Raised on the Wearer when the Pilot loses control of them
+/// due to the Pilot exiting the clothing or the clothing being unequipped by the Wearer.
+/// </summary>
 [ByRefEvent]
 public record struct StoppedBeingPilotedByClothing(EntityUid Clothing, EntityUid Pilot);
