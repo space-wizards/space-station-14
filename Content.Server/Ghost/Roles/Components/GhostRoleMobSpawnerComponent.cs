@@ -23,8 +23,7 @@ namespace Content.Server.Ghost.Roles.Components
         [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? Prototype;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("selectablePrototypes")]
+        [DataField]
         public List<string> SelectablePrototypes = new List<string>();
     }
 }
