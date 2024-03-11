@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: Naive817
-  changes:
-  - message: Syndicate has fielded cyborgs for testing. They are loaded with syndicate
-      laws and have no access.
-    type: Add
-  - message: Nuclear operatives can now call in an well-armed assault cyborg for a
-      hefty price (65 TC). Comes with an Operative module complete with Emag and pinpointer,
-      a L6C ROW module, an Esword module, a positronic brain & a hyper capacity powercell
-    type: Add
-  id: 5619
-  time: '2024-01-07T22:12:08.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/19733
 - author: DoutorWhite
   changes:
   - message: Now the round duration should be correct on all interfaces after reconnecting.
@@ -3817,3 +3805,10 @@
   id: 6118
   time: '2024-03-11T01:55:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25972
+- author: metalgearsloth
+  changes:
+  - message: Remove the buttons for generated debris from shuttle maps.
+    type: Tweak
+  id: 6119
+  time: '2024-03-11T02:11:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25897
