@@ -254,7 +254,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-detective
-    stampedColor: "#FC0A0A"
+    stampedColor: "#754d36"
     stampState: "paper_stamp-detective"
   - type: Sprite
     state: stamp-detective
