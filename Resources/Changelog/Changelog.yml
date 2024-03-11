@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Syndicate cyborgs can now see who syndicate agents are, and they now
-      have a lock on their chassis that needs syndicate access to open.
-    type: Tweak
-  id: 5622
-  time: '2024-01-08T03:48:57.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23710
 - author: Dygon
   changes:
   - message: Incendiary projectiles and lava are less flammable.
@@ -3816,3 +3808,10 @@
   id: 6121
   time: '2024-03-11T03:12:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25192
+- author: Lank
+  changes:
+  - message: The detective is no longer independent, and again works under Security.
+    type: Tweak
+  id: 6122
+  time: '2024-03-11T03:33:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25986
