@@ -14,19 +14,19 @@ public sealed partial class MessagesServerComponent : Component
     /// The list of messages cached by the server.
     /// </summary>
     [DataField]
-    public List<MessagesMessageData> Messages = new();
+    public List<MessagesMessageData> Messages = [];
 
     /// <summary>
     /// The list of messages the server is trying to send.
     /// </summary>
     [DataField]
-    public List<MessagesMessageData> MessagesQueue = new();
+    public List<MessagesMessageData> MessagesQueue = [];
 
     /// <summary>
     /// Dictionary translating uids to readable names
     /// </summary>
     [DataField]
-    public Dictionary<string,string> NameDict= new();
+    public Dictionary<string, string> NameDict = [];
 
     /// <summary>
     /// Key used to denote which faction the server belongs to.

@@ -9,13 +9,13 @@ public sealed partial class MessagesCartridgeComponent : Component
     /// The list of messages cached by the device.
     /// </summary>
     [DataField]
-    public List<MessagesMessageData> Messages = new();
+    public List<MessagesMessageData> Messages = [];
 
     /// <summary>
     /// The list of messages the device is trying to send.
     /// </summary>
     [DataField]
-    public List<MessagesMessageData> MessagesQueue = new();
+    public List<MessagesMessageData> MessagesQueue = [];
 
     /// <summary>
     /// The uid of the current user
@@ -29,7 +29,7 @@ public sealed partial class MessagesCartridgeComponent : Component
     [DataField]
     public string? UserName = null;
 
-     /// <summary>
+    /// <summary>
     /// The uid of the crew the user is chatting with
     /// </summary>
     [DataField]
@@ -45,22 +45,18 @@ public sealed partial class MessagesCartridgeComponent : Component
     /// Dictionary translating uids to readable names
     /// </summary>
     [DataField]
-    public Dictionary<string,string> NameDict= new();
+    public Dictionary<string, string> NameDict = [];
 
     /// <summary>
     /// Whether the cartridge has lost connection and should be looking for a new server
     /// </summary>
     [DataField]
-    public bool DeadConnection=true;
+    public bool DeadConnection = true;
 
     /// <summary>
     /// Key used to denote which faction the cartridge belongs to.
     /// </summary>
     [DataField]
     public string EncryptionKey = "Nanotrasen";
-
-    public TimeSpan UpdateDelay = TimeSpan.FromSeconds(10);
-    public TimeSpan NextUpdate = TimeSpan.Zero;
-
 
 }

@@ -341,13 +341,13 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
             {
                 if (TryGetProgram<MessagesCartridgeComponent>(uid, out var programUid, out var messagesCartridgeComponent, false, loader, cont))
                 {
-                    if ((TryComp(uid, out PdaComponent? pdaComponent)) && (programUid is EntityUid realProgramUid))
+                    if (TryComp(uid, out PdaComponent? _) && programUid is EntityUid realProgramUid)
                     {
-                        if (TryComp(args.Entity, out IdCardComponent? idCardComponent))
+                        if (TryComp(args.Entity, out IdCardComponent? _))
                         {
                             messagesCartridgeComponent.ConnectedId = args.Entity;
                             messagesCartridgeComponent.UserUid = args.Entity.ToString();
-                            if (_messagesCartridgeSystem.GetActiveServer(messagesCartridgeComponent,Transform(uid).MapID) is var (_, server))
+                            if (_messagesCartridgeSystem.GetActiveServer(messagesCartridgeComponent, Transform(uid).MapID) is var (_, server))
                             {
                                 _messagesCartridgeSystem.PullFromServer(realProgramUid, messagesCartridgeComponent, server);
                             }
