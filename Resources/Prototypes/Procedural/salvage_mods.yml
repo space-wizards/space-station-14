@@ -223,7 +223,6 @@
   proto: Experiment
   biomes:
     #- LowDesert
-    - Snow
     - Grasslands
 
 - type: salvageDungeonMod
@@ -237,3 +236,9 @@
   proto: Mineshaft
   biomes:
     - Caves
+
+- type: salvageDungeonMod
+  id: SnowyLabs
+  proto: SnowyLabs
+  biomes:
+    - Snow

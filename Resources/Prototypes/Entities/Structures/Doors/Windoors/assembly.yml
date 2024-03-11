@@ -73,6 +73,33 @@
     graph: Windoor
     node: assemblySecure
 
+- type: entity
+  id: WindoorAssemblyClockwork
+  name: clockwork windoor assembly
+  description: It opens, it closes, and you can see through it! This one looks tough.
+  parent: WindoorAssembly
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Windoors/clockwork_windoor.rsi
+    layers:
+    - state: open
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 450
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetBrass1:
+            min: 1
+            max: 2
+  - type: Construction
+    graph: Windoor
+    node: assemblyClockwork
+
 #plasma windoor assemblies
 - type: entity
   id: WindoorAssemblyPlasma

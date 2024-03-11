@@ -29,6 +29,7 @@
   - type: UseDelay
     delay: 1.0
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       collection: ToySqueak
     damage:
@@ -928,6 +929,7 @@
     attackRate: 1.5
     angle: 0
     animation: WeaponArcThrust
+    wideAnimationRotation: 90
     damage:
       types:
         Blunt: 0
