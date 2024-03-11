@@ -914,6 +914,18 @@
 
 - type: entity
   parent: PassengerIDCard
+  id: BridgeOfficerIDCard
+  name: bridge officer ID card
+  components:
+  - type: PresetIdCard
+    job: BridgeOfficer
+  - type: Sprite
+    layers:
+    - state: silver
+    - state: idbridgeofficer
+
+- type: entity
+  parent: PassengerIDCard
   id: CoronerIDCard
   name: coroner ID card
   components:
