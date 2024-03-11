@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DoutorWhite
-  changes:
-  - message: Now the round duration should be correct on all interfaces after reconnecting.
-    type: Fix
-  id: 5620
-  time: '2024-01-08T00:30:10.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23707
 - author: EmoGarbage404
   changes:
   - message: Fixed grappling hooks being able to fire multiple hooks.
@@ -3812,3 +3805,10 @@
   id: 6119
   time: '2024-03-11T02:11:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25897
+- author: Errant
+  changes:
+  - message: Species info is now available in the Guidebook and in the character editor.
+    type: Add
+  id: 6120
+  time: '2024-03-11T03:01:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25844
