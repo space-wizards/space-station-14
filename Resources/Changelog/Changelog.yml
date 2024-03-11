@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Fixed grappling hooks being able to fire multiple hooks.
-    type: Fix
-  id: 5621
-  time: '2024-01-08T01:15:46.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23709
 - author: Dutch-VanDerLinde
   changes:
   - message: Syndicate cyborgs can now see who syndicate agents are, and they now
@@ -3812,3 +3805,14 @@
   id: 6120
   time: '2024-03-11T03:01:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25844
+- author: Dygon
+  changes:
+  - message: 'The following criminal record statuses have been added: Suspect, Discharged,
+      Paroled.'
+    type: Add
+  - message: Security huds now show an icon on entities that have a visible name linked
+      to a criminal record.
+    type: Add
+  id: 6121
+  time: '2024-03-11T03:12:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25192
