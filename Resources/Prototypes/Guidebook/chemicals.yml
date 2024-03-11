@@ -4,7 +4,7 @@
   text: "/ServerInfo/Guidebook/Chemicals.xml"
   children:
   - Elements
-  - Medicine
+  - Medicinal
   - Narcotics
   - Pyrotechnic
   - Toxins
@@ -17,44 +17,53 @@
 - type: guideEntry
   id: Elements
   name: guide-entry-elements
-  text: "/ServerInfo/Guidebook/Chemical Tabs/Elements.xml"
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Elements.xml"
+  filterEnabled: True
 
 - type: guideEntry
   id: Medicinal
-  name: guide-entry-medicine
-  text: "/ServerInfo/Guidebook/Medical/Medicine.xml"
+  name: guide-entry-medicinal
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Medicinal.xml"
+  filterEnabled: True
 
 - type: guideEntry
   id: Narcotics
   name: guide-entry-narcotics
-  text: "/ServerInfo/Guidebook/Chemical Tabs/Narcotics.xml"
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Narcotics.xml"
+  filterEnabled: True
 
 - type: guideEntry
   id: Pyrotechnic
   name: guide-entry-pyrotechnics
-  text: "/ServerInfo/Guidebook/Chemical Tabs/Pyrotechnic.xml"
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Pyrotechnic.xml"
+  filterEnabled: True
 
 - type: guideEntry
   id: Toxins
   name: guide-entry-toxins
-  text: "/ServerInfo/Guidebook/Chemical Tabs/Toxins.xml"
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Toxins.xml"
+  filterEnabled: True
 
 - type: guideEntry
   id: Foods
   name: guide-entry-foods
-  text: "/ServerInfo/Guidebook/Chemical Tabs/Foods.xml"
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Foods.xml"
+  filterEnabled: True
 
 - type: guideEntry
   id: Botanical
   name: guide-entry-botanical
-  text: "/ServerInfo/Guidebook/Medical/Botanicals.xml"
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Botany.xml"
+  filterEnabled: True
 
 - type: guideEntry
   id: Biological
   name: guide-entry-biological
-  text: "/ServerInfo/Guidebook/Chemical Tabs/Biological.xml"
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Biological.xml"
+  filterEnabled: True
 
 - type: guideEntry
   id: Others
   name: guide-entry-others
-  text: "/ServerInfo/Guidebook/Chemical Tabs/Other.xml"
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Other.xml"
+  filterEnabled: True
