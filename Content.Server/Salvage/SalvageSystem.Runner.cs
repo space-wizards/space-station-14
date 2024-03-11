@@ -10,6 +10,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Salvage.Expeditions;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -186,7 +187,7 @@ public sealed partial class SalvageSystem
                             if (shuttleXform.MapUid != uid || HasComp<FTLComponent>(shuttleUid))
                                 continue;
 
-                            _shuttle.FTLTravel(shuttleUid, shuttle, member, ftlTime);
+                            _shuttle.FTLToDock(shuttleUid, shuttle, member, ftlTime);
                         }
 
                         break;

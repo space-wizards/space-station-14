@@ -11,7 +11,7 @@
                 <RichTextLabel Name="ReagentName" HorizontalAlignment="Center"/>
             </PanelContainer>
             <BoxContainer Name="RecipesContainer" HorizontalExpand="True">
-                <Collapsible Orientation="Vertical" HorizontalExpand="True">
+                <Collapsible HorizontalExpand="True">
                     <CollapsibleHeading Title="{Loc 'guidebook-reagent-recipes-header'}"/>
                     <CollapsibleBody>
                         <GridContainer Name="RecipesDescriptionContainer"
@@ -24,7 +24,7 @@
                 </Collapsible>
             </BoxContainer>
             <BoxContainer Name="SourcesContainer" HorizontalExpand="True">
-                <Collapsible Orientation="Vertical" HorizontalExpand="True">
+                <Collapsible HorizontalExpand="True">
                     <CollapsibleHeading Title="{Loc 'guidebook-reagent-sources-header'}"/>
                     <CollapsibleBody>
                         <GridContainer Name="SourcesDescriptionContainer"
@@ -37,7 +37,7 @@
                 </Collapsible>
             </BoxContainer>
             <BoxContainer Name="EffectsContainer" HorizontalExpand="True">
-                <Collapsible Orientation="Vertical">
+                <Collapsible>
                     <CollapsibleHeading Title="{Loc 'guidebook-reagent-effects-header'}"/>
                     <CollapsibleBody>
                         <BoxContainer Name="EffectsDescriptionContainer"
