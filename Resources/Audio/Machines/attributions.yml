@@ -108,7 +108,7 @@
   copyright: "cmorris035"
   source: "https://freesound.org/people/cmorris035/sounds/319152/"
 
-- files: ["airlock_open.ogg", "airlock_close.ogg", "airlock_deny.ogg"]
+- files: ["airlock_open.ogg", "airlock_close.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "/tg/station"
   source: "https://github.com/tgstation/tgstation/tree/5f5002b21253354c20ea224be3f604d79299b37e/sound/machines"
@@ -152,3 +152,8 @@
   license: "CC0-1.0"
   copyright: "dakamakat on freesound.org"
   source: "https://freesound.org/people/Dakamakat/sounds/717370/"
+
+- files: ["airlock_deny.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "/tg/station, edited by Discord: Decortes and GitHub: Decortex"
+  source: "https://github.com/tgstation/tgstation/tree/5f5002b21253354c20ea224be3f604d79299b37e/sound/machines"
