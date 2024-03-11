@@ -446,11 +446,11 @@ namespace Content.Server.Ghost.Roles
             var verbText = "placeholder";
 
             if (prototype.Name != null)
-                verbText = prototype.Name;
+                verbText = Loc.GetString(prototype.Name);
 
             return new Verb()
             {
-                Text = Loc.GetString(verbText),
+                Text = verbText,
                 Disabled = component.Prototype == prototype.EntityPrototype,
                 Category = VerbCategory.SelectType,
                 Act = () => SetMode(uid, prototype, verbText, component, userUid)
