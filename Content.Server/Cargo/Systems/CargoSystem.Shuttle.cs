@@ -8,6 +8,7 @@ using Content.Shared.GameTicking;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Audio;
+using BuySellType = Content.Server.Cargo.Components.CargoPalletComponent.BuySellType;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -173,13 +174,13 @@ public sealed partial class CargoSystem
     /// </summary>
     private int GetCargoSpace(EntityUid gridUid)
     {
-        var space = GetCargoPallets(gridUid, false, true).Count;
+        var space = GetCargoPallets(gridUid, BuySellType.buy).Count;
         return space;
     }
 
-    /// GetCargoPallets(gridUid, true, false) to return only sell pads
-    /// GetCargoPallets(gridUid, false, true) to return only buy pads
-    private List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent PalletXform)> GetCargoPallets(EntityUid gridUid, bool sellOnly = false, bool buyOnly = false)
+    /// GetCargoPallets(gridUid, BuySellType.sell) to return only sell pads
+    /// GetCargoPallets(gridUid, BuySellType.buy) to return only buy pads
+    private List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent PalletXform)> GetCargoPallets(EntityUid gridUid, BuySellType requestType = BuySellType.both)
     {
         _pads.Clear();
 
@@ -193,11 +194,11 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            if (sellOnly && comp.PalletType != "sell" && comp.PalletType != "both")
+            if (requestType == BuySellType.sell && comp.PalletType != BuySellType.sell && comp.PalletType != BuySellType.both)
             {
                 continue;
             }
-            if (buyOnly && comp.PalletType != "buy" && comp.PalletType != "both")
+            if (requestType == BuySellType.buy && comp.PalletType != BuySellType.buy && comp.PalletType != BuySellType.both)
             {
                 continue;
             }
@@ -263,7 +264,7 @@ public sealed partial class CargoSystem
         amount = 0;
         toSell = new HashSet<EntityUid>();
 
-        foreach (var (palletUid, _, _) in GetCargoPallets(gridUid, true, false))
+        foreach (var (palletUid, _, _) in GetCargoPallets(gridUid, BuySellType.sell))
         {
             // Containers should already get the sell price of their children so can skip those.
             _setEnts.Clear();

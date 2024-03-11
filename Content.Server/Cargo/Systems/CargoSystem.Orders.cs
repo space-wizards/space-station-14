@@ -15,6 +15,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using BuySellType = Content.Server.Cargo.Components.CargoPalletComponent.BuySellType;
 
 namespace Content.Server.Cargo.Systems
 {
@@ -205,7 +206,7 @@ namespace Content.Server.Cargo.Systems
             // Try to fulfill from any station where possible, if the pad is not occupied.
             foreach (var trade in _listEnts)
             {
-                var tradePads = GetCargoPallets(trade, false, true);
+                var tradePads = GetCargoPallets(trade, BuySellType.buy);
                 _random.Shuffle(tradePads);
 
                 var freePads = GetFreeCargoPallets(trade, tradePads);
