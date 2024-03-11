@@ -6,6 +6,7 @@ using Content.Client.Info.PlaytimeStats;
 using Content.Client.Lobby;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
+using Content.Shared.Clothing;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
@@ -177,9 +178,9 @@ namespace Content.Client.Preferences.UI
                     var job = controller.GetPreferredJob(humanoid);
                     controller.GiveDummyJobClothes(_previewDummy, humanoid, job);
 
-                    if (prototypeManager.HasIndex<RoleLoadoutPrototype>("Job" + job.ID))
+                    if (prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
                     {
-                        var loadout = humanoid.GetLoadoutOrDefault("Job" + job.ID, entityManager, prototypeManager);
+                        var loadout = humanoid.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), entityManager, prototypeManager);
                         controller.GiveDummyLoadout(_previewDummy, loadout);
                     }
                 }

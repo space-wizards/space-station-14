@@ -9,6 +9,7 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared.CCVar;
+using Content.Shared.Clothing;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -556,7 +557,7 @@ namespace Content.Client.Preferences.UI
                 foreach (var job in jobs)
                 {
                     RoleLoadout? loadout = null;
-                    Profile?.Loadouts.TryGetValue("Job" + job.ID, out loadout);
+                    Profile?.Loadouts.TryGetValue(LoadoutSystem.GetJobPrototype(job.ID), out loadout);
                     var selector = new JobPrioritySelector(loadout, job, jobLoadoutGroup, _prototypeManager);
 
                     if (!_requirements.IsAllowed(job, out var reason))

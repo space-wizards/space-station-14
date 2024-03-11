@@ -4,6 +4,7 @@ using Content.Client.Inventory;
 using Content.Client.Lobby.UI;
 using Content.Client.Preferences;
 using Content.Client.Station;
+using Content.Shared.Clothing;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
@@ -113,9 +114,9 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         var job = _dummyJob ?? GetPreferredJob(profile);
         GiveDummyJobClothes(dummy, profile, job);
 
-        if (_prototypeManager.HasIndex<RoleLoadoutPrototype>("Job" + job.ID))
+        if (_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
         {
-            var loadout = profile.GetLoadoutOrDefault("Job" + job.ID, EntityManager, _prototypeManager);
+            var loadout = profile.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), EntityManager, _prototypeManager);
             GiveDummyLoadout(dummy, loadout);
         }
     }

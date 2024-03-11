@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Lobby;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Clothing;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Preferences.Loadouts.Effects;
 using Content.Shared.Roles;
@@ -109,7 +110,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
         var protoManager = collection.Resolve<IPrototypeManager>();
 
         // If no loadout found then disabled button
-        if (!protoManager.HasIndex<RoleLoadoutPrototype>("Job" + Proto.ID))
+        if (!protoManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(Proto.ID)))
         {
             loadoutWindowBtn.Disabled = true;
         }
@@ -125,7 +126,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                 if (args.Button.Pressed)
                 {
                     // We only create a loadout when necessary to avoid unnecessary DB entries.
-                    _loadout ??= new RoleLoadout("Job" + Proto.ID);
+                    _loadout ??= new RoleLoadout(LoadoutSystem.GetJobPrototype(Proto.ID));
                     _loadout.SetDefault(entManager, protoManager);
 
                     _loadoutWindow = new LoadoutWindow(_loadout, protoManager.Index(_loadout.Role), session, collection)
