@@ -15,4 +15,5 @@
       - Pillow3
       - Pillow4
       - Pillow5
+      - Pillow6
     chance: 1

@@ -58,6 +58,17 @@
     {
       "name": "icon-five-inhand-right",
       "directions": 4
+    },
+	{
+      "name": "icon-six"
+    },
+    {
+      "name": "icon-six-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "icon-six-inhand-right",
+      "directions": 4
     }
   ]
 }
