@@ -14,8 +14,7 @@ namespace Content.Server.Ghost.Roles.Components
         [DataField("deleteOnSpawn")]
         public bool DeleteOnSpawn = true;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("availableTakeovers")]
+        [DataField]
         public int AvailableTakeovers = 1;
 
         [ViewVariables]
