@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Dygon
-  changes:
-  - message: Incendiary projectiles and lava are less flammable.
-    type: Tweak
-  - message: Incendiary projectiles no longer ignite entities while flying past them.
-    type: Fix
-  id: 5623
-  time: '2024-01-08T05:41:42.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23479
 - author: EmoGarbage404
   changes:
   - message: Particles from the Particle Accelerator once again collide with players.
@@ -3815,3 +3806,10 @@
   id: 6122
   time: '2024-03-11T03:33:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25986
+- author: pigeonpeas
+  changes:
+  - message: added new expedition ambience
+    type: Add
+  id: 6123
+  time: '2024-03-11T06:56:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25983
