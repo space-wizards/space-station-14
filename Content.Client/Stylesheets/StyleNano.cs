@@ -74,6 +74,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassLabelKeyText = "LabelKeyText";
         public const string StyleClassLabelSecondaryColor = "LabelSecondaryColor";
         public const string StyleClassLabelBig = "LabelBig";
+        public const string StyleClassLabelSmall = "LabelSmall";
         public const string StyleClassButtonBig = "ButtonBig";
 
         public const string StyleClassPopupMessageSmall = "PopupMessageSmall";
@@ -328,6 +329,12 @@ namespace Content.Client.Stylesheets
             };
             chatFilterButton.SetPatchMargin(StyleBox.Margin.All, 5);
             chatFilterButton.SetPadding(StyleBox.Margin.All, 2);
+
+            var smallButtonTex = resCache.GetTexture("/Textures/Interface/Nano/button_small.svg.96dpi.png");
+            var smallButtonBase = new StyleBoxTexture
+            {
+                Texture = smallButtonTex,
+            };
 
             var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
 
@@ -644,6 +651,23 @@ namespace Content.Client.Stylesheets
 
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
+
+                // Colors for confirm buttons confirm states.
+                Element<ConfirmButton>()
+                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDefault),
+
+                Element<ConfirmButton>()
+                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionHovered),
+
+                Element<ConfirmButton>()
+                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionPressed),
+
+                Element<ConfirmButton>()
+                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
 
                 new StyleRule(new SelectorChild(
@@ -1189,14 +1213,6 @@ namespace Content.Client.Stylesheets
                         new StyleProperty(StripeBack.StylePropertyBackground, stripeBack),
                     }),
 
-                // StyleClassLabelBig
-                new StyleRule(
-                    SelectorElement.Class(StyleClassLabelBig),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSans16),
-                    }),
-
                 // StyleClassItemStatus
                 new StyleRule(SelectorElement.Class(StyleClassItemStatus), new[]
                 {
@@ -1303,10 +1319,29 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BackgroundColor = NanoGold, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2}),
                 }),
 
+                // Labels ---
+                Element<Label>().Class(StyleClassLabelBig)
+                    .Prop(Label.StylePropertyFont, notoSans16),
+
+                Element<Label>().Class(StyleClassLabelSmall)
+                 .Prop(Label.StylePropertyFont, notoSans10),
+                // ---
+
+                // Different Background shapes ---
                 Element<PanelContainer>().Class(ClassAngleRect)
                     .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
 
+                Element<PanelContainer>().Class("BackgroundOpenRight")
+                    .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenRight)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
+
+                Element<PanelContainer>().Class("BackgroundOpenLeft")
+                    .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenLeft)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
+                // ---
+
+                // Dividers
                 Element<PanelContainer>().Class(ClassLowDivider)
                     .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
                     {
@@ -1391,6 +1426,15 @@ namespace Content.Client.Stylesheets
 
                 Element<Button>().Class("ButtonColorGreen").Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodHovered),
+                // ---
+
+                // Small Button ---
+                Element<Button>().Class("ButtonSmall")
+                    .Prop(ContainerButton.StylePropertyStyleBox, smallButtonBase),
+
+                Child().Parent(Element<Button>().Class("ButtonSmall"))
+                    .Child(Element<Label>())
+                    .Prop(Label.StylePropertyFont, notoSans8),
                 // ---
 
                 Element<Label>().Class("StatusFieldTitle")
@@ -1490,7 +1534,6 @@ namespace Content.Client.Stylesheets
                     {
                         BackgroundColor = FancyTreeSelectedRowColor,
                     }),
-
             }).ToList());
         }
     }

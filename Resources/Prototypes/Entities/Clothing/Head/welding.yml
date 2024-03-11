@@ -4,13 +4,15 @@
   name: welding mask
   abstract: true
   components:
+  - type: Item
+    storedRotation: 0
   - type: IngestionBlocker
   - type: FlashImmunity
   - type: IdentityBlocker
   - type: EyeProtection
   - type: PhysicalComposition
     materialComposition:
-      Steel: 500
+      Steel: 200
       Glass: 100
   - type: StaticPrice
     price: 50

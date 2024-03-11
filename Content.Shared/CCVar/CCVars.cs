@@ -369,6 +369,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> SecretWeightPrototype =
             CVarDef.Create("game.secret_weight_prototype", "Secret", CVar.SERVERONLY);
 
+        /// <summary>
+        /// The id of the sound collection to randomly choose a sound from and play when the round ends.
+        /// </summary>
+        public static readonly CVarDef<string> RoundEndSoundCollection =
+            CVarDef.Create("game.round_end_sound_collection", "RoundEnd", CVar.SERVERONLY);
+
         /*
          * Discord
          */
@@ -486,6 +492,13 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> PiratesPlayersPerOp =
             CVarDef.Create("pirates.players_per_pirate", 5);
+
+        /*
+         * Nukeops
+         */
+
+        public static readonly CVarDef<bool> NukeopsSpawnGhostRoles =
+            CVarDef.Create("nukeops.spawn_ghost_roles", false);
 
         /*
          * Tips
@@ -1479,15 +1492,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> CrewManifestUnsecure =
             CVarDef.Create("crewmanifest.unsecure", true, CVar.REPLICATED);
 
-        /// <summary>
-        ///     Dictates the order the crew manifest will appear in, in terms of its sections.
-        ///     Sections not in this list will appear at the end of the list, in no
-        ///     specific order.
-        /// </summary>
-        public static readonly CVarDef<string> CrewManifestOrdering =
-            CVarDef.Create("crewmanifest.ordering", "Command,Security,Science,Medical,Engineering,Cargo,Civilian,Unknown",
-                CVar.REPLICATED);
-
         /*
          * Biomass
          */
@@ -1573,6 +1577,13 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> ScreenShakeIntensity =
             CVarDef.Create("accessibility.screen_shake_intensity", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        /// A generic toggle for various visual effects that are color sensitive.
+        /// As of 2/16/24, only applies to progress bar colors.
+        /// </summary>
+        public static readonly CVarDef<bool> AccessibilityColorblindFriendly =
+            CVarDef.Create("accessibility.colorblind_friendly", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*
          * CHAT
