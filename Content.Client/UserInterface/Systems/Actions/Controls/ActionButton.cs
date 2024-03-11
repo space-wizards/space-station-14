@@ -355,6 +355,7 @@ public sealed class ActionButton : Control, IEntityControl
     {
         base.MouseEntered();
 
+        UserInterfaceManager.HoverSound();
         _beingHovered = true;
         DrawModeChanged();
     }

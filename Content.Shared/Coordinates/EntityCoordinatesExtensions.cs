@@ -21,11 +21,13 @@ namespace Content.Shared.Coordinates
             return new EntityCoordinates(id, x, y);
         }
 
+        [Obsolete]
         public static EntityCoordinates ToCoordinates(this MapGridComponent grid, float x, float y)
         {
             return ToCoordinates(grid.Owner, x, y);
         }
 
+        [Obsolete]
         public static EntityCoordinates ToCoordinates(this MapGridComponent grid)
         {
             return ToCoordinates(grid.Owner, Vector2.Zero);

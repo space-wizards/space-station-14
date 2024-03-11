@@ -1,7 +1,7 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Item;
+namespace Content.Shared.Item.ItemToggle.Components;
 
 /// <summary>
 /// Handles generic item toggles, like a welder turning on and off, or an e-sword.
@@ -54,7 +54,7 @@ public sealed partial class ItemToggleComponent : Component
 public record struct ItemToggleActivateAttemptEvent(EntityUid? User)
 {
     public bool Cancelled = false;
-    public EntityUid? User = User;
+    public readonly EntityUid? User = User;
 }
 
 /// <summary>
@@ -64,63 +64,34 @@ public record struct ItemToggleActivateAttemptEvent(EntityUid? User)
 public record struct ItemToggleDeactivateAttemptEvent(EntityUid? User)
 {
     public bool Cancelled = false;
-    public EntityUid? User = User;
+    public readonly EntityUid? User = User;
 }
 
 /// <summary>
 /// Raised directed on an entity any sort of toggle is complete.
 /// </summary>
 [ByRefEvent]
-public record struct ItemToggleDoneEvent(bool Activated, EntityUid? User)
+public readonly record struct ItemToggledEvent(bool Predicted, bool Activated, EntityUid? User)
 {
-    public bool Activated = Activated;
-    public EntityUid? User = User;
+    public readonly bool Predicted = Predicted;
+    public readonly bool Activated = Activated;
+    public readonly EntityUid? User = User;
 }
 
 /// <summary>
-/// Raised in order to play a toggle sound effect.
+/// Raised directed on an entity when an itemtoggle is activated.
 /// </summary>
 [ByRefEvent]
-public record struct ItemTogglePlayToggleSoundEvent(bool Activated, bool Predicted, EntityUid? User)
+public readonly record struct ItemToggleActivatedEvent(EntityUid? User)
 {
-    public bool Activated = Activated;
-    public bool Predicted = Predicted;
-    public EntityUid? User = User;
+    public readonly EntityUid? User = User;
 }
 
 /// <summary>
-/// Raised in order to play a failure to toggle sound effect.
+/// Raised directed on an entity when an itemtoggle is deactivated.
 /// </summary>
 [ByRefEvent]
-public record struct ItemTogglePlayFailSoundEvent(bool Predicted, EntityUid? User)
+public readonly record struct ItemToggleDeactivatedEvent(EntityUid? User)
 {
-    public bool Predicted = Predicted;
-    public EntityUid? User = User;
-}
-
-/// <summary>
-/// Raised in order to effect changes upon the Light component of the entity.
-/// </summary>
-[ByRefEvent]
-public record struct ItemToggleLightUpdateEvent(bool Activated)
-{
-    public bool Activated = Activated;
-}
-
-/// <summary>
-/// Raised in order to effect changes upon the Appearance component of the entity.
-/// </summary>
-[ByRefEvent]
-public record struct ItemToggleAppearanceUpdateEvent(bool Activated)
-{
-    public bool Activated = Activated;
-}
-
-/// <summary>
-/// Raised in order to effect changes upon the Reflect component of the entity.
-/// </summary>
-[ByRefEvent]
-public record struct ItemToggleReflectUpdateEvent(bool Activated)
-{
-    public bool Activated = Activated;
+    public readonly EntityUid? User = User;
 }

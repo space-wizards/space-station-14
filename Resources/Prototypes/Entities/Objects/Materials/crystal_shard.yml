@@ -15,13 +15,11 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           shard1: ""
-      - enum.DamageStateVisualLayers.Base:
           shard2: ""
-      - enum.DamageStateVisualLayers.Base:
           shard3: ""
   - type: SpaceGarbage
-  - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: -22.5
     attackRate: 1.5
     damage:
       types:

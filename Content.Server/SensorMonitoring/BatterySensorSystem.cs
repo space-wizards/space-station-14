@@ -1,6 +1,7 @@
 ﻿using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
+using Content.Shared.DeviceNetwork;
 
 namespace Content.Server.SensorMonitoring;
 
@@ -30,7 +31,7 @@ public sealed class BatterySensorSystem : EntitySystem
                 {
                     [DeviceNetworkConstants.Command] = DeviceNetworkCommandSyncData,
                     [DeviceNetworkCommandSyncData] = new BatterySensorData(
-                        battery.Charge,
+                        battery.CurrentCharge,
                         battery.MaxCharge,
                         netBattery.CurrentReceiving,
                         netBattery.MaxChargeRate,

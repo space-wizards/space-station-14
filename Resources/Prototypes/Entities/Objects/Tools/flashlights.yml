@@ -7,7 +7,6 @@
   - type: Tag
     tags:
     - Flashlight
-    - DroneUsable
   - type: HandheldLight
     addPrefix: false
     blinkingBehaviourId: blinking
@@ -69,6 +68,11 @@
     price: 40
   - type: StealTarget
     stealGroup: LAMP
+  - type: Clothing
+    sprite: Objects/Tools/flashlight.rsi
+    quickEquip: false
+    slots:
+      - Belt
 
 - type: entity
   name: seclite
@@ -103,6 +107,7 @@
         visible: false
         map: [ "light" ]
   - type: MeleeWeapon
+    wideAnimationRotation: 90
     damage:
       types:
         Blunt: 10
@@ -111,6 +116,11 @@
   - type: PointLight
     enabled: false
     radius: 8
+  - type: Clothing
+    sprite: Objects/Tools/seclite.rsi
+    quickEquip: false
+    slots:
+      - Belt
 
 - type: entity
   parent: FlashlightLantern

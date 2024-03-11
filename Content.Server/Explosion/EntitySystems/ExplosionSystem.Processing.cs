@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Explosion;
+using Content.Shared.Explosion.Components;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
@@ -155,7 +156,7 @@ public sealed partial class ExplosionSystem
 #endif
         }
 
-        Logger.InfoS("Explosion", $"Processed {TilesPerTick - tilesRemaining} tiles in {Stopwatch.Elapsed.TotalMilliseconds}ms");
+        Log.Info($"Processed {TilesPerTick - tilesRemaining} tiles in {Stopwatch.Elapsed.TotalMilliseconds}ms");
 
         // we have finished processing our tiles. Is there still an ongoing explosion?
         if (_activeExplosion != null)

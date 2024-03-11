@@ -1,6 +1,8 @@
 - type: entity
   id: CrateArmorySMG
   parent: CrateWeaponSecure
+  name: SMG crate
+  description: Contains two high-powered, semiautomatic rifles with four mags. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
@@ -12,6 +14,8 @@
 - type: entity
   id: CrateArmoryShotgun
   parent: CrateWeaponSecure
+  name: shotgun crate
+  description: For when the enemy absolutely needs to be replaced with lead. Contains two Enforcer Combat Shotguns, and some standard shotgun shells. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
@@ -23,6 +27,8 @@
 - type: entity
   id: CrateTrackingImplants
   parent: CrateWeaponSecure
+  name: tracking implants
+  description: Contains a handful of tracking implanters. Good for prisoners you'd like to release but still keep track of.
   components:
   - type: StorageFill
     contents:
@@ -32,6 +38,8 @@
 - type: entity
   parent: CrateWeaponSecure
   id: CrateTrainingBombs
+  name: training bombs
+  description: Contains three low-yield training bombs for security to learn defusal and safe ordnance disposal, EOD suit not included. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
@@ -41,6 +49,8 @@
 - type: entity
   id: CrateArmoryLaser
   parent: CrateWeaponSecure
+  name: lasers crate
+  description: Contains three standard-issue laser rifles. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
@@ -50,6 +60,8 @@
 - type: entity
   id: CrateArmoryPistols
   parent: CrateWeaponSecure
+  name: pistols crate
+  description: Contains two standard NT pistols with four mags. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:

@@ -2,6 +2,7 @@
                xmlns:ui="clr-namespace:Content.Client.Medical.CrewMonitoring"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'crew-monitoring-user-interface-title'}"
+               Resizable="False"
                SetSize="1210 700"
                MinSize="1210 700">
     <BoxContainer Orientation="Vertical">
@@ -13,7 +14,7 @@
                         <Label Name="StationName" Text="Unknown station" Align="Center" Margin="0 5 0 3"/>
                     </PanelContainer>
                 </controls:StripeBack>
-                
+
                 <ScrollContainer Name="SensorScroller"
                                  VerticalExpand="True"
                                  SetWidth="520"

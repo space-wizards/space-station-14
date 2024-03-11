@@ -32,7 +32,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
   - type: StaticPrice
     price: 25
 
@@ -72,8 +72,27 @@
   components:
   - type: Sprite
     sprite: Structures/Power/cell_recharger.rsi
+    layers:
+    - map: ["enum.PowerChargerVisualLayers.Base"]
+      state: "empty"
+    - map: ["enum.PowerChargerVisualLayers.Light"]
+      state: "light-off"
+      shader: "unshaded"
+    - state: open
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      visible: false
   - type: Machine
     board: CellRechargerCircuitboard
+  - type: Wires
+    boardName: wires-board-name-recharger
+    layoutId: Recharger
+  - type: WiresPanel
+  - type: GenericVisualizer
+    visuals:
+      enum.WiresVisuals.MaintenancePanelState:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: true }
+          False: { visible: false }
   - type: PowerCellSlot
     cellSlotId: charger_slot
     # fitsInCharger is true i dont think this will ever affect anything negatively but it lets it function
@@ -81,13 +100,51 @@
     slots:
       charger_slot:
         ejectOnInteract: true
-        name: Power cell
+        name: power-cell-slot-component-slot-name-default
         whitelist:
-          components:
-          - PowerCell
-        blacklist:
           tags:
-          - PotatoBattery
+          - PowerCell
+          - PowerCellSmall
+
+- type: entity
+  parent: [ BaseItemRecharger, ConstructibleMachine ]
+  id: PowerCageRecharger
+  name: cage recharger
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.35,0.25,0.35"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: LitOnPowered
+  - type: PointLight
+    radius: 1.5
+    color: "#03fc4e"
+    energy: 0.7
+  - type: Charger
+    chargeRate: 50
+  - type: Sprite
+    sprite: Structures/Power/cage_recharger.rsi
+  - type: PowerCellSlot
+    cellSlotId: charger_slot
+  - type: ItemSlots
+    slots:
+      charger_slot:
+        ejectOnInteract: true
+        name: Power cage
+        whitelist:
+          tags:
+          - PowerCage
+  - type: Machine
+    board: PowerCageRechargerCircuitboard
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: BaseItemRecharger
@@ -108,6 +165,32 @@
           - HitscanBatteryAmmoProvider
           - ProjectileBatteryAmmoProvider
           - Stunbaton
+
+- type: entity
+  parent: BaseItemRecharger
+  id: TurboItemRecharger
+  name: turbo recharger
+  description: An overclocked recharger that's been adapted with a global port.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/turbo_recharger.rsi
+  - type: Machine
+    board: TurboItemRechargerCircuitboard
+  - type: Charger
+    chargeRate: 100
+  - type: ItemSlots
+    slots:
+      charger_slot:
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - HitscanBatteryAmmoProvider
+          - ProjectileBatteryAmmoProvider
+          - Stunbaton
+          - PowerCell
+        blacklist:
+          tags:
+          - PotatoBattery
 
 - type: entity
   parent: BaseItemRecharger
@@ -157,7 +240,7 @@
         map: ["enum.WiresVisualLayers.MaintenancePanel"]
         visible: false
   - type: Charger
-    baseChargeRate: 30
+    chargeRate: 30
     slotId: entity_storage
     whitelist:
       components:

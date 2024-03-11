@@ -1,3 +1,36 @@
+# Default Mixing
+# Not actually used in reactions: only meant for guidebook display purposes.
+
+- type: mixingCategory
+  id: DummyMix
+  verbText: mixing-verb-default-mix
+  icon:
+    sprite: Objects/Specific/Chemistry/beaker_large.rsi
+    state: beakerlarge
+
+- type: mixingCategory
+  id: DummyGrind
+  verbText: mixing-verb-default-grind
+  icon:
+    sprite: Structures/Machines/juicer.rsi
+    state: juicer0
+
+- type: mixingCategory
+  id: DummyJuice
+  verbText: mixing-verb-default-juice
+  icon:
+    sprite: Structures/Machines/juicer.rsi
+    state: juicer0
+
+- type: mixingCategory
+  id: DummyCondense
+  verbText: mixing-verb-default-condense
+  icon:
+    sprite: Structures/Piping/Atmospherics/condenser.rsi
+    state: display
+
+# Alternative Mixing Methods
+
 - type: mixingCategory
   id: Centrifuge
   verbText: mixing-verb-centrifuge

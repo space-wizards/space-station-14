@@ -21,6 +21,7 @@ namespace Content.Shared.Mind;
 public abstract class SharedMindSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly SharedPlayerSystem _player = default!;
@@ -144,6 +145,10 @@ public abstract class SharedMindSystem : EntitySystem
     private void OnExamined(EntityUid uid, MindContainerComponent mindContainer, ExaminedEvent args)
     {
         if (!mindContainer.ShowExamineInfo || !args.IsInDetailsRange)
+            return;
+
+        // TODO predict we can't right now because session stuff isnt networked
+        if (_net.IsClient)
             return;
 
         var dead = _mobState.IsDead(uid);
@@ -394,7 +399,8 @@ public abstract class SharedMindSystem : EntitySystem
         EntityUid uid,
         out EntityUid mindId,
         [NotNullWhen(true)] out MindComponent? mind,
-        MindContainerComponent? container = null)
+        MindContainerComponent? container = null,
+        VisitingMindComponent? visitingmind = null)
     {
         mindId = default;
         mind = null;
@@ -403,7 +409,14 @@ public abstract class SharedMindSystem : EntitySystem
             return false;
 
         if (!container.HasMind)
-            return false;
+        {
+            // The container has no mind. Check for a visiting mind...
+            if (!Resolve(uid, ref visitingmind, false))
+                return false;
+
+            mindId = visitingmind.MindId ?? default;
+            return TryComp(mindId, out mind);
+        }
 
         mindId = container.Mind ?? default;
         return TryComp(mindId, out mind);

@@ -161,6 +161,17 @@
   - sprite: Mobs/Customization/Moth/moth_antennas.rsi
     state: witchwing
 
+- type: marking
+  id: MothAntennasUnderwing
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_antennas.rsi
+    state: underwing_primary
+  - sprite: Mobs/Customization/Moth/moth_antennas.rsi
+    state: underwing_secondary
+
 # Wings
 - type: marking
   id: MothWingsDefault
@@ -371,6 +382,17 @@
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
     state: witchwing
+
+- type: marking
+  id: MothWingsUnderwing
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: underwing_primary
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: underwing_secondary
 
 # Body markings:
 # Charred

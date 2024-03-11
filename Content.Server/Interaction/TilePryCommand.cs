@@ -7,9 +7,6 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Interaction
 {
-    /// <summary>
-    /// <see cref="Shared.Tools.Components.TilePryingComponent.TryPryTile"/>
-    /// </summary>
     [AdminCommand(AdminFlags.Debug)]
     sealed class TilePryCommand : IConsoleCommand
     {

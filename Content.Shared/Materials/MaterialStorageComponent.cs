@@ -61,6 +61,12 @@ public sealed partial class MaterialStorageComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan InsertionTime = TimeSpan.FromSeconds(0.79f); // 0.01 off for animation timing
+
+    /// <summary>
+    /// Whether the storage can eject the materials stored within it
+    /// </summary>
+    [DataField]
+    public bool CanEjectStoredMaterials = true;
 }
 
 [Serializable, NetSerializable]
@@ -94,3 +100,22 @@ public record struct GetMaterialWhitelistEvent(EntityUid Storage)
 
     public List<ProtoId<MaterialPrototype>> Whitelist = new();
 }
+
+/// <summary>
+/// Message sent to try and eject a material from a storage
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class EjectMaterialMessage : EntityEventArgs
+{
+    public NetEntity Entity;
+    public string Material;
+    public int SheetsToExtract;
+
+    public EjectMaterialMessage(NetEntity entity, string material, int sheetsToExtract)
+    {
+        Entity = entity;
+        Material = material;
+        SheetsToExtract = sheetsToExtract;
+    }
+}
+

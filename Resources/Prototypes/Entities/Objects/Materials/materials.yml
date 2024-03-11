@@ -11,7 +11,6 @@
     size: Normal
   - type: Tag
     tags:
-      - DroneUsable
       - RawMaterial
   - type: Damageable
     damageContainer: Inorganic
@@ -128,7 +127,6 @@
   - type: Tag
     tags:
       - ClothMade
-      - DroneUsable
       - Gauze
       - RawMaterial
   - type: Construction
@@ -193,7 +191,6 @@
   - type: Tag
     tags:
       - ClothMade
-      - DroneUsable
       - RawMaterial
 
 - type: entity
@@ -212,7 +209,7 @@
         reagents: #Hell if I know what durathread is made out of.
         - ReagentId: Fiber
           Quantity: 6
-          
+
 - type: entity
   parent: MaterialBase
   id: MaterialWoodPlank
@@ -241,7 +238,6 @@
   - type: Tag
     tags:
     - Wooden
-    - DroneUsable
     - RawMaterial
   - type: Extractable
     grindableSolutionName: wood
@@ -411,9 +407,7 @@
   - type: Tag
     tags:
       - ClothMade
-      - DroneUsable
       - RawMaterial
-
 
 - type: entity
   parent: MaterialCotton
@@ -489,7 +483,7 @@
   parent: MaterialBase
   id: MaterialWebSilk
   name: silk
-  description: A webby material
+  description: A webby material.
   suffix: Full
   components:
   - type: PhysicalComposition
@@ -523,7 +517,6 @@
   - type: Tag
     tags:
       - ClothMade
-      - DroneUsable
       - RawMaterial
 
 - type: entity

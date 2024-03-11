@@ -891,3 +891,32 @@
 
 # Note: I would put a bunch of colored burgers here as listed in the tg .dm but
 # I'd rather wait for a custom burger component.
+
+- type: entity
+  name: mothroachburger
+  parent: FoodBurgerBase
+  id: FoodBurgerMothRoach
+  description: The last lamp it saw was the one inside the microwave.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - meaty
+      - light
+  - type: Sprite
+    state: mothroach
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 7
+  - type: Tag
+    tags:
+    - Meat
+    

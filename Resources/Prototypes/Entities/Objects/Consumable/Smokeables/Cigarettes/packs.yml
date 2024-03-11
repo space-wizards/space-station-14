@@ -197,6 +197,7 @@
   id: CigPackMixedMedical
   parent: CigPackMixedBase
   name: Dan's soaked smokes
+  suffix: Medical
   description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
   components:
   - type: Sprite
@@ -224,6 +225,7 @@
   id: CigPackMixed
   parent: CigPackMixedBase
   name: Dan's soaked smokes
+  suffix: Mixed
   description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
   components:
   - type: Sprite
@@ -257,6 +259,7 @@
   id: CigPackMixedNasty
   parent: CigPackMixedBase
   name: Dan's soaked smokes
+  suffix: Nasty
   description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
   components:
   - type: Sprite

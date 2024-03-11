@@ -24,7 +24,6 @@ namespace Content.Client.Verbs.UI
     public sealed class VerbMenuUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly ContextMenuUIController _context = default!;
 
         [UISystemDependency] private readonly CombatModeSystem _combatMode = default!;
@@ -112,7 +111,7 @@ namespace Content.Client.Verbs.UI
 
             // Show the menu at mouse pos
             menu.SetPositionLast();
-            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, new Vector2(1, 1));
+            var box = UIBox2.FromDimensions(UIManager.MousePositionScaled.Position, new Vector2(1, 1));
             menu.Open(box);
         }
 
@@ -274,6 +273,7 @@ namespace Content.Client.Verbs.UI
 
         private void ExecuteVerb(Verb verb)
         {
+            UIManager.ClickSound();
             _verbSystem.ExecuteVerb(CurrentTarget, verb);
 
             if (verb.CloseMenu ?? verb.CloseMenuDefault)

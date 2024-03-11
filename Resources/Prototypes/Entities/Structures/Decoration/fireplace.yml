@@ -45,3 +45,4 @@
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+  - type: AlwaysHot

@@ -47,6 +47,8 @@
     components:
     - Item # it doesnt necessarily have to be restricted from structures, but i think it'll be better that way
   permanentComponents:
+  - type: Item
+    size: Huge
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -108,6 +110,18 @@
     solution: beaker
 
 - type: artifactEffect
+  id: EffectSpeedUp
+  targetDepth: 2
+  effectHint: artifact-effect-hint-displacement
+  whitelist:
+    components:
+    - Item
+  permanentComponents:
+  - type: HeldSpeedModifier
+    walkModifier: 1.2
+    sprintModifier: 1.3
+
+- type: artifactEffect
   id: EffectDrill
   targetDepth: 3
   effectHint: artifact-effect-hint-drill
@@ -115,7 +129,7 @@
     components:
     - Item
   permanentComponents:
-  - type: ItemCooldown
+  - type: UseDelay
   - type: MeleeWeapon
     damage:
       types:
@@ -124,7 +138,6 @@
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sharp
-
 
 - type: artifactEffect
   id: EffectPowerGen20K
@@ -136,6 +149,12 @@
   permanentComponents:
   - type: PowerSupplier
     supplyRate: 20000
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output_hv:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
 
 - type: artifactEffect
   id: EffectBigIron
@@ -196,12 +215,11 @@
     components:
     - Item
   permanentComponents:
-  - type: TilePrying
   - type: UserInterface
     interfaces:
       - key: enum.SignalLinkerUiKey.Key
         type: SignalPortSelectorBoundUserInterface
-  - type: LatticeCutting
+  - type: ToolTileCompatible
   - type: Tool
     qualities:
     - Screwing

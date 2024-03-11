@@ -154,7 +154,7 @@
     stampedName: stamp-component-stamped-name-mime
     stampedColor: "#777777"
     stampState: "paper_stamp-mime"
-    # TODO remove sound from mime's rubber stamp
+    sound: null
   - type: Sprite
     state: stamp-mime
 
@@ -245,3 +245,16 @@
     stampState: "paper_stamp-deny"
   - type: Sprite
     state: stamp-deny
+
+- type: entity
+  name: detective's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampDetective
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-detective
+    stampedColor: "#FC0A0A"
+    stampState: "paper_stamp-detective"
+  - type: Sprite
+    state: stamp-detective

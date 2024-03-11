@@ -57,7 +57,7 @@ public abstract class SharedMagbootsSystem : EntitySystem
 
         if (TryComp<ItemComponent>(uid, out var item))
         {
-            _item.SetHeldPrefix(uid, magboots.On ? "on" : null, item);
+            _item.SetHeldPrefix(uid, magboots.On ? "on" : null, component: item);
             _clothing.SetEquippedPrefix(uid, magboots.On ? "on" : null);
         }
 

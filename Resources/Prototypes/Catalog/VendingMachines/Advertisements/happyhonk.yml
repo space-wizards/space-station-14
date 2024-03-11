@@ -1,4 +1,4 @@
-﻿- type: advertisementsPack
+- type: advertisementsPack
   id: HappyHonkAds
   advertisements:
   - advertisement-happyhonk-1
@@ -10,3 +10,10 @@
   - advertisement-happyhonk-7
   - advertisement-happyhonk-8
   - advertisement-happyhonk-9
+  - advertisement-happyhonk-10
+  thankyous:
+  - vending-machine-thanks
+  - thankyou-happyhonk-1
+  - thankyou-happyhonk-2
+  - thankyou-happyhonk-3
+  - thankyou-happyhonk-4

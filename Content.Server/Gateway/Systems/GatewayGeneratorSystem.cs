@@ -6,6 +6,7 @@ using Content.Server.Procedural;
 using Content.Server.Salvage;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
+using Content.Shared.Maps;
 using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Physics;
@@ -41,6 +42,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly RestrictedRangeSystem _restricted = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
 
     [ValidatePrototypeId<DatasetPrototype>]
     private const string PlanetNames = "names_borer";
@@ -65,7 +67,6 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GatewayGeneratorComponent, EntityUnpausedEvent>(OnGeneratorUnpaused);
         SubscribeLocalEvent<GatewayGeneratorComponent, MapInitEvent>(OnGeneratorMapInit);
         SubscribeLocalEvent<GatewayGeneratorComponent, ComponentShutdown>(OnGeneratorShutdown);
         SubscribeLocalEvent<GatewayGeneratorDestinationComponent, AttemptGatewayOpenEvent>(OnGeneratorAttemptOpen);
@@ -81,11 +82,6 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 
             QueueDel(genUid);
         }
-    }
-
-    private void OnGeneratorUnpaused(Entity<GatewayGeneratorComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.NextUnlock += args.PausedTime;
     }
 
     private void OnGeneratorMapInit(EntityUid uid, GatewayGeneratorComponent generator, MapInitEvent args)
@@ -132,7 +128,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         {
             for (var y = -2; y <= 2; y++)
             {
-                tiles.Add((new Vector2i(x, y) + origin, new Tile(tileDef.TileId, variant: random.NextByte(tileDef.Variants))));
+                tiles.Add((new Vector2i(x, y) + origin, new Tile(tileDef.TileId, variant: _tile.PickVariant((ContentTileDefinition) tileDef, random))));
             }
         }
 

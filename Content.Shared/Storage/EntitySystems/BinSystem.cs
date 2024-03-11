@@ -4,12 +4,11 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
 using Robust.Shared.Network;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -18,7 +17,6 @@ namespace Content.Shared.Storage.EntitySystems;
 /// </summary>
 public sealed class BinSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ISharedAdminLogManager _admin = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -32,7 +30,7 @@ public sealed class BinSystem : EntitySystem
         SubscribeLocalEvent<BinComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BinComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<BinComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
-        SubscribeLocalEvent<BinComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<BinComponent, InteractHandEvent>(OnInteractHand, before: new[] { typeof(SharedItemSystem) });
         SubscribeLocalEvent<BinComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
         SubscribeLocalEvent<BinComponent, GetVerbsEvent<AlternativeVerb>>(OnAltInteractHand);
         SubscribeLocalEvent<BinComponent, ExaminedEvent>(OnExamined);
@@ -73,7 +71,7 @@ public sealed class BinSystem : EntitySystem
 
     private void OnInteractHand(EntityUid uid, BinComponent component, InteractHandEvent args)
     {
-        if (args.Handled || !_timing.IsFirstTimePredicted)
+        if (args.Handled)
             return;
 
         EntityUid? toGrab = component.Items.LastOrDefault();
@@ -109,9 +107,6 @@ public sealed class BinSystem : EntitySystem
     private void InsertIntoBin(EntityUid user, EntityUid target, EntityUid itemInHand, BinComponent component, bool handled, bool canReach)
     {
         if (handled || !canReach)
-            return;
-
-        if (!_timing.IsFirstTimePredicted)
             return;
 
         if (!TryInsertIntoBin(target, itemInHand, component))

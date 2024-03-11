@@ -1,34 +1,6 @@
 # Tier 1
 
 - type: technology
-  id: JanitorialEquipment
-  name: research-technology-janitorial-equipment
-  icon:
-    sprite: Objects/Specific/Janitorial/mop.rsi
-    state: mop
-  discipline: CivilianServices
-  tier: 1
-  cost: 5000
-  recipeUnlocks:
-  - MopItem
-  - Holoprojector
-  - Mousetrap
-  - LightReplacer
-  - TrashBag
-
-- type: technology
-  id: LaundryTech
-  name: research-technology-laundry-tech
-  icon:
-    sprite: Structures/Machines/uniform_printer.rsi
-    state: icon
-  discipline: CivilianServices
-  tier: 1
-  cost: 5000
-  recipeUnlocks:
-  - UniformPrinterMachineCircuitboard
-
-- type: technology
   id: Hydroponics
   name: research-technology-basic-hydroponics
   icon:
@@ -62,22 +34,6 @@
   - HamtrPeripheralsElectronics
   - MechEquipmentGrabberSmall
   - VimHarness
-
-- type: technology
-  id: FoodService
-  name: research-technology-food-service
-  icon:
-    sprite: Structures/Machines/juicer.rsi
-    state: juicer1
-  discipline: CivilianServices
-  tier: 1
-  cost: 7500
-  recipeUnlocks: #remove all of these once we have more kitchen equipment
-  - MicrowaveMachineCircuitboard
-  - ReagentGrinderMachineCircuitboard
-  - ElectricGrillMachineCircuitboard
-  - BoozeDispenserMachineCircuitboard
-  - SodaDispenserMachineCircuitboard
 
 - type: technology
   id: AudioVisualCommunication
@@ -114,6 +70,33 @@
     - DawInstrumentMachineCircuitboard
     - MassMediaCircuitboard
 
+- type: technology
+  id: RoboticCleanliness
+  name: research-technology-robotic-cleanliness
+  icon:
+    sprite: Mobs/Silicon/chassis.rsi
+    state: janitor
+  discipline: CivilianServices
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - BorgModuleLightReplacer
+  - BorgModuleAdvancedCleaning
+
+- type: technology
+  id: MeatManipulation
+  name: research-technology-meat-manipulation
+  icon:
+    sprite: Structures/Machines/fat_sucker.rsi
+    state: display
+  discipline: CivilianServices
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - FatExtractorMachineCircuitboard
+  - BiofabricatorMachineCircuitboard
+  - BiomassReclaimerMachineCircuitboard
+
 # Tier 2
 
 - type: technology
@@ -130,17 +113,32 @@
   - FauxTileAstroIce
 
 - type: technology
-  id: RoboticCleanliness
-  name: research-technology-robotic-cleanliness
+  id: BiochemicalStasis
+  name: research-technology-biochemical-stasis
+  icon:
+    sprite: Structures/Machines/stasis_bed.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - StasisBedMachineCircuitboard
+  - CryoPodMachineCircuitboard
+  - CryostasisBeaker
+  - SyringeCryostasis
+
+- type: technology
+  id: MechanizedTreatment
+  name: research-technology-mechanized-treatment
   icon:
     sprite: Mobs/Silicon/chassis.rsi
-    state: janitor
+    state: medical
   discipline: CivilianServices
   tier: 2
   cost: 5000
   recipeUnlocks:
-  - BorgModuleLightReplacer
-  - BorgModuleAdvancedCleaning
+  - BorgModuleAdvancedTreatment
+  - BorgModuleDefibrillator
 
 - type: technology
   id: AdvancedCleaning
@@ -154,20 +152,6 @@
   recipeUnlocks:
   - AdvMopItem
   - MegaSprayBottle
-  technologyPrerequisites:
-  - JanitorialEquipment
-
-- type: technology
-  id: MeatManipulation
-  name: research-technology-meat-manipulation
-  icon:
-    sprite: Structures/Machines/fat_sucker.rsi
-    state: display
-  discipline: CivilianServices
-  tier: 2
-  cost: 5000
-  recipeUnlocks:
-  - FatExtractorMachineCircuitboard
 
 - type: technology
   id: HONKMech
@@ -227,3 +211,16 @@
   cost: 10000
   recipeUnlocks:
   - ClothingShoesBootsSpeed
+
+- type: technology
+  id: BluespaceChemistry
+  name: research-technology-bluespace-chemistry
+  icon:
+    sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
+    state: beakerbluespace
+  discipline: CivilianServices
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - BluespaceBeaker
+  - SyringeBluespace

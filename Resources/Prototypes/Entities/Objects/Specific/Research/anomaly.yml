@@ -45,8 +45,14 @@
           True: { visible: true }
           False: { visible: false }
   - type: ProximityBeeper
-    component: Anomaly
-    maximumDistance: 20
+  - type: ProximityDetector
+    enabled: false
+    range: 20
+    criteria:
+      components:
+      - Anomaly
+  - type: Beeper
+    enabled: false
     minBeepInterval: 0.15
     maxBeepInterval: 1.00
     beepSound:
@@ -83,11 +89,11 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalylocatorwide.rsi
-  - type: ProximityBeeper
-    maximumDistance: 40
+  - type: Beeper
     minBeepInterval: 0.5
     maxBeepInterval: 0.5
-
+  - type: ProximityDetector
+    range: 40
 - type: entity
   id: AnomalyLocatorWide
   parent: [ AnomalyLocatorWideUnpowered, PowerCellSlotSmallItem ]

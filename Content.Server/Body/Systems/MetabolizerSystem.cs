@@ -171,7 +171,7 @@ namespace Content.Server.Body.Systems
                     // still remove reagents
                     if (EntityManager.TryGetComponent<MobStateComponent>(solutionEntityUid.Value, out var state))
                     {
-                        if (_mobStateSystem.IsDead(solutionEntityUid.Value, state))
+                        if (!proto.WorksOnTheDead && _mobStateSystem.IsDead(solutionEntityUid.Value, state))
                             continue;
                     }
 

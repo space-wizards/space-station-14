@@ -14,7 +14,7 @@ namespace Content.Shared.Anomaly.Components;
 ///
 /// Anomalies and their related components were designed here: https://hackmd.io/@ss14-design/r1sQbkJOs
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(SharedAnomalySystem))]
 public sealed partial class AnomalyComponent : Component
 {
@@ -86,7 +86,7 @@ public sealed partial class AnomalyComponent : Component
     /// <summary>
     /// The time at which the next artifact pulse will occur.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextPulseTime = TimeSpan.Zero;
 
@@ -268,13 +268,13 @@ public readonly record struct AnomalyShutdownEvent(EntityUid Anomaly, bool Super
 /// </summary>
 /// <param name="Anomaly">The anomaly being changed</param>
 [ByRefEvent]
-public readonly record struct AnomalySeverityChangedEvent(EntityUid Anomaly, float Severity);
+public readonly record struct AnomalySeverityChangedEvent(EntityUid Anomaly, float Stability, float Severity);
 
 /// <summary>
 /// Event broadcast when an anomaly's stability is changed.
 /// </summary>
 [ByRefEvent]
-public readonly record struct AnomalyStabilityChangedEvent(EntityUid Anomaly, float Stability);
+public readonly record struct AnomalyStabilityChangedEvent(EntityUid Anomaly, float Stability, float Severity);
 
 /// <summary>
 /// Event broadcast when an anomaly's health is changed.

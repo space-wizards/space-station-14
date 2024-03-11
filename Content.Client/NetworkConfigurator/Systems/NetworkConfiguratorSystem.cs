@@ -31,13 +31,13 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         base.Initialize();
 
         SubscribeLocalEvent<ClearAllOverlaysEvent>(_ => ClearAllOverlays());
-        SubscribeLocalEvent<NetworkConfiguratorComponent, ItemStatusCollectMessage>(OnCollectItemStatus);
+        Subs.ItemStatus<NetworkConfiguratorComponent>(OnCollectItemStatus);
     }
 
-    private void OnCollectItemStatus(EntityUid uid, NetworkConfiguratorComponent configurator, ItemStatusCollectMessage args)
+    private Control OnCollectItemStatus(Entity<NetworkConfiguratorComponent> entity)
     {
         _inputManager.TryGetKeyBinding((ContentKeyFunctions.AltUseItemInHand), out var binding);
-        args.Controls.Add(new StatusControl(configurator, binding?.GetKeyString() ?? ""));
+        return new StatusControl(entity, binding?.GetKeyString() ?? "");
     }
 
     public bool ConfiguredListIsTracked(EntityUid uid, NetworkConfiguratorComponent? component = null)
@@ -52,8 +52,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     /// </summary>
     public void ToggleVisualization(EntityUid uid, bool toggle, NetworkConfiguratorComponent? component = null)
     {
-        if (_playerManager.LocalPlayer == null
-            || _playerManager.LocalPlayer.ControlledEntity == null
+        if (_playerManager.LocalEntity == null
             || !Resolve(uid, ref component)
             || component.ActiveDeviceList == null)
             return;
@@ -77,7 +76,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         {
             var overlay = new NetworkConfiguratorLinkOverlay();
             _overlay.AddOverlay(overlay);
-            var player = _playerManager.LocalPlayer.ControlledEntity.Value;
+            var player = _playerManager.LocalEntity.Value;
             overlay.Action = Spawn(Action);
             _actions.AddActionDirect(player, overlay.Action.Value);
         }

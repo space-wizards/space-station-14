@@ -75,20 +75,6 @@
       - MobRaccoonMorticia
 
 - type: entity
-  name: Drone Spawner
-  id: SpawnMobDrone
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-      - state: green
-      - sprite: Mobs/Silicon/drone.rsi
-        state: shell
-  - type: ConditionalSpawner
-    prototypes:
-      - Drone
-
-- type: entity
   name: Fox Renault Spawner
   id: SpawnMobFoxRenault
   parent: MarkerBase
@@ -779,6 +765,21 @@
     prototypes:
     - MobPenguin
 
+
+- type: entity
+  name: Hellspawn Spawner
+  id: SpawnMobHellspawn
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: hellspawn
+      sprite: Markers/mobs.rsi
+  - type: ConditionalSpawner
+    prototypes:
+      - MobHellspawn
+
 - type: entity
   name: ore crab spawner
   id: SpawnMobOreCrab
@@ -791,10 +792,10 @@
       sprite: Mobs/Elemental/orecrab.rsi
   - type: RandomSpawner
     prototypes:
-      - MobUraniumCrab
-      - MobIronCrab
-      - MobQuartzCrab
-      - MobSilverCrab
+      - MobSpawnCrabUranium
+      - MobSpawnCrabIron
+      - MobSpawnCrabQuartz
+      - MobSpawnCrabSilver
 
 - type: entity
   name: luminous person spawner

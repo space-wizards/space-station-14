@@ -84,7 +84,7 @@ public sealed class HealingSystem : EntitySystem
         if (healed == null && healing.BloodlossModifier != 0)
             return;
 
-        var total = healed?.Total ?? FixedPoint2.Zero;
+        var total = healed?.GetTotal() ?? FixedPoint2.Zero;
 
         // Re-verify that we can heal the damage.
 
@@ -111,7 +111,7 @@ public sealed class HealingSystem : EntitySystem
                 $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
         }
 
-        _audio.PlayPvs(healing.HealingEndSound, entity.Owner, AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
+        _audio.PlayPvs(healing.HealingEndSound, entity.Owner, AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
 
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = (HasDamage(entity.Comp, healing) && !dontRepeat);
@@ -185,7 +185,7 @@ public sealed class HealingSystem : EntitySystem
         }
 
         _audio.PlayPvs(component.HealingBeginSound, uid,
-                AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
+                AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
 
         var isNotSelf = user != target;
 

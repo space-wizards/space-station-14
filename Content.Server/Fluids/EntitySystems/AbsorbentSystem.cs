@@ -9,7 +9,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
 using Robust.Server.Audio;
-using Robust.Shared.Map;
+using Robust.Server.GameObjects;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -18,7 +19,6 @@ namespace Content.Server.Fluids.EntitySystems;
 /// <inheritdoc/>
 public sealed class AbsorbentSystem : SharedAbsorbentSystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
@@ -27,6 +27,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
 
     public override void Initialize()
     {
@@ -106,14 +107,15 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         if (!_solutionContainerSystem.TryGetSolution(used, AbsorbentComponent.SolutionName, out var absorberSoln))
             return;
 
-        if (_useDelay.ActiveDelay(used))
+        if (TryComp<UseDelayComponent>(used, out var useDelay)
+            && _useDelay.IsDelayed((used, useDelay)))
             return;
 
         // If it's a puddle try to grab from
-        if (!TryPuddleInteract(user, used, target, component, absorberSoln.Value))
+        if (!TryPuddleInteract(user, used, target, component, useDelay, absorberSoln.Value))
         {
             // If it's refillable try to transfer
-            if (!TryRefillableInteract(user, used, target, component, absorberSoln.Value))
+            if (!TryRefillableInteract(user, used, target, component, useDelay, absorberSoln.Value))
                 return;
         }
     }
@@ -121,7 +123,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     /// <summary>
     ///     Logic for an absorbing entity interacting with a refillable.
     /// </summary>
-    private bool TryRefillableInteract(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent component, Entity<SolutionComponent> absorbentSoln)
+    private bool TryRefillableInteract(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent component, UseDelayComponent? useDelay, Entity<SolutionComponent> absorbentSoln)
     {
         if (!TryComp(target, out RefillableSolutionComponent? refillable))
             return false;
@@ -143,7 +145,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         }
 
         _audio.PlayPvs(component.TransferSound, target);
-        _useDelay.BeginDelay(used);
+        if (useDelay != null)
+            _useDelay.TryResetDelay((used, useDelay));
         return true;
     }
 
@@ -264,7 +267,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     /// <summary>
     ///     Logic for an absorbing entity interacting with a puddle.
     /// </summary>
-    private bool TryPuddleInteract(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent absorber, Entity<SolutionComponent> absorberSoln)
+    private bool TryPuddleInteract(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent absorber, UseDelayComponent? useDelay, Entity<SolutionComponent> absorberSoln)
     {
         if (!TryComp(target, out PuddleComponent? puddle))
             return false;
@@ -297,17 +300,20 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         var absorberSplit = absorberSolution.SplitSolutionWithOnly(puddleSplit.Volume, PuddleSystem.EvaporationReagents);
 
         // Do tile reactions first
-        var coordinates = Transform(target).Coordinates;
-        if (_mapManager.TryGetGrid(coordinates.GetGridUid(EntityManager), out var mapGrid))
+        var transform = Transform(target);
+        var gridUid = transform.GridUid;
+        if (TryComp(gridUid, out MapGridComponent? mapGrid))
         {
-            _puddleSystem.DoTileReactions(mapGrid.GetTileRef(coordinates), absorberSplit);
+            var tileRef = _mapSystem.GetTileRef(gridUid.Value, mapGrid, transform.Coordinates);
+            _puddleSystem.DoTileReactions(tileRef, absorberSplit);
         }
 
         _solutionContainerSystem.AddSolution(puddle.Solution.Value, absorberSplit);
         _solutionContainerSystem.AddSolution(absorberSoln, puddleSplit);
 
         _audio.PlayPvs(absorber.PickupSound, target);
-        _useDelay.BeginDelay(used);
+        if (useDelay != null)
+            _useDelay.TryResetDelay((used, useDelay));
 
         var userXform = Transform(user);
         var targetPos = _transform.GetWorldPosition(target);

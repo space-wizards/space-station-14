@@ -3,7 +3,6 @@ using Content.Server.Beam;
 using Content.Server.Beam.Components;
 using Content.Server.Lightning.Components;
 using Content.Shared.Lightning;
-using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 
 namespace Content.Server.Lightning;
@@ -21,9 +20,6 @@ public sealed class LightningSystem : SharedLightningSystem
     [Dependency] private readonly BeamSystem _beam = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-
-    private List<Entity<LightningTargetComponent>> _lookupTargetsList = new();
-    private HashSet<Entity<LightningTargetComponent>> _lookupTargets = new();
 
     public override void Initialize()
     {
@@ -48,14 +44,19 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="user">Where the lightning fires from</param>
     /// <param name="target">Where the lightning fires to</param>
     /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
-    public void ShootLightning(EntityUid user, EntityUid target, string lightningPrototype = "Lightning")
+    /// <param name="triggerLightningEvents">if the lightnings being fired should trigger lightning events.</param>
+    public void ShootLightning(EntityUid user, EntityUid target, string lightningPrototype = "Lightning", bool triggerLightningEvents = true)
     {
         var spriteState = LightningRandomizer();
         _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
 
-        var ev = new HitByLightningEvent(user, target);
-        RaiseLocalEvent(target, ref ev);
+        if (triggerLightningEvents) // we don't want certain prototypes to trigger lightning level events
+        {
+            var ev = new HitByLightningEvent(user, target);
+            RaiseLocalEvent(target, ref ev);
+        }
     }
+
 
     /// <summary>
     /// Looks for objects with a LightningTarget component in the radius, prioritizes them, and hits the highest priority targets with lightning.
@@ -65,7 +66,8 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="boltCount">Number of lightning bolts</param>
     /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
     /// <param name="arcDepth">how many times to recursively fire lightning bolts from the target points of the first shot.</param>
-    public void ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype = "Lightning", int arcDepth = 0)
+    /// <param name="triggerLightningEvents">if the lightnings being fired should trigger lightning events.</param>
+    public void ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype = "Lightning", int arcDepth = 0, bool triggerLightningEvents = true)
     {
         //To Do: add support to different priority target tablem for different lightning types
         //To Do: Remove Hardcode LightningTargetComponent (this should be a parameter of the SharedLightningComponent)
@@ -75,16 +77,25 @@ public sealed class LightningSystem : SharedLightningSystem
         var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).MapPosition, range).ToList();
         _random.Shuffle(targets);
         targets.Sort((x, y) => y.Priority.CompareTo(x.Priority));
-        var realCount = Math.Min(targets.Count, boltCount);
-        if (realCount <= 0)
-            return;
-        for (int i = 0; i < realCount; i++)
+
+        int shootedCount = 0;
+        int count = -1;
+        while(shootedCount < boltCount)
         {
-            ShootLightning(user, targets[i].Owner, lightningPrototype);
-            if (arcDepth > 0)
+            count++;
+
+            if (count >= targets.Count) { break; }
+
+            var curTarget = targets[count];
+            if (!_random.Prob(curTarget.HitProbability)) //Chance to ignore target
+                continue;
+
+            ShootLightning(user, targets[count].Owner, lightningPrototype, triggerLightningEvents);
+            if (arcDepth - targets[count].LightningResistance > 0)
             {
-                ShootRandomLightnings(targets[i].Owner, range, 1, lightningPrototype, arcDepth - targets[i].LightningResistance);
+                ShootRandomLightnings(targets[count].Owner, range, 1, lightningPrototype, arcDepth - targets[count].LightningResistance, triggerLightningEvents);
             }
+            shootedCount++;
         }
     }
 }

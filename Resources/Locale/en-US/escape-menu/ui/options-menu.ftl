@@ -19,6 +19,7 @@ ui-options-general-discord = Discord
 ui-options-general-cursor = Cursor
 ui-options-general-speech = Speech
 ui-options-general-storage = Storage
+ui-options-general-accessibility = Accessibility
 
 ## Audio menu
 
@@ -27,6 +28,7 @@ ui-options-midi-volume = MIDI (Instrument) Volume:
 ui-options-ambient-music-volume = Ambient music volume:
 ui-options-ambience-volume = Ambience volume:
 ui-options-lobby-volume = Lobby & Round-end volume:
+ui-options-interface-volume = Interface volume:
 ui-options-ambience-max-sounds = Ambience simultaneous sounds:
 ui-options-lobby-music = Lobby & Round-end Music
 ui-options-restart-sounds = Round Restart Sounds
@@ -43,6 +45,11 @@ ui-options-opaque-storage-window = Opaque storage window
 ui-options-show-looc-on-head = Show LOOC chat above characters head
 ui-options-fancy-speech = Show names in speech bubbles
 ui-options-fancy-name-background = Add background to speech bubble names
+ui-options-enable-color-name = Add colors to character names
+ui-options-colorblind-friendly = Colorblind friendly mode
+ui-options-reduced-motion = Reduce motion of visual effects
+ui-options-screen-shake-intensity = Screen shake intensity
+ui-options-screen-shake-percent = { TOSTRING($intensity, "P0") }
 ui-options-vsync = VSync
 ui-options-fullscreen = Fullscreen
 ui-options-lighting-label = Lighting Quality:
@@ -65,7 +72,7 @@ ui-options-hud-theme-slimecore = Slimecore
 ui-options-hud-theme-clockwork = Clockwork
 ui-options-hud-theme-retro = Retro
 ui-options-hud-theme-minimalist = Minimalist
-ui-options-hud-theme-eris = Eris
+ui-options-hud-theme-ashen = Ashen
 ui-options-vp-stretch = Stretch viewport to fit game window
 ui-options-vp-scale = Fixed viewport scale: x{ $scale }
 ui-options-vp-integer-scaling = Prefer integer scaling (might cause black bars/clipping)

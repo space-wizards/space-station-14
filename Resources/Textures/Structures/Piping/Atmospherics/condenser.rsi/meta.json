@@ -36,6 +36,9 @@
             "directions":4
         },
         {
+            "name":"display"
+        },
+        {
             "name":"fill-1"
         },
         {

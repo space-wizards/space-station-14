@@ -26,7 +26,7 @@
         acts: [ "Destruction" ]
   - type: Storage
     grid:
-    - 0,0,5,3
+    - 0,0,6,3
     maxItemSize: Normal
   - type: ContainerContainer
     containers:
@@ -40,6 +40,11 @@
   - type: Tag
     tags:
     - Wooden
+  - type: Anchorable
+  - type: Rotatable
+  - type: Construction
+    graph: Dresser
+    node: dresser
 
 - type: entity
   id: DresserFilled

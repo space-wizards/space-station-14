@@ -31,7 +31,7 @@
   - type: ItemSlots
   - type: SmokingPipe
     bowl_slot:
-      name: Bowl
+      name: smoking-pipe-slot-component-slot-name-bowl
       startingItem: GroundTobacco
       whitelist:
         tags:
@@ -54,7 +54,7 @@
   - type: ItemSlots
   - type: SmokingPipe
     bowl_slot:
-      name: Bowl
+      name: smoking-pipe-slot-component-slot-name-bowl
       startingItem: GroundCannabis
       whitelist:
         tags:

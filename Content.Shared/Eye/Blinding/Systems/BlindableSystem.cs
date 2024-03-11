@@ -7,57 +7,67 @@ namespace Content.Shared.Eye.Blinding.Systems;
 
 public sealed class BlindableSystem : EntitySystem
 {
+    [Dependency] private readonly BlurryVisionSystem _blurriness = default!;
+    [Dependency] private readonly EyeClosingSystem _eyelids = default!;
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<BlindableComponent, RejuvenateEvent>(OnRejuvenate);
+        SubscribeLocalEvent<BlindableComponent, EyeDamageChangedEvent>(OnDamageChanged);
     }
 
-    private void OnRejuvenate(EntityUid uid, BlindableComponent component, RejuvenateEvent args)
+    private void OnRejuvenate(Entity<BlindableComponent> ent, ref RejuvenateEvent args)
     {
-        AdjustEyeDamage(uid, -component.EyeDamage, component);
+        AdjustEyeDamage((ent.Owner, ent.Comp), -ent.Comp.EyeDamage);
+    }
+
+    private void OnDamageChanged(Entity<BlindableComponent> ent, ref EyeDamageChangedEvent args)
+    {
+        _blurriness.UpdateBlurMagnitude((ent.Owner, ent.Comp));
+        _eyelids.UpdateEyesClosable((ent.Owner, ent.Comp));
     }
 
     [PublicAPI]
-    public void UpdateIsBlind(EntityUid uid, BlindableComponent? blindable = null)
+    public void UpdateIsBlind(Entity<BlindableComponent?> blindable)
     {
-        if (!Resolve(uid, ref blindable, false))
+        if (!Resolve(blindable, ref blindable.Comp, false))
             return;
 
-        var old = blindable.IsBlind;
+        var old = blindable.Comp.IsBlind;
 
         // Don't bother raising an event if the eye is too damaged.
-        if (blindable.EyeDamage >= BlindableComponent.MaxDamage)
+        if (blindable.Comp.EyeDamage >= BlindableComponent.MaxDamage)
         {
-            blindable.IsBlind = true;
+            blindable.Comp.IsBlind = true;
         }
         else
         {
             var ev = new CanSeeAttemptEvent();
-            RaiseLocalEvent(uid, ev);
-            blindable.IsBlind = ev.Blind;
+            RaiseLocalEvent(blindable.Owner, ev);
+            blindable.Comp.IsBlind = ev.Blind;
         }
 
-        if (old == blindable.IsBlind)
+        if (old == blindable.Comp.IsBlind)
             return;
 
-        var changeEv = new BlindnessChangedEvent(blindable.IsBlind);
-        RaiseLocalEvent(uid, ref changeEv);
+        var changeEv = new BlindnessChangedEvent(blindable.Comp.IsBlind);
+        RaiseLocalEvent(blindable.Owner, ref changeEv);
         Dirty(blindable);
     }
 
-    public void AdjustEyeDamage(EntityUid uid, int amount, BlindableComponent? blindable = null)
+    public void AdjustEyeDamage(Entity<BlindableComponent?> blindable, int amount)
     {
-        if (!Resolve(uid, ref blindable, false) || amount == 0)
+        if (!Resolve(blindable, ref blindable.Comp, false) || amount == 0)
             return;
 
-        blindable.EyeDamage += amount;
-        blindable.EyeDamage = Math.Clamp(blindable.EyeDamage, 0, BlindableComponent.MaxDamage);
+        blindable.Comp.EyeDamage += amount;
+        blindable.Comp.EyeDamage = Math.Clamp(blindable.Comp.EyeDamage, 0, BlindableComponent.MaxDamage);
         Dirty(blindable);
-        UpdateIsBlind(uid, blindable);
+        UpdateIsBlind(blindable);
 
-        var ev = new EyeDamageChangedEvent(blindable.EyeDamage);
-        RaiseLocalEvent(uid, ref ev);
+        var ev = new EyeDamageChangedEvent(blindable.Comp.EyeDamage);
+        RaiseLocalEvent(blindable.Owner, ref ev);
     }
 }
 
@@ -71,7 +81,7 @@ public record struct BlindnessChangedEvent(bool Blind);
 ///     This event is raised when an entity's eye damage changes
 /// </summary>
 [ByRefEvent]
-public record struct  EyeDamageChangedEvent(int Damage);
+public record struct EyeDamageChangedEvent(int Damage);
 
 /// <summary>
 ///     Raised directed at an entity to see whether the entity is currently blind or not.

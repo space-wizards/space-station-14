@@ -119,9 +119,9 @@
   parent: MarkerBase
   components:
   - type: GhostRole
-    name: Space Ninja
-    description: Use stealth and deception to sabotage the station.
-    rules: You are an elite mercenary of the Spider Clan. You aren't required to follow your objectives, yet your NINJA HONOR demands you try.
+    name: ghost-role-information-space-ninja-name
+    description: ghost-role-information-space-ninja-description
+    rules: ghost-role-information-space-ninja-rules
   - type: GhostRoleMobSpawner
     prototype: MobHumanSpaceNinja
   - type: Sprite
