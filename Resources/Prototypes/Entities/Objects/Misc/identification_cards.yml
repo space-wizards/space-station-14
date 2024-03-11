@@ -839,7 +839,6 @@
     heldPrefix: blue
   - type: IdCard
     jobTitle: Агент РХБЗЗ
-    jobColor: "#"
 
 - type: entity
   parent: IDCardStandard
