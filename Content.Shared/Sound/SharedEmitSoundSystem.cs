@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -25,7 +26,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _netMan = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
@@ -54,12 +55,12 @@ public abstract class SharedEmitSoundSystem : EntitySystem
     {
         if (!args.PlaySound ||
             !TryComp<TransformComponent>(uid, out var xform) ||
-            !_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            !TryComp(xform.GridUid, out MapGridComponent? grid))
         {
             return;
         }
 
-        var tile = grid.GetTileRef(xform.Coordinates);
+        var tile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
 
         // Handle maps being grids (we'll still emit the sound).
         if (xform.GridUid != xform.MapUid && tile.IsSpace(_tileDefMan))
@@ -102,10 +103,23 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         TryEmitSound(uid, component, args.User);
     }
 
-    protected void TryEmitSound(EntityUid uid, BaseEmitSoundComponent component, EntityUid? user=null, bool predict=true)
+    protected void TryEmitSound(EntityUid uid, BaseEmitSoundComponent component, EntityUid? user = null, bool predict = true)
     {
         if (component.Sound == null)
             return;
+
+        var emitterEv = new EmitSoundAttemptEvent(user);
+        RaiseLocalEvent(uid, ref emitterEv);
+        if (emitterEv.Cancelled)
+            return;
+
+        if (user != null)
+        {
+            var userEv = new UseSoundEmitterAttemptEvent(uid);
+            RaiseLocalEvent(user.Value, ref userEv);
+            if (userEv.Cancelled)
+                return;
+        }
 
         if (predict)
         {
@@ -130,12 +144,12 @@ public abstract class SharedEmitSoundSystem : EntitySystem
             return;
         }
 
-        const float MaxVolumeVelocity = 10f;
-        const float MinVolume = -10f;
-        const float MaxVolume = 2f;
+        const float maxVolumeVelocity = 10f;
+        const float minVolume = -10f;
+        const float maxVolume = 2f;
 
-        var fraction = MathF.Min(1f, (physics.LinearVelocity.Length() - component.MinimumVelocity) / MaxVolumeVelocity);
-        var volume = MinVolume + (MaxVolume - MinVolume) * fraction;
+        var fraction = MathF.Min(1f, (physics.LinearVelocity.Length() - component.MinimumVelocity) / maxVolumeVelocity);
+        var volume = minVolume + (maxVolume - minVolume) * fraction;
         component.NextSound = _timing.CurTime + EmitSoundOnCollideComponent.CollideCooldown;
         var sound = component.Sound;
 
@@ -144,4 +158,23 @@ public abstract class SharedEmitSoundSystem : EntitySystem
             _audioSystem.PlayPvs(_audioSystem.GetSound(sound), uid, AudioParams.Default.WithVolume(volume));
         }
     }
+}
+
+/// <summary>
+/// Raised on an entity when it tries to emit sound through <see cref="SharedEmitSoundSystem"/>.
+/// </summary>
+[ByRefEvent]
+public sealed class EmitSoundAttemptEvent(EntityUid? user) : CancellableEntityEventArgs
+{
+    public readonly EntityUid? User = user;
+}
+
+/// <summary>
+/// Raised on an entity using a sound-emitting object when it tries to emit a sound.
+/// Cancelling will prevent the sound from being emitted.
+/// </summary>
+[ByRefEvent]
+public sealed class UseSoundEmitterAttemptEvent(EntityUid usedEnt) : CancellableEntityEventArgs
+{
+    public readonly EntityUid UsedEnt = usedEnt;
 }

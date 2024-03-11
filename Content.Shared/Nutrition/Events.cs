@@ -53,3 +53,25 @@ public sealed partial class VapeDoAfterEvent : DoAfterEvent
 
     public override DoAfterEvent Clone() => this;
 }
+
+/// <summary>
+/// Raised on an entity when it tries to make a sound while eating something.
+/// Cancelling will stop the sound from being played.
+/// </summary>
+/// <param name="foodEnt">the entity being eaten</param>
+[ByRefEvent]
+public sealed class AttemptMakeEatingSoundEvent(EntityUid foodEnt) : CancellableEntityEventArgs
+{
+    public readonly EntityUid FoodEnt = foodEnt;
+}
+
+/// <summary>
+/// Raised on an entity when it tries to make a sound while drinking something.
+/// Cancelling will stop the sound from being played.
+/// </summary>
+/// <param name="drinkEnt">the entity being drunk</param>
+[ByRefEvent]
+public sealed class AttemptMakeDrinkingSoundEvent(EntityUid drinkEnt) : CancellableEntityEventArgs
+{
+    public readonly EntityUid DrinkEnt = drinkEnt;
+}

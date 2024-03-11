@@ -387,7 +387,10 @@ public sealed class DrinkSystem : EntitySystem
             _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} drank {ToPrettyString(entity.Owner):drink}");
         }
 
-        _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-2f));
+        var soundAttemptEvent = new AttemptMakeDrinkingSoundEvent(entity);
+        RaiseLocalEvent(args.Target.Value, ref soundAttemptEvent);
+        if (!soundAttemptEvent.Cancelled)
+            _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-2f));
 
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
         //TODO: Grab the stomach UIDs somehow without using Owner

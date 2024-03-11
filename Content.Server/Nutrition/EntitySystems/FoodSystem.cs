@@ -278,7 +278,10 @@ public sealed class FoodSystem : EntitySystem
             _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} ate {ToPrettyString(entity.Owner):food}");
         }
 
-        _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-1f));
+        var soundAttemptEvent = new AttemptMakeEatingSoundEvent(entity);
+        RaiseLocalEvent(args.Target.Value, ref soundAttemptEvent);
+        if (!soundAttemptEvent.Cancelled)
+            _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-1f));
 
         // Try to break all used utensils
         foreach (var utensil in utensils)
