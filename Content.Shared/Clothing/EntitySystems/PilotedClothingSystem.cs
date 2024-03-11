@@ -49,16 +49,7 @@ public sealed partial class PilotedClothingSystem : EntitySystem
         if (_entMan.GetNetEntity(args.Entity) != entity.Comp.Pilot)
             return;
 
-        // Break the relay connection by removing components.
-        var pilotEnt = _entMan.GetEntity(entity.Comp.Pilot.Value);
-        var wearerEnt = _entMan.GetEntity(entity.Comp.Wearer);
-        RemCompDeferred<RelayInputMoverComponent>(pilotEnt);
-        RemCompDeferred<InteractionRelayComponent>(pilotEnt);
-        if (wearerEnt != null)
-            RemCompDeferred<PilotedByClothingComponent>(wearerEnt.Value);
-        entity.Comp.Pilot = null;
-
-        Dirty(entity);
+        StopPiloting(entity);
     }
 
     private void OnEquipped(Entity<PilotedClothingComponent> entity, ref GotEquippedEvent args)
@@ -80,19 +71,7 @@ public sealed partial class PilotedClothingSystem : EntitySystem
 
     private void OnUnequipped(Entity<PilotedClothingComponent> entity, ref GotUnequippedEvent args)
     {
-        if (entity.Comp.Wearer == null)
-            return;
-
-        // Break the relay connection by removing components.
-        var wearerEnt = _entMan.GetEntity(entity.Comp.Wearer.Value);
-        var pilotEnt = _entMan.GetEntity(entity.Comp.Pilot);
-        RemCompDeferred<MovementRelayTargetComponent>(wearerEnt);
-        RemCompDeferred<PilotedByClothingComponent>(wearerEnt);
-        if (pilotEnt != null)
-            RemCompDeferred<InteractionRelayComponent>(pilotEnt.Value);
-
-        entity.Comp.Wearer = null;
-        Dirty(entity);
+        StopPiloting(entity);
     }
 
     /// <summary>
@@ -127,6 +106,51 @@ public sealed partial class PilotedClothingSystem : EntitySystem
             _interaction.SetRelay(pilotEnt, wearerEnt, interactionRelay);
         }
 
+        var pilotEv = new StartedPilotingClothingEvent(entity, wearerEnt);
+        RaiseLocalEvent(pilotEnt, ref pilotEv);
+
+        var wearerEv = new StartingBeingPilotedByClothing(entity, pilotEnt);
+        RaiseLocalEvent(wearerEnt, ref wearerEv);
+
+        return true;
+    }
+
+    private bool StopPiloting(Entity<PilotedClothingComponent> entity)
+    {
+        if (entity.Comp.Pilot == null || entity.Comp.Wearer == null)
+            return false;
+
+        // Break the relay connection by removing components.
+        var pilotEnt = _entMan.GetEntity(entity.Comp.Pilot.Value);
+        RemCompDeferred<RelayInputMoverComponent>(pilotEnt);
+        RemCompDeferred<InteractionRelayComponent>(pilotEnt);
+
+        var wearerEnt = _entMan.GetEntity(entity.Comp.Wearer.Value);
+        RemCompDeferred<MovementRelayTargetComponent>(wearerEnt);
+        RemCompDeferred<PilotedByClothingComponent>(wearerEnt);
+
+        var pilotEv = new StoppedPilotingClothingEvent(entity, wearerEnt);
+        RaiseLocalEvent(pilotEnt, ref pilotEv);
+
+        var wearerEv = new StoppedBeingPilotedByClothing(entity, pilotEnt);
+        RaiseLocalEvent(wearerEnt, ref wearerEv);
+
+        entity.Comp.Pilot = null;
+        entity.Comp.Wearer = null;
+
+        Dirty(entity);
         return true;
     }
 }
+
+[ByRefEvent]
+public record struct StartedPilotingClothingEvent(EntityUid Clothing, EntityUid Wearer);
+
+[ByRefEvent]
+public record struct StoppedPilotingClothingEvent(EntityUid Clothing, EntityUid Wearer);
+
+[ByRefEvent]
+public record struct StartingBeingPilotedByClothing(EntityUid Clothing, EntityUid Pilot);
+
+[ByRefEvent]
+public record struct StoppedBeingPilotedByClothing(EntityUid Clothing, EntityUid Pilot);
