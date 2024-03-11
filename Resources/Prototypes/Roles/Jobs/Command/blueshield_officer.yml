@@ -1,7 +1,7 @@
 - type: job
   id: BlueshieldOfficer
   name: Blueshield Officer
-  description: "Protect the Heads from the fate of death!"
+  description: "Act as a bodyguard and advisor for Command and CentCom VIPs."
   playTimeTracker: JobBlueshieldOfficer
   requirements:
     - !type:DepartmentTimeRequirement
@@ -18,7 +18,7 @@
   icon: "JobIconNanotrasen"
   requireAdminNotify: true
   joinNotifyCrew: true
-  supervisors: job-supervisors-captain
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
@@ -40,7 +40,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterArmorCaptainCarapace
     id: ERTSecurityPDA
-    ears: ClothingHeadsetCentCom
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58Nonlethal
     pocket2: DeathAcidifierImplanter
