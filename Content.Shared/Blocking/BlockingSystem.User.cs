@@ -56,7 +56,7 @@ public sealed partial class BlockingSystem
             _damageable.TryChangeDamage(component.BlockingItem, blockFraction * args.OriginalDamage);
 
             var modify = new DamageModifierSet();
-            foreach (var (key, _) in dmgComp.Damage.DamageDict)
+            foreach (var key in dmgComp.Damage.DamageDict.Keys)
             {
                 modify.Coefficients.TryAdd(key, 1 - blockFraction);
             }
