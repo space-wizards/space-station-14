@@ -7,6 +7,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Lube;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
@@ -20,15 +21,17 @@ public sealed class LubeSystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly OpenableSystem _openable = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<LubeComponent, AfterInteractEvent>(OnInteract, after: new[] { typeof(OpenableSystem) });
+        SubscribeLocalEvent<LubeComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
     }
 
-    private void OnInteract(Entity<LubeComponent> entity, ref AfterInteractEvent args)
+    private void OnInteract(EntityUid uid, LubeComponent component, ref AfterInteractEvent args)
     {
         if (args.Handled)
             return;
@@ -36,37 +39,50 @@ public sealed class LubeSystem : EntitySystem
         if (!args.CanReach || args.Target is not { Valid: true } target)
             return;
 
-        if (TryLube(entity, target, args.User))
-        {
+        if (TryLube(uid, component, target, args.User))
             args.Handled = true;
-            _audio.PlayPvs(entity.Comp.Squeeze, entity);
-            _popup.PopupEntity(Loc.GetString("lube-success", ("target", Identity.Entity(target, EntityManager))), args.User, args.User, PopupType.Medium);
-        }
-        else
-        {
-            _popup.PopupEntity(Loc.GetString("lube-failure", ("target", Identity.Entity(target, EntityManager))), args.User, args.User, PopupType.Medium);
-        }
     }
 
-    private bool TryLube(Entity<LubeComponent> lube, EntityUid target, EntityUid actor)
+    private void OnUtilityVerb(EntityUid uid, LubeComponent component, GetVerbsEvent<UtilityVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess || args.Target is not { Valid: true } target ||
+        _openable.IsClosed(uid))
+            return;
+
+        var verb = new UtilityVerb()
+        {
+            Act = () => TryLube(uid, component, args.Target, args.User),
+            IconEntity = GetNetEntity(uid),
+            Text = Loc.GetString("lube-verb-text"),
+            Message = Loc.GetString("lube-verb-message")
+        };
+
+        args.Verbs.Add(verb);
+    }
+
+    private bool TryLube(EntityUid uid, LubeComponent component, EntityUid target, EntityUid actor)
     {
         if (HasComp<LubedComponent>(target) || !HasComp<ItemComponent>(target))
         {
+            _popup.PopupEntity(Loc.GetString("lube-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
             return false;
         }
 
-        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(lube.Owner, lube.Comp.Solution, out _, out var solution))
+        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(uid, component.Solution, out _, out var solution))
         {
-            var quantity = solution.RemoveReagent(lube.Comp.Reagent, lube.Comp.Consumption);
+            var quantity = solution.RemoveReagent(component.Reagent, component.Consumption);
             if (quantity > 0)
             {
                 var lubed = EnsureComp<LubedComponent>(target);
-                lubed.SlipsLeft = _random.Next(lube.Comp.MinSlips * quantity.Int(), lube.Comp.MaxSlips * quantity.Int());
-                lubed.SlipStrength = lube.Comp.SlipStrength;
-                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} lubed {ToPrettyString(target):subject} with {ToPrettyString(lube.Owner):tool}");
+                lubed.SlipsLeft = _random.Next(component.MinSlips * quantity.Int(), component.MaxSlips * quantity.Int());
+                lubed.SlipStrength = component.SlipStrength;
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} lubed {ToPrettyString(target):subject} with {ToPrettyString(uid):tool}");
+                _audio.PlayPvs(component.Squeeze, uid);
+                _popup.PopupEntity(Loc.GetString("lube-success", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
                 return true;
             }
         }
+        _popup.PopupEntity(Loc.GetString("lube-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
         return false;
     }
 }
