@@ -371,12 +371,8 @@ public abstract class SharedActionsSystem : EntitySystem
 
         BaseActionEvent? performEvent = null;
 
-        if (action.CheckMobState != null)
-        {
-            if (!TryComp<MobStateComponent>(user, out var mobState) ||
-                mobState.CurrentState != action.CheckMobState)
-                return;
-        }
+        if (action.CheckConsciousness && !_actionBlockerSystem.CanConsciouslyPerformAction(user))
+            return;
 
         // Validate request by checking action blockers and the like:
         switch (action)

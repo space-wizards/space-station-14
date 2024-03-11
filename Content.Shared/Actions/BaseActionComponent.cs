@@ -120,9 +120,10 @@ public abstract partial class BaseActionComponent : Component
     [DataField("checkCanInteract")] public bool CheckCanInteract = true;
 
     /// <summary>
-    /// If not null, determines whether the action system should block this action if the user is not in the correct MobState
+    /// Whether to check if the user is conscious or not. Can be used instead of <see cref="CheckCanInteract"/>
+    /// for a more permissive check.
     /// </summary>
-    [DataField] public MobState? CheckMobState;
+    [DataField] public bool CheckConsciousness;
 
     /// <summary>
     ///     If true, this will cause the action to only execute locally without ever notifying the server.
@@ -183,7 +184,7 @@ public abstract class BaseActionComponentState : ComponentState
     public NetEntity? Container;
     public NetEntity? EntityIcon;
     public bool CheckCanInteract;
-    public MobState? CheckMobState;
+    public bool CheckConsciousness;
     public bool ClientExclusive;
     public int Priority;
     public NetEntity? AttachedEntity;
@@ -211,7 +212,7 @@ public abstract class BaseActionComponentState : ComponentState
         MaxCharges = component.MaxCharges;
         RenewCharges = component.RenewCharges;
         CheckCanInteract = component.CheckCanInteract;
-        CheckMobState = component.CheckMobState;
+        CheckConsciousness = component.CheckConsciousness;
         ClientExclusive = component.ClientExclusive;
         Priority = component.Priority;
         AutoPopulate = component.AutoPopulate;
