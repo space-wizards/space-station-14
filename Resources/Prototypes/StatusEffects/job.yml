@@ -398,6 +398,13 @@
 
 - type: statusIcon
   parent: JobIcon
+  id: JobIconBridgeOfficer
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: BridgeOfficer
+
+- type: statusIcon
+  parent: JobIcon
   id: JobIconIAA
   icon:
     sprite: Interface/Misc/job_icons.rsi

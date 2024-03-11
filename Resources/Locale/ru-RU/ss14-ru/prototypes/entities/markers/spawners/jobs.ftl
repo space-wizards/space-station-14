@@ -172,3 +172,7 @@ ent-SpawnPointBlueShield = офицер синий щит
 ent-SpawnPointPrisoner = заключённый
     .desc = { ent-SpawnPointJobBase.desc }
     .suffix = { ent-SpawnPointJobBase.suffix }
+
+ent-SpawnPointBridgeOfficer = офицер мостика
+    .desc = { ent-SpawnPointJobBase.desc }
+    .suffix = { ent-SpawnPointJobBase.suffix }

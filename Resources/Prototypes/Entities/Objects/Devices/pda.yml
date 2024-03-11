@@ -1334,3 +1334,23 @@
       whitelist:
         components:
           - Cartridge
+
+- type: entity
+  parent: BasePDA
+  id: BridgeOfficerPDA
+  name: bridge officer PDA
+  description: Raise shields!
+  components:
+  - type: Pda
+    id: BridgeOfficerIDCard
+    state: pda-bridgeofficer
+    penSlot:
+      startingItem: PenCap
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: PdaBorderColor
+    borderColor: "#7C5D00"
+  - type: Icon
+    state: pda-bridgeofficer

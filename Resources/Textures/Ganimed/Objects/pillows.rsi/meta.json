@@ -2,7 +2,7 @@
   "version": 1,
   "size": {"x": 32, "y": 32},
   "license": "See repo CLA.",
-  "copyright": "By thedusteffin for Enterprise server use.",
+  "copyright": "By thedusteffin for Enterprise server use. Six pillow by Gorox",
   "states": [
     {
       "name": "icon-one"
