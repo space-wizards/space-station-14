@@ -10,13 +10,13 @@
     thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 100
+          damage: 300
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
-          damage: 75
+          damage: 200 #20ish crowbar hits
         behaviors:
         - !type:EmptyAllContainersBehaviour
         - !type:DoActsBehavior
