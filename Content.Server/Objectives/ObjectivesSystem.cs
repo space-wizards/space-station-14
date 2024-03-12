@@ -105,6 +105,8 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
     private void AddSummary(ref string result, string agent, List<EntityUid> minds)
     {
+        var agentSummaries = new List<(string summary, float successRate, int completedObjectives)>();
+
         foreach (var mindId in minds)
         {
             if (!TryComp(mindId, out MindComponent? mind))
@@ -114,25 +116,25 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             if (title == null)
                 continue;
 
-            result += "\n";
-
             var custody = IsInCustody(mindId, mind) ? Loc.GetString("objectives-in-custody") : string.Empty;
 
             var objectives = mind.Objectives;
             if (objectives.Count == 0)
             {
-                result += Loc.GetString("objectives-no-objectives", ("custody", custody), ("title", title), ("agent", agent));
+                agentSummaries.Add((Loc.GetString("objectives-no-objectives", ("custody", custody), ("title", title), ("agent", agent)), 0f, 0));
                 continue;
             }
 
-            result += Loc.GetString("objectives-with-objectives", ("custody", custody), ("title", title), ("agent", agent));
+            var completedObjectives = 0;
+            var totalObjectives = 0;
+            var agentSummary = Loc.GetString("objectives-with-objectives", ("custody", custody), ("title", title), ("agent", agent));
 
             foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).Issuer))
             {
                 //TO DO:
                 //check for the right group here. Getting the target issuer is easy: objectiveGroup.Key
                 //It should be compared to the type of the group's issuer.
-                result += "\n" + Loc.GetString($"objective-issuer-{objectiveGroup.Key}");
+                agentSummary += "\n" + Loc.GetString($"objective-issuer-{objectiveGroup.Key}");
 
                 foreach (var objective in objectiveGroup)
                 {
@@ -142,17 +144,20 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
                     var objectiveTitle = info.Value.Title;
                     var progress = info.Value.Progress;
+                    totalObjectives++;
+
                     if (progress > 0.99f)
                     {
-                        result += "\n- " + Loc.GetString(
+                        agentSummary += "\n- " + Loc.GetString(
                             "objectives-objective-success",
                             ("objective", objectiveTitle),
                             ("markupColor", "green")
                         );
+                        completedObjectives++;
                     }
                     else
                     {
-                        result += "\n- " + Loc.GetString(
+                        agentSummary += "\n- " + Loc.GetString(
                             "objectives-objective-fail",
                             ("objective", objectiveTitle),
                             ("progress", (int) (progress * 100)),
@@ -161,7 +166,17 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                     }
                 }
             }
+
+            var successRate = totalObjectives > 0 ? (float) completedObjectives / totalObjectives : 0f;
+            agentSummaries.Add((agentSummary, successRate, completedObjectives));
         }
+
+        agentSummaries = agentSummaries.OrderByDescending(x => x.successRate)
+                                       .ThenByDescending(x => x.completedObjectives)
+                                       .ToList();
+
+        foreach (var (summary, _, _) in agentSummaries)
+            result += "\n" + summary;
     }
 
     public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
