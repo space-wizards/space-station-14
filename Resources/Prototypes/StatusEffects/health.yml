@@ -5,6 +5,7 @@
     sprite: /Textures/Interface/Misc/health_icons.rsi
     state: Fine
   locationPreference: Left
+
 - type: statusIcon
   id: HealthIconCritical
   priority: 1
@@ -12,10 +13,19 @@
     sprite: /Textures/Interface/Misc/health_icons.rsi
     state: Critical
   locationPreference: Left
+
 - type: statusIcon
   id: HealthIconDead
   priority: 1
   icon:
     sprite: /Textures/Interface/Misc/health_icons.rsi
     state: Dead
+  locationPreference: Left
+
+- type: statusIcon
+  id: HealthIconCatatonic
+  priority: 1
+  icon:
+    sprite: /Textures/Interface/Misc/health_icons.rsi
+    state: Catatonic
   locationPreference: Left

@@ -15,6 +15,9 @@
 		},
 		{
 			"name": "Dead"
+		},
+		{
+			"name": "Catatonic"
 		}
     ]
 }
