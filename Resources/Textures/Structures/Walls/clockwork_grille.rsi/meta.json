@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/f64e687250f028359d811b2c7e9d4974b2e7ffeb/icons/effects/clockwork.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ratvargrille"
+    },
+    {
+      "name": "brokenratvargrille"
+    },
+	{
+	  "name": "ratvargrille_diagonal"
+	}
+  ]
+}

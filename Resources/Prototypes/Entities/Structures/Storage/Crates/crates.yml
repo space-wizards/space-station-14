@@ -337,7 +337,7 @@
           bounds: "-0.4,-0.4,0.4,0.29"
         density: 135
         mask:
-        - LargeMobMask
+        - SmallMobMask #this is so they can go under plastic flaps
         layer:
         - LargeMobLayer
   - type: Construction

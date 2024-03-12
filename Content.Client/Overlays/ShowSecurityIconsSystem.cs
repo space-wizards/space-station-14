@@ -3,6 +3,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Overlays;
 using Content.Shared.PDA;
+using Content.Shared.Security.Components;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
@@ -74,7 +75,11 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
                 result.Add(icon);
         }
 
-        // Add arrest icons here, WYCI.
+        if (TryComp<CriminalRecordComponent>(uid, out var record))
+        {
+            if(_prototypeMan.TryIndex<StatusIconPrototype>(record.StatusIcon.Id, out var criminalIcon))
+                result.Add(criminalIcon);
+        }
 
         return result;
     }
