@@ -56,35 +56,6 @@
     - Secret
 
 - type: gamePreset
-  id: SecretExtended #For Admin Use: Runs Extended but shows "Secret" in lobby.
-  alias:
-    - secretextended
-  name: secret-title
-  showInVote: false #Admin Use
-  description: secret-description
-  rules:
-    - BasicStationEventScheduler
-
-- type: gamePreset
-  id: SecretGreenshift #For Admin Use: Runs Greenshift but shows "Secret" in lobby.
-  alias:
-  - secretgreenshift
-  name: secret-title
-  showInVote: false #Admin Use
-  description: secret-description
-
-- type: gamePreset
-  id: Sandbox
-  alias:
-    - sandbox
-  name: sandbox-title
-  description: sandbox-description
-  showInVote: false # Not suitable for use without admin intervention, since entity spamming can quickly crash a server
-  maxPlayers: 5
-  rules:
-    - Sandbox
-
-- type: gamePreset
   id: Traitor
   alias:
     - traitor
