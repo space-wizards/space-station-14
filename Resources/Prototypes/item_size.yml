@@ -1,3 +1,11 @@
+# Items that you hold between your fingers
+- type: itemSize
+  id: Miniscule
+  weight: 0
+  name: item-component-size-Miniscule
+  defaultShape:
+  - 0,0,0,0
+
 # Items that can be held completely in one's hand.
 - type: itemSize
   id: Tiny

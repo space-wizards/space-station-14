@@ -17,7 +17,7 @@
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
-    size: Tiny
+    size: Miniscule
   - type: Construction
     graph: smokeableCigarette
     node: cigarette
@@ -42,7 +42,7 @@
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
-    size: Tiny
+    size: Miniscule
   - type: Construction
     graph: smokeableCigarette
     node: cigarette
