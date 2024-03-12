@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added the turbo recharger to research. It's compatible with both weapons
-      and cells and charges 5 times faster than ordinary station rechargers.
-    type: Add
-  - message: Removed machine upgrades from all chargers.
-    type: Remove
-  id: 5629
-  time: '2024-01-08T07:15:13.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23723
 - author: username
   changes:
   - message: Ability to copy data from pda
@@ -3808,3 +3798,11 @@
   id: 6128
   time: '2024-03-12T12:57:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26033
+- author: liltenhead
+  changes:
+  - message: Buffed the zombie virus to do purely poison damage, and more likely to
+      spread the infection per bite.
+    type: Tweak
+  id: 6129
+  time: '2024-03-12T18:44:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25954
