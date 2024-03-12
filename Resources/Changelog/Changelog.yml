@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: username
-  changes:
-  - message: Ability to copy data from pda
-    type: Add
-  id: 5630
-  time: '2024-01-08T10:06:44.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23533
 - author: Jrpl
   changes:
   - message: The Communications Computer now has a 30-second delay before an announcement
@@ -3806,3 +3799,11 @@
   id: 6129
   time: '2024-03-12T18:44:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25954
+- author: UnicornOnLSD
+  changes:
+  - message: brought back the classic crew cut as an alternative to the current one
+      !
+    type: Add
+  id: 6130
+  time: '2024-03-12T18:47:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25935
