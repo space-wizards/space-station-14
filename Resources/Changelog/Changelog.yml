@@ -1,36 +1,4 @@
 ﻿Entries:
-- author: Scribbles0
-  changes:
-  - message: Cryoxadone and doxarubixadone now work on dead patients.
-    type: Tweak
-  id: 5627
-  time: '2024-01-08T06:31:26.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23558
-- author: Dygon
-  changes:
-  - message: Mothroaches are now a little bit more resilient, making them less prone
-      to being gibbed.
-    type: Tweak
-  id: 5628
-  time: '2024-01-08T06:57:34.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23722
-- author: EmoGarbage404
-  changes:
-  - message: Added the turbo recharger to research. It's compatible with both weapons
-      and cells and charges 5 times faster than ordinary station rechargers.
-    type: Add
-  - message: Removed machine upgrades from all chargers.
-    type: Remove
-  id: 5629
-  time: '2024-01-08T07:15:13.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23723
-- author: username
-  changes:
-  - message: Ability to copy data from pda
-    type: Add
-  id: 5630
-  time: '2024-01-08T10:06:44.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23533
 - author: Jrpl
   changes:
   - message: The Communications Computer now has a 30-second delay before an announcement
@@ -3806,3 +3774,36 @@
   id: 6126
   time: '2024-03-12T02:38:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25770
+- author: nikthechampiongr
+  changes:
+  - message: Recyclers now leave logs when they gib people.
+    type: Add
+  - message: People sending a broadcast in the communications console now leave logs.
+    type: Add
+  id: 6127
+  time: '2024-03-12T10:57:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26008
+- author: ShadowCommander
+  changes:
+  - message: Fixed arrivals shuttle not docking with the station when it was slowly
+      spinning.
+    type: Fix
+  id: 6128
+  time: '2024-03-12T12:57:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26033
+- author: liltenhead
+  changes:
+  - message: Buffed the zombie virus to do purely poison damage, and more likely to
+      spread the infection per bite.
+    type: Tweak
+  id: 6129
+  time: '2024-03-12T18:44:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25954
+- author: UnicornOnLSD
+  changes:
+  - message: brought back the classic crew cut as an alternative to the current one
+      !
+    type: Add
+  id: 6130
+  time: '2024-03-12T18:47:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25935
