@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Jrpl
-  changes:
-  - message: The Communications Computer now has a 30-second delay before an announcement
-      can be made, after the computer is built. This includes all Communications Computers
-      that are on the map by default.
-    type: Tweak
-  id: 5631
-  time: '2024-01-08T12:28:07.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/21681
 - author: Dutch-VanDerLinde
   changes:
   - message: Robotech deluxe vending machines now contain 2 diagnostic HUDs, a flame
@@ -3807,3 +3798,10 @@
   id: 6130
   time: '2024-03-12T18:47:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25935
+- author: FungiFellow
+  changes:
+  - message: Added Improvised Shotgun Shell Recipe
+    type: Add
+  id: 6131
+  time: '2024-03-12T23:52:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25545
