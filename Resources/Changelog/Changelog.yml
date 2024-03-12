@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Dygon
-  changes:
-  - message: Mothroaches are now a little bit more resilient, making them less prone
-      to being gibbed.
-    type: Tweak
-  id: 5628
-  time: '2024-01-08T06:57:34.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23722
 - author: EmoGarbage404
   changes:
   - message: Added the turbo recharger to research. It's compatible with both weapons
@@ -3808,3 +3800,11 @@
   id: 6127
   time: '2024-03-12T10:57:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26008
+- author: ShadowCommander
+  changes:
+  - message: Fixed arrivals shuttle not docking with the station when it was slowly
+      spinning.
+    type: Fix
+  id: 6128
+  time: '2024-03-12T12:57:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26033
