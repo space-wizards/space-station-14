@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Kezu",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "shelf"
+    },
+    {
+      "name": "bar-0"
+    },
+    {
+      "name": "bar-1"
+    },
+    {
+      "name": "bar-2"
+    },
+    {
+      "name": "bar-3"
+    },
+    {
+      "name": "locked-shelf"
+    },
+    {
+      "name": "unlocked-shelf"
+    },
+    {
+      "name": "open-unlocked-shelf"
+    }
+  ]
+}
