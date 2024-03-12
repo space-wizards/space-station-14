@@ -79,3 +79,8 @@
   id: Weh
   files:
   - /Audio/Items/Toys/weh.ogg
+
+- type: soundCollection
+  id: WehChat
+  files:
+  - /Audio/Items/Toys/weh.ogg

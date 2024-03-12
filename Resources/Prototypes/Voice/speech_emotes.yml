@@ -248,6 +248,21 @@
   chatMessages: [Wehs!]
 
 - type: emote
+  id: WehChat
+  category: Vocal
+  chatMessages: [Weh!]
+  chatTriggers:
+    - weh
+    - weh.
+    - weh!
+    - wehs
+    - wehs.
+    - wehs!
+    - wehing
+    - wehing.
+    - wehing!
+
+- type: emote
   id: Chirp
   category: Vocal
   chatMessages: [chirps!]
