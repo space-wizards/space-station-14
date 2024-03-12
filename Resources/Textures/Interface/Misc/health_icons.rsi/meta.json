@@ -10,14 +10,14 @@
         {
             "name": "Fine"
         },
-		{
-			"name": "Critical"
-		},
-		{
-			"name": "Dead"
-		},
-		{
-			"name": "Catatonic"
-		}
+        {
+            "name": "Critical"
+        },
+        {
+            "name": "Dead"
+        },
+        {
+            "name": "Catatonic"
+        }
     ]
 }
