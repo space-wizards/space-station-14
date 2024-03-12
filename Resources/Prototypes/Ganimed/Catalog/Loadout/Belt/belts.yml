@@ -13,6 +13,7 @@
     - SeniorOfficer
     - Brigmedic
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingBeltMilitaryWebbing
 
 - type: loadout
@@ -30,6 +31,7 @@
     - SeniorOfficer
     - Brigmedic
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingBeltSecurityWebbing
 
 - type: loadout
@@ -56,6 +58,7 @@
     - SeniorOfficer
     - Brigmedic
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingBeltMilitaryWebbingMed
 
 - type: loadout
@@ -75,6 +78,7 @@
     - ServiceWorker
     - Brigmedic
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingBeltBandolier
 
 - type: loadout
@@ -169,6 +173,7 @@
     - SeniorOfficer
     - Brigmedic
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingBeltSecurityFilled
 
 - type: loadout
@@ -221,6 +226,7 @@
     - SeniorOfficer
     - Brigmedic
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingBeltAssault
 
 - type: loadout

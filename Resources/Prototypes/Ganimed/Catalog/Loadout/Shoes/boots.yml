@@ -14,6 +14,7 @@
     - Captain
     - BlueShield
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingShoesBootsCombat
 
 - type: loadout
@@ -40,6 +41,7 @@
     - Quartermaster
     - BlueShield
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingShoesBootsMerc
 
 - type: loadout
@@ -57,6 +59,7 @@
     - SeniorOfficer
     - BlueShield
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingShoesSwat
 
 - type: loadout
@@ -112,6 +115,7 @@
     - HeadOfPersonnel
     - BlueShield
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingShoesBootsJack
 
 - type: loadout
@@ -128,6 +132,7 @@
     - SeniorOfficer
     - BlueShield
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingShoesBootsJackSecFilled
 
 - type: loadout

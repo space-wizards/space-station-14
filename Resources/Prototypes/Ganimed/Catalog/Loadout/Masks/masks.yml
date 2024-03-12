@@ -130,6 +130,7 @@
     - SeniorOfficer
     - Brigmedic
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingMaskGasSecurity
 
 - type: loadout
@@ -159,6 +160,7 @@
     - SeniorOfficer
     - Brigmedic
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingMaskGasMerc
 
 - type: loadout

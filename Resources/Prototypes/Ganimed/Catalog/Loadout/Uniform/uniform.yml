@@ -254,6 +254,7 @@
     - HeadOfSecurity
     - SeniorOfficer
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingUniformJumpsuitBrigmedic
 
 - type: loadout
@@ -287,6 +288,7 @@
     - HeadOfSecurity
     - SeniorOfficer
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingUniformJumpskirtBrigmedic
 
 - type: loadout
@@ -782,6 +784,7 @@
     - Quartermaster
     - BlueShield
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingUniformJumpsuitScientist
 
 - type: loadout
@@ -881,6 +884,7 @@
     - SeniorOfficer
     - BlueShield
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingUniformJumpsuitSec
 
 - type: loadout
@@ -898,6 +902,7 @@
     - SeniorOfficer
     - BlueShield
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingUniformJumpskirtSec
 
 - type: loadout
@@ -1214,6 +1219,7 @@
     - SeniorOfficer
     - IAA
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingUniformJumpsuitLawyerGood
 
 - type: loadout
@@ -1229,6 +1235,7 @@
     - SeniorOfficer
     - IAA
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingUniformJumpskirtLawyerGood
 
 - type: loadout
@@ -1389,6 +1396,7 @@
     - SeniorOfficer
     - BlueShield
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingUniformJumpsuitSecGrey
 
 - type: loadout
@@ -1405,6 +1413,7 @@
     - SeniorOfficer
     - BlueShield
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingUniformJumpskirtSecGrey
 
 - type: loadout
@@ -1475,6 +1484,7 @@
     - SeniorOfficer
     - BlueShield
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingUniformJumpsuitTacticool
 
 - type: loadout
@@ -1491,6 +1501,7 @@
     - SeniorOfficer
     - BlueShield
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingUniformJumpskirtTacticool
 
 - type: loadout
@@ -1508,6 +1519,7 @@
     - SeniorOfficer
     - BlueShield
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingUniformJumpskirtTacticalMaid
 
 - type: loadout
@@ -1727,6 +1739,7 @@
     - HeadOfSecurity
     - SeniorOfficer
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingUniformJumpskirtBrigmedicBlack
 
 - type: loadout
@@ -1744,4 +1757,5 @@
     - HeadOfSecurity
     - SeniorOfficer
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingUniformJumpsuitBrigmedicBlack

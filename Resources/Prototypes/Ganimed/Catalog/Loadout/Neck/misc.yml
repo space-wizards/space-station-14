@@ -132,6 +132,7 @@
     - Detective
     - Brigmedic
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingNeckSecuritymedal
 
 - type: loadout
