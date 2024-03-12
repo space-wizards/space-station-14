@@ -119,7 +119,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      33: Dead
+      24: Dead
   - type: Fixtures
     fixtures:
       fix1:
@@ -135,7 +135,7 @@
     hidden: true
     damage:
       groups:
-        Brute: 8
+        Brute: 4
     animation: WeaponArcBite
   - type: Climbing
   - type: NameIdentifier

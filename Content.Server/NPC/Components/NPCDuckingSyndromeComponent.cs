@@ -10,7 +10,7 @@ namespace Content.Server.NPC.Components;
 public sealed partial class NPCDuckingSyndromeComponent : Component
 {
     [DataField]
-    public HashSet<EntityUid> SyndromeTarget;
+    public HashSet<EntityUid> SyndromeTarget = new();
 
     [DataField]
     public float SearchRadius = 10f;
