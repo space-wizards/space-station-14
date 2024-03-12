@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Variant cube boxes are given to the chef instead of monkey cube boxes,
-      and they contain both monkey cubes and kobold cubes.
-    type: Add
-  - message: Kobold cube boxes and wrappers have a new sprite.
-    type: Tweak
-  id: 5626
-  time: '2024-01-08T06:27:40.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23685
 - author: Scribbles0
   changes:
   - message: Cryoxadone and doxarubixadone now work on dead patients.
@@ -3809,3 +3799,10 @@
   id: 6125
   time: '2024-03-11T23:05:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26003
+- author: Ubaser
+  changes:
+  - message: Unpressurized areas now deal heat damage along with blunt.
+    type: Tweak
+  id: 6126
+  time: '2024-03-12T02:38:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25770
