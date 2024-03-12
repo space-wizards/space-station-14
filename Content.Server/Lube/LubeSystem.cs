@@ -40,7 +40,7 @@ public sealed class LubeSystem : EntitySystem
         if (!args.CanReach || args.Target is not { Valid: true } target)
             return;
 
-        if (TryLube(entity, entity, target, args.User))
+        if (TryLube(entity, target, args.User))
             args.Handled = true;
     }
 
@@ -54,7 +54,7 @@ public sealed class LubeSystem : EntitySystem
 
         var verb = new UtilityVerb()
         {
-            Act = () => TryLube(entity, entity, target, user),
+            Act = () => TryLube(entity, target, user),
             IconEntity = GetNetEntity(entity),
             Text = Loc.GetString("lube-verb-text"),
             Message = Loc.GetString("lube-verb-message")
@@ -63,7 +63,7 @@ public sealed class LubeSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private bool TryLube(EntityUid uid, LubeComponent component, EntityUid target, EntityUid actor)
+    private bool TryLube(Entity<LubeComponent> entity, EntityUid target, EntityUid actor)
     {
         if (HasComp<LubedComponent>(target) || !HasComp<ItemComponent>(target))
         {
@@ -71,16 +71,16 @@ public sealed class LubeSystem : EntitySystem
             return false;
         }
 
-        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(uid, component.Solution, out _, out var solution))
+        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
         {
-            var quantity = solution.RemoveReagent(component.Reagent, component.Consumption);
+            var quantity = solution.RemoveReagent(entity.Comp.Reagent, entity.Comp.Consumption);
             if (quantity > 0)
             {
                 var lubed = EnsureComp<LubedComponent>(target);
-                lubed.SlipsLeft = _random.Next(component.MinSlips * quantity.Int(), component.MaxSlips * quantity.Int());
-                lubed.SlipStrength = component.SlipStrength;
-                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} lubed {ToPrettyString(target):subject} with {ToPrettyString(uid):tool}");
-                _audio.PlayPvs(component.Squeeze, uid);
+                lubed.SlipsLeft = _random.Next(entity.Comp.MinSlips * quantity.Int(), entity.Comp.MaxSlips * quantity.Int());
+                lubed.SlipStrength = entity.Comp.SlipStrength;
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} lubed {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
+                _audio.PlayPvs(entity.Comp.Squeeze, entity.Owner);
                 _popup.PopupEntity(Loc.GetString("lube-success", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
                 return true;
             }
