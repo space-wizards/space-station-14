@@ -288,9 +288,6 @@ namespace Content.Server.Voting.Managers
 
             foreach (var preset in _prototypeManager.EnumeratePrototypes<GamePresetPrototype>())
             {
-                if(!preset.ShowInVote)
-                    continue;
-
                 presets[preset.ID] = preset.ModeTitle;
             }
             return presets;
