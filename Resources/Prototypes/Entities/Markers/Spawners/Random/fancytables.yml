@@ -7,7 +7,7 @@
       layers:
         - state: red
         - sprite: Structures/Furniture/Tables/Fancy/blue.rsi
-          state: Icon
+          state: full
     - type: RandomSpawner
       prototypes:
         - TableFancyBlue
