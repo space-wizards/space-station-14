@@ -1,7 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
+using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
@@ -108,6 +109,21 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         {
             component.Stream = _audio.PlayPredicted(component.Sound, uid, user)?.Entity;
             component.NextSound = Timing.CurTime + component.SoundCooldown;
+        }
+
+        if (TryComp<ContainerManagerComponent>(item, out var contManager)){
+            foreach (var cont in contManager.Containers.Values)
+            {
+                var containedEntites = cont.ContainedEntities.ToArray();
+
+                foreach (var entity in containedEntites)
+                {
+                    if (Terminating(entity))
+                        continue;
+
+                    Container.RemoveEntity(item, entity, force: true, destination: uid.ToCoordinates());
+                }
+            }
         }
 
         var duration = GetReclaimingDuration(uid, item, component);
