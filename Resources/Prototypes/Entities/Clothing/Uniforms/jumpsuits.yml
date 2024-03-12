@@ -1459,3 +1459,15 @@
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
+
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBunnysuit
+  name: bunny suit
+  description: Quite open bunny costume. Make sure you'll be a good bunny girl senpai.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/bunnysuit.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/bunnysuit.rsi
