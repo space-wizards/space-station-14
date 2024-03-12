@@ -12,7 +12,7 @@ public sealed partial class SilencedComponent : Component
     /// Can this entity make sounds indirectly by interacting with sound emitting objects?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool AllowEmitterUse;
+    public bool AllowEmitterUse = true;
 
     /// <summary>
     /// Can this entity make footstep sounds?

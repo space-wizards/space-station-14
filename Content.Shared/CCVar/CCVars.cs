@@ -2023,6 +2023,20 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> GatewayGeneratorEnabled =
             CVarDef.Create("gateway.generator_enabled", true);
 
+        /// <summary>
+        /// Whether mimes make footstep sounds while walking.
+        /// </summary>
+        public static readonly CVarDef<bool> MimeAllowFootsteps =
+            CVarDef.Create("mime.allow_footsteps", true, CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// Whether mimes can make sounds indirectly by interactions
+        /// with entities that use the EmitSound components.
+        /// This includes bike horns, desk bells, plushies, etc.
+        /// </summary>
+        public static readonly CVarDef<bool> MimeAllowEmitters =
+            CVarDef.Create("mime.allow_emitters", true, CVar.REPLICATED | CVar.SERVER);
+
         /*
          * DEBUG
          */
