@@ -50,6 +50,8 @@
   - type: Item
     heldPrefix: off
     size: Normal
+    shape:
+    - 0,0,0,3
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunbaton.rsi
     quickEquip: false

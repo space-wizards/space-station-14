@@ -12,6 +12,9 @@
     sprite: Clothing/Belt/utility.rsi
   - type: Storage
     maxItemSize: Normal
+    grid:
+    - 0,0,7,1
+    - 0,2,0,3
     # TODO: Fill this out more.
     whitelist:
       tags:
@@ -458,6 +461,9 @@
   - type: Clothing
     sprite: Clothing/Belt/security.rsi
   - type: Storage
+    grid:
+    - 0,0,7,1
+    - 0,2,0,3
     whitelist:
       tags:
         - CigPack
