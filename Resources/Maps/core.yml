@@ -17006,9 +17006,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 33.5,-10.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 8474
   - uid: 20249
@@ -112859,8 +112856,6 @@ entities:
         17481:
         - Pressed: Toggle
         17487:
-        - Pressed: Toggle
-        invalid:
         - Pressed: Toggle
         17305:
         - Pressed: Toggle
