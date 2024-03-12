@@ -51,7 +51,7 @@ public sealed class RandomSpriteSystem : SharedRandomSpriteSystem
             {
                 if (layer.Key is not { } strKey || !int.TryParse(strKey, out index))
                 {
-                    Logger.Error($"Invalid key `{layer.Key}` for entity with random sprite {ToPrettyString(uid)}");
+                    Log.Error($"Invalid key `{layer.Key}` for entity with random sprite {ToPrettyString(uid)}");
                     continue;
                 }
             }

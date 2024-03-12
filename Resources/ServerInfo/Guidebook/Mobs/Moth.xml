@@ -1,0 +1,15 @@
+<Document>
+  # Moth People
+
+  <Box>
+    <GuideEntityEmbed Entity="MobMoth" Caption=""/>
+  </Box>
+
+  They can eat cotton, fabrics and clothing, but virtually none of the food that others would consider "edible". They prefer a somewhat lower temperature range than humans.
+  Their Insect Blood can't be metabolised from Iron like normal blood.
+
+  Their wings give them better acceleration if there is no gravity on the station, but they still can't move without equipment when floating out in space.
+
+  They take [color=#1e90ff]30% less Cold damage[/color] but [color=#ffa500]30% more Heat damage, and catch on fire more easily[/color].
+
+</Document>

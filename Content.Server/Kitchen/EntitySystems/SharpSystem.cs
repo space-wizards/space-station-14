@@ -1,6 +1,8 @@
 ﻿using Content.Server.Body.Systems;
 using Content.Server.Kitchen.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
@@ -26,6 +28,7 @@ public sealed class SharpSystem : EntitySystem
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
@@ -73,7 +76,6 @@ public sealed class SharpSystem : EntitySystem
                 BreakOnDamage = true,
                 NeedHand = true
             };
-
         _doAfterSystem.TryStartDoAfter(doAfter);
     }
 
@@ -121,6 +123,11 @@ public sealed class SharpSystem : EntitySystem
         _destructibleSystem.DestroyEntity(args.Args.Target.Value);
 
         args.Handled = true;
+
+        _adminLogger.Add(LogType.Gib,
+            $"{EntityManager.ToPrettyString(args.User):user} " +
+            $"has butchered {EntityManager.ToPrettyString(args.Target):target} " +
+            $"with {EntityManager.ToPrettyString(args.Used):knife}");
     }
 
     private void OnGetInteractionVerbs(EntityUid uid, ButcherableComponent component, GetVerbsEvent<InteractionVerb> args)
