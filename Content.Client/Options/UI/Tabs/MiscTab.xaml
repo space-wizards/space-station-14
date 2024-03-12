@@ -27,8 +27,7 @@
             <Label Text="{Loc 'ui-options-chat-window-opacity'}" Margin="8 0" />
                 <Slider Name="ChatWindowOpacitySlider"
                         MinValue="0"
-                        MaxValue="100"
-                        Rounded="True"
+                        MaxValue="1"
                         MinWidth="200" />
                 <Label Name="ChatWindowOpacityLabel" Margin="8 0" />
             </BoxContainer>
@@ -72,6 +71,3 @@
         </controls:StripeBack>
     </BoxContainer>
 </tabs:MiscTab>
-
-
-
