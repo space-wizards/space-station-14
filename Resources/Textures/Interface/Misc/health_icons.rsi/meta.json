@@ -5,10 +5,16 @@
         "y": 8
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/tgstation/tgstation/blob/master/icons/mob/huds/hud.dmi",
+    "copyright": "Made by DoutorWhite",
     "states": [
         {
             "name": "Fine"
-        }
+        },
+		{
+			"name": "Critical"
+		},
+		{
+			"name": "Dead"
+		}
     ]
 }

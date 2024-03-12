@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Overlays;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
@@ -14,11 +15,19 @@ namespace Content.Client.Overlays;
 public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+
 
     public HashSet<string> DamageContainers = new();
 
     [ValidatePrototypeId<StatusIconPrototype>]
     private const string HealthIconFine = "HealthIconFine";
+
+    [ValidatePrototypeId<StatusIconPrototype>]
+    private const string HealthIconCritical = "HealthIconCritical";
+
+    [ValidatePrototypeId<StatusIconPrototype>]
+    private const string HealthIconDead = "HealthIconDead";
 
     public override void Initialize()
     {
@@ -45,18 +54,20 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
         DamageContainers.Clear();
     }
 
-    private void OnGetStatusIconsEvent(EntityUid uid, DamageableComponent damageableComponent, ref GetStatusIconsEvent args)
+    private void OnGetStatusIconsEvent(Entity<DamageableComponent> entity, ref GetStatusIconsEvent args)
     {
         if (!IsActive || args.InContainer)
             return;
 
-        var healthIcons = DecideHealthIcons(damageableComponent);
+        var healthIcons = DecideHealthIcons(entity);
 
         args.StatusIcons.AddRange(healthIcons);
     }
 
-    private IReadOnlyList<StatusIconPrototype> DecideHealthIcons(DamageableComponent damageableComponent)
+    private IReadOnlyList<StatusIconPrototype> DecideHealthIcons(Entity<DamageableComponent> entity)
     {
+        var damageableComponent = entity.Comp;
+
         if (damageableComponent.DamageContainerID == null ||
             !DamageContainers.Contains(damageableComponent.DamageContainerID))
         {
@@ -66,10 +77,14 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
         var result = new List<StatusIconPrototype>();
 
         // Here you could check health status, diseases, mind status, etc. and pick a good icon, or multiple depending on whatever.
-        if (damageableComponent?.DamageContainerID == "Biological" &&
-            _prototypeMan.TryIndex<StatusIconPrototype>(HealthIconFine, out var healthyIcon))
+        if (damageableComponent?.DamageContainerID == "Biological")
         {
-            result.Add(healthyIcon);
+            if (_mobState.IsAlive(entity) && !_mobState.IsCritical(entity) && _prototypeMan.TryIndex<StatusIconPrototype>(HealthIconFine, out var fineIcon))
+                result.Add(fineIcon);
+            else if (_mobState.IsCritical(entity) && _prototypeMan.TryIndex<StatusIconPrototype>(HealthIconCritical, out var critIcon))
+                result.Add(critIcon);
+            else if (_mobState.IsDead(entity) && _prototypeMan.TryIndex<StatusIconPrototype>(HealthIconDead, out var deadIcon))
+                result.Add(deadIcon);
         }
 
         return result;
