@@ -445,7 +445,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         component.MapEntity = map;
         component.Entity = grid;
-        _shuttle.AddFTLDestination(grid.Value, false);
+        _shuttle.TryAddFTLDestination(mapId, false, out _);
     }
 
     public HashSet<EntityUid> GetCentcommMaps()
@@ -505,14 +505,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         EnsureComp<ProtectedGridComponent>(shuttle.Value);
         EnsureComp<PreventPilotComponent>(shuttle.Value);
         EnsureComp<EmergencyShuttleComponent>(shuttle.Value);
-    }
-
-    private void OnEscapeUnpaused(EntityUid uid, EscapePodComponent component, ref EntityUnpausedEvent args)
-    {
-        if (component.LaunchTime == null)
-            return;
-
-        component.LaunchTime = component.LaunchTime.Value + args.PausedTime;
     }
 
     /// <summary>

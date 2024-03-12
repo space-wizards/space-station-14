@@ -1,5 +1,5 @@
 
-
+# Jumpsuits/skirts
 - type: latheRecipe
   id: ClothingUniformJumpsuitColorGrey # Tide
   result: ClothingUniformJumpsuitColorGrey
@@ -608,7 +608,7 @@
   completetime: 4
   materials:
     Cloth: 300
-
+# Command winter coats
 - type: latheRecipe
   id: ClothingOuterWinterCap
   result: ClothingOuterWinterCap
@@ -672,7 +672,7 @@
   materials:
     Cloth: 500
     Durathread: 400
-
+# Mantles
 - type: latheRecipe
   id: ClothingNeckMantleCap
   result: ClothingNeckMantleCap
@@ -728,8 +728,7 @@
   materials:
     Cloth: 200
     Durathread: 150
-
-
+# Winter coats
 - type: latheRecipe
   id: ClothingOuterWinterMusician
   result: ClothingOuterWinterMusician
@@ -905,7 +904,7 @@
   materials:
     Cloth: 500
     Durathread: 300
-
+# Hats
 - type: latheRecipe
   id: ClothingHeadHatCaptain
   result: ClothingHeadHatCaptain
@@ -1080,6 +1079,13 @@
   completetime: 2
   materials:
     Cloth: 100
+
+- type: latheRecipe
+  id: ClothingHeadHatParamedicsoft
+  result: ClothingHeadHatParamedicsoft
+  completetime: 1
+  materials:
+    Cloth: 100
 # Ties
 - type: latheRecipe
   id: ClothingNeckTieRed
@@ -1157,3 +1163,66 @@
   completetime: 2
   materials:
     Cloth: 200
+# Carpets
+- type: latheRecipe
+  id: Carpet
+  result: FloorCarpetItemRed
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetBlack
+  result: FloorCarpetItemBlack
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetPink
+  result: FloorCarpetItemPink
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetBlue
+  result: FloorCarpetItemBlue
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetGreen
+  result: FloorCarpetItemGreen
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetOrange
+  result: FloorCarpetItemOrange
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetPurple
+  result: FloorCarpetItemPurple
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetCyan
+  result: FloorCarpetItemCyan
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  id: CarpetWhite
+  result: FloorCarpetItemWhite
+  completetime: 1
+  materials:
+    Cloth: 100
