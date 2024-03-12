@@ -22,7 +22,8 @@ marking-LizardHornsShort = Lizard Horns (Short)
 marking-LizardHornsSimple-horns_simple = Lizard Horns
 marking-LizardHornsSimple = Lizard Horns
 
-marking-LizardTailSmooth-tail_smooth = Lizard Tail (Smooth)
+marking-LizardTailSmooth-tail_smooth_primary = Lizard Tail
+marking-LizardTailSmooth-tail_smooth_secondary = Under Tone
 marking-LizardTailSmooth = Lizard Tail (Smooth)
 
 marking-LizardTailLarge-tail_large = Lizard Tail (Large)
