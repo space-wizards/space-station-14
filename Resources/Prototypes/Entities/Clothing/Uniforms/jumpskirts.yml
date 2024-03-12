@@ -925,3 +925,14 @@
       - state: equipped-INNERCLOTHING-jumpskirt
       - state: equipped-INNERCLOTHING-shirt
         color: "#b30000"
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtMusician
+  name: musician's skirt
+  description: A fancy skirt for the musically inclined.  Perfect for any lounge act!
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/musician.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/musician.rsi
