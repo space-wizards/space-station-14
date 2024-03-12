@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -19,12 +20,27 @@ namespace Content.Shared.Mobs.Components
         //default mobstate is always the lowest state level
         [ViewVariables] public MobState CurrentState { get; set; } = MobState.Alive;
 
-        [DataField("allowedStates")] public HashSet<MobState> AllowedStates = new()
+        [DataField("allowedStates")]
+        public HashSet<MobState> AllowedStates = new()
             {
                 MobState.Alive,
                 MobState.Critical,
                 MobState.Dead
             };
+
+        // proto to spawn when you die.
+        [DataField]
+        public string ProtoOnDeath = "Doodie";
+
+        // sound to make when you die.
+        [DataField]
+        public SoundSpecifier SoundOnDeath = new SoundCollectionSpecifier("Parp")
+        {
+            Params = new AudioParams
+            {
+                Variation = 0.125f
+            }
+        };
     }
 
     [Serializable, NetSerializable]

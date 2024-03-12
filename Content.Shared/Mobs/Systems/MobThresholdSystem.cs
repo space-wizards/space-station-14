@@ -3,15 +3,21 @@ using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Mobs.Systems;
 
 public sealed class MobThresholdSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -355,6 +361,15 @@ public sealed class MobThresholdSystem : EntitySystem
             mobState.CurrentState == newState)
         {
             return;
+        }
+
+        if (_net.IsServer)
+        {
+            if (mobState.CurrentState != MobState.Dead && newState == MobState.Dead)
+            {
+                var ent = Spawn(mobState.ProtoOnDeath, Transform(target).Coordinates);
+                _audio.PlayPvs(mobState.SoundOnDeath, target);
+            }
         }
 
         if (mobState.CurrentState != MobState.Dead || thresholds.AllowRevives)

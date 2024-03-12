@@ -1,0 +1,65 @@
+- type: entity
+  name: dung
+  parent: FoodMeatBase
+  id: Doodie
+  description: What a load of shit.
+  components:
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        layer:
+        - SlipLayer
+        hard: false
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        density: 10
+        mask:
+        - ItemMask
+  - type: Appearance
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/doodie.rsi
+    state: doodie
+  - type: BadFood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: GastroToxin
+          Quantity: 9
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 1
+        - ReagentId: Fat
+          Quantity: 2
+        - ReagentId: Nutriment
+          Quantity: 6
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: fire
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - nutty
+      - slimy
+      - validhunting
+      - fiber
+      - terrible
+  - type: Slippery
+    paralyzeTime: 1
+    launchForwardsMultiplier: .5
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: Perishable
+    rotAfter: 60
+    molsPerSecondPerUnitMass: 0.1
+  - type: Tag
+    tags:
+    - Trash
