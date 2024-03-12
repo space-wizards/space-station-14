@@ -2,6 +2,8 @@ using Content.Client.Atmos.Rotting;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Damage;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Overlays;
 using Content.Shared.StatusIcon;
@@ -17,7 +19,6 @@ namespace Content.Client.Overlays;
 public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public HashSet<string> DamageContainers = new();
 
@@ -32,6 +33,13 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
 
     [ValidatePrototypeId<StatusIconPrototype>]
     private const string HealthIconDecomposing = "HealthIconDecomposing";
+
+    private readonly Dictionary<MobState, string> _stateIcons = new()
+    {
+        { MobState.Alive, HealthIconFine },
+        { MobState.Critical, HealthIconCritical },
+        { MobState.Dead, HealthIconDead }
+    };
 
     public override void Initialize()
     {
@@ -83,15 +91,16 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
         // Here you could check health status, diseases, mind status, etc. and pick a good icon, or multiple depending on whatever.
         if (damageableComponent?.DamageContainerID == "Biological")
         {
-            // Determines the icon to be used, based on mob state
-            if (_mobState.IsAlive(entity) && _prototypeMan.TryIndex<StatusIconPrototype>(HealthIconFine, out var fineIcon))
-                result.Add(fineIcon);
-            else if (_mobState.IsCritical(entity) && _prototypeMan.TryIndex<StatusIconPrototype>(HealthIconCritical, out var critIcon))
-                result.Add(critIcon);
-            else if (_mobState.IsDead(entity) && !HasComp<RottingComponent>(entity) && _prototypeMan.TryIndex<StatusIconPrototype>(HealthIconDead, out var deadIcon))
-                result.Add(deadIcon);
-            else if (_prototypeMan.TryIndex<StatusIconPrototype>(HealthIconDecomposing, out var rottingIcon))
-                result.Add(rottingIcon);
+            if (TryComp<MobStateComponent>(entity, out var state))
+            {
+                // Since there is no MobState for a rotting mob, we have to deal with this case first.
+                if (HasComp<RottingComponent>(entity) && _prototypeMan.TryIndex<StatusIconPrototype>(HealthIconDecomposing, out var rottingIcon))
+                {
+                    result.Add(rottingIcon);
+                }
+                else if (_stateIcons.TryGetValue(state.CurrentState, out var value) && _prototypeMan.TryIndex<StatusIconPrototype>(value, out var icon))
+                    result.Add(icon);
+            }
         }
 
         return result;
