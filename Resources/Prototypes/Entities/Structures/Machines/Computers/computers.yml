@@ -18,6 +18,13 @@
       state: atmos_key
   - type: GenericVisualizer
     visuals:
+      enum.ComputerVisuals.Powered:
+        computerLayerScreen:
+          True: { visible: true, shader: unshaded }
+          False: { visible: false }
+        computerLayerKeys:
+          True: { visible: true, shader: unshaded }
+          False: { visible: true, shader: shaded }   
       enum.AtmosAlertsComputerVisuals.ComputerLayerScreen:
         computerLayerScreen:
           0: { state: alert-0 }

@@ -158,8 +158,8 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
                 }
 
                 // Update the appearance of the console based on the highest recorded level of alert
-                if (TryComp<AppearanceComponent>(ent, out var appearance))
-                    _appearance.SetData(ent, AtmosAlertsComputerVisuals.ComputerLayerScreen, (int) highestAlert, appearance);
+                if (TryComp<AppearanceComponent>(ent, out var entAppearance))
+                    _appearance.SetData(ent, AtmosAlertsComputerVisuals.ComputerLayerScreen, (int) highestAlert, entAppearance);
 
                 // If the console UI is open, send UI data to each subscribed session
                 if (!_userInterfaceSystem.TryGetUi(ent, AtmosAlertsComputerUiKey.Key, out var bui))
