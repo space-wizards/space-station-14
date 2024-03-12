@@ -87,6 +87,7 @@
     - SeniorOfficer
     - BlueShield
     - Brigmedic
+    - BridgeOfficer
   prototype: ClothingHeadHatBeretSecurity
 
 - type: loadout
