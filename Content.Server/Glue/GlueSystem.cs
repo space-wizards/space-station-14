@@ -35,7 +35,7 @@ public sealed class GlueSystem : SharedGlueSystem
     }
 
     // When glue bottle is used on item it will apply the glued and unremoveable components.
-    private void OnInteract(EntityUid uid, GlueComponent component, ref AfterInteractEvent args)
+    private void OnInteract(Entity<GlueComponent> entity, ref AfterInteractEvent args)
     {
         if (args.Handled)
             return;
@@ -43,20 +43,22 @@ public sealed class GlueSystem : SharedGlueSystem
         if (!args.CanReach || args.Target is not { Valid: true } target)
             return;
 
-        if (TryGlue(uid, component, target, args.User))
+        if (TryGlue(entity, entity, target, args.User))
             args.Handled = true;
     }
 
-    private void OnUtilityVerb(EntityUid uid, GlueComponent component, GetVerbsEvent<UtilityVerb> args)
+    private void OnUtilityVerb(Entity<GlueComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess || args.Target is not { Valid: true } target ||
-        _openable.IsClosed(uid))
+        _openable.IsClosed(entity))
             return;
+
+        var user = args.User;
 
         var verb = new UtilityVerb()
         {
-            Act = () => TryGlue(uid, component, args.Target, args.User),
-            IconEntity = GetNetEntity(uid),
+            Act = () => TryGlue(entity, entity, target, user),
+            IconEntity = GetNetEntity(entity),
             Text = Loc.GetString("glue-verb-text"),
             Message = Loc.GetString("glue-verb-message")
         };

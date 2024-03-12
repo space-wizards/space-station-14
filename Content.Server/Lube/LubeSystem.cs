@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.Glue;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -31,7 +32,7 @@ public sealed class LubeSystem : EntitySystem
         SubscribeLocalEvent<LubeComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
     }
 
-    private void OnInteract(EntityUid uid, LubeComponent component, ref AfterInteractEvent args)
+    private void OnInteract(Entity<LubeComponent> entity, ref AfterInteractEvent args)
     {
         if (args.Handled)
             return;
@@ -39,20 +40,22 @@ public sealed class LubeSystem : EntitySystem
         if (!args.CanReach || args.Target is not { Valid: true } target)
             return;
 
-        if (TryLube(uid, component, target, args.User))
+        if (TryLube(entity, entity, target, args.User))
             args.Handled = true;
     }
 
-    private void OnUtilityVerb(EntityUid uid, LubeComponent component, GetVerbsEvent<UtilityVerb> args)
+    private void OnUtilityVerb(Entity<LubeComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess || args.Target is not { Valid: true } target ||
-        _openable.IsClosed(uid))
+        _openable.IsClosed(entity))
             return;
+
+        var user = args.User;
 
         var verb = new UtilityVerb()
         {
-            Act = () => TryLube(uid, component, args.Target, args.User),
-            IconEntity = GetNetEntity(uid),
+            Act = () => TryLube(entity, entity, target, user),
+            IconEntity = GetNetEntity(entity),
             Text = Loc.GetString("lube-verb-text"),
             Message = Loc.GetString("lube-verb-message")
         };
