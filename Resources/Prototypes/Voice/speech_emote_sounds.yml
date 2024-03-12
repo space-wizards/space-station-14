@@ -88,7 +88,7 @@
       collection: MaleCry
     Weh:
       collection: Weh
-    WehLizard:
+    WehChat:
       collection: WehChat
 
 - type: emoteSounds
