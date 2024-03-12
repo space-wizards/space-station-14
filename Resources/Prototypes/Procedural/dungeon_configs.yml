@@ -322,3 +322,91 @@
         SouthEast: BrickTileWhiteInnerSe
         NorthWest: BrickTileWhiteInnerNw
         NorthEast: BrickTileWhiteInnerNe
+
+
+
+- type: dungeonConfig
+  id: Clockwork
+  generator: !type:PrefabDunGen
+    roomWhitelist:
+      - Clockwork
+    presets:
+      - Bucket
+      - Wow
+      - SpaceShip
+      - Tall
+  postGeneration:
+    - !type:CorridorPostGen
+      tile: FloorGrayConcrete
+      width: 3
+
+    - !type:DungeonEntrancePostGen
+      tile: FloorGrayConcrete
+      count: 2
+
+    - !type:RoomEntrancePostGen
+      tile: FloorGrayConcrete
+      entities:
+        - CableApcExtension
+        - PinionAirlockGlass
+
+    - !type:EntranceFlankPostGen
+      tile: FloorGrayConcrete
+      entities:
+        - WallClock
+
+    - !type:ExternalWindowPostGen
+      tile: FloorGrayConcrete
+      entities:
+        - ClockworkGrille
+        - ClockworkWindow
+
+    - !type:WallMountPostGen
+      spawns:
+        - id: RandomPainting
+          prob: 0.05
+          orGroup: content
+        - id: AirAlarmAssembly
+          orGroup: content
+        - id: FireAlarmAssembly
+          orGroup: content
+
+    - !type:BoundaryWallPostGen
+      tile: FloorGrayConcrete
+      wall: WallClock
+      cornerWall: WallClock
+
+    - !type:JunctionPostGen
+      tile: FloorGrayConcrete
+      width: 1
+      entities:
+        - PinionAirlockGlass
+
+    - !type:JunctionPostGen
+      entities:
+        - PinionAirlockGlass
+
+    - !type:AutoCablingPostGen
+
+    - !type:CornerClutterPostGen
+      contents:
+        - id: PottedPlantRandom
+          amount: 1
+
+    - !type:CorridorDecalSkirtingPostGen
+      color: "#753d1496"
+      cardinalDecals:
+        South: BrickTileWhiteLineS
+        East: BrickTileWhiteLineE
+        North: BrickTileWhiteLineN
+        West: BrickTileWhiteLineW
+      cornerDecals:
+        SouthEast: BrickTileWhiteCornerSe
+        SouthWest: BrickTileWhiteCornerSw
+        NorthEast: BrickTileWhiteCornerNe
+        NorthWest: BrickTileWhiteCornerNw
+      pocketDecals:
+        SouthWest: BrickTileWhiteInnerSw
+        SouthEast: BrickTileWhiteInnerSe
+        NorthWest: BrickTileWhiteInnerNw
+        NorthEast: BrickTileWhiteInnerNe

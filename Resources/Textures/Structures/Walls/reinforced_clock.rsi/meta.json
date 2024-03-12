@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "by @jaraten. Resprite from https://github.com/tgstation/tgstation/blob/b8fc9b367ebb26def792a68bcb25294e518698d8/icons/turf/walls/clockwork_wall.dmi and https://github.com/tgstation/tgstation/blob/f64e687250f028359d811b2c7e9d4974b2e7ffeb/icons/effects/clockwork.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "rclock0",
+	  "directions": 4
+    },
+    {
+      "name": "rclock1",
+	  "directions": 4
+    },
+    {
+      "name": "rclock2",
+	  "directions": 4
+    },
+    {
+      "name": "rclock3",
+	  "directions": 4
+    },
+    {
+      "name": "rclock4",
+	  "directions": 4
+    },
+    {
+      "name": "rclock5",
+	  "directions": 4
+    },
+    {
+      "name": "rclock6",
+	  "directions": 4
+    },
+    {
+      "name": "rclock7",
+	  "directions": 4
+    },
+	{
+	  "name": "full"
+	}
+  ]
+}

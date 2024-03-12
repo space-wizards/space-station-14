@@ -378,6 +378,9 @@
   id: ClownSuit
 
 - type: Tag
+  id: Clockwork
+
+- type: Tag
   id: CluwneHorn
 
 - type: Tag #Ohioans die happy

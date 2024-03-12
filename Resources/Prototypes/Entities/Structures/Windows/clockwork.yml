@@ -54,6 +54,60 @@
       sprite: Structures/Windows/cracks.rsi
 
 - type: entity
+  id: ReinforcedClockworkWindow
+  name: reinforced clockwork window
+  parent: ClockworkWindow
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/clockwork_rwindow.rsi
+  - type: Icon
+    sprite: Structures/Windows/clockwork_rwindow.rsi
+  - type: Repairable
+    fuelCost: 10
+    doAfterDelay: 2
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: RGlass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassClockwork:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    base: crwindow
+  - type: Construction
+    graph: Window
+    node: clockworkRWindow
+  - type: Appearance
+  - type: DamageVisuals
+    thresholds: [4, 8, 12]
+    damageDivisor: 4
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks.rsi
+
+- type: entity
   id: WindowClockworkDirectional
   parent: WindowDirectional
   name: directional clockwork window

@@ -1,0 +1,306 @@
+# Rooms
+# Large
+# - 17x5
+- type: dungeonRoom
+  id: Clockwork17x5a
+  size: 17,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 0,0
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork17x5b
+  size: 17,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 18,0
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork17x5c
+  size: 17,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 36,0
+  tags:
+    - Clockwork
+
+# - 11x5
+
+- type: dungeonRoom
+  id: Clockwork11x5a
+  size: 11,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 0,6
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork11x5b
+  size: 11,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 12,6
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork11x5c
+  size: 11,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 24,6
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork11x5d
+  size: 11,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 36,6
+  tags:
+    - Clockwork
+
+# - 11x3
+
+- type: dungeonRoom
+  id: Clockwork11x3a
+  size: 11,3
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 0,12
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork11x3b
+  size: 11,3
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 12,12
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork11x3c
+  size: 11,3
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 24,12
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork11x3d
+  size: 11,3
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 36,12
+  tags:
+    - Clockwork
+    
+# - 7x5
+
+- type: dungeonRoom
+  id: Clockwork7x5a
+  size: 7,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 0,16
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork7x5b
+  size: 7,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 8,16
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork7x5c
+  size: 7,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 16,16
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork7x5e
+  size: 7,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 32,16
+  tags:
+    - Clockwork
+
+# - 7x3
+
+- type: dungeonRoom
+  id: Clockwork7x3a
+  size: 7,3
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 0,22
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork7x3b
+  size: 7,3
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 8,22
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork7x3c
+  size: 7,3
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 16,22
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork7x3d
+  size: 7,3
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 24,22
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork7x3e
+  size: 7,3
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 32,22
+  tags:
+    - Clockwork
+
+# - 3x5
+
+- type: dungeonRoom
+  id: Clockwork3x5a
+  size: 3,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 40, 20
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork3x5b
+  size: 3,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 44, 20
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork3x5c
+  size: 3,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 48, 20
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork3x5d
+  size: 3,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 52, 20
+  tags:
+    - Clockwork
+
+# - 7x7
+
+- type: dungeonRoom
+  id: Clockwork7x7a
+  size: 7,7
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 0, 26
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork7x7b
+  size: 7,7
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 8, 26
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork7x7c
+  size: 7,7
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 16, 26
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork7x7d
+  size: 7,7
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 24, 26
+  tags:
+    - Clockwork
+
+# - 5x5
+
+- type: dungeonRoom
+  id: Clockwork5x5a
+  size: 5,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 32, 26
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork5x5b
+  size: 5,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 38, 26
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork5x5c
+  size: 5,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 44, 26
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork5x5d
+  size: 5,5
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 50, 26
+  tags:
+    - Clockwork
+
+# - 13x3
+
+- type: dungeonRoom
+  id: Clockwork13x3a
+  size: 13,3
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 0,34
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork13x3b
+  size: 13,3
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 14,34
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork13x3c
+  size: 13,3
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 28,34
+  tags:
+    - Clockwork
+
+- type: dungeonRoom
+  id: Clockwork13x3d
+  size: 13,3
+  atlas: /Maps/Dungeon/clockwork.yml
+  offset: 42,34
+  tags:
+    - Clockwork

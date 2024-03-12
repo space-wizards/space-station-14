@@ -115,6 +115,44 @@
     base: clock
 
 - type: entity
+  parent: WallClock
+  id: WallReinforcedClockwork
+  name: reinforced clockwork wall
+  components:
+  - type: Tag
+    tags:
+      - Wall
+  - type: Sprite
+    sprite: Structures/Walls/reinforced_clock.rsi
+  - type: Icon
+    sprite: Structures/Walls/reinforced_clock.rsi
+    state: full
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+  - type: IconSmooth
+    key: walls
+    base: rclock
+
+- type: entity
   parent: BaseWall
   id: WallClown
   name: bananium wall
