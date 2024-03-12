@@ -53,3 +53,4 @@
             SeniorResearcher: [ 1, 1 ]
             SeniorPhysician: [ 1, 1 ]
             SeniorEngineer: [ 1, 1 ]
+            BridgeOfficer: [ 0, 1 ]

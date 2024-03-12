@@ -891,6 +891,20 @@
         - Write
 
 - type: entity
+  parent: CentcomPDA
+  id: SRTPDA
+  suffix: SRT
+  components:
+  - type: Pda
+    id: CentcomIDCardSRT
+    penSlot:
+      startingItem: BlackFountainPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+
+- type: entity
   parent: BasePDA
   id: MusicianPDA
   name: musician PDA

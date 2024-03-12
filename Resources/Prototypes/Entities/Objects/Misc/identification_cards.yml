@@ -494,12 +494,12 @@
     - state: ert_commander
   - type: IdCard
     jobTitle: ОБР Лидер
-    jobIcon: JobIconNanotrasen
+    jobIcon: JobIconERTLeader
   - type: Item
     heldPrefix: gold
 
 - type: entity
-  parent: ERTLeaderIDCard
+  parent: SpecOpsIDCard
   id: ERTChaplainIDCard
   name: ERT Chaplain ID card
   components:
@@ -509,11 +509,12 @@
     - state: ert_chaplain # we have the sprite for the id but dont have chaplain ERT equipment for now.
   - type: IdCard
     jobTitle: ОБР Священник
+    jobIcon: JobIconERTChaplain
   - type: Item
     heldPrefix: blue
 
 - type: entity
-  parent: ERTChaplainIDCard
+  parent: SpecOpsIDCard
   id: ERTEngineerIDCard
   name: ERT Engineer ID card
   components:
@@ -523,9 +524,10 @@
     - state: ert_engineer
   - type: IdCard
     jobTitle: ОБР Инженер
+    jobIcon: JobIconERTEngineer
 
 - type: entity
-  parent: ERTChaplainIDCard
+  parent: SpecOpsIDCard
   id: ERTJanitorIDCard
   name: ERT Janitor ID card
   components:
@@ -535,9 +537,10 @@
     - state: ert_janitor
   - type: IdCard
     jobTitle: ОБР Кустодиал Специалист
+    jobIcon: JobIconERTJanitor
 
 - type: entity
-  parent: ERTChaplainIDCard
+  parent: SpecOpsIDCard
   id: ERTMedicIDCard
   name: ERT Medic ID card
   components:
@@ -547,9 +550,10 @@
     - state: ert_medic
   - type: IdCard
     jobTitle: ОБР Медик
+    jobIcon: JobIconERTMedical
 
 - type: entity
-  parent: ERTChaplainIDCard
+  parent: SpecOpsIDCard
   id: ERTSecurityIDCard
   name: ERT Security ID card
   components:
@@ -559,7 +563,7 @@
     - state: ert_security
   - type: IdCard
     jobTitle: ОБР Офицер Безопасности
-
+    jobIcon: JobIconERTOfficer
 - type: entity
   parent: IDCardStandard
   id: CentcomIDCardSyndie
@@ -595,6 +599,37 @@
   parent: SpecOpsIDCard
   id: CentcomIDCardDeathsquad
   name: deathsquad ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+    - state: idcentcom
+  - type: Item
+    heldPrefix: blue
+  - type: IdCard
+    jobTitle: Оперативник МОГ Гамма-2
+    jobIcon: JobIconDeathSquad
+  - type: Access
+    groups:
+    - SpecOpsAllAccess
+
+- type: entity
+  parent: SpecOpsIDCard
+  id: CentcomIDCardSRT
+  name: SRT ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+    - state: idcentcom
+  - type: Item
+    heldPrefix: blue
+  - type: IdCard
+    jobTitle: Офицер ГСН
+    jobIcon: JobIconSRT
+  - type: Access
+    groups:
+    - SpecOpsAllAccess
 
 - type: entity
   name: passenger ID card
@@ -804,7 +839,6 @@
     heldPrefix: blue
   - type: IdCard
     jobTitle: Агент РХБЗЗ
-    jobColor: "#"
 
 - type: entity
   parent: IDCardStandard
