@@ -34,8 +34,9 @@
     - state: icon
       map: [ "unfoldedLayer" ]
     - state: icon_flipped
-      map: ["foldedLayer"]
+      map: ["unfoldedLayer"]
       visible: false
+
   - type: Clothing
     sprite: Clothing/Eyes/Misc/eyepatch.rsi
   - type: EyeProtection
