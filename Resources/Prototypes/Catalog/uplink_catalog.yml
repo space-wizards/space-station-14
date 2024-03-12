@@ -769,7 +769,7 @@
   icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: throwing_knives }
   productEntity: ThrowingKnivesKit
   cost:
-    Telecrystal: 12
+    Telecrystal: 8
   categories:
     - UplinkBundles
 
