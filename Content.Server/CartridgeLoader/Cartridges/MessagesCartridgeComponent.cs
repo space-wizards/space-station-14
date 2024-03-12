@@ -48,15 +48,11 @@ public sealed partial class MessagesCartridgeComponent : Component
     public Dictionary<string, string> NameDict = [];
 
     /// <summary>
-    /// Whether the cartridge has lost connection and should be looking for a new server
-    /// </summary>
-    [DataField]
-    public bool DeadConnection = true;
-
-    /// <summary>
     /// Key used to denote which faction the cartridge belongs to.
     /// </summary>
     [DataField]
-    public string EncryptionKey = "Nanotrasen";
+    public MessagesKeys EncryptionKey = MessagesKeys.Nanotrasen;
 
 }
+
+

@@ -29,10 +29,10 @@ public sealed partial class MessagesUiFragment : BoxContainer
 
         HeaderButton.OnPressed += _ => OnButtonPressed?.Invoke(null);
 
-        UpdateState(MessagesUiStateMode.UserList, new List<(string,string)>(), null);
+        UpdateState(MessagesUiStateMode.UserList, [], null);
     }
 
-    public void UpdateState(MessagesUiStateMode mode, List<(string,string)>? contents, string? name)
+    public void UpdateState(MessagesUiStateMode mode, List<(string, string)>? contents, string? name)
     {
         MessageContainer.DisposeAllChildren();
         MessageContainer.RemoveAllChildren();
@@ -40,7 +40,7 @@ public sealed partial class MessagesUiFragment : BoxContainer
             OverContainer.RemoveChild(Input);
         if (OverContainer.Children.Contains(HeaderBox))
             OverContainer.RemoveChild(HeaderBox);
-        if ((mode == MessagesUiStateMode.Chat) && (contents != null))
+        if (mode == MessagesUiStateMode.Chat && contents != null)
         {
             HeaderLabel.Text = name;
 
@@ -58,7 +58,7 @@ public sealed partial class MessagesUiFragment : BoxContainer
             {
                 return;
             }
-            foreach (var (user,userUid) in contents)
+            foreach (var (user, userUid) in contents)
             {
                 AddButton(userUid, user);
             }
@@ -67,23 +67,24 @@ public sealed partial class MessagesUiFragment : BoxContainer
 
     private void AddButton(string userUid, string userName)
     {
-        var button = new Button();
-        button.Text = userName;
-        button.HorizontalExpand = true;
-        button.ClipText = true;
-        button.MinWidth = 60;
+        var button = new Button
+        {
+            Text = userName,
+            HorizontalExpand = true,
+            ClipText = true,
+            MinWidth = 60
+        };
         button.OnPressed += _ => OnButtonPressed?.Invoke(userUid);
         MessageContainer.AddChild(button);
     }
 
     private void AddNote(string note)
     {
-
-        var label = new Label();
-        label.Text = note;
-        label.HorizontalExpand = true;
-        label.ClipText = false;
-
-        MessageContainer.AddChild(label);
+        MessageContainer.AddChild(new Label
+        {
+            Text = note,
+            HorizontalExpand = true,
+            ClipText = false
+        });
     }
 }

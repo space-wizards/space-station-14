@@ -32,7 +32,7 @@ public sealed partial class MessagesServerComponent : Component
     /// Key used to denote which faction the server belongs to.
     /// </summary>
     [DataField]
-    public string EncryptionKey = "Nanotrasen";
+    public MessagesKeys EncryptionKey = MessagesKeys.Nanotrasen;
 
     public TimeSpan UpdateDelay = TimeSpan.FromSeconds(3);
     public TimeSpan NextUpdate = TimeSpan.Zero;

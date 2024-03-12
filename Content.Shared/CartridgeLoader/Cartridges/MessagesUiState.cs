@@ -32,3 +32,10 @@ public partial struct MessagesMessageData
     public string Content;
     public TimeSpan Time;
 }
+
+[Serializable, NetSerializable]
+public enum MessagesKeys
+{
+    Nanotrasen,
+    Syndicate
+}
