@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Scribbles0
-  changes:
-  - message: Cryoxadone and doxarubixadone now work on dead patients.
-    type: Tweak
-  id: 5627
-  time: '2024-01-08T06:31:26.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23558
 - author: Dygon
   changes:
   - message: Mothroaches are now a little bit more resilient, making them less prone
@@ -3806,3 +3799,12 @@
   id: 6126
   time: '2024-03-12T02:38:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25770
+- author: nikthechampiongr
+  changes:
+  - message: Recyclers now leave logs when they gib people.
+    type: Add
+  - message: People sending a broadcast in the communications console now leave logs.
+    type: Add
+  id: 6127
+  time: '2024-03-12T10:57:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26008
