@@ -28,6 +28,8 @@
                 <Slider Name="ChatWindowOpacitySlider"
                         MinValue="0"
                         MaxValue="1"
+                        Rounded="True"
+                        RoundingDecimals="2"
                         MinWidth="200" />
                 <Label Name="ChatWindowOpacityLabel" Margin="8 0" />
             </BoxContainer>
