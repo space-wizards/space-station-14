@@ -398,6 +398,13 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: crewcut
 - type: marking
+  id: HumanHairCrewcut2
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: crewcut2
+- type: marking
   id: HumanHairCurls
   bodyPart: Hair
   markingCategory: Hair
