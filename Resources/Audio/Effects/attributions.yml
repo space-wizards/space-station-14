@@ -216,3 +216,8 @@
   copyright: Bhijn and Myr (github username deathride58)
   license: CC0-1.0
   source: https://github.com/space-wizards/space-station-14/pull/23212
+
+- files: ["boing.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "tgstation"
+  source: "https://github.com/Ghommie/tgstation/blob/34981308860b3888741d0a134aaf2ea1a6488554/sound/effects/boing.ogg"

@@ -206,6 +206,9 @@
   id: BoxHug
 
 - type: Tag
+  id: BoxingGlove
+
+- type: Tag
   id: Burnt
 
 - type: Tag
