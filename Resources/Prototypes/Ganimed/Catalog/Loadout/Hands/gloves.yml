@@ -29,6 +29,7 @@
     - SalvageSpecialist
     - Brigmedic
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingHandsGlovesMercFingerless
 
 - type: loadout
@@ -40,6 +41,7 @@
     - HeadOfSecurity
     - Captain
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingHandsGlovesCombat
 
 - type: loadout
@@ -51,6 +53,7 @@
     - HeadOfSecurity
     - Captain
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingHandsMercGlovesCombat
 
 - type: loadout
@@ -62,6 +65,7 @@
     - HeadOfSecurity
     - Captain
     - BlueShield
+    - BridgeOfficer
   sponsorOnly: true
   prototype: ClothingHandsTacticalMaidGloves
 
