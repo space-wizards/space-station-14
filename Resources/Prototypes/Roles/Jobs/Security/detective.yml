@@ -16,6 +16,9 @@
   - Brig
   - Maintenance
   - Service
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: DetectiveGear

@@ -16,6 +16,9 @@
   - Security
   - Brig
   - Maintenance
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: SecurityCadetGear

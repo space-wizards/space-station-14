@@ -27,6 +27,9 @@
   - Maintenance
   - Service
   - External
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: HoSGear

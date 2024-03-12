@@ -13,6 +13,9 @@
   access:
   - Research
   - Maintenance
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: ScientistGear

@@ -15,6 +15,9 @@
   access:
   - Medical
   - Maintenance
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: MedicalInternGear

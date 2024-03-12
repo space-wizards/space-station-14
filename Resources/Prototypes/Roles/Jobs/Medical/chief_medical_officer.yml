@@ -23,6 +23,9 @@
   - Maintenance
   - Chemistry
   - ChiefMedicalOfficer
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: CMOGear

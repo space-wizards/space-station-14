@@ -24,6 +24,9 @@
   - Maintenance
   - External
   - Command
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: QuartermasterGear

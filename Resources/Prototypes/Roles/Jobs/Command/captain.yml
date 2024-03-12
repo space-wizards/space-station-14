@@ -24,6 +24,9 @@
   canBeAntag: false
   accessGroups:
   - AllAccess
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: CaptainGear

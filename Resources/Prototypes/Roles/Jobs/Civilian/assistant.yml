@@ -8,6 +8,9 @@
   supervisors: job-supervisors-everyone
   access:
   - Maintenance
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: PassengerGear

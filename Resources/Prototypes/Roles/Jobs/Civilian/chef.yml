@@ -24,6 +24,8 @@
       energy: 750
     - type: AnnounceOnAbsorb
       text: pizza-lord-chef
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: ChefGear

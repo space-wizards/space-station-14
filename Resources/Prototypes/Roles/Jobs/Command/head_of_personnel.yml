@@ -34,6 +34,9 @@
   - Hydroponics
   - External
   # I mean they'll give themselves the rest of the access levels *anyways*.
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: HoPGear

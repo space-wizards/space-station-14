@@ -10,6 +10,9 @@
   - Cargo
   - Maintenance
   - External
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: CargoTechGear

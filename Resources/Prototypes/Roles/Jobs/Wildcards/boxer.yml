@@ -9,6 +9,10 @@
   supervisors: job-supervisors-hop
   access:
   - Service
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
+
 - type: startingGear
   id: BoxerGear
   equipment:

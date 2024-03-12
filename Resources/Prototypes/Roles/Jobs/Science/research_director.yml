@@ -20,6 +20,9 @@
   - Command
   - Maintenance
   - ResearchDirector
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: ResearchDirectorGear
