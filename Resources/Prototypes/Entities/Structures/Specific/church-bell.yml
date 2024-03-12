@@ -12,17 +12,11 @@
     layers:
     - state: church-bell
   - type: InteractionPopup
-    interactDelay: 15
+    interactDelay: 22
     successChance: 1
     interactSuccessSound:
       path: /Audio/Effects/church_bell.ogg
   - type: Clickable
-  - type: MeleeSound
-    soundGroups:
-      Brute:
-        path:
-          "/Audio/Effects/church_bell.ogg"
-  - type: Appearance
   - type: Rotatable
   - type: CollisionWake
     enabled: false
