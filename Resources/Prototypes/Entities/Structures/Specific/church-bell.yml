@@ -1,0 +1,45 @@
+- type: entity
+  id: ChurchBell
+  name: church bell
+  description: You feel your soul grow ever closer to the realms beyond for every chime this bell tolls...
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/Specific/church-bell.rsi
+    layers:
+    - state: church-bell
+  - type: InteractionPopup
+    interactDelay: 15
+    successChance: 1
+    interactSuccessSound:
+      path: /Audio/Effects/church_bell.ogg
+  - type: Clickable
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/church_bell.ogg"
+  - type: Appearance
+  - type: Rotatable
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    canCollide: false
+    bodyType: Static
+  - type: Fixtures
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
