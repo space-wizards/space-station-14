@@ -4,7 +4,6 @@ using Content.Shared.Damage;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Overlays;
-using Content.Shared.SSDIndicator;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
@@ -19,8 +18,6 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
 {
     [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly RottingSystem _rotting = default!;
-
 
     public HashSet<string> DamageContainers = new();
 
@@ -35,6 +32,7 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
 
     [ValidatePrototypeId<StatusIconPrototype>]
     private const string HealthIconDecomposing = "HealthIconDecomposing";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -85,6 +83,7 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
         // Here you could check health status, diseases, mind status, etc. and pick a good icon, or multiple depending on whatever.
         if (damageableComponent?.DamageContainerID == "Biological")
         {
+            // Determines the icon to be used, based on mob state
             if (_mobState.IsAlive(entity) && _prototypeMan.TryIndex<StatusIconPrototype>(HealthIconFine, out var fineIcon))
                 result.Add(fineIcon);
             else if (_mobState.IsCritical(entity) && _prototypeMan.TryIndex<StatusIconPrototype>(HealthIconCritical, out var critIcon))
