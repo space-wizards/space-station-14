@@ -21,3 +21,7 @@ ent-ClothingHeadsetAltSyndicate = полноразмерная кроваво-к
     .desc = Модифицированный модульный интерком синдиката, надеваемый на голову, и содержащий ключ шифрования. Имеет 5 ячеек для ключей шифрования.
 ent-ClothingHeadsetAltFreelancer = полноразмерная гарнитура фрилансера
     .desc = { ent-ClothingHeadsetAlt.desc }
+ent-ClothingHeadsetAltERT = полноразмерная гарнитура ОБР
+    .desc = { ent-ClothingHeadsetAlt.desc }
+ent-ClothingHeadsetAltMTF = полноразмерная гарнитура МОГ
+    .desc = { ent-ClothingHeadsetAlt.desc }

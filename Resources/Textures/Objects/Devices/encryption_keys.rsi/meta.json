@@ -8,6 +8,7 @@
   },
   "states": [
     {"name": "crypt_gray"},
+    {"name": "crypt_black"},
     {"name": "crypt_rusted"},
     {"name": "crypt_gold"},
     {"name": "crypt_orange"},
@@ -34,6 +35,11 @@
     {"name": "sci_label"},
     {"name": "sec_label"},
     {"name": "service_label"},
+    {"name": "deathsquad_label"},
+    {"name": "ert_label"},
+    {"name": "specops_label"},
+    {"name": "srt_label"},
+    {"name": "mtf_label"},
     {"name": "synd_label"}
   ]
 }

@@ -246,3 +246,82 @@
       layers:
         - state: crypt_rusted
         - state: pirate_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeySpecOps
+  name: spec ops encryption key
+  description: An encryption key used by spec ops.
+  components:
+  - type: EncryptionKey
+    channels:
+    - SpecOps
+    defaultChannel: SpecOps
+  - type: Sprite
+    layers:
+    - state: crypt_blue
+    - state: specops_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyDeathSquad
+  name: black encryption key
+  description: An encryption key used by death squad.
+  components:
+  - type: EncryptionKey
+    channels:
+    - DeathSquad
+    - SRT
+    - SpecOps
+    - MTF
+    - ERT
+    defaultChannel: DeathSquad
+  - type: Sprite
+    layers:
+    - state: crypt_black
+    - state: deathsquad_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeySRT
+  name: SRT encryption key
+  description: An encryption key used by SRT.
+  components:
+  - type: EncryptionKey
+    channels:
+    - SRT
+    defaultChannel: SRT
+  - type: Sprite
+    layers:
+    - state: crypt_blue
+    - state: srt_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyMTF
+  name: MTF encryption key
+  description: An encryption key used by MTF.
+  components:
+  - type: EncryptionKey
+    channels:
+    - MTF
+    defaultChannel: MTF
+  - type: Sprite
+    layers:
+    - state: crypt_blue
+    - state: mtf_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyERT
+  name: ERT encryption key
+  description: An encryption key used by ERT.
+  components:
+  - type: EncryptionKey
+    channels:
+    - ERT
+    defaultChannel: ERT
+  - type: Sprite
+    layers:
+    - state: crypt_blue
+    - state: ert_label
