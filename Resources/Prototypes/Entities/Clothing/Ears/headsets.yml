@@ -305,3 +305,89 @@
       sprite: Clothing/Ears/Headsets/freelance.rsi
     - type: Clothing
       sprite: Clothing/Ears/Headsets/freelance.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetERT
+  name: ERT headset
+  description: A headset used by the upper echelons of Nanotrasen.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCentCom
+      - EncryptionKeyStationMaster
+      - EncryptionKeyERT
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/ert.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/ert.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetSRT
+  name: SRT headset
+  description: A headset used by the upper echelons of Nanotrasen.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCentCom
+      - EncryptionKeyStationMaster
+      - EncryptionKeySRT
+      - EncryptionKeySpecOps
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/srt.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/srt.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetMTF
+  name: MTF headset
+  description: A headset used by the upper echelons of Nanotrasen.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCentCom
+      - EncryptionKeyStationMaster
+      - EncryptionKeyMTF
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/mtf.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/mtf.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetDeathSquad
+  name: DeathSquad headset
+  description: A headset used by the upper echelons of Nanotrasen.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCentCom
+      - EncryptionKeyStationMaster
+      - EncryptionKeyDeathSquad
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/deathSquad.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/deathsquad.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetSpecOps
+  name: SpecOps headset
+  description: A headset used by the upper echelons of Nanotrasen.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCentCom
+      - EncryptionKeyStationMaster
+      - EncryptionKeyDeathSquad
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/specops.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/specops.rsi

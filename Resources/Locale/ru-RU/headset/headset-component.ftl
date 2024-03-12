@@ -19,5 +19,10 @@ chat-radio-supply = Снабжение
 chat-radio-syndicate = Синдикат
 chat-radio-binary = Бинарный
 chat-radio-freelance = Фриланс
+chat-radio-specops = Штаб специальных операций
+chat-radio-deathsquad = Рыцари смерти
+chat-radio-ert = ОБР
+chat-radio-srt = ГСН
+chat-radio-mtf = МОГ
 # not headset but whatever
 chat-radio-handheld = Портативный

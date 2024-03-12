@@ -95,3 +95,43 @@
   color: "#f6ce64"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
+
+- type: radioChannel
+  id: SpecOps
+  name: chat-radio-specops
+  keycode: 'ш'
+  frequency: 1413
+  color: "#fae7b5ff"
+  longRange: true
+
+- type: radioChannel
+  id: DeathSquad
+  name: chat-radio-deathsquad
+  keycode: 'д'
+  frequency: 1984
+  color: "#8e8e8e"
+  longRange: true
+
+- type: radioChannel
+  id: ERT
+  name: chat-radio-ert
+  keycode: 'е'
+  frequency: 1399
+  color: "#3c94c5"
+  longRange: true
+
+- type: radioChannel
+  id: SRT
+  name: chat-radio-srt
+  keycode: 'г'
+  frequency: 1400
+  color: "#00a85b"
+  longRange: true
+
+- type: radioChannel
+  id: MTF
+  name: chat-radio-mtf
+  keycode: 'х'
+  frequency: 1401
+  color: "#b09800"
+  longRange: true
