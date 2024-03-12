@@ -74,6 +74,7 @@
     - SalvageSpecialist
     - Brigmedic
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingEyesGlassesMercenary
 
 - type: loadout
@@ -169,6 +170,7 @@
     - Captain
     - Brigmedic
     - BlueShield
+    - BridgeOfficer
   prototype: ClothingEyesGlassesSunglasses
 
 - type: loadout
