@@ -1,0 +1,19 @@
+<Document>
+  # Slime People
+
+  <Box>
+    <GuideEntityEmbed Entity="MobSlimePerson" Caption=""/>
+  </Box>
+
+  They breathe nitrogen instead of oxygen, which is abundant in the station air, but harder to find compressed into gas tanks. They take significant damage if they are sprayed or splashed with water, but can
+  (and like other species, need to) drink it safely to stay hydrated.
+  They exhale nitrous oxide and are unaffected by it.
+  Their body can process 6 reagents at the same time instead of just 2.
+
+  Their Slime "blood" can not be regenerated from Iron. Slime Blood is technically a source of
+  moderately filling food for other species, although drinking the blood of your coworkers is usually frowned upon.
+  They suffocate 80% slower, but take pressure damage 9% faster. This makes them by far the species most capable to survive in hard vacuum. For a while.
+
+  They take [color=#1e90ff]80% less Cellular damage, 40% less Blunt damage and 20% less Poison damage[/color], but [color=#ffa500]50% more Cold damage, 20% more Slash damage and 20% more Piercing damage[/color].
+
+</Document>
