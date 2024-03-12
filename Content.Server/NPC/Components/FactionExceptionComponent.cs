@@ -6,7 +6,7 @@ namespace Content.Server.NPC.Components;
 /// Prevents an NPC from attacking ignored entities from enemy factions.
 /// Can be added to if pettable, see PettableFriendComponent.
 /// </summary>
-[RegisterComponent, Access(typeof(NpcFactionSystem), typeof(NPCDuckingSyndromeSystem))]
+[RegisterComponent, Access(typeof(NpcFactionSystem), typeof(NPCImpritingBehaviourSystem))]
 public sealed partial class FactionExceptionComponent : Component
 {
     /// <summary>

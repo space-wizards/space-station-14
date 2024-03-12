@@ -86,8 +86,7 @@
   - type: HTN
     rootTask:
       task: DragonCarpCompound
-  - type: NPCDuckingSyndrome
-    searchRadius: 3
+  - type: NPCImpritingBehaviour
   - type: Sprite
     sprite: Mobs/Demons/tomatokiller.rsi 
     noRot: true
@@ -157,10 +156,7 @@
     grindableSolutionName: bloodstream
   - type: PotencyVisuals
   - type: Appearance
-  - type: FlavorProfile
-    flavors:
-      - tomato
   - type: Produce
-    seedId: tomato #SSS
+    seedId: killerTomato
   - type: MobPrice
     price: 100
