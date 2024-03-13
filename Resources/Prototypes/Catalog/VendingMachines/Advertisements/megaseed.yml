@@ -1,9 +1,11 @@
-﻿- type: advertisementsPack
+- type: advertisementsPack
   id: MegaSeedAds
   advertisements:
     - advertisement-megaseed-1
     - advertisement-megaseed-2
     - advertisement-megaseed-3
     - advertisement-megaseed-4
+    - advertisement-megaseed-5
+    - advertisement-megaseed-6
   thankyous:
     - vending-machine-thanks

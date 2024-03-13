@@ -34,8 +34,8 @@ namespace Content.Server.NPC.Systems
         {
             base.Initialize();
 
-            _configurationManager.OnValueChanged(CCVars.NPCEnabled, SetEnabled, true);
-            _configurationManager.OnValueChanged(CCVars.NPCMaxUpdates, SetMaxUpdates, true);
+            Subs.CVar(_configurationManager, CCVars.NPCEnabled, value => Enabled = value, true);
+            Subs.CVar(_configurationManager, CCVars.NPCMaxUpdates, obj => _maxUpdates = obj, true);
         }
 
         public void OnPlayerNPCAttach(EntityUid uid, HTNComponent component, PlayerAttachedEvent args)
@@ -49,16 +49,6 @@ namespace Content.Server.NPC.Systems
                 return;
 
             WakeNPC(uid, component);
-        }
-
-        private void SetMaxUpdates(int obj) => _maxUpdates = obj;
-        private void SetEnabled(bool value) => Enabled = value;
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            _configurationManager.UnsubValueChanged(CCVars.NPCEnabled, SetEnabled);
-            _configurationManager.UnsubValueChanged(CCVars.NPCMaxUpdates, SetMaxUpdates);
         }
 
         public void OnNPCMapInit(EntityUid uid, HTNComponent component, MapInitEvent args)

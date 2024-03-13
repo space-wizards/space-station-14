@@ -15,7 +15,6 @@
   - type: Tag
     tags:
     - Sheet
-    - DroneUsable
   - type: Material
   - type: Damageable
     damageContainer: Inorganic
@@ -47,7 +46,7 @@
         acts: [ "Destruction" ]
   - type: SolutionContainerManager
     solutions:
-      glass: 
+      glass:
         canReact: false
 
 - type: entity
@@ -197,6 +196,7 @@
         - ReagentId: Carbon
           Quantity: 0.5
         canReact: false
+
 - type: entity
   parent: SheetGlassBase
   id: SheetPGlass
@@ -442,8 +442,8 @@
           Quantity: 4.5
         - ReagentId: Carbon
           Quantity: 0.5
-        canReact: false 
-    
+        canReact: false
+
 - type: entity
   parent: SheetRUGlass
   id: SheetRUGlass1
@@ -454,4 +454,81 @@
     state: ruglass
   - type: Stack
     stackType: ReinforcedUraniumGlass
+    count: 1
+
+- type: entity
+  parent: SheetGlassBase
+  id: SheetClockworkGlass
+  name: clockwork glass
+  description: A sheet of brass-hardened glass, primarily used by clockwork enthusiasts and remnants of Ratvarian cults.
+  suffix: Full
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      BrassGlass: 100
+  - type: Stack
+    stackType: ClockworkGlass
+    baseLayer: base
+    layerStates:
+    - cglass
+    - cglass_2
+    - cglass_3
+  - type: Sprite
+    state: cglass_3
+    layers:
+    - state: cglass_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: cglass
+  - type: Construction
+    graph: Glass
+    node: SheetClockworkGlass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassClockwork:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Extractable
+    grindableSolutionName: brassglass
+  - type: SolutionContainerManager
+    solutions:
+      cglass:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 10
+        - ReagentId: Zinc
+          Quantity: 3.3
+        - ReagentId: Copper
+          Quantity: 6.7
+        canReact: false
+
+- type: entity
+  parent: SheetClockworkGlass
+  id: SheetClockworkGlass1
+  name: clockwork glass
+  suffix: Single
+  components:
+  - type: Sprite
+    state: cglass
+  - type: Stack
+    stackType: ClockworkGlass
     count: 1

@@ -3,7 +3,8 @@
 injector-draw-text = Draw
 injector-inject-text = Inject
 injector-invalid-injector-toggle-mode = Invalid
-injector-volume-label = Volume: [color=white]{$currentVolume}/{$totalVolume}[/color] | [color=white]{$modeString}[/color]
+injector-volume-label = Volume: [color=white]{$currentVolume}/{$totalVolume}[/color]
+    Mode: [color=white]{$modeString}[/color] ([color=white]{$transferVolume}u[/color])
 
 ## Entity
 
@@ -17,8 +18,12 @@ injector-component-transfer-success-message = You transfer {$amount}u into {$tar
 injector-component-draw-success-message = You draw {$amount}u from {$target}.
 injector-component-target-already-full-message = {$target} is already full!
 injector-component-target-is-empty-message = {$target} is empty!
+injector-component-cannot-toggle-draw-message = Too full to draw!
+injector-component-cannot-toggle-inject-message = Nothing to inject!
 
 ## mob-inject doafter messages
 
-injector-component-injecting-user = You start inserting the needle.
-injector-component-injecting-target = {CAPITALIZE(THE($user))} is trying to stick a needle into you!
+injector-component-drawing-user = You start drawing the needle.
+injector-component-injecting-user = You start injecting the needle.
+injector-component-drawing-target = {CAPITALIZE(THE($user))} is trying to use a needle to draw from you!
+injector-component-injecting-target = {CAPITALIZE(THE($user))} is trying to inject a needle into you!

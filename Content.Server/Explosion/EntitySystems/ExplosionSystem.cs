@@ -122,7 +122,6 @@ public sealed partial class ExplosionSystem : EntitySystem
     public override void Shutdown()
     {
         base.Shutdown();
-        UnsubscribeCvars();
         _nodeGroupSystem.PauseUpdating = false;
         _pathfindingSystem.PauseUpdating = false;
     }
@@ -291,7 +290,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         if (!_prototypeManager.TryIndex<ExplosionPrototype>(typeId, out var type))
         {
-            Logger.Error($"Attempted to spawn unknown explosion prototype: {type}");
+            Log.Error($"Attempted to spawn unknown explosion prototype: {type}");
             return;
         }
 

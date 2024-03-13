@@ -7,19 +7,6 @@ public sealed class UseDelaySystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<UseDelayComponent, EntityUnpausedEvent>(OnUnpaused);
-    }
-
-    private void OnUnpaused(Entity<UseDelayComponent> ent, ref EntityUnpausedEvent args)
-    {
-        // We got unpaused, resume the delay
-        ent.Comp.DelayStartTime += args.PausedTime;
-        ent.Comp.DelayEndTime += args.PausedTime;
-        Dirty(ent);
-    }
-
     public void SetDelay(Entity<UseDelayComponent> ent, TimeSpan delay)
     {
         if (ent.Comp.Delay == delay)
@@ -60,5 +47,13 @@ public sealed class UseDelaySystem : EntitySystem
         ent.Comp.DelayEndTime = curTime - _metadata.GetPauseTime(ent) + ent.Comp.Delay;
         Dirty(ent);
         return true;
+    }
+
+    public bool TryResetDelay(EntityUid uid, bool checkDelayed = false, UseDelayComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return false;
+
+        return TryResetDelay((uid, component), checkDelayed);
     }
 }

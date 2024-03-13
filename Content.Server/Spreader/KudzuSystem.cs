@@ -21,7 +21,6 @@ public sealed class KudzuSystem : EntitySystem
     {
         SubscribeLocalEvent<KudzuComponent, ComponentStartup>(SetupKudzu);
         SubscribeLocalEvent<KudzuComponent, SpreadNeighborsEvent>(OnKudzuSpread);
-        SubscribeLocalEvent<GrowingKudzuComponent, EntityUnpausedEvent>(OnKudzuUnpaused);
         SubscribeLocalEvent<KudzuComponent, DamageChangedEvent>(OnDamageChanged);
     }
 
@@ -80,11 +79,6 @@ public sealed class KudzuSystem : EntitySystem
         }
     }
 
-    private void OnKudzuUnpaused(EntityUid uid, GrowingKudzuComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextTick += args.PausedTime;
-    }
-
     private void SetupKudzu(EntityUid uid, KudzuComponent component, ComponentStartup args)
     {
         if (!EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
@@ -92,7 +86,7 @@ public sealed class KudzuSystem : EntitySystem
             return;
         }
 
-        _appearance.SetData(uid, KudzuVisuals.Variant, _robustRandom.Next(1, 3), appearance);
+        _appearance.SetData(uid, KudzuVisuals.Variant, _robustRandom.Next(1, component.SpriteVariants), appearance);
         _appearance.SetData(uid, KudzuVisuals.GrowthLevel, 1, appearance);
     }
 

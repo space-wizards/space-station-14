@@ -773,15 +773,11 @@ entities:
   entities:
   - uid: 179
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -5.5,17.5
       parent: 2
   - uid: 541
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 2.5,17.5
       parent: 2
@@ -789,15 +785,11 @@ entities:
   entities:
   - uid: 71
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 2.5,-8.5
       parent: 2
   - uid: 148
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -5.5,-8.5
       parent: 2
@@ -3432,139 +3424,103 @@ entities:
   entities:
   - uid: 68
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-1.5
       parent: 2
   - uid: 368
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -5.5,20.5
       parent: 2
   - uid: 369
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 2.5,20.5
       parent: 2
   - uid: 370
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,19.5
       parent: 2
   - uid: 371
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -6.5,19.5
       parent: 2
   - uid: 374
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,-7.5
       parent: 2
   - uid: 375
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -3.5,-7.5
       parent: 2
   - uid: 378
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,1.5
       parent: 2
   - uid: 379
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -5.5,9.5
       parent: 2
   - uid: 380
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -5.5,6.5
       parent: 2
   - uid: 381
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -6.5,16.5
       parent: 2
   - uid: 382
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,16.5
       parent: 2
   - uid: 385
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -0.5,6.5
       parent: 2
   - uid: 386
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -0.5,9.5
       parent: 2
   - uid: 387
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 2.5,1.5
       parent: 2
   - uid: 388
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -1.5,4.5
       parent: 2
   - uid: 447
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -5.5,-9.5
       parent: 2
   - uid: 636
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,-9.5
@@ -3582,6 +3538,56 @@ entities:
     components:
     - type: Transform
       pos: 2.4661305,9.648575
+      parent: 2
+- proto: Screen
+  entities:
+  - uid: 28
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -3.5,17.5
+      parent: 2
+  - uid: 36
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 0.5,17.5
+      parent: 2
+  - uid: 57
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 0.5,5.5
+      parent: 2
+  - uid: 104
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 4.5,0.5
+      parent: 2
+  - uid: 122
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -7.5,0.5
+      parent: 2
+  - uid: 193
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,-11.5
+      parent: 2
+  - uid: 234
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -3.5,-2.5
+      parent: 2
+  - uid: 235
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 0.5,-2.5
       parent: 2
 - proto: ShotGunCabinetFilled
   entities:
@@ -4238,8 +4244,6 @@ entities:
   entities:
   - uid: 103
     components:
-    - type: MetaData
-      flags: SessionSpecific
     - type: Transform
       pos: -3.5,16.5
       parent: 2
@@ -4247,8 +4251,6 @@ entities:
   entities:
   - uid: 304
     components:
-    - type: MetaData
-      flags: SessionSpecific
     - type: Transform
       pos: 0.5,11.5
       parent: 2
@@ -4256,8 +4258,6 @@ entities:
   entities:
   - uid: 518
     components:
-    - type: MetaData
-      flags: SessionSpecific
     - type: Transform
       pos: 3.5,11.5
       parent: 2
@@ -4265,8 +4265,6 @@ entities:
   entities:
   - uid: 303
     components:
-    - type: MetaData
-      flags: SessionSpecific
     - type: Transform
       pos: 1.5,11.5
       parent: 2
@@ -4274,8 +4272,6 @@ entities:
   entities:
   - uid: 320
     components:
-    - type: MetaData
-      flags: SessionSpecific
     - type: Transform
       pos: -0.5,6.5
       parent: 2
@@ -4283,8 +4279,6 @@ entities:
   entities:
   - uid: 327
     components:
-    - type: MetaData
-      flags: SessionSpecific
     - type: Transform
       pos: -3.5,1.5
       parent: 2
@@ -4292,8 +4286,6 @@ entities:
   entities:
   - uid: 302
     components:
-    - type: MetaData
-      flags: SessionSpecific
     - type: Transform
       pos: 2.5,11.5
       parent: 2
@@ -4301,8 +4293,6 @@ entities:
   entities:
   - uid: 684
     components:
-    - type: MetaData
-      flags: SessionSpecific
     - type: Transform
       pos: -2.5,-11.5
       parent: 2
@@ -4310,8 +4300,6 @@ entities:
   entities:
   - uid: 319
     components:
-    - type: MetaData
-      flags: SessionSpecific
     - type: Transform
       pos: -4.5,-9.5
       parent: 2
@@ -4319,684 +4307,490 @@ entities:
   entities:
   - uid: 3
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,5.5
       parent: 2
   - uid: 4
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 2.5,5.5
       parent: 2
   - uid: 5
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,6.5
       parent: 2
   - uid: 6
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,7.5
       parent: 2
   - uid: 7
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -1.5,5.5
       parent: 2
   - uid: 8
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -1.5,6.5
       parent: 2
   - uid: 9
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,8.5
       parent: 2
   - uid: 11
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -1.5,8.5
       parent: 2
   - uid: 12
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -0.5,5.5
       parent: 2
   - uid: 13
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 0.5,5.5
       parent: 2
   - uid: 14
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 1.5,5.5
       parent: 2
   - uid: 15
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -1.5,9.5
       parent: 2
   - uid: 16
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -1.5,10.5
       parent: 2
   - uid: 21
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,10.5
       parent: 2
   - uid: 22
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,9.5
       parent: 2
   - uid: 23
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,10.5
       parent: 2
   - uid: 25
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -7.5,10.5
       parent: 2
   - uid: 27
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -6.5,10.5
       parent: 2
   - uid: 31
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -7.5,5.5
       parent: 2
   - uid: 34
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -6.5,5.5
       parent: 2
   - uid: 35
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -7.5,0.5
       parent: 2
   - uid: 38
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -7.5,11.5
       parent: 2
   - uid: 39
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -7.5,4.5
       parent: 2
   - uid: 40
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,11.5
       parent: 2
   - uid: 42
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,5.5
       parent: 2
   - uid: 45
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,4.5
       parent: 2
   - uid: 47
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,0.5
       parent: 2
   - uid: 53
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 1.5,2.5
       parent: 2
   - uid: 55
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -4.5,-1.5
       parent: 2
   - uid: 56
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -4.5,-2.5
       parent: 2
   - uid: 58
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 1.5,1.5
       parent: 2
   - uid: 59
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 1.5,0.5
       parent: 2
   - uid: 60
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 1.5,-0.5
       parent: 2
   - uid: 61
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -4.5,2.5
       parent: 2
   - uid: 62
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -4.5,1.5
       parent: 2
   - uid: 63
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -4.5,0.5
       parent: 2
   - uid: 64
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -4.5,-0.5
       parent: 2
   - uid: 72
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 1.5,-8.5
       parent: 2
   - uid: 73
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 1.5,-2.5
       parent: 2
   - uid: 74
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -3.5,-8.5
       parent: 2
   - uid: 75
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -4.5,-8.5
       parent: 2
   - uid: 78
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 1.5,-1.5
       parent: 2
   - uid: 93
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -7.5,16.5
       parent: 2
   - uid: 94
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -7.5,17.5
       parent: 2
   - uid: 95
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -7.5,18.5
       parent: 2
   - uid: 98
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,16.5
       parent: 2
   - uid: 99
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,17.5
       parent: 2
   - uid: 100
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,18.5
       parent: 2
   - uid: 106
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -4.5,17.5
       parent: 2
   - uid: 107
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -3.5,17.5
       parent: 2
   - uid: 108
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -2.5,17.5
       parent: 2
   - uid: 109
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -1.5,17.5
       parent: 2
   - uid: 110
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -0.5,17.5
       parent: 2
   - uid: 111
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 0.5,17.5
       parent: 2
   - uid: 112
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 1.5,17.5
       parent: 2
   - uid: 115
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -7.5,19.5
       parent: 2
   - uid: 116
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -7.5,20.5
       parent: 2
   - uid: 130
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,20.5
       parent: 2
   - uid: 131
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,19.5
       parent: 2
   - uid: 132
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 0.5,-8.5
       parent: 2
   - uid: 133
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -0.5,-8.5
       parent: 2
   - uid: 134
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -1.5,-8.5
       parent: 2
   - uid: 135
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -2.5,-8.5
       parent: 2
   - uid: 137
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -7.5,-7.5
       parent: 2
   - uid: 138
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -7.5,-8.5
       parent: 2
   - uid: 141
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -6.5,-9.5
       parent: 2
   - uid: 142
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -7.5,-3.5
       parent: 2
   - uid: 143
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -6.5,-10.5
       parent: 2
   - uid: 144
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -6.5,-11.5
       parent: 2
   - uid: 145
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -6.5,-8.5
       parent: 2
   - uid: 146
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,-8.5
       parent: 2
   - uid: 147
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -6.5,-12.5
       parent: 2
   - uid: 150
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,-8.5
       parent: 2
   - uid: 152
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,-9.5
       parent: 2
   - uid: 153
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,-10.5
       parent: 2
   - uid: 154
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,-11.5
       parent: 2
   - uid: 155
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,-12.5
       parent: 2
   - uid: 156
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 2.5,-12.5
       parent: 2
   - uid: 157
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 1.5,-12.5
       parent: 2
   - uid: 158
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 0.5,-12.5
       parent: 2
   - uid: 159
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -0.5,-12.5
       parent: 2
   - uid: 160
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -1.5,-12.5
       parent: 2
   - uid: 161
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -2.5,-12.5
       parent: 2
   - uid: 162
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -3.5,-12.5
       parent: 2
   - uid: 163
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -4.5,-12.5
       parent: 2
   - uid: 164
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -5.5,-12.5
       parent: 2
   - uid: 165
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,-7.5
       parent: 2
   - uid: 169
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,-3.5
       parent: 2
   - uid: 216
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-10.5
       parent: 2
   - uid: 217
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-9.5
       parent: 2
   - uid: 290
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -6.5,17.5
       parent: 2
   - uid: 293
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,17.5
       parent: 2
   - uid: 337
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,-2.5
       parent: 2
   - uid: 350
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,-2.5
       parent: 2
   - uid: 384
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -3.5,-2.5
       parent: 2
   - uid: 389
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -7.5,-2.5
       parent: 2
   - uid: 439
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-11.5

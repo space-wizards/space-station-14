@@ -120,7 +120,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           MachineFrameDestroyed:

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: WindoorAssembly
   name: windoor assembly
   description: It opens, it closes, and you can see through it!
@@ -72,4 +72,155 @@
   - type: Construction
     graph: Windoor
     node: assemblySecure
+
+- type: entity
+  id: WindoorAssemblyClockwork
+  name: clockwork windoor assembly
+  description: It opens, it closes, and you can see through it! This one looks tough.
+  parent: WindoorAssembly
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Windoors/clockwork_windoor.rsi
+    layers:
+    - state: open
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 450
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetBrass1:
+            min: 1
+            max: 2
+  - type: Construction
+    graph: Windoor
+    node: assemblyClockwork
+
+#plasma windoor assemblies
+- type: entity
+  id: WindoorAssemblyPlasma
+  name: Plasma windoor assembly
+  description: It opens, it closes, and you can see through it! This one looks purp-, no, pink. Wait...
+  parent: WindoorAssembly
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Windoors/plasma.rsi
+    layers:
+    - state: assembly
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 360
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+          SheetPGlass1:
+            min: 1
+            max: 3
+  - type: Construction
+    graph: Windoor
+    node: pglass
+
+- type: entity
+  id: WindoorAssemblySecurePlasma
+  name: Secure Plasma windoor assembly
+  description: It opens, it closes, and you can see through it! This one looks strong and pin-, no, purple. Hold on...
+  parent: WindoorAssembly
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Windoors/plasma.rsi
+    layers:
+    - state: secure_underlay
+    - state: assembly
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasteel1:
+            min: 1
+            max: 2
+          SheetRPGlass1:
+            min: 1
+            max: 3
+  - type: Construction
+    graph: Windoor
+    node: pglassSecure
+
+#uranium windoor assemblies
+- type: entity
+  id: WindoorAssemblyUranium
+  name: Uranium windoor assembly
+  description: It opens, it closes, and you can see through it! This one looks sickly green...
+  parent: WindoorAssembly
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Windoors/uranium.rsi
+    layers:
+    - state: assembly
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+          SheetUGlass1:
+            min: 1
+            max: 3
+  - type: Construction
+    graph: Windoor
+    node: uglass
+
+- type: entity
+  id: WindoorAssemblySecureUranium
+  name: Secure Uranium windoor assembly
+  description: It opens, it closes, and you can see through it! This one looks strong and radioactive-lime-green!
+  parent: WindoorAssembly
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Windoors/uranium.rsi
+    layers:
+    - state: secure_underlay
+    - state: assembly
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasteel1:
+            min: 1
+            max: 2
+          SheetRUGlass1:
+            min: 1
+            max: 3
+  - type: Construction
+    graph: Windoor
+    node: uglassSecure
 

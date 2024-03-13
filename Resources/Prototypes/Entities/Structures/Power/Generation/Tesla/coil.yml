@@ -96,7 +96,7 @@
             acts: [ "Destruction" ]
           - !type:PlaySoundBehavior
             sound:
-              path: /Audio/Effects/metalbreak.ogg
+              collection: MetalBreak
           - !type:SpawnEntitiesBehavior
             spawn:
               SheetSteel1:
@@ -162,7 +162,7 @@
     messages: WindowMessages
   - type: Repairable
   - type: Damageable
-    damageContainer: StructuralInorganic 
+    damageContainer: StructuralInorganic
   - type: DamageVisuals
     thresholds: [8, 16, 25]
     damageDivisor: 3.333
@@ -174,12 +174,12 @@
       - trigger:
           !type:DamageTrigger
           damage: 300
-        behaviors:      
+        behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
           - !type:PlaySoundBehavior
             sound:
-              path: /Audio/Effects/metalbreak.ogg
+              collection: MetalBreak
           - !type:SpawnEntitiesBehavior
             spawn:
               SheetSteel1:

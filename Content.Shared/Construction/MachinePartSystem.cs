@@ -21,7 +21,6 @@ namespace Content.Shared.Construction
         {
             base.Initialize();
             SubscribeLocalEvent<MachineBoardComponent, ExaminedEvent>(OnMachineBoardExamined);
-            SubscribeLocalEvent<MachinePartComponent, ExaminedEvent>(OnMachinePartExamined);
         }
 
         private void OnMachineBoardExamined(EntityUid uid, MachineBoardComponent component, ExaminedEvent args)
@@ -59,20 +58,6 @@ namespace Content.Shared.Construction
                         ("amount", info.Amount),
                         ("requiredElement", Loc.GetString(info.ExamineName))));
                 }
-            }
-        }
-
-        private void OnMachinePartExamined(EntityUid uid, MachinePartComponent component, ExaminedEvent args)
-        {
-            if (!args.IsInDetailsRange)
-                return;
-
-            using (args.PushGroup(nameof(MachinePartComponent)))
-            {
-                args.PushMarkup(Loc.GetString("machine-part-component-on-examine-rating-text",
-                    ("rating", component.Rating)));
-                args.PushMarkup(Loc.GetString("machine-part-component-on-examine-type-text", ("type",
-                    Loc.GetString(_prototype.Index<MachinePartPrototype>(component.PartType).Name))));
             }
         }
 

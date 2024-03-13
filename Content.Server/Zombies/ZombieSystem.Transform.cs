@@ -30,11 +30,10 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
-using Robust.Shared.Audio;
 using Content.Shared.Prying.Components;
+using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Zombies
@@ -98,13 +97,14 @@ namespace Content.Server.Zombies
             var zombiecomp = AddComp<ZombieComponent>(target);
 
             //we need to basically remove all of these because zombies shouldn't
-            //get diseases, breath, be thirst, be hungry, die in space or have offspring
+            //get diseases, breath, be thirst, be hungry, die in space, have offspring or be paraplegic.
             RemComp<RespiratorComponent>(target);
             RemComp<BarotraumaComponent>(target);
             RemComp<HungerComponent>(target);
             RemComp<ThirstComponent>(target);
-            RemComp<ReproductiveComponent>(target); 
+            RemComp<ReproductiveComponent>(target);
             RemComp<ReproductivePartnerComponent>(target);
+            RemComp<LegsParalyzedComponent>(target);
 
             //funny voice
             var accentType = "zombie";
@@ -125,7 +125,10 @@ namespace Content.Server.Zombies
             var melee = EnsureComp<MeleeWeaponComponent>(target);
             melee.Animation = zombiecomp.AttackAnimation;
             melee.WideAnimation = zombiecomp.AttackAnimation;
+            melee.AltDisarm = false;
             melee.Range = 1.2f;
+            melee.Angle = 0.0f;
+            melee.HitSound = zombiecomp.BiteSound;
 
             if (mobState.CurrentState == MobState.Alive)
             {

@@ -162,14 +162,12 @@ namespace Content.Shared.ActionBlocker
             if (ev.Cancelled)
                 return false;
 
-            if (target != null)
-            {
-                var tev = new GettingAttackedAttemptEvent();
-                RaiseLocalEvent(target.Value, ref tev);
-                return !tev.Cancelled;
-            }
+            if (target == null)
+                return true;
 
-            return true;
+            var tev = new GettingAttackedAttemptEvent();
+            RaiseLocalEvent(target.Value, ref tev);
+            return !tev.Cancelled;
         }
 
         public bool CanChangeDirection(EntityUid uid)

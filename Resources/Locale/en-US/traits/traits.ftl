@@ -18,14 +18,14 @@ trait-muted-desc = You can't speak
 trait-paracusia-name = Paracusia
 trait-paracusia-desc = You hear sounds that aren't really there
 
+trait-unrevivable-name = Unrevivable
+trait-unrevivable-desc = You are unable to be revived by defibrillators.
+
 trait-pirate-accent-name = Pirate Accent
 trait-pirate-accent-desc = You can't stop speaking like a pirate!
 
 trait-accentless-name = Accentless
 trait-accentless-desc = You don't have the accent that your species would usually have
-
-trait-wheelchair-bound-name = Wheelchair Bound
-trait-wheelchair-bound-desc = You cannot move without your wheelchair. Wheelchair included.
 
 trait-frontal-lisp-name = Frontal Lisp
 trait-frontal-lisp-desc = You thpeak with a lithp

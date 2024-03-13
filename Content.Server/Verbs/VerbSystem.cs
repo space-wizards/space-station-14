@@ -59,7 +59,7 @@ namespace Content.Server.Verbs
 
             var response =
                 new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(GetEntity(args.EntityUid), attached, verbTypes, force));
-            RaiseNetworkEvent(response, player.ConnectedClient);
+            RaiseNetworkEvent(response, player.Channel);
         }
 
         /// <summary>

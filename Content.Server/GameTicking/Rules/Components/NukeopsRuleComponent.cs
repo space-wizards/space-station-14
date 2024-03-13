@@ -1,3 +1,4 @@
+using Content.Server.Maps;
 using Content.Server.NPC.Components;
 using Content.Server.RoundEnd;
 using Content.Server.StationEvents.Events;
@@ -16,15 +17,8 @@ namespace Content.Server.GameTicking.Rules.Components;
 [RegisterComponent, Access(typeof(NukeopsRuleSystem), typeof(LoneOpsSpawnRule))]
 public sealed partial class NukeopsRuleComponent : Component
 {
-    // TODO Replace with GameRuleComponent.minPlayers
     /// <summary>
-    /// The minimum needed amount of players
-    /// </summary>
-    [DataField]
-    public int MinPlayers = 20;
-
-    /// <summary>
-    ///     This INCLUDES the operatives. So a value of 3 is satisfied by 2 players & 1 operative
+    /// This INCLUDES the operatives. So a value of 3 is satisfied by 2 players & 1 operative
     /// </summary>
     [DataField]
     public int PlayersPerOperative = 10;
@@ -93,16 +87,10 @@ public sealed partial class NukeopsRuleComponent : Component
     public int WarTCAmountPerNukie = 40;
 
     /// <summary>
-    ///     Time allowed for declaration of war
-    /// </summary>
-    [DataField("warDeclarationDelay")]
-    public TimeSpan WarDeclarationDelay = TimeSpan.FromMinutes(6);
-
-    /// <summary>
     ///     Delay between war declaration and nuke ops arrival on station map. Gives crew time to prepare
     /// </summary>
     [DataField]
-    public TimeSpan? WarNukieArriveDelay = TimeSpan.FromMinutes(15);
+    public TimeSpan WarNukieArriveDelay = TimeSpan.FromMinutes(15);
 
     /// <summary>
     ///     Minimal operatives count for war declaration
@@ -117,37 +105,10 @@ public sealed partial class NukeopsRuleComponent : Component
     public EntProtoId GhostSpawnPointProto = "SpawnPointGhostNukeOperative";
 
     [DataField]
-    public ProtoId<AntagPrototype> CommanderRoleProto = "NukeopsCommander";
-
-    [DataField]
-    public ProtoId<AntagPrototype> OperativeRoleProto = "Nukeops";
-
-    [DataField]
-    public ProtoId<AntagPrototype> MedicRoleProto = "NukeopsMedic";
-
-    [DataField]
-    public ProtoId<StartingGearPrototype> CommanderStartGearProto = "SyndicateCommanderGearFull";
-
-    [DataField]
-    public ProtoId<StartingGearPrototype> MedicStartGearProto = "SyndicateOperativeMedicFull";
-
-    [DataField]
-    public ProtoId<StartingGearPrototype> OperativeStartGearProto = "SyndicateOperativeGearFull";
-
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<DatasetPrototype>))]
-    public string EliteNames = "SyndicateNamesElite";
-
-    [DataField]
     public string OperationName = "Test Operation";
 
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<DatasetPrototype>))]
-    public string NormalNames = "SyndicateNamesNormal";
-
-    [DataField(customTypeSerializer: typeof(ResPathSerializer))]
-    public ResPath OutpostMap = new("/Maps/nukieplanet.yml");
-
-    [DataField(customTypeSerializer: typeof(ResPathSerializer))]
-    public ResPath ShuttleMap = new("/Maps/infiltrator.yml");
+    [DataField]
+    public ProtoId<GameMapPrototype> OutpostMapPrototype = "NukieOutpost";
 
     [DataField]
     public WinType WinType = WinType.Neutral;
@@ -164,32 +125,52 @@ public sealed partial class NukeopsRuleComponent : Component
     public EntityUid? TargetStation;
 
     /// <summary>
-    ///     Cached starting gear prototypes.
-    /// </summary>
-    [DataField]
-    public Dictionary<string, StartingGearPrototype> StartingGearPrototypes = new ();
-
-    /// <summary>
-    ///     Cached operator name prototypes.
-    /// </summary>
-    [DataField]
-    public Dictionary<string, List<string>> OperativeNames = new();
-
-    /// <summary>
     ///     Data to be used in <see cref="OnMindAdded"/> for an operative once the Mind has been added.
     /// </summary>
     [DataField]
     public Dictionary<EntityUid, string> OperativeMindPendingData = new();
 
-    /// <summary>
-    ///     Players who played as an operative at some point in the round.
-    ///     Stores the mind as well as the entity name
-    /// </summary>
-    [DataField]
-    public Dictionary<string, EntityUid> OperativePlayers = new();
-
     [DataField(required: true)]
     public ProtoId<NpcFactionPrototype> Faction = default!;
+
+    [DataField]
+    public NukeopSpawnPreset CommanderSpawnDetails = new() { AntagRoleProto = "NukeopsCommander", GearProto = "SyndicateCommanderGearFull", NamePrefix = "nukeops-role-commander", NameList = "SyndicateNamesElite" };
+
+    [DataField]
+    public NukeopSpawnPreset AgentSpawnDetails = new() { AntagRoleProto = "NukeopsMedic", GearProto = "SyndicateOperativeMedicFull", NamePrefix = "nukeops-role-agent", NameList = "SyndicateNamesNormal" };
+
+    [DataField]
+    public NukeopSpawnPreset OperativeSpawnDetails = new();
+}
+
+/// <summary>
+/// Stores the presets for each operative type
+/// Ie Commander, Agent and Operative
+/// </summary>
+[DataDefinition, Serializable]
+public sealed partial class NukeopSpawnPreset
+{
+
+    [DataField]
+    public ProtoId<AntagPrototype> AntagRoleProto = "Nukeops";
+
+    /// <summary>
+    /// The equipment set this operative will be given when spawned
+    /// </summary>
+    [DataField]
+    public ProtoId<StartingGearPrototype> GearProto = "SyndicateOperativeGearFull";
+
+    /// <summary>
+    /// The name prefix, ie "Agent"
+    /// </summary>
+    [DataField]
+    public LocId NamePrefix = "nukeops-role-operator";
+
+    /// <summary>
+    /// The entity name suffix will be chosen from this list randomly
+    /// </summary>
+    [DataField]
+    public ProtoId<DatasetPrototype> NameList = "SyndicateNamesNormal";
 }
 
 public enum WinType : byte

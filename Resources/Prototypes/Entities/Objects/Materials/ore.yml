@@ -87,9 +87,7 @@
       ironore:
         reagents:
         - ReagentId: Iron
-          Quantity: 9
-        - ReagentId: Carbon
-          Quantity: 1
+          Quantity: 10
 
 - type: entity
   id: SteelOre1
@@ -310,6 +308,39 @@
 - type: entity
   parent: Coal
   id: Coal1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: OreBase
+  id: SaltOre
+  name: salt
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: SaltOre
+  - type: Sprite
+    state: salt
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      RawSalt: 500
+  - type: Extractable
+    grindableSolutionName: saltore
+  - type: SolutionContainerManager
+    solutions:
+      saltore:
+        reagents:
+        - ReagentId: TableSalt
+          Quantity: 10
+        - ReagentId: Iodine
+          Quantity: 5
+
+- type: entity
+  parent: SaltOre
+  id: Salt1
   suffix: Single
   components:
   - type: Stack
