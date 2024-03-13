@@ -1287,6 +1287,13 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: longest2
 - type: marking
+  id: HumanHairStar
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: star
+- type: marking
   id: HumanHairVeryshortovereyealternate
   bodyPart: Hair
   markingCategory: Hair
