@@ -374,6 +374,9 @@
   - type: Sprite
     sprite: Structures/Furniture/padded_stool.rsi
     state: pufi-black
+  - type: Construction
+    graph: Seat
+    node: blackPaddedStool
 
 - type: entity
   name: blue padded stool
@@ -384,6 +387,9 @@
   - type: Sprite
     sprite: Structures/Furniture/padded_stool.rsi
     state: pufi-blue
+  - type: Construction
+    graph: Seat
+    node: bluePaddedStool
 
 - type: entity
   name: green padded stool
@@ -394,6 +400,9 @@
   - type: Sprite
     sprite: Structures/Furniture/padded_stool.rsi
     state: pufi-green
+  - type: Construction
+    graph: Seat
+    node: greenPaddedStool
 
 - type: entity
   name: orange padded stool
@@ -404,6 +413,9 @@
   - type: Sprite
     sprite: Structures/Furniture/padded_stool.rsi
     state: pufi-orange
+  - type: Construction
+    graph: Seat
+    node: orangePaddedStool
 
 - type: entity
   name: pink padded stool
@@ -414,6 +426,9 @@
   - type: Sprite
     sprite: Structures/Furniture/padded_stool.rsi
     state: pufi-pink
+  - type: Construction
+    graph: Seat
+    node: pinkPaddedStool
 
 - type: entity
   name: purple padded stool
@@ -424,6 +439,9 @@
   - type: Sprite
     sprite: Structures/Furniture/padded_stool.rsi
     state: pufi-purple
+  - type: Construction
+    graph: Seat
+    node: purplePaddedStool
 
 - type: entity
   name: red padded stool
@@ -434,6 +452,9 @@
   - type: Sprite
     sprite: Structures/Furniture/padded_stool.rsi
     state: pufi-red
+  - type: Construction
+    graph: Seat
+    node: redPaddedStool
 
 - type: entity
   name: white padded stool
@@ -444,3 +465,6 @@
   - type: Sprite
     sprite: Structures/Furniture/padded_stool.rsi
     state: pufi-white
+  - type: Construction
+    graph: Seat
+    node: whitePaddedStool
