@@ -49,8 +49,6 @@ public partial struct AntagSelectionDefinition
     [DataField]
     public MinMax? MaxRange;
 
-    //todo implement a max range thing? make both of these ranges?
-
     [DataField]
     public int PlayerRatio = 10;
 
@@ -58,7 +56,7 @@ public partial struct AntagSelectionDefinition
     /// If true, players that latejoin into a round have a chance of being converted into antagonists.
     /// </summary>
     [DataField]
-    public bool LateJoinAntagonists = false;
+    public bool LateJoinAdditional = false;
 
     //todo: find out how to do this with minimal boilerplate: filler department, maybe?
     //public HashSet<ProtoId<JobPrototype>> JobBlacklist = new()

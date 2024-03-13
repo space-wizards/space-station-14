@@ -38,14 +38,11 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
 
-    private int PlayersPerTraitor => _cfg.GetCVar(CCVars.TraitorPlayersPerTraitor);
-    private int MaxTraitors => _cfg.GetCVar(CCVars.TraitorMaxTraitors);
+    public const int MaxPicks = 20;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
 
         SubscribeLocalEvent<TraitorRuleComponent, AfterAntagEntitySelectedEvent>(AfterEntitySelected);
 
@@ -125,11 +122,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         // Give traitors their objectives
         if (giveObjectives)
         {
-            var maxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
-            var maxPicks = _cfg.GetCVar(CCVars.TraitorMaxPicks);
             var difficulty = 0f;
-            Log.Debug($"Attempting {maxPicks} objective picks with {maxDifficulty} difficulty");
-            for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
+            for (var pick = 0; pick < MaxPicks && component.MaxDifficulty > difficulty; pick++)
             {
                 var objective = _objectives.GetRandomObjective(mindId, mind, component.ObjectiveGroup);
                 if (objective == null)
@@ -143,50 +137,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         }
 
         return true;
-    }
-
-    private void HandleLatejoin(PlayerSpawnCompleteEvent ev)
-    {
-        var query = QueryActiveRules();
-        while (query.MoveNext(out _, out var comp, out _))
-        {
-            if (comp.TotalTraitors >= MaxTraitors)
-                continue;
-
-            if (!ev.LateJoin)
-                continue;
-
-            if (!_antagSelection.IsPlayerEligible(ev.Player, comp.TraitorPrototypeId))
-                continue;
-
-            //If its before we have selected traitors, continue
-            if (comp.SelectionStatus < TraitorRuleComponent.SelectionState.Started)
-                continue;
-
-            // the nth player we adjust our probabilities around
-            var target = PlayersPerTraitor * comp.TotalTraitors + 1;
-            var chance = 1f / PlayersPerTraitor;
-
-            // If we have too many traitors, divide by how many players below target for next traitor we are.
-            if (ev.JoinOrder < target)
-            {
-                chance /= (target - ev.JoinOrder);
-            }
-            else // Tick up towards 100% chance.
-            {
-                chance *= ((ev.JoinOrder + 1) - target);
-            }
-
-            if (chance > 1)
-                chance = 1;
-
-            // Now that we've calculated our chance, roll and make them a traitor if we roll under.
-            // You get one shot.
-            if (_random.Prob(chance))
-            {
-                MakeTraitor(ev.Mob, comp);
-            }
-        }
     }
 
     private void OnObjectivesTextGetInfo(EntityUid uid, TraitorRuleComponent comp, ref ObjectivesTextGetInfoEvent args)

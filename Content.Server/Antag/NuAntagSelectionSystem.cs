@@ -34,6 +34,8 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly RoleSystem _role = default!;
 
+    public const float LatejoinRandomChance = 0.5f;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -86,10 +88,32 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
         var query = QueryActiveRules();
         while (query.MoveNext(out var uid, out _, out var antag, out _))
         {
+            if (!antag.Definitions.Any(p => p.LateJoinAdditional))
+                continue;
+
+            var totalTargetCount = GetTargetAntagCount((uid, antag));
+            if (antag.SelectedMinds.Count >= totalTargetCount)
+                continue;
+
             foreach (var def in antag.Definitions)
             {
-                if (!def.LateJoinAntagonists)
+                if (!def.LateJoinAdditional)
                     continue;
+
+                // don't add latejoin antags before actual selection is done.
+                if (!antag.SelectionsComplete)
+                    continue;
+
+                // TODO: this really doesn't handle multiple latejoin definitions well
+                // eventually this should probably store the players per definition with some kind of unique identifier.
+                // something to figure out later.
+                if (antag.SelectedMinds.Count >= def.Max)
+                    continue;
+
+                if (!RobustRandom.Prob(LatejoinRandomChance))
+                    continue;
+
+                MakeAntag((uid, antag), args.Player, def);
             }
         }
     }
@@ -245,6 +269,17 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
         }
 
         return new AntagSelectionPlayerPool(primaryList, secondaryList, fallbackList, rawList);
+    }
+
+    public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool? pool = null)
+    {
+        var count = 0;
+        foreach (var def in ent.Comp.Definitions)
+        {
+            count += GetTargetAntagCount(ent, pool, def);
+        }
+
+        return count;
     }
 
     public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool? pool, AntagSelectionDefinition def)

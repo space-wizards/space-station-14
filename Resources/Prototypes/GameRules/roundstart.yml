@@ -108,6 +108,7 @@
     - prefRoles: [ Traitor ]
       max: 12
       playerRatio: 10
+      lateJoinAdditional: true
       mindComponents:
       - type: TraitorRole
         prototype: Traitor

@@ -22,8 +22,6 @@ namespace Content.Shared.Shuttles.Components
         [ViewVariables]
         public EntityCoordinates? Position { get; set; }
 
-        public const float BreakDistance = 0.25f;
-
         public Vector2 CurTickStrafeMovement = Vector2.Zero;
         public float CurTickRotationMovement;
         public float CurTickBraking;
