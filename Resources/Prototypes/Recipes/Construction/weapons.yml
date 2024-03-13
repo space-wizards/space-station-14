@@ -1,4 +1,26 @@
 - type: construction
+  name: grey bladed flatcap
+  id: BladedFlatcapGrey
+  graph: BladedFlatcapGrey
+  startNode: start
+  targetNode: icon
+  category: construction-category-weapons
+  description: An inconspicuous hat with glass shards sewn into the brim.
+  icon: { sprite: Clothing/Head/Hats/greyflatcap.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: brown bladed flatcap
+  id: BladedFlatcapBrown
+  graph: BladedFlatcapBrown
+  startNode: start
+  targetNode: icon
+  category: construction-category-weapons
+  description: An inconspicuous hat with glass shards sewn into the brim.
+  icon: { sprite: Clothing/Head/Hats/brownflatcap.rsi, state: icon }
+  objectType: Item
+
+- type: construction
   name: glass shiv
   id: Shiv
   graph: Shiv

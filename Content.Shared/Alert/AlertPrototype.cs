@@ -1,5 +1,4 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Alert
@@ -8,7 +7,7 @@ namespace Content.Shared.Alert
     /// An alert popup with associated icon, tooltip, and other data.
     /// </summary>
     [Prototype("alert")]
-    public sealed partial class AlertPrototype : IPrototype, ISerializationHooks
+    public sealed partial class AlertPrototype : IPrototype
     {
         [ViewVariables]
         string IPrototype.ID => AlertType.ToString();
@@ -52,7 +51,7 @@ namespace Content.Shared.Alert
         /// Key which is unique w.r.t category semantics (alerts with same category have equal keys,
         /// alerts with no category have different keys).
         /// </summary>
-        public AlertKey AlertKey { get; private set; }
+        public AlertKey AlertKey => new(AlertType, Category);
 
         /// <summary>
         /// -1 (no effect) unless MaxSeverity is specified. Defaults to 1. Minimum severity level supported by this state.
@@ -79,16 +78,6 @@ namespace Content.Shared.Alert
         /// </summary>
         [DataField("onClick", serverOnly: true)]
         public IAlertClick? OnClick { get; private set; }
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            if (AlertType == AlertType.Error)
-            {
-                Logger.ErrorS("alert", "missing or invalid alertType for alert with name {0}", Name);
-            }
-
-            AlertKey = new AlertKey(AlertType, Category);
-        }
 
         /// <param name="severity">severity level, if supported by this alert</param>
         /// <returns>the icon path to the texture for the provided severity level</returns>

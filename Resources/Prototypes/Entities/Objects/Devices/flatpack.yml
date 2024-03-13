@@ -35,6 +35,149 @@
       cpu_supply: "#A46106"
   - type: StaticPrice
     price: 250
-  - type: Tag
-    tags:
-    - DroneUsable
+
+- type: entity
+  parent: BaseFlatpack
+  id: SolarAssemblyFlatpack
+  name: solar assembly flatpack
+  description: A flatpack used for constructing a solar assembly.
+  components:
+  - type: Flatpack
+    entity: SolarAssembly
+  - type: Sprite
+    layers:
+    - state: solar-assembly-part
+  - type: StaticPrice
+    price: 75
+
+- type: entity
+  parent: BaseFlatpack
+  id: AmePartFlatpack
+  name: AME flatpack
+  description: A flatpack used for constructing an antimatter engine reactor.
+  components:
+  - type: Sprite
+    layers:
+    - state: ame-part
+  - type: Flatpack
+    entity: AmeShielding
+  - type: StaticPrice
+    price: 500
+  - type: GuideHelp
+    guides: [ AME, Power ]
+  - type: StealTarget
+    stealGroup: AmePartFlatpack
+
+- type: entity
+  parent: BaseFlatpack
+  id: SingularityGeneratorFlatpack
+  name: singularity generator flatpack
+  description: A flatpack used for constructing a singularity generator.
+  components:
+  - type: Flatpack
+    entity: SingularityGenerator
+  - type: Sprite
+    layers:
+    - state: singularity-generator
+  - type: GuideHelp
+    guides: [ Singularity, Power ]
+
+- type: entity
+  parent: BaseFlatpack
+  id: RadiationCollectorFlatpack
+  name: radiation collector flatpack
+  description: A flatpack used for constructing a radiation collector.
+  components:
+  - type: Flatpack
+    entity: RadiationCollectorNoTank
+  - type: Sprite
+    layers:
+    - state: radiation-collector
+  - type: GuideHelp
+    guides: [ Singularity, Power ]
+
+- type: entity
+  parent: BaseFlatpack
+  id: ContainmentFieldGeneratorFlatpack
+  name: containment field generator flatpack
+  description: A flatpack used for constructing a containment field generator.
+  components:
+  - type: Flatpack
+    entity: ContainmentFieldGenerator
+  - type: Sprite
+    layers:
+    - state: containment-field-generator
+  - type: GuideHelp
+    guides: [ Singularity, Power ]
+
+- type: entity
+  parent: BaseFlatpack
+  id: TeslaGeneratorFlatpack
+  name: tesla generator flatpack
+  description: A flatpack used for constructing a tesla generator.
+  components:
+  - type: Flatpack
+    entity: TeslaGenerator
+  - type: Sprite
+    layers:
+    - state: tesla-generator
+  - type: GuideHelp
+    guides: [ Power ] # TODO add tesla guide
+
+- type: entity
+  parent: BaseFlatpack
+  id: TeslaCoilFlatpack
+  name: tesla coil flatpack
+  description: A flatpack used for constructing a tesla coil.
+  components:
+  - type: Flatpack
+    entity: TeslaCoil
+  - type: Sprite
+    layers:
+    - state: tesla-coil
+  - type: GuideHelp
+    guides: [ Power ] # TODO add tesla guide
+
+- type: entity
+  parent: BaseFlatpack
+  id: TeslaGroundingRodFlatpack
+  name: grounding rod flatpack
+  description: A flatpack used for constructing a grounding rod.
+  components:
+  - type: Flatpack
+    entity: TeslaGroundingRod
+  - type: Sprite
+    layers:
+    - state: grounding-rod
+  - type: GuideHelp
+    guides: [ Power ] # TODO add tesla guide
+
+- type: entity
+  parent: BaseFlatpack
+  id: GyroscopeFlatpack
+  name: gyroscope flatpack
+  description: A flatpack used for constructing a gyroscope.
+  components:
+  - type: Flatpack
+    entity: Gyroscope
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#cec8ac"
+    - state: icon-default
+
+- type: entity
+  parent: BaseFlatpack
+  id: ThrusterFlatpack
+  name: thruster flatpack
+  description: A flatpack used for constructing a thruster.
+  components:
+  - type: Flatpack
+    entity: Thruster
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#cec8ac"
+    - state: icon-default

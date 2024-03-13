@@ -1,16 +1,11 @@
 using Content.Client.Gameplay;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
-using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Configuration;
-using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Client.GameTicking.Managers
@@ -32,13 +27,11 @@ namespace Content.Client.GameTicking.Managers
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
-        [ViewVariables] public string? LobbySong { get; private set; }
         [ViewVariables] public string? RestartSound { get; private set; }
         [ViewVariables] public string? LobbyBackground { get; private set; }
         [ViewVariables] public bool DisallowedLateJoin { get; private set; }
         [ViewVariables] public string? ServerInfoBlob { get; private set; }
         [ViewVariables] public TimeSpan StartTime { get; private set; }
-        [ViewVariables] public TimeSpan RoundStartTimeSpan { get; private set; }
         [ViewVariables] public new bool Paused { get; private set; }
 
         [ViewVariables] public IReadOnlyDictionary<NetEntity, Dictionary<string, uint?>> JobsAvailable => _jobsAvailable;
@@ -46,7 +39,6 @@ namespace Content.Client.GameTicking.Managers
 
         public event Action? InfoBlobUpdated;
         public event Action? LobbyStatusUpdated;
-        public event Action? LobbySongUpdated;
         public event Action? LobbyLateJoinStatusUpdated;
         public event Action<IReadOnlyDictionary<NetEntity, Dictionary<string, uint?>>>? LobbyJobsAvailableUpdated;
 
@@ -69,16 +61,6 @@ namespace Content.Client.GameTicking.Managers
             SubscribeNetworkEvent<TickerJobsAvailableEvent>(UpdateJobsAvailable);
 
             _initialized = true;
-        }
-
-        public void SetLobbySong(string? song, bool forceUpdate = false)
-        {
-            var updated = song != LobbySong;
-
-            LobbySong = song;
-
-            if (updated || forceUpdate)
-                LobbySongUpdated?.Invoke();
         }
 
         private void LateJoinStatus(TickerLateJoinStatusEvent message)
@@ -121,7 +103,6 @@ namespace Content.Client.GameTicking.Managers
             RoundStartTimeSpan = message.RoundStartTimeSpan;
             IsGameStarted = message.IsRoundStarted;
             AreWeReady = message.YouAreReady;
-            SetLobbySong(message.LobbySong);
             LobbyBackground = message.LobbyBackground;
             Paused = message.Paused;
 
@@ -149,7 +130,6 @@ namespace Content.Client.GameTicking.Managers
         private void RoundEnd(RoundEndMessageEvent message)
         {
             // Force an update in the event of this song being the same as the last.
-            SetLobbySong(message.LobbySong, true);
             RestartSound = message.RestartSound;
 
             // Don't open duplicate windows (mainly for replays).

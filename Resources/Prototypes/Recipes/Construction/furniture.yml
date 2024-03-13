@@ -51,6 +51,23 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: brass chair
+  id: ChairBrass
+  graph: Seat
+  startNode: start
+  targetNode: chairBrass
+  category: construction-category-furniture
+  description: You sit in this. Either by will or force.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: brass_chair
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: office chair
   id: ChairOfficeLight
   graph: Seat
@@ -220,6 +237,23 @@
   conditions:
     - !type:TileNotBlocked
 
+- type: construction
+  name: comfortable blue bench
+  id: BlueComfBench
+  graph: Seat
+  startNode: start
+  targetNode: blueComfBench
+  category: construction-category-furniture
+  description: A bench with an extremely comfortable backrest.
+  icon:
+    sprite: Structures/Furniture/Bench/comf_bench.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
 #tables
 - type: construction
   name: steel table
@@ -307,6 +341,23 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: brass table
+  id: TableBrass
+  graph: Table
+  startNode: start
+  targetNode: TableBrass
+  category: construction-category-furniture
+  description: A shiny, corrosion resistant brass table. Steampunk!
+  icon:
+    sprite: Structures/Furniture/Tables/brass.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: wood table
   id: TableWood
   graph: Table
@@ -333,6 +384,159 @@
   description: A square piece of wood standing on four legs covered by a cloth. (What did you expect?)
   icon:
     sprite: Structures/Furniture/Tables/carpet.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy black table
+  id: TableFancyBlack
+  graph: Table
+  startNode: start
+  targetNode: TableFancyBlack
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/black.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy blue table
+  id: TableFancyBlue
+  graph: Table
+  startNode: start
+  targetNode: TableFancyBlue
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/blue.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy cyan table
+  id: TableFancyCyan
+  graph: Table
+  startNode: start
+  targetNode: TableFancyCyan
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/cyan.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy green table
+  id: TableFancyGreen
+  graph: Table
+  startNode: start
+  targetNode: TableFancyGreen
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/green.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy orange table
+  id: TableFancyOrange
+  graph: Table
+  startNode: start
+  targetNode: TableFancyOrange
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/orange.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy purple table
+  id: TableFancyPurple
+  graph: Table
+  startNode: start
+  targetNode: TableFancyPurple
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/purple.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy pink table
+  id: TableFancyPink
+  graph: Table
+  startNode: start
+  targetNode: TableFancyPink
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/pink.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy red table
+  id: TableFancyRed
+  graph: Table
+  startNode: start
+  targetNode: TableFancyRed
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/red.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: fancy white table
+  id: TableFancyWhite
+  graph: Table
+  startNode: start
+  targetNode: TableFancyWhite
+  category: construction-category-furniture
+  description: A table covered with a beautiful cloth.
+  icon:
+    sprite: Structures/Furniture/Tables/Fancy/white.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -506,7 +710,160 @@
   targetNode: Curtains
   category: construction-category-furniture
   icon:
-    sprite: Structures/Decoration/curtains.rsi
+    sprite: Structures/Decoration/Curtains/hospital.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  id: CurtainsBlack
+  name: black curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsBlack
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/black.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked  
+
+- type: construction
+  id: CurtainsBlue
+  name: blue curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsBlue
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/blue.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked  
+    
+- type: construction
+  id: CurtainsCyan
+  name: cyan curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsCyan
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/cyan.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  id: CurtainsGreen
+  name: green curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsGreen
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/green.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  id: CurtainsOrange
+  name: orange curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsOrange
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/orange.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  id: CurtainsPink
+  name: pink curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsPink
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/pink.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  id: CurtainsPurple
+  name: purple curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsPurple
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/purple.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  id: CurtainsRed
+  name: red curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsRed
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/red.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked    
+
+- type: construction
+  id: CurtainsWhite
+  name: white curtains
+  description: Hides what others shouldn't see.
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsWhite
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/Curtains/white.rsi
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter

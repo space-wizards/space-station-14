@@ -33,13 +33,7 @@ public sealed class NPCJukeSystem : EntitySystem
         _npcRangedQuery = GetEntityQuery<NPCRangedCombatComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
 
-        SubscribeLocalEvent<NPCJukeComponent, EntityUnpausedEvent>(OnJukeUnpaused);
         SubscribeLocalEvent<NPCJukeComponent, NPCSteeringEvent>(OnJukeSteering);
-    }
-
-    private void OnJukeUnpaused(EntityUid uid, NPCJukeComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextJuke += args.PausedTime;
     }
 
     private void OnJukeSteering(EntityUid uid, NPCJukeComponent component, ref NPCSteeringEvent args)

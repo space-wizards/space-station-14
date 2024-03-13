@@ -23,7 +23,7 @@ public sealed class ActionsAddedTest
         var client = pair.Client;
         var sEntMan = server.ResolveDependency<IEntityManager>();
         var cEntMan = client.ResolveDependency<IEntityManager>();
-        var clientSession = client.ResolveDependency<Robust.Client.Player.IPlayerManager>().LocalPlayer?.Session;
+        var clientSession = client.Session;
         var serverSession = server.ResolveDependency<IPlayerManager>().Sessions.Single();
         var sActionSystem = server.System<SharedActionsSystem>();
         var cActionSystem = client.System<SharedActionsSystem>();

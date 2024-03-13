@@ -39,7 +39,9 @@
   - type: Sprite
     layers:
       - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
         color: "#dbdbdb"
 
 - type: entity
@@ -52,5 +54,7 @@
   - type: Sprite
     layers:
       - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
         color: "#43c4f7"
