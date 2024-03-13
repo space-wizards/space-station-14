@@ -65,7 +65,7 @@
   parent: ImmovableRodKeepTilesStill
   id: ImmovableRodBartender
   suffix: Bartender
-  name: immovable rod
+  name: immovable bar
   description: At least it won't deal 55 stamina damage.
   components:
   - type: ImmovableRod
