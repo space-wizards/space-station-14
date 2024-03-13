@@ -4,8 +4,8 @@ using Content.Shared.Power;
 namespace Content.Server.Power.Components;
 
 [RegisterComponent]
-[Access(typeof(MachinePowerChargeSystem))]
-public sealed partial class MachinePowerChargeComponent : Component
+[Access(typeof(PowerChargeSystem))]
+public sealed partial class PowerChargeComponent : SharedPowerChargeComponent
 {
     // TODO: Change comments
     // 1% charge per second.
@@ -44,7 +44,7 @@ public sealed partial class MachinePowerChargeComponent : Component
     /// This is used to allow machine power charging to be integrated into any ui
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public Enum UiKey { get; set; } = MachinePowerChargeUiKey.Key;
+    public Enum UiKey { get; set; } = PowerChargeUiKey.Key;
 
     // 0 -> 1
     [DataField]

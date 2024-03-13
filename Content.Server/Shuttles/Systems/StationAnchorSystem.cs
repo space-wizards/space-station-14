@@ -1,4 +1,8 @@
-﻿using Content.Server.Shuttles.Components;
+﻿using Content.Server.Popups;
+using Content.Server.Power.EntitySystems;
+using Content.Server.Shuttles.Components;
+using Content.Shared.Construction.Components;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
@@ -7,24 +11,43 @@ namespace Content.Server.Shuttles.Systems;
 public sealed class StationAnchorSystem : EntitySystem
 {
     [Dependency] private readonly ShuttleSystem _shuttleSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<StationAnchorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         SubscribeLocalEvent<StationAnchorComponent, AnchorStateChangedEvent>(OnAnchorStationChange);
-        SubscribeLocalEvent<StationAnchorComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
+
+        SubscribeLocalEvent<StationAnchorComponent, ChargedMachineActivatedEvent>(OnActivated);
+        SubscribeLocalEvent<StationAnchorComponent, ChargedMachineDeactivatedEvent>(OnDeactivated);
     }
 
-    private void OnGetVerbs(EntityUid uid, StationAnchorComponent component, GetVerbsEvent<Verb> args)
+    private void OnActivated(Entity<StationAnchorComponent> ent, ref ChargedMachineActivatedEvent args)
     {
-        // add debug verb to toggle power requirements
-        args.Verbs.Add(new()
-        {
-            Text = "Enable",
-            Category = VerbCategory.Debug,
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")), // "smite" is a lightning bolt
-            Act = () => SetStatus(uid, true)
-        });
+        SetStatus(ent, true);
+    }
+
+    private void OnDeactivated(Entity<StationAnchorComponent> ent, ref ChargedMachineDeactivatedEvent args)
+    {
+        SetStatus(ent, false);
+    }
+
+    /// <summary>
+    /// Prevent unanchoring when anchor is active
+    /// </summary>
+    private void OnUnanchorAttempt(EntityUid uid, StationAnchorComponent component, UnanchorAttemptEvent args)
+    {
+        if (!component.SwitchedOn)
+            return;
+
+        _popupSystem.PopupEntity(
+            Loc.GetString("station-anchor-unanchoring-failed"),
+            uid,
+            args.User,
+            PopupType.Medium);
+
+        args.Cancel();
     }
 
     private void OnAnchorStationChange(Entity<StationAnchorComponent> ent, ref AnchorStateChangedEvent args)
@@ -33,9 +56,9 @@ public sealed class StationAnchorSystem : EntitySystem
             SetStatus(ent, false);
     }
 
-    private void SetStatus(EntityUid uid, bool enabled, ShuttleComponent? shuttleComponent = default)
+    private void SetStatus(Entity<StationAnchorComponent> ent, bool enabled, ShuttleComponent? shuttleComponent = default)
     {
-        var transform = Transform(uid);
+        var transform = Transform(ent);
         var grid = transform.GridUid;
         if (!grid.HasValue || !transform.Anchored && enabled || !Resolve(grid.Value, ref shuttleComponent))
             return;
@@ -50,5 +73,6 @@ public sealed class StationAnchorSystem : EntitySystem
         }
 
         shuttleComponent.Enabled = !enabled;
+        ent.Comp.SwitchedOn = enabled;
     }
 }

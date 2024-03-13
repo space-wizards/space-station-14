@@ -17,20 +17,20 @@ public sealed class SwitchChargingMachineMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class ChargingMachineState : BoundUserInterfaceState
+public sealed class PowerChargeState : BoundUserInterfaceState
 {
     public bool On;
     // 0 -> 255
     public byte Charge;
-    public MachinePowerChargePowerStatus PowerStatus;
+    public PowerChargePowerStatus PowerStatus;
     public short PowerDraw;
     public short PowerDrawMax;
     public short EtaSeconds;
 
-    public ChargingMachineState(
+    public PowerChargeState(
         bool on,
         byte charge,
-        MachinePowerChargePowerStatus powerStatus,
+        PowerChargePowerStatus powerStatus,
         short powerDraw,
         short powerDrawMax,
         short etaSeconds)
@@ -45,20 +45,21 @@ public sealed class ChargingMachineState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public enum MachinePowerChargeUiKey
+public enum PowerChargeUiKey
 {
     Key
 }
 
 [Serializable, NetSerializable]
-public enum MachinePowerChargeVisuals
+public enum PowerChargeVisuals
 {
     State,
-    Charge
+    Charge,
+    Active
 }
 
 [Serializable, NetSerializable]
-public enum MachinePowerChargeStatus
+public enum PowerChargeStatus
 {
     Broken,
     Unpowered,
@@ -67,7 +68,7 @@ public enum MachinePowerChargeStatus
 }
 
 [Serializable, NetSerializable]
-public enum MachinePowerChargePowerStatus : byte
+public enum PowerChargePowerStatus : byte
 {
     Off,
     Discharging,

@@ -799,3 +799,12 @@
      Steel: 100
      Glass: 900
      Gold: 100
+
+- type: latheRecipe
+  id: StationAnchorCircuitboard
+  result: StationAnchorCircuitboard
+  completetime: 8
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100

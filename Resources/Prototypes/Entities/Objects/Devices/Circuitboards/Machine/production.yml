@@ -1229,3 +1229,20 @@
       Steel: 5
       CableHV: 5
       Uranium: 2
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: StationAnchorCircuitboard
+  name: station anchor machine board
+  description: A machine printed circuit board for a station anchor.
+  components:
+  - type: MachineBoard
+    prototype: GravityGeneratorMini
+    requirements:
+      Capacitor: 4
+      MatterBin: 3
+    materialRequirements:
+      Steel: 10
+      Glass: 5
+      CableHV: 8
+      Uranium: 2
