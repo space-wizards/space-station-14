@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added the Quantum Spin Inverter. This object, when linked with another
-      inverter, can be used to swap places, allowing teleportation across great distances.
-      Research it in the new Experimental Quantum Leaping technology.
-    type: Add
-  id: 5642
-  time: '2024-01-09T07:37:56.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23756
 - author: mirrorcult
   changes:
   - message: Catatonic/SSD state no longer mispredicts in examine
@@ -3804,3 +3795,10 @@
   id: 6141
   time: '2024-03-13T10:00:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25566
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Zombies can now wideswing, similar to how a space carp would.
+    type: Tweak
+  id: 6142
+  time: '2024-03-13T10:02:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26064
