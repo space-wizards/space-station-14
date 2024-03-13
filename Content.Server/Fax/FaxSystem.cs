@@ -459,7 +459,7 @@ public sealed class FaxSystem : EntitySystem
 
         if (args.Session.AttachedEntity != null)
             _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} has added to {ToPrettyString(uid):tool} queue a job to copy {ToPrettyString(component.PaperSlot.Item):subject}");
+                $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} added print job to {ToPrettyString(uid):tool} with text: {ToPrettyString(component.PaperSlot.Item):subject}");
     }
 
     /// <summary>
