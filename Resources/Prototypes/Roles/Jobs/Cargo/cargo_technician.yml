@@ -11,6 +11,9 @@
   - Maintenance
   extendedAccess:
   - Salvage
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: CargoTechGear

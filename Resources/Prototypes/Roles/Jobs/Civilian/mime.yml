@@ -17,6 +17,8 @@
     components:
     - type: MimePowers
     - type: FrenchAccent
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: MimeGear

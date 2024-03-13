@@ -17,6 +17,9 @@
   extendedAccess:
   - Hydroponics
   - Bar
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: ChefGear
