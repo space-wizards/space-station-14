@@ -29,6 +29,3 @@ comp-climbable-cant-climb = You are incapable of climbing!
 
 # Shown to you when your character tries to force someone else who can't climb onto a climbable
 comp-climbable-target-cant-climb = { CAPITALIZE(THE($moved-user)) } can't go there!
-
-# Shown to you when your character tries to force someone else onto a climbable but isn't able to
-comp-climbable-cant-force-climb = You can't force { THE($moved-user) } onto { THE($climbable) }!

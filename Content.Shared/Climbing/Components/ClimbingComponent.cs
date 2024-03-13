@@ -20,12 +20,6 @@ public sealed partial class ClimbingComponent : Component
     public bool CanClimb = true;
 
     /// <summary>
-    /// Whether the owner is able to forcibly raise other characters onto things.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool CanForceClimb = true;
-
-    /// <summary>
     /// Whether the owner is climbing on a climbable entity.
     /// </summary>
     [AutoNetworkedField, DataField]

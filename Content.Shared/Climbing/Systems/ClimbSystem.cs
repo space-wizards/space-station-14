@@ -452,12 +452,6 @@ public sealed partial class ClimbSystem : VirtualController
             return false;
         }
 
-        if (!TryComp<ClimbingComponent>(user, out var userClimbingComp) || !userClimbingComp.CanForceClimb)
-        {
-            reason = Loc.GetString("comp-climbable-cant-force-climb", ("moved-user", Identity.Entity(dragged, EntityManager)), ("climbable", Identity.Entity(target, EntityManager)));
-            return false;
-        }
-
         bool Ignored(EntityUid entity) => entity == target || entity == user || entity == dragged;
 
         if (!_interactionSystem.InRangeUnobstructed(user, target, component.Range, predicate: Ignored)
