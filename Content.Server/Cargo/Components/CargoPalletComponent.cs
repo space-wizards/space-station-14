@@ -7,19 +7,19 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 /// </summary>
 
 public enum BuySellType
-    {
+{
     Buy = 1,
     Sell = 2,
     All = Buy | Sell
-    }
+}
 
 
 [RegisterComponent]
 public sealed partial class CargoPalletComponent : Component
 {
     /// <summary>
-    /// Whether the pad is a buy pad, a sell pad, or both.
+    /// Whether the pad is a buy pad, a sell pad, or all.
     /// </summary>
     [DataField]
-     public BuySellType PalletType;
+    public BuySellType PalletType;
 }
