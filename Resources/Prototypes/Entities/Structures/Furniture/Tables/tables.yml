@@ -404,6 +404,47 @@
       collection: FootstepTile
 
 - type: entity
+  id: TableBrass
+  parent: TableBase
+  name: brass table
+  description: A shiny, corrosion resistant brass table. Steampunk!
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/brass.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/brass.rsi
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 125
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetBrass1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Table
+    node: TableBrass
+    
+- type: entity
   id: TableWood
   parent: TableBase
   name: wood table
@@ -547,6 +588,162 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepCarpet
+
+# Fancy tables
+
+- type: entity
+  id: TableFancyBase
+  abstract: true
+  parent: TableBase
+  name: fancy table
+  description: Expensive and rich.
+  components:
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25 
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 1
+          MaterialCloth1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Wooden
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepCarpet
+
+- type: entity
+  id: TableFancyBlue
+  parent: TableFancyBase
+  suffix: Blue
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/blue.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/blue.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyBlue
+
+- type: entity
+  id: TableFancyCyan
+  parent: TableFancyBase
+  suffix: Cyan
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/cyan.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/cyan.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyCyan
+
+- type: entity
+  id: TableFancyBlack
+  parent: TableFancyBase
+  suffix: Black
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/black.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/black.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyBlack
+
+- type: entity
+  id: TableFancyRed
+  parent: TableFancyBase
+  suffix: Red
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/red.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/red.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyRed
+    
+- type: entity
+  id: TableFancyPurple
+  parent: TableFancyBase
+  suffix: Purple
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/purple.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/purple.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyPurple
+    
+- type: entity
+  id: TableFancyPink
+  parent: TableFancyBase
+  suffix: Pink
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/pink.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/pink.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyPink
+    
+- type: entity
+  id: TableFancyGreen
+  parent: TableFancyBase
+  suffix: Green
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/green.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/green.rsi  
+  - type: Construction
+    graph: Table
+    node: TableFancyGreen
+    
+- type: entity
+  id: TableFancyOrange
+  parent: TableFancyBase
+  suffix: Orange
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/orange.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/orange.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyOrange
+    
+- type: entity
+  id: TableFancyWhite
+  parent: TableFancyBase
+  suffix: White
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/white.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/white.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancyWhite
+
+#Debug
 
 - type: entity
   id: TableDebug

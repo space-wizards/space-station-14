@@ -320,7 +320,7 @@ public sealed class FaxSystem : EntitySystem
             _faxecute.Faxecute(uid, component); /// when button pressed it will hurt the mob.
         }
         else
-            Copy(uid, component);
+            Copy(uid, component, args);
     }
 
     private void OnSendButtonPressed(EntityUid uid, FaxMachineComponent component, FaxSendMessage args)
@@ -438,13 +438,20 @@ public sealed class FaxSystem : EntitySystem
         component.SendTimeoutRemaining += component.SendTimeout;
 
         UpdateUserInterface(uid, component);
+
+        if (args.Session.AttachedEntity != null)
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} added print job to {ToPrettyString(uid):tool} with text: {args.Content}");
+        else
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"Someone added print job to {ToPrettyString(uid):tool} with text: {args.Content}");
     }
 
     /// <summary>
     ///     Copies the paper in the fax. A timeout is set after copying,
     ///     which is shared by the send button.
     /// </summary>
-    public void Copy(EntityUid uid, FaxMachineComponent? component = null)
+    public void Copy(EntityUid uid, FaxMachineComponent? component, FaxCopyMessage args)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -471,6 +478,10 @@ public sealed class FaxSystem : EntitySystem
         // will start immediately.
 
         UpdateUserInterface(uid, component);
+
+        if (args.Session.AttachedEntity != null)
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} added copy job to {ToPrettyString(uid):tool} with text: {ToPrettyString(component.PaperSlot.Item):subject}");
     }
 
     /// <summary>
