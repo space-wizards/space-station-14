@@ -37,6 +37,7 @@ public abstract class SharedInjectorSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
+        var user = args.User;
         var (_, component) = entity;
 
         var min = component.MinimumTransferAmount;
