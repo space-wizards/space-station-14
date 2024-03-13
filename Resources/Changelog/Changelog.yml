@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: EmoGarbage404
   changes:
-  - message: Mining drills, chainsaws, and gloves of the north star can now automatically
-      attack at the max rate when holding down the attack button.
-    type: Tweak
-  id: 5641
-  time: '2024-01-09T07:25:07.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23765
-- author: EmoGarbage404
-  changes:
   - message: Added the Quantum Spin Inverter. This object, when linked with another
       inverter, can be used to swap places, allowing teleportation across great distances.
       Research it in the new Experimental Quantum Leaping technology.
@@ -3804,3 +3796,11 @@
   id: 6140
   time: '2024-03-13T09:47:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25079
+- author: veprolet
+  changes:
+  - message: Injectors like the syringe can now toggle their transfer amount using
+      alternative interactions.
+    type: Tweak
+  id: 6141
+  time: '2024-03-13T10:00:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25566
