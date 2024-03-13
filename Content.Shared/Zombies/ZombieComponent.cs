@@ -143,7 +143,7 @@ public sealed partial class ZombieComponent : Component, IAntagStatusIconCompone
     /// <summary>
     ///     Hit sound on zombie bite.
     /// </summary>
-    [DataField("biteSound")]
+    [DataField]
     public SoundSpecifier BiteSound = new SoundPathSpecifier("/Audio/Effects/bite.ogg");
 
     /// <summary>
