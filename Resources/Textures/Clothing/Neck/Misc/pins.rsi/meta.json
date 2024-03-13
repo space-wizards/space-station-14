@@ -69,13 +69,6 @@
         {
             "name": "trans-equipped",
             "directions": 4
-        },
-        {
-            "name": "autism"
-        },
-        {
-            "name": "autism-equipped",
-            "directions": 4
         }
     ]
 }
