@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Cryoxadone and Doxarubixadone no longer work on the dead.
-    type: Remove
-  id: 5639
-  time: '2024-01-09T05:43:46.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23763
 - author: koteq
   changes:
   - message: Stasis beds prevent dead body decay
@@ -3803,3 +3796,11 @@
   id: 6138
   time: '2024-03-13T08:45:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25668
+- author: Plykiya
+  changes:
+  - message: Additional syringe doafter delay is now based on syringe contents rather
+      than transfer amount setting.
+    type: Tweak
+  id: 6139
+  time: '2024-03-13T09:35:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25890
