@@ -712,6 +712,7 @@
 
 # Disruption
 
+- type: listing
   id: UplinkEmag
   name: uplink-emag-name
   description: uplink-emag-desc
