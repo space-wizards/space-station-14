@@ -28,13 +28,13 @@ public sealed partial class ExplosionPrototype : IPrototype
     /// <summary>
     ///     If it ignites entities.
     /// </summary>
-    [DataField("doesIgnite")]
+    [DataField]
     public bool DoesIgnite = false;
 
     /// <summary>
     ///     Amount of firestacks applied on ignite.
     /// </summary>
-    [DataField("fireStacksOnIgnite")]
+    [DataField]
     public float FireStacksOnIgnite = 1f;
 
     /// <summary>
