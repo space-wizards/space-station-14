@@ -53,7 +53,6 @@ public sealed partial class PolymorphSystem : EntitySystem
     {
         SubscribeLocalEvent<PolymorphableComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<PolymorphedEntityComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<PolymorphOnSpawnComponent, MapInitEvent>(PolymorphOnMapInit);
 
         SubscribeLocalEvent<PolymorphableComponent, PolymorphActionEvent>(OnPolymorphActionEvent);
         SubscribeLocalEvent<PolymorphedEntityComponent, RevertPolymorphActionEvent>(OnRevertPolymorphActionEvent);
@@ -116,11 +115,6 @@ public sealed partial class PolymorphSystem : EntitySystem
             action.EntityIcon = component.Parent;
             action.UseDelay = TimeSpan.FromSeconds(component.Configuration.Delay);
         }
-    }
-
-    private void PolymorphOnMapInit(Entity<PolymorphOnSpawnComponent> ent, ref MapInitEvent args)
-    {
-        PolymorphEntity(ent, ent.Comp.Polymorph);
     }
 
     private void OnPolymorphActionEvent(Entity<PolymorphableComponent> ent, ref PolymorphActionEvent args)
