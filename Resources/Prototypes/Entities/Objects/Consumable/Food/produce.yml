@@ -255,6 +255,8 @@
       reagents:
       - ReagentId: JuiceBanana
         Quantity: 10
+  - type: ReplaceRandom
+    prototype: ClusterBananaPeel
   - type: Tag
     tags:
     - Fruit
