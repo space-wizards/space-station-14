@@ -21,6 +21,17 @@
   objectType: Item
 
 - type: construction
+  name: clockwork glass
+  description: A brass-reinforced sheet of glass.
+  id: SheetClockworkGlass
+  graph: Glass
+  startNode: start
+  targetNode: SheetClockworkGlass
+  category: construction-category-materials
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: cglass }
+  objectType: Item
+
+- type: construction
   name: plasma glass
   description: A sheet of translucent plasma.
   id: SheetPGlass

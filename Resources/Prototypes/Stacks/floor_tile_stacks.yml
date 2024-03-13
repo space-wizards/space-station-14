@@ -83,6 +83,20 @@
   itemSize: 5
 
 - type: stack
+  id: FloorTileBrassFilled
+  name: filled brass plate
+  spawn: FloorTileItemBrassFilled
+  maxCount: 30
+  itemSize: 5
+  
+- type: stack
+  id: FloorTileBrassReebe
+  name: smooth brass plate
+  spawn: FloorTileItemBrassReebe
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
   id: FloorTileLino
   name: linoleum floor
   spawn: FloorTileItemLino

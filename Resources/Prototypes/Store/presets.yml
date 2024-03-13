@@ -2,16 +2,16 @@
   id: StorePresetUplink
   storeName: Uplink
   categories:
-  - UplinkWeapons
+  - UplinkWeaponry
   - UplinkAmmo
   - UplinkExplosives
-  - UplinkMisc
-  - UplinkBundles
-  - UplinkTools
-  - UplinkUtility
+  - UplinkChemicals
+  - UplinkDeception
+  - UplinkDisruption
   - UplinkImplants
+  - UplinkAllies
+  - UplinkWearables
   - UplinkJob
-  - UplinkArmor
   - UplinkPointless
   currencyWhitelist:
   - Telecrystal

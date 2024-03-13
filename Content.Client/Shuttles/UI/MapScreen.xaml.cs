@@ -150,8 +150,12 @@ public sealed partial class MapScreen : BoxContainer
                 _ftlStyle.BackgroundColor = Color.FromHex("#B02E26");
                 MapRadar.InFtl = false;
                 break;
+            // Fallback in case no FTL state or the likes.
             default:
-                throw new NotImplementedException();
+                SetFTLAllowed(false);
+                _ftlStyle.BackgroundColor = Color.FromHex("#B02E26");
+                MapRadar.InFtl = false;
+                break;
         }
 
         if (IsFTLBlocked())
@@ -314,10 +318,13 @@ public sealed partial class MapScreen : BoxContainer
 
             foreach (var grid in _mapManager.GetAllMapGrids(mapComp.MapId))
             {
+                _entManager.TryGetComponent(grid.Owner, out IFFComponent? iffComp);
+
                 var gridObj = new GridMapObject()
                 {
                     Name = _entManager.GetComponent<MetaDataComponent>(grid.Owner).EntityName,
-                    Entity = grid.Owner
+                    Entity = grid.Owner,
+                    HideButton = iffComp != null && (iffComp.Flags & IFFFlags.HideLabel) != 0x0,
                 };
 
                 // Always show our shuttle immediately
@@ -325,7 +332,8 @@ public sealed partial class MapScreen : BoxContainer
                 {
                     AddMapObject(mapComp.MapId, gridObj);
                 }
-                else
+                else if (iffComp == null ||
+                         (iffComp.Flags & IFFFlags.Hide) == 0x0)
                 {
                     _pendingMapObjects.Add((mapComp.MapId, gridObj));
                 }
@@ -419,9 +427,13 @@ public sealed partial class MapScreen : BoxContainer
     /// </summary>
     private void AddMapObject(MapId mapId, IMapObject mapObj)
     {
-        var gridContents = _mapHeadings[mapId];
         var existing = _mapObjects.GetOrNew(mapId);
         existing.Add(mapObj);
+
+        if (mapObj.HideButton)
+            return;
+
+        var gridContents = _mapHeadings[mapId];
 
         var gridButton = new Button()
         {

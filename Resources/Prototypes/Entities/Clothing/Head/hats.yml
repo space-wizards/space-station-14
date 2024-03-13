@@ -800,8 +800,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatMagician
-  name: magician's top hat.
-  description: "A magician's top hat."
+  name: magician's tophat
+  description: "A magician's tophat."
   components:
   - type: Icon
     sprite: Clothing/Head/Hats/magician.rsi
@@ -818,6 +818,7 @@
   - type: Item
     size: Small
     sprite: Clothing/Head/Hats/magician.rsi
+    storedRotation: 0
   - type: Storage
     grid:
     - 0,0,0,0
@@ -935,6 +936,9 @@
   name: grey flatcap
   description: Fashionable for both the working class and old man Jenkins.
   components:
+  - type: Tag
+    tags:
+    - BrimFlatcapGrey
   - type: Sprite
     sprite: Clothing/Head/Hats/greyflatcap.rsi
   - type: Clothing
@@ -946,6 +950,9 @@
   name: brown flatcap
   description: Stupid clown! You made me look bad!
   components:
+  - type: Tag
+    tags:
+    - BrimFlatcapBrown
   - type: Sprite
     sprite: Clothing/Head/Hats/brownflatcap.rsi
   - type: Clothing

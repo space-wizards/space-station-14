@@ -156,7 +156,7 @@ public sealed partial class ExplosionSystem
 #endif
         }
 
-        Logger.InfoS("Explosion", $"Processed {TilesPerTick - tilesRemaining} tiles in {Stopwatch.Elapsed.TotalMilliseconds}ms");
+        Log.Info($"Processed {TilesPerTick - tilesRemaining} tiles in {Stopwatch.Elapsed.TotalMilliseconds}ms");
 
         // we have finished processing our tiles. Is there still an ongoing explosion?
         if (_activeExplosion != null)

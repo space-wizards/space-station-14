@@ -54,7 +54,7 @@ public sealed partial class ShuttleConsoleSystem
         var angle = args.Angle.Reduced();
         var targetCoordinates = new EntityCoordinates(targetXform.MapUid!.Value, _transform.GetWorldPosition(targetXform));
 
-        ConsoleFTL(ent, true, targetCoordinates, angle, targetXform.MapID);
+        ConsoleFTL(ent, targetCoordinates, angle, targetXform.MapID);
     }
 
     private void OnPositionFTLMessage(Entity<ShuttleConsoleComponent> entity, ref ShuttleConsoleFTLPositionMessage args)
@@ -69,7 +69,7 @@ public sealed partial class ShuttleConsoleSystem
 
         var targetCoordinates = new EntityCoordinates(mapUid, args.Coordinates.Position);
         var angle = args.Angle.Reduced();
-        ConsoleFTL(entity, false, targetCoordinates, angle, args.Coordinates.MapId);
+        ConsoleFTL(entity, targetCoordinates, angle, args.Coordinates.MapId);
     }
 
     private void GetBeacons(ref List<ShuttleBeaconObject>? beacons)
@@ -95,7 +95,7 @@ public sealed partial class ShuttleConsoleSystem
     {
         var query = AllEntityQuery<FTLExclusionComponent, TransformComponent>();
 
-        while (query.MoveNext(out var uid, out var comp, out var xform))
+        while (query.MoveNext(out var comp, out var xform))
         {
             if (!comp.Enabled)
                 continue;
@@ -108,7 +108,7 @@ public sealed partial class ShuttleConsoleSystem
     /// <summary>
     /// Handles shuttle console FTLs.
     /// </summary>
-    private void ConsoleFTL(Entity<ShuttleConsoleComponent> ent, bool beacon, EntityCoordinates targetCoordinates, Angle targetAngle, MapId targetMap)
+    private void ConsoleFTL(Entity<ShuttleConsoleComponent> ent, EntityCoordinates targetCoordinates, Angle targetAngle, MapId targetMap)
     {
         var consoleUid = GetDroneConsole(ent.Owner);
 
@@ -136,7 +136,7 @@ public sealed partial class ShuttleConsoleSystem
         List<ShuttleExclusionObject>? exclusions = null;
         GetExclusions(ref exclusions);
 
-        if (!beacon && !_shuttle.FTLFree(shuttleUid.Value, targetCoordinates, targetAngle, exclusions))
+        if (!_shuttle.FTLFree(shuttleUid.Value, targetCoordinates, targetAngle, exclusions))
         {
             return;
         }
