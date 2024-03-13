@@ -11,7 +11,7 @@ public sealed partial class MessagesUiFragment : BoxContainer
 {
 
     public event Action<string>? OnMessageSent;
-    public event Action<string?>? OnButtonPressed;
+    public event Action<int?>? OnButtonPressed;
 
     public MessagesUiFragment()
     {
@@ -32,7 +32,7 @@ public sealed partial class MessagesUiFragment : BoxContainer
         UpdateState(MessagesUiStateMode.UserList, [], null);
     }
 
-    public void UpdateState(MessagesUiStateMode mode, List<(string, string)>? contents, string? name)
+    public void UpdateState(MessagesUiStateMode mode, List<(string, int?)>? contents, string? name)
     {
         MessageContainer.DisposeAllChildren();
         MessageContainer.RemoveAllChildren();
@@ -65,7 +65,7 @@ public sealed partial class MessagesUiFragment : BoxContainer
         }
     }
 
-    private void AddButton(string userUid, string userName)
+    private void AddButton(int? userUid, string userName)
     {
         var button = new Button
         {

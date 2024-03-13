@@ -20,8 +20,8 @@ public sealed partial class MessagesUi : UIFragment
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
         _fragment = new MessagesUiFragment();
-        _fragment.OnMessageSent += note => SendMessagesMessage(MessagesUiAction.Send, note, userInterface);
-        _fragment.OnButtonPressed += userUid => SendMessagesMessage(MessagesUiAction.ChangeChat, userUid, userInterface);
+        _fragment.OnMessageSent += note => SendMessagesMessage(MessagesUiAction.Send, note, null, userInterface);
+        _fragment.OnButtonPressed += userUid => SendMessagesMessage(MessagesUiAction.ChangeChat, null, userUid, userInterface);
     }
 
     public override void UpdateState(BoundUserInterfaceState state)
@@ -32,9 +32,9 @@ public sealed partial class MessagesUi : UIFragment
         _fragment?.UpdateState(messagesState.Mode, messagesState.Contents, messagesState.Name);
     }
 
-    private void SendMessagesMessage(MessagesUiAction action, string? parameter, BoundUserInterface userInterface)
+    private void SendMessagesMessage(MessagesUiAction action, string? stringInput, int? uidInput, BoundUserInterface userInterface)
     {
-        var MessagesMessage = new MessagesUiMessageEvent(action, parameter);
+        var MessagesMessage = new MessagesUiMessageEvent(action, stringInput, uidInput);
         var message = new CartridgeUiMessage(MessagesMessage);
         userInterface.SendMessage(message);
     }

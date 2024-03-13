@@ -346,7 +346,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
                         if (TryComp(args.Entity, out IdCardComponent? _))
                         {
                             messagesCartridgeComponent.ConnectedId = args.Entity;
-                            messagesCartridgeComponent.UserUid = args.Entity.ToString();
+                            messagesCartridgeComponent.UserUid = args.Entity.Id;
                             if (_messagesCartridgeSystem.GetActiveServer(messagesCartridgeComponent, Transform(uid).MapID) is var (_, server))
                             {
                                 _messagesCartridgeSystem.PullFromServer(realProgramUid, messagesCartridgeComponent, server);

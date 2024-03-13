@@ -94,7 +94,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     private static string GetName(MessagesCartridgeComponent component, int key)
     {
         if (!(component.NameDict.ContainsKey(key)))
-            component.NameDict[key] = Loc.GetString("messages-unknown-user");
+            component.NameDict[key] = "???";
 
         return component.NameDict[key];
     }
@@ -114,7 +114,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
         component.UserUid = component.ConnectedId.Value.Id;
         string? fullName = idCardComponent.FullName;
-        fullName ??= Loc.GetString("messages-unknown-user");
+        fullName ??= "???";
         component.UserName = $"{fullName} ({idCardComponent.JobTitle})";
 
         return true;

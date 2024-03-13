@@ -3,7 +3,7 @@
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 [Serializable, NetSerializable]
-public sealed class MessagesUiState(MessagesUiStateMode mode, List<(string, int?)> contents = null, string? name = null) : BoundUserInterfaceState
+public sealed class MessagesUiState(MessagesUiStateMode mode, List<(string, int?)> contents, string? name = null) : BoundUserInterfaceState
 {
     public List<(string, int?)>? Contents = contents;
     public MessagesUiStateMode Mode = mode;
