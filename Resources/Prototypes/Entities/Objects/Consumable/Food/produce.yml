@@ -657,6 +657,8 @@
       reagents:
       - ReagentId: JuicePotato
         Quantity: 10
+  - type: ReplaceOnSpawn
+    prototype: HotPotato
   - type: Tag
     tags:
     - Potato
