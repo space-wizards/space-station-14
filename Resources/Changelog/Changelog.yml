@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Catatonic/SSD state no longer mispredicts in examine
-    type: Fix
-  id: 5643
-  time: '2024-01-09T08:02:39.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23769
 - author: lunarcomets
   changes:
   - message: ShadyCigs now properly display flippo lighter icons!
@@ -3802,3 +3795,11 @@
   id: 6142
   time: '2024-03-13T10:02:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26064
+- author: Krunk
+  changes:
+  - message: Clown & Jester shoes can now hold plastic knives and cap guns! All clowning,
+      all the time!
+    type: Add
+  id: 6143
+  time: '2024-03-13T10:03:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25661
