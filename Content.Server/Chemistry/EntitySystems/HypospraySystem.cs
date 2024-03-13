@@ -74,7 +74,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
         TryDoInject(entity, args.HitEntities.First(), args.User);
     }
 
-    public bool TryDoInject(Entity<HyposprayComponent> entity, EntityUid? target, EntityUid user)
+    public bool TryDoInject(Entity<HyposprayComponent> entity, EntityUid target, EntityUid user)
     {
         var (uid, component) = entity;
 
@@ -86,7 +86,6 @@ public sealed class HypospraySystem : SharedHypospraySystem
             if (_useDelay.IsDelayed((uid, delayComp)))
                 return false;
         }
-
 
         string? msgFormat = null;
 
@@ -100,21 +99,21 @@ public sealed class HypospraySystem : SharedHypospraySystem
 
         if (!_solutionContainers.TryGetSolution(uid, component.SolutionName, out var hypoSpraySoln, out var hypoSpraySolution) || hypoSpraySolution.Volume == 0)
         {
-            _popup.PopupEntity(Loc.GetString("hypospray-component-empty-message"), target.Value, user);
+            _popup.PopupEntity(Loc.GetString("hypospray-component-empty-message"), target, user);
             return true;
         }
 
-        if (!_solutionContainers.TryGetInjectableSolution(target.Value, out var targetSoln, out var targetSolution))
+        if (!_solutionContainers.TryGetInjectableSolution(target, out var targetSoln, out var targetSolution))
         {
-            _popup.PopupEntity(Loc.GetString("hypospray-cant-inject", ("target", Identity.Entity(target.Value, EntityManager))), target.Value, user);
+            _popup.PopupEntity(Loc.GetString("hypospray-cant-inject", ("target", Identity.Entity(target, EntityManager))), target, user);
             return false;
         }
 
-        _popup.PopupEntity(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message", ("other", target)), target.Value, user);
+        _popup.PopupEntity(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message", ("other", target)), target, user);
 
         if (target != user)
         {
-            _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target.Value, target.Value);
+            _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
             // TODO: This should just be using melee attacks...
             // meleeSys.SendLunge(angle, user);
         }
@@ -131,7 +130,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
 
         if (realTransferAmount <= 0)
         {
-            _popup.PopupEntity(Loc.GetString("hypospray-component-transfer-already-full-message", ("owner", target)), target.Value, user);
+            _popup.PopupEntity(Loc.GetString("hypospray-component-transfer-already-full-message", ("owner", target)), target, user);
             return true;
         }
 
@@ -140,14 +139,14 @@ public sealed class HypospraySystem : SharedHypospraySystem
 
         if (!targetSolution.CanAddSolution(removedSolution))
             return true;
-        _reactiveSystem.DoEntityReaction(target.Value, removedSolution, ReactionMethod.Injection);
+        _reactiveSystem.DoEntityReaction(target, removedSolution, ReactionMethod.Injection);
         _solutionContainers.TryAddSolution(targetSoln.Value, removedSolution);
 
-        var ev = new TransferDnaEvent { Donor = target.Value, Recipient = uid };
-        RaiseLocalEvent(target.Value, ref ev);
+        var ev = new TransferDnaEvent { Donor = target, Recipient = uid };
+        RaiseLocalEvent(target, ref ev);
 
         // same LogType as syringes...
-        _adminLogger.Add(LogType.ForceFeed, $"{EntityManager.ToPrettyString(user):user} injected {EntityManager.ToPrettyString(target.Value):target} with a solution {SolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {EntityManager.ToPrettyString(uid):using}");
+        _adminLogger.Add(LogType.ForceFeed, $"{EntityManager.ToPrettyString(user):user} injected {EntityManager.ToPrettyString(target):target} with a solution {SolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {EntityManager.ToPrettyString(uid):using}");
 
         return true;
     }
@@ -185,7 +184,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
             ("target", Identity.Entity(target, EntityManager))), entity.Owner, user);
     }
 
-    static bool EligibleEntity([NotNullWhen(true)] EntityUid? entity, IEntityManager entMan, HyposprayComponent component)
+    private bool EligibleEntity(EntityUid entity, IEntityManager entMan, HyposprayComponent component)
     {
         // TODO: Does checking for BodyComponent make sense as a "can be hypospray'd" tag?
         // In SS13 the hypospray ONLY works on mobs, NOT beakers or anything else.
