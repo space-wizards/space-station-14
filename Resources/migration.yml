@@ -223,3 +223,7 @@ SolarAssemblyPart: SolarAssemblyFlatpack
 AmePart: AmePartFlatpack
 AmePartStealObjective: AmePartFlatpackStealObjective
 Observationskit: null
+
+# 2024-03-10
+FoodChili: FoodChiliPepper
+FoodChilly: FoodChillyPepper
