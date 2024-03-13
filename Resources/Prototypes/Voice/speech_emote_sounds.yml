@@ -32,8 +32,6 @@
       collection: MaleCry
     Whistle:
       collection: Whistles
-    Weh:
-      collection: Weh
 
 - type: emoteSounds
   id: FemaleHuman
@@ -68,8 +66,6 @@
       collection: FemaleCry
     Whistle:
       collection: Whistles
-    Weh:
-      collection: Weh
 
 - type: emoteSounds
   id: UnisexReptilian
@@ -88,8 +84,6 @@
       collection: MaleCry
     Weh:
       collection: Weh
-    WehChat:
-      collection: WehChat
 
 - type: emoteSounds
   id: MaleSlime
@@ -124,8 +118,6 @@
       collection: MaleCry
     Whistle:
       collection: Whistles
-    Weh:
-      collection: Weh
   params:
     variation: 0.125
 
@@ -162,8 +154,6 @@
       collection: FemaleCry
     Whistle:
       collection: Whistles
-    Weh:
-      collection: Weh
   params:
     variation: 0.125
 
@@ -187,8 +177,6 @@
       collection: DionaLaugh
     Honk:
       collection: BikeHorn
-    Weh:
-      collection: Weh
   params:
     variation: 0.125
 
@@ -205,8 +193,6 @@
       path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
     Click:
       path: /Audio/Voice/Arachnid/arachnid_click.ogg
-    Weh:
-      collection: Weh
 
 - type: emoteSounds
   id: UnisexDwarf
@@ -239,8 +225,6 @@
       collection: MaleCry
     Whistle:
       collection: Whistles
-    Weh:
-      collection: Weh
   params:
     variation: 0.125
     pitch: 0.75
@@ -276,8 +260,6 @@
       collection: FemaleCry
     Whistle:
       collection: Whistles
-    Weh:
-      collection: Weh
   params:
     variation: 0.125
     pitch: 0.75
@@ -297,8 +279,6 @@
       path: /Audio/Voice/Moth/moth_chitter.ogg
     Squeak:
       path: /Audio/Voice/Moth/moth_squeak.ogg
-    Weh:
-      collection: Weh
 
 # body emotes
 - type: emoteSounds

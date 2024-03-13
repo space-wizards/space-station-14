@@ -246,11 +246,6 @@
   id: Weh
   category: Vocal
   chatMessages: [Wehs!]
-
-- type: emote
-  id: WehChat
-  category: Vocal
-  chatMessages: [Weh!]
   chatTriggers:
     - weh
     - weh.
