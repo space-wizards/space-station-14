@@ -51,13 +51,13 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         if (args is not MessagesUiMessageEvent messageEvent)
             return;
 
-        if (messageEvent.Action == MessagesUiAction.Send && component.UserUid != null && component.ChatUid != null && messageEvent.Parameter != null)
+        if (messageEvent.Action == MessagesUiAction.Send && component.UserUid != null && component.ChatUid != null && messageEvent.StringInput != null)
         {
             MessagesMessageData messageData = new()
             {
-                SenderId = component.UserUid,
-                ReceiverId = component.ChatUid,
-                Content = messageEvent.Parameter,
+                SenderId = component.UserUid.Value,
+                ReceiverId = component.ChatUid.Value,
+                Content = messageEvent.StringInput,
                 Time = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan)
             };
             component.MessagesQueue.Add(messageData);
@@ -65,13 +65,14 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         else
         {
             if (messageEvent.Action == MessagesUiAction.ChangeChat)
-                component.ChatUid = messageEvent.Parameter;
+                component.ChatUid = messageEvent.UidInput;
         }
 
         UpdateUiState(uid, GetEntity(args.LoaderUid), component);
     }
 
-
+    //Function that returns the uid and component of an active server with matching faction on a given map if it exists
+    //<Todo> might be better to move this to the server system
     public (EntityUid, MessagesServerComponent)? GetActiveServer(MessagesCartridgeComponent component, MapId mapId)
     {
         var servers = _entManager.AllEntityQueryEnumerator<MessagesServerComponent, ApcPowerReceiverComponent, TransformComponent>();
@@ -89,28 +90,31 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         return null;
     }
 
-    private static string GetName(MessagesCartridgeComponent component, string key)
+    //helper function to get name of a given user from the cart's dictionary
+    private static string GetName(MessagesCartridgeComponent component, int key)
     {
         if (!(component.NameDict.ContainsKey(key)))
-            component.NameDict[key] = "Unknown"; //<todo> localise
+            component.NameDict[key] = Loc.GetString("messages-unknown-user");
 
         return component.NameDict[key];
     }
 
+    //Updates the ui state of a given cartridge
     public void ForceUpdate(EntityUid uid, MessagesCartridgeComponent component)
     {
         if (TryComp(Transform(uid).ParentUid, out CartridgeLoaderComponent? _))
             UpdateUiState(uid, Transform(uid).ParentUid, component);
     }
 
+    //Function that updates the name and id of the user to match the id card
     public bool UpdateName(EntityUid uid, MessagesCartridgeComponent component)
     {
         if (component.ConnectedId == null || !(TryComp(component.ConnectedId, out IdCardComponent? idCardComponent)))
             return false;
 
-        component.UserUid = component.ConnectedId.ToString();
+        component.UserUid = component.ConnectedId.Value.Id;
         string? fullName = idCardComponent.FullName;
-        fullName ??= "Unknown"; //<todo> localise
+        fullName ??= Loc.GetString("messages-unknown-user");
         component.UserName = $"{fullName} ({idCardComponent.JobTitle})";
 
         return true;
@@ -121,9 +125,9 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
         MessagesUiState state;
-        if (component.ChatUid == null)
+        if (component.ChatUid == null) //if no chat is loaded, list known users
         {
-            List<(string, string)> userList = [];
+            List<(string, int?)> userList = [];
 
             foreach (var nameEntry in component.NameDict.Keys)
             {
@@ -134,9 +138,9 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
             userList.Sort
             (
-                delegate ((string, string) a, (string, string) b)
+                delegate ((string, int?) a, (string, int?) b)
                 {
-                    return String.Compare(a.Item2, b.Item2);
+                    return String.Compare(a.Item1, b.Item1);
                 }
             );
 
@@ -144,7 +148,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         }
         else
         {
-            List<MessagesMessageData> messageList = [];
+            List<MessagesMessageData> messageList = []; //Else, list messages from the current chat
 
             foreach (var message in component.Messages)
             {
@@ -162,21 +166,22 @@ public sealed class MessagesCartridgeSystem : EntitySystem
                 }
             );
 
-            List<(string, string)> formattedMessageList = [];
+            List<(string, int?)> formattedMessageList = [];
 
             foreach (var message in messageList)
             {
                 string name = GetName(component, message.SenderId);
                 var stationTime = message.Time.Subtract(_gameTicker.RoundStartTimeSpan);
-                string content = stationTime.ToString("\\[hh\\:mm\\:ss\\]") + " : " + message.Content;
-                formattedMessageList.Add((name, content));
+                string content = $"{stationTime.ToString("\\[hh\\:mm\\:ss\\]")} {name}: {message.Content}";
+                formattedMessageList.Add((content, null));
             }
 
-            state = new MessagesUiState(MessagesUiStateMode.Chat, formattedMessageList, GetName(component, component.ChatUid));
+            state = new MessagesUiState(MessagesUiStateMode.Chat, formattedMessageList, GetName(component, component.ChatUid.Value));
         }
         _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, state);
     }
 
+    //function that receives the message and notifies the user
     public void ServerToPdaMessage(EntityUid uid, MessagesCartridgeComponent component, MessagesMessageData message, EntityUid pdaUid)
     {
         component.Messages.Add(message);
@@ -194,7 +199,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
             UpdateUiState(uid, pdaUid, component);
     }
 
-
+    //Function that downloads the dictionary and messages from the server
     public void PullFromServer(EntityUid uid, MessagesCartridgeComponent component, MessagesServerComponent server)
     {
 
@@ -208,11 +213,11 @@ public sealed class MessagesCartridgeSystem : EntitySystem
 
         if (server.NameDict != component.NameDict)
         {
-            if (component.UserUid is string userUid && component.UserName is string userName)
-                server.NameDict[userUid] = userName;
             var keylist = server.NameDict.Keys;
             foreach (var key in keylist)
             {
+                if (key == component.UserUid)
+                    continue;
                 component.NameDict[key] = server.NameDict[key];
             }
         }

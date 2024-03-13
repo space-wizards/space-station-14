@@ -17,16 +17,10 @@ public sealed partial class MessagesServerComponent : Component
     public List<MessagesMessageData> Messages = [];
 
     /// <summary>
-    /// The list of messages the server is trying to send.
-    /// </summary>
-    [DataField]
-    public List<MessagesMessageData> MessagesQueue = [];
-
-    /// <summary>
     /// Dictionary translating uids to readable names
     /// </summary>
     [DataField]
-    public Dictionary<string, string> NameDict = [];
+    public Dictionary<int, string> NameDict = [];
 
     /// <summary>
     /// Key used to denote which faction the server belongs to.

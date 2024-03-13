@@ -3,18 +3,11 @@
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 [Serializable, NetSerializable]
-public sealed class MessagesUiState : BoundUserInterfaceState
+public sealed class MessagesUiState(MessagesUiStateMode mode, List<(string, int?)> contents = null, string? name = null) : BoundUserInterfaceState
 {
-    public List<(string,string)>? Contents;
-    public MessagesUiStateMode Mode;
-    public string? Name;
-
-    public MessagesUiState(MessagesUiStateMode mode, List<(string,string)>? contents = null, string? name = null)
-    {
-        Contents = contents;
-        Mode = mode;
-        Name = name;
-    }
+    public List<(string, int?)>? Contents = contents;
+    public MessagesUiStateMode Mode = mode;
+    public string? Name = name;
 }
 
 [Serializable, NetSerializable]
@@ -27,8 +20,8 @@ public enum MessagesUiStateMode
 [Serializable, NetSerializable]
 public partial struct MessagesMessageData
 {
-    public string SenderId;
-    public string ReceiverId;
+    public int SenderId;
+    public int ReceiverId;
     public string Content;
     public TimeSpan Time;
 }

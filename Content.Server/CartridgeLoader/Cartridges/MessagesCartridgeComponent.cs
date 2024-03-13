@@ -21,7 +21,7 @@ public sealed partial class MessagesCartridgeComponent : Component
     /// The uid of the current user
     /// </summary>
     [DataField]
-    public string? UserUid = null;
+    public int? UserUid = null;
 
     /// <summary>
     /// The name and job of the user
@@ -33,7 +33,7 @@ public sealed partial class MessagesCartridgeComponent : Component
     /// The uid of the crew the user is chatting with
     /// </summary>
     [DataField]
-    public string? ChatUid = null;
+    public int? ChatUid = null;
 
     /// <summary>
     /// ID card connected to the Cartridge
@@ -45,7 +45,7 @@ public sealed partial class MessagesCartridgeComponent : Component
     /// Dictionary translating uids to readable names
     /// </summary>
     [DataField]
-    public Dictionary<string, string> NameDict = [];
+    public Dictionary<int, string> NameDict = [];
 
     /// <summary>
     /// Key used to denote which faction the cartridge belongs to.

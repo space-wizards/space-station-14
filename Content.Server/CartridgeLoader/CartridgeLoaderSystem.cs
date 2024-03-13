@@ -335,7 +335,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
     protected override void OnItemInserted(EntityUid uid, CartridgeLoaderComponent loader, EntInsertedIntoContainerMessage args)
     {
-        if (args.Container.ID == PdaComponent.PdaIdSlotId)
+        if (args.Container.ID == PdaComponent.PdaIdSlotId) //Very ugly hardcoded thing to update messager app when ID card is inserted. <Todo> find some better way to do this.
         {
             if ((TryComp(uid, out ContainerManagerComponent? cont)))
             {

@@ -47,10 +47,9 @@ public sealed class MessagesServerSystem : EntitySystem
             return;
 
         var query = _entManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();
-        List<(string, string)> toUpdate = [];
+        List<(int, string)> toUpdate = [];
 
-        bool needDictUpdate = false;
-
+        //Loop iterates over all cartridges on the map when the server is updated
         while (query.MoveNext(out var cartUid, out var cartComponent))
         {
             if (Transform(cartUid).MapID != mapId)
@@ -62,6 +61,7 @@ public sealed class MessagesServerSystem : EntitySystem
             if (cartComponent.UserUid == null || cartComponent.UserName == null)
                 continue;
 
+            //if the cart has any unsent messages, the server attempts to send them
             if (cartComponent.MessagesQueue.Count > 0)
             {
                 var messagesToSend = new List<MessagesMessageData>(cartComponent.MessagesQueue);
@@ -78,12 +78,12 @@ public sealed class MessagesServerSystem : EntitySystem
                 _messagesCartridgeSystem.ForceUpdate(cartUid, cartComponent);
             }
 
-            if (component.NameDict.TryGetValue(cartComponent.UserUid, out var cartUserName) && cartUserName == cartComponent.UserName)
+            //If the cart reports a changed name, it adds it to the toUpdate list and updates the cart's name dictionary
+            if (component.NameDict.TryGetValue(cartComponent.UserUid.Value, out var cartUserName) && cartUserName == cartComponent.UserName)
                 continue;
 
-            needDictUpdate = true;
-            component.NameDict[cartComponent.UserUid] = cartComponent.UserName;
-            toUpdate.Add((cartComponent.UserUid, cartComponent.UserName));
+            component.NameDict[cartComponent.UserUid.Value] = cartComponent.UserName;
+            toUpdate.Add((cartComponent.UserUid.Value, cartComponent.UserName));
             foreach (var entry in component.NameDict)
             {
                 if (!cartComponent.NameDict.TryGetValue(entry.Key, out var targetUserName) || targetUserName != entry.Value)
@@ -94,7 +94,8 @@ public sealed class MessagesServerSystem : EntitySystem
             _messagesCartridgeSystem.ForceUpdate(cartUid, cartComponent);
         }
 
-        if (needDictUpdate)
+        //If any names were changed or added, the server updates all the carts on its map.
+        if (toUpdate.Count > 0)
         {
             query = _entManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();
             while (query.MoveNext(out var cartUid, out var cartComponent))
@@ -115,6 +116,8 @@ public sealed class MessagesServerSystem : EntitySystem
         }
     }
 
+    //Sync function that updates the name dictionaries of all carts to match the server.
+    //Called periodically with update.
     public void Sync(EntityUid uid, MessagesServerComponent component)
     {
         var mapId = Transform(uid).MapID;
@@ -138,6 +141,7 @@ public sealed class MessagesServerSystem : EntitySystem
         }
     }
 
+    //function that tries to send a message to any matching cartridges on its map
     public bool TryToSend(MessagesMessageData message, MapId mapId)
     {
         bool sent = false;
@@ -148,7 +152,7 @@ public sealed class MessagesServerSystem : EntitySystem
         {
             if (Transform(uid).MapID != mapId)
                 continue;
-            if (cartridge.LoaderUid != null)
+            if (cartridge.LoaderUid != null) //<TODO> this should probably be more generalisable
             {
                 if (messagesCartridgeComponent.UserUid == message.ReceiverId)
                     _messagesCartridgeSystem.ServerToPdaMessage(uid, messagesCartridgeComponent, message, uid);
