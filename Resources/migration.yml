@@ -225,11 +225,6 @@ Observationskit: null
 
 # 2024-02-26
 CrateBaseWeldable: CrateGenericSteel
-BoxPerformer: ClothingBackpackDuffelPerformer
-MonkeyCubeBox: BoxMonkeyCube
-KoboldCubeBox: BoxKoboldCube
-VariantCubeBox: BoxVariantCube
-SyndicateSpongeBox: BoxSyndicateSponge
 
 # 2024-03-7
 AirlockExternalEasyPry: AirlockExternal
@@ -245,3 +240,10 @@ AirlockShuttleEasyPryLocked: AirlockExternalShuttleLocked
 ClothingBackpackFilledDetective: ClothingBackpackSecurityFilledDetective
 ClothingBackpackDuffelFilledDetective: ClothingBackpackDuffelSecurityFilledDetective
 ClothingBackpackSatchelFilledDetective: ClothingBackpackSatchelSecurityFilledDetective
+
+#2024-03-13
+BoxPerformer: ClothingBackpackDuffelPerformer
+MonkeyCubeBox: BoxMonkeyCube
+KoboldCubeBox: BoxKoboldCube
+VariantCubeBox: BoxVariantCube
+SyndicateSpongeBox: BoxSyndicateSponge
