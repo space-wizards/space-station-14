@@ -712,11 +712,6 @@
 
 # Disruption
 
-- type: listing
-  id: UplinkAmmoBundle
-  name: uplink-ammo-bundle-name
-  description: uplink-ammo-bundle-desc
-  productEntity: ClothingBackpackDuffelSyndicateAmmoFilled
   id: UplinkEmag
   name: uplink-emag-name
   description: uplink-emag-desc
