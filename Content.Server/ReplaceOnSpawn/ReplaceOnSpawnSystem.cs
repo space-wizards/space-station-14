@@ -3,9 +3,9 @@ using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 
-namespace Content.Server.ReplaceRandom;
+namespace Content.Server.ReplaceOnSpawn;
 
-public sealed class ReplaceRandomSystem : EntitySystem
+public sealed class ReplaceOnSpawn : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedBuckleSystem _buckle = default!;
@@ -14,10 +14,10 @@ public sealed class ReplaceRandomSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<ReplaceRandomComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ReplaceOnSpawnComponent, MapInitEvent>(OnMapInit);
     }
 
-    public void OnMapInit(Entity<ReplaceRandomComponent> entity, ref MapInitEvent args)
+    public void OnMapInit(Entity<ReplaceOnSpawnComponent> entity, ref MapInitEvent args)
     {
         if (!_random.Prob(entity.Comp.Chance)) return;
 

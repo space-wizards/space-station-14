@@ -1,9 +1,9 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.ReplaceRandom;
+namespace Content.Server.ReplaceOnSpawn;
 
 [RegisterComponent]
-public sealed partial class ReplaceRandomComponent : Component
+public sealed partial class ReplaceOnSpawnComponent : Component
 {
     [DataField]
     public EntProtoId? Prototype;
