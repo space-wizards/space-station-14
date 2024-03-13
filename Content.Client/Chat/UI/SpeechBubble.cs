@@ -252,16 +252,13 @@ namespace Content.Client.Chat.UI
             var bubbleContent = new RichTextLabel
             {
                 MaxWidth = SpeechMaxWidth,
-                Margin = new Thickness(2, 6, 2, 2)
+                Margin = new Thickness(2, 6, 2, 2),
+                StyleClasses = { "bubbleContent" }
             };
 
             //We'll be honest. *Yes* this is hacky. Doing this in a cleaner way would require a bottom-up refactor of how saycode handles sending chat messages. -Myr
             bubbleHeader.SetMessage(ExtractAndFormatSpeechSubstring(message, "BubbleHeader", fontColor));
             bubbleContent.SetMessage(ExtractAndFormatSpeechSubstring(message, "BubbleContent", fontColor));
-
-            // check if this is a whisperBox and if so manually format the font for whispers
-            // yes, i am aware this is probably messed up but from what little i know of the source code right now this is the way i'm doing it - maylo
-            if (speechStyleClass == "whisperBox") bubbleContent.SetMessage(FormatSpeech("[font size=11][italic]" + bubbleContent.GetMessage(), fontColor));
 
             //As for below: Some day this could probably be converted to xaml. But that is not today. -Myr
             var mainPanel = new PanelContainer
