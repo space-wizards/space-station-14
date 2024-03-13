@@ -80,9 +80,9 @@ public sealed class SpreaderSystem : EntitySystem
         EnsureComp<SpreaderGridComponent>(ev.EntityUid);
     }
 
-    private void OnTerminating(EntityUid uid, EdgeSpreaderComponent component, ref EntityTerminatingEvent args)
+    private void OnTerminating(Entity<EdgeSpreaderComponent> entity, ref EntityTerminatingEvent args)
     {
-        var neighbors = GetSpreadableNeighbors(uid);
+        var neighbors = GetSpreadableNeighbors(entity);
 
         foreach (var neighbor in neighbors)
         {
@@ -163,7 +163,7 @@ public sealed class SpreaderSystem : EntitySystem
         }
     }
 
-    private void Spread(EntityUid uid, TransformComponent xform, string prototype, ref int updates)
+    private void Spread(EntityUid uid, TransformComponent xform, ProtoId<EdgeSpreaderPrototype> prototype, ref int updates)
     {
         GetNeighbors(uid, xform, prototype, out var freeTiles, out _, out var neighbors);
 
@@ -181,18 +181,18 @@ public sealed class SpreaderSystem : EntitySystem
     /// <summary>
     /// Gets the neighboring node data for the specified entity and the specified node group.
     /// </summary>
-    public void GetNeighbors(EntityUid uid, TransformComponent transform, string prototype, out ValueList<(MapGridComponent, TileRef)> freeTiles, out ValueList<Vector2i> occupiedTiles, out ValueList<EntityUid> neighbors)
+    public void GetNeighbors(EntityUid uid, TransformComponent comp, ProtoId<EdgeSpreaderPrototype> prototype, out ValueList<(MapGridComponent, TileRef)> freeTiles, out ValueList<Vector2i> occupiedTiles, out ValueList<EntityUid> neighbors)
     {
         // TODO remove occupiedTiles -- its currently unused and just slows this method down.
-        DebugTools.Assert(_prototype.HasIndex<EdgeSpreaderPrototype>(prototype));
+        DebugTools.Assert(_prototype.HasIndex(prototype));
         freeTiles = [];
         occupiedTiles = [];
         neighbors = [];
 
-        if (!TryComp<MapGridComponent>(transform.GridUid, out var grid))
+        if (!TryComp<MapGridComponent>(comp.GridUid, out var grid))
             return;
 
-        var tile = _map.TileIndicesFor(transform.GridUid.Value, grid, transform.Coordinates);
+        var tile = _map.TileIndicesFor(comp.GridUid.Value, grid, comp.Coordinates);
         var spreaderQuery = GetEntityQuery<EdgeSpreaderComponent>();
         var airtightQuery = GetEntityQuery<AirtightComponent>();
         var dockQuery = GetEntityQuery<DockingComponent>();
@@ -204,7 +204,7 @@ public sealed class SpreaderSystem : EntitySystem
         var neighborTiles = new ValueList<(EntityUid entity, MapGridComponent grid, Vector2i Indices, AtmosDirection OtherDir, AtmosDirection OurDir)>();
 
         // Check if anything on our own tile blocking that direction.
-        var ourEnts = _map.GetAnchoredEntitiesEnumerator(transform.GridUid.Value, grid, tile);
+        var ourEnts = _map.GetAnchoredEntitiesEnumerator(comp.GridUid.Value, grid, tile);
 
         while (ourEnts.MoveNext(out var ent))
         {
@@ -242,7 +242,7 @@ public sealed class SpreaderSystem : EntitySystem
             var direction = (Direction) (i * 2);
             var atmosDir = direction.ToAtmosDirection();
             var neighborPos = SharedMapSystem.GetDirection(tile, direction);
-            neighborTiles.Add((transform.GridUid.Value, grid, neighborPos, atmosDir, atmosDir.GetOpposite()));
+            neighborTiles.Add((comp.GridUid.Value, grid, neighborPos, atmosDir, atmosDir.GetOpposite()));
         }
 
         foreach (var (neighborEnt, neighborGrid, neighborPos, ourAtmosDir, otherAtmosDir) in neighborTiles)
@@ -308,20 +308,23 @@ public sealed class SpreaderSystem : EntitySystem
         var neighbors = new List<EntityUid>();
 
         Vector2i tile;
+        EntityUid ent;
         MapGridComponent? grid;
 
         if (position == null)
         {
             var transform = Transform(uid);
-            if (!TryComp(uid, out grid) || TerminatingOrDeleted(uid))
+            if (!TryComp(transform.GridUid, out grid) || TerminatingOrDeleted(transform.GridUid.Value))
                 return neighbors;
-            tile = _map.TileIndicesFor(uid, grid, transform.Coordinates);
+            tile = _map.TileIndicesFor(transform.GridUid.Value, grid, transform.Coordinates);
+            ent = transform.GridUid.Value;
         }
         else
         {
             if (!TryComp(position.Value.Grid, out grid))
                 return neighbors;
             tile = position.Value.Tile;
+            ent = position.Value.Grid;
         }
 
         var spreaderQuery = GetEntityQuery<EdgeSpreaderComponent>();
@@ -333,13 +336,13 @@ public sealed class SpreaderSystem : EntitySystem
                 continue;
 
             var directionEnumerator =
-                _map.GetAnchoredEntitiesEnumerator(uid, grid, SharedMapSystem.GetDirection(tile, direction.ToDirection()));
+                _map.GetAnchoredEntitiesEnumerator(ent, grid, SharedMapSystem.GetDirection(tile, direction.ToDirection()));
 
-            while (directionEnumerator.MoveNext(out var ent))
+            while (directionEnumerator.MoveNext(out var entity))
             {
-                DebugTools.Assert(Transform(ent.Value).Anchored);
-                if (spreaderQuery.HasComponent(ent) && !TerminatingOrDeleted(ent.Value))
-                    neighbors.Add(ent.Value);
+                DebugTools.Assert(Transform(entity.Value).Anchored);
+                if (spreaderQuery.HasComponent(entity) && !TerminatingOrDeleted(entity.Value))
+                    neighbors.Add(entity.Value);
             }
         }
 
