@@ -10,6 +10,7 @@ public sealed class KudzuSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
 
@@ -28,13 +29,12 @@ public sealed class KudzuSystem : EntitySystem
     {
         // Every time we take any damage, we reduce growth depending on all damage over the growth impact
         //   So the kudzu gets slower growing the more it is hurt.
-        int growthDamage = (int) (args.Damageable.TotalDamage / component.GrowthHealth);
+        var growthDamage = (int) (args.Damageable.TotalDamage / component.GrowthHealth);
         if (growthDamage > 0)
         {
-            GrowingKudzuComponent? growing;
-            if (!TryComp(uid, out growing))
+            if (!HasComp<GrowingKudzuComponent>(uid))
             {
-                growing = AddComp<GrowingKudzuComponent>(uid);
+                AddComp<GrowingKudzuComponent>(uid);
                 component.GrowthLevel = 3;
             }
             component.GrowthLevel = Math.Max(1, component.GrowthLevel - growthDamage);
@@ -69,7 +69,7 @@ public sealed class KudzuSystem : EntitySystem
 
         foreach (var neighbor in args.NeighborFreeTiles)
         {
-            var neighborUid = Spawn(prototype, neighbor.Grid.GridTileToLocal(neighbor.Tile));
+            var neighborUid = Spawn(prototype, _map.GridTileToLocal(neighbor.Tile.GridUid, neighbor.Grid, neighbor.Tile.GridIndices));
             DebugTools.Assert(HasComp<EdgeSpreaderComponent>(neighborUid));
             DebugTools.Assert(HasComp<ActiveEdgeSpreaderComponent>(neighborUid));
             DebugTools.Assert(Comp<EdgeSpreaderComponent>(neighborUid).Id == KudzuGroup);

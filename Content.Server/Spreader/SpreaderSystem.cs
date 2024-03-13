@@ -18,9 +18,9 @@ namespace Content.Server.Spreader;
 /// </summary>
 public sealed class SpreaderSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     /// <summary>
     /// Cached maximum number of updates per spreader prototype. This is applied per-grid.
@@ -31,7 +31,7 @@ public sealed class SpreaderSystem : EntitySystem
     /// Remaining number of updates per grid & prototype.
     /// </summary>
     // TODO PERFORMANCE Assign each prototype to an index and convert dictionary to array
-    private Dictionary<EntityUid, Dictionary<string, int>> _gridUpdates = new();
+    private readonly Dictionary<EntityUid, Dictionary<string, int>> _gridUpdates = [];
 
     public const float SpreadCooldownSeconds = 1;
 
@@ -57,7 +57,7 @@ public sealed class SpreaderSystem : EntitySystem
 
     private void SetupPrototypes()
     {
-        _prototypeUpdates = new Dictionary<string, int>();
+        _prototypeUpdates = [];
         foreach (var proto in _prototype.EnumeratePrototypes<EdgeSpreaderPrototype>())
         {
             _prototypeUpdates.Add(proto.ID, proto.UpdatesPerSecond);
@@ -181,18 +181,18 @@ public sealed class SpreaderSystem : EntitySystem
     /// <summary>
     /// Gets the neighboring node data for the specified entity and the specified node group.
     /// </summary>
-    public void GetNeighbors(EntityUid uid, TransformComponent transform, string prototype, out ValueList<(MapGridComponent Grid, Vector2i Tile)> freeTiles, out ValueList<Vector2i> occupiedTiles, out ValueList<EntityUid> neighbors)
+    public void GetNeighbors(EntityUid uid, TransformComponent transform, string prototype, out ValueList<(MapGridComponent, TileRef)> freeTiles, out ValueList<Vector2i> occupiedTiles, out ValueList<EntityUid> neighbors)
     {
         // TODO remove occupiedTiles -- its currently unused and just slows this method down.
         DebugTools.Assert(_prototype.HasIndex<EdgeSpreaderPrototype>(prototype));
-        freeTiles = new ValueList<(MapGridComponent Grid, Vector2i Tile)>();
-        occupiedTiles = new ValueList<Vector2i>();
-        neighbors = new ValueList<EntityUid>();
+        freeTiles = [];
+        occupiedTiles = [];
+        neighbors = [];
 
-        if (!_mapManager.TryGetGrid(transform.GridUid, out var grid))
+        if (!TryComp<MapGridComponent>(transform.GridUid, out var grid))
             return;
 
-        var tile = grid.TileIndicesFor(transform.Coordinates);
+        var tile = _map.TileIndicesFor(transform.GridUid.Value, grid, transform.Coordinates);
         var spreaderQuery = GetEntityQuery<EdgeSpreaderComponent>();
         var airtightQuery = GetEntityQuery<AirtightComponent>();
         var dockQuery = GetEntityQuery<DockingComponent>();
@@ -201,10 +201,10 @@ public sealed class SpreaderSystem : EntitySystem
         var blockedAtmosDirs = AtmosDirection.Invalid;
 
         // Due to docking ports they may not necessarily be opposite directions.
-        var neighborTiles = new ValueList<(MapGridComponent grid, Vector2i Indices, AtmosDirection OtherDir, AtmosDirection OurDir)>();
+        var neighborTiles = new ValueList<(EntityUid entity, MapGridComponent grid, Vector2i Indices, AtmosDirection OtherDir, AtmosDirection OurDir)>();
 
         // Check if anything on our own tile blocking that direction.
-        var ourEnts = grid.GetAnchoredEntitiesEnumerator(tile);
+        var ourEnts = _map.GetAnchoredEntitiesEnumerator(transform.GridUid.Value, grid, tile);
 
         while (ourEnts.MoveNext(out var ent))
         {
@@ -215,7 +215,7 @@ public sealed class SpreaderSystem : EntitySystem
                 xformQuery.TryGetComponent(dock.DockedWith, out var dockedXform) &&
                 TryComp<MapGridComponent>(dockedXform.GridUid, out var dockedGrid))
             {
-                neighborTiles.Add((dockedGrid, dockedGrid.CoordinatesToTile(dockedXform.Coordinates), xform.LocalRotation.ToAtmosDirection(), dockedXform.LocalRotation.ToAtmosDirection()));
+                neighborTiles.Add((ent.Value, dockedGrid, _map.CoordinatesToTile(ent.Value, dockedGrid, dockedXform.Coordinates), xform.LocalRotation.ToAtmosDirection(), dockedXform.LocalRotation.ToAtmosDirection()));
             }
 
             // If we're on a blocked tile work out which directions we can go.
@@ -225,7 +225,7 @@ public sealed class SpreaderSystem : EntitySystem
                 continue;
             }
 
-            foreach (var value in new[] { AtmosDirection.North, AtmosDirection.East, AtmosDirection.South, AtmosDirection.West})
+            foreach (var value in new[] { AtmosDirection.North, AtmosDirection.East, AtmosDirection.South, AtmosDirection.West })
             {
                 if ((value & airtight.AirBlockedDirection) == 0x0)
                     continue;
@@ -242,20 +242,20 @@ public sealed class SpreaderSystem : EntitySystem
             var direction = (Direction) (i * 2);
             var atmosDir = direction.ToAtmosDirection();
             var neighborPos = SharedMapSystem.GetDirection(tile, direction);
-            neighborTiles.Add((grid, neighborPos, atmosDir, atmosDir.GetOpposite()));
+            neighborTiles.Add((transform.GridUid.Value, grid, neighborPos, atmosDir, atmosDir.GetOpposite()));
         }
 
-        foreach (var (neighborGrid, neighborPos, ourAtmosDir, otherAtmosDir) in neighborTiles)
+        foreach (var (neighborEnt, neighborGrid, neighborPos, ourAtmosDir, otherAtmosDir) in neighborTiles)
         {
             // This tile is blocked to that direction.
             if ((blockedAtmosDirs & ourAtmosDir) != 0x0)
                 continue;
 
-            if (!neighborGrid.TryGetTileRef(neighborPos, out var tileRef) || tileRef.Tile.IsEmpty)
+            if (!_map.TryGetTileRef(neighborEnt, neighborGrid, neighborPos, out var tileRef) || tileRef.Tile.IsEmpty)
                 continue;
 
             var directionEnumerator =
-                neighborGrid.GetAnchoredEntitiesEnumerator(neighborPos);
+                _map.GetAnchoredEntitiesEnumerator(neighborEnt, neighborGrid, neighborPos);
             var occupied = false;
 
             while (directionEnumerator.MoveNext(out var ent))
@@ -278,7 +278,7 @@ public sealed class SpreaderSystem : EntitySystem
 
             var oldCount = occupiedTiles.Count;
             directionEnumerator =
-                neighborGrid.GetAnchoredEntitiesEnumerator(neighborPos);
+                _map.GetAnchoredEntitiesEnumerator(neighborEnt, neighborGrid, neighborPos);
 
             while (directionEnumerator.MoveNext(out var ent))
             {
@@ -294,7 +294,7 @@ public sealed class SpreaderSystem : EntitySystem
             }
 
             if (oldCount == occupiedTiles.Count)
-                freeTiles.Add((neighborGrid, neighborPos));
+                freeTiles.Add((neighborGrid, tileRef));
         }
     }
 
@@ -313,13 +313,13 @@ public sealed class SpreaderSystem : EntitySystem
         if (position == null)
         {
             var transform = Transform(uid);
-            if (!_mapManager.TryGetGrid(transform.GridUid, out grid) || TerminatingOrDeleted(transform.GridUid.Value))
+            if (!TryComp(uid, out grid) || TerminatingOrDeleted(uid))
                 return neighbors;
-            tile = grid.TileIndicesFor(transform.Coordinates);
+            tile = _map.TileIndicesFor(uid, grid, transform.Coordinates);
         }
         else
         {
-            if (!_mapManager.TryGetGrid(position.Value.Grid, out grid))
+            if (!TryComp(position.Value.Grid, out grid))
                 return neighbors;
             tile = position.Value.Tile;
         }
@@ -333,7 +333,7 @@ public sealed class SpreaderSystem : EntitySystem
                 continue;
 
             var directionEnumerator =
-                grid.GetAnchoredEntitiesEnumerator(SharedMapSystem.GetDirection(tile, direction.ToDirection()));
+                _map.GetAnchoredEntitiesEnumerator(uid, grid, SharedMapSystem.GetDirection(tile, direction.ToDirection()));
 
             while (directionEnumerator.MoveNext(out var ent))
             {
