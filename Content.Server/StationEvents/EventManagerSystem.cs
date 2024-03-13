@@ -29,15 +29,6 @@ public sealed class EventManagerSystem : EntitySystem
         _sawmill = Logger.GetSawmill("events");
 
         Subs.CVar(_configurationManager, CCVars.EventsEnabled, SetEnabled, true);
-
-        SubscribeLocalEvent<StationEventComponent, EntityUnpausedEvent>(OnUnpaused);
-    }
-
-    private void OnUnpaused(EntityUid uid, StationEventComponent component, ref EntityUnpausedEvent args)
-    {
-        component.StartTime += args.PausedTime;
-        if (component.EndTime != null)
-            component.EndTime = component.EndTime.Value + args.PausedTime;
     }
 
     /// <summary>

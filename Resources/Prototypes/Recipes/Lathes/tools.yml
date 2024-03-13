@@ -134,6 +134,15 @@
     Plastic: 250
 
 - type: latheRecipe
+  id: HandHeldMassScanner
+  result: HandHeldMassScannerEmpty
+  category: Tools
+  completetime: 2
+  materials:
+    Steel: 800
+    Glass: 300
+
+- type: latheRecipe
   id: HandheldGPSBasic
   result: HandheldGPSBasic
   category: Tools
