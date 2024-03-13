@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: Salvage wrecks are back and rebalanced for shuttle building and gearing
-      for expeditions!
-    type: Tweak
-  id: 5633
-  time: '2024-01-08T21:49:51.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23733
-- author: Emisse
-  changes:
-  - message: Advanced machine parts removed.
-    type: Tweak
-  id: 5634
-  time: '2024-01-08T23:24:36.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23752
 - author: EmoGarbage404
   changes:
   - message: Satchels have a larger carrying capacity that is divided into pockets.
@@ -3804,3 +3789,17 @@
   id: 6132
   time: '2024-03-13T01:00:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26050
+- author: SlamBamActionman
+  changes:
+  - message: Syndicate implanters can no longer be recycled.
+    type: Tweak
+  id: 6133
+  time: '2024-03-13T02:02:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26047
+- author: Gyrandola
+  changes:
+  - message: Adding Sky Blue carpets to tables no longer results in red carpet ones.
+    type: Fix
+  id: 6134
+  time: '2024-03-13T02:03:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26049
