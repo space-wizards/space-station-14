@@ -55,6 +55,12 @@ public sealed partial class VapeDoAfterEvent : DoAfterEvent
 }
 
 /// <summary>
+/// Raised before food is sliced
+/// </summary>
+[ByRefEvent]
+public record struct SliceFoodEvent();
+
+/// <summary>
 /// Raised on an entity when it tries to make a sound while eating something.
 /// Cancelling will stop the sound from being played.
 /// </summary>
