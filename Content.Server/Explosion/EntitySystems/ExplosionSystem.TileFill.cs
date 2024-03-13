@@ -37,7 +37,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         if (!_explosionTypes.TryGetValue(typeID, out var typeIndex))
         {
-            Logger.Error("Attempted to spawn explosion using a prototype that was not defined during initialization. Explosion prototype hot-reload is not currently supported.");
+            Log.Error("Attempted to spawn explosion using a prototype that was not defined during initialization. Explosion prototype hot-reload is not currently supported.");
             return null;
         }
 
