@@ -92,7 +92,6 @@
     proto: robot
   - type: Tag
     tags:
-    - ClothMade
     - WhitelistChameleon
 
 - type: entity
