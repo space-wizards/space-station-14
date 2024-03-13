@@ -5,7 +5,7 @@
     state: glass_3
   product: CrateMaterialGlass
   cost: 1000
-  category: Materials
+  category: cargoproduct-category-name-materials
   group: market
 
 - type: cargoProduct
@@ -15,7 +15,7 @@
     state: steel_3
   product: CrateMaterialSteel
   cost: 1000
-  category: Materials
+  category: cargoproduct-category-name-materials
   group: market
 
 - type: cargoProduct
@@ -25,7 +25,7 @@
     state: plastic_3
   product: CrateMaterialPlastic
   cost: 1500
-  category: Materials
+  category: cargoproduct-category-name-materials
   group: market
 
 - type: cargoProduct
@@ -35,7 +35,7 @@
     state: brass_3
   product: CrateMaterialBrass
   cost: 2500
-  category: Materials
+  category: cargoproduct-category-name-materials
   group: market
 
 - type: cargoProduct
@@ -45,7 +45,7 @@
     state: plasteel_3
   product: CrateMaterialPlasteel
   cost: 3000
-  category: Materials
+  category: cargoproduct-category-name-materials
   group: market
 
 - type: cargoProduct
@@ -55,7 +55,7 @@
     state: cloth_3
   product: CrateMaterialTextiles
   cost: 1000
-  category: Materials
+  category: cargoproduct-category-name-materials
   group: market
 
 - type: cargoProduct
@@ -65,7 +65,7 @@
     state: plasma_3
   product: CrateMaterialPlasma
   cost: 2000
-  category: Materials
+  category: cargoproduct-category-name-materials
   group: market
 
 - type: cargoProduct
@@ -75,7 +75,7 @@
     state: cardboard_3
   product: CrateMaterialCardboard
   cost: 750
-  category: Materials
+  category: cargoproduct-category-name-materials
   group: market
 
 - type: cargoProduct
@@ -85,7 +85,7 @@
     state: paper_3
   product: CrateMaterialPaper
   cost: 1000
-  category: Materials
+  category: cargoproduct-category-name-materials
   group: market
 
 - type: cargoProduct
@@ -95,7 +95,7 @@
     state: fueltank
   product: WeldingFuelTankFull
   cost: 1500
-  category: Materials
+  category: cargoproduct-category-name-materials
   group: market
 
 - type: cargoProduct
@@ -105,5 +105,5 @@
     state: watertank
   product: WaterTankFull
   cost: 1000
-  category: Materials
+  category: cargoproduct-category-name-materials
   group: market

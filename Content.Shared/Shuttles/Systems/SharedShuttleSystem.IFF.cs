@@ -60,7 +60,7 @@ public abstract partial class SharedShuttleSystem
             return;
 
         component.Color = color;
-        Dirty(component);
+        Dirty(gridUid, component);
         UpdateIFFInterfaces(gridUid, component);
     }
 
@@ -73,7 +73,7 @@ public abstract partial class SharedShuttleSystem
             return;
 
         component.Flags |= flags;
-        Dirty(component);
+        Dirty(gridUid, component);
         UpdateIFFInterfaces(gridUid, component);
     }
 
@@ -87,7 +87,7 @@ public abstract partial class SharedShuttleSystem
             return;
 
         component.Flags &= ~flags;
-        Dirty(component);
+        Dirty(gridUid, component);
         UpdateIFFInterfaces(gridUid, component);
     }
 }
