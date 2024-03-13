@@ -2423,6 +2423,22 @@
       gender: epicene
   - type: Bloodstream
     bloodMaxVolume: 100
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 8
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: HTN
+    rootTask:
+      task: RuminantHostileCompound
   - type: Tag
     tags:
     - VimPilot
@@ -3189,4 +3205,3 @@
   components:
   - type: ReplacementAccent
     accent: nymph
-    
