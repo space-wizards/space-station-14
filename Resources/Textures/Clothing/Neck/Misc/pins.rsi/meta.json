@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-3.0, CC-BY-NC-4.0",
-  "copyright": "PixelTK leaves his mark on upstream, Autism pin by Terraspark",
+  "license": "CC-BY-SA-3.0",
+  "copyright": "PixelTK leaves his mark on upstream",
   "size": {
     "x": 32,
     "y": 32
@@ -77,13 +77,6 @@
             "name": "autism-equipped",
             "directions": 4
         },
-        {
-            "name": "goldautism"
-        },
-        {
-            "name": "goldautism-equipped",
-            "directions": 4
-        }
     ]
 }
 

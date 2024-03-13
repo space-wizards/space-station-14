@@ -159,11 +159,11 @@
   description: be autism do crime
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/pins.rsi
+    sprite: Clothing/Neck/Misc/autismpin.rsi
     layers:
     - state: autism
   - type: Clothing
-    sprite: Clothing/Neck/Misc/pins.rsi
+    sprite: Clothing/Neck/Misc/autismpin.rsi
     clothingVisuals:
       neck:
       - state: autism-equipped
@@ -175,11 +175,11 @@
   description: be autism do warcrime
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/pins.rsi
+    sprite: Clothing/Neck/Misc/goldautismpin.rsi
     layers:
     - state: goldautism
   - type: Clothing
-    sprite: Clothing/Neck/Misc/pins.rsi
+    sprite: Clothing/Neck/Misc/goldautismpin.rsi
     clothingVisuals:
       neck:
       - state: goldautism-equipped
