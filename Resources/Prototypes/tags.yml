@@ -1143,6 +1143,9 @@
   id: SuitEVA
 
 - type: Tag
+  id: SurgeryTool
+
+- type: Tag
   id: SurveillanceCameraMonitorCircuitboard
 
 - type: Tag
