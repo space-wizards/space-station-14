@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Satchels have a larger carrying capacity that is divided into pockets.
-    type: Tweak
-  id: 5635
-  time: '2024-01-09T00:48:45.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23724
 - author: cooldolphin
   changes:
   - message: You can now find delicious vintage hidden away in maintenance closets.
@@ -3803,3 +3796,10 @@
   id: 6134
   time: '2024-03-13T02:03:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26049
+- author: Gyrandola
+  changes:
+  - message: Clicking yourself with a knife no longer triggers a butchering popup
+    type: Fix
+  id: 6135
+  time: '2024-03-13T03:52:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26051
