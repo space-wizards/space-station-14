@@ -290,8 +290,6 @@
   name: contraband storage crate
   description: An armory access locked crate for storing contraband confiscated from suspects or prisoners.
   components:
-  - type: Icon
-    sprite: Structures/Storage/Crates/sec_gear.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/sec_gear.rsi
   - type: AccessReader
