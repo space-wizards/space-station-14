@@ -1219,7 +1219,7 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/moonshineglass.rsi
     state: icon_empty
-  metamorphicMaxFillLevels: 4
+  metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
