@@ -221,6 +221,12 @@
   id: Briefcase
 
 - type: Tag
+  id: BrimFlatcapBrown
+
+- type: Tag
+  id: BrimFlatcapGrey
+
+- type: Tag
   id: Brutepack
 
 - type: Tag
@@ -352,6 +358,9 @@
 
 - type: Tag
   id: Cleaver
+
+- type: Tag
+  id: ClockworkGlassShard
 
 - type: Tag
   id: ClothMade
@@ -761,6 +770,9 @@
 - type: Tag
   id: MimeHappyHonk
 
+- type: Tag
+  id: Mineshaft
+
 # Magazines ordered by slot then caliber
 
 - type: Tag
@@ -1078,6 +1090,9 @@
 
 - type: Tag
   id: Smokable
+
+- type: Tag
+  id: SnowyLabs
 
 - type: Tag
   id: Soap
