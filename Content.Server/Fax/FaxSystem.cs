@@ -458,8 +458,8 @@ public sealed class FaxSystem : EntitySystem
         UpdateUserInterface(uid, component);
 
         if (args.Session.AttachedEntity != null)
-            _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} added print job to {ToPrettyString(uid):tool} with text: {ToPrettyString(component.PaperSlot.Item):subject}");
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} added copy job to {ToPrettyString(uid):tool} with text: {ToPrettyString(component.PaperSlot.Item):subject}");
     }
 
     /// <summary>
