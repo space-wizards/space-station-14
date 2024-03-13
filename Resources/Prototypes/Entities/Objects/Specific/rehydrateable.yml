@@ -154,7 +154,7 @@
   parent: PlushieCarp
   id: DehydratedSpaceCarp
   name: dehydrated space carp
-  description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
+  description: Looks like a regular space carp, but just add water and it becomes a real-life carp plushie!
   components:
   - type: SolutionContainerManager
     solutions:

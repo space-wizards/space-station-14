@@ -490,11 +490,16 @@
 - type: entity
   parent: BasePlushie
   id: PlushieCarp
-  name: carp plushie
-  description: An adorable stuffed toy that resembles the monstrous space carp.
+  name: space carp
+  description: It's a space carp.
   components:
   - type: Sprite
-    state: carpplush
+    sprite: Mobs/Aliens/Carps/space.rsi
+    layers:
+    - state: alive
+      color: '#BB07F6'
+    - state: mouth
+      shader: unshaded
   - type: Item
     heldPrefix: carpplush
     storedRotation: -90
