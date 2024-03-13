@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lunarcomets
-  changes:
-  - message: ShadyCigs now properly display flippo lighter icons!
-    type: Fix
-  id: 5644
-  time: '2024-01-09T10:16:32.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23778
 - author: IProduceWidgets
   changes:
   - message: Some Centcom officers now have an N1984 standard issue officer's pistol!
@@ -3803,3 +3796,10 @@
   id: 6143
   time: '2024-03-13T10:03:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25661
+- author: 778b
+  changes:
+  - message: Guns which use battery as magazines now display ammo. Like Svalinn pistol.
+    type: Fix
+  id: 6144
+  time: '2024-03-13T11:13:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26009
