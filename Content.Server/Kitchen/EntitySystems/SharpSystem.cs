@@ -56,7 +56,7 @@ public sealed class SharpSystem : EntitySystem
         if (!TryComp<SharpComponent>(knife, out var sharp))
             return;
 
-        if (butcher.Type != ButcheringType.Knife)
+        if (butcher.Type != ButcheringType.Knife && target != user)
         {
             _popupSystem.PopupEntity(Loc.GetString("butcherable-different-tool", ("target", target)), knife, user);
             return;
