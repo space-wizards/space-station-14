@@ -167,7 +167,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 }
                 else
                 {
-                    Logger.Warning("atmos", $"{ToPrettyString(uid)} received GasFilterSelectGasMessage with an invalid ID: {args.ID}");
+                    Log.Warning($"{ToPrettyString(uid)} received GasFilterSelectGasMessage with an invalid ID: {args.ID}");
                 }
             }
             else
