@@ -155,7 +155,7 @@ public sealed class MessagesServerSystem : EntitySystem
             if (cartridge.LoaderUid != null) //<TODO> this should probably be more generalisable
             {
                 if (messagesCartridgeComponent.UserUid == message.ReceiverId)
-                    _messagesCartridgeSystem.ServerToPdaMessage(uid, messagesCartridgeComponent, message, uid);
+                    _messagesCartridgeSystem.ServerToPdaMessage(uid, messagesCartridgeComponent, message, cartridge.LoaderUid.Value);
                 sent = true;
             }
         }
