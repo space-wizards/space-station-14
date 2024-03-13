@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Robotech deluxe vending machines now contain 2 diagnostic HUDs, a flame
-      welding mask, and a welding tool.
-    type: Tweak
-  id: 5632
-  time: '2024-01-08T20:34:40.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23747
 - author: Emisse
   changes:
   - message: Salvage wrecks are back and rebalanced for shuttle building and gearing
@@ -3805,3 +3797,10 @@
   id: 6131
   time: '2024-03-12T23:52:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25545
+- author: NakataRin
+  changes:
+  - message: Skeletons can only spawn with 10 people on the server now.
+    type: Tweak
+  id: 6132
+  time: '2024-03-13T01:00:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26050
