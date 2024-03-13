@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: cooldolphin
-  changes:
-  - message: You can now find delicious vintage hidden away in maintenance closets.
-    type: Add
-  id: 5636
-  time: '2024-01-09T02:24:32.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23740
 - author: ike709
   changes:
   - message: The appraisal tool will now tell you if a crate contains a completed
@@ -3803,3 +3796,10 @@
   id: 6135
   time: '2024-03-13T03:52:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26051
+- author: maylokana
+  changes:
+  - message: Italicized whisper bubbles
+    type: Tweak
+  id: 6136
+  time: '2024-03-13T08:03:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25602
