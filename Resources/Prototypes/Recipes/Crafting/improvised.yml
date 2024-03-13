@@ -164,6 +164,19 @@
     state: icon
 
 - type: construction
+  name: improvised shotgun shell
+  id: ShellShotgunImprovised
+  graph: ImprovisedShotgunShellGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a Barn
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: improvised
+
+- type: construction
   name: rifle stock
   id: riflestock
   graph: RifleStockGraph

@@ -33,3 +33,7 @@
 - type: lobbyBackground
   id: Blueprint
   background: /Textures/LobbyScreens/blueprint.webp
+
+- type: lobbyBackground
+  id: Behonker
+  background: /Textures/LobbyScreens/behonker.webp
