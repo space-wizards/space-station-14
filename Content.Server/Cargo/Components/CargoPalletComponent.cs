@@ -5,20 +5,21 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 /// <summary>
 /// Any entities intersecting when a shuttle is recalled will be sold.
 /// </summary>
+
+public enum BuySellType
+    {
+    Buy = 1,
+    Sell = 2,
+    All = Buy | Sell
+    }
+
+
 [RegisterComponent]
 public sealed partial class CargoPalletComponent : Component
 {
     /// <summary>
     /// Whether the pad is a buy pad, a sell pad, or both.
     /// </summary>
-
-    public enum BuySellType
-    {
-        buy,
-        sell,
-        both
-    }
-
     [DataField]
-    public BuySellType PalletType;
+     public BuySellType PalletType;
 }
