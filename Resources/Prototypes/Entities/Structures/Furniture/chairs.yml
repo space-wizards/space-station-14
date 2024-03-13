@@ -190,6 +190,9 @@
   - type: Sprite
     sprite: Structures/Furniture/comfy_chair.rsi
     state: comfy-black
+  - type: Construction
+    graph: Seat
+    node: blackChairComfy
 
 - type: entity
   name: blue comfy chair
@@ -200,6 +203,9 @@
   - type: Sprite
     sprite: Structures/Furniture/comfy_chair.rsi
     state: comfy-blue
+  - type: Construction
+    graph: Seat
+    node: blueChairComfy
 
 - type: entity
   name: green comfy chair
@@ -210,6 +216,9 @@
   - type: Sprite
     sprite: Structures/Furniture/comfy_chair.rsi
     state: comfy-green
+  - type: Construction
+    graph: Seat
+    node: greenChairComfy
 
 - type: entity
   name: orange comfy chair
@@ -220,6 +229,9 @@
   - type: Sprite
     sprite: Structures/Furniture/comfy_chair.rsi
     state: comfy-orange
+  - type: Construction
+    graph: Seat
+    node: orangeChairComfy
 
 - type: entity
   name: pink comfy chair
@@ -230,6 +242,9 @@
   - type: Sprite
     sprite: Structures/Furniture/comfy_chair.rsi
     state: comfy-pink
+  - type: Construction
+    graph: Seat
+    node: pinkChairComfy
 
 - type: entity
   name: purple comfy chair
@@ -240,6 +255,9 @@
   - type: Sprite
     sprite: Structures/Furniture/comfy_chair.rsi
     state: comfy-purple
+  - type: Construction
+    graph: Seat
+    node: purpleChairComfy
 
 - type: entity
   name: red comfy chair
@@ -250,6 +268,9 @@
   - type: Sprite
     sprite: Structures/Furniture/comfy_chair.rsi
     state: comfy-red
+  - type: Construction
+    graph: Seat
+    node: redChairComfy
 
 - type: entity
   name: white comfy chair
@@ -260,6 +281,9 @@
   - type: Sprite
     sprite: Structures/Furniture/comfy_chair.rsi
     state: comfy-white
+  - type: Construction
+    graph: Seat
+    node: whiteChairComfy
 
 - type: entity
   name: pilot seat
