@@ -40,7 +40,6 @@ public abstract class SharedFlatpackSystem : EntitySystem
         SubscribeLocalEvent<FlatpackComponent, ExaminedEvent>(OnFlatpackExamined);
 
         SubscribeLocalEvent<FlatpackCreatorComponent, ContainerIsRemovingAttemptEvent>(OnCreatorRemovingAttempt);
-        SubscribeLocalEvent<FlatpackCreatorComponent, EntityUnpausedEvent>(OnCreatorUnpaused);
     }
 
     private void OnFlatpackInteractUsing(Entity<FlatpackComponent> ent, ref InteractUsingEvent args)
@@ -108,11 +107,6 @@ public abstract class SharedFlatpackSystem : EntitySystem
     {
         if (args.Container.ID == ent.Comp.SlotId && ent.Comp.Packing)
             args.Cancel();
-    }
-
-    private void OnCreatorUnpaused(Entity<FlatpackCreatorComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.PackEndTime += args.PausedTime;
     }
 
     public void SetupFlatpack(Entity<FlatpackComponent?> ent, EntityUid? board)

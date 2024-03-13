@@ -37,3 +37,27 @@ public sealed partial class DepartmentPrototype : IPrototype
     [DataField("weight")]
     public int Weight { get; private set; } = 0;
 }
+
+/// <summary>
+/// Sorts <see cref="DepartmentPrototype"/> appropriately for display in the UI,
+/// respecting their <see cref="DepartmentPrototype.Weight"/>.
+/// </summary>
+public sealed class DepartmentUIComparer : IComparer<DepartmentPrototype>
+{
+    public static readonly DepartmentUIComparer Instance = new();
+
+    public int Compare(DepartmentPrototype? x, DepartmentPrototype? y)
+    {
+        if (ReferenceEquals(x, y))
+            return 0;
+        if (ReferenceEquals(null, y))
+            return 1;
+        if (ReferenceEquals(null, x))
+            return -1;
+
+        var cmp = -x.Weight.CompareTo(y.Weight);
+        if (cmp != 0)
+            return cmp;
+        return string.Compare(x.ID, y.ID, StringComparison.Ordinal);
+    }
+}

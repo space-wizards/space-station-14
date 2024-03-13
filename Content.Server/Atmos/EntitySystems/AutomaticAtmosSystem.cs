@@ -39,7 +39,7 @@ public sealed class AutomaticAtmosSystem : EntitySystem
         if (physics.Mass / ShuttleSystem.TileMassMultiplier >= 7.0f)
         {
             AddComp<GridAtmosphereComponent>(ev.Entity);
-            Logger.InfoS("atmos", $"Giving grid {ev.Entity} GridAtmosphereComponent.");
+            Log.Info($"Giving grid {ev.Entity} GridAtmosphereComponent.");
         }
         // It's not super important to remove it should the grid become too small again.
         // If explosions ever gain the ability to outright shatter grids, do rethink this.
