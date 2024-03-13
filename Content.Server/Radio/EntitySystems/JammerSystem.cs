@@ -84,11 +84,11 @@ public sealed class JammerSystem : EntitySystem
         }
     }
 
-    private void OnSensorSendAttempt(EntityUid uid, SuitSensorComponent comp, SuitSensorsSendAttemptEvent args)
+    private void OnSensorSendAttempt(EntityUid uid, SuitSensorComponent comp, ref SuitSensorsSendAttemptEvent args)
     {
         if (ShouldCancelSend(uid))
         {
-            args.Cancel();
+            args.Cancelled = true;
         }
     }
 

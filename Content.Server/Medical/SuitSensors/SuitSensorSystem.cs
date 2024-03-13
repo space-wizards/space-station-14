@@ -74,7 +74,7 @@ public sealed class SuitSensorSystem : EntitySystem
             sensor.NextUpdate = curTime + sensor.UpdateRate;
 
             var canEv = new SuitSensorsSendAttemptEvent();
-            RaiseLocalEvent(uid, canEv);
+            RaiseLocalEvent(uid, ref canEv);
             if (canEv.Cancelled)
                 continue;
 

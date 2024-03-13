@@ -88,6 +88,8 @@ public sealed partial class SuitSensorComponent : Component
     public bool PreviousControlsLocked = false;
 }
 
-public sealed class SuitSensorsSendAttemptEvent : CancellableEntityEventArgs
+[ByRefEvent]
+public record struct SuitSensorsSendAttemptEvent
 {
+    public bool Cancelled;
 };
