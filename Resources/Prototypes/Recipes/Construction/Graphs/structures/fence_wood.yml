@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: FenceWood
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DeleteEntity { }
+    edges:
+    - to: straight
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: MaterialWoodPlank
+        amount: 2
+        doAfter: 6

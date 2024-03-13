@@ -1,0 +1,75 @@
+- type: entity
+  parent: BaseStructure
+  id: BaseFenceWood
+  name: wooden fence
+  description: Wooden piece of fencing. I hope there is babushka's garden behind it.
+  abstract: true
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/boxingpunch1.ogg"
+  - type: Tag
+    tags:
+    - RCDDeconstructWhitelist
+    - Wooden
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWood
+  - type: Sprite
+    sprite: Structures/Walls/fence.rsi
+    drawdepth: WallTops
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    anchored: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 125
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Climbable
+    delay: 5.0
+  - type: Appearance
+
+- type: entity
+  parent: BaseFenceWood
+  id: FenceWoodHighStraight
+  suffix: Straight
+  components:
+  - type: Icon
+    sprite: Structures/Walls/fence.rsi
+    state: icon_straight
+  - type: Sprite
+    layers:
+    - state: straight
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.5,0.10,0.5"
+        density: 1000
+        mask:
+        - FullTileMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Construction
+    graph: FenceWood
+    node: straight
