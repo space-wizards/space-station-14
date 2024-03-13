@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by github:DreamlyJack(624946166152298517)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pufi-black",
+      "directions": 4
+    },
+    {
+      "name": "pufi-black-overlay",
+      "directions": 4
+    },
+    {
+      "name": "pufi-blue",
+      "directions": 4
+    },
+    {
+      "name": "pufi-blue-overlay",
+      "directions": 4
+    },
+    {
+      "name": "pufi-green",
+      "directions": 4
+    },
+    {
+      "name": "pufi-green-overlay",
+      "directions": 4
+    },
+    {
+      "name": "pufi-orange",
+      "directions": 4
+    },
+    {
+      "name": "pufi-orange-overlay",
+      "directions": 4
+    },
+    {
+      "name": "pufi-pink",
+      "directions": 4
+    },
+    {
+      "name": "pufi-pink-overlay",
+      "directions": 4
+    },
+    {
+      "name": "pufi-purple",
+      "directions": 4
+    },
+    {
+      "name": "pufi-purple-overlay",
+      "directions": 4
+    },
+    {
+      "name": "pufi-red",
+      "directions": 4
+    },
+    {
+      "name": "pufi-red-overlay",
+      "directions": 4
+    },
+    {
+      "name": "pufi-white",
+      "directions": 4
+    },
+    {
+      "name": "pufi-white-overlay",
+      "directions": 4
+    }
+  ]
+}
