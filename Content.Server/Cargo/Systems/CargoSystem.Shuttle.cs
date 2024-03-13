@@ -193,8 +193,7 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            if (((requestType & BuySellType.Sell) != 0 && (comp.PalletType & BuySellType.Sell) == 0) ||
-                ((requestType & BuySellType.Buy) != 0 && (comp.PalletType & BuySellType.Buy) == 0))
+            if ((requestType & comp.PalletType) == 0)
             {
                 continue;
             }
