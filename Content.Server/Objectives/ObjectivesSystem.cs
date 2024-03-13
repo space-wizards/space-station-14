@@ -12,6 +12,7 @@ using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
+using System.Text;
 
 namespace Content.Server.Objectives;
 
@@ -82,28 +83,29 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                 totalInCustody += minds.Where(m => IsInCustody(m)).Count();
             }
 
-            var result = Loc.GetString("objectives-round-end-result", ("count", total), ("agent", agent));
+            var result = new StringBuilder();
+            result.AppendLine(Loc.GetString("objectives-round-end-result", ("count", total), ("agent", agent)));
             if (agent == Loc.GetString("traitor-round-end-agent-name"))
             {
-                result += "\n" + Loc.GetString("objectives-round-end-result-in-custody", ("count", total), ("custody", totalInCustody), ("agent", agent));
+                result.AppendLine(Loc.GetString("objectives-round-end-result-in-custody", ("count", total), ("custody", totalInCustody), ("agent", agent)));
             }
             // next add all the players with its own prepended text
             foreach (var (prepend, minds) in summary)
             {
                 if (prepend != string.Empty)
-                    result += prepend;
+                    result.Append(prepend);
 
                 // add space between the start text and player list
-                result += "\n";
+                result.AppendLine();
 
-                AddSummary(ref result, agent, minds);
+                AddSummary(result, agent, minds);
             }
 
-            ev.AddLine(result + "\n");
+            ev.AddLine(result.AppendLine().ToString());
         }
     }
 
-    private void AddSummary(ref string result, string agent, List<EntityUid> minds)
+    private void AddSummary(StringBuilder result, string agent, List<EntityUid> minds)
     {
         var agentSummaries = new List<(string summary, float successRate, int completedObjectives)>();
 
@@ -127,14 +129,15 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
             var completedObjectives = 0;
             var totalObjectives = 0;
-            var agentSummary = Loc.GetString("objectives-with-objectives", ("custody", custody), ("title", title), ("agent", agent));
+            var agentSummary = new StringBuilder();
+            agentSummary.AppendLine(Loc.GetString("objectives-with-objectives", ("custody", custody), ("title", title), ("agent", agent)));
 
             foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).Issuer))
             {
                 //TO DO:
                 //check for the right group here. Getting the target issuer is easy: objectiveGroup.Key
                 //It should be compared to the type of the group's issuer.
-                agentSummary += "\n" + Loc.GetString($"objective-issuer-{objectiveGroup.Key}");
+                agentSummary.AppendLine(Loc.GetString($"objective-issuer-{objectiveGroup.Key}"));
 
                 foreach (var objective in objectiveGroup)
                 {
@@ -146,37 +149,37 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                     var progress = info.Value.Progress;
                     totalObjectives++;
 
+                    agentSummary.Append("- ");
                     if (progress > 0.99f)
                     {
-                        agentSummary += "\n- " + Loc.GetString(
+                        agentSummary.AppendLine(Loc.GetString(
                             "objectives-objective-success",
                             ("objective", objectiveTitle),
                             ("markupColor", "green")
-                        );
+                        ));
                         completedObjectives++;
                     }
                     else
                     {
-                        agentSummary += "\n- " + Loc.GetString(
+                        agentSummary.AppendLine(Loc.GetString(
                             "objectives-objective-fail",
                             ("objective", objectiveTitle),
                             ("progress", (int) (progress * 100)),
                             ("markupColor", "red")
-                        );
+                        ));
                     }
                 }
             }
 
             var successRate = totalObjectives > 0 ? (float) completedObjectives / totalObjectives : 0f;
-            agentSummaries.Add((agentSummary, successRate, completedObjectives));
+            agentSummaries.Add((agentSummary.ToString(), successRate, completedObjectives));
         }
 
-        agentSummaries = agentSummaries.OrderByDescending(x => x.successRate)
-                                       .ThenByDescending(x => x.completedObjectives)
-                                       .ToList();
+        var sortedAgents = agentSummaries.OrderByDescending(x => x.successRate)
+                                       .ThenByDescending(x => x.completedObjectives);
 
-        foreach (var (summary, _, _) in agentSummaries)
-            result += "\n" + summary;
+        foreach (var (summary, _, _) in sortedAgents)
+            result.AppendLine(summary);
     }
 
     public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
