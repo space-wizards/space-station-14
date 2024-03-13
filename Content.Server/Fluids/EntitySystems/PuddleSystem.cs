@@ -550,6 +550,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
     #region Spill
 
+    /// <inheritdoc/>
     public override bool TrySplashSpillAt(EntityUid uid,
         EntityCoordinates coordinates,
         Solution solution,
@@ -595,6 +596,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         return TrySpillAt(coordinates, solution, out puddleUid, sound);
     }
 
+    /// <inheritdoc/>
     public override bool TrySpillAt(EntityCoordinates coordinates, Solution solution, out EntityUid puddleUid, bool sound = true)
     {
         if (solution.Volume == 0)
@@ -612,6 +614,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         return TrySpillAt(mapGrid.GetTileRef(coordinates), solution, out puddleUid, sound);
     }
 
+    /// <inheritdoc/>
     public override bool TrySpillAt(EntityUid uid, Solution solution, out EntityUid puddleUid, bool sound = true,
         TransformComponent? transformComponent = null)
     {
@@ -624,6 +627,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         return TrySpillAt(transformComponent.Coordinates, solution, out puddleUid, sound: sound);
     }
 
+    /// <inheritdoc/>
     public override bool TrySpillAt(TileRef tileRef, Solution solution, out EntityUid puddleUid, bool sound = true,
         bool tileReact = true)
     {
