@@ -134,7 +134,7 @@ public sealed partial class DockingSystem
 
        foreach (var config in configs)
        {
-           if (config.Coordinates.Equals(coordinates) && config.Angle.EqualsApprox(angle, 0.01))
+           if (config.Coordinates.Equals(coordinates) && config.Angle.EqualsApprox(angle, 0.15))
            {
                return config;
            }

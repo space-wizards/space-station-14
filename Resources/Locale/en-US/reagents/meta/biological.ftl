@@ -24,3 +24,6 @@ reagent-desc-fat = No matter how it was obtained, its application is important.
 
 reagent-name-vomit = vomit
 reagent-desc-vomit = You can see a few chunks of someone's last meal in it.
+
+reagent-name-grey-matter = grey matter
+reagent-desc-grey-matter = Thought juice, the stuff that leaks out of your ears.
