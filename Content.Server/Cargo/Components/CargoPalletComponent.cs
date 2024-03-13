@@ -6,10 +6,11 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 /// Any entities intersecting when a shuttle is recalled will be sold.
 /// </summary>
 
-public enum BuySellType
+[Flags]
+public enum BuySellType : byte
 {
-    Buy = 1,
-    Sell = 2,
+    Buy = 1 << 0,
+    Sell = 1 << 1,
     All = Buy | Sell
 }
 
