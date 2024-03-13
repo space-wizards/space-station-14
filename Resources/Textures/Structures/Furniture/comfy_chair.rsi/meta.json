@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by github:DreamlyJack(624946166152298517)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "comfy-black",
+      "directions": 4
+    },
+    {
+      "name": "comfy-black-overlay",
+      "directions": 4
+    },
+    {
+      "name": "comfy-blue",
+      "directions": 4
+    },
+    {
+      "name": "comfy-blue-overlay",
+      "directions": 4
+    },
+    {
+      "name": "comfy-green",
+      "directions": 4
+    },
+    {
+      "name": "comfy-green-overlay",
+      "directions": 4
+    },
+    {
+      "name": "comfy-orange",
+      "directions": 4
+    },
+    {
+      "name": "comfy-orange-overlay",
+      "directions": 4
+    },
+    {
+      "name": "comfy-pink",
+      "directions": 4
+    },
+    {
+      "name": "comfy-pink-overlay",
+      "directions": 4
+    },
+    {
+      "name": "comfy-purple",
+      "directions": 4
+    },
+    {
+      "name": "comfy-purple-overlay",
+      "directions": 4
+    },
+    {
+      "name": "comfy-red",
+      "directions": 4
+    },
+    {
+      "name": "comfy-red-overlay",
+      "directions": 4
+    },
+    {
+      "name": "comfy-white",
+      "directions": 4
+    },
+    {
+      "name": "comfy-white-overlay",
+      "directions": 4
+    }
+  ]
+}
