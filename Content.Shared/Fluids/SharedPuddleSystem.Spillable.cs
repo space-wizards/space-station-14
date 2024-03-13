@@ -13,7 +13,6 @@ namespace Content.Shared.Fluids;
 public abstract partial class SharedPuddleSystem
 {
     [Dependency] protected readonly SharedOpenableSystem Openable = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     protected virtual void InitializeSpillable()
     {
@@ -46,7 +45,7 @@ public abstract partial class SharedPuddleSystem
         if (solution.Volume == FixedPoint2.Zero)
             return;
 
-        if (_entityManager.HasComponent<PreventSpillerComponent>(args.User))
+        if (HasComp<PreventSpillerComponent>(args.User))
             return;
 
 
