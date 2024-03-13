@@ -1,0 +1,30 @@
+#license: CLA
+#copyright: https://github.com/ss14-ganimed/ENT14-Master/blob/master/CLA.txt
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitTSF
+  name: Fleet jumpsuit
+  description: It looks technologically advanced.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/tsf/tsf.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/tsf/tsf.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitTSFCommander
+  name: Commander jumpsuit
+  description: It looks technologically advanced.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/tsf/tsf_captain.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/tsf/tsf_captain.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
