@@ -150,7 +150,7 @@ namespace Content.Client.Popups
                 PopupEntity(message, uid, type);
         }
 
-        public override void PopupEntity(string? message, EntityUid uid, Filter filter, bool recordReplay, PopupType type=PopupType.Small)
+        public override void PopupEntity(string? message, EntityUid uid, Filter filter, bool recordReplay, PopupType type = PopupType.Small)
         {
             if (!filter.Recipients.Contains(_playerManager.LocalSession))
                 return;
@@ -168,6 +168,12 @@ namespace Content.Client.Popups
         {
             if (TryComp(uid, out TransformComponent? transform))
                 PopupMessage(message, type, transform.Coordinates, uid, true);
+        }
+
+        public override void PopupPredicted(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient != null && _timing.IsFirstTimePredicted)
+                PopupEntity(message, uid, recipient.Value, type);
         }
 
         #endregion

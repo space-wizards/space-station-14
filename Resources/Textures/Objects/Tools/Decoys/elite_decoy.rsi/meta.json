@@ -1,0 +1,18 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Modified from existing sprites.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+        "name": "folded"
+        },
+        {
+        "name": "eballoon",
+        "directions": 4
+        }
+]
+}

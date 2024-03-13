@@ -16,7 +16,7 @@ public sealed partial class ParticleAcceleratorSystem
         var xformQuery = GetEntityQuery<TransformComponent>();
         if (!xformQuery.TryGetComponent(uid, out var xform))
         {
-            Logger.Error("ParticleAccelerator attempted to emit a particle without (having) a transform from which to base its initial position and orientation.");
+            Log.Error("ParticleAccelerator attempted to emit a particle without (having) a transform from which to base its initial position and orientation.");
             return;
         }
 

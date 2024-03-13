@@ -112,9 +112,9 @@
         - ReagentId: Nutriment
           Quantity: 3
         - ReagentId: Sugar
-          Quantity: 2
+          Quantity: 5
         - ReagentId: Laughter
-          Quantity: 2
+          Quantity: 5
   - type: Extractable
     juiceSolution:
       reagents:
