@@ -85,8 +85,11 @@
       - SimpleHostile
   - type: HTN
     rootTask:
-      task: DragonCarpCompound
+      task: KillerTomatoCompound
   - type: NPCImpritingBehaviour
+    whitelist:
+      components:
+      - Actor
   - type: Sprite
     sprite: Mobs/Demons/tomatokiller.rsi 
     noRot: true

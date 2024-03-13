@@ -21,11 +21,12 @@ public sealed partial class NPCImpritingBehaviourSystem : EntitySystem
     private void OnMapInit(Entity<NPCImpritingBehaviourComponent> impriting, ref MapInitEvent args)
     {
         var entities = _lookup.GetEntitiesInRange(impriting, impriting.Comp.SearchRadius);
+        var impritingTargets = new List<EntityUid>();
         foreach (var ent in entities)
         {
-            if (HasComp<ActorComponent>(ent))
+            if (impriting.Comp.Whitelist.IsValid(ent))
             {
-                impriting.Comp.ImpritingTarget.Add(ent);
+                impritingTargets.Add(ent);
                 var exception = EnsureComp<FactionExceptionComponent>(impriting);
                 exception.Ignored.Add(ent);
             }
@@ -34,7 +35,7 @@ public sealed partial class NPCImpritingBehaviourSystem : EntitySystem
 
         if (impriting.Comp.Follow)
         {
-            var mommy = _random.Pick(impriting.Comp.ImpritingTarget);
+            var mommy = _random.Pick(impritingTargets);
             _npc.SetBlackboard(impriting, NPCBlackboard.FollowTarget, new EntityCoordinates(mommy, Vector2.Zero));
         }
 
