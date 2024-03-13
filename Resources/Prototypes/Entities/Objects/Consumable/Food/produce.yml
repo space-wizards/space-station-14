@@ -255,8 +255,9 @@
       reagents:
       - ReagentId: JuiceBanana
         Quantity: 10
-  - type: ReplaceRandom
-    prototype: ClusterBananaPeel
+  - type: PolymorphOnSpawn
+    polymorph: ClusterBananaPeel
+    chance: 0.5
   - type: Tag
     tags:
     - Fruit

@@ -164,3 +164,13 @@
     revertOnDeath: true
     revertOnCrit: true
     duration: 20
+
+- type: polymorph
+  id: ClusterBananaPeel
+  configuration:
+    entity: ClusterBananaPeel
+    forced: true
+    transferDamage: false
+    revertOnCrit: false
+    revertOnDeath: false
+    revertOnEat: false
