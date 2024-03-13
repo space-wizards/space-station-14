@@ -20,12 +20,6 @@
     uiWindowPos: 0,1
     strippingWindowPos: 1,1
     displayName: Mask
-    whitelist:
-      tags:
-        - MonkeyWearable
-        - PetWearable
-      components:
-        - Smokable
   - name: jumpsuit
     slotTexture: uniform
     slotFlags: INNERCLOTHING
@@ -60,5 +54,4 @@
     displayName: Suit
     whitelist:
       tags:
-        - SuitEVA
-
+        - MonkeyWearable

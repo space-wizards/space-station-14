@@ -39,9 +39,30 @@ public abstract class SharedInjectorSystem : EntitySystem
 
         var (_, component) = entity;
 
-        // Add specific transfer verbs according to the container's size
+        var min = component.MinimumTransferAmount;
+        var max = component.MaximumTransferAmount;
+        var cur = component.TransferAmount;
+        var toggleAmount = cur == max ? min : max;
+
         var priority = 0;
-        var user = args.User;
+        AlternativeVerb toggleVerb = new()
+        {
+            Text = Loc.GetString("comp-solution-transfer-verb-toggle", ("amount", toggleAmount)),
+            Category = VerbCategory.SetTransferAmount,
+            Act = () =>
+            {
+                component.TransferAmount = toggleAmount;
+                Popup.PopupClient(Loc.GetString("comp-solution-transfer-set-amount", ("amount", toggleAmount)), user, user);
+                Dirty(entity);
+            },
+
+            Priority = priority
+        };
+        args.Verbs.Add(toggleVerb);
+
+        priority -= 1;
+
+        // Add specific transfer verbs according to the container's size
         foreach (var amount in TransferAmounts)
         {
             if (amount < component.MinimumTransferAmount || amount > component.MaximumTransferAmount)
@@ -91,16 +112,34 @@ public abstract class SharedInjectorSystem : EntitySystem
         if (injector.Comp.InjectOnly)
             return;
 
+        if (!SolutionContainers.TryGetSolution(injector.Owner, InjectorComponent.SolutionName, out var solEnt, out var solution))
+            return;
+
         string msg;
+
         switch (injector.Comp.ToggleState)
         {
             case InjectorToggleMode.Inject:
-                SetMode(injector, InjectorToggleMode.Draw);
-                msg = "injector-component-drawing-text";
+                if (solution.AvailableVolume > 0) // If solution has empty space to fill up, allow toggling to draw
+                {
+                    SetMode(injector, InjectorToggleMode.Draw);
+                    msg = "injector-component-drawing-text";
+                }
+                else
+                {
+                    msg = "injector-component-cannot-toggle-draw-message";
+                }
                 break;
             case InjectorToggleMode.Draw:
-                SetMode(injector, InjectorToggleMode.Inject);
-                msg = "injector-component-injecting-text";
+                if (solution.Volume > 0) // If solution has anything in it, allow toggling to inject
+                {
+                    SetMode(injector, InjectorToggleMode.Inject);
+                    msg = "injector-component-injecting-text";
+                }
+                else
+                {
+                    msg = "injector-component-cannot-toggle-inject-message";
+                }
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
