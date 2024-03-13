@@ -73,8 +73,8 @@ public sealed class SuitSensorSystem : EntitySystem
             // TODO: This would cause imprecision at different tick rates.
             sensor.NextUpdate = curTime + sensor.UpdateRate;
 
-            var canEv = new SuitSensorsSendAttemptEvent(uid);
-            RaiseLocalEvent(ref canEv);
+            var canEv = new SuitSensorsSendAttemptEvent();
+            RaiseLocalEvent(uid, canEv);
             if (canEv.Cancelled)
                 continue;
 

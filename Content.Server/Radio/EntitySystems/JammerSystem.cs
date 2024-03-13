@@ -24,7 +24,7 @@ public sealed class JammerSystem : EntitySystem
         SubscribeLocalEvent<ActiveRadioJammerComponent, PowerCellChangedEvent>(OnPowerCellChanged);
         SubscribeLocalEvent<RadioJammerComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RadioSendAttemptEvent>(OnRadioSendAttempt);
-        SubscribeLocalEvent<SuitSensorsSendAttemptEvent>(OnSensorSendAttempt);
+        SubscribeLocalEvent<SuitSensorComponent, SuitSensorsSendAttemptEvent>(OnSensorSendAttempt);
     }
 
     public override void Update(float frameTime)
@@ -84,11 +84,11 @@ public sealed class JammerSystem : EntitySystem
         }
     }
 
-    private void OnSensorSendAttempt(ref SuitSensorsSendAttemptEvent args)
+    private void OnSensorSendAttempt(EntityUid uid, SuitSensorComponent comp, SuitSensorsSendAttemptEvent args)
     {
-        if (ShouldCancelSend(args.Source))
+        if (ShouldCancelSend(uid))
         {
-            args.Cancelled = true;
+            args.Cancel();
         }
     }
 

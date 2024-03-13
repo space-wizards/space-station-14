@@ -88,9 +88,6 @@ public sealed partial class SuitSensorComponent : Component
     public bool PreviousControlsLocked = false;
 }
 
-[ByRefEvent]
-public record struct SuitSensorsSendAttemptEvent(EntityUid Source)
+public sealed class SuitSensorsSendAttemptEvent : CancellableEntityEventArgs
 {
-    public readonly EntityUid Source = Source;
-    public bool Cancelled = false;
 };
