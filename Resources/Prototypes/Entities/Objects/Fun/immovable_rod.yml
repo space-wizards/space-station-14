@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: ImmovableRod
   name: immovable rod
   description: You can sense that it's hungry. That's usually a bad sign.
@@ -60,3 +60,14 @@
   components:
   - type: ImmovableRod
     randomizeVelocity: false
+
+- type: entity
+  parent: ImmovableRodKeepTilesStill
+  id: ImmovableRodBartender
+  suffix: Bartender
+  name: immovable rod
+  description: At least it won't deal 55 stamina damage.
+  components:
+  - type: ImmovableRod
+  - type: TimedDespawn
+    lifetime: 0.5

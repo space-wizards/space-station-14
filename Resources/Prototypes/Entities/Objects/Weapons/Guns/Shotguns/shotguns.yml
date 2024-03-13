@@ -132,6 +132,18 @@
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
 
+#Bartender
+- type: entity
+  name: double-barreled shotgun
+  parent: WeaponShotgunDoubleBarreled
+  id: WeaponShotgunDoubleBarreledBartender
+  description: Perfect for firing at someone with a doafter bar who MIGHT be trying to climb the counter.
+  suffix: Bartender
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunBartender
+#Bartender
+
 - type: entity
   name: Enforcer
   parent: BaseWeaponShotgun

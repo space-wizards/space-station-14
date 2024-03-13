@@ -6,7 +6,7 @@
   - type: StorageFill
     contents:
       - id: ClothingOuterArmorBasicSlim
-      - id: WeaponShotgunDoubleBarreledRubber
+      - id: WeaponShotgunDoubleBarreledBartender
       - id: DrinkShaker
       - id: ClothingEyesHudBeer
       - id: HandLabeler
@@ -17,7 +17,7 @@
         prob: 0.5
       - id: DrinkBottleBeer
         prob: 0.5
-      - id: BoxBeanbag
+      - id: BoxBartender
         amount: 2
       - id: RagItem
         amount: 2

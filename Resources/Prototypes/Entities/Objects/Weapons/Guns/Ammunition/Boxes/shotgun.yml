@@ -114,3 +114,16 @@
       layers:
         - state: boxwide
         - state: shellslug
+
+- type: entity
+  name: shotgun bartending cartridges dispenser
+  parent: AmmoProviderShotgunShell
+  id: BoxBartender
+  description: A dispenser box full of bartending shots, designed for double-barrel shotguns.
+  components:
+    - type: BallisticAmmoProvider
+      proto: ShellShotgunBartender
+    - type: Sprite
+      layers:
+        - state: boxwide
+        - state: shellbeanbag

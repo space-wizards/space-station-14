@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseShellShotgun
   name: shell (.50)
   parent: BaseCartridge
@@ -165,3 +165,20 @@
       proto: PelletShotgunUranium
     - type: SpentAmmoVisuals
       state: "depleted-uranium"
+
+#Bartender
+- type: entity
+  id: ShellShotgunBartender
+  name: shell (.50 bartending)
+  description: Instantly annihilates anything and everything in front of you. But it doesn't deal 55 stamina damage so it's honestly completely useless and I'm going to kill my infant son.
+  parent: BaseShellShotgun
+  components:
+  - type: Sprite
+    layers:
+      - state: beanbag
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: ImmovableRodBartender
+    count: 1
+  - type: SpentAmmoVisuals
+    state: "beanbag"
