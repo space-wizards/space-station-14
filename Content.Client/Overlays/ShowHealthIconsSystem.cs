@@ -22,25 +22,6 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
 
     public HashSet<string> DamageContainers = new();
 
-    [ValidatePrototypeId<StatusIconPrototype>]
-    private const string HealthIconFine = "HealthIconFine";
-
-    [ValidatePrototypeId<StatusIconPrototype>]
-    private const string HealthIconCritical = "HealthIconCritical";
-
-    [ValidatePrototypeId<StatusIconPrototype>]
-    private const string HealthIconDead = "HealthIconDead";
-
-    [ValidatePrototypeId<StatusIconPrototype>]
-    private const string HealthIconDecomposing = "HealthIconDecomposing";
-
-    private readonly Dictionary<MobState, string> _stateIcons = new()
-    {
-        { MobState.Alive, HealthIconFine },
-        { MobState.Critical, HealthIconCritical },
-        { MobState.Dead, HealthIconDead }
-    };
-
     public override void Initialize()
     {
         base.Initialize();
@@ -94,11 +75,11 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
             if (TryComp<MobStateComponent>(entity, out var state))
             {
                 // Since there is no MobState for a rotting mob, we have to deal with this case first.
-                if (HasComp<RottingComponent>(entity) && _prototypeMan.TryIndex<StatusIconPrototype>(HealthIconDecomposing, out var rottingIcon))
+                if (HasComp<RottingComponent>(entity) && _prototypeMan.TryIndex<StatusIconPrototype>(damageableComponent.DecomposingIcon, out var decomposingIcon))
                 {
-                    result.Add(rottingIcon);
+                    result.Add(decomposingIcon);
                 }
-                else if (_stateIcons.TryGetValue(state.CurrentState, out var value) && _prototypeMan.TryIndex<StatusIconPrototype>(value, out var icon))
+                else if (damageableComponent.HealthIcons.TryGetValue(state.CurrentState, out var value) && _prototypeMan.TryIndex(value, out var icon))
                     result.Add(icon);
             }
         }
