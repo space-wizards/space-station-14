@@ -9,6 +9,10 @@
   - type: Damageable
     damageContainer: Biological
   - type: BodyPart
+  - type: Woundable
+    maxHealth: 50
+    maxIntegrity: 10
+    config: {}
   - type: Gibbable
   - type: ContainerContainer
     containers:

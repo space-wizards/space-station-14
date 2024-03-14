@@ -1,0 +1,44 @@
+﻿<med:BodyPartStatusControl
+    xmlns="https://spacestation14.io"
+    xmlns:med="clr-namespace:Content.Client.UserInterface.Systems.MedicalMenu.Controls"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    VerticalAlignment="Stretch"
+    HorizontalAlignment="Stretch"
+    HorizontalExpand="True"
+    Orientation="Vertical"
+    MinSize="150 10">
+    <CollapsibleHeading MinHeight="35" Name="Heading" Access="Private">
+
+    </CollapsibleHeading>
+    <CollapsibleBody>
+        <BoxContainer
+            Orientation="Vertical">
+            <Label
+                Text="UnknownBodyPart"
+                Access="Private"
+                Name="BodyPartLabel" />
+            <controls:VSpacer
+                Spacing="30" />
+            <Label
+                Text="Unknown"
+                Access="Private"
+                Name="BodyPartStatusLabel" />
+            <BoxContainer
+                Orientation="Vertical"
+                HorizontalExpand="True"
+                VerticalExpand="True">
+                <controls:Placeholder
+                    PlaceholderText="STUFF GOES HERE"
+                />
+                <BoxContainer
+                    Name="Contents"
+                    Access="Private"
+                    Orientation="Vertical"
+                    HorizontalExpand="True"
+                    VerticalExpand="True"
+                    />
+            </BoxContainer>
+        </BoxContainer>
+    </CollapsibleBody>
+    <controls:HLine/>
+</med:BodyPartStatusControl>

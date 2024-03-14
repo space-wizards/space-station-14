@@ -560,12 +560,14 @@ public partial class SharedBodySystem
     /// <summary>
     /// Returns all body part components for this entity including itself.
     /// </summary>
-    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyPartChildren(EntityUid partId, BodyPartComponent? part = null)
+    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyPartChildren(EntityUid partId, BodyPartComponent? part = null,
+        bool inclusive = true)
     {
         if (!Resolve(partId, ref part, false))
             yield break;
 
-        yield return (partId, part);
+        if (inclusive)
+            yield return (partId, part);
 
         foreach (var slotId in part.Children.Keys)
         {
@@ -582,6 +584,30 @@ public partial class SharedBodySystem
                     {
                         yield return value;
                     }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Returns all body part components that are direct children of this entity.
+    /// </summary>
+    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyPartDirectChildren(EntityUid partId, BodyPartComponent? part = null)
+    {
+        if (!Resolve(partId, ref part, false))
+            yield break;
+
+        foreach (var slotId in part.Children.Keys)
+        {
+            var containerSlotId = GetPartSlotContainerId(slotId);
+
+            if (Containers.TryGetContainer(partId, containerSlotId, out var container))
+            {
+                foreach (var containedEnt in container.ContainedEntities)
+                {
+                    if (!TryComp(containedEnt, out BodyPartComponent? childPart))
+                        continue;
+                    yield return (containedEnt, childPart);
                 }
             }
         }

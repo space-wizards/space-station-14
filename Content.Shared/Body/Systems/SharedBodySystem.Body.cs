@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Body.Components;
@@ -218,6 +219,20 @@ public partial class SharedBodySystem
         {
             yield return childContainer;
         }
+    }
+
+
+    public bool TryGetRootBodyPart(EntityUid target, [NotNullWhen(true)] out Entity<BodyPartComponent>? rootPart,
+        BodyComponent? bodyComp = null, bool logMissingBody = false)
+    {
+        rootPart = null;
+        if (!Resolve(target, ref bodyComp, logMissingBody))
+            return false;
+        var foundEnt = ((ContainerSlot)Containers.GetContainer(target, bodyComp.RootPartSlot)).ContainedEntity;
+        if (foundEnt == null || !TryComp<BodyPartComponent>(foundEnt, out var rootPartComp))
+            return false;
+        rootPart = new Entity<BodyPartComponent>(foundEnt.Value, rootPartComp);
+        return true;
     }
 
     /// <summary>

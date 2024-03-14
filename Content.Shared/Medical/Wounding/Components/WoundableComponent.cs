@@ -93,4 +93,8 @@ public sealed partial class WoundableComponent : Component
     /// </summary>
     public FixedPoint2 HitPoints => Health + Integrity;
 
+    public FixedPoint2 MaxHitPoints => MaxHealth + MaxIntegrity;
+
+    public FixedPoint2 HitPointPercent => HitPoints / MaxHitPoints;
+
 }

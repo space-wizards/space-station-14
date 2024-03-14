@@ -50,6 +50,7 @@
   id: MobDamageable
   abstract: true
   components:
+  - type: WoundableRoot #TODO: move this to it's own prototype category
   - type: Damageable
     damageContainer: Biological
   - type: Destructible
