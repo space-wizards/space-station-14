@@ -213,7 +213,7 @@ public sealed partial class ClimbSystem : VirtualController
             return true;
 
         var ev = new AttemptClimbEvent(user, entityToMove, climbable);
-        RaiseLocalEvent(climbable, ev);
+        RaiseLocalEvent(climbable, ref ev);
         if (ev.Cancelled)
             return false;
 

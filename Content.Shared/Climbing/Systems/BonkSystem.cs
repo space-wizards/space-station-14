@@ -120,7 +120,7 @@ public sealed partial class BonkSystem : EntitySystem
             return;
 
         if (TryStartBonk(uid, args.User, args.Climber, component))
-            args.Cancel();
+            args.Cancelled = true;
     }
 
     [Serializable, NetSerializable]
