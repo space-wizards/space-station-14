@@ -29,6 +29,7 @@
   - type: UseDelay
     delay: 1.0
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       collection: ToySqueak
     damage:
@@ -278,6 +279,15 @@
       reagents:
       - ReagentId: JuiceThatMakesYouWeh
         Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: JuiceThatMakesYouWeh
+          Quantity: 10
 
 - type: entity
   parent: PlushieLizard
@@ -321,6 +331,15 @@
       reagents:
       - ReagentId: JuiceThatMakesYouWeh
         Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: JuiceThatMakesYouWeh
+          Quantity: 10
 
 - type: entity
   parent: BasePlushie
@@ -874,6 +893,7 @@
   - type: Tag
     tags:
     - Sidearm
+    - ToySidearm
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -906,14 +926,14 @@
   suffix: Fake
   description: Looks almost like the real thing! Ages 8 and up.
   components:
-    - type: RevolverAmmoProvider
-      whitelist:
-        tags:
-          - CartridgeCap
-          - SpeedLoaderCap
-          - CartridgeMagnum
-          - SpeedLoaderMagnum
-      proto: CartridgeMagnumAP
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeCap
+        - SpeedLoaderCap
+        - CartridgeMagnum
+        - SpeedLoaderMagnum
+    proto: CartridgeMagnumAP
 
 - type: entity
   parent: BaseItem
@@ -928,6 +948,7 @@
     attackRate: 1.5
     angle: 0
     animation: WeaponArcThrust
+    wideAnimationRotation: 90
     damage:
       types:
         Blunt: 0

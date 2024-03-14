@@ -5,7 +5,7 @@
     state: jar
   product: CrateEngineeringAMEJar
   cost: 2000
-  category: Engineering
+  category: cargoproduct-category-name-engineering
   group: market
 
 - type: cargoProduct
@@ -15,7 +15,7 @@
     state: icon
   product: CrateEngineeringSingularityGenerator
   cost: 4000
-  category: Engineering
+  category: cargoproduct-category-name-engineering
   group: market
 
 - type: cargoProduct
@@ -25,7 +25,7 @@
     state: icon
   product: CrateEngineeringSingularityContainment
   cost: 1000
-  category: Engineering
+  category: cargoproduct-category-name-engineering
   group: market
 
 #- type: cargoProduct
@@ -37,7 +37,7 @@
 #    state: emitter2
 #  product: CrateEngineeringSingularityEmitter
 #  cost: 3000
-#  category: Engineering
+#  category: cargoproduct-category-name-engineering
 #  group: market
 
 - type: cargoProduct
@@ -47,7 +47,7 @@
     state: ca_on
   product: CrateEngineeringSingularityCollector
   cost: 1000
-  category: Engineering
+  category: cargoproduct-category-name-engineering
   group: market
 
 - type: cargoProduct
@@ -57,7 +57,7 @@
     state: completed
   product: CrateEngineeringParticleAccelerator
   cost: 2000
-  category: Engineering
+  category: cargoproduct-category-name-engineering
   group: market
 
 - type: cargoProduct
@@ -67,7 +67,7 @@
     state: solar-assembly-part
   product: CrateEngineeringSolar
   cost: 500
-  category: Engineering
+  category: cargoproduct-category-name-engineering
   group: market
 
 - type: cargoProduct
@@ -77,7 +77,7 @@
     state: icon
   product: CrateEngineeringTeslaGenerator
   cost: 4000
-  category: Engineering
+  category: cargoproduct-category-name-engineering
   group: market
 
 - type: cargoProduct
@@ -87,7 +87,7 @@
     state: coil
   product: CrateEngineeringTeslaCoil
   cost: 1200
-  category: Engineering
+  category: cargoproduct-category-name-engineering
   group: market
 
 - type: cargoProduct
@@ -97,5 +97,5 @@
     state: grounding_rod
   product: CrateEngineeringTeslaGroundingRod
   cost: 400
-  category: Engineering
+  category: cargoproduct-category-name-engineering
   group: market
