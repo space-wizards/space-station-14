@@ -21,7 +21,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Linq;
-using System.Diagnostics;
 
 namespace Content.Server.Strip
 {
@@ -595,20 +594,20 @@ namespace Content.Server.Strip
         {
             var args = ev.DoAfter.Args;
 
-            Debug.Assert(entity.Owner == args.User);
-            Debug.Assert(args.Target != null);
-            Debug.Assert(args.Used != null);
-            Debug.Assert(ev.Event.SlotOrHandName != null);
+            DebugTools.Assert(entity.Owner == args.User);
+            DebugTools.Assert(args.Target != null);
+            DebugTools.Assert(args.Used != null);
+            DebugTools.Assert(ev.Event.SlotOrHandName != null);
 
             if (ev.Event.InventoryOrHand)
             {
-                if (ev.Event.InsertOrRemove && !CanStripInsertInventory(args.User, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName, entity.Comp) ||
+                if ( ev.Event.InsertOrRemove && !CanStripInsertInventory(args.User, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName, entity.Comp) ||
                     !ev.Event.InsertOrRemove && !CanStripRemoveInventory(args.User, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName))
                         ev.Cancel();
             }
             else
             {
-                if (ev.Event.InsertOrRemove && !CanStripInsertHand(args.User, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName, entity.Comp) ||
+                if ( ev.Event.InsertOrRemove && !CanStripInsertHand(args.User, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName, entity.Comp) ||
                     !ev.Event.InsertOrRemove && !CanStripRemoveHand(args.User, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName))
                         ev.Cancel();
             }
@@ -619,10 +618,10 @@ namespace Content.Server.Strip
             if (ev.Cancelled)
                 return;
 
-            Debug.Assert(entity.Owner == ev.User);
-            Debug.Assert(ev.Target != null);
-            Debug.Assert(ev.Used != null);
-            Debug.Assert(ev.SlotOrHandName != null);
+            DebugTools.Assert(entity.Owner == ev.User);
+            DebugTools.Assert(ev.Target != null);
+            DebugTools.Assert(ev.Used != null);
+            DebugTools.Assert(ev.SlotOrHandName != null);
 
             if (ev.InventoryOrHand)
             {
