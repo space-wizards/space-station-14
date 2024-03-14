@@ -22,7 +22,10 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,7,1
+    - 0,0,7,0
+    storedSprite:
+      sprite: Objects/Weapons/Melee/baseball_bat.rsi
+      state: storage
   - type: Tool
     qualities:
     - Rolling
