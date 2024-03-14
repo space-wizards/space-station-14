@@ -1,10 +1,16 @@
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage.Expeditions;
+using Content.Shared.Dataset;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Salvage;
 
 public sealed partial class SalvageSystem
 {
+    [ValidatePrototypeId<EntityPrototype>]
+    public const string CoordinatesDisk = "CoordinatesDisk";
+
     private void OnSalvageClaimMessage(EntityUid uid, SalvageExpeditionConsoleComponent component, ClaimSalvageMessage args)
     {
         var station = _station.GetOwningStation(uid);
@@ -15,11 +21,16 @@ public sealed partial class SalvageSystem
         if (!data.Missions.TryGetValue(args.Index, out var missionparams))
             return;
 
-        SpawnMission(missionparams, station.Value);
+        var cdUid = Spawn(CoordinatesDisk, Transform(uid).Coordinates);
+        SpawnMission(missionparams, station.Value, cdUid);
 
         data.ActiveMission = args.Index;
         var mission = GetMission(_prototypeManager.Index<SalvageDifficultyPrototype>(missionparams.Difficulty), missionparams.Seed);
         data.NextOffer = _timing.CurTime + mission.Duration + TimeSpan.FromSeconds(1);
+
+        _labelSystem.Label(cdUid, GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), missionparams.Seed));
+        _audio.PlayPvs(component.PrintSound, uid);
+
         UpdateConsoles((station.Value, data));
     }
 

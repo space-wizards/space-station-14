@@ -23,4 +23,10 @@ public sealed partial class FTLDestinationComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool BeaconsOnly;
+
+    /// <summary>
+    /// Shuttles must use a corresponding CD to travel to this location.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    public bool RequireCoordinateDisk = false;
 }

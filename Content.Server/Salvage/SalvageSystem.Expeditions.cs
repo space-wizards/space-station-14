@@ -8,6 +8,7 @@ using Content.Shared.Salvage.Expeditions;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 
 namespace Content.Server.Salvage;
 
@@ -148,7 +149,7 @@ public sealed partial class SalvageSystem
         return new SalvageExpeditionConsoleState(component.NextOffer, component.Claimed, component.Cooldown, component.ActiveMission, missions);
     }
 
-    private void SpawnMission(SalvageMissionParams missionParams, EntityUid station)
+    private void SpawnMission(SalvageMissionParams missionParams, EntityUid station, EntityUid? coordinatesDisk)
     {
         var cancelToken = new CancellationTokenSource();
         var job = new SpawnSalvageMissionJob(
@@ -162,7 +163,9 @@ public sealed partial class SalvageSystem
             _biome,
             _dungeon,
             _metaData,
+            _transform,
             station,
+            coordinatesDisk,
             missionParams,
             cancelToken.Token);
 

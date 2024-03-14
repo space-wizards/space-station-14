@@ -116,7 +116,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
                 var mapTransform = Matrix3.CreateInverseTransform(Offset, Angle.Zero);
 
-                if (beaconsOnly && TryGetBeacon(_beacons, mapTransform, args.RelativePosition, PixelRect, out var foundBeacon, out _))
+                if (beaconsOnly && TryGetBeacon(_beacons, mapTransform, GetLocalPosition(_inputs.MouseScreenPosition), PixelRect, out var foundBeacon, out _))
                 {
                     RequestBeaconFTL?.Invoke(foundBeacon.Entity, _ftlAngle);
                 }
