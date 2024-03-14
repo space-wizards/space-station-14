@@ -1,14 +1,12 @@
 using Content.Shared.Actions;
-using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.Speech;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Bed.Sleep
+namespace Content.Shared.Bed.Sleep
 {
     public abstract class SharedSleepingSystem : EntitySystem
     {
@@ -71,6 +69,9 @@ namespace Content.Server.Bed.Sleep
             args.Cancel();
         }
     }
+
+    [ByRefEvent]
+    public record struct AttemptSnoreEvent(bool Cancelled = false) { }
 }
 
 

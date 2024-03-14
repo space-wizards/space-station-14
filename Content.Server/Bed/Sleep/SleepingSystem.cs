@@ -13,7 +13,6 @@ using Content.Shared.Slippery;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -62,7 +61,10 @@ namespace Content.Server.Bed.Sleep
                 EnsureComp<StunnedComponent>(uid);
                 EnsureComp<KnockedDownComponent>(uid);
 
-                if (TryComp<SleepEmitSoundComponent>(uid, out var sleepSound))
+                var attemptSnoreEv = new AttemptSnoreEvent();
+                RaiseLocalEvent(uid, ref attemptSnoreEv);
+
+                if (!attemptSnoreEv.Cancelled && TryComp<SleepEmitSoundComponent>(uid, out var sleepSound))
                 {
                     var emitSound = EnsureComp<SpamEmitSoundComponent>(uid);
                     emitSound.Sound = sleepSound.Snore;

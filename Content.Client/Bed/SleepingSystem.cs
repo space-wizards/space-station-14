@@ -1,4 +1,4 @@
-using Content.Server.Bed.Sleep;
+using Content.Shared.Bed.Sleep;
 
 namespace Content.Client.Bed;
 

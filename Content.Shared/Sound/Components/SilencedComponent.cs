@@ -9,16 +9,9 @@ namespace Content.Shared.Sound.Components;
 public sealed partial class SilencedComponent : Component
 {
     /// <summary>
-    /// Can this entity make sounds indirectly by interacting with sound emitting objects?
+    /// Can this entity snore while sleeping?
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool AllowEmitterUse = true;
-
-    /// <summary>
-    /// Can this entity make footstep sounds?
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool AllowFootsteps = true;
+    public bool AllowSnoring;
 
     /// <summary>
     /// Can this entity make sounds while eating?
@@ -32,10 +25,4 @@ public sealed partial class SilencedComponent : Component
 
     [DataField, AutoNetworkedField]
     public bool AllowDrinkingSounds;
-
-    /// <summary>
-    /// Used to track if the entity is allowed to make footstep sounds normally.
-    /// </summary>
-    [AutoNetworkedField]
-    public bool HadFootsteps;
 }

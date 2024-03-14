@@ -64,20 +64,14 @@ public record struct SliceFoodEvent();
 /// Raised on an entity when it tries to make a sound while eating something.
 /// Cancelling will stop the sound from being played.
 /// </summary>
-/// <param name="foodEnt">the entity being eaten</param>
+/// <param name="FoodEnt">the entity being eaten</param>
 [ByRefEvent]
-public sealed class AttemptMakeEatingSoundEvent(EntityUid foodEnt) : CancellableEntityEventArgs
-{
-    public readonly EntityUid FoodEnt = foodEnt;
-}
+public record struct AttemptMakeEatingSoundEvent(EntityUid FoodEnt, bool Cancelled = false) { }
 
 /// <summary>
 /// Raised on an entity when it tries to make a sound while drinking something.
 /// Cancelling will stop the sound from being played.
 /// </summary>
-/// <param name="drinkEnt">the entity being drunk</param>
+/// <param name="DrinkEnt">the entity being drunk</param>
 [ByRefEvent]
-public sealed class AttemptMakeDrinkingSoundEvent(EntityUid drinkEnt) : CancellableEntityEventArgs
-{
-    public readonly EntityUid DrinkEnt = drinkEnt;
-}
+public record struct AttemptMakeDrinkingSoundEvent(EntityUid DrinkEnt, bool Cancelled = false) { }
