@@ -140,6 +140,8 @@
           prob: 0.20
         - id: DrinkSpaceLube
           prob: 0.20
+        - id: PillGoonHumanMutator
+          prob: 0.15
         - id: BarberScissors
           prob: 0.05
         # Syndicate loot
@@ -225,6 +227,8 @@
           prob: 0.20
         - id: DrinkSpaceGlue
           prob: 0.20
+        - id: PillGoonHumanMutator
+          prob: 0.15
         - id: ModularReceiver
           prob: 0.1
         # Syndicate loot
