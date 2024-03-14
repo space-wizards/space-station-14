@@ -1182,9 +1182,7 @@
     runningState: icon
     staticRecipes:
       # Circuits
-      - ProtolatheMachineCircuitboard
       - AutolatheMachineCircuitboard
-      - CircuitImprinterMachineCircuitboard
       - OreProcessorMachineCircuitboard
       - MaterialReclaimerMachineCircuitboard
       - ElectrolysisUnitMachineCircuitboard
