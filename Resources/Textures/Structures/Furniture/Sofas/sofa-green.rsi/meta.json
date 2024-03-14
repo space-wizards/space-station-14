@@ -8,9 +8,6 @@
   "copyright": "Sprited by github:DreamlyJack(624946166152298517)",
   "states": [
     {
-      "name": "full"
-    },
-    {
       "name": "state_0",
       "directions": 4
     },
