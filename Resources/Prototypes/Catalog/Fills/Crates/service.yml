@@ -308,8 +308,6 @@
           prob: 0.15
         - id: LightTubeBroken
           prob: 0.15
-        - id: LightBulbBroken
-          prob: 0.15
         - id: PillGoonHumanMutator
           prob: 0.15
         - id: MobMouseDead

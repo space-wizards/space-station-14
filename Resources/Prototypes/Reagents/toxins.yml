@@ -643,7 +643,7 @@
   group: Toxins
   desc: reagent-desc-goon-human-mutator
   physicalDesc: reagent-physical-desc-pungent
-  flavor: indescribable
+  flavor: metallic
   color: "#007100"
   metabolisms:
     Poison:
