@@ -70,8 +70,12 @@ namespace Content.Shared.Bed.Sleep
         }
     }
 
+    /// <summary>
+    /// Raised on an entity as it falls asleep and is about to start snoring.
+    /// Cancelling will stop the entity from snoring.
+    /// </summary>
     [ByRefEvent]
-    public record struct AttemptSnoreEvent(bool Cancelled = false) { }
+    public record struct AttemptStartSnoringEvent(bool Cancelled = false) { }
 }
 
 

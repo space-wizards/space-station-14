@@ -61,7 +61,7 @@ namespace Content.Server.Bed.Sleep
                 EnsureComp<StunnedComponent>(uid);
                 EnsureComp<KnockedDownComponent>(uid);
 
-                var attemptSnoreEv = new AttemptSnoreEvent();
+                var attemptSnoreEv = new AttemptStartSnoringEvent();
                 RaiseLocalEvent(uid, ref attemptSnoreEv);
 
                 if (!attemptSnoreEv.Cancelled && TryComp<SleepEmitSoundComponent>(uid, out var sleepSound))

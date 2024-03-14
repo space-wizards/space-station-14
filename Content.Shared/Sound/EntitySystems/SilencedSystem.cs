@@ -14,12 +14,12 @@ public sealed partial class SilencedSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SilencedComponent, AttemptSnoreEvent>(OnAttemptSnore);
+        SubscribeLocalEvent<SilencedComponent, AttemptStartSnoringEvent>(OnAttemptSnore);
         SubscribeLocalEvent<SilencedComponent, AttemptMakeEatingSoundEvent>(OnAttemptMakeEatingSound);
         SubscribeLocalEvent<SilencedComponent, AttemptMakeDrinkingSoundEvent>(OnAttemptMakeDrinkingSound);
     }
 
-    private void OnAttemptSnore(Entity<SilencedComponent> entity, ref AttemptSnoreEvent args)
+    private void OnAttemptSnore(Entity<SilencedComponent> entity, ref AttemptStartSnoringEvent args)
     {
         if (!entity.Comp.AllowSnoring)
             args.Cancelled = true;
