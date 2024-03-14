@@ -14,18 +14,10 @@
         <med:TargetBodyStatus
             Name="TargetStatus"
             Access="Internal"
-            SizeFlagsStretchRatio="1"
         />
-        <Control
-            SizeFlagsStretchRatio="1"
-            HorizontalExpand="True"
-            HorizontalAlignment="Stretch"/>
-
-        <ScrollContainer SizeFlagsStretchRatio="1"
-                         HorizontalExpand="True"
+        <ScrollContainer HorizontalExpand="True"
                          VerticalExpand="True"
-                         HorizontalAlignment="Left"
-                         VerticalAlignment="Stretch"
+                         HorizontalAlignment="Right"
                          MinSize="300 200"
         >
             <BoxContainer
