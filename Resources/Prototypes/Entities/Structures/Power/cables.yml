@@ -52,11 +52,11 @@
   components:
   - type: Sprite
     sprite: Structures/Power/Cables/lv_cable.rsi
-    state: hvcable_0
+    state: lvcable_0
     drawdepth: ThickWire
   - type: Icon
     sprite: Structures/Power/Cables/lv_cable.rsi
-    state: hvcable_4
+    state: lvcable_4
   - type: NodeContainer
     nodes:
       power:
@@ -85,7 +85,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: CableVisualizer
-    statePrefix: hvcable_
+    statePrefix: lvcable_
   # TODO make this change on power
   - type: AmbientSound
     enabled: false
@@ -103,11 +103,11 @@
   - type: Sprite
     color: Yellow
     sprite: Structures/Power/Cables/lv_cable.rsi
-    state: mvcable_0
+    state: lvcable_0
   - type: Icon
     color: Yellow
     sprite: Structures/Power/Cables/lv_cable.rsi
-    state: mvcable_4
+    state: lvcable_4
   - type: NodeContainer
     nodes:
       power:
@@ -136,7 +136,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: CableVisualizer
-    statePrefix: mvcable_
+    statePrefix: lvcable_
 
 - type: entity
   parent: CableBase
