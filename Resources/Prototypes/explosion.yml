@@ -128,5 +128,4 @@
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 6
-  doesIgnite: true
-  fireStacksOnIgnite: 2
+  fireStacks: 2

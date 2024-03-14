@@ -26,16 +26,10 @@ public sealed partial class ExplosionPrototype : IPrototype
     public DamageSpecifier DamagePerIntensity = default!;
 
     /// <summary>
-    ///     If it ignites entities.
+    ///     Amount of firestacks to apply in addition to igniting.
     /// </summary>
     [DataField]
-    public bool DoesIgnite = false;
-
-    /// <summary>
-    ///     Amount of firestacks applied on ignite.
-    /// </summary>
-    [DataField]
-    public float FireStacksOnIgnite = 1f;
+    public float? FireStacks;
 
     /// <summary>
     ///     This set of points, together with <see cref="_tileBreakIntensity"/> define a function that maps the
