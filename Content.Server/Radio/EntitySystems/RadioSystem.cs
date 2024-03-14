@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Radio.Components;
+using Content.Server.Station.Components;
 using Content.Server.VoiceMask;
 using Content.Shared.Chat;
 using Content.Shared.Database;
@@ -61,6 +62,24 @@ public sealed class RadioSystem : EntitySystem
     public void SendRadioMessage(EntityUid messageSource, string message, ProtoId<RadioChannelPrototype> channel, EntityUid radioSource, bool escapeMarkup = true)
     {
         SendRadioMessage(messageSource, message, _prototype.Index(channel), radioSource, escapeMarkup: escapeMarkup);
+    }
+
+    /// <summary>
+    /// Gets the message frequency, if there is no such frequency, returns the standard channel frequency.
+    /// </summary>
+    public int GetFrequency(EntityUid source, RadioChannelPrototype channel)
+    {
+        var frequency = channel.Frequency;
+        var xform = Transform(source);
+        if (xform.GridUid != null)
+        {
+            var grid = xform.GridUid.Value;
+            if (TryComp<StationFrequencyComponent>(grid, out var stationFrequency)
+                && stationFrequency.Frequency.TryGetValue(channel.ID, out frequency))
+                return frequency;
+        }
+
+        return frequency;
     }
 
     /// <summary>
@@ -133,6 +152,8 @@ public sealed class RadioSystem : EntitySystem
                                                              !intercom.SupportedChannels.Contains(channel.ID)))
                     continue;
             }
+            if (GetFrequency(receiver, channel) != GetFrequency(messageSource, channel))
+                continue;
 
             if (!channel.LongRange && transform.MapID != sourceMapId && !radio.GlobalReceive)
                 continue;
