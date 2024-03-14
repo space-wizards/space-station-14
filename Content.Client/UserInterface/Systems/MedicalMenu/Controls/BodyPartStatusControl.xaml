@@ -40,5 +40,4 @@
             </BoxContainer>
         </BoxContainer>
     </CollapsibleBody>
-    <controls:HLine/>
 </med:BodyPartStatusControl>
