@@ -33,7 +33,10 @@
         Slash: 4
         Structural: 4
   - type: Item
-    size: Normal
+    size: Huge
+    storedRotation: 45
+    shape:
+    - 0,0,4,2
     sprite: Objects/Weapons/Melee/chainsaw.rsi
   - type: DisarmMalus
   - type: RefillableSolution

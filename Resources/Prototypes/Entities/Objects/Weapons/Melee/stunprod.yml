@@ -47,7 +47,7 @@
   - type: UseDelay
   - type: Item
     heldPrefix: off
-    size: Normal
+    size: Ginormous # too dangerous and bulky or something
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunprod.rsi
     quickEquip: false

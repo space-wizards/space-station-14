@@ -16,6 +16,9 @@
         Slash: 12
   - type: Item
     size: Normal
+    storedRotation: 45
+    shape:
+    - 0,0,2,0
   - type: Clothing
     sprite: Objects/Weapons/Melee/cult_dagger.rsi
     slots:
@@ -39,7 +42,10 @@
       types:
         Slash: 16
   - type: Item
-    size: Normal
+    size: Huge
+    storedRotation: 45
+    shape:
+    - 0,0,5,1
   - type: Clothing
     sprite: Objects/Weapons/Melee/cult_blade.rsi
     slots:

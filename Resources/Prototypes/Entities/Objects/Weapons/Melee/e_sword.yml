@@ -18,7 +18,7 @@
   - type: ItemToggleDisarmMalus
     activatedDisarmMalus: 0.6
   - type: ItemToggleSize
-    activatedSize: Huge
+    activatedSize: Ginormous # it would just cut through the bag
   - type: ItemToggleMeleeWeapon
     activatedSoundOnHit:
       path: /Audio/Weapons/eblade1.ogg

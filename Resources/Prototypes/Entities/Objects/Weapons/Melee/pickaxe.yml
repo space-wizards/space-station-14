@@ -43,7 +43,9 @@
   description: Powerful tool used to quickly drill through rocks
   components:
   - type: Item
-    storedRotation: -90
+    size: Huge
+    shape:
+    - 0,0,5,2
   - type: Tag
     tags:
     - Pickaxe
