@@ -893,6 +893,7 @@
   - type: Tag
     tags:
     - Sidearm
+    - ToySidearm
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -925,14 +926,14 @@
   suffix: Fake
   description: Looks almost like the real thing! Ages 8 and up.
   components:
-    - type: RevolverAmmoProvider
-      whitelist:
-        tags:
-          - CartridgeCap
-          - SpeedLoaderCap
-          - CartridgeMagnum
-          - SpeedLoaderMagnum
-      proto: CartridgeMagnumAP
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeCap
+        - SpeedLoaderCap
+        - CartridgeMagnum
+        - SpeedLoaderMagnum
+    proto: CartridgeMagnumAP
 
 - type: entity
   parent: BaseItem
