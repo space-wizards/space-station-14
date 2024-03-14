@@ -72,9 +72,9 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
             if (TryComp<MobStateComponent>(entity, out var state))
             {
                 // Since there is no MobState for a rotting mob, we have to deal with this case first.
-                if (HasComp<RottingComponent>(entity) && _prototypeMan.TryIndex<StatusIconPrototype>(damageableComponent.DecomposingIcon, out var decomposingIcon))
+                if (HasComp<RottingComponent>(entity) && _prototypeMan.TryIndex(damageableComponent.RottingIcon, out var rottingIcon))
                 {
-                    result.Add(decomposingIcon);
+                    result.Add(rottingIcon);
                 }
                 else if (damageableComponent.HealthIcons.TryGetValue(state.CurrentState, out var value) && _prototypeMan.TryIndex(value, out var icon))
                     result.Add(icon);
