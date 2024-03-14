@@ -93,8 +93,6 @@ public sealed partial class EmergencyShuttleSystem
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealMessage>(OnEmergencyRepeal);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealAllMessage>(OnEmergencyRepealAll);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnEmergencyOpenAttempt);
-
-        SubscribeLocalEvent<EscapePodComponent, EntityUnpausedEvent>(OnEscapeUnpaused);
     }
 
     private void OnEmergencyOpenAttempt(EntityUid uid, EmergencyShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
@@ -165,28 +163,26 @@ public sealed partial class EmergencyShuttleSystem
 
                 if (!Deleted(centcomm.Entity))
                 {
-                    _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
-                        centcomm.Entity.Value, _consoleAccumulator, TransitTime, true);
+                    _shuttle.FTLToDock(comp.EmergencyShuttle.Value, shuttle,
+                        centcomm.Entity.Value, _consoleAccumulator, TransitTime);
                     continue;
                 }
 
                 if (!Deleted(centcomm.MapEntity))
                 {
                     // TODO: Need to get non-overlapping positions.
-                    _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
+                    _shuttle.FTLToCoordinates(comp.EmergencyShuttle.Value, shuttle,
                         new EntityCoordinates(centcomm.MapEntity.Value,
                             _random.NextVector2(1000f)), _consoleAccumulator, TransitTime);
                 }
             }
 
             var podQuery = AllEntityQuery<EscapePodComponent>();
-            var podLaunchOffset = 0.5f;
 
             // Stagger launches coz funny
             while (podQuery.MoveNext(out _, out var pod))
             {
-                pod.LaunchTime = _timing.CurTime + TimeSpan.FromSeconds(podLaunchOffset);
-                podLaunchOffset += _random.NextFloat(0.5f, 2.5f);
+                pod.LaunchTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(0.05f, 0.75f));
             }
         }
 
@@ -197,13 +193,15 @@ public sealed partial class EmergencyShuttleSystem
             var stationUid = _station.GetOwningStation(uid);
 
             if (!TryComp<StationCentcommComponent>(stationUid, out var centcomm) ||
-                Deleted(centcomm.Entity) || pod.LaunchTime == null || pod.LaunchTime < _timing.CurTime)
+                Deleted(centcomm.Entity) ||
+                pod.LaunchTime == null ||
+                pod.LaunchTime > _timing.CurTime)
             {
                 continue;
             }
 
             // Don't dock them. If you do end up doing this then stagger launch.
-            _shuttle.FTLTravel(uid, shuttle, centcomm.Entity.Value, hyperspaceTime: TransitTime);
+            _shuttle.FTLToDock(uid, shuttle, centcomm.Entity.Value, hyperspaceTime: TransitTime);
             RemCompDeferred<EscapePodComponent>(uid);
         }
 
@@ -219,15 +217,18 @@ public sealed partial class EmergencyShuttleSystem
         // All the others.
         if (_consoleAccumulator < minTime)
         {
-            var query = AllEntityQuery<StationCentcommComponent>();
+            var query = AllEntityQuery<StationCentcommComponent, TransformComponent>();
 
             // Guarantees that emergency shuttle arrives first before anyone else can FTL.
-            while (query.MoveNext(out var comp))
+            while (query.MoveNext(out var comp, out var centcommXform))
             {
                 if (Deleted(comp.Entity))
                     continue;
 
-                _shuttle.AddFTLDestination(comp.Entity.Value, true);
+                if (_shuttle.TryAddFTLDestination(centcommXform.MapID, true, out var ftlComp))
+                {
+                    _shuttle.SetFTLWhitelist((centcommXform.MapUid!.Value, ftlComp), null);
+                }
             }
         }
     }
@@ -307,8 +308,9 @@ public sealed partial class EmergencyShuttleSystem
 
     private void CleanupEmergencyConsole()
     {
+        // Realistically most of this shit needs moving to a station component so each station has their own emergency shuttle
+        // and timer and all that jazz so I don't really care about debugging if it works on cleanup vs start.
         _announced = false;
-        _roundEndCancelToken = null;
         ShuttlesLeft = false;
         _launchedShuttles = false;
         _consoleAccumulator = float.MinValue;
