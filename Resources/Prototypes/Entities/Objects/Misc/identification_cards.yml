@@ -978,7 +978,7 @@
   - type: Sprite
     layers:
     - state: centcom
-    - state: idTSF
+    - state: idtsf
   - type: Item
     heldPrefix: blue
   - type: IdCard
@@ -986,4 +986,4 @@
     jobIcon: JobIconTSF
   - type: Access
     access:
-    - Maintenance
+     - Maintenance
