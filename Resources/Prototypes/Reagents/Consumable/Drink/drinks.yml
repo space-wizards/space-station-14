@@ -344,7 +344,10 @@
         amount: 0.05
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/teaglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: TonicWater
