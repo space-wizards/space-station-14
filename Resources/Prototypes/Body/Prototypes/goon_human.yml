@@ -1,0 +1,49 @@
+﻿- type: body
+  id: GoonHuman
+  name: "goonHuman"
+  root: torso
+  slots:
+    head:
+      part: HeadGoonHuman
+      connections:
+      - torso
+      organs:
+        brain: OrganHumanBrain
+        eyes: OrganHumanEyes
+    torso:
+      part: TorsoGoonHuman
+      connections:
+      - right_arm
+      - left_arm
+      - right_leg
+      - left_leg
+      organs:
+        heart: OrganHumanHeart
+        lungs: OrganHumanLungs
+        stomach: OrganHumanStomach
+        liver: OrganHumanLiver
+        kidneys: OrganHumanKidneys
+    right_arm:
+      part: RightArmGoonHuman
+      connections:
+      - right_hand
+    left_arm:
+      part: LeftArmGoonHuman
+      connections:
+      - left_hand
+    right_hand:
+      part: RightHandGoonHuman
+    left_hand:
+      part: LeftHandGoonHuman
+    right_leg:
+      part: RightLegGoonHuman
+      connections:
+      - right_foot
+    left_leg:
+      part: LeftLegGoonHuman
+      connections:
+      - left_foot
+    right_foot:
+      part: RightFootGoonHuman
+    left_foot:
+      part: LeftFootGoonHuman

@@ -1,0 +1,19 @@
+- type: entity
+  parent: BaseMobHuman
+  id: BaseMobGoonHuman
+  name: Urist McGoon
+  abstract: true
+  components:
+  - type: HumanoidAppearance
+    species: GoonHuman
+  - type: Icon
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: full
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobGoonHumanDummy
+  noSpawn: true
+  components:
+  - type: HumanoidAppearance
+    species: GoonHuman

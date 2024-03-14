@@ -1,0 +1,89 @@
+- type: entity
+  id: TorsoGoonHuman
+  name: "goon human torso"
+  parent: TorsoHuman
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: "torso_m"
+
+- type: entity
+  id: HeadGoonHuman
+  name: "goon human head"
+  parent: HeadHuman
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: "head_m"
+
+- type: entity
+  id: LeftArmGoonHuman
+  name: "left human arm"
+  parent: LeftArmHuman
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: "l_arm"
+
+- type: entity
+  id: RightArmGoonHuman
+  name: "right human arm"
+  parent: RightArmHuman
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: "r_arm"
+
+- type: entity
+  id: LeftHandGoonHuman
+  name: "left human hand"
+  parent: LeftHandHuman
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: "l_hand"
+
+- type: entity
+  id: RightHandGoonHuman
+  name: "right human hand"
+  parent: RightHandHuman
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: "r_hand"
+
+- type: entity
+  id: LeftLegGoonHuman
+  name: "left human leg"
+  parent: LeftLegHuman
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: "l_leg"
+
+- type: entity
+  id: RightLegGoonHuman
+  name: "right human leg"
+  parent: RightLegHuman
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: "r_leg"
+
+- type: entity
+  id: LeftFootGoonHuman
+  name: "left human foot"
+  parent: LeftFootHuman
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: "l_foot"
+
+- type: entity
+  id: RightFootGoonHuman
+  name: "right human foot"
+  parent: RightFootHuman
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: "r_foot"

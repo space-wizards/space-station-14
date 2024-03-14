@@ -1,0 +1,6 @@
+- type: entity
+  save: false
+  name: odd human
+  parent: BaseMobGoonHuman
+  description: Its like a human but... tilted?
+  id: MobGoonHuman
