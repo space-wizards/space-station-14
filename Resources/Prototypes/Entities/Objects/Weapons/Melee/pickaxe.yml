@@ -43,9 +43,9 @@
   description: Powerful tool used to quickly drill through rocks
   components:
   - type: Item
-    size: Huge
+    size: Large
     shape:
-    - 0,0,5,2
+    - 0,0,4,1
   - type: Tag
     tags:
     - Pickaxe

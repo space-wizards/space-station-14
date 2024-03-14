@@ -45,7 +45,7 @@
     size: Huge
     storedRotation: 45
     shape:
-    - 0,0,5,1
+    - 0,0,4,1
   - type: Clothing
     sprite: Objects/Weapons/Melee/cult_blade.rsi
     slots:
