@@ -141,6 +141,12 @@ public sealed partial class ZombieComponent : Component, IAntagStatusIconCompone
     public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
 
     /// <summary>
+    ///     Hit sound on zombie bite.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier BiteSound = new SoundPathSpecifier("/Audio/Effects/bite.ogg");
+
+    /// <summary>
     /// The blood reagent of the humanoid to restore in case of cloning
     /// </summary>
     [DataField("beforeZombifiedBloodReagent")]
