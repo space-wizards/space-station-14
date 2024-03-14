@@ -75,7 +75,10 @@ namespace Content.Shared.Bed.Sleep
     /// Cancelling will stop the entity from snoring.
     /// </summary>
     [ByRefEvent]
-    public record struct AttemptStartSnoringEvent(bool Cancelled = false) { }
+    public record struct AttemptStartSnoringEvent()
+    {
+        public bool Cancelled;
+    }
 }
 
 

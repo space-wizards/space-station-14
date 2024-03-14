@@ -66,7 +66,10 @@ public record struct SliceFoodEvent();
 /// </summary>
 /// <param name="FoodEnt">the entity being eaten</param>
 [ByRefEvent]
-public record struct AttemptMakeEatingSoundEvent(EntityUid FoodEnt, bool Cancelled = false) { }
+public record struct AttemptMakeEatingSoundEvent(EntityUid FoodEnt)
+{
+    public bool Cancelled;
+}
 
 /// <summary>
 /// Raised on an entity when it tries to make a sound while drinking something.
@@ -74,4 +77,7 @@ public record struct AttemptMakeEatingSoundEvent(EntityUid FoodEnt, bool Cancell
 /// </summary>
 /// <param name="DrinkEnt">the entity being drunk</param>
 [ByRefEvent]
-public record struct AttemptMakeDrinkingSoundEvent(EntityUid DrinkEnt, bool Cancelled = false) { }
+public record struct AttemptMakeDrinkingSoundEvent(EntityUid DrinkEnt)
+{
+    public bool Cancelled;
+}
