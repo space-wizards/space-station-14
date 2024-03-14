@@ -10,14 +10,15 @@
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
-    # If you update this also update the bulldog's size.
     size: Large
+    shape:
+    - 0,0,7,1 # long guns will only fit in dufflebags
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
     quickEquip: false
     slots:
     - Back
-    - suitStorage
+    # - suitStorage # not concealable
   - type: AmmoCounter
   - type: Gun
     fireRate: 2
@@ -59,12 +60,13 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: Large
+    shape:
+    - 0,0,5,2 #shorter because bullpup but wider
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
     quickEquip: false
     slots:
     - Back
-    - suitStorage
   - type: AmmoCounter
   - type: Gun
     fireRate: 2
@@ -108,9 +110,6 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
   - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
     heldPrefix: db
   - type: Gun
@@ -162,9 +161,6 @@
   description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds. Uses .50 shotgun shells.
   components:
   - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
     heldPrefix: pump
   - type: Sprite
@@ -187,8 +183,13 @@
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
+    slots:
+    - Back
+    - suitStorage
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,3,1 # twice shorter than the double barrel
     sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
     heldPrefix: sawn
   - type: Gun
@@ -213,20 +214,27 @@
     graph: ShotgunSawn
     node: shotgunsawn
     deconstructionTarget: null
+    
 
 - type: entity
-  name: handmade pistol
+  name: handmade shotgun
   parent: BaseWeaponShotgun
   id: WeaponShotgunHandmade
   description: Looks unreliable. Uses .50 shotgun shells.
   components:
   - type: Item
-    size: Small
-    storedRotation: 90
+    size: Normal
+    shape:
+    - 0,0,3,1 # same size as the sawn off
+    sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
+    heldPrefix: sawn
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
+    slots:
+    - Back
+    - suitStorage
   - type: Gun
     fireRate: 4
   - type: BallisticAmmoProvider
@@ -246,9 +254,8 @@
   description: Deadly at close range.
   components:
   - type: Item
-    size: Normal
     shape:
-    - 0,0,4,0
+    - 0,0,5,1 # doesnt look that long
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/blunderbuss.rsi
   - type: Gun
@@ -269,9 +276,6 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
   - type: Item
-    size: Normal
-    shape:
-    - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
     heldPrefix: improvised
   - type: Gun

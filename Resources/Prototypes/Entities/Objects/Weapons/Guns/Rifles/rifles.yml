@@ -8,12 +8,14 @@
   - type: Sprite
   - type: Item
     size: Huge
+    shape:
+    - 0,0,7,2 # very bulky, will only fit in dufflebags
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
     quickEquip: false
     slots:
     - Back
-    - suitStorage
+    # - suitStorage # not concealable
   - type: AmmoCounter
   - type: Gun
     fireRate: 5
@@ -111,6 +113,10 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,6,2 # shorter because bullpup
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
   - type: ItemSlots
