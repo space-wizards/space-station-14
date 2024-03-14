@@ -32,6 +32,7 @@
   - type: ContainerContainer
     containers:
       board: !type:Container
+  - type: NavMapDoor
   - type: Door
     openDrawDepth: BlastDoors
     closedDrawDepth: BlastDoors
@@ -89,6 +90,8 @@
   - type: DeviceLinkSource
     ports:
     - DoorStatus
+    lastSignals:
+      DoorStatus: false
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
     messagePerceivedByOthers: comp-window-knock

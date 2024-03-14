@@ -52,7 +52,7 @@ namespace Content.Shared.Atmos
         ///     calculations and so cap it here. The physical interpretation is that at this temperature, any
         ///     gas that you would have transforms into plasma.
         /// </summary>
-        public const float Tmax = 200e3f;
+        public const float Tmax = 262144; // 1/64 of max safe integer, any values above will result in a ~0.03K epsilon
 
         /// <summary>
         ///     Liters in a cell.

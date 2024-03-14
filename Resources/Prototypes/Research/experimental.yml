@@ -11,7 +11,6 @@
   cost: 5000
   recipeUnlocks:
   - ProximitySensor
-  - Drone
   - ExosuitFabricatorMachineCircuitboard
 
 - type: technology
@@ -152,3 +151,15 @@
   recipeUnlocks:
     - WeaponForceGun
     - WeaponTetherGun
+
+- type: technology
+  id: QuantumLeaping
+  name: research-technology-quantum-leaping
+  icon:
+    sprite: Objects/Devices/swapper.rsi
+    state: icon
+  discipline: Experimental
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - DeviceQuantumSpinInverter

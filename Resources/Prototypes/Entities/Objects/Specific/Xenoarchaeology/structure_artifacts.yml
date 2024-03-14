@@ -42,7 +42,6 @@
           density: 75
           layer: # doesn't collide with artifact storage
           - Opaque
-          - BulletImpassable
           mask:
           - MachineMask
     - type: InteractionOutline

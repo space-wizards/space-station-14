@@ -99,6 +99,9 @@ namespace Content.Server.Light.EntitySystems
                     _item.SetHeldPrefix(ent, "lit", component: item);
                 }
 
+                var isHotEvent = new IsHotEvent() {IsHot = true};
+                RaiseLocalEvent(ent, isHotEvent);
+
                 component.CurrentState = ExpendableLightState.Lit;
                 component.StateExpiryTime = component.GlowDuration;
 
@@ -175,8 +178,6 @@ namespace Content.Server.Light.EntitySystems
             if (args.Handled)
                 return;
 
-            var isHotEvent = new IsHotEvent() {IsHot = true};
-            RaiseLocalEvent(ent, isHotEvent);
             if (TryActivate(ent))
                 args.Handled = true;
         }

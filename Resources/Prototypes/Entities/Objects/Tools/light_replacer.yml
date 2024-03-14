@@ -15,10 +15,6 @@
       amount: 8
     - id: LightBulb
       amount: 5
-  - type: Tag
-    tags:
-      - LightReplacer
-      - DroneUsable
   - type: StaticPrice
     price: 100
   - type: ContainerContainer

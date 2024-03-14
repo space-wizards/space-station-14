@@ -12,6 +12,7 @@
     FoodCondimentBottleBBQ: 1
     FoodCondimentBottleVinegar: 2
     ReagentContainerOliveoil: 2
+    ReagentContainerMayo: 1
     VariantCubeBox: 1
     FoodContainerEgg: 1
     DrinkMilkCarton: 2
@@ -19,3 +20,4 @@
     FoodButter: 4
     FoodCheese: 1
     FoodMeat: 6
+    

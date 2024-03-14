@@ -34,6 +34,8 @@ using Robust.Shared.Timing;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using System.Linq;
+using System.Numerics;
+using Robust.Shared.Physics.Components;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Server.Administration.Systems
@@ -65,7 +67,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly StationSystem _stations = default!;
         [Dependency] private readonly StationSpawningSystem _spawning = default!;
 
-        private readonly Dictionary<ICommonSession, EditSolutionsEui> _openSolutionUis = new();
+        private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
         public override void Initialize()
         {
@@ -251,7 +253,10 @@ namespace Content.Server.Administration.Systems
                     Text = Loc.GetString("admin-verbs-teleport-to"),
                     Category = VerbCategory.Admin,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/open.svg.192dpi.png")),
-                    Act = () => _console.ExecuteCommand(player, $"tpto {args.Target}"),
+                    Act = () =>
+                    {
+                        _console.ExecuteCommand(player, $"tpto {GetNetEntity(args.Target)}");
+                    },
                     Impact = LogImpact.Low
                 });
 
@@ -267,8 +272,17 @@ namespace Content.Server.Administration.Systems
                         {
                             if (player.AttachedEntity != null)
                             {
-                                var mapPos = Transform(player.AttachedEntity.Value).MapPosition;
-                                _console.ExecuteCommand(player, $"tpgrid {args.Target} {mapPos.X} {mapPos.Y} {mapPos.MapId}");
+                                var mapPos = _transformSystem.GetMapCoordinates(player.AttachedEntity.Value);
+                                if (TryComp(args.Target, out PhysicsComponent? targetPhysics))
+                                {
+                                    var offset = targetPhysics.LocalCenter;
+                                    var rotation = _transformSystem.GetWorldRotation(args.Target);
+                                    offset = rotation.RotateVec(offset);
+
+                                    mapPos = mapPos.Offset(-offset);
+                                }
+
+                                _console.ExecuteCommand(player, $"tpgrid {GetNetEntity(args.Target)} {mapPos.X} {mapPos.Y} {mapPos.MapId}");
                             }
                         }
                         else
@@ -472,10 +486,13 @@ namespace Content.Server.Administration.Systems
         #region SolutionsEui
         private void OnSolutionChanged(Entity<SolutionContainerManagerComponent> entity, ref SolutionContainerChangedEvent args)
         {
-            foreach (var eui in _openSolutionUis.Values)
+            foreach (var list in _openSolutionUis.Values)
             {
-                if (eui.Target == entity.Owner)
-                    eui.StateDirty();
+                foreach (var eui in list)
+                {
+                    if (eui.Target == entity.Owner)
+                        eui.StateDirty();
+                }
             }
         }
 
@@ -484,21 +501,33 @@ namespace Content.Server.Administration.Systems
             if (session.AttachedEntity == null)
                 return;
 
-            if (_openSolutionUis.ContainsKey(session))
-                _openSolutionUis[session].Close();
-
-            var eui = _openSolutionUis[session] = new EditSolutionsEui(uid);
+            var eui = new EditSolutionsEui(uid);
             _euiManager.OpenEui(eui, session);
             eui.StateDirty();
+
+            if (!_openSolutionUis.ContainsKey(session)) {
+                _openSolutionUis[session] = new List<EditSolutionsEui>();
+            }
+
+            _openSolutionUis[session].Add(eui);
         }
 
-        public void OnEditSolutionsEuiClosed(ICommonSession session)
+        public void OnEditSolutionsEuiClosed(ICommonSession session, EditSolutionsEui eui)
         {
-            _openSolutionUis.Remove(session, out var eui);
+            _openSolutionUis[session].Remove(eui);
+            if (_openSolutionUis[session].Count == 0)
+              _openSolutionUis.Remove(session);
         }
 
         private void Reset(RoundRestartCleanupEvent ev)
         {
+            foreach (var euis in _openSolutionUis.Values)
+            {
+                foreach (var eui in euis.ToList())
+                {
+                    eui.Close();
+                }
+            }
             _openSolutionUis.Clear();
         }
         #endregion

@@ -57,6 +57,7 @@
   - type: Weldable
     time: 10
   - type: Airlock
+  - type: NavMapDoor
   - type: DoorBolt
   - type: AccessReader
   - type: Appearance

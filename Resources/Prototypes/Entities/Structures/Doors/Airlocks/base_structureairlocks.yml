@@ -64,6 +64,7 @@
   - type: Weldable
     time: 3
   - type: Airlock
+  - type: NavMapDoor
   - type: DoorBolt
   - type: Appearance
   - type: WiresVisuals
@@ -94,6 +95,8 @@
   - type: DeviceLinkSource
     ports:
       - DoorStatus
+    lastSignals:
+      DoorStatus: false
   - type: SoundOnOverload
   - type: SpawnOnOverload
   - type: UserInterface
@@ -117,6 +120,10 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      # TODO this should go to the broken node first
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
   - type: Construction
     graph: Airlock
     node: airlock
@@ -129,6 +136,7 @@
     mode: NoSprite
   - type: PaintableAirlock
     group: Standard
+    department: Civilian
   - type: AccessReader
   - type: StaticPrice
     price: 150

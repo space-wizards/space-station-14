@@ -74,7 +74,7 @@
 - type: entity
   parent: PersonalAI
   id: SyndicatePersonalAI
-  name: Syndicate personal ai device
+  name: syndicate personal ai device
   description: Your Syndicate pal who's fun to be with!
   components:
   - type: Sprite
@@ -150,6 +150,6 @@
   components:
     - type: InstantAction
       checkCanInteract: false
-      icon: Interface/home.png
+      icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
       event: !type:OpenUiActionEvent
         key: enum.StationMapUiKey.Key

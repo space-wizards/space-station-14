@@ -1,4 +1,6 @@
-﻿using Robust.Client.Input;
+﻿using Content.Shared.CCVar;
+using Robust.Client.Input;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 
 namespace Content.Client.Interaction;
@@ -20,12 +22,13 @@ namespace Content.Client.Interaction;
 /// <typeparam name="T">thing being dragged and dropped</typeparam>
 public sealed class DragDropHelper<T>
 {
-    private readonly IInputManager _inputManager;
+    [Dependency] private readonly IInputManager _inputManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private readonly OnBeginDrag _onBeginDrag;
     private readonly OnEndDrag _onEndDrag;
     private readonly OnContinueDrag _onContinueDrag;
-    public float Deadzone = 2f;
+    private float _deadzone;
 
     /// <summary>
     /// Convenience method, current mouse screen position as provided by inputmanager.
@@ -63,10 +66,16 @@ public sealed class DragDropHelper<T>
     /// <param name="onEndDrag"><see cref="OnEndDrag"/></param>
     public DragDropHelper(OnBeginDrag onBeginDrag, OnContinueDrag onContinueDrag, OnEndDrag onEndDrag)
     {
-        _inputManager = IoCManager.Resolve<IInputManager>();
+        IoCManager.InjectDependencies(this);
         _onBeginDrag = onBeginDrag;
         _onEndDrag = onEndDrag;
         _onContinueDrag = onContinueDrag;
+        _cfg.OnValueChanged(CCVars.DragDropDeadZone, SetDeadZone, true);
+    }
+
+    ~DragDropHelper()
+    {
+        _cfg.UnsubValueChanged(CCVars.DragDropDeadZone, SetDeadZone);
     }
 
     /// <summary>
@@ -121,7 +130,7 @@ public sealed class DragDropHelper<T>
             case DragState.MouseDown:
             {
                 var screenPos = _inputManager.MouseScreenPosition;
-                if ((_mouseDownScreenPos.Position - screenPos.Position).Length() > Deadzone)
+                if ((_mouseDownScreenPos.Position - screenPos.Position).Length() > _deadzone)
                 {
                     StartDragging();
                 }
@@ -138,6 +147,11 @@ public sealed class DragDropHelper<T>
                 break;
             }
         }
+    }
+
+    private void SetDeadZone(float value)
+    {
+        _deadzone = value;
     }
 }
 
