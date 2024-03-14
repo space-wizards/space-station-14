@@ -49,6 +49,21 @@
 
 - type: entity
   parent: BaseFoam
+  id: Mist
+  name: mist
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Effects/chemmist.rsi
+    state: chemmist
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: BaseFoam
   id: Foam
   name: foam
   noSpawn: true
