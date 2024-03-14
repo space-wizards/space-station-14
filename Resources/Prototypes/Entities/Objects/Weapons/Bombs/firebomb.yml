@@ -3,8 +3,8 @@
 # with that you could make napalm ied instead of welding fuel with no additional complexity
 - type: entity
   parent: BaseItem
-  id: ImprovisedExplosive
-  name: improvised explosive device
+  id: FireBomb
+  name: fire bomb
   description: A weak, improvised incendiary device.
   components:
   - type: Sprite
@@ -26,10 +26,10 @@
         volume: 1
   - type: RandomTimerTrigger
     min: 0
-    max: 60
-  - type: Explosive # Weak explosion in a very small radius. Doesn't break underplating.
-    explosionType: Default
-    totalIntensity: 20
+    max: 15
+  - type: Explosive # Weak explosion in a very small radius. Ignites surrounding entities.
+    explosionType: FireBomb
+    totalIntensity: 25
     intensitySlope: 5
     maxIntensity: 3
     canCreateVacuum: false
@@ -50,14 +50,14 @@
         acts: ["Destruction"]
       - !type:ExplodeBehavior
   - type: Construction
-    graph: ImprovisedExplosive
-    node: ied
+    graph: FireBomb
+    node: firebomb
 
 # has igniter but no fuel or wires
 - type: entity
   parent: DrinkColaCanEmpty
-  id: ImprovisedExplosiveEmpty
-  name: improvised explosive device
+  id: FireBombEmpty
+  name: fire bomb
   suffix: empty
   description: A weak, improvised incendiary device. This one has no fuel.
   components:
@@ -74,17 +74,17 @@
           True: {state: "base"}
           False: {state: "base"}
   - type: Construction
-    graph: ImprovisedExplosive
+    graph: FireBomb
     node: empty
-    defaultTarget: ied
+    defaultTarget: firebomb
   - type: Tag
     tags:
     - Trash
     # no DrinkCan, prevent using it to make another ied
 
 - type: entity
-  parent: ImprovisedExplosiveEmpty
-  id: ImprovisedExplosiveFuel
+  parent: FireBombEmpty
+  id: FireBombFuel
   suffix: fuel
   description: A weak, improvised incendiary device. This one is missing wires.
   components:
@@ -102,6 +102,6 @@
           Quantity: 30
   - type: Construction
     node: fuel
-    defaultTarget: ied
+    defaultTarget: firebomb
   - type: Tag
     tags: []
