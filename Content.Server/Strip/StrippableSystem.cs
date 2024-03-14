@@ -398,10 +398,8 @@ namespace Content.Server.Strip
             EntityUid held,
             string handName)
         {
-            if (!Resolve(user, ref user.Comp))
-                return false;
-
-            if (!Resolve(target, ref target.Comp))
+            if (!Resolve(user, ref user.Comp) ||
+                !Resolve(target, ref target.Comp))
                 return false;
 
             if (user.Comp.ActiveHand == null)
