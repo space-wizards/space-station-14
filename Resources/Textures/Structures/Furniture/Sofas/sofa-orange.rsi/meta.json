@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by github:DreamlyJack(624946166152298517)",
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "state_0",
+      "directions": 4
+    },
+    {
+      "name": "state_1",
+      "directions": 4
+    },
+    {
+      "name": "state_2",
+      "directions": 4
+    },
+    {
+      "name": "state_3",
+      "directions": 4
+    },
+    {
+      "name": "sofa_overlay",
+      "directions": 4
+    },
+    {
+      "name": "sofa_overlay_1",
+      "directions": 4
+    }
+  ]
+}
