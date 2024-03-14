@@ -29,12 +29,14 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
     public const float AmbientMusicMultiplier = 3f;
     public const float LobbyMultiplier = 3f;
     public const float InterfaceMultiplier = 2f;
-
+    
     public override void Initialize()
     {
         base.Initialize();
+
         UpdatesOutsidePrediction = true;
         InitializeAmbientMusic();
+        InitializeLobbyMusic();
         SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
     }
 
@@ -43,11 +45,11 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
         _fadingOut.Clear();
 
         // Preserve lobby music but everything else should get dumped.
-        var lobbyMusic = EntityManager.System<BackgroundAudioSystem>().LobbyMusicStream;
+        var lobbyMusic = _lobbySoundtrackInfo?.MusicStreamEntityUid;
         TryComp(lobbyMusic, out AudioComponent? lobbyMusicComp);
         var oldMusicGain = lobbyMusicComp?.Gain;
 
-        var restartAudio = EntityManager.System<BackgroundAudioSystem>().LobbyRoundRestartAudioStream;
+        var restartAudio = _lobbyRoundRestartAudioStream;
         TryComp(restartAudio, out AudioComponent? restartComp);
         var oldAudioGain = restartComp?.Gain;
 
@@ -62,12 +64,14 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
         {
             Audio.SetGain(restartAudio, oldAudioGain.Value, restartComp);
         }
+        PlayRestartSound(ev);
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
         ShutdownAmbientMusic();
+        ShutdownLobbyMusic();
     }
 
     public override void Update(float frameTime)
@@ -78,6 +82,7 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
             return;
 
         UpdateAmbientMusic();
+        UpdateLobbyMusic();
         UpdateFades(frameTime);
     }
 
@@ -102,7 +107,7 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 
         _fadingOut.Remove(stream.Value);
         var curVolume = component.Volume;
-        var change = (curVolume - MinVolume) / duration;
+        var change = (MinVolume - curVolume) / duration;
         _fadingIn.Add(stream.Value, (change, component.Volume));
         component.Volume = MinVolume;
     }
@@ -146,8 +151,8 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
                 continue;
             }
 
-            var volume = component.Volume + change * frameTime;
-            volume = MathF.Max(target, volume);
+            var volume = component.Volume - change * frameTime;
+            volume = MathF.Min(target, volume);
             _audio.SetVolume(stream, volume, component);
 
             if (component.Volume.Equals(target))
