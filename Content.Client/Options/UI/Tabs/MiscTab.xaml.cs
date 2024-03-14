@@ -103,9 +103,10 @@ namespace Content.Client.Options.UI.Tabs
             UpdateApplyButton();
         }
 
-        private void OnChatWindowOpacitySliderChanged(Range obj)
+        private void OnChatWindowOpacitySliderChanged(Range range)
         {
-            ChatWindowOpacityLabel.Text = Loc.GetString("ui-options-chat-window-opacity-percent", ("opacity", ChatWindowOpacitySlider.Value));
+            ChatWindowOpacityLabel.Text = Loc.GetString("ui-options-chat-window-opacity-percent",
+                ("opacity", range.Value));
             UpdateApplyButton();
         }
 
