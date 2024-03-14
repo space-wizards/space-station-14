@@ -115,8 +115,8 @@
     node: strobeLight
 
 - type: entity
-  id: PoweredStrobeLight
-  suffix: "Empty, siren"
+  id: PoweredStrobeLightPolice
+  suffix: "Empty, police"
   parent: PoweredStrobeLightEmpty
   components:
   - type: AmbientSound
@@ -124,3 +124,36 @@
     range: 10
     sound:
       path: "/Audio/Effects/Lightning/strobe.ogg"
+
+- type: entity
+  id: PoweredStrobeLightSiren
+  suffix: "Empty, siren"
+  parent: PoweredStrobeLightEmpty
+  components:
+  - type: AmbientSound
+    volume: 0
+    range: 10
+    sound:
+      path: "/Audio/Misc/siren.ogg"
+
+- type: entity
+  id: PoweredStrobeLightAdmin
+  suffix: "Empty, admin"
+  parent: PoweredStrobeLightEmpty
+  components:
+  - type: AmbientSound
+    volume: 0
+    range: 10
+    sound:
+      path: "/Audio/Effects/Lightning/strobeadmin.ogg"
+
+- type: entity
+  id: PoweredStrobeLightEpsilon
+  suffix: "Empty, epsilon"
+  parent: PoweredStrobeLightEmpty
+  components:
+  - type: AmbientSound
+    volume: 0
+    range: 10
+    sound:
+      path: "/Audio/Effects/Lightning/strobeepsilon.ogg"
