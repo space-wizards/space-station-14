@@ -602,16 +602,14 @@ namespace Content.Server.Strip
 
             if (ev.Event.InventoryOrHand)
             {
-                if (ev.Event.InsertOrRemove &&
-                    !CanStripInsertInventory(args.User, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName, entity.Comp) ||
-                    !CanStripRemoveInventory(args.User, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName))
+                if (ev.Event.InsertOrRemove && !CanStripInsertInventory(args.User, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName, entity.Comp) ||
+                    !ev.Event.InsertOrRemove && !CanStripRemoveInventory(args.User, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName))
                         ev.Cancel();
             }
             else
             {
-                if (ev.Event.InsertOrRemove &&
-                    !CanStripInsertHand(args.User, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName, entity.Comp) ||
-                    !CanStripRemoveHand(args.User, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName))
+                if (ev.Event.InsertOrRemove && !CanStripInsertHand(args.User, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName, entity.Comp) ||
+                    !ev.Event.InsertOrRemove && !CanStripRemoveHand(args.User, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName))
                         ev.Cancel();
             }
         }
