@@ -15,15 +15,6 @@ public sealed partial class WoundSystem
 {
     private const float SplatterDamageMult = 1.0f;
 
-
-    public WoundSystem(SharedContainerSystem containerSystem, IPrototypeManager prototypeManager, GibbingSystem gibbingSystem, DamageableSystem damageableSystem)
-    {
-        _containerSystem = containerSystem;
-        _prototypeManager = prototypeManager;
-        _gibbingSystem = gibbingSystem;
-        _damageableSystem = damageableSystem;
-    }
-
     private void InitWounding()
     {
         SubscribeLocalEvent<WoundableComponent, DamageChangedEvent>(OnWoundableDamaged);

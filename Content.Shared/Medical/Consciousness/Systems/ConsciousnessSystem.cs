@@ -23,11 +23,11 @@ public sealed class ConsciousnessSystem : EntitySystem
     {
         SubscribeLocalEvent<ConsciousnessComponent,UpdateMobStateEvent>(OnMobstateChanged);
         SubscribeLocalEvent<ConsciousnessComponent,MapInitEvent>(ConsciousnessInit);
-        SubscribeLocalEvent<BrainComponent, OrganRemovedFromBodyEvent>(OnBrainRemoved);
-        SubscribeLocalEvent<BrainComponent, OrganAddedToBodyEvent>(OnBrainAdded);
+        SubscribeLocalEvent<ConsciousnessProviderComponent, OrganRemovedFromBodyEvent>(OnProviderRemoved);
+        SubscribeLocalEvent<ConsciousnessProviderComponent, OrganAddedToBodyEvent>(OnProviderAdded);
     }
 
-    private void OnBrainAdded(EntityUid uid, BrainComponent component, ref OrganAddedToBodyEvent args)
+    private void OnProviderAdded(EntityUid uid, ConsciousnessProviderComponent provider, ref OrganAddedToBodyEvent args)
     {
         if (!TryComp<ConsciousnessComponent>(args.Body, out var consciousness))
             return;
@@ -43,7 +43,7 @@ public sealed class ConsciousnessSystem : EntitySystem
             ConsciousnessComponent.MaxConsciousness);
     }
 
-    private void OnBrainRemoved(EntityUid brainUid, BrainComponent brain, ref OrganRemovedFromBodyEvent args)
+    private void OnProviderRemoved(EntityUid brainUid, ConsciousnessProviderComponent provider, ref OrganRemovedFromBodyEvent args)
     {
         if (!TryComp<ConsciousnessComponent>(args.OldBody, out var consciousness) || consciousness.LinkedBrain != brainUid)
             return;
