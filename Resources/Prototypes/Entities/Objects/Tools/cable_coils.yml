@@ -247,6 +247,7 @@
     heldPrefix: coilmv
   - type: CablePlacer
     cablePrototypeID: CableDet
+    blockingCableType: Null
     overTile: true
   - type: Appearance
   - type: Extractable

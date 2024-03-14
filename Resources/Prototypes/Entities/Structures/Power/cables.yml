@@ -204,12 +204,12 @@
   - type: Fixtures
   - type: Sprite
     color: Yellow
-    sprite: Structures/Power/Cables/mv_cable.rsi
-    state: mvcable_0
+    sprite: Structures/Power/Cables/ex_cable.rsi
+    state: excable_0
   - type: Icon
     color: Yellow
-    sprite: Structures/Power/Cables/mv_cable.rsi
-    state: mvcable_4
+    sprite: Structures/Power/Cables/ex_cable.rsi
+    state: excable_4
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -232,7 +232,7 @@
         !type:CableNode
         nodeGroupID: MVPower #This makes them join MV cables, but were only using the visualizer.
   - type: CableVisualizer
-    statePrefix: mvcable_
+    statePrefix: excable_
   - type: Explosive
     explosionType: DemolitionCharge
     totalIntensity: 10

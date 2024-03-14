@@ -7,12 +7,21 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public sealed partial class CablePlacerComponent : Component
     {
+        /// <summary>
+        /// The structure prototype for the cable coil to place.
+        /// </summary>
         [DataField("cablePrototypeID", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? CablePrototypeId = "CableHV";
 
-        [DataField("blockingWireType")]
+        /// <summary>
+        /// What kind of wire prevents placing this wire over it.
+        /// </summary>
+        [DataField]
         public CableType BlockingCableType = CableType.HighVoltage;
 
+        /// <summary>
+        /// Whether the placed cable should go over tiles or not.
+        /// </summary>
         [DataField]
         public bool OverTile = false;
     }
