@@ -241,6 +241,11 @@ ClothingBackpackFilledDetective: ClothingBackpackSecurityFilledDetective
 ClothingBackpackDuffelFilledDetective: ClothingBackpackDuffelSecurityFilledDetective
 ClothingBackpackSatchelFilledDetective: ClothingBackpackSatchelSecurityFilledDetective
 
+# 2024-03-11
+ImprovisedExplosive: FireBomb
+ImprovisedExplosiveEmpty: FireBombEmpty
+ImprovisedExplosiveFuel: FireBombFuel
+
 #2024-03-13
 BoxPerformer: ClothingBackpackDuffelPerformer
 MonkeyCubeBox: BoxMonkeyCube
