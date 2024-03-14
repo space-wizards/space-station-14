@@ -637,3 +637,22 @@
       - !type:Electrocute
         probability: 0.8
 
+- type: reagent
+  id: GoonHumanMutator
+  name: reagent-name-goon-human-mutator
+  group: Toxins
+  desc: reagent-desc-goon-human-mutator
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: indescribable
+  color: "#007100"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:Polymorph
+        prototype: GoonHumanMorph
+        conditions:
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
+        - !type:ReagentThreshold
+          min: 5

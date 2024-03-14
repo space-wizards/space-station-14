@@ -719,6 +719,22 @@
               Quantity: 5
 
 - type: entity
+  name: interdimensional pill
+  parent: Pill
+  description: looks like it came from another dimension... odd.
+  id: PillGoonHumanMutator
+  components:
+    - type: Sprite
+      state: pill_goon
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 20
+          reagents:
+            - ReagentId: GoonHumanMutator
+              Quantity: 20
+
+- type: entity
   parent: PillCanister
   id: PillCanisterRandom
   suffix: Random
