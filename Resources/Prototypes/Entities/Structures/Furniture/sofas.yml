@@ -8,9 +8,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-black.rsi
     state: state_0
-  - type: Construction
-    graph: Sofas
-    node: blackSofaLeftEnd
 
 - type: entity
   name: black sofa
@@ -21,9 +18,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-black.rsi
     state: state_1
-  - type: Construction
-    graph: Sofas
-    node: blackSofaRightEnd
 
 - type: entity
   name: black sofa
@@ -34,9 +28,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-black.rsi
     state: state_2
-  - type: Construction
-    graph: Sofas
-    node: blackSofaCorner
 
 - type: entity
   name: black sofa
@@ -47,9 +38,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-black.rsi
     state: state_3
-  - type: Construction
-    graph: Sofas
-    node: blackSofaForward
 
 #blue
 - type: entity
@@ -61,9 +49,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-blue.rsi
     state: state_0
-  - type: Construction
-    graph: Sofas
-    node: blueSofaLeftEnd
 
 - type: entity
   name: blue sofa
@@ -74,9 +59,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-blue.rsi
     state: state_1
-  - type: Construction
-    graph: Sofas
-    node: blueSofaRightEnd
 
 - type: entity
   name: blue sofa
@@ -87,9 +69,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-blue.rsi
     state: state_2
-  - type: Construction
-    graph: Sofas
-    node: blueSofaCorner
 
 - type: entity
   name: blue sofa
@@ -100,9 +79,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-blue.rsi
     state: state_3
-  - type: Construction
-    graph: Sofas
-    node: blueSofaForward
 
 #green
 - type: entity
@@ -114,9 +90,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-green.rsi
     state: state_0
-  - type: Construction
-    graph: Sofas
-    node: greenSofaLeftEnd
 
 - type: entity
   name: green sofa
@@ -127,9 +100,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-green.rsi
     state: state_1
-  - type: Construction
-    graph: Sofas
-    node: greenSofaRightEnd
 
 - type: entity
   name: green sofa
@@ -140,9 +110,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-green.rsi
     state: state_2
-  - type: Construction
-    graph: Sofas
-    node: greenSofaCorner
 
 - type: entity
   name: green sofa
@@ -153,9 +120,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-green.rsi
     state: state_3
-  - type: Construction
-    graph: Sofas
-    node: greenSofaForward
 
 #orange
 - type: entity
@@ -167,9 +131,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-orange.rsi
     state: state_0
-  - type: Construction
-    graph: Sofas
-    node: orangeSofaLeftEnd
 
 - type: entity
   name: orange sofa
@@ -180,9 +141,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-orange.rsi
     state: state_1
-  - type: Construction
-    graph: Sofas
-    node: orangeSofaRightEnd
 
 - type: entity
   name: orange sofa
@@ -193,9 +151,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-orange.rsi
     state: state_2
-  - type: Construction
-    graph: Sofas
-    node: orangeSofaCorner
 
 - type: entity
   name: orange sofa
@@ -206,9 +161,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-orange.rsi
     state: state_3
-  - type: Construction
-    graph: Sofas
-    node: orangeSofaForward
 
 #pink
 - type: entity
@@ -220,9 +172,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-pink.rsi
     state: state_0
-  - type: Construction
-    graph: Sofas
-    node: pinkSofaLeftEnd
 
 - type: entity
   name: pink sofa
@@ -233,9 +182,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-pink.rsi
     state: state_1
-  - type: Construction
-    graph: Sofas
-    node: pinkSofaRightEnd
 
 - type: entity
   name: pink sofa
@@ -246,9 +192,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-pink.rsi
     state: state_2
-  - type: Construction
-    graph: Sofas
-    node: pinkSofaCorner
 
 - type: entity
   name: pink sofa
@@ -259,9 +202,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-pink.rsi
     state: state_3
-  - type: Construction
-    graph: Sofas
-    node: pinkSofaForward
 
 #purple
 - type: entity
@@ -273,9 +213,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-purple.rsi
     state: state_0
-  - type: Construction
-    graph: Sofas
-    node: purpleSofaLeftEnd
 
 - type: entity
   name: purple sofa
@@ -286,9 +223,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-purple.rsi
     state: state_1
-  - type: Construction
-    graph: Sofas
-    node: purpleSofaRightEnd
 
 - type: entity
   name: purple sofa
@@ -299,9 +233,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-purple.rsi
     state: state_2
-  - type: Construction
-    graph: Sofas
-    node: purpleSofaCorner
 
 - type: entity
   name: purple sofa
@@ -312,9 +243,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-purple.rsi
     state: state_3
-  - type: Construction
-    graph: Sofas
-    node: purpleSofaForward
 
 #red
 - type: entity
@@ -326,9 +254,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-red.rsi
     state: state_0
-  - type: Construction
-    graph: Sofas
-    node: redSofaLeftEnd
 
 - type: entity
   name: red sofa
@@ -339,9 +264,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-red.rsi
     state: state_1
-  - type: Construction
-    graph: Sofas
-    node: redSofaRightEnd
 
 - type: entity
   name: red sofa
@@ -352,9 +274,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-red.rsi
     state: state_2
-  - type: Construction
-    graph: Sofas
-    node: redSofaCorner
 
 - type: entity
   name: red sofa
@@ -365,9 +284,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-red.rsi
     state: state_3
-  - type: Construction
-    graph: Sofas
-    node: redSofaForward
 
 #white
 - type: entity
@@ -379,9 +295,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-white.rsi
     state: state_0
-  - type: Construction
-    graph: Sofas
-    node: whiteSofaLeftEnd
 
 - type: entity
   name: white sofa
@@ -392,9 +305,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-white.rsi
     state: state_1
-  - type: Construction
-    graph: Sofas
-    node: whiteSofaRightEnd
 
 - type: entity
   name: white sofa
@@ -405,9 +315,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-white.rsi
     state: state_2
-  - type: Construction
-    graph: Sofas
-    node: whiteSofaCorner
 
 - type: entity
   name: white sofa
@@ -418,6 +325,3 @@
   - type: Sprite
     sprite: Structures/Furniture/Sofas/sofa-white.rsi
     state: state_3
-  - type: Construction
-    graph: Sofas
-    node: whiteSofaForward
