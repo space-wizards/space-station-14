@@ -1,7 +1,7 @@
 - type: species
   id: Skeleton
   name: species-name-skeleton
-  roundStart: false
+  roundStart: true
   prototype: MobSkeletonPerson
   sprites: MobSkeletonSprites
   defaultSkinTone: "#fff9e2"
