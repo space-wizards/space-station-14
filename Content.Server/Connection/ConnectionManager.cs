@@ -78,9 +78,9 @@ namespace Content.Server.Connection
                 if (banHits is { Count: > 0 })
                     await _db.AddServerBanHitsAsync(id, banHits);
 
-                var properties = new Dictionary<string, JsonNode>();
+                var properties = new Dictionary<string, object>();
                 if (reason == ConnectionDenyReason.Full)
-                    properties["delay"] = JsonValue.Create(_cfg.GetCVar(CCVars.GameServerFullReconnectDelay));
+                    properties["delay"] = _cfg.GetCVar(CCVars.GameServerFullReconnectDelay);
 
                 e.Deny(new NetDenyReason(msg, properties));
             }

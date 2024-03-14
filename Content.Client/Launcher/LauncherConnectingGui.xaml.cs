@@ -101,9 +101,7 @@ namespace Content.Client.Launcher
             {
                 _redial = reason.RedialFlag;
 
-                if (reason.StructuredReason.TryGetPropertyValue("delay", out var node)
-                    && node != null
-                    && node.AsValue().TryGetValue(out int delay))
+                if (reason.Message.Int32Of("delay") is { } delay)
                 {
                     _waitTime = delay;
                 }
