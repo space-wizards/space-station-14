@@ -308,8 +308,9 @@ public sealed partial class EmergencyShuttleSystem
 
     private void CleanupEmergencyConsole()
     {
+        // Realistically most of this shit needs moving to a station component so each station has their own emergency shuttle
+        // and timer and all that jazz so I don't really care about debugging if it works on cleanup vs start.
         _announced = false;
-        _roundEndCancelToken = null;
         ShuttlesLeft = false;
         _launchedShuttles = false;
         _consoleAccumulator = float.MinValue;
