@@ -1,4 +1,6 @@
 ent-ClothingUniformJumpsuitTSF = комбинезон флота
     .desc = Выглядит технологично.
-ent-ClothingUniformJumpsuitTSFCaptain = комбинезон командира флота
+ent-ClothingUniformJumpsuitTSFCommander = комбинезон командира флота
     .desc = Выглядит технологично.
+ent-ClothingShoesBootsMagTSF = боевые магнитные ботинки
+    .desc = Обычные тапочки для военных.
