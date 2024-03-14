@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
@@ -19,7 +20,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     /// <param name="profile">Character profile to use, if any.</param>
     public void EquipStartingGear(EntityUid entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
     {
-        if (InventorySystem.TryGetSlots(entity, out var slotDefinitions))
+        if (InventorySystem.TryGetSlots(entity, out var slotDefinitions, true))
         {
             foreach (var slot in slotDefinitions)
             {

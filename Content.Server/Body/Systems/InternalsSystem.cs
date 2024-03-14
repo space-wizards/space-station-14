@@ -5,7 +5,6 @@ using Content.Server.Hands.Systems;
 using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
-using Content.Shared.Atmos.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Internals;
@@ -13,7 +12,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
@@ -28,7 +26,6 @@ public sealed class InternalsSystem : EntitySystem
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     public const SlotFlags InventorySlots = SlotFlags.POCKET | SlotFlags.BELT;
 
@@ -44,33 +41,14 @@ public sealed class InternalsSystem : EntitySystem
         SubscribeLocalEvent<BreathToolComponent, ConnectedBreathToolEvent>(OnBreathMaskConnected);
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<InternalsDelayedActivationComponent>();
-        while (query.MoveNext(out var uid, out var delayComp))
-        {
-            if (_timing.CurTime < delayComp.Time)
-                continue;
-
-            if (TryComp<InternalsComponent>(uid, out var comp) &&
-                !AreInternalsWorking(comp))
-                ToggleInternals(delayComp.Entity , delayComp.Entity , false, comp);
-
-            RemCompDeferred<InternalsDelayedActivationComponent>(uid);
-        }
-    }
-
     private void OnBreathMaskConnected(EntityUid uid, BreathToolComponent comp, ConnectedBreathToolEvent args)
     {
         if (!comp.AutomaticActivation)
             return;
 
-        // delaying until next tick, because at spawn we can't be sure the gas tank will spawn before the mask
-        EnsureComp<InternalsDelayedActivationComponent>(args.User, out var delayComp);
-        delayComp.Time= _timing.CurTime + TimeSpan.FromTicks(1);
-        delayComp.Entity = args.User;
+        if (TryComp<InternalsComponent>(args.User, out var internalsComp) &&
+                !AreInternalsWorking(internalsComp))
+                ToggleInternals(args.User , args.User , false, internalsComp);
 
         // this is currently only used for roundstart activation, so we turn the feature off afterwards
         comp.AutomaticActivation = false;
