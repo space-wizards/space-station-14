@@ -48,7 +48,7 @@
   parent: CableBase
   id: CableHV
   name: HV power cable
-  description: An orange high voltage power cable.
+  description: An high voltage power cable.
   components:
   - type: Sprite
     color: Green
