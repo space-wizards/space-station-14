@@ -391,3 +391,19 @@
     sprite: Clothing/Ears/Headsets/specops.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/specops.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetTSF
+  name: SpecOps headset
+  description: A headset used by the upper echelons of TSF.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyTSF
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/tsf.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/tsf.rsi

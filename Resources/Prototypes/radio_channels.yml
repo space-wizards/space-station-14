@@ -135,3 +135,11 @@
   frequency: 1401
   color: "#b09800"
   longRange: true
+
+- type: radioChannel
+  id: TSF
+  name: chat-radio-tsf
+  keycode: 'ь'
+  frequency: 2010
+  color: "#526382"
+  longRange: true
