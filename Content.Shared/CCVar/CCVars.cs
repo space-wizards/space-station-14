@@ -859,6 +859,13 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AdminAfkTime =
             CVarDef.Create("admin.afk_time", 600f, CVar.SERVERONLY);
 
+        /// <summary>
+        /// If true, admins are able to connect even if
+        /// <see cref="SoftMaxPlayers"/> would otherwise block regular players.
+        /// </summary>
+        public static readonly CVarDef<bool> AdminBypassMaxPlayers =
+            CVarDef.Create("admin.bypass_max_players", true, CVar.SERVERONLY);
+
         /*
          * Explosions
          */
