@@ -1276,7 +1276,7 @@
   description: A machine printed circuit board for a station anchor.
   components:
   - type: MachineBoard
-    prototype: GravityGeneratorMini
+    prototype: StationAnchor
     requirements:
       Capacitor: 4
       MatterBin: 3

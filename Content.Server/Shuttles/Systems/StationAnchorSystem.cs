@@ -21,6 +21,16 @@ public sealed class StationAnchorSystem : EntitySystem
 
         SubscribeLocalEvent<StationAnchorComponent, ChargedMachineActivatedEvent>(OnActivated);
         SubscribeLocalEvent<StationAnchorComponent, ChargedMachineDeactivatedEvent>(OnDeactivated);
+
+        SubscribeLocalEvent<StationAnchorComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, StationAnchorComponent component, MapInitEvent args)
+    {
+        if (!component.SwitchedOn)
+            return;
+
+        SetStatus(new Entity<StationAnchorComponent>(uid, component), true);
     }
 
     private void OnActivated(Entity<StationAnchorComponent> ent, ref ChargedMachineActivatedEvent args)

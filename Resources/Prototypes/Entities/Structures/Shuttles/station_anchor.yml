@@ -1,24 +1,64 @@
-﻿# TODO: Finish Tasks for adding a new machine
-# - [x] StationAnchorSystem disables unanchoring when active
-# - [x] Generic visualizer
-# - [x] 64x64 sprite from devi on discord
-# - [ ] Sounds
-# - [x] Unlit layer
-# - [ ] Construction recipe
-#   - [ ] Figure out how to deal with 64x64 construction
-# - [ ] Research?
-# - [x] Proper description
-# - [ ] Testing
-
-- type: entity
-  id: StationAnchor
-  parent: [BaseMachinePowered, ConstructibleMachine]
+﻿- type: entity
+  id: StationAnchorBase
+  abstract: true
   name: station anchor
   description: Prevents stations from moving
   placement:
     mode: AlignTileAny
   components:
-    - type: StationAnchor
+  - type: StationAnchor
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: AmbientSound
+    enabled: false
+    range: 4
+    volume: -4
+    sound:
+      path: /Audio/Effects/shuttle_thruster.ogg
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Machines/station_anchor.rsi
+    layers:
+    - state: station_anchor
+      map: ["base"]
+    - state: station_anchor_unlit
+      shader: unshaded
+      map: ["unlit"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerChargeVisuals.Active:
+        unlit:
+          True: { visible: True }
+          False: { visible: False }
+  - type: Appearance
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.7,-0.8,0.7,0.8"
+        density: 190
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+
+
+- type: entity
+  id: StationAnchorIndestructible
+  parent: StationAnchorBase
+  suffix: Indestructible, Unpowered
+
+- type: entity
+  id: StationAnchor
+  parent: [StationAnchorBase, BaseMachinePowered, ConstructibleMachine]
+  name: station anchor
+  description: Prevents stations from moving
+  placement:
+    mode: AlignTileAny
+  components:
     - type: PowerCharge
       windowTitle: Station Anchor
       idlePower: 50
@@ -28,35 +68,9 @@
       key: enum.PowerChargeUiKey.Key
     - type: ActivatableUIRequiresPower
     - type: Anchorable
-    - type: Transform
-      anchored: true
     - type: ApcPowerReceiver
       powerLoad: 2500
     - type: ExtensionCableReceiver
-    - type: Physics
-      bodyType: Static
-    - type: AmbientSound
-      enabled: false
-      range: 4
-      volume: -4
-      sound:
-        path: /Audio/Effects/shuttle_thruster.ogg # TODO: Replace with https://freesound.org/people/peridactyloptrix/sounds/213528/
-    - type: InteractionOutline
-    - type: Sprite
-      sprite: Structures/Machines/station_anchor.rsi
-      layers:
-        - state: station_anchor
-          map: ["base"]
-        - state: station_anchor_unlit
-          shader: unshaded
-          map: ["unlit"]
-    - type: GenericVisualizer
-      visuals:
-        enum.PowerChargeVisuals.Active:
-          unlit:
-            True: { visible: True }
-            False: { visible: False }
-    - type: Appearance
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
@@ -82,19 +96,16 @@
             path: /Audio/Effects/metalbreak.ogg
     - type: StaticPrice
       price: 10000
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.7,-0.8,0.7,0.8"
-          density: 190
-          mask:
-          - LargeMobMask
-          layer:
-          - WallLayer
     - type: Machine
-      board: StationAnchorCircuitboard #FlatpackerMachineCircuitboard
+      board: StationAnchorCircuitboard
+    - type: ContainerContainer
+      containers:
+        machine_board: !type:Container
+        machine_parts: !type:Container
+    - type: Construction
+      containers:
+      - machine_parts
+      - machine_board
     - type: UserInterface
       interfaces:
       - key: enum.PowerChargeUiKey.Key
