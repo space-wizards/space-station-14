@@ -96,7 +96,7 @@ public abstract class SharedMagicSystem : EntitySystem
         if (!hasReqs)
         {
             args.Cancelled = true;
-            _popup.PopupClient("Missing Requirements", args.Performer, args.Performer);
+            _popup.PopupClient(Loc.GetString("spell-requirements-failed"), args.Performer, args.Performer);
         }
     }
 
