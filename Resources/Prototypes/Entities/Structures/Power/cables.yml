@@ -51,11 +51,11 @@
   description: An orange high voltage power cable.
   components:
   - type: Sprite
-    sprite: Structures/Power/Cables/hv_cable.rsi
+    sprite: Structures/Power/Cables/lv_cable.rsi
     state: hvcable_0
     drawdepth: ThickWire
   - type: Icon
-    sprite: Structures/Power/Cables/hv_cable.rsi
+    sprite: Structures/Power/Cables/lv_cable.rsi
     state: hvcable_4
   - type: NodeContainer
     nodes:
@@ -102,11 +102,11 @@
   components:
   - type: Sprite
     color: Yellow
-    sprite: Structures/Power/Cables/mv_cable.rsi
+    sprite: Structures/Power/Cables/lv_cable.rsi
     state: mvcable_0
   - type: Icon
     color: Yellow
-    sprite: Structures/Power/Cables/mv_cable.rsi
+    sprite: Structures/Power/Cables/lv_cable.rsi
     state: mvcable_4
   - type: NodeContainer
     nodes:
