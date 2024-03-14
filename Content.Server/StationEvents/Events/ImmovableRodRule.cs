@@ -3,6 +3,7 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.ImmovableRod;
 using Content.Server.StationEvents.Components;
 using Content.Server.Weapons.Ranged.Systems;
+using Content.Shared.Storage;
 using Robust.Shared.Spawners;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -25,7 +26,7 @@ public sealed class ImmovableRodRule : StationEventSystem<ImmovableRodRuleCompon
 
         if (_random.Prob(component.RodRandomProbability) && component.RodRandomPrototypes.Count != 0)
         {
-            protoName = _random.Pick(component.RodRandomPrototypes);
+            protoName = _random.Pick(component.RodRandomPrototypes).PrototypeId.Value;
         }
 
         var proto = _prototypeManager.Index<EntityPrototype>(protoName);

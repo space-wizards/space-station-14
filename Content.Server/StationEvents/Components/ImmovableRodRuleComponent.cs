@@ -1,4 +1,5 @@
 using Content.Server.StationEvents.Events;
+using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -7,14 +8,14 @@ namespace Content.Server.StationEvents.Components;
 [RegisterComponent, Access(typeof(ImmovableRodRule))]
 public sealed partial class ImmovableRodRuleComponent : Component
 {
-    [DataField("rodPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string RodPrototype = "ImmovableRodKeepTilesStill";
+    [DataField]
+    public EntProtoId RodPrototype = "ImmovableRodKeepTilesStill";
 
     /// <summary>
     ///     List of rod variants.
     /// </summary>
     [DataField]
-    public List<EntProtoId> RodRandomPrototypes = new();
+    public List<EntitySpawnEntry> RodRandomPrototypes = new();
 
     /// <summary>
     ///     Probability for rod to be a variant.
