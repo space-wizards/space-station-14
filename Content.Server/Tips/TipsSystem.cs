@@ -3,7 +3,11 @@ using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Dataset;
+using Content.Shared.Tips;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Console;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -22,6 +26,7 @@ public sealed class TipsSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly IConsoleHost _conHost = default!;
 
     private bool _tipsEnabled;
     private float _tipTimeOutOfRound;
@@ -42,7 +47,64 @@ public sealed class TipsSystem : EntitySystem
         Subs.CVar(_cfg, CCVars.TipsDataset, SetDataset, true);
 
         RecalculateNextTipTime();
+        _conHost.RegisterCommand("clippy", SendClippy);
+        _conHost.RegisterCommand("tip", SendTip);
     }
+
+    private void SendTip(IConsoleShell shell, string argstr, string[] args)
+    {
+        AnnounceRandomTip();
+        RecalculateNextTipTime();
+    }
+
+    private void SendClippy(IConsoleShell shell, string argstr, string[] args)
+    {
+        if (args.Length < 2)
+        {
+            shell.WriteLine(
+                "usage: clippy <player Uid | broadcast> <message> [entity prototype] [speak time] [slide time] [waddle]");
+            return;
+        }
+
+        ActorComponent? actor = null;
+        if (args[0] != "broadcast" && args[0] != "all")
+        {
+            if (!EntityUid.TryParse(args[0], out var uid)
+                || !TryComp(uid, out actor))
+            {
+                shell.WriteError($"Could not find player {args[0]}");
+                return;
+            }
+        }
+
+        var ev = new ClippyEvent(args[1]);
+
+        string proto;
+        if (args.Length > 2)
+        {
+            ev.Proto = args[2];
+            if (!_prototype.HasIndex<EntityPrototype>(args[2]))
+            {
+                shell.WriteError($"Unknown prototype: {args[2]}");
+                return;
+            }
+        }
+
+        if (args.Length > 3)
+            ev.SpeakTime = float.Parse(args[3]);
+
+        if (args.Length > 4)
+            ev.SlideTime = float.Parse(args[4]);
+
+        if (args.Length > 5)
+            ev.WaddleInterval = float.Parse(args[5]);
+
+        if (actor != null)
+            RaiseNetworkEvent(ev, actor.PlayerSession);
+        else
+            RaiseNetworkEvent(ev);
+    }
+
 
     public override void Update(float frameTime)
     {
@@ -87,10 +149,11 @@ public sealed class TipsSystem : EntitySystem
             return;
 
         var tip = _random.Pick(tips.Values);
-        var msg = Loc.GetString("tips-system-chat-message-wrap", ("tip", tip));
+        var msg = $"Tippy the Clown says:\n\n{tip}";
 
-        _chat.ChatMessageToManyFiltered(Filter.Broadcast(), ChatChannel.OOC, tip, msg,
-            EntityUid.Invalid, false, false, Color.MediumPurple);
+        var ev = new ClippyEvent(msg);
+        ev.SpeakTime = 1 + tip.Length * 0.05f;
+        RaiseNetworkEvent(ev);
     }
 
     private void RecalculateNextTipTime()
