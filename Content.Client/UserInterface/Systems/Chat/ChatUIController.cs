@@ -9,6 +9,7 @@ using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
@@ -265,8 +266,7 @@ public sealed class ChatUIController : UIController
 
         chatBox.ChatWindowPanel.PanelOverride = new StyleBoxFlat
         {
-
-            BackgroundColor = Color.FromHex("#25252A").WithAlpha(opacity)
+            BackgroundColor = StyleNano.ChatBackgroundColor.WithAlpha(opacity)
         };
     }
 

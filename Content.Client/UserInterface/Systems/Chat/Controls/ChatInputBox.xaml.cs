@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chat;
+﻿using Content.Client.Stylesheets;
+using Content.Shared.Chat;
 using Content.Shared.Input;
 using Robust.Client.UserInterface.Controls;
 
@@ -44,6 +45,7 @@ public class ChatInputBox : PanelContainer
             StyleClasses = {"chatFilterOptionButton"}
         };
         Container.AddChild(FilterButton);
+        AddStyleClass(StyleNano.StyleClassChatSubPanel);
         ChannelSelector.OnChannelSelect += UpdateActiveChannel;
     }
 
