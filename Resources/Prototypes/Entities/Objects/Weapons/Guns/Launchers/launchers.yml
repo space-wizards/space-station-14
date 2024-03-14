@@ -31,6 +31,10 @@
     layers:
       - state: icon
         map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,5,1
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
   - type: AmmoCounter

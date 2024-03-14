@@ -7,7 +7,9 @@
   components:
   - type: Sprite
   - type: Item
-    size: Ginormous # too bulky to fit inside bags
+    size: Huge
+    shape:
+    - 0,0,7,3
   - type: Clothing
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
     quickEquip: false
