@@ -34,6 +34,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Fart:
+      collection: Parp
 
 - type: emoteSounds
   id: FemaleHuman
@@ -70,6 +72,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Fart:
+      collection: Parp
 
 - type: emoteSounds
   id: UnisexReptilian
@@ -88,6 +92,8 @@
       collection: MaleCry
     Weh:
       collection: Weh
+    Fart:
+      collection: Parp
 
 - type: emoteSounds
   id: MaleSlime
@@ -124,6 +130,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Fart:
+      collection: Parp
   params:
     variation: 0.125
 
@@ -162,6 +170,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Fart:
+      collection: Parp
   params:
     variation: 0.125
 
@@ -187,6 +197,8 @@
       collection: BikeHorn
     Weh:
       collection: Weh
+    Fart:
+      collection: Parp
   params:
     variation: 0.125
 
@@ -205,6 +217,8 @@
       path: /Audio/Voice/Arachnid/arachnid_click.ogg
     Weh:
       collection: Weh
+    Fart:
+      collection: Parp
 
 - type: emoteSounds
   id: UnisexDwarf
@@ -239,6 +253,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Fart:
+      collection: Parp
   params:
     variation: 0.125
     pitch: 0.75
@@ -276,6 +292,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Fart:
+      collection: Parp
   params:
     variation: 0.125
     pitch: 0.75
@@ -297,6 +315,8 @@
       path: /Audio/Voice/Moth/moth_squeak.ogg
     Weh:
       collection: Weh
+    Fart:
+      collection: Parp
 
 # body emotes
 - type: emoteSounds
@@ -310,6 +330,8 @@
         volume: -6
     Salute:
       collection: Salutes
+    Fart:
+      collection: Parp
 
 - type: emoteSounds
   id: DionaBodyEmotes
@@ -324,6 +346,8 @@
       path: /Audio/Voice/Diona/diona_salute.ogg
       params:
        volume: -5
+    Fart:
+      collection: Parp
 
 # mobs
 - type: emoteSounds
@@ -332,6 +356,9 @@
     collection: ZombieScreams
     params:
       variation: 0.125
+  sounds:
+    Fart:
+      collection: Parp
 
 - type: emoteSounds
   id: Skeleton
@@ -339,6 +366,9 @@
     path: /Audio/Voice/Skeleton/skeleton_scream.ogg
     params:
       variation: 0.125
+  sounds:
+    Fart:
+      collection: Parp
 
 - type: emoteSounds
   id: Mouse
@@ -346,6 +376,9 @@
     path: /Audio/Animals/mouse_squeak.ogg
     params:
       variation: 0.125
+  sounds:
+    Fart:
+      collection: Parp
 
 - type: emoteSounds
   id: Cluwne
@@ -353,6 +386,9 @@
     collection: CluwneScreams
     params:
       variation: 0.125
+  sounds:
+    Fart:
+      collection: Parp
 
 - type: emoteSounds
   id: Bear
@@ -360,6 +396,9 @@
     path: /Audio/Animals/bear.ogg
     params:
       variation: 0.125
+  sounds:
+    Fart:
+      collection: Parp
 
 - type: emoteSounds
   id: Cerberus
@@ -367,6 +406,9 @@
     path: /Audio/Animals/cerberus.ogg
     params:
       variation: 0.125
+  sounds:
+    Fart:
+      collection: Parp
 
 - type: emoteSounds
   id: Kangaroo
@@ -374,9 +416,14 @@
     path: /Audio/Animals/kangaroo_grunt.ogg
     params:
       variation: 0.125
+  sounds:
+    Fart:
+      collection: Parp
 
 - type: emoteSounds
   id: Nymph
   sounds:
     Chirp:
       path: /Audio/Animals/nymph_chirp.ogg
+    Fart:
+      collection: Parp
