@@ -8,18 +8,8 @@ namespace Content.Server.StationEvents.Components;
 [RegisterComponent, Access(typeof(ImmovableRodRule))]
 public sealed partial class ImmovableRodRuleComponent : Component
 {
-    [DataField]
-    public EntProtoId RodPrototype = "ImmovableRodKeepTilesStill";
-
-    /// <summary>
-    ///     List of rod variants.
+    ///     List of possible rods and spawn probabilities.
     /// </summary>
     [DataField]
-    public List<EntitySpawnEntry> RodRandomPrototypes = new();
-
-    /// <summary>
-    ///     Probability for rod to be a variant.
-    /// </summary>
-    [DataField]
-    public float RodRandomProbability = 0.05f;
+    public List<EntitySpawnEntry> RodPrototypes = new();
 }

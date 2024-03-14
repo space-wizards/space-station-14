@@ -4,16 +4,15 @@ using Content.Server.ImmovableRod;
 using Content.Server.StationEvents.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Storage;
-using Robust.Shared.Spawners;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
+using System.Linq;
 
 namespace Content.Server.StationEvents.Events;
 
 public sealed class ImmovableRodRule : StationEventSystem<ImmovableRodRuleComponent>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly GunSystem _gun = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -22,14 +21,7 @@ public sealed class ImmovableRodRule : StationEventSystem<ImmovableRodRuleCompon
     {
         base.Started(uid, component, gameRule, args);
 
-        var protoName = component.RodPrototype;
-
-        if (_random.Prob(component.RodRandomProbability) && component.RodRandomPrototypes.Count != 0)
-        {
-            var randomProtoName = _random.Pick(component.RodRandomPrototypes).PrototypeId;
-            if (randomProtoName.HasValue)
-                protoName = randomProtoName.Value;
-        }
+        var protoName = EntitySpawnCollection.GetSpawns(component.RodPrototypes).First();
 
         var proto = _prototypeManager.Index<EntityPrototype>(protoName);
 
