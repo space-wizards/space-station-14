@@ -125,6 +125,7 @@
   description: "Go out on your own terms, hell, even take them with you! kill them all, you know you want to! do it! (disclaimer: does not arm without power)"
   parent: GrenadeBase
   id: SelfDestructSeq
+  noSpawn: true
   components:
   - type: ExplodeOnTrigger
   - type: Explosive
