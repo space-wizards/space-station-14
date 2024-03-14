@@ -21,7 +21,6 @@ public sealed partial class DungeonJob
         var dungeonRotation = _dungeon.GetDungeonRotation(seed);
         var dungeonTransform = Matrix3.CreateTransform(_position, dungeonRotation);
         var roomPackProtos = new Dictionary<Vector2i, List<DungeonRoomPackPrototype>>();
-        var fallbackTile = new Tile(_tileDefManager[prefab.Tile].TileId);
 
         foreach (var pack in _prototype.EnumeratePrototypes<DungeonRoomPackPrototype>())
         {
