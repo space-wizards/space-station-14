@@ -87,42 +87,6 @@ public sealed class RadioCreatedEvent(
 }
 
 /// <summary>
-/// Raised when a character speaks on the radio.
-/// </summary>
-[Serializable]
-public sealed class RadioEmittedEvent : EntityEventArgs
-{
-    public EntityUid Speaker;
-    public EntityUid? Device;
-    public string AsName;
-    public string Message;
-    public string Channel;
-    public uint Id;
-
-    public RadioEmittedEvent(
-        EntityUid speaker,
-        string asName,
-        string message,
-        string channel,
-        EntityUid? device,
-        uint id
-    )
-    {
-        Speaker = speaker;
-        Device = device;
-        AsName = asName;
-        Message = message;
-        Channel = channel;
-        Id = id;
-    }
-
-    public string GetMessage()
-    {
-        return Message;
-    }
-}
-
-/// <summary>
 /// Raised when a character whispers.
 /// </summary>
 public sealed class WhisperCreatedEvent(EntityUid speaker, string message, float minRange, float maxRange) : IChatEvent
