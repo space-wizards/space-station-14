@@ -123,7 +123,7 @@ public abstract partial class BaseActionComponent : Component
     /// Whether to check if the user is conscious or not. Can be used instead of <see cref="CheckCanInteract"/>
     /// for a more permissive check.
     /// </summary>
-    [DataField] public bool CheckConsciousness;
+    [DataField] public bool CheckConsciousness = true;
 
     /// <summary>
     ///     If true, this will cause the action to only execute locally without ever notifying the server.
