@@ -1368,3 +1368,24 @@
     borderColor: "#7C5D00"
   - type: Icon
     state: pda-bridgeofficer
+
+- type: entity
+  parent: BasePDA
+  id: TSFPDA
+  name: TSF PDA
+  description: Should we go and kill the xenos?
+  components:
+  - type: Pda
+    id: TSFIDCard
+    state: pda-tsf
+    penSlot:
+      startingItem: BlackFountainPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: PdaBorderColor
+    borderColor: "#38507D"
+    accentVColor: "#38507D"
+  - type: Icon
+    state: pda-tsf

@@ -969,3 +969,21 @@
     layers:
     - state: default
     - state: idcoroner
+
+- type: entity
+  parent: IDCardStandard
+  id: TSFIDCard
+  name: TSF representative ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+    - state: idTSF
+  - type: Item
+    heldPrefix: blue
+  - type: IdCard
+    jobTitle: Представитель ТСФ
+    jobIcon: JobIconTSF
+  - type: Access
+    access:
+    - Maintenance

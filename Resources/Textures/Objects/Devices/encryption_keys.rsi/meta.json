@@ -40,6 +40,7 @@
     {"name": "specops_label"},
     {"name": "srt_label"},
     {"name": "mtf_label"},
+    {"name": "tsf_label"},
     {"name": "synd_label"}
   ]
 }
