@@ -173,13 +173,16 @@ public sealed partial class CargoSystem
     /// </summary>
     private int GetCargoSpace(EntityUid gridUid)
     {
-        var space = GetCargoPallets(gridUid).Count;
+        var space = GetCargoPallets(gridUid, BuySellType.Buy).Count;
         return space;
     }
 
-    private List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent PalletXform)> GetCargoPallets(EntityUid gridUid)
+    /// GetCargoPallets(gridUid, BuySellType.Sell) to return only Sell pads
+    /// GetCargoPallets(gridUid, BuySellType.Buy) to return only Buy pads
+    private List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent PalletXform)> GetCargoPallets(EntityUid gridUid, BuySellType requestType = BuySellType.All)
     {
         _pads.Clear();
+
         var query = AllEntityQuery<CargoPalletComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out var comp, out var compXform))
@@ -190,7 +193,13 @@ public sealed partial class CargoSystem
                 continue;
             }
 
+            if ((requestType & comp.PalletType) == 0)
+            {
+                continue;
+            }
+
             _pads.Add((uid, comp, compXform));
+
         }
 
         return _pads;
@@ -250,7 +259,7 @@ public sealed partial class CargoSystem
         amount = 0;
         toSell = new HashSet<EntityUid>();
 
-        foreach (var (palletUid, _, _) in GetCargoPallets(gridUid))
+        foreach (var (palletUid, _, _) in GetCargoPallets(gridUid, BuySellType.Sell))
         {
             // Containers should already get the sell price of their children so can skip those.
             _setEnts.Clear();
