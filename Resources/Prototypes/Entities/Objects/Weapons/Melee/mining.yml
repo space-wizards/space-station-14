@@ -83,9 +83,6 @@
         Slash: 15
   - type: Item
     size: Small
-    storedRotation: -45
-    shape:
-    - 0,0,0,2
   - type: Tag
     tags:
     - Knife

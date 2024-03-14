@@ -34,7 +34,6 @@
         Structural: 4
   - type: Item
     size: Huge
-    storedRotation: 45
     shape:
     - 0,0,4,2
     sprite: Objects/Weapons/Melee/chainsaw.rsi

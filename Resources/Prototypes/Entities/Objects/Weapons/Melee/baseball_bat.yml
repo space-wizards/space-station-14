@@ -21,7 +21,6 @@
         Structural: 10
   - type: Item
     size: Huge
-    storedRotation: 45
     shape:
     - 0,0,7,1
   - type: Tool
