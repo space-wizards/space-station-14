@@ -1,5 +1,6 @@
 using Content.Client.Gameplay;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
 using Content.Shared.RCD;
 using Content.Shared.RCD.Components;
 using Content.Shared.RCD.Systems;
@@ -32,6 +33,9 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
     private bool _isKeyBindActive = false;
 
     private readonly BoundKeyFunction _keyfunction = EngineKeyFunctions.EditorRotateObject;
+    private readonly EntProtoId _rcdConstructionGhost = "rcdconstructionghost";
+    private readonly Color _validConstructionColor = new Color(48, 255, 48, 128);
+    private readonly Color _invalidConstructionColor = new Color(255, 48, 48, 128);
 
     public override void Initialize()
     {
@@ -52,19 +56,19 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
         var hasRCD = TryComp<RCDComponent>(uid, out var rcd);
 
         // Rotate the construction ghost if the keybind was actived this frame
-        if (WasKeybindActivatedThisFrame(player.Value) && hasRCD)
-            RotateRCDConstructionGhost(uid!.Value, rcd!);
+        if (WasKeybindActivatedThisFrame(player.Value) && hasRCD && uid != null)
+            RotateRCDConstructionGhost(uid.Value, rcd!);
 
         // Delete the construction ghost if its no longer needed
         if (!hasRCD ||
-            !EntityManager.TryGetComponent<InputComponent>(player, out var input) ||
+            !TryComp<InputComponent>(player, out var input) ||
             _inputManager.Contexts.ActiveContext.Name != input.ContextName)
         {
             DeleteConstructionGhost();
             return;
         }
 
-        if (_constructionPrototype != rcd!.ProtoId)
+        if (rcd == null || _constructionPrototype != rcd.ProtoId)
         {
             DeleteConstructionGhost();
 
@@ -91,7 +95,7 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
         var tileWorldPosition = _mapSystem.GridTileToWorldPos(mapGridData.Value.GridUid, mapGridData.Value.Component, mapGridData.Value.Position);
         var distance = (tileWorldPosition - _transformSystem.GetWorldPosition(player.Value)).Length();
 
-        if (distance > 1.5f)
+        if (distance > SharedInteractionSystem.InteractionRange)
         {
             DeleteConstructionGhost();
             return;
@@ -103,18 +107,20 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
 
         if (_constructionGhost == null)
         {
-            _constructionGhost = EntityManager.SpawnEntity("rcdconstructionghost", tilePosition);
+            _constructionGhost = Spawn(_rcdConstructionGhost, tilePosition);
 
-            sprite = EntityManager.GetComponent<SpriteComponent>(_constructionGhost.Value);
-            sprite.Color = new Color(48, 255, 48, 128);
+            if (TryComp(_constructionGhost.Value, out sprite))
+            {
+                sprite.Color = _validConstructionColor;
 
-            sprite.AddBlankLayer(0);
-            sprite.LayerSetSprite(0, _cachedPrototype.GhostSprite);
-            sprite.LayerSetShader(0, "unshaded");
-            sprite.LayerSetVisible(0, true);
+                sprite.AddBlankLayer(0);
+                sprite.LayerSetSprite(0, _cachedPrototype.GhostSprite);
+                sprite.LayerSetShader(0, "unshaded");
+                sprite.LayerSetVisible(0, true);
 
-            if (_cachedPrototype.Rotation == RcdRotation.Camera)
-                sprite.NoRotation = true;
+                if (_cachedPrototype.Rotation == RcdRotation.Camera)
+                    sprite.NoRotation = true;
+            }
         }
 
         // See if the mouse is hovering over a target
@@ -128,8 +134,8 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
         // Update color of the construction ghost
         var isValid = _rcdSystem.IsRCDOperationStillValid(uid!.Value, rcd, mapGridData.Value, target, player.Value, false);
 
-        sprite = EntityManager.GetComponent<SpriteComponent>(_constructionGhost.Value);
-        sprite.Color = isValid ? new Color(48, 255, 48, 128) : new Color(255, 48, 48, 128);
+        if (TryComp(_constructionGhost.Value, out sprite))
+            sprite.Color = isValid ? _validConstructionColor : _invalidConstructionColor;
 
         // Update the construction ghost position and rotation
         _transformSystem.SetWorldPosition(_constructionGhost.Value, tileWorldPosition);
@@ -219,7 +225,7 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
     {
         var map = MapId.Nullspace;
 
-        if (EntityManager.TryGetComponent(player, out TransformComponent? xform))
+        if (TryComp(player, out TransformComponent? xform))
             map = xform.MapID;
 
         if (map == MapId.Nullspace)

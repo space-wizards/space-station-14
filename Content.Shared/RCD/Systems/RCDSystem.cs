@@ -47,6 +47,11 @@ public class RCDSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
+    private readonly int _instantConstructionDelay = 0;
+    private readonly EntProtoId _instantConstructionFx = "EffectRCDConstruct0";
+    private readonly ProtoId<RCDPrototype> _deconstructTileProto = "DeconstructTile";
+    private readonly ProtoId<RCDPrototype> _deconstructLatticeProto = "DeconstructLattice";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -129,8 +134,8 @@ public class RCDSystem : EntitySystem
         var location = args.ClickLocation;
 
         // Initial validity checks
-        if (!_gameTiming.IsFirstTimePredicted)
-            return;
+        //if (!_gameTiming.IsFirstTimePredicted)
+        //    return;
 
         if (!location.IsValid(EntityManager))
             return;
@@ -155,45 +160,49 @@ public class RCDSystem : EntitySystem
         #region: Operation modifiers
 
         // Deconstruction modifiers
-        if (component.CachedPrototype.Mode == RcdMode.Deconstruct)
+        switch (component.CachedPrototype.Mode)
         {
-            // Deconstructing an object
-            if (args.Target != null)
-            {
-                if (TryComp<RCDDeconstructableComponent>(args.Target, out var destructible))
+            case RcdMode.Deconstruct:
+
+                // Deconstructing an object
+                if (args.Target != null)
                 {
-                    cost = destructible.Cost;
-                    delay = destructible.Delay;
-                    effectPrototype = destructible.Effect;
+                    if (TryComp<RCDDeconstructableComponent>(args.Target, out var destructible))
+                    {
+                        cost = destructible.Cost;
+                        delay = destructible.Delay;
+                        effectPrototype = destructible.Effect;
+                    }
                 }
-            }
 
-            // Deconstructing a tile
-            else
-            {
-                var tile = _mapSystem.GetTileRef(mapGridData.Value.GridUid, mapGridData.Value.Component, mapGridData.Value.Location);
-                var protoName = (tile.GetContentTileDefinition().ID != "Lattice") ? "DeconstructTile" : "DeconstructLattice";
-
-                if (_protoManager.TryIndex<RCDPrototype>(protoName, out var deconProto))
+                // Deconstructing a tile
+                else
                 {
-                    cost = deconProto.Cost;
-                    delay = deconProto.Delay;
-                    effectPrototype = deconProto.Effect;
+                    var deconstructedTile = _mapSystem.GetTileRef(mapGridData.Value.GridUid, mapGridData.Value.Component, mapGridData.Value.Location);
+                    var protoName = deconstructedTile.GetContentTileDefinition().IsLattice ? _deconstructTileProto : _deconstructLatticeProto;
+
+                    if (_protoManager.TryIndex(protoName, out var deconProto))
+                    {
+                        cost = deconProto.Cost;
+                        delay = deconProto.Delay;
+                        effectPrototype = deconProto.Effect;
+                    }
                 }
-            }
-        }
 
-        // Tile construction modifiers
-        else if (component.CachedPrototype.Mode == RcdMode.ConstructTile)
-        {
-            // If replacing a tile, make the construction instant
-            var tile = _mapSystem.GetTileRef(mapGridData.Value.GridUid, mapGridData.Value.Component, mapGridData.Value.Location);
+                break;
 
-            if (!tile.Tile.IsEmpty)
-            {
-                delay = 0;
-                effectPrototype = "EffectRCDConstruct0";
-            }
+            case RcdMode.ConstructTile:
+
+                // If replacing a tile, make the construction instant
+                var contructedTile = _mapSystem.GetTileRef(mapGridData.Value.GridUid, mapGridData.Value.Component, mapGridData.Value.Location);
+
+                if (!contructedTile.Tile.IsEmpty)
+                {
+                    delay = _instantConstructionDelay;
+                    effectPrototype = _instantConstructionFx;
+                }
+
+                break;
         }
 
         #endregion
@@ -215,7 +224,7 @@ public class RCDSystem : EntitySystem
 
         args.Handled = true;
 
-        if (!_doAfter.TryStartDoAfter(doAfterArgs) && _net.IsServer)
+        if (!_doAfter.TryStartDoAfter(doAfterArgs))
             QueueDel(effect);
     }
 
@@ -392,10 +401,8 @@ public class RCDSystem : EntitySystem
 
             if (component.CachedPrototype.CollisionMask != CollisionGroup.None && TryComp<FixturesComponent>(ent, out var fixtures))
             {
-                for (int i = 0; i < fixtures.FixtureCount; i++)
+                foreach ((var _, var fixture) in fixtures.Fixtures)
                 {
-                    (var _, var fixture) = fixtures.Fixtures.ElementAt(i);
-
                     // No collision possible
                     if (Prototype(ent)?.ID != component.CachedPrototype.Prototype &&
                         (fixture.CollisionLayer <= 0 || (fixture.CollisionLayer & (int) component.CachedPrototype.CollisionMask) == 0))

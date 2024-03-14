@@ -83,7 +83,7 @@ public sealed partial class RCDMenu : RadialMenu
             {
                 var castChild = child as RadialMenuTextureButton;
 
-                if (castChild == null)
+                if (castChild is null)
                     continue;
 
                 if (castChild.TargetLayer == proto.Category)

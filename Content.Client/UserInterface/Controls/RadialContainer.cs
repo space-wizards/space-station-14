@@ -99,7 +99,7 @@ public class RadialContainer : LayoutContainer
     /// Specifies the different radial alignment modes
     /// </summary>
     /// <seealso cref="RadialAlignment"/>
-    public enum RAlignment
+    public enum RAlignment : byte
     {
         Clockwise,
         AntiClockwise,

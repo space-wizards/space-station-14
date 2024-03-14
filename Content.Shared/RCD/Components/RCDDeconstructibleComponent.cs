@@ -1,8 +1,10 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.RCD.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
+[Access([])]
 public sealed partial class RCDDeconstructableComponent : Component
 {
     /// <summary>

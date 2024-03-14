@@ -32,11 +32,6 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
         _menu.OpenCenteredAt(_inputManager.MouseScreenPosition.Position / vpSize);
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
-    {
-        base.UpdateState(state);
-    }
-
     public void SendRCDSystemMessage(ProtoId<RCDPrototype> protoId)
     {
         SendMessage(new RCDSystemMessage(protoId));
