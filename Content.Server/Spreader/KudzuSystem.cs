@@ -32,11 +32,9 @@ public sealed class KudzuSystem : EntitySystem
         var growthDamage = (int) (args.Damageable.TotalDamage / component.GrowthHealth);
         if (growthDamage > 0)
         {
-            if (!HasComp<GrowingKudzuComponent>(uid))
-            {
-                AddComp<GrowingKudzuComponent>(uid);
+            if (!EnsureComp<GrowingKudzuComponent>(uid, out _))
                 component.GrowthLevel = 3;
-            }
+
             component.GrowthLevel = Math.Max(1, component.GrowthLevel - growthDamage);
             if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
             {
