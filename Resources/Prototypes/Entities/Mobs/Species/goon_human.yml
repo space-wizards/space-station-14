@@ -9,6 +9,11 @@
   - type: Icon
     sprite: Mobs/Species/GoonHuman/parts.rsi
     state: full
+  - type: Vocal
+    sounds:
+      Male: MaleGoonHuman
+      Female: FemaleGoonHuman
+      Unsexed: MaleGoonHuman
 
 - type: entity
   parent: BaseSpeciesDummy
