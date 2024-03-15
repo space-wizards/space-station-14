@@ -577,17 +577,6 @@
       - Vegetable
 
 - type: cargoBounty
-  id: BountyManlyDorf
-  reward: 3300
-  description: bounty-description-manly-dorf
-  entries:
-  - name: bounty-item-manly-dorf
-    amount: 4
-    whitelist:
-      tags:
-      - ManlyDorf
-
-- type: cargoBounty
   id: BountyChili
   reward: 5555
   description: bounty-description-chili
