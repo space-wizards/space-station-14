@@ -130,7 +130,7 @@ namespace Content.Server.VendingMachines
 
         private void UpdateVendingMachineInterfaceState(EntityUid uid, VendingMachineComponent component)
         {
-            var state = new VendingMachineInterfaceState(GetAllInventory(uid, component));
+            var state = new VendingMachineInterfaceState(GetAllInventory(uid, component), component.Balance);
 
             _userInterfaceSystem.TrySetUiState(uid, VendingMachineUiKey.Key, state);
         }

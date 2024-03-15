@@ -49,6 +49,7 @@ namespace Content.Client.VendingMachines
             _cachedInventory = newState.Inventory;
 
             _menu?.Populate(_cachedInventory, out _cachedFilteredIndex, _menu.SearchBar.Text);
+            _menu?.UpdateBalance(newState.Balance);
         }
 
         private void OnItemSelected(ItemList.ItemListSelectedEventArgs args)
