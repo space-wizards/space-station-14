@@ -12,7 +12,7 @@
   - type: Item
     size: Large
     shape:
-    - 0,0,7,1 # long guns will only fit in dufflebags
+    - 0,0,7,0 # long guns will only fit in dufflebags
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
     quickEquip: false
@@ -61,7 +61,7 @@
   - type: Item
     size: Large
     shape:
-    - 0,0,5,2 #shorter because bullpup but wider
+    - 0,0,5,1 #shorter because bullpup but wider
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
     quickEquip: false
@@ -189,7 +189,7 @@
   - type: Item
     size: Normal
     shape:
-    - 0,0,3,1 # twice shorter than the double barrel
+    - 0,0,3,0 # twice shorter than the double barrel
     sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
     heldPrefix: sawn
   - type: Gun
@@ -225,7 +225,7 @@
   - type: Item
     size: Normal
     shape:
-    - 0,0,3,1 # same size as the sawn off
+    - 0,0,3,0 # same size as the sawn off
     sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
     heldPrefix: sawn
   - type: Sprite

@@ -190,7 +190,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,5,2
+    - 0,0,5,1
   - type: Gun
     projectileSpeed: 10
     soundGunshot:
@@ -223,7 +223,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,7,2 # will only fit in dufflebags
+    - 0,0,7,1 # will only fit in dufflebags
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
   - type: StaticPrice
@@ -294,7 +294,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,5,2 # SMG-sized for ERT use
+    - 0,0,5,1 # SMG-sized for ERT use
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
     slots:
@@ -332,7 +332,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,5,2 # SMG-sized for ERT use
+    - 0,0,5,1 # SMG-sized for ERT use
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
     slots:
@@ -366,7 +366,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,7,2 # will only fit in dufflebags
+    - 0,0,7,1 # will only fit in dufflebags
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: Gun
@@ -425,7 +425,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,7,2 # will only fit in dufflebags
+    - 0,0,7,1 # will only fit in dufflebags
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
   - type: Gun
@@ -489,7 +489,7 @@
   - type: Item
     size: Large
     shape:
-    - 0,0,5,2 # SMG sized
+    - 0,0,5,1 # SMG sized
   - type: Tag
     tags:
       - Taser

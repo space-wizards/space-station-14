@@ -9,7 +9,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,7,3 # Huge but not ginormous since it needs to fit into the bundle
+    - 0,0,7,2 # Huge but not ginormous since it needs to fit into the bundle
   - type: Clothing
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
     quickEquip: false
