@@ -334,7 +334,7 @@ namespace Content.IntegrationTests.Tests
             var entityManager = server.ResolveDependency<IEntityManager>();
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
 
-            var vendingMachineSystem = entitySystemManager.GetEntitySystem<SharedVendingMachineSystem>();
+            var vendingMachineSystem = entitySystemManager.GetEntitySystem<VendingMachineSystem>();
 
             var testMap = await pair.CreateTestMap();
 

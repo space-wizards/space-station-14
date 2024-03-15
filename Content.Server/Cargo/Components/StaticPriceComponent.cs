@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Cargo.Components;
+﻿namespace Content.Server.Cargo.Components;
 
 /// <summary>
 /// This is used for setting a static, unchanging price for an object.

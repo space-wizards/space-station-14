@@ -75,6 +75,11 @@ namespace Content.Server.VendingMachines
         private void OnComponentMapInit(EntityUid uid, VendingMachineComponent component, MapInitEvent args)
         {
             _action.AddAction(uid, ref component.ActionEntity, component.Action, uid);
+            RestockInventoryFromPrototype(uid, component);
+            if (HasComp<ApcPowerReceiverComponent>(uid))
+            {
+                TryUpdateVisualState(uid, component);
+            }
             Dirty(uid, component);
         }
 
@@ -94,16 +99,6 @@ namespace Content.Server.VendingMachines
             }
 
             args.Price += price;
-        }
-
-        protected override void OnComponentInit(EntityUid uid, VendingMachineComponent component, ComponentInit args)
-        {
-            base.OnComponentInit(uid, component, args);
-
-            if (HasComp<ApcPowerReceiverComponent>(uid))
-            {
-                TryUpdateVisualState(uid, component);
-            }
         }
 
         private void OnActivatableUIOpenAttempt(EntityUid uid, VendingMachineComponent component, ActivatableUIOpenAttemptEvent args)
@@ -517,6 +512,70 @@ namespace Content.Server.VendingMachines
                 args.Affected = true;
                 args.Disabled = true;
                 component.NextEmpEject = _timing.CurTime;
+            }
+        }
+
+        public void RestockInventoryFromPrototype(EntityUid uid,
+            VendingMachineComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+            {
+                return;
+            }
+
+            if (!PrototypeManager.TryIndex(component.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
+                return;
+
+            AddInventoryFromPrototype(uid, packPrototype.StartingInventory, InventoryType.Regular, component);
+            AddInventoryFromPrototype(uid, packPrototype.EmaggedInventory, InventoryType.Emagged, component);
+            AddInventoryFromPrototype(uid, packPrototype.ContrabandInventory, InventoryType.Contraband, component);
+
+            UpdateVendingMachineInterfaceState(uid, component);
+        }
+
+        private void AddInventoryFromPrototype(EntityUid uid, Dictionary<string, uint>? entries,
+            InventoryType type,
+            VendingMachineComponent? component = null)
+        {
+            if (!Resolve(uid, ref component) || entries == null)
+            {
+                return;
+            }
+
+            Dictionary<string, VendingMachineInventoryEntry> inventory;
+            switch (type)
+            {
+                case InventoryType.Regular:
+                    inventory = component.Inventory;
+                    break;
+                case InventoryType.Emagged:
+                    inventory = component.EmaggedInventory;
+                    break;
+                case InventoryType.Contraband:
+                    inventory = component.ContrabandInventory;
+                    break;
+                default:
+                    return;
+            }
+
+            foreach (var (id, amount) in entries)
+            {
+                if (PrototypeManager.TryIndex<EntityPrototype>(id, out var proto))
+                {
+                    if (inventory.TryGetValue(id, out var entry))
+                        // Prevent a machine's stock from going over three times
+                        // the prototype's normal amount. This is an arbitrary
+                        // number and meant to be a convenience for someone
+                        // restocking a machine who doesn't want to force vend out
+                        // all the items just to restock one empty slot without
+                        // losing the rest of the restock.
+                        entry.Amount = Math.Min(entry.Amount + amount, 3 * amount);
+                    else
+                    {
+                        var minCost = Math.Max(1, (int) _pricing.GetEstimatedPrice(proto));
+                        inventory.Add(id, new VendingMachineInventoryEntry(type, id, amount, _random.Next(minCost, 4 * minCost)));
+                    }
+                }
             }
         }
     }
