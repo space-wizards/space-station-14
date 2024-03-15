@@ -27,7 +27,6 @@
     - Bandana
     - HidesNose
 
-
 - type: entity
   parent: ClothingMaskBandanaBase
   id: ClothingMaskBandBlack
