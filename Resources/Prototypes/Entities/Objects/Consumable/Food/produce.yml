@@ -1211,7 +1211,7 @@
     grindableSolutionName: food
   - type: Tag
     tags:
-    - Flower
+    - Flower # TODO add "RedFlower" or "Poppy" tag, when other color flowers will be
 
 - type: entity
   name: lily
