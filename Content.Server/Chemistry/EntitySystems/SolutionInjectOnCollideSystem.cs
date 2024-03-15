@@ -4,8 +4,6 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Projectiles;
-using JetBrains.Annotations;
-using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
