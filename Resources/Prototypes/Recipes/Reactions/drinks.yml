@@ -83,7 +83,7 @@
       amount: 1
     ScrewdriverCocktail:
       amount: 1
-    WeldingFuel:
+    Blood:
       amount: 1
   products:
     CogChamp: 3
@@ -360,7 +360,7 @@
   reactants:
     Ethanol:
       amount: 2
-    WeldingFuel:
+    Blood:
       amount: 1
     Enzyme:
       amount: 1

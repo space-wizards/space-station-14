@@ -70,7 +70,7 @@
     solutions:
       Welder:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 8
         maxVol: 8 #uses less fuel than a welder, so this isnt as bad as it looks
   - type: MeleeWeapon
@@ -113,7 +113,7 @@
     solutions:
       Welder:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 4
         maxVol: 4 #uses less fuel than a welder, so this isnt as bad as it looks
 
@@ -175,7 +175,7 @@
     solutions:
       Welder:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 12
         maxVol: 12 #uses less fuel than a welder, so this isnt as bad as it looks
   - type: Welder

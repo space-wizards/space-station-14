@@ -3,8 +3,8 @@
 - type: entity
   id: WeldingFuelTank
   parent: StorageTank
-  name: fuel tank
-  description: A fuel tank. It's used to store high amounts of fuel.
+  name: blood tank
+  description: A blood tank. It's used to store high amounts of blood. Blood is fuel.
   suffix: Empty
   components:
   - type: StaticPrice
@@ -44,14 +44,14 @@
     solutions:
       tank:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 1500
 
 - type: entity
   parent: WeldingFuelTank
   id: WeldingFuelTankHighCapacity
-  name: high-capacity fuel tank
-  description: A highly pressurized fuel tank made to hold gargantuan amounts of welding fuel.
+  name: high-capacity blood tank
+  description: A highly pressurized blood tank made to hold gargantuan amounts of blood. Blood is fuel.
   suffix: Full
   components:
   - type: StaticPrice
@@ -70,7 +70,7 @@
     solutions:
       tank:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 5000
         maxVol: 5000
   - type: Explosive

@@ -76,7 +76,7 @@
     solutions:
       Welder:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 100
         maxVol: 100
   - type: Tool
@@ -87,7 +87,7 @@
   - type: PointLight
     enabled: false
     radius: 1.5
-    color: orange
+    color: red
     netsync: false
   - type: Appearance
   - type: RequiresEyeProtection
@@ -113,7 +113,7 @@
     solutions:
       Welder:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 250
         maxVol: 250
 
@@ -131,7 +131,7 @@
     solutions:
       Welder:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 250
         maxVol: 250
   - type: Tool
@@ -151,18 +151,18 @@
     solutions:
       Welder:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 1000
         maxVol: 1000
   - type: PointLight
     enabled: false
     radius: 1.5
-    color: lightblue
+    color: red
   - type: SolutionRegeneration
     solution: Welder
     generated:
       reagents:
-      - ReagentId: WeldingFuel
+      - ReagentId: Blood
         Quantity: 1
 
 - type: entity
@@ -182,7 +182,7 @@
     solutions:
       Welder:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 50
         maxVol: 50
   - type: Tool
@@ -190,4 +190,4 @@
   - type: PointLight
     enabled: false
     radius: 1.0
-    color: orange
+    color: red

@@ -45,7 +45,7 @@
   reactants:
     Oil:
       amount: 1
-    WeldingFuel:
+    Blood:
       amount: 1
     Oxygen:
       amount: 1
@@ -256,7 +256,7 @@
 - type: reaction
   id: Oil
   reactants:
-    WeldingFuel:
+    Blood:
       amount: 1
     Hydrogen:
       amount: 1
