@@ -76,10 +76,11 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
         if (!EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physicsComponent))
             return;
 
-        var walkSpeed = 1.0f;
-        var sprintSpeed = 1.0f;
+        var walkSpeed = 0.0f;
+        var sprintSpeed = 0.0f;
 
         bool remove = true;
+        var entries = 0;
         foreach (var ent in _physics.GetContactingEntities(uid, physicsComponent))
         {
             if (!TryComp<SpeedModifierContactsComponent>(ent, out var slowContactsComponent))
@@ -88,12 +89,19 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
             if (slowContactsComponent.IgnoreWhitelist != null && slowContactsComponent.IgnoreWhitelist.IsValid(uid))
                 continue;
 
-            walkSpeed *= slowContactsComponent.WalkSpeedModifier;
-            sprintSpeed *= slowContactsComponent.SprintSpeedModifier;
+            walkSpeed += slowContactsComponent.WalkSpeedModifier;
+            sprintSpeed += slowContactsComponent.SprintSpeedModifier;
             remove = false;
+            entries++;
         }
 
-        args.ModifySpeed(walkSpeed, sprintSpeed);
+        if (entries > 0)
+        {
+            walkSpeed /= entries;
+            sprintSpeed /= entries;
+
+            args.ModifySpeed(walkSpeed, sprintSpeed);
+        }
 
         // no longer colliding with anything
         if (remove)
