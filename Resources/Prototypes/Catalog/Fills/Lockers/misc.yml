@@ -114,10 +114,13 @@
           prob: 0.2
           orGroup: carp
         - id: PlushieHolocarp
-          prob: 0.2
+          prob: 0.05
           orGroup: carp
         - id: PlushieMagicarp
-          prob: 0.2
+          prob: 0.05
+          orGroup: carp
+        - id: PlushieRainbowCarp
+          prob: 0.03
           orGroup: carp
         - id: PlushieSlime
           prob: 0.2
@@ -214,10 +217,13 @@
           prob: 0.2
           orGroup: carp
         - id: PlushieHolocarp
-          prob: 0.2
+          prob: 0.05
           orGroup: carp
         - id: PlushieMagicarp
-          prob: 0.2
+          prob: 0.05
+          orGroup: carp
+        - id: PlushieRainbowCarp
+          prob: 0.03
           orGroup: carp
         - id: PlushieSlime
           prob: 0.2
