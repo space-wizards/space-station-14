@@ -587,19 +587,6 @@
       tags:
       - ChiliBowl
 
-# If someone else wants to do this, go for it, making a bounty check for alive seems like a headache
-
-# - type: cargoBounty
-#  id: BountyLiveMouse
-#  reward: 1500
-#  description: bounty-description-live-mouse
-#  entries:
-#  - name: bounty-item-live-mouse
-#    amount: 1
-#    whitelist:
-#      tags:
-#     -
-
 - type: cargoBounty
   id: BountyRollerskates
   reward: 6500
@@ -667,7 +654,7 @@
       - Beer
 
 - type: cargoBounty
-  id: BountyHi-VizVest
+  id: BountyHiVizVest
   reward: 3030
   description: bounty-description-hi-viz-vest
   entries:
@@ -675,7 +662,7 @@
     amount: 3
     whitelist:
       tags:
-      - Hi-Viz
+      - HiViz
 
 - type: cargoBounty
   id: BountyTorch
