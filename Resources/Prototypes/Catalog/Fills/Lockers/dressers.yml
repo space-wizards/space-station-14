@@ -39,7 +39,10 @@
       - id: ClothingNeckMantleCMO
       - id: ClothingCloakCmo
       - id: ClothingOuterCoatLabCmo
+      - id: ClothingUniformJumpsuitCMOTurtle
+      - id: ClothingUniformJumpskirtCMOTurtle
       - id: ClothingHeadHatBeretCmo
+      - id: ClothingHeadCMOMirror
       - id: ClothingEyesGlasses
       - id: ClothingOuterWinterCMO
 
