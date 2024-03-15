@@ -1,7 +1,7 @@
 <BoxContainer xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          Orientation="Vertical" Margin="0 0 0 4">
-    <Collapsible Orientation="Vertical">
+    <Collapsible>
         <CollapsibleHeading Name="CName" />
         <CollapsibleBody Margin="20 0 0 0">
             <BoxContainer Orientation="Vertical">

@@ -48,6 +48,28 @@
       task: SimpleHumanoidHostileCompound
 
 - type: entity
+  name: syndicate footsoldier 
+  parent: BaseMobHuman
+  id: MobSyndicateFootsoldier
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - SyndicateFootsoldierGearRuin
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+
+- type: entity
+  name: syndicate shuttle pilot
+  parent: MobSyndicateFootsoldier
+  id: MobSyndicateFootsoldierPilot
+
+- type: entity
   parent: BaseMobHuman
   suffix: Dead
   save: false # mobs are currently not saveable.

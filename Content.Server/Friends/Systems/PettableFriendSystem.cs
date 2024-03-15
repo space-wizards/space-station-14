@@ -1,7 +1,7 @@
-using Content.Server.Chemistry.Components;
 using Content.Server.Friends.Components;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 

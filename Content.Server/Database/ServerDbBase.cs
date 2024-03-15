@@ -1534,6 +1534,12 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             return time != null ? NormalizeDatabaseTime(time.Value) : time;
         }
 
+        public async Task<bool> HasPendingModelChanges()
+        {
+            await using var db = await GetDb();
+            return db.DbContext.Database.HasPendingModelChanges();
+        }
+
         protected abstract Task<DbGuard> GetDb([CallerMemberName] string? name = null);
 
         protected void LogDbOp(string? name)
