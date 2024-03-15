@@ -515,6 +515,16 @@
     - WhitelistChameleon
 
 - type: entity
+  parent: ClothingMaskNeckGaiter
+  id: ClothingMaskNeckGaiterRed
+  name: red neck gaiter
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/neckgaiterred.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/neckgaiterred.rsi
+
+- type: entity
   parent: ClothingMaskClownBase
   id: ClothingMaskSexyClown
   name: sexy clown mask
