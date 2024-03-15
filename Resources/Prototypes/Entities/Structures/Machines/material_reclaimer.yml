@@ -77,6 +77,7 @@
       - Material
       - Pda
       - IdCard
+      - Brain
       tags:
       - HighRiskItem
     soundCooldown: 0
