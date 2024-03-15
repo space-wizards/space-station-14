@@ -1,6 +1,7 @@
-﻿<controls:TargetBodyStatus
+﻿<med:TargetBodyStatus
     xmlns="https://spacestation14.io"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.MedicalMenu.Controls"
+    xmlns:med="clr-namespace:Content.Client.UserInterface.Systems.MedicalMenu.Controls"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Orientation="Vertical"
     >
     <BoxContainer
@@ -12,4 +13,7 @@
             Text="No Target"
             />
     </BoxContainer>
-</controls:TargetBodyStatus>
+    <controls:Placeholder
+        PlaceholderText="Target Info Goes here"
+        />
+</med:TargetBodyStatus>

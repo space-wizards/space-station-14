@@ -19,7 +19,6 @@ public sealed partial class BodyPartStatusControl : Collapsible
         set
         {
             _partName = value;
-            Heading.Title = value;
             BodyPartLabel.Text = value;
         }
     }
@@ -35,6 +34,9 @@ public sealed partial class BodyPartStatusControl : Collapsible
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+
+        //setup chevron
+        Chevron.AddStyleClass(OptionButton.StyleClassOptionTriangle);
     }
 
     public void SetPartCondition(FixedPoint2 conditionPercentage)
