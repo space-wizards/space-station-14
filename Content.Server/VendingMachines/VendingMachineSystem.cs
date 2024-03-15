@@ -573,7 +573,7 @@ namespace Content.Server.VendingMachines
                     else
                     {
                         var minCost = Math.Max(1, (int) _pricing.GetEstimatedPrice(proto));
-                        inventory.Add(id, new VendingMachineInventoryEntry(type, id, amount, _random.Next(minCost, 4 * minCost)));
+                        inventory.Add(id, new VendingMachineInventoryEntry(type, id, amount, _random.Next(minCost, 2 * minCost)));
                     }
                 }
             }
