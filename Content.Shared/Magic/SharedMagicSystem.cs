@@ -70,7 +70,7 @@ public abstract class SharedMagicSystem : EntitySystem
     private void OnBeforeCastSpell(Entity<MagicComponent> ent, ref BeforeCastSpellEvent args)
     {
         var comp = ent.Comp;
-        var hasReqs = false;
+        var hasReqs = true;
 
         if (comp.RequiresClothes)
         {
@@ -78,7 +78,9 @@ public abstract class SharedMagicSystem : EntitySystem
             while (enumerator.MoveNext(out var containerSlot))
             {
                 if (containerSlot.ContainedEntity is { } item)
+                {
                     hasReqs = HasComp<WizardClothesComponent>(item);
+                }
                 else
                     hasReqs = false;
 
@@ -90,9 +92,6 @@ public abstract class SharedMagicSystem : EntitySystem
         if (comp.RequiresSpeech && HasComp<MutedComponent>(args.Performer))
             hasReqs = false;
 
-        // TODO: Localized popup, better message
-        // If missing clothes mention robes & hat need to be equipped
-        // If muted, say requires a voce
         if (!hasReqs)
         {
             args.Cancelled = true;
