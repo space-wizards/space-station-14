@@ -9,7 +9,6 @@ namespace Content.Client.Radio.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class HandheldRadioMenu : FancyWindow
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public event Action<bool>? OnMicPressed;
     public event Action<bool>? OnSpeakerPressed;
@@ -26,7 +25,6 @@ public sealed partial class HandheldRadioMenu : FancyWindow
         FrequencyLineEdit.OnTextEntered += e => OnFrequencyChanged?.Invoke(e.Text);
         FrequencyLineEdit.OnFocusExit += e => OnFrequencyChanged?.Invoke(e.Text);
     }
-
 
     public void Update(HandheldRadioBoundUIState state)
     {
