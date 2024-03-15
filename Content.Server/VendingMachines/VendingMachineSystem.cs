@@ -10,18 +10,21 @@ using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
+using Content.Shared.Cargo.Components;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Emp;
+using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.UserInterface;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -40,6 +43,7 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly AdvertiseSystem _advertise = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -70,6 +74,8 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineComponent, RestockDoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
+
+            SubscribeLocalEvent<VendingMachineComponent, InteractUsingEvent>(OnInteractUsing);
         }
 
         private void OnComponentMapInit(EntityUid uid, VendingMachineComponent component, MapInitEvent args)
@@ -577,6 +583,22 @@ namespace Content.Server.VendingMachines
                     }
                 }
             }
+        }
+
+        private void OnInteractUsing(EntityUid uid, VendingMachineComponent component, ref InteractUsingEvent args)
+        {
+            if (!HasComp<CashComponent>(args.Used))
+                return;
+
+            var price = _pricing.GetPrice(args.Used);
+
+            if (price == 0)
+                return;
+
+            _audio.PlayPvs(component.SoundConfirm, uid);
+            component.Balance += (int) price;
+            UpdateVendingMachineInterfaceState(uid, component);
+            QueueDel(args.Used);
         }
     }
 }
