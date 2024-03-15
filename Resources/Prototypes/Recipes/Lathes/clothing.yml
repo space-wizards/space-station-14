@@ -675,6 +675,14 @@
     Durathread: 150
 
 - type: latheRecipe
+  id: ClothingNeckBridgeOfficerMantle
+  result: ClothingNeckBridgeOfficerMantle
+  completetime: 2.8
+  materials:
+    Cloth: 150
+    Durathread: 150
+
+- type: latheRecipe
   id: ClothingNeckMantleCE
   result: ClothingNeckMantleCE
   completetime: 2.8

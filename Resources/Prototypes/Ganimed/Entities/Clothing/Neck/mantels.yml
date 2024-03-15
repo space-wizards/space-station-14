@@ -1,0 +1,10 @@
+#license: CLA
+#copiryght: https://github.com/ss14-ganimed/ENT14-Master/blob/master/CLA.txt
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckBridgeOfficerMantle
+  name: bridge officer mantle
+  description: Elegant mantle in black colors.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Neck/Mantles/BridgeofficerMantle.rsi
