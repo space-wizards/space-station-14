@@ -44,6 +44,16 @@
     - type: ActivatableUIRequiresPowerCell
 
 - type: entity
+  id: HandheldStationMapEmpty
+  parent: HandheldStationMap
+  suffix: Handheld, Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+
+- type: entity
   id: HandheldStationMapUnpowered
   parent: BaseHandheldStationMap
   suffix: Handheld, Unpowered

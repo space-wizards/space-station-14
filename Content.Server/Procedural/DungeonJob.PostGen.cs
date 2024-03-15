@@ -173,7 +173,7 @@ public sealed partial class DungeonJob
             if (found)
                 continue;
 
-            _entManager.SpawnEntity("CableApcExtension", _grid.GridTileToLocal(tile));
+            _entManager.SpawnEntity(gen.Entity, _grid.GridTileToLocal(tile));
         }
     }
 
@@ -854,11 +854,11 @@ public sealed partial class DungeonJob
         }
 
         var setTiles = new List<(Vector2i, Tile)>();
-        var tileDef = _tileDefManager["FloorSteel"];
+        var tileDef = _prototype.Index(gen.Tile);
 
         foreach (var tile in corridorTiles)
         {
-            setTiles.Add((tile, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
+            setTiles.Add((tile, _tile.GetVariantTile(tileDef, random)));
         }
 
         grid.SetTiles(setTiles);

@@ -111,6 +111,10 @@
   mapPath: /Maps/Salvage/meatball.yml
 
 - type: salvageMap
+  id: VeganMeatball
+  mapPath: /Maps/Salvage/vegan-meatball.yml
+
+- type: salvageMap
   id: MediumHaulingShuttleWreck
   mapPath: /Maps/Salvage/hauling-shuttle.yml
 
