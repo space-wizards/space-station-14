@@ -24,7 +24,6 @@
   - type: NavMapBeacon
     text: station-beacon-general
     color: "#D4D4D496"
-  - type: WarpPoint
   - type: ActivatableUI
     key: enum.NavMapBeaconUiKey.Key
     singleUser: true
