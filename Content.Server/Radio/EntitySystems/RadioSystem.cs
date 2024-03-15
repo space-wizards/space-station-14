@@ -70,6 +70,11 @@ public sealed class RadioSystem : EntitySystem
     public int GetFrequency(EntityUid source, RadioChannelPrototype channel)
     {
         var frequency = channel.Frequency;
+        if (TryComp<RadioMicrophoneComponent>(source, out var radioMicrophone))
+        {
+            frequency = radioMicrophone.Frequency;
+            return frequency;
+        }
         var xform = Transform(source);
         if (xform.GridUid != null)
         {
@@ -87,7 +92,7 @@ public sealed class RadioSystem : EntitySystem
     /// </summary>
     /// <param name="messageSource">Entity that spoke the message</param>
     /// <param name="radioSource">Entity that picked up the message and will send it, e.g. headset</param>
-    public void SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource, bool escapeMarkup = true)
+    public void SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource, int? frequency = null, bool escapeMarkup = true)
     {
         // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
         if (!_messages.Add(message))
@@ -144,6 +149,9 @@ public sealed class RadioSystem : EntitySystem
 
         var speakerQuery = GetEntityQuery<RadioSpeakerComponent>();
         var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
+
+        if (frequency == null)
+            frequency = GetFrequency(messageSource, channel);
         while (canSend && radioQuery.MoveNext(out var receiver, out var radio, out var transform))
         {
             if (!radio.ReceiveAllChannels)
@@ -152,7 +160,7 @@ public sealed class RadioSystem : EntitySystem
                                                              !intercom.SupportedChannels.Contains(channel.ID)))
                     continue;
             }
-            if (GetFrequency(receiver, channel) != GetFrequency(messageSource, channel))
+            if (GetFrequency(receiver, channel) != frequency)
                 continue;
 
             if (!channel.LongRange && transform.MapID != sourceMapId && !radio.GlobalReceive)

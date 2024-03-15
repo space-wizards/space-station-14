@@ -51,6 +51,11 @@ public sealed class RadioDeviceSystem : EntitySystem
         SubscribeLocalEvent<IntercomComponent, ToggleIntercomMicMessage>(OnToggleIntercomMic);
         SubscribeLocalEvent<IntercomComponent, ToggleIntercomSpeakerMessage>(OnToggleIntercomSpeaker);
         SubscribeLocalEvent<IntercomComponent, SelectIntercomChannelMessage>(OnSelectIntercomChannel);
+
+        SubscribeLocalEvent<RadioMicrophoneComponent, BeforeActivatableUIOpenEvent>(OnBeforeHandheldRadioUiOpen);
+        SubscribeLocalEvent<RadioMicrophoneComponent, ToggleHandheldRadioMicMessage>(OnToggleHandheldRadioMic);
+        SubscribeLocalEvent<RadioMicrophoneComponent, ToggleHandheldRadioSpeakerMessage>(OnToggleHandheldRadioSpeaker);
+        SubscribeLocalEvent<RadioMicrophoneComponent, SelectHandheldRadioFrequencyMessage>(OnChangeHandheldRadioFrequency);
     }
 
     public override void Update(float frameTime)
@@ -187,7 +192,7 @@ public sealed class RadioDeviceSystem : EntitySystem
             return; // no feedback loops please.
 
         if (_recentlySent.Add((args.Message, args.Source)))
-            _radio.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel), uid);
+            _radio.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel), uid, frequency: component.Frequency);
     }
 
     private void OnAttemptListen(EntityUid uid, RadioMicrophoneComponent component, ListenAttemptEvent args)
@@ -239,11 +244,14 @@ public sealed class RadioDeviceSystem : EntitySystem
         if (component.RequiresPower && !this.IsPowered(uid, EntityManager) || args.Session.AttachedEntity is not { })
             return;
 
-        if (!_protoMan.TryIndex<RadioChannelPrototype>(args.Channel, out _) || !component.SupportedChannels.Contains(args.Channel))
+        if (!_protoMan.TryIndex<RadioChannelPrototype>(args.Channel, out var channel) || !component.SupportedChannels.Contains(args.Channel))
             return;
 
         if (TryComp<RadioMicrophoneComponent>(uid, out var mic))
+        {
             mic.BroadcastChannel = args.Channel;
+            mic.Frequency = channel.Frequency;
+        }
         if (TryComp<RadioSpeakerComponent>(uid, out var speaker))
             speaker.Channels = new(){ args.Channel };
         UpdateIntercomUi(uid, component);
@@ -261,4 +269,60 @@ public sealed class RadioDeviceSystem : EntitySystem
         var state = new IntercomBoundUIState(micEnabled, speakerEnabled, availableChannels, selectedChannel);
         _ui.TrySetUiState(uid, IntercomUiKey.Key, state);
     }
+
+    #region Handheld Radio
+
+    public void SetFrequency(EntityUid uid, int frequency, RadioMicrophoneComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.Frequency = frequency;
+    }
+
+    private void OnBeforeHandheldRadioUiOpen(EntityUid uid, RadioMicrophoneComponent component, BeforeActivatableUIOpenEvent args)
+    {
+        UpdateHandheldRadioUi(uid, component);
+    }
+
+    private void OnToggleHandheldRadioMic(EntityUid uid, RadioMicrophoneComponent component, ToggleHandheldRadioMicMessage args)
+    {
+        if (args.Session.AttachedEntity is not { } user)
+            return;
+
+        SetMicrophoneEnabled(uid, user, args.Enabled, true);
+        UpdateHandheldRadioUi(uid, component);
+    }
+
+    private void OnToggleHandheldRadioSpeaker(EntityUid uid, RadioMicrophoneComponent component, ToggleHandheldRadioSpeakerMessage args)
+    {
+        if (args.Session.AttachedEntity is not { } user)
+            return;
+
+        SetSpeakerEnabled(uid, user, args.Enabled, true);
+        UpdateHandheldRadioUi(uid, component);
+    }
+
+    private void OnChangeHandheldRadioFrequency(EntityUid uid, RadioMicrophoneComponent component, SelectHandheldRadioFrequencyMessage args)
+    {
+        if (args.Session.AttachedEntity is not { })
+            return;
+
+        SetFrequency(uid, args.Frequency, component);
+        UpdateHandheldRadioUi(uid, component);
+    }
+
+    private void UpdateHandheldRadioUi(EntityUid uid, RadioMicrophoneComponent component)
+    {
+        var micComp = CompOrNull<RadioMicrophoneComponent>(uid);
+        var speakerComp = CompOrNull<RadioSpeakerComponent>(uid);
+        var frequency = component.Frequency;
+
+        var micEnabled = micComp?.Enabled ?? false;
+        var speakerEnabled = speakerComp?.Enabled ?? false;
+        var state = new HandheldRadioBoundUIState(micEnabled, speakerEnabled, frequency);
+        _ui.TrySetUiState(uid, IntercomUiKey.Key, state);
+    }
+
+    #endregion
 }
