@@ -5,7 +5,7 @@
     state: artifact_container_icon
   product: CrateArtifactContainer
   cost: 500
-  category: Science
+  category: cargoproduct-category-name-science
   group: market
 
 - type: cargoProduct
@@ -15,7 +15,7 @@
     state: ano13
   product: RandomArtifactSpawner
   cost: 2000
-  category: Science
+  category: cargoproduct-category-name-science
   group: market
 
 - type: cargoProduct
@@ -25,5 +25,5 @@
     state: icon
   product: CrateScienceBiosuit
   cost: 800
-  category: Science
+  category: cargoproduct-category-name-science
   group: market
