@@ -1188,6 +1188,9 @@
   id: Torch
 
 - type: Tag
+  id: ToyRubberDuck
+
+- type: Tag
   id: ToySidearm
 
 - type: Tag

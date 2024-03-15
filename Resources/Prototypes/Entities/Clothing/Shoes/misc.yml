@@ -47,6 +47,9 @@
       collection: FootstepDuck
       params:
         variation: 0.07
+  - type: Construction
+    graph: ClothingShoeSlippersDuck
+    node: ClothingShoeSlippersDuck
 
 - type: entity
   parent: ClothingShoesBaseButcherable
