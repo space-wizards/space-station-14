@@ -645,16 +645,15 @@
       - Bandana
 
 - type: cargoBounty
-  id: BountyCookedMeat
+  id: BountySteak
   reward: 3200
-  description: bounty-description-cooked-meat
+  description: bounty-description-steak
   entries:
-  - name: bounty-item-cooked-meat
+  - name: bounty-item-steak
     amount: 4
     whitelist:
       tags:
-      - Cooked
-      - Meat
+      - Steak
 
 - type: cargoBounty
   id: BountyBanana
@@ -712,19 +711,8 @@
       - Medkit
 
 - type: cargoBounty
-  id: BountyLaceupShoes
-  reward: 1500
-  description: bounty-description-laceup-shoes
-  entries:
-  - name: bounty-item-laceup-shoes
-    amount: 1
-    whitelist:
-      tags:
-      - LaceUpShoes
-
-- type: cargoBounty
   id: BountyCardboardBox
-  reward: 2500
+  reward: 1500
   description: bounty-description-cardobard-box
   entries:
   - name: bounty-item-cardboard-box
