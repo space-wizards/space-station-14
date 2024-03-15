@@ -20,7 +20,7 @@ namespace Content.Client.Access.UI
 
         private readonly IdCardConsoleBoundUserInterface _owner;
 
-        private AccessLevelControl _accessButtons;
+        private AccessLevelControl _accessButtons = new();
         private readonly List<string> _jobPrototypeIds = new();
 
         private string? _lastFullName;
@@ -66,7 +66,7 @@ namespace Content.Client.Access.UI
 
             JobPresetOptionButton.OnItemSelected += SelectJobPreset;
 
-            _accessButtons = new AccessLevelControl(accessLevels, prototypeManager);
+            _accessButtons.Populate(accessLevels, prototypeManager);
             AccessLevelControlContainer.AddChild(_accessButtons);
 
             foreach (var (id, button) in _accessButtons.ButtonsList)

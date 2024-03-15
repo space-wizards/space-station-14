@@ -16,7 +16,7 @@ namespace Content.Client.Doors.Electronics;
 public sealed partial class DoorElectronicsConfigurationMenu : FancyWindow
 {
     private readonly DoorElectronicsBoundUserInterface _owner;
-    private AccessLevelControl _buttonsList;
+    private AccessLevelControl _buttonsList = new();
 
     public DoorElectronicsConfigurationMenu(DoorElectronicsBoundUserInterface ui, List<ProtoId<AccessLevelPrototype>> accessLevels, IPrototypeManager prototypeManager)
     {
@@ -24,7 +24,7 @@ public sealed partial class DoorElectronicsConfigurationMenu : FancyWindow
 
         _owner = ui;
 
-        _buttonsList = new AccessLevelControl(accessLevels, prototypeManager);
+        _buttonsList.Populate(accessLevels, prototypeManager);
         AccessLevelControlContainer.AddChild(_buttonsList);
 
         foreach (var (id, button) in _buttonsList.ButtonsList)

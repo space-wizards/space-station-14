@@ -14,9 +14,21 @@ public sealed partial class AccessLevelControl : GridContainer
 {
     public readonly Dictionary<ProtoId<AccessLevelPrototype>, Button> ButtonsList = new();
 
-    public AccessLevelControl(List<ProtoId<AccessLevelPrototype>> accessLevels, IPrototypeManager prototypeManager)
+    public AccessLevelControl()
     {
         RobustXamlLoader.Load(this);
+    }
+
+    private static string GetAccessLevelName(AccessLevelPrototype prototype)
+    {
+        if (prototype.Name is { } name)
+            return Loc.GetString(name);
+
+        return prototype.ID;
+    }
+
+    public void Populate(List<ProtoId<AccessLevelPrototype>> accessLevels, IPrototypeManager prototypeManager)
+    {
         foreach (var access in accessLevels)
         {
             if (!prototypeManager.TryIndex<AccessLevelPrototype>(access, out var accessLevel))
@@ -33,14 +45,6 @@ public sealed partial class AccessLevelControl : GridContainer
             AddChild(newButton);
             ButtonsList.Add(accessLevel.ID, newButton);
         }
-    }
-
-    private static string GetAccessLevelName(AccessLevelPrototype prototype)
-    {
-        if (prototype.Name is { } name)
-            return Loc.GetString(name);
-
-        return prototype.ID;
     }
 
     public void UpdateState(
