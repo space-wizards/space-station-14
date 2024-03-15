@@ -1686,6 +1686,8 @@
   parent: MobMouse
   id: MobMouseCancer
   components:
+  - type: Sprite
+    color: LightGreen
   - type: PointLight
     color: LightGreen
     radius: 5
@@ -1707,8 +1709,11 @@
     spawned:
     - id: FoodMeatRat
       amount: 1
-    - id: SheetUranium
+    - id: SheetUranium1
       amount: 1
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Zombie
 
 - type: entity
   name: lizard #Weh
