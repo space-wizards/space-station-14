@@ -1186,9 +1186,6 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/manlydorfglass.rsi
     state: icon
-  - type: Tag
-    tags:
-    - ManlyDorf
 
 - type: entity
   parent: DrinkGlass
