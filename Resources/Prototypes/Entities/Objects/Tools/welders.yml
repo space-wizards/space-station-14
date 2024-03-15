@@ -87,7 +87,7 @@
   - type: PointLight
     enabled: false
     radius: 1.5
-    color: orange
+    color: red
     netsync: false
   - type: Appearance
   - type: RequiresEyeProtection
@@ -157,7 +157,7 @@
   - type: PointLight
     enabled: false
     radius: 1.5
-    color: lightblue
+    color: red
   - type: SolutionRegeneration
     solution: Welder
     generated:
@@ -190,4 +190,4 @@
   - type: PointLight
     enabled: false
     radius: 1.0
-    color: orange
+    color: red
