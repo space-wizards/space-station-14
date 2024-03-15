@@ -1,12 +1,14 @@
 using Content.Shared.Emag.Components;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Shared.Cargo.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
+using Robust.Shared.Random;
 
 namespace Content.Shared.VendingMachines;
 
@@ -17,6 +19,8 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] private readonly IComponentFactory _factory = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -105,7 +109,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
 
         foreach (var (id, amount) in entries)
         {
-            if (PrototypeManager.HasIndex<EntityPrototype>(id))
+            if (PrototypeManager.TryIndex<EntityPrototype>(id, out var proto))
             {
                 if (inventory.TryGetValue(id, out var entry))
                     // Prevent a machine's stock from going over three times
@@ -116,8 +120,24 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                     // losing the rest of the restock.
                     entry.Amount = Math.Min(entry.Amount + amount, 3 * amount);
                 else
-                    inventory.Add(id, new VendingMachineInventoryEntry(type, id, amount));
+                {
+                    var minCost = Math.Max(1, (int) GetStaticPrice(proto));
+                    inventory.Add(id, new VendingMachineInventoryEntry(type, id, amount, _random.Next(minCost, 4 * minCost)));
+                }
             }
         }
+    }
+
+    private double GetStaticPrice(EntityPrototype prototype)
+    {
+        var price = 0.0;
+
+        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StaticPriceComponent)), out var staticProto))
+        {
+            var staticPrice = (StaticPriceComponent) staticProto.Component;
+            price += staticPrice.Price;
+        }
+
+        return price;
     }
 }

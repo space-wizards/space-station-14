@@ -42,6 +42,8 @@
     noRot: false
   - type: Pullable
   - type: DamageExaminable
+  - type: StaticPrice
+    price: 10
 
 - type: entity
   name: "storage item"

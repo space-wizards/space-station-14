@@ -115,6 +115,10 @@ namespace Content.Shared.VendingMachines
         [AutoNetworkedField]
         public EntityUid? ActionEntity;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        [AutoNetworkedField]
+        public int Balance;
+
         public float NonLimitedEjectForce = 7.5f;
 
         public float NonLimitedEjectRange = 5f;
@@ -192,11 +196,14 @@ namespace Content.Shared.VendingMachines
         public string ID;
         [ViewVariables(VVAccess.ReadWrite)]
         public uint Amount;
-        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int Cost;
+        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount, int cost)
         {
             Type = type;
             ID = id;
             Amount = amount;
+            Cost = cost;
         }
     }
 
