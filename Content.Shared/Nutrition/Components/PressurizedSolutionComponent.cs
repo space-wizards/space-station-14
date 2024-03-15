@@ -90,17 +90,17 @@ public sealed partial class PressurizedSolutionComponent : Component
     /// Popup message shown to user when sprayed by the solution.
     /// </summary>
     [DataField]
-    public LocId SprayHolderMessageSelf = "pressurized-drink-spray-holder-self";
+    public LocId SprayHolderMessageSelf = "pressurized-solution-spray-holder-self";
 
     /// <summary>
     /// Popup message shown to others when a user is sprayed by the solution.
     /// </summary>
     [DataField]
-    public LocId SprayHolderMessageOthers = "pressurized-drink-spray-holder-others";
+    public LocId SprayHolderMessageOthers = "pressurized-solution-spray-holder-others";
 
     /// <summary>
     /// Popup message shown aboe the entity when the solution sprays without a target.
     /// </summary>
     [DataField]
-    public LocId SprayGroundMessage = "pressurized-drink-spray-ground";
+    public LocId SprayGroundMessage = "pressurized-solution-spray-ground";
 }
