@@ -40,7 +40,7 @@
           bounds: "-0.25,-0.4,0.25,0.1"
         density: 20
         mask:
-        - Impassable
+        - ItemMask
   - type: EntityStorage
     capacity: 1
     isCollidableWhenOpen: true
