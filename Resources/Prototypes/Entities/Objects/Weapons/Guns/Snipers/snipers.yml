@@ -11,9 +11,8 @@
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: Huge
-    storedRotation: 45
     shape:
-    - 0,0,7,1 # will only fit in dufflebags
+    - 0,0,7,0 # will only fit in dufflebags
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
     quickEquip: false
@@ -48,6 +47,10 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+  - type: Item
+    storedSprite:
+      sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+      state: storage
 
 - type: entity
   name: Hristov
