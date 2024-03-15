@@ -1,5 +1,7 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
+using Content.Shared.Access;
 
 namespace Content.Shared.Doors.Electronics;
 
@@ -11,9 +13,9 @@ public sealed partial class DoorElectronicsComponent : Component
 [Serializable, NetSerializable]
 public sealed class DoorElectronicsUpdateConfigurationMessage : BoundUserInterfaceMessage
 {
-    public List<string> accessList;
+    public List<ProtoId<AccessLevelPrototype>> accessList;
 
-    public DoorElectronicsUpdateConfigurationMessage(List<string> _accessList)
+    public DoorElectronicsUpdateConfigurationMessage(List<ProtoId<AccessLevelPrototype>> _accessList)
     {
         accessList = _accessList;
     }
@@ -22,9 +24,9 @@ public sealed class DoorElectronicsUpdateConfigurationMessage : BoundUserInterfa
 [Serializable, NetSerializable]
 public sealed class DoorElectronicsConfigurationState : BoundUserInterfaceState
 {
-    public List<string> accessList;
+    public List<ProtoId<AccessLevelPrototype>> accessList;
 
-    public DoorElectronicsConfigurationState(List<string> _accessList)
+    public DoorElectronicsConfigurationState(List<ProtoId<AccessLevelPrototype>> _accessList)
     {
         accessList = _accessList;
     }

@@ -12,9 +12,9 @@ namespace Content.Client.Access.UI;
 [GenerateTypedNameReferences]
 public sealed partial class AccessLevelControl : GridContainer
 {
-    public readonly Dictionary<string, Button> ButtonsList = new();
+    public readonly Dictionary<ProtoId<AccessLevelPrototype>, Button> ButtonsList = new();
 
-    public AccessLevelControl(List<string> accessLevels, IPrototypeManager prototypeManager)
+    public AccessLevelControl(List<ProtoId<AccessLevelPrototype>> accessLevels, IPrototypeManager prototypeManager)
     {
         RobustXamlLoader.Load(this);
         foreach (var access in accessLevels)
@@ -44,8 +44,8 @@ public sealed partial class AccessLevelControl : GridContainer
     }
 
     public void UpdateState(
-        List<string> pressedList,
-        List<string>? enabledList = null)
+        List<ProtoId<AccessLevelPrototype>> pressedList,
+        List<ProtoId<AccessLevelPrototype>>? enabledList = null)
     {
         foreach (var (accessName, button) in ButtonsList)
         {

@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Doors.Electronics;
+using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.DeviceNetwork.Components;
@@ -7,6 +8,7 @@ using Content.Shared.Doors.Electronics;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Doors.Electronics;
 
@@ -25,15 +27,13 @@ public sealed class DoorElectronicsSystem : EntitySystem
 
     public void UpdateUserInterface(EntityUid uid, DoorElectronicsComponent component)
     {
-        var accesses = new List<string>();
+        var accesses = new List<ProtoId<AccessLevelPrototype>>();
 
         if (TryComp<AccessReaderComponent>(uid, out var accessReader))
         {
             foreach (var accessList in accessReader.AccessLists)
             {
                 var access = accessList.FirstOrDefault();
-                if (access == null)
-                    continue;
                 accesses.Add(access);
             }
         }

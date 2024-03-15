@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Popups;
+using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
@@ -12,6 +13,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using static Content.Shared.Access.Components.AccessOverriderComponent;
 
 namespace Content.Server.Access.Systems;
@@ -110,9 +112,9 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         var targetLabel = Loc.GetString("access-overrider-window-no-target");
         var targetLabelColor = Color.Red;
 
-        string[]? possibleAccess = null;
-        string[]? currentAccess = null;
-        string[]? missingAccess = null;
+        List<ProtoId<AccessLevelPrototype>>? possibleAccess = null;
+        List<ProtoId<AccessLevelPrototype>>? currentAccess = null;
+        List<ProtoId<AccessLevelPrototype>>? missingAccess = null;
 
         if (component.TargetAccessReaderId is { Valid: true } accessReader)
         {
@@ -122,8 +124,8 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             if (!_accessReader.GetMainAccessReader(accessReader, out var accessReaderComponent))
                 return;
 
-            List<HashSet<string>> currentAccessHashsets = accessReaderComponent.AccessLists;
-            currentAccess = ConvertAccessHashSetsToList(currentAccessHashsets)?.ToArray();
+            List<HashSet<ProtoId<AccessLevelPrototype>>> currentAccessHashsets = accessReaderComponent.AccessLists;
+            currentAccess = ConvertAccessHashSetsToList(currentAccessHashsets)?.ToList();
         }
 
         if (component.PrivilegedIdSlot.Item is { Valid: true } idCard)
@@ -132,12 +134,12 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
 
             if (component.TargetAccessReaderId is { Valid: true })
             {
-                possibleAccess = _accessReader.FindAccessTags(idCard).ToArray();
+                possibleAccess = _accessReader.FindAccessTags(idCard).ToList();
             }
 
             if (currentAccess != null && possibleAccess != null)
             {
-                missingAccess = currentAccess.Except(possibleAccess).ToArray();
+                missingAccess = currentAccess.Except(possibleAccess).ToList();
             }
         }
 
@@ -156,15 +158,15 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         _userInterface.TrySetUiState(uid, AccessOverriderUiKey.Key, newState);
     }
 
-    private List<string> ConvertAccessHashSetsToList(List<HashSet<string>> accessHashsets)
+    private List<ProtoId<AccessLevelPrototype>> ConvertAccessHashSetsToList(List<HashSet<ProtoId<AccessLevelPrototype>>> accessHashsets)
     {
-        List<string> accessList = new List<string>();
+        List<ProtoId<AccessLevelPrototype>> accessList = new List<ProtoId<AccessLevelPrototype>>();
 
         if (accessHashsets != null && accessHashsets.Any())
         {
-            foreach (HashSet<string> hashSet in accessHashsets)
+            foreach (HashSet<ProtoId<AccessLevelPrototype>> hashSet in accessHashsets)
             {
-                foreach (string hash in hashSet.ToArray())
+                foreach (ProtoId<AccessLevelPrototype> hash in hashSet.ToArray())
                 {
                     accessList.Add(hash);
                 }
@@ -174,15 +176,15 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         return accessList;
     }
 
-    private List<HashSet<string>> ConvertAccessListToHashSet(List<string> accessList)
+    private List<HashSet<ProtoId<AccessLevelPrototype>>> ConvertAccessListToHashSet(List<ProtoId<AccessLevelPrototype>> accessList)
     {
-        List<HashSet<string>> accessHashsets = new List<HashSet<string>>();
+        List<HashSet<ProtoId<AccessLevelPrototype>>> accessHashsets = new List<HashSet<ProtoId<AccessLevelPrototype>>>();
 
         if (accessList != null && accessList.Any())
         {
-            foreach (string access in accessList)
+            foreach (ProtoId<AccessLevelPrototype> access in accessList)
             {
-                accessHashsets.Add(new HashSet<string>() { access });
+                accessHashsets.Add(new HashSet<ProtoId<AccessLevelPrototype>>() { access });
             }
         }
 
@@ -193,7 +195,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
     /// Called whenever an access button is pressed, adding or removing that access requirement from the target access reader.
     /// </summary>
     private void TryWriteToTargetAccessReaderId(EntityUid uid,
-        List<string> newAccessList,
+        List<ProtoId<AccessLevelPrototype>> newAccessList,
         EntityUid player,
         AccessOverriderComponent? component = null)
     {

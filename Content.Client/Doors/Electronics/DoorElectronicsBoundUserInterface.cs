@@ -18,13 +18,13 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        List<string> accessLevels = new();
+        List<ProtoId<AccessLevelPrototype>> accessLevels = new();
 
         foreach (var accessLevel in _prototypeManager.EnumeratePrototypes<AccessLevelPrototype>())
         {
             if (accessLevel.Name != null)
             {
-                accessLevels.Add(new string(accessLevel.ID));
+                accessLevels.Add(accessLevel.ID);
             }
         }
 
@@ -52,7 +52,7 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
         _window?.Dispose();
     }
 
-    public void UpdateConfiguration(List<string> newAccessList)
+    public void UpdateConfiguration(List<ProtoId<AccessLevelPrototype>> newAccessList)
     {
         SendMessage(new DoorElectronicsUpdateConfigurationMessage(newAccessList));
     }
