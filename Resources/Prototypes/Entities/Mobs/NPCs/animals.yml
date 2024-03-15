@@ -1681,6 +1681,36 @@
         Base: splat-2
 
 - type: entity
+  name: cancer mouse
+  description: It's Cancer Mouse, everybody!
+  parent: MobMouse
+  id: MobMouseCancer
+  components:
+  - type: PointLight
+    color: LightGreen
+    radius: 5
+    energy: 5
+    netsync: false
+  - type: RadiationSource
+    intensity: 1
+  - type: Bloodstream
+    bloodReagent: UnstableMutagen
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+        - ReagentId: Uranium
+          Quantity: 10
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatRat
+      amount: 1
+    - id: SheetUranium
+      amount: 1
+
+- type: entity
   name: lizard #Weh
   parent: SimpleMobBase
   id: MobLizard
