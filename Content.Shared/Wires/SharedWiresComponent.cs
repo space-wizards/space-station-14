@@ -209,42 +209,12 @@ namespace Content.Shared.Wires
     {
         public static string Name(this WireColor color)
         {
-            return Loc.GetString(color switch
-            {
-                WireColor.Red => "Red",
-                WireColor.Blue => "Blue",
-                WireColor.Green => "Green",
-                WireColor.Orange => "Orange",
-                WireColor.Brown => "Brown",
-                WireColor.Gold => "Gold",
-                WireColor.Gray => "Gray",
-                WireColor.Cyan => "Cyan",
-                WireColor.Navy => "Navy",
-                WireColor.Purple => "Purple",
-                WireColor.Pink => "Pink",
-                WireColor.Fuchsia => "Fuchsia",
-                _ => throw new InvalidOperationException()
-            });
+            return Loc.GetString("Green");
         }
 
         public static Color ColorValue(this WireColor color)
         {
-            return color switch
-            {
-                WireColor.Red => Color.Red,
-                WireColor.Blue => Color.Blue,
-                WireColor.Green => Color.LimeGreen,
-                WireColor.Orange => Color.Orange,
-                WireColor.Brown => Color.Brown,
-                WireColor.Gold => Color.Gold,
-                WireColor.Gray => Color.Gray,
-                WireColor.Cyan => Color.Cyan,
-                WireColor.Navy => Color.Navy,
-                WireColor.Purple => Color.Purple,
-                WireColor.Pink => Color.Pink,
-                WireColor.Fuchsia => Color.Fuchsia,
-                _ => throw new InvalidOperationException()
-            };
+            return Color.LimeGreen;
         }
 
         public static string Name(this WireLetter letter)
