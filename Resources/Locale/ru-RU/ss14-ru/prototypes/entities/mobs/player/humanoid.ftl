@@ -48,3 +48,6 @@ ent-RandomHumanoidSpawnerCluwne = Клувень
 ent-RandomHumanoidSpawnerDeathSquad = Агент эскадрона смерти
     .suffix = ОБР, Эскадрон
     .desc = { "" }
+ent-RandomHumanoidSpawnerTSFNavy = Рекрут ТСФ
+    .suffix = ТСФ, EVA
+    .desc = { "" }
