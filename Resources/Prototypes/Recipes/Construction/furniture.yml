@@ -119,6 +119,142 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: black comfy chair
+  id: BlackChairComfy
+  graph: Seat
+  startNode: start
+  targetNode: blackChairComfy
+  category: construction-category-furniture
+  description: It looks comfy.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: comfy-greyscale
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: blue comfy chair
+  id: BlueChairComfy
+  graph: Seat
+  startNode: start
+  targetNode: blueChairComfy
+  category: construction-category-furniture
+  description: It looks comfy.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: comfy-greyscale
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: green comfy chair
+  id: GreenChairComfy
+  graph: Seat
+  startNode: start
+  targetNode: greenChairComfy
+  category: construction-category-furniture
+  description: It looks comfy.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: comfy-greyscale
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: orange comfy chair
+  id: OrangeChairComfy
+  graph: Seat
+  startNode: start
+  targetNode: orangeChairComfy
+  category: construction-category-furniture
+  description: It looks comfy.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: comfy-greyscale
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: pink comfy chair
+  id: PinkChairComfy
+  graph: Seat
+  startNode: start
+  targetNode: pinkChairComfy
+  category: construction-category-furniture
+  description: It looks comfy.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: comfy-greyscale
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: purple comfy chair
+  id: PurpleChairComfy
+  graph: Seat
+  startNode: start
+  targetNode: purpleChairComfy
+  category: construction-category-furniture
+  description: It looks comfy.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: comfy-greyscale
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: red comfy chair
+  id: RedChairComfy
+  graph: Seat
+  startNode: start
+  targetNode: redChairComfy
+  category: construction-category-furniture
+  description: It looks comfy.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: comfy-greyscale
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: white comfy chair
+  id: WhiteChairComfy
+  graph: Seat
+  startNode: start
+  targetNode: whiteChairComfy
+  category: construction-category-furniture
+  description: It looks comfy.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: comfy-greyscale
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: pilots chair
   id: chairPilotSeat
   graph: Seat
@@ -248,6 +384,142 @@
   icon:
     sprite: Structures/Furniture/Bench/comf_bench.rsi
     state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: black padded stool
+  id: BlackPaddedStool
+  graph: Seat
+  startNode: start
+  targetNode: blackPaddedStool
+  category: construction-category-furniture
+  description: Soft bag chair, comfortable!
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: pufi-greyscale
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: blue padded stool
+  id: BluePaddedStool
+  graph: Seat
+  startNode: start
+  targetNode: bluePaddedStool
+  category: construction-category-furniture
+  description: Soft bag chair, comfortable!
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: pufi-greyscale
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: green padded stool
+  id: GreenPaddedStool
+  graph: Seat
+  startNode: start
+  targetNode: greenPaddedStool
+  category: construction-category-furniture
+  description: Soft bag chair, comfortable!
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: pufi-greyscale
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: orange padded stool
+  id: OrangePaddedStool
+  graph: Seat
+  startNode: start
+  targetNode: orangePaddedStool
+  category: construction-category-furniture
+  description: Soft bag chair, comfortable!
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: pufi-greyscale
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: pink padded stool
+  id: PinkPaddedStool
+  graph: Seat
+  startNode: start
+  targetNode: pinkPaddedStool
+  category: construction-category-furniture
+  description: Soft bag chair, comfortable!
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: pufi-greyscale
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: purple padded stool
+  id: PurplePaddedStool
+  graph: Seat
+  startNode: start
+  targetNode: purplePaddedStool
+  category: construction-category-furniture
+  description: Soft bag chair, comfortable!
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: pufi-greyscale
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: red padded stool
+  id: RedPaddedStool
+  graph: Seat
+  startNode: start
+  targetNode: redPaddedStool
+  category: construction-category-furniture
+  description: Soft bag chair, comfortable!
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: pufi-greyscale
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: white padded stool
+  id: WhitePaddedStool
+  graph: Seat
+  startNode: start
+  targetNode: whitePaddedStool
+  category: construction-category-furniture
+  description: Soft bag chair, comfortable!
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: pufi-greyscale
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
