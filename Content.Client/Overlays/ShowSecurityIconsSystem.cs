@@ -6,6 +6,7 @@ using Content.Shared.PDA;
 using Content.Shared.Security.Components;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
+using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
@@ -13,6 +14,7 @@ namespace Content.Client.Overlays;
 public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
     [ValidatePrototypeId<StatusIconPrototype>]
@@ -32,12 +34,20 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
             return;
         }
 
-        var securityIcons = DecideSecurityIcon(uid);
+        @event.StatusIcons.AddRange(GetSecurityIcons(uid));
 
-        @event.StatusIcons.AddRange(securityIcons);
+        var canDisplayEv = new CanDisplayStatusIconsEvent(_player.LocalSession?.AttachedEntity);
+        RaiseLocalEvent(ref canDisplayEv);
+
+        if (canDisplayEv.Cancelled)
+        {
+            return;
+        }
+
+        @event.StatusIcons.AddRange(GetCancellableSecurityIcons(uid));
     }
 
-    private IReadOnlyList<StatusIconPrototype> DecideSecurityIcon(EntityUid uid)
+    private IReadOnlyList<StatusIconPrototype> GetSecurityIcons(EntityUid uid)
     {
         var result = new List<StatusIconPrototype>();
 
@@ -75,9 +85,16 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
                 result.Add(icon);
         }
 
+        return result;
+    }
+
+    private IReadOnlyList<StatusIconPrototype> GetCancellableSecurityIcons(EntityUid uid)
+    {
+        var result = new List<StatusIconPrototype>();
+
         if (TryComp<CriminalRecordComponent>(uid, out var record))
         {
-            if(_prototypeMan.TryIndex<StatusIconPrototype>(record.StatusIcon.Id, out var criminalIcon))
+            if (_prototypeMan.TryIndex<StatusIconPrototype>(record.StatusIcon.Id, out var criminalIcon))
                 result.Add(criminalIcon);
         }
 
