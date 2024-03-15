@@ -30,7 +30,7 @@ public sealed partial class RCDComponent : Component
     /// The ProtoId of the currently selected RCD prototype
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<RCDPrototype> ProtoId = default!;
+    public ProtoId<RCDPrototype> ProtoId = "Invalid";
 
     /// <summary>
     /// A cached copy of currently selected RCD prototype

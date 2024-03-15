@@ -1,5 +1,9 @@
 # Operations
 - type: rcd
+  id: Invalid   # Hidden prototype - do not add to RCDs
+  mode: Invalid
+  
+- type: rcd
   id: Deconstruct
   name: rcd-component-deconstruct
   category: Main

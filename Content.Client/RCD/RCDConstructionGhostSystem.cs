@@ -70,12 +70,15 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
             return;
         }
 
-        if (rcd == null || _constructionPrototype != rcd.ProtoId)
+        if (rcd is null)
+            return;
+
+        if (_constructionPrototype != rcd.ProtoId)
         {
             DeleteConstructionGhost();
 
-            _constructionPrototype = rcd!.ProtoId;
-            _protoManager.TryIndex(rcd!.ProtoId, out _cachedPrototype);
+            _constructionPrototype = rcd.ProtoId;
+            _protoManager.TryIndex(rcd.ProtoId, out _cachedPrototype);            
         }
 
         if (_cachedPrototype?.GhostSprite == null)

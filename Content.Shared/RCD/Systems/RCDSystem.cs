@@ -72,11 +72,9 @@ public class RCDSystem : EntitySystem
         // On init, set the RCD to its first available recipe
         if (component.AvailablePrototypes.Any())
         {
-            var protoId = component.AvailablePrototypes.First();
-            var proto = _protoManager.Index(protoId);
+            component.ProtoId = component.AvailablePrototypes.First();
+            component.CachedPrototype = _protoManager.Index(component.ProtoId);
 
-            component.ProtoId = protoId;
-            component.CachedPrototype = proto;
             Dirty(uid, component);
 
             return;
@@ -115,6 +113,10 @@ public class RCDSystem : EntitySystem
     {
         if (!args.IsInDetailsRange)
             return;
+
+        // Update cached prototype if required
+        if (component.ProtoId.Id != component.CachedPrototype?.Prototype)
+            component.CachedPrototype = _protoManager.Index(component.ProtoId);
 
         var msg = (component.CachedPrototype.Prototype != null) ?
             Loc.GetString("rcd-component-examine-build-details", ("name", Loc.GetString(component.CachedPrototype.SetName))) :
