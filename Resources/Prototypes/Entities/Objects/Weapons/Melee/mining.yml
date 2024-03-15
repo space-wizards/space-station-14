@@ -81,8 +81,6 @@
     damage:
       types:
         Slash: 15
-  - type: Item
-    size: Small
   - type: Tag
     tags:
     - Knife
