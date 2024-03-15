@@ -627,6 +627,7 @@
   name: TSF hardsuit helmet
   description: Armored hardsuit helmet for millitary needs.
   components:
+  - type: BreathMask
   - type: Sprite
     sprite: Ganimed/Clothing/Head/Hardsuits/tsf.rsi
   - type: Clothing
