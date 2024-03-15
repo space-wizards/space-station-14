@@ -17,19 +17,19 @@ public sealed partial class RCDComponent : Component
     /// <summary>
     /// List of RCD prototypes that the device comes loaded with
     /// </summary>
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public HashSet<ProtoId<RCDPrototype>> AvailablePrototypes = new();
 
     /// <summary>
     /// Sound that plays when a RCD operation successfully completes
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public SoundSpecifier SuccessSound = new SoundPathSpecifier("/Audio/Items/deconstruct.ogg");
 
     /// <summary>
     /// The ProtoId of the currently selected RCD prototype
     /// </summary>
-    [AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, AutoNetworkedField]
     public ProtoId<RCDPrototype> ProtoId = default!;
 
     /// <summary>
@@ -44,6 +44,6 @@ public sealed partial class RCDComponent : Component
     /// <summary>
     /// The direction constructed entities will face upon spawning
     /// </summary>
-    [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public Direction ConstructionDirection = Direction.South;
 }

@@ -28,6 +28,8 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
     [Dependency] private readonly RCDSystem _rcdSystem = default!;
 
     private EntityUid? _constructionGhost = null;
+    private Vector2i _constructionGhostPosition = default;
+    private Direction _constructionGhostDirection = default;
     private ProtoId<RCDPrototype>? _constructionPrototype = null;
     private RCDPrototype? _cachedPrototype = null;
     private bool _isKeyBindActive = false;
@@ -137,11 +139,19 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
         if (TryComp(_constructionGhost.Value, out sprite))
             sprite.Color = isValid ? _validConstructionColor : _invalidConstructionColor;
 
-        // Update the construction ghost position and rotation
-        _transformSystem.SetWorldPosition(_constructionGhost.Value, tileWorldPosition);
+        // Update the construction ghost position and rotation if they have changed
+        if (_constructionGhostPosition != mapGridData.Value.Position)
+        {
+            _constructionGhostPosition = mapGridData.Value.Position;
+            _transformSystem.SetWorldPosition(_constructionGhost.Value, tileWorldPosition);
+        }
 
-        if (_cachedPrototype.Rotation == RcdRotation.User)
-            _transformSystem.SetLocalRotation(_constructionGhost.Value, rcd!.ConstructionDirection.ToAngle());
+        if (_constructionGhostDirection != rcd.ConstructionDirection &&
+            _cachedPrototype.Rotation == RcdRotation.User)
+        {
+            _constructionGhostDirection = rcd.ConstructionDirection;
+            _transformSystem.SetLocalRotation(_constructionGhost.Value, rcd.ConstructionDirection.ToAngle());
+        }
     }
 
     // Work around to capture player input

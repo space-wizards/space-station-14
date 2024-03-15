@@ -56,7 +56,7 @@ public class RCDSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RCDComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<RCDComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RCDComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RCDComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<RCDComponent, RCDDoAfterEvent>(OnDoAfter);
@@ -67,21 +67,19 @@ public class RCDSystem : EntitySystem
 
     #region Event handling
 
-    private void OnInit(EntityUid uid, RCDComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, RCDComponent component, MapInitEvent args)
     {
         // On init, set the RCD to its first available recipe
-        foreach (var protoId in component.AvailablePrototypes)
+        if (component.AvailablePrototypes.Any())
         {
+            var protoId = component.AvailablePrototypes.First();
             var proto = _protoManager.Index(protoId);
 
-            if (proto != null)
-            {
-                component.ProtoId = protoId;
-                component.CachedPrototype = proto;
-                Dirty(uid, component);
+            component.ProtoId = protoId;
+            component.CachedPrototype = proto;
+            Dirty(uid, component);
 
-                return;
-            }
+            return;
         }
 
         // The RCD has no valid recipes somehow? Get rid of it
@@ -109,7 +107,7 @@ public class RCDSystem : EntitySystem
                 Loc.GetString("rcd-component-change-build-mode", ("name", Loc.GetString(component.CachedPrototype.SetName))) :
                 Loc.GetString("rcd-component-change-mode", ("mode", Loc.GetString(component.CachedPrototype.SetName)));
 
-            _popup.PopupEntity(msg, uid, args.Session.AttachedEntity.Value);
+            _popup.PopupClient(msg, uid, args.Session.AttachedEntity.Value);
         }
     }
 
@@ -134,9 +132,6 @@ public class RCDSystem : EntitySystem
         var location = args.ClickLocation;
 
         // Initial validity checks
-        //if (!_gameTiming.IsFirstTimePredicted)
-        //    return;
-
         if (!location.IsValid(EntityManager))
             return;
 
@@ -291,8 +286,8 @@ public class RCDSystem : EntitySystem
 
     public bool IsRCDOperationStillValid(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid? target, EntityUid user, bool popMsgs = true)
     {
-        // Update cached prototype if required (should only be needed by the client, for prediction)
-        if (component.ProtoId.Id != component.CachedPrototype.Prototype)
+        // Update cached prototype if required
+        if (component.ProtoId.Id != component.CachedPrototype?.Prototype)
             component.CachedPrototype = _protoManager.Index(component.ProtoId);
 
         // Check that the RCD has enough ammo to get the job done
@@ -403,31 +398,21 @@ public class RCDSystem : EntitySystem
             {
                 foreach ((var _, var fixture) in fixtures.Fixtures)
                 {
-                    // No collision possible
-                    if (Prototype(ent)?.ID != component.CachedPrototype.Prototype &&
-                        (fixture.CollisionLayer <= 0 || (fixture.CollisionLayer & (int) component.CachedPrototype.CollisionMask) == 0))
+                    // Continue if no collision is possible
+                    if ((fixture.CollisionLayer <= 0 || (fixture.CollisionLayer & (int) component.CachedPrototype.CollisionMask) == 0))
                         continue;
 
-                    // Check for custom collision bounds
+                    // Continue if our custom collision bounds are not intersected
                     if (component.CachedPrototype.CollisionBounds != null &&
                         !DoesCustomBoundsIntersectWithFixture(component.CachedPrototype.CollisionBounds.Value, constructionAngle, ent, fixture))
                         continue;
 
-                    // Collision detected
+                    // Collision was detected
                     if (popMsgs)
                         _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-space-is-occupied-message"), uid, user);
 
                     return false;
                 }
-            }
-
-            else if (Prototype(ent)?.ID == component.CachedPrototype.Prototype)
-            {
-                // Collision detected
-                if (popMsgs)
-                    _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-space-is-occupied-message"), uid, user);
-
-                return false;
             }
         }
 
@@ -494,15 +479,18 @@ public class RCDSystem : EntitySystem
         if (!_net.IsServer)
             return;
 
+        if (component.CachedPrototype.Prototype == null)
+            return;
+
         switch (component.CachedPrototype.Mode)
         {
             case RcdMode.ConstructTile:
-                _mapSystem.SetTile(mapGridData.GridUid, mapGridData.Component, mapGridData.Position, new Tile(_tileDefMan[component.CachedPrototype.Prototype!].TileId));
+                _mapSystem.SetTile(mapGridData.GridUid, mapGridData.Component, mapGridData.Position, new Tile(_tileDefMan[component.CachedPrototype.Prototype].TileId));
                 _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to set grid: {mapGridData.GridUid} {mapGridData.Position} to {component.CachedPrototype.Prototype}");
                 break;
 
             case RcdMode.ConstructObject:
-                var ent = Spawn(component.CachedPrototype.Prototype!, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
+                var ent = Spawn(component.CachedPrototype.Prototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
 
                 switch (component.CachedPrototype.Rotation)
                 {
