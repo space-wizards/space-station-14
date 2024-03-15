@@ -126,8 +126,8 @@
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlassesCheapSunglasses
-  name: cheap sun glasses
-  description: A pair of black sunglasses. Doesn't block light, more of an accessory than something useful.
+  name: cheap sunglasses
+  description: A pair of black sunglasses. Doesn't block light well, more of an accessory than something useful.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/sunglasses.rsi
