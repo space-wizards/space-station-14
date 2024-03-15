@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Created by TheShuEd for Space Station 14",
+  "copyright": "The sprite base is taken from  tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039, separated into layers and added new ones by TheShuEd (github)",
   "size": {
     "x": 32,
     "y": 32
