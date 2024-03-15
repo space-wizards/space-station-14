@@ -158,6 +158,14 @@
     access: [["Atmospherics"]]
 
 - type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureAtmosphericsLocked
+  suffix: Atmospherics, Locked, Plasma
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
   parent: WindoorSecure
   id: WindoorSecureBarLocked
   suffix: Bar, Locked
