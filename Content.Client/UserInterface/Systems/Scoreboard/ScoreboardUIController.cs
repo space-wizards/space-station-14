@@ -14,8 +14,8 @@ namespace Content.Client.UserInterface.Scoreboard;
 public sealed class ScoreboardUIController : UIController, IOnStateEntered<LobbyState>, IOnStateEntered<GameplayState>, IOnStateExited<LobbyState>, IOnStateExited<GameplayState>
 {
 
-    [Dependency] private readonly IInputManager _input = default!;
-    [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+    [UISystemDependency] private readonly IInputManager _input = default!;
+    [UISystemDependency] private readonly IEntitySystemManager _entitySystem = default!;
     private ClientGameTicker _gameTicker = default!;
 
     public void OnStateEntered(LobbyState state)
