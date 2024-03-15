@@ -698,7 +698,7 @@
   id: HighSecDoor
 
 - type: Tag
-  id: Hi-Viz
+  id: HiViz
 
 - type: Tag
   id: Hoe
@@ -771,9 +771,6 @@
 
 - type: Tag
   id: Knife
-
-- type: Tag
-  id: LaceUpShoes
 
 - type: Tag
   id: LavaBrig
