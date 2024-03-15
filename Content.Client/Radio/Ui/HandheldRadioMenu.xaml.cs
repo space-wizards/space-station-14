@@ -27,15 +27,12 @@ public sealed partial class HandheldRadioMenu : FancyWindow
         FrequencyLineEdit.OnFocusExit += e => OnFrequencyChanged?.Invoke(e.Text);
     }
 
-    public void SetCurrentLabel(string label)
-    {
-        FrequencyLineEdit.Text = label;
-    }
 
     public void Update(HandheldRadioBoundUIState state)
     {
         MicButton.Pressed = state.MicEnabled;
         SpeakerButton.Pressed = state.SpeakerEnabled;
+        FrequencyLineEdit.Text = state.Frequency.ToString();
     }
 }
 
