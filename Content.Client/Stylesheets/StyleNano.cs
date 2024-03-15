@@ -927,6 +927,14 @@ namespace Content.Client.Stylesheets
                 }),
 
                 new StyleRule(new SelectorChild(
+                    new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "whisperBox"}, null, null),
+                    new SelectorElement(typeof(RichTextLabel), new[] {"bubbleContent"}, null, null)),
+                    new[]
+                {
+                    new StyleProperty("font", notoSansItalic12),
+                }),
+
+                new StyleRule(new SelectorChild(
                     new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "emoteBox"}, null, null),
                     new SelectorElement(typeof(RichTextLabel), null, null, null)),
                     new[]
