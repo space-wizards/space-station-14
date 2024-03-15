@@ -57,29 +57,25 @@ public sealed partial class WoundComponent : Component
     /// How much integrity damage are we applying, expressed as a percentage (/100) of applied damage.
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public FixedPoint2 MaxIntegrityDamage;
+    public FixedPoint2 DamageToIntegrity;
 
     /// <summary>
     /// How much are we decreasing our woundables health cap, expressed as a percentage (/100) of applied damage
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public FixedPoint2 MaxHealthDebuff;
+    public FixedPoint2 MaxHealthDecrease;
 
     /// <summary>
     /// How much are we decreasing our woundables integrity cap, expressed as a percentage (/100) of applied damage
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public FixedPoint2 MaxIntegrityDebuff;
-    /// <summary>
-    /// How much the integrity damage gets applied, modified by severity
-    /// </summary>
-    public FixedPoint2 IntegrityDamage => Severity * MaxIntegrityDamage / 100;
+    public FixedPoint2 MaxIntegrityDecrease;
     /// <summary>
     /// How much the healthcap gets decreased, modified by severity
     /// </summary>
-    public FixedPoint2 HealthDebuff => Severity * MaxHealthDebuff / 100;
+    public FixedPoint2 HealthDecrease => Severity * MaxHealthDecrease / 100;
     /// <summary>
     /// How much the integrity cap gets decreased, modified by severity
     /// </summary>
-    public FixedPoint2 IntegrityDebuff => Severity * MaxIntegrityDebuff / 100;
+    public FixedPoint2 IntegrityDecrease => Severity * MaxIntegrityDecrease / 100;
 }

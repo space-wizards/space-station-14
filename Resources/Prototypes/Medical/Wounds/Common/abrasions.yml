@@ -1,0 +1,27 @@
+﻿
+- type: entity
+  id: MinorAbrasion
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+    damageToIntegrity: 0
+    maxHealthDecrease: 0
+    maxIntegrityDecrease: 0
+
+- type: entity
+  id: Abrasion
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+    damageToIntegrity: 0
+    maxHealthDecrease: 0
+    maxIntegrityDecrease: 0
+
+- type: entity
+  id: SevereAbrasion
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+    damageToIntegrity: 0
+    maxHealthDecrease: 0
+    maxIntegrityDecrease: 0

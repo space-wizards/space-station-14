@@ -1,0 +1,26 @@
+﻿- type: entity
+  id: MinorBlister
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+    damageToIntegrity: 0
+    maxHealthDecrease: 0
+    maxIntegrityDecrease: 0
+
+- type: entity
+  id: Blister
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+    damageToIntegrity: 0
+    maxHealthDecrease: 0
+    maxIntegrityDecrease: 0
+
+- type: entity
+  id: SevereBlister
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+    damageToIntegrity: 0
+    maxHealthDecrease: 0
+    maxIntegrityDecrease: 0

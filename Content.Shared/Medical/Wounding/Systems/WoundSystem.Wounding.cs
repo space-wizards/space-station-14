@@ -81,9 +81,9 @@ public sealed partial class WoundSystem
         {
             var onWoundHealed = new WoundFullyHealedEvent(woundable, wound);
             RaiseRelayedLocalEvent(woundable, wound, ref onWoundHealed);
-            woundable.Comp.HealthCap += wound.Comp.HealthDebuff/100 * wound.Comp.AppliedDamage;
-            woundable.Comp.IntegrityCap += wound.Comp.IntegrityDebuff/100 * wound.Comp.AppliedDamage;
-            woundable.Comp.Integrity += wound.Comp.IntegrityDamage/100 * wound.Comp.AppliedDamage;
+            woundable.Comp.HealthCap += wound.Comp.HealthDecrease/100 * wound.Comp.AppliedDamage;
+            woundable.Comp.IntegrityCap += wound.Comp.IntegrityDecrease/100 * wound.Comp.AppliedDamage;
+            //woundable.Comp.Integrity += wound.Comp.DamageToIntegrity/100 * wound.Comp.AppliedDamage;
         }
         else
         {
@@ -208,8 +208,8 @@ public sealed partial class WoundSystem
     private void ApplyWoundEffects(Entity<WoundComponent> wound, Entity<WoundableComponent> woundable, ProtoId<DamageTypePrototype> damageType)
     {
         woundable.Comp.LastAppliedDamageType = damageType;
-        woundable.Comp.HealthCap -= wound.Comp.HealthDebuff/100 * wound.Comp.AppliedDamage;
-        woundable.Comp.IntegrityCap -= wound.Comp.IntegrityDebuff/100 * wound.Comp.AppliedDamage;
+        woundable.Comp.HealthCap -= wound.Comp.HealthDecrease/100 * wound.Comp.AppliedDamage;
+        woundable.Comp.IntegrityCap -= wound.Comp.IntegrityDecrease/100 * wound.Comp.AppliedDamage;
         woundable.Comp.Integrity -= wound.Comp.IntegrityDamage/100 * wound.Comp.AppliedDamage;
         if (woundable.Comp.Health > woundable.Comp.HealthCap)
             SetWoundableHealth(new Entity<WoundableComponent?>(woundable, woundable.Comp), woundable.Comp.HealthCap);

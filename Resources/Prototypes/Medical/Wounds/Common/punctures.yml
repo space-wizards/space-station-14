@@ -1,0 +1,26 @@
+﻿- type: entity
+  id: MinorPunctureWound
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+    damageToIntegrity: 0
+    maxHealthDecrease: 0
+    maxIntegrityDecrease: 0
+
+- type: entity
+  id: PunctureWound
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+    damageToIntegrity: 0
+    maxHealthDecrease: 0
+    maxIntegrityDecrease: 0
+
+- type: entity
+  id: SeverePunctureWound
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+    damageToIntegrity: 0
+    maxHealthDecrease: 0
+    maxIntegrityDecrease: 0

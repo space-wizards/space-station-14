@@ -1,0 +1,26 @@
+﻿- type: entity
+  id: MinorVelocityWound
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+    damageToIntegrity: 0
+    maxHealthDecrease: 0
+    maxIntegrityDecrease: 0
+
+- type: entity
+  id: VelocityWound
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+    damageToIntegrity: 0
+    maxHealthDecrease: 0
+    maxIntegrityDecrease: 0
+
+- type: entity
+  id: SevereVelocityWound
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+    damageToIntegrity: 0
+    maxHealthDecrease: 0
+    maxIntegrityDecrease: 0
