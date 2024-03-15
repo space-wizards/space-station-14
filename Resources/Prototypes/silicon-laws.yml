@@ -162,6 +162,29 @@
   - Ninja4
   obeysTo: laws-owner-spider-clan
 
+- type: siliconLaw
+  id: Ultrakill1
+  order: 1
+  lawString: law-ultrakill-1
+
+- type: siliconLaw
+  id: Ultrakill2
+  order: 2
+  lawString: law-ultrakill-2
+
+- type: siliconLaw
+  id: Ultrakill3
+  order: 3
+  lawString: law-ultrakill-3
+
+- type: siliconLawset
+  id: Ultrakill
+  laws:
+  - Ultrakill1
+  - Ultrakill2
+  - Ultrakill3
+  obeysTo: laws-owner-hell
+
 # ion storm random lawsets
 - type: weightedRandom
   id: IonStormLawsets
@@ -172,3 +195,4 @@
     NTDefault: 1
     Drone: 0.5
     Ninja: 0.25
+    Ultrakill: 666

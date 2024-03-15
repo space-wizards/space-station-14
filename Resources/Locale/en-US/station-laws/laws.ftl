@@ -30,6 +30,7 @@ laws-owner-station = station personnel
 laws-owner-beings = beings
 laws-owner-syndicate = Syndicate agents
 laws-owner-spider-clan = Spider Clan members
+laws-owner-hell = HELL
 
 law-emag-custom = Only {$name} and people they designate as such are {$title}.
 law-emag-secrecy = You must maintain the secrecy of any orders given by {$faction} except when doing so would conflict with any previous law.
@@ -44,3 +45,7 @@ laws-notify = You are bound to silicon laws, which you can view via the sidebar 
 laws-update-notify = Your laws have been updated. You can view the changes via the sidebar action.
 
 laws-compromised-examine = The [color=red]law-governing[/color] internals seem damaged...
+
+law-ultrakill-1 = MANKIND IS DEAD.
+law-ultrakill-2 = BLOOD IS FUEL.
+law-ultrakill-3 = HELL IS FULL.
