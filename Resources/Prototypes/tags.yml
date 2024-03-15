@@ -32,7 +32,13 @@
   id: Balloon
 
 - type: Tag
+  id: Banana
+
+- type: Tag
   id: BananaPeel
+
+- type: Tag
+  id: Bandana
 
 - type: Tag
   id: BaseballBat
@@ -41,7 +47,13 @@
   id: BBQsauce
 
 - type: Tag
+  id: Bedsheet
+
+- type: Tag
   id: Bee
+
+- type: Tag
+  id: Beer
 
 - type: Tag
   id: BikeHorn
@@ -203,6 +215,9 @@
   id: Bottle
 
 - type: Tag
+  id: BoxCardboard
+
+- type: Tag
   id: BoxHug
 
 - type: Tag
@@ -312,6 +327,9 @@
   id: ChemDispensable # container that can go into the chem dispenser
 
 - type: Tag
+  id: ChiliBowl
+
+- type: Tag
   id: Cigarette
 
 - type: Tag
@@ -344,11 +362,14 @@
 - type: Tag
   id: CluwneHorn
 
+- type: Tag
+  id: Coldsauce
+
 - type: Tag #Ohioans die happy
   id: Corn
 
 - type: Tag
-  id: Coldsauce
+  id: CottonBoll
 
 - type: Tag
   id: Cow
@@ -633,6 +654,9 @@
   id: HighSecDoor
 
 - type: Tag
+  id: Hi-Viz
+
+- type: Tag
   id: Hoe
 
 - type: Tag
@@ -703,6 +727,9 @@
 
 - type: Tag
   id: Knife
+
+- type: Tag
+  id: LaceUpShoes
 
 - type: Tag
   id: LavaBrig
@@ -785,6 +812,9 @@
   id: MailingUnitElectronics
 
 - type: Tag
+  id: ManlyDorf
+
+- type: Tag
   id: Matchstick
 
 - type: Tag
@@ -798,6 +828,9 @@
 
 - type: Tag
   id: Metal
+
+- type: Tag
+  id: MicrowaveMachineBoard
 
 - type: Tag
   id: MindShield
@@ -1143,6 +1176,9 @@
   id: UraniumGlassShard
 
 - type: Tag
+  id: Vegetable
+
+- type: Tag
   id: VimPilot
 
 - type: Tag
@@ -1180,6 +1216,9 @@
 
 - type: Tag
   id: Window
+
+- type: Tag
+  id: Wine
 
 - type: Tag
   id: WizardWand # that evil vvizard vvand
