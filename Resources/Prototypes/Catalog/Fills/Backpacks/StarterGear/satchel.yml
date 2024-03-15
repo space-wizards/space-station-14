@@ -5,6 +5,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvival
 
 - type: entity
@@ -14,6 +15,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvival
       - id: Crowbar
       - id: Wrench
@@ -28,6 +30,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxHug
       - id: RubberStampClown
 
@@ -38,6 +41,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvivalSecurity
       - id: Flash
       - id: MagazinePistol
@@ -49,6 +53,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvivalSecurity
       - id: Flash
       - id: ForensicPad
@@ -61,6 +66,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: Flash
 
 - type: entity
@@ -70,6 +76,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvivalMedical
 
 - type: entity
@@ -79,6 +86,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvivalMedical
       - id: EmergencyRollerBedSpawnFolded
 
@@ -89,6 +97,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvival
       - id: Flash
       #- name: StationCharter
@@ -100,6 +109,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvivalEngineering
       - id: Flash
       #- id: TelescopicBaton
@@ -111,6 +121,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvival
       - id: Flash
       #- id: TelescopicBaton
@@ -122,6 +133,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvival
       - id: Flash
       #- id: TelescopicBaton
@@ -133,6 +145,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvivalMedical
       - id: Flash
       #- id: TelescopicBaton
@@ -144,6 +157,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvival
       - id: Flash
       #- id: TelescopicBaton
@@ -155,6 +169,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvivalSecurity
       - id: Flash
       - id: MagazinePistol
@@ -166,6 +181,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvivalEngineering
 
 - type: entity
@@ -175,6 +191,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvivalEngineering
 
 - type: entity
@@ -184,6 +201,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvival
 
 - type: entity
@@ -193,6 +211,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvival
 
 - type: entity
@@ -202,6 +221,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvivalMedical
 
 - type: entity
@@ -211,6 +231,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvival
       - id: Bible
       - id: RubberStampChaplain
@@ -222,6 +243,7 @@
   components:
     - type: StorageFill
       contents:
+        - id: SpaceCash300
         - id: BoxSurvival
         - id: AcousticGuitarInstrument
         - id: SaxophoneInstrument
@@ -233,6 +255,7 @@
   components:
     - type: StorageFill
       contents:
+        - id: SpaceCash300
         - id: BoxSurvival
         - id: BookRandom
 
@@ -243,6 +266,7 @@
   components:
     - type: StorageFill
       contents:
+      - id: SpaceCash300
       - id: BoxSurvival
       - id: BoxForensicPad
       - id: Lighter
@@ -256,6 +280,7 @@
   components:
     - type: StorageFill
       contents:
+        - id: SpaceCash300
         - id: BoxSurvival
 
 - type: entity
@@ -265,6 +290,7 @@
   components:
     - type: StorageFill
       contents:
+        - id: SpaceCash300
         - id: BoxSurvival
 
 - type: entity
@@ -274,6 +300,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SpaceCash300
       - id: BoxSurvival
       - id: RubberStampMime
 
@@ -284,6 +311,7 @@
   components:
   - type: StorageFill
     contents:
+    - id: SpaceCash300
     - id: GasAnalyzer
     - id: trayScanner
   - type: Unremoveable
