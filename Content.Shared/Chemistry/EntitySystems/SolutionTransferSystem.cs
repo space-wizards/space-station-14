@@ -26,7 +26,7 @@ public sealed class SolutionTransferSystem : EntitySystem
     /// <summary>
     ///     Default transfer amounts for the set-transfer verb.
     /// </summary>
-    public static readonly FixedPoint2[] DefaultTransferAmounts = new() { 1, 5, 10, 25, 50, 100, 250, 500, 1000 };
+    public static readonly FixedPoint2[] DefaultTransferAmounts = new FixedPoint2[] { 1, 5, 10, 25, 50, 100, 250, 500, 1000 };
 
     public override void Initialize()
     {
@@ -80,7 +80,7 @@ public sealed class SolutionTransferSystem : EntitySystem
             verb.Category = VerbCategory.SetTransferAmount;
             verb.Act = () =>
             {
-                comp.TransferAmount = FixedPoint2.New(amount);
+                comp.TransferAmount = amount;
                 _popup.PopupClient(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)), uid, user);
             };
 
