@@ -409,12 +409,6 @@
 - type: Tag
   id: Coldsauce
 
-- type: Tag #Ohioans die happy
-  id: Corn
-
-- type: Tag
-  id: CottonBoll
-
 - type: Tag
   id: CombatKnife
 
@@ -426,6 +420,9 @@
 
 - type: Tag #Ohioans die happy
   id: Corn
+
+- type: Tag
+  id: CottonBoll
 
 - type: Tag
   id: Cow
