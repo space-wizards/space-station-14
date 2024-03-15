@@ -98,7 +98,7 @@
       drink:
         maxVol: 30
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 30
   - type: Construction
     node: fuel

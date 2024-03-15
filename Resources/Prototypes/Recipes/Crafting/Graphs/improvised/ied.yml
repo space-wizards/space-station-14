@@ -36,7 +36,7 @@
       - !type:MinSolution
         solution: drink
         reagent:
-          ReagentId: WeldingFuel
+          ReagentId: Blood
         quantity: 30
       steps:
       - tool: Screwing
@@ -56,7 +56,7 @@
       - !type:MinSolution
         solution: drink
         reagent:
-          ReagentId: WeldingFuel
+          ReagentId: Blood
         quantity: 30
       steps:
       - material: Cable

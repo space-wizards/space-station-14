@@ -132,10 +132,10 @@
   name: P.A.C.M.A.N.-type portable generator
   description: |-
     A flexible backup generator for powering a variety of equipment.
-    Runs off solid plasma sheets and is rated for up to 30 kW.
+    Runs off bloodpacks and is rated for up to 30 kW.
   parent: PortableGeneratorSwitchableBase
   id: PortableGeneratorPacman
-  suffix: Plasma, 30 kW
+  suffix: Bloodpack, 30 kW
   components:
     - type: Sprite
       layers:
@@ -167,11 +167,11 @@
       # a decent curve that goes up to about an hour at 5 kW.
       fuelEfficiencyConstant: 0.75
     - type: SolidFuelGeneratorAdapter
-      fuelMaterial: Plasma
-      multiplier: 0.01
+      fuelMaterial: Bloodpack
+      multiplier: 0.3
     - type: MaterialStorage
       storageLimit: 3000
-      materialWhiteList: [Plasma]
+      materialWhiteList: [Bloodpack]
     - type: PortableGenerator
       startChance: 0.8
     - type: GeneratorExhaustGas
@@ -190,10 +190,10 @@
   name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
   description: |-
     An advanced generator for powering departments.
-    Runs off uranium sheets and is rated for up to 50 kW.
+    Runs off bloodpacks and is rated for up to 50 kW.
   parent: PortableGeneratorSwitchableBase
   id: PortableGeneratorSuperPacman
-  suffix: Uranium, 50 kW
+  suffix: Bloodpack, 50 kW
   components:
     - type: Sprite
       layers:
@@ -225,11 +225,11 @@
       # Barely save any fuel from reducing power output
       fuelEfficiencyConstant: 0.1
     - type: SolidFuelGeneratorAdapter
-      fuelMaterial: Uranium
-      multiplier: 0.01
+      fuelMaterial: Bloodpack
+      multiplier: 0.3
     - type: MaterialStorage
       storageLimit: 3000
-      materialWhiteList: [Uranium]
+      materialWhiteList: [Bloodpack]
     - type: PortableGenerator
     - type: PowerMonitoringDevice
       group: Generator
@@ -298,7 +298,7 @@
     - type: ChemicalFuelGeneratorAdapter
       solution: tank
       reagents:
-        WeldingFuel: 1
+        Blood: 1
     - type: SolutionContainerManager
       solutions:
         tank:

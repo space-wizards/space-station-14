@@ -77,7 +77,7 @@
     solutions:
       tank:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 1000
   - type: ReagentTank
     tankType: Fuel

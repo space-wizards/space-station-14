@@ -76,7 +76,7 @@
     solutions:
       Welder:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 100
         maxVol: 100
   - type: Tool
@@ -113,7 +113,7 @@
     solutions:
       Welder:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 250
         maxVol: 250
 
@@ -131,7 +131,7 @@
     solutions:
       Welder:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 250
         maxVol: 250
   - type: Tool
@@ -151,7 +151,7 @@
     solutions:
       Welder:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 1000
         maxVol: 1000
   - type: PointLight
@@ -162,7 +162,7 @@
     solution: Welder
     generated:
       reagents:
-      - ReagentId: WeldingFuel
+      - ReagentId: Blood
         Quantity: 1
 
 - type: entity
@@ -182,7 +182,7 @@
     solutions:
       Welder:
         reagents:
-        - ReagentId: WeldingFuel
+        - ReagentId: Blood
           Quantity: 50
         maxVol: 50
   - type: Tool

@@ -26,7 +26,7 @@ namespace Content.Server.Tools.Components
         ///     Reagent that will be used as fuel for welding.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public ProtoId<ReagentPrototype> FuelReagent = "WeldingFuel";
+        public ProtoId<ReagentPrototype> FuelReagent = "Blood";
 
         /// <summary>
         ///     Fuel consumption per second while the welder is active.
