@@ -24,6 +24,14 @@
   price: 0.15
 
 - type: material
+  id: Brass
+  stackEntity: SheetBrass1
+  name: materials-brass
+  icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: brass }
+  color: "#b18b25"
+  price: 0.1
+
+- type: material
   id: Plasteel
   stackEntity: SheetPlasteel1
   name: materials-plasteel

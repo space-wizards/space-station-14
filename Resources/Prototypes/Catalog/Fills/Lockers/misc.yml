@@ -28,12 +28,6 @@
       - id: OxygenTankFilled
         prob: 0.20
         orGroup: EmergencyTankOrRegularTank
-      - id: EmergencyNitrogenTankFilled
-        prob: 0.80
-        orGroup: EmergencyNitrogenOrRegularNitrogen
-      - id: NitrogenTankFilled
-        prob: 0.20
-        orGroup: EmergencyNitrogenOrRegularNitrogen
       - id: ToolboxEmergencyFilled
         prob: 0.4
       - id: MedkitOxygenFilled
@@ -58,12 +52,6 @@
       - id: OxygenTankFilled
         prob: 0.20
         orGroup: EmergencyTankOrRegularTank
-      - id: NitrogenTankFilled
-        prob: 0.80
-        orGroup: EmergencyNitrogenOrRegularNitrogen
-      - id: EmergencyNitrogenTankFilled
-        prob: 0.20
-        orGroup: EmergencyNitrogenOrRegularNitrogen  
       - id: ToolboxEmergencyFilled
         prob: 0.4
       - id: MedkitOxygenFilled
@@ -84,7 +72,6 @@
         - id: ClothingHeadHelmetFire
         - id: ClothingMaskGas
         - id: OxygenTankFilled
-        - id: NitrogenTankFilled
         - id: FireExtinguisher
           prob: 0.25
 - type: entity
@@ -98,7 +85,6 @@
         - id: ClothingHeadHelmetFire
         - id: ClothingMaskGas
         - id: OxygenTankFilled
-        - id: NitrogenTankFilled
         - id: FireExtinguisher
           prob: 0.25
 - type: entity
@@ -126,6 +112,16 @@
           prob: 0.44
         - id: PlushieCarp
           prob: 0.2
+          orGroup: carp
+        - id: PlushieHolocarp
+          prob: 0.05
+          orGroup: carp
+        - id: PlushieMagicarp
+          prob: 0.05
+          orGroup: carp
+        - id: PlushieRainbowCarp
+          prob: 0.03
+          orGroup: carp
         - id: PlushieSlime
           prob: 0.2
         - id: PlushieSnake
@@ -219,6 +215,16 @@
           prob: 0.44
         - id: PlushieCarp
           prob: 0.2
+          orGroup: carp
+        - id: PlushieHolocarp
+          prob: 0.05
+          orGroup: carp
+        - id: PlushieMagicarp
+          prob: 0.05
+          orGroup: carp
+        - id: PlushieRainbowCarp
+          prob: 0.03
+          orGroup: carp
         - id: PlushieSlime
           prob: 0.2
         - id: PlushieSnake

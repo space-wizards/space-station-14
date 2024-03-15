@@ -1,5 +1,5 @@
 
-
+# Jumpsuits/skirts
 - type: latheRecipe
   id: ClothingUniformJumpsuitColorGrey # Tide
   result: ClothingUniformJumpsuitColorGrey
@@ -262,6 +262,20 @@
     Cloth: 300
 
 - type: latheRecipe
+  id: ClothingUniformJumpsuitSeniorEngineer
+  result: ClothingUniformJumpsuitSeniorEngineer
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtSeniorEngineer
+  result: ClothingUniformJumpskirtSeniorEngineer
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
   id: ClothingUniformJumpsuitHoP
   result: ClothingUniformJumpsuitHoP
   completetime: 4
@@ -421,6 +435,20 @@
     Cloth: 300
 
 - type: latheRecipe
+  id: ClothingUniformJumpsuitSeniorPhysician
+  result: ClothingUniformJumpsuitSeniorPhysician
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtSeniorPhysician
+  result: ClothingUniformJumpskirtSeniorPhysician
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
   id: ClothingUniformJumpsuitMime
   result: ClothingUniformJumpsuitMime
   completetime: 4
@@ -465,6 +493,20 @@
 - type: latheRecipe
   id: ClothingUniformJumpskirtParamedic
   result: ClothingUniformJumpskirtParamedic
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitSeniorOfficer
+  result: ClothingUniformJumpsuitSeniorOfficer
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtSeniorOfficer
+  result: ClothingUniformJumpskirtSeniorOfficer
   completetime: 4
   materials:
     Cloth: 300
@@ -549,6 +591,20 @@
     Cloth: 300
 
 - type: latheRecipe
+  id: ClothingUniformJumpsuitSeniorResearcher
+  result: ClothingUniformJumpsuitSeniorResearcher
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtSeniorResearcher
+  result: ClothingUniformJumpskirtSeniorResearcher
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
   id: ClothingUniformJumpsuitSec
   result: ClothingUniformJumpsuitSec
   completetime: 4
@@ -624,7 +680,7 @@
   completetime: 4
   materials:
     Cloth: 300
-
+# Command winter coats
 - type: latheRecipe
   id: ClothingOuterWinterCap
   result: ClothingOuterWinterCap
@@ -688,7 +744,7 @@
   materials:
     Cloth: 500
     Durathread: 400
-
+# Mantles
 - type: latheRecipe
   id: ClothingNeckMantleCap
   result: ClothingNeckMantleCap
@@ -744,8 +800,7 @@
   materials:
     Cloth: 200
     Durathread: 150
-
-
+# Winter coats
 - type: latheRecipe
   id: ClothingOuterWinterMusician
   result: ClothingOuterWinterMusician
@@ -921,7 +976,7 @@
   materials:
     Cloth: 500
     Durathread: 300
-
+# Hats
 - type: latheRecipe
   id: ClothingHeadHatCaptain
   result: ClothingHeadHatCaptain
@@ -1096,6 +1151,13 @@
   completetime: 2
   materials:
     Cloth: 100
+
+- type: latheRecipe
+  id: ClothingHeadHatParamedicsoft
+  result: ClothingHeadHatParamedicsoft
+  completetime: 1
+  materials:
+    Cloth: 100
 # Ties
 - type: latheRecipe
   id: ClothingNeckTieRed
@@ -1173,7 +1235,7 @@
   completetime: 2
   materials:
     Cloth: 200
-
+# Carpets
 - type: latheRecipe
   id: Carpet
   result: FloorCarpetItemRed
