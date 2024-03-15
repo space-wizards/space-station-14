@@ -26,7 +26,7 @@ public sealed class SolutionTransferSystem : EntitySystem
     /// <summary>
     ///     Default transfer amounts for the set-transfer verb.
     /// </summary>
-    public static readonly List<int> DefaultTransferAmounts = new() { 1, 5, 10, 25, 50, 100, 250, 500, 1000 };
+    public static readonly FixedPoint2[] DefaultTransferAmounts = new() { 1, 5, 10, 25, 50, 100, 250, 500, 1000 };
 
     public override void Initialize()
     {
@@ -75,9 +75,6 @@ public sealed class SolutionTransferSystem : EntitySystem
         var user = args.User;
         foreach (var amount in DefaultTransferAmounts)
         {
-            if (amount < comp.MinimumTransferAmount.Int() || amount > comp.MaximumTransferAmount.Int())
-                continue;
-
             AlternativeVerb verb = new();
             verb.Text = Loc.GetString("comp-solution-transfer-verb-amount", ("amount", amount));
             verb.Category = VerbCategory.SetTransferAmount;
