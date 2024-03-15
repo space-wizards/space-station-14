@@ -325,3 +325,18 @@
     layers:
     - state: crypt_blue
     - state: ert_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyTSF
+  name: TSF encryption key
+  description: An encryption key used by TSF.
+  components:
+  - type: EncryptionKey
+    channels:
+    - TSF
+    defaultChannel: TSF
+  - type: Sprite
+    layers:
+    - state: crypt_blue
+    - state: tsf_label

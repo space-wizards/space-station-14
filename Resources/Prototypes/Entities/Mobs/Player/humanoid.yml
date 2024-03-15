@@ -472,3 +472,29 @@
       description: ghost-role-information-cluwne-description
     - type: GhostTakeoverAvailable
     - type: Cluwne
+
+- type: entity
+  id: RandomHumanoidSpawnerTSFNavy
+  name: TSF recruit
+  suffix: TSF, EVA
+  components:
+    - type: Sprite
+      sprite: Ganimed/Clothing/OuterClothing/Hardsuits/tsf.rsi
+      state: icon
+    - type: RandomMetadata
+      nameSegments:
+        - NamesFirstMilitary
+        - NamesLastMilitary
+    - type: RandomHumanoidSpawner
+      settings: TSFNavy
+
+- type: randomHumanoidSettings
+  id: TSFNavy
+  randomizeName: false
+  components:
+    - type: Loadout
+      prototypes: [ TSFHardsuitGear ]
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - NamesLastMilitary

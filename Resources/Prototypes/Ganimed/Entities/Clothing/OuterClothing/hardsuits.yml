@@ -871,3 +871,34 @@
     tags:
     - WhitelistChameleon
     - HighRiskItem
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitTSF
+  name: security hardsuit
+  description: A spacesuit used by the TSF navy.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/Hardsuits/tsf.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/Hardsuits/tsf.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitTSF
+  - type: StaminaProtection
+    coefficient: 0.55
+  - type: HeldSpeedModifier

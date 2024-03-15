@@ -1,0 +1,58 @@
+#license: CLA
+#copyright: https://github.com/ss14-ganimed/ENT14-Master/blob/master/CLA.txt
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsMagTSF
+  name: battle magboots
+  description: Ordinary slippers for the military.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Shoes/tsf_magboots.rsi
+    state: icon
+  - type: Clothing
+    sprite: Ganimed/Clothing/Shoes/tsf_magboots.rsi
+  - type: Magboots
+    toggleAction: ActionToggleMagbootsTSF
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.8
+    enabled: false
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 2 minutes of thrust
+      volume: 0.75
+      temperature: 293.15
+      moles:
+        - 0.153853429 # oxygen
+        - 0.153853429 # nitrogen
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.SharedGasTankUiKey.Key
+        type: GasTankBoundUserInterface
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+  - type: Jetpack
+    moleUsage: 0.00085
+  - type: CanMoveInAir
+  - type: InputMover
+    toParent: true
+  - type: MovementSpeedModifier
+    weightlessAcceleration: 1
+    weightlessFriction: 0.3
+    weightlessModifier: 1.2
+  - type: Tag
+    tags:
+      - WhitelistChameleon
+
+- type: entity
+  id: ActionToggleMagbootsTSF
+  parent: ActionBaseToggleMagboots
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Ganimed/Clothing/Shoes/tsf_magboots.rsi, state: icon }
+    iconOn: Ganimed/Clothing/Shoes/tsf_magboots.rsi/icon-on.png

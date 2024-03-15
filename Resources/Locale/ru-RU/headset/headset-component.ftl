@@ -24,5 +24,6 @@ chat-radio-deathsquad = Рыцари смерти
 chat-radio-ert = ОБР
 chat-radio-srt = ГСН
 chat-radio-mtf = МОГ
+chat-radio-tsf = ТСФ
 # not headset but whatever
 chat-radio-handheld = Портативный

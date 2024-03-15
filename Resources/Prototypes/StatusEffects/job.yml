@@ -461,6 +461,13 @@
 
 - type: statusIcon
   parent: JobIcon
+  id: JobIconTSF
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: TSF
+
+- type: statusIcon
+  parent: JobIcon
   id: JobIconDeathSquad
   icon:
     sprite: Interface/Misc/job_icons.rsi
