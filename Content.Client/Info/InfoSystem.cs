@@ -12,13 +12,13 @@ public sealed class InfoSystem : EntitySystem
     {
         base.Initialize();
         SubscribeNetworkEvent<RulesMessage>(OnRulesReceived);
-        Logger.DebugS("info", "Requested server info.");
+        Log.Debug("Requested server info.");
         RaiseNetworkEvent(new RequestRulesMessage());
     }
 
     private void OnRulesReceived(RulesMessage message, EntitySessionEventArgs eventArgs)
     {
-        Logger.DebugS("info", "Received server rules.");
+        Log.Debug("Received server rules.");
         Rules = message;
         _rules.UpdateRules();
     }

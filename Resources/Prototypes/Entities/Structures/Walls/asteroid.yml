@@ -4,16 +4,19 @@
 #Asteroid rock
 - type: entity
   id: AsteroidRock
-  parent: BaseStructure
+  parent: BaseWall
   name: asteroid rock
   description: A rocky asteroid.
   components:
-  - type: PlacementReplacement
-    key: walls
+  - type: Transform
+    noRot: true
   - type: IconSmooth
     key: walls
     mode: NoSprite
   - type: SmoothEdge
+  - type: Icon
+    sprite: Structures/Walls/rock.rsi
+    state: rock_asteroid
   - type: Sprite
     sprite: Structures/Walls/rock.rsi
     layers:
@@ -42,21 +45,6 @@
           path: /Audio/Effects/break_stone.ogg
           params:
             volume: -6
-  - type: Occluder
-  - type: Airtight
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-        density: 100
-        mask:
-        - FullTileMask
-        layer:
-        - WallLayer
-  - type: RadiationBlocker
-    resistance: 2
 
 # Ore veins
 - type: entity
@@ -379,12 +367,12 @@
 # Rocks and ore veins
 - type: entity
   id: WallRock
-  parent: BaseStructure
+  parent: BaseWall
   name: rock
   suffix: planetmap
   components:
-    - type: PlacementReplacement
-      key: walls
+    - type: Transform
+      noRot: true
     - type: SoundOnGather
     - type: Gatherable
       whitelist:
@@ -401,22 +389,12 @@
           behaviors:
             - !type:DoActsBehavior
               acts: ["Destruction"]
-    - type: Occluder
-    - type: Airtight
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
-          density: 100
-          mask:
-            - FullTileMask
-          layer:
-            - WallLayer
     - type: IconSmooth
       key: walls
       mode: NoSprite
+    - type: Icon
+      sprite: Structures/Walls/rock.rsi
+      state: rock
     - type: SmoothEdge
     - type: Sprite
       sprite: Structures/Walls/rock.rsi
@@ -430,8 +408,6 @@
           state: rock_north
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_west
-    - type: RadiationBlocker
-      resistance: 2
 
 # Ore veins
 - type: entity
@@ -662,6 +638,9 @@
   name: basalt
   parent: WallRock
   components:
+    - type: Icon
+      sprite: Structures/Walls/rock.rsi
+      state: rock_wall
     - type: Sprite
       sprite: Structures/Walls/rock.rsi
       layers:
@@ -902,6 +881,9 @@
   name: snowdrift
   parent: WallRock
   components:
+    - type: Icon
+      sprite: Structures/Walls/rock.rsi
+      state: rock_snow
     - type: Sprite
       sprite: Structures/Walls/rock.rsi
       layers:
@@ -1142,6 +1124,9 @@
   name: sandstone
   parent: WallRock
   components:
+    - type: Icon
+      sprite: Structures/Walls/rock.rsi
+      state: rock_sand
     - type: Sprite
       sprite: Structures/Walls/rock.rsi
       layers:
@@ -1382,6 +1367,9 @@
   name: chromite
   parent: WallRock
   components:
+    - type: Icon
+      sprite: Structures/Walls/rock.rsi
+      state: rock_chromite
     - type: Sprite
       sprite: Structures/Walls/rock.rsi
       layers:
@@ -1622,6 +1610,9 @@
   name: andesite
   parent: WallRock
   components:
+    - type: Icon
+      sprite: Structures/Walls/rock.rsi
+      state: rock_andesite
     - type: Sprite
       sprite: Structures/Walls/rock.rsi
       layers:

@@ -56,7 +56,30 @@ public sealed partial class NPCSteeringSystem
             return true;
         }
 
-        return false;
+        // TODO: Ideally for "FreeSpace" we check all entities on the tile and build flags dynamically (pathfinder refactor in future).
+        var ents = _entSetPool.Get();
+        _lookup.GetLocalEntitiesIntersecting(node.GraphUid, node.ChunkOrigin, ents, flags: LookupFlags.Static);
+        var result = true;
+
+        if (ents.Count > 0)
+        {
+            var fixtures = _fixturesQuery.GetComponent(uid);
+            var physics = _physicsQuery.GetComponent(uid);
+
+            foreach (var intersecting in ents)
+            {
+                if (!_physics.IsCurrentlyHardCollidable((uid, fixtures, physics), intersecting))
+                {
+                    continue;
+                }
+
+                result = false;
+                break;
+            }
+        }
+
+        _entSetPool.Return(ents);
+        return result;
     }
 
     /// <summary>
