@@ -8,7 +8,16 @@
   },
   "states": [
     {
-      "name": "shelf"
+      "name": "base"
+    },
+    {
+      "name": "locked-shelf"
+    },
+    {
+      "name": "unlocked-shelf"
+    },
+    {
+      "name": "open-unlocked-shelf"
     },
     {
       "name": "bar-0"
@@ -23,13 +32,7 @@
       "name": "bar-3"
     },
     {
-      "name": "locked-shelf"
-    },
-    {
-      "name": "unlocked-shelf"
-    },
-    {
-      "name": "open-unlocked-shelf"
+      "name": "bar-4"
     }
   ]
 }
