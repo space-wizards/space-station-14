@@ -293,8 +293,15 @@ namespace Content.Server.VendingMachines
             if (string.IsNullOrEmpty(entry.ID))
                 return;
 
+            if (vendComponent.Balance < entry.Cost)
+            {
+                Popup.PopupEntity(Loc.GetString("vending-machine-component-try-eject-not-enough-money"), uid);
+                Deny(uid, vendComponent);
+                return;
+            }
 
             // Start Ejecting, and prevent users from ordering while anim playing
+            vendComponent.Balance = Math.Max(0, vendComponent.Balance - entry.Cost);
             vendComponent.Ejecting = true;
             vendComponent.NextItemToEject = entry.ID;
             vendComponent.ThrowNextItem = throwItem;
