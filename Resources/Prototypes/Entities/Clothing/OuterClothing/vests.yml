@@ -65,7 +65,7 @@
     sprite: Clothing/OuterClothing/Vests/hazard.rsi
   - type: Tag
     tags:
-    - Hi-Viz
+    - HiViz
 
 #(Bartender) vest
 - type: entity
