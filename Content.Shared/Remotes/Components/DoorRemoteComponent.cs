@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Remotes;
+namespace Content.Shared.Remotes.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DoorRemoteComponent : Component
@@ -14,5 +14,6 @@ public enum OperatingMode : byte
 {
     OpenClose,
     ToggleBolts,
-    ToggleEmergencyAccess
+    ToggleEmergencyAccess,
+    placeholderForUiUpdates
 }
