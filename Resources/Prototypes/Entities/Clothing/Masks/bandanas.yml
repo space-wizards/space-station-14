@@ -25,6 +25,8 @@
   - type: Tag
     tags:
     - Bandana
+    - HidesNose
+
 
 - type: entity
   parent: ClothingMaskBandanaBase

@@ -27,19 +27,12 @@ public sealed class ChasingWalkSystem : VirtualController
         base.Initialize();
 
         SubscribeLocalEvent<ChasingWalkComponent, MapInitEvent>(OnChasingMapInit);
-        SubscribeLocalEvent<ChasingWalkComponent, EntityUnpausedEvent>(OnChasingUnpaused);
     }
 
     private void OnChasingMapInit(EntityUid uid, ChasingWalkComponent component, MapInitEvent args)
     {
         component.NextImpulseTime = _gameTiming.CurTime;
         component.NextChangeVectorTime = _gameTiming.CurTime;
-    }
-
-    private void OnChasingUnpaused(EntityUid uid, ChasingWalkComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextImpulseTime += args.PausedTime;
-        component.NextChangeVectorTime += args.PausedTime;
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)

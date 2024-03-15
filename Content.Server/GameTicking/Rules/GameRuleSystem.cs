@@ -1,13 +1,9 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Station.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.Collections;
-using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -16,9 +12,9 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     [Dependency] protected readonly IRobustRandom RobustRandom = default!;
     [Dependency] protected readonly IChatManager ChatManager = default!;
     [Dependency] protected readonly GameTicker GameTicker = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
 
     // Not protected, just to be used in utility methods
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly MapSystem _map = default!;
 

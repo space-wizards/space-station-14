@@ -191,6 +191,30 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorBrassFilled
+  name: tiles-brass-floor-filled
+  sprite: /Textures/Tiles/Misc/clockwork/clockwork_floor_filled.png
+  baseTurf: PlatingBrass
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemBrassFilled
+  heatCapacity: 10000
+  
+- type: tile
+  id: FloorBrassReebe
+  name: tiles-brass-floor-reebe
+  sprite: /Textures/Tiles/Misc/clockwork/reebe.png
+  baseTurf: PlatingBrass
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemBrassReebe
+  heatCapacity: 10000
+
+- type: tile
   id: FloorPlastic
   name: tiles-plastic-floor
   sprite: /Textures/Tiles/plastic.png

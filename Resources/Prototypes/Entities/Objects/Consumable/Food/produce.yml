@@ -112,9 +112,9 @@
         - ReagentId: Nutriment
           Quantity: 3
         - ReagentId: Sugar
-          Quantity: 2
+          Quantity: 5
         - ReagentId: Laughter
-          Quantity: 2
+          Quantity: 5
   - type: Extractable
     juiceSolution:
       reagents:
@@ -1008,7 +1008,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 14
+        maxVol: 18
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
@@ -1021,7 +1021,7 @@
   - type: Produce
     seedId: onionred
   - type: SliceableFood
-    count: 4
+    count: 5
     slice: FoodOnionRedSlice
   - type: Tag
     tags:
@@ -1100,7 +1100,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 3
+        maxVol: 5
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
@@ -1123,7 +1123,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 3
+        maxVol: 5
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
