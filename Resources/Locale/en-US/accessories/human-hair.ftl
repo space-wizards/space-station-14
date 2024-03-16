@@ -55,6 +55,7 @@ marking-HumanHairCornrowbun = Cornrow Bun
 marking-HumanHairCornrowbraid = Cornrow Braid
 marking-HumanHairCornrowtail = Cornrow Tail
 marking-HumanHairCrewcut = Crewcut
+marking-HumanHairCrewcut2 = Crewcut 2
 marking-HumanHairCurls = Curls
 marking-HumanHairC = Cut Hair
 marking-HumanHairDandypompadour = Dandy Pompadour
