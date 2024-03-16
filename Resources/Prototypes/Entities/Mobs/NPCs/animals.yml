@@ -2670,8 +2670,8 @@
     animation: WeaponArcBite
     damage:
       types:
-        Slash: 7.5
-        Piercing: 7.5
+        Slash: 5
+        Piercing: 5
   - type: StaminaDamageOnHit
     damage: 30 #Sheepdogs are ment to stun people, not to kill them.
   - type: MovementSpeedModifier
