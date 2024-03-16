@@ -1,0 +1,159 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "The sprite base is taken from  tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039, separated into layers and added new ones by TheShuEd (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base_leg_short",
+      "directions": 4
+    },
+    {
+      "name": "base_leg_skirt",
+      "directions": 4
+    },
+    {
+      "name": "base_leg_skirt_long",
+      "directions": 4
+    },
+    {
+      "name": "base_leg_standart",
+      "directions": 4
+    },
+    {
+      "name": "base_torso_armless",
+      "directions": 4
+    },
+    {
+      "name": "base_torso_bra",
+      "directions": 4
+    },
+    {
+      "name": "base_torso_shirt",
+      "directions": 4
+    },
+    {
+      "name": "base_torso_standart",
+      "directions": 4
+    },
+    {
+      "name": "base_torso_standart2",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_armless1",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_armless2",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_armless3",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_armless4",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_armless5",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_armless6",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_armless7",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_armless8",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_armless9",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_armless10",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_bra1",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_bra2",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_bra3",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_bra4",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_bra5",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_shirt1",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_shirt2",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_shirt3",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart1",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart2",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart3",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart4",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart5",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart6",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart7",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart8",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_standart9",
+      "directions": 4
+    },
+    {
+      "name": "mask_null",
+      "directions": 4
+    }
+  ]
+}

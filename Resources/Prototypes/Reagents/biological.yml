@@ -201,3 +201,24 @@
     collection: FootstepBlood
     params:
       volume: 6
+
+- type: reagent
+  id: GreyMatter
+  name: reagent-name-grey-matter
+  group: Biological
+  desc: reagent-desc-grey-matter
+  physicalDesc: reagent-physical-desc-neural
+  flavor: mindful
+  color: "#C584B8"
+  slippery: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateHunger
+        factor: 1.5
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 2

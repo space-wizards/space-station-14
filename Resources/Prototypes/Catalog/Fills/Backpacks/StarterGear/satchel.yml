@@ -216,6 +216,17 @@
       - id: RubberStampChaplain
       - id: WeaponGodGun
 
+  
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelLawyerFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: RubberStampLawyer
+
 - type: entity
   noSpawn: true
   parent: ClothingBackpackSatchel
