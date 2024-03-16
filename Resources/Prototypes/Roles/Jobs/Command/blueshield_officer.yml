@@ -1,0 +1,40 @@
+- type: job
+  id: BlueshieldOfficer
+  name: job-name-bso
+  description: job-description-bso
+  playTimeTracker: JobBlueshieldOfficer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 54000 # 15 hours
+  weight: 20
+  startingGear: CaptainGear
+  icon: "JobIconNanotrasen"
+  requireAdminNotify: true
+  joinNotifyCrew: true
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
+
+- type: startingGear
+  id: CaptainGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCaptain
+    back: ClothingBackpackCaptainFilled
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatCaptain
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    outerClothing: ClothingOuterArmorCaptainCarapace
+    id: CaptainPDA
+    ears: ClothingHeadsetAltCommand
+  innerClothingSkirt: ClothingUniformJumpskirtCaptain
+  satchel: ClothingBackpackSatchelCaptainFilled
+  duffelbag: ClothingBackpackDuffelCaptainFilled

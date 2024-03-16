@@ -1,13 +1,11 @@
-[color=#ff0000]YOU MUST BE AT LEAST 16 YEARS OF AGE TO PLAY ON WIZARD'S DEN SERVERS. ANY USERS SUSPECTED OF BEING UNDER 16 YEARS OF AGE WILL BE BANNED UNTIL THEY ARE OF AGE.[/color]
+[color=#ff0000]YOU MUST BE AT LEAST 14 YEARS OF AGE TO PLAY ON THE GOOB STATION SERVER. ANY USERS SUSPECTED OF BEING UNDER 14 YEARS OF AGE WILL BE BANNED UNTIL THEY ARE OF AGE.[/color]
 
 [color=#ff0000]DISCONNECTING FROM OR IGNORING/EVADING ADMIN-HELPS WILL RESULT IN AN APPEAL ONLY BAN.[/color]
 
-This is the "short" form of the rules, which has all the information any regular player should need. You can find the "long" form of the rules with more examples & clarifications of any ambiguity on our wiki at [color=#a4885c]wiki.spacestation14.io[/color], should you need it.
+This is the "short" form of the rules, which has all the information any regular player should need. You can find the "long" form of the rules with more examples & clarifications of any ambiguity on the Space Station 14 wiki at [color=#a4885c]wiki.spacestation14.io[/color], should you need it.
 
 [color=#ff0000]Recent Changes[/color]
-    - Revolutionary rules have been added (#12, #15)
-    - Silicon rules have been added (#22)
-    - Security/command rules have been updated to address forced borging (#21)
+    - Removed Sandbox Rule 2.
 
 [color=#a4885c]01.[/color] [color=#a4885c]The[/color] [color=#ffd700]Golden[/color] [color=#a4885c]Rule.[/color] Admins may excercise discretion with rules as they see fit. If you rule lawyer or line skirt, you will get removed. Admins will answer for use of this privilege.
 
@@ -29,7 +27,7 @@ This is the "short" form of the rules, which has all the information any regular
 
 [color=#a4885c]08.[/color] Don't use multiple SS14 accounts to play (referred to as "multi-keying"). Users knowingly using multiple SS14 accounts will have all of their accounts banned.
 
-[color=#a4885c]09.[/color] Do not ignore the admin help relay or abuse it by flooding it with garbage, checking for admins before stating a problem (ex: "hello?", "any admins?"), using it as a chatroom, or sending messages of no substance. Hostility to administators in the relay will likely result in your removal. All admin helps are sent to the SS14 Discord.
+[color=#a4885c]09.[/color] Do not ignore the admin help relay or abuse it by flooding it with garbage, checking for admins before stating a problem (ex: "hello?", "any admins?"), using it as a chatroom, or sending messages of no substance. Hostility to administators in the relay will likely result in your removal. All admin helps are sent to the Goob Station's ahelp channel.
 
 [color=#ff0000]IN GAME & ROLEPLAY RULES[/color]
 
@@ -112,4 +110,9 @@ These rules also apply to any individual who is a silicon, including cyborgs and
     - Everyone that the borg's HUD indicates have a job, including passenger, are considered "crewmembers" for the purpose of laws that refer to crewmembers. Borgs may not do anything to remove the indicator from someone, including removing their ID, but someone else removing a crewmember's ID is not crew harm.
     - "Harm" is at minimum seen as physical violence or damage against someone or something. If the player wishes, they may choose to interpret psychological harm or similar aspects as harm as well. If two actions are likely to cause harm via action or inaction, silicons will be expected to try and pursue the option with the least potential for harm, however silicons instructed to prevent harm are still forbidden from directly causing harm. You can take an action or not act in cases that might result in eventual harm if it minimizes harm, but you cannot do so if it results in immediate harm. Silicons should default to inaction if neither action nor inaction can prevent harm.
     - When receiving orders or directives from crewmembers and with a law that instructs you must obey, conflicting orders typically defer the choice to the silicon player of which directive you choose to obey if they conflict (taking into account the priorities of your other laws).
+    - Orders to silicons that are clearly unreasonable or obnoxious are a violation of the "Don't be a dick" rule. They can be ignored and can be ahelped.
+
+[color=#00ff00]SANDBOX SPECIFIC RULES[/color]
+1. You are free to do as you wish, however, causing massive damage to both the station, the arrivals system, and other player’s builds is strictly prohibited. It is also strictly prohibited to spawn large amounts of entities, as too much entities can cause severe lag.
+
     - Orders to silicons that are clearly unreasonable or obnoxious are a violation of the "Don't be a dick" rule. They can be ignored and can be ahelped.
