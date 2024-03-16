@@ -78,9 +78,7 @@ public abstract class SharedMagicSystem : EntitySystem
             while (enumerator.MoveNext(out var containerSlot))
             {
                 if (containerSlot.ContainedEntity is { } item)
-                {
                     hasReqs = HasComp<WizardClothesComponent>(item);
-                }
                 else
                     hasReqs = false;
 
@@ -92,11 +90,11 @@ public abstract class SharedMagicSystem : EntitySystem
         if (comp.RequiresSpeech && HasComp<MutedComponent>(args.Performer))
             hasReqs = false;
 
-        if (!hasReqs)
-        {
-            args.Cancelled = true;
-            _popup.PopupClient(Loc.GetString("spell-requirements-failed"), args.Performer, args.Performer);
-        }
+        if (hasReqs)
+            return;
+
+        args.Cancelled = true;
+        _popup.PopupClient(Loc.GetString("spell-requirements-failed"), args.Performer, args.Performer);
     }
 
     private void OnInit(EntityUid uid, MagicComponent component, MapInitEvent args)
@@ -397,7 +395,8 @@ public abstract class SharedMagicSystem : EntitySystem
     #endregion
 
     // When any spell is cast it will raise this as an event, so then it can be played in server or something. At least until chat gets moved to shared
-    protected void Speak(BaseActionEvent args)
+    // TODO: Temp until chat is in shared
+    private void Speak(BaseActionEvent args)
     {
         if (args is not ISpeakSpell speak || string.IsNullOrWhiteSpace(speak.Speech))
             return;
