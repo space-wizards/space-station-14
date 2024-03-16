@@ -2592,6 +2592,111 @@
       gender: epicene
 
 - type: entity
+  name: Muhtar
+  parent: SimpleMobBase
+  id: MobMuhtar
+  description: "Man's best friend. And the worst enemy of the enemy of NanoTraisen."
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/muhtar.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: muhtar
+    - type: Physics
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 20
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Inventory
+    speciesId: sheepdog
+    templateId: pet
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: muhtar
+      Critical:
+        Base: muhtar_dead
+      Dead:
+        Base: muhtar_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 2
+  - type: ReplacementAccent
+    accent: dog
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: petting-success-dog # It mustn't react at it at all.
+    interactFailureString: petting-failure-generic
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+    - FootstepSound
+    - DoorBumpOpener
+  - type: GhostTakeoverAvailable
+  - type: GhostRole
+    makeSentient: true
+    allowMovement: true
+    requirements:
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 36000
+    name: ghost-role-information-muhtar-name
+    description: ghost-role-information-muhtar-descriprion
+    rules: ghost-role-information-muhtar-rules
+  - type: MeleeWeapon
+    altDisarm: false
+    soundHit:
+        collection: AlienClaw
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Slash: 5
+        Piercing: 5
+  - type: StaminaDamageOnHit
+    damage: 30 #Sheepdogs are ment to stun people, not to kill them.
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 6
+    baseWalkSpeed: 4.5
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Critical
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      75: Critical
+      140: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      50: 0.5
+  - type: Stamina
+    critThreshold: 150
+  - type: Puller
+    needsHands: false
+  - type: NoSlip
+
+- type: entity
   name: cat
   parent: SimpleMobBase
   id: MobCat
