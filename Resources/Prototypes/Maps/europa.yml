@@ -10,6 +10,7 @@
       components:
         - type: StationRandom
           enableStationRotation: false
+          enableStationOffset: false
         - type: StationNameSetup
           mapNameTemplate: '{0} Europa {1}'
           nameGenerator:
