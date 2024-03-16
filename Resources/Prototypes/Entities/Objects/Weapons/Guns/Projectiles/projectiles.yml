@@ -998,4 +998,3 @@
     soundForce: true
   - type: StaminaDamageOnCollide
     damage: 25
-    ignoreResistances: true
