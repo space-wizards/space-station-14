@@ -105,6 +105,7 @@
           types:
             Caustic: 0.5
             Poison: 0.5
+
 - type: reagent
   id: Gold
   name: reagent-name-gold
@@ -379,6 +380,13 @@
   color: "#00ff04"
   meltingPoint: 700.0
   boilingPoint: 1737.0
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: 4
 
 - type: reagent
   id: Zinc

@@ -121,6 +121,7 @@
   name: enriched uranium
   components:
   - type: Sprite
+    sprite: Objects/Fun/enricheduranium.rsi
     state: icon
   - type: RadiationSource
-    intensity: 5
+    intensity: 1.5

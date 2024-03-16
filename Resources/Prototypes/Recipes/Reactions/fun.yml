@@ -179,11 +179,9 @@
     Uranium-235:
       amount: 55
     Fluorine:
-      amount: 25
+      amount: 35
     Uranium-234:
-      amount: 2
-    Iron:
-      amount: 18
+      amount: 10
   effects:
     - !type:CreateEntityReactionEffect
       entity: EnrichedUranium
