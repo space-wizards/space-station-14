@@ -36,11 +36,6 @@
             - material: Steel
               amount: 2
               doAfter: 1
-        - to: chairComfy
-          steps:
-            - material: Steel
-              amount: 2
-              doAfter: 1
         - to: blackChairComfy
           steps:
             - material: Steel
@@ -221,18 +216,6 @@
 
     - node: chairOfficeDark
       entity: ChairOfficeDark
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
-          steps:
-            - tool: Screwing
-              doAfter: 1
-
-    - node: chairComfy
-      entity: ComfyChair
       edges:
         - to: start
           completed:

@@ -170,18 +170,6 @@
     node: chairOfficeDark
 
 - type: entity
-  name: comfy chair
-  id: ComfyChair
-  parent: ChairBase
-  description: It looks comfy.
-  components:
-  - type: Sprite
-    state: comfy
-  - type: Construction
-    graph: Seat
-    node: chairComfy
-
-- type: entity
   name: black comfy chair
   id: BlackComfyChair
   parent: ChairBase

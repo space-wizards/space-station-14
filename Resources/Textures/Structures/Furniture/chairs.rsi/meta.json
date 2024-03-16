@@ -32,14 +32,6 @@
       "directions": 4
     },
     {
-      "name": "comfy",
-      "directions": 4
-    },
-    {
-      "name": "comfy-overlay",
-      "directions": 4
-    },
-    {
       "name": "meat",
       "directions": 4
     },
@@ -100,15 +92,7 @@
 		"directions": 4
 	},
 	{
-		"name": "pufi-overlay-greyscale",
-		"directions": 4
-	},
-	{
 		"name": "comfy-greyscale",
-		"directions": 4
-	},
-	{
-		"name": "comfy-overlay-greyscale",
 		"directions": 4
 	}
   ]

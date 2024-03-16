@@ -102,23 +102,6 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: comfy chair
-  id: ChairComfy
-  graph: Seat
-  startNode: start
-  targetNode: chairComfy
-  category: construction-category-furniture
-  description: It looks comfy.
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: comfy
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
   name: black comfy chair
   id: BlackChairComfy
   graph: Seat
