@@ -588,8 +588,8 @@
   id: AgentIDCard
   suffix: Agent
   components:
-  - type: PresetIdCard
-    job: Passenger
+  - type: IdCard
+    jobTitle: Passenger
   - type: Access
     tags:
     - Maintenance
