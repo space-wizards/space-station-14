@@ -202,6 +202,7 @@
       - id: BoxSurvival
       - id: Bible
       - id: RubberStampChaplain
+      - id: WeaponGodGun
   
 - type: entity
   noSpawn: true
@@ -212,6 +213,7 @@
     contents:
       - id: BoxSurvival
       - id: RubberStampLawyer
+
 
 - type: entity
   noSpawn: true

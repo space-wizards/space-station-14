@@ -2,7 +2,11 @@
   id: Cluster
   mapName: 'Cluster'
   mapPath: /Maps/cluster.yml
+
+  minPlayers: 1
+=======
   minPlayers: 0
+
   maxPlayers: 100
   stations:
     Cluster:
@@ -21,6 +25,8 @@
           availableJobs:
             #service
             Captain: [ 1, 1 ]
+            BlueshieldOfficer: [ 1, 1 ]
+            NanotrasenRepresentative: [ 1, 1 ]
             NanotrasenRepresentative: [ 1, 1 ]
             BlueshieldOfficer: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
