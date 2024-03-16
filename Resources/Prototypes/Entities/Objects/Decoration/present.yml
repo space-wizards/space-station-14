@@ -68,6 +68,12 @@
         orGroup: GiftPool
       - id: PlushieCarp
         orGroup: GiftPool
+      - id: PlushieMagicarp
+        orGroup: GiftPool
+      - id: PlushieHolocarp
+        orGroup: GiftPool
+      - id: PlushieRainbowCarp
+        orGroup: GiftPool
       - id: PlushieSlime
         orGroup: GiftPool
       - id: PlushieSnake
