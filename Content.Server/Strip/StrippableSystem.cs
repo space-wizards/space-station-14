@@ -477,6 +477,9 @@ namespace Content.Server.Strip
                 !Resolve(target, ref target.Comp))
                 return;
 
+            if (!CanStripInsertHand(user, target, held, handName))
+                return;
+
             _handsSystem.TryDrop(user, checkActionBlocker: false, handsComp: user.Comp);
             _handsSystem.TryPickup(target, held, handName, checkActionBlocker: false, animateUser: stealth, animate: stealth, handsComp: target.Comp);
             _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):actor} has placed the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s hands");
@@ -568,10 +571,14 @@ namespace Content.Server.Strip
             Entity<HandsComponent?> user,
             Entity<HandsComponent?> target,
             EntityUid item,
+            string handName,
             bool stealth)
         {
             if (!Resolve(user, ref user.Comp) ||
                 !Resolve(target, ref target.Comp))
+                return;
+
+            if (!CanStripRemoveHand(user, target, item, handName))
                 return;
 
             _handsSystem.TryDrop(target, item, checkActionBlocker: false, handsComp: target.Comp);
@@ -624,7 +631,7 @@ namespace Content.Server.Strip
             {
                 if (ev.InsertOrRemove)
                         StripInsertHand((entity.Owner, entity.Comp), ev.Target.Value, ev.Used.Value, ev.SlotOrHandName, ev.Args.Hidden);
-                else    StripRemoveHand((entity.Owner, entity.Comp), ev.Target.Value, ev.Used.Value, ev.Args.Hidden);
+                else    StripRemoveHand((entity.Owner, entity.Comp), ev.Target.Value, ev.Used.Value, ev.SlotOrHandName, ev.Args.Hidden);
             }
         }
     }
