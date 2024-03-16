@@ -2,8 +2,8 @@
   id: Marathon
   mapName: 'Marathon Station'
   mapPath: /Maps/marathon.yml
-  minPlayers: 35
-  maxPlayers: 70
+  minPlayers: 0
+  maxPlayers: 100
   stations:
     Marathon:
       stationProto: StandardNanotrasenStation
@@ -21,8 +21,11 @@
           availableJobs:
             #service
             Captain: [ 1, 1 ]
+
             BlueshieldOfficer: [ 1, 1 ]
             NanotrasenRepresentative: [ 1, 1 ]
+            NanotrasenRepresentative: [ 1, 1 ]
+            BlueshieldOfficer: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 2, 2 ]
             Botanist: [ 2, 3 ]
