@@ -544,7 +544,7 @@ namespace Content.Server.Strip
             var (time, stealth) = GetStripTimeModifiers(user, target, targetStrippable.HandStripDelay);
 
             if (!stealth)
-                _popupSystem.PopupEntity( Loc.GetString("strippable-component-alert-owner", ("user", Identity.Entity(user, EntityManager)), ("item", item)), target, target);
+                _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner", ("user", Identity.Entity(user, EntityManager)), ("item", item)), target, target);
 
             var prefix = stealth ? "stealthily " : "";
             _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
