@@ -240,6 +240,19 @@
       - MobMcGriff
 
 - type: entity
+  name:  Muhtar Spawner
+  id: SpawnMobMuhtar
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobMuhtar
+
+- type: entity
   name: Sloth Paperwork Spawner
   id: SpawnMobSlothPaperwork
   parent: MarkerBase

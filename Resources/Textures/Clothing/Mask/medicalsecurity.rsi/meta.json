@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprited by LinkUyx#6557. Reptilian edit by Nairod(Github)",
+  "copyright": "Sprited by LinkUyx#6557. Reptilian edit by Nairod(Github), Sheepdog edit by NikaVichy(Github)",
   "size": {
     "x": 32,
     "y": 32
@@ -56,6 +56,10 @@
     },
     {
       "name": "equipped-MASK-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-sheepdog",
       "directions": 4
     }
   ]
