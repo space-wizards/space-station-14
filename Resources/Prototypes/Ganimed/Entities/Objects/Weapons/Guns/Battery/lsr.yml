@@ -14,6 +14,8 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Item
+    size: Huge
   - type: Clothing
     sprite: Ganimed/Objects/Guns/Battery/lsr.rsi
     quickEquip: false
