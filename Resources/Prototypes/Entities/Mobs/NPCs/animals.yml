@@ -1347,12 +1347,13 @@
     baseSprintSpeed: 5
   - type: MeleeWeapon
     soundHit:
-      path: /Audio/Weapons/pierce.ogg
+      collection: AlienClaw
     angle: 30
-    animation: WeaponArcPunch
+    animation: WeaponArcClaw
     damage:
       types:
-        Piercing: 9
+        Slash: 5
+        Piercing: 4
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 285
