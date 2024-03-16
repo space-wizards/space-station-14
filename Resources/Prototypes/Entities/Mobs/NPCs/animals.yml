@@ -2650,6 +2650,7 @@
     - CannotSuicide
     - VimPilot
     - FootstepSound
+    - DoorBumpOpener
   - type: GhostTakeoverAvailable
   - type: GhostRole
     makeSentient: true
@@ -2662,18 +2663,20 @@
     description: ghost-role-information-muhtar-descriprion
     rules: ghost-role-information-muhtar-rules
   - type: MeleeWeapon
+    altDisarm: false
     soundHit:
         collection: AlienClaw
     angle: 0
     animation: WeaponArcBite
     damage:
       types:
-        Slash: 5
-        Piercing: 5
+        Slash: 7.5
+        Piercing: 7.5
   - type: StaminaDamageOnHit
-    damage: 35 #Sheepdogs are ment to stun people, not to kill them.
+    damage: 30 #Sheepdogs are ment to stun people, not to kill them.
   - type: MovementSpeedModifier
-    baseSprintSpeed: 5.5
+    baseSprintSpeed: 6
+    baseWalkSpeed: 4.5
   - type: MobState
     allowedStates:
     - Alive
@@ -2689,6 +2692,10 @@
       50: 0.5
   - type: Stamina
     critThreshold: 150
+  - type: Puller
+    needsHands: false
+  - type: NoSlip
+
 
 - type: entity
   name: cat
@@ -2757,6 +2764,7 @@
   - type: Tag
     tags:
     - VimPilot
+
 
 - type: entity
   name: calico cat
