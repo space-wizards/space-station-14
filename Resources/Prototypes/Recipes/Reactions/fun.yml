@@ -171,3 +171,19 @@
   products:
     Laughter: 2
 
+- type: reaction
+  id: CreateEnrichedUranium
+  impact: Low
+  quantized: true
+  reactants:
+    Uranium-235:
+      amount: 55
+    Fluorine:
+      amount: 25
+    Uranium-234:
+      amount: 2
+    Iron:
+      amount: 18
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: EnrichedUranium

@@ -114,3 +114,13 @@
   - type: Stack
     lingering: true
     count: 0
+
+- type: entity
+  parent: MaterialBase
+  id: EnrichedUranium
+  name: enriched uranium
+  components:
+  - type: Sprite
+    state: icon
+  - type: RadiationSource
+    intensity: 5
