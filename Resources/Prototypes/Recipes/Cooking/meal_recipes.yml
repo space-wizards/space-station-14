@@ -58,6 +58,16 @@
     FoodOnionSlice: 2
 
 - type: microwaveMealRecipe
+  id: RecipeHyperrealisticSandwich
+  name: hyper-realistic sandwich recipe
+  result: FoodSandwichHyperrealistic
+  time: 15
+  solids:
+    FoodBurgerPlain: 1
+  reagents:
+    SpaceDrugs: 5 #sandwich is a interdimensional hallucination??? idk man i just want a hyperrealistic sandwich
+
+- type: microwaveMealRecipe
   id: RecipeBrainBurger
   name: brain burger recipe
   result: FoodBurgerBrain
