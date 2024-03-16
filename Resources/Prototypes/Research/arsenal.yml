@@ -120,6 +120,7 @@
   cost: 10000
   recipeUnlocks:
   - WeaponLaserCannon
+  - WeaponEnergySniperRifle
 
 - type: technology
   id: SecurityIntercommunications

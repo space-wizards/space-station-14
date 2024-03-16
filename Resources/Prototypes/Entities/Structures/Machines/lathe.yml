@@ -702,6 +702,7 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - WeaponEnergySniperRifle
   - type: MaterialStorage
     whitelist:
       tags:
