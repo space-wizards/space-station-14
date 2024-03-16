@@ -1,14 +1,20 @@
 - type: job
   id: BlueshieldOfficer
-  name: job-name-bso
-  description: job-description-bso
+  name: Blueshield Officer
+  description: "Act as a bodyguard and advisor for Command and CentCom VIPs."
   playTimeTracker: JobBlueshieldOfficer
   requirements:
     - !type:DepartmentTimeRequirement
       department: Command
       time: 54000 # 15 hours
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 54000 # 15 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 54000 # 15 hours
   weight: 20
-  startingGear: CaptainGear
+  startingGear: BlueshieldOfficerGear
   icon: "JobIconNanotrasen"
   requireAdminNotify: true
   joinNotifyCrew: true
@@ -24,17 +30,20 @@
       - type: CommandStaff
 
 - type: startingGear
-  id: CaptainGear
+  id: BlueshieldOfficerGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitCaptain
+    jumpsuit: ClothingUniformJumpsuitColorBlue
     back: ClothingBackpackCaptainFilled
     shoes: ClothingShoesBootsCombatFilled
-    head: ClothingHeadHatCaptain
-    eyes: ClothingEyesGlassesSunglasses
-    gloves: ClothingHandsGlovesCaptain
+    head: ClothingHeadHelmetBasic
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterArmorCaptainCarapace
-    id: CaptainPDA
+    id: ERTSecurityPDA
     ears: ClothingHeadsetAltCommand
-  innerClothingSkirt: ClothingUniformJumpskirtCaptain
+    belt: ClothingBeltSecurityFilled
+    pocket1: WeaponPistolMk58Nonlethal
+    pocket2: DeathAcidifierImplanter
+  innerClothingSkirt: ClothingUniformJumpskirtColorBlue
   satchel: ClothingBackpackSatchelCaptainFilled
   duffelbag: ClothingBackpackDuffelCaptainFilled
