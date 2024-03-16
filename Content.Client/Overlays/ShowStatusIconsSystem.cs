@@ -57,6 +57,7 @@ public sealed class ShowStatusIconsSystem : EquipmentHudSystem<ShowStatusIconsCo
     private StatusIconPrototype? _nukeOperativeIcon = null;
     ////////////////////////////////////////////////////////
 
+    // TODO: should these be turned into a bitflag?
     private bool _showJob = false;
     private bool _showHunger = false;
     private bool _showThirst = false;
@@ -89,6 +90,7 @@ public sealed class ShowStatusIconsSystem : EquipmentHudSystem<ShowStatusIconsCo
 
         foreach (var showStatusIcon in ev.Components)
         {
+            // TODO: should these be turned into a bitflag?
             _showJob |= showStatusIcon.ShowJob;
             _showHunger |= showStatusIcon.ShowHunger;
             _showThirst |= showStatusIcon.ShowThirst;
@@ -102,6 +104,7 @@ public sealed class ShowStatusIconsSystem : EquipmentHudSystem<ShowStatusIconsCo
     {
         base.DeactivateInternal();
 
+        // TODO: should these be turned into a bitflag?
         _showJob = false;
         _showHunger = false;
         _showThirst = false;
