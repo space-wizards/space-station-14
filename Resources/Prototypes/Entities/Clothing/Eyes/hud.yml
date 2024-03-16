@@ -1,4 +1,14 @@
 - type: entity
+  id: HudIconsSecurity
+  abstract: true
+  noSpawn: true
+  components:
+  - type: ShowStatusIcons
+    showJob: true
+    showMindShield: true
+    showCriminalRecord: true
+
+- type: entity
   parent: ClothingEyesBase
   id: ClothingEyesHudDiagnostic
   name: diagnostic hud
@@ -17,7 +27,7 @@
   parent: ClothingEyesBase
   id: ClothingEyesHudMedical
   name: medical hud
-  description: A heads-up display that scans the humanoids in view and provides accurate data about their health status. 
+  description: A heads-up display that scans the humanoids in view and provides accurate data about their health status.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Hud/med.rsi
@@ -34,7 +44,7 @@
     - HudMedical
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, HudIconsSecurity]
   id: ClothingEyesHudSecurity
   name: security hud
   description: A heads-up display that scans the humanoids in view and provides accurate data about their ID status and security records.
@@ -43,7 +53,6 @@
     sprite: Clothing/Eyes/Hud/sec.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/sec.rsi
-  - type: ShowSecurityIcons
   - type: Tag
     tags:
     - HudSecurity
@@ -58,7 +67,8 @@
     sprite: Clothing/Eyes/Hud/beergoggles.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/beergoggles.rsi
-  - type: ShowThirstIcons
+  - type: ShowStatusIcons
+    showThirst: true
   - type: StealTarget
     stealGroup: ClothingEyesHudBeer
   - type: SolutionScanner
@@ -73,7 +83,8 @@
     sprite: Clothing/Eyes/Hud/friedonion.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/friedonion.rsi
-  - type: ShowHungerIcons
+  - type: ShowStatusIcons
+    showHunger: true
   - type: Food
   - type: SolutionContainerManager
     solutions:
@@ -97,8 +108,9 @@
     sprite: Clothing/Eyes/Hud/onionbeer.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/onionbeer.rsi
-  - type: ShowHungerIcons
-  - type: ShowThirstIcons
+  - type: ShowStatusIcons
+    showHunger: true
+    showThirst: true
 
 - type: entity
   parent: ClothingEyesBase
@@ -116,7 +128,8 @@
   - type: ShowHealthIcons
     damageContainers:
     - Biological
-  - type: ShowHungerIcons
+  - type: ShowStatusIcons
+    showHunger: true
 
 - type: entity
   parent: ClothingEyesBase
@@ -134,11 +147,12 @@
   - type: ShowHealthIcons
     damageContainers:
     - Biological
-  - type: ShowHungerIcons
-  - type: ShowThirstIcons
+  - type: ShowStatusIcons
+    showHunger: true
+    showThirst: true
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, HudIconsSecurity]
   id: ClothingEyesHudMedSec
   name: medsec hud
   description: An eye display that looks like a mixture of medical and security huds.
@@ -150,13 +164,12 @@
   - type: Construction
     graph: HudMedSec
     node: medsecHud
-  - type: ShowSecurityIcons
   - type: ShowHealthBars
     damageContainers:
     - Biological
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, HudIconsSecurity]
   id: ClothingEyesHudMultiversal
   name: multiversal hud
   description: Filler
@@ -165,7 +178,6 @@
     sprite: Clothing/Eyes/Hud/medsecengi.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/medsecengi.rsi
-  - type: ShowSecurityIcons
   - type: ShowHealthBars
     damageContainers:
     - Biological
@@ -173,10 +185,11 @@
   - type: ShowHealthIcons
     damageContainers:
     - Biological
-  - type: ShowSyndicateIcons
+  - type: ShowStatusIcons
+    showNukeOperative: true
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, HudIconsSecurity]
   id: ClothingEyesHudOmni
   name: omni hud
   description: Filler
@@ -185,7 +198,6 @@
     sprite: Clothing/Eyes/Hud/omni.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/omni.rsi
-  - type: ShowSecurityIcons
   - type: ShowHealthBars
     damageContainers:
     - Biological
@@ -193,12 +205,13 @@
   - type: ShowHealthIcons
     damageContainers:
     - Biological
-  - type: ShowHungerIcons
-  - type: ShowThirstIcons
-  - type: ShowSyndicateIcons
+  - type: ShowStatusIcons
+    showHunger: true
+    showThirst: true
+    showNukeOperative: true
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, HudIconsSecurity]
   id: ClothingEyesHudSyndicate
   name: syndicate visor
   description: The syndicate's professional head-up display, designed for better detection of humanoids and their subsequent elimination.
@@ -207,15 +220,13 @@
     sprite: Clothing/Eyes/Hud/synd.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/synd.rsi
-  - type: ShowSyndicateIcons
-  - type: ShowSecurityIcons
+  - type: ShowStatusIcons
+    showNukeOperative: true
 
 - type: entity
-  parent: ClothingEyesGlassesSunglasses
+  parent: [ClothingEyesGlassesSunglasses, HudIconsSecurity]
   id: ClothingEyesGlassesHiddenSecurity
   suffix: Syndicate
-  components:
-  - type: ShowSecurityIcons
 
 - type: entity
   parent: ClothingEyesHudMedical

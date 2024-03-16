@@ -7,17 +7,4 @@ namespace Content.Client.Silicons.Laws;
 /// <inheritdoc/>
 public sealed class SiliconLawSystem : SharedSiliconLawSystem
 {
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CanDisplayStatusIconsEvent>(OnCanDisplayStatusIcons);
-    }
-
-    private void OnCanDisplayStatusIcons(ref CanDisplayStatusIconsEvent args)
-    {
-        if (HasComp<SiliconLawBoundComponent>(args.User))
-            args.Cancelled = true;
-    }
 }
