@@ -140,7 +140,7 @@
   priority: 10
   impact: High
   reactants:
-    Water:
+    Phosphorus:
       amount: 1
     Sodium:
       amount: 1
