@@ -13,6 +13,8 @@
   id: MobGingerbreadSprites
   sprites:
     Head: MobGingerbreadHead
+    Hair: MobHumanoidAnyMarking
+    FacialHair: MobHumanoidAnyMarking
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
     Chest: MobGingerbreadTorso
