@@ -313,6 +313,7 @@
       - WeaponAdvancedLaser
       - WeaponLaserCannon
       - WeaponXrayCannon
+      - WeaponEnergySniperRifle
 
 - type: entity
   id: ProtolatheHyperConvection
