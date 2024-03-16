@@ -9,6 +9,7 @@ using Content.Shared.Database;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Speech;
+using Content.Shared.Ghost;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -65,26 +66,32 @@ public sealed class RadioSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets the message frequency, if there is no such frequency, returns the standard channel frequency.
+    /// Try to get channel frequency from StationFrequencyComponent, else return the standard channel frequency.
     /// </summary>
-    public int GetFrequency(EntityUid source, RadioChannelPrototype channel)
+    public int TryGetStationFrequency(EntityUid source, RadioChannelPrototype channel)
     {
-        var frequency = channel.Frequency;
-        if (TryComp<RadioMicrophoneComponent>(source, out var radioMicrophone))
-        {
-            frequency = radioMicrophone.Frequency;
-            return frequency;
-        }
         var xform = Transform(source);
         if (xform.GridUid != null)
         {
             var grid = xform.GridUid.Value;
             if (TryComp<StationFrequencyComponent>(grid, out var stationFrequency)
-                && stationFrequency.Frequency.TryGetValue(channel.ID, out frequency))
+                && stationFrequency.Frequency.TryGetValue(channel.ID, out var frequency))
                 return frequency;
         }
+        return channel.Frequency;
+    }
 
-        return frequency;
+    /// <summary>
+    /// Gets the message frequency, if there is no such frequency, returns the standard channel frequency.
+    /// </summary>
+    public int GetFrequency(EntityUid source, RadioChannelPrototype channel)
+    {
+        if (!channel.LongRange)
+            return TryGetStationFrequency(source, channel);
+        if (TryComp<RadioMicrophoneComponent>(source, out var radioMicrophone))
+            return radioMicrophone.Frequency;
+
+        return channel.Frequency;
     }
 
     /// <summary>
@@ -160,7 +167,7 @@ public sealed class RadioSystem : EntitySystem
                                                              !intercom.SupportedChannels.Contains(channel.ID)))
                     continue;
             }
-            if (GetFrequency(receiver, channel) != frequency)
+            if (!HasComp<GhostComponent>(receiver) && GetFrequency(receiver, channel) != frequency)
                 continue;
 
             if (!channel.LongRange && transform.MapID != sourceMapId && !radio.GlobalReceive)

@@ -68,6 +68,7 @@ public sealed class RadioDeviceSystem : EntitySystem
     #region Component Init
     private void OnMicrophoneInit(EntityUid uid, RadioMicrophoneComponent component, ComponentInit args)
     {
+        component.Frequency = _radio.TryGetStationFrequency(uid, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel));
         if (component.Enabled)
             EnsureComp<ActiveListenerComponent>(uid).Range = component.ListenRange;
         else
@@ -180,7 +181,7 @@ public sealed class RadioDeviceSystem : EntitySystem
 
         using (args.PushGroup(nameof(RadioMicrophoneComponent)))
         {
-            args.PushMarkup(Loc.GetString("handheld-radio-component-on-examine", ("frequency", proto.Frequency)));
+            args.PushMarkup(Loc.GetString("handheld-radio-component-on-examine", ("frequency", component.Frequency)));
             args.PushMarkup(Loc.GetString("handheld-radio-component-chennel-examine",
                 ("channel", proto.LocalizedName)));
         }
@@ -250,7 +251,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         if (TryComp<RadioMicrophoneComponent>(uid, out var mic))
         {
             mic.BroadcastChannel = args.Channel;
-            mic.Frequency = channel.Frequency;
+            mic.Frequency = _radio.TryGetStationFrequency(uid, channel);
         }
         if (TryComp<RadioSpeakerComponent>(uid, out var speaker))
             speaker.Channels = new(){ args.Channel };
@@ -308,7 +309,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         if (args.Session.AttachedEntity is not { })
             return;
 
-        SetFrequency(uid, args.Frequency, component);
+        SetFrequency(uid, args.Frequency);
         UpdateHandheldRadioUi(uid, component);
     }
 

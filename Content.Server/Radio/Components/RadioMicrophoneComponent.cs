@@ -34,8 +34,11 @@ public sealed partial class RadioMicrophoneComponent : Component
     [DataField("toggleOnInteract")]
     public bool ToggleOnInteract = true;
 
+    /// <summary>
+    // The radio frequency on which the message will be transmitted
+    /// </summary>
     [DataField("frequency")]
-    public int Frequency = 1330;
+    public int Frequency = 0;
 
     /// <summary>
     /// Whether or not the speaker must have an

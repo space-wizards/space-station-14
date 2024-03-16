@@ -1,7 +1,7 @@
 namespace Content.Server.Station.Components;
 
 /// <summary>
-/// Adjusts the frequency of the crew headsets.
+/// Allows to set the frequency of all outgoing messages from the grid for specific channels.
 /// </summary>
 [RegisterComponent]
 public sealed partial class StationFrequencyComponent : Component

@@ -6,9 +6,11 @@
   components:
   - type: RadioMicrophone
     broadcastChannel: Handheld
+    toggleOnInteract: false
   - type: RadioSpeaker
     channels:
     - Handheld
+    toggleOnInteract: false
   - type: Speech
     speechVerb: Robotic
   - type: Sprite
