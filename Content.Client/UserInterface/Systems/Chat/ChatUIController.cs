@@ -261,12 +261,22 @@ public sealed class ChatUIController : UIController
     {
         var chatBox = UIManager.ActiveScreen?.GetWidget<ChatBox>() ?? UIManager.ActiveScreen?.GetWidget<ResizableChatBox>();
 
-        if (chatBox == null)
+        var panel = chatBox?.ChatWindowPanel;
+        if (panel is null)
             return;
 
-        chatBox.ChatWindowPanel.PanelOverride = new StyleBoxFlat
+        Color color;
+        if (panel.PanelOverride is StyleBoxFlat styleBoxFlat)
+            color = styleBoxFlat.BackgroundColor;
+        else if (panel.TryGetStyleProperty<StyleBox>(PanelContainer.StylePropertyPanel, out var style)
+                 && style is StyleBoxFlat propStyleBoxFlat)
+            color = propStyleBoxFlat.BackgroundColor;
+        else
+            color = StyleNano.ChatBackgroundColor;
+
+        panel.PanelOverride = new StyleBoxFlat
         {
-            BackgroundColor = StyleNano.ChatBackgroundColor.WithAlpha(opacity)
+            BackgroundColor = color.WithAlpha(opacity)
         };
     }
 
