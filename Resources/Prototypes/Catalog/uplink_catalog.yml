@@ -1439,6 +1439,16 @@
   categories:
     - UplinkPointless
 
+- type: listing
+  id: UplinkBackpackSyndicate
+  name: uplink-backpack-syndicate-name
+  description: uplink-backpack-syndicate-desc
+  productEntity: ClothingBackpackSyndicate
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkPointless    
+
 # Job Specific
 
 - type: listing
