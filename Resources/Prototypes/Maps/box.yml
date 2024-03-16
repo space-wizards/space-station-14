@@ -2,8 +2,8 @@
   id: Box
   mapName: 'Box Station'
   mapPath: /Maps/box.yml
-  minPlayers: 1
   minPlayers: 0
+  minPlayers: 100
 stations:
     Boxstation:
       stationProto: StandardNanotrasenStation
