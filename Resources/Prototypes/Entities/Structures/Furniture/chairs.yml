@@ -394,3 +394,5 @@
           MaterialWoodPlank:
             min: 2
             max: 4
+  - type: StaticPrice
+    price: 20
