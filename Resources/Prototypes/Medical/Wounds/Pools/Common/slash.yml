@@ -1,7 +1,13 @@
 - type: woundPool
-  id: CommonBlunt
+  id: CommonSlash
   wounds:
-    5: Bruise
-    25: JointDislocation
-    45: HairlineFracture
-    70: CompoundFracture
+    2: MinorAbrasion
+    5: Abrasion
+    10: SevereAbrasion
+    25: Cut
+    40: Laceration
+    50: SevereLaceration
+    60: SurfaceAvulsion
+    70: MinorTissueAvulsion
+    80: TissueAvulsion
+    90: SevereTissueAvulsion

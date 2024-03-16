@@ -1,7 +1,15 @@
 - type: woundPool
-  id: CommonBlunt
+  id: CommonPiercing
   wounds:
-    5: Bruise
-    25: JointDislocation
-    45: HairlineFracture
-    70: CompoundFracture
+    2: MinorBruise
+    4: Bruise
+    6: SevereBruise
+    8: CriticalBruise
+    10: MinorPenetratingWound
+    15: MinorPunctureWound
+    20: PunctureWound
+    35: PenetratingWound
+    50: SeverePunctureWound
+    65: PenetratingWound
+    80: SeverePenetratingWound
+    90: SevereTissueAvulsion

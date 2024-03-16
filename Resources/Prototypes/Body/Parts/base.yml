@@ -12,7 +12,7 @@
   - type: Woundable
     maxHealth: 50
     maxIntegrity: 10
-    config: {}
+    config: {CommonBlunt, CommonPiercing, CommonSlash}
   - type: Gibbable
   - type: ContainerContainer
     containers:

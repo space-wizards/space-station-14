@@ -1,13 +1,4 @@
 ﻿- type: entity
-  id: SkinFlap
-  parent: BaseHealingWound
-  components:
-  - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
-
-- type: entity
   id: SurfaceAvulsion
   parent: BaseHealingWound
   components:
