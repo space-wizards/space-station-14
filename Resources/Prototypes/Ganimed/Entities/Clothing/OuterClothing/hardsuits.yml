@@ -875,7 +875,7 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitTSF
-  name: security hardsuit
+  name: TSF hardsuit
   description: A spacesuit used by the TSF navy.
   components:
   - type: Sprite
@@ -894,6 +894,8 @@
         Slash: 0.6
         Piercing: 0.6
         Caustic: 0.7
+        Heat: 0.6
+        Radiation: 0.4
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -901,4 +903,37 @@
     clothingPrototype: ClothingHeadHelmetHardsuitTSF
   - type: StaminaProtection
     coefficient: 0.55
+  - type: HeldSpeedModifier
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitTSFHeavy
+  name: TSF heavy hardsuit
+  description: A spacesuit used by the TSF navy.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/Hardsuits/tsfheavy.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/Hardsuits/tsfheavy.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3
+        Piercing: 0.4
+        Caustic: 0.2
+        Heat: 0.6
+        Radiation: 0.4
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.50
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitTSFHeavy
+  - type: StaminaProtection
+    coefficient: 0.20
   - type: HeldSpeedModifier
