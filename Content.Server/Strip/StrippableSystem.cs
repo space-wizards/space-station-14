@@ -122,13 +122,12 @@ namespace Content.Server.Strip
         private void OnStripButtonPressed(Entity<StrippableComponent> strippable, ref StrippingSlotButtonPressed args)
         {
             if (args.Session.AttachedEntity is not { Valid: true } user ||
-                !TryComp<HandsComponent>(user, out var userHands) ||
-                !TryComp<HandsComponent>(strippable.Owner, out var targetHands))
+                !TryComp<HandsComponent>(user, out var userHands))
                 return;
 
             if (args.IsHand)
             {
-                StripHand((user, userHands), (strippable.Owner, targetHands), args.Slot, strippable);
+                StripHand((user, userHands), (strippable.Owner, null), args.Slot, strippable);
                 return;
             }
 
