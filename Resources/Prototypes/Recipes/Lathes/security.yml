@@ -275,6 +275,14 @@
     Steel: 500
 
 - type: latheRecipe
+  id: MagazinePistolEmpty
+  result: MagazinePistolEmpty
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 10
+
+- type: latheRecipe
   id: MagazinePistol
   result: MagazinePistol
   category: Ammo
@@ -283,12 +291,28 @@
     Steel: 100
 
 - type: latheRecipe
+  id: MagazinePistolSubMachineGunEmpty
+  result: MagazinePistolSubMachineGunEmpty
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 30
+
+- type: latheRecipe
   id: MagazinePistolSubMachineGun
   result: MagazinePistolSubMachineGun
   category: Ammo
   completetime: 5
   materials:
     Steel: 300
+
+- type: latheRecipe
+  id: MagazinePistolSubMachineGunTopMountedEmpty
+  result: MagazinePistolSubMachineGunTopMountedEmpty
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 30
 
 - type: latheRecipe
   id: MagazinePistolSubMachineGunTopMounted
@@ -333,12 +357,28 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: MagazineRifleEmpty
+  result: MagazineRifleEmpty
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 30
+
+- type: latheRecipe
   id: MagazineRifle
   result: MagazineRifle
   category: Ammo
   completetime: 5
   materials:
     Steel: 375
+
+- type: latheRecipe
+  id: MagazineLightRifleEmpty
+  result: MagazineLightRifleEmpty
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 30
 
 - type: latheRecipe
   id: MagazineLightRifle
@@ -389,6 +429,14 @@
   completetime: 5
   materials:
     Steel: 200
+
+- type: latheRecipe
+  id: MagazineShotgunEmpty
+  result: MagazineShotgunEmpty
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 20
 
 - type: latheRecipe
   id: ShellShotgunIncendiary
@@ -647,4 +695,3 @@
      Steel: 150
      Plastic: 100
      Glass: 20
-     

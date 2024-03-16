@@ -55,6 +55,15 @@
   - type: Appearance
 
 - type: entity
+  id: MagazineLightRifleEmpty
+  name: "magazine (.30 rifle)"
+  suffix: empty
+  parent: BaseMagazineLightRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+
+- type: entity
   id: MagazineLightRifle
   name: "magazine (.30 rifle)"
   parent: BaseMagazineLightRifle

@@ -658,11 +658,12 @@
       - ShellShotgunSlug
       - ShellShotgunFlare
       - ShellTranquilizer
-      - MagazinePistol
-      - MagazinePistolSubMachineGun
-      - MagazinePistolSubMachineGunTopMounted
-      - MagazineRifle
-      - MagazineLightRifle
+      - MagazinePistolEmpty
+      - MagazinePistolSubMachineGunEmpty
+      - MagazinePistolSubMachineGunTopMountedEmpty
+      - MagazineRifleEmpty
+      - MagazineLightRifleEmpty
+      - MagazineShotgunEmpty
       - MagazineBoxPistol
       - MagazineBoxMagnum
       - MagazineBoxRifle

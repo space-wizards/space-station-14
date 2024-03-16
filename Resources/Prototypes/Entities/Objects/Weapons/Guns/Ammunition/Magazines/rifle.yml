@@ -34,6 +34,15 @@
 
 # Magazines
 - type: entity
+  id: MagazineRifleEmpty
+  name: "magazine (.20 rifle)"
+  suffix: empty
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+
+- type: entity
   id: MagazineRifle
   name: "magazine (.20 rifle)"
   parent: BaseMagazineRifle
