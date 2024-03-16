@@ -375,7 +375,7 @@
   parent: BaseFenceWoodSmall
   id: FenceWoodSmallGate
   name: wooden fence gate
-  description: Do you have any idea what awaits you behind these gates? It can be either a toilet or a luxurious mansion. But you continue to love your emo boys.
+  description: Looking at this gate, a familiar image pops up in your head. Where's my piggy?
   components:
   - type: Sprite
     layers:
