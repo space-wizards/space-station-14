@@ -112,5 +112,12 @@ These rules also apply to any individual who is a silicon, including cyborgs and
     - When receiving orders or directives from crewmembers and with a law that instructs you must obey, conflicting orders typically defer the choice to the silicon player of which directive you choose to obey if they conflict (taking into account the priorities of your other laws).
     - Orders to silicons that are clearly unreasonable or obnoxious are a violation of the "Don't be a dick" rule. They can be ignored and can be ahelped.
 
+[color=#0066ff]Blueshield Officer Rules[/color]
+    - You are to protect the Station Heads and Central Command VIPs from danger. You are not a Security Officer with all-access, so do not abandon your duties. If you are dismissed and no longer needed, you are able to instead help with security work until further notice.
+    - You are hard up to a higher standard of play as command and the Nanotrasen Representative is. Take your job seriously, and do it right.
+    - Your higher up is the Nanotrasen Representative. If you need guidance, ask them for help.
+    - Do not abuse your role, and use common sense. If you have questions or concerns, ahelp them for the Admins to answer or try asking in the Discord. Failure to do so can lead to a roleban from command or gameban.
+    - Do not make yourself Captain or any other command job. If you want to be Captain, instead choose that role while in the lobby.
+
 [color=#00ff00]SANDBOX SPECIFIC RULES[/color]
 1. You are free to do as you wish, however, causing massive damage to both the station, the arrivals system, and other player’s builds is strictly prohibited. It is also strictly prohibited to spawn large amounts of entities, as too much entities can cause severe lag.
