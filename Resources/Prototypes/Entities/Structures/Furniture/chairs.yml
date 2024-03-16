@@ -473,7 +473,7 @@
   components:
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
     color: "#23242c"
   - type: Construction
     graph: Seat
@@ -487,7 +487,7 @@
   components:
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
     color: "#356287"
   - type: Construction
     graph: Seat
@@ -501,7 +501,7 @@
   components:
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
     color: "#2a6e47"
   - type: Construction
     graph: Seat
@@ -515,7 +515,7 @@
   components:
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
     color: "#9d480c"
   - type: Construction
     graph: Seat
@@ -529,7 +529,7 @@
   components:
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
     color: "#91265e"
   - type: Construction
     graph: Seat
@@ -543,7 +543,7 @@
   components:
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
     color: "#563968"
   - type: Construction
     graph: Seat
@@ -557,7 +557,7 @@
   components:
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
     color: "#872222"
   - type: Construction
     graph: Seat
@@ -571,7 +571,7 @@
   components:
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
     color: "#dcdcdc"
   - type: Construction
     graph: Seat

@@ -383,7 +383,7 @@
   description: Soft bag chair, comfortable!
   icon:
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -400,7 +400,7 @@
   description: Soft bag chair, comfortable!
   icon:
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -417,7 +417,7 @@
   description: Soft bag chair, comfortable!
   icon:
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -434,7 +434,7 @@
   description: Soft bag chair, comfortable!
   icon:
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -451,7 +451,7 @@
   description: Soft bag chair, comfortable!
   icon:
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -468,7 +468,7 @@
   description: Soft bag chair, comfortable!
   icon:
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -485,7 +485,7 @@
   description: Soft bag chair, comfortable!
   icon:
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -502,7 +502,7 @@
   description: Soft bag chair, comfortable!
   icon:
     sprite: Structures/Furniture/chairs.rsi
-    state: pufi-greyscale
+    state: pufi-box-greyscale
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

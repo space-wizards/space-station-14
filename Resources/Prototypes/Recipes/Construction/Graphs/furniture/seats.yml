@@ -122,41 +122,65 @@
             - material: Cloth
               amount: 3
               doAfter: 1
+            - material: WoodPlank
+              amount: 1
+              doAfter: 1
         - to: bluePaddedStool
           steps:
             - material: Cloth
               amount: 3
+              doAfter: 1
+            - material: WoodPlank
+              amount: 1
               doAfter: 1
         - to: greenPaddedStool
           steps:
             - material: Cloth
               amount: 3
               doAfter: 1
+            - material: WoodPlank
+              amount: 1
+              doAfter: 1
         - to: orangePaddedStool
           steps:
             - material: Cloth
               amount: 3
               doAfter: 1
+            - material: WoodPlank
+              amount: 1
+              doAfter: 1              
         - to: pinkPaddedStool
           steps:
             - material: Cloth
               amount: 3
               doAfter: 1
+            - material: WoodPlank
+              amount: 1
+              doAfter: 1              
         - to: purplePaddedStool
           steps:
             - material: Cloth
               amount: 3
               doAfter: 1
+            - material: WoodPlank
+              amount: 1
+              doAfter: 1              
         - to: redPaddedStool
           steps:
             - material: Cloth
               amount: 3
               doAfter: 1
+            - material: WoodPlank
+              amount: 1
+              doAfter: 1              
         - to: whitePaddedStool
           steps:
             - material: Cloth
               amount: 3
               doAfter: 1
+            - material: WoodPlank
+              amount: 1
+              doAfter: 1              
 
     - node: chair
       entity: Chair
@@ -427,6 +451,9 @@
             - !type:SpawnPrototype
               prototype: MaterialCloth1
               amount: 3
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 1
           steps:
             - tool: Cutting
               doAfter: 1
@@ -439,6 +466,9 @@
             - !type:SpawnPrototype
               prototype: MaterialCloth1
               amount: 3
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 1              
           steps:
             - tool: Cutting
               doAfter: 1
@@ -451,6 +481,9 @@
             - !type:SpawnPrototype
               prototype: MaterialCloth1
               amount: 3
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 1              
           steps:
             - tool: Cutting
               doAfter: 1
@@ -463,6 +496,9 @@
             - !type:SpawnPrototype
               prototype: MaterialCloth1
               amount: 3
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 1              
           steps:
             - tool: Cutting
               doAfter: 1
@@ -475,6 +511,9 @@
             - !type:SpawnPrototype
               prototype: MaterialCloth1
               amount: 3
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 1              
           steps:
             - tool: Cutting
               doAfter: 1
@@ -487,6 +526,9 @@
             - !type:SpawnPrototype
               prototype: MaterialCloth1
               amount: 3
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 1              
           steps:
             - tool: Cutting
               doAfter: 1
@@ -499,6 +541,9 @@
             - !type:SpawnPrototype
               prototype: MaterialCloth1
               amount: 3
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 1              
           steps:
             - tool: Cutting
               doAfter: 1
@@ -511,6 +556,9 @@
             - !type:SpawnPrototype
               prototype: MaterialCloth1
               amount: 3
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 1              
           steps:
             - tool: Cutting
               doAfter: 1
