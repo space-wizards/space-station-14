@@ -992,7 +992,7 @@
   - type: Projectile
     damage:
       types:
-        Heat: 30
+        Heat: 45
     soundHit:
       path: "/Audio/Weapons/tap.ogg"
     soundForce: true
