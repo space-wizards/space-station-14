@@ -193,7 +193,20 @@
 - type: damageModifierSet
   id: Vox
   coefficients: # To be decided
-    Poison: 1
+    Slash: 0.8
+    Piercing: 0.8
+    Shock: 1.2 #electric type beats bird
+    Cold: 0.0
+    Heat: 0.0
+    Poison: 0.5
+    Radiation: 0.5
+    Asphyxiation: 0.8
+    Bloodloss: 3 #thick skin but weak veins? I dunno i'm just tryna make it interesting
+    Cellular: 0.5
+    Caustic: 0.0
+  flatReductions:
+    Slash: 5
+    Poison: 2
 
 - type: damageModifierSet
   id: Zombie #Blunt resistant and immune to biological threats, but can be hacked apart and burned
