@@ -161,22 +161,6 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
-  id: ClothingOuterCoatLabGene
-  name: geneticist lab coat
-  description: A suit that protects against minor chemical spills. Has an blue stripe on the shoulder.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/labcoat_gene.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/labcoat_gene.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Caustic: 0.75
-
-
-- type: entity
-  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatLabCmo
   name: chief medical officer's lab coat
   description: Bluer than the standard model.
@@ -197,9 +181,9 @@
   description: A suit that protects against minor chemical spills. Has a purple stripe on the shoulder.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/rndcoat.rsi
+    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/rndcoat.rsi
+    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -227,9 +211,9 @@
   description: Woven with top of the line technology, this labcoat helps protect against radiation in similar way to the experimental hardsuit.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/rd_coat.rsi
+    sprite: Clothing/OuterClothing/Coats/labcoat_rd.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/rd_coat.rsi
+    sprite: Clothing/OuterClothing/Coats/labcoat_rd.rsi
   - type: Armor
     modifiers:
       coefficients:
