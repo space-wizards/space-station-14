@@ -137,36 +137,6 @@
     proto: null
 
 - type: entity
-  id: MagazinePistolEmptyLethal
-  name: pistol magazine (.35 auto)
-  suffix: empty
-  parent: BaseMagazinePistol
-  components:
-  - type: BallisticAmmoProvider
-    proto: null
-  - type: Sprite
-    layers:
-    - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazinePistolEmptyNonLethal
-  name: pistol magazine (.35 auto)
-  suffix: empty
-  parent: BaseMagazinePistol
-  components:
-  - type: BallisticAmmoProvider
-    proto: null
-  - type: Sprite
-    layers:
-    - state: rubber
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
   id: MagazinePistol
   name: pistol magazine (.35 auto)
   parent: BaseMagazinePistol
@@ -179,6 +149,24 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolEmptyLethal
+  name: pistol magazine (.35 auto)
+  suffix: empty
+  parent: MagazinePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+
+- type: entity
+  id: MagazinePistolIncendiary
+  name: pistol magazine (.35 auto incendiary)
+  suffix: empty
+  parent: MagazinePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolIncendiary
 
 - type: entity
   id: MagazinePistolPractice
@@ -204,6 +192,29 @@
   - type: Sprite
     layers:
     - state: rubber
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolEmptyNonLethal
+  name: pistol magazine (.35 auto)
+  suffix: empty
+  parent: MagazinePistolRubber
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+
+- type: entity
+  id: MagazinePistolUranium
+  name: pistol magazine (.35 auto uranium)
+  parent: BaseMagazinePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolUranium
+  - type: Sprite
+    layers:
+    - state: uranium
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]

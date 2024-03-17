@@ -658,6 +658,7 @@
       - BoxShotgunSlug
       - BoxLethalshot
       - BoxShotgunFlare
+      - MagazinePistol 
       - MagazinePistolEmptyLethal
       - MagazinePistolEmptyNonLethal
       - MagazinePistolSubMachineGunEmptyLethal
@@ -686,15 +687,15 @@
     dynamicRecipes:
       - CartridgeLightRifleIncendiary
       - CartridgeMagnumIncendiary
-      - CartridgePistolIncendiary
+      - MagazinePistolIncendiary
       - CartridgeRifleIncendiary
       - CartridgeLightRifleUranium
       - CartridgeMagnumUranium
-      - CartridgePistolUranium
+      - MagazinePistolUranium
       - CartridgeRifleUranium
       - CartridgeLightRifleRubber
       - CartridgeMagnumRubber
-      - CartridgePistolRubber
+      - MagazinePistolRubber
       - CartridgeRifleRubber
       - ClothingEyesGlassesSecurity
       - ExplosivePayload
