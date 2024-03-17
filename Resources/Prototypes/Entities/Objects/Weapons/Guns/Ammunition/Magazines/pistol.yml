@@ -137,13 +137,34 @@
     proto: null
 
 - type: entity
-  id: MagazinePistolEmpty
+  id: MagazinePistolEmptyLethal
   name: pistol magazine (.35 auto)
   suffix: empty
   parent: BaseMagazinePistol
   components:
   - type: BallisticAmmoProvider
     proto: null
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolEmptyNonLethal
+  name: pistol magazine (.35 auto)
+  suffix: empty
+  parent: BaseMagazinePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    layers:
+    - state: rubber
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazinePistol
@@ -188,13 +209,34 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazinePistolHighCapacityEmpty
+  id: MagazinePistolHighCapacityEmptyLethal
   name: machine pistol magazine (.35 auto)
   suffix: empty
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
     proto: null
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolHighCapacityEmptyNonLethal
+  name: machine pistol magazine (.35 auto)
+  suffix: empty
+  parent: BaseMagazinePistolHighCapacity
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    layers:
+    - state: rubber
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazinePistolHighCapacity
@@ -259,13 +301,34 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazinePistolSubMachineGunEmpty
+  id: MagazinePistolSubMachineGunEmptyLethal
   name: SMG magazine (.35 auto)
   suffix: empty
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
     proto: null 
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolSubMachineGunEmptyNonLethal
+  name: SMG magazine (.35 auto)
+  suffix: empty
+  parent: BaseMagazinePistolSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    proto: null 
+  - type: Sprite
+    layers:
+    - state: rubber
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazinePistolSubMachineGunPractice

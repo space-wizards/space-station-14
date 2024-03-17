@@ -654,15 +654,19 @@
       - Stunbaton
       - ForensicPad
       - RiotShield
-      - ShellShotgun
-      - ShellShotgunSlug
-      - ShellShotgunFlare
       - ShellTranquilizer
-      - MagazinePistolEmpty
-      - MagazinePistolSubMachineGunEmpty
+      - BoxShotgunSlug
+      - BoxLethalshot
+      - BoxShotgunFlare
+      - MagazinePistolEmptyLethal
+      - MagazinePistolEmptyNonLethal
+      - MagazinePistolSubMachineGunEmptyLethal
+      - MagazinePistolSubMachineGunEmptyNonLethal
       - MagazinePistolSubMachineGunTopMountedEmpty
-      - MagazineRifleEmpty
-      - MagazineLightRifleEmpty
+      - MagazineRifleEmptyLethal
+      - MagazineRifleEmptyNonLethal
+      - MagazineLightRifleEmptyLethal
+      - MagazineLightRifleEmptyNonLethal
       - MagazineShotgunEmpty
       - MagazineBoxPistol
       - MagazineBoxMagnum
@@ -676,9 +680,9 @@
       - MagazineBoxMagnumPractice
       - MagazineBoxPistolPractice
       - MagazineBoxRiflePractice
-      - ShellShotgunPractice
       - WeaponLaserCarbinePractice
       - WeaponDisablerPractice
+      - BoxShotgunPractice 
     dynamicRecipes:
       - CartridgeLightRifleIncendiary
       - CartridgeMagnumIncendiary
@@ -700,14 +704,17 @@
       - MagazineBoxMagnumIncendiary
       - MagazineBoxPistolIncendiary
       - MagazineBoxRifleIncendiary
+      - BoxShotgunIncendiary
       - MagazineBoxLightRifleUranium
       - MagazineBoxMagnumUranium
       - MagazineBoxPistolUranium
       - MagazineBoxRifleUranium
+      - BoxShotgunUranium
       - MagazineBoxLightRifleRubber
       - MagazineBoxMagnumRubber
       - MagazineBoxPistolRubber
       - MagazineBoxRifleRubber
+      - BoxBeanbag
       - MagazineGrenadeEmpty
       - GrenadeEMP
       - GrenadeFlash

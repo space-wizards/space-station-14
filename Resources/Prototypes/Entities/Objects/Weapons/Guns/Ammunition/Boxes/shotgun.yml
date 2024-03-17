@@ -21,7 +21,7 @@
       whitelist:
         tags:
         - ShellShotgun
-      capacity: 12
+      capacity: 16
 
 # Shotgun Shells
 - type: entity
@@ -88,6 +88,19 @@
       layers:
         - state: boxwide
         - state: shellincendiary
+
+- type: entity
+  name: shotgun uranium cartridges dispenser
+  parent: AmmoProviderShotgunShell
+  id: BoxShotgunUranium
+  description: A dispenser box full of uranium cartridges, designed for riot shotguns.
+  components:
+    - type: BallisticAmmoProvider
+      proto: ShellShotgunUranium
+    - type: Sprite
+      layers:
+        - state: boxwide
+        - state: shelluranium
 
 - type: entity
   name: shotgun practice cartridges dispenser

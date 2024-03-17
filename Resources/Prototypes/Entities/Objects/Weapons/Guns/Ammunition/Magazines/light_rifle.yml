@@ -55,13 +55,34 @@
   - type: Appearance
 
 - type: entity
-  id: MagazineLightRifleEmpty
+  id: MagazineLightRifleEmptyLethal
   name: "magazine (.30 rifle)"
   suffix: empty
   parent: BaseMagazineLightRifle
   components:
   - type: BallisticAmmoProvider
     proto: null
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineLightRifleEmptyNonLethal
+  name: "magazine (.30 rifle)"
+  suffix: empty
+  parent: BaseMagazineLightRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    layers:
+    - state: rubber
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineLightRifle

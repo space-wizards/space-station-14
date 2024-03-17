@@ -9,7 +9,7 @@
       tags:
         - CartridgeRifle
     proto: CartridgeRifle
-    capacity: 60
+    capacity: 50
   - type: Item
     size: Small
   - type: ContainerContainer
