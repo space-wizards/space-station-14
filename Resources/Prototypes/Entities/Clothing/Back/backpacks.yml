@@ -253,7 +253,7 @@
   parent: ClothingBackpack
   id: ClothingBackpackSyndicate
   name: syndicate backpack
-  description:  
+  description:
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/syndicate.rsi
