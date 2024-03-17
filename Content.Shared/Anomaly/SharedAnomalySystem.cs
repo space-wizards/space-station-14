@@ -133,7 +133,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (HasComp<AnomalySupercriticalComponent>(uid))
             return;
 
-        AdminLog.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ToPrettyString(uid)} began to go supercritical.");
+        AdminLog.Add(LogType.Anomaly, LogImpact.Extreme, $"Anomaly {ToPrettyString(uid)} began to go supercritical.");
         if (_net.IsServer)
             _sawmill.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(uid)}");
 
@@ -180,7 +180,8 @@ public abstract class SharedAnomalySystem : EntitySystem
         // Logging before resolve, in case the anomaly has deleted itself.
         if (_net.IsServer)
             _sawmill.Info($"Ending anomaly. Entity: {ToPrettyString(uid)}");
-        AdminLog.Add(LogType.Anomaly, LogImpact.Extreme, $"Anomaly {ToPrettyString(uid)} went supercritical.");
+        AdminLog.Add(LogType.Anomaly, supercritical ? LogImpact.High : LogImpact.Low,
+                     $"Anomaly {ToPrettyString(uid)} {(supercritical ? "went supercritical" : "decayed")}.");
 
         if (!Resolve(uid, ref component))
             return;
