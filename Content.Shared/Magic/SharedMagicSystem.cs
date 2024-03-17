@@ -4,6 +4,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Coordinates.Helpers;
+using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
@@ -48,6 +49,7 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly LockSystem _lock = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     public override void Initialize()
     {
@@ -88,11 +90,29 @@ public abstract class SharedMagicSystem : EntitySystem
         if (comp.RequiresSpeech && HasComp<MutedComponent>(args.Performer))
             hasReqs = false;
 
-        if (hasReqs)
+        if (!hasReqs)
+        {
+            args.Cancelled = true;
+            _popup.PopupClient(Loc.GetString("spell-requirements-failed"), args.Performer, args.Performer);
+            return;
+        }
+
+        // DoAfter
+        if (ent.Comp.CastTime <= 0.0f)
             return;
 
-        args.Cancelled = true;
-        _popup.PopupClient(Loc.GetString("spell-requirements-failed"), args.Performer, args.Performer);
+        // TODO: Pre Spell Doafter (this)
+        //  How to check if cancelled?
+        // TODO: Repeating spell doafter (repeated fireballs for example or healing)
+        //  Would be in the spell body as a method?
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.Performer, ent.Comp.CastTime, null, null)
+        {
+            BreakOnUserMove = true,
+            BreakOnTargetMove = true,
+            NeedHand = true
+        };
+
+        _doAfter.TryStartDoAfter(doAfterArgs);
     }
 
     private void OnInit(EntityUid uid, MagicComponent component, MapInitEvent args)
@@ -130,7 +150,7 @@ public abstract class SharedMagicSystem : EntitySystem
 
     private void OnProjectileSpell(ProjectileSpellEvent ev)
     {
-        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer) || !_net.IsServer)
             return;
 
         ev.Handled = true;
@@ -146,9 +166,6 @@ public abstract class SharedMagicSystem : EntitySystem
         var spawnCoords = _mapManager.TryFindGridAt(fromMap, out var gridUid, out _)
             ? fromCoords.WithEntityId(gridUid, EntityManager)
             : new(_mapManager.GetMapEntityId(fromMap.MapId), fromMap.Position);
-
-        if (!_net.IsServer)
-            return;
 
         var ent = Spawn(ev.Prototype, spawnCoords);
         var direction = toCoords.ToMapPos(EntityManager, _transform) -

@@ -15,6 +15,8 @@ public sealed partial class MagicComponent : Component
     //  Move while casting allowed
     //  Maybe add doafters to events?
     //    So if doafter != null, then do the spell after?
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float CastTime;
 
     // TODO: Spell requirements
     //  A list of requirements to cast the spell
