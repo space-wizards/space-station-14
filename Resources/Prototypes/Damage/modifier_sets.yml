@@ -196,8 +196,6 @@
     Slash: 0.8
     Piercing: 0.8
     Shock: 1.2 #electric type beats bird
-    Cold: 0.0
-    Heat: 0.0
     Poison: 0.5
     Radiation: 0.5
     Asphyxiation: 0.8
