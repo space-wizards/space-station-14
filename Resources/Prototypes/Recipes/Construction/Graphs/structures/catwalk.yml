@@ -23,6 +23,7 @@
           - !type:DeleteEntity {}
           steps:
             - tool: Cutting
+              doAfter: 1
         
         - to: AcceleratingCatwalk
           steps:
@@ -38,9 +39,14 @@
     - node: AcceleratingCatwalk
       entity: AcceleratingCatwalk
       edges:
-        - to: start
+        - to: Catwalk
           completed:
           - !type:SpawnPrototype
-                prototype: PartRodMetal1
-                amount: 2
-          - !type:DeleteEntity {}
+            prototype: CapacitorStockPart
+            amount: 1
+          - !type:SpawnPrototype
+            prototype: CableApcStack1
+            amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 1

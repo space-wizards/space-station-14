@@ -60,6 +60,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Construction
+    node: AcceleratingCatwalk
   - type: Physics
     canCollide: true
   - type: Sprite
