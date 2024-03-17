@@ -31,12 +31,10 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private const float ReactTime = 0.125f;
 
-        private ISawmill _sawmill = default!;
-
         public override void Initialize()
         {
             base.Initialize();
-            _sawmill = Logger.GetSawmill("vapor");
+
             SubscribeLocalEvent<VaporComponent, StartCollideEvent>(HandleCollide);
         }
 
@@ -128,7 +126,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
                     if (reaction > reagentQuantity.Quantity)
                     {
-                        _sawmill.Error($"Tried to tile react more than we have for reagent {reagentQuantity}. Found {reaction} and we only have {reagentQuantity.Quantity}");
+                        Log.Error($"Tried to tile react more than we have for reagent {reagentQuantity}. Found {reaction} and we only have {reagentQuantity.Quantity}");
                         reaction = reagentQuantity.Quantity;
                     }
 
