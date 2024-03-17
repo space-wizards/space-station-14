@@ -1458,6 +1458,9 @@
           Quantity: 100
   - type: TrashOnSolutionEmpty
     solution: drink
+  - type: Tag
+    tags:
+      - DrinkSpaceGlue
 
 - type: entity
   parent: BaseItem
