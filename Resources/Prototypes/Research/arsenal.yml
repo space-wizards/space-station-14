@@ -33,6 +33,7 @@
   - MagazinePistolIncendiary
   - MagazineBoxPistolIncendiary
   - MagazineBoxMagnumIncendiary
+  - MagazineLightRifleIncendiary
   - MagazineBoxLightRifleIncendiary
   - MagazineBoxRifleIncendiary
 
@@ -66,6 +67,7 @@
   - MagazinePistolRubber
   - MagazineBoxPistolRubber
   - MagazineBoxMagnumRubber
+  - MagazineLightRifleRubber 
   - MagazineBoxLightRifleRubber
   - MagazineBoxRifleRubber
   - BoxBeanbag
@@ -88,6 +90,7 @@
   - MagazinePistolUranium
   - MagazineBoxPistolUranium
   - MagazineBoxMagnumUranium
+  - MagazineLightRifleUranium
   - MagazineBoxLightRifleUranium
   - MagazineBoxRifleUranium
   - BoxShotgunUranium

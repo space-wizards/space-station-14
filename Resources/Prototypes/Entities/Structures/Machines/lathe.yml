@@ -667,6 +667,7 @@
       - MagazineRifle
       - MagazineRifleEmptyLethal
       - MagazineRifleEmptyNonLethal
+      - MagazineLightRifle
       - MagazineLightRifleEmptyLethal
       - MagazineLightRifleEmptyNonLethal
       - MagazineShotgunEmpty
@@ -686,15 +687,15 @@
       - WeaponDisablerPractice
       - BoxShotgunPractice 
     dynamicRecipes:
-      - CartridgeLightRifleIncendiary
+      - MagazineLightRifleIncendiary
       - CartridgeMagnumIncendiary
       - MagazinePistolIncendiary
       - MagazineRifleIncendiary
-      - CartridgeLightRifleUranium
+      - MagazineLightRifleUranium
       - CartridgeMagnumUranium
       - MagazinePistolUranium
       - MagazineRifleUranium
-      - CartridgeLightRifleRubber
+      - MagazineLightRifleRubber
       - CartridgeMagnumRubber
       - MagazinePistolRubber
       - MagazineRifleRubber
