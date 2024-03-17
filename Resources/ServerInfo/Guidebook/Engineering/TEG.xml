@@ -31,7 +31,7 @@
 
   As stated above, there are many different layouts one can follow to heat up (or cool down) gases; this part of the guide will cover 2 common methods one will often see for the hot loop when the TEG is setup: The Pipe Burn, and the Burn chamber.
 
-  Side note: Plasma fires burn now relatively cool compared to, for example, Tritium fires (compared to before, where Plasma fires were near-instant levels of lethal). It may be viable to extract Tritium from the setups below (using a 95/5 ratio of O2/Plasma) and react it with Oxygen to get truly hellish temperatures for power. Although, this is just a recommendation; I'm not ya mum.
+  Side note: Plasma fires burn relatively cool compared to, for example, Tritium fires. It may be viable to extract Tritium from an extraction setup (using a 97/3 ratio of O2/Plasma) and react it with Oxygen to get truly hellish temperatures for power. Although, this is just a recommendation; I'm not ya mum.
 
   ## The Pipe Burn
 
@@ -68,19 +68,19 @@
   Most (if not all) stations have the burn chamber separated from the main atmospherics block by a 1-wide spaced grid, presumably to prevent conduction. The chambers consist of 3(+1) important parts:
   - The Air Injector/Passive Vent
   - The Space Vent
-  - The Air Scrubber (array)
-  - The Air Alarm (Optional, but Recommended)
+  - The Radiator Loop
 
+  Most normal burn chambers don't come with Heat-Exchangers; instead, they have air scrubbers (and optionally, an air alarm) to help filter for Tritium, which is a highly reactive, hot-burning gas that can also be used to heat the TEG efficiently.
+  However, this is a slightly more advanced setup than just burning plasma, as it needs 2 burn chambers instead of 1 (one for tritium production, one for burning said tritium), so remove the scrubbers and retrofit the burn chamber with a parallel array of heat-exchangers instead.
+  
   The air injector (or Passive Vent) injects air (or allows air to flow) into the burn chamber. Either should be supplemented with a pump before it, to keep pressures high.
-  There are a few notable differences between the passive vent and the air injector; mostly speaking, the air injector allows you to keep pumping in air at higher pressures, at the expense of being mildly more tedious to work with than a passive vent. If you are using the space vent, it really doesn't matter which one you use.
+  There is a notable difference between the passive vent and the air injector; the air injector can only keep injecting air up to 9MPa, which can be reached very easily with a good burn. Ideally, switch out the air injector for a passive vent connected to a volume pump.
 
-  The space vent (designated as a blast door to space on one side of the burn chamber) allows waste gases to be expelled and destroyed. This is only really useful if you want to produce tritium and you want to keep the burn going, but you can open this if you want to for now.
+  The space vent (designated as a blast door to space on one side of the burn chamber) allows waste gases to be expelled and destroyed. Open this to keep the pressure under control.
 
-  The air scrubber(s) serve to input the now hot air into a pipe that should lead to the hot-side Circulator. They also 'filter' the air; this is only really useful if you want to filter out a useful gas (usually, tritium). However, the default settings also are not the best, as gas intake is low, and unburnt plasma is also filtered out, both reducing the efficicency of the burn. See the Air Alarm step for more information.
-  To increase the output's airflow, pipe as many air scrubbers as the room can hold to the output. You can't stack scrubbers, so be efficient!
-
-  Optionally, you can use a network configurator to link all the air scrubbers to the air alarm present on some burn chambers. If you want to extract tritium, do this and set the scrubbers to filter for tritium gas.
-  If not, it is still recommended to do this step, and set the gas scrubbers to scrub everything but Plasma and O2, and also set the scrubbers to siphon air instead. This ensures as much hot, non-burnable air is pulled in as possible.
+  The radiator loop collects heat from the burnt gases and brings it to the TEG. To maximize efficiency, hook up the heat-exchangers [italics]in parallel to each other[/italics], with a pressure pump at max pressure after the array and a volumetric pump before the array.
+  The pressure of the volumetric pump should be set to ( 200 / number of heat-exchangers ) L/s. For example, having 2 heat-exchangers would mean you should set the pressure to 100 L/s. 
+  Finally, fill the whole loop with (ideally) a high heat capacity gas, like Frezon or Plasma. (Yes, Frezon =/= Cold. Frezon has one of the highest heat capacities in the game; so long as it isn't reacting with Nitrogen, it can actually be heated and can store heat really well!)
 
   # The Cold Loop
 
@@ -107,17 +107,36 @@
 
   ## Coolant Array
 
-  This is the default method for the Cold Loop you will see on a variety of stations. Being of moderate complexity and having no losses of any resource, this [italics]should[/italics] be the main method of cooling down the TEG. However, space heat exchange kinda sucks at the moment, so this is not as relevant as it should be.
+  This is the default method for the Cold Loop you will see on a variety of stations. Being of moderate complexity and having no losses of any resource, this [italics]should[/italics] be the main method of cooling down the TEG. However, every station at the moment somehow has their heat exchangers hooked up wrong, reducing efficiency greatly. (Thanks a bunch, NT!)
 
-  Simply speaking, this consists of 3 major parts: An input connector port, a few pumps and the heat-exchanger array out in space. It should be setup like so:
+  To use heat-exchangers properly, they must be setup in [italics]parallel[/italics], not in series (like what you see on most stations). A gas pump at max pressure should be placed after, and a volumetric pump before the heat-exchangers.
+  The flow-rate of the volumetric pump should be set to ( 200 / number of heat-exchangers ) L/s.
+
+  Simply speaking, the Coolant Array consists of 3 major parts: An input connector port, a few pumps and the heat-exchanger array out in space. It can be setup like so:
 
   <Box>
     <GuideEntityEmbed Entity="GasPipeBend" Rotation="90" Caption="" Margin="-1"/>
-    <GuideEntityEmbed Entity="HeatExchanger" Rotation="90" Caption="" Margin="-1"/>
-    <GuideEntityEmbed Entity="HeatExchanger" Rotation="90" Caption="" Margin="-1"/>
-    <GuideEntityEmbed Entity="HeatExchanger" Rotation="90" Caption="" Margin="-1"/>
-    <GuideEntityEmbed Entity="HeatExchanger" Rotation="90" Caption="" Margin="-1"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="0" Caption="" Margin="-1"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="0" Caption="" Margin="-1"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="0" Caption="" Margin="-1"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="0" Caption="" Margin="-1"/>
     <GuideEntityEmbed Entity="GasPipeBend" Rotation="0" Caption="" Margin="-1"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="HeatExchanger" Rotation="0" Caption="" Margin="-1"/>
+    <GuideEntityEmbed Entity="HeatExchanger" Rotation="0" Caption="" Margin="-1"/>
+    <GuideEntityEmbed Entity="HeatExchanger" Rotation="0" Caption="" Margin="-1"/>
+    <GuideEntityEmbed Entity="HeatExchanger" Rotation="0" Caption="" Margin="-1"/>
+    <GuideEntityEmbed Entity="HeatExchanger" Rotation="0" Caption="" Margin="-1"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Rotation="0" Caption="" Margin="-1"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="90" Caption="" Margin="-1"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180" Caption="" Margin="-1"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180" Caption="" Margin="-1"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180" Caption="" Margin="-1"/>
+    <GuideEntityEmbed Entity="GasPipeBend" Rotation="270" Caption="" Margin="-1"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Rotation="0" Caption="" Margin="-1"/>
   </Box>
   <Box>
     <GuideEntityEmbed Entity="WallReinforced" Rotation="0" Caption="" Margin="0"/>
@@ -129,7 +148,7 @@
   </Box>
   <Box>
     <GuideEntityEmbed Entity="GasPipeBend" Rotation="180" Caption="" Margin="-1"/>
-    <GuideEntityEmbed Entity="GasVolumePump" Rotation="90" Caption="" Margin="-1"/>
+    <GuideEntityEmbed Entity="GasPressurePump" Rotation="90" Caption="" Margin="-1"/>
     <GuideEntityEmbed Entity="TegCirculator" Rotation="90" Caption="" Margin="-1"/>
     <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="0" Caption="" Margin="-1"/>
     <GuideEntityEmbed Entity="GasVolumePump" Rotation="90" Caption="" Margin="-1"/>
@@ -142,11 +161,11 @@
 
   - Connector Port: Use this to input a gas with high heat capacity; most of the time, Plasma or Frezon is used to do so, as they both have very high specific heat capacities (although most any gas will do). (Yes, Plasma =/= Hot. You can cool it down, and it acts as a really good heat exchange medium.)
   - Input/Output Pumps: Used to make sure gas keeps flowing through both the Circulator and the Heat-Exchanger array. As the gas cools down and heats up (and as it flows through the Exchanger), pressure must be applied for it to keep flowing.
-  - Heat-Exchanger: Basically, just a bunch of heat-exchanger pipes in space. Not much to say, besides the fact that it cools down the gas inside it.
+  - Heat-Exchanger: Basically, just a bunch of heat-exchanger pipes in space. Not much to say, besides the fact that it cools down the gas inside it. Make sure the heat-exchangers are placed on lattice, not plating! Otherwise, the heat-exchange efficiency will be greatly reduced, as the heat-exchangers aren't directly exposed to space below them.
 
   ## The Freezer Loop
 
-  Most of the time, you will see this method being used in efficient TEG setups. It's basically just the Coolant array, but replacing the Heat-Exchangers with a freezer. Even though the freezer does use power, it is only a small fraction of what the TEG can generate, and it's better than the Coolant array at the moment, so go fish.
+  Most of the time, you will see this method being used in efficient TEG setups. It's basically just the Coolant array, but replacing the Heat-Exchangers with a freezer. Even though the freezer does use power, it is only a small fraction of what the TEG can generate, and it's better than the default Coolant array at the moment, so go fish.
 
   Just follow the steps for the Coolant array, but use a freezer in place of the Heat-Exchangers. As so:
   <Box>
