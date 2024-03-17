@@ -27,8 +27,6 @@ using Robust.Shared.Spawners;
 
 namespace Content.Shared.Magic;
 
-// TODO: 2 split spellbooks into their own ECS
-
 /// <summary>
 /// Handles learning and using spells (actions)
 /// </summary>
@@ -149,13 +147,13 @@ public abstract class SharedMagicSystem : EntitySystem
             ? fromCoords.WithEntityId(gridUid, EntityManager)
             : new(_mapManager.GetMapEntityId(fromMap.MapId), fromMap.Position);
 
-        if (_net.IsServer)
-        {
-            var ent = Spawn(ev.Prototype, spawnCoords);
-            var direction = toCoords.ToMapPos(EntityManager, _transform) -
-                            spawnCoords.ToMapPos(EntityManager, _transform);
-            _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer);
-        }
+        if (!_net.IsServer)
+            return;
+
+        var ent = Spawn(ev.Prototype, spawnCoords);
+        var direction = toCoords.ToMapPos(EntityManager, _transform) -
+                        spawnCoords.ToMapPos(EntityManager, _transform);
+        _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer);
     }
 
     // staves.yml ActionRGB light
@@ -281,18 +279,16 @@ public abstract class SharedMagicSystem : EntitySystem
     }
 
     /// <summary>
-    /// Spawns entity prototypes from a list within range of click.
+    /// Spawns entities from a list within range of click.
     /// </summary>
     /// <remarks>
-    /// It will offset mobs after the first mob based on the OffsetVector2 property supplied.
+    /// It will offset entities after the first entity based on the OffsetVector2.
     /// </remarks>
     /// <param name="args"> The Spawn Spell Event args.</param>
     private void OnWorldSpawn(WorldSpawnSpellEvent args)
     {
         if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
             return;
-
-        // TODO: Merge with projectile?
 
         var targetMapCoords = args.Target;
 

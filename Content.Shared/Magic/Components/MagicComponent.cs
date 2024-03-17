@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.GameStates;
 
 namespace Content.Shared.Magic.Components;
-// TODO: Networked?
+// TODO: Rename to MagicActionComponent
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedMagicSystem))]
 public sealed partial class MagicComponent : Component
 {
@@ -21,10 +21,11 @@ public sealed partial class MagicComponent : Component
     //    Robes
     //    Voice
     //    Hands
-    //    Wand in hand (or any item in hand
+    //    Any item in hand
     //    Spell takes up an inhand slot
     //      May be an action toggle or something
 
+    // TODO: List requirements in action desc
     /// <summary>
     ///     Does this spell require Wizard Robes & Hat?
     /// </summary>
@@ -38,4 +39,5 @@ public sealed partial class MagicComponent : Component
     public bool RequiresSpeech;
 
     // TODO: FreeHand - should check if toggleable action
+    //  Check which hand is free to toggle action in
 }
