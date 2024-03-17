@@ -6,6 +6,6 @@ namespace Content.Server.Station.Components;
 [RegisterComponent]
 public sealed partial class StationFrequencyComponent : Component
 {
-    [DataField("frequency")]
+    [DataField]
     public Dictionary<string, int> Frequency = new();
 }

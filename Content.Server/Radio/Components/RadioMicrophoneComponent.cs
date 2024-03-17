@@ -37,8 +37,8 @@ public sealed partial class RadioMicrophoneComponent : Component
     /// <summary>
     // The radio frequency on which the message will be transmitted
     /// </summary>
-    [DataField("frequency")]
-    public int Frequency = 0;
+    [DataField]
+    public int Frequency = 1459; // Common channel frequency
 
     /// <summary>
     /// Whether or not the speaker must have an
