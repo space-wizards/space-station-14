@@ -47,6 +47,7 @@
   - type: Speech
     speechVerb: Skeleton
   - type: ZombieImmune
+  - type: NoDrink
   - type: Vocal
     sounds:
       Male: Skeleton
