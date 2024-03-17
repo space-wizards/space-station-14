@@ -192,9 +192,9 @@
 
 - type: damageModifierSet
   id: Vox
-  coefficients: # To be decided
-    Slash: 0.8
-    Piercing: 0.8
+  coefficients:
+    Slash: 1.5
+    Piercing: 1.5
     Shock: 1.2 #electric type beats bird
     Poison: 0.5
     Radiation: 0.5
@@ -204,6 +204,7 @@
     Caustic: 0.0
   flatReductions:
     Slash: 5
+    Piercing: 2
     Poison: 2
 
 - type: damageModifierSet
