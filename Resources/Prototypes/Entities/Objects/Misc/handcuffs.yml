@@ -157,3 +157,30 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
     state: icon
+
+- type: entity
+  name: clown cuffs
+  description: To be used for good or evil? The honkmother will decide. Honk.
+  id: ClownCuffs
+  parent: Handcuffs
+  components:
+  - type: Item
+    size: Normal
+    storedRotation: 90
+  - type: Handcuff
+    breakoutTime: 1
+    cuffedRSI: Objects/Fun/clowncuffs.rsi
+    bodyIconState: body-overlay
+    endCuffSound:
+      path: /Audio/Items/bikehorn.ogg
+    startUncuffSound:
+      path: /Audio/Effects/Footsteps/clownspiderstep1.ogg
+    endUncuffSound:
+      path: /Audio/Effects/Footsteps/clownspiderstep2.ogg
+    startBreakoutSound:
+      path: /Audio/Effects/Footsteps/clownspiderstep2.ogg
+  - type: Sprite
+    sprite: Objects/Fun/clowncuffs.rsi
+    state: icon
+  - type: UseDelay
+    delay: 2
