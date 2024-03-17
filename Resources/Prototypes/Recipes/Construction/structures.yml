@@ -866,12 +866,26 @@
   conditions:
     - !type:TileNotBlocked
       failIfSpace: false
-    - !type:TileType
-      targets:
-        - Lattice
-        - Plating
   icon:
     sprite: Structures/catwalk.rsi
+    state: catwalk_preview
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  name: catwalk
+  id: AcceleratingCatwalk
+  graph: Catwalk
+  startNode: start
+  targetNode: AcceleratingCatwalk
+  category: construction-category-structures
+  description: High-tech catwalk that speeds up everyone who moves on it
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+  icon:
+    sprite: Structures/accelerating_catwalk.rsi
     state: catwalk_preview
   objectType: Structure
   placementMode: SnapgridCenter
