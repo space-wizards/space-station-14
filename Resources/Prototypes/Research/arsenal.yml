@@ -31,9 +31,10 @@
   - CartridgeLightRifleIncendiary
   - MagazineRifleIncendiary
   - MagazinePistolIncendiary
+  - MagazineLightRifleIncendiary
+  - SpeedloaderMagnumIncendiary
   - MagazineBoxPistolIncendiary
   - MagazineBoxMagnumIncendiary
-  - MagazineLightRifleIncendiary
   - MagazineBoxLightRifleIncendiary
   - MagazineBoxRifleIncendiary
 
@@ -65,9 +66,10 @@
   - CartridgeLightRifleRubber
   - MagazineRifleRubber
   - MagazinePistolRubber
+  - MagazineLightRifleRubber
+  - SpeedloaderMagnumRubber
   - MagazineBoxPistolRubber
   - MagazineBoxMagnumRubber
-  - MagazineLightRifleRubber 
   - MagazineBoxLightRifleRubber
   - MagazineBoxRifleRubber
   - BoxBeanbag
@@ -88,9 +90,10 @@
   - CartridgeLightRifleUranium
   - MagazineRifleUranium
   - MagazinePistolUranium
+  - MagazineLightRifleUranium
+  - SpeedloaderMagnumUranium
   - MagazineBoxPistolUranium
   - MagazineBoxMagnumUranium
-  - MagazineLightRifleUranium
   - MagazineBoxLightRifleUranium
   - MagazineBoxRifleUranium
   - BoxShotgunUranium

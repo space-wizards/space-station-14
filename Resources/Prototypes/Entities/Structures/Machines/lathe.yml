@@ -676,6 +676,8 @@
       - MagazineBoxRifle
       - MagazineBoxLightRifle
       - SpeedLoaderMagnum
+      - SpeedLoaderMagnumEmpty
+      - SpeedLoaderMagnumPractice
       - TargetHuman
       - TargetSyndicate
       - TargetClown
@@ -688,15 +690,15 @@
       - BoxShotgunPractice 
     dynamicRecipes:
       - MagazineLightRifleIncendiary
-      - CartridgeMagnumIncendiary
+      - SpeedloaderMagnumIncendiary
       - MagazinePistolIncendiary
       - MagazineRifleIncendiary
       - MagazineLightRifleUranium
-      - CartridgeMagnumUranium
+      - SpeedloaderMagnumUranium
       - MagazinePistolUranium
       - MagazineRifleUranium
       - MagazineLightRifleRubber
-      - CartridgeMagnumRubber
+      - SpeedloaderMagnumRubber
       - MagazinePistolRubber
       - MagazineRifleRubber
       - ClothingEyesGlassesSecurity

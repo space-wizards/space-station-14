@@ -589,12 +589,47 @@
     Plastic: 160
 
 - type: latheRecipe
+  id: SpeedLoaderMagnumEmpty
+  result: SpeedLoaderMagnumEmpty
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 50
+
+- type: latheRecipe
   id: SpeedLoaderMagnum
   result: SpeedLoaderMagnum
   category: Ammo
   completetime: 5
   materials:
-    Steel: 200
+    Steel: 190
+
+- type: latheRecipe
+  id: SpeedLoaderMagnumPractice
+  result: SpeedLoaderMagnumPractice
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 90
+
+- type: latheRecipe
+  id: SpeedLoaderMagnumUranium
+  result: SpeedLoaderMagnumUranium
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 50
+    Plastic: 150
+    Uranium: 110
+
+- type: latheRecipe
+  id: SpeedLoaderMagnumIncendiary
+  result: SpeedLoaderMagnumIncendiary
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 50
+    Plastic: 150
 
 - type: latheRecipe
   id: MagazineShotgunEmpty
