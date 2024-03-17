@@ -12,6 +12,7 @@ using Content.Shared.Stacks;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
@@ -111,20 +112,8 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
             component.NextSound = Timing.CurTime + component.SoundCooldown;
         }
 
-        if (TryComp<ContainerManagerComponent>(item, out var contManager)){
-            foreach (var cont in contManager.Containers.Values)
-            {
-                var containedEntites = cont.ContainedEntities.ToArray();
-
-                foreach (var entity in containedEntites)
-                {
-                    if (Terminating(entity))
-                        continue;
-
-                    Container.RemoveEntity(item, entity, force: true, destination: uid.ToCoordinates());
-                }
-            }
-        }
+        var reclaimedEvent = new GotReclaimedEvent(uid.ToCoordinates());
+        RaiseLocalEvent(item, ref reclaimedEvent);
 
         var duration = GetReclaimingDuration(uid, item, component);
         // if it's instant, don't bother with all the active comp stuff.
@@ -253,3 +242,6 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         }
     }
 }
+
+[ByRefEvent]
+public record struct GotReclaimedEvent(EntityCoordinates Coordinates);
