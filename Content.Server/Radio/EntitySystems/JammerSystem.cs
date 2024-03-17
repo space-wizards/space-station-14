@@ -1,3 +1,4 @@
+using Content.Server.Medical.SuitSensors;
 using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
@@ -23,6 +24,7 @@ public sealed class JammerSystem : EntitySystem
         SubscribeLocalEvent<ActiveRadioJammerComponent, PowerCellChangedEvent>(OnPowerCellChanged);
         SubscribeLocalEvent<RadioJammerComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RadioSendAttemptEvent>(OnRadioSendAttempt);
+        SubscribeLocalEvent<SuitSensorComponent, SuitSensorsSendAttemptEvent>(OnSensorSendAttempt);
     }
 
     public override void Update(float frameTime)
@@ -76,15 +78,33 @@ public sealed class JammerSystem : EntitySystem
 
     private void OnRadioSendAttempt(ref RadioSendAttemptEvent args)
     {
-        var source = Transform(args.RadioSource).Coordinates;
+        if (ShouldCancelSend(args.RadioSource))
+        {
+            args.Cancelled = true;
+        }
+    }
+
+    private void OnSensorSendAttempt(EntityUid uid, SuitSensorComponent comp, ref SuitSensorsSendAttemptEvent args)
+    {
+        if (ShouldCancelSend(uid))
+        {
+            args.Cancelled = true;
+        }
+    }
+
+    private bool ShouldCancelSend(EntityUid sourceUid)
+    {
+        var source = Transform(sourceUid).Coordinates;
         var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent, TransformComponent>();
+
         while (query.MoveNext(out _, out _, out var jam, out var transform))
         {
             if (source.InRange(EntityManager, _transform, transform.Coordinates, jam.Range))
             {
-                args.Cancelled = true;
-                return;
+                return true;
             }
         }
+
+        return false;
     }
 }
