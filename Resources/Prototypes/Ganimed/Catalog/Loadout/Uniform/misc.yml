@@ -1,4 +1,19 @@
 - type: loadout
+  id: LoadoutClothingUniformJumpsuitWhiteTurtleneck
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  prototype: ClothingUniformJumpsuitWhiteTurtleneck
+
+- type: loadout
+  id: LoadoutClothingUniformJumpskirtWhiteTurtleneck
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  prototype: ClothingUniformJumpskirtWhiteTurtleneck
+
+
+- type: loadout
   id: LoadoutUniformUniformShortsRed
   category: loadout-category-uniform
   cost: 1

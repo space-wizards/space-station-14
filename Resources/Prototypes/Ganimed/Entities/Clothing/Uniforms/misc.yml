@@ -227,3 +227,31 @@
       sprite: Corvax/Clothing/Uniforms/Jumpsuit/ussp.rsi
     - type: Clothing
       sprite: Corvax/Clothing/Uniforms/Jumpsuit/ussp.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitWhiteTurtleneck
+  name: White turtleneck jumpsuit
+  description: An elegant white turtleneck that you have already stained with yourself.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/Jumpsuit/whiteturtleneck.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/Jumpsuit/whiteturtleneck.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtWhiteTurtleneck
+  name: White turtleneck jumpskirt
+  description: An elegant white turtleneck that you have already stained with yourself.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/Jumpskirt/whiteturtleneck.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/Jumpskirt/whiteturtleneck.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
