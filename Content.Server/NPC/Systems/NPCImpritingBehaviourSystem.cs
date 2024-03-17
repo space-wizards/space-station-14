@@ -38,7 +38,5 @@ public sealed partial class NPCImpritingBehaviourSystem : EntitySystem
             var mommy = _random.Pick(impritingTargets);
             _npc.SetBlackboard(impriting, NPCBlackboard.FollowTarget, new EntityCoordinates(mommy, Vector2.Zero));
         }
-
-        return;
     }
 }
