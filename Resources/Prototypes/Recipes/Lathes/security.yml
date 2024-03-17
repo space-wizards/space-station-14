@@ -613,6 +613,15 @@
     Steel: 90
 
 - type: latheRecipe
+  id: SpeedLoaderMagnumRubber
+  result: SpeedLoaderMagnumRubber
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 90
+    Plastic: 110
+
+- type: latheRecipe
   id: SpeedLoaderMagnumUranium
   result: SpeedLoaderMagnumUranium
   category: Ammo
