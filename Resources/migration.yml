@@ -246,3 +246,6 @@ ClothingBackpackSatchelFilledDetective: ClothingBackpackSatchelSecurityFilledDet
 ImprovisedExplosive: FireBomb
 ImprovisedExplosiveEmpty: FireBombEmpty
 ImprovisedExplosiveFuel: FireBombFuel
+
+# 2024-04-1
+SingularityGenerator: WehularityGenerator
