@@ -414,7 +414,7 @@
   category: Ammo
   completetime: 5
   materials:
-    Steel: 30
+    Steel: 25
 
 - type: latheRecipe
   id: MagazineRifleEmptyNonLethal
@@ -422,7 +422,7 @@
   category: Ammo
   completetime: 5
   materials:
-    Steel: 30
+    Steel: 25
 
 - type: latheRecipe
   id: MagazineRifle
@@ -430,7 +430,43 @@
   category: Ammo
   completetime: 5
   materials:
-    Steel: 375
+    Steel: 475
+
+- type: latheRecipe
+  id: MagazineRifleRubber
+  result: MagazineRifleRubber
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 175
+    Plastic: 300
+
+- type: latheRecipe
+  id: MagazineRiflePractice
+  result: MagazineRiflePractice
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 175
+
+- type: latheRecipe
+  id: MagazineRifleUranium
+  result: MagazineRifleUranium
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 25
+    Plastic: 300
+    Uranium: 300
+
+- type: latheRecipe
+  id: MagazineRifle
+  result: MagazineRifleIncendiary
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 25
+    Plastic: 450
 
 - type: latheRecipe
   id: MagazineLightRifleEmptyLethal

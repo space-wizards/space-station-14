@@ -34,36 +34,6 @@
 
 # Magazines
 - type: entity
-  id: MagazineRifleEmptyLethal
-  name: "magazine (.20 rifle)"
-  suffix: empty
-  parent: BaseMagazineRifle
-  components:
-  - type: BallisticAmmoProvider
-    proto: null
-  - type: Sprite
-    layers:
-    - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineRifleEmptyNonLethal
-  name: "magazine (.20 rifle)"
-  suffix: empty
-  parent: BaseMagazineRifle
-  components:
-  - type: BallisticAmmoProvider
-    proto: null
-  - type: Sprite
-    layers:
-    - state: rubber
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
   id: MagazineRifle
   name: "magazine (.20 rifle)"
   parent: BaseMagazineRifle
@@ -76,6 +46,23 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineRifleEmptyLethal
+  name: "magazine (.20 rifle)"
+  suffix: empty
+  parent: MagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+
+- type: entity
+  id: MagazineRifleIncendiary
+  name: "magazine (.20 rifle incendiary)"
+  parent: MagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleIncendiary
 
 - type: entity
   id: MagazineRiflePractice
@@ -104,6 +91,15 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineRifleEmptyNonLethal
+  name: "magazine (.20 rifle)"
+  suffix: empty
+  parent: MagazineRifleRubber
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
 
 - type: entity
   id: MagazineRifleUranium

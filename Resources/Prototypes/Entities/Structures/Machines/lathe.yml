@@ -664,6 +664,7 @@
       - MagazinePistolSubMachineGunEmptyLethal
       - MagazinePistolSubMachineGunEmptyNonLethal
       - MagazinePistolSubMachineGunTopMountedEmpty
+      - MagazineRifle
       - MagazineRifleEmptyLethal
       - MagazineRifleEmptyNonLethal
       - MagazineLightRifleEmptyLethal
@@ -688,15 +689,15 @@
       - CartridgeLightRifleIncendiary
       - CartridgeMagnumIncendiary
       - MagazinePistolIncendiary
-      - CartridgeRifleIncendiary
+      - MagazineRifleIncendiary
       - CartridgeLightRifleUranium
       - CartridgeMagnumUranium
       - MagazinePistolUranium
-      - CartridgeRifleUranium
+      - MagazineRifleUranium
       - CartridgeLightRifleRubber
       - CartridgeMagnumRubber
       - MagazinePistolRubber
-      - CartridgeRifleRubber
+      - MagazineRifleRubber
       - ClothingEyesGlassesSecurity
       - ExplosivePayload
       - FlashPayload

@@ -29,7 +29,7 @@
   - CartridgePistolIncendiary
   - CartridgeMagnumIncendiary
   - CartridgeLightRifleIncendiary
-  - CartridgeRifleIncendiary
+  - MagazineRifleIncendiary
   - MagazinePistolIncendiary
   - MagazineBoxPistolIncendiary
   - MagazineBoxMagnumIncendiary
@@ -62,7 +62,7 @@
   - CartridgePistolRubber
   - CartridgeMagnumRubber
   - CartridgeLightRifleRubber
-  - CartridgeRifleRubber
+  - MagazineRifleRubber
   - MagazinePistolRubber
   - MagazineBoxPistolRubber
   - MagazineBoxMagnumRubber
@@ -84,7 +84,7 @@
   - CartridgePistolUranium
   - CartridgeMagnumUranium
   - CartridgeLightRifleUranium
-  - CartridgeRifleUranium
+  - MagazineRifleUranium
   - MagazinePistolUranium
   - MagazineBoxPistolUranium
   - MagazineBoxMagnumUranium

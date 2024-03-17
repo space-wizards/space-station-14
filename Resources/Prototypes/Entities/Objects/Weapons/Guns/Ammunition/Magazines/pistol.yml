@@ -162,7 +162,6 @@
 - type: entity
   id: MagazinePistolIncendiary
   name: pistol magazine (.35 auto incendiary)
-  suffix: empty
   parent: MagazinePistol
   components:
   - type: BallisticAmmoProvider
