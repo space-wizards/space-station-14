@@ -946,7 +946,7 @@
     Nutriment:
       Min: 1
       Max: 2
-      Potencydivisor: 50
+      PotencyDivisor: 50
     Bicaridine:
       Min: 1
       Max: 20
@@ -1000,7 +1000,7 @@
     Nutriment:
       Min: 1
       Max: 2
-      Potencydivisor: 50
+      PotencyDivisor: 50
     Bicaridine:
       Min: 1
       Max: 20
@@ -1070,7 +1070,7 @@
     Vitamin:
       Min: 1
       Max: 2
-      Potencydivisor: 50
+      PotencyDivisor: 50
 
 - type: seed
   id: ambrosiaDeus
@@ -1254,7 +1254,7 @@
     Nutriment:
       Min: 1
       Max: 5
-      Potencydivisor: 50
+      PotencyDivisor: 50
     PolypyryliumOligomers:
       Min: 1
       Max: 15

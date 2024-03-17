@@ -8,6 +8,7 @@ public sealed partial class GunSystem
     {
         base.InitializeMagazine();
         SubscribeLocalEvent<MagazineAmmoProviderComponent, UpdateAmmoCounterEvent>(OnMagazineAmmoUpdate);
+        SubscribeLocalEvent<MagazineAmmoProviderComponent, AmmoCounterControlEvent>(OnMagazineControl);
     }
 
     private void OnMagazineAmmoUpdate(EntityUid uid, MagazineAmmoProviderComponent component, UpdateAmmoCounterEvent args)
@@ -24,6 +25,14 @@ public sealed partial class GunSystem
             return;
         }
 
+        RaiseLocalEvent(ent.Value, args, false);
+    }
+
+    private void OnMagazineControl(EntityUid uid, MagazineAmmoProviderComponent component, AmmoCounterControlEvent args)
+    {
+        var ent = GetMagazineEntity(uid);
+        if (ent == null)
+            return;
         RaiseLocalEvent(ent.Value, args, false);
     }
 }

@@ -311,6 +311,9 @@ public sealed class DrinkSystem : EntitySystem
         if (args.Used is null || !_solutionContainer.TryGetSolution(args.Used.Value, args.Solution, out var soln, out var solution))
             return;
 
+        if (_openable.IsClosed(args.Used.Value, args.Target.Value))
+            return;
+
         // TODO this should really be checked every tick.
         if (_food.IsMouthBlocked(args.Target.Value))
             return;

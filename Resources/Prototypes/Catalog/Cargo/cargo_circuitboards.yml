@@ -5,5 +5,5 @@
     state: cpuboard
   product: CrateCrewMonitoringBoards
   cost: 2000
-  category: Circuitboards
+  category: cargoproduct-category-name-circuitboards
   group: market

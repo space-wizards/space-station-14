@@ -30,7 +30,6 @@
   - Reporter
   - Visitor
   - Zookeeper
-  - Detective
   - ServiceWorker
 
 - type: department
@@ -46,6 +45,8 @@
   - HeadOfSecurity
   - ResearchDirector
   - Quartermaster
+  - BlueshieldOfficer
+  - NanotrasenRepresentative
   primary: false
   weight: 100
 
@@ -80,6 +81,7 @@
   - HeadOfSecurity
   - SecurityCadet
   - SecurityOfficer
+  - Detective
   - Warden
 
 - type: department
