@@ -52,7 +52,7 @@
             SecurityOfficer: [ 8, 8 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 4, 4 ]
-            Lawyer: [ 2, 2 ]
+            Lawyer: [ 3, 3 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
