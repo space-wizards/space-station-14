@@ -409,3 +409,6 @@ uplink-hypodart-desc = A seemingly unremarkable dart with an enlarged reservoir 
 
 uplink-barber-scissors-name = Barber Scissors
 uplink-barber-scissors-desc = A good tool to give your fellow agent a nice haircut, unless you want to give it to yourself.
+
+uplink-throngler-name = The Throngler
+uplink-throngler-desc = You're never gonna get it. You're never gonna get it. Please don't get it... 
