@@ -3,9 +3,12 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Rejuvenate;
+using Content.Shared.StatusIcon;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
@@ -13,6 +16,7 @@ namespace Content.Shared.Nutrition.EntitySystems;
 public sealed class ThirstSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
@@ -20,11 +24,28 @@ public sealed class ThirstSystem : EntitySystem
 
     private ISawmill _sawmill = default!;
 
+    [ValidatePrototypeId<StatusIconPrototype>]
+    private const string ThirstIconOverhydratedId = "ThirstIconOverhydrated";
+
+    [ValidatePrototypeId<StatusIconPrototype>]
+    private const string ThirstIconThirstyId = "ThirstIconThirsty";
+
+    [ValidatePrototypeId<StatusIconPrototype>]
+    private const string ThirstIconParchedId = "ThirstIconParched";
+
+    private StatusIconPrototype? _thirstIconOverhydrated = null;
+    private StatusIconPrototype? _thirstIconThirsty = null;
+    private StatusIconPrototype? _thirstIconParched = null;
+
     public override void Initialize()
     {
         base.Initialize();
 
         _sawmill = Logger.GetSawmill("thirst");
+
+        DebugTools.Assert(_prototype.TryIndex(ThirstIconOverhydratedId, out _thirstIconOverhydrated) &&
+                          _prototype.TryIndex(ThirstIconThirstyId, out _thirstIconThirsty) &&
+                          _prototype.TryIndex(ThirstIconParchedId, out _thirstIconParched));
 
         SubscribeLocalEvent<ThirstComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         SubscribeLocalEvent<ThirstComponent, MapInitEvent>(OnMapInit);
@@ -108,6 +129,28 @@ public sealed class ThirstSystem : EntitySystem
                 return false;
             default:
                 throw new ArgumentOutOfRangeException(nameof(threshold), threshold, null);
+        }
+    }
+
+    public bool TryGetStatusIconPrototype(ThirstComponent component, out StatusIconPrototype? prototype)
+    {
+        switch (component.CurrentThirstThreshold)
+        {
+            case ThirstThreshold.OverHydrated:
+                prototype = _thirstIconOverhydrated;
+                return true;
+
+            case ThirstThreshold.Thirsty:
+                prototype = _thirstIconThirsty;
+                return true;
+
+            case ThirstThreshold.Parched:
+                prototype = _thirstIconParched;
+                return true;
+
+            default:
+                prototype = null;
+                return false;
         }
     }
 

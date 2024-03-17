@@ -1,10 +1,11 @@
 using Content.Shared.Overlays;
-using Content.Shared.StatusIcon.Components;
 using Content.Shared.NukeOps;
 using Content.Shared.StatusIcon;
+using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
+
 public sealed class ShowSyndicateIconsSystem : EquipmentHudSystem<ShowSyndicateIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -16,28 +17,13 @@ public sealed class ShowSyndicateIconsSystem : EquipmentHudSystem<ShowSyndicateI
         SubscribeLocalEvent<NukeOperativeComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
     }
 
-    private void OnGetStatusIconsEvent(EntityUid uid, NukeOperativeComponent nukeOperativeComponent, ref GetStatusIconsEvent args)
+    private void OnGetStatusIconsEvent(EntityUid uid, NukeOperativeComponent component, ref GetStatusIconsEvent ev)
     {
-        if (!IsActive || args.InContainer)
-        {
+        if (!IsActive || ev.InContainer)
             return;
-        }
 
-        var syndicateIcons = SyndicateIcon(uid, nukeOperativeComponent);
-
-        args.StatusIcons.AddRange(syndicateIcons);
-    }
-
-    private IReadOnlyList<StatusIconPrototype> SyndicateIcon(EntityUid uid, NukeOperativeComponent nukeOperativeComponent)
-    {
-        var result = new List<StatusIconPrototype>();
-
-        if (_prototype.TryIndex<StatusIconPrototype>(nukeOperativeComponent.SyndStatusIcon, out var syndicateicon))
-        {
-            result.Add(syndicateicon);
-        }
-
-        return result;
+        if (_prototype.TryIndex<StatusIconPrototype>(component.SyndStatusIcon, out var iconPrototype))
+            ev.StatusIcons.Add(iconPrototype);
     }
 }
 
