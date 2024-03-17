@@ -20,6 +20,9 @@
     sound: /Audio/SimpleStation14/Items/Handling/cardboardbox_drop.ogg
   - type: EmitSoundOnLand
     sound: /Audio/SimpleStation14/Items/Handling/cardboardbox_drop.ogg
+  - type: Tag
+    tags:
+    - BoxCardboard
 
 - type: entity
   name: mousetrap box
