@@ -1095,6 +1095,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTChaplain
+  name: ERT chaplain uniform
+  description: A special suit made for Central Command's elite chaplain corps.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_chaplain.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_chaplain.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTEngineer
   name: ERT engineering uniform
   description: A special suit made for the elite engineers under CentCom.
