@@ -19,6 +19,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.GameTicking;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Tag;
@@ -80,6 +81,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         Subs.CVar(_configManager, CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
 
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
         SubscribeLocalEvent<StationEmergencyShuttleComponent, ComponentStartup>(OnStationStartup);
         SubscribeLocalEvent<StationCentcommComponent, ComponentShutdown>(OnCentcommShutdown);
         SubscribeLocalEvent<StationCentcommComponent, ComponentInit>(OnCentcommInit);
@@ -93,8 +95,13 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     private void OnRoundStart(RoundStartingEvent ev)
     {
         CleanupEmergencyConsole();
-        _roundEndCancelToken?.Cancel();
         _roundEndCancelToken = new CancellationTokenSource();
+    }
+
+    private void OnRoundCleanup(RoundRestartCleanupEvent ev)
+    {
+        _roundEndCancelToken?.Cancel();
+        _roundEndCancelToken = null;
     }
 
     private void OnCentcommShutdown(EntityUid uid, StationCentcommComponent component, ComponentShutdown args)

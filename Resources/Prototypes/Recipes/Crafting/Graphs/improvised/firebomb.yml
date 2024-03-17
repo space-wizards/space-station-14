@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: ImprovisedExplosive
+  id: FireBomb
   start: start
   graph:
   - node: start
@@ -19,7 +19,7 @@
           state: icon
         doAfter: 1
   - node: empty
-    entity: ImprovisedExplosiveEmpty
+    entity: FireBombEmpty
     edges:
     - to: start
       completed:
@@ -42,7 +42,7 @@
       - tool: Screwing
         doAfter: 1
   - node: fuel
-    entity: ImprovisedExplosiveFuel
+    entity: FireBombFuel
     edges:
     - to: empty
       conditions:
@@ -51,7 +51,7 @@
       steps:
       - tool: Screwing
         doAfter: 1
-    - to: ied
+    - to: firebomb
       conditions: # no dumping out 29u of the fuel then adding wires :)
       - !type:MinSolution
         solution: drink
@@ -62,8 +62,8 @@
       - material: Cable
         amount: 5
         doAfter: 2
-  - node: ied
-    entity: ImprovisedExplosive
+  - node: firebomb
+    entity: FireBomb
     edges:
     - to: fuel
       completed:
