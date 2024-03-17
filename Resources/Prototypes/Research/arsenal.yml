@@ -33,6 +33,7 @@
   - MagazinePistolIncendiary
   - MagazineLightRifleIncendiary
   - SpeedLoaderMagnumIncendiary
+  - MagazineShotgunIncendiary
   - MagazineBoxPistolIncendiary
   - MagazineBoxMagnumIncendiary
   - MagazineBoxLightRifleIncendiary
@@ -68,6 +69,7 @@
   - MagazinePistolRubber
   - MagazineLightRifleRubber
   - SpeedLoaderMagnumRubber
+  - MagazineShotgunBeanbag
   - MagazineBoxPistolRubber
   - MagazineBoxMagnumRubber
   - MagazineBoxLightRifleRubber

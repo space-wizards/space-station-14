@@ -671,6 +671,8 @@
       - MagazineLightRifleEmptyLethal
       - MagazineLightRifleEmptyNonLethal
       - MagazineShotgunEmpty
+      - MagazineShotgun
+      - MagazineShotgunSlug
       - MagazineBoxPistol
       - MagazineBoxMagnum
       - MagazineBoxRifle
@@ -693,6 +695,7 @@
       - SpeedLoaderMagnumIncendiary
       - MagazinePistolIncendiary
       - MagazineRifleIncendiary
+      - MagazineShotgunIncendiary
       - MagazineLightRifleUranium
       - SpeedLoaderMagnumUranium
       - MagazinePistolUranium
@@ -701,6 +704,7 @@
       - SpeedLoaderMagnumRubber
       - MagazinePistolRubber
       - MagazineRifleRubber
+      - MagazineShotgunBeanbag
       - ClothingEyesGlassesSecurity
       - ExplosivePayload
       - FlashPayload
@@ -723,9 +727,6 @@
       - MagazineGrenadeEmpty
       - GrenadeEMP
       - GrenadeFlash
-      - ShellShotgunBeanbag
-      - ShellShotgunIncendiary
-      - ShellShotgunUranium
       - Signaller
       - SignalTrigger
       - TelescopicShield

@@ -600,6 +600,9 @@
   id: SpeedLoaderMagnum
   result: SpeedLoaderMagnum
   category: Ammo
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    state: base-6
   completetime: 5
   materials:
     Steel: 190
@@ -646,7 +649,42 @@
   category: Ammo
   completetime: 5
   materials:
-    Steel: 20
+    Steel: 50
+
+- type: latheRecipe
+  id: MagazineShotgun
+  result: MagazineShotgun
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 240
+
+- type: latheRecipe
+  id: MagazineShotgunBeanbag
+  result: MagazineShotgunBeanbag
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 150
+    Plastic: 140
+
+- type: latheRecipe
+  id: MagazineShotgunSlug
+  result: MagazineShotgunSlug
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 190
+    Plastic: 100
+
+- type: latheRecipe
+  id: MagazineShotgunIncendiary
+  result: MagazineShotgunIncendiary
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 100
+    Plastic: 190
 
 - type: latheRecipe
   id: ShellShotgunIncendiary
