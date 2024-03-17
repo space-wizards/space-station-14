@@ -177,6 +177,8 @@ public sealed class PlantHolderSystem : EntitySystem
                 {
                     component.Health = component.Seed.Endurance;
                 }
+                component.CurrentPotency = seed.BasePotency;
+                component.CachedBasePotency = seed.BasePotency;
                 component.LastCycle = _gameTiming.CurTime;
 
                 QueueDel(args.Used);
@@ -339,7 +341,7 @@ public sealed class PlantHolderSystem : EntitySystem
             var seed = produce.Seed;
             if (seed != null)
             {
-                var nutrientBonus = seed.Potency / 2.5f;
+                var nutrientBonus = produce.ProducePotency / 2.5f;
                 AdjustNutrient(uid, nutrientBonus, component);
             }
             QueueDel(args.Used);
@@ -426,6 +428,13 @@ public sealed class PlantHolderSystem : EntitySystem
                 UpdateSprite(uid, component);
 
             return;
+        }
+
+        // React to changes in the plant's base potency;
+        if (component.Seed.BasePotency != component.CachedBasePotency)
+        {
+            component.CurrentPotency += component.Seed.BasePotency - component.CachedBasePotency;
+            component.CachedBasePotency = component.Seed.BasePotency;
         }
 
         // There's a small chance the pest population increases.
@@ -563,7 +572,7 @@ public sealed class PlantHolderSystem : EntitySystem
             foreach (var (gas, amount) in component.Seed.ExudeGasses)
             {
                 environment.AdjustMoles(gas,
-                    MathF.Max(1f, MathF.Round(amount * MathF.Round(component.Seed.Potency) / exudeCount)));
+                    MathF.Max(1f, MathF.Round(amount * MathF.Round(component.CurrentPotency) / exudeCount)));
             }
         }
 
@@ -582,7 +591,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 component.UpdateSpriteAfterUpdate = true;
         }
 
-        // Weed levels.
+        // Pest levels.
         if (component.PestLevel > 0)
         {
             // TODO: Carnivorous plants?
@@ -709,7 +718,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 return false;
             }
 
-            _botany.Harvest(component.Seed, user, component.YieldMod);
+            _botany.Harvest(component.Seed, component.CurrentPotency, user, component.YieldMod);
             AfterHarvest(plantholder, component);
             return true;
         }
@@ -730,7 +739,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed == null || !component.Harvest)
             return;
 
-        _botany.AutoHarvest(component.Seed, Transform(uid).Coordinates);
+        _botany.AutoHarvest(component.Seed, component.CurrentPotency, Transform(uid).Coordinates);
         AfterHarvest(uid, component);
     }
 
