@@ -304,29 +304,28 @@ public sealed class StationSystem : EntitySystem
         var data = Comp<StationDataComponent>(station);
         name ??= MetaData(station).EntityName;
 
+        var entry = gridIds ?? Array.Empty<EntityUid>();
 
-        foreach (var grid in gridIds ?? Array.Empty<EntityUid>())
+        foreach (var grid in entry)
         {
             AddGridToStation(station, grid, null, data, name);
         }
 
-        if (TryComp<StationRandomComponent>(station, out var random))
+        if (TryComp<StationRandomTransformComponent>(station, out var random))
         {
-            var rotation = _random.NextAngle();
-            var offset = new Vector2(
-                _random.NextFloat(-random.MaxStationOffset, random.MaxStationOffset),
-                _random.NextFloat(-random.MaxStationOffset, random.MaxStationOffset));
+            var rotation = new Angle();
+            var offset = new Vector2();
 
-            foreach (var grid in gridIds ?? Array.Empty<EntityUid>())
+            if (random.MaxStationOffset != null)
+                offset = _random.NextVector2(-random.MaxStationOffset.Value, random.MaxStationOffset.Value);
+
+            if (random.EnableStationRotation)
+                rotation = _random.NextAngle();
+
+            foreach (var grid in entry)
             {
-                if (random.EnableStationRotation)
-                    _transform.SetWorldRotation(grid, rotation);
-
-                if (random.EnableStationOffset)
-                {
-                    var pos = _transform.GetWorldPosition(grid);
-                    _transform.SetWorldPosition(grid, pos + offset);
-                }
+                var pos = _transform.GetWorldPosition(grid);
+                _transform.SetWorldPositionRotation(grid, pos + offset, rotation);
             }
         }
 

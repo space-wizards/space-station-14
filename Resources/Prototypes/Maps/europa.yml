@@ -8,9 +8,9 @@
     Europa:
       stationProto: StandardNanotrasenStation
       components:
-        - type: StationRandom
+        - type: StationRandomTransform
           enableStationRotation: false
-          enableStationOffset: false
+          maxStationOffset: null
         - type: StationNameSetup
           mapNameTemplate: '{0} Europa {1}'
           nameGenerator:

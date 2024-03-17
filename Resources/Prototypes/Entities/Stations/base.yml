@@ -8,7 +8,7 @@
   id: BaseRandomStation
   abstract: true
   components:
-    - type: StationRandom
+    - type: StationRandomTransform
 
 - type: entity
   id: BaseStationCargo
