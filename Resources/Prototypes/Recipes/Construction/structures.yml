@@ -874,7 +874,7 @@
   canBuildInImpassable: false
 
 - type: construction
-  name: catwalk
+  name: acceleration catwalk
   id: AcceleratingCatwalk
   graph: Catwalk
   startNode: start
