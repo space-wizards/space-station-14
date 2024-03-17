@@ -919,4 +919,20 @@
   - type: Tag
     tags:
     - Meat
-    
+
+- type: entity
+  name: slime burger
+  parent: FoodBurgerBase
+  id: FoodBurgerSlime
+  description: A slimeball smashed flat, grilled, and put on a bun. Manages to be crispy and gooey at the same time.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - slimy
+  - type: Sprite
+    layers:
+    - state: custburg-bottom
+    - state: custburg-filling
+      color: green
+    - state: custburg-top
