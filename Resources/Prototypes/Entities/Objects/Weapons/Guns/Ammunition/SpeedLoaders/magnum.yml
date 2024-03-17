@@ -53,7 +53,7 @@
         map: [ "enum.GunVisualLayers.Base" ]
 
 - type: entity
-  id: SpeedLoaderMagnum
+  id: SpeedLoaderMagnumIncendiary
   name: "speed loader (.45 magnum incendiary)"
   parent: SpeedLoaderMagnum
   components:
