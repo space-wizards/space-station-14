@@ -969,14 +969,9 @@
   icon: { sprite: /Textures/Mobs/Pets/cat.rsi, state: syndicat }
   productEntity: MobCatSyndy
   cost:
-    Telecrystal: 10
+    Telecrystal: 7
   categories:
     - UplinkAllies
-  conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - NukeOpsUplink
 
 - type: listing
   id: UplinkSyndicatePersonalAI
@@ -1355,7 +1350,7 @@
   description: uplink-cat-ears-desc
   productEntity: ClothingHeadHatCatEars
   cost:
-    Telecrystal: 26
+    Telecrystal: 20
   categories:
   - UplinkPointless
 
@@ -1660,3 +1655,19 @@
     - Scientist
     - ResearchDirector
     - Chef
+
+- type: listing
+  id: UplinkThrongler
+  name: uplink-throngler-name
+  description: uplink-throngler-desc
+  productEntity: Throngler
+  cost:
+    Telecrystal: 100
+  categories:
+  - UplinkWeaponry
+  restockTime: 10
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
