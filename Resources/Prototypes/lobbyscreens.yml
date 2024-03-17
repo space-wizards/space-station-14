@@ -37,11 +37,3 @@
 - type: lobbyBackground
   id: Behonker
   background: /Textures/LobbyScreens/behonker.webp
-
-- type: lobbyBackground
-  id: Nice
-  background: /Textures/LobbyScreens/nice.webp
-
- - type: lobbyBackground
-  id: Arturo
-  background: /Textures/LobbyScreens/Arturo_Nieto-Dorantes.webp
