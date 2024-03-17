@@ -460,7 +460,7 @@
     Uranium: 300
 
 - type: latheRecipe
-  id: MagazineRifle
+  id: MagazineRifleIncendiary
   result: MagazineRifleIncendiary
   category: Ammo
   completetime: 5
