@@ -1459,3 +1459,69 @@
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformSwimsuitBlack
+  name: black swimsuit
+  description: Black beach swimsuit. It remains to be hoped that it was not worn by some fetishist
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/Swimsuits/black.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/Swimsuits/black.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformSwimsuitBlue
+  name: blue swimsuit
+  description: A blue beach swimsuit. Fits snugly to the body and is quite closed
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/Swimsuits/blue.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/Swimsuits/blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformSwimsuitRed
+  name: red swimsuit
+  description: A red beach swimsuit. It looks pretty cliched
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/Swimsuits/red.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/Swimsuits/red.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformSwimsuitRibbon
+  name: ribbon swimsuit
+  description: A swimsuit connected by ribbons
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/Swimsuits/ribbon.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/Swimsuits/ribbon.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformSwimsuitAnime
+  name: oriental swimsuit
+  description: A swimsuit that is defiantly open. Some schoolgirls from oriental comics wear similar ones
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/Swimsuits/anime.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/Swimsuits/anime.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: lothingUniformSwimsuitOutdoor 
+  name: outdoor swimsuit
+  description: A swimsuit that is defiantly open. It doesn't look complete
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/Swimsuits/outdoor.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/Swimsuits/outdoor.rsi
