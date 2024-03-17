@@ -690,15 +690,15 @@
       - BoxShotgunPractice 
     dynamicRecipes:
       - MagazineLightRifleIncendiary
-      - SpeedloaderMagnumIncendiary
+      - SpeedLoaderMagnumIncendiary
       - MagazinePistolIncendiary
       - MagazineRifleIncendiary
       - MagazineLightRifleUranium
-      - SpeedloaderMagnumUranium
+      - SpeedLoaderMagnumUranium
       - MagazinePistolUranium
       - MagazineRifleUranium
       - MagazineLightRifleRubber
-      - SpeedloaderMagnumRubber
+      - SpeedLoaderMagnumRubber
       - MagazinePistolRubber
       - MagazineRifleRubber
       - ClothingEyesGlassesSecurity
