@@ -51,3 +51,30 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  id: AcceleratingCatwalk
+  name: accelerating catwalk
+  description: High-tech catwalk that speeds up everyone who moves on it
+  parent: Catwalk
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Physics
+    canCollide: true
+  - type: Sprite
+    sprite: Structures/accelerating_catwalk.rsi
+    drawdepth: FloorTiles
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 1.5
+    sprintSpeedModifier: 1.5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - LowImpassable
