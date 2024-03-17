@@ -6,8 +6,8 @@ namespace Content.Shared.Movement.Components;
 
 [NetworkedComponent, RegisterComponent]
 [AutoGenerateComponentState]
-[Access(typeof(SlowContactsSystem))]
-public sealed partial class SlowContactsComponent : Component
+[Access(typeof(SpeedModifierContactsSystem))]
+public sealed partial class SpeedModifierContactsComponent : Component
 {
     [DataField("walkSpeedModifier"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
