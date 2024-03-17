@@ -21,6 +21,7 @@ public sealed class PopupOverlay : Overlay
     private readonly IUserInterfaceManager _uiManager;
     private readonly PopupSystem _popup;
     private readonly PopupUIController _controller;
+    private readonly ExamineSystemShared _examine;
 
     private readonly ShaderInstance _shader;
 
@@ -33,12 +34,14 @@ public sealed class PopupOverlay : Overlay
         IPrototypeManager protoManager,
         IUserInterfaceManager uiManager,
         PopupUIController controller,
+        ExamineSystemShared examine,
         PopupSystem popup)
     {
         _configManager = configManager;
         _entManager = entManager;
         _playerMgr = playerMgr;
         _uiManager = uiManager;
+        _examine = examine;
         _popup = popup;
         _controller = controller;
 
@@ -81,7 +84,7 @@ public sealed class PopupOverlay : Overlay
             var distance = (mapPos.Position - args.WorldBounds.Center).Length();
 
             // Should handle fade here too wyci.
-            if (!args.WorldBounds.Contains(mapPos.Position) || !ExamineSystemShared.InRangeUnOccluded(viewPos, mapPos, distance,
+            if (!args.WorldBounds.Contains(mapPos.Position) || !_examine.InRangeUnOccluded(viewPos, mapPos, distance,
                     e => e == popup.InitialPos.EntityId || e == ourEntity, entMan: _entManager))
                 continue;
 
