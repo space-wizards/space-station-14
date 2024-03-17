@@ -324,7 +324,7 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/tequillaglass.rsi
     state: icon_empty
-  metamorphicMaxFillLevels: 3
+  metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
@@ -1216,12 +1216,6 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: moonshine
   color: "#d1d7d155"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/moonshineglass.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 6
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:

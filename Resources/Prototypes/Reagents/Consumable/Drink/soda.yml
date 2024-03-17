@@ -7,12 +7,6 @@
   flavor: soda
   color: "#6c2828"
   recognizable: true
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/colaglass.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 5
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
 
 - type: reagent
   id: ChangelingSting
@@ -31,12 +25,6 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: drgibb
   color: "#102000"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/dr_gibb_glass.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 5
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
 
 - type: reagent
   id: EnergyDrink
@@ -136,12 +124,6 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: sodacitrus
   color: "#a6fa5a"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/space_mountain_wind_glass.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 5
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
 
 - type: reagent
   id: SpaceUp
@@ -151,12 +133,6 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: spaceup
   color: "#e3e3e37d"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/space-up_glass.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 6
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
 
 - type: reagent
   id: Starkist
