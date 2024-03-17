@@ -54,7 +54,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
-    [Dependency] private readonly SlowContactsSystem _slowContacts = default!;
+    [Dependency] private readonly SpeedModifierContactsSystem _speedModContacts = default!;
     [Dependency] private readonly TileFrictionController _tile = default!;
 
     [ValidatePrototypeId<ReagentPrototype>]
@@ -435,13 +435,13 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         if (maxViscosity > 0)
         {
-            var comp = EnsureComp<SlowContactsComponent>(uid);
+            var comp = EnsureComp<SpeedModifierContactsComponent>(uid);
             var speed = 1 - maxViscosity;
-            _slowContacts.ChangeModifiers(uid, speed, comp);
+            _speedModContacts.ChangeModifiers(uid, speed, comp);
         }
         else
         {
-            RemComp<SlowContactsComponent>(uid);
+            RemComp<SpeedModifierContactsComponent>(uid);
         }
     }
 
