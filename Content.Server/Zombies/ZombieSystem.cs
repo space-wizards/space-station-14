@@ -70,10 +70,9 @@ namespace Content.Server.Zombies
 
         private void OnPendingMapInit(EntityUid uid, PendingZombieComponent component, MapInitEvent args)
         {
-            if (!TryComp<MobStateComponent>(uid, out var mobState))
-                return;
+            var mobState = EnsureComp<MobStateComponent>(uid);
 
-            if (_mobState.IsDead(uid, mobState) && !HasComp<ZombieComponent>(uid) && !HasComp<ZombieImmuneComponent>(uid))
+            if (_mobState.IsDead(uid, mobState))
             {
                 ZombifyEntity(uid);
                 return;
