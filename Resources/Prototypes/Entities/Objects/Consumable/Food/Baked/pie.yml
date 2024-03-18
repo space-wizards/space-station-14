@@ -433,7 +433,7 @@
   - type: FlavorProfile
     flavors:
       - sweet
-      - ice cream
+      - icecream
   - type: Sprite
     state: peachcobbler-slice
 
