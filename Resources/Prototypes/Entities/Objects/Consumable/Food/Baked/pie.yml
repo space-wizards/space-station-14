@@ -406,6 +406,37 @@
     heldPrefix: mime
 # Tastes like nothing.
 
+- type: entity
+  name: peach cobbler
+  parent: FoodPieBase
+  id: FoodPiePeach
+  description: Canned peaches covered with a crusty dough and topped with ice cream. Delicious.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - funny
+      - ice cream
+  - type: Sprite
+    layers:
+    - state: tin
+    - state: peachcobbler
+  - type: SliceableFood
+    slice: FoodPiePeachSlice
+
+- type: entity
+  name: slice of peach cobbler
+  parent: FoodPieSliceBase
+  id: FoodPiePeachSlice
+  description: A portion of peach cobbler, topped with a scoop of ice cream.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - ice cream
+  - type: Sprite
+    state: peachcobbler-slice
+
 # No Slice
 
 - type: entity

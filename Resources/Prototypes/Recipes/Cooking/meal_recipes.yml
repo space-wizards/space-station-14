@@ -1008,6 +1008,18 @@
     FoodMeatXeno: 3
     FoodPlateTin: 1
 
+- type: microwaveMealRecipe
+  id: RecipePeachCobbler
+  name: peach cobbler recipe
+  result: FoodPiePeach
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodTinPeachesMaint: 1
+    FoodPlateTin: 1
+  reagents:
+    IceCream: 10
+
 #Tarts
 
 - type: microwaveMealRecipe
