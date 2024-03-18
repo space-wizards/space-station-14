@@ -37,6 +37,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitCaptain
     back: ClothingBackpackCaptainFilled
+    mask: ClothingMaskClown
     shoes: ClothingShoesBootsLaceup
     head: ClothingHeadHatCaptain
     eyes: ClothingEyesGlassesSunglasses

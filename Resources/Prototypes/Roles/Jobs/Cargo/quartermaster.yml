@@ -44,6 +44,7 @@
     shoes: ClothingShoesColorBrown
     id: QuartermasterPDA
     ears: ClothingHeadsetQM
+    mask: ClothingMaskClown
     belt: BoxFolderClipboard
     pocket1: AppraisalTool
   innerClothingSkirt: ClothingUniformJumpskirtQM

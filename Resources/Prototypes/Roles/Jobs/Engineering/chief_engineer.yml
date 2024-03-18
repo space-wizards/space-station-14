@@ -41,9 +41,10 @@
   id: ChiefEngineerGear
   equipment:
     head: ClothingHeadHatHardhatWhite
-    jumpsuit: ClothingUniformJumpsuitChiefEngineer
+    jumpsuit: ClothingUniformJumpsuitClown
     back: ClothingBackpackChiefEngineerFilled
-    shoes: ClothingShoesColorBrown
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClown
     id: CEPDA
     eyes: ClothingEyesGlassesMeson
     ears: ClothingHeadsetCE

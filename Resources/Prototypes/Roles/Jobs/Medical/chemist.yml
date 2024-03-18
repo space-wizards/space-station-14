@@ -18,9 +18,10 @@
 - type: startingGear
   id: ChemistGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitChemistry
+    jumpsuit: ClothingUniformJumpsuitClown
     back: ClothingBackpackChemistryFilled
-    shoes: ClothingShoesColorWhite
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClown
     outerClothing: ClothingOuterCoatLabChem
     id: ChemistryPDA
     ears: ClothingHeadsetMedical

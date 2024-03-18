@@ -43,7 +43,8 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitCMO
     back: ClothingBackpackCMOFilled
-    shoes: ClothingShoesColorBrown
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClown
     outerClothing: ClothingOuterCoatLabCmo
     id: CMOPDA
     ears: ClothingHeadsetCMO

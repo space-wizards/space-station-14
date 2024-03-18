@@ -30,8 +30,9 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorRed
     back: ClothingBackpackSecurityFilled
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesClown
     outerClothing: ClothingOuterArmorBasic
+    mask: ClothingMaskClown
     id: SecurityCadetPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled

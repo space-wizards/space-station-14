@@ -25,8 +25,9 @@
     jumpsuit: ClothingUniformJumpsuitBartender
     outerClothing: ClothingOuterVest
     back: ClothingBackpackFilled
-    shoes: ClothingShoesColorBlack
+    shoes: ClothingShoesClown
     id: BartenderPDA
+    mask: ClothingMaskClown
     ears: ClothingHeadsetService
   innerClothingSkirt: ClothingUniformJumpskirtBartender
   satchel: ClothingBackpackSatchelFilled

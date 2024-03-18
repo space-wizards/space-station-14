@@ -23,6 +23,7 @@
     shoes: ClothingShoesGaloshes
     head: ClothingHeadHatPurplesoft
     id: JanitorPDA
+    mask: ClothingMaskClown
     gloves: ClothingHandsGlovesJanitor
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled

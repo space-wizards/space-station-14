@@ -20,6 +20,7 @@
     back: ClothingBackpackCargoFilled
     shoes: ClothingShoesColorBlack
     id: CargoPDA
+    mask: ClothingMaskClown
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
   innerClothingSkirt: ClothingUniformJumpskirtCargo

@@ -14,8 +14,9 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorGrey
     back: ClothingBackpackFilled
-    shoes: ClothingShoesColorBlack
+    shoes: ClothingShoesClown
     id: PassengerPDA
+    mask: ClothingMaskClown
     ears: ClothingHeadsetGrey
   innerClothingSkirt: ClothingUniformJumpskirtColorGrey
   satchel: ClothingBackpackSatchelFilled

@@ -21,11 +21,11 @@
 - type: startingGear
   id: ChefGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitChef
+    jumpsuit: ClothingUniformJumpsuitClown
     head: ClothingHeadHatChef
     back: ClothingBackpackFilled
-    mask: ClothingMaskItalianMoustache
-    shoes: ClothingShoesColorBlack
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClown
     id: ChefPDA
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterApronChef

@@ -25,6 +25,7 @@
     back: ClothingBackpackSalvageFilled
     shoes: ClothingShoesBootsSalvage
     id: SalvagePDA
+    mask: ClothingMaskClown
     ears: ClothingHeadsetCargo
   satchel: ClothingBackpackSatchelSalvageFilled
   duffelbag: ClothingBackpackDuffelSalvageFilled

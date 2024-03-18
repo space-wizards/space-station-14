@@ -20,7 +20,8 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitBartender
     back: ClothingBackpackFilled
-    shoes: ClothingShoesColorBlack
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClown
     id: ServiceWorkerPDA
     ears: ClothingHeadsetService
   innerClothingSkirt: ClothingUniformJumpskirtBartender

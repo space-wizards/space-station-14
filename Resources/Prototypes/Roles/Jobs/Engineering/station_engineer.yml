@@ -23,7 +23,8 @@
     head: ClothingHeadHatHardhatYellow
     jumpsuit: ClothingUniformJumpsuitEngineering
     back: ClothingBackpackEngineeringFilled
-    shoes: ClothingShoesBootsWork
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClown
     outerClothing: ClothingOuterVestHazard
     id: EngineerPDA
     eyes: ClothingEyesGlassesMeson
