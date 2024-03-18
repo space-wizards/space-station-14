@@ -29,7 +29,7 @@ public sealed class LegallyDistinctSpaceFerretSystem : EntitySystem
             return;
         }
 
-        var animation = new Animation
+        _animation.Play(uid.Value, new Animation
         {
             Length = TimeSpan.FromSeconds(0.66),
             AnimationTracks =
@@ -47,10 +47,8 @@ public sealed class LegallyDistinctSpaceFerretSystem : EntitySystem
                     }
                 }
             }
-        };
-
-        _animation.Play(uid.Value, animation, "backflip");
-        _audio.PlayEntity(new SoundPathSpecifier("/Audio/Animals/slugclap.ogg"), Filter.Local(), uid.Value, false);
+        }, "backflip");
+        _audio.PlayEntity(new SoundPathSpecifier("Audio/Effects/Emotes/clap1.ogg"), Filter.Local(), uid.Value, false);
     }
 
     public void OnEepyEvent(GoEepyEvent args)

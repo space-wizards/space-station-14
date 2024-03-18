@@ -38,7 +38,7 @@ public sealed class LegallyDistinctSpaceFerretSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly RoleSystem _role = default!;
-    [Dependency] private IChatManager _chatMan = default!;
+    [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
 
@@ -67,7 +67,7 @@ public sealed class LegallyDistinctSpaceFerretSystem : EntitySystem
             return;
 
         var session = mind.Session;
-        _audio.PlayGlobal(new SoundPathSpecifier(component.RoleSfx), Filter.Empty().AddPlayer(session), false, AudioParams.Default);
+        _audio.PlayGlobal(new SoundPathSpecifier(component.RoleIntroSfx), Filter.Empty().AddPlayer(session), false, AudioParams.Default.WithVolume(0.66f));
         _chatMan.DispatchServerMessage(session, Loc.GetString("legallydistinctspaceferret-role-greeting"));
 
         _role.MindAddRole(args.MindId, new LegallyDistinctSpaceFerretRoleComponent()
@@ -139,7 +139,7 @@ public sealed class LegallyDistinctSpaceFerretSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString(comp.YouWinMessage), uid, PopupType.Large);
 
         // Play SFX for all!
-        _audio.PlayPvs(new SoundPathSpecifier(comp.RoleSfx), uid);
+        _audio.PlayPvs(new SoundPathSpecifier(comp.RoleOutroSfx), uid, AudioParams.Default.WithVolume(0.66f));
 
         // Green text!
         if (_mind.TryGetObjectiveComp<HibernateConditionComponent>(uid, out var obj))

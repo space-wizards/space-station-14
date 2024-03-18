@@ -9,7 +9,8 @@
     outOfRangeMessage: legallydistinctspaceferret-out-of-range
     notEnoughNutrientsMessage: legallydistinctspaceferret-not-enough-nutrients
     youWinMessage: legallydistinctspaceferret-you-win-popup
-    roleSfx: /Audio/Animals/skugendgame.ogg
+    roleIntroSfx: /Audio/Animals/wawa_intro.ogg
+    roleOutroSfx: /Audio/Animals/wawa_outro.ogg
   - type: NameIdentifier
     group: LegallyDistinctSpaceFerret
   - type: ReplacementAccent
