@@ -90,3 +90,16 @@
     sprite: Clothing/Neck/Medals/clownmedal.rsi
   - type: StealTarget
     stealGroup: ClothingNeckClownmedal
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckServicemedal
+  name: service medal
+  description: Given for the best work in the service department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Medals/servicemedal.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Medals/servicemedal.rsi
+  - type: StealTarget
+    stealGroup: ClothingNeckServicemedal
