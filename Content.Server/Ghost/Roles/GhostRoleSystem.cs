@@ -26,6 +26,7 @@ using Robust.Shared.Utility;
 using Content.Server.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Collections;
 
 namespace Content.Server.Ghost.Roles
 {
@@ -419,19 +420,17 @@ namespace Content.Server.Ghost.Roles
         private void OnVerb(EntityUid uid, GhostRoleMobSpawnerComponent component, GetVerbsEvent<Verb> args)
         {
             var prototypes = component.SelectablePrototypes;
-            if (prototypes.Count <= 1)
+            if (prototypes.Count < 1)
                 return;
 
             if (!args.CanAccess || !args.CanInteract || args.Hands == null)
                 return;
 
-            var verbs = new List<Verb>();
+            var verbs = new ValueList<Verb>();
 
             foreach (var prototypeID in prototypes)
             {
-                _prototype.TryIndex<GhostRolePrototype>(prototypeID, out var prototype);
-
-                if (prototype != null)
+                if (_prototype.TryIndex<GhostRolePrototype>(prototypeID, out var prototype))
                 {
                     var verb = CreateVerb(uid, component, args.User, prototype);
                     verbs.Add(verb);
@@ -443,10 +442,7 @@ namespace Content.Server.Ghost.Roles
 
         private Verb CreateVerb(EntityUid uid, GhostRoleMobSpawnerComponent component, EntityUid userUid, GhostRolePrototype prototype)
         {
-            var verbText = "placeholder";
-
-            if (prototype.Name != null)
-                verbText = Loc.GetString(prototype.Name);
+            var verbText = Loc.GetString(prototype.Name);
 
             return new Verb()
             {
@@ -463,11 +459,6 @@ namespace Content.Server.Ghost.Roles
                 return;
 
             var ghostrolecomp = EnsureComp<GhostRoleComponent>(uid);
-
-            if (prototype.Description == null)
-                return;
-            if (prototype.Rules == null)
-                return;
 
             component.Prototype = prototype.EntityPrototype;
             ghostrolecomp.RoleName = verbText;

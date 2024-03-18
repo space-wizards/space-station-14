@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Ghost.Roles.Components
 {
@@ -20,8 +19,11 @@ namespace Content.Server.Ghost.Roles.Components
         public int CurrentTakeovers = 0;
 
         [DataField]
-        public string? Prototype;
+        public EntProtoId? Prototype;
 
+        /// <summary>
+        ///     If this ghostrole spawner has multiple selectable ghostrole prototypes.
+        /// </summary>
         [DataField]
         public List<string> SelectablePrototypes = [];
     }
