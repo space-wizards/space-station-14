@@ -6,10 +6,12 @@ namespace Content.Shared.VendingMachines
     public sealed class VendingMachineInterfaceState : BoundUserInterfaceState
     {
         public List<VendingMachineInventoryEntry> Inventory;
+        public int Balance;
 
-        public VendingMachineInterfaceState(List<VendingMachineInventoryEntry> inventory)
+        public VendingMachineInterfaceState(List<VendingMachineInventoryEntry> inventory, int balance)
         {
             Inventory = inventory;
+            Balance = balance;
         }
     }
 

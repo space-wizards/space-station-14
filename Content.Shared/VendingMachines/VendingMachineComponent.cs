@@ -104,6 +104,9 @@ namespace Content.Shared.VendingMachines
         // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
         public SoundSpecifier SoundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
+        [DataField]
+        public SoundSpecifier SoundConfirm = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg");
+
         /// <summary>
         ///     The action available to the player controlling the vending machine
         /// </summary>
@@ -114,6 +117,10 @@ namespace Content.Shared.VendingMachines
         [DataField("actionEntity")]
         [AutoNetworkedField]
         public EntityUid? ActionEntity;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [AutoNetworkedField]
+        public int Balance;
 
         public float NonLimitedEjectForce = 7.5f;
 
@@ -192,11 +199,14 @@ namespace Content.Shared.VendingMachines
         public string ID;
         [ViewVariables(VVAccess.ReadWrite)]
         public uint Amount;
-        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int Cost;
+        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount, int cost)
         {
             Type = type;
             ID = id;
             Amount = amount;
+            Cost = cost;
         }
     }
 

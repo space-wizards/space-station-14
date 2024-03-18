@@ -92,7 +92,7 @@ namespace Content.Client.VendingMachines.UI
                 if (itemName.Length > longestEntry.Length)
                     longestEntry = itemName;
 
-                vendingItem.Text = $"{itemName} [{entry.Amount}]";
+                vendingItem.Text = $"${entry.Cost} | {itemName} [{entry.Amount}]";
                 vendingItem.Icon = icon;
                 filteredInventory.Add(i);
             }
@@ -104,6 +104,11 @@ namespace Content.Client.VendingMachines.UI
         {
             SetSize = new Vector2(Math.Clamp((longestEntryLength + 2) * 12, 250, 300),
                 Math.Clamp(contentCount * 50, 150, 350));
+        }
+
+        public void UpdateBalance(int points)
+        {
+            PointsLabel.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", points.ToString()));
         }
     }
 }
