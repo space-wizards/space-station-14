@@ -196,7 +196,7 @@ entities:
       pos: 0.5,0.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -4971.7075
+      secondsUntilStateChange: -4791.22
       state: Opening
   - uid: 4
     components:
@@ -205,7 +205,7 @@ entities:
       pos: 0.5,2.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -4970.7407
+      secondsUntilStateChange: -4790.2534
       state: Opening
   - uid: 5
     components:
@@ -214,7 +214,7 @@ entities:
       pos: 6.5,2.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -4969.807
+      secondsUntilStateChange: -4789.32
       state: Opening
   - uid: 6
     components:
@@ -223,7 +223,7 @@ entities:
       pos: 6.5,0.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -4984.807
+      secondsUntilStateChange: -4804.32
       state: Opening
 - proto: APCBasic
   entities:
