@@ -1023,3 +1023,8 @@
   id: violets
   flavorType: Complex
   description: flavor-complex-violets
+
+- type: flavor
+  id: skub
+  flavorType: Complex
+  description: flavor-complex-skub

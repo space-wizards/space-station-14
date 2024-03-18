@@ -936,3 +936,27 @@
     - state: custburg-filling
       color: green
     - state: custburg-top
+
+- type: entity
+  name: skuburger
+  parent: FoodBurgerBase
+  id: FoodBurgerSkub
+  description: Finally, what you've always wanted!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - skub
+  - type: Sprite
+    state: skub
+    #type: Food
+    #sound:
+    #  collection: Skub
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 33
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 17
+        - ReagentId: Vitamin
+          Quantity: 9

@@ -323,13 +323,22 @@
     MobMothroach: 1
 
 - type: microwaveMealRecipe
-  id: RecipeSlimeBuger
+  id: RecipeSlimeBurger
   name: slime burger recipe
   result: FoodBurgerSlime
   time: 10
   solids:
     FoodBreadBun: 1
     FoodMeatSlime: 1
+
+- type: microwaveMealRecipe
+  id: RecipeSkubBurger
+  name: skuburger recipe
+  result: FoodBurgerSkub
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    Skub: 1
 
 
 #Breads & Sandwiches
