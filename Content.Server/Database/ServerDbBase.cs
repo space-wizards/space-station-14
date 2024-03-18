@@ -1368,6 +1368,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     .Include(note => note.Player)
                     .ToListAsync()).Select(MakeAdminNoteRecord));
             notesCol.AddRange(await GetMessagesImpl(db, player));
+            notesCol.AddRange(await GetServerBansAsNotesForUser(db, player));
+            notesCol.AddRange(await GetGroupedServerRoleBansAsNotesForUser(db, player));
             return notesCol;
         }
 
