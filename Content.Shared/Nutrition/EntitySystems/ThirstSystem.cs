@@ -22,8 +22,6 @@ public sealed class ThirstSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
 
-    private ISawmill _sawmill = default!;
-
     [ValidatePrototypeId<StatusIconPrototype>]
     private const string ThirstIconOverhydratedId = "ThirstIconOverhydrated";
 
@@ -40,8 +38,6 @@ public sealed class ThirstSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        _sawmill = Logger.GetSawmill("thirst");
 
         DebugTools.Assert(_prototype.TryIndex(ThirstIconOverhydratedId, out _thirstIconOverhydrated) &&
                           _prototype.TryIndex(ThirstIconThirstyId, out _thirstIconThirsty) &&
@@ -199,7 +195,7 @@ public sealed class ThirstSystem : EntitySystem
                 return;
 
             default:
-                _sawmill.Error($"No thirst threshold found for {component.CurrentThirstThreshold}");
+                Log.Error($"No thirst threshold found for {component.CurrentThirstThreshold}");
                 throw new ArgumentOutOfRangeException($"No thirst threshold found for {component.CurrentThirstThreshold}");
         }
     }
