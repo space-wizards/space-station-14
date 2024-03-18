@@ -1060,6 +1060,21 @@
         - ReagentId: Protein
           Quantity: 5
 
+- type: entity
+  name: black pudding
+  parent: FoodMeatBase
+  id: FoodMeatBlackPudding
+  description: A distinctly British sausage made from blood, with additives included until it's able to solidify. Neither black nor pudding.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+  - type: Sprite
+    state: blackpudding
+  - type: SliceableFood
+    slice: FoodMeatBlackPuddingSlice
+
 # Cutlets
 
 # Raw
@@ -1465,6 +1480,28 @@
     - Meat
   - type: Sprite
     state: xenocutlet-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 1
+
+- type: entity
+  name: black pudding slice
+  parent: FoodMeatBase
+  id: FoodMeatBlackPuddingSlice
+  description: A slice of black pudding. The oats within are clearly visible.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Cutlet
+    - Meat
+  - type: Sprite
+    state: blackpudding-slice
   - type: SolutionContainerManager
     solutions:
       food:

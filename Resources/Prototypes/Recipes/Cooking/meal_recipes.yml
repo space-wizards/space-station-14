@@ -1188,6 +1188,16 @@
     FoodCorn: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBlackPudding
+  name: black pudding recipe
+  result: FoodMeatBlackPudding
+  time: 15
+  reagents:
+    Blood: 15
+    Fat: 5
+    Oats: 5
+
+- type: microwaveMealRecipe
   id: RecipePancake
   name: pancake recipe
   result: FoodBakedPancake
