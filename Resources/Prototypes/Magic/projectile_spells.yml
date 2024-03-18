@@ -22,7 +22,7 @@
   - type: ActionUpgrade
     effectedLevels:
       2: ActionFireballII
-      4: ActionFireballIII
+      3: ActionFireballIII
 
 - type: entity
   id: ActionFireballII
@@ -32,8 +32,7 @@
   noSpawn: true
   components:
   - type: WorldTargetAction
-    useDelay: 5
-    charges: 3
+    useDelay: 10
     renewCharges: true
     itemIconStyle: BigAction
     checkCanAccess: false
@@ -56,8 +55,7 @@
   noSpawn: true
   components:
     - type: WorldTargetAction
-      useDelay: 5
-      charges: 5
+      useDelay: 8
       renewCharges: true
       itemIconStyle: BigAction
       checkCanAccess: false
