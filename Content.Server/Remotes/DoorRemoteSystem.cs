@@ -22,6 +22,7 @@ namespace Content.Server.Remotes
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly ExamineSystemShared _examine = default!;
         // I'm so sorry [Dependency] private readonly SharedAirlockSystem _sharedAirlockSystem = default!;
 
         public override void Initialize()
@@ -67,7 +68,7 @@ namespace Content.Server.Remotes
                 || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
                 // Only able to control doors if they are within your vision and within your max range.
                 // Not affected by mobs or machines anymore.
-                || !ExamineSystemShared.InRangeUnOccluded(args.User, args.Target.Value, SharedInteractionSystem.MaxRaycastRange, null))
+                || !_examine.InRangeUnOccluded(args.User, args.Target.Value, SharedInteractionSystem.MaxRaycastRange, null))
             {
                 return;
             }
