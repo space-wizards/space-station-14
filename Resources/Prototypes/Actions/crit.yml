@@ -8,7 +8,7 @@
   - type: InstantAction
     itemIconStyle: NoItem
     checkCanInteract: false
-    checkConciousness: false
+    checkConsciousness: false
     icon:
       sprite: Mobs/Ghosts/ghost_human.rsi
       state: icon
@@ -23,7 +23,7 @@
   - type: InstantAction
     itemIconStyle: NoItem
     checkCanInteract: false
-    checkConciousness: false
+    checkConsciousness: false
     icon:
       sprite: Interface/Actions/actions_crit.rsi
       state: fakedeath
@@ -39,7 +39,7 @@
   - type: InstantAction
     itemIconStyle: NoItem
     checkCanInteract: false
-    checkConciousness: false
+    checkConsciousness: false
     icon:
       sprite: Interface/Actions/actions_crit.rsi
       state: lastwords
