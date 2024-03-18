@@ -24,6 +24,8 @@ public sealed class AlignRCDConstruction : PlacementMode
 
     private const float SearchBoxSize = 2f;
 
+    private EntityCoordinates _unalignedMouseCoords = default;
+
     /// <summary>
     /// This placement mode is not on the engine because it is content specific (i.e., for the RCD)
     /// </summary>
@@ -41,8 +43,8 @@ public sealed class AlignRCDConstruction : PlacementMode
 
     public override void AlignPlacementMode(ScreenCoordinates mouseScreen)
     {
-        // Go over diagonal size so when placing in a line it doesn't stop snapping.
-        MouseCoords = ScreenToCursorGrid(mouseScreen).AlignWithClosestGridTile(SearchBoxSize, _entityManager, _mapManager);
+        _unalignedMouseCoords = ScreenToCursorGrid(mouseScreen);
+        MouseCoords = _unalignedMouseCoords.AlignWithClosestGridTile(SearchBoxSize, _entityManager, _mapManager);
 
         var gridId = MouseCoords.GetGridUid(_entityManager);
 
@@ -50,7 +52,8 @@ public sealed class AlignRCDConstruction : PlacementMode
             return;
 
         CurrentTile = _mapSystem.GetTileRef(gridId.Value, mapGrid, MouseCoords);
-        float tileSize = mapGrid.TileSize; //convert from ushort to float
+
+        float tileSize = mapGrid.TileSize;
         GridDistancing = tileSize;
 
         if (pManager.CurrentPermission!.IsTile)
@@ -67,16 +70,7 @@ public sealed class AlignRCDConstruction : PlacementMode
 
     public override bool IsValidPosition(EntityCoordinates position)
     {
-        // Determine if player is carrying an RCD in their active hand
         var player = _playerManager.LocalSession?.AttachedEntity;
-
-        if (!_entityManager.TryGetComponent<HandsComponent>(player, out var hands))
-            return false;
-
-        var heldEntity = hands.ActiveHand?.HeldEntity;
-
-        if (!_entityManager.TryGetComponent<RCDComponent>(heldEntity, out var rcd))
-            return false;
 
         // If the destination is out of interaction range, set the placer alpha to zero
         if (!_entityManager.TryGetComponent<TransformComponent>(player, out var xform))
@@ -94,6 +88,15 @@ public sealed class AlignRCDConstruction : PlacementMode
             InvalidPlaceColor = InvalidPlaceColor.WithAlpha(255);
         }
 
+        // Determine if player is carrying an RCD in their active hand
+        if (!_entityManager.TryGetComponent<HandsComponent>(player, out var hands))
+            return false;
+
+        var heldEntity = hands.ActiveHand?.HeldEntity;
+
+        if (!_entityManager.TryGetComponent<RCDComponent>(heldEntity, out var rcd))
+            return false;
+
         // Retrieve the map grid data for the position
         if (!_rcdSystem.TryGetMapGridData(position, out var mapGridData))
             return false;
@@ -104,7 +107,7 @@ public sealed class AlignRCDConstruction : PlacementMode
         if (currentState is not GameplayStateBase screen)
             return false;
 
-        var target = screen.GetClickedEntity(position.ToMap(_entityManager, _transformSystem));
+        var target = screen.GetClickedEntity(_unalignedMouseCoords.ToMap(_entityManager, _transformSystem));
 
         // Determine if the RCD operation is valid or not
         if (!_rcdSystem.IsRCDOperationStillValid(heldEntity.Value, rcd, mapGridData.Value, target, player.Value, false))
