@@ -45,9 +45,9 @@ namespace Content.Server.Chemistry.TileReactions
                 var step = entityManager.EnsureComponent<StepTriggerComponent>(puddleUid);
                 entityManager.EntitySysManager.GetEntitySystem<StepTriggerSystem>().SetRequiredTriggerSpeed(puddleUid, _requiredSlipSpeed, step);
 
-                var slow = entityManager.EnsureComponent<SlowContactsComponent>(puddleUid);
+                var slow = entityManager.EnsureComponent<SpeedModifierContactsComponent>(puddleUid);
                 var speedModifier = 1 - reagent.Viscosity;
-                entityManager.EntitySysManager.GetEntitySystem<SlowContactsSystem>().ChangeModifiers(puddleUid, speedModifier, slow);
+                entityManager.EntitySysManager.GetEntitySystem<SpeedModifierContactsSystem>().ChangeModifiers(puddleUid, speedModifier, slow);
 
                 return reactVolume;
             }

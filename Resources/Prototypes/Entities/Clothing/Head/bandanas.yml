@@ -20,6 +20,9 @@
     - state: icon_mask
       map: [ "unfoldedLayer" ]
       visible: false
+  - type: Tag
+    tags:
+    - Bandana
 
 - type: entity
   parent: [ClothingHeadBandBase, ClothingMaskBandBlack]

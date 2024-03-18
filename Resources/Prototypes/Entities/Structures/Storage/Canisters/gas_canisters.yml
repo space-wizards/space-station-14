@@ -74,7 +74,7 @@
             bounds: "-0.25,-0.25,0.25,0.25"
           density: 190
           mask:
-          - MachineMask
+          - SmallMobMask
           layer:
           - MachineLayer
     - type: AtmosDevice
