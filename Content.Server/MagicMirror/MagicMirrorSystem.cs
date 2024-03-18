@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.DoAfter;
 using Content.Server.Humanoid;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -29,11 +29,15 @@ public sealed class MagicMirrorSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<MagicMirrorComponent, ActivatableUIOpenAttemptEvent>(OnOpenUIAttempt);
-        SubscribeLocalEvent<MagicMirrorComponent, BoundUIClosedEvent>(OnUIClosed);
-        SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorSelectMessage>(OnMagicMirrorSelect);
-        SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorChangeColorMessage>(OnTryMagicMirrorChangeColor);
-        SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorAddSlotMessage>(OnTryMagicMirrorAddSlot);
-        SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorRemoveSlotMessage>(OnTryMagicMirrorRemoveSlot);
+
+        Subs.BuiEvents<MagicMirrorComponent>(MagicMirrorUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIClosedEvent>(OnUIClosed);
+            subs.Event<MagicMirrorSelectMessage>(OnMagicMirrorSelect);
+            subs.Event<MagicMirrorChangeColorMessage>(OnTryMagicMirrorChangeColor);
+            subs.Event<MagicMirrorAddSlotMessage>(OnTryMagicMirrorAddSlot);
+            subs.Event<MagicMirrorRemoveSlotMessage>(OnTryMagicMirrorRemoveSlot);
+        });
 
         SubscribeLocalEvent<MagicMirrorComponent, AfterInteractEvent>(OnMagicMirrorInteract);
 

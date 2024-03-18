@@ -21,6 +21,7 @@ public sealed partial class ParticleAcceleratorSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
 
     public override void Initialize()
     {

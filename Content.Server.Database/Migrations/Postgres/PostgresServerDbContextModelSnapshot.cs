@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using NpgsqlTypes;
 
 #nullable disable
 
@@ -19,7 +20,7 @@ namespace Content.Server.Database.Migrations.Postgres
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -816,6 +817,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("integer")
                         .HasColumnName("slot");
 
+                    b.Property<int>("SpawnPriority")
+                        .HasColumnType("integer")
+                        .HasColumnName("spawn_priority");
+
                     b.Property<string>("Species")
                         .IsRequired()
                         .HasColumnType("text")
@@ -892,7 +897,7 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<ValueTuple<IPAddress, int>?>("Address")
+                    b.Property<NpgsqlInet?>("Address")
                         .HasColumnType("inet")
                         .HasColumnName("address");
 
@@ -1034,7 +1039,7 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<ValueTuple<IPAddress, int>?>("Address")
+                    b.Property<NpgsqlInet?>("Address")
                         .HasColumnType("inet")
                         .HasColumnName("address");
 

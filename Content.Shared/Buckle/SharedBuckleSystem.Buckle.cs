@@ -7,7 +7,6 @@ using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
@@ -16,7 +15,6 @@ using Content.Shared.Standing;
 using Content.Shared.Storage.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
-using Content.Shared.Vehicle.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -40,7 +38,6 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, StandAttemptEvent>(OnBuckleStandAttempt);
         SubscribeLocalEvent<BuckleComponent, ThrowPushbackAttemptEvent>(OnBuckleThrowPushbackAttempt);
         SubscribeLocalEvent<BuckleComponent, UpdateCanMoveEvent>(OnBuckleUpdateCanMove);
-        SubscribeLocalEvent<BuckleComponent, ChangeDirectionAttemptEvent>(OnBuckleChangeDirectionAttempt);
     }
 
     private void OnBuckleComponentStartup(EntityUid uid, BuckleComponent component, ComponentStartup args)
@@ -124,16 +121,6 @@ public abstract partial class SharedBuckleSystem
 
     private void OnBuckleStandAttempt(EntityUid uid, BuckleComponent component, StandAttemptEvent args)
     {
-        //Let entities stand back up while on vehicles so that they can be knocked down when slept/stunned
-        //This prevents an exploit that allowed people to become partially invulnerable to stuns
-        //while on vehicles
-
-        if (component.BuckledTo != null)
-        {
-            var buckle = component.BuckledTo;
-            if (TryComp<VehicleComponent>(buckle, out _))
-                return;
-        }
         if (component.Buckled)
             args.Cancel();
     }
@@ -149,14 +136,7 @@ public abstract partial class SharedBuckleSystem
         if (component.LifeStage > ComponentLifeStage.Running)
             return;
 
-        if (component.Buckled &&
-            !HasComp<VehicleComponent>(component.BuckledTo)) // buckle+vehicle shitcode
-            args.Cancel();
-    }
-
-    private void OnBuckleChangeDirectionAttempt(EntityUid uid, BuckleComponent component, ChangeDirectionAttemptEvent args)
-    {
-        if (component.Buckled)
+        if (component.Buckled) // buckle shitcode
             args.Cancel();
     }
 
@@ -357,13 +337,12 @@ public abstract partial class SharedBuckleSystem
         if (TryComp<AppearanceComponent>(buckleUid, out var appearance))
             Appearance.SetData(buckleUid, BuckleVisuals.Buckled, true, appearance);
 
-        _rotationVisuals.SetHorizontalAngle(buckleUid,  strapComp.Rotation);
+        _rotationVisuals.SetHorizontalAngle(buckleUid, strapComp.Rotation);
 
         ReAttach(buckleUid, strapUid, buckleComp, strapComp);
         SetBuckledTo(buckleUid, strapUid, strapComp, buckleComp);
         // TODO user is currently set to null because if it isn't the sound fails to play in some situations, fix that
-        var audioSourceUid = userUid == buckleUid ? userUid : strapUid;
-        _audio.PlayPredicted(strapComp.BuckleSound, strapUid, audioSourceUid);
+        _audio.PlayPredicted(strapComp.BuckleSound, strapUid, userUid);
 
         var ev = new BuckleChangeEvent(strapUid, buckleUid, true);
         RaiseLocalEvent(ev.BuckledEntity, ref ev);
@@ -435,10 +414,6 @@ public abstract partial class SharedBuckleSystem
                 return false;
 
             if (HasComp<SleepingComponent>(buckleUid) && buckleUid == userUid)
-                return false;
-
-            // If the strap is a vehicle and the rider is not the person unbuckling, return. Unless the rider is crit or dead.
-            if (TryComp<VehicleComponent>(strapUid, out var vehicle) && vehicle.Rider != userUid && !_mobState.IsIncapacitated(buckleUid))
                 return false;
 
             // If the person is crit or dead in any kind of strap, return. This prevents people from unbuckling themselves while incapacitated.

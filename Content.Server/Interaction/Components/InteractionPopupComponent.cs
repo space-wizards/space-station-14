@@ -76,4 +76,10 @@ public sealed partial class InteractionPopupComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan LastInteractTime;
+
+    /// <summary>
+    /// If set to true, activate interactions will also trigger the component.
+    /// </summary>
+    [DataField]
+    public bool OnActivate;
 }

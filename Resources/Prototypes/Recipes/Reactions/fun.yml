@@ -161,3 +161,28 @@
     Carbon: 3
     Sugar: 2
 
+- type: reaction
+  id: Laughter
+  reactants:
+    JuiceBanana:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Laughter: 2
+
+- type: reaction
+  id: Gunpowder
+  impact: Low
+  quantized: true
+  minTemp: 374
+  reactants:
+    Potassium:
+      amount: 6
+    Sulfur:
+      amount: 2
+    Charcoal:
+      amount: 2
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: MaterialGunpowder

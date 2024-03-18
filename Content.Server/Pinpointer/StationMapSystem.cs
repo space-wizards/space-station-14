@@ -14,8 +14,12 @@ public sealed class StationMapSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<StationMapUserComponent, EntParentChangedMessage>(OnUserParentChanged);
-        SubscribeLocalEvent<StationMapComponent, BoundUIOpenedEvent>(OnStationMapOpened);
-        SubscribeLocalEvent<StationMapComponent, BoundUIClosedEvent>(OnStationMapClosed);
+
+        Subs.BuiEvents<StationMapComponent>(StationMapUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIOpenedEvent>(OnStationMapOpened);
+            subs.Event<BoundUIClosedEvent>(OnStationMapClosed);
+        });
     }
 
     private void OnStationMapClosed(EntityUid uid, StationMapComponent component, BoundUIClosedEvent args)

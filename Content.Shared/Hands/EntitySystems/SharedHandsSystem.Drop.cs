@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -28,8 +29,8 @@ public abstract partial class SharedHandsSystem
         var didUnequip = new DidUnequipHandEvent(uid, args.Entity, hand);
         RaiseLocalEvent(uid, didUnequip);
 
-        if (TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
-            _virtualSystem.Delete((args.Entity, @virtual), uid);
+        if (TryComp(args.Entity, out VirtualItemComponent? @virtual))
+            _virtualSystem.DeleteVirtualItem((args.Entity, @virtual), uid);
     }
 
     private bool ShouldIgnoreRestrictions(EntityUid user)

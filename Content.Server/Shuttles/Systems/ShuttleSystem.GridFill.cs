@@ -18,12 +18,7 @@ public sealed partial class ShuttleSystem
 
         SubscribeLocalEvent<GridFillComponent, MapInitEvent>(OnGridFillMapInit);
 
-        _cfg.OnValueChanged(CCVars.GridFill, OnGridFillChange);
-    }
-
-    private void ShutdownGridFills()
-    {
-        _cfg.UnsubValueChanged(CCVars.GridFill, OnGridFillChange);
+        Subs.CVar(_cfg, CCVars.GridFill, OnGridFillChange);
     }
 
     private void OnGridFillChange(bool obj)
@@ -76,7 +71,7 @@ public sealed partial class ShuttleSystem
         {
             if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
             {
-                TryFTLProximity(ent[0], shuttle, targetGrid.Value);
+                TryFTLProximity(ent[0], targetGrid.Value);
             }
 
             _station.AddGridToStation(uid, ent[0]);
@@ -132,7 +127,7 @@ public sealed partial class ShuttleSystem
                 {
                     if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
                     {
-                        TryFTLProximity(ent[0], shuttle, targetGrid.Value);
+                        TryFTLProximity(ent[0], targetGrid.Value);
                     }
                     else
                     {
@@ -155,6 +150,17 @@ public sealed partial class ShuttleSystem
                     {
                         var name = path.FilenameWithoutExtension;
                         _metadata.SetEntityName(ent[0], name);
+                    }
+
+                    foreach (var compReg in group.AddComponents.Values)
+                    {
+                        var compType = compReg.Component.GetType();
+
+                        if (HasComp(ent[0], compType))
+                            continue;
+
+                        var comp = _factory.GetComponent(compType);
+                        AddComp(ent[0], comp, true);
                     }
                 }
                 else
@@ -200,7 +206,7 @@ public sealed partial class ShuttleSystem
 
                 if (config != null)
                 {
-                    FTLDock(config, shuttleXform);
+                    FTLDock((ent[0], shuttleXform), config);
 
                     if (TryComp<StationMemberComponent>(xform.GridUid, out var stationMember))
                     {
@@ -209,6 +215,17 @@ public sealed partial class ShuttleSystem
 
                     valid = true;
                 }
+            }
+
+            foreach (var compReg in component.AddComponents.Values)
+            {
+                var compType = compReg.Component.GetType();
+
+                if (HasComp(ent[0], compType))
+                    continue;
+
+                var comp = _factory.GetComponent(compType);
+                AddComp(ent[0], comp, true);
             }
         }
 

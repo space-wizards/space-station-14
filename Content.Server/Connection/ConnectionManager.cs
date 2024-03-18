@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Linq;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Content.Server.Connection.Whitelist;
 using Content.Server.Database;
@@ -83,7 +84,11 @@ namespace Content.Server.Connection
                 if (banHits is { Count: > 0 })
                     await _db.AddServerBanHitsAsync(id, banHits);
 
-                e.Deny(msg);
+                var properties = new Dictionary<string, object>();
+                if (reason == ConnectionDenyReason.Full)
+                    properties["delay"] = _cfg.GetCVar(CCVars.GameServerFullReconnectDelay);
+
+                e.Deny(new NetDenyReason(msg, properties));
             }
             else
             {
@@ -112,7 +117,7 @@ namespace Content.Server.Connection
 
             var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
 
-            if (_cfg.GetCVar(CCVars.PanicBunkerEnabled))
+            if (_cfg.GetCVar(CCVars.PanicBunkerEnabled) && adminData == null)
             {
                 var showReason = _cfg.GetCVar(CCVars.PanicBunkerShowReason);
                 var customReason = _cfg.GetCVar(CCVars.PanicBunkerCustomReason);
@@ -120,15 +125,16 @@ namespace Content.Server.Connection
                 var minMinutesAge = _cfg.GetCVar(CCVars.PanicBunkerMinAccountAge);
                 var record = await _dbManager.GetPlayerRecordByUserId(userId);
                 var validAccountAge = record != null &&
-                                        record.FirstSeenTime.CompareTo(DateTimeOffset.Now - TimeSpan.FromMinutes(minMinutesAge)) <= 0;
+                                      record.FirstSeenTime.CompareTo(DateTimeOffset.Now - TimeSpan.FromMinutes(minMinutesAge)) <= 0;
+                var bypassAllowed = _cfg.GetCVar(CCVars.BypassBunkerWhitelist) && await _db.GetWhitelistStatusAsync(userId);
 
                 // Use the custom reason if it exists & they don't have the minimum account age
-                if (customReason != string.Empty && !validAccountAge)
+                if (customReason != string.Empty && !validAccountAge && !bypassAllowed)
                 {
                     return (ConnectionDenyReason.Panic, customReason, null);
                 }
 
-                if (showReason && !validAccountAge)
+                if (showReason && !validAccountAge && !bypassAllowed)
                 {
                     return (ConnectionDenyReason.Panic,
                         Loc.GetString("panic-bunker-account-denied-reason",
@@ -140,19 +146,19 @@ namespace Content.Server.Connection
                 var haveMinOverallTime = overallTime != null && overallTime.TimeSpent.TotalHours > minOverallHours;
 
                 // Use the custom reason if it exists & they don't have the minimum time
-                if (customReason != string.Empty && !haveMinOverallTime)
+                if (customReason != string.Empty && !haveMinOverallTime && !bypassAllowed)
                 {
                     return (ConnectionDenyReason.Panic, customReason, null);
                 }
 
-                if (showReason && !haveMinOverallTime)
+                if (showReason && !haveMinOverallTime && !bypassAllowed)
                 {
                     return (ConnectionDenyReason.Panic,
                         Loc.GetString("panic-bunker-account-denied-reason",
                             ("reason", Loc.GetString("panic-bunker-account-reason-overall", ("hours", minOverallHours)))), null);
                 }
 
-                if (!validAccountAge || !haveMinOverallTime)
+                if (!validAccountAge || !haveMinOverallTime && !bypassAllowed)
                 {
                     return (ConnectionDenyReason.Panic, Loc.GetString("panic-bunker-account-denied"), null);
                 }
@@ -161,7 +167,8 @@ namespace Content.Server.Connection
             var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) &&
                             ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
                             status == PlayerGameStatus.JoinedGame;
-            if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && adminData is null) && !wasInGame)
+            var adminBypass = _cfg.GetCVar(CCVars.AdminBypassMaxPlayers) && adminData != null;
+            if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && !adminBypass) && !wasInGame)
             {
                 return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
             }

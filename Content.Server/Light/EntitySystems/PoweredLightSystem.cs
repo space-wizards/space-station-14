@@ -23,11 +23,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Content.Shared.DoAfter;
-using Content.Server.Emp;
-using Content.Server.DeviceLinking.Events;
-using Content.Server.DeviceLinking.Systems;
-using Content.Shared.Inventory;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Light.EntitySystems
@@ -135,7 +130,7 @@ namespace Content.Server.Light.EntitySystems
 
                         var burnMsg = Loc.GetString("powered-light-component-burn-hand");
                         _popupSystem.PopupEntity(burnMsg, uid, userUid);
-                        _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.Total:damage} damage");
+                        _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.GetTotal():damage} damage");
                         _audio.PlayEntity(light.BurnHandSound, Filter.Pvs(uid), uid, true);
 
                         args.Handled = true;
@@ -215,6 +210,21 @@ namespace Content.Server.Light.EntitySystems
         }
 
         /// <summary>
+        ///     Replaces the spawned prototype of a pre-mapinit powered light with a different variant.
+        /// </summary>
+        public bool ReplaceSpawnedPrototype(Entity<PoweredLightComponent> light, string bulb)
+        {
+            if (light.Comp.LightBulbContainer.ContainedEntity != null)
+                return false;
+
+            if (LifeStage(light.Owner) >= EntityLifeStage.MapInitialized)
+                return false;
+
+            light.Comp.HasLampOnSpawn = bulb;
+            return true;
+        }
+
+        /// <summary>
         ///     Try to replace current bulb with a new one
         ///     If succeed old bulb just drops on floor
         /// </summary>
@@ -241,6 +251,17 @@ namespace Content.Server.Light.EntitySystems
         /// </summary>
         public bool TryDestroyBulb(EntityUid uid, PoweredLightComponent? light = null)
         {
+            if (!Resolve(uid, ref light, false))
+                return false;
+
+            // if we aren't mapinited,
+            // just null the spawned bulb
+            if (LifeStage(uid) < EntityLifeStage.MapInitialized)
+            {
+                light.HasLampOnSpawn = null;
+                return true;
+            }
+
             // check bulb state
             var bulbUid = GetBulb(uid, light);
             if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))

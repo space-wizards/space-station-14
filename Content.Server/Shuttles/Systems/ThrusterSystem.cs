@@ -45,16 +45,12 @@ public sealed class ThrusterSystem : EntitySystem
         SubscribeLocalEvent<ThrusterComponent, ComponentShutdown>(OnThrusterShutdown);
         SubscribeLocalEvent<ThrusterComponent, PowerChangedEvent>(OnPowerChange);
         SubscribeLocalEvent<ThrusterComponent, AnchorStateChangedEvent>(OnAnchorChange);
-        SubscribeLocalEvent<ThrusterComponent, ReAnchorEvent>(OnThrusterReAnchor);
         SubscribeLocalEvent<ThrusterComponent, MoveEvent>(OnRotate);
         SubscribeLocalEvent<ThrusterComponent, IsHotEvent>(OnIsHotEvent);
         SubscribeLocalEvent<ThrusterComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<ThrusterComponent, EndCollideEvent>(OnEndCollide);
 
         SubscribeLocalEvent<ThrusterComponent, ExaminedEvent>(OnThrusterExamine);
-
-        SubscribeLocalEvent<ThrusterComponent, RefreshPartsEvent>(OnRefreshParts);
-        SubscribeLocalEvent<ThrusterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
         SubscribeLocalEvent<ShuttleComponent, TileChangedEvent>(OnShuttleTileChange);
     }
@@ -151,9 +147,9 @@ public sealed class ThrusterSystem : EntitySystem
     private void OnRotate(EntityUid uid, ThrusterComponent component, ref MoveEvent args)
     {
         // TODO: Disable visualizer for old direction
+        // TODO: Don't make them rotatable and make it require anchoring.
 
         if (!component.Enabled ||
-            component.Type != ThrusterType.Linear ||
             !EntityManager.TryGetComponent(uid, out TransformComponent? xform) ||
             !EntityManager.TryGetComponent(xform.GridUid, out ShuttleComponent? shuttleComponent))
         {
@@ -176,22 +172,42 @@ public sealed class ThrusterSystem : EntitySystem
         // Disable if new tile invalid
         if (component.IsOn && !canEnable)
         {
-            DisableThruster(uid, component, xform, args.OldRotation);
+            DisableThruster(uid, component, args.OldPosition.EntityId, xform, args.OldRotation);
             return;
         }
 
         var oldDirection = (int) args.OldRotation.GetCardinalDir() / 2;
         var direction = (int) args.NewRotation.GetCardinalDir() / 2;
+        var oldShuttleComponent = shuttleComponent;
 
-        shuttleComponent.LinearThrust[oldDirection] -= component.Thrust;
-        shuttleComponent.BaseLinearThrust[oldDirection] -= component.BaseThrust;
-        DebugTools.Assert(shuttleComponent.LinearThrusters[oldDirection].Contains(uid));
-        shuttleComponent.LinearThrusters[oldDirection].Remove(uid);
+        if (args.ParentChanged)
+        {
+            oldShuttleComponent = Comp<ShuttleComponent>(args.OldPosition.EntityId);
 
-        shuttleComponent.LinearThrust[direction] += component.Thrust;
-        shuttleComponent.BaseLinearThrust[direction] += component.BaseThrust;
-        DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(uid));
-        shuttleComponent.LinearThrusters[direction].Add(uid);
+            // If no parent change doesn't matter for angular.
+            if (component.Type == ThrusterType.Angular)
+            {
+                oldShuttleComponent.AngularThrust -= component.Thrust;
+                DebugTools.Assert(oldShuttleComponent.AngularThrusters.Contains(uid));
+                oldShuttleComponent.AngularThrusters.Remove(uid);
+
+                shuttleComponent.AngularThrust += component.Thrust;
+                DebugTools.Assert(!shuttleComponent.AngularThrusters.Contains(uid));
+                shuttleComponent.AngularThrusters.Add(uid);
+                return;
+            }
+        }
+
+        if (component.Type == ThrusterType.Linear)
+        {
+            oldShuttleComponent.LinearThrust[oldDirection] -= component.Thrust;
+            DebugTools.Assert(oldShuttleComponent.LinearThrusters[oldDirection].Contains(uid));
+            oldShuttleComponent.LinearThrusters[oldDirection].Remove(uid);
+
+            shuttleComponent.LinearThrust[direction] += component.Thrust;
+            DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(uid));
+            shuttleComponent.LinearThrusters[direction].Add(uid);
+        }
     }
 
     private void OnAnchorChange(EntityUid uid, ThrusterComponent component, ref AnchorStateChangedEvent args)
@@ -204,14 +220,6 @@ public sealed class ThrusterSystem : EntitySystem
         {
             DisableThruster(uid, component);
         }
-    }
-
-    private void OnThrusterReAnchor(EntityUid uid, ThrusterComponent component, ref ReAnchorEvent args)
-    {
-        DisableThruster(uid, component, args.OldGrid);
-
-        if (CanEnable(uid, component))
-            EnableThruster(uid, component);
     }
 
     private void OnThrusterInit(EntityUid uid, ThrusterComponent component, ComponentInit args)
@@ -270,7 +278,6 @@ public sealed class ThrusterSystem : EntitySystem
                 var direction = (int) xform.LocalRotation.GetCardinalDir() / 2;
 
                 shuttleComponent.LinearThrust[direction] += component.Thrust;
-                shuttleComponent.BaseLinearThrust[direction] += component.BaseThrust;
                 DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(uid));
                 shuttleComponent.LinearThrusters[direction].Add(uid);
 
@@ -369,7 +376,6 @@ public sealed class ThrusterSystem : EntitySystem
                 var direction = (int) angle.Value.GetCardinalDir() / 2;
 
                 shuttleComponent.LinearThrust[direction] -= component.Thrust;
-                shuttleComponent.BaseLinearThrust[direction] -= component.BaseThrust;
                 DebugTools.Assert(shuttleComponent.LinearThrusters[direction].Contains(uid));
                 shuttleComponent.LinearThrusters[direction].Remove(uid);
                 break;
@@ -563,24 +569,6 @@ public sealed class ThrusterSystem : EntitySystem
                 _appearance.SetData(uid, ThrusterVisualState.Thrusting, false, appearance);
             }
         }
-    }
-
-    private void OnRefreshParts(EntityUid uid, ThrusterComponent component, RefreshPartsEvent args)
-    {
-        if (component.IsOn) // safely disable thruster to prevent negative thrust
-            DisableThruster(uid, component);
-
-        var thrustRating = args.PartRatings[component.MachinePartThrust];
-
-        component.Thrust = component.BaseThrust * MathF.Pow(component.PartRatingThrustMultiplier, thrustRating - 1);
-
-        if (component.Enabled && CanEnable(uid, component))
-            EnableThruster(uid, component);
-    }
-
-    private void OnUpgradeExamine(EntityUid uid, ThrusterComponent component, UpgradeExamineEvent args)
-    {
-        args.AddPercentageUpgrade("thruster-comp-upgrade-thrust", component.Thrust / component.BaseThrust);
     }
 
     #endregion

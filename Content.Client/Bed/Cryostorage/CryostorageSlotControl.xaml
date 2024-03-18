@@ -1,0 +1,13 @@
+<BoxContainer
+    xmlns="https://spacestation14.io"
+    Orientation="Horizontal"
+    HorizontalExpand="True"
+    Margin="5">
+    <RichTextLabel Name="SlotLabel" HorizontalAlignment="Left"/>
+    <Control HorizontalExpand="True"/>
+    <BoxContainer Orientation="Horizontal"
+                  HorizontalAlignment="Right">
+        <Label Name="ItemLabel" Margin="0 0 5 0"/>
+        <Button Name="Button" Access="Public" Text="{Loc 'cryostorage-ui-button-remove'}"></Button>
+    </BoxContainer>
+</BoxContainer>
