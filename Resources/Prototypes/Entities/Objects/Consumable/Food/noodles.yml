@@ -169,3 +169,25 @@
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like pasta, butter.
+
+- type: entity
+  name: spaghetti and slimeballs
+  parent: FoodNoodlesBase
+  id: FoodNoodlesSlimeball
+  description: An Italian classic, with the mystery meat replaced with mystery goop. Oddly tasty.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - pasta
+      - slimy
+  - type: Sprite
+    state: slimeball
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 4

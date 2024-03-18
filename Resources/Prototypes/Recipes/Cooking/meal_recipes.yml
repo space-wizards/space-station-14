@@ -614,6 +614,15 @@
     FoodMeatMeatball: 2
 
 - type: microwaveMealRecipe
+  id: RecipeSlimeballSpaghetti
+  name: spaghetti & slimeballs recipe
+  result: FoodNoodlesSlimeball
+  time: 10
+  solids:
+    FoodNoodlesBoiled: 1
+    FoodMeatSlime: 2
+
+- type: microwaveMealRecipe
   id: RecipeButterNoodles
   name: butter noodles recipe
   result: FoodNoodlesButter
