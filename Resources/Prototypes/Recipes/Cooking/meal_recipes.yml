@@ -1017,6 +1017,19 @@
     FoodMeatXeno: 3
     FoodPlateTin: 1
 
+# Two recipes for peach cobbler: one with tinned peaches and the other with maintenance peaches.
+- type: microwaveMealRecipe
+  id: RecipePeachCobbler
+  name: peach cobbler recipe
+  result: FoodPiePeach
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodTinPeaches: 1
+    FoodPlateTin: 1
+  reagents:
+    IceCream: 10
+
 - type: microwaveMealRecipe
   id: RecipePeachCobbler
   name: peach cobbler recipe
