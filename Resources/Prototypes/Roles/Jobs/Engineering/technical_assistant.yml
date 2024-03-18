@@ -18,6 +18,9 @@
   - Maintenance
   - Engineering
   - External
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: TechnicalAssistantGear

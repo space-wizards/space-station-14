@@ -13,6 +13,9 @@
   extendedAccess:
   - Kitchen
   - Bar
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: BotanistGear

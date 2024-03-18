@@ -14,6 +14,8 @@
   - !type:GiveItemOnHolidaySpecial
     holiday: GarbageDay
     prototype: WeaponRevolverInspector
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: JanitorGear

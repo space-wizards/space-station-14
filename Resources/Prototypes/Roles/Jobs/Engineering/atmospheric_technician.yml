@@ -15,6 +15,9 @@
   - Engineering
   - External
   - Atmospherics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: AtmosphericTechnicianGear

@@ -14,6 +14,9 @@
   - Kitchen
   extendedAccess:
   - Hydroponics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: ServiceWorkerGear

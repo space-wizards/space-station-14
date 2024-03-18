@@ -9,6 +9,9 @@
   access:
   - Service
   - Maintenance
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: ReporterGear

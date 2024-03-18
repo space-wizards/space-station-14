@@ -13,6 +13,8 @@
   - !type:GiveItemOnHolidaySpecial
     holiday: MikuDay
     prototype: BoxPerformer
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: MusicianGear

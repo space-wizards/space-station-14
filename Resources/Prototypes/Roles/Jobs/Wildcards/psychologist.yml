@@ -11,6 +11,9 @@
   - Maintenance
   extendedAccess:
   - Chemistry
+  special:
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
 
 - type: startingGear
   id: PsychologistGear
