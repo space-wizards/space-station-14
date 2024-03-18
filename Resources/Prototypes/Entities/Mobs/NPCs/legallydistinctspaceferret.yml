@@ -228,7 +228,7 @@
   components:
   - type: InstantAction
     useDelay: 3
-    icon: deprecated.rsi\deprecated.png
+    icon: deprecated.rsi/deprecated.png
     event: !type:BackflipActionEvent
     checkCanInteract: false
 
@@ -290,3 +290,9 @@
     uiWindowPos: 2,1
     strippingWindowPos: 2,4
     displayName: ID
+
+- type: nameIdentifierGroup
+  id: Legally Distinct Space Ferret
+  prefix: Legally Distinct Space Ferret
+  minValue: 1
+  maxValue: 99
