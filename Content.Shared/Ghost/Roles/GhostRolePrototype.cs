@@ -5,7 +5,6 @@ namespace Content.Shared.Ghost.Roles;
 /// <summary>
 ///     For selectable ghostrole prototypes in ghostrole spawners.
 /// </summary>
-///
 [Prototype]
 public sealed partial class GhostRolePrototype : IPrototype
 {
