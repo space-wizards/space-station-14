@@ -313,6 +313,7 @@
       - WeaponAdvancedLaser
       - WeaponLaserCannon
       - WeaponXrayCannon
+      - WeaponEnergySniperRifle
 
 - type: entity
   id: ProtolatheHyperConvection
@@ -702,6 +703,7 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - WeaponEnergySniperRifle
   - type: MaterialStorage
     whitelist:
       tags:

@@ -1,0 +1,41 @@
+#license: CLA
+#copyright: https://github.com/ss14-ganimed/ENT14-Master/blob/master/CLA.txt
+- type: entity
+  name: LSR Queen Blade
+  parent: BaseWeaponBattery
+  id: WeaponEnergySniperRifle
+  description: A high-tech sniper rifle used by ship pilots and assassins.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/Guns/Battery/lsr.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Ganimed/Objects/Guns/Battery/lsr.rsi
+    quickEquip: false
+    slots:
+    - Back
+  - type: Gun
+    fireRate: 0.75
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: SniperBolt
+    fireCost: 200
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: false
+  - type: Appearance
+  - type: Tag
+    tags:
+    - HighRiskItem
+  - type: StaticPrice
+    price: 750

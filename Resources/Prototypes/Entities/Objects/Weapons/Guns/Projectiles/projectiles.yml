@@ -960,3 +960,42 @@
     soundForce: true
   - type: StaminaDamageOnCollide
     damage: 25
+
+- type: entity
+  name: SniperLaser
+  id: SniperBolt
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: chronobolt
+      color: "#ff0000"
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        mask:
+        - Opaque
+      fly-by: *flybyfixture
+  - type: Ammo
+  - type: Projectile
+    damage:
+      types:
+        Heat: 45
+    soundHit:
+      path: "/Audio/Weapons/tap.ogg"
+    soundForce: true
+  - type: StaminaDamageOnCollide
+    damage: 25
+    ignoreResistances: true
