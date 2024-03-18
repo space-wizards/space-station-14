@@ -1031,7 +1031,7 @@
     IceCream: 10
 
 - type: microwaveMealRecipe
-  id: RecipePeachCobbler
+  id: RecipeMaintPeachCobbler
   name: peach cobbler recipe
   result: FoodPiePeach
   time: 15
