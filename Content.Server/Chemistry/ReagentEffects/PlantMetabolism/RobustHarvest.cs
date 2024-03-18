@@ -42,7 +42,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
             {
                 // Too much of a good thing reduces yield
                 plantHolder.EnsureUniqueSeed(args.SolutionEntity, plantHolderComp);
-                plantHolderComp.YeildMod -= 1f / (float)plantHolderComp.Seed.Yield;
+                plantHolderComp.YieldMod -= 1f / (float)plantHolderComp.Seed.Yield;
             }
         }
 
