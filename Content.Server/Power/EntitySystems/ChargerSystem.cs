@@ -6,7 +6,6 @@ using Content.Shared.PowerCell.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Storage.Components;
 using Robust.Server.Containers;
 
@@ -17,6 +16,7 @@ internal sealed class ChargerSystem : EntitySystem
 {
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
@@ -178,7 +178,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (container.ContainedEntities.Count == 0)
             return CellChargerStatus.Empty;
 
-        if (!SearchForBattery(container.ContainedEntities.First(), out var heldBattery))
+        if (!SearchForBattery(container.ContainedEntities[0], out _, out var heldBattery))
             return CellChargerStatus.Off;
 
         if (Math.Abs(heldBattery.MaxCharge - heldBattery.CurrentCharge) < 0.01)
@@ -198,27 +198,28 @@ internal sealed class ChargerSystem : EntitySystem
         if (component.Whitelist?.IsValid(targetEntity, EntityManager) == false)
             return;
 
-        if (!SearchForBattery(targetEntity, out var heldBattery))
+        if (!SearchForBattery(targetEntity, out var batteryUid, out var heldBattery))
             return;
 
-        heldBattery.CurrentCharge += component.ChargeRate * frameTime;
+        _battery.SetCharge(batteryUid.Value, heldBattery.CurrentCharge + component.ChargeRate * frameTime, heldBattery);
         // Just so the sprite won't be set to 99.99999% visibility
         if (heldBattery.MaxCharge - heldBattery.CurrentCharge < 0.01)
         {
-            heldBattery.CurrentCharge = heldBattery.MaxCharge;
+            _battery.SetCharge(batteryUid.Value, heldBattery.MaxCharge, heldBattery);
         }
 
         UpdateStatus(uid, component);
     }
 
-    private bool SearchForBattery(EntityUid uid, [NotNullWhen(true)] out BatteryComponent? component)
+    private bool SearchForBattery(EntityUid uid, [NotNullWhen(true)] out EntityUid? batteryUid, [NotNullWhen(true)] out BatteryComponent? component)
     {
         // try get a battery directly on the inserted entity
         if (!TryComp(uid, out component))
         {
             // or by checking for a power cell slot on the inserted entity
-            return _powerCell.TryGetBatteryFromSlot(uid, out component);
+            return _powerCell.TryGetBatteryFromSlot(uid, out batteryUid, out component);
         }
+        batteryUid = uid;
         return true;
     }
 }
