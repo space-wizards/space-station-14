@@ -94,9 +94,9 @@
   source: https://gdc.sonniss.com
 
 - files: ["church_bell1.ogg", "church_bell2.ogg", "church_bell3.ogg", "church_bell4.ogg"]
-  copyright: '"Dramatic church bells" in "Church Bell" on mixkit.co. See https://mixkit.co/license/#sfxFree for license. Editted from stereo to mono, and variations pitched.'
-  license: Custom
-  source: https://mixkit.co/free-sound-effects/church-bell/
+  copyright: 'the bell of my school's church.wav by fonografico -- https://freesound.org/s/636113/. Pitch variations created via edits by Sphiral.'
+  license: Creative Commons 0
+  source: https://freesound.org/people/fonografico/sounds/636113/?
 
 - files: ["pop.ogg"]
   copyright: '"pop.ogg" by mirrorcult of GitHub.com'

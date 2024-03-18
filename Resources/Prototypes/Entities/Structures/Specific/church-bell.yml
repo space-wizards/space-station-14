@@ -13,7 +13,7 @@
     layers:
     - state: church-bell
   - type: InteractionPopup
-    interactDelay: 2
+    interactDelay: 1
     successChance: 1
     interactSuccessSound:
       collection: ChurchBell
