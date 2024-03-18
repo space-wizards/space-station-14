@@ -4,6 +4,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Connection.Whitelist;
 
+/// <summary>
+/// Used by the <see cref="ConnectionManager"/> to determine if a player should be allowed to join the server.
+/// Used in the whitelist.prototype_list CVar.
+/// </summary>
 [Prototype("PlayerConnectionWhitelist")]
 public sealed class PlayerConnectionWhitelistPrototype : IPrototype
 {
@@ -26,41 +30,4 @@ public sealed class PlayerConnectionWhitelistPrototype : IPrototype
 
     [DataField]
     public WhitelistCondition[] Conditions { get; } = default!;
-}
-
-public static class WhitelistExtensions
-{
-    public static async Task<(bool isWhitelisted, string? denyMessage)> IsWhitelisted(this PlayerConnectionWhitelistPrototype prototype, NetUserData data, ISawmill sawmill)
-    {
-        foreach (var condition in prototype.Conditions)
-        {
-            var (isConditionSuccess, denyMessage) = await condition.Condition(data);
-            if (isConditionSuccess)
-            {
-                sawmill.Debug($"User {data.UserName} passed whitelist condition {condition.GetType().Name}");
-                if (condition.BreakIfConditionSuccess)
-                {
-                    sawmill.Debug($"User {data.UserName} passed whitelist condition {condition.GetType().Name} and it's a breaking condition");
-                    return (true, null);
-                }
-                continue;
-            }
-
-            if (condition.BreakIfConditionFail)
-            {
-                sawmill.Debug($"User {data.UserName} failed whitelist condition {condition.GetType().Name}");
-                return (false, denyMessage);
-            }
-
-            sawmill.Debug($"User {data.UserName} failed whitelist condition {condition.GetType().Name} but it's not a breaking condition");
-        }
-
-        sawmill.Debug($"User {data.UserName} passed all whitelist conditions");
-        return (true, null);
-    }
-
-    public static bool IsValid(this PlayerConnectionWhitelistPrototype prototype, int playerCount)
-    {
-        return playerCount >= prototype.MinimumPlayers && playerCount <= prototype.MaximumPlayers;
-    }
 }

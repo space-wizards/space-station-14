@@ -447,6 +447,9 @@ namespace Content.Server.Database
         [Required, Key] public Guid UserId { get; set; }
     }
 
+    /// <summary>
+    /// List of users who are on the "blacklist". This is a list that may be used by Whitelist implementations to deny access to certain users.
+    /// </summary>
     [Table("blacklist")]
     public class Blacklist
     {

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Content.Server.Connection.Whitelist;
+using Content.Server.Connection.Whitelist.Conditions;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
@@ -20,6 +21,7 @@ namespace Content.Server.Connection
     public interface IConnectionManager
     {
         void Initialize();
+        void PostInit();
     }
 
     /// <summary>
@@ -37,6 +39,8 @@ namespace Content.Server.Connection
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private ISawmill _sawmill = default!;
+        private PlayerConnectionWhitelistPrototype[]? _whitelists;
+
         public void Initialize()
         {
             _netMgr.Connecting += NetMgrOnConnecting;
@@ -44,6 +48,27 @@ namespace Content.Server.Connection
             _sawmill = Logger.GetSawmill("connmgr");
             // Approval-based IP bans disabled because they don't play well with Happy Eyeballs.
             // _netMgr.HandleApprovalCallback = HandleApproval;
+        }
+
+        private void UpdateWhitelists(string s)
+        {
+            var list = new List<PlayerConnectionWhitelistPrototype>();
+            var allWhitelists = _prototypeManager.EnumeratePrototypes<PlayerConnectionWhitelistPrototype>().ToList();
+            foreach (var id in s.Split(','))
+            {
+                if (allWhitelists.FirstOrDefault(p => p.ID == id) is { } prototype)
+                {
+                    list.Add(prototype);
+                }
+                else
+                {
+                    _sawmill.Error($"Whitelist prototype {id} does not exist.");
+                    _whitelists = Array.Empty<PlayerConnectionWhitelistPrototype>();
+                    return;
+                }
+            }
+
+            _whitelists = list.ToArray();
         }
 
         /*
@@ -184,37 +209,176 @@ namespace Content.Server.Connection
             // Checks for whitelist IF it's enabled AND the user isn't an admin. Admins are always allowed.
             if (_cfg.GetCVar(CCVars.WhitelistEnabled) && adminData is null)
             {
-                var whitelists = _prototypeManager.EnumeratePrototypes<PlayerConnectionWhitelistPrototype>();
-                var whitelistStringList = _cfg.GetCVar(CCVars.WhitelistPrototype);
-
-                // The whitelistStringList is a comma separated list of whitelists to check. I loop through every prototype in the list and check if the user is whitelisted.
-                foreach (var whitelistString in whitelistStringList.Split(','))
+                if (_whitelists is null)
                 {
-                    var whitelist = whitelists.FirstOrDefault(w => w.ID == whitelistString);
-                    if (whitelist is null)
-                    {
-                        _sawmill.Warning($"Whitelist prototype {whitelistString} does not exist.");
-                        continue;
-                    }
+                    _sawmill.Error("Whitelist enabled but no whitelists loaded.");
+                    // Misconfigured, deny everyone.
+                    return (ConnectionDenyReason.Whitelist, Loc.GetString("whitelist-misconfigured"), null);
+                }
 
-                    if (!whitelist.IsValid(_plyMgr.PlayerCount))
+                foreach (var whitelist in _whitelists)
+                {
+                    if (!IsValid(whitelist, _plyMgr.PlayerCount))
                     {
                         // Not valid for current player count.
                         continue;
                     }
-                    var whitelistStatus = await whitelist.IsWhitelisted(e.UserData, _sawmill);
 
+                    var whitelistStatus = await IsWhitelisted(whitelist, e.UserData, _sawmill);
                     if (!whitelistStatus.isWhitelisted)
                     {
                         // Not whitelisted.
                         return (ConnectionDenyReason.Whitelist, Loc.GetString("whitelist-fail-prefix", ("msg", whitelistStatus.denyMessage!)), null);
                     }
+
                     // Whitelisted, don't check any more.
                     break;
                 }
             }
 
             return null;
+        }
+
+        public bool IsValid(PlayerConnectionWhitelistPrototype whitelist, int playerCount)
+        {
+            return playerCount >= whitelist.MinimumPlayers && playerCount <= whitelist.MaximumPlayers;
+        }
+
+        public async Task<(bool isWhitelisted, string? denyMessage)> IsWhitelisted(PlayerConnectionWhitelistPrototype whitelist, NetUserData data, ISawmill sawmill)
+        {
+            foreach (var condition in whitelist.Conditions)
+            {
+                var matched = false;
+                string denyMessage;
+                switch (condition.GetType())
+                {
+                    case { } t when t == typeof(ConditionAlwaysDeny):
+                        matched = true;
+                        denyMessage = Loc.GetString("whitelist-always-deny");
+                        break;
+                    case { } t when t == typeof(ConditionManualWhitelist):
+                        matched = await _db.GetWhitelistStatusAsync(data.UserId);
+                        denyMessage = Loc.GetString("whitelist-manual");
+                        break;
+                    case { } t when t == typeof(ConditionManualBlacklist):
+                        matched = !(await _db.GetBlacklistStatusAsync(data.UserId));
+                        denyMessage = Loc.GetString("whitelist-blacklisted");
+                        break;
+                    case { } t when t == typeof(ConditionNotesDateRange):
+                        var conditionNotes = (ConditionNotesDateRange)condition;
+                        var remarks = await _db.GetAllAdminRemarks(data.UserId.UserId);
+                        remarks = remarks.Where(x => x.CreatedAt > DateTime.Now.AddDays(-conditionNotes.Range)).ToList();
+                        if (!conditionNotes.IncludeExpired)
+                            // If we're not including expired notes, filter them out.
+                            remarks = remarks.Where(x => x.ExpirationTime is null || x.ExpirationTime > DateTime.Now).ToList();
+                        var remarksCopy = remarks.ToList();
+                        foreach (var adminRemarksRecord in remarks)
+                        {
+                            // In order to get the severity of the remark, we need to see if its a AdminNoteRecord.
+                            if (adminRemarksRecord is not AdminNoteRecord adminNoteRecord)
+                                continue;
+
+                            // We want to filter out secret notes if we're not including them.
+                            if (!conditionNotes.IncludeSecret && adminNoteRecord.Secret)
+                                continue;
+
+                            // At this point, we need to remove the note if it's not within the severity range.
+                            if (adminNoteRecord.Severity < conditionNotes.MinimumSeverity)
+                            {
+                                remarksCopy.Remove(adminRemarksRecord);
+                            }
+                        }
+
+                        matched = remarksCopy.Count == 0;
+                        denyMessage = Loc.GetString("whitelist-notes");
+                        break;
+                    case { } t when t == typeof(ConditionPlayerCount):
+                        var conditionPlayerCount = (ConditionPlayerCount)condition;
+                        var count = _plyMgr.PlayerCount;
+                        matched = count >= conditionPlayerCount.MinimumPlayers && count <= conditionPlayerCount.MaximumPlayers;
+                        denyMessage = Loc.GetString("whitelist-player-count");
+                        break;
+                    case { } t when t == typeof(ConditionPlaytime):
+                        var conditionPlaytime = (ConditionPlaytime)condition;
+                        var playtime = await _db.GetPlayTimes(data.UserId);
+                        var tracker = playtime.Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
+                        if (tracker is null)
+                        {
+                            matched = false;
+                        }
+                        else
+                        {
+                            matched = tracker.TimeSpent.TotalMinutes >= conditionPlaytime.MinimumPlaytime;
+                        }
+                        denyMessage = Loc.GetString("whitelist-playtime", ("minutes", conditionPlaytime.MinimumPlaytime));
+                        break;
+                    case { } t when t == typeof(ConditionNotesPlaytimeRange):
+                        var conditionNotesPlaytimeRange = (ConditionNotesPlaytimeRange)condition;
+                        var remarksPlaytimeRange = await _db.GetAllAdminRemarks(data.UserId.UserId);
+                        // In order to filter by playtime, we need to do the following: playtimeAtNote >= overallPlaytime - Range
+                        var overallPlaytime = await _db.GetPlayTimes(data.UserId);
+                        var overallTracker = overallPlaytime.Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
+                        if (overallTracker is null)
+                        {
+                            matched = false;
+                            denyMessage = Loc.GetString("whitelist-notes");
+                            break;
+                        }
+                        remarksPlaytimeRange = remarksPlaytimeRange.Where(x =>
+                            x.PlaytimeAtNote >= overallTracker.TimeSpent - TimeSpan.FromMinutes(conditionNotesPlaytimeRange.Range)).ToList();
+                        if (!conditionNotesPlaytimeRange.IncludeExpired)
+                            remarksPlaytimeRange = remarksPlaytimeRange.Where(x => x.ExpirationTime is null || x.ExpirationTime > DateTime.Now).ToList();
+                        var copy = remarksPlaytimeRange.ToList();
+                        foreach (var adminRemarksRecord in remarksPlaytimeRange)
+                        {
+                            // In order to get the severity of the remark, we need to see if its a AdminNoteRecord.
+                            if (adminRemarksRecord is not AdminNoteRecord adminNoteRecord)
+                                continue;
+
+                            // We want to filter out secret notes if we're not including them.
+                            if (!conditionNotesPlaytimeRange.IncludeSecret && adminNoteRecord.Secret)
+                                continue;
+
+                            // At this point, we need to remove the note if it's not within the severity range.
+                            if (adminNoteRecord.Severity < conditionNotesPlaytimeRange.MinimumSeverity)
+                            {
+                                copy.Remove(adminRemarksRecord);
+                            }
+                        }
+
+                        matched = copy.Count == 0;
+                        denyMessage = Loc.GetString("whitelist-notes");
+                        break;
+                    default:
+                        throw new NotImplementedException($"Whitelist condition {condition.GetType().Name} not implemented");
+                }
+
+                sawmill.Debug($"User {data.UserName} whitelist condition {condition.GetType().Name} result: {matched}");
+
+                switch (condition.Action)
+                {
+                    case ConditionAction.Allow:
+                        if (matched)
+                        {
+                            sawmill.Debug($"User {data.UserName} passed whitelist condition {condition.GetType().Name} and it's a breaking condition");
+                            return (true, denyMessage);
+                        }
+                        break;
+                    case ConditionAction.Deny:
+                        if (matched)
+                        {
+                            sawmill.Debug($"User {data.UserName} failed whitelist condition {condition.GetType().Name}");
+                            return (false, denyMessage);
+                        }
+                        break;
+                    default:
+                        sawmill.Debug($"User {data.UserName} failed whitelist condition {condition.GetType().Name} but it's not a breaking condition");
+                        break;
+                }
+            }
+
+            sawmill.Debug($"User {data.UserName} passed all whitelist conditions");
+            return (true, null);
         }
 
         private async Task<NetUserId?> AssignUserIdCallback(string name)
@@ -233,6 +397,11 @@ namespace Content.Server.Connection
             var assigned = new NetUserId(Guid.NewGuid());
             await _db.AssignUserIdAsync(name, assigned);
             return assigned;
+        }
+
+        public void PostInit()
+        {
+            _cfg.OnValueChanged(CCVars.WhitelistPrototypeList, UpdateWhitelists, true);
         }
     }
 }

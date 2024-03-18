@@ -1,38 +1,7 @@
 ﻿- type: PlayerConnectionWhitelist
-  id: mrpWhitelist
-  conditions:
-    - !type:ConditionManualBlacklist # Blacklisted people are banned from playing MRP but can still play LRP
-      breakIfConditionSuccess: false
-      breakIfConditionFail: true
-    - !type:ConditionNotes
-      includeExpired: false
-      minimumSeverity: 3 # High
-      minimumNotes: 1
-      range: 30 # 30 days
-    - !type:ConditionNotes
-      includeExpired: false
-      minimumSeverity: 2 # Medium
-      minimumNotes: 1
-      range: 14 # 14 Days
-    - !type:ConditionNotes
-      includeExpired: false
-      minimumSeverity: 1 # Low
-      minimumNotes: 3
-      range: 14 # 14 Days
-    - !type:ConditionManualWhitelist
-      breakIfConditionSuccess: true
-      breakIfConditionFail: false
-    - !type:ConditionPlayerCount # Playtime requirement is only checked if there are more than 15 players on the server
-      minimumPlayers: 0
-      maximumPlayers: 15
-      breakIfConditionSuccess: true
-      breakIfConditionFail: false
-    - !type:ConditionPlaytime
-      minimumPlaytime: 1200 # 20 hours to be whitelisted
-      breakIfConditionSuccess: true
-      breakIfConditionFail: true # If you don't have 20 hours and there are more than 15 players on the server, you can't play MRP
-
-- type: PlayerConnectionWhitelist
   id: basicWhitelist # Basic whitelist using only the ManualWhitelist condition
   conditions:
     - !type:ConditionManualWhitelist
+      action: 0 # Allow if matched
+    - !type:ConditionAlwaysDeny # Deny if matched
+      action: 1 # Deny if matched

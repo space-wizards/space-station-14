@@ -5,29 +5,36 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Connection.Whitelist;
 
+/// <summary>
+/// This class is used to determine if a player should be allowed to join the server.
+/// It is used in <see cref="PlayerConnectionWhitelistPrototype"/>
+/// </summary>
 [ImplicitDataDefinitionForInheritors]
 [MeansImplicitUse]
 public abstract partial class WhitelistCondition
 {
     /// <summary>
-    /// Function that checks if the player should be allowed to join.
+    /// What action should be taken if this condition is met?
+    /// Defaults to <see cref="ConditionAction.Next"/>.
     /// </summary>
-    /// <param name="data"></param>
-    /// <returns>
-    /// A tuple with the first value being whether the player should be allowed to join and the second value being the
-    /// reason why they should not be allowed to join.
-    /// </returns>
-    public abstract Task<(bool sucess, string denyReason)> Condition(NetUserData data);
+    public ConditionAction Action { get; set; } = ConditionAction.Next;
+}
 
+/// <summary>
+/// Determines what action should be taken if a condition is met.
+/// </summary>
+public enum ConditionAction
+{
     /// <summary>
-    /// If this condition succeeds, the next conditions will be skipped.
+    /// The player is allowed to join, and the next conditions will be skipped.
     /// </summary>
-    [DataField]
-    public virtual bool BreakIfConditionSuccess { get; set; } = false;
-
+    Allow,
     /// <summary>
-    /// If this condition fails, the next conditions will be skipped and the player will be denied.
+    /// The player is denied to join, and the next conditions will be skipped.
     /// </summary>
-    [DataField]
-    public virtual bool BreakIfConditionFail { get; set; } = true;
+    Deny,
+    /// <summary>
+    /// The next condition should be checked.
+    /// </summary>
+    Next
 }

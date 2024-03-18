@@ -9,18 +9,4 @@ public sealed partial class ConditionPlaytime : WhitelistCondition
 {
     [DataField]
     public int MinimumPlaytime = 0; // In minutes
-
-    public override async Task<(bool, string)> Condition(NetUserData data)
-    {
-        var db = IoCManager.Resolve<IServerDbManager>();
-        var playtime = await db.GetPlayTimes(data.UserId);
-        var tracker = playtime.Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
-        if (tracker is null)
-        {
-            return (false, Loc.GetString("whitelist-playtime", ("minutes", MinimumPlaytime)));
-        }
-
-        return (tracker.TimeSpent.TotalMinutes >= MinimumPlaytime, Loc.GetString("whitelist-playtime", ("minutes", MinimumPlaytime)));
-    }
-
 }
