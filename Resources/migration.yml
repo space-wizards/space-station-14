@@ -241,3 +241,14 @@ AirlockShuttleEasyPryLocked: AirlockExternalShuttleLocked
 ClothingBackpackFilledDetective: ClothingBackpackSecurityFilledDetective
 ClothingBackpackDuffelFilledDetective: ClothingBackpackDuffelSecurityFilledDetective
 ClothingBackpackSatchelFilledDetective: ClothingBackpackSatchelSecurityFilledDetective
+<<<<<<< Updated upstream
+=======
+
+# 2024-03-11
+ImprovisedExplosive: FireBomb
+ImprovisedExplosiveEmpty: FireBombEmpty
+ImprovisedExplosiveFuel: FireBombFuel
+
+# 2024-04-1
+SingularityGenerator: WehularityGenerator
+>>>>>>> Stashed changes
