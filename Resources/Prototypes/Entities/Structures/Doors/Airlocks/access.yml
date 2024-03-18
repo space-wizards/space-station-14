@@ -656,7 +656,7 @@
   - type: AccessReader
     access: [["Research"]]
   - type: Wires
-    layoutId: AirlockResearch
+    layoutId: AirlockScience
 
 - type: entity
   parent: AirlockScienceGlass
@@ -666,7 +666,7 @@
   - type: AccessReader
     access: [["Research"], ["Medical"]]
   - type: Wires
-    layoutId: AirlockResearch
+    layoutId: AirlockScience
 
 - type: entity
   parent: AirlockCentralCommandGlass
@@ -1023,7 +1023,7 @@
   - type: AccessReader
     access: [["Research"]]
   - type: Wires
-    layoutId: AirlockResearch
+    layoutId: AirlockScience
 
 - type: entity
   parent: AirlockMaint
@@ -1033,7 +1033,7 @@
   - type: AccessReader
     access: [["Research"], ["Medical"]]
   - type: Wires
-    layoutId: AirlockResearch
+    layoutId: AirlockScience
 
 - type: entity
   parent: AirlockMaint

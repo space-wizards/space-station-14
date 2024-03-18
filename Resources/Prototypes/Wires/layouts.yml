@@ -31,7 +31,7 @@
 
 - type: wireLayout
   parent: Airlock
-  id: AirlockResearch
+  id: AirlockScience
 
 - type: wireLayout
   parent: Airlock
