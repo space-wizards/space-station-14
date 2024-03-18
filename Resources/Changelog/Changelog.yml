@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: EmoGarbage404
   changes:
-  - message: Reduced ore drop rates from anomaly ore crabs.
-    type: Tweak
-  id: 5688
-  time: '2024-01-13T06:27:43.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24012
-- author: EmoGarbage404
-  changes:
   - message: The chem guidebook once again displays sources for various reagents.
     type: Fix
   id: 5689
@@ -3813,3 +3806,10 @@
   id: 6187
   time: '2024-03-18T21:31:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26240
+- author: Terraspark4941
+  changes:
+  - message: The TEG page in the guidebook has been updated with proper information!
+    type: Tweak
+  id: 6188
+  time: '2024-03-18T21:33:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26170
