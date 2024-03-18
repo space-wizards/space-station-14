@@ -2596,7 +2596,7 @@
   name: Muhtar
   parent: SimpleMobBase
   id: MobMuhtar
-  description: "Man's best friend. And the worst enemy of the enemy of NanoTraisen."
+  description: "Man's best friend. And the worst enemy of the enemy of NanoTrasen."
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -2676,8 +2676,8 @@
   - type: StaminaDamageOnHit
     damage: 30 #Sheepdogs are ment to stun people, not to kill them.
   - type: MovementSpeedModifier
-    baseSprintSpeed: 6
-    baseWalkSpeed: 4.5
+    baseSprintSpeed: 5
+    baseWalkSpeed: 2.5
   - type: MobState
     allowedStates:
     - Alive
@@ -2695,7 +2695,6 @@
     critThreshold: 150
   - type: Puller
     needsHands: false
-  - type: NoSlip
 
 - type: entity
   name: cat
