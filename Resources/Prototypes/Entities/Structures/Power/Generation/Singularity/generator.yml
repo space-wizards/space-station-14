@@ -41,7 +41,7 @@
   description: An Odd Device which produces a Wehvitational Wehularity when set up.
   components:
   - type: Sprite
-    sprite: Structures\Power\Generation\Singularity\wehgenerator.rsi
+    sprite: Structures/Power/Generation/Singularity/wehgenerator.rsi
     state: icon
   - type: SingularityGenerator
     spawnId: Wehularity
