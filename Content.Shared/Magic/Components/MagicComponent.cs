@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.GameStates;
 
 namespace Content.Shared.Magic.Components;
-// TODO: Rename to MagicActionComponent
+// TODO: Rename to MagicActionComponent or MagicRequirementsComponent
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedMagicSystem))]
 public sealed partial class MagicComponent : Component
 {
@@ -11,17 +11,10 @@ public sealed partial class MagicComponent : Component
     //  Could handle lifetime, ignore caster, etc?
     // Magic caster comp would be on the caster, used for what I'm not sure
 
-    // TODO: Doafter required (ie chanting spell)
-    //  Move while casting allowed
-    //  Maybe add doafters to events?
-    //    So if doafter != null, then do the spell after?
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float CastTime;
+    // TODO: Do After here or in actions
 
     // TODO: Spell requirements
     //  A list of requirements to cast the spell
-    //    Robes
-    //    Voice
     //    Hands
     //    Any item in hand
     //    Spell takes up an inhand slot

@@ -2,7 +2,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
-using Content.Shared.Chat;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
@@ -49,12 +48,10 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly LockSystem _lock = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MagicComponent, MapInitEvent>(OnInit, after: new []{typeof(SharedActionsSystem)});
         SubscribeLocalEvent<MagicComponent, BeforeCastSpellEvent>(OnBeforeCastSpell);
 
         // TODO: More spells
@@ -90,34 +87,13 @@ public abstract class SharedMagicSystem : EntitySystem
         if (comp.RequiresSpeech && HasComp<MutedComponent>(args.Performer))
             hasReqs = false;
 
-        if (!hasReqs)
-        {
-            args.Cancelled = true;
-            _popup.PopupClient(Loc.GetString("spell-requirements-failed"), args.Performer, args.Performer);
-            return;
-        }
-
-        // DoAfter
-        if (ent.Comp.CastTime <= 0.0f)
+        if (hasReqs)
             return;
 
-        // TODO: Pre Spell Doafter (this)
-        //  How to check if cancelled?
-        // TODO: Repeating spell doafter (repeated fireballs for example or healing)
-        //  Would be in the spell body as a method?
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.Performer, ent.Comp.CastTime, null, null)
-        {
-            BreakOnUserMove = true,
-            BreakOnTargetMove = true,
-            NeedHand = true
-        };
+        args.Cancelled = true;
+        _popup.PopupClient(Loc.GetString("spell-requirements-failed"), args.Performer, args.Performer);
 
-        _doAfter.TryStartDoAfter(doAfterArgs);
-    }
-
-    private void OnInit(EntityUid uid, MagicComponent component, MapInitEvent args)
-    {
-
+        // TODO: Pre-cast do after, either here or in SharedActionsSystem
     }
 
     private bool PassesSpellPrerequisites(EntityUid spell, EntityUid performer)
