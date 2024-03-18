@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: The empty space around Map UI window edges is no longer resizable.
-    type: Tweak
-  - message: Station Map ui now has proper edges.
-    type: Fix
-  id: 5692
-  time: '2024-01-13T15:04:46.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24024
 - author: Dygon
   changes:
   - message: Expendable light sources turned on through the verb menu now ignite the
@@ -3812,3 +3803,12 @@
   id: 6191
   time: '2024-03-18T21:47:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25925
+- author: Killerqu00
+  changes:
+  - message: Initial Infected now can see each other.
+    type: Add
+  - message: Initial Infected can now see zombified entities.
+    type: Add
+  id: 6192
+  time: '2024-03-18T21:57:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25934
