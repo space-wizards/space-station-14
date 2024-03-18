@@ -112,7 +112,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
             component.NextSound = Timing.CurTime + component.SoundCooldown;
         }
 
-        var reclaimedEvent = new GotReclaimedEvent(uid.ToCoordinates());
+        var reclaimedEvent = new GotReclaimedEvent(EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
         RaiseLocalEvent(item, ref reclaimedEvent);
 
         var duration = GetReclaimingDuration(uid, item, component);
