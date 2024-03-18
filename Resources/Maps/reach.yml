@@ -1351,10 +1351,6 @@ entities:
     - type: Transform
       pos: 1.5,14.5
       parent: 407
-    - type: DeviceLinkSource
-      linkedPorts:
-        invalid:
-        - DoorStatus: DoorBolt
 - proto: AirlockExternalGlassEngineeringLocked
   entities:
   - uid: 1244
