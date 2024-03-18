@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Crotalus
-  changes:
-  - message: 'New ghost warp point: nuclear bomb'
-    type: Add
-  id: 5691
-  time: '2024-01-13T07:30:11.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23973
 - author: Errant
   changes:
   - message: The empty space around Map UI window edges is no longer resizable.
@@ -3812,3 +3805,10 @@
   id: 6190
   time: '2024-03-18T21:36:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26244
+- author: shampunj
+  changes:
+  - message: Zombies now passively heal 1 heat/shock damage every 50 seconds
+    type: Tweak
+  id: 6191
+  time: '2024-03-18T21:47:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25925
