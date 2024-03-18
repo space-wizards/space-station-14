@@ -8,6 +8,7 @@
     icon: Mobs/Species/Diona/organs.rsi/brain.png
     event: !type:GibActionEvent {}
     checkCanInteract: false
+    checkConsciousness: false
 
 - type: entity
   id: DionaReformAction
