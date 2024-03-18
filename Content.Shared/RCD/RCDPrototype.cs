@@ -88,12 +88,6 @@ public sealed class RCDPrototype : IPrototype
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public RcdRotation Rotation { get; private set; } = RcdRotation.User;
-
-    /// <summary>
-    /// The sprite to be used for the RCD construction ghost 
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public SpriteSpecifier? GhostSprite { get; private set; } = null;
 }
 
 public enum RcdMode : byte

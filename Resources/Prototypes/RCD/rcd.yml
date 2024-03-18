@@ -9,10 +9,8 @@
   category: Main
   sprite: /Textures/Interface/Radial/RCD/deconstruct.png
   mode: Deconstruct
+  prototype: EffectRCDDeconstructPreview
   rotation: Camera
-  ghostSprite:
-    sprite: Effects/rcd.rsi
-    state: deconstructPreview
 
 - type: rcd
   id: DeconstructLattice   # Hidden prototype - do not add to RCDs  
@@ -44,7 +42,6 @@
   rules:
     - CanBuildOnEmptyTile
   fx: EffectRCDConstruct1
-  ghostSprite: /Textures/Tiles/plating.png
   
 - type: rcd
   id: FloorSteel
@@ -59,7 +56,6 @@
   rules:
     - CanBuildOnEmptyTile
   fx: EffectRCDConstruct1
-  ghostSprite: /Textures/Tiles/steel_dirty.png
 
 - type: rcd
   id: Catwalk
@@ -75,9 +71,6 @@
     - MustBuildOnSubfloor
   rotation: Fixed
   fx: EffectRCDConstruct1
-  ghostSprite:
-    sprite: Structures/catwalk.rsi
-    state: catwalk_preview 
 
 # Walls
 - type: rcd
@@ -92,9 +85,6 @@
   collisionMask: FullTileMask
   rotation: Fixed
   fx: EffectRCDConstruct2
-  ghostSprite:
-    sprite: Structures/Walls/solid.rsi
-    state: full
 
 - type: rcd
   id: Grille
@@ -108,9 +98,6 @@
   collisionMask: FullTileMask
   rotation: Fixed
   fx: EffectRCDConstruct2
-  ghostSprite:
-    sprite: Structures/Walls/grille.rsi
-    state: grille
 
 # Windows
 - type: rcd
@@ -127,9 +114,6 @@
     - IsWindow
   rotation: Fixed
   fx: EffectRCDConstruct2
-  ghostSprite:
-    sprite: Structures/Windows/window.rsi
-    state: full
   
 - type: rcd
   id: WindowDirectional
@@ -146,9 +130,6 @@
     - IsWindow
   rotation: User
   fx: EffectRCDConstruct1
-  ghostSprite:
-    sprite: Structures/Windows/directional.rsi
-    state: window
   
 - type: rcd
   id: ReinforcedWindow
@@ -164,9 +145,6 @@
     - IsWindow
   rotation: User
   fx: EffectRCDConstruct3
-  ghostSprite:
-    sprite: Structures/Windows/reinforced_window.rsi
-    state: full
     
 - type: rcd
   id: WindowReinforcedDirectional
@@ -183,9 +161,6 @@
     - IsWindow
   rotation: User
   fx: EffectRCDConstruct2
-  ghostSprite:
-    sprite: Structures/Windows/directional.rsi
-    state: reinforced_window
 
 # Airlocks
 - type: rcd
@@ -200,9 +175,6 @@
   collisionMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstruct4
-  ghostSprite:
-    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
-    state: closed
   
 - type: rcd
   id: AirlockGlass
@@ -216,9 +188,6 @@
   collisionMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstruct4
-  ghostSprite:
-    sprite: Structures/Doors/Airlocks/Glass/glass.rsi
-    state: closed
   
 - type: rcd
   id: Firelock
@@ -232,9 +201,6 @@
   collisionMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstruct3
-  ghostSprite:
-    sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
-    state: closed
 
 # Lighting
 - type: rcd
@@ -250,9 +216,6 @@
   collisionBounds: "-0.23,-0.49,0.23,-0.36"
   rotation: User
   fx: EffectRCDConstruct1
-  ghostSprite:
-    sprite:  Structures/Wallmounts/Lighting/light_tube.rsi
-    state: base
   
 - type: rcd
   id: BulbLight
@@ -267,9 +230,6 @@
   collisionBounds: "-0.23,-0.49,0.23,-0.36"
   rotation: User
   fx: EffectRCDConstruct1
-  ghostSprite:
-    sprite: Structures/Wallmounts/Lighting/light_small.rsi
-    state: base
 
 # Electrical
 - type: rcd
@@ -286,9 +246,6 @@
   - MustBuildOnSubfloor
   rotation: Fixed
   fx: EffectRCDConstruct0
-  ghostSprite:
-    sprite: Structures/Power/Cables/lv_cable.rsi
-    state: lvcable_0
     
 - type: rcd
   id: MVCable
@@ -304,9 +261,6 @@
   - MustBuildOnSubfloor
   rotation: Fixed
   fx: EffectRCDConstruct0
-  ghostSprite:
-    sprite: Structures/Power/Cables/mv_cable.rsi
-    state: mvcable_0
     
 - type: rcd
   id: HVCable
@@ -322,9 +276,6 @@
   - MustBuildOnSubfloor
   rotation: Fixed
   fx: EffectRCDConstruct0
-  ghostSprite:
-    sprite: Structures/Power/Cables/hv_cable.rsi
-    state: hvcable_0
     
 - type: rcd
   id: CableTerminal
@@ -340,6 +291,3 @@
   - MustBuildOnSubfloor
   rotation: User
   fx: EffectRCDConstruct0
-  ghostSprite:
-    sprite: Structures/Power/cable_terminal.rsi
-    state: term

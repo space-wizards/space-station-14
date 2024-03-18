@@ -11,12 +11,18 @@
     drawdepth: Effects
     sprite: /Textures/Effects/rcd.rsi
     state: construct0
-  - type: TimedDespawn
-    lifetime: 1.2
   - type: Tag
     tags:
     - HideContextMenu
   - type: AnimationPlayer
+  
+- type: entity
+  parent: EffectRCDBase
+  id: EffectRCDDeconstructPreview
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: deconstructPreview
   
 - type: entity
   parent: EffectRCDBase

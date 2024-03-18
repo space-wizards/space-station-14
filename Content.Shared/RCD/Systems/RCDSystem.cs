@@ -42,7 +42,6 @@ public class RCDSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
@@ -73,8 +72,7 @@ public class RCDSystem : EntitySystem
         if (component.AvailablePrototypes.Any())
         {
             component.ProtoId = component.AvailablePrototypes.First();
-            component.CachedPrototype = _protoManager.Index(component.ProtoId);
-
+            UpdateCachedPrototype(uid, component);
             Dirty(uid, component);
 
             return;
@@ -90,12 +88,12 @@ public class RCDSystem : EntitySystem
         if (!component.AvailablePrototypes.Contains(args.ProtoId))
             return;
 
-        if (!_protoManager.TryIndex(args.ProtoId, out var proto))
+        if (!_protoManager.HasIndex(args.ProtoId))
             return;
 
-        // Update the current RCD prototype to the one supplied
+        // Set the current RCD prototype to the one supplied
         component.ProtoId = args.ProtoId;
-        component.CachedPrototype = proto;
+        UpdateCachedPrototype(uid, component);
         Dirty(uid, component);
 
         if (args.Session.AttachedEntity != null)
@@ -115,8 +113,7 @@ public class RCDSystem : EntitySystem
             return;
 
         // Update cached prototype if required
-        if (component.ProtoId.Id != component.CachedPrototype?.Prototype)
-            component.CachedPrototype = _protoManager.Index(component.ProtoId);
+        UpdateCachedPrototype(uid, component);
 
         var msg = (component.CachedPrototype.Prototype != null) ?
             Loc.GetString("rcd-component-examine-build-details", ("name", Loc.GetString(component.CachedPrototype.SetName))) :
@@ -289,8 +286,7 @@ public class RCDSystem : EntitySystem
     public bool IsRCDOperationStillValid(EntityUid uid, RCDComponent component, MapGridData mapGridData, EntityUid? target, EntityUid user, bool popMsgs = true)
     {
         // Update cached prototype if required
-        if (component.ProtoId.Id != component.CachedPrototype?.Prototype)
-            component.CachedPrototype = _protoManager.Index(component.ProtoId);
+        UpdateCachedPrototype(uid, component);
 
         // Check that the RCD has enough ammo to get the job done
         TryComp<LimitedChargesComponent>(uid, out var charges);
@@ -576,6 +572,12 @@ public class RCDSystem : EntitySystem
 
         var polyXform = new Transform(entXformComp.LocalPosition, (float) boundingBoxAngle);
         return poly.ComputeAABB(polyXform, 0).Intersects(fixture.Shape.ComputeAABB(entXform, 0));
+    }
+
+    public void UpdateCachedPrototype(EntityUid uid, RCDComponent component)
+    {
+        if (component.ProtoId.Id != component.CachedPrototype?.Prototype)
+            component.CachedPrototype = _protoManager.Index(component.ProtoId);
     }
 
     #endregion
