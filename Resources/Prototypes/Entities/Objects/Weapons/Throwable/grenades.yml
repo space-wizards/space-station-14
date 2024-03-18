@@ -367,7 +367,7 @@
 - type: entity
   parent: SmokeGrenade
   id: CleanerGrenade
-  name: cleaner grenade
+  name: cleanade
   description: Special grenade for janitors, releasing large cloud of space cleaner foam
   components:
   - type: Sprite
