@@ -600,9 +600,6 @@
   id: SpeedLoaderMagnum
   result: SpeedLoaderMagnum
   category: Ammo
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
-    state: base-6
   completetime: 5
   materials:
     Steel: 190
