@@ -292,7 +292,7 @@
     displayName: ID
 
 - type: nameIdentifierGroup
-  id: Legally Distinct Space Ferret
+  id: LegallyDistinctSpaceFerret
   prefix: Legally Distinct Space Ferret
   minValue: 1
   maxValue: 99
