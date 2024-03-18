@@ -93,6 +93,11 @@
   license: Custom
   source: https://gdc.sonniss.com
 
+- files: ["church_bell1.ogg", "church_bell2.ogg", "church_bell3.ogg", "church_bell4.ogg"]
+  copyright: '"Dramatic church bells" in "Church Bell" on mixkit.co. See https://mixkit.co/license/#sfxFree for license. Editted from stereo to mono, and variations pitched.'
+  license: Custom
+  source: https://mixkit.co/free-sound-effects/church-bell/
+
 - files: ["pop.ogg"]
   copyright: '"pop.ogg" by mirrorcult of GitHub.com'
   license: "CC0-1.0"
