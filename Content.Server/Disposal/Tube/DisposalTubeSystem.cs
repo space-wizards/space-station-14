@@ -122,7 +122,7 @@ namespace Content.Server.Disposal.Tube
                     if (trimmed == "")
                         continue;
 
-                    router.Tags.Add(tag.Trim());
+                    router.Tags.Add(trimmed);
                 }
 
                 _audioSystem.PlayPvs(router.ClickSound, uid, AudioParams.Default.WithVolume(-2f));

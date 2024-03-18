@@ -82,7 +82,7 @@
     - type: AtmosExposed
       growthTickChance: 0.3
       spreadChance: 0.4
-    - type: SlowContacts
+    - type: SpeedModifierContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
       ignoreWhitelist:
@@ -123,7 +123,7 @@
     - type: Kudzu
       spriteVariants: 5
       spreadChance: 0.01
-    - type: SlowContacts
+    - type: SpeedModifierContacts
       walkSpeedModifier: 0.8
       sprintSpeedModifier: 0.8
       ignoreWhitelist:
@@ -237,7 +237,7 @@
          Heat: 3
       growthTickChance: 0.3
     - type: AtmosExposed
-    - type: SlowContacts
+    - type: SpeedModifierContacts
       walkSpeedModifier: 0.3
       sprintSpeedModifier: 0.3
       ignoreWhitelist:

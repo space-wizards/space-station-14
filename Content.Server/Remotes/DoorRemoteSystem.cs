@@ -17,6 +17,7 @@ namespace Content.Shared.Remotes
         [Dependency] private readonly AirlockSystem _airlock = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
 
+
         public override void Initialize()
         {
             base.Initialize();
@@ -34,6 +35,7 @@ namespace Content.Shared.Remotes
                                                                           // Only able to control doors if they are within your vision and within your max range.
                                                                           // Not affected by mobs or machines anymore.
                 || !ExamineSystemShared.InRangeUnOccluded(args.User, args.Target.Value, SharedInteractionSystem.MaxRaycastRange, null))
+
             {
                 return;
             }

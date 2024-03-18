@@ -236,3 +236,89 @@
       contents:
         - id: RandomStalagmiteOrCrystal
           amount: 1
+
+- type: dungeonConfig
+  id: SnowyLabs
+  generator: !type:PrefabDunGen
+    roomWhitelist:
+      - SnowyLabs
+    presets:
+      - Bucket
+      - Wow
+      - SpaceShip
+      - Tall
+  postGeneration:
+    - !type:CorridorPostGen
+      width: 3
+
+    - !type:DungeonEntrancePostGen
+      count: 2
+
+    - !type:RoomEntrancePostGen
+      entities:
+        - CableApcExtension
+        - AirlockFreezerHydroponicsLocked
+
+    - !type:EntranceFlankPostGen
+      entities:
+        - Grille
+        - Window
+
+    - !type:ExternalWindowPostGen
+      entities:
+        - Grille
+        - Window
+
+    - !type:WallMountPostGen
+      spawns:
+        # Posters
+        - id: RandomPosterLegit
+          orGroup: content
+        - id: ExtinguisherCabinetFilled
+          prob: 0.2
+          orGroup: content
+        - id: RandomPainting
+          prob: 0.05
+          orGroup: content
+        - id: IntercomScience
+          prob: 0.1
+          orGroup: content
+
+    - !type:BoundaryWallPostGen
+        tile: FloorSteel
+        wall: WallSilver
+        cornerWall: WallSilver
+
+    - !type:JunctionPostGen
+      width: 1
+      entities:
+        - AirlockHydroGlassLocked
+
+    - !type:JunctionPostGen
+      entities:
+        - AirlockHydroGlassLocked
+
+    - !type:AutoCablingPostGen
+
+    - !type:CornerClutterPostGen
+      contents:
+        - id: PottedPlantRandom
+          amount: 1
+
+    - !type:CorridorDecalSkirtingPostGen
+      color: "#4cc7aa96"
+      cardinalDecals:
+        South: BrickTileWhiteLineS
+        East: BrickTileWhiteLineE
+        North: BrickTileWhiteLineN
+        West: BrickTileWhiteLineW
+      cornerDecals:
+        SouthEast: BrickTileWhiteCornerSe
+        SouthWest: BrickTileWhiteCornerSw
+        NorthEast: BrickTileWhiteCornerNe
+        NorthWest: BrickTileWhiteCornerNw
+      pocketDecals:
+        SouthWest: BrickTileWhiteInnerSw
+        SouthEast: BrickTileWhiteInnerSe
+        NorthWest: BrickTileWhiteInnerNw
+        NorthEast: BrickTileWhiteInnerNe
