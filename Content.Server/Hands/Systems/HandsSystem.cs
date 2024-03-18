@@ -10,16 +10,12 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Explosion;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Physics.Pull;
-using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Stacks;
 using Content.Shared.Throwing;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
@@ -43,7 +39,7 @@ namespace Content.Server.Hands.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] {typeof(StunSystem), typeof(StaminaSystem)});
+            SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: [typeof(StunSystem), typeof(StaminaSystem)]);
 
             SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
             SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
@@ -88,9 +84,8 @@ namespace Content.Server.Hands.Systems
                 return;
 
             // Break any pulls
-            if (TryComp(uid, out SharedPullerComponent? puller) && puller.Pulling is EntityUid pulled &&
-                TryComp(pulled, out SharedPullableComponent? pullable))
-                _pullingSystem.TryStopPull(pullable);
+            if (TryComp(uid, out SharedPullerComponent? puller) && puller.Pulling is EntityUid pulled)
+                _pullingSystem.TryStopPull(pulled);
 
             if (!_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
                 return;
@@ -130,13 +125,13 @@ namespace Content.Server.Hands.Systems
 
         private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
         {
-            if (args.Puller.Owner != uid)
+            if (args.Puller != uid)
                 return;
 
-            if (TryComp<SharedPullerComponent>(args.Puller.Owner, out var pullerComp) && !pullerComp.NeedsHands)
+            if (TryComp<SharedPullerComponent>(args.Puller, out var pullerComp) && !pullerComp.NeedsHands)
                 return;
 
-            if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.Pulled.Owner, uid))
+            if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.Pulled, uid))
             {
                 DebugTools.Assert("Unable to find available hand when starting pulling??");
             }
@@ -144,7 +139,7 @@ namespace Content.Server.Hands.Systems
 
         private void HandlePullStopped(EntityUid uid, HandsComponent component, PullStoppedMessage args)
         {
-            if (args.Puller.Owner != uid)
+            if (args.Puller != uid)
                 return;
 
             // Try find hand that is doing this pull.
@@ -153,7 +148,7 @@ namespace Content.Server.Hands.Systems
             {
                 if (hand.HeldEntity == null
                     || !TryComp(hand.HeldEntity, out VirtualItemComponent? virtualItem)
-                    || virtualItem.BlockingEntity != args.Pulled.Owner)
+                    || virtualItem.BlockingEntity != args.Pulled)
                     continue;
 
                 QueueDel(hand.HeldEntity.Value);
@@ -167,7 +162,7 @@ namespace Content.Server.Hands.Systems
 
         private bool HandleThrowItem(ICommonSession? playerSession, EntityCoordinates coordinates, EntityUid entity)
         {
-            if (playerSession?.AttachedEntity is not {Valid: true} player || !Exists(player))
+            if (playerSession?.AttachedEntity is not { Valid: true } player || !Exists(player))
                 return false;
 
             return ThrowHeldItem(player, coordinates);
@@ -192,7 +187,7 @@ namespace Content.Server.Hands.Systems
             {
                 var splitStack = _stackSystem.Split(throwEnt, 1, EntityManager.GetComponent<TransformComponent>(player).Coordinates, stack);
 
-                if (splitStack is not {Valid: true})
+                if (splitStack is not { Valid: true })
                     return false;
 
                 throwEnt = splitStack.Value;
@@ -204,7 +199,7 @@ namespace Content.Server.Hands.Systems
 
             var length = direction.Length();
             var distance = Math.Clamp(length, minDistance, hands.ThrowRange);
-            direction *= distance/length;
+            direction *= distance / length;
 
             var throwStrength = hands.ThrowForceMultiplier;
 

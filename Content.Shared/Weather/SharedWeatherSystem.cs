@@ -182,7 +182,7 @@ public abstract class SharedWeatherSystem : EntitySystem
         }
 
         if (proto != null)
-            StartWeather(weatherComp, proto, endTime);
+            StartWeather(mapUid, weatherComp, proto, endTime);
     }
 
     /// <summary>
@@ -190,7 +190,7 @@ public abstract class SharedWeatherSystem : EntitySystem
     /// </summary>
     protected virtual void Run(EntityUid uid, WeatherData weather, WeatherPrototype weatherProto, float frameTime) {}
 
-    protected void StartWeather(WeatherComponent component, WeatherPrototype weather, TimeSpan? endTime)
+    protected void StartWeather(EntityUid uid, WeatherComponent component, WeatherPrototype weather, TimeSpan? endTime)
     {
         if (component.Weather.ContainsKey(weather.ID))
             return;
@@ -202,7 +202,7 @@ public abstract class SharedWeatherSystem : EntitySystem
         };
 
         component.Weather.Add(weather.ID, data);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     protected virtual void EndWeather(EntityUid uid, WeatherComponent component, string proto)

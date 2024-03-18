@@ -22,7 +22,7 @@ namespace Content.Server.Alert.Click
 
             if (entityManager.TryGetComponent(player, out SharedPullableComponent? playerPullable))
             {
-                entityManager.System<SharedPullingSystem>().TryStopPull(playerPullable);
+                entityManager.System<SharedPullingSystem>().TryStopPull(player, playerPullable);
             }
         }
     }

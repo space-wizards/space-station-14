@@ -17,12 +17,11 @@ namespace Content.Shared.Pulling.Systems
             SubscribeLocalEvent<SharedPullableComponent, MoveInputEvent>(OnRelayMoveInput);
         }
 
-        private void OnRelayMoveInput(EntityUid uid, SharedPullableComponent component, ref MoveInputEvent args)
+        private void OnRelayMoveInput(Entity<SharedPullableComponent> entity, ref MoveInputEvent args)
         {
-            var entity = args.Entity;
             if (_mobState.IsIncapacitated(entity) || !_blocker.CanMove(entity)) return;
 
-            _pullSystem.TryStopPull(component);
+            _pullSystem.TryStopPull((entity, entity.Comp));
         }
     }
 }

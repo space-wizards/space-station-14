@@ -1,6 +1,5 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Pulling.Components
 {
@@ -45,13 +44,8 @@ namespace Content.Shared.Pulling.Components
     /// <summary>
     /// Raised when a request is made to stop pulling an entity.
     /// </summary>
-    public sealed class StopPullingEvent : CancellableEntityEventArgs
+    public sealed class StopPullingEvent(EntityUid? uid = null) : CancellableEntityEventArgs
     {
-        public EntityUid? User { get; }
-
-        public StopPullingEvent(EntityUid? uid = null)
-        {
-            User = uid;
-        }
+        public EntityUid? User { get; } = uid;
     }
 }

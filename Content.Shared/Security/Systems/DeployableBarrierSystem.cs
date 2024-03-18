@@ -55,7 +55,7 @@ public sealed class DeployableBarrierSystem : EntitySystem
         }
 
         if (TryComp(uid, out SharedPullableComponent? pullable))
-            _pulling.TryStopPull(pullable);
+            _pulling.TryStopPull(uid, pullable);
 
         SharedPointLightComponent? pointLight = null;
         if (_pointLight.ResolveLight(uid, ref pointLight))

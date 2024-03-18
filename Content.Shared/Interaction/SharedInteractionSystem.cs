@@ -185,10 +185,10 @@ namespace Content.Shared.Interaction
             if (!InRangeUnobstructed(userEntity.Value, uid, popup: true))
                 return false;
 
-            if (!TryComp(uid, out SharedPullableComponent? pull))
+            if (!HasComp<SharedPullableComponent>(uid))
                 return false;
 
-            _pullSystem.TogglePull(userEntity.Value, pull);
+            _pullSystem.TogglePull(userEntity.Value, uid);
             return false;
         }
 

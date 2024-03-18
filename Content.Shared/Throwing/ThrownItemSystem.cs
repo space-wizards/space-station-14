@@ -85,8 +85,8 @@ namespace Content.Shared.Throwing
         private void HandlePullStarted(PullStartedMessage message)
         {
             // TODO: this isn't directed so things have to be done the bad way
-            if (EntityManager.TryGetComponent(message.Pulled.Owner, out ThrownItemComponent? thrownItemComponent))
-                StopThrow(message.Pulled.Owner, thrownItemComponent);
+            if (TryComp<ThrownItemComponent>(message.Pulled, out var thrownItemComponent))
+                StopThrow(message.Pulled, thrownItemComponent);
         }
 
         public void StopThrow(EntityUid uid, ThrownItemComponent thrownItemComponent)

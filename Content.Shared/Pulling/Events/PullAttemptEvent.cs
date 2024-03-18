@@ -1,11 +1,6 @@
-﻿using Robust.Shared.Physics.Components;
+﻿namespace Content.Shared.Physics.Pull;
 
-namespace Content.Shared.Physics.Pull
+public sealed class PullAttemptEvent(EntityUid puller, EntityUid pulled) : PullMessage(puller, pulled)
 {
-    public sealed class PullAttemptEvent : PullMessage
-    {
-        public PullAttemptEvent(PhysicsComponent puller, PhysicsComponent pulled) : base(puller, pulled) { }
-
-        public bool Cancelled { get; set; }
-    }
+    public bool Cancelled { get; set; }
 }

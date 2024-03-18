@@ -26,13 +26,12 @@ namespace Content.Shared.Pulling
         /// <summary>
         ///     A mapping of pullers to the entity that they are pulling.
         /// </summary>
-        private readonly Dictionary<EntityUid, EntityUid> _pullers =
-            new();
+        private readonly Dictionary<EntityUid, EntityUid> _pullers = [];
 
-        private readonly HashSet<SharedPullableComponent> _moving = new();
-        private readonly HashSet<SharedPullableComponent> _stoppedMoving = new();
+        private readonly HashSet<EntityUid> _moving = [];
+        private readonly HashSet<EntityUid> _stoppedMoving = [];
 
-        public IReadOnlySet<SharedPullableComponent> Moving => _moving;
+        public IReadOnlySet<EntityUid> Moving => _moving;
 
         public override void Initialize()
         {
@@ -57,37 +56,37 @@ namespace Content.Shared.Pulling
                 .Register<SharedPullingSystem>();
         }
 
-        private void OnPullableCollisionChange(EntityUid uid, SharedPullableComponent component, ref CollisionChangeEvent args)
+        private void OnPullableCollisionChange(Entity<SharedPullableComponent> entity, ref CollisionChangeEvent args)
         {
-            if (component.PullJointId != null && !args.CanCollide)
+            if (entity.Comp.PullJointId != null && !args.CanCollide)
             {
-                _joints.RemoveJoint(uid, component.PullJointId);
+                _joints.RemoveJoint(entity, entity.Comp.PullJointId);
             }
         }
 
-        private void OnJointRemoved(EntityUid uid, SharedPullableComponent component, JointRemovedEvent args)
+        private void OnJointRemoved(Entity<SharedPullableComponent> entity, ref JointRemovedEvent args)
         {
-            if (component.Puller != args.OtherEntity)
+            if (entity.Comp.Puller != args.OtherEntity)
                 return;
 
             // Do we have some other join with our Puller?
             // or alternatively:
             // TODO track the relevant joint.
 
-            if (TryComp(uid, out JointComponent? joints))
+            if (TryComp(entity, out JointComponent? joints))
             {
                 foreach (var jt in joints.GetJoints.Values)
                 {
-                    if (jt.BodyAUid == component.Puller || jt.BodyBUid == component.Puller)
+                    if (jt.BodyAUid == entity.Comp.Puller.Value || jt.BodyBUid == entity.Comp.Puller.Value)
                         return;
                 }
             }
 
             // No more joints with puller -> force stop pull.
-            _pullSm.ForceDisconnectPullable(component);
+            _pullSm.ForceDisconnectPullable(entity.Owner, entity.Comp);
         }
 
-        private void AddPullVerbs(EntityUid uid, SharedPullableComponent component, GetVerbsEvent<Verb> args)
+        private void AddPullVerbs(Entity<SharedPullableComponent> entity, ref GetVerbsEvent<Verb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -97,22 +96,25 @@ namespace Content.Shared.Pulling
                 return;
 
             //TODO VERB ICONS add pulling icon
-            if (component.Puller == args.User)
+            if (entity.Comp.Puller == args.User)
             {
+                var user = args.User;
                 Verb verb = new()
                 {
                     Text = Loc.GetString("pulling-verb-get-data-text-stop-pulling"),
-                    Act = () => TryStopPull(component, args.User),
+                    Act = () => TryStopPull(entity.Owner, entity.Comp, user),
                     DoContactInteraction = false // pulling handle its own contact interaction.
                 };
                 args.Verbs.Add(verb);
             }
             else if (CanPull(args.User, args.Target))
             {
+                var user = args.User;
+                var target = args.Target;
                 Verb verb = new()
                 {
                     Text = Loc.GetString("pulling-verb-get-data-text"),
-                    Act = () => TryStartPull(args.User, args.Target),
+                    Act = () => TryStartPull(user, target),
                     DoContactInteraction = false // pulling handle its own contact interaction.
                 };
                 args.Verbs.Add(verb);
@@ -120,25 +122,25 @@ namespace Content.Shared.Pulling
         }
 
         // Raise a "you are being pulled" alert if the pulled entity has alerts.
-        private void PullableHandlePullStarted(EntityUid uid, SharedPullableComponent component, PullStartedMessage args)
+        private void PullableHandlePullStarted(Entity<SharedPullableComponent> entity, ref PullStartedMessage args)
         {
-            if (args.Pulled.Owner != uid)
+            if (args.Pulled != entity.Owner)
                 return;
 
-            _alertsSystem.ShowAlert(uid, AlertType.Pulled);
+            _alertsSystem.ShowAlert(entity, AlertType.Pulled);
         }
 
-        private  void PullableHandlePullStopped(EntityUid uid, SharedPullableComponent component, PullStoppedMessage args)
+        private void PullableHandlePullStopped(Entity<SharedPullableComponent> entity, ref PullStoppedMessage args)
         {
-            if (args.Pulled.Owner != uid)
+            if (args.Pulled != entity.Owner)
                 return;
 
-            _alertsSystem.ClearAlert(uid, AlertType.Pulled);
+            _alertsSystem.ClearAlert(entity, AlertType.Pulled);
         }
 
-        public bool IsPulled(EntityUid uid, SharedPullableComponent? component = null)
+        public bool IsPulled(Entity<SharedPullableComponent?> entity)
         {
-            return Resolve(uid, ref component, false) && component.BeingPulled;
+            return Resolve(entity, ref entity.Comp, false) && entity.Comp.BeingPulled;
         }
 
         public override void Update(float frameTime)
@@ -158,22 +160,22 @@ namespace Content.Shared.Pulling
 
         private void OnPullStarted(PullStartedMessage message)
         {
-            SetPuller(message.Puller.Owner, message.Pulled.Owner);
+            SetPuller(message.Puller, message.Pulled);
         }
 
         private void OnPullStopped(PullStoppedMessage message)
         {
-            RemovePuller(message.Puller.Owner);
+            RemovePuller(message.Puller);
         }
 
-        protected void OnPullableMove(EntityUid uid, SharedPullableComponent component, PullableMoveMessage args)
+        protected void OnPullableMove(Entity<SharedPullableComponent> entity, ref PullableMoveMessage args)
         {
-            _moving.Add(component);
+            _moving.Add(entity);
         }
 
-        protected void OnPullableStopMove(EntityUid uid, SharedPullableComponent component, PullableStopMovingMessage args)
+        protected void OnPullableStopMove(Entity<SharedPullableComponent> entity, ref PullableStopMovingMessage args)
         {
-            _stoppedMoving.Add(component);
+            _stoppedMoving.Add(entity);
         }
 
         // TODO: When Joint networking is less shitcodey fix this to use a dedicated joints message.
@@ -181,7 +183,7 @@ namespace Content.Shared.Pulling
         {
             if (TryComp(message.Entity, out SharedPullableComponent? pullable))
             {
-                TryStopPull(pullable);
+                TryStopPull((message.Entity, pullable));
             }
 
             if (TryComp(message.Entity, out SharedPullerComponent? puller))
@@ -191,7 +193,7 @@ namespace Content.Shared.Pulling
                 if (!TryComp(puller.Pulling.Value, out SharedPullableComponent? pulling))
                     return;
 
-                TryStopPull(pulling);
+                TryStopPull((puller.Pulling.Value, pulling));
             }
         }
 
@@ -201,7 +203,10 @@ namespace Content.Shared.Pulling
                 !player.IsValid())
                 return false;
 
-            if (!TryGetPulled(player, out var pulled))
+            if (!TryComp<SharedPullerComponent>(player, out var pullerComp))
+                return false;
+
+            if (!TryGetPulled((player, pullerComp), out var pulled))
                 return false;
 
             if (!TryComp(pulled.Value, out SharedPullableComponent? pullable))
@@ -210,32 +215,50 @@ namespace Content.Shared.Pulling
             if (_containerSystem.IsEntityInContainer(player))
                 return false;
 
-            TryMoveTo(pullable, coords);
+            TryMoveTo((pulled.Value, pullable), coords);
 
             return false;
         }
 
-        private void SetPuller(EntityUid puller, EntityUid pulled)
+        private void SetPuller(Entity<SharedPullerComponent?> puller, Entity<SharedPullableComponent?> pulled)
         {
             _pullers[puller] = pulled;
         }
 
-        private bool RemovePuller(EntityUid puller)
+        private bool RemovePuller(Entity<SharedPullerComponent?> puller)
         {
             return _pullers.Remove(puller);
         }
 
-        public EntityUid GetPulled(EntityUid by)
+        public EntityUid GetPulled(EntityUid by, SharedPullerComponent? comp = null)
+        {
+            if (!Resolve(by, ref comp))
+                return EntityUid.Invalid;
+
+            return GetPulled((by, comp));
+        }
+        public EntityUid GetPulled(Entity<SharedPullerComponent?> by)
         {
             return _pullers.GetValueOrDefault(by);
         }
 
-        public bool TryGetPulled(EntityUid by, [NotNullWhen(true)] out EntityUid? pulled)
+        public bool TryGetPulled(EntityUid by, [NotNullWhen(true)] out EntityUid? pulled, SharedPullerComponent? comp = null)
+        {
+            if (!Resolve(by, ref comp))
+            {
+                pulled = default;
+                return false;
+            }
+
+            return TryGetPulled((by, comp), out pulled);
+        }
+
+        public bool TryGetPulled(Entity<SharedPullerComponent?> by, [NotNullWhen(true)] out EntityUid? pulled)
         {
             return (pulled = GetPulled(by)) != null;
         }
 
-        public bool IsPulling(EntityUid puller)
+        public bool IsPulling(Entity<SharedPullerComponent?> puller)
         {
             return _pullers.ContainsKey(puller);
         }

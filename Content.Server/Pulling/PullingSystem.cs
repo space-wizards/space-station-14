@@ -27,7 +27,7 @@ namespace Content.Server.Pulling
 
         private void HandleReleasePulledObject(ICommonSession? session)
         {
-            if (session?.AttachedEntity is not {Valid: true} player)
+            if (session?.AttachedEntity is not { Valid: true } player)
             {
                 return;
             }
@@ -42,7 +42,7 @@ namespace Content.Server.Pulling
                 return;
             }
 
-            TryStopPull(pullable);
+            TryStopPull((pulled.Value, pullable));
         }
     }
 }
