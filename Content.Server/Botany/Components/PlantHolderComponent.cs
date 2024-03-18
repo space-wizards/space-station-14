@@ -71,11 +71,8 @@ public sealed partial class PlantHolderComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("health")]
     public float Health;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("currentPotency")]
-    public float CurrentPotency;
-
-    [ViewVariables(VVAccess.ReadWrite), DataField("cachedBasePotency")]
-    public float CachedBasePotency;
+    [ViewVariables(VVAccess.ReadWrite), DataField("potencyBonus")]
+    public float PotencyBonus;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("weedCoefficient")]
     public float WeedCoefficient = 1f;

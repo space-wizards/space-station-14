@@ -177,8 +177,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 {
                     component.Health = component.Seed.Endurance;
                 }
-                component.CurrentPotency = seed.BasePotency;
-                component.CachedBasePotency = seed.BasePotency;
+
                 component.LastCycle = _gameTiming.CurTime;
 
                 QueueDel(args.Used);
@@ -430,13 +429,6 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        // React to changes in the plant's base potency;
-        if (component.Seed.BasePotency != component.CachedBasePotency)
-        {
-            component.CurrentPotency += component.Seed.BasePotency - component.CachedBasePotency;
-            component.CachedBasePotency = component.Seed.BasePotency;
-        }
-
         // There's a small chance the pest population increases.
         // Can only happen when there's a live seed planted.
         if (_random.Prob(0.01f))
@@ -572,7 +564,7 @@ public sealed class PlantHolderSystem : EntitySystem
             foreach (var (gas, amount) in component.Seed.ExudeGasses)
             {
                 environment.AdjustMoles(gas,
-                    MathF.Max(1f, MathF.Round(amount * MathF.Round(component.CurrentPotency) / exudeCount)));
+                    MathF.Max(1f, MathF.Round(amount * MathF.Round(component.PotencyBonus + component.Seed.BasePotency) / exudeCount)));
             }
         }
 
@@ -718,7 +710,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 return false;
             }
 
-            _botany.Harvest(component.Seed, component.CurrentPotency, user, component.YieldMod);
+            _botany.Harvest(component.Seed, component.PotencyBonus, user, component.YieldMod);
             AfterHarvest(plantholder, component);
             return true;
         }
@@ -739,7 +731,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed == null || !component.Harvest)
             return;
 
-        _botany.AutoHarvest(component.Seed, component.CurrentPotency, Transform(uid).Coordinates);
+        _botany.AutoHarvest(component.Seed, component.PotencyBonus, Transform(uid).Coordinates);
         AfterHarvest(uid, component);
     }
 
@@ -781,6 +773,7 @@ public sealed class PlantHolderSystem : EntitySystem
         component.Harvest = false;
         component.MutationLevel = 0;
         component.YieldMod = 1;
+        component.PotencyBonus = 0;
         component.MutationMod = 1;
         component.ImproperLight = false;
         component.ImproperHeat = false;
