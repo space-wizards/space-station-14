@@ -936,6 +936,9 @@
     - state: custburg-filling
       color: green
     - state: custburg-top
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: skuburger
