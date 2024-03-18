@@ -60,7 +60,7 @@ public sealed partial class PlantHolderComponent : Component
     public bool Sampled;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("yieldMod")]
-    public int YieldMod = 1;
+    public float YieldMod = 1;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("mutationMod")]
     public float MutationMod = 1f;

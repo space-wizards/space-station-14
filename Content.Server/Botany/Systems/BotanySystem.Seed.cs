@@ -121,7 +121,7 @@ public sealed partial class BotanySystem : EntitySystem
         return seed;
     }
 
-    public IEnumerable<EntityUid> AutoHarvest(SeedData proto, float potency, EntityCoordinates position, int yieldMod = 1)
+    public IEnumerable<EntityUid> AutoHarvest(SeedData proto, float potency, EntityCoordinates position, float yieldMod = 1f)
     {
         if (position.IsValid(EntityManager) &&
             proto.ProductPrototypes.Count > 0)
@@ -130,7 +130,7 @@ public sealed partial class BotanySystem : EntitySystem
         return Enumerable.Empty<EntityUid>();
     }
 
-    public IEnumerable<EntityUid> Harvest(SeedData proto, float potency, EntityUid user, int yieldMod = 1)
+    public IEnumerable<EntityUid> Harvest(SeedData proto, float potency, EntityUid user, float yieldMod = 1f)
     {
         if (proto.ProductPrototypes.Count == 0 || proto.Yield <= 0)
         {
@@ -143,7 +143,7 @@ public sealed partial class BotanySystem : EntitySystem
         return GenerateProduct(proto, potency, Transform(user).Coordinates, yieldMod);
     }
 
-    public IEnumerable<EntityUid> GenerateProduct(SeedData proto, float producePotency, EntityCoordinates position, int yieldMod = 1)
+    public IEnumerable<EntityUid> GenerateProduct(SeedData proto, float producePotency, EntityCoordinates position, float yieldMod = 1f)
     {
         var totalYield = 0;
         if (proto.Yield > -1)

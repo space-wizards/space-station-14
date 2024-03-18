@@ -693,7 +693,7 @@ public sealed class PlantHolderSystem : EntitySystem
         component.PestLevel = MathHelper.Clamp(component.PestLevel, 0f, 10f);
         component.WeedLevel = MathHelper.Clamp(component.WeedLevel, 0f, 10f);
         component.Toxins = MathHelper.Clamp(component.Toxins, 0f, 100f);
-        component.YieldMod = MathHelper.Clamp(component.YieldMod, 0, 2);
+        component.YieldMod = MathHelper.Clamp(component.YieldMod, 0f, 2f);
         component.MutationMod = MathHelper.Clamp(component.MutationMod, 0f, 3f);
     }
 
