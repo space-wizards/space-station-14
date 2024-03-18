@@ -654,7 +654,6 @@
       - Stunbaton
       - ForensicPad
       - RiotShield
-      - ShellTranquilizer
       - BoxShotgunSlug
       - BoxLethalshot
       - BoxShotgunFlare
@@ -705,6 +704,7 @@
       - MagazinePistolRubber
       - MagazineRifleRubber
       - MagazineShotgunBeanbag
+      - ShellTranquilizer
       - ClothingEyesGlassesSecurity
       - ExplosivePayload
       - FlashPayload

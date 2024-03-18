@@ -63,6 +63,7 @@
   cost: 5000
   recipeUnlocks:
   - ShellShotgunBeanbag
+  - ShellTranquilizer 
   - CartridgePistolRubber
   - CartridgeMagnumRubber
   - CartridgeLightRifleRubber
