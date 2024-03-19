@@ -539,7 +539,7 @@
       - MobSlimesPet
 
 - type: entity
-  name: Pun Pun Spawner
+  name: Bartender Animal Spawner
   id: SpawnMobMonkeyPunpun
   parent: MarkerBase
   components:
@@ -551,6 +551,7 @@
   - type: ConditionalSpawner
     prototypes:
     - MobMonkeyPunpun
+    - MobKoboldYipyip
 
 - type: entity
   name: behonker Spawner

@@ -792,6 +792,40 @@
       gender: male
 
 - type: entity
+  name: Yip Yip
+  parent: MobKobold
+  id: MobKoboldYipyip
+  description: Funny bar lizard
+  components:
+  - type: GhostRole
+    prob: 1
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-yipyip-name
+    description: ghost-role-information-yipyip-description
+  - type: GhostTakeoverAvailable
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 3
+    - id: DrinkTequilaBottleFull
+      amount: 1
+  - type: Flashable
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - VimPilot
+  - type: Loadout
+    prototypes: [ MobKoboldGear ]
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+
+- type: entity
   name: Tropico
   parent: MobCrab
   id: MobCrabAtmos

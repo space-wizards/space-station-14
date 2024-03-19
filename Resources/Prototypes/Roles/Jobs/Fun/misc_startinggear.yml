@@ -241,6 +241,14 @@
     jumpsuit: ClothingUniformJumpsuitJacketMonkey
     id: PunPunIDCard
 
+- type: startingGear
+  id: MobKoboldGear
+  equipment:
+    head: ClothingHeadHatTophat
+    ears: ClothingHeadsetService
+    jumpsuit: ClothingUniformJumpsuitJacketMonkey
+    id: YipYipIDCard
+
 # Passenger but without the ID, bag, or headset
 
 - type: startingGear
