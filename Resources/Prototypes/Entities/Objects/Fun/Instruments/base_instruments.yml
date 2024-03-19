@@ -20,6 +20,30 @@
   - type: StaticPrice
     price: 200
 
+#These are for wearable instruments
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: BaseWornInstrument
+  description: That's an instrument. You can wear it.
+  components:
+  - type: Sprite
+  - type: Instrument
+  - type: Clothing
+    quickEquip: false
+  - type: ActivatableUI
+    singleUser: true
+    verbText: verb-instrument-openui
+    key: enum.InstrumentUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
+  - type: Item
+    size: Normal
+  - type: StaticPrice
+    price: 200
+
 #These are for instruments that are larger, can't be picked up, or have collision
 - type: entity
   name: baseinstrument
