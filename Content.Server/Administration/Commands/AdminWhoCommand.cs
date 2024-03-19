@@ -19,6 +19,16 @@ public sealed class AdminWhoCommand : IConsoleCommand
         var adminMgr = IoCManager.Resolve<IAdminManager>();
         var afk = IoCManager.Resolve<IAfkManager>();
 
+        var seeStealth = true;
+
+        // If null it (hopefully) means it is being called from the console.
+        if (shell.Player != null)
+        {
+            var playerData = adminMgr.GetAdminData(shell.Player);
+
+            seeStealth = playerData != null && playerData.CanStealth();
+        }
+
         var sb = new StringBuilder();
         var first = true;
         foreach (var admin in adminMgr.ActiveAdmins)
@@ -29,6 +39,9 @@ public sealed class AdminWhoCommand : IConsoleCommand
 
             var adminData = adminMgr.GetAdminData(admin)!;
             DebugTools.AssertNotNull(adminData);
+
+            if (adminData.Stealth && !seeStealth)
+                continue;
 
             sb.Append(admin.Name);
             if (adminData.Title is { } title)

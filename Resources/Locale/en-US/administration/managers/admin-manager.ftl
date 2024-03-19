@@ -7,3 +7,5 @@ admin-manager-admin-permissions-updated-message = Your admin permission have bee
 admin-manager-admin-logout-message = Admin logout: {$name}
 admin-manager-admin-login-message = Admin login: {$name}
 admin-manager-admin-data-host-title = Host
+admin-manager-stealthed-message = You are now a hidden admin.
+admin-manager-unstealthed-message = You are no longer hidden.
