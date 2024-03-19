@@ -29,6 +29,7 @@
     - type: ActivatableUI
       key: enum.StoreUiKey.Key
     - type: Store
+      allowRefund: true
       preset: StorePresetSpellbook
       balance:
         WizCoin: 10
