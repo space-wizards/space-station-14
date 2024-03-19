@@ -138,7 +138,7 @@
   copyright: "Taken from ParadiseSS13"
   source: "https://github.com/ParadiseSS13/Paradise/commit/a34f1054cef5a44a67fdac3b67b811137c6071dd"
 
-- files: ["wawa_intro.ogg", "wawa_outro.ogg"]
+- files: ["wawa_intro.ogg", "wawa_outro.ogg", "wawa_chatter.ogg", "wawa_chillin.ogg", "wawa_exclaim.ogg", "wawa_question.ogg", "wawa_statement.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Hannah 'FairlySadPanda' Dawson, 2024. Industrial audio sample taken from GDC 2015 bundle - amb_JD_drone_gates_ofmydian"
   source: "https://sonniss.com/gameaudiogdc"
