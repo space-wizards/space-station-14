@@ -29,55 +29,62 @@ namespace Content.Shared.Pulling.Systems
             SubscribeLocalEvent<SharedPullerComponent, ComponentShutdown>(OnPullerShutdown);
         }
 
-        private void OnPullerShutdown(Entity<SharedPullerComponent> entity, ref ComponentShutdown args)
+        private void OnPullerShutdown(EntityUid uid, SharedPullerComponent component, ComponentShutdown args)
         {
-            _why.ForceDisconnectPuller(entity, entity.Comp);
+            _why.ForceDisconnectPuller(component);
         }
 
-        private void OnVirtualItemDeleted(Entity<SharedPullerComponent> entity, ref VirtualItemDeletedEvent args)
+        private void OnVirtualItemDeleted(EntityUid uid, SharedPullerComponent component, VirtualItemDeletedEvent args)
         {
-            if (entity.Comp.Pulling == null)
+            if (component.Pulling == null)
                 return;
 
-            if (entity.Comp.Pulling == args.BlockingEntity)
+            if (component.Pulling == args.BlockingEntity)
             {
-                if (TryComp<SharedPullableComponent>(args.BlockingEntity, out var comp))
+                if (EntityManager.TryGetComponent<SharedPullableComponent>(args.BlockingEntity, out var comp))
                 {
-                    _pullSystem.TryStopPull((args.BlockingEntity, comp), entity);
+                    _pullSystem.TryStopPull(comp, uid);
                 }
             }
         }
 
-        private void PullerHandlePullStarted(Entity<SharedPullerComponent> entity, ref PullStartedMessage args)
+        private void PullerHandlePullStarted(
+            EntityUid uid,
+            SharedPullerComponent component,
+            PullStartedMessage args)
         {
-            if (args.Puller != entity.Owner)
+            if (args.Puller.Owner != uid)
                 return;
 
-            _alertsSystem.ShowAlert(entity, AlertType.Pulling);
+            _alertsSystem.ShowAlert(component.Owner, AlertType.Pulling);
 
-            RefreshMovementSpeed(entity);
+            RefreshMovementSpeed(component);
         }
 
-        private void PullerHandlePullStopped(Entity<SharedPullerComponent> entity, ref PullStoppedMessage args)
+        private void PullerHandlePullStopped(
+            EntityUid uid,
+            SharedPullerComponent component,
+            PullStoppedMessage args)
         {
-            if (args.Puller != entity.Owner)
+            if (args.Puller.Owner != uid)
                 return;
 
-            if (_alertsSystem.IsShowingAlert(entity, AlertType.Pulling))
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(entity):user} stopped pulling {ToPrettyString(args.Pulled):target}");
-            _alertsSystem.ClearAlert(entity, AlertType.Pulling);
+            var euid = component.Owner;
+            if (_alertsSystem.IsShowingAlert(euid, AlertType.Pulling))
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(euid):user} stopped pulling {ToPrettyString(args.Pulled.Owner):target}");
+            _alertsSystem.ClearAlert(euid, AlertType.Pulling);
 
-            RefreshMovementSpeed(entity);
+            RefreshMovementSpeed(component);
         }
 
-        private void OnRefreshMovespeed(Entity<SharedPullerComponent> entity, ref RefreshMovementSpeedModifiersEvent args)
+        private void OnRefreshMovespeed(EntityUid uid, SharedPullerComponent component, RefreshMovementSpeedModifiersEvent args)
         {
-            args.ModifySpeed(entity.Comp.WalkSpeedModifier, entity.Comp.SprintSpeedModifier);
+            args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
         }
 
-        private void RefreshMovementSpeed(Entity<SharedPullerComponent> entity)
+        private void RefreshMovementSpeed(SharedPullerComponent component)
         {
-            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(entity);
+            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(component.Owner);
         }
     }
 }

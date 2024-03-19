@@ -27,70 +27,56 @@ namespace Content.Shared.Pulling
             SubscribeLocalEvent<SharedPullableComponent, ComponentShutdown>(OnShutdown);
         }
 
-        private void OnShutdown(Entity<SharedPullableComponent> entity, ref ComponentShutdown args)
+        private void OnShutdown(EntityUid uid, SharedPullableComponent component, ComponentShutdown args)
         {
-            if (entity.Comp.Puller != null)
-                ForceRelationship(null, entity);
+            if (component.Puller != null)
+                ForceRelationship(null, component);
         }
 
         // A WARNING:
         // The following 2 functions are the most internal part of the pulling system's relationship management.
         // They do not expect to be cancellable.
-        private void ForceDisconnect(Entity<SharedPullerComponent?> puller, Entity<SharedPullableComponent?> pullable)
+        private void ForceDisconnect(SharedPullerComponent puller, SharedPullableComponent pullable)
         {
-            if (!Resolve(puller, ref puller.Comp))
-                return;
-
-            if (!Resolve(pullable, ref pullable.Comp))
-                return;
+            var pullerPhysics = EntityManager.GetComponent<PhysicsComponent>(puller.Owner);
+            var pullablePhysics = EntityManager.GetComponent<PhysicsComponent>(pullable.Owner);
 
             // MovingTo shutdown
             ForceSetMovingTo(pullable, null);
 
             // Joint shutdown
             if (!_timing.ApplyingState && // During state-handling, joint component will handle its own state.
-                pullable.Comp.PullJointId != null &&
-                TryComp(puller, out JointComponent? jointComp))
+                pullable.PullJointId != null &&
+                TryComp(puller.Owner, out JointComponent? jointComp))
             {
-                if (jointComp.GetJoints.TryGetValue(pullable.Comp.PullJointId, out var j))
+                if (jointComp.GetJoints.TryGetValue(pullable.PullJointId, out var j))
                     _jointSystem.RemoveJoint(j);
             }
-            pullable.Comp.PullJointId = null;
+            pullable.PullJointId = null;
 
             // State shutdown
-            puller.Comp.Pulling = null;
-            pullable.Comp.Puller = null;
+            puller.Pulling = null;
+            pullable.Puller = null;
 
             // Messaging
-            var message = new PullStoppedMessage(puller, pullable);
+            var message = new PullStoppedMessage(pullerPhysics, pullablePhysics);
 
-            RaiseLocalEvent(puller, message, broadcast: false);
+            RaiseLocalEvent(puller.Owner, message, broadcast: false);
 
-            if (Initialized(pullable))
-                RaiseLocalEvent(pullable, message, true);
+            if (Initialized(pullable.Owner))
+                RaiseLocalEvent(pullable.Owner, message, true);
 
             // Networking
             Dirty(puller);
             Dirty(pullable);
         }
 
-        private void ForceDisconnect(EntityUid puller, EntityUid pullable, SharedPullerComponent? pullerComp = null, SharedPullableComponent? pullableComp = null)
-        {
-            ForceDisconnect((puller, pullerComp), (pullable, pullableComp));
-        }
-
-        public void ForceRelationship(EntityUid? pullerEnt, EntityUid? pullableEnt, SharedPullerComponent? puller = null, SharedPullableComponent? pullable = null)
+        public void ForceRelationship(SharedPullerComponent? puller, SharedPullableComponent? pullable)
         {
             if (_timing.ApplyingState)
                 return;
-
-            if (pullerEnt != null && !Resolve(pullerEnt.Value, ref puller))
-                return;
-
-            if (pullableEnt != null && !Resolve(pullableEnt.Value, ref pullable))
-                return;
-
-            if (pullable != null && puller != null && puller.Pulling == pullableEnt)
+            ;
+            if (pullable != null && puller != null && (puller.Pulling == pullable.Owner))
             {
                 // Already done
                 return;
@@ -98,130 +84,113 @@ namespace Content.Shared.Pulling
 
             // Start by disconnecting the pullable from whatever it is currently connected to.
             var pullableOldPullerE = pullable?.Puller;
-            if (pullableOldPullerE != null && pullableEnt != null)
-                ForceDisconnect(pullableOldPullerE.Value, pullableEnt.Value);
+            if (pullableOldPullerE != null)
+            {
+                ForceDisconnect(EntityManager.GetComponent<SharedPullerComponent>(pullableOldPullerE.Value), pullable!);
+            }
 
             // Continue with the puller.
             var pullerOldPullableE = puller?.Pulling;
-            if (pullerOldPullableE != null && pullerEnt != null)
-                ForceDisconnect(pullerEnt.Value!, pullerOldPullableE.Value);
-
-            if (pullerEnt == null || !Resolve(pullerEnt.Value, ref puller))
-                return;
-
-            if (pullableEnt == null || !Resolve(pullableEnt.Value, ref pullable))
-                return;
-
-            // And now for the actual connection (if any).
-            var pullablePhysics = Comp<PhysicsComponent>(pullableEnt.Value);
-            pullable.PullJointId = $"pull-joint-{pullableEnt.Value}";
-
-            // State startup
-            puller.Pulling = pullableEnt;
-            pullable.Puller = pullerEnt;
-
-            // joint state handling will manage its own state
-            if (!_timing.ApplyingState)
+            if (pullerOldPullableE != null)
             {
-                // Joint startup
-                var union = _physics.GetHardAABB(pullerEnt.Value).Union(_physics.GetHardAABB(pullableEnt.Value, body: pullablePhysics));
-                var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
-
-                var joint = _jointSystem.CreateDistanceJoint(pullableEnt.Value, pullerEnt.Value, id: pullable.PullJointId);
-                joint.CollideConnected = false;
-                // This maximum has to be there because if the object is constrained too closely, the clamping goes backwards and asserts.
-                joint.MaxLength = Math.Max(1.0f, length);
-                joint.Length = length * 0.75f;
-                joint.MinLength = 0f;
-                joint.Stiffness = 1f;
+                ForceDisconnect(puller!, EntityManager.GetComponent<SharedPullableComponent>(pullerOldPullableE.Value));
             }
 
-            // Messaging
-            var message = new PullStartedMessage(pullerEnt.Value, pullableEnt.Value);
+            // And now for the actual connection (if any).
 
-            RaiseLocalEvent(pullerEnt.Value, message, broadcast: false);
-            RaiseLocalEvent(pullableEnt.Value, message, true);
+            if (puller != null && pullable != null)
+            {
+                var pullerPhysics = EntityManager.GetComponent<PhysicsComponent>(puller.Owner);
+                var pullablePhysics = EntityManager.GetComponent<PhysicsComponent>(pullable.Owner);
+                pullable.PullJointId = $"pull-joint-{pullable.Owner}";
 
-            // Networking
-            Dirty(pullerEnt.Value, puller);
-            Dirty(pullableEnt.Value, pullable);
-        }
+                // State startup
+                puller.Pulling = pullable.Owner;
+                pullable.Puller = puller.Owner;
 
-        public void ForceRelationship(Entity<SharedPullerComponent?> puller, Entity<SharedPullableComponent?> pullable)
-        {
-            ForceRelationship(puller, pullable, puller.Comp, pullable.Comp);
+                // joint state handling will manage its own state
+                if (!_timing.ApplyingState)
+                {
+                    // Joint startup
+                    var union = _physics.GetHardAABB(puller.Owner).Union(_physics.GetHardAABB(pullable.Owner, body: pullablePhysics));
+                    var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
+
+                    var joint = _jointSystem.CreateDistanceJoint(pullablePhysics.Owner, pullerPhysics.Owner, id: pullable.PullJointId);
+                    joint.CollideConnected = false;
+                    // This maximum has to be there because if the object is constrained too closely, the clamping goes backwards and asserts.
+                    joint.MaxLength = Math.Max(1.0f, length);
+                    joint.Length = length * 0.75f;
+                    joint.MinLength = 0f;
+                    joint.Stiffness = 1f;
+                }
+
+                // Messaging
+                var message = new PullStartedMessage(pullerPhysics, pullablePhysics);
+
+                RaiseLocalEvent(puller.Owner, message, broadcast: false);
+                RaiseLocalEvent(pullable.Owner, message, true);
+
+                // Networking
+                Dirty(puller);
+                Dirty(pullable);
+            }
         }
 
         // For OnRemove use only.
-        public void ForceDisconnectPuller(Entity<SharedPullerComponent?> puller)
+        public void ForceDisconnectPuller(SharedPullerComponent puller)
         {
             // DO NOT ADD ADDITIONAL LOGIC IN THIS FUNCTION. Do it in ForceRelationship.
             ForceRelationship(puller, null);
         }
 
-        public void ForceDisconnectPuller(EntityUid puller, SharedPullerComponent? comp = null)
-        {
-            ForceDisconnectPuller((puller, comp));
-        }
-
         // For OnRemove use only.
-        public void ForceDisconnectPullable(Entity<SharedPullableComponent?> pullable)
+        public void ForceDisconnectPullable(SharedPullableComponent pullable)
         {
             // DO NOT ADD ADDITIONAL LOGIC IN THIS FUNCTION. Do it in ForceRelationship.
             ForceRelationship(null, pullable);
         }
 
-        public void ForceDisconnectPullable(EntityUid pullable, SharedPullableComponent? comp = null)
+        public void ForceSetMovingTo(SharedPullableComponent pullable, EntityCoordinates? movingTo)
         {
-            ForceDisconnectPullable((pullable, comp));
-        }
-
-        public void ForceSetMovingTo(Entity<SharedPullableComponent?> pullable, EntityCoordinates? movingTo)
-        {
-            if (!Resolve(pullable, ref pullable.Comp))
-                return;
-
             if (_timing.ApplyingState)
                 return;
 
-            if (pullable.Comp.MovingTo == movingTo)
+            if (pullable.MovingTo == movingTo)
+            {
                 return;
+            }
 
             // Don't allow setting a MovingTo if there's no puller.
             // The other half of this guarantee (shutting down a MovingTo if the puller goes away) is enforced in ForceRelationship.
-            if (pullable.Comp.Puller == null && movingTo != null)
+            if (pullable.Puller == null && movingTo != null)
+            {
                 return;
+            }
 
-            pullable.Comp.MovingTo = movingTo;
+            pullable.MovingTo = movingTo;
             Dirty(pullable);
 
             if (movingTo == null)
+            {
                 RaiseLocalEvent(pullable.Owner, new PullableStopMovingMessage(), true);
+            }
             else
+            {
                 RaiseLocalEvent(pullable.Owner, new PullableMoveMessage(), true);
-        }
-
-        public void ForceSetMovingTo(EntityUid pullable, EntityCoordinates? movingTo, SharedPullableComponent? comp = null)
-        {
-            ForceSetMovingTo((pullable, comp), movingTo);
+            }
         }
 
         /// <summary>
         /// Changes if the entity needs a hand in order to be able to pull objects.
         /// </summary>
-        public void ChangeHandRequirement(Entity<SharedPullerComponent?> entity, bool needsHands)
+        public void ChangeHandRequirement(EntityUid uid, bool needsHands, SharedPullerComponent? comp)
         {
-            if (!Resolve(entity, ref entity.Comp, false))
+            if (!Resolve(uid, ref comp, false))
                 return;
 
-            entity.Comp.NeedsHands = needsHands;
+            comp.NeedsHands = needsHands;
 
-            Dirty(entity);
-        }
-
-        public void ChangeHandRequirement(EntityUid uid, bool needsHands, SharedPullerComponent? comp = null)
-        {
-            ChangeHandRequirement((uid, comp), needsHands);
+            Dirty(uid, comp);
         }
     }
 }

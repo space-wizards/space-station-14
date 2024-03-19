@@ -81,7 +81,7 @@ namespace Content.Server.Physics.Controllers
             if (TryComp<PhysicsComponent>(pullable, out var physics))
                 PhysicsSystem.WakeBody(pullable, body: physics);
 
-            _pullableSystem.StopMoveTo((pullable, pullableComponent));
+            _pullableSystem.StopMoveTo(pullableComponent);
         }
 
         private void UpdatePulledRotation(EntityUid puller, EntityUid pulled)
@@ -131,32 +131,30 @@ namespace Content.Server.Physics.Controllers
                 // This can include if leaving the Moving set due to not being pulled anymore,
                 //  or due to being deleted.
 
-                if (!TryComp<SharedPullableComponent>(pullable, out var pullableComp))
+                if (pullable.Deleted)
                     continue;
 
-                if (pullableComp.Deleted)
+                if (pullable.MovingTo == null)
                     continue;
 
-                if (pullableComp.MovingTo == null)
+                if (pullable.Puller is not {Valid: true} puller)
                     continue;
 
-                if (pullableComp.Puller is not { Valid: true } puller)
-                    continue;
-
-                var pullableXform = Transform(pullable);
+                var pullableEnt = pullable.Owner;
+                var pullableXform = Transform(pullableEnt);
                 var pullerXform = Transform(puller);
 
                 // Now that's over with...
 
                 var pullerPosition = pullerXform.MapPosition;
-                var movingTo = pullableComp.MovingTo.Value.ToMap(EntityManager, _transform);
+                var movingTo = pullable.MovingTo.Value.ToMap(EntityManager, _transform);
                 if (movingTo.MapId != pullerPosition.MapId)
                 {
                     _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
 
-                if (!TryComp<PhysicsComponent>(pullable, out var physics) ||
+                if (!TryComp<PhysicsComponent>(pullableEnt, out var physics) ||
                     physics.BodyType == BodyType.Static ||
                     movingTo.MapId != pullableXform.MapID)
                 {
@@ -172,7 +170,7 @@ namespace Content.Server.Physics.Controllers
 
                 if (diffLength < MaximumSettleDistance && physics.LinearVelocity.Length() < MaximumSettleVelocity)
                 {
-                    PhysicsSystem.SetLinearVelocity(pullable, Vector2.Zero, body: physics);
+                    PhysicsSystem.SetLinearVelocity(pullableEnt, Vector2.Zero, body: physics);
                     _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
@@ -190,10 +188,10 @@ namespace Content.Server.Physics.Controllers
                     accel -= physics.LinearVelocity * SettleShutdownMultiplier * scaling;
                 }
 
-                PhysicsSystem.WakeBody(pullable, body: physics);
+                PhysicsSystem.WakeBody(pullableEnt, body: physics);
 
                 var impulse = accel * physics.Mass * frameTime;
-                PhysicsSystem.ApplyLinearImpulse(pullable, impulse, body: physics);
+                PhysicsSystem.ApplyLinearImpulse(pullableEnt, impulse, body: physics);
 
                 // if the puller is weightless or can't move, then we apply the inverse impulse (Newton's third law).
                 // doing it under gravity produces an unsatisfying wiggling when pulling.

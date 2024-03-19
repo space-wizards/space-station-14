@@ -13,6 +13,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Pulling
 {
@@ -28,32 +29,48 @@ namespace Content.Shared.Pulling
 
         public bool CanPull(EntityUid puller, EntityUid pulled)
         {
-            if (!TryComp<SharedPullerComponent>(puller, out var comp))
+            if (!EntityManager.TryGetComponent<SharedPullerComponent>(puller, out var comp))
+            {
                 return false;
+            }
 
             if (comp.NeedsHands && !_handsSystem.TryGetEmptyHand(puller, out _))
+            {
                 return false;
+            }
 
             if (!_blocker.CanInteract(puller, pulled))
+            {
                 return false;
+            }
 
-            if (!TryComp<PhysicsComponent>(pulled, out var physics))
+            if (!EntityManager.TryGetComponent<PhysicsComponent>(pulled, out var physics))
+            {
                 return false;
+            }
 
             if (physics.BodyType == BodyType.Static)
+            {
                 return false;
+            }
 
             if (puller == pulled)
+            {
                 return false;
+            }
 
-            if (_containerSystem.IsEntityInContainer(puller) || _containerSystem.IsEntityInContainer(pulled))
+            if(_containerSystem.IsEntityInContainer(puller) || _containerSystem.IsEntityInContainer(pulled))
+            {
                 return false;
+            }
 
-            if (TryComp<BuckleComponent>(puller, out var buckle))
+            if (EntityManager.TryGetComponent(puller, out BuckleComponent? buckle))
             {
                 // Prevent people pulling the chair they're on, etc.
-                if (buckle is { PullStrap: false, Buckled: true } && buckle.LastEntityBuckledTo == pulled)
+                if (buckle is { PullStrap: false, Buckled: true } && (buckle.LastEntityBuckledTo == pulled))
+                {
                     return false;
+                }
             }
 
             var getPulled = new BeingPulledAttemptEvent(puller, pulled);
@@ -63,100 +80,95 @@ namespace Content.Shared.Pulling
             return (!startPull.Cancelled && !getPulled.Cancelled);
         }
 
-        public bool TogglePull(EntityUid puller, EntityUid pullable, SharedPullerComponent? pullerComp = null, SharedPullableComponent? pullableComp = null)
+        public bool TogglePull(EntityUid puller, SharedPullableComponent pullable)
         {
-            if (!Resolve(puller, ref pullerComp))
-                return false;
-
-            if (!Resolve(pullable, ref pullableComp))
-                return false;
-
-            return TogglePull((puller, pullerComp), (pullable, pullableComp));
-        }
-
-        public bool TogglePull(Entity<SharedPullerComponent?> puller, Entity<SharedPullableComponent?> pullable)
-        {
-            if (pullable.Comp?.Puller == puller)
+            if (pullable.Puller == puller)
+            {
                 return TryStopPull(pullable);
-
-            return TryStartPull(puller, pullable);
+            }
+            return TryStartPull(puller, pullable.Owner);
         }
 
         // -- Core attempted actions --
 
-        public bool TryStopPull(EntityUid pullable, SharedPullableComponent? comp = null, EntityUid? user = null)
+        public bool TryStopPull(SharedPullableComponent pullable, EntityUid? user = null)
         {
-            return TryStopPull((pullable, comp), user);
-        }
-
-        public bool TryStopPull(Entity<SharedPullableComponent?> pullable, EntityUid? user = null)
-        {
-            if (!Resolve(pullable, ref pullable.Comp))
-                return false;
-
             if (_timing.ApplyingState)
                 return false;
 
-            if (!pullable.Comp.BeingPulled)
+            if (!pullable.BeingPulled)
             {
                 return false;
             }
 
             var msg = new StopPullingEvent(user);
-            RaiseLocalEvent(pullable, msg, true);
+            RaiseLocalEvent(pullable.Owner, msg, true);
 
             if (msg.Cancelled) return false;
 
             // Stop pulling confirmed!
 
-            if (TryComp<PhysicsComponent>(pullable, out var pullablePhysics))
+            if (TryComp<PhysicsComponent>(pullable.Owner, out var pullablePhysics))
             {
-                _physics.SetFixedRotation(pullable, pullable.Comp.PrevFixedRotation, body: pullablePhysics);
+                _physics.SetFixedRotation(pullable.Owner, pullable.PrevFixedRotation, body: pullablePhysics);
             }
 
             _pullSm.ForceRelationship(null, pullable);
             return true;
         }
 
-        public bool TryStartPull(EntityUid puller, EntityUid pullable, SharedPullerComponent? pullerComp = null, SharedPullableComponent? pullableComp = null)
+        public bool TryStartPull(EntityUid puller, EntityUid pullable)
         {
-            return TryStartPull((puller, pullerComp), (pullable, pullableComp));
+            if (!EntityManager.TryGetComponent(puller, out SharedPullerComponent? pullerComp))
+            {
+                return false;
+            }
+            if (!EntityManager.TryGetComponent(pullable, out SharedPullableComponent? pullableComp))
+            {
+                return false;
+            }
+            return TryStartPull(pullerComp, pullableComp);
         }
 
         // The main "start pulling" function.
-        public bool TryStartPull(Entity<SharedPullerComponent?> puller, Entity<SharedPullableComponent?> pullable)
+        public bool TryStartPull(SharedPullerComponent puller, SharedPullableComponent pullable)
         {
-            if (!Resolve(puller, ref puller.Comp) || !Resolve(pullable, ref pullable.Comp))
-                return false;
-
             if (_timing.ApplyingState)
                 return false;
 
-            if (puller.Comp.Pulling == pullable)
+            if (puller.Pulling == pullable.Owner)
                 return true;
 
             // Pulling a new object : Perform sanity checks.
 
-            if (!CanPull(puller, pullable))
+            if (!CanPull(puller.Owner, pullable.Owner))
+            {
                 return false;
+            }
 
-            if (!HasComp<PhysicsComponent>(puller))
+            if (!EntityManager.TryGetComponent<PhysicsComponent>(puller.Owner, out var pullerPhysics))
+            {
                 return false;
+            }
 
-            if (!TryComp<PhysicsComponent>(pullable, out var pullablePhysics))
+            if (!EntityManager.TryGetComponent<PhysicsComponent>(pullable.Owner, out var pullablePhysics))
+            {
                 return false;
+            }
 
             // Ensure that the puller is not currently pulling anything.
             // If this isn't done, then it happens too late, and the start/stop messages go out of order,
             //  and next thing you know it thinks it's not pulling anything even though it is!
 
-            var oldPullable = puller.Comp.Pulling;
+            var oldPullable = puller.Pulling;
             if (oldPullable != null)
             {
-                if (TryComp<SharedPullableComponent>(oldPullable.Value, out var oldPullableComp))
+                if (EntityManager.TryGetComponent(oldPullable.Value, out SharedPullableComponent? oldPullableComp))
                 {
-                    if (!TryStopPull(oldPullable.Value, oldPullableComp))
+                    if (!TryStopPull(oldPullableComp))
+                    {
                         return false;
+                    }
                 }
                 else
                 {
@@ -168,69 +180,59 @@ namespace Content.Shared.Pulling
             // Ensure that the pullable is not currently being pulled.
             // Same sort of reasons as before.
 
-            var oldPuller = pullable.Comp.Puller;
+            var oldPuller = pullable.Puller;
             if (oldPuller != null)
             {
                 if (!TryStopPull(pullable))
+                {
                     return false;
+                }
             }
 
             // Continue with pulling process.
 
-            var pullAttempt = new PullAttemptEvent(puller.Owner, pullable);
+            var pullAttempt = new PullAttemptEvent(pullerPhysics, pullablePhysics);
 
-            RaiseLocalEvent(puller, pullAttempt, broadcast: false);
+            RaiseLocalEvent(puller.Owner, pullAttempt, broadcast: false);
 
             if (pullAttempt.Cancelled)
             {
                 return false;
             }
 
-            RaiseLocalEvent(pullable, pullAttempt, true);
+            RaiseLocalEvent(pullable.Owner, pullAttempt, true);
 
             if (pullAttempt.Cancelled)
                 return false;
 
-            _interaction.DoContactInteraction(pullable, puller);
+            _interaction.DoContactInteraction(pullable.Owner, puller.Owner);
 
             _pullSm.ForceRelationship(puller, pullable);
-            pullable.Comp.PrevFixedRotation = pullablePhysics.FixedRotation;
-            _physics.SetFixedRotation(pullable, pullable.Comp.FixedRotationOnPull, body: pullablePhysics);
+            pullable.PrevFixedRotation = pullablePhysics.FixedRotation;
+            _physics.SetFixedRotation(pullable.Owner, pullable.FixedRotationOnPull, body: pullablePhysics);
             _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(puller):user} started pulling {ToPrettyString(pullable):target}");
+                $"{ToPrettyString(puller.Owner):user} started pulling {ToPrettyString(pullable.Owner):target}");
             return true;
         }
 
-        public bool TryMoveTo(EntityUid pullable, EntityCoordinates to, SharedPullableComponent? component = null)
+        public bool TryMoveTo(SharedPullableComponent pullable, EntityCoordinates to)
         {
-            return TryMoveTo((pullable, component), to);
-        }
-
-        public bool TryMoveTo(Entity<SharedPullableComponent?> pullable, EntityCoordinates to)
-        {
-            if (!Resolve(pullable, ref pullable.Comp))
+            if (pullable.Puller == null)
+            {
                 return false;
+            }
 
-            if (pullable.Comp.Puller == null)
+            if (!EntityManager.HasComponent<PhysicsComponent>(pullable.Owner))
+            {
                 return false;
-
-            if (!HasComp<PhysicsComponent>(pullable))
-                return false;
+            }
 
             _pullSm.ForceSetMovingTo(pullable, to);
             return true;
         }
 
-        public void StopMoveTo(EntityUid pullable, SharedPullableComponent? comp = null)
+        public void StopMoveTo(SharedPullableComponent pullable)
         {
-            StopMoveTo((pullable, comp));
-        }
-
-        public void StopMoveTo(Entity<SharedPullableComponent?> pullable)
-        {
-            if (!Resolve(pullable, ref pullable.Comp))
-                return;
-
             _pullSm.ForceSetMovingTo(pullable, null);
         }
     }

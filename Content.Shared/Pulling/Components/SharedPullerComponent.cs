@@ -17,7 +17,7 @@ namespace Content.Shared.Pulling.Components
         /// <summary>
         ///     Does this entity need hands to be able to pull something?
         /// </summary>
-        [DataField]
+        [DataField("needsHands")]
         public bool NeedsHands = true;
     }
 }

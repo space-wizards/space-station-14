@@ -20,7 +20,7 @@ namespace Content.Server.Alert.Click
             var playerTarget = ps.GetPulled(player);
             if (playerTarget != default && entManager.TryGetComponent(playerTarget, out SharedPullableComponent? playerPullable))
             {
-                ps.TryStopPull(playerTarget, playerPullable);
+                ps.TryStopPull(playerPullable);
             }
         }
     }

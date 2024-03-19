@@ -1,10 +1,13 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
+using Content.Shared.Movement;
 using Content.Shared.Movement.Events;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling.Events;
+using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 
 namespace Content.Shared.Administration;
@@ -44,7 +47,7 @@ public sealed class AdminFrozenSystem : EntitySystem
     {
         if (TryComp<SharedPullableComponent>(uid, out var pullable))
         {
-            _pulling.TryStopPull((uid, pullable));
+            _pulling.TryStopPull(pullable);
         }
 
         UpdateCanMove(uid, component, args);
