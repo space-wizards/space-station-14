@@ -946,14 +946,14 @@
   id: FoodBurgerSkub
   description: Finally, what you've always wanted!
   components:
+  - type: Food
+    useSound:
+      collection: Skub
   - type: FlavorProfile
     flavors:
       - skub
   - type: Sprite
     state: skub
-    #type: Food
-    #sound:
-    #  collection: Skub
   - type: SolutionContainerManager
     solutions:
       food:

@@ -71,6 +71,7 @@
       - FoodBurgerSpell
       - FoodBurgerSuper
       - FoodBurgerCrazy
+      - FoodBurgerSkub
       - FoodMeatHumanKebab
       - FoodMeatLizardtailKebab
       - FoodMeatRatKebab
@@ -78,5 +79,4 @@
       - FoodMeatSnakeKebab
       - FoodPizzaArnoldSlice
       - FoodTacoRat
-      - FoodBurgerSkub
     rareChance: 0.05
