@@ -1,12 +1,11 @@
-using Content.Server.NPC.Systems;
+using Content.Shared.NPC.Systems;
 using Content.Shared.Whitelist;
 
-namespace Content.Server.NPC.Components;
+namespace Content.Shared.NPC.Components;
 /// <summary>
 /// A component that makes the entity friendly to nearby creatures it sees on init.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(NPCImprintingOnSpawnBehaviourSystem))]
 public sealed partial class NPCImprintingOnSpawnBehaviourComponent : Component
 {
     /// <summary>

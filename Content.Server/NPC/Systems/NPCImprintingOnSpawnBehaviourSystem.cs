@@ -1,12 +1,12 @@
 using System.Numerics;
-using Content.Server.NPC.Components;
+using Content.Shared.NPC.Components;
+using Content.Shared.NPC.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.NPC.Systems;
 
-public sealed partial class NPCImprintingOnSpawnBehaviourSystem : EntitySystem
+public sealed partial class NPCImprintingOnSpawnBehaviourSystem : SharedNPCImprintingOnSpawnBehaviourSystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly NPCSystem _npc = default!;

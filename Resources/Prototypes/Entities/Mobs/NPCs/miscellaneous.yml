@@ -89,7 +89,7 @@
   - type: NPCImprintingOnSpawnBehaviour
     whitelist:
       components:
-      - Actor
+      - HumanoidAppearance
   - type: Sprite
     sprite: Mobs/Demons/tomatokiller.rsi 
     noRot: true
