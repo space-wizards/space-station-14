@@ -276,7 +276,7 @@ namespace Content.Shared.Atmos
         public const float HazardLowPressure = 20f;
 
         /// <summary>
-        ///    The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT,
+        ///    The amount of pressure damage someone takes is equal to ((pressure / HAZARD_HIGH_PRESSURE) - 1)*PRESSURE_DAMAGE_COEFFICIENT,
         ///     with the maximum of MaxHighPressureDamage.
         /// </summary>
         public const float PressureDamageCoefficient = 4;
