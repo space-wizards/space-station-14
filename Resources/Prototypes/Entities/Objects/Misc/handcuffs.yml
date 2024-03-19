@@ -171,14 +171,16 @@
     breakoutTime: 1
     cuffedRSI: Objects/Fun/clowncuffs.rsi
     bodyIconState: body-overlay
+    startCuffSound:
+      path: /Audio/Misc/honkalarm.ogg
     endCuffSound:
       path: /Audio/Items/bikehorn.ogg
     startUncuffSound:
-      path: /Audio/Effects/Footsteps/clownspiderstep1.ogg
+      path: /Audio/Misc/ducky.ogg
     endUncuffSound:
-      path: /Audio/Effects/Footsteps/clownspiderstep2.ogg
+      path: /Audio/Items/bikehorn.ogg
     startBreakoutSound:
-      path: /Audio/Effects/Footsteps/clownspiderstep2.ogg
+      path: /Audio/Misc/ducky.ogg
   - type: Sprite
     sprite: Objects/Fun/clowncuffs.rsi
     state: icon
