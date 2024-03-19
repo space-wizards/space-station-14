@@ -1,5 +1,4 @@
 - type: entity
-<<<<<<< HEAD
   parent: [ClothingEyesBase, BaseFoldable]
   id: ClothingHeadEyeBaseFlippable
   abstract: true
@@ -44,8 +43,6 @@
       scale: -1,1
 
 - type: entity
-=======
->>>>>>> parent of a810522b80 (Adds the ability to flip eyepatches to the other eye)
   parent: ClothingEyesBase
   id: ClothingEyesHudDiagnostic
   name: diagnostic hud
@@ -265,7 +262,7 @@
   - type: ShowSecurityIcons
 
 - type: entity
-  parent: ClothingEyesHudMedical
+  parent: [ClothingEyesHudMedical, ClothingHeadEyeBaseFlippable]
   id: ClothingEyesEyepatchHudMedical
   name: medical hud eyepatch
   description: A heads-up display that scans the humanoids in view and provides accurate data about their health status. For true patriots.
@@ -276,7 +273,12 @@
     sprite: Clothing/Eyes/Hud/medpatch.rsi
 
 - type: entity
-  parent: ClothingEyesHudSecurity
+  parent: [ClothingEyesEyepatchHudMedical, ClothingHeadEyeBaseFlipped]
+  id: ClothingEyesEyepatchHudMedicalFlipped
+  name: medical hud eyepatch
+
+- type: entity
+  parent: [ClothingEyesHudSecurity,  ClothingHeadEyeBaseFlippable]
   id: ClothingEyesEyepatchHudSecurity
   name: security hud eyepatch
   description: A heads-up display that scans the humanoids in view and provides accurate data about their ID status and security records. For true patriots.
@@ -287,7 +289,12 @@
     sprite: Clothing/Eyes/Hud/secpatch.rsi
 
 - type: entity
-  parent: ClothingEyesHudBeer
+  parent: [ClothingEyesEyepatchHudSecurity,  ClothingHeadEyeBaseFlipped]
+  id: ClothingEyesEyepatchHudSecurityFlipped
+  name: security hud eyepatch
+
+- type: entity
+  parent: [ClothingEyesHudBeer, ClothingHeadEyeBaseFlippable]
   id: ClothingEyesEyepatchHudBeer
   name: beer hud eyepatch
   description: A pair of sunHud outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion. For true patriots.
@@ -298,7 +305,12 @@
     sprite: Clothing/Eyes/Hud/beerpatch.rsi
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesEyepatchHudBeer, ClothingHeadEyeBaseFlipped]
+  id: ClothingEyesEyepatchHudBeerFlipped
+  name: beer hud eyepatch
+
+- type: entity
+  parent: [ClothingEyesHudDiagnostic, ClothingHeadEyeBaseFlippable]
   id: ClothingEyesEyepatchHudDiag
   name: diagnostic hud eyepatch
   description: A heads-up display capable of analyzing the integrity and status of robotics and exosuits. Made out of see-borg-ium.
@@ -307,7 +319,8 @@
     sprite: Clothing/Eyes/Hud/diagpatch.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/diagpatch.rsi
-  - type: ShowHealthBars
-    damageContainers:
-    - Inorganic
-    - Silicon
+
+- type: entity
+  parent: [ClothingEyesEyepatchHudDiag, ClothingHeadEyeBaseFlipped]
+  id: ClothingEyesEyepatchHudDiagFlipped
+  name: diagnostic hud eyepatch
