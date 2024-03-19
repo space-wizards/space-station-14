@@ -23,14 +23,14 @@ public sealed partial class NPCImprintingOnSpawnBehaviourSystem : SharedNPCImpri
 
         var entities = _lookup.GetEntitiesInRange(imprinting, imprinting.Comp.SearchRadius);
         var imprintingTargets = new List<EntityUid>();
+
+        if (entities == null) return;
+        if (entities.Count == 0) return;
+
         foreach (var ent in entities)
         {
-            var addEnt = true;
-            if (imprinting.Comp.Whitelist != null && !imprinting.Comp.Whitelist.IsValid(ent))
-            {
-                addEnt = false;
-            }
-            if (addEnt)
+            var check = imprinting.Comp.Whitelist != null && !imprinting.Comp.Whitelist.IsValid(ent);
+            if (!check)
             {
                 imprintingTargets.Add(ent);
                 var exception = EnsureComp<FactionExceptionComponent>(imprinting);
