@@ -1,8 +1,9 @@
 - type: statusIcon
   id: SecurityIcon
   abstract: true
-  priority: 1
-  locationPreference: Left
+  priority: 2
+  offset: 1
+  locationPreference: Right
 
 - type: statusIcon
   parent: SecurityIcon

@@ -1,8 +1,10 @@
+using System.IO.Compression;
 using Content.Client.Administration.Managers;
 using Content.Client.Launcher;
 using Content.Client.MainMenu;
 using Content.Client.Replay.Spectator;
 using Content.Client.Replay.UI.Loading;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Shared.Chat;
 using Content.Shared.Effects;
@@ -24,7 +26,13 @@ using Robust.Client.Replays.Playback;
 using Robust.Client.State;
 using Robust.Client.Timing;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared;
+using Robust.Shared.Configuration;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Serialization.Markdown.Mapping;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Replay;
 
@@ -41,6 +49,8 @@ public sealed class ContentReplayPlaybackManager
     [Dependency] private readonly IClientAdminManager _adminMan = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IBaseClient _client = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IResourceManager _resMan = default!;
 
     /// <summary>
     /// UI state to return to when stopping a replay or loading fails.
@@ -50,6 +60,13 @@ public sealed class ContentReplayPlaybackManager
     public bool IsScreenshotMode = false;
 
     private bool _initialized;
+    
+    /// <summary>
+    /// Most recently loaded file, for re-attempting the load with error tolerance.
+    /// Required because the zip reader auto-disposes and I'm too lazy to change it so that
+    /// <see cref="ReplayFileReaderZip"/> can re-open it.
+    /// </summary>
+    public (ResPath? Zip, ResPath Folder)? LastLoad;
 
     public void Initialize()
     {
@@ -73,11 +90,50 @@ public sealed class ContentReplayPlaybackManager
 
     private void OnFinishedLoading(Exception? exception)
     {
-        if (exception != null)
+        if (exception == null)
         {
-            ReturnToDefaultState();
-            _uiMan.Popup(Loc.GetString("replay-loading-failed", ("reason", exception)));
+            LastLoad = null;
+            return;
         }
+
+        ReturnToDefaultState();
+
+        // Show a popup window with the error message
+        var text = Loc.GetString("replay-loading-failed", ("reason", exception));
+        var box = new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Vertical,
+            Children = {new Label {Text = text}}
+        };
+
+        var popup = new DefaultWindow { Title = "Error!" };
+        popup.Contents.AddChild(box);
+
+        // Add button for attempting to re-load the replay while ignoring some errors.
+        if (!_cfg.GetCVar(CVars.ReplayIgnoreErrors) && LastLoad is {} last)
+        {
+            var button = new Button
+            {
+                Text = Loc.GetString("replay-loading-retry"), 
+                StyleClasses = { StyleBase.ButtonCaution }
+            };
+            
+            button.OnPressed += _ =>
+            {
+                _cfg.SetCVar(CVars.ReplayIgnoreErrors, true);
+                popup.Dispose();
+
+                IReplayFileReader reader = last.Zip == null
+                    ? new ReplayFileReaderResources(_resMan, last.Folder)
+                    : new ReplayFileReaderZip(new(_resMan.UserData.OpenRead(last.Zip.Value)), last.Folder);
+
+                _loadMan.LoadAndStartReplay(reader);
+            };
+            
+            box.AddChild(button);
+        }
+
+        popup.OpenCentered();
     }
 
     public void ReturnToDefaultState()
