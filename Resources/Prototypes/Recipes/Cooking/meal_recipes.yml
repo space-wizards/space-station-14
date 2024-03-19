@@ -924,6 +924,18 @@
     FoodBungo: 2
     FoodChili: 1
 
+- type: microwaveMealRecipe
+  id: RecipeBoneSoup
+  name: bone broth recipe
+  result: FoodSoupBone
+  time: 10
+  reagents:
+    Water: 10
+    Vinegar: 5
+  solids:
+    FoodBowlBig: 1
+    MaterialBones1: 1
+
 #Pies
 
 - type: microwaveMealRecipe

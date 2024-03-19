@@ -1215,3 +1215,28 @@
     - Fruit
     - Soup
 # Tastes like bungo, hot curry.
+
+- type: entity
+  name: bone broth
+  parent: FoodBowlBase
+  id: FoodSoupBone
+  description: The ghost of a proper soup. Not very filling, but full of vitamins.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - savory
+      - vitamin
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bowl.rsi
+    layers:
+    - state: bowl
+    - state: bonebroth
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1 # Everybody gets one.
+        - ReagentId: Vitamin
+          Quantity: 14
