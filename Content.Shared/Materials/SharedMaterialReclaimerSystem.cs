@@ -112,7 +112,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
             component.NextSound = Timing.CurTime + component.SoundCooldown;
         }
 
-        var reclaimedEvent = new GotReclaimedEvent(EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
+        var reclaimedEvent = new GotReclaimedEvent(Transform(uid).Coordinates);
         RaiseLocalEvent(item, ref reclaimedEvent);
 
         var duration = GetReclaimingDuration(uid, item, component);
@@ -244,4 +244,4 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 }
 
 [ByRefEvent]
-public record struct GotReclaimedEvent(EntityCoordinates Coordinates);
+public record struct GotReclaimedEvent(EntityCoordinates ReclaimerCoordinates);

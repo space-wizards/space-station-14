@@ -395,10 +395,10 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnReclaimed(EntityUid uid, StorageComponent storageComp, GotReclaimedEvent args)
     {
-        _containerSystem.EmptyContainer(storageComp.Container, destination: args.Coordinates);
+        _containerSystem.EmptyContainer(storageComp.Container, destination: args.ReclaimerCoordinates);
     }
 
-        private void OnDestroy(EntityUid uid, StorageComponent storageComp, DestructionEventArgs args)
+    private void OnDestroy(EntityUid uid, StorageComponent storageComp, DestructionEventArgs args)
     {
         var coordinates = TransformSystem.GetMoverCoordinates(uid);
 
