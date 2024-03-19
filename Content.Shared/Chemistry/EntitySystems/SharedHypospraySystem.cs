@@ -20,11 +20,11 @@ public abstract class SharedHypospraySystem : EntitySystem
         SubscribeLocalEvent<HyposprayComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleModeVerb);
     }
 
-    //
+    // <summary>
     // Uses the OnlyMobs field as a check to implement the ability
     // to draw from jugs and containers with the hypospray
     // Toggleable to allow people to inject containers if they prefer it over drawing
-    //
+    // </summary>
     private void AddToggleModeVerb(Entity<HyposprayComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
