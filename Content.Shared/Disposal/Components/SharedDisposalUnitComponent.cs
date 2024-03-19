@@ -1,4 +1,5 @@
 using Robust.Shared.Audio;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -16,6 +17,18 @@ public abstract partial class SharedDisposalUnitComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("soundFlush")]
     public SoundSpecifier? FlushSound = new SoundPathSpecifier("/Audio/Machines/disposalflush.ogg");
+
+    /// <summary>
+    /// Blacklists (prevents) entities listed from being placed inside.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist;
+
+    /// <summary>
+    /// Whitelists (allows) entities listed from being placed inside.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// Sound played when an object is inserted into the disposal unit.

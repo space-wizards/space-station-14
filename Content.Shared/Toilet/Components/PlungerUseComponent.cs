@@ -1,9 +1,9 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Shared.Random;
+using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Toilet
+namespace Content.Shared.Toilet.Components
 {
     /// <summary>
     /// Entity can interact with plungers.
@@ -28,9 +28,10 @@ namespace Content.Shared.Toilet
         /// <summary>
         /// A weighted random entity prototype containing the different loot that rummaging can provide.
         /// </summary>
-        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomEntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         [AutoNetworkedField]
-        public string PlungerLoot = "PlungerLoot";
+        public ProtoId<WeightedRandomEntityPrototype> PlungerLoot = "PlungerLoot";
+
 
         /// <summary>
         /// Sound played on rummage completion.

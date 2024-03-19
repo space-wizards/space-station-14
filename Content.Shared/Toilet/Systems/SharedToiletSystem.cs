@@ -1,7 +1,6 @@
 using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
-using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 using Content.Shared.Tools.Systems;
@@ -9,13 +8,16 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Storage.Components;
+using Content.Shared.Toilet.Components;
 using Content.Shared.Examine;
 
-namespace Content.Shared.Toilet
+
+namespace Content.Shared.Toilet.Systems
 {
     /// <summary>
     /// Handles sprite changes for both toilet seat up and down as well as for lid open and closed. Handles interactions with hidden stash
     /// </summary>
+
     public abstract class SharedToiletSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
@@ -29,7 +31,6 @@ namespace Content.Shared.Toilet
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ToiletComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<ToiletComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<ToiletComponent, GetVerbsEvent<AlternativeVerb>>(OnToggleSeatVerb);
             SubscribeLocalEvent<ToiletComponent, ActivateInWorldEvent>(OnActivateInWorld);
@@ -38,24 +39,15 @@ namespace Content.Shared.Toilet
             SubscribeLocalEvent<ToiletComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<ToiletComponent, ExaminedEvent>(OnExamine);
         }
-        private void OnInit(EntityUid uid, ToiletComponent component, ComponentInit args)
-        {
-            EnsureComp<SecretStashComponent>(uid);
-        }
 
         private void OnMapInit(EntityUid uid, ToiletComponent component, MapInitEvent args)
         {
-            OnToiletSetup(uid);
-        }
-        private void OnToiletSetup(EntityUid uid, ToiletComponent? component = null)
-        {
-            if (!Resolve(uid, ref component))
-                return;
+            EnsureComp<SecretStashComponent>(uid);
 
-            if (_random.Prob(0.5f) == true)
+            if (_random.Prob(0.5f))
                 component.ToggleSeat = true;
 
-            if (_random.Prob(0.3f) == true)
+            if (_random.Prob(0.3f))
             {
                 TryComp<PlungerUseComponent>(uid, out var plunger);
 
@@ -74,10 +66,10 @@ namespace Content.Shared.Toilet
             if (args.Handled)
                 return;
 
-            // are player trying place or lift of cistern lid?
+            // is player trying place or lift off cistern lid?
             if (_tool.UseTool(args.Used, args.User, uid, component.PryLidTime, component.PryingQuality, new ToiletPryDoAfterEvent()))
                 args.Handled = true;
-            // maybe player trying to hide something inside cistern?
+            // maybe player is trying to hide something inside cistern?
             else if (component.ToggleLid)
             {
                 _secretStash.TryHideItem(uid, args.User, args.Used);
@@ -90,7 +82,7 @@ namespace Content.Shared.Toilet
             if (args.Handled)
                 return;
 
-            // trying get something from stash?
+            // trying to get something from stash?
             if (component.ToggleLid)
             {
                 var gotItem = _secretStash.TryGetItem(uid, args.User);
@@ -149,12 +141,9 @@ namespace Content.Shared.Toilet
 
             component.ToggleSeat = !component.ToggleSeat;
 
-            if (_timing.IsFirstTimePredicted)
-            {
-                _audio.PlayPvs(component.SeatSound, uid);
-                UpdateAppearance(uid, component);
-                Dirty(uid, component, meta);
-            }
+            _audio.PlayPredicted(component.SeatSound, uid, uid);
+            UpdateAppearance(uid, component);
+            Dirty(uid, component, meta);
         }
 
         private void UpdateAppearance(EntityUid uid, ToiletComponent? component = null)

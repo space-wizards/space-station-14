@@ -1,4 +1,4 @@
-using Content.Shared.Toilet;
+using Content.Shared.Toilet.Systems;
 
 namespace Content.Server.Toilet;
 

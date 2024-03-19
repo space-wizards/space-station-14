@@ -34,6 +34,14 @@
   - type: DisposalUnit
     autoEngageEnabled: false
     humanoidCanEnter: false
+    blacklist:
+      components:
+      - HumanoidAppearance
+      - Plunger
+      - SolutionTransfer
+    whitelist:
+      components:
+      - Item
     soundFlush: /Audio/Effects/Fluids/flush.ogg
     soundInsert: /Audio/Effects/Fluids/splash.ogg
   - type: Toilet

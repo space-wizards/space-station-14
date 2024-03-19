@@ -5,7 +5,8 @@ using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Toilet
+
+namespace Content.Shared.Toilet.Components
 {
     /// <summary>
     /// Toilets that can be flushed, seats toggled up and down, items hidden in cistern.
