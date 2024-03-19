@@ -117,3 +117,6 @@
     - id: TrashBananaPeelExplosive
     sound:
       path: /Audio/Effects/unwrap.ogg
+  - type: Tag
+    tags:
+    - Banana
