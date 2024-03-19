@@ -83,18 +83,6 @@ public sealed class WiresSystem : SharedWiresSystem
             wireActions.AddRange(layoutPrototype.Wires);
         }
 
-        // does the prototype have a parent (and are the wires empty?) if so, we just create
-        // a new layout based on that
-        foreach (var parentLayout in _protoMan.EnumerateParents<WireLayoutPrototype>(wires.LayoutId))
-        {
-            if (parentLayout.Wires != null)
-            {
-                wireActions.AddRange(parentLayout.Wires);
-            }
-
-            dummyWires += parentLayout.DummyWires;
-        }
-
         if (wireActions.Count > 0)
         {
             foreach (var wire in wireActions)

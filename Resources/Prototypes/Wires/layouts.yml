@@ -10,7 +10,7 @@
   - !type:DoorSafetyWireAction
 
 - type: wireLayout
-  parent: Airlock
+  parent: HighSec
   id: AirlockSecurity
 
 - type: wireLayout
@@ -30,7 +30,7 @@
   id: AirlockMedical
 
 - type: wireLayout
-  parent: Airlock
+  parent: HighSec
   id: AirlockScience
 
 - type: wireLayout
