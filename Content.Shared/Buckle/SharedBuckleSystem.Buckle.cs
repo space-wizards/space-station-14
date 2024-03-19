@@ -7,7 +7,6 @@ using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
@@ -39,7 +38,6 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, StandAttemptEvent>(OnBuckleStandAttempt);
         SubscribeLocalEvent<BuckleComponent, ThrowPushbackAttemptEvent>(OnBuckleThrowPushbackAttempt);
         SubscribeLocalEvent<BuckleComponent, UpdateCanMoveEvent>(OnBuckleUpdateCanMove);
-        SubscribeLocalEvent<BuckleComponent, ChangeDirectionAttemptEvent>(OnBuckleChangeDirectionAttempt);
     }
 
     private void OnBuckleComponentStartup(EntityUid uid, BuckleComponent component, ComponentStartup args)
@@ -139,12 +137,6 @@ public abstract partial class SharedBuckleSystem
             return;
 
         if (component.Buckled) // buckle shitcode
-            args.Cancel();
-    }
-
-    private void OnBuckleChangeDirectionAttempt(EntityUid uid, BuckleComponent component, ChangeDirectionAttemptEvent args)
-    {
-        if (component.Buckled)
             args.Cancel();
     }
 
@@ -451,7 +443,7 @@ public abstract partial class SharedBuckleSystem
             _transform.SetWorldRotation(buckleXform, oldBuckledToWorldRot);
 
             if (strapComp.UnbuckleOffset != Vector2.Zero)
-                _transform.SetCoordinates((buckleUid, buckleXform, MetaData(buckleUid)), oldBuckledXform.Coordinates.Offset(strapComp.UnbuckleOffset));
+                buckleXform.Coordinates = oldBuckledXform.Coordinates.Offset(strapComp.UnbuckleOffset);
         }
 
         if (TryComp(buckleUid, out AppearanceComponent? appearance))

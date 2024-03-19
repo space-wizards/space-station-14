@@ -163,6 +163,7 @@
   - type: AutoRecharge
     rechargeDuration: 30
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     damage:
       types:
         Blunt: 0 # melee weapon to allow flashing individual targets

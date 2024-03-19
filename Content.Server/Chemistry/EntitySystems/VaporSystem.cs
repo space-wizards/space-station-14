@@ -28,16 +28,13 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
         [Dependency] private readonly ReactiveSystem _reactive = default!;
-        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
         private const float ReactTime = 0.125f;
-
-        private ISawmill _sawmill = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            _sawmill = Logger.GetSawmill("vapor");
+
             SubscribeLocalEvent<VaporComponent, StartCollideEvent>(HandleCollide);
         }
 
@@ -72,7 +69,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
                 _throwing.TryThrow(vapor, dir, speed, user: user);
 
-                var distance = (target.Position - _xformSystem.GetWorldPosition(vaporXform)).Length();
+                var distance = (target.Position - vaporXform.WorldPosition).Length();
                 var time = (distance / physics.LinearVelocity.Length());
                 despawn.Lifetime = MathF.Min(aliveTime, time);
             }
@@ -129,7 +126,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
                     if (reaction > reagentQuantity.Quantity)
                     {
-                        _sawmill.Error($"Tried to tile react more than we have for reagent {reagentQuantity}. Found {reaction} and we only have {reagentQuantity.Quantity}");
+                        Log.Error($"Tried to tile react more than we have for reagent {reagentQuantity}. Found {reaction} and we only have {reagentQuantity.Quantity}");
                         reaction = reagentQuantity.Quantity;
                     }
 

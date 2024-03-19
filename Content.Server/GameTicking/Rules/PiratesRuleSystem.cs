@@ -4,8 +4,6 @@ using Content.Server.Administration.Commands;
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.NPC.Components;
-using Content.Server.NPC.Systems;
 using Content.Server.Preferences.Managers;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
@@ -14,6 +12,8 @@ using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mind;
+using Content.Shared.NPC.Prototypes;
+using Content.Shared.NPC.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
@@ -50,8 +50,6 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
-
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string GameRuleId = "Pirates";
@@ -182,7 +180,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
 
             var aabbs = EntityQuery<StationDataComponent>().SelectMany(x =>
                     x.Grids.Select(x =>
-                        _xformSystem.GetWorldMatrix(x).TransformBox(_mapManager.GetGridComp(x).LocalAABB)))
+                        xformQuery.GetComponent(x).WorldMatrix.TransformBox(_mapManager.GetGridComp(x).LocalAABB)))
                 .ToArray();
 
             var aabb = aabbs[0];
@@ -203,7 +201,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
 
             if (!gridId.HasValue)
             {
-                Logger.ErrorS("pirates", $"Gridid was null when loading \"{map}\", aborting.");
+                Log.Error($"Gridid was null when loading \"{map}\", aborting.");
                 foreach (var session in ops)
                 {
                     ev.PlayerPool.Add(session);
@@ -232,7 +230,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
             if (spawns.Count == 0)
             {
                 spawns.Add(Transform(pirates.PirateShip).Coordinates);
-                Logger.WarningS("pirates", $"Fell back to default spawn for pirates!");
+                Log.Warning($"Fell back to default spawn for pirates!");
             }
 
             for (var i = 0; i < ops.Length; i++)
@@ -273,11 +271,12 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     }
 
     //Forcing one player to be a pirate.
-    public void MakePirate(EntityUid mindId, MindComponent mind)
+    public void MakePirate(EntityUid entity)
     {
-        if (!mind.OwnedEntity.HasValue)
+        if (!_mindSystem.TryGetMind(entity, out var mindId, out var mind))
             return;
-        SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, GearId, EntityManager);
+
+        SetOutfitCommand.SetOutfit(entity, GearId, EntityManager);
 
         var pirateRule = EntityQuery<PiratesRuleComponent>().FirstOrDefault();
         if (pirateRule == null)

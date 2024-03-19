@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Coordinates;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
@@ -11,6 +12,7 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Lock;
+using Content.Shared.Materials;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
@@ -54,6 +56,8 @@ public abstract class SharedStorageSystem : EntitySystem
     [ValidatePrototypeId<ItemSizePrototype>]
     public const string DefaultStorageMaxItemSize = "Normal";
 
+    public const float AreaInsertDelayPerItem = 0.075f;
+
     private ItemSizePrototype _defaultStorageMaxItemSize = default!;
 
     public bool CheckingCanInsert;
@@ -93,6 +97,9 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeAllEvent<StorageSetItemLocationEvent>(OnSetItemLocation);
         SubscribeAllEvent<StorageInsertItemIntoLocationEvent>(OnInsertItemIntoLocation);
         SubscribeAllEvent<StorageRemoveItemEvent>(OnRemoveItem);
+
+        SubscribeLocalEvent<StorageComponent, GotReclaimedEvent>(OnReclaimed);
+
         UpdatePrototypeCache();
     }
 
@@ -258,11 +265,14 @@ public abstract class SharedStorageSystem : EntitySystem
         if (storageComp.AreaInsert && (args.Target == null || !HasComp<ItemComponent>(args.Target.Value)))
         {
             var validStorables = new List<EntityUid>();
+            var delay = 0f;
 
             foreach (var entity in _entityLookupSystem.GetEntitiesInRange(args.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.Dynamic | LookupFlags.Sundries))
             {
                 if (entity == args.User
-                    || !_itemQuery.HasComponent(entity)
+                    // || !_itemQuery.HasComponent(entity)
+                    || !TryComp<ItemComponent>(entity, out var itemComp) // Need comp to get item size to get weight
+                    || !_prototype.TryIndex(itemComp.Size, out var itemSize)
                     || !CanInsert(uid, entity, out _, storageComp)
                     || !_interactionSystem.InRangeUnobstructed(args.User, entity))
                 {
@@ -270,12 +280,13 @@ public abstract class SharedStorageSystem : EntitySystem
                 }
 
                 validStorables.Add(entity);
+                delay += itemSize.Weight * AreaInsertDelayPerItem;
             }
 
             //If there's only one then let's be generous
             if (validStorables.Count > 1)
             {
-                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, 0.2f * validStorables.Count, new AreaPickupDoAfterEvent(GetNetEntityList(validStorables)), uid, target: uid)
+                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay, new AreaPickupDoAfterEvent(GetNetEntityList(validStorables)), uid, target: uid)
                 {
                     BreakOnDamage = true,
                     BreakOnUserMove = true,
@@ -380,6 +391,11 @@ public abstract class SharedStorageSystem : EntitySystem
         }
 
         args.Handled = true;
+    }
+
+    private void OnReclaimed(EntityUid uid, StorageComponent storageComp, GotReclaimedEvent args)
+    {
+        _containerSystem.EmptyContainer(storageComp.Container, destination: args.ReclaimerCoordinates);
     }
 
     private void OnDestroy(EntityUid uid, StorageComponent storageComp, DestructionEventArgs args)
