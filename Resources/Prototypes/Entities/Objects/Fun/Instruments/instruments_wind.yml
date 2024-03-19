@@ -64,6 +64,7 @@
   - type: Item
     size: Small
     sprite: Objects/Fun/Instruments/harmonica.rsi
+    storedRotation: -90
   - type: Clothing
     slots:
     - neck
