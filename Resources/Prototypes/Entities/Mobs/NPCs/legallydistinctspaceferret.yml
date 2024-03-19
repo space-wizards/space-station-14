@@ -66,10 +66,6 @@
     interactSuccessString: petting-success-legallydistinctspaceferret
     interactFailureString: petting-failure-legallydistinctspaceferret
     interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/wa.ogg
-    interactFailureSound:
-      path: /Audio/Animals/wawa.ogg
   # They nyoom and go under doors/tables
   - type: MovementSpeedModifier
     baseWalkSpeed: 5 # nyoom
