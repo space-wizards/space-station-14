@@ -33,7 +33,6 @@
       - HumanoidAppearance
   - type: DisposalUnit
     autoEngageEnabled: false
-    humanoidCanEnter: false
     blacklist:
       components:
       - HumanoidAppearance
