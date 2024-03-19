@@ -131,7 +131,6 @@
   components:
     - type: Implanter
       implant: SadTromboneImplant
-      allowMultipleImplants: true # WOMP WOMP
 
 - type: entity
   id: LightImplanter
@@ -140,7 +139,6 @@
   components:
     - type: Implanter
       implant: LightImplant
-      allowMultipleImplants: true # ok this might be a bad idea. How to win against your enemies? Crash their game with 50 lights!
 
 - type: entity
   id: BikeHornImplanter
@@ -149,7 +147,6 @@
   components:
     - type: Implanter
       implant: BikeHornImplant
-      allowMultipleImplants: true # This implant can be implanted multiple times HONK HONK
 
 #Security implanters
 
