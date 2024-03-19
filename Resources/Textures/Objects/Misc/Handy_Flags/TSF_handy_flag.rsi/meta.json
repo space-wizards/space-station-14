@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "license": "CLA",
+  "copyright": "Drawn by Saveliy360, modified by AltMapper, see repo CLA.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CLA",
+  "copyright": "By AltMapper for Enterprise server exclusive use.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "elz"
+    },
+    {
+      "name": "tsf"
+    },
+    {
+      "name": "ussp"
+    }
+  ]
+}

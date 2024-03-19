@@ -69,3 +69,43 @@
     state: icon
   - type: Item
     sprite: Objects/Misc/Handy_Flags/pirate_handy_flag.rsi
+
+
+- type: entity
+  parent: BaseItem
+  id: FlagHandyElz
+  name: Elizium handheld flag
+  description: "Go to kill xenos!"
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/Elz_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/Elz_handy_flag.rsi
+
+- type: entity
+  parent: BaseItem
+  id: FlagHandyUSSP
+  name: USSP handheld flag
+  description: "Proletarians of all countries, unite!"
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/USSP_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/USSP_handy_flag.rsi
+
+- type: entity
+  parent: BaseItem
+  id: FlagHandyTSF
+  name: TSF handheld flag
+  description: "It looks technologically advanced."
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/TSF_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/TSF_handy_flag.rsi
+
+
+
