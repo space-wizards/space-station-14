@@ -266,3 +266,18 @@
     ears: ClothingHeadsetERT
     belt: ClothingBeltJanitorFilled
     pocket1: Flare
+
+- type: startingGear
+  id: SRTGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSRT
+    back: ClothingBackpackERTLeaderFilled
+    shoes: ClothingShoesBootsCombatFilled
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterArmorBasicSlim
+    id: SRTPDA
+    ears: ClothingHeadsetSRT
+    belt: ClothingBeltSecurityFilled
+    pocket1: WeaponPistolMk58Nonlethal
+    pocket2: FlashlightSeclite
