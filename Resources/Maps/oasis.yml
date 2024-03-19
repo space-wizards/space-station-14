@@ -15255,8 +15255,6 @@ entities:
       pos: 47.5,-25.5
       parent: 21002
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 28262
     - type: AtmosDevice
@@ -90227,8 +90225,6 @@ entities:
       pos: 47.5,-26.5
       parent: 21002
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 21418
       - 21417
