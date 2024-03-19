@@ -255,3 +255,17 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSRT
+  name: SRT jumpsuit
+  description: And whose jumpsuit is this?
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/srt.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/srt.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
