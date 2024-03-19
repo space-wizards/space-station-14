@@ -56,7 +56,6 @@
       amount: 4 # Good eatin', though. You monster.
   # They wawa
   - type: Speech
-    speechSounds: Wawa
     speechVerb: Wawa
   - type: TypingIndicator
     proto: moth
@@ -239,15 +238,6 @@
     icon: { sprite: Mobs/Animals/legallydistinctspaceferret.rsi, state: legallydistinctspaceferret_eepy }
     event: !type:EepyActionEvent
     checkCanInteract: false
-
-- type: speechSounds
-  id: Wawa
-  saySound:
-    path: /Audio/Animals/wawawa.ogg
-  askSound:
-    path: /Audio/Animals/wawa.ogg
-  exclaimSound:
-    path: /Audio/Animals/wa.ogg
 
 - type: antag
   id: LegallyDistinctSpaceFerret
