@@ -11,9 +11,6 @@
             "name": "icon"
         },
         {
-            "name": "icon_flipped"
-        },
-        {
             "name": "equipped-EYES",
             "directions": 4
         },
