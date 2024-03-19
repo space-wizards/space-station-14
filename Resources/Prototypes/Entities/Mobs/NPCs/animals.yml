@@ -3195,6 +3195,17 @@
     reformTime: 10
     popupText: diona-reform-attempt
     reformPrototype: MobDionaReformed
+  - type: Item
+    sprite: Mobs/Animals/nymph.rsi
+    heldprefix: inhand
+    size: Normal
+  - type: CanEscapeInventory
+  - type: Clothing
+    quickEquip: false
+    sprite: Mobs/Animals/nymph.rsi
+    slots:
+    - HEAD
+  - type: Appearance
 
 - type: entity
   parent: MobDionaNymph
