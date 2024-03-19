@@ -789,6 +789,7 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
 
         component.YieldMod = 1;
+        component.PotencyBonus = 0;
         component.MutationMod = 1;
         component.PestLevel = 0;
         component.Seed = null;
