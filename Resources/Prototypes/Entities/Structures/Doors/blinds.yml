@@ -1,9 +1,7 @@
 - type: entity
-  id: BaseBlinds
-#  parent: BaseStructure
+  id: BaseStructureBlinds
   name: blinds
   abstract: true
-  description: You will definitely want to hide your hidden secrets behind them.
   placement:
     mode: SnapgridCenter
     snap:
@@ -13,6 +11,34 @@
   - type: Transform
     anchored: true
   - type: Clickable
+  - type: Sprite
+  - type: Physics
+    canCollide: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: BlockWeather
+  - type: Occluder
+
+- type: entity
+  id: BaseBlinds
+  name: blinds
+  parent: BaseStructureBlinds
+  abstract: true
+  description: You will definitely want to hide your hidden secrets behind them.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+  components:
   - type: Appearance
   - type: Sprite
     sprite: Structures/Doors/Blinds/wood_blinds.rsi
@@ -21,19 +47,6 @@
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
   - type: AnimationPlayer
-  - type: Physics
-    canCollide: true
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49"
-        density: 100
-        mask:
-        - FullTileMask
-        layer:
-        - AirlockLayer
   - type: NavMapDoor
   - type: Door
     openDrawDepth: BlastDoors
@@ -51,40 +64,78 @@
       path: /Audio/Effects/curtain_openclose.ogg
     closeSound:
       path: /Audio/Effects/curtain_openclose.ogg
+
+- type: entity
+  id: BlindsWoodFrame
+  name: wooden blinds frame
+  parent: BaseStructureBlinds
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Blinds/wood_blinds.rsi
+    state: frame
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Wood
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
-  - type: BlockWeather
-
-#- type: entity
-#  id: BlindsWood
-#  parent: BaseBlinds
-#  name: wooden blinds
-#  description: You will definitely want to hide your hidden secrets behind them.
-#  components:
-#  - type: Occluder
+  - type: Construction
+    graph: Blinds
+    node: frameWood
 
 - type: entity
   id: BlindsWood
   name: wooden blinds
   parent: BaseBlinds
   components:
-  - type: Occluder
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Wood
+  - type: Construction
+    graph: Blinds
+    node: startWoodBlinds
 
 - type: entity
   id: BlindsWoodOpen
   parent: BlindsWood
+  suffix: Open
+  components:
+  - type: Door
+    state: Open
+
+- type: entity
+  id: BlindsMetalFrame
+  name: metal blinds frame
+  parent: BaseStructureBlinds
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Blinds/metal_blinds.rsi
+    state: frame
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metal
+  - type: Construction
+    graph: Blinds
+    node: frameMetal
+
+- type: entity
+  id: BlindsMetal
+  name: metal blinds
+  parent: BaseBlinds
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Blinds/metal_blinds.rsi
+    drawdepth: BlastDoors
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metal
+  - type: Construction
+    graph: Blinds
+    node: startMetalBlinds
+
+- type: entity
+  id: BlindsMetalOpen
+  parent: BlindsMetal
   suffix: Open
   components:
   - type: Door
