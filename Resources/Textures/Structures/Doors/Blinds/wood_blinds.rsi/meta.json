@@ -8,22 +8,13 @@
   },
   "states": [
     {
-      "name": "blinds"
+      "name": "open"
     },
     {
-      "name": "blinds-1"
+      "name": "closed"
     },
     {
-      "name": "blinds-closed"
-    },
-    {
-      "name": "blinds-1-closed"
-    },
-    {
-      "name": "blinds-open"
-    },
-    {
-      "name": "blinds-1-open"
+      "name": "frame"
     }
   ]
 }
