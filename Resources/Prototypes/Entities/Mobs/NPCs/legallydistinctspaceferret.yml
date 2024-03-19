@@ -65,6 +65,10 @@
     interactSuccessString: petting-success-legallydistinctspaceferret
     interactFailureString: petting-failure-legallydistinctspaceferret
     interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/wawa_chillin.ogg
+    interactFailureSound:
+      path: /Audio/Animals/wawa_chatter.ogg
   # They nyoom and go under doors/tables
   - type: MovementSpeedModifier
     baseWalkSpeed: 5 # nyoom
@@ -238,6 +242,15 @@
     icon: { sprite: Mobs/Animals/legallydistinctspaceferret.rsi, state: legallydistinctspaceferret_eepy }
     event: !type:EepyActionEvent
     checkCanInteract: false
+
+- type: speechSounds
+  id: Wawa
+  saySound:
+    path: /Audio/Animals/wawa_statement.ogg
+  askSound:
+    path: /Audio/Animals/wawa_question.ogg
+  exclaimSound:
+    path: /Audio/Animals/wawa_exclaim.ogg
 
 - type: antag
   id: LegallyDistinctSpaceFerret
