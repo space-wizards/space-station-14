@@ -6,6 +6,7 @@
     "x": 32,
     "y": 32
   },
+<<<<<<< HEAD
     "states": [
         {
             "name": "icon"
@@ -19,4 +20,15 @@
             "directions": 4
         }
     ]
+=======
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-EYES",
+      "directions": 4
+    }
+  ]
+>>>>>>> parent of a810522b80 (Adds the ability to flip eyepatches to the other eye)
 }
