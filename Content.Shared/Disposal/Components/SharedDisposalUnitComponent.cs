@@ -74,11 +74,11 @@ public abstract partial class SharedDisposalUnitComponent : Component
     [DataField]
     public TimeSpan FlushDelay = TimeSpan.FromSeconds(3);
 
+    /// <summary>
+    /// Checks if entity is mob and if mobs can enter (needed so that dead mobs can enter when alive mobs cannot).
+    /// </summary>
     [DataField]
     public bool MobsCanEnter = true;
-
-    [DataField]
-    public bool HumanoidCanEnter = true;
 
     /// <summary>
     /// Removes the pressure requirement for flushing.
