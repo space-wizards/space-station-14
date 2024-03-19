@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by Hqlle (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "floor-lamp-head"
+        },
+        {
+            "name": "floor-lamp-lamp"
+        },
+        {
+            "name": "floor-lamp-light"
+        },
+        {
+            "name": "floor-lamp-stick"
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}
