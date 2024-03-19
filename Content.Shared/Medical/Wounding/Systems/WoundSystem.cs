@@ -1,4 +1,5 @@
-﻿using Content.Shared.Damage;
+﻿using Content.Shared.Body.Systems;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Gibbing.Systems;
@@ -6,6 +7,7 @@ using Content.Shared.Medical.Wounding.Components;
 using Content.Shared.Medical.Wounding.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Medical.Wounding.Systems;
@@ -17,6 +19,8 @@ public sealed partial class WoundSystem : EntitySystem
     [Dependency] private readonly GibbingSystem _gibbingSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedBodySystem _bodySystem = default!;
 
 
     private TimeSpan _healingUpdateRate = new TimeSpan(0,0,1);
@@ -94,6 +98,26 @@ public sealed partial class WoundSystem : EntitySystem
             AddWoundableIntegrity(woundable, newHealth);
         Dirty(woundable, woundable.Comp);
     }
+
+    public IEnumerable<Entity<WoundComponent>> GetAllWoundables(EntityUid woundableEntity,
+        WoundableComponent? woundable = null)
+    {
+        if (
+            !Resolve(woundableEntity, ref woundable)
+            || !_containerSystem.TryGetContainer(woundableEntity, WoundableComponent.WoundableContainerId,
+                out var container))
+            yield break;
+        foreach (var ent in container.ContainedEntities)
+        {
+            if (!TryComp<WoundComponent>(ent, out var woundComp))
+            {
+                Log.Error($"Found an entity ({ToPrettyString(ent)}) in a wound container that is not a wound! This should never happen.");
+                continue;
+            }
+            yield return new Entity<WoundComponent>(ent, woundComp);
+        }
+    }
+
 
     public void AddWoundableHealth(Entity<WoundableComponent?> woundable, FixedPoint2 healthAddition,
         ProtoId<DamageTypePrototype>? damageTypeOverride = null)

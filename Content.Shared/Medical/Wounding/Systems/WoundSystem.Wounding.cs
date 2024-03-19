@@ -1,4 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -7,17 +10,75 @@ using Content.Shared.Gibbing.Systems;
 using Content.Shared.Medical.Wounding.Components;
 using Content.Shared.Medical.Wounding.Events;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical.Wounding.Systems;
 
 public sealed partial class WoundSystem
 {
+
+    [Dependency] private readonly INetManager _netManager = default!;
     private const float SplatterDamageMult = 1.0f;
+    private const float NonCoreDamageChance = 0.5f;
+    private const float HeadDamageChance = 0.2f;
+    private const float ChanceForPartSelection = 0.50f;
 
     private void InitWounding()
     {
         SubscribeLocalEvent<WoundableComponent, DamageChangedEvent>(OnWoundableDamaged);
+        SubscribeLocalEvent<BodyComponent, DamageChangedEvent>(OnBodyDamaged);
+    }
+
+    private void OnBodyDamaged(EntityUid bodyEnt, BodyComponent body, ref DamageChangedEvent args)
+    {
+        //TODO: Make this method not MEGA ASS, because jesus christ I'm giving myself terminal space aids by doing this.
+        //This is all placeholder and terrible, rewrite asap
+
+        //Do not handle damage if it is being set instead of being changed.
+        //We will handle that with another listener
+        if (args.DamageDelta == null)
+            return;
+        if (!_bodySystem.TryGetRootBodyPart(bodyEnt, out var rootPart, body))
+            return;
+
+        //prevent relaying bloodloss damage
+        args.DamageDelta.DamageDict.Remove("Asphyxiation");
+        args.DamageDelta.DamageDict.Remove("Bloodloss");
+        args.DamageDelta.DamageDict.Remove("Structural");
+        if (args.DamageDelta.Empty)
+            return;
+
+        DamageableComponent? damagableComp;
+
+        if (_random.NextFloat(0f, 1f) > NonCoreDamageChance)
+        {
+            if (_random.NextFloat(0f, 1f) <= HeadDamageChance)
+            {
+                var heads = _bodySystem.GetBodyChildrenOfType(bodyEnt, BodyPartType.Head, body).ToList();
+                var (headId, _) = heads[_random.Next(heads.Count)];
+                if (TryComp(headId, out damagableComp))
+                {
+                    _damageableSystem.TryChangeDamage(headId, args.DamageDelta, damageable: damagableComp);
+                    return;
+                }
+            }
+            if (TryComp(rootPart, out damagableComp))
+            {
+                _damageableSystem.TryChangeDamage(rootPart.Value, args.DamageDelta, damageable: damagableComp);
+                return;
+            }
+        }
+        var children = _bodySystem.GetBodyPartDirectChildren(rootPart.Value, rootPart.Value.Comp).ToArray();
+        Entity<BodyPartComponent> foundTarget = children[_random.Next(0, children.Length)];
+        while (_random.NextFloat(0, 1f) > ChanceForPartSelection)
+        {
+            children = _bodySystem.GetBodyPartDirectChildren(foundTarget, foundTarget.Comp).ToArray();
+            if (children.Length == 0)
+                break;
+            foundTarget = children[_random.Next(0, children.Length)];
+        }
+        _damageableSystem.TryChangeDamage(foundTarget, args.DamageDelta);
     }
 
     private void OnWoundableDamaged(EntityUid owner, WoundableComponent woundableComp, ref DamageChangedEvent args)
@@ -135,18 +196,18 @@ public sealed partial class WoundSystem
             )
             return false;
         var adjDamage = damage * metadata.Scaling;
-        if (adjDamage > metadata.PoolDamageMax)
+        if (adjDamage > metadata.DamageMax)
         {
-            overflow = adjDamage - metadata.PoolDamageMax;
-            adjDamage = metadata.PoolDamageMax;
+            overflow = adjDamage - metadata.DamageMax;
+            adjDamage = metadata.DamageMax;
         }
-        var percentageOfMax = adjDamage * metadata.Scaling * 100 / (metadata.PoolDamageMax*100);
+        var percentageOfMax = adjDamage * metadata.Scaling * 100 / (metadata.DamageMax*100);
         var woundPool = _prototypeManager.Index(metadata.WoundPool);
         foreach (var (percentage, lastWoundProtoId) in woundPool.Wounds)
         {
             if (percentage > percentageOfMax)
                 break;
-            woundProtoId = lastWoundProtoId;
+            woundProtoId = new EntProtoId(lastWoundProtoId);
         }
         return woundProtoId != null;
     }
@@ -161,6 +222,8 @@ public sealed partial class WoundSystem
     /// <returns></returns>
     public bool TryApplyWounds(Entity<WoundableComponent?> woundable, ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage)
     {
+        if (_netManager.IsClient) //TODO: Dirty hack because I'm too lazy to make a client implementation override
+            return true;
         if (!Resolve(woundable, ref woundable.Comp)
             || !TryGetWoundProtoFromDamage(woundable, damageType, damage, out var woundProtoId, out var overflow)
             || !TryCreateWound(woundable, woundProtoId.Value, out var createdWound, damageType, damage))
@@ -181,7 +244,7 @@ public sealed partial class WoundSystem
     private Entity<WoundComponent>? CreateWound_Internal(EntityUid woundableEnt, EntProtoId woundPrototype,
         WoundableComponent woundableComp, ProtoId<DamageTypePrototype> damageType, FixedPoint2 appliedDamage, bool force)
     {
-        if (EntityManager.TrySpawnInContainer(woundPrototype, woundableEnt,
+        if (!EntityManager.TrySpawnInContainer(woundPrototype, woundableEnt,
                 WoundableComponent.WoundableContainerId, out var woundEntId)
             || !TryComp(woundEntId, out WoundComponent? woundComp)
            )
@@ -217,8 +280,9 @@ public sealed partial class WoundSystem
             SetWoundableIntegrity(new Entity<WoundableComponent?>(woundable, woundable.Comp), woundable.Comp.HealthCap);
         var woundApplied = new WoundAppliedEvent(woundable, wound);
         RaiseRelayedLocalEvent(woundable, wound, ref woundApplied);
-        Dirty(wound);
         CheckWoundableGibbing(woundable, woundable.Comp, damageType);
+        Dirty(wound);
+        Dirty(woundable);
     }
 
     /// <summary>
@@ -285,7 +349,6 @@ public sealed partial class WoundSystem
     {
         if (!_containerSystem.TryGetContainer(woundableEnt, WoundableComponent.WoundableContainerId, out var container))
             return;
-        var woundCount = container.ContainedEntities.Count;
         foreach (var woundEnt in container.ContainedEntities)
         {
             TryRemoveWound(woundEnt, false);
@@ -295,7 +358,7 @@ public sealed partial class WoundSystem
 
         _gibbingSystem.TryGibEntity(outerEnt, woundableEnt, GibType.Gib, GibContentsOption.Drop, out var droppedEnts);
         var damageSpec = new DamageSpecifier();
-        damageSpec.DamageDict.Add(damageType, splatDamage/woundCount * SplatterDamageMult);
+        damageSpec.DamageDict.Add(damageType, splatDamage * SplatterDamageMult);
         foreach (var targetEnt in droppedEnts)
         {
             _damageableSystem.TryChangeDamage(targetEnt, damageSpec);

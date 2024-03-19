@@ -6,33 +6,33 @@ public static class SeverityHelper
 {
     private static string[] _physicalStrings = new[]
     {
-        "Pristine",
-        "Slight Damage",
-        "Minor Damage",
-        "Damaged",
-        "Bad Damage",
+        "Critical Damage",
         "Severe Damage",
-        "Critical Damage"
+        "Bad Damage",
+        "Damaged",
+        "Minor Damage",
+        "Slight Damage",
+        "Pristine"
     };
 
     private static string[] _severityStrings = new[]
     {
-        "Trivial",
-        "Minor",
-        "Moderate",
-        "Major",
+        "Critical",
         "Extreme",
-        "Critical"
+        "Major",
+        "Moderate",
+        "Minor",
+        "Trivial"
     };
 
     private static string[] _visibleConditionStrings = new[]
     {
-        "Pristine",
-        "Healthy",
-        "Looks OK",
-        "Not Great",
+        "Critical",
         "Looking Bad",
-        "Critical"
+        "Not Great",
+        "Looks OK",
+        "Healthy",
+        "Pristine"
     };
 
     public static string GetSeverityString(FixedPoint2 severityPercentage)

@@ -12,7 +12,17 @@
   - type: Woundable
     maxHealth: 50
     maxIntegrity: 10
-    config: {CommonBlunt, CommonPiercing, CommonSlash}
+    config:
+      Piercing:
+        damageMax: 200
+        woundPool: CommonPiercing
+      Blunt:
+        damageMax: 200
+        woundPool: CommonBlunt
+      Slash:
+        damageMax: 200
+        woundPool: CommonSlash
+
   - type: Gibbable
   - type: ContainerContainer
     containers:

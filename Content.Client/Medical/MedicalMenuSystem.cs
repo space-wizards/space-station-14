@@ -1,11 +1,17 @@
-﻿using Content.Client.Interactable;
+﻿using System.Linq;
+using Content.Client.Administration.Managers;
+using Content.Client.Interactable;
 using Content.Client.UserInterface.Systems.MedicalMenu;
+using Content.Shared.Administration;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounding.Components;
 using Content.Shared.Verbs;
+using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
+using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Medical;
@@ -14,7 +20,12 @@ public sealed class MedicalMenuSystem : EntitySystem
 {
     [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+    [Dependency] private readonly IClientAdminManager _adminManager = default!;
+    [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
+    [Dependency] private readonly ToolshedManager _toolshed = default!;
+
     private MedicalMenuUIController _medMenuController = default!;
 
     //TODO: make this a CVAR
@@ -23,11 +34,11 @@ public sealed class MedicalMenuSystem : EntitySystem
     public override void Initialize()
     {
         _medMenuController = _uiManager.GetUIController<MedicalMenuUIController>();
-        SubscribeLocalEvent<WoundableRootComponent, GetVerbsEvent<Verb>>(SetupMedicalUI);
+        SubscribeLocalEvent<MedicalDataComponent, GetVerbsEvent<Verb>>(SetupMedicalUI);
 
     }
 
-    private void SetupMedicalUI(EntityUid uid, WoundableRootComponent component, GetVerbsEvent<Verb> args)
+    private void SetupMedicalUI(EntityUid uid, MedicalDataComponent component, GetVerbsEvent<Verb> args)
     {
             if (!args.CanInteract
                 || !_containerSystem.IsInSameOrParentContainer(args.User, args.Target)
@@ -41,6 +52,19 @@ public sealed class MedicalMenuSystem : EntitySystem
                 Act = () => { OpenUI(args.Target);},
                 ClientExclusive = true
             });
+
+            // View variables verbs
+            if (_adminManager.HasFlag(AdminFlags.Debug) && _player.LocalSession != null)
+            {
+                var verb = new VvVerb()
+                {
+                    Text = Loc.GetString("Print All Wounds"),
+                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/vv.svg.192dpi.png")),
+                    Act = () => _toolshed.InvokeCommand(_player.LocalSession, "PrintAllWounds", args.Target, out _),
+                    ClientExclusive = true // opening VV window is client-side. Don't ask server to run this verb.
+                };
+                args.Verbs.Add(verb);
+            }
     }
 
     private void OpenUI(EntityUid target)

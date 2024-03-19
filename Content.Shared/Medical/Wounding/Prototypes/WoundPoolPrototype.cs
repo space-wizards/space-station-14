@@ -26,7 +26,7 @@ public sealed partial class WoundingMetadata
     /// The uppermost damage for the wound pool
     /// </summary>
     [DataField(required:true)]
-    public FixedPoint2 PoolDamageMax = 200;
+    public FixedPoint2 DamageMax = 200;
 
     /// <summary>
     /// How much to scale incoming damage by
