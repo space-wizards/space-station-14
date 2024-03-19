@@ -47,6 +47,9 @@ public sealed class AdminWhoCommand : IConsoleCommand
             if (adminData.Title is { } title)
                 sb.Append($": [{title}]");
 
+            if (adminData.Stealth)
+                sb.Append(" (S)");
+
             if (shell.Player is { } player && adminMgr.HasAdminFlag(player, AdminFlags.Admin))
             {
                 if (afk.IsAfk(admin))
