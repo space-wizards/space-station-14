@@ -93,7 +93,7 @@ namespace Content.Shared.SubFloor
             if (args.NewTile.Tile.IsEmpty)
                 return; // Anything that was here will be unanchored anyways.
 
-            UpdateTile(MapManager.GetGrid(args.NewTile.GridUid), args.NewTile.GridIndices);
+            UpdateTile(Comp<MapGridComponent>(args.NewTile.GridUid), args.NewTile.GridIndices);
         }
 
         /// <summary>

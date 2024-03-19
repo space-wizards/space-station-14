@@ -145,7 +145,7 @@ namespace Content.Client.NodeContainer
 
             foreach (var (gridId, gridDict) in _gridIndex)
             {
-                var grid = _mapManager.GetGrid(gridId);
+                var grid = _entityManager.GetComponent<MapGridComponent>(gridId);
                 var (_, _, worldMatrix, invMatrix) = _entityManager.GetComponent<TransformComponent>(gridId).GetWorldPositionRotationMatrixWithInv();
 
                 var lCursorBox = invMatrix.TransformBox(cursorBox);
