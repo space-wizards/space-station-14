@@ -56,6 +56,42 @@
         amount: 2
       - id: RiotShield
         amount: 2
+      - id: ClothingNeckCloakPan
+        amount: 2
+      - id: ClothingNeckCloakEnby
+        amount: 2
+      - id: ClothingNeckCloakGay
+        amount: 2
+      - id: ClothingNeckCloakLesbian
+        amount: 2
+      - id: ClothingNeckCloakIntersex
+        amount: 2
+      - id: ClothingNeckCloakBi
+        amount: 2
+      - id: ClothingNeckCloakAro
+        amount: 2
+      - id: ClothingNeckCloakAce
+        amount: 2
+      - id: ClothingNeckCloakTrans
+        amount: 2
+      - id: ClothingNeckTransPin
+        amount: 2
+      - id: ClothingNeckPansexualPin
+        amount: 2
+      - id: ClothingNeckNonBinaryPin
+        amount: 2
+      - id: ClothingNeckLesbianPin
+        amount: 2
+      - id: ClothingNeckIntersexPin
+        amount: 2
+      - id: ClothingNeckBisexualPin
+        amount: 2
+      - id: ClothingNeckAsexualPin
+        amount: 2
+      - id: ClothingNeckAromanticPin
+        amount: 2
+      - id: ClothingNeckLGBTPin
+        amount: 2
 #      - SecGasmask
 
 - type: entity

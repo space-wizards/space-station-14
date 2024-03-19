@@ -1282,3 +1282,131 @@
   completetime: 1
   materials:
     Cloth: 100
+
+# Cloaks
+- type: latheRecipe
+  id: ClothingNeckCloakPan
+  result: ClothingNeckCloakPan
+  completetime: 2
+  materials:
+    Cloth: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakEnby
+  result: ClothingNeckCloakEnby
+  completetime: 2
+  materials:
+    Cloth: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakGay
+  result: ClothingNeckCloakGay
+  completetime: 2
+  materials:
+    Cloth: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakLesbian
+  result: ClothingNeckCloakLesbian
+  completetime: 2
+  materials:
+    Cloth: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakIntersex
+  result: ClothingNeckCloakIntersex
+  completetime: 2
+  materials:
+    Cloth: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakBi
+  result: ClothingNeckCloakBi
+  completetime: 2
+  materials:
+    Cloth: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakAro
+  result: ClothingNeckCloakAro
+  completetime: 2
+  materials:
+    Cloth: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakAce
+  result: ClothingNeckCloakAce
+  completetime: 2
+  materials:
+    Cloth: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakTrans
+  result: ClothingNeckCloakTrans
+  completetime: 2
+  materials:
+    Cloth: 200
+
+# Pins
+- type: latheRecipe
+  id: ClothingNeckTransPin
+  result: ClothingNeckTransPin
+  completetime: 2
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: ClothingNeckPansexualPin
+  result: ClothingNeckPansexualPin
+  completetime: 2
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: ClothingNeckNonBinaryPin
+  result: ClothingNeckNonBinaryPin
+  completetime: 2
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: ClothingNeckLesbianPin
+  result: ClothingNeckLesbianPin
+  completetime: 2
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: ClothingNeckIntersexPin
+  result: ClothingNeckIntersexPin
+  completetime: 2
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: ClothingNeckBisexualPin
+  result: ClothingNeckBisexualPin
+  completetime: 2
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: ClothingNeckAsexualPin
+  result: ClothingNeckAsexualPin
+  completetime: 2
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: ClothingNeckAromanticPin
+  result: ClothingNeckAromanticPin
+  completetime: 2
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: ClothingNeckLGBTPin
+  result: ClothingNeckLGBTPin
+  completetime: 2
+  materials:
+    Steel: 300

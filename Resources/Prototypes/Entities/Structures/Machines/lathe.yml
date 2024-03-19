@@ -162,6 +162,25 @@
       - WeaponCapacitorRechargerCircuitboard
       - HandheldStationMap
       - ClothingHeadHatWelding
+    dynamicRecipes:
+      - ClothingNeckCloakPan
+      - ClothingNeckCloakEnby
+      - ClothingNeckCloakGay
+      - ClothingNeckCloakLesbian
+      - ClothingNeckCloakIntersex
+      - ClothingNeckCloakBi
+      - ClothingNeckCloakAro
+      - ClothingNeckCloakAce
+      - ClothingNeckCloakTrans
+      - ClothingNeckTransPin
+      - ClothingNeckPansexualPin
+      - ClothingNeckNonBinaryPin
+      - ClothingNeckLesbianPin
+      - ClothingNeckIntersexPin
+      - ClothingNeckBisexualPin
+      - ClothingNeckAsexualPin
+      - ClothingNeckAromanticPin
+      - ClothingNeckLGBTPin
   - type: EmagLatheRecipes
     emagStaticRecipes:
        - CartridgePistol
@@ -732,6 +751,24 @@
       - ShuttleGunPerforatorCircuitboard
       - ShuttleGunFriendshipCircuitboard
       - ShuttleGunDusterCircuitboard
+      - ClothingNeckCloakPan
+      - ClothingNeckCloakEnby
+      - ClothingNeckCloakGay
+      - ClothingNeckCloakLesbian
+      - ClothingNeckCloakIntersex
+      - ClothingNeckCloakBi
+      - ClothingNeckCloakAro
+      - ClothingNeckCloakAce
+      - ClothingNeckCloakTrans
+      - ClothingNeckTransPin
+      - ClothingNeckPansexualPin
+      - ClothingNeckNonBinaryPin
+      - ClothingNeckLesbianPin
+      - ClothingNeckIntersexPin
+      - ClothingNeckBisexualPin
+      - ClothingNeckAsexualPin
+      - ClothingNeckAromanticPin
+      - ClothingNeckLGBTPin
   - type: MaterialStorage
     whitelist:
       tags:
