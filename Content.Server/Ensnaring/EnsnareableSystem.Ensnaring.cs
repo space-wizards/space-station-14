@@ -118,8 +118,7 @@ public sealed partial class EnsnareableSystem
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, user, freeTime, new EnsnareableDoAfterEvent(), target, target: target, used: ensnare)
         {
-            BreakOnUserMove = breakOnMove,
-            BreakOnTargetMove = breakOnMove,
+            BreakOnMove = breakOnMove,
             BreakOnDamage = false,
             NeedHand = true,
             BlockDuplicate = true,

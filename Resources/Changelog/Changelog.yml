@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: VasilisThePikachu
-  changes:
-  - message: Due to Nanotrashen's budget cuts, Space pens are no longer supplied on
-      the station.
-    type: Remove
-  id: 5694
-  time: '2024-01-13T20:20:11.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23970
-- author: SlamBamActionman
-  changes:
-  - message: Ammo Techfab Circuitboard has been removed from Thief objectives.
-    type: Remove
-  id: 5695
-  time: '2024-01-13T20:55:03.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24037
-- author: Varen
-  changes:
-  - message: Eggs can be drawn from with a syringe.
-    type: Tweak
-  id: 5696
-  time: '2024-01-13T20:57:20.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24042
 - author: degradka
   changes:
   - message: Prevent oversized items from being placed in the microwave.
@@ -3813,3 +3791,24 @@
   id: 6193
   time: '2024-03-18T22:35:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25978
+- author: SlamBamActionman
+  changes:
+  - message: Recyclers no longer delete items stored inside of recycled entities.
+    type: Fix
+  id: 6194
+  time: '2024-03-19T02:36:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26045
+- author: Vermidia
+  changes:
+  - message: Made the Artifact Reports page up to date with current Xenoarchaeology
+    type: Tweak
+  id: 6195
+  time: '2024-03-19T03:22:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26252
+- author: keronshb
+  changes:
+  - message: Fixed a bug where stores were enabling refunds after a purchase
+    type: Fix
+  id: 6196
+  time: '2024-03-19T03:48:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26251
