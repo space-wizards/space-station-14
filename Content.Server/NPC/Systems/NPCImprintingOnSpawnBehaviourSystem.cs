@@ -18,25 +18,35 @@ public sealed partial class NPCImprintingOnSpawnBehaviourSystem : SharedNPCImpri
         SubscribeLocalEvent<NPCImprintingOnSpawnBehaviourComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnMapInit(Entity<NPCImprintingOnSpawnBehaviourComponent> impriting, ref MapInitEvent args)
+    private void OnMapInit(Entity<NPCImprintingOnSpawnBehaviourComponent> imprinting, ref MapInitEvent args)
     {
-        var entities = _lookup.GetEntitiesInRange(impriting, impriting.Comp.SearchRadius);
-        var impritingTargets = new List<EntityUid>();
+
+        var entities = _lookup.GetEntitiesInRange(imprinting, imprinting.Comp.SearchRadius);
+        var imprintingTargets = new List<EntityUid>();
         foreach (var ent in entities)
         {
-            if (impriting.Comp.Whitelist.IsValid(ent))
+            var addEnt = true;
+            if (imprinting.Comp.Whitelist != null && !imprinting.Comp.Whitelist.IsValid(ent))
             {
-                impritingTargets.Add(ent);
-                var exception = EnsureComp<FactionExceptionComponent>(impriting);
+                addEnt = false;
+            }
+            if (addEnt)
+            {
+                imprintingTargets.Add(ent);
+                var exception = EnsureComp<FactionExceptionComponent>(imprinting);
                 exception.Ignored.Add(ent);
             }
-            //if we haven't found mommy, we'll be aggressive with everyone.
         }
 
-        if (impriting.Comp.Follow)
+        if (imprinting.Comp.Follow)
         {
-            var mommy = _random.Pick(impritingTargets);
-            _npc.SetBlackboard(impriting, NPCBlackboard.FollowTarget, new EntityCoordinates(mommy, Vector2.Zero));
+            var mommy = _random.Pick(imprintingTargets);
+            _npc.SetBlackboard(imprinting, NPCBlackboard.FollowTarget, new EntityCoordinates(mommy, Vector2.Zero));
         }
+    }
+
+    private void AddImprintingTarget()
+    {
+
     }
 }
