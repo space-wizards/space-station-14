@@ -17,13 +17,13 @@ public sealed partial class WormCorridorPostGen : IPostDunGen
     /// How many times to run the worm
     /// </summary>
     [DataField]
-    public int Count = 10;
+    public int Count = 20;
 
     /// <summary>
     /// How long to make each worm
     /// </summary>
     [DataField]
-    public int Length = 30;
+    public int Length = 20;
 
     /// <summary>
     /// Maximum amount the angle can change in a single step.
