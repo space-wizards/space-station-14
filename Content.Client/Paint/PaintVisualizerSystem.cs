@@ -29,17 +29,16 @@ public sealed class PaintedVisualizerSystem : VisualizerSystem<PaintedComponent>
 
     protected override void OnAppearanceChange(EntityUid uid, PaintedComponent component, ref AppearanceChangeEvent args)
     {
-        // ShaderPrototype sadly in Robust.Client, cannot move to shared component.
         var shader = _protoMan.Index<ShaderPrototype>(component.ShaderName).Instance();
 
         if (args.Sprite == null)
             return;
 
-        if (!_appearance.TryGetData<bool>(uid, PaintVisuals.Painted, out bool isPainted))
+        // What is this even doing? It's not even checking what the value is.
+        if (!_appearance.TryGetData(uid, PaintVisuals.Painted, out bool isPainted))
             return;
 
         var sprite = args.Sprite;
-
 
         foreach (var spriteLayer in sprite.AllLayers)
         {
