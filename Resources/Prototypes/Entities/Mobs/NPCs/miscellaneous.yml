@@ -86,7 +86,7 @@
   - type: HTN
     rootTask:
       task: KillerTomatoCompound
-  - type: NPCImpritingBehaviour
+  - type: NPCImprintingOnSpawnBehaviour
     whitelist:
       components:
       - Actor

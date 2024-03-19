@@ -6,7 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.NPC.Systems;
 
-public sealed partial class NPCImpritingBehaviourSystem : EntitySystem
+public sealed partial class NPCImprintingOnSpawnBehaviourSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
@@ -15,10 +15,10 @@ public sealed partial class NPCImpritingBehaviourSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<NPCImpritingBehaviourComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<NPCImprintingOnSpawnBehaviourComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnMapInit(Entity<NPCImpritingBehaviourComponent> impriting, ref MapInitEvent args)
+    private void OnMapInit(Entity<NPCImprintingOnSpawnBehaviourComponent> impriting, ref MapInitEvent args)
     {
         var entities = _lookup.GetEntitiesInRange(impriting, impriting.Comp.SearchRadius);
         var impritingTargets = new List<EntityUid>();

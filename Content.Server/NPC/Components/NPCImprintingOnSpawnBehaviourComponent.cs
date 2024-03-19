@@ -6,8 +6,8 @@ namespace Content.Server.NPC.Components;
 /// A component that makes the entity friendly to nearby creatures it sees on init.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(NPCImpritingBehaviourSystem))]
-public sealed partial class NPCImpritingBehaviourComponent : Component
+[Access(typeof(NPCImprintingOnSpawnBehaviourSystem))]
+public sealed partial class NPCImprintingOnSpawnBehaviourComponent : Component
 {
     /// <summary>
     /// filter who can be a friend to this creature
