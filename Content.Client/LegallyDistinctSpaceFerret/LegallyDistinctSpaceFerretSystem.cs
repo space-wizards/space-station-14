@@ -48,7 +48,7 @@ public sealed class LegallyDistinctSpaceFerretSystem : EntitySystem
                 }
             }
         }, "backflip");
-        _audio.PlayEntity(new SoundPathSpecifier("Audio/Effects/Emotes/clap1.ogg"), Filter.Local(), uid.Value, false);
+        _audio.PlayEntity(new SoundPathSpecifier(args.SfxSource), Filter.Local(), uid.Value, false);
     }
 
     public void OnEepyEvent(GoEepyEvent args)

@@ -17,9 +17,10 @@ public sealed partial class EepyActionEvent : InstantActionEvent
 }
 
 [Serializable, NetSerializable]
-public sealed class DoABackFlipEvent(NetEntity backflipper) : EntityEventArgs
+public sealed class DoABackFlipEvent(NetEntity backflipper, string sfxSource) : EntityEventArgs
 {
     public NetEntity Backflipper = backflipper;
+    public string SfxSource = sfxSource;
 }
 
 [Serializable, NetSerializable]
@@ -60,6 +61,9 @@ public sealed partial class LegallyDistinctSpaceFerretComponent : Component
 
     [DataField]
     public string RoleOutroSfx;
+
+    [DataField]
+    public string ClappaSfx;
 
     [DataField]
     public ProtoId<AntagPrototype> AntagProtoId = "LegallyDistinctSpaceFerret";

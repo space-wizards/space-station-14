@@ -108,7 +108,7 @@ public sealed class LegallyDistinctSpaceFerretSystem : EntitySystem
 
     public void OnBackflipAction(EntityUid uid, LegallyDistinctSpaceFerretComponent comp, BackflipActionEvent args)
     {
-        RaiseNetworkEvent(new DoABackFlipEvent(GetNetEntity(uid)));
+        RaiseNetworkEvent(new DoABackFlipEvent(GetNetEntity(uid), comp.ClappaSfx));
 
         args.Handled = true;
     }

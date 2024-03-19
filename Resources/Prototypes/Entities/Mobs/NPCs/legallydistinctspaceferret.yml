@@ -11,6 +11,7 @@
     youWinMessage: legallydistinctspaceferret-you-win-popup
     roleIntroSfx: /Audio/Animals/wawa_intro.ogg
     roleOutroSfx: /Audio/Animals/wawa_outro.ogg
+    clappaSfx: /Audio/Animals/slugclappa.ogg
   - type: NameIdentifier
     group: LegallyDistinctSpaceFerret
   - type: ReplacementAccent
@@ -57,6 +58,7 @@
   # They wawa
   - type: Speech
     speechVerb: Wawa
+    speechSounds: Wawa
   - type: TypingIndicator
     proto: moth
   # They hard to pet
