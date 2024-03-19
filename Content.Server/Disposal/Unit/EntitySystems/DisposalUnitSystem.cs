@@ -512,8 +512,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         var doAfterArgs = new DoAfterArgs(EntityManager, userId.Value, delay, new DisposalDoAfterEvent(), unitId, target: toInsertId, used: unitId)
         {
             BreakOnDamage = true,
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
+            BreakOnMove = true,
             NeedHand = false
         };
 
