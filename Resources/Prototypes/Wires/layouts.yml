@@ -30,11 +30,11 @@
   id: AirlockMedical
 
 - type: wireLayout
-  parent: HighSec
+  parent: Airlock
   id: AirlockScience
 
 - type: wireLayout
-  parent: Airlock
+  parent: HighSec
   id: AirlockCommand
 
 - type: wireLayout
