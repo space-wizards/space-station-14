@@ -71,6 +71,12 @@ public sealed partial class ImplanterComponent : Component
     public (string, string) ImplantData;
 
     /// <summary>
+    /// If the <see cref="Implant"/> is already implanted, should it be allowed to be implanted again?
+    /// </summary>
+    [DataField]
+    public bool AllowMultipleImplants = true;
+
+    /// <summary>
     /// The <see cref="ItemSlot"/> for this implanter
     /// </summary>
     [DataField(required: true)]
