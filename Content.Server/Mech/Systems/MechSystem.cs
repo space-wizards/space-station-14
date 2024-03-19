@@ -39,14 +39,10 @@ public sealed partial class MechSystem : SharedMechSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
-    private ISawmill _sawmill = default!;
-
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
-
-        _sawmill = Logger.GetSawmill("mech");
 
         SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MechComponent, EntInsertedIntoContainerMessage>(OnInsertBattery);
@@ -96,10 +92,10 @@ public sealed partial class MechSystem : SharedMechSystem
 
         if (TryComp<ToolComponent>(args.Used, out var tool) && tool.Qualities.Contains("Prying") && component.BatterySlot.ContainedEntity != null)
         {
-            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.BatteryRemovalDelay, new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.BatteryRemovalDelay,
+                new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
             {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
+                BreakOnMove = true
             };
 
             _doAfter.TryStartDoAfter(doAfterEventArgs);
@@ -186,7 +182,7 @@ public sealed partial class MechSystem : SharedMechSystem
                 {
                     var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.EntryDelay, new MechEntryEvent(), uid, target: uid)
                     {
-                        BreakOnUserMove = true,
+                        BreakOnMove = true,
                     };
 
                     _doAfter.TryStartDoAfter(doAfterEventArgs);
@@ -214,11 +210,8 @@ public sealed partial class MechSystem : SharedMechSystem
                         return;
                     }
 
-                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.ExitDelay, new MechExitEvent(), uid, target: uid)
-                    {
-                        BreakOnUserMove = true,
-                        BreakOnTargetMove = true,
-                    };
+                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.ExitDelay,
+                        new MechExitEvent(), uid, target: uid);
 
                     _doAfter.TryStartDoAfter(doAfterEventArgs);
                 }
@@ -343,7 +336,7 @@ public sealed partial class MechSystem : SharedMechSystem
         _battery.SetCharge(battery!.Value, batteryComp.CurrentCharge + delta.Float(), batteryComp);
         if (batteryComp.CurrentCharge != component.Energy) //if there's a discrepency, we have to resync them
         {
-            _sawmill.Debug($"Battery charge was not equal to mech charge. Battery {batteryComp.CurrentCharge}. Mech {component.Energy}");
+            Log.Debug($"Battery charge was not equal to mech charge. Battery {batteryComp.CurrentCharge}. Mech {component.Energy}");
             component.Energy = batteryComp.CurrentCharge;
             Dirty(component);
         }
