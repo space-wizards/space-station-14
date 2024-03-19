@@ -49,6 +49,7 @@ public sealed partial class DungeonJob
         {
             // TODO: Get room like how noise does
             position = random.PickAndTake(ends);
+            _dungeon.GetRoomPrototype()
             // TODO: Rotation
             // TODO: Iterate room tiles and remove from corridors
             // TODO: patch holes
@@ -56,7 +57,7 @@ public sealed partial class DungeonJob
 
         // TODO: Make corridor widening code re-usable.
 
-        // Get boundary tiles of corridors as long as they don't intersect room 
+        // Get boundary tiles of corridors as long as they don't intersect room
 
         return dungeon;
     }

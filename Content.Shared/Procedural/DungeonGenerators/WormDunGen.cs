@@ -10,6 +10,12 @@ namespace Content.Shared.Procedural.DungeonGenerators;
 public sealed partial class WormDunGen : IDunGen
 {
     /// <summary>
+    /// Valid room sizes we can use.
+    /// </summary>
+    [DataField]
+    public List<Vector2i> RoomSizes = new();
+
+    /// <summary>
     /// How many rooms to place.
     /// </summary>
     [DataField]
