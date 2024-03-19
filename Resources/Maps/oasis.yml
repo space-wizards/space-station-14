@@ -8203,7 +8203,7 @@ entities:
             color: '#FFFFFFFF'
             id: BushCOne
           decals:
-            72: 24.991669,-1.6784534
+            68: 24.991669,-1.6784534
         - node:
             color: '#FFFFFFFF'
             id: BushCThree
@@ -8256,7 +8256,7 @@ entities:
             id: Bushc3
           decals:
             7: 19.998627,4.431698
-            64: 17.0542,-7.727089
+            62: 17.0542,-7.727089
         - node:
             color: '#FFFFFFFF'
             id: Bushe1
@@ -8277,13 +8277,13 @@ entities:
             43: 26.545914,-1.8401108
             44: 26.780289,-2.4807358
             61: 17.345871,-5.706253
-            71: 26.866669,-4.9909534
+            67: 26.866669,-4.9909534
         - node:
             color: '#FFFFFFFF'
             id: Bushg1
           decals:
             28: 8.570679,-7.0878906
-            65: 17.033371,-7.404171
+            63: 17.033371,-7.404171
         - node:
             color: '#FFFFFFFF'
             id: Bushi1
@@ -8295,11 +8295,11 @@ entities:
             30: 23.733414,5.727852
             34: 23.202164,-0.97527313
             50: 22.800522,7.944504
-            70: 27.210419,-4.8347034
-            73: 25.950012,-1.8138714
-            74: 16.229706,-11.13625
-            75: 15.844284,-11.2404175
-            76: 11.097305,-2.8601494
+            66: 27.210419,-4.8347034
+            69: 25.950012,-1.8138714
+            70: 16.229706,-11.13625
+            71: 15.844284,-11.2404175
+            72: 11.097305,-2.8601494
         - node:
             color: '#FFFFFFFF'
             id: Bushi2
@@ -8320,7 +8320,7 @@ entities:
             26: 12.261475,-12.150391
             32: 23.389664,5.087227
             36: 23.530289,-1.5690231
-            69: 27.054169,-4.4701214
+            65: 27.054169,-4.4701214
         - node:
             color: '#FFFFFFFF'
             id: Bushi4
@@ -8346,7 +8346,7 @@ entities:
           decals:
             9: 0.8915558,8.204041
             48: 27.034897,6.100754
-            67: 27.168762,-3.6263714
+            64: 27.168762,-3.6263714
         - node:
             color: '#FFFFFFFF'
             id: Bushk1
@@ -13379,7 +13379,7 @@ entities:
       pos: 46.5,-40.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -123580.74
+      secondsUntilStateChange: -124585.54
       state: Opening
   - uid: 4137
     components:
@@ -13816,7 +13816,7 @@ entities:
       pos: -3.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -239748.16
+      secondsUntilStateChange: -240752.95
       state: Opening
   - uid: 1496
     components:
@@ -15257,8 +15257,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 28262
-    - type: AtmosDevice
-      joinedGrid: 21002
 - proto: AirTank
   entities:
   - uid: 18893
@@ -73285,6 +73283,17 @@ entities:
     - type: Transform
       pos: -6.5,46.5
       parent: 2
+  - uid: 28312
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 18.5,-44.5
+      parent: 21002
+  - uid: 28313
+    components:
+    - type: Transform
+      pos: -6.5,16.5
+      parent: 21002
 - proto: ChairOfficeLight
   entities:
   - uid: 1247
@@ -75152,6 +75161,13 @@ entities:
     - type: Transform
       pos: -33.359306,-49.4063
       parent: 2
+- proto: ClothingOuterCoatTrench
+  entities:
+  - uid: 28309
+    components:
+    - type: Transform
+      pos: -4.444107,16.65205
+      parent: 21002
 - proto: ClothingOuterGhostSheet
   entities:
   - uid: 6736
@@ -86833,6 +86849,13 @@ entities:
     - type: Transform
       pos: -54.288788,-36.341164
       parent: 2
+- proto: DrinkMugOne
+  entities:
+  - uid: 28311
+    components:
+    - type: Transform
+      pos: 17.620728,-45.2835
+      parent: 21002
 - proto: DrinkOatMilkCarton
   entities:
   - uid: 5280
@@ -94129,6 +94152,11 @@ entities:
     - type: Transform
       pos: -37.352245,-42.760193
       parent: 2
+  - uid: 28310
+    components:
+    - type: Transform
+      pos: -7.485779,15.599967
+      parent: 21002
 - proto: FoodSoupClown
   entities:
   - uid: 2267
@@ -139139,11 +139167,6 @@ entities:
     - type: Transform
       pos: 17.5,-33.5
       parent: 2
-  - uid: 24222
-    components:
-    - type: Transform
-      pos: 4.5,-48.5
-      parent: 2
   - uid: 24223
     components:
     - type: Transform
@@ -139158,6 +139181,11 @@ entities:
     components:
     - type: Transform
       pos: -52.5,-4.5
+      parent: 2
+  - uid: 28308
+    components:
+    - type: Transform
+      pos: 3.5,-41.5
       parent: 2
 - proto: PottedPlantRD
   entities:
@@ -145294,12 +145322,6 @@ entities:
     components:
     - type: Transform
       pos: -25.5,2.5
-      parent: 2
-  - uid: 1328
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -25.5,-1.5
       parent: 2
   - uid: 1329
     components:
@@ -152822,6 +152844,26 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 55.5,-32.5
       parent: 2
+  - uid: 28314
+    components:
+    - type: Transform
+      pos: 96.5,27.5
+      parent: 21002
+  - uid: 28315
+    components:
+    - type: Transform
+      pos: 43.5,67.5
+      parent: 21002
+  - uid: 28316
+    components:
+    - type: Transform
+      pos: 96.5,-4.5
+      parent: 21002
+  - uid: 28317
+    components:
+    - type: Transform
+      pos: 47.5,-45.5
+      parent: 21002
 - proto: SignSurgery
   entities:
   - uid: 8937
@@ -161680,6 +161722,11 @@ entities:
       parent: 2
 - proto: VendingMachineCoffee
   entities:
+  - uid: 1328
+    components:
+    - type: Transform
+      pos: 4.5,-48.5
+      parent: 2
   - uid: 2552
     components:
     - type: Transform
@@ -161699,6 +161746,11 @@ entities:
     components:
     - type: Transform
       pos: -8.5,-41.5
+      parent: 2
+  - uid: 24222
+    components:
+    - type: Transform
+      pos: -25.5,-1.5
       parent: 2
 - proto: VendingMachineCondiments
   entities:
@@ -182055,7 +182107,7 @@ entities:
       pos: 24.5,2.5
       parent: 21002
     - type: Door
-      secondsUntilStateChange: -17879.986
+      secondsUntilStateChange: -18884.785
       state: Opening
 - proto: WoodenSignRight
   entities:
