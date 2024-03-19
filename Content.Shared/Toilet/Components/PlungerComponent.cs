@@ -11,7 +11,7 @@ namespace Content.Shared.Toilet.Components
         /// <summary>
         /// Duration of plunger doafter event.
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         [AutoNetworkedField]
         public float PlungeDuration = 2f;
     }

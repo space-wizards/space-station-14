@@ -14,14 +14,14 @@ namespace Content.Shared.Toilet.Components
         /// <summary>
         /// If true entity has been plungered.
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         [AutoNetworkedField]
         public bool Plunged;
 
         /// <summary>
         /// If true entity can interact with plunger.
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         [AutoNetworkedField]
         public bool NeedsPlunger = false;
 
