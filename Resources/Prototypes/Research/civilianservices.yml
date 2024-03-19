@@ -224,3 +224,15 @@
   recipeUnlocks:
   - BluespaceBeaker
   - SyringeBluespace
+
+- type: technology
+  id: RefillableMedipen
+  name: research-technology-refillable-medipen
+  icon:
+    sprite: Objects/Specific/Medical/hypospray.rsi
+    state: medhypo
+  discipline: CivilianServices
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - MedicalHypospray
