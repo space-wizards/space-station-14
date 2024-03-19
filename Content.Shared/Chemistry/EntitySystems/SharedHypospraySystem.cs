@@ -51,6 +51,9 @@ public abstract class SharedHypospraySystem : EntitySystem
 
     public void SetMode(Entity<HyposprayComponent> entity, bool onlyAffectsMobs)
     {
+        if (entity.Comp.OnlyAffectsMobs == onlyAffectsMobs)
+            return;
+
         entity.Comp.OnlyAffectsMobs = onlyAffectsMobs;
         Dirty(entity);
     }
