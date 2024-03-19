@@ -13,8 +13,7 @@
       visible: false
   - type: Appearance
   - type: GasPoweredThrower
-    hitSound:
-      path: /Audio/Effects/boing.ogg
+    gasUsage: 0.25
   - type: Item
     size: Large
   - type: MeleeWeapon
@@ -27,11 +26,10 @@
       types:
         Blunt: 0
     soundHit:
-      collection: BoxingHit
+      path: /Audio/Weapons/boingopunch.ogg
   - type: StaminaDamageOnHit
     damage: 15
   - type: MeleeThrowOnHit
-    unanchorOnHit: true
     enabled: false
   - type: ItemMapper
     containerWhitelist: [gas_tank]

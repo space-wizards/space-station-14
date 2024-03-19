@@ -19,10 +19,7 @@ public abstract class SharedGasPoweredMeleeThrowSystem : EntitySystem
 
     private void OnAttemptMeleeThrowOnHit(Entity<GasPoweredThrowerComponent> ent, ref AttemptMeleeThrowOnHitEvent args)
     {
-        var (uid, comp) = ent;
-
-
-        if (!Container.TryGetContainer(uid, comp.TankSlotId, out var container) ||
+        if (!Container.TryGetContainer(ent, ent.Comp.TankSlotId, out var container) ||
             container is not ContainerSlot slot || slot.ContainedEntity is null)
         {
             args.Cancelled = true;

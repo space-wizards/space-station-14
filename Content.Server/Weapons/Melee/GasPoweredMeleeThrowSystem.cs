@@ -38,34 +38,30 @@ public sealed class GasPoweredMeleeThrowSystem : SharedGasPoweredMeleeThrowSyste
     }
     private void OnAttemptMeleeThrowOnHit(Entity<GasPoweredThrowerComponent> ent, ref AttemptMeleeThrowOnHitEvent args)
     {
-        var (uid, comp) = ent;
-
         args.Cancelled = false;
         args.Handled = true;
 
         var gas = GetGas(ent);
-        if (gas == null && comp.GasUsage > 0f)
+        if (gas == null && ent.Comp.GasUsage > 0f)
         {
             args.Cancelled = true;
             return;
         }
 
-        Audio.PlayPvs(comp.HitSound, uid, AudioParams.Default.WithVariation(0.025f).WithVolume(8f));
-
         if (gas == null)
             return;
 
         var environment = _atmos.GetContainingMixture(ent, false, true);
-        var removed = _gasTank.RemoveAir(gas.Value, comp.GasUsage);
+        var removed = _gasTank.RemoveAir(gas.Value, ent.Comp.GasUsage);
         if (environment != null && removed != null)
         {
             _atmos.Merge(environment, removed);
         }
 
-        if (gas.Value.Comp.Air.TotalMoles >= comp.GasUsage)
+        if (gas.Value.Comp.Air.TotalMoles >= ent.Comp.GasUsage)
             return;
 
-        _itemSlots.TryEject(uid, comp.TankSlotId, uid, out _);
+        _itemSlots.TryEject(ent, ent.Comp.TankSlotId, ent, out _);
     }
 
     private Entity<GasTankComponent>? GetGas(EntityUid uid)
