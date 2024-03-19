@@ -3,42 +3,26 @@
   parent: BaseHealingWound
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: MinorTissueAvulsion
   parent: BaseHealingWound
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
-
 - type: entity
   id: TissueAvulsion
   parent: BaseHealingWound
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: SevereTissueAvulsion
   parent: BaseHealingWound
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: Amputation
   parent: BaseHealingWound
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0

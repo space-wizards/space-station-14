@@ -3,25 +3,16 @@
   parent: BaseHealingWound
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: Laceration
   parent: BaseHealingWound
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: SevereLaceration
   parent: BaseHealingWound
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 

@@ -3,9 +3,7 @@
   abstract: true
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
+
 - type: entity
   id: BaseHealingWound
   parent: BaseWound

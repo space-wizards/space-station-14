@@ -4,51 +4,33 @@
   parent: BaseHealingWound
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: Bruise
   parent: BaseHealingWound
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: SevereBruise
   parent: BaseHealingWound
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: CriticalBruise
   parent: BaseHealingWound
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: Crush
   parent: BaseHealingWound
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: SevereCrush
   parent: BaseHealingWound
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0

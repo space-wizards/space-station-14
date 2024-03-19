@@ -5,8 +5,6 @@ using Content.Shared.Body.Part;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Content.Shared.Gibbing.Events;
-using Content.Shared.Gibbing.Systems;
 using Content.Shared.Medical.Wounding.Components;
 using Content.Shared.Medical.Wounding.Events;
 using Robust.Shared.Containers;
@@ -19,6 +17,7 @@ public sealed partial class WoundSystem
 {
 
     [Dependency] private readonly INetManager _netManager = default!;
+    private const float DefaultSeverity = 100;
     private const float SplatterDamageMult = 1.0f;
     private const float NonCoreDamageChance = 0.5f;
     private const float HeadDamageChance = 0.2f;
@@ -28,6 +27,8 @@ public sealed partial class WoundSystem
     {
         SubscribeLocalEvent<WoundableComponent, DamageChangedEvent>(OnWoundableDamaged);
         SubscribeLocalEvent<BodyComponent, DamageChangedEvent>(OnBodyDamaged);
+        SubscribeLocalEvent<WoundComponent, ContainerGettingInsertedAttemptEvent>(OnWoundInsertAttempt);
+        SubscribeLocalEvent<WoundComponent, EntGotRemovedFromContainerMessage>(OnWoundRemoved);
     }
 
     private void OnBodyDamaged(EntityUid bodyEnt, BodyComponent body, ref DamageChangedEvent args)
@@ -42,7 +43,8 @@ public sealed partial class WoundSystem
         if (!_bodySystem.TryGetRootBodyPart(bodyEnt, out var rootPart, body))
             return;
 
-        //prevent relaying bloodloss damage
+        //TODO: This is a quick hack to prevent asphyxiation/bloodloss from damaging bodyparts
+        //Once proper body/organ simulation is implemented these can be removed
         args.DamageDelta.DamageDict.Remove("Asphyxiation");
         args.DamageDelta.DamageDict.Remove("Bloodloss");
         args.DamageDelta.DamageDict.Remove("Structural");
@@ -87,94 +89,110 @@ public sealed partial class WoundSystem
         //We will handle that with another listener
         if (args.DamageDelta == null)
             return;
-        foreach (var (damageTypeId, damage) in args.DamageDelta.DamageDict)
+        CreateWoundsFromDamage(new(owner, woundableComp), args.DamageDelta);
+    }
+
+    #region Utility
+
+    public IEnumerable<Entity<WoundComponent>> GetAllWounds(Entity<WoundableComponent> woundable)
+    {
+        if (!_containerSystem.TryGetContainer(woundable, WoundableComponent.WoundableContainerId, out var container))
+        {
+            Log.Error($"Wound container could not be found for {ToPrettyString(woundable)}! This should never happen!");
+            yield break;
+        }
+        foreach (var entId in container.ContainedEntities)
+        {
+            yield return new Entity<WoundComponent>(entId, Comp<WoundComponent>(entId));
+        }
+    }
+
+    #endregion
+
+
+    #region WoundDestruction
+
+    public void RemoveWound(Entity<WoundComponent> wound, Entity<WoundableComponent>? woundableParent)
+    {
+        if (woundableParent != null)
+        {
+            if (wound.Comp.ParentWoundable != woundableParent.Value.Owner)
+            {
+                Log.Error($"{ToPrettyString(woundableParent.Value.Owner)} does not match the parent woundable on {ToPrettyString(wound.Owner)}");
+                return;
+            }
+        }
+        else
+        {
+            if (!TryComp<WoundableComponent>(wound.Comp.ParentWoundable, out var woundable))
+            {
+                Log.Error($"{ToPrettyString(wound.Comp.ParentWoundable)} Does not have a woundable component this should never happen!");
+                return;
+            }
+
+            woundableParent = new(wound.Comp.ParentWoundable, woundable);
+        }
+
+        if (!_containerSystem.TryGetContainer(woundableParent.Value, WoundableComponent.WoundableContainerId,
+                out var container)
+            || !_containerSystem.Remove(new(wound, null, null), container, reparent: false))
+        {
+            Log.Error($"Failed to remove wound from {ToPrettyString(wound.Comp.ParentWoundable)}, this should never happen!");
+        }
+    }
+    #endregion
+
+    #region WoundCreation
+
+    public void CreateWoundsFromDamage(Entity<WoundableComponent> woundable, DamageSpecifier damageSpec)
+    {
+        foreach (var (damageTypeId, damage) in damageSpec.DamageDict)
         {
             //If damage is negative (healing) skip because wound healing is handled with internal logic.
             if (damage < 0)
                 continue;
-            var woundable = new Entity<WoundableComponent?>(owner, woundableComp);
-            TryApplyWounds(woundable, damageTypeId, damage);
-            RelayDamageToWoundable(woundable, damageTypeId, damage);
+            if (!TryGetWoundProtoFromDamage(woundable, new(damageTypeId), damage,
+                    out var protoId, out var overflow))
+                return;
+            AddWound(woundable, protoId, DefaultSeverity);
         }
     }
 
-    /// <summary>
-    /// Create a new wound on a woundable from the specified wound prototype
-    /// </summary>
-    /// <param name="woundableEnt">Target Woundable entity</param>
-    /// <param name="woundPrototype">Prototype Id of the wound being spawned</param>
-    /// <param name="woundable">Woundable Component</param>
-    /// <param name="damageType">Damage type we are applying</param>
-    /// <param name="damage">The amount of damage applied</param>
-    /// <param name="force">Prevent canceling creating this wound</param>
-    /// <returns>A woundable entity if successful, null if not</returns>
-    public Entity<WoundComponent>? CreateWound(EntityUid  woundableEnt,EntProtoId woundPrototype,
-        ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage, WoundableComponent? woundable = null, bool force = false)
+    private void AddWound(Entity<WoundableComponent> woundable, EntProtoId woundProtoId, FixedPoint2 severity)
     {
-        return !Resolve(woundableEnt, ref woundable) ? null : CreateWound_Internal(woundableEnt, woundPrototype, woundable, damageType, damage, force);
-    }
-
-
-    /// <summary>
-    ///  Attempt to remove a wound
-    /// </summary>
-    /// <param name="woundEnt">The wound entity to remove</param>
-    /// <param name="fullyHeal">Does this count as "fully healing" the wound, or just removal</param>
-    /// <param name="woundComp">The wound component to remove</param>
-    /// <param name="force">Prevent canceling the wound removal</param>
-    /// <returns>True if successful, false if not</returns>
-    public bool TryRemoveWound(EntityUid woundEnt, bool fullyHeal, WoundComponent? woundComp = null, bool force = false)
-    {
-        if (!Resolve(woundEnt, ref woundComp))
-            return false;
-        var woundableParent = woundComp.ParentWoundable;
-        var woundable = new Entity<WoundableComponent>(woundableParent, Comp<WoundableComponent>(woundableParent));
-        var wound = new Entity<WoundComponent>(woundEnt, woundComp);
-
-        var onRemoveWoundAttempt = new RemoveWoundAttemptEvent(woundable, wound);
-        RaiseRelayedLocalEvent(woundable, wound, ref onRemoveWoundAttempt);
-        if (!force && onRemoveWoundAttempt.CancelRemove)
-            return false;
-
-        _containerSystem.TryRemoveFromContainer(woundEnt, true);
-
-        if (fullyHeal)
+        var newWound = CreateWound(woundProtoId, severity);
+        var attempt = new CreateWoundAttemptEvent(woundable, newWound);
+        RaiseLocalEvent(woundable, ref attempt);
+        if (woundable.Comp.Body != null)
+            RaiseLocalEvent(woundable.Comp.Body.Value, ref attempt);
+        if (attempt.Canceled)
         {
-            var onWoundHealed = new WoundFullyHealedEvent(woundable, wound);
-            RaiseRelayedLocalEvent(woundable, wound, ref onWoundHealed);
-            woundable.Comp.HealthCap += wound.Comp.HealthDecrease/100 * wound.Comp.AppliedDamage;
-            woundable.Comp.IntegrityCap += wound.Comp.IntegrityDecrease/100 * wound.Comp.AppliedDamage;
-            //woundable.Comp.Integrity += wound.Comp.DamageToIntegrity/100 * wound.Comp.AppliedDamage;
+            //if we aren't adding this wound, nuke it because it's not being attached to anything.
+            QueueDel(newWound);
+            return;
         }
-        else
+        if (!_containerSystem.TryGetContainer(woundable, WoundableComponent.WoundableContainerId, out var container)
+            || !_containerSystem.Insert(new(newWound.Owner, null, null, null), container)
+           )
         {
-            var onWoundRemoved = new WoundRemovedEvent(woundable, wound);
-            RaiseRelayedLocalEvent(woundable, wound, ref onWoundRemoved);
+            Log.Error($"{ToPrettyString(woundable.Owner)} does not have a woundable container, or insertion is not possible! This should never happen!");
+            return;
         }
-        EntityManager.DeleteEntity(wound);
-        return true;
     }
 
-
     /// <summary>
-    /// Try to Create a new wound on a woundable from the specified wound prototype
+    /// Create a new wound in nullspace from a wound entity prototype id.
     /// </summary>
-    /// <param name="woundableEnt">Target Woundable entity</param>
-    /// <param name="woundPrototype">Prototype Id of the wound being spawned</param>
-    /// <param name="createdWound">The created wound</param>
-    /// <param name="woundable">Woundable Component</param>
-    /// <param name="damageType">Damage type we are applying</param>
-    /// <param name="damage">The amount of damage applied</param>
-    /// <param name="force">Prevent canceling creating this wound</param>
-    /// <returns>True when successful, false when not</returns>
-    public bool TryCreateWound(Entity<WoundableComponent?> woundable, EntProtoId woundPrototype, [NotNullWhen(true)]out Entity<WoundComponent>? createdWound,
-        ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage, bool force = false)
+    /// <param name="woundProtoId">ProtoId of our wound</param>
+    /// <param name="severity">The severity the wound will start with</param>
+    /// <returns></returns>
+    private Entity<WoundComponent> CreateWound(EntProtoId woundProtoId, FixedPoint2 severity)
     {
-        createdWound = null;
-        if (!Resolve(woundable, ref woundable.Comp))
-            return false;
-        createdWound = CreateWound_Internal(woundable, woundPrototype, woundable.Comp, damageType, damage, force);
-        return createdWound != null;
+        var newEnt = Spawn(woundProtoId);
+        var newWound = new Entity<WoundComponent>(newEnt, Comp<WoundComponent>(newEnt));
+        //Do not raise a severity changed event because we will handle that when the wound gets attached
+        SetWoundSeverity(newWound, severity, false);
+        return newWound;
     }
 
     /// <summary>
@@ -184,193 +202,140 @@ public sealed partial class WoundSystem
     /// <param name="damageType">Damage type to check</param>
     /// <param name="damage">Damage being applied</param>
     /// <param name="woundProtoId">Found WoundProtoId</param>
-    /// <param name="overflow">The amount of damage exceeding the max cap</param>
+    /// <param name="damageOverflow">The amount of damage exceeding the max cap</param>
     /// <returns>True if a woundProto is found, false if not</returns>
-    public bool TryGetWoundProtoFromDamage(Entity<WoundableComponent?> woundable,ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage,
-        [NotNullWhen(true)] out EntProtoId? woundProtoId, out FixedPoint2 overflow)
+    public bool TryGetWoundProtoFromDamage(Entity<WoundableComponent> woundable,ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage,
+        [NotNullWhen(true)] out string? woundProtoId, out FixedPoint2 damageOverflow)
     {
-        overflow = 0;
+        damageOverflow = 0;
         woundProtoId = null;
-        if (!Resolve(woundable, ref woundable.Comp)
-            || !woundable.Comp.Config.TryGetValue(damageType, out var metadata)
-            )
+        if (!woundable.Comp.Config.TryGetValue(damageType, out var metadata))
             return false;
+        //scale the incoming damage and calculate overflows
         var adjDamage = damage * metadata.Scaling;
         if (adjDamage > metadata.DamageMax)
         {
-            overflow = adjDamage - metadata.DamageMax;
+            damageOverflow = adjDamage - metadata.DamageMax;
             adjDamage = metadata.DamageMax;
         }
-        var percentageOfMax = adjDamage * metadata.Scaling * 100 / (metadata.DamageMax*100);
+        var percentageOfMax = adjDamage / metadata.DamageMax *100;
         var woundPool = _prototypeManager.Index(metadata.WoundPool);
         foreach (var (percentage, lastWoundProtoId) in woundPool.Wounds)
         {
-            if (percentage > percentageOfMax)
+            if (percentage >= percentageOfMax)
                 break;
-            woundProtoId = new EntProtoId(lastWoundProtoId);
+            woundProtoId = lastWoundProtoId;
         }
         return woundProtoId != null;
     }
 
-    /// <summary>
-    /// Tries to apply wounds to the specified woundable based on the damage and damagetype
-    /// </summary>
-    /// <param name="targetWoundable"></param>
-    /// <param name="damageType"></param>
-    /// <param name="damage"></param>
-    /// <param name="woundable"></param>
-    /// <returns></returns>
-    public bool TryApplyWounds(Entity<WoundableComponent?> woundable, ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage)
-    {
-        if (_netManager.IsClient) //TODO: Dirty hack because I'm too lazy to make a client implementation override
-            return true;
-        if (!Resolve(woundable, ref woundable.Comp)
-            || !TryGetWoundProtoFromDamage(woundable, damageType, damage, out var woundProtoId, out var overflow)
-            || !TryCreateWound(woundable, woundProtoId.Value, out var createdWound, damageType, damage))
-            return false;
-        //TODO: Apply overflow to adjacent/attached parts
-        return true;
-    }
+    #endregion
+
+    #region Severity
+
 
     /// <summary>
-    /// Create a new wound on a woundable from the specified wound prototype
+    /// Forcibly set a wound's severity, this does NOT raise a cancellable event, and should only be used internally.
+    /// This exists for performance reasons to reduce the amount of events being raised.
+    /// Or in situations where cancelling should not be allowed.
     /// </summary>
-    /// <param name="woundableEnt">Target Woundable entity</param>
-    /// <param name="woundPrototype">Prototype Id of the wound being spawned</param>
-    /// <param name="woundableComp">Woundable Component</param>
-    /// <param name="damageType">Damage type used to create this wound</param>
-    /// <param name="appliedDamage">The amount of damage applied to create this wound</param>
-    /// <returns>A woundable entity if successful, null if not</returns>
-    private Entity<WoundComponent>? CreateWound_Internal(EntityUid woundableEnt, EntProtoId woundPrototype,
-        WoundableComponent woundableComp, ProtoId<DamageTypePrototype> damageType, FixedPoint2 appliedDamage, bool force)
+    /// <param name="wound">Target wound</param>
+    /// <param name="severity">New Severity</param>
+    /// <param name="raiseEvent">Should we raise a severity changed event</param>
+    private void SetWoundSeverity(Entity<WoundComponent> wound, FixedPoint2 severity, bool raiseEvent)
     {
-        if (!EntityManager.TrySpawnInContainer(woundPrototype, woundableEnt,
-                WoundableComponent.WoundableContainerId, out var woundEntId)
-            || !TryComp(woundEntId, out WoundComponent? woundComp)
-           )
-            return null;
-        var woundable = new Entity<WoundableComponent>(woundableEnt, woundableComp);
-        var wound = new Entity<WoundComponent>(woundEntId.Value, woundComp);
-
-        wound.Comp.Body = woundable.Comp.Body;
-        wound.Comp.ParentWoundable = woundable.Owner;
-        wound.Comp.RootWoundable = woundable.Comp.RootWoundable;
-        wound.Comp.AppliedDamage = appliedDamage;
-        wound.Comp.AppliedDamageType = damageType;
-        var newWoundEvent = new CreateWoundAttemptEvent(woundable, wound);
-        RaiseRelayedLocalEvent(woundable, wound, ref newWoundEvent);
-        if (!force && newWoundEvent.Canceled)
-        {
-            EntityManager.DeleteEntity(woundEntId);
-            return null;
-        }
-        ApplyWoundEffects(wound, woundable, damageType);
-        return new Entity<WoundComponent>(woundEntId.Value, wound);
-    }
-
-    private void ApplyWoundEffects(Entity<WoundComponent> wound, Entity<WoundableComponent> woundable, ProtoId<DamageTypePrototype> damageType)
-    {
-        woundable.Comp.LastAppliedDamageType = damageType;
-        woundable.Comp.HealthCap -= wound.Comp.HealthDecrease/100 * wound.Comp.AppliedDamage;
-        woundable.Comp.IntegrityCap -= wound.Comp.IntegrityDecrease/100 * wound.Comp.AppliedDamage;
-        //woundable.Comp.Integrity -= wound.Comp.IntegrityDamage/100 * wound.Comp.AppliedDamage;
-        if (woundable.Comp.Health > woundable.Comp.HealthCap)
-            SetWoundableHealth(new Entity<WoundableComponent?>(woundable, woundable.Comp), woundable.Comp.HealthCap);
-        if (woundable.Comp.Integrity > woundable.Comp.IntegrityCap)
-            SetWoundableIntegrity(new Entity<WoundableComponent?>(woundable, woundable.Comp), woundable.Comp.HealthCap);
-        var woundApplied = new WoundAppliedEvent(woundable, wound);
-        RaiseRelayedLocalEvent(woundable, wound, ref woundApplied);
-        CheckWoundableGibbing(woundable, woundable.Comp, damageType);
+        var oldSev = severity;
+        wound.Comp.Severity = severity;
+        if (!raiseEvent)
+            return;
+        var ev = new WoundSeverityChangedEvent(wound, oldSev);
+        RaiseLocalEvent(wound, ref ev);
         Dirty(wound);
-        Dirty(woundable);
     }
 
     /// <summary>
-    /// Clamps the values of a woundable within the proper range.
+    /// Sets a wound's severity in a cancellable way. Generally avoid using this when you can and use AddWoundSeverity instead!
+    /// AddWoundSeverity DOES NOT raise a cancellable event, only set does to prevent systems from overwriting each other!
     /// </summary>
-    /// <param name="woundable">Woundable being clamped</param>
-    /// <returns>Returns true if integrity is zero or negative, returns false if invalid or if integrity is greater than 0</returns>
-    public bool ClampWoundableValues(Entity<WoundableComponent?> woundable)
+    /// <param name="wound">Target wound</param>
+    /// <param name="severity">New severity value</param>
+    /// <returns>True if the severity was successfully set, false if not</returns>
+    public bool TrySetWoundSeverity(Entity<WoundComponent> wound, FixedPoint2 severity)
     {
-        var dirty = false;
-        if (!Resolve(woundable, ref woundable.Comp))
+        var attempt = new SetWoundSeverityAttemptEvent(wound, severity);
+        RaiseLocalEvent(wound, ref attempt);
+        if (attempt.Cancel)
             return false;
-        if (woundable.Comp.HealthCap < woundable.Comp.Health)
-        {
-            woundable.Comp.Health = woundable.Comp.HealthCap;
-            dirty = true;
-        }
-
-        if (woundable.Comp.HealthCap < 0)
-        {
-            woundable.Comp.HealthCap = 0;
-            dirty = true;
-        }
-
-        if (woundable.Comp.Health < 0)
-        {
-            woundable.Comp.Integrity += woundable.Comp.Health;
-            woundable.Comp.Health = 0;
-            dirty = true;
-        }
-
-        if (woundable.Comp.IntegrityCap < woundable.Comp.Integrity)
-        {
-            woundable.Comp.Integrity = woundable.Comp.IntegrityCap;
-            dirty = true;
-        }
-
-        if (!dirty)
-            Dirty(woundable);
-        return woundable.Comp.Integrity <= 0;
-    }
-
-
-    /// <summary>
-    /// Check to make sure woundable values are within thresholds and trigger gibbing if too much damage has been taken.
-    /// This is automatically called when adding/removing wounds or applying damage. Manually call this if you modify a woundable's damage.
-    /// </summary>
-    /// <param name="woundable">The woundable entity/component</param>
-    /// <param name="damageTypeOverride">Optional override for the type of damage to use for overflow</param>
-    /// <returns>True if we gibbed the part, false if we did not</returns>
-    private bool CheckWoundableGibbing(EntityUid woundableEnt, WoundableComponent woundable,
-        ProtoId<DamageTypePrototype>? damageTypeOverride = null)
-    {
-        if (woundable.Integrity > 0)
-            return false;
-        var damageType = woundable.LastAppliedDamageType;
-        if (damageTypeOverride != null)
-            damageType = damageTypeOverride.Value;
-        GibWoundable(woundableEnt, woundable, damageType, -woundable.Integrity);
+        SetWoundSeverity(wound, severity, true);
         return true;
     }
 
-    private void GibWoundable(EntityUid woundableEnt, WoundableComponent woundable, ProtoId<DamageTypePrototype> damageType, FixedPoint2 splatDamage)
+    /// <summary>
+    /// Add/Remove from a wounds severity value. Note: Severity is clamped between 0 and 100.
+    /// </summary>
+    /// <param name="wound">Target wound</param>
+    /// <param name="severityDelta">Severity value we are adding/removing</param>
+    public void ChangeWoundSeverity(Entity<WoundComponent> wound, FixedPoint2 severityDelta)
     {
-        if (!_containerSystem.TryGetContainer(woundableEnt, WoundableComponent.WoundableContainerId, out var container))
-            return;
-        foreach (var woundEnt in container.ContainedEntities)
-        {
-            TryRemoveWound(woundEnt, false);
-        }
-
-        var outerEnt = woundable.Body ?? woundable.RootWoundable;
-
-        _gibbingSystem.TryGibEntity(outerEnt, woundableEnt, GibType.Gib, GibContentsOption.Drop, out var droppedEnts);
-        var damageSpec = new DamageSpecifier();
-        damageSpec.DamageDict.Add(damageType, splatDamage * SplatterDamageMult);
-        foreach (var targetEnt in droppedEnts)
-        {
-            _damageableSystem.TryChangeDamage(targetEnt, damageSpec);
-        }
+        SetWoundSeverity(wound, FixedPoint2.Clamp(wound.Comp.Severity+severityDelta, 0 , 100), true);
     }
 
-    private void RelayDamageToWoundable(Entity<WoundableComponent?> woundable,
-        ProtoId<DamageTypePrototype> damageType, FixedPoint2 damage)
+    #endregion
+
+    #region ContainerEvents
+
+    private void OnWoundInsertAttempt(EntityUid woundEnt, WoundComponent wound, ref ContainerGettingInsertedAttemptEvent args)
     {
-        if (damage == 0)
+        if (args.Container.ID != WoundableComponent.WoundableContainerId)
+        {
+            Log.Error("Tried to add wound to a container that is NOT woundableContainer");
+            args.Cancel();
             return;
-        AddWoundableHealth(woundable, -damage, damageType);
+        }
+        if (!TryComp<WoundableComponent>(args.Container.Owner, out var woundable))
+        {
+            Log.Error("Tried to add a wound to an entity without a woundable!");
+            args.Cancel();
+            return;
+        }
+
+        wound.ParentWoundable = args.Container.Owner;
+        var ev = new WoundCreatedEvent(
+            new (args.Container.Owner,woundable),
+            new(woundEnt, wound));
+        RaiseLocalEvent(args.Container.Owner, ref ev);
+        RaiseLocalEvent(woundEnt, ref ev);
+        if (woundable.Body != null)
+        {
+            var ev2 = new WoundAppliedToBody(
+                new (woundable.Body.Value, Comp<BodyComponent>(woundable.Body.Value)),
+                new (args.Container.Owner,woundable),
+                new(woundEnt, wound));
+            RaiseLocalEvent(woundable.Body.Value ,ref ev2);
+            RaiseLocalEvent(woundEnt ,ref ev2);
+        }
+        Dirty(woundEnt, wound);
     }
 
+    private void OnWoundRemoved(EntityUid woundEnt, WoundComponent wound, ref EntGotRemovedFromContainerMessage args)
+    {
+        var woundable = Comp<WoundableComponent>(args.Container.Owner);
+        var ev = new WoundDestroyedEvent(
+            new(args.Container.Owner, woundable),
+            new (woundEnt, wound)
+        );
+        RaiseLocalEvent(woundEnt, ref ev);
+        RaiseLocalEvent(args.Container.Owner, ref ev);
+        if (woundable.Body != null)
+        {
+            var ev2 = new WoundRemovedFromBody(
+                new (woundable.Body.Value, Comp<BodyComponent>(woundable.Body.Value)),
+                new (args.Container.Owner,woundable),
+                new(woundEnt, wound));
+            RaiseLocalEvent(woundable.Body.Value ,ref ev2);
+            RaiseLocalEvent(woundEnt ,ref ev2);
+        }
+        QueueDel(woundEnt); //Wounds should never exist outside of a container
+    }
+    #endregion
 }

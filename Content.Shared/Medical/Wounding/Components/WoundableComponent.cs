@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Content.Shared.Medical.Trauma.Systems;
 using Content.Shared.Medical.Wounding.Prototypes;
 using Content.Shared.Medical.Wounding.Systems;
 using Robust.Shared.Containers;
@@ -10,14 +11,11 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Medical.Wounding.Components;
 
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(WoundSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(WoundSystem), typeof(TraumaSystem))]
 public sealed partial class WoundableComponent : Component
 {
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? Body;
-
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
-    public EntityUid RootWoundable;
 
     public const string WoundableContainerId = "Wounds";
 

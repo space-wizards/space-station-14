@@ -19,7 +19,7 @@ public sealed partial class WoundComponent : Component
     /// Root woundable for our parent, this will always be valid
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
-    public EntityUid RootWoundable;
+    public EntityUid RootEntity;
 
     /// <summary>
     /// Current parentWoundable, this will always be valid
@@ -33,49 +33,4 @@ public sealed partial class WoundComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 Severity = 100;
-
-    /// <summary>
-    /// How much severity we should remove from this wound during a healing update.
-    /// This is only used if a healableComponent is also present
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public FixedPoint2 HealAmount = 1;
-
-    /// <summary>
-    /// What damage type is this woundable associated with
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
-    public ProtoId<DamageTypePrototype> AppliedDamageType;
-
-    /// <summary>
-    /// How much damage has been applied with this woundable
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
-    public FixedPoint2 AppliedDamage;
-
-    /// <summary>
-    /// How much integrity damage are we applying, expressed as a percentage (/100) of applied damage.
-    /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public FixedPoint2 DamageToIntegrity;
-
-    /// <summary>
-    /// How much are we decreasing our woundables health cap, expressed as a percentage (/100) of applied damage
-    /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public FixedPoint2 MaxHealthDecrease;
-
-    /// <summary>
-    /// How much are we decreasing our woundables integrity cap, expressed as a percentage (/100) of applied damage
-    /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public FixedPoint2 MaxIntegrityDecrease;
-    /// <summary>
-    /// How much the healthcap gets decreased, modified by severity
-    /// </summary>
-    public FixedPoint2 HealthDecrease => Severity * MaxHealthDecrease / 100;
-    /// <summary>
-    /// How much the integrity cap gets decreased, modified by severity
-    /// </summary>
-    public FixedPoint2 IntegrityDecrease => Severity * MaxIntegrityDecrease / 100;
 }

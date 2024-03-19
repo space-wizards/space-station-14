@@ -5,9 +5,6 @@
   abstract: true
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: SecondDegreeBurnBase
@@ -15,9 +12,6 @@
   abstract: true
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: ThirdDegreeBurnBase
@@ -25,9 +19,6 @@
   abstract: true
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 # === Thermal ===
 - type: entity
@@ -35,27 +26,18 @@
   parent: FirstDegreeBurnBase
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: SecondDegreeThermalBurn
   parent: SecondDegreeBurnBase
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: ThirdDegreeThermalBurn
   parent: ThirdDegreeBurnBase
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 # === Frostbite ===
 - type: entity
@@ -63,27 +45,18 @@
   parent: FirstDegreeBurnBase
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: SecondDegreeFrostbite
   parent: SecondDegreeBurnBase
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: ThirdDegreeFrostbite
   parent: ThirdDegreeBurnBase
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 # === Chemical ===
 - type: entity
@@ -91,27 +64,18 @@
   parent: FirstDegreeBurnBase
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: SecondDegreeChemBurn
   parent: SecondDegreeBurnBase
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: ThirdDegreeChemBurn
   parent: ThirdDegreeBurnBase
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 # === Electrical ===
 - type: entity
@@ -119,27 +83,18 @@
   parent: FirstDegreeBurnBase
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: SecondDegreeElectricalBurn
   parent: SecondDegreeBurnBase
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: ThirdDegreeElectricalBurn
   parent: ThirdDegreeBurnBase
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 # === Radiation ===
 - type: entity
@@ -147,24 +102,15 @@
   parent: FirstDegreeBurnBase
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: SecondDegreeRadiationBurn
   parent: SecondDegreeBurnBase
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
 
 - type: entity
   id: ThirdDegreeRadiationBurn
   parent: ThirdDegreeBurnBase
   components:
   - type: Wound
-    damageToIntegrity: 0
-    maxHealthDecrease: 0
-    maxIntegrityDecrease: 0
