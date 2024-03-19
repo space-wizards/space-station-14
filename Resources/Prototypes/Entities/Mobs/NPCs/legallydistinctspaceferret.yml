@@ -279,6 +279,5 @@
 
 - type: nameIdentifierGroup
   id: LegallyDistinctSpaceFerret
-  prefix: Legally Distinct Space Ferret
   minValue: 1
   maxValue: 99 # I fucking dare you to spawn more than 100 wawa
