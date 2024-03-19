@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by github:DreamlyJack(624946166152298517)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "blinds"
+    },
+    {
+      "name": "blinds-1"
+    },
+    {
+      "name": "blinds-closed"
+    },
+    {
+      "name": "blinds-1-closed"
+    },
+    {
+      "name": "blinds-open"
+    },
+    {
+      "name": "blinds-1-open"
+    }
+  ]
+}
