@@ -637,25 +637,25 @@
       effects:
       - !type:Electrocute
         probability: 0.8
-# ADMIN ONLY CHEM DONT SEND ME TO THE CODE GUILLOTINE
+
 - type: reagent
   id: lingium
   name: reagent-name-lingium
   group: Toxins
   desc: reagent-desc-lingium
-  flavor: deoxyribonucleic pain
+  flavor: exotic
   color: "#437298"
   physicalDesc: reagent-physical-desc-exotic-smelling
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
   - !type:PlantAdjustHealth
-    amount: -500
+    amount: -1
   metabolisms:
     Poison:
       effects:
       - !type:HealthChange
         damage:
           types:
-            Cellular: 20
+            Cellular: 1.5
 
