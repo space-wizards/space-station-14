@@ -81,7 +81,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
 
     public bool CheckSameImplant(EntityUid target, EntityUid implant)
     {
-        if (!EntityManager.TryGetComponent<ImplantedComponent>(target, out var implanted))
+        if (!TryComp<ImplantedComponent>(target, out var implanted))
             return false;
 
         var implantPrototype = Prototype(implant);
