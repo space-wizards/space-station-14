@@ -15,9 +15,10 @@
     layers:
     - state: icon
       map: [ "unfoldedLayer" ]
-    - state: icon_flipped
+    - state: icon
       map: ["foldedLayer"]
       visible: false
+      scale: -1,1
       
 - type: entity
   parent: ClothingHeadEyeBaseFlippable
@@ -36,9 +37,10 @@
     - state: icon
       map: [ "unfoldedLayer" ]
       visible: false
-    - state: icon_flipped
+    - state: icon
       map: ["foldedLayer"]
       visible: true
+      scale: -1,1
 
 - type: entity
   parent: ClothingEyesBase
