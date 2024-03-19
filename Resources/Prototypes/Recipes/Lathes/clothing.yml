@@ -490,7 +490,7 @@
 
 - type: latheRecipe
   id: ClothingOuterCoatLabSeniorPhysician
-  result: ClothingUniformJumpsuitSeniorPhysician
+  result: ClothingOuterCoatLabSeniorPhysician
   completetime: 5
   materials:
     Cloth: 400
