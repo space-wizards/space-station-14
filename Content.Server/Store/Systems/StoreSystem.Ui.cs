@@ -165,8 +165,6 @@ public sealed partial class StoreSystem
 
         if (!IsOnStartingMap(uid, component))
             component.RefundAllowed = false;
-        else
-            component.RefundAllowed = true;
 
         //subtract the cash
         foreach (var (currency, value) in listing.Cost)
@@ -323,7 +321,7 @@ public sealed partial class StoreSystem
         if (!component.RefundAllowed || component.BoughtEntities.Count == 0)
             return;
 
-        for (var i = component.BoughtEntities.Count; i >= 0; i--)
+        for (var i = component.BoughtEntities.Count - 1; i >= 0; i--)
         {
             var purchase = component.BoughtEntities[i];
 
@@ -332,13 +330,15 @@ public sealed partial class StoreSystem
 
             component.BoughtEntities.RemoveAt(i);
 
-            if (_actions.TryGetActionData(purchase, out var actionComponent))
+            if (_actions.TryGetActionData(purchase, out var actionComponent, logError: false))
             {
                 _actionContainer.RemoveAction(purchase, actionComponent);
             }
 
             EntityManager.DeleteEntity(purchase);
         }
+
+        component.BoughtEntities.Clear();
 
         foreach (var (currency, value) in component.BalanceSpent)
         {
