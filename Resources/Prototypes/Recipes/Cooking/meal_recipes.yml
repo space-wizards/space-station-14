@@ -1438,6 +1438,16 @@
     FoodCakePlain: 1
 
 - type: microwaveMealRecipe
+  id: RecipeLemonLimeCake
+  name: lemon-lime soda cake recipe
+  result: FoodCakeLemonLime
+  time: 5
+  reagents:
+    LemonLime: 10
+  solids:
+    FoodCakePlain: 1
+
+- type: microwaveMealRecipe
   id: RecipeCatCake
   name: cat cake recipe
   result: MobCatCake

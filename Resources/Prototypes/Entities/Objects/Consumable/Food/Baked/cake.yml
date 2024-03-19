@@ -631,6 +631,34 @@
 # Tastes like sweetness, cake, jam.
 
 - type: entity
+  name: lemon-lime soda cake
+  parent: FoodCakeBase
+  id: FoodCakeLemonLime
+  description: A moist and sugary cake made with lemon-lime soda, traditionally baked in a Bundt pan.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - lemonlimesoda
+  - type: Sprite
+    state: lemonlime
+  - type: SliceableFood
+    slice: FoodCakeLemonLimeSlice
+
+
+- type: entity
+  name: slice of lemon-lime soda cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeLemonLimeSlice
+  description: A slice of lemon-lime soda cake. Not much healthier for it.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - lemonlimesoda
+  - type: Sprite
+    state: lemonlime-slice
+
+
+- type: entity
   name: cak
   id: MobCatCake
   parent: FoodCakeBase
