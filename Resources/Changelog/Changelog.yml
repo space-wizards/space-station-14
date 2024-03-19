@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Varen
-  changes:
-  - message: Eggs can be drawn from with a syringe.
-    type: Tweak
-  id: 5696
-  time: '2024-01-13T20:57:20.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24042
 - author: degradka
   changes:
   - message: Prevent oversized items from being placed in the microwave.
@@ -3812,3 +3805,10 @@
   id: 6195
   time: '2024-03-19T03:22:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26252
+- author: keronshb
+  changes:
+  - message: Fixed a bug where stores were enabling refunds after a purchase
+    type: Fix
+  id: 6196
+  time: '2024-03-19T03:48:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26251
