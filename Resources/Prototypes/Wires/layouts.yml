@@ -10,7 +10,7 @@
   - !type:DoorSafetyWireAction
 
 - type: wireLayout
-  parent: HighSec
+  parent: Airlock
   id: AirlockSecurity
 
 - type: wireLayout
