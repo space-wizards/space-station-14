@@ -1,25 +1,17 @@
 using Content.Shared.Maps;
+using Content.Shared.Procedural.DungeonGenerators;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Procedural.DungeonGenerators;
+namespace Content.Shared.Procedural.PostGeneration;
 
 // Ime a worm
 /// <summary>
-/// Generates worm corridors first then places rooms on the ends.
+/// Generates worm corridors.
 /// </summary>
-public sealed partial class WormDunGen : IDunGen
+public sealed partial class WormCorridorPostGen : IPostDunGen
 {
-    /// <summary>
-    /// Valid room sizes we can use.
-    /// </summary>
     [DataField]
-    public List<Vector2i> RoomSizes = new();
-
-    /// <summary>
-    /// How many rooms to place.
-    /// </summary>
-    [DataField]
-    public int RoomCount = 5;
+    public int PathLimit = 2048;
 
     /// <summary>
     /// How many times to run the worm
@@ -37,7 +29,7 @@ public sealed partial class WormDunGen : IDunGen
     /// Maximum amount the angle can change in a single step.
     /// </summary>
     [DataField]
-    public Angle MaxAngleChange;
+    public Angle MaxAngleChange = Angle.FromDegrees(45);
 
     [DataField]
     public ProtoId<ContentTileDefinition> Tile = "FloorSteel";
@@ -46,5 +38,5 @@ public sealed partial class WormDunGen : IDunGen
     /// How wide to make the corridor.
     /// </summary>
     [DataField]
-    public int Width = 3;
+    public float Width = 3f;
 }

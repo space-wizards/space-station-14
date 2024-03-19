@@ -3,12 +3,12 @@ using Content.Shared.Storage;
 namespace Content.Shared.Procedural.PostGeneration;
 
 /// <summary>
-/// Spawns entities inside corners.
+/// Adds entities randomly to the corridors.
 /// </summary>
-public sealed partial class CornerClutterPostGen : IPostDunGen
+public sealed partial class CorridorClutterPostGen : IPostDunGen
 {
     [DataField]
-    public float Chance = 0.50f;
+    public float Chance = 0.05f;
 
     /// <summary>
     /// The default starting bulbs

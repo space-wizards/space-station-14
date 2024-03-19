@@ -333,47 +333,29 @@
 
 - type: dungeonConfig
   id: Haunted
-  generator: !type:WormDunGen
+  generator: !type:PrefabDunGen
+    tile: FloorCaveDrought
     roomWhitelist:
-      - Haunted
-    noises:
-      noise:
-
+    - Mineshaft
+    presets:
+    - Bucket
+    - Wow
+    - SpaceShip
+    - Tall
   postGeneration:
-    - !type:WormPostGen
+    - !type:WormCorridorPostGen
       width: 3
+      tile: FloorCaveDrought
+
+    - !type:CorridorClutterPostGen
+      contents:
+      - id: FloraStalagmite1
+      - id: FloraStalagmite2
+      - id: FloraStalagmite3
+      - id: FloraStalagmite4
+      - id: FloraStalagmite5
+      - id: FloraStalagmite6
 
     - !type:BoundaryWallPostGen
-      tile: FloorSteel
-      wall: WallSolid
-      cornerWall: WallReinforced
-
-    - !type:JunctionPostGen
-      width: 1
-
-    - !type:JunctionPostGen
-
-    - !type:AutoCablingPostGen
-
-    - !type:CornerClutterPostGen
-      contents:
-        - id: PottedPlantRandom
-          amount: 1
-
-    - !type:CorridorDecalSkirtingPostGen
-      color: "#D381C996"
-      cardinalDecals:
-        South: BrickTileWhiteLineS
-        East: BrickTileWhiteLineE
-        North: BrickTileWhiteLineN
-        West: BrickTileWhiteLineW
-      cornerDecals:
-        SouthEast: BrickTileWhiteCornerSe
-        SouthWest: BrickTileWhiteCornerSw
-        NorthEast: BrickTileWhiteCornerNe
-        NorthWest: BrickTileWhiteCornerNw
-      pocketDecals:
-        SouthWest: BrickTileWhiteInnerSw
-        SouthEast: BrickTileWhiteInnerSe
-        NorthWest: BrickTileWhiteInnerNw
-        NorthEast: BrickTileWhiteInnerNe
+      tile: FloorCaveDrought
+      wall: WallRock

@@ -24,5 +24,5 @@ public sealed partial class CorridorPostGen : IPostDunGen
     /// How wide to make the corridor.
     /// </summary>
     [DataField]
-    public int Width = 3;
+    public float Width = 3f;
 }
