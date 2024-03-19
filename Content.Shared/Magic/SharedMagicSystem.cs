@@ -3,7 +3,6 @@ using Content.Shared.Actions;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Coordinates.Helpers;
-using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
@@ -62,6 +61,27 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<ChangeComponentsSpellEvent>(OnChangeComponentsSpell);
         SubscribeLocalEvent<SmiteSpellEvent>(OnSmiteSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
+
+        // TODO: InstantDoAfterSpell and WorldDoafterSpell
+        //  Both would be an action that take in an event, that passes an event to trigger once the doafter is done
+        //  This would be three events:
+        //    1 - Event that triggers from the action that starts the doafter
+        //    2 - The doafter event itself, which passes the event with it
+        //    3 - The event to trigger once the do-after finishes
+
+        // TODO: Polymorph Spell (Self)
+
+        // TODO: Polymorph Spell (Others, rng, projectile)
+
+        // TODO: Inanimate objects to life
+
+        // TODO: Flesh2Stone
+
+        // TODO: Lightning Spell
+
+        // TODO: Magic Missile
+
+        // TODO: Jaunt (should be its own ECS)
     }
 
     private void OnBeforeCastSpell(Entity<MagicComponent> ent, ref BeforeCastSpellEvent args)
