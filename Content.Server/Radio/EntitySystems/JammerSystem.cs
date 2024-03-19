@@ -1,4 +1,6 @@
+using Content.Server.Medical.SuitSensors;
 using Content.Server.Popups;
+using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
 using Content.Server.Radio.Components;
 using Content.Shared.Examine;
@@ -10,6 +12,7 @@ namespace Content.Server.Radio.EntitySystems;
 public sealed class JammerSystem : EntitySystem
 {
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -21,6 +24,7 @@ public sealed class JammerSystem : EntitySystem
         SubscribeLocalEvent<ActiveRadioJammerComponent, PowerCellChangedEvent>(OnPowerCellChanged);
         SubscribeLocalEvent<RadioJammerComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RadioSendAttemptEvent>(OnRadioSendAttempt);
+        SubscribeLocalEvent<SuitSensorComponent, SuitSensorsSendAttemptEvent>(OnSensorSendAttempt);
     }
 
     public override void Update(float frameTime)
@@ -28,8 +32,8 @@ public sealed class JammerSystem : EntitySystem
         var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent>();
         while (query.MoveNext(out var uid, out var _, out var jam))
         {
-            if (_powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
-                !battery.TryUseCharge(jam.Wattage * frameTime))
+            if (_powerCell.TryGetBatteryFromSlot(uid, out var batteryUid, out var battery) &&
+                !_battery.TryUseCharge(batteryUid.Value, jam.Wattage * frameTime, battery))
             {
                 RemComp<ActiveRadioJammerComponent>(uid);
             }
@@ -38,7 +42,7 @@ public sealed class JammerSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, RadioJammerComponent comp, ActivateInWorldEvent args)
     {
-        var activated = !HasComp<ActiveRadioJammerComponent>(uid) && 
+        var activated = !HasComp<ActiveRadioJammerComponent>(uid) &&
             _powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
             battery.CurrentCharge > comp.Wattage;
         if (activated)
@@ -74,15 +78,33 @@ public sealed class JammerSystem : EntitySystem
 
     private void OnRadioSendAttempt(ref RadioSendAttemptEvent args)
     {
-        var source = Transform(args.RadioSource).Coordinates;
+        if (ShouldCancelSend(args.RadioSource))
+        {
+            args.Cancelled = true;
+        }
+    }
+
+    private void OnSensorSendAttempt(EntityUid uid, SuitSensorComponent comp, ref SuitSensorsSendAttemptEvent args)
+    {
+        if (ShouldCancelSend(uid))
+        {
+            args.Cancelled = true;
+        }
+    }
+
+    private bool ShouldCancelSend(EntityUid sourceUid)
+    {
+        var source = Transform(sourceUid).Coordinates;
         var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent, TransformComponent>();
+
         while (query.MoveNext(out _, out _, out var jam, out var transform))
         {
             if (source.InRange(EntityManager, _transform, transform.Coordinates, jam.Range))
             {
-                args.Cancelled = true;
-                return;
+                return true;
             }
         }
+
+        return false;
     }
 }

@@ -111,7 +111,7 @@ public sealed class LockSystem : EntitySystem
             return _doAfter.TryStartDoAfter(
                 new DoAfterArgs(EntityManager, user, lockComp.LockTime, new LockDoAfter(), uid, uid)
                 {
-                    BreakOnDamage = true, BreakOnTargetMove = true, BreakOnUserMove = true, RequireCanInteract = true,
+                    BreakOnDamage = true, BreakOnMove = true, RequireCanInteract = true,
                     NeedHand = true
                 });
         }
@@ -187,7 +187,7 @@ public sealed class LockSystem : EntitySystem
             return _doAfter.TryStartDoAfter(
                 new DoAfterArgs(EntityManager, user, lockComp.LockTime, new UnlockDoAfter(), uid, uid)
                 {
-                    BreakOnDamage = true, BreakOnTargetMove = true, BreakOnUserMove = true, RequireCanInteract = true,
+                    BreakOnDamage = true, BreakOnMove = true, RequireCanInteract = true,
                     NeedHand = true
                 });
         }
@@ -246,8 +246,16 @@ public sealed class LockSystem : EntitySystem
     {
         if (!component.Locked || !component.BreakOnEmag)
             return;
-        _audio.PlayPredicted(component.UnlockSound, uid, null);
+
+        _audio.PlayPredicted(component.UnlockSound, uid, args.UserUid);
+
+        component.Locked = false;
         _appearanceSystem.SetData(uid, LockVisuals.Locked, false);
+        Dirty(uid, component);
+
+        var ev = new LockToggledEvent(false);
+        RaiseLocalEvent(uid, ref ev, true);
+
         RemComp<LockComponent>(uid); //Literally destroys the lock as a tell it was emagged
         args.Handled = true;
     }

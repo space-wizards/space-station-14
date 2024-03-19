@@ -338,6 +338,7 @@ namespace Content.Server.GameTicking
             _metaData.SetEntityName(ghost, name);
             _ghost.SetCanReturnToBody(ghost, false);
             _mind.TransferTo(mind.Value, ghost);
+            _adminLogger.Add(LogType.LateJoin, LogImpact.Low, $"{player.Name} late joined the round as an Observer with {ToPrettyString(ghost):entity}.");
         }
 
         #region Mob Spawning Helpers
@@ -392,7 +393,7 @@ namespace Content.Server.GameTicking
                     var gridXform = Transform(gridUid);
 
                     return new EntityCoordinates(gridUid,
-                        _transform.GetInvWorldMatrix(gridXform).Transform(toMap.Position));
+                        gridXform.InvWorldMatrix.Transform(toMap.Position));
                 }
 
                 return spawn;

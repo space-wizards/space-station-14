@@ -37,8 +37,6 @@ namespace Content.Server.Disposal.Tube
         [Dependency] private readonly DisposableSystem _disposableSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -124,7 +122,7 @@ namespace Content.Server.Disposal.Tube
                     if (trimmed == "")
                         continue;
 
-                    router.Tags.Add(tag.Trim());
+                    router.Tags.Add(trimmed);
                 }
 
                 _audioSystem.PlayPvs(router.ClickSound, uid, AudioParams.Default.WithVolume(-2f));
@@ -432,7 +430,8 @@ namespace Content.Server.Disposal.Tube
             if (!Resolve(uid, ref entry))
                 return false;
 
-            var holder = Spawn(DisposalEntryComponent.HolderPrototypeId, _xformSystem.GetMapCoordinates(uid));
+            var xform = Transform(uid);
+            var holder = Spawn(DisposalEntryComponent.HolderPrototypeId, xform.MapPosition);
             var holderComponent = Comp<DisposalHolderComponent>(holder);
 
             foreach (var entity in from.Container.ContainedEntities.ToArray())
