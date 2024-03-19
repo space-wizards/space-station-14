@@ -23,7 +23,7 @@ public sealed partial class ProduceComponent : SharedProduceComponent
     public string? SeedId;
 
     /// <summary>
-    ///     Seed data used to create a <see cref="SeedComponent"/> when this produce has its seeds extracted.
+    ///     Potency of the given piece of produce, calculated from the seed data and any additional bonuses.
     /// </summary>
     [DataField]
     public float ProducePotency;
