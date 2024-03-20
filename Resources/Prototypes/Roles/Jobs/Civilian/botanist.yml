@@ -24,6 +24,7 @@
     back: ClothingBackpackHydroponicsFilled
     shoes: ClothingShoesClown
     mask: ClothingMaskClown
+    id: BotanistPDA
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterApronBotanist
     belt: ClothingBeltPlantFilled

@@ -23,6 +23,7 @@
     back: ClothingBackpackChaplainFilled
     shoes: ClothingShoesClown
     mask: ClothingMaskClown
+    id: ChaplainPDA
     ears: ClothingHeadsetService
   innerClothingSkirt: ClothingUniformJumpskirtChaplain
   satchel: ClothingBackpackSatchelChaplainFilled
