@@ -12,6 +12,7 @@
           sprite: Objects/Materials/materials.rsi
           state: wood_2
         doAfter: 4
+
   - node: cart
     entity: ImprovisedNuclearBombCart
     edges:
@@ -19,7 +20,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: MaterialWoodPlank1
-        amount: 30
+        amount: 15
       - !type:DeleteEntity {}
       steps:
       - tool: Prying
@@ -32,6 +33,7 @@
           sprite: Objects/Materials/parts.rsi
           state: rods_2
         doAfter: 3
+
   - node: insides
     entity: ImprovisedNuclearBombInsides
     edges:
@@ -51,6 +53,7 @@
           sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeStraight
         doAfter: 4
+
   - node: pipe
     entity: ImprovisedNuclearBombInsidesPipe
     edges:
@@ -69,6 +72,7 @@
         icon:
           sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
         doAfter: 2
+
   - node: gun
     entity: ImprovisedNuclearBombInsidesGun
     edges:
@@ -90,6 +94,7 @@
             - state: depleted-uranium
               map: [ "enum.AmmoVisualLayers.Base" ]
         doAfter: 1
+
   - node: bullet
     entity: ImprovisedNuclearBombInsidesBullet
     edges:
@@ -111,6 +116,7 @@
         icon:
           sprite: Objects/Fun/enricheduranium.rsi
         doAfter: 5
+
   - node: uranium
     entity: ImprovisedNuclearBombInsidesUranium
     edges:
@@ -130,6 +136,7 @@
           sprite: Objects/Materials/Sheets/metal.rsi
           state: steel_3
         doAfter: 5
+
   - node: finished
     entity: ImprovisedNuclearBomb
     edges:
