@@ -240,3 +240,16 @@
   icon:
     sprite: Objects/Weapons/Bombs/pipebomb.rsi
     state: icon
+
+- type: construction
+  name: nuclear fission device
+  id: ImprovisedNuclearBombSign
+  graph: NukeCraft
+  startNode: start
+  targetNode: painted
+  category: construction-category-misc
+  objectType: Structure
+  description: A full nuclear explosive.
+  icon:
+    sprite: Objects/Devices/nuke.rsi
+    state: nuclearbomb_base

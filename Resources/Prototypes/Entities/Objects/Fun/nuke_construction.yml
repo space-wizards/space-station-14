@@ -8,9 +8,20 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_2
     noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 20 #It has wheels and bluespace tech to make it lighter.
+        mask:
+        - MachineMask
+        layer:
+        - HalfWallLayer
 
 - type: entity
-  parent: BaseStructure
+  parent: ImprovisedNuclearBombCart
   id: ImprovisedNuclearBombInsides
   name: nuclear fission explosive
   description: A partially constructed nuke.
@@ -21,7 +32,7 @@
     noRot: true
 
 - type: entity
-  parent: BaseStructure
+  parent: ImprovisedNuclearBombCart
   id: ImprovisedNuclearBombInsidesPipe
   name: nuclear fission explosive
   description: A partially constructed nuke.
@@ -32,7 +43,7 @@
     noRot: true
 
 - type: entity
-  parent: BaseStructure
+  parent: ImprovisedNuclearBombCart
   id: ImprovisedNuclearBombInsidesGun
   name: nuclear fission explosive
   description: A partially constructed nuke.
@@ -43,7 +54,7 @@
     noRot: true
 
 - type: entity
-  parent: BaseStructure
+  parent: ImprovisedNuclearBombCart
   id: ImprovisedNuclearBombInsidesBullet
   name: nuclear fission explosive
   description: A partially constructed nuke.
@@ -54,7 +65,7 @@
     noRot: true
 
 - type: entity
-  parent: BaseStructure
+  parent: ImprovisedNuclearBombCart
   id: ImprovisedNuclearBombInsidesUranium
   name: nuclear fission explosive
   description: A partially constructed nuke. Looks like it contains radioactive material.
@@ -63,9 +74,22 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_4
     noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 60 #It has wheels and bluespace tech to make it lighter.
+        mask:
+        - MachineMask
+        layer:
+        - HalfWallLayer
+  - type: RadiationSource
+    intensity: 1
 
 - type: entity
-  parent: BaseStructure
+  parent: ImprovisedNuclearBombCart
   id: ImprovisedNuclearBomb
   name: nuclear fission explosive
   description: A nuclear fission device!
@@ -74,6 +98,13 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_5
     noRot: true
+  - type: Nuke
+    explosionType: Default
+    maxIntensity: 100
+    intensitySlope: 5
+    totalIntensity: 300
+  - type: StaticPrice
+    price: 50000 # war profits
   - type: Fixtures
     fixtures:
       fix1:
@@ -85,13 +116,6 @@
         - MachineMask
         layer:
         - HalfWallLayer
-  - type: Nuke
-    explosionType: Default
-    maxIntensity: 100
-    intensitySlope: 5
-    totalIntensity: 300
-  - type: StaticPrice
-    price: 50000 # war profits
 
 - type: entity
   parent: ImprovisedNuclearBomb
