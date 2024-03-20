@@ -51,6 +51,8 @@
     sound: /Audio/SimpleStation14/Items/Handling/crowbar_pickup.ogg
   - type: EmitSoundOnDrop
     sound: /Audio/SimpleStation14/Items/Handling/crowbar_drop.ogg
+    soundHit:
+      collection: MetalThud
 
 - type: entity
   name: syndicate jaws of life
