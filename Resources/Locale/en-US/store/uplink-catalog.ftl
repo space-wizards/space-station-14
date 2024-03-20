@@ -409,3 +409,6 @@ uplink-hypodart-desc = A seemingly unremarkable dart with an enlarged reservoir 
 
 uplink-barber-scissors-name = Barber Scissors
 uplink-barber-scissors-desc = A good tool to give your fellow agent a nice haircut, unless you want to give it to yourself.
+
+uplink-warhorn-name = Syndicate Warhorn
+uplink-warhorn-desc = A tool that releases an intimidating sound, great for letting the station know you're nearby.
