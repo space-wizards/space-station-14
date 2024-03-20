@@ -29,7 +29,6 @@
   - type: Tag
     tags:
     - Pizza
-    - Fruit # Tomato? idk
 
 - type: entity
   parent: FoodInjectableBase # Not sliceable
