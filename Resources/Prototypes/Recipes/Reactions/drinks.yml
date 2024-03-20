@@ -59,7 +59,7 @@
   reactants:
     B52:
       amount: 10
-    Uranium:
+    Uranium-238:
       amount: 1
   products:
     AtomicBomb: 11
@@ -535,7 +535,7 @@
   reactants:
     Whiskey:
       amount: 10
-    Uranium:
+    Uranium-238:
       amount: 1
   products:
     ManhattanProject: 10
@@ -623,7 +623,7 @@
   reactants:
     Cola:
       amount: 5
-    Uranium:
+    Uranium-238:
       amount: 1
   products:
     NuclearCola: 5
@@ -792,7 +792,7 @@
   reactants:
     LongIslandIcedTea:
       amount: 10
-    Uranium:
+    Uranium-238:
       amount: 1
   products:
     ThreeMileIsland: 10
