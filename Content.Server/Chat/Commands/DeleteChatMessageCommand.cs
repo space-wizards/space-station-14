@@ -18,6 +18,8 @@ namespace Content.Server.Chat.Commands
         {
             if (!uint.TryParse(args[0], out var result))
             {
+                shell.WriteError("can't delete chat message: invalid number argument");
+
                 return;
             }
 

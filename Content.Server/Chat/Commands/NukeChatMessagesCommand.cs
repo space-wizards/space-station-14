@@ -33,27 +33,28 @@ namespace Content.Server.Chat.Commands
             }
         }
 
-    [AdminCommand(AdminFlags.Admin)]
-    internal sealed class NukeChatMessagesUserIdCommand : IConsoleCommand
-    {
-        [Dependency] private readonly ChatRepository _repo = default!;
-
-        public string Command => "nukeuserids";
-        public string Description => "Delete all of the supplied userIds' chat messages posted during this round";
-        public string Help => "nukeuserids <username> <username> <username> <username>...";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        [AdminCommand(AdminFlags.Admin)]
+        internal sealed class NukeChatMessagesUserIdCommand : IConsoleCommand
         {
-            if (args.Length <= 0)
-            {
-                return;
-            }
+            [Dependency] private readonly ChatRepository _repo = default!;
 
-            foreach (var username in args)
+            public string Command => "nukeuserids";
+            public string Description => "Delete all of the supplied userIds' chat messages posted during this round";
+            public string Help => "nukeuserids <username> <username> <username> <username>...";
+
+            public void Execute(IConsoleShell shell, string argStr, string[] args)
             {
-                if (!_repo.NukeForUserId(username, out var reason))
+                if (args.Length <= 0)
                 {
-                    shell.WriteError($"nuke for userId {args[0]} failed: {reason}");
+                    return;
+                }
+
+                foreach (var username in args)
+                {
+                    if (!_repo.NukeForUserId(username, out var reason))
+                    {
+                        shell.WriteError($"nuke for userId {args[0]} failed: {reason}");
+                    }
                 }
             }
         }
