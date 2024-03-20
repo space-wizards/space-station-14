@@ -62,7 +62,7 @@ namespace Content.Client.Construction.UI
                     else
                         _constructionView.OpenCentered();
 
-                    if(_selected != null)
+                    if (_selected != null)
                         PopulateInfo(_selected);
                 }
                 else
@@ -103,7 +103,6 @@ namespace Content.Client.Construction.UI
 
             PopulateCategories();
             OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
-
         }
 
         public void OnHudCraftingButtonToggled(ButtonToggledEventArgs args)
@@ -192,6 +191,8 @@ namespace Content.Client.Construction.UI
             // hard-coded to show all recipes
             uniqueCategories.Add("construction-category-all");
 
+            // uniqueCategories.Add("favorites");
+
             foreach (var prototype in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
                 var category = prototype.Category;
@@ -218,7 +219,10 @@ namespace Content.Client.Construction.UI
         {
             var spriteSys = _systemManager.GetEntitySystem<SpriteSystem>();
             _constructionView.ClearRecipeInfo();
-            _constructionView.SetRecipeInfo(prototype.Name, prototype.Description, spriteSys.Frame0(prototype.Icon), prototype.Type != ConstructionType.Item);
+            _constructionView.SetRecipeInfo(
+                prototype.Name, prototype.Description, spriteSys.Frame0(prototype.Icon),
+                prototype.Type != ConstructionType.Item,
+                false);
 
             var stepList = _constructionView.RecipeStepList;
             GenerateStepList(prototype, stepList);
@@ -236,7 +240,7 @@ namespace Content.Client.Construction.UI
                 var text = entry.Arguments != null
                     ? Loc.GetString(entry.Localization, entry.Arguments) : Loc.GetString(entry.Localization);
 
-                if (entry.EntryNumber is {} number)
+                if (entry.EntryNumber is { } number)
                 {
                     text = Loc.GetString("construction-presenter-step-wrapper",
                         ("step-number", number), ("text", text));

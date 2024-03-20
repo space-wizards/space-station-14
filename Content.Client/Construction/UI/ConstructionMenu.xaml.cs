@@ -37,7 +37,7 @@ namespace Content.Client.Construction.UI
         event EventHandler ClearAllGhosts;
 
         void ClearRecipeInfo();
-        void SetRecipeInfo(string name, string description, Texture iconTexture, bool isItem);
+        void SetRecipeInfo(string name, string description, Texture iconTexture, bool isItem, bool isFavorite);
         void ResetPlacement();
 
         #region Window Control
@@ -112,13 +112,16 @@ namespace Content.Client.Construction.UI
             EraseButton.Pressed = false;
         }
 
-        public void SetRecipeInfo(string name, string description, Texture iconTexture, bool isItem)
+        public void SetRecipeInfo(
+            string name, string description, Texture iconTexture, bool isItem, bool isFavorite)
         {
             BuildButton.Disabled = false;
             BuildButton.Text = Loc.GetString(isItem ? "construction-menu-place-ghost" : "construction-menu-craft");
             TargetName.SetMessage(name);
             TargetDesc.SetMessage(description);
             TargetTexture.Texture = iconTexture;
+            FavoriteButton.Visible = true;
+            FavoriteButton.Text = isFavorite ? "construction-add-favorite-button" : "construction-remove-from-favorite-button";
         }
 
         public void ClearRecipeInfo()
@@ -127,6 +130,7 @@ namespace Content.Client.Construction.UI
             TargetName.SetMessage(string.Empty);
             TargetDesc.SetMessage(string.Empty);
             TargetTexture.Texture = null;
+            FavoriteButton.Visible = false;
             RecipeStepList.Clear();
         }
     }
