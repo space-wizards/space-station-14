@@ -25,12 +25,13 @@
 - type: startingGear
   id: SecurityOfficerGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitSec
+    jumpsuit: ClothingUniformJumpsuitClown
     back: ClothingBackpackSecurityFilled
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesClown
     eyes: ClothingEyesGlassesSunglasses
     head: ClothingHeadHelmetBasic
     outerClothing: ClothingOuterArmorBasic
+    mask: ClothingMaskClown
     id: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled

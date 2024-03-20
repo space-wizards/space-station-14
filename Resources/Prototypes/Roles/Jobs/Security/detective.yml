@@ -26,9 +26,10 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitDetective
     back: ClothingBackpackSecurityFilledDetective
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesClown
     eyes: ClothingEyesGlassesSunglasses
     head: ClothingHeadHatFedoraBrown
+    mask: ClothingMaskClown
     outerClothing: ClothingOuterVestDetective
     id: DetectivePDA
     ears: ClothingHeadsetSecurity

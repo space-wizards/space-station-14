@@ -23,7 +23,8 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitParamedic
     back: ClothingBackpackParamedicFilled
-    shoes: ClothingShoesColorBlue
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClown
     id: ParamedicPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalEMTFilled

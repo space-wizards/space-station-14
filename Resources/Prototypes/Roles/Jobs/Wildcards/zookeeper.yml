@@ -19,7 +19,8 @@
     jumpsuit: ClothingUniformJumpsuitSafari
     back: ClothingBackpackFilled
     head: ClothingHeadSafari
-    shoes: ClothingShoesColorWhite
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClown
     id: ZookeeperPDA
     ears: ClothingHeadsetService
   innerClothingSkirt: ClothingUniformJumpsuitSafari

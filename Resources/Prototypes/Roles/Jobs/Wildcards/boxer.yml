@@ -21,7 +21,8 @@
     id: BoxerPDA
     ears: ClothingHeadsetService
     gloves: ClothingHandsGlovesBoxingRed
-    shoes: ClothingShoesColorRed
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClown
     belt: ClothingBeltChampion
   innerClothingSkirt: UniformShortsRedWithTop
   satchel: ClothingBackpackSatchelFilled

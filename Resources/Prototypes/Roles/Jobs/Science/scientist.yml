@@ -20,9 +20,10 @@
 - type: startingGear
   id: ScientistGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitScientist
+    jumpsuit: ClothingUniformJumpsuitClown
     back: ClothingBackpackScienceFilled
-    shoes: ClothingShoesColorWhite
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClown
     outerClothing: ClothingOuterCoatRnd
     id: SciencePDA
     ears: ClothingHeadsetScience

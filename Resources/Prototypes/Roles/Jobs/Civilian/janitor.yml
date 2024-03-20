@@ -24,6 +24,7 @@
     back: ClothingBackpackFilled
     shoes: ClothingShoesGaloshes
     head: ClothingHeadHatPurplesoft
+    mask: ClothingMaskClown
     id: JanitorPDA
     gloves: ClothingHandsGlovesJanitor
     ears: ClothingHeadsetService

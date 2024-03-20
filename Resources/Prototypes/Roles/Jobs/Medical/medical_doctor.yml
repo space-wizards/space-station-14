@@ -22,9 +22,10 @@
 - type: startingGear
   id: DoctorGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    jumpsuit: ClothingUniformJumpsuitClown
     back: ClothingBackpackMedicalFilled
-    shoes: ClothingShoesColorWhite
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClown
     outerClothing: ClothingOuterCoatLab
     id: MedicalPDA
     ears: ClothingHeadsetMedical

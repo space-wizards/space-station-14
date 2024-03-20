@@ -18,7 +18,8 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitReporter
     back: ClothingBackpackFilled
-    shoes: ClothingShoesColorWhite
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClown
     id: ReporterPDA
     ears: ClothingHeadsetService
   innerClothingSkirt: ClothingUniformJumpsuitJournalist
