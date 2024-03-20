@@ -9,14 +9,9 @@ using Robust.Shared.Replays;
 namespace Content.Server.Chat.V2.Repository;
 
 /// <summary>
-/// Stores <see cref="IChatEvent"/>, gives them UIDs, and issues <see cref="ChatEventCreated"/>.
+/// Stores <see cref="IChatEvent"/>, gives them UIDs, and issues <see cref="MessageCreatedEvent"/>.
+/// Allows for deletion of messages.
 /// </summary>
-/// <remarks>
-/// This is an <see cref="EntitySystem"/> because:
-/// <list type="number"><item>It raises events</item>
-/// <item>It needs to extract user UIDs from entities</item>
-/// <item>Making this be a manager means more auto-wiring boilerplate</item></list>
-/// </remarks>
 public sealed class ChatRepository : EntitySystem
 {
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
@@ -179,7 +174,9 @@ public sealed class ChatRepository : EntitySystem
     /// <param name="userName">The user ID to nuke.</param>
     /// <param name="reason">Why nuking failed, if it did.</param>
     /// <returns>If nuking did anything.</returns>
-    /// <remarks>Note that this could be a <b>very large</b> event, as we send every single event ID over the wire.</remarks>
+    /// <remarks>Note that this could be a <b>very large</b> event, as we send every single event ID over the wire.
+    /// By necessity we can't leak the player-source of chat messages (or if they even have the same origin) because of
+    /// client modders who could use that information to cheat/metagrudge/etc >:(</remarks>
     public bool NukeForUsername(string userName, [NotNullWhen(false)] out string? reason)
     {
         if (!_userNamesToIds.TryGetValue(userName, out var userId))
@@ -199,7 +196,9 @@ public sealed class ChatRepository : EntitySystem
     /// <param name="userId">The user ID to nuke.</param>
     /// <param name="reason">Why nuking failed, if it did.</param>
     /// <returns>If nuking did anything.</returns>
-    /// <remarks>Note that this could be a <b>very large</b> event, as we send every single event ID over the wire.</remarks>
+    /// <remarks>Note that this could be a <b>very large</b> event, as we send every single event ID over the wire.
+    /// By necessity we can't leak the player-source of chat messages (or if they even have the same origin) because of
+    /// client modders who could use that information to cheat/metagrudge/etc >:(</remarks>
     public bool NukeForUserId(string userId, [NotNullWhen(false)] out string? reason)
     {
         if (!_playerMessages.TryGetValue(userId, out var dict))
