@@ -1,7 +1,6 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Robust.Shared.Audio;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
@@ -53,6 +52,12 @@ public sealed partial class StoreComponent : Component
     /// All listings, including those that aren't available to the buyer
     /// </summary>
     public HashSet<ListingData> Listings = new();
+
+    /// <summary>
+    /// Discounts for items in <see cref="Listings"/>.
+    /// </summary>
+    [ViewVariables, DataField]
+    public List<StoreDiscountData> Discounts = new();
 
     /// <summary>
     /// All available listings from the last time that it was checked.

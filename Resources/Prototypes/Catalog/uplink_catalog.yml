@@ -6,6 +6,8 @@
   name: uplink-pistol-viper-name
   description: uplink-pistol-viper-desc
   productEntity: WeaponPistolViper
+  discountCategory: category1
+  discountOptions: [0.3,0.8]
   cost:
     Telecrystal: 3
   categories:
@@ -89,7 +91,7 @@
       blacklist:
         tags:
           - NukeOpsUplink
-  
+
 - type: listing
   id: UplinkEshield
   name: uplink-eshield-name
@@ -467,7 +469,7 @@
     Telecrystal: 6
   categories:
   - UplinkChemicals
-  
+
 - type: listing
   id: UplinkHypoDart
   name: uplink-hypodart-name
@@ -489,7 +491,7 @@
     Telecrystal: 4
   categories:
   - UplinkChemicals
-  
+
 - type: listing
   id: UplinkZombieBundle
   name: uplink-zombie-bundle-name
@@ -559,7 +561,7 @@
     Telecrystal: 12
   categories:
   - UplinkChemicals
-  
+
 - type: listing
   id: UplinkCigarettes
   name: uplink-cigarettes-name
@@ -590,7 +592,7 @@
           - SurplusBundle
 
 # Deception
-  
+
 - type: listing
   id: UplinkAgentIDCard
   name: uplink-agent-id-card-name
@@ -600,7 +602,7 @@
     Telecrystal: 3
   categories:
   - UplinkDeception
-  
+
 - type: listing
   id: UplinkStealthBox
   name: uplink-stealth-box-name
@@ -628,11 +630,11 @@
   description: uplink-binary-translator-key-desc
   icon: { sprite: /Textures/Objects/Devices/encryption_keys.rsi, state: rd_label }
   productEntity: EncryptionKeyBinary
-  cost: 
+  cost:
     Telecrystal: 1
   categories:
   - UplinkDeception
-  
+
 - type: listing
   id: UplinkCyberpen
   name: uplink-cyberpen-name
@@ -652,7 +654,7 @@
     Telecrystal: 1
   categories:
   - UplinkDeception
-  
+
 - type: listing
   id: UplinkUltrabrightLantern
   name: uplink-ultrabright-lantern-name
@@ -705,7 +707,7 @@
     Telecrystal: 8
   categories:
   - UplinkDisruption
-  
+
 - type: listing
   id: UplinkRadioJammer
   name: uplink-radio-jammer-name
@@ -745,7 +747,7 @@
     Telecrystal: 3
   categories:
   - UplinkDisruption
-  
+
 - type: listing
   id: UplinkToolbox
   name: uplink-toolbox-name
@@ -1099,7 +1101,7 @@
       whitelist:
         tags:
           - NukeOpsUplink
- 
+
 - type: listing
   id: UplinkUplinkImplanter # uplink uplink real
   name: uplink-uplink-implanter-name
@@ -1354,6 +1356,8 @@
   name: uplink-outlaw-glasses-name
   description: uplink-outlaw-glasses-desc
   productEntity: ClothingEyesGlassesOutlawGlasses
+  discountCategory: category1
+  discountOptions: [ 0.5, 0.7 ]
   cost:
     Telecrystal: 1
   categories:
@@ -1364,6 +1368,8 @@
   name: uplink-costume-pyjama-name
   description: uplink-costume-pyjama-desc
   productEntity: ClothingBackpackDuffelSyndicatePyjamaBundle
+  discountCategory: category0
+  discountOptions: [0.5,0.7]
   cost:
     Telecrystal: 4
   categories:
@@ -1374,6 +1380,7 @@
   name: uplink-costume-clown-name
   description: uplink-costume-clown-desc
   productEntity: ClothingBackpackDuffelSyndicateCostumeClown
+
   cost:
     Telecrystal: 2
   categories:
@@ -1414,6 +1421,8 @@
   name: uplink-balloon-name
   description: uplink-balloon-desc
   productEntity: BalloonSyn
+  discountCategory: category2
+  discountOptions: [0.5,0.7]
   cost:
     Telecrystal: 20
   categories:
@@ -1446,6 +1455,8 @@
   name: uplink-gatfruit-seeds-name
   description: uplink-gatfruit-seeds-desc
   productEntity: GatfruitSeeds
+  discountCategory: category1
+  discountOptions: [ 0.5, 0.7 ]
   cost:
     Telecrystal: 6
   categories:
@@ -1506,6 +1517,8 @@
   name: uplink-holy-hand-grenade-name
   description: uplink-holy-hand-grenade-desc
   productEntity: HolyHandGrenade
+  discountCategory: category1
+  discountOptions: [ 0.5, 0.7 ]
   cost:
     Telecrystal: 20
   categories:
@@ -1520,6 +1533,8 @@
   name: uplink-revolver-cap-gun-fake-name
   description: uplink-revolver-cap-gun-fake-desc
   productEntity: RevolverCapGunFake
+  discountCategory: category1
+  discountOptions: [ 0.5, 0.7 ]
   cost:
     Telecrystal: 9
   categories:

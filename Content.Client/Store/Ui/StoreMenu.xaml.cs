@@ -59,7 +59,7 @@ public sealed partial class StoreMenu : DefaultWindow
             (type.Key, type.Value), type => _prototypeManager.Index<CurrencyPrototype>(type.Key));
 
         var balanceStr = string.Empty;
-        foreach (var ((type, amount),proto) in currency)
+        foreach (var ((type, amount), proto) in currency)
         {
             balanceStr += Loc.GetString("store-ui-balance-display", ("amount", amount),
                 ("currency", Loc.GetString(proto.DisplayName, ("amount", 1))));
@@ -77,7 +77,7 @@ public sealed partial class StoreMenu : DefaultWindow
         WithdrawButton.Disabled = disabled;
     }
 
-    public void UpdateListing(List<ListingData> listings)
+    public void UpdateListing(List<ListingData> listings, List<StoreDiscountData> msgDiscounts)
     {
         var sorted = listings.OrderBy(l => l.Priority).ThenBy(l => l.Cost.Values.Sum());
 
@@ -85,9 +85,13 @@ public sealed partial class StoreMenu : DefaultWindow
         // should probably chunk these out instead. to-do if this clogs the internet tubes.
         // maybe read clients prototypes instead?
         ClearListings();
+        var storeDiscounts = msgDiscounts.Where(x => x.Count > 0)
+                                         .ToDictionary(x => x.ListingId);
+
         foreach (var item in sorted)
         {
-            AddListingGui(item);
+            storeDiscounts.TryGetValue(item.ID, out var discountData);
+            AddListingGui(item, discountData);
         }
     }
 
@@ -124,7 +128,7 @@ public sealed partial class StoreMenu : DefaultWindow
         OnRefundAttempt?.Invoke(args);
     }
 
-    private void AddListingGui(ListingData listing)
+    private void AddListingGui(ListingData listing, StoreDiscountData? discountData)
     {
         if (!listing.Categories.Contains(CurrentCategory))
             return;
@@ -132,7 +136,7 @@ public sealed partial class StoreMenu : DefaultWindow
         var listingName = Loc.GetString(listing.Name);
         var listingDesc = Loc.GetString(listing.Description);
         var listingPrice = listing.Cost;
-        var canBuy = CanBuyListing(Balance, listingPrice);
+        var canBuy = CanBuyListing(Balance, listingPrice, discountData);
 
         var spriteSys = _entityManager.EntitySysManager.GetEntitySystem<SpriteSystem>();
 
@@ -160,8 +164,9 @@ public sealed partial class StoreMenu : DefaultWindow
                 texture = spriteSys.Frame0(action.Icon);
             }
         }
-        var listingInStock = ListingInStock(listing);
-        if (listingInStock != GetListingPriceString(listing))
+
+        var listingInStock = ListingInStock(listing, discountData);
+        if (listingInStock != GetListingPriceString(listing, discountData))
         {
             listingName += " (Out of stock)";
             canBuy = false;
@@ -177,9 +182,10 @@ public sealed partial class StoreMenu : DefaultWindow
     /// <summary>
     /// Return time until available or the cost.
     /// </summary>
-    /// <param name="listing"></param>
+    /// <param name="listing">Data for store item.</param>
+    /// <param name="discountData">Discount for item, if applicable.</param>
     /// <returns></returns>
-    public string ListingInStock(ListingData listing)
+    public string ListingInStock(ListingData listing, StoreDiscountData? discountData)
     {
         var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
 
@@ -190,22 +196,30 @@ public sealed partial class StoreMenu : DefaultWindow
             return timeLeftToBuy.Duration().ToString(@"mm\:ss");
         }
 
-        return GetListingPriceString(listing);
+        return GetListingPriceString(listing, discountData);
     }
-    public bool CanBuyListing(Dictionary<string, FixedPoint2> currency, Dictionary<string, FixedPoint2> price)
+
+    public bool CanBuyListing(Dictionary<string, FixedPoint2> currentBalance, Dictionary<string, FixedPoint2> price, StoreDiscountData? discountData)
     {
-        foreach (var type in price)
+        foreach (var (currency, value) in price)
         {
-            if (!currency.ContainsKey(type.Key))
+            if (!currentBalance.ContainsKey(currency))
                 return false;
 
-            if (currency[type.Key] < type.Value)
+            var amount = value;
+            if (discountData != null && discountData.DiscountByCurrency.TryGetValue(currency, out var discount))
+            {
+                amount = Math.Round(amount.Value * (1 - discount) / 100);
+            }
+
+            if (currentBalance[currency] < amount)
                 return false;
         }
+
         return true;
     }
 
-    public string GetListingPriceString(ListingData listing)
+    public string GetListingPriceString(ListingData listing, StoreDiscountData? discountData)
     {
         var text = string.Empty;
         if (listing.Cost.Count < 1)
@@ -214,9 +228,25 @@ public sealed partial class StoreMenu : DefaultWindow
         {
             foreach (var (type, amount) in listing.Cost)
             {
+                var totalAmount = amount;
+                var discountMessage = string.Empty;
+                if (discountData?.DiscountByCurrency.TryGetValue(type, out var value) != null
+                    && value > 0)
+                {
+                    totalAmount = Math.Round(totalAmount.Value * (1 - value) / 100);
+                    discountMessage = Loc.GetString(
+                        "store-discount-display",
+                        ("amount", (value * 100).ToString("####"))
+                    );
+                }
+
                 var currency = _prototypeManager.Index<CurrencyPrototype>(type);
-                text += Loc.GetString("store-ui-price-display", ("amount", amount),
-                    ("currency", Loc.GetString(currency.DisplayName, ("amount", amount))));
+                text += Loc.GetString(
+                            "store-ui-price-display",
+                            ("amount", totalAmount),
+                            ("currency", Loc.GetString(currency.DisplayName, ("amount", totalAmount)))
+                        )
+                        + discountMessage;
             }
         }
 

@@ -3,6 +3,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
@@ -28,6 +29,18 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// </summary>
     [DataField("name")]
     public string Name = string.Empty;
+
+    /// <summary>
+    /// Discount category for listing item. This marker describes chance of how often will item be discounted.
+    /// </summary>
+    [DataField("discountCategory")]
+    public DiscountCategory DiscountCategory;
+
+    /// <summary>
+    /// Options for discount - % of how much item costs can be cut by discount.
+    /// </summary>
+    [DataField("discountOptions")]
+    public List<float> DiscountOptions = default!;
 
     /// <summary>
     /// The description of the listing. If empty, uses the entity's description (if present)
@@ -166,11 +179,12 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             ProductEvent = ProductEvent,
             PurchaseAmount = PurchaseAmount,
             RestockTime = RestockTime,
+            DiscountCategory = DiscountCategory,
+            DiscountOptions = DiscountOptions
         };
     }
 }
 
-//<inheritdoc>
 /// <summary>
 ///     Defines a set item listing that is available in a store
 /// </summary>
@@ -179,5 +193,50 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
 [DataDefinition]
 public sealed partial class ListingPrototype : ListingData, IPrototype
 {
+}
 
+[Serializable, NetSerializable]
+public enum DiscountCategory : byte
+{
+    /// <summary>
+    /// Items should not be discounted in any way share or form for the love of humanity.
+    /// </summary>
+    NoGoCategory,
+
+    /// <summary>
+    /// Dirty-cheap items that are rarely used and can be discounted to 0-ish cost to encourage usage.
+    /// </summary>
+    Category0,
+
+    /// <summary>
+    /// Cheap items that are used not very often.
+    /// </summary>
+    Category1,
+
+    /// <summary>
+    /// Casually used items that are widely used but can be (rarely) discounted for epic lulz.
+    /// </summary>
+    Category2
+}
+
+[Serializable, NetSerializable, DataDefinition]
+public sealed partial class StoreDiscountData
+{
+    /// <summary>
+    /// Id of listing item to be discounted.
+    /// </summary>
+    [DataField("listingId")]
+    public string ListingId = default!;
+
+    /// <summary>
+    /// Amount of discounted items. Each buy will decrement this counter.
+    /// </summary>
+    [DataField("count")]
+    public int Count;
+
+    /// <summary>
+    /// Map of currencies to % value of discount.
+    /// </summary>
+    [DataField("discountByCurrency")]
+    public Dictionary<string, float> DiscountByCurrency = new();
 }

@@ -110,7 +110,7 @@ public sealed partial class StoreSystem
 
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
-        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter, component.RefundAllowed);
+        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, component.Discounts, showFooter, component.RefundAllowed);
         _ui.SetUiState(ui, state);
     }
 
@@ -155,9 +155,16 @@ public sealed partial class StoreSystem
         }
 
         //check that we have enough money
-        foreach (var currency in listing.Cost)
+        var discountData = component.Discounts.FirstOrDefault(x => x.Count > 0 && x.ListingId == listing.ID);
+        foreach (var (currency, value) in listing.Cost)
         {
-            if (!component.Balance.TryGetValue(currency.Key, out var balance) || balance < currency.Value)
+            var totalAmount = value;
+            if (discountData?.DiscountByCurrency.TryGetValue(currency, out var discount) != null)
+            {
+                totalAmount = Math.Round(totalAmount.Value * (1 - discount) / 100);
+            }
+
+            if (!component.Balance.TryGetValue(currency, out var balance) || balance < totalAmount)
             {
                 return;
             }
@@ -171,7 +178,14 @@ public sealed partial class StoreSystem
         //subtract the cash
         foreach (var (currency, value) in listing.Cost)
         {
-            component.Balance[currency] -= value;
+            var totalAmount = value;
+            if (discountData?.DiscountByCurrency?.TryGetValue(currency, out var discount) != null)
+            {
+                totalAmount = Math.Round(totalAmount.Value * (1 - discount) / 100);
+                discountData.Count--;
+            }
+
+            component.Balance[currency] -= totalAmount;
 
             component.BalanceSpent.TryAdd(currency, FixedPoint2.Zero);
 
@@ -344,6 +358,7 @@ public sealed partial class StoreSystem
         {
             component.Balance[currency] += value;
         }
+
         // Reset store back to its original state
         RefreshAllListings(component);
         component.BalanceSpent = new();
