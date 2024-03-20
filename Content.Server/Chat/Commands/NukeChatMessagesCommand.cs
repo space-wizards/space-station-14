@@ -24,7 +24,7 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            foreach (var username in args[1..])
+            foreach (var username in args)
             {
                 if (!_repo.NukeForUsername(username, out var reason))
                 {
@@ -49,7 +49,7 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            foreach (var username in args[1..])
+            foreach (var username in args)
             {
                 if (!_repo.NukeForUserId(username, out var reason))
                 {
