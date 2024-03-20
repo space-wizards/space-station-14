@@ -52,7 +52,7 @@
     - KeyedInstrument
 
 - type: entity
-  parent: BaseWornInstrument
+  parent: [BaseHandheldInstrument, Clothing]
   id: HarmonicaInstrument
   name: harmonica
   components:
@@ -66,8 +66,11 @@
     sprite: Objects/Fun/Instruments/harmonica.rsi
     storedRotation: -90
   - type: Clothing
+    quickEquip: false
     slots:
     - neck
+  - type: ActivatableUI
+    inHandsOnly: false  
   - type: Tag
     tags:
     - WoodwindInstrument
