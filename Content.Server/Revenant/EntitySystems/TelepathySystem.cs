@@ -1,8 +1,8 @@
-using Content.Server.Revenant.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Content.Server.Administration;
 using Content.Server.Prayer;
+using Content.Shared.Revenant.Components;
 
 namespace Content.Server.Revenant;
 
@@ -18,7 +18,7 @@ public sealed partial class TelepathySystem : EntitySystem
 
     private void GetVerbs(GetVerbsEvent<Verb> ev)
     {
-    AddRevenantVerbs(ev);
+        AddRevenantVerbs(ev);
     }
 
     private void AddRevenantVerbs(GetVerbsEvent<Verb> args)
@@ -28,7 +28,7 @@ public sealed partial class TelepathySystem : EntitySystem
 
         var player = actor.PlayerSession;
 
-        if (!HasComp<EssenceComponent>(args.User))
+        if (HasComp<RevenantComponent>(args.User))
         {
 
             if (TryComp(args.Target, out ActorComponent? targetActor))
