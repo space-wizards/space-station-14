@@ -46,6 +46,8 @@ namespace Content.Server.Chat.Commands
             {
                 if (args.Length <= 0)
                 {
+                    shell.WriteError($"nuking messages failed: you forgot to input a userId!");
+
                     return;
                 }
 
