@@ -55,9 +55,10 @@ public sealed partial class WoundSystem
 
         if (_random.NextFloat(0f, 1f) > NonCoreDamageChance)
         {
-            if (_random.NextFloat(0f, 1f) <= HeadDamageChance)
+            var heads = _bodySystem.GetBodyChildrenOfType(bodyEnt, BodyPartType.Head, body).ToList();
+            if (_random.NextFloat(0f, 1f) <= HeadDamageChance && heads.Count > 0)
             {
-                var heads = _bodySystem.GetBodyChildrenOfType(bodyEnt, BodyPartType.Head, body).ToList();
+
                 var (headId, _) = heads[_random.Next(heads.Count)];
                 if (TryComp(headId, out damagableComp))
                 {
@@ -114,6 +115,9 @@ public sealed partial class WoundSystem
 
     public void RemoveWound(Entity<WoundComponent> wound, Entity<WoundableComponent>? woundableParent)
     {
+        if (_netManager.IsClient)
+            return; //TempHack to prevent removal from running on the client, wounds are updated from the network
+
         if (woundableParent != null)
         {
             if (wound.Comp.ParentWoundable != woundableParent.Value.Owner)
@@ -160,6 +164,9 @@ public sealed partial class WoundSystem
 
     private void AddWound(Entity<WoundableComponent> woundable, EntProtoId woundProtoId, FixedPoint2 severity)
     {
+        if (_netManager.IsClient)
+            return; //TempHack to prevent addition from running on the client, wounds are updated from the network
+
         var newWound = CreateWound(woundProtoId, severity);
         var attempt = new CreateWoundAttemptEvent(woundable, newWound);
         RaiseLocalEvent(woundable, ref attempt);

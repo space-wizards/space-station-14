@@ -9,6 +9,7 @@ using Content.Shared.Verbs;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
+using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Toolshed;
@@ -23,8 +24,8 @@ public sealed class MedicalMenuSystem : EntitySystem
     [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
-    [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
-    [Dependency] private readonly ToolshedManager _toolshed = default!;
+    [Dependency] private readonly IConsoleHost _console = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
 
     private MedicalMenuUIController _medMenuController = default!;
 
@@ -60,7 +61,7 @@ public sealed class MedicalMenuSystem : EntitySystem
                 {
                     Text = Loc.GetString("Print All Wounds"),
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/vv.svg.192dpi.png")),
-                    Act = () => _toolshed.InvokeCommand(_player.LocalSession, "PrintAllWounds", args.Target, out _),
+                    Act = () => _console.RemoteExecuteCommand(_player.LocalSession, $"PrintAllWounds \"{_entityManager.GetNetEntity(args.Target)}\""),
                     ClientExclusive = true // opening VV window is client-side. Don't ask server to run this verb.
                 };
                 args.Verbs.Add(verb);

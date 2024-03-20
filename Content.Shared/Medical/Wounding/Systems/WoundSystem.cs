@@ -1,10 +1,7 @@
 ﻿using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
-using Content.Shared.FixedPoint;
 using Content.Shared.Gibbing.Systems;
 using Content.Shared.Medical.Wounding.Components;
-using Content.Shared.Medical.Wounding.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
