@@ -208,7 +208,13 @@
         probability: 0.02
         damage:
           types:
-            Cellular: 60 #smoking gives you stage 7 lung cancer.
+            Cellular: 50 #smoking gives you stage 7 lung cancer.
+      - !type:PopupMessage
+        visualType: LargeCaution
+        probability: 0.02
+        type: Local
+        messages:
+        - generic-reagent-effect-tumors
 
 # TODO: Replace these nonstandardized effects with generic brain damage
 - type: reagent
