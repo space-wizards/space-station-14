@@ -646,7 +646,14 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book0 
+    - state: paper
+    - state: cover_old
+      color: "#c526de"
+    - state: decor_wingette
+    - state: icon_bucket
+    - state: detail_bookmark
+      color: "#61363d"
+    - state: overlay_dirt
   - type: Paper
     content: book-text-janitor
 
