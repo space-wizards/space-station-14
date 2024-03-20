@@ -210,8 +210,9 @@
       amount: 1
     Plasma:
       amount: 2
+      catalyst: true
     DexalinPlus:
       amount: 1
   effects:
     products:
-     Lingium: 1
+     Lingium: 4
