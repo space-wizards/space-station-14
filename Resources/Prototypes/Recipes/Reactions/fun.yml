@@ -200,3 +200,18 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
+
+ id: Lingium
+  impact: Low
+  quantized: true
+  minTemp: 500
+  reactants:
+    Doxarubixadone:
+      amount: 1
+    Plasma:
+      amount: 2
+    DexalinPlus:
+      amount: 1
+  effects:
+    products:
+     Lingium: 1
