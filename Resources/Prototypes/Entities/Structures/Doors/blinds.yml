@@ -110,7 +110,7 @@
     state: frame
   - type: Damageable
     damageContainer: StructuralInorganic
-    damageModifierSet: Metal
+    damageModifierSet: FlimsyMetallic
   - type: Construction
     graph: Blinds
     node: frameMetal
@@ -128,7 +128,7 @@
       map: ["enum.DoorVisualLayers.Base"]
   - type: Damageable
     damageContainer: StructuralInorganic
-    damageModifierSet: Metal
+    damageModifierSet: FlimsyMetallic
   - type: Construction
     graph: Blinds
     node: startMetalBlinds
