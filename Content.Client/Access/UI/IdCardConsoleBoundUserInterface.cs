@@ -1,5 +1,6 @@
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
+using Content.Shared.Access;
 using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.CrewManifest;
@@ -28,7 +29,6 @@ namespace Content.Client.Access.UI
             if (EntMan.TryGetComponent<IdCardConsoleComponent>(Owner, out var idCard))
             {
                 accessLevels = idCard.AccessLevels;
-                accessLevels.Sort();
             }
             else
             {
@@ -65,7 +65,7 @@ namespace Content.Client.Access.UI
             _window?.UpdateState(castState);
         }
 
-        public void SubmitData(string newFullName, string newJobTitle, List<string> newAccessList, string newJobPrototype)
+        public void SubmitData(string newFullName, string newJobTitle, List<ProtoId<AccessLevelPrototype>> newAccessList, string newJobPrototype)
         {
             if (newFullName.Length > MaxFullNameLength)
                 newFullName = newFullName[..MaxFullNameLength];

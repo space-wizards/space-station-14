@@ -105,7 +105,7 @@ namespace Content.Client.Access.UI
             _owner.SubmitData(
 
                 // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
-                _accessButtons.Where(x => x.Value.Pressed).Select(x => x.Key).ToList());
+                _accessButtons.Where(x => x.Value.Pressed).Select(x => new ProtoId<AccessLevelPrototype>(x.Key)).ToList());
         }
     }
 }

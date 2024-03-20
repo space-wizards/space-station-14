@@ -116,8 +116,8 @@ public sealed partial class NearbyAccessRule : RulesRule
     [DataField("count")]
     public int Count = 1;
 
-    [DataField("access", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
-    public List<string> Access = new();
+    [DataField("access", required: true)]
+    public List<ProtoId<AccessLevelPrototype>> Access = new();
 
     [DataField("range")]
     public float Range = 10f;

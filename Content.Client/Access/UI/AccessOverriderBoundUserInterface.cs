@@ -64,7 +64,7 @@ namespace Content.Client.Access.UI
             _window?.UpdateState(castState);
         }
 
-        public void SubmitData(List<string> newAccessList)
+        public void SubmitData(List<ProtoId<AccessLevelPrototype>> newAccessList)
         {
             SendMessage(new WriteToTargetAccessReaderIdMessage(newAccessList));
         }
