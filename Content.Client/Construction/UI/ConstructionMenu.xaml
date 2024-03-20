@@ -10,9 +10,11 @@
         </BoxContainer>
         <Control MinSize="10 0"/>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.6">
+            <Button Name="FavoriteButton" Visible="false" HorizontalExpand="False"
+                HorizontalAlignment="Right" Margin="0 0 0 10"/>
             <Control>
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 0 0 5">
-                    <BoxContainer Orientation="Horizontal" Align="Center" Margin="0 0 0 5">
+                    <BoxContainer Orientation="Horizontal" Align="Center">
                         <TextureRect Name="TargetTexture" HorizontalAlignment="Right" Stretch="Keep"/>
                         <Control MinSize="10 0"/>
                         <BoxContainer Orientation="Vertical">
@@ -20,11 +22,9 @@
                             <RichTextLabel Name="TargetDesc"/>
                         </BoxContainer>
                     </BoxContainer>
-                    <Button Name="FavoriteButton" Visible="false" HorizontalExpand="False"
-                        HorizontalAlignment="Right"/>
                 </BoxContainer>
             </Control>
-            <ItemList Name="RecipeStepList" Access="Public" VerticalExpand="True"/>
+            <ItemList Name="RecipeStepList" Access="Public" VerticalExpand="True" Margin="0 0 0 5"/>
             <BoxContainer Orientation="Vertical">
                 <Button Name="BuildButton" Disabled="True" ToggleMode="True" VerticalExpand="True" SizeFlagsStretchRatio="0.5"/>
                 <BoxContainer Orientation="Horizontal" VerticalExpand="True" SizeFlagsStretchRatio="0.5">
