@@ -32,6 +32,7 @@ namespace Content.Client.Construction.UI
 
         event EventHandler<(string search, string catagory)> PopulateRecipes;
         event EventHandler<ItemList.Item?> RecipeSelected;
+        event EventHandler RecipeFavorited;
         event EventHandler<bool> BuildButtonToggled;
         event EventHandler<bool> EraseButtonToggled;
         event EventHandler ClearAllGhosts;
@@ -97,12 +98,14 @@ namespace Content.Client.Construction.UI
             ClearButton.OnPressed += _ => ClearAllGhosts?.Invoke(this, EventArgs.Empty);
             EraseButton.Text = Loc.GetString("construction-menu-eraser-mode");
             EraseButton.OnToggled += args => EraseButtonToggled?.Invoke(this, args.Pressed);
+
+            FavoriteButton.OnPressed += args => RecipeFavorited?.Invoke(this, EventArgs.Empty);
         }
 
         public event EventHandler? ClearAllGhosts;
-
         public event EventHandler<(string search, string catagory)>? PopulateRecipes;
         public event EventHandler<ItemList.Item?>? RecipeSelected;
+        public event EventHandler? RecipeFavorited;
         public event EventHandler<bool>? BuildButtonToggled;
         public event EventHandler<bool>? EraseButtonToggled;
 

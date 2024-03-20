@@ -33,7 +33,7 @@ namespace Content.Client.Construction.UI
 
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
-
+        private List<ConstructionPrototype> _favoritedRecipes = [];
         private bool CraftingAvailable
         {
             get => _uiManager.GetActiveUIWidget<GameTopMenuBar>().CraftingButton.Visible;
@@ -100,6 +100,8 @@ namespace Content.Client.Construction.UI
                 _placementManager.ToggleEraserHijacked(new ConstructionPlacementHijack(_constructionSystem, null));
                 _constructionView.EraseButtonPressed = b;
             };
+
+            _constructionView.RecipeFavorited += (_, _) => OnViewFavoriteRecipe();
 
             PopulateCategories();
             OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
@@ -219,10 +221,11 @@ namespace Content.Client.Construction.UI
         {
             var spriteSys = _systemManager.GetEntitySystem<SpriteSystem>();
             _constructionView.ClearRecipeInfo();
+
             _constructionView.SetRecipeInfo(
                 prototype.Name, prototype.Description, spriteSys.Frame0(prototype.Icon),
                 prototype.Type != ConstructionType.Item,
-                false);
+                !_favoritedRecipes.Contains(prototype));
 
             var stepList = _constructionView.RecipeStepList;
             GenerateStepList(prototype, stepList);
@@ -330,6 +333,19 @@ namespace Content.Client.Construction.UI
         private void OnSystemUnloaded(object? sender, SystemChangedArgs args)
         {
             if (args.System is ConstructionSystem) SystemBindingChanged(null);
+        }
+
+        private void OnViewFavoriteRecipe()
+        {
+            if (_selected is not ConstructionPrototype recipe)
+                return;
+
+            if (!_favoritedRecipes.Remove(_selected))
+            {
+                _favoritedRecipes.Add(_selected);
+            }
+
+            PopulateInfo(_selected);
         }
 
         private void SystemBindingChanged(ConstructionSystem? newSystem)
