@@ -47,6 +47,8 @@
       params:
         variation: 0.250
         volume: -12
+    deactivatedSoundOnHitNoDamage:
+      collection: MetalThud
     activatedDamage:
         types:
             Heat: 8
