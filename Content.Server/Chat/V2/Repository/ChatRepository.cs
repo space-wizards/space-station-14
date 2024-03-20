@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Repository;
@@ -22,9 +23,10 @@ public sealed class ChatRepository : EntitySystem
     [Dependency] private readonly IPlayerManager _player = default!;
 
     // Clocks should start at 1, as 0 indicates "clock not set" or "clock forgotten to be set by bad programmer".
-    private uint _clock = 1;
+    private uint _nextMessageId = 1;
     private Dictionary<uint, ChatRecord> _messages = new();
     private Dictionary<string, Dictionary<uint, ChatRecord>> _playerMessages = new();
+    private Dictionary<string, string> _userNamesToIds = new();
 
     public override void Initialize()
     {
@@ -44,9 +46,16 @@ public sealed class ChatRepository : EntitySystem
     /// <returns>If storing and raising succeeded.</returns>
     public bool Add(IChatEvent ev)
     {
-        var i = _clock++;
-        var user = GetUserForEntity(ev);
-        ev.Id = i;
+        if (!_player.TryGetSessionByEntity(ev.Sender, out var session))
+        {
+            return false;
+        }
+
+        var messageId = _nextMessageId;
+
+        _nextMessageId++;
+
+        ev.Id = messageId;
 
         var location = new Vector2();
         var map = "";
@@ -63,22 +72,25 @@ public sealed class ChatRepository : EntitySystem
 
         var storedEv = new ChatRecord
         {
-            UserName = user,
+            UserName = session.Name,
+            UserId = session.UserId.UserId.ToString(),
             EntityName = Name(ev.Sender),
             Location = location,
             Map = map,
             StoredEvent = ev
         };
 
-        _messages.Add(i, storedEv);
+        _messages[messageId] = storedEv;
 
-        if (!_playerMessages.TryGetValue(user, out var set))
+        if (!_playerMessages.TryGetValue(storedEv.UserId, out var set))
         {
             set = new Dictionary<uint, ChatRecord>();
-            _playerMessages.Add(user, set);
+            _playerMessages[storedEv.UserId] = set;
         }
 
-        set.Add(i, storedEv);
+        set.Add(messageId, storedEv);
+
+        _userNamesToIds[storedEv.UserName] = storedEv.UserId;
 
         RaiseLocalEvent(ev.Sender, new MessageCreatedEvent(ev), true);
 
@@ -102,7 +114,12 @@ public sealed class ChatRepository : EntitySystem
     /// <returns>An array of messages.</returns>
     public IChatEvent[] GetMessagesFor(EntityUid entity)
     {
-        return _playerMessages.TryGetValue(GetUserForEntity(entity), out var recs)
+        if (!_player.TryGetSessionByEntity(entity, out var session))
+        {
+            return [];
+        }
+
+        return _playerMessages.TryGetValue(session.UserId.UserId.ToString(), out var recs)
             ? recs.Select(rec => rec.Value.StoredEvent).ToArray()
             : Array.Empty<IChatEvent>();
     }
@@ -159,13 +176,36 @@ public sealed class ChatRepository : EntitySystem
     /// Nukes a user's entire chat history from the repo and issues a <see cref="MessageDeletedEvent"/> saying this has
     /// happened.
     /// </summary>
-    /// <param name="user">The user ID to nuke.</param>
+    /// <param name="userName">The user ID to nuke.</param>
+    /// <param name="reason">Why nuking failed, if it did.</param>
     /// <returns>If nuking did anything.</returns>
     /// <remarks>Note that this could be a <b>very large</b> event, as we send every single event ID over the wire.</remarks>
-    public bool Nuke(string user)
+    public bool NukeForUsername(string userName, [NotNullWhen(false)] out string? reason)
     {
-        if (!_playerMessages.TryGetValue(user, out var dict))
+        if (!_userNamesToIds.TryGetValue(userName, out var userId))
         {
+            reason = "username doesn't equate to a userId in the repository";
+
+            return false;
+        }
+
+        return NukeForUserId(userId, out reason);
+    }
+
+    /// <summary>
+    /// Nukes a user's entire chat history from the repo and issues a <see cref="MessageDeletedEvent"/> saying this has
+    /// happened.
+    /// </summary>
+    /// <param name="userId">The user ID to nuke.</param>
+    /// <param name="reason">Why nuking failed, if it did.</param>
+    /// <returns>If nuking did anything.</returns>
+    /// <remarks>Note that this could be a <b>very large</b> event, as we send every single event ID over the wire.</remarks>
+    public bool NukeForUserId(string userId, [NotNullWhen(false)] out string? reason)
+    {
+        if (!_playerMessages.TryGetValue(userId, out var dict))
+        {
+            reason = "the user has no messages to nuke";
+
             return false;
         }
 
@@ -176,10 +216,12 @@ public sealed class ChatRepository : EntitySystem
 
         var ev = new MessagesNukedEvent(dict.Keys);
 
-        _playerMessages.Remove(user);
-        _playerMessages.Add(user, new Dictionary<uint, ChatRecord>());
+        _playerMessages.Remove(userId);
+        _playerMessages.Add(userId, new Dictionary<uint, ChatRecord>());
 
         RaiseLocalEvent(ev);
+
+        reason = null;
 
         return true;
     }
@@ -189,18 +231,9 @@ public sealed class ChatRepository : EntitySystem
     /// </summary>
     public void Refresh()
     {
-        _clock = 1;
+        _nextMessageId = 1;
         _messages.Clear();
         _playerMessages.Clear();
-    }
-
-    private string GetUserForEntity(IChatEvent ev)
-    {
-        return GetUserForEntity(ev.Sender);
-    }
-
-    private string GetUserForEntity(EntityUid uid)
-    {
-        return _player.TryGetSessionByEntity(uid, out var session) ? session.Name : "";
+        _userNamesToIds.Clear();
     }
 }

@@ -7,9 +7,10 @@ namespace Content.Shared.Chat.V2.Repository;
 /// <summary>
 /// The record associated with a specific chat event.
 /// </summary>
-public struct ChatRecord(string userName, IChatEvent storedEvent, string entityName, Vector2 location, string map)
+public struct ChatRecord(string userName, string userId, IChatEvent storedEvent, string entityName, Vector2 location, string map)
 {
     public string UserName = userName;
+    public string UserId = userId;
     public string EntityName = entityName;
     public Vector2 Location = location;
     public string Map = map;
