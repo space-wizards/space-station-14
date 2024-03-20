@@ -9,13 +9,16 @@ namespace Content.Server.Administration.Managers;
 
 public sealed partial class AdminManager
 {
-    private static readonly Meter Meter = new("SS14.AdminManager");
+    static AdminManager()
+    {
+        var meter = new Meter("SS14.AdminManager");
 
-    private static readonly ObservableGauge<int> AdminOnlineActiveCount = Meter.CreateObservableGauge(
-        "admins_online_count",
-        MeasureAdminCount,
-        null,
-        "The count of online admins");
+        meter.CreateObservableGauge(
+            "admins_online_count",
+            MeasureAdminCount,
+            null,
+            "The count of online admins");
+    }
 
     private static Dictionary<int, (int active, int afk, int deadminned)>? _adminOnlineCounts;
 
