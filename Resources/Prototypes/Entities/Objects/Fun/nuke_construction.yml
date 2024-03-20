@@ -1,0 +1,104 @@
+- type: entity
+  parent: BaseStructure
+  id: ImprovisedNuclearBombCart
+  name: cart
+  description: A cute little trolly... made to carry a nuclear fission device.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/nukecraft.rsi
+    state: nukecraft_2
+    noRot: true
+
+- type: entity
+  parent: BaseStructure
+  id: ImprovisedNuclearBombInsides
+  name: nuclear fission explosive
+  description: A partially constructed nuke.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/nukecraft.rsi
+    state: nukecraft_2
+    noRot: true
+
+- type: entity
+  parent: BaseStructure
+  id: ImprovisedNuclearBombInsidesPipe
+  name: nuclear fission explosive
+  description: A partially constructed nuke.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/nukecraft.rsi
+    state: nukecraft_3
+    noRot: true
+
+- type: entity
+  parent: BaseStructure
+  id: ImprovisedNuclearBombInsidesGun
+  name: nuclear fission explosive
+  description: A partially constructed nuke.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/nukecraft.rsi
+    state: nukecraft_3
+    noRot: true
+
+- type: entity
+  parent: BaseStructure
+  id: ImprovisedNuclearBombInsidesBullet
+  name: nuclear fission explosive
+  description: A partially constructed nuke.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/nukecraft.rsi
+    state: nukecraft_3
+    noRot: true
+
+- type: entity
+  parent: BaseStructure
+  id: ImprovisedNuclearBombInsidesUranium
+  name: nuclear fission explosive
+  description: A partially constructed nuke. Looks like it contains radioactive material.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/nukecraft.rsi
+    state: nukecraft_4
+    noRot: true
+
+- type: entity
+  parent: BaseStructure
+  id: ImprovisedNuclearBomb
+  name: nuclear fission explosive
+  description: A nuclear fission device!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/nukecraft.rsi
+    state: nukecraft_5
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 80 #It has wheels and bluespace tech to make it lighter.
+        mask:
+        - MachineMask
+        layer:
+        - HalfWallLayer
+  - type: Nuke
+    explosionType: Default
+    maxIntensity: 100
+    intensitySlope: 5
+    totalIntensity: 300
+  - type: StaticPrice
+    price: 50000 # war profits
+
+- type: entity
+  parent: ImprovisedNuclearBomb
+  id: ImprovisedNuclearBombSign
+  name: nuclear fission explosive
+  description: A nuclear fission device!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/nukecraft.rsi
+    state: nukecraft_6

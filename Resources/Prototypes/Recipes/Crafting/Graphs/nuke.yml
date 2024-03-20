@@ -1,0 +1,153 @@
+- type: constructionGraph
+  id: NukeCraft
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: cart
+      steps:
+      - material: WoodPlank
+        amount: 15
+        icon:
+          sprite: Objects/Materials/materials.rsi
+          state: wood_2
+        doAfter: 4
+  - node: cart
+    entity: ImprovisedNuclearBombCart
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+        amount: 30
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Prying
+        doAfter: 4
+    - to: insides
+      steps:
+      - material: MetalRod
+        amount: 8
+        icon:
+          sprite: Objects/Materials/parts.rsi
+          state: rods_2
+        doAfter: 3
+  - node: insides
+    entity: ImprovisedNuclearBombInsides
+    edges:
+    - to: cart
+      completed:
+      - !type:SpawnPrototype
+        prototype: PartRodMetal1
+        amount: 8
+      steps:
+      - tool: Cutting
+        doAfter: 3
+    - to: pipe
+      steps:
+      - material: GasPipeStraight
+        amount: 1
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+        doAfter: 4
+  - node: pipe
+    entity: ImprovisedNuclearBombInsidesPipe
+    edges:
+    - to: insides
+      completed:
+      - !type:SpawnPrototype
+        prototype: WeaponShotgunImprovised
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 3
+    - to: gun
+      steps:
+      - material: WeaponShotgunImprovised
+        amount: 1
+        icon:
+          sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+        doAfter: 2
+  - node: gun
+    entity: ImprovisedNuclearBombInsidesGun
+    edges:
+    - to: pipe
+      completed:
+      - !type:SpawnPrototype
+        prototype: WeaponShotgunImprovised
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 3
+    - to: bullet
+      steps:
+      - material: ShellShotgunUranium
+        amount: 1
+        icon:
+          sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgunshell.rsi
+          layers:
+            - state: depleted-uranium
+              map: [ "enum.AmmoVisualLayers.Base" ]
+        doAfter: 1
+  - node: bullet
+    entity: ImprovisedNuclearBombInsidesBullet
+    edges:
+    - to: pipe
+      completed:
+      - !type:SpawnPrototype
+        prototype: WeaponShotgunImprovised
+        amount: 1
+      - !type:SpawnPrototype
+        prototype: ShellShotgunUranium
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 3
+    - to: uranium
+      steps:
+      - material: EnrichedUranium
+        amount: 1
+        icon:
+          sprite: Objects/Fun/enricheduranium.rsi
+        doAfter: 5
+  - node: uranium
+    entity: ImprovisedNuclearBombInsidesUranium
+    edges:
+    - to: bullet
+      completed:
+      - !type:SpawnPrototype
+        prototype: EnrichedUranium
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 5
+    - to: finished
+      steps:
+      - material: SheetMetalBase
+        amount: 30
+        icon:
+          sprite: Objects/Materials/Sheets/metal.rsi
+          state: steel_3
+        doAfter: 5
+  - node: finished
+    entity: ImprovisedNuclearBomb
+    edges:
+    - to: uranium
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetMetalBase
+        amount: 30
+      steps:
+      - tool: Prying
+        doAfter: 10
+    - to: painted
+      steps:
+      - tag: Crayon
+        amount: 1
+        icon:
+          sprite: Objects/Fun/crayons.rsi
+          state: yellow
+        doAfter: 1
+  - node: painted
+    entity: ImprovisedNuclearBombSign
