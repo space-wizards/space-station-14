@@ -154,6 +154,9 @@ uplink-syndicate-weapon-module-desc = This module will give a cyborg advanced la
 uplink-singularity-beacon-name = Singularity Beacon
 uplink-singularity-beacon-desc = A device that attracts singularities. Has to be anchored and powered. Causes singularities to grow when consumed.
 
+uplink-nuke-code-paper-name = Stolen nuclear authentication codes
+uplink-nuke-code-paper-desc = A slip of paper with the authentication codes for a nearby nuclear fission explosive device.
+
 # Implants
 uplink-storage-implanter-name = Storage Implanter
 uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespace technology!

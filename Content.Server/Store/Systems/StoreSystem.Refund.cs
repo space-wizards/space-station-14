@@ -1,4 +1,6 @@
-﻿using Content.Server.Store.Components;
+using Content.Server.Paper;
+using Content.Server.Store.Components;
+using Content.Shared.UserInterface;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Store.Systems;
@@ -11,6 +13,17 @@ public sealed partial class StoreSystem
         SubscribeLocalEvent<StoreRefundComponent, EntityTerminatingEvent>(OnRefundTerminating);
         SubscribeLocalEvent<StoreRefundComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
         SubscribeLocalEvent<StoreRefundComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
+        SubscribeLocalEvent<StoreRefundComponent, BeforeActivatableUIOpenEvent>(BeforeUIOpen);
+    }
+    private void BeforeUIOpen(EntityUid uid, StoreRefundComponent component, BeforeActivatableUIOpenEvent args)
+    {
+        if (component.StoreEntity == null || _actions.TryGetActionData(uid, out _) || !TryComp<StoreComponent>(component.StoreEntity.Value, out var storeComp))
+            return;
+
+        if (!TryComp<PaperComponent>(uid, out var paper) || string.IsNullOrEmpty(paper.Content))
+            return;
+
+        DisableRefund(component.StoreEntity.Value, storeComp);
     }
 
     private void OnEntityRemoved(EntityUid uid, StoreRefundComponent component, EntRemovedFromContainerMessage args)

@@ -844,6 +844,25 @@
   categories:
     - UplinkDisruption
 
+- type: listing
+  id: UplinkNukeCodePaper
+  name: uplink-nuke-code-paper-name
+  description: uplink-nuke-code-paper-desc
+  productEntity: NukeCodePaper
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkDisruption
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+
 # Allies
 
 - type: listing
