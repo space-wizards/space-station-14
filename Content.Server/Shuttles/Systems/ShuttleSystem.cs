@@ -129,10 +129,10 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
             return;
 
         _physics.SetBodyType(uid, BodyType.Dynamic, manager: manager, body: component);
-        _physics.SetBodyStatus(component, BodyStatus.InAir);
+        _physics.SetBodyStatus(uid, component, BodyStatus.InAir);
         _physics.SetFixedRotation(uid, false, manager: manager, body: component);
-        _physics.SetLinearDamping(component, shuttle.LinearDamping);
-        _physics.SetAngularDamping(component, shuttle.AngularDamping);
+        _physics.SetLinearDamping(uid, component, shuttle.LinearDamping);
+        _physics.SetAngularDamping(uid, component, shuttle.AngularDamping);
     }
 
     public void Disable(EntityUid uid, FixturesComponent? manager = null, PhysicsComponent? component = null)
@@ -141,7 +141,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
             return;
 
         _physics.SetBodyType(uid, BodyType.Static, manager: manager, body: component);
-        _physics.SetBodyStatus(component, BodyStatus.OnGround);
+        _physics.SetBodyStatus(uid, component, BodyStatus.OnGround);
         _physics.SetFixedRotation(uid, true, manager: manager, body: component);
     }
 
