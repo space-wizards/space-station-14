@@ -29,6 +29,7 @@
   - type: Tag
     tags:
     - Pizza
+    - ReptilianFood
 
 - type: entity
   parent: FoodInjectableBase # Not sliceable
@@ -57,6 +58,7 @@
   - type: Tag
     tags:
     - Pizza
+    - ReptilianFood
 
 # Pizza
 
