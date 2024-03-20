@@ -77,9 +77,10 @@ public sealed class LegallyDistinctSpaceFerretSystem : EntitySystem
 
         component.BrainrotEffectCanceller = new CancellationTokenSource();
 
+        var mobs = new HashSet<Entity<MobStateComponent>>();
+
         Timer.SpawnRepeating(TimeSpan.FromSeconds(1), () =>
         {
-            var mobs = new HashSet<Entity<MobStateComponent>>();
             _lookup.GetEntitiesInRange(Transform(uid).Coordinates, component.BrainRotAuraRadius, mobs);
             foreach (var comp in mobs)
             {
@@ -176,29 +177,25 @@ public sealed class LegallyDistinctSpaceFerretSystem : EntitySystem
 }
 
 [RegisterComponent, Access(typeof(LegallyDistinctSpaceFerretSystem)), ExclusiveAntagonist]
-public sealed partial class LegallyDistinctSpaceFerretRoleComponent : AntagonistRoleComponent
-{
-}
+public sealed class LegallyDistinctSpaceFerretRoleComponent : AntagonistRoleComponent;
 
 [RegisterComponent]
-public sealed partial class ConsumeNutrientsConditionComponent : Component
+public sealed class ConsumeNutrientsConditionComponent : Component
 {
     [DataField]
     public float NutrientsRequired = 150.0f;
 
-    public float NutrientsConsumed = 0f;
+    public float NutrientsConsumed;
 }
 
 [RegisterComponent]
-public sealed partial class HibernateConditionComponent : Component
+public sealed class HibernateConditionComponent : Component
 {
     public bool Hibernated;
 }
 
 [RegisterComponent]
-public sealed partial class LegallyDistinctSpaceFerretSpawnRuleComponent : Component
-{
-}
+public sealed class LegallyDistinctSpaceFerretSpawnRuleComponent : Component;
 
 public sealed class LegallyDistinctSpaceFerretSpawnRule : StationEventSystem<LegallyDistinctSpaceFerretSpawnRuleComponent>
 {
@@ -207,7 +204,7 @@ public sealed class LegallyDistinctSpaceFerretSpawnRule : StationEventSystem<Leg
         base.Started(uid, comp, gameRule, args);
 
         TryFindRandomTile(out _, out _, out _, out var coords);
-        Sawmill.Info($"Creating ferret spawnpoint at {coords}");
+        Sawmill.Info($"Creating ferret spawn point at {coords}");
         Spawn("SpawnPointGhostLegallyDistinctSpaceFerret", coords);
     }
 }
