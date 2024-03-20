@@ -92,10 +92,10 @@ public sealed partial class MechSystem : SharedMechSystem
 
         if (TryComp<ToolComponent>(args.Used, out var tool) && tool.Qualities.Contains("Prying") && component.BatterySlot.ContainedEntity != null)
         {
-            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.BatteryRemovalDelay, new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.BatteryRemovalDelay,
+                new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
             {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
+                BreakOnMove = true
             };
 
             _doAfter.TryStartDoAfter(doAfterEventArgs);
@@ -110,7 +110,7 @@ public sealed partial class MechSystem : SharedMechSystem
         component.Energy = battery.CurrentCharge;
         component.MaxEnergy = battery.MaxCharge;
 
-        Dirty(component);
+        Dirty(uid, component);
         _actionBlocker.UpdateCanMove(uid);
     }
 
@@ -140,7 +140,7 @@ public sealed partial class MechSystem : SharedMechSystem
         component.Energy = component.MaxEnergy;
 
         _actionBlocker.UpdateCanMove(uid);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnRemoveEquipmentMessage(EntityUid uid, MechComponent component, MechEquipmentRemoveMessage args)
@@ -182,7 +182,7 @@ public sealed partial class MechSystem : SharedMechSystem
                 {
                     var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.EntryDelay, new MechEntryEvent(), uid, target: uid)
                     {
-                        BreakOnUserMove = true,
+                        BreakOnMove = true,
                     };
 
                     _doAfter.TryStartDoAfter(doAfterEventArgs);
@@ -210,11 +210,8 @@ public sealed partial class MechSystem : SharedMechSystem
                         return;
                     }
 
-                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.ExitDelay, new MechExitEvent(), uid, target: uid)
-                    {
-                        BreakOnUserMove = true,
-                        BreakOnTargetMove = true,
-                    };
+                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.ExitDelay,
+                        new MechExitEvent(), uid, target: uid);
 
                     _doAfter.TryStartDoAfter(doAfterEventArgs);
                 }
@@ -341,7 +338,7 @@ public sealed partial class MechSystem : SharedMechSystem
         {
             Log.Debug($"Battery charge was not equal to mech charge. Battery {batteryComp.CurrentCharge}. Mech {component.Energy}");
             component.Energy = batteryComp.CurrentCharge;
-            Dirty(component);
+            Dirty(uid, component);
         }
         _actionBlocker.UpdateCanMove(uid);
         return true;
@@ -361,7 +358,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
         _actionBlocker.UpdateCanMove(uid);
 
-        Dirty(component);
+        Dirty(uid, component);
         UpdateUserInterface(uid, component);
     }
 
@@ -376,7 +373,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
         _actionBlocker.UpdateCanMove(uid);
 
-        Dirty(component);
+        Dirty(uid, component);
         UpdateUserInterface(uid, component);
     }
 

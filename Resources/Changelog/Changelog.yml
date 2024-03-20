@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: degradka
-  changes:
-  - message: Prevent oversized items from being placed in the microwave.
-    type: Fix
-  id: 5697
-  time: '2024-01-13T21:11:10.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24026
-- author: Bhijn and Myr
-  changes:
-  - message: The QM's uniform has received a redesign, making it more visually distinguishable
-      for those with colorblindness.
-    type: Tweak
-  id: 5698
-  time: '2024-01-14T02:45:06.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24055
-- author: lzk228
-  changes:
-  - message: Removed archaic accent.
-    type: Remove
-  id: 5699
-  time: '2024-01-14T02:45:54.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24052
 - author: 21Melkuu
   changes:
   - message: Added Mayo to the Chefvend.
@@ -3812,3 +3790,24 @@
   id: 6196
   time: '2024-03-19T03:48:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26251
+- author: Errant
+  changes:
+  - message: Thrown objects can no longer slip while they are still in flight.
+    type: Tweak
+  id: 6197
+  time: '2024-03-20T11:57:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24494
+- author: Killerqu00
+  changes:
+  - message: Airlock wires are now different between departments.
+    type: Tweak
+  id: 6198
+  time: '2024-03-20T16:07:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26247
+- author: Tayrtahn
+  changes:
+  - message: Pizza is no longer considered a fruit.
+    type: Tweak
+  id: 6199
+  time: '2024-03-20T19:03:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26293

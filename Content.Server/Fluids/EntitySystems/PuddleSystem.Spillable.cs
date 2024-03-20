@@ -203,9 +203,8 @@ public sealed partial class PuddleSystem
             {
                 _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, entity.Comp.SpillDelay ?? 0, new SpillDoAfterEvent(), entity.Owner, target: entity.Owner)
                 {
-                    BreakOnTargetMove = true,
-                    BreakOnUserMove = true,
                     BreakOnDamage = true,
+                    BreakOnMove = true,
                     NeedHand = true,
                 });
             };

@@ -214,7 +214,7 @@ namespace Content.Shared.Friction
                 return;
 
             friction.Modifier = value;
-            Dirty(friction);
+            Dirty(entityUid, friction);
         }
     }
 }
