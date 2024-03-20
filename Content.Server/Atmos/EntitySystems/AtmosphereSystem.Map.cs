@@ -58,7 +58,7 @@ public partial class AtmosphereSystem
 
         component.Space = space;
         component.Mixture = mixture;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     public void SetMapGasMixture(EntityUid uid, GasMixture? mixture, MapAtmosphereComponent? component = null)
@@ -67,7 +67,7 @@ public partial class AtmosphereSystem
             return;
 
         component.Mixture = mixture;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     public void SetMapSpace(EntityUid uid, bool space, MapAtmosphereComponent? component = null)
@@ -76,6 +76,6 @@ public partial class AtmosphereSystem
             return;
 
         component.Space = space;
-        Dirty(component);
+        Dirty(uid, component);
     }
 }
