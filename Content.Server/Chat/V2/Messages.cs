@@ -5,7 +5,7 @@ using Content.Shared.Radio;
 namespace Content.Server.Chat.V2;
 
 /// <summary>
-/// Raised when a comms console makes an announcement.
+/// Raised locally when a comms announcement is made.
 /// </summary>
 public sealed class CommsAnnouncementCreatedEvent(EntityUid sender, EntityUid console, string message) : IChatEvent
 {
@@ -29,8 +29,7 @@ public sealed class DeadChatCreatedEvent(EntityUid speaker, string message, bool
 }
 
 /// <summary>
-/// Raised by chat system when entity made some emote.
-/// Use it to play sound, change sprite or something else.
+/// Raised locally when a character emotes.
 /// </summary>
 public sealed class EmoteCreatedEvent(EntityUid sender, string message, float range) : IChatEvent
 {
@@ -42,7 +41,7 @@ public sealed class EmoteCreatedEvent(EntityUid sender, string message, float ra
 }
 
 /// <summary>
-/// A server-only event that is fired when an entity chats in local chat.
+/// Raised locally when a character talks in local.
 /// </summary>
 public sealed class LocalChatCreatedEvent(EntityUid speaker, string message, float range) : IChatEvent
 {
@@ -54,24 +53,18 @@ public sealed class LocalChatCreatedEvent(EntityUid speaker, string message, flo
 }
 
 /// <summary>
-/// Raised when a character speaks in LOOC.
+/// Raised locally when a character speaks in LOOC.
 /// </summary>
-public sealed class LoocCreatedEvent : IChatEvent
+public sealed class LoocCreatedEvent(EntityUid speaker, string message) : IChatEvent
 {
     public uint Id { get; set; }
-    public EntityUid Sender { get; set; }
-    public string Message { get; set; }
+    public EntityUid Sender { get; set; } = speaker;
+    public string Message { get; set; } = message;
     public MessageType Type => MessageType.Looc;
-
-    public LoocCreatedEvent(EntityUid speaker, string message)
-    {
-        Sender = speaker;
-        Message = message;
-    }
 }
 
 /// <summary>
-/// Raised when a character speaks on the radio.
+/// Raised locally when a character speaks on the radio.
 /// </summary>
 public sealed class RadioCreatedEvent(
     EntityUid speaker,
@@ -87,7 +80,7 @@ public sealed class RadioCreatedEvent(
 }
 
 /// <summary>
-/// Raised when a character whispers.
+/// Raised locally when a character whispers.
 /// </summary>
 public sealed class WhisperCreatedEvent(EntityUid speaker, string message, float minRange, float maxRange) : IChatEvent
 {
