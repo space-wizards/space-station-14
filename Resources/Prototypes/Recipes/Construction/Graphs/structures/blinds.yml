@@ -26,7 +26,7 @@
         - to: startWoodBlinds
           completed:
             - !type:SpawnPrototype
-              prototype: WoodPlank1
+              prototype: MaterialWoodPlank1
               amount: 3
             - !type:DeleteEntity {}
           steps:
@@ -57,7 +57,7 @@
         - to: startMetalBlinds
           completed:
             - !type:SpawnPrototype
-              prototype: SteelSheet1
+              prototype: SheetSteel1
               amount: 3
             - !type:DeleteEntity {}
           steps:

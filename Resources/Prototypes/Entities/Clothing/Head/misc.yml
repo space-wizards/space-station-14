@@ -278,3 +278,17 @@
       - WhitelistChameleon
   - type: StaticPrice
     price: 1
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadTorchereHat
+  name: torchere
+  description: Put it on and become a floor lamp.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/torchere.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/torchere.rsi
+  - type: Tag
+    tags:
+      - Torchere
