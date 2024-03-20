@@ -27,6 +27,7 @@ public sealed partial class WoundSystem : EntitySystem
         SubscribeLocalEvent<WoundableComponent, ComponentInit>(OnWoundableInit);
         InitWounding();
         InitBodyListeners();
+        InitDamage();
     }
 
     public override void Update(float frameTime)

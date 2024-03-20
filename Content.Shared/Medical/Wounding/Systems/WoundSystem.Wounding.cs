@@ -25,72 +25,8 @@ public sealed partial class WoundSystem
 
     private void InitWounding()
     {
-        SubscribeLocalEvent<WoundableComponent, DamageChangedEvent>(OnWoundableDamaged);
-        SubscribeLocalEvent<BodyComponent, DamageChangedEvent>(OnBodyDamaged);
         SubscribeLocalEvent<WoundComponent, ContainerGettingInsertedAttemptEvent>(OnWoundInsertAttempt);
         SubscribeLocalEvent<WoundComponent, EntGotRemovedFromContainerMessage>(OnWoundRemoved);
-    }
-
-    private void OnBodyDamaged(EntityUid bodyEnt, BodyComponent body, ref DamageChangedEvent args)
-    {
-        //TODO: Make this method not MEGA ASS, because jesus christ I'm giving myself terminal space aids by doing this.
-        //This is all placeholder and terrible, rewrite asap
-
-        //Do not handle damage if it is being set instead of being changed.
-        //We will handle that with another listener
-        if (args.DamageDelta == null)
-            return;
-        if (!_bodySystem.TryGetRootBodyPart(bodyEnt, out var rootPart, body))
-            return;
-
-        //TODO: This is a quick hack to prevent asphyxiation/bloodloss from damaging bodyparts
-        //Once proper body/organ simulation is implemented these can be removed
-        args.DamageDelta.DamageDict.Remove("Asphyxiation");
-        args.DamageDelta.DamageDict.Remove("Bloodloss");
-        args.DamageDelta.DamageDict.Remove("Structural");
-        if (args.DamageDelta.Empty)
-            return;
-
-        DamageableComponent? damagableComp;
-
-        if (_random.NextFloat(0f, 1f) > NonCoreDamageChance)
-        {
-            var heads = _bodySystem.GetBodyChildrenOfType(bodyEnt, BodyPartType.Head, body).ToList();
-            if (_random.NextFloat(0f, 1f) <= HeadDamageChance && heads.Count > 0)
-            {
-
-                var (headId, _) = heads[_random.Next(heads.Count)];
-                if (TryComp(headId, out damagableComp))
-                {
-                    _damageableSystem.TryChangeDamage(headId, args.DamageDelta, damageable: damagableComp);
-                    return;
-                }
-            }
-            if (TryComp(rootPart, out damagableComp))
-            {
-                _damageableSystem.TryChangeDamage(rootPart.Value, args.DamageDelta, damageable: damagableComp);
-                return;
-            }
-        }
-        var children = _bodySystem.GetBodyPartDirectChildren(rootPart.Value, rootPart.Value.Comp).ToArray();
-        Entity<BodyPartComponent> foundTarget = children[_random.Next(0, children.Length)];
-        while (_random.NextFloat(0, 1f) > ChanceForPartSelection)
-        {
-            children = _bodySystem.GetBodyPartDirectChildren(foundTarget, foundTarget.Comp).ToArray();
-            if (children.Length == 0)
-                break;
-            foundTarget = children[_random.Next(0, children.Length)];
-        }
-        _damageableSystem.TryChangeDamage(foundTarget, args.DamageDelta);
-    }
-
-    private void OnWoundableDamaged(EntityUid owner, WoundableComponent woundableComp, ref DamageChangedEvent args)
-    {
-        //Do not handle damage if it is being set instead of being changed.
-        //We will handle that with another listener
-        if (args.DamageDelta == null)
-            return;
-        CreateWoundsFromDamage(new(owner, woundableComp), args.DamageDelta);
     }
 
     #region Utility
