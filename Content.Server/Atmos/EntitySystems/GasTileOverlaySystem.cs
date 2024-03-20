@@ -118,10 +118,11 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             // PVS was turned off, ensure data gets sent to all clients.
-            foreach (var (grid, meta) in EntityQuery<GasTileOverlayComponent, MetaDataComponent>(true))
+            var query = EntityQueryEnumerator<GasTileOverlayComponent, MetaDataComponent>();
+            while (query.MoveNext(out var uid, out var grid, out var meta))
             {
                 grid.ForceTick = _gameTiming.CurTick;
-                Dirty(grid, meta);
+                Dirty(uid, grid, meta);
             }
         }
 
@@ -264,9 +265,10 @@ namespace Content.Server.Atmos.EntitySystems
         private void UpdateOverlayData(GameTick curTick)
         {
             // TODO parallelize?
-            foreach (var (overlay, gam, meta) in EntityQuery<GasTileOverlayComponent, GridAtmosphereComponent, MetaDataComponent>(true))
+            var query = EntityQueryEnumerator<GasTileOverlayComponent, GridAtmosphereComponent, MetaDataComponent>();
+            while (query.MoveNext(out var uid, out var overlay, out var gam, out var meta))
             {
-                bool changed = false;
+                var changed = false;
                 foreach (var index in overlay.InvalidTiles)
                 {
                     var chunkIndex = GetGasChunkIndices(index);
@@ -278,7 +280,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 if (changed)
-                    Dirty(overlay, meta);
+                    Dirty(uid, overlay, meta);
 
                 overlay.InvalidTiles.Clear();
             }
