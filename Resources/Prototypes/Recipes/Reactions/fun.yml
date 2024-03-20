@@ -210,7 +210,7 @@
       amount: 1
     Plasma: # Consumed in reaction: steady supply of plasma required for a jug of it
       amount: 2 
-    DexalinPlus:
+    Uranium:
       amount: 1
   effects:
     products:
