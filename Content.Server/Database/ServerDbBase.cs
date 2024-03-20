@@ -1368,6 +1368,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     .Include(note => note.Player)
                     .ToListAsync()).Select(MakeAdminNoteRecord));
             notesCol.AddRange(await GetMessagesImpl(db, player));
+            notesCol.AddRange(await GetServerBansAsNotesForUser(db, player));
+            notesCol.AddRange(await GetGroupedServerRoleBansAsNotesForUser(db, player));
             return notesCol;
         }
 
@@ -1532,6 +1534,12 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         protected DateTime? NormalizeDatabaseTime(DateTime? time)
         {
             return time != null ? NormalizeDatabaseTime(time.Value) : time;
+        }
+
+        public async Task<bool> HasPendingModelChanges()
+        {
+            await using var db = await GetDb();
+            return db.DbContext.Database.HasPendingModelChanges();
         }
 
         protected abstract Task<DbGuard> GetDb([CallerMemberName] string? name = null);

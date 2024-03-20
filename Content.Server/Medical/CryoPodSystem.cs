@@ -142,8 +142,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, entity.Comp.EntryDelay, new CryoPodDragFinished(), entity, target: args.Dragged, used: entity)
         {
             BreakOnDamage = true,
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
+            BreakOnMove = true,
             NeedHand = false,
         };
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
@@ -203,6 +202,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
                 bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
                 ? bloodSolution.FillFraction
                 : 0,
+            null,
             null
         ));
     }

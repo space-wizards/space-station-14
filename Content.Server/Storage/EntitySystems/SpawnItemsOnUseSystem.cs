@@ -80,11 +80,6 @@ namespace Content.Server.Storage.EntitySystems
                 _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(uid)} which spawned {ToPrettyString(entityToPlaceInHands.Value)}");
             }
 
-            if (component.Sound != null)
-            {
-                _audio.PlayPvs(component.Sound, uid);
-            }
-
             component.Uses--;
 
             // Delete entity only if component was successfully used
@@ -97,6 +92,7 @@ namespace Content.Server.Storage.EntitySystems
             if (entityToPlaceInHands != null)
             {
                 _hands.PickupOrDrop(args.User, entityToPlaceInHands.Value);
+                _audio.PlayPvs(component.Sound, entityToPlaceInHands.Value);
             }
         }
     }

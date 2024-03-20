@@ -90,6 +90,9 @@
     sprite: Clothing/OuterClothing/Misc/cardborg.rsi
   - type: TypingIndicatorClothing
     proto: robot
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterBaseToggleable
