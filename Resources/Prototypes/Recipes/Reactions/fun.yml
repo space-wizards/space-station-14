@@ -186,7 +186,7 @@
     - !type:CreateEntityReactionEffect
       entity: EnrichedUranium
 
-  id: Gunpowder
+  id: Gunpowder # Own a musket for home defense, cause that's what the founding fathers intended!
   impact: Low
   quantized: true
   minTemp: 374
@@ -200,3 +200,18 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
+
+ id: Lingium
+  impact: Low
+  quantized: true
+  minTemp: 250 
+  reactants:
+    Doxarubixadone:
+      amount: 1
+    Plasma: # Consumed in reaction: steady supply of plasma required for a jug of it
+      amount: 2 
+    Uranium:
+      amount: 1
+  effects:
+    products:
+     Lingium: 3
