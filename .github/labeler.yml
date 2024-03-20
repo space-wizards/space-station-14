@@ -10,3 +10,6 @@
 
 "No C#":
 - all: ["!**/*.cs"]
+
+"April Fools (merge for one day)":
+- base-branch: 'april-fools-2024'
