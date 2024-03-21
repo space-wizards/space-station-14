@@ -92,8 +92,7 @@ public sealed class SharedSpellbookSystem : EntitySystem
     {
         var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.LearnTime, new SpellbookDoAfterEvent(), uid, target: uid)
         {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
+            BreakOnMove = true,
             BreakOnDamage = true,
             NeedHand = true //What, are you going to read with your eyes only??
         };
