@@ -5,6 +5,7 @@
   description: It's magic.
   components:
   - type: Microwave
+    capacity: 10
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -82,6 +83,13 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    totalIntensity: 5
+    intensitySlope: 5
+    canCreateVacuum: false
+    deleteAfterExplosion: false
   - type: ApcPowerReceiver
     powerLoad: 400
   - type: Machine

@@ -216,7 +216,7 @@ public sealed class DrainSystem : SharedDrainSystem
         var text = drainSolution.AvailableVolume != 0
             ? Loc.GetString("drain-component-examine-volume", ("volume", drainSolution.AvailableVolume))
             : Loc.GetString("drain-component-examine-hint-full");
-        args.Message.AddMarkup($"\n\n{text}");
+        args.PushMarkup(text);
     }
 
     private void OnInteract(Entity<DrainComponent> entity, ref AfterInteractUsingEvent args)
@@ -239,9 +239,8 @@ public sealed class DrainSystem : SharedDrainSystem
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, entity.Comp.UnclogDuration, new DrainDoAfterEvent(), entity, args.Target, args.Used)
         {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
             BreakOnDamage = true,
+            BreakOnMove = true,
             BreakOnHandChange = true
         };
 

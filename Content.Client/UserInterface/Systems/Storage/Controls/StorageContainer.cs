@@ -249,7 +249,7 @@ public sealed class StorageContainer : BaseWindow
 
         var boundingGrid = storageComp.Grid.GetBoundingBox();
         var size = _emptyTexture!.Size * 2;
-        var lastEntity = storageComp.Container.ContainedEntities.LastOrDefault();
+        var containedEntities = storageComp.Container.ContainedEntities.Reverse().ToArray();
 
         //todo. at some point, we may want to only rebuild the pieces that have actually received new data.
 
@@ -267,19 +267,22 @@ public sealed class StorageContainer : BaseWindow
 
                 var currentPosition = new Vector2i(x, y);
 
-                foreach (var item in storageComp.StoredItems)
+                foreach (var (itemEnt, itemPos) in storageComp.StoredItems)
                 {
-                    if (item.Value.Position != currentPosition)
+                    if (itemPos.Position != currentPosition)
                         continue;
-
-                    var itemEnt = _entity.GetEntity(item.Key);
 
                     if (_entity.TryGetComponent<ItemComponent>(itemEnt, out var itemEntComponent))
                     {
-                        var gridPiece = new ItemGridPiece((itemEnt, itemEntComponent), item.Value, _entity)
+                        var gridPiece = new ItemGridPiece((itemEnt, itemEntComponent), itemPos, _entity)
                         {
                             MinSize = size,
-                            Marked = itemEnt == lastEntity
+                            Marked = Array.IndexOf(containedEntities, itemEnt) switch
+                            {
+                                0 => ItemGridPieceMarks.First,
+                                1 => ItemGridPieceMarks.Second,
+                                _ => null,
+                            }
                         };
                         gridPiece.OnPiecePressed += OnPiecePressed;
                         gridPiece.OnPieceUnpressed += OnPieceUnpressed;

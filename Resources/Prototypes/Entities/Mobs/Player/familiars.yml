@@ -46,7 +46,7 @@
     rules: ghost-role-information-cerberus-rules
   - type: GhostTakeoverAvailable
   - type: MeleeWeapon
-    angle: 0
+    altDisarm: false
     animation: WeaponArcBite
     damage:
       types:
@@ -54,9 +54,12 @@
         Slash: 7
   - type: InputMover
   - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
   - type: NpcFactionMember
     factions:
-    - SimpleNeutral
+    - Syndicate
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-corrupted-corgi

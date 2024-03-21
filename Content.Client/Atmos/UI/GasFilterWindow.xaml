@@ -9,7 +9,7 @@
 
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Label Text="{Loc comp-gas-filter-ui-filter-transfer-rate}"/>
-            <LineEdit Name="FilterTransferRateInput" MinSize="60 0" />
+            <LineEdit Name="FilterTransferRateInput" MinSize="70 0" />
             <Button Name="SetFilterRate" Text="{Loc comp-gas-filter-ui-filter-set-rate}" Disabled="True"/>
         </BoxContainer>
 

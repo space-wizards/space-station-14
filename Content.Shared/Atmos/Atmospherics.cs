@@ -47,7 +47,7 @@ namespace Content.Shared.Atmos
         ///     calculations and so cap it here. The physical interpretation is that at this temperature, any
         ///     gas that you would have transforms into plasma.
         /// </summary>
-        public const float Tmax = 200e3f;
+        public const float Tmax = 262144; // 1/64 of max safe integer, any values above will result in a ~0.03K epsilon
 
         /// <summary>
         ///     Liters in a cell.
@@ -271,7 +271,7 @@ namespace Content.Shared.Atmos
         public const float HazardLowPressure = 20f;
 
         /// <summary>
-        ///    The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT,
+        ///    The amount of pressure damage someone takes is equal to ((pressure / HAZARD_HIGH_PRESSURE) - 1)*PRESSURE_DAMAGE_COEFFICIENT,
         ///     with the maximum of MaxHighPressureDamage.
         /// </summary>
         public const float PressureDamageCoefficient = 4;

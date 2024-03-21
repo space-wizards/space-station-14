@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
+using Content.Server.IP;
 using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
@@ -161,7 +162,7 @@ namespace Content.Server.Database
             if (!includeUnbanned)
             {
                 query = query.Where(p =>
-                    p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.Now));
+                    p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.UtcNow));
             }
 
             if (exemptFlags is { } exempt)
@@ -196,7 +197,7 @@ namespace Content.Server.Database
             return new ServerBanDef(
                 ban.Id,
                 uid,
-                ban.Address,
+                ban.Address.ToTuple(),
                 ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
                 ban.BanTime,
                 ban.ExpirationTime,
@@ -233,7 +234,7 @@ namespace Content.Server.Database
 
             db.PgDbContext.Ban.Add(new ServerBan
             {
-                Address = serverBan.Address,
+                Address = serverBan.Address.ToNpgsqlInet(),
                 HWId = serverBan.HWId?.ToArray(),
                 Reason = serverBan.Reason,
                 Severity = serverBan.Severity,
@@ -353,7 +354,7 @@ namespace Content.Server.Database
             if (!includeUnbanned)
             {
                 query = query?.Where(p =>
-                    p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.Now));
+                    p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.UtcNow));
             }
 
             query = query!.Distinct();
@@ -385,7 +386,7 @@ namespace Content.Server.Database
             return new ServerRoleBanDef(
                 ban.Id,
                 uid,
-                ban.Address,
+                ban.Address.ToTuple(),
                 ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
                 ban.BanTime,
                 ban.ExpirationTime,
@@ -423,7 +424,7 @@ namespace Content.Server.Database
 
             var ban = new ServerRoleBan
             {
-                Address = serverRoleBan.Address,
+                Address = serverRoleBan.Address.ToNpgsqlInet(),
                 HWId = serverRoleBan.HWId?.ToArray(),
                 Reason = serverRoleBan.Reason,
                 Severity = serverRoleBan.Severity,
@@ -455,17 +456,6 @@ namespace Content.Server.Database
             await db.PgDbContext.SaveChangesAsync();
         }
         #endregion
-
-        protected override PlayerRecord MakePlayerRecord(Player record)
-        {
-            return new PlayerRecord(
-                new NetUserId(record.UserId),
-                new DateTimeOffset(record.FirstSeenTime),
-                record.LastSeenUserName,
-                new DateTimeOffset(record.LastSeenTime),
-                record.LastSeenAddress,
-                record.LastSeenHWId?.ToImmutableArray());
-        }
 
         public override async Task<int> AddConnectionLogAsync(
             NetUserId userId,
@@ -529,6 +519,12 @@ WHERE to_tsvector('english'::regconfig, a.message) @@ websearch_to_tsquery('engl
             }
 
             return db.AdminLog;
+        }
+
+        protected override DateTime NormalizeDatabaseTime(DateTime time)
+        {
+            DebugTools.Assert(time.Kind == DateTimeKind.Utc);
+            return time;
         }
 
         private async Task<DbGuardImpl> GetDbImpl([CallerMemberName] string? name = null)

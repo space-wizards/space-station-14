@@ -15,7 +15,7 @@ namespace Content.Server.Database.Migrations.Sqlite
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.4");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
 
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
@@ -75,13 +75,13 @@ namespace Content.Server.Database.Migrations.Sqlite
 
             modelBuilder.Entity("Content.Server.Database.AdminLog", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("admin_log_id");
-
                     b.Property<int>("RoundId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("round_id");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("admin_log_id");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT")
@@ -105,13 +105,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("type");
 
-                    b.HasKey("Id", "RoundId")
+                    b.HasKey("RoundId", "Id")
                         .HasName("PK_admin_log");
 
                     b.HasIndex("Date");
-
-                    b.HasIndex("RoundId")
-                        .HasDatabaseName("IX_admin_log_round_id");
 
                     b.HasIndex("Type")
                         .HasDatabaseName("IX_admin_log_type");
@@ -121,22 +118,23 @@ namespace Content.Server.Database.Migrations.Sqlite
 
             modelBuilder.Entity("Content.Server.Database.AdminLogPlayer", b =>
                 {
-                    b.Property<Guid>("PlayerUserId")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("player_user_id");
+                    b.Property<int>("RoundId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("round_id");
 
                     b.Property<int>("LogId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("log_id");
 
-                    b.Property<int>("RoundId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("round_id");
+                    b.Property<Guid>("PlayerUserId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("player_user_id");
 
-                    b.HasKey("PlayerUserId", "LogId", "RoundId")
+                    b.HasKey("RoundId", "LogId", "PlayerUserId")
                         .HasName("PK_admin_log_player");
 
-                    b.HasIndex("LogId", "RoundId");
+                    b.HasIndex("PlayerUserId")
+                        .HasDatabaseName("IX_admin_log_player_player_user_id");
 
                     b.ToTable("admin_log_player", (string)null);
                 });
@@ -167,6 +165,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<Guid?>("DeletedById")
                         .HasColumnType("TEXT")
                         .HasColumnName("deleted_by_id");
+
+                    b.Property<bool>("Dismissed")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("dismissed");
 
                     b.Property<DateTime?>("ExpirationTime")
                         .HasColumnType("TEXT")
@@ -217,7 +219,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasIndex("RoundId")
                         .HasDatabaseName("IX_admin_messages_round_id");
 
-                    b.ToTable("admin_messages", (string)null);
+                    b.ToTable("admin_messages", null, t =>
+                        {
+                            t.HasCheckConstraint("NotDismissedAndSeen", "NOT dismissed OR seen");
+                        });
                 });
 
             modelBuilder.Entity("Content.Server.Database.AdminNote", b =>
@@ -759,6 +764,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("slot");
 
+                    b.Property<int>("SpawnPriority")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("spawn_priority");
+
                     b.Property<string>("Species")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -1235,10 +1244,10 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.HasOne("Content.Server.Database.AdminLog", "Log")
                         .WithMany("Players")
-                        .HasForeignKey("LogId", "RoundId")
+                        .HasForeignKey("RoundId", "LogId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_admin_log_player_admin_log_log_id_round_id");
+                        .HasConstraintName("FK_admin_log_player_admin_log_round_id_log_id");
 
                     b.Navigation("Log");
 

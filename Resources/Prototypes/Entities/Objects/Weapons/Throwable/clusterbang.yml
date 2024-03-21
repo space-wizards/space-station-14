@@ -156,7 +156,7 @@
       map: ["enum.TriggerVisualLayers.Base"]
   - type: ClusterGrenade
     fillPrototype: PelletClusterIncendiary
-    maxGrenadesCount: 15
+    maxGrenadesCount: 30
     grenadeType: enum.GrenadeType.Shoot
   - type: OnUseTimerTrigger
     beepSound:

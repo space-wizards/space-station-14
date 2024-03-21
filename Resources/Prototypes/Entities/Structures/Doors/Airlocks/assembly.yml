@@ -1,44 +1,339 @@
+#Atmospherics
 - type: entity
-  id: AirlockAssembly
-  name: airlock assembly
-  description: It opens, it closes, and maybe crushes you.
+  parent: AirlockAssembly
+  id: AirlockAssemblyAtmospherics
+  suffix: Atmospherics
   components:
-  - type: Clickable
-  - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+    sprite: Structures/Doors/Airlocks/Standard/atmospherics.rsi
     state: "assembly"
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
-        density: 110
-        mask:
-        - FullTileMask
-        layer:
-        - HumanoidBlockLayer
-  - type: Anchorable
-    delay: 2
-  - type: Pullable
-  - type: Transform
-    anchored: true
-    noRot: true
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyAtmosphericsGlass
+  suffix: Atmospherics, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/atmospherics.rsi
+    state: "assembly"
+
+#Cargo
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyCargo
+  suffix: Cargo
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/cargo.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyCargoGlass
+  suffix: Cargo, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/cargo.rsi
+    state: "assembly"
+
+#Clockwork
+- type: entity
+  id: PinionAirlockAssembly
+  name: airlock assembly
+  suffix: Pinion, Clockwork
+  parent: AirlockAssembly
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/clockwork_pinion.rsi
+    state: "assembly"
   - type: Construction
-    graph: Airlock
+    graph: PinionAirlock
     node: assembly
   placement:
     mode: SnapgridCenter
+
+- type: entity
+  parent: PinionAirlockAssembly
+  id: PinionAirlockAssemblyGlass
+  suffix: Pinion, Clockwork, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/clockwork_pinion.rsi
+    state: "assembly"
+
+#Command
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyCommand
+  suffix: Command
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/command.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyCommandGlass
+  suffix: Command, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/command.rsi
+    state: "assembly"
+
+#Engineering
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyEngineering
+  suffix: Engineering
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/engineering.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyEngineeringGlass
+  suffix: Engineering, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/engineering.rsi
+    state: "assembly"
+
+#External
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyExternal
+  suffix: External
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/external.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyExternalGlass
+  suffix: External, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/external.rsi
+    state: "assembly"
+
+#Public (Glass Airlock)
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyGlass
+  suffix: Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/glass.rsi
+    state: "assembly"
+
+#Freezer
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyFreezer
+  suffix: Freezer
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/freezer.rsi
+    state: "assembly"
+
+#Maintenance
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMaintenance
+  suffix: Maintenance
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMaintenanceGlass
+  suffix: Maintenance, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/maint.rsi
+    state: "assembly"
+
+#Medical
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMedical
+  suffix: Medical
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/medical.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMedicalGlass
+  suffix: Medical, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/medical.rsi
+    state: "assembly"
+
+#Science
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyScience
+  suffix: Science
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/science.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyScienceGlass
+  suffix: Science, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/science.rsi
+    state: "assembly"
+
+#Security
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblySecurity
+  suffix: Security
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/security.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblySecurityGlass
+  suffix: Security, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/security.rsi
+    state: "assembly"
+
+#Shuttle
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyShuttle
+  suffix: Shuttle
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/shuttle.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyShuttleGlass
+  suffix: Shuttle, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
+    state: "assembly"
+
+#Virology
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyVirology
+  suffix: Virology
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/virology.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyVirologyGlass
+  suffix: Virology, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/virology.rsi
+    state: "assembly"
+
+#CentralCommand
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyCentralCommand
+  suffix: CentralCommand
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/centcomm.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyCentralCommandGlass
+  suffix: CentralCommand, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/centcomm.rsi
+    state: "assembly"
+
+#Mining
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMining
+  suffix: Mining
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/mining.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMiningGlass
+  suffix: Mining, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/mining.rsi
+    state: "assembly"
+
+#Syndicate
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblySyndicate
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/syndicate.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblySyndicateGlass
+  suffix: Syndicate, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/syndicate.rsi
+    state: "assembly"
+
+#ShuttleSyndicate
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyShuttleSyndicate
+  suffix: ShuttleSyndicate
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/shuttle_syndicate.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyShuttleSyndicateGlass
+  suffix: ShuttleSyndicate, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/shuttle_syndicate.rsi
+    state: "assembly"
+
+#High Security
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyHighSec
+  suffix: HighSec
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/highsec/highsec.rsi
+    state: "assembly"

@@ -36,7 +36,7 @@ public sealed partial class BonkSystem : EntitySystem
 
     private void OnBonkDoAfter(EntityUid uid, Components.BonkableComponent component, BonkDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Target != args.Args.User)
+        if (args.Handled || args.Cancelled || args.Args.Target == null)
             return;
 
         TryBonk(args.Args.User, uid, component);
@@ -82,8 +82,7 @@ public sealed partial class BonkSystem : EntitySystem
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.Dragged, component.BonkDelay, new BonkDoAfterEvent(), uid, target: uid)
         {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
+            BreakOnMove = true,
             BreakOnDamage = true
         };
 

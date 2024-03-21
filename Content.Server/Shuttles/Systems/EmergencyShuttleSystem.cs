@@ -5,12 +5,12 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Communications;
-using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking.Events;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
+using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Components;
@@ -18,6 +18,8 @@ using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.DeviceNetwork;
+using Content.Shared.GameTicking;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Tag;
@@ -62,8 +64,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
-    private ISawmill _sawmill = default!;
-
     private const float ShuttleSpawnBuffer = 1f;
 
     private bool _emergencyShuttleEnabled;
@@ -73,12 +73,12 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
     public override void Initialize()
     {
-        _sawmill = Logger.GetSawmill("shuttle.emergency");
         _emergencyShuttleEnabled = _configManager.GetCVar(CCVars.EmergencyShuttleEnabled);
         // Don't immediately invoke as roundstart will just handle it.
-        _configManager.OnValueChanged(CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
+        Subs.CVar(_configManager, CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
 
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
         SubscribeLocalEvent<StationEmergencyShuttleComponent, ComponentStartup>(OnStationStartup);
         SubscribeLocalEvent<StationCentcommComponent, ComponentShutdown>(OnCentcommShutdown);
         SubscribeLocalEvent<StationCentcommComponent, ComponentInit>(OnCentcommInit);
@@ -92,8 +92,13 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     private void OnRoundStart(RoundStartingEvent ev)
     {
         CleanupEmergencyConsole();
-        _roundEndCancelToken?.Cancel();
         _roundEndCancelToken = new CancellationTokenSource();
+    }
+
+    private void OnRoundCleanup(RoundRestartCleanupEvent ev)
+    {
+        _roundEndCancelToken?.Cancel();
+        _roundEndCancelToken = null;
     }
 
     private void OnCentcommShutdown(EntityUid uid, StationCentcommComponent component, ComponentShutdown args)
@@ -149,12 +154,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     {
         base.Update(frameTime);
         UpdateEmergencyConsole(frameTime);
-    }
-
-    public override void Shutdown()
-    {
-        _configManager.UnsubValueChanged(CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
-        ShutdownEmergencyConsole();
     }
 
     /// <summary>
@@ -235,8 +234,18 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
                 [ShuttleTimerMasks.ShuttleTime] = countdownTime,
                 [ShuttleTimerMasks.SourceTime] = countdownTime,
                 [ShuttleTimerMasks.DestTime] = countdownTime,
-                [ShuttleTimerMasks.Text] = new string?[] { "BYE!" }
             };
+
+            // by popular request
+            // https://discord.com/channels/310555209753690112/770682801607278632/1189989482234126356
+            if (_random.Next(1000) == 0)
+            {
+                payload.Add(ScreenMasks.Text, ShuttleTimerMasks.Kill);
+                payload.Add(ScreenMasks.Color, Color.Red);
+            }
+            else
+                payload.Add(ScreenMasks.Text, ShuttleTimerMasks.Bye);
+
             _deviceNetworkSystem.QueuePacket(shuttle, null, payload, net.TransmitFrequency);
         }
     }
@@ -379,7 +388,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     {
         if (component.MapEntity != null || component.Entity != null)
         {
-            _sawmill.Warning("Attempted to re-add an existing centcomm map.");
+            Log.Warning("Attempted to re-add an existing centcomm map.");
             return;
         }
 
@@ -404,7 +413,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         if (string.IsNullOrEmpty(component.Map.ToString()))
         {
-            _sawmill.Warning("No CentComm map found, skipping setup.");
+            Log.Warning("No CentComm map found, skipping setup.");
             return;
         }
 
@@ -440,7 +449,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         component.MapEntity = map;
         component.Entity = grid;
-        _shuttle.AddFTLDestination(grid.Value, false);
+        _shuttle.TryAddFTLDestination(mapId, false, out _);
     }
 
     public HashSet<EntityUid> GetCentcommMaps()
@@ -479,7 +488,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         if (shuttle == null)
         {
-            _sawmill.Error($"Unable to spawn emergency shuttle {shuttlePath} for {ToPrettyString(uid)}");
+            Log.Error($"Unable to spawn emergency shuttle {shuttlePath} for {ToPrettyString(uid)}");
             return;
         }
 
@@ -500,14 +509,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         EnsureComp<ProtectedGridComponent>(shuttle.Value);
         EnsureComp<PreventPilotComponent>(shuttle.Value);
         EnsureComp<EmergencyShuttleComponent>(shuttle.Value);
-    }
-
-    private void OnEscapeUnpaused(EntityUid uid, EscapePodComponent component, ref EntityUnpausedEvent args)
-    {
-        if (component.LaunchTime == null)
-            return;
-
-        component.LaunchTime = component.LaunchTime.Value + args.PausedTime;
     }
 
     /// <summary>

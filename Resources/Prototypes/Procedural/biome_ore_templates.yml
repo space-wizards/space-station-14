@@ -1,6 +1,6 @@
 # Low value
 - type: biomeMarkerLayer
-  id: OreTin
+  id: OreIron
   entityMask:
     AsteroidRock: AsteroidRockTin
     WallRock: WallRockTin
@@ -35,6 +35,20 @@
     WallRockChromite: WallRockChromiteCoal
     WallRockSand: WallRockSandCoal
     WallRockSnow: WallRockSnowCoal
+  maxCount: 30
+  minGroupSize: 10
+  maxGroupSize: 20
+  radius: 4
+
+- type: biomeMarkerLayer
+  id: OreSalt
+  entityMask:
+    AsteroidRock: AsteroidRockSalt
+    WallRock: WallRockSalt
+    WallRockBasalt: WallRockBasaltSalt
+    WallRockChromite: WallRockChromiteSalt
+    WallRockSand: WallRockSandSalt
+    WallRockSnow: WallRockSnowSalt
   maxCount: 30
   minGroupSize: 10
   maxGroupSize: 20

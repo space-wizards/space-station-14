@@ -1,5 +1,5 @@
 using Content.Server.Power.Components;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using static Content.Shared.Arcade.SharedSpaceVillainArcadeComponent;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;

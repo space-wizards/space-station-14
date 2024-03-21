@@ -14,12 +14,15 @@
     sprite: Objects/Weapons/Melee/chainsaw.rsi
     state: icon
   - type: MeleeWeapon
+    autoAttack: true
+    angle: 0
     wideAnimationRotation: -135
+    attackRate: 4
     damage:
       types:
-        Slash: 5
-        Blunt: 5
-        Structural: 10
+        Slash: 2
+        Blunt: 2
+        Structural: 4
     soundHit:
       path: /Audio/Weapons/chainsaw.ogg
       params:
@@ -27,8 +30,8 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Slash: 10
-        Structural: 10
+        Slash: 4
+        Structural: 4
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/chainsaw.rsi

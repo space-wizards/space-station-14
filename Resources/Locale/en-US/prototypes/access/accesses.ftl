@@ -1,6 +1,7 @@
 id-card-access-level-command = Command
 id-card-access-level-captain = Captain
 id-card-access-level-head-of-personnel = Head of Personnel
+id-card-access-level-cryogenics = Cryogenics
 
 id-card-access-level-head-of-security = Head of Security
 id-card-access-level-security = Security

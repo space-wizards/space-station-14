@@ -77,12 +77,12 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "Taken from DragishaRambo21 via freesound.org and mixed from stereo to mono."
   source: "https://freesound.org/people/DragishaRambo21/sounds/345920/"
-  
+
 - files: ["tesla_consume.ogg"]
   license: "CC0-1.0"
   copyright: "Taken from egomassive via freesound.org and mixed from stereo to mono."
   source: "https://freesound.org/people/egomassive/sounds/536741/"
-  
+
 - files: ["sizzle.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Recorded by deltanedas for SS14"
@@ -90,11 +90,6 @@
 
 - files: ["drop.ogg"]
   copyright: '"FS Concrete Soldier Crouch N02" in "Soldier Footsteps" by Levan Nadashvili of SONNISS.com. See https://sonniss.com/gdc-bundle-license/ for license. Mixed from stereo to mono.'
-  license: Custom
-  source: https://gdc.sonniss.com
-
-- files: ["wall_bonk.ogg"]
-  copyright: '"Nuts and Bolts" by 344 Audio of SONNISS.com. See https://sonniss.com/gdc-bundle-license/ for license.'
   license: Custom
   source: https://gdc.sonniss.com
 
@@ -131,6 +126,26 @@
   copyright: 'Created by PNMCarrieRailfan on Freesound.org. Edited and exported to .ogg by EmoGarbage404 (github)'
   license: "CC-BY-NC-4.0"
   source: "https://freesound.org/people/PNMCarrieRailfan/sounds/682439/"
+
+- files: ["metal_slam5.ogg", "metal_break1.ogg", "metal_break1.ogg", "metal_break1.ogg", "metal_break1.ogg", "metal_break5.ogg", "metal_glass_break1.ogg", "metal_glass_break2.ogg"]
+  copyright: 'Created by and released in a sound pack by PNMCarrieRailfan on Freesound.org. Cut, edited and exported to mono .ogg by mirrorcult (github)'
+  license: "CC-BY-NC-4.0"
+  source: "https://freesound.org/people/PNMCarrieRailfan/packs/38016/"
+
+- files: ["glass_break1.ogg", "glass_break2.ogg", "glass_break3.ogg", "glass_break4.ogg", "glass_smack.ogg", "glass_smash.ogg", "metal_thud1.ogg", "metal_thud2.ogg", "metal_thud3.ogg", "weak_hit.ogg", "wood_destroy1.ogg", "window_shatter1.ogg", "window_shatter2.ogg", "window_shatter3.ogg"]
+  copyright: "CM-SS13 at 84dc482572649ae7c2264c71ea1fe9fd169e4774"
+  license: "CC-BY-SA-3.0"
+  source: "https://github.com/cmss13-devs/cmss13"
+
+- files: ["glass_crack1.ogg", "glass_crack2.ogg", "glass_crack3.ogg", "glass_crack4.ogg", "metal_scrape1.ogg", "metal_scrape2.ogg", "metal_scrape3.ogg"]
+  copyright: "Baystation 12 at 23c0d851246ebbaeb0df647318ce9874da895d3d"
+  license: "CC-BY-SA-3.0"
+  source: "https://github.com/Baystation12/Baystation12"
+
+- files: ["wood_destroy2.ogg", "wood_destroy3.ogg", "wood_destroy_heavy1.ogg", "metal_slam1.ogg", "metal_slam2.ogg", "metal_slam3.ogg"]
+  copyright: "Based on sounds from OpenSourceWeb at edb003dc8ff5009476a9bcb74e79206039fb3390, edited and reworked by mirrorcult"
+  license: "CC-BY-SA-3.0"
+  source: "https://github.com/Open-SourceWeb/OpenSourceWeb"
 
 - files: ["voteding.ogg"]
   copyright: '"Bike, Bell Ding, Single, 01-01.wav" byInspectorJ (www.jshaw.co.uk) of Freesound.org; The volume has been reduced.'

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Physics.Components;
 using Content.Shared.Follower.Components;
 using Content.Shared.Throwing;
@@ -69,11 +70,15 @@ internal sealed class RandomWalkController : VirtualController
         if(!Resolve(uid, ref physics))
             return;
 
-        var pushAngle = _random.NextAngle();
+        var pushVec = _random.NextAngle().ToVec();
+        pushVec += randomWalk.BiasVector;
+        pushVec.Normalize();
+        if (randomWalk.ResetBiasOnWalk)
+            randomWalk.BiasVector *= 0f;
         var pushStrength = _random.NextFloat(randomWalk.MinSpeed, randomWalk.MaxSpeed);
 
         _physics.SetLinearVelocity(uid, physics.LinearVelocity * randomWalk.AccumulatorRatio, body: physics);
-        _physics.ApplyLinearImpulse(uid, pushAngle.ToVec() * (pushStrength * physics.Mass), body: physics);
+        _physics.ApplyLinearImpulse(uid, pushVec * (pushStrength * physics.Mass), body: physics);
     }
 
     /// <summary>

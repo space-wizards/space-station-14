@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Light.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Light.EntitySystems;
 using Content.Shared.Light.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
@@ -13,7 +14,7 @@ using Robust.Shared.Containers;
 namespace Content.Server.Light.EntitySystems;
 
 [UsedImplicitly]
-public sealed class LightReplacerSystem : EntitySystem
+public sealed class LightReplacerSystem : SharedLightReplacerSystem
 {
     [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -33,23 +34,27 @@ public sealed class LightReplacerSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, LightReplacerComponent component, ExaminedEvent args)
     {
-        if (!component.InsertedBulbs.ContainedEntities.Any())
+        using (args.PushGroup(nameof(LightReplacerComponent)))
         {
-            args.PushMarkup(Loc.GetString("comp-light-replacer-no-lights"));
-            return;
-        }
-        args.PushMarkup(Loc.GetString("comp-light-replacer-has-lights"));
-        var groups = new Dictionary<string, int>();
-        var metaQuery = GetEntityQuery<MetaDataComponent>();
-        foreach (var bulb in component.InsertedBulbs.ContainedEntities)
-        {
-            var metaData = metaQuery.GetComponent(bulb);
-            groups[metaData.EntityName] = groups.GetValueOrDefault(metaData.EntityName) + 1;
-        }
+            if (!component.InsertedBulbs.ContainedEntities.Any())
+            {
+                args.PushMarkup(Loc.GetString("comp-light-replacer-no-lights"));
+                return;
+            }
 
-        foreach (var (name, amount) in groups)
-        {
-            args.PushMarkup(Loc.GetString("comp-light-replacer-light-listing", ("amount", amount), ("name", name)));
+            args.PushMarkup(Loc.GetString("comp-light-replacer-has-lights"));
+            var groups = new Dictionary<string, int>();
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
+            foreach (var bulb in component.InsertedBulbs.ContainedEntities)
+            {
+                var metaData = metaQuery.GetComponent(bulb);
+                groups[metaData.EntityName] = groups.GetValueOrDefault(metaData.EntityName) + 1;
+            }
+
+            foreach (var (name, amount) in groups)
+            {
+                args.PushMarkup(Loc.GetString("comp-light-replacer-light-listing", ("amount", amount), ("name", name)));
+            }
         }
     }
 
@@ -228,7 +233,7 @@ public sealed class LightReplacerSystem : EntitySystem
         // show some message if success
         if (insertedBulbs > 0 && userUid != null)
         {
-            var msg = Loc.GetString("comp-light-replacer-refill-from-storage", ("light-replacer", storageUid));
+            var msg = Loc.GetString("comp-light-replacer-refill-from-storage", ("light-replacer", replacerUid));
             _popupSystem.PopupEntity(msg, replacerUid, userUid.Value, PopupType.Medium);
         }
 

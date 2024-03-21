@@ -10,7 +10,7 @@ namespace Content.Shared.Weapons.Melee;
 /// <summary>
 /// When given to a mob lets them do unarmed attacks, or when given to an item lets someone wield it to do attacks.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class MeleeWeaponComponent : Component
 {
     // TODO: This is becoming bloated as shit.
@@ -18,7 +18,7 @@ public sealed partial class MeleeWeaponComponent : Component
     /// <summary>
     /// Does this entity do a disarm on alt attack.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool AltDisarm = true;
 
     /// <summary>
@@ -33,6 +33,7 @@ public sealed partial class MeleeWeaponComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     [ViewVariables(VVAccess.ReadWrite)]
+    [AutoPausedField]
     public TimeSpan NextAttack;
 
     /// <summary>
@@ -59,6 +60,12 @@ public sealed partial class MeleeWeaponComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool Attacking = false;
+
+    /// <summary>
+    /// If true, attacks will be repeated automatically without requiring the mouse button to be lifted.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool AutoAttack;
 
     /// <summary>
     /// Base damage for this weapon. Can be modified via heavy damage or other means.
@@ -132,7 +139,7 @@ public sealed partial class MeleeWeaponComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("soundNoDamage"), AutoNetworkedField]
-    public SoundSpecifier NoDamageSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/tap.ogg");
+    public SoundSpecifier NoDamageSound { get; set; } = new SoundCollectionSpecifier("WeakHit");
 }
 
 /// <summary>

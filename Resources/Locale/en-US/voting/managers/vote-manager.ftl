@@ -6,6 +6,7 @@ ui-vote-initiator-server = The server
 ui-vote-restart-title = Restart round
 ui-vote-restart-succeeded = Restart vote succeeded.
 ui-vote-restart-failed = Restart vote failed (need { TOSTRING($ratio, "P0") }).
+ui-vote-restart-fail-not-enough-ghost-players = Restart vote failed: A minimum of { $ghostPlayerRequirement }% ghost players is required to initiate a restart vote. Currently, there are not enough ghost players.
 ui-vote-restart-yes = Yes
 ui-vote-restart-no = No
 ui-vote-restart-abstain = Abstain

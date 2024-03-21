@@ -7,6 +7,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Botany;
+using Content.Shared.Burial.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
@@ -70,6 +71,17 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
+    private int GetCurrentGrowthStage(Entity<PlantHolderComponent> entity)
+    {
+        var (uid, component) = entity;
+
+        if (component.Seed == null)
+            return 0;
+
+        var result = Math.Max(1, (int) (component.Age * component.Seed.GrowthStages / component.Seed.Maturation));
+        return result;
+    }
+
     private void OnExamine(Entity<PlantHolderComponent> entity, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
@@ -77,59 +89,62 @@ public sealed class PlantHolderSystem : EntitySystem
 
         var (_, component) = entity;
 
-        if (component.Seed == null)
+        using (args.PushGroup(nameof(PlantHolderComponent)))
         {
-            args.PushMarkup(Loc.GetString("plant-holder-component-nothing-planted-message"));
-        }
-        else if (!component.Dead)
-        {
-            var displayName = Loc.GetString(component.Seed.DisplayName);
-            args.PushMarkup(Loc.GetString("plant-holder-component-something-already-growing-message",
+            if (component.Seed == null)
+            {
+                args.PushMarkup(Loc.GetString("plant-holder-component-nothing-planted-message"));
+            }
+            else if (!component.Dead)
+            {
+                var displayName = Loc.GetString(component.Seed.DisplayName);
+                args.PushMarkup(Loc.GetString("plant-holder-component-something-already-growing-message",
                     ("seedName", displayName),
                     ("toBeForm", displayName.EndsWith('s') ? "are" : "is")));
 
-            if (component.Health <= component.Seed.Endurance / 2)
-            {
-                args.PushMarkup(Loc.GetString(
-                    "plant-holder-component-something-already-growing-low-health-message",
-                    ("healthState",
-                        Loc.GetString(component.Age > component.Seed.Lifespan
-                            ? "plant-holder-component-plant-old-adjective"
-                            : "plant-holder-component-plant-unhealthy-adjective"))));
+                if (component.Health <= component.Seed.Endurance / 2)
+                {
+                    args.PushMarkup(Loc.GetString(
+                        "plant-holder-component-something-already-growing-low-health-message",
+                        ("healthState",
+                            Loc.GetString(component.Age > component.Seed.Lifespan
+                                ? "plant-holder-component-plant-old-adjective"
+                                : "plant-holder-component-plant-unhealthy-adjective"))));
+                }
             }
-        }
-        else
-        {
-            args.PushMarkup(Loc.GetString("plant-holder-component-dead-plant-matter-message"));
-        }
+            else
+            {
+                args.PushMarkup(Loc.GetString("plant-holder-component-dead-plant-matter-message"));
+            }
 
-        if (component.WeedLevel >= 5)
-            args.PushMarkup(Loc.GetString("plant-holder-component-weed-high-level-message"));
+            if (component.WeedLevel >= 5)
+                args.PushMarkup(Loc.GetString("plant-holder-component-weed-high-level-message"));
 
-        if (component.PestLevel >= 5)
-            args.PushMarkup(Loc.GetString("plant-holder-component-pest-high-level-message"));
+            if (component.PestLevel >= 5)
+                args.PushMarkup(Loc.GetString("plant-holder-component-pest-high-level-message"));
 
-        args.PushMarkup(Loc.GetString($"plant-holder-component-water-level-message",
-            ("waterLevel", (int) component.WaterLevel)));
-        args.PushMarkup(Loc.GetString($"plant-holder-component-nutrient-level-message",
-            ("nutritionLevel", (int) component.NutritionLevel)));
+            args.PushMarkup(Loc.GetString($"plant-holder-component-water-level-message",
+                ("waterLevel", (int) component.WaterLevel)));
+            args.PushMarkup(Loc.GetString($"plant-holder-component-nutrient-level-message",
+                ("nutritionLevel", (int) component.NutritionLevel)));
 
-        if (component.DrawWarnings)
-        {
-            if (component.Toxins > 40f)
-                args.PushMarkup(Loc.GetString("plant-holder-component-toxins-high-warning"));
+            if (component.DrawWarnings)
+            {
+                if (component.Toxins > 40f)
+                    args.PushMarkup(Loc.GetString("plant-holder-component-toxins-high-warning"));
 
-            if (component.ImproperLight)
-                args.PushMarkup(Loc.GetString("plant-holder-component-light-improper-warning"));
+                if (component.ImproperLight)
+                    args.PushMarkup(Loc.GetString("plant-holder-component-light-improper-warning"));
 
-            if (component.ImproperHeat)
-                args.PushMarkup(Loc.GetString("plant-holder-component-heat-improper-warning"));
+                if (component.ImproperHeat)
+                    args.PushMarkup(Loc.GetString("plant-holder-component-heat-improper-warning"));
 
-            if (component.ImproperPressure)
-                args.PushMarkup(Loc.GetString("plant-holder-component-pressure-improper-warning"));
+                if (component.ImproperPressure)
+                    args.PushMarkup(Loc.GetString("plant-holder-component-pressure-improper-warning"));
 
-            if (component.MissingGas > 0)
-                args.PushMarkup(Loc.GetString("plant-holder-component-gas-missing-warning"));
+                if (component.MissingGas > 0)
+                    args.PushMarkup(Loc.GetString("plant-holder-component-gas-missing-warning"));
+            }
         }
     }
 
@@ -144,6 +159,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 if (!_botany.TryGetSeed(seeds, out var seed))
                     return;
 
+                float? seedHealth = seeds.HealthOverride;
                 var name = Loc.GetString(seed.Name);
                 var noun = Loc.GetString(seed.Noun);
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
@@ -153,7 +169,14 @@ public sealed class PlantHolderSystem : EntitySystem
                 component.Seed = seed;
                 component.Dead = false;
                 component.Age = 1;
-                component.Health = component.Seed.Endurance;
+                if (seedHealth is float realSeedHealth)
+                {
+                    component.Health = realSeedHealth;
+                }
+                else
+                {
+                    component.Health = component.Seed.Endurance;
+                }
                 component.LastCycle = _gameTiming.CurTime;
 
                 QueueDel(args.Used);
@@ -188,7 +211,7 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (_tagSystem.HasTag(args.Used, "Shovel"))
+        if (HasComp<ShovelComponent>(args.Used))
         {
             if (component.Seed != null)
             {
@@ -258,13 +281,19 @@ public sealed class PlantHolderSystem : EntitySystem
                 return;
             }
 
+            if (GetCurrentGrowthStage(entity) <= 1)
+            {
+                _popup.PopupCursor(Loc.GetString("plant-holder-component-early-sample-message"), args.User);
+                return;
+            }
+
+            component.Health -= (_random.Next(3, 5) * 10);
             component.Seed.Unique = false;
-            var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User);
+            var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User, component.Health);
             _randomHelper.RandomOffset(seed, 0.25f);
             var displayName = Loc.GetString(component.Seed.DisplayName);
             _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                 ("seedName", displayName)), args.User);
-            component.Health -= (_random.Next(3, 5) * 10);
 
             if (component.Seed != null && component.Seed.CanScream)
             {
@@ -592,6 +621,7 @@ public sealed class PlantHolderSystem : EntitySystem
             RemovePlant(uid, component);
             component.ForceUpdate = true;
             Update(uid, component);
+            return;
         }
 
         CheckHealth(uid, component);
@@ -762,6 +792,7 @@ public sealed class PlantHolderSystem : EntitySystem
         component.Seed = null;
         component.Dead = false;
         component.Age = 0;
+        component.LastProduce = 0;
         component.Sampled = false;
         component.Harvest = false;
         component.ImproperLight = false;
@@ -892,7 +923,7 @@ public sealed class PlantHolderSystem : EntitySystem
             }
             else if (component.Age < component.Seed.Maturation)
             {
-                var growthStage = Math.Max(1, (int) (component.Age * component.Seed.GrowthStages / component.Seed.Maturation));
+                var growthStage = GetCurrentGrowthStage((uid, component));
 
                 _appearance.SetData(uid, PlantHolderVisuals.PlantRsi, component.Seed.PlantRsi.ToString(), app);
                 _appearance.SetData(uid, PlantHolderVisuals.PlantState, $"stage-{growthStage}", app);

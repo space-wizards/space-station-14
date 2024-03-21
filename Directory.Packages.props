@@ -1,0 +1,19 @@
+﻿<Project>
+  <Import Project="RobustToolbox/Directory.Packages.props" />
+  <ItemGroup>
+    <!--
+    Remove EF Core packages from Robust. They're only used by Robust.Benchmarks anyways.
+    -->
+    <PackageVersion Remove="Npgsql.EntityFrameworkCore.PostgreSQL" />
+    <PackageVersion Remove="Microsoft.EntityFrameworkCore.Design" />
+
+    <PackageVersion Include="CsvHelper" Version="30.0.1" />
+    <PackageVersion Include="ImGui.NET" Version="1.87.3" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="8.0.0" />
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+    <PackageVersion Include="OpenTK" Version="4.7.2" />
+    <PackageVersion Include="Veldrid" Version="4.8.0" />
+    <PackageVersion Include="Veldrid.SPIRV" Version="1.0.15" />
+  </ItemGroup>
+</Project>

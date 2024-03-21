@@ -24,6 +24,7 @@ using Content.Shared.Random;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Modifiers;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
@@ -91,6 +92,8 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         MetaDataComponent? metadata = null;
         var grid = _entManager.EnsureComponent<MapGridComponent>(mapUid);
         var random = new Random(_missionParams.Seed);
+        var destComp = _entManager.AddComponent<FTLDestinationComponent>(mapUid);
+        destComp.BeaconsOnly = true;
 
         // Setup mission configs
         // As we go through the config the rating will deplete so we'll go for most important to least important.

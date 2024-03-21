@@ -15,6 +15,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Numerics;
+using Content.Shared.Gibbing.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio.Systems;
 
@@ -37,7 +38,6 @@ public sealed class BodySystem : SharedBodySystem
 
         SubscribeLocalEvent<BodyComponent, MoveInputEvent>(OnRelayMoveInput);
         SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
-        SubscribeLocalEvent<BodyComponent, BeingMicrowavedEvent>(OnBeingMicrowaved);
     }
 
     private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
@@ -63,19 +63,6 @@ public sealed class BodySystem : SharedBodySystem
         {
             RaiseLocalEvent(organ.Id, args);
         }
-    }
-
-    private void OnBeingMicrowaved(EntityUid uid, BodyComponent component, BeingMicrowavedEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        // Don't microwave animals, kids
-        SharedTransform.AttachToGridOrMap(uid);
-        _appearance.SetData(args.Microwave, MicrowaveVisualState.Bloody, true);
-        GibBody(uid, false, component);
-
-        args.Handled = true;
     }
 
     protected override void AddPart(
@@ -120,7 +107,16 @@ public sealed class BodySystem : SharedBodySystem
         _humanoidSystem.SetLayersVisibility(bodyUid, layers, false, true, humanoid);
     }
 
-    public override HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false, BodyComponent? body = null, bool deleteItems = false, bool deleteBrain = false)
+    public override HashSet<EntityUid> GibBody(
+        EntityUid bodyId,
+        bool gibOrgans = false,
+        BodyComponent? body = null ,
+        bool launchGibs = true,
+        Vector2? splatDirection = null,
+        float splatModifier = 1,
+        Angle splatCone = default,
+        SoundSpecifier? gibSoundOverride = null
+    )
     {
         if (!Resolve(bodyId, ref body, false))
             return new HashSet<EntityUid>();
@@ -132,28 +128,8 @@ public sealed class BodySystem : SharedBodySystem
         if (xform.MapUid == null)
             return new HashSet<EntityUid>();
 
-        var gibs = base.GibBody(bodyId, gibOrgans, body, deleteItems, deleteBrain);
-
-        var coordinates = xform.Coordinates;
-        var filter = Filter.Pvs(bodyId, entityManager: EntityManager);
-        var audio = AudioParams.Default.WithVariation(0.025f);
-
-        _audio.PlayStatic(body.GibSound, filter, coordinates, true, audio);
-
-        foreach (var entity in gibs)
-        {
-            if (deleteItems)
-            {
-                if (!HasComp<BrainComponent>(entity) || deleteBrain)
-                {
-                    QueueDel(entity);
-                }
-            }
-            else
-            {
-                SharedTransform.SetCoordinates(entity, coordinates.Offset(_random.NextVector2(.3f)));
-            }
-        }
+        var gibs = base.GibBody(bodyId, gibOrgans, body, launchGibs: launchGibs,
+            splatDirection: splatDirection, splatModifier: splatModifier, splatCone:splatCone);
         RaiseLocalEvent(bodyId, new BeingGibbedEvent(gibs));
         QueueDel(bodyId);
 

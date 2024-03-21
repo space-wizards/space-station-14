@@ -1,11 +1,13 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.Guidebook;
 using Content.Client.Humanoid;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
@@ -72,6 +74,7 @@ namespace Content.Client.Preferences.UI
         private Slider _skinColor => CSkin;
         private OptionButton _clothingButton => CClothingButton;
         private OptionButton _backpackButton => CBackpackButton;
+        private OptionButton _spawnPriorityButton => CSpawnPriorityButton;
         private SingleMarkingPicker _hairPicker => CHairStylePicker;
         private SingleMarkingPicker _facialHairPicker => CFacialHairPicker;
         private EyeColorPicker _eyesPicker => CEyeColorPicker;
@@ -114,6 +117,8 @@ namespace Content.Client.Preferences.UI
             _preferencesManager = preferencesManager;
             _configurationManager = configurationManager;
             _markingManager = IoCManager.Resolve<MarkingManager>();
+
+            SpeciesInfoButton.ToolTip = Loc.GetString("humanoid-profile-editor-guidebook-button-tooltip");
 
             #region Left
 
@@ -340,6 +345,21 @@ namespace Content.Client.Preferences.UI
 
             #endregion Backpack
 
+            #region SpawnPriority
+
+            foreach (var value in Enum.GetValues<SpawnPriorityPreference>())
+            {
+                _spawnPriorityButton.AddItem(Loc.GetString($"humanoid-profile-editor-preference-spawn-priority-{value.ToString().ToLower()}"), (int) value);
+            }
+
+            _spawnPriorityButton.OnItemSelected += args =>
+            {
+                _spawnPriorityButton.SelectId(args.Id);
+                SetSpawnPriority((SpawnPriorityPreference) args.Id);
+            };
+
+            #endregion SpawnPriority
+
             #region Eyes
 
             _eyesPicker.OnEyeColorPicked += newColor =>
@@ -507,8 +527,28 @@ namespace Content.Client.Preferences.UI
 
             preferencesManager.OnServerDataLoaded += LoadServerData;
 
+            SpeciesInfoButton.OnPressed += OnSpeciesInfoButtonPressed;
+
+            UpdateSpeciesGuidebookIcon();
 
             IsDirty = false;
+        }
+
+        private void OnSpeciesInfoButtonPressed(BaseButton.ButtonEventArgs args)
+        {
+            var guidebookController = UserInterfaceManager.GetUIController<GuidebookUIController>();
+            var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
+            var page = "Species";
+            if (_prototypeManager.HasIndex<GuideEntryPrototype>(species))
+                page = species;
+
+            if (_prototypeManager.TryIndex<GuideEntryPrototype>("Species", out var guideRoot))
+            {
+                var dict = new Dictionary<string, GuideEntry>();
+                dict.Add("Species", guideRoot);
+                //TODO: Don't close the guidebook if its already open, just go to the correct page
+                guidebookController.ToggleGuidebook(dict, includeChildren:true, selected: page);
+            }
         }
 
         private void ToggleClothes(BaseButton.ButtonEventArgs obj)
@@ -523,7 +563,10 @@ namespace Content.Client.Preferences.UI
             _jobCategories.Clear();
             var firstCategory = true;
 
-            foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
+            var departments = _prototypeManager.EnumeratePrototypes<DepartmentPrototype>().ToArray();
+            Array.Sort(departments, DepartmentUIComparer.Instance);
+
+            foreach (var department in departments)
             {
                 var departmentName = Loc.GetString($"department-{department.ID}");
 
@@ -567,8 +610,10 @@ namespace Content.Client.Preferences.UI
                     _jobList.AddChild(category);
                 }
 
-                var jobs = department.Roles.Select(o => _prototypeManager.Index<JobPrototype>(o)).Where(o => o.SetPreference).ToList();
-                jobs.Sort((x, y) => -string.Compare(x.LocalizedName, y.LocalizedName, StringComparison.CurrentCultureIgnoreCase));
+                var jobs = department.Roles.Select(jobId => _prototypeManager.Index<JobPrototype>(jobId))
+                    .Where(job => job.SetPreference)
+                    .ToArray();
+                Array.Sort(jobs, JobUIComparer.Instance);
 
                 foreach (var job in jobs)
                 {
@@ -604,6 +649,11 @@ namespace Content.Client.Preferences.UI
                     };
 
                 }
+            }
+
+            if (Profile is not null)
+            {
+                UpdateJobPriorities();
             }
         }
 
@@ -764,6 +814,7 @@ namespace Content.Client.Preferences.UI
             CMarkings.SetSpecies(newSpecies); // Repopulate the markings tab as well.
             UpdateSexControls(); // update sex for new species
             RebuildSpriteView(); // they might have different inv so we need a new dummy
+            UpdateSpeciesGuidebookIcon();
             IsDirty = true;
             _needUpdatePreview = true;
         }
@@ -783,6 +834,12 @@ namespace Content.Client.Preferences.UI
         private void SetBackpack(BackpackPreference newBackpack)
         {
             Profile = Profile?.WithBackpackPreference(newBackpack);
+            IsDirty = true;
+        }
+
+        private void SetSpawnPriority(SpawnPriorityPreference newSpawnPriority)
+        {
+            Profile = Profile?.WithSpawnPriorityPreference(newSpawnPriority);
             IsDirty = true;
         }
 
@@ -909,6 +966,25 @@ namespace Content.Client.Preferences.UI
 
         }
 
+        public void UpdateSpeciesGuidebookIcon()
+        {
+            SpeciesInfoButton.StyleClasses.Clear();
+
+            var species = Profile?.Species;
+            if (species is null)
+                return;
+
+            if (!_prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesProto))
+                return;
+
+            // Don't display the info button if no guide entry is found
+            if (!_prototypeManager.HasIndex<GuideEntryPrototype>(species))
+                return;
+
+            var style = speciesProto.GuideBookIcon;
+            SpeciesInfoButton.StyleClasses.Add(style);
+        }
+
         private void UpdateMarkings()
         {
             if (Profile == null)
@@ -959,6 +1035,16 @@ namespace Content.Client.Preferences.UI
             }
 
             _backpackButton.SelectId((int) Profile.Backpack);
+        }
+
+        private void UpdateSpawnPriorityControls()
+        {
+            if (Profile == null)
+            {
+                return;
+            }
+
+            _spawnPriorityButton.SelectId((int) Profile.SpawnPriority);
         }
 
         private void UpdateHairPickers()
@@ -1100,6 +1186,7 @@ namespace Content.Client.Preferences.UI
             UpdateSpecies();
             UpdateClothingControls();
             UpdateBackpackControls();
+            UpdateSpawnPriorityControls();
             UpdateAgeEdit();
             UpdateEyePickers();
             UpdateSaveButton();
@@ -1269,7 +1356,7 @@ namespace Content.Client.Preferences.UI
                 var icon = new TextureRect
                 {
                     TextureScale = new Vector2(2, 2),
-                    Stretch = TextureRect.StretchMode.KeepCentered
+                    VerticalAlignment = VAlignment.Center
                 };
                 var jobIcon = protoMan.Index<StatusIconPrototype>(proto.Icon);
                 icon.Texture = jobIcon.Icon.Frame0();

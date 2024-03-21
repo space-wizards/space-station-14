@@ -15,6 +15,7 @@ public sealed class PriceGunSystem : EntitySystem
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly CargoSystem _bountySystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -55,9 +56,17 @@ public sealed class PriceGunSystem : EntitySystem
         if (!TryComp(uid, out UseDelayComponent? useDelay) || _useDelay.IsDelayed((uid, useDelay)))
             return;
 
-        var price = _pricingSystem.GetPrice(args.Target.Value);
+        // Check if we're scanning a bounty crate
+        if (_bountySystem.IsBountyComplete(args.Target.Value, (EntityUid?) null, out _))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("price-gun-bounty-complete"), args.User, args.User);
+        }
+        else // Otherwise appraise the price
+        {
+            double price = _pricingSystem.GetPrice(args.Target.Value);
+            _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result", ("object", Identity.Entity(args.Target.Value, EntityManager)), ("price", $"{price:F2}")), args.User, args.User);
+        }
 
-        _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result", ("object", Identity.Entity(args.Target.Value, EntityManager)), ("price", $"{price:F2}")), args.User, args.User);
         _useDelay.TryResetDelay((uid, useDelay));
         args.Handled = true;
     }

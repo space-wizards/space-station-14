@@ -4,6 +4,8 @@
   id: Lighter
   description: "A simple plastic cigarette lighter."
   components:
+  - type: IgnitionSource
+    ignited: false
   - type: ItemToggle
     predictable: false
     soundActivate:
@@ -72,6 +74,7 @@
           Quantity: 8
         maxVol: 8 #uses less fuel than a welder, so this isnt as bad as it looks
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     damage:
       types:
         Blunt: 0
@@ -123,10 +126,11 @@
   - type: Sprite
     sprite: Objects/Tools/lighters.rsi
     layers:
-    - state: zippo_top
-      map: ["top"]
     - state: zippo_icon_base
       map: ["base"]
+    - state: zippo_top
+      map: ["top"]
+      visible: false
     - state: zippo_open
       map: ["open"]
       visible: false
@@ -161,6 +165,9 @@
         open:
           True: { visible: true }
           False: { visible: false }
+        top:
+          True: { visible: true }
+          False: { visible: false }
         base:
           True: { visible: false }
           False: { visible: true }
@@ -171,6 +178,10 @@
         - ReagentId: WeldingFuel
           Quantity: 12
         maxVol: 12 #uses less fuel than a welder, so this isnt as bad as it looks
+  - type: Welder
+    fuelConsumption: 0.01
+    fuelLitCost: 0.1
+    tankSafe: true
   - type: ToggleableLightVisuals
     spriteLayer: lighter_flame
     inhandVisuals:
@@ -181,6 +192,7 @@
       - state: zippo-inhand-right-flame
         shader: unshaded
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     damage:
       types:
         Blunt: 1 # does a little bit of damage on hit when off
@@ -199,10 +211,11 @@
   - type: Sprite
     sprite: Objects/Tools/lighters.rsi
     layers:
-    - state: zippo_top
-      map: ["top"]
     - state: zippo_engraved_icon_base
       map: ["base"]
+    - state: zippo_top
+      map: ["top"]
+      visible: false
     - state: zippo_engraved_open
       map: ["open"]
       visible: false

@@ -30,6 +30,8 @@ petting-success-hamster = You pet {THE($target)} on {POSS-ADJ($target)} fluffy l
 petting-success-bear = You reluctantly pet {THE($target)} on {POSS-ADJ($target)} mystical head.
 petting-success-slimes = You pet {THE($target)} on {POSS-ADJ($target)} mucous surface.
 petting-success-snake = You pet {THE($target)} on {POSS-ADJ($target)} scaly large head.
+petting-success-monkey = You pet {THE($target)} on {POSS-ADJ($target)} mischevious little head.
+petting-success-nymph = You pet {THE($target)} on {POSS-ADJ($target)} wooden little head.
 
 petting-failure-generic = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} aloof towards you.
 
@@ -49,6 +51,9 @@ petting-failure-holo = You reach out to pet {THE($target)}, but {POSS-ADJ($targe
 petting-failure-dragon = You raise your hand, but as {THE($target)} roars, you decide you'd rather not be toasty carp food.
 petting-failure-hamster = You reach out to pet {THE($target)}, but {SUBJECT($target)} attempts to bite your finger and only your quick reflexes save you from an almost fatal injury.
 petting-failure-bear = You reach out to pet {THE($target)}, but {SUBJECT($target)} growls, making you think twice.
+petting-failure-monkey = You reach out to pet {THE($target)}, but {SUBJECT($target)} almost bites your fingers!
+petting-failure-nymph = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} moves their branches away.
+petting-failure-shadow = You're trying to pet {THE($target)}, but your hand passes through the cold darkness of his body.
 
 ## Petting silicons
 

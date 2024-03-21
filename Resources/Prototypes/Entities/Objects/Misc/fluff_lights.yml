@@ -163,6 +163,7 @@
   - type: AutoRecharge
     rechargeDuration: 30
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     damage:
       types:
         Blunt: 0 # melee weapon to allow flashing individual targets
@@ -206,9 +207,7 @@
           bounds: "-0.2, -0.5, 0.2, 0.5"
         density: 50
         mask:
-        - MachineMask
-        layer:
-        - MachineLayer
+        - HighImpassable
   - type: PointLight
     enabled: false
     radius: 8
@@ -225,7 +224,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/glass_break1.ogg
+          collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           FloodlightBroken:
@@ -261,7 +260,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -278,6 +277,4 @@
           bounds: "-0.2, -0.5, 0.2, 0.5"
         density: 50
         mask:
-        - MachineMask
-        layer:
-        - MachineLayer
+        - HighImpassable

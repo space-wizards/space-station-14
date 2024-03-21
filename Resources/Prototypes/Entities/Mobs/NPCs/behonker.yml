@@ -112,6 +112,9 @@
           Radiation: 10
     - type: Input
       context: "human"
+    - type: Bloodstream
+      bloodMaxVolume: 300
+      bloodReagent: Laughter
 
 - type: entity
   name: behonker

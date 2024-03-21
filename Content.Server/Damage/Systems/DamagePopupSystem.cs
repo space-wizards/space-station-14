@@ -20,7 +20,7 @@ public sealed class DamagePopupSystem : EntitySystem
         if (args.DamageDelta != null)
         {
             var damageTotal = args.Damageable.TotalDamage;
-            var damageDelta = args.DamageDelta.Total;
+            var damageDelta = args.DamageDelta.GetTotal();
 
             var msg = component.Type switch
             {
