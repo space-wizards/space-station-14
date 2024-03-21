@@ -12,7 +12,7 @@
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: MikuDay
-    prototype: BoxPerformer
+    prototype: ClothingBackpackDuffelPerformer
 
 - type: startingGear
   id: MusicianGear

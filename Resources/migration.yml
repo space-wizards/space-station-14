@@ -130,7 +130,6 @@ DrinkGoldschlagerGlass: DrinkGildlagerGlass
 
 # 2024-01-07
 ClosetBase: ClosetSteelBase
-MonkeyCubeBox: VariantCubeBox
 
 # 2024-01-08
 SalvagePartsT4Spawner: SalvageLootSpawner
@@ -246,3 +245,10 @@ ClothingBackpackSatchelFilledDetective: ClothingBackpackSatchelSecurityFilledDet
 ImprovisedExplosive: FireBomb
 ImprovisedExplosiveEmpty: FireBombEmpty
 ImprovisedExplosiveFuel: FireBombFuel
+
+#2024-03-13
+BoxPerformer: ClothingBackpackDuffelPerformer
+MonkeyCubeBox: BoxMonkeyCube
+KoboldCubeBox: BoxKoboldCube
+VariantCubeBox: BoxVariantCube
+SyndicateSpongeBox: BoxSyndicateSponge

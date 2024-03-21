@@ -56,9 +56,8 @@
 
 - type: entity
   name: lighttube box
-  parent: BoxCardboard
+  parent: BoxLightbulb
   id: BoxLighttube
-  description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
   - type: StorageFill
     contents:
@@ -68,18 +67,11 @@
     layers:
       - state: box
       - state: lighttube
-  - type: Storage
-    grid:
-    - 0,0,5,3
-    whitelist:
-      components:
-      - LightBulb
 
 - type: entity
   name: mixed lights box
-  parent: BoxCardboard
+  parent: BoxLightbulb
   id: BoxLightMixed
-  description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
   - type: StorageFill
     contents:
@@ -91,12 +83,6 @@
     layers:
       - state: box
       - state: lightmixed
-  - type: Storage
-    grid:
-    - 0,0,5,3
-    whitelist:
-      components:
-      - LightBulb
 
 - type: entity
   name: PDA box
@@ -202,20 +188,6 @@
       - state: box
       - state: inflatable
 
-
-- type: entity
-  name: hatsune miku day bag
-  parent: ClothingBackpackDuffel
-  id: BoxPerformer
-  description: Happy Hatsune Miku Day!
-  components:
-  - type: StorageFill
-    contents:
-      - id: ClothingShoesBootsPerformer
-      - id: ClothingUniformJumpskirtPerformer
-      - id: FoodMealMemoryleek
-        amount: 2
-
 - type: entity
   name: flare box
   parent: BoxCardboard
@@ -267,10 +239,6 @@
     layers:
       - state: box
       - state: encryptokey
-  - type: Storage
-    whitelist:
-      components:
-      - EncryptionKey
 
 - type: entity
   name: cargo encryption key box
@@ -358,13 +326,10 @@
   id: BoxEncryptionKeySyndie
   description: Two syndicate encryption keys for the price of one. Miniaturized for ease of use.
   components:
-  - type: Item
-    size: Normal
   - type: StorageFill
     contents:
       - id: EncryptionKeySyndie
         amount: 2
-  - type: Storage
 
 - type: entity
   name: deathrattle implant box
@@ -372,8 +337,6 @@
   id: BoxDeathRattleImplants
   description: Six deathrattle implants and handheld GPS devices for the whole squad.
   components:
-  - type: Item
-    size: Normal
   - type: StorageFill
     contents:
       - id: DeathRattleImplanter
@@ -402,6 +365,7 @@
 
 - type: entity
   name: candle box
+  description: This box filled with candles.
   parent: BoxCardboard
   id: BoxCandle
   components:
@@ -427,16 +391,9 @@
 
 - type: entity
   name: small candle box
-  parent: BoxCardboard
+  parent: BoxCandle
   id: BoxCandleSmall
   components:
-  - type: Sprite
-    layers:
-      - state: box
-      - state: candle
-  - type: Storage
-    grid:
-    - 0,0,9,2
   - type: StorageFill
     contents:
       - id: CandleSmall
@@ -456,8 +413,6 @@
   id: BoxDarts
   description: This box filled with colorful darts.
   components:
-  - type: Item
-    size: Normal
   - type: StorageFill
     contents:
       - id: Dart
@@ -475,3 +430,54 @@
     layers:
       - state: box
       - state: darts
+
+- type: entity
+  parent: BoxCardboard
+  name: monkey cube box
+  id: BoxMonkeyCube
+  description: Drymate brand monkey cubes. Just add water!
+  components:
+  - type: StorageFill
+    contents:
+      - id: MonkeyCubeWrapped
+        amount: 8
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+
+- type: entity
+  parent: BoxMonkeyCube
+  name: kobold cube box
+  id: BoxKoboldCube
+  description: Condensed kobolds in a cube. Just add water!
+  components:
+  - type: StorageFill
+    contents:
+      - id: KoboldCubeWrapped
+        amount: 8
+  - type: Sprite
+    state: box_kobold
+
+- type: entity
+  parent: BoxMonkeyCube
+  name: variant cube box
+  id: BoxVariantCube
+  description: Both kobold cubes and monkey cubes. Just add water!
+  components:
+  - type: StorageFill
+    contents:
+      - id: KoboldCubeWrapped
+        amount: 4
+      - id: MonkeyCubeWrapped
+        amount: 4
+  - type: Sprite
+    state: box_variant
+
+- type: entity
+  parent: BoxMonkeyCube
+  suffix: Syndicate
+  id: BoxSyndicateSponge
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyndicateSpongeWrapped
+        amount: 6

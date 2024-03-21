@@ -1109,7 +1109,7 @@
       whitelist:
         tags:
           - NukeOpsUplink
- 
+
 - type: listing
   id: UplinkUplinkImplanter # uplink uplink real
   name: uplink-uplink-implanter-name
@@ -1644,11 +1644,11 @@
       - SurplusBundle
 
 - type: listing
-  id: UplinkSyndicateSpongeBox
-  name: uplink-syndicate-sponge-box-name
-  description: uplink-syndicate-sponge-box-desc
+  id: UplinkBoxSyndicateSponge
+  name: uplink-box-syndicate-sponge-name
+  description: uplink-box-syndicate-sponge-desc
   icon: { sprite:  Objects/Misc/monkeycube.rsi, state: box}
-  productEntity: SyndicateSpongeBox
+  productEntity: BoxSyndicateSponge
   cost:
     Telecrystal: 7
   categories:
