@@ -6,6 +6,8 @@
   components:
   - type: AccessReader
     access: [["Service"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: Airlock
@@ -14,6 +16,8 @@
   components:
   - type: AccessReader
     access: [["Lawyer"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: Airlock
@@ -22,6 +26,8 @@
   components:
   - type: AccessReader
     access: [["Theatre"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: Airlock
@@ -30,6 +36,8 @@
   components:
   - type: AccessReader
     access: [["Chapel"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: Airlock
@@ -38,6 +46,8 @@
   components:
   - type: AccessReader
     access: [["Janitor"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: Airlock
@@ -46,6 +56,8 @@
   components:
   - type: AccessReader
     access: [["Kitchen"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: Airlock
@@ -54,6 +66,8 @@
   components:
   - type: AccessReader
     access: [["Bar"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: Airlock
@@ -62,6 +76,8 @@
   components:
   - type: AccessReader
     access: [["Hydroponics"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: Airlock
@@ -70,6 +86,8 @@
   components:
   - type: AccessReader
     access: [["Captain"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockExternal
@@ -86,6 +104,8 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
+  - type: Wires
+    layoutId: AirlockCargo
 
 - type: entity
   parent: AirlockExternal
@@ -94,6 +114,8 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockExternal
@@ -102,6 +124,8 @@
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockExternal
@@ -126,6 +150,8 @@
   components:
   - type: AccessReader
     access: [["Kitchen"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockFreezer
@@ -134,6 +160,8 @@
   components:
   - type: AccessReader
     access: [["Kitchen"], ["Hydroponics"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockFreezer
@@ -142,6 +170,8 @@
   components:
   - type: AccessReader
     access: [["Hydroponics"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockEngineering
@@ -150,6 +180,8 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockAtmospherics
@@ -158,6 +190,8 @@
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockCargo
@@ -166,6 +200,8 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
+  - type: Wires
+    layoutId: AirlockCargo
 
 - type: entity
   parent: AirlockCargo
@@ -174,6 +210,8 @@
   components:
   - type: AccessReader
     access: [["Salvage"]]
+  - type: Wires
+    layoutId: AirlockCargo
 
 - type: entity
   parent: AirlockMining
@@ -182,6 +220,8 @@
   components:
   - type: AccessReader
     access: [["Salvage"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockMedical
@@ -190,6 +230,8 @@
   components:
   - type: AccessReader
     access: [["Medical"]]
+  - type: Wires
+    layoutId: AirlockMedical
 
 - type: entity
   parent: AirlockVirology
@@ -198,6 +240,8 @@
   components:
   - type: AccessReader
     access: [["Medical"]]
+  - type: Wires
+    layoutId: AirlockMedical
 
 - type: entity
   parent: AirlockChemistry
@@ -206,6 +250,8 @@
   components:
   - type: AccessReader
     access: [["Chemistry"]]
+  - type: Wires
+    layoutId: AirlockMedical
 
 - type: entity
   parent: AirlockScience
@@ -214,6 +260,8 @@
   components:
   - type: AccessReader
     access: [["Research"]]
+  - type: Wires
+    layoutId: AirlockScience
 
 - type: entity
   parent: AirlockScience
@@ -222,6 +270,8 @@
   components:
   - type: AccessReader
     access: [["Research"], ["Medical"]]
+  - type: Wires
+    layoutId: AirlockScience
 
 - type: entity
   parent: AirlockCentralCommand
@@ -250,6 +300,8 @@
   components:
   - type: AccessReader
     access: [["Captain"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommand
@@ -258,6 +310,8 @@
   components:
   - type: AccessReader
     access: [["ChiefMedicalOfficer"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommand
@@ -266,6 +320,8 @@
   components:
   - type: AccessReader
     access: [["ChiefEngineer"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommand
@@ -274,6 +330,8 @@
   components:
   - type: AccessReader
     access: [["HeadOfSecurity"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommand
@@ -282,6 +340,8 @@
   components:
   - type: AccessReader
     access: [["ResearchDirector"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommand
@@ -290,6 +350,8 @@
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommand
@@ -298,6 +360,8 @@
   components:
   - type: AccessReader
     access: [["Quartermaster"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockSecurity
@@ -356,6 +420,8 @@
   components:
   - type: AccessReader
     access: [["Security", "Command"]]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockCommand
@@ -364,6 +430,8 @@
   components:
   - type: AccessReader
     access: [["External"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 #Delta V: Add Airlocks
 - type: entity
@@ -439,6 +507,8 @@
   components:
   - type: AccessReader
     access: [["Service"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockGlass
@@ -447,6 +517,8 @@
   components:
   - type: AccessReader
     access: [["Lawyer"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockGlass
@@ -455,6 +527,8 @@
   components:
   - type: AccessReader
     access: [["Theatre"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockGlass
@@ -463,6 +537,8 @@
   components:
   - type: AccessReader
     access: [["Bar"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockExternalGlass
@@ -479,6 +555,8 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockExternalGlass
@@ -503,6 +581,8 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockExternalGlass
@@ -511,6 +591,8 @@
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockGlass
@@ -519,6 +601,8 @@
   components:
   - type: AccessReader
     access: [["Kitchen"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockGlass
@@ -527,6 +611,8 @@
   components:
   - type: AccessReader
     access: [["Janitor"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockGlass
@@ -535,6 +621,8 @@
   components:
   - type: AccessReader
     access: [["Hydroponics"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockGlass
@@ -543,6 +631,8 @@
   components:
   - type: AccessReader
     access: [["Chapel"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockEngineeringGlass
@@ -551,6 +641,8 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockAtmosphericsGlass
@@ -559,6 +651,8 @@
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockCargoGlass
@@ -567,6 +661,8 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
+  - type: Wires
+    layoutId: AirlockCargo
 
 - type: entity
   parent: AirlockCargoGlass
@@ -575,6 +671,8 @@
   components:
   - type: AccessReader
     access: [["Salvage"]]
+  - type: Wires
+    layoutId: AirlockCargo
 
 - type: entity
   parent: AirlockMiningGlass
@@ -583,6 +681,8 @@
   components:
   - type: AccessReader
     access: [["Salvage"]]
+  - type: Wires
+    layoutId: AirlockCargo
 
 - type: entity
   parent: AirlockChemistryGlass
@@ -591,6 +691,8 @@
   components:
   - type: AccessReader
     access: [["Chemistry"]]
+  - type: Wires
+    layoutId: AirlockMedical
 
 - type: entity
   parent: AirlockMedicalGlass
@@ -599,6 +701,8 @@
   components:
   - type: AccessReader
     access: [["Medical"]]
+  - type: Wires
+    layoutId: AirlockMedical
 
 - type: entity
   parent: AirlockVirologyGlass
@@ -607,6 +711,8 @@
   components:
   - type: AccessReader
     access: [["Medical"]]
+  - type: Wires
+    layoutId: AirlockMedical
 
 - type: entity
   parent: AirlockScienceGlass
@@ -615,6 +721,8 @@
   components:
   - type: AccessReader
     access: [["Research"]]
+  - type: Wires
+    layoutId: AirlockScience
 
 - type: entity
   parent: AirlockScienceGlass
@@ -623,6 +731,8 @@
   components:
   - type: AccessReader
     access: [["Research"], ["Medical"]]
+  - type: Wires
+    layoutId: AirlockScience
 
 - type: entity
   parent: AirlockCentralCommandGlass
@@ -641,6 +751,8 @@
   components:
   - type: AccessReader
     access: [["Command"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommandGlass
@@ -649,6 +761,8 @@
   components:
   - type: AccessReader
     access: [["Captain"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommandGlass
@@ -657,6 +771,8 @@
   components:
   - type: AccessReader
     access: [["ChiefMedicalOfficer"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommandGlass
@@ -665,6 +781,8 @@
   components:
   - type: AccessReader
     access: [["ChiefEngineer"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommandGlass
@@ -673,6 +791,8 @@
   components:
   - type: AccessReader
     access: [["HeadOfSecurity"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommandGlass
@@ -681,6 +801,8 @@
   components:
   - type: AccessReader
     access: [["ResearchDirector"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommandGlass
@@ -689,6 +811,8 @@
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommandGlass
@@ -697,6 +821,8 @@
   components:
   - type: AccessReader
     access: [["Quartermaster"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockSecurityGlass
@@ -705,6 +831,8 @@
   components:
   - type: AccessReader
     access: [["Security"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockSecurityGlass
@@ -713,6 +841,8 @@
   components:
   - type: AccessReader
     access: [["Detective"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockSecurityGlass
@@ -721,6 +851,8 @@
   components:
   - type: AccessReader
     access: [["Brig"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockSecurityGlass
@@ -729,6 +861,8 @@
   components:
   - type: AccessReader
     access: [["Security"], ["Lawyer"]]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockSecurityGlass
@@ -737,6 +871,8 @@
   components:
   - type: AccessReader
     access: [["Armory"]]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockCommandGlassLocked
@@ -852,6 +988,8 @@
   components:
   - type: AccessReader
     access: [["Salvage"]]
+  - type: Wires
+    layoutId: AirlockCargo
 
 - type: entity
   parent: AirlockMaint
@@ -860,6 +998,8 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
+  - type: Wires
+    layoutId: AirlockCargo
 
 - type: entity
   parent: AirlockMaint
@@ -868,6 +1008,8 @@
   components:
   - type: AccessReader
     access: [["Command"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockMaint
@@ -884,6 +1026,8 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockMaint
@@ -892,6 +1036,8 @@
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockMaint
@@ -900,6 +1046,8 @@
   components:
   - type: AccessReader
     access: [["Bar"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockMaint
@@ -908,6 +1056,8 @@
   components:
   - type: AccessReader
     access: [["Chapel"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockMaint
@@ -916,6 +1066,8 @@
   components:
   - type: AccessReader
     access: [["Hydroponics"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockMaint
@@ -924,6 +1076,8 @@
   components:
   - type: AccessReader
     access: [["Janitor"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockMaint
@@ -932,6 +1086,8 @@
   components:
   - type: AccessReader
     access: [["Lawyer"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockMaint
@@ -940,6 +1096,8 @@
   components:
   - type: AccessReader
     access: [["Service"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockMaint
@@ -948,6 +1106,8 @@
   components:
   - type: AccessReader
     access: [["Theatre"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockMaint
@@ -956,6 +1116,8 @@
   components:
   - type: AccessReader
     access: [["Kitchen"]]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockMaint
@@ -972,6 +1134,8 @@
   components:
   - type: AccessReader
     access: [["Medical"]]
+  - type: Wires
+    layoutId: AirlockMedical
 
 - type: entity
   parent: AirlockMaint
@@ -980,6 +1144,8 @@
   components:
   - type: AccessReader
     access: [["Chemistry"]]
+  - type: Wires
+    layoutId: AirlockMedical
 
 - type: entity
   parent: AirlockMaint
@@ -988,6 +1154,8 @@
   components:
   - type: AccessReader
     access: [["Research"]]
+  - type: Wires
+    layoutId: AirlockScience
 
 - type: entity
   parent: AirlockMaint
@@ -996,6 +1164,8 @@
   components:
   - type: AccessReader
     access: [["Research"], ["Medical"]]
+  - type: Wires
+    layoutId: AirlockScience
 
 - type: entity
   parent: AirlockMaint
@@ -1004,6 +1174,8 @@
   components:
   - type: AccessReader
     access: [["Security"]]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockMaint
@@ -1012,6 +1184,8 @@
   components:
   - type: AccessReader
     access: [["Detective"]]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockMaint
@@ -1020,6 +1194,8 @@
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockMaint
@@ -1028,6 +1204,8 @@
   components:
   - type: AccessReader
     access: [["Captain"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockMaint
@@ -1036,6 +1214,8 @@
   components:
   - type: AccessReader
     access: [["ChiefEngineer"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockMaint
@@ -1044,6 +1224,8 @@
   components:
   - type: AccessReader
     access: [["ChiefMedicalOfficer"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockMaint
@@ -1052,6 +1234,8 @@
   components:
   - type: AccessReader
     access: [["HeadOfSecurity"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockMaint
@@ -1060,6 +1244,8 @@
   components:
   - type: AccessReader
     access: [["ResearchDirector"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockMaint
@@ -1068,6 +1254,8 @@
   components:
   - type: AccessReader
     access: [["Armory"]]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 #Delta V: Add Airlocks
 - type: entity
