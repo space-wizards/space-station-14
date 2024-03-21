@@ -58,7 +58,7 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
         }
         component.WalkSpeedModifier = walkSpeed;
         component.SprintSpeedModifier = sprintSpeed;
-        Dirty(component);
+        Dirty(uid, component);
         _toUpdate.UnionWith(_physics.GetContactingEntities(uid));
     }
 

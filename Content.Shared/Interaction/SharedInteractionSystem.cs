@@ -459,7 +459,7 @@ namespace Content.Shared.Interaction
                 return false;
 
             if (!HasComp<NoRotateOnInteractComponent>(user))
-                _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager));
+                _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager, _transform));
 
             return true;
         }
@@ -612,7 +612,7 @@ namespace Content.Shared.Interaction
             Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
             var inRange = true;
             MapCoordinates originPos = default;
-            var targetPos = otherCoordinates.ToMap(EntityManager);
+            var targetPos = otherCoordinates.ToMap(EntityManager, _transform);
             Angle targetRot = default;
 
             // So essentially:
@@ -785,7 +785,7 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null,
             bool popup = false)
         {
-            return InRangeUnobstructed(origin, other.ToMap(EntityManager), range, collisionMask, predicate, popup);
+            return InRangeUnobstructed(origin, other.ToMap(EntityManager, _transform), range, collisionMask, predicate, popup);
         }
 
         /// <summary>
