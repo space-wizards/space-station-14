@@ -186,7 +186,7 @@
     - !type:CreateEntityReactionEffect
       entity: EnrichedUranium
 
-  id: Gunpowder
+  id: CreateGunpowder
   impact: Low
   quantized: true
   minTemp: 374
