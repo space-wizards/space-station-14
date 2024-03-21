@@ -72,15 +72,12 @@ public sealed class PaintSystem : SharedPaintSystem
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, user, component.Delay, new PaintDoAfterEvent(), uid, target: target, used: uid)
         {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
-            BreakOnDamage = true,
+            BreakOnMove = true,
             NeedHand = true,
             BreakOnHandChange = true
         };
 
-        if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs))
-            return;
+        _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
     }
 
     private void OnPaint(Entity<PaintComponent> entity, ref PaintDoAfterEvent args)
@@ -112,7 +109,6 @@ public sealed class PaintSystem : SharedPaintSystem
             return;
         }
 
-
         if (TryPaint(entity, target))
         {
             EnsureComp<PaintedComponent>(target, out PaintedComponent? paint);
@@ -131,12 +127,14 @@ public sealed class PaintSystem : SharedPaintSystem
                         if (!_inventory.TryGetSlotEntity(target, slot.Name, out var slotEnt))
                             continue;
 
-                        if (slotEnt == null)
-                            return;
-
-                        if (HasComp<PaintedComponent>(slotEnt.Value) || !entity.Comp.Blacklist?.IsValid(slotEnt.Value, EntityManager) != true
-                            || HasComp<RandomSpriteComponent>(slotEnt.Value) || HasComp<HumanoidAppearanceComponent>(slotEnt.Value))
-                            return;
+                        if (HasComp<PaintedComponent>(slotEnt.Value) || !entity.Comp.Blacklist?.IsValid(slotEnt.Value,
+                                                                         EntityManager) != true
+                                                                     || HasComp<RandomSpriteComponent>(slotEnt.Value) ||
+                                                                     HasComp<HumanoidAppearanceComponent>(
+                                                                         slotEnt.Value))
+                        {
+                            continue;
+                        }
 
                         EnsureComp<PaintedComponent>(slotEnt.Value, out PaintedComponent? slotpaint);
                         EnsureComp<AppearanceComponent>(slotEnt.Value);
