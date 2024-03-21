@@ -658,18 +658,21 @@
     tags:
     - Meat
   - type: Item
-    size: Large
+    size: Normal
   - type: SliceableFood
     count: 5
     slice: FoodMealHaggisSlice
 
 - type: entity
   name: slice of haggis
-  parent: FoodMealHaggis
+  parent: FoodMealBase
   id: FoodMealHaggisSlice
   description: A heaping serving of haggis. You can faintly hear bagpipes.
   components:
-  - type: Food
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - scotland
   - type: SolutionContainerManager
     solutions:
       food:
@@ -681,5 +684,3 @@
           Quantity: 5
   - type: Sprite
     state: haggis-slice
-  - type: Item
-    size: Tiny
