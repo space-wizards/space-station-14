@@ -1,7 +1,6 @@
 - type: entity
   name: Rat King
   id: MobRatKing
-
   parent: [ SimpleMobBase, MobCombat ]
   description: He's da rat. He make da roolz.
   components:
