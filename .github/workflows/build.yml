@@ -1,0 +1,17 @@
+name: Benchmarks
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * *'
+
+concurrency: benchmarks
+
+jobs:
+  build:
+    name: Build solution
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build
+        run: |
+          python3 RUN_THIS.py
+          dotnet build && ./bin/Content.Server/Content.Server || exit
