@@ -82,6 +82,18 @@ public abstract class SharedMagicSystem : EntitySystem
         // TODO: Magic Missile
 
         // TODO: Jaunt (should be its own ECS)
+
+        // TODO: Touch spell
+        //  1 - When toggled on, show in hand
+        //  2 - Block hand when toggled on
+        //      - Require free hand
+        //  Toggle Event
+        //   Inherit?
+        //  When toggled on, show hand sprite
+        //  Pass event to raise
+        // May just need to make a component, like toggle spell component
+        // Then on toggled, allow clicking
+        //  Like combat mode?
     }
 
     private void OnBeforeCastSpell(Entity<MagicComponent> ent, ref BeforeCastSpellEvent args)
