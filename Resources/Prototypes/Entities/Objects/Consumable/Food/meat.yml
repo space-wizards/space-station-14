@@ -1521,6 +1521,10 @@
   components:
   - type: Sprite
     state: cutlet
+  - type: Tags
+    tags:
+    - Raw
+    - Meat
 
 - type: entity
   name: tripe
@@ -1530,6 +1534,10 @@
   components:
   - type: Sprite
     state: cutlet
+  - type: Tags
+    tags:
+    - Raw
+    - Meat
 
 - type: entity
   name: stripped heart
@@ -1539,6 +1547,10 @@
   components:
   - type: Sprite
     state: cutlet
+  - type: Tags
+    tags:
+    - Raw
+    - Meat
 
 - type: entity
   name: lights
@@ -1548,6 +1560,10 @@
   components:
   - type: Sprite
     state: cutlet
+  - type: Tags
+    tags:
+    - Raw
+    - Meat
 
 - type: entity
   name: sliced kidney
@@ -1557,3 +1573,7 @@
   components:
   - type: Sprite
     state: cutlet
+  - type: Tags
+    tags:
+    - Raw
+    - Meat
