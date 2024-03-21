@@ -17,7 +17,7 @@ if (!parsed.SkipBuild)
 
 if (parsed.Client)
 {
-    await ClientPackaging.PackageClient(parsed.SkipBuild, logger);
+    await ClientPackaging.PackageClient(parsed.SkipBuild, parsed.Configuration, logger);
 }
 else
 {

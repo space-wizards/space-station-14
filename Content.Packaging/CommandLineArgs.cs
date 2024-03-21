@@ -32,7 +32,7 @@ public sealed class CommandLineArgs
     public bool HybridAcz { get; set; }
 
     /// <summary>
-    /// Configuration used for when packaging. (Release, Debug)
+    /// Configuration used for when packaging the server. (Release, Debug, Tools)
     /// </summary>
     public string Configuration { get; set; }
 
@@ -136,7 +136,7 @@ Options:
   --no-wipe-release     Don't wipe the release folder before creating files.
   --hybrid-acz          Use HybridACZ for server builds.
   --platform            Platform for server builds. Default will output several x64 targets.
-  --configuration       Configuration to use for building. Default is Release.
+  --configuration       Configuration to use for building the server (Release, Debug, Tools). Default is Release.
 ");
     }
 
