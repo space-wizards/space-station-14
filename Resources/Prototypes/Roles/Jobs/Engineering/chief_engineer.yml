@@ -44,7 +44,7 @@
     jumpsuit: ClothingUniformJumpsuitClown
     back: ClothingBackpackChiefEngineerFilled
     shoes: ClothingShoesClown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     id: CEPDA
     eyes: ClothingEyesGlassesMeson
     ears: ClothingHeadsetCE

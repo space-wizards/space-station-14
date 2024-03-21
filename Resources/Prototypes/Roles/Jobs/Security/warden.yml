@@ -32,7 +32,7 @@
     back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesClown
     eyes: ClothingEyesGlassesSunglasses
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     outerClothing: ClothingOuterCoatWarden
     id: WardenPDA
     ears: ClothingHeadsetSecurity

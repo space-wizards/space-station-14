@@ -29,7 +29,7 @@
     shoes: ClothingShoesClown
     eyes: ClothingEyesGlassesSunglasses
     head: ClothingHeadHatFedoraBrown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     outerClothing: ClothingOuterVestDetective
     id: DetectivePDA
     ears: ClothingHeadsetSecurity

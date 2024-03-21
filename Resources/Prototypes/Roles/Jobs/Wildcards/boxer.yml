@@ -22,7 +22,7 @@
     ears: ClothingHeadsetService
     gloves: ClothingHandsGlovesBoxingRed
     shoes: ClothingShoesClown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     belt: ClothingBeltChampion
   innerClothingSkirt: UniformShortsRedWithTop
   satchel: ClothingBackpackSatchelFilled

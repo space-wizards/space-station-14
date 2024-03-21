@@ -24,7 +24,7 @@
     jumpsuit: ClothingUniformJumpsuitBartender
     back: ClothingBackpackFilled
     shoes: ClothingShoesClown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     id: ServiceWorkerPDA
     ears: ClothingHeadsetService
   innerClothingSkirt: ClothingUniformJumpskirtBartender

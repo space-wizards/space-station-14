@@ -21,7 +21,7 @@
     jumpsuit: ClothingUniformJumpsuitPsychologist
     back: ClothingBackpackMedicalFilled
     shoes: ClothingShoesClown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     id: PsychologistPDA
     ears: ClothingHeadsetMedical
   innerClothingSkirt: ClothingUniformJumpsuitPsychologist

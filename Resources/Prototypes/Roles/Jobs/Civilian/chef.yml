@@ -28,7 +28,7 @@
     head: ClothingHeadHatChef
     back: ClothingBackpackFilled
     shoes: ClothingShoesClown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     id: ChefPDA
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterApronChef

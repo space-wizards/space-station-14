@@ -23,7 +23,7 @@
     jumpsuit: ClothingUniformJumpsuitClown
     back: ClothingBackpackHydroponicsFilled
     shoes: ClothingShoesClown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     id: BotanistPDA
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterApronBotanist

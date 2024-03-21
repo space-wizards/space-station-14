@@ -19,7 +19,7 @@
     jumpsuit: ClothingUniformJumpsuitReporter
     back: ClothingBackpackFilled
     shoes: ClothingShoesClown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     id: ReporterPDA
     ears: ClothingHeadsetService
   innerClothingSkirt: ClothingUniformJumpsuitJournalist

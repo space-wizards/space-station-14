@@ -24,7 +24,7 @@
     jumpsuit: ClothingUniformJumpsuitParamedic
     back: ClothingBackpackParamedicFilled
     shoes: ClothingShoesClown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     id: ParamedicPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalEMTFilled

@@ -42,7 +42,7 @@
     jumpsuit: ClothingUniformJumpsuitQM
     back: ClothingBackpackQuartermasterFilled
     shoes: ClothingShoesColorBrown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     id: QuartermasterPDA
     ears: ClothingHeadsetQM
     belt: BoxFolderClipboard

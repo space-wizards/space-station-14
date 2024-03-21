@@ -31,7 +31,7 @@
     eyes: ClothingEyesGlassesSunglasses
     head: ClothingHeadHelmetBasic
     outerClothing: ClothingOuterArmorBasic
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     id: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled

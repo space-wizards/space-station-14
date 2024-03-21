@@ -35,7 +35,7 @@
     jumpsuit: ClothingUniformJumpsuitClown
     back: ClothingBackpackResearchDirectorFilled
     shoes: ClothingShoesClown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     outerClothing: ClothingOuterCoatRD
     id: RnDPDA
     ears: ClothingHeadsetRD

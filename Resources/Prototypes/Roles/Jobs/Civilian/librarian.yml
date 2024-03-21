@@ -20,7 +20,7 @@
     back: ClothingBackpackLibrarianFilled
     shoes: ClothingShoesClown
     id: LibrarianPDA
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     ears: ClothingHeadsetService
     pocket1: d10Dice
     pocket2: HandLabeler # for making named bestsellers

@@ -19,7 +19,7 @@
     back: ClothingBackpackFilled
     shoes: ClothingShoesClown
     id: PassengerPDA
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     ears: ClothingHeadsetGrey
   innerClothingSkirt: ClothingUniformJumpskirtColorGrey
   satchel: ClothingBackpackSatchelFilled

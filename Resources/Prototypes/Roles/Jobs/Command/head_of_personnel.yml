@@ -62,7 +62,7 @@
     jumpsuit: ClothingUniformJumpsuitClown
     back: ClothingBackpackHOPFilled
     shoes: ClothingShoesClown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     head: ClothingHeadHatHopcap
     id: HoPPDA
     gloves: ClothingHandsGlovesHop

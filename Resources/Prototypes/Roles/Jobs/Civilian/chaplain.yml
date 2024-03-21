@@ -22,7 +22,7 @@
     jumpsuit: ClothingUniformJumpsuitChaplain
     back: ClothingBackpackChaplainFilled
     shoes: ClothingShoesClown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     id: ChaplainPDA
     ears: ClothingHeadsetService
   innerClothingSkirt: ClothingUniformJumpskirtChaplain

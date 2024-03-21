@@ -23,7 +23,7 @@
     jumpsuit: ClothingUniformJumpsuitClown
     back: ClothingBackpackScienceFilled
     shoes: ClothingShoesClown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     outerClothing: ClothingOuterCoatRnd
     id: SciencePDA
     ears: ClothingHeadsetScience

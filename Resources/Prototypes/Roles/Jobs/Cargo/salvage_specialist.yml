@@ -27,7 +27,7 @@
     jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
     back: ClothingBackpackSalvageFilled
     shoes: ClothingShoesBootsSalvage
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     id: SalvagePDA
     ears: ClothingHeadsetCargo
   satchel: ClothingBackpackSatchelSalvageFilled

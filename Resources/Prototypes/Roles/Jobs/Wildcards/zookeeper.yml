@@ -20,7 +20,7 @@
     back: ClothingBackpackFilled
     head: ClothingHeadSafari
     shoes: ClothingShoesClown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     id: ZookeeperPDA
     ears: ClothingHeadsetService
   innerClothingSkirt: ClothingUniformJumpsuitSafari

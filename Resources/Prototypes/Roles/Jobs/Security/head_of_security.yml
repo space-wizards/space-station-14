@@ -48,7 +48,7 @@
     outerClothing: ClothingOuterCoatHoSTrench
     eyes: ClothingEyesGlassesSunglasses
     head: ClothingHeadHatBeretHoS
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     id: HoSPDA
     gloves: ClothingHandsGlovesCombat
     ears: ClothingHeadsetAltSecurity

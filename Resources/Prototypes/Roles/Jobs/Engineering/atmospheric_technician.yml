@@ -25,7 +25,7 @@
     jumpsuit: ClothingUniformJumpsuitAtmos
     back: ClothingBackpackAtmosphericsFilled
     shoes: ClothingShoesClown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     eyes: ClothingEyesGlassesMeson
     id: AtmosPDA
     belt: ClothingBeltUtilityEngineering

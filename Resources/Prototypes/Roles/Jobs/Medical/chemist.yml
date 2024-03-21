@@ -24,7 +24,7 @@
     jumpsuit: ClothingUniformJumpsuitClown
     back: ClothingBackpackChemistryFilled
     shoes: ClothingShoesClown
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     outerClothing: ClothingOuterCoatLabChem
     id: ChemistryPDA
     ears: ClothingHeadsetMedical

@@ -30,7 +30,7 @@
     back: ClothingBackpackFilled
     shoes: ClothingShoesClown
     id: BartenderPDA
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     ears: ClothingHeadsetService
   innerClothingSkirt: ClothingUniformJumpskirtBartender
   satchel: ClothingBackpackSatchelFilled

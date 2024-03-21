@@ -25,7 +25,7 @@
     back: ClothingBackpackFilled
     shoes: ClothingShoesClown
     id: LawyerPDA
-    mask: ClothingMaskClown
+    mask: ClothingMaskClownUnremoveable
     ears: ClothingHeadsetSecurity
     # TODO add copy of space law
   inhand:
