@@ -220,6 +220,12 @@
     access: [["Medical"], ["Command"], ["Research"]]
   - type: Inventory
     templateId: borgDutch
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
 
 - type: entity
   id: BorgChassisService
@@ -323,6 +329,12 @@
       noMindState: synd_medical
     - type: Construction
       node: syndicatemedical
+    - type: ShowHealthBars
+      damageContainers:
+      - Biological
+    - type: ShowHealthIcons
+      damageContainers:
+      - Biological
 
 - type: entity
   id: BorgChassisSyndicateSaboteur
