@@ -281,14 +281,14 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadTorchereHat
-  name: torchere
+  id: ClothingHeadFloorLampHeadHat
+  name: floor lamp head
   description: Put it on and become a floor lamp.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Misc/torchere.rsi
+    sprite: Clothing/Head/Misc/floor_lamp_head.rsi
   - type: Clothing
-    sprite: Clothing/Head/Misc/torchere.rsi
+    sprite: Clothing/Head/Misc/floor_lamp_head.rsi
   - type: Tag
     tags:
-      - Torchere
+      - FloorLampHead

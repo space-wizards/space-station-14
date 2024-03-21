@@ -22,11 +22,11 @@
       edges:
         - to: floorLampHeaded
           steps:
-            - tag: Torchere
+            - tag: FloorLampHead
               icon:
-                sprite: Clothing/Head/Misc/torchere.rsi
+                sprite: Clothing/Head/Misc/floor_lamp_head.rsi
                 state: icon
-              name: torchere
+              name: floor lamp head
               doAfter: 2
         - to: start
           completed:
@@ -47,7 +47,7 @@
         - to: floorLamp
           completed:
             - !type:SpawnPrototype
-              prototype: ClothingHeadTorchereHat
+              prototype: ClothingHeadFloorLampHeadHat
               amount: 1
             - !type:SpawnPrototype
               prototype: FloorLamp
