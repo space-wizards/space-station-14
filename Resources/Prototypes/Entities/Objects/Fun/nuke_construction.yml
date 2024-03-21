@@ -25,7 +25,7 @@
     targetNode: painted
 
 - type: entity
-  parent: ImprovisedNuclearBombCart
+  parent: BaseStructure
   id: ImprovisedNuclearBombInsides
   name: nuclear fission explosive
   description: A partially constructed nuke.
@@ -40,7 +40,7 @@
     targetNode: painted
 
 - type: entity
-  parent: ImprovisedNuclearBombCart
+  parent: BaseStructure
   id: ImprovisedNuclearBombInsidesPipe
   name: nuclear fission explosive
   description: A partially constructed nuke.
@@ -55,7 +55,7 @@
     targetNode: painted
 
 - type: entity
-  parent: ImprovisedNuclearBombCart
+  parent: BaseStructure
   id: ImprovisedNuclearBombInsidesGun
   name: nuclear fission explosive
   description: A partially constructed nuke.
@@ -70,7 +70,7 @@
     targetNode: painted
 
 - type: entity
-  parent: ImprovisedNuclearBombCart
+  parent: BaseStructure
   id: ImprovisedNuclearBombInsidesBullet
   name: nuclear fission explosive
   description: A partially constructed nuke.
@@ -85,7 +85,7 @@
     targetNode: painted
 
 - type: entity
-  parent: ImprovisedNuclearBombCart
+  parent: BaseStructure
   id: ImprovisedNuclearBombInsidesUranium
   name: nuclear fission explosive
   description: A partially constructed nuke. Looks like it contains radioactive material.
@@ -113,7 +113,7 @@
     targetNode: painted
 
 - type: entity
-  parent: ImprovisedNuclearBombCart
+  parent: BaseStructure
   id: ImprovisedNuclearBomb
   name: nuclear fission explosive
   description: A nuclear fission device!
@@ -146,7 +146,7 @@
     targetNode: painted
 
 - type: entity
-  parent: ImprovisedNuclearBomb
+  parent: BaseStructure
   id: ImprovisedNuclearBombSign
   name: nuclear fission explosive
   description: A nuclear fission device!
