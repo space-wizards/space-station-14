@@ -289,6 +289,9 @@
     sprite: Clothing/Head/Misc/floor_lamp_head.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/floor_lamp_head.rsi
+  - type: Construction
+    graph: FloorLampHead
+    node: floorLampHead
   - type: Tag
     tags:
       - FloorLampHead

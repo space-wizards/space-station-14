@@ -1,0 +1,12 @@
+- type: construction
+  name: floor lamp head
+  id: FloorLampHead
+  graph: FloorLampHead
+  startNode: start
+  targetNode: floorLampHead
+  category: construction-category-misc
+  description: Fabric hat for floor lamp.
+  icon:
+    sprite: Clothing/Head/Misc/floor_lamp_head.rsi
+    state: icon
+  objectType: Item
