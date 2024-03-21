@@ -101,7 +101,8 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         if (!TryComp<ScramImplantComponent>(uid, out var implant))
             return;
 
-        // If we do not stop pulling then if the user is cuffed they will teleport they will be teleporter with their captor.
+        // We need stop the user from being pulled so they don't just get "attached" with whoever is pulling them.
+        // This can for example happen when the user is cuffed and being pulled.
         if (TryComp<PullableComponent>(ent, out var pull) && _pullingSystem.IsPulled(ent, pull))
             _pullingSystem.TryStopPull(ent, pull);
 
