@@ -216,3 +216,8 @@
   copyright: Bhijn and Myr (github username deathride58)
   license: CC0-1.0
   source: https://github.com/space-wizards/space-station-14/pull/23212
+
+- files: ["metal-pipe-falling.ogg"]
+  copyright: "Taken from thenotcheeseman via freesound.org and mixed from stereo to mono."
+  license: CC0-1.0
+  source: "https://freesound.org/people/thenotcheeseman/sounds/679206/
