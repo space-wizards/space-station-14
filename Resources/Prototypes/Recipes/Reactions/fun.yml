@@ -200,8 +200,8 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
-
- id: Lingium
+- type: reaction
+  id: Lingium
   impact: Low
   quantized: true
   minTemp: 250 
