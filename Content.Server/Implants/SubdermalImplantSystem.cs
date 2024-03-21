@@ -19,6 +19,8 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using System.Numerics;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 
 namespace Content.Server.Implants;
 
@@ -34,6 +36,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
+    [Dependency] private readonly PullingSystem _pullingSystem = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
 
@@ -97,6 +100,11 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
         if (!TryComp<ScramImplantComponent>(uid, out var implant))
             return;
+
+        // We need stop the user from being pulled so they don't just get "attached" with whoever is pulling them.
+        // This can for example happen when the user is cuffed and being pulled.
+        if (TryComp<PullableComponent>(ent, out var pull) && _pullingSystem.IsPulled(ent, pull))
+            _pullingSystem.TryStopPull(ent, pull);
 
         var xform = Transform(ent);
         var entityCoords = xform.Coordinates.ToMap(EntityManager, _xform);
