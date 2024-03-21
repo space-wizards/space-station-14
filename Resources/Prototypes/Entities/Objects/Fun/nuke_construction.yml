@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/nukecraft.rsi
-    state: nukecraft_2
+    state: nukecraft_1
     noRot: true
   - type: Fixtures
     fixtures:
