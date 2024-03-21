@@ -393,6 +393,9 @@ public abstract class SharedMagicSystem : EntitySystem
             if (!_interaction.InRangeUnobstructed(args.Performer, target, range: 0, collisionMask: CollisionGroup.Opaque))
                 continue;
 
+            if (TryComp<DoorBoltComponent>(target, out var doorBoltComp) && doorBoltComp.BoltsDown)
+                _door.SetBoltsDown((target, doorBoltComp), false, predicted: true);
+
             if (TryComp<DoorComponent>(target, out var doorComp) && doorComp.State is not DoorState.Open)
                 _door.StartOpening(target);
 
