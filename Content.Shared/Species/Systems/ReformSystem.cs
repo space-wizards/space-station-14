@@ -5,6 +5,9 @@ using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Mind;
 using Content.Shared.Zombies;
+using Content.Shared.Item;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Resist;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -23,6 +26,9 @@ public sealed partial class ReformSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
 
+    System.TimeSpan start;
+    System.TimeSpan end;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -34,6 +40,10 @@ public sealed partial class ReformSystem : EntitySystem
         SubscribeLocalEvent<ReformComponent, ReformDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<ReformComponent, EntityZombifiedEvent>(OnZombified);
+
+        SubscribeLocalEvent<ReformComponent, GettingPickedUpAttemptEvent>(OnPickedUp);
+        SubscribeLocalEvent<ReformComponent, DroppedEvent>(OnDropped);
+        SubscribeLocalEvent<ReformComponent, EscapeInventoryEvent>(OnEscape);
     }
 
     private void OnMapInit(EntityUid uid, ReformComponent comp, MapInitEvent args)
@@ -47,8 +57,8 @@ public sealed partial class ReformSystem : EntitySystem
         // See if the action should start with a delay, and give it that starting delay if so.
         if (comp.StartDelayed && reformAction != null && reformAction.UseDelay != null)
         {
-            var start = _gameTiming.CurTime;
-            var end = _gameTiming.CurTime + reformAction.UseDelay.Value;
+            start = _gameTiming.CurTime;
+            end = _gameTiming.CurTime + reformAction.UseDelay.Value;
 
             _actionsSystem.SetCooldown(comp.ActionEntity!.Value, start, end);
         }
@@ -89,7 +99,7 @@ public sealed partial class ReformSystem : EntitySystem
             return;
 
         // Spawn a new entity
-        // This is, to an extent, taken from polymorph. I don't use polymorph for various reasons- most notably that this is permanent. 
+        // This is, to an extent, taken from polymorph. I don't use polymorph for various reasons- most notably that this is permanent.
         var child = Spawn(comp.ReformPrototype, Transform(uid).Coordinates);
 
         // This transfers the mind to the new entity
@@ -105,8 +115,34 @@ public sealed partial class ReformSystem : EntitySystem
         _actionsSystem.RemoveAction(uid, comp.ActionEntity); // Zombies can't reform
     }
 
-    public sealed partial class ReformEvent : InstantActionEvent { } 
-    
+    private void OnPickedUp(EntityUid uid, ReformComponent comp, ref GettingPickedUpAttemptEvent args)
+    {
+
+        _actionsSystem.RemoveAction(uid, comp.ActionEntity);
+    }
+
+    private void OnDropped(EntityUid uid, ReformComponent comp, ref DroppedEvent args)
+    {
+        _actionsSystem.AddAction(uid, ref comp.ActionEntity, out var reformAction, comp.ActionPrototype);
+
+        if (comp.StartDelayed && reformAction != null && reformAction.UseDelay != null)
+        {
+            _actionsSystem.SetCooldown(comp.ActionEntity!.Value, start, end);
+        }
+    }
+
+    private void OnEscape(EntityUid uid, ReformComponent comp, ref EscapeInventoryEvent args)
+    {
+        _actionsSystem.AddAction(uid, ref comp.ActionEntity, out var reformAction, comp.ActionPrototype);
+
+        if (comp.StartDelayed && reformAction != null && reformAction.UseDelay != null)
+        {
+            _actionsSystem.SetCooldown(comp.ActionEntity!.Value, start, end);
+        }
+    }
+
+    public sealed partial class ReformEvent : InstantActionEvent { }
+
     [Serializable, NetSerializable]
     public sealed partial class ReformDoAfterEvent : SimpleDoAfterEvent { }
 }
