@@ -21,6 +21,7 @@ using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Content.Shared.Decals.DecalGridComponent;
+using ChunkIndicesEnumerator = Robust.Shared.Map.Enumerators.ChunkIndicesEnumerator;
 
 namespace Content.Server.Decals
 {

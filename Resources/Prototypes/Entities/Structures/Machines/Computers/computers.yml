@@ -103,7 +103,7 @@
     tags:
       - Syndicate
   - type: RadarConsole
-    maxRange: 1536
+    maxRange: 384
   - type: WorldLoader
     radius: 1536
   - type: PointLight
@@ -638,9 +638,6 @@
     radius: 1.5
     energy: 1.6
     color: "#e6e227"
-  - type: Tag
-    tags:
-      - DroneUsable
 
 - type: entity
   parent: BaseComputer
@@ -967,6 +964,9 @@
       state: request
     - map: ["computerLayerKeys"]
       state: tech_key
+  - type: Anchorable
+    flags:
+    - Anchorable
   - type: CargoPalletConsole
   - type: ActivatableUI
     key: enum.CargoPalletConsoleUiKey.Sale
@@ -987,7 +987,7 @@
 - type: entity
   parent: BaseComputer
   id: ComputerMassMedia
-  name: mass-media console
+  name: news manager console
   description: Write your message to the world!
   components:
   - type: Sprite
@@ -1003,18 +1003,18 @@
   - type: Computer
     board: ComputerMassMediaCircuitboard
   - type: DeviceNetworkRequiresPower
-  - type: NewsWrite
+  - type: NewsWriter
   - type: AccessReader
     access: [[ "Command" ]]
   - type: ActivatableUI
-    key: enum.NewsWriteUiKey.Key
+    key: enum.NewsWriterUiKey.Key
   - type: ActivatableUIRequiresVision
   - type: Transform
     anchored: true
   - type: UserInterface
     interfaces:
-      - key: enum.NewsWriteUiKey.Key
-        type: NewsWriteBoundUserInterface
+      - key: enum.NewsWriterUiKey.Key
+        type: NewsWriterBoundUserInterface
 
 - type: entity
   parent: BaseComputer

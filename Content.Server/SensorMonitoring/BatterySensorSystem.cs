@@ -31,7 +31,7 @@ public sealed class BatterySensorSystem : EntitySystem
                 {
                     [DeviceNetworkConstants.Command] = DeviceNetworkCommandSyncData,
                     [DeviceNetworkCommandSyncData] = new BatterySensorData(
-                        battery.Charge,
+                        battery.CurrentCharge,
                         battery.MaxCharge,
                         netBattery.CurrentReceiving,
                         netBattery.MaxChargeRate,

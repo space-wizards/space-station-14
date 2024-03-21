@@ -125,7 +125,9 @@
       - id: BoxForensicPad
       - id: DrinkDetFlask
       - id: ClothingHandsGlovesForensic
+      - id: RubberStampDetective
       - id: HoloprojectorSecurity
+      - id: BoxEvidenceMarkers
 
 - type: entity
   id: ClosetBombFilled
@@ -224,7 +226,7 @@
     contents:
     - id: WeaponSubMachineGunWt550
       amount: 2
-    - id: MagazinePistolSubMachineGun
+    - id: MagazinePistolSubMachineGunTopMounted
       amount: 4
 
 - type: entity

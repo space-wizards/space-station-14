@@ -201,7 +201,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
 
             if (!gridId.HasValue)
             {
-                Logger.ErrorS("pirates", $"Gridid was null when loading \"{map}\", aborting.");
+                Log.Error($"Gridid was null when loading \"{map}\", aborting.");
                 foreach (var session in ops)
                 {
                     ev.PlayerPool.Add(session);
@@ -230,7 +230,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
             if (spawns.Count == 0)
             {
                 spawns.Add(Transform(pirates.PirateShip).Coordinates);
-                Logger.WarningS("pirates", $"Fell back to default spawn for pirates!");
+                Log.Warning($"Fell back to default spawn for pirates!");
             }
 
             for (var i = 0; i < ops.Length; i++)
@@ -271,11 +271,12 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     }
 
     //Forcing one player to be a pirate.
-    public void MakePirate(EntityUid mindId, MindComponent mind)
+    public void MakePirate(EntityUid entity)
     {
-        if (!mind.OwnedEntity.HasValue)
+        if (!_mindSystem.TryGetMind(entity, out var mindId, out var mind))
             return;
-        SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, GearId, EntityManager);
+
+        SetOutfitCommand.SetOutfit(entity, GearId, EntityManager);
 
         var pirateRule = EntityQuery<PiratesRuleComponent>().FirstOrDefault();
         if (pirateRule == null)

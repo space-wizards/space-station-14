@@ -296,9 +296,6 @@
   - type: Advertise
     pack: ClothesMateAds
   - type: Speech
-  - type: Tag
-    tags:
-      - DroneUsable
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/clothing.rsi
     layers:
@@ -329,9 +326,6 @@
   - type: Advertise
     pack: ClothesMateAds
   - type: Speech
-  - type: Tag
-    tags:
-    - DroneUsable
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/winterdrobe.rsi
     layers:
@@ -365,6 +359,7 @@
     screenState: screen
     ejectDelay: 5
     soundVend: /Audio/Machines/machine_vend_hot_drink.ogg
+    initialStockQuality: 0.33
   - type: Advertise
     pack: HotDrinksMachineAds
   - type: Speech
@@ -402,6 +397,7 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     ejectDelay: 1.9
+    initialStockQuality: 0.33
   - type: Advertise
     pack: RobustSoftdrinksAds
   - type: Speech
@@ -545,6 +541,7 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     ejectDelay: 1.9
+    initialStockQuality: 0.33
   - type: Advertise
     pack: RobustSoftdrinksAds
   - type: Speech
@@ -579,6 +576,7 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     ejectDelay: 1.9
+    initialStockQuality: 0.33
   - type: Advertise
     pack: RobustSoftdrinksAds
   - type: Speech
@@ -613,6 +611,7 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     ejectDelay: 1.9
+    initialStockQuality: 0.33
   - type: Advertise
     pack: RobustSoftdrinksAds
   - type: Speech
@@ -703,6 +702,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    initialStockQuality: 0.33
   - type: Advertise
     pack: DiscountDansAds
   - type: Speech
@@ -888,7 +888,7 @@
 - type: entity
   parent: VendingMachineSeedsUnlocked
   id: VendingMachineSeeds
-  suffix: Hyroponics
+  suffix: Hydroponics
   components:
   - type: AccessReader
     access: [["Hydroponics"]]
@@ -908,6 +908,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    initialStockQuality: 0.33
   - type: Advertise
     pack: GetmoreChocolateCorpAds
   - type: Speech
@@ -1051,6 +1052,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    initialStockQuality: 0.33
   - type: Advertise
     pack: BodaAds
   - type: Speech
@@ -1103,9 +1105,6 @@
     radius: 1.5
     energy: 1.6
     color: "#c73434"
-  - type: Tag
-    tags:
-      - DroneUsable
 
 - type: entity
   parent: VendingMachine
@@ -1201,9 +1200,6 @@
     radius: 1.5
     energy: 1.6
     color: "#d4ab33"
-  - type: Tag
-    tags:
-      - DroneUsable
 
 - type: entity
   parent: VendingMachine
@@ -1248,6 +1244,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    initialStockQuality: 0.33
   - type: Advertise
     pack: ChangAds
   - type: Speech
@@ -1270,7 +1267,7 @@
   parent: VendingMachine
   id: VendingMachineSalvage
   name: Salvage Vendor
-  description: A dwarves best friend!
+  description: A dwarf's best friend!
   components:
   - type: VendingMachine
     pack: SalvageEquipmentInventory
@@ -1311,6 +1308,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    initialStockQuality: 0.33
   - type: Advertise
     pack: DonutAds
   - type: Speech
@@ -1336,12 +1334,20 @@
   parent: VendingMachine
   name: vending machine
   abstract: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
   components:
+  - type: Physics
+    canCollide: false
+  - type: Fixtures
   - type: Sprite
     drawdepth: WallMountedItems
     snapCardinals: false
+  - type: Rotatable
   - type: WallMount
-    arc: 180
+    arc: 175
   - type: Transform
     noRot: false
 
@@ -1915,6 +1921,7 @@
     denyState: deny-unshaded
     ejectDelay: 1.9
     soundVend: /Audio/Items/bikehorn.ogg
+    initialStockQuality: 1.0 # Nobody knows how Honk does it, but their vending machines always seem well-stocked...
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/happyhonk.rsi
     layers:

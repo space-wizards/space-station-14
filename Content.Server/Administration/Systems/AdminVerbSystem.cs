@@ -66,8 +66,9 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly StationSystem _stations = default!;
         [Dependency] private readonly StationSpawningSystem _spawning = default!;
+        [Dependency] private readonly ExamineSystemShared _examine = default!;
 
-        private readonly Dictionary<ICommonSession, EditSolutionsEui> _openSolutionUis = new();
+        private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
         public override void Initialize()
         {
@@ -416,7 +417,7 @@ namespace Content.Server.Administration.Systems
                     Act = () =>
                     {
 
-                        var message = ExamineSystemShared.InRangeUnOccluded(args.User, args.Target)
+                        var message = _examine.InRangeUnOccluded(args.User, args.Target)
                             ? Loc.GetString("in-range-unoccluded-verb-on-activate-not-occluded")
                             : Loc.GetString("in-range-unoccluded-verb-on-activate-occluded");
 
@@ -486,10 +487,13 @@ namespace Content.Server.Administration.Systems
         #region SolutionsEui
         private void OnSolutionChanged(Entity<SolutionContainerManagerComponent> entity, ref SolutionContainerChangedEvent args)
         {
-            foreach (var eui in _openSolutionUis.Values)
+            foreach (var list in _openSolutionUis.Values)
             {
-                if (eui.Target == entity.Owner)
-                    eui.StateDirty();
+                foreach (var eui in list)
+                {
+                    if (eui.Target == entity.Owner)
+                        eui.StateDirty();
+                }
             }
         }
 
@@ -498,21 +502,33 @@ namespace Content.Server.Administration.Systems
             if (session.AttachedEntity == null)
                 return;
 
-            if (_openSolutionUis.ContainsKey(session))
-                _openSolutionUis[session].Close();
-
-            var eui = _openSolutionUis[session] = new EditSolutionsEui(uid);
+            var eui = new EditSolutionsEui(uid);
             _euiManager.OpenEui(eui, session);
             eui.StateDirty();
+
+            if (!_openSolutionUis.ContainsKey(session)) {
+                _openSolutionUis[session] = new List<EditSolutionsEui>();
+            }
+
+            _openSolutionUis[session].Add(eui);
         }
 
-        public void OnEditSolutionsEuiClosed(ICommonSession session)
+        public void OnEditSolutionsEuiClosed(ICommonSession session, EditSolutionsEui eui)
         {
-            _openSolutionUis.Remove(session, out var eui);
+            _openSolutionUis[session].Remove(eui);
+            if (_openSolutionUis[session].Count == 0)
+              _openSolutionUis.Remove(session);
         }
 
         private void Reset(RoundRestartCleanupEvent ev)
         {
+            foreach (var euis in _openSolutionUis.Values)
+            {
+                foreach (var eui in euis.ToList())
+                {
+                    eui.Close();
+                }
+            }
             _openSolutionUis.Clear();
         }
         #endregion

@@ -23,8 +23,6 @@
         Blunt: 0
   - type: Spillable
     solution: drink
-  - type: FitsInDispenser
-    solution: drink
   - type: DrawableSolution
     solution: drink
   - type: RefillableSolution
@@ -75,6 +73,8 @@
     materialComposition:
       Glass: 25
   - type: ExaminableSolution
+    solution: drink
+  - type: FitsInDispenser
     solution: drink
 
 # Transformable container - normal glass
@@ -369,6 +369,9 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/beerglass.rsi
     state: icon
+  - type: Tag
+    tags:
+    - Beer
 
 - type: entity
   parent: DrinkGlass
@@ -943,6 +946,9 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/iced_beerglass.rsi
     state: icon
+  - type: Tag
+    tags:
+    - Beer
 
 - type: entity
   parent: DrinkGlass

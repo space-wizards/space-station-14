@@ -70,6 +70,38 @@
     canTeleportToOtherMaps: true
 
 - type: entity
+  id: PortalGatewayBlue
+  parent: BasePortal
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/gateway.rsi
+    color: SkyBlue
+    layers:
+    - state: portal
+  - type: PointLight
+    color: SkyBlue
+    radius: 3
+    energy: 1
+    netsync: false
+
+- type: entity
+  id: PortalGatewayOrange
+  parent: BasePortal
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/gateway.rsi
+    color: OrangeRed
+    layers:
+    - state: portal
+  - type: PointLight
+    color: OrangeRed
+    radius: 3
+    energy: 1
+    netsync: false
+
+- type: entity
   id: ShadowPortal
   name: shadow rift
   description: Looks unstable.
