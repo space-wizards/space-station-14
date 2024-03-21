@@ -194,7 +194,7 @@ public abstract class SharedMechSystem : EntitySystem
         if (_net.IsServer)
             _popup.PopupEntity(popupString, uid);
 
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     /// <summary>
@@ -278,7 +278,7 @@ public abstract class SharedMechSystem : EntitySystem
             return false;
 
         component.Energy = FixedPoint2.Clamp(component.Energy + delta, 0, component.MaxEnergy);
-        Dirty(component);
+        Dirty(uid, component);
         UpdateUserInterface(uid, component);
         return true;
     }
@@ -306,7 +306,7 @@ public abstract class SharedMechSystem : EntitySystem
             UpdateAppearance(uid, component);
         }
 
-        Dirty(component);
+        Dirty(uid, component);
         UpdateUserInterface(uid, component);
     }
 
@@ -434,7 +434,7 @@ public abstract class SharedMechSystem : EntitySystem
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, args.Dragged, component.EntryDelay, new MechEntryEvent(), uid, target: uid)
         {
-            BreakOnUserMove = true,
+            BreakOnMove = true,
         };
 
         _doAfter.TryStartDoAfter(doAfterEventArgs);

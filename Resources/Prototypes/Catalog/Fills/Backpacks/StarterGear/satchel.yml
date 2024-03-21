@@ -30,6 +30,8 @@
     contents:
       - id: BoxHug
       - id: RubberStampClown
+      - id: CrayonRainbow
+      - id: ClownCuffs
 
 - type: entity
   noSpawn: true

@@ -113,8 +113,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 var vapeDoAfterEvent = new VapeDoAfterEvent(solution, forced);
                 _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, delay, vapeDoAfterEvent, entity.Owner, target: args.Target, used: entity.Owner)
                 {
-                    BreakOnTargetMove = true,
-                    BreakOnUserMove = false,
+                    BreakOnMove = false,
                     BreakOnDamage = true
                 });
             }
