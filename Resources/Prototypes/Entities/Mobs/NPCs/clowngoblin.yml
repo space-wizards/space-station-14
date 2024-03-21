@@ -99,9 +99,6 @@
     soundHit:
       collection: BikeHorn
     animation: WeaponArcFist
-  - type: Construction
-    graph: ClownGoblin
-    node: ClownGoblin
   - type: Vocal
     sounds:
       Male: ClownGoblin
