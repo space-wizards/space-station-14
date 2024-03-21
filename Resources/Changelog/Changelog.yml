@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: 21Melkuu
-  changes:
-  - message: Added Mayo to the Chefvend.
-    type: Add
-  id: 5700
-  time: '2024-01-14T02:47:19.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24017
-- author: Aexxie
-  changes:
-  - message: Lizards' punch animation now matches their damage type
-    type: Fix
-  - message: Spiders now deal piercing damage instead of slash damage when unarmed,
-      as intended. Their animation has been changed to the biting animation as well.
-    type: Fix
-  id: 5701
-  time: '2024-01-14T03:08:20.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24019
 - author: deltanedas
   changes:
   - message: Revolutionaries that are deconverted by headrevs dying get a window shown
@@ -3811,3 +3794,18 @@
   id: 6199
   time: '2024-03-20T19:03:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26293
+- author: jamessimo
+  changes:
+  - message: Ratkings and Rat servants eyes now glow in the dark
+    type: Tweak
+  id: 6200
+  time: '2024-03-21T13:16:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26300
+- author: nikthechampiongr
+  changes:
+  - message: Scram! implant no longer allows for someone to keep pulling you when
+      it teleports you.
+    type: Fix
+  id: 6201
+  time: '2024-03-21T17:42:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26309
