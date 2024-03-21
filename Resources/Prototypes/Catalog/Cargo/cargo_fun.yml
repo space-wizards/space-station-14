@@ -69,6 +69,16 @@
   group: market
 
 - type: cargoProduct
+  id: FunSprayPaints
+  icon:
+    sprite: Objects/Fun/spraycans.rsi
+    state: death2_cap
+  product: CrateFunSprayPaints
+  cost: 2000
+  category: Fun
+  group: market
+
+- type: cargoProduct
   id: FunParty
   icon:
     sprite: Objects/Consumable/Food/Baked/cake.rsi
