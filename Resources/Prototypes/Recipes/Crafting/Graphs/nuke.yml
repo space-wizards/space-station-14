@@ -11,6 +11,7 @@
         icon:
           sprite: Objects/Materials/materials.rsi
           state: wood_2
+        name: wood
         doAfter: 4
 
   - node: cart
@@ -32,6 +33,7 @@
         icon:
           sprite: Objects/Materials/parts.rsi
           state: rods_2
+        name: rods
         doAfter: 3
 
   - node: insides
@@ -47,11 +49,11 @@
         doAfter: 3
     - to: pipe
       steps:
-      - material: GasPipeStraight
-        amount: 1
+      - tag: Pipe
         icon:
           sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeStraight
+        name: pipe
         doAfter: 4
 
   - node: pipe
@@ -67,10 +69,10 @@
         doAfter: 3
     - to: gun
       steps:
-      - material: WeaponShotgunImprovised
-        amount: 1
+      - tag: WeaponShotgunImprovised
         icon:
           sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+        name: improvised shotgun
         doAfter: 2
 
   - node: gun
@@ -86,13 +88,13 @@
         doAfter: 3
     - to: bullet
       steps:
-      - material: ShellShotgunUranium
-        amount: 1
+      - tag: ShellShotgunUranium
         icon:
           sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgunshell.rsi
           layers:
             - state: depleted-uranium
               map: [ "enum.AmmoVisualLayers.Base" ]
+        name: uranium shotgun shell
         doAfter: 1
 
   - node: bullet
@@ -111,10 +113,10 @@
         doAfter: 3
     - to: uranium
       steps:
-      - material: EnrichedUranium
-        amount: 1
+      - tag: EnrichedUranium
         icon:
           sprite: Objects/Fun/enricheduranium.rsi
+        name: enriched uranium
         doAfter: 5
 
   - node: uranium
@@ -135,6 +137,7 @@
         icon:
           sprite: Objects/Materials/Sheets/metal.rsi
           state: steel_3
+        name: steel
         doAfter: 5
 
   - node: finished
@@ -155,6 +158,8 @@
         icon:
           sprite: Objects/Fun/crayons.rsi
           state: yellow
+        name: crayon
         doAfter: 1
+  
   - node: painted
     entity: ImprovisedNuclearBombSign

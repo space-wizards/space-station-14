@@ -126,3 +126,6 @@
     state: icon
   - type: RadiationSource
     intensity: 1
+  - type: Tag
+    tags:
+    - EnrichedUranium

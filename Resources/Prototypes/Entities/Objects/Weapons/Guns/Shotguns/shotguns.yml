@@ -282,6 +282,9 @@
   - type: Construction
     graph: ImprovisedShotgunGraph
     node: shotgun
+  - type: Tag
+    tags:
+    - WeaponShotgunImprovised
   - type: StaticPrice
     price: 20
 
