@@ -31,6 +31,7 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private EntityQuery<CarpRiftsConditionComponent> _objQuery;
 
@@ -150,7 +151,7 @@ public sealed partial class DragonSystem : EntitySystem
         // cant stack rifts near eachother
         foreach (var (_, riftXform) in EntityQuery<DragonRiftComponent, TransformComponent>(true))
         {
-            if (riftXform.Coordinates.InRange(EntityManager, xform.Coordinates, RiftRange))
+            if (riftXform.Coordinates.InRange(EntityManager, _transform, xform.Coordinates, RiftRange))
             {
                 _popup.PopupEntity(Loc.GetString("carp-rift-proximity", ("proximity", RiftRange)), uid, uid);
                 return;

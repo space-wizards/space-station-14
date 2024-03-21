@@ -167,7 +167,7 @@ public sealed class MagicSystem : EntitySystem
         foreach (var pos in GetSpawnPositions(xform, ev.Pos))
         {
             // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
-            var mapPos = pos.ToMap(EntityManager);
+            var mapPos = pos.ToMap(EntityManager, _transformSystem);
             var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var gridUid, out _)
                 ? pos.WithEntityId(gridUid, EntityManager)
                 : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
