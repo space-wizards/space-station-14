@@ -97,6 +97,15 @@
       "name": "goliath-cooked"
     },
     {
+      "name": "heart"
+    },
+    {
+      "name": "kidney"
+    },
+    {
+      "name": "liver"
+    },
+    {
       "name": "lizard"
     },
     {
@@ -104,6 +113,9 @@
     },
     {
       "name": "lizard-tail"
+    },
+    {
+      "name": "lung"
     },
     {
       "name": "plate-meat"
@@ -176,6 +188,9 @@
     },
     {
       "name": "spiderleg-cooked"
+    },
+    {
+      "name": "stomach"
     },
     {
       "name": "tomato"

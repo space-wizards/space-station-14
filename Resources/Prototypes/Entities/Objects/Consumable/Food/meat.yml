@@ -1520,7 +1520,7 @@
   description: What is this? Chopped liver?
   components:
   - type: Sprite
-    state: cutlet
+    state: liver
   - type: Tag
     tags:
     - Raw
@@ -1533,7 +1533,7 @@
   description: The lining of a stomach, with all the gross stuff (relatively speaking) carefully scraped away with a knife.
   components:
   - type: Sprite
-    state: cutlet
+    state: stomach
   - type: Tag
     tags:
     - Raw
@@ -1546,7 +1546,7 @@
   description: On the bright side, the broken heart isn't what killed them.
   components:
   - type: Sprite
-    state: cutlet
+    state: heart
   - type: Tag
     tags:
     - Raw
@@ -1559,7 +1559,7 @@
   description: Butchered lung, named for their light weight. Makes a telltale whistling sound as it cooks.
   components:
   - type: Sprite
-    state: cutlet
+    state: lung
   - type: Tag
     tags:
     - Raw
@@ -1572,7 +1572,7 @@
   description: Not to be confused with the bean. Smells of ammonia.
   components:
   - type: Sprite
-    state: cutlet
+    state: kidney
   - type: Tag
     tags:
     - Raw
