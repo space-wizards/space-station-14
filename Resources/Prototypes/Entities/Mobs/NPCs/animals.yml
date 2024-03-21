@@ -3200,6 +3200,7 @@
     heldprefix: inhand
     size: Normal
   - type: CanEscapeInventory
+    baseResistTime: 1
   - type: Clothing
     quickEquip: false
     sprite: Mobs/Animals/nymph.rsi
