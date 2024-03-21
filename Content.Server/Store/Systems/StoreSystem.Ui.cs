@@ -159,7 +159,7 @@ public sealed partial class StoreSystem
         foreach (var (currency, value) in listing.Cost)
         {
             var totalAmount = value;
-            if (discountData?.DiscountByCurrency.TryGetValue(currency, out var discount) != null)
+            if (discountData?.DiscountByCurrency.TryGetValue(currency, out var discount) == true)
             {
                 totalAmount = Math.Round(totalAmount.Value * (1 - discount) / 100);
             }
@@ -179,7 +179,7 @@ public sealed partial class StoreSystem
         foreach (var (currency, value) in listing.Cost)
         {
             var totalAmount = value;
-            if (discountData?.DiscountByCurrency?.TryGetValue(currency, out var discount) != null)
+            if (discountData?.DiscountByCurrency.TryGetValue(currency, out var discount) == true)
             {
                 totalAmount = Math.Round(totalAmount.Value * (1 - discount) / 100);
                 discountData.Count--;
@@ -189,7 +189,7 @@ public sealed partial class StoreSystem
 
             component.BalanceSpent.TryAdd(currency, FixedPoint2.Zero);
 
-            component.BalanceSpent[currency] += value;
+            component.BalanceSpent[currency] += totalAmount;
         }
 
         //spawn entity

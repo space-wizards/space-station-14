@@ -77,7 +77,7 @@ public sealed partial class StoreMenu : DefaultWindow
         WithdrawButton.Disabled = disabled;
     }
 
-    public void UpdateListing(List<ListingData> listings, List<StoreDiscountData> msgDiscounts)
+    public void UpdateListing(List<ListingData> listings, List<StoreDiscountData> discounts)
     {
         var sorted = listings.OrderBy(l => l.Priority).ThenBy(l => l.Cost.Values.Sum());
 
@@ -85,7 +85,7 @@ public sealed partial class StoreMenu : DefaultWindow
         // should probably chunk these out instead. to-do if this clogs the internet tubes.
         // maybe read clients prototypes instead?
         ClearListings();
-        var storeDiscounts = msgDiscounts.Where(x => x.Count > 0)
+        var storeDiscounts = discounts.Where(x => x.Count > 0)
                                          .ToDictionary(x => x.ListingId);
 
         foreach (var item in sorted)

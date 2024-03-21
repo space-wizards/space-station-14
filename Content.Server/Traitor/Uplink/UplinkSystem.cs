@@ -69,7 +69,8 @@ namespace Content.Server.Traitor.Uplink
 
         private List<StoreDiscountData> InitializeDiscounts(IEnumerable<ListingData> storeComponent, DiscountSettings settings)
         {
-            var listingsByDiscountCategory = storeComponent.GroupBy(x => x.DiscountCategory)
+            var listingsByDiscountCategory = storeComponent.Where(x => x.DiscountOptions.Count > 0)
+                                                           .GroupBy(x => x.DiscountCategory)
                                                            .ToDictionary(
                                                                x => x.Key,
                                                                x => x.ToArray()
@@ -188,10 +189,12 @@ namespace Content.Server.Traitor.Uplink
         /// Total count of discounts that can be attached to uplink.
         /// </summary>
         public int TotalAvailableDiscounts { get; set; } = 3;
+
         /// <summary>
         /// Maximum count of category 2 (not cheap stuff) items to be discounted.
         /// </summary>
         public int MaxCategory2Discounts { get; set; } = 1;
+
         /// <summary>
         /// Maximum count of category 0 (very low-costing stuff) items to be discounted.
         /// </summary>
