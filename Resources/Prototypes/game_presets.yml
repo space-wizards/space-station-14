@@ -95,6 +95,7 @@
   showInVote: false
   rules:
     - Traitor
+    - SubGamemodesRule
     - BasicStationEventScheduler
     - BasicRoundstartVariation
 
@@ -120,6 +121,7 @@
   showInVote: false
   rules:
     - Nukeops
+    - SubGamemodesRule
     - BasicStationEventScheduler
     - BasicRoundstartVariation
 
@@ -134,6 +136,7 @@
   showInVote: false
   rules:
     - Revolutionary
+    - SubGamemodesRule
     - BasicStationEventScheduler
     - BasicRoundstartVariation
 

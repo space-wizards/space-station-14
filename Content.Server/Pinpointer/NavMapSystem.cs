@@ -54,7 +54,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
     private void OnStationInit(StationGridAddedEvent ev)
     {
         var comp = EnsureComp<NavMapComponent>(ev.GridId);
-        RefreshGrid(comp, Comp<MapGridComponent>(ev.GridId));
+        RefreshGrid(ev.GridId, comp, Comp<MapGridComponent>(ev.GridId));
     }
 
     private void OnNavMapBeaconStartup(EntityUid uid, NavMapBeaconComponent component, ComponentStartup args)
@@ -164,7 +164,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
         if (!TryComp<MapGridComponent>(uid, out var grid))
             return;
 
-        RefreshGrid(component, grid);
+        RefreshGrid(uid, component, grid);
     }
 
     private void OnNavMapSplit(ref GridSplitEvent args)
@@ -177,13 +177,13 @@ public sealed class NavMapSystem : SharedNavMapSystem
         foreach (var grid in args.NewGrids)
         {
             var newComp = EnsureComp<NavMapComponent>(grid);
-            RefreshGrid(newComp, gridQuery.GetComponent(grid));
+            RefreshGrid(grid, newComp, gridQuery.GetComponent(grid));
         }
 
-        RefreshGrid(comp, gridQuery.GetComponent(args.Grid));
+        RefreshGrid(args.Grid, comp, gridQuery.GetComponent(args.Grid));
     }
 
-    private void RefreshGrid(NavMapComponent component, MapGridComponent grid)
+    private void RefreshGrid(EntityUid uid, NavMapComponent component, MapGridComponent grid)
     {
         component.Chunks.Clear();
 
@@ -199,7 +199,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
                 component.Chunks[chunkOrigin] = chunk;
             }
 
-            RefreshTile(grid, component, chunk, tile.Value.GridIndices);
+            RefreshTile(uid, grid, component, chunk, tile.Value.GridIndices);
         }
     }
 
@@ -291,7 +291,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
             if (navMap.Chunks.TryGetValue(chunkOrigin, out var chunk))
             {
-                RefreshTile(oldGrid, navMap, chunk, ev.TilePos);
+                RefreshTile(ev.OldGrid, oldGrid, navMap, chunk, ev.TilePos);
             }
         }
 
@@ -318,10 +318,10 @@ public sealed class NavMapSystem : SharedNavMapSystem
             navMap.Chunks[chunkOrigin] = chunk;
         }
 
-        RefreshTile(grid, navMap, chunk, tile);
+        RefreshTile(xform.GridUid.Value, grid, navMap, chunk, tile);
     }
 
-    private void RefreshTile(MapGridComponent grid, NavMapComponent component, NavMapChunk chunk, Vector2i tile)
+    private void RefreshTile(EntityUid uid, MapGridComponent grid, NavMapComponent component, NavMapChunk chunk, Vector2i tile)
     {
         var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
         var existing = chunk.TileData;
@@ -356,7 +356,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
         if (existing == chunk.TileData)
             return;
 
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     /// <summary>
