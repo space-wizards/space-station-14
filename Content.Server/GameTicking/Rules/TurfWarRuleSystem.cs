@@ -138,16 +138,6 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
         foreach (var (department, mind) in comp.Minds)
         {
             MakeTagger((uid, comp), department, mind);
-
-            if (!_mind.TryGetSession(mind, out var session))
-                continue;
-
-            // prevent antag of christmas future combining with tagger
-            // TODO: make a generic thingy so this isnt specific to traitor
-            foreach (var traitor in traitorRules)
-            {
-                _traitorRule.RemoveCandidate(traitor, session);
-            }
         }
 
         Log.Info($"Turf war started on station {comp.Station}");
