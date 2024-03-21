@@ -186,6 +186,7 @@
     - !type:CreateEntityReactionEffect
       entity: EnrichedUranium
 
+- type: reaction
   id: Gunpowder # Own a musket for home defense, cause that's what the founding fathers intended!
   impact: Low
   quantized: true
