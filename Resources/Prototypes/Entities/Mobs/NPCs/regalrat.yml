@@ -191,7 +191,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: rat
-    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded", "movement"]
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
       state: eyes
       shader: unshaded
 
