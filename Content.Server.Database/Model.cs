@@ -268,6 +268,11 @@ namespace Content.Server.Database
                 .HasPrincipalKey(author => author.UserId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            // A message cannot be "dismissed" without also being "seen".
+            modelBuilder.Entity<AdminMessage>().ToTable(t =>
+                t.HasCheckConstraint("NotDismissedAndSeen",
+                    "NOT dismissed OR seen"));
+
             modelBuilder.Entity<ServerBan>()
                 .HasOne(ban => ban.CreatedBy)
                 .WithMany(author => author.AdminServerBansCreated)
@@ -969,6 +974,15 @@ namespace Content.Server.Database
         [ForeignKey("DeletedBy")] public Guid? DeletedById { get; set; }
         public Player? DeletedBy { get; set; }
         public DateTime? DeletedAt { get; set; }
+
+        /// <summary>
+        /// Whether the message has been seen at least once by the player.
+        /// </summary>
         public bool Seen { get; set; }
+
+        /// <summary>
+        /// Whether the message has been dismissed permanently by the player.
+        /// </summary>
+        public bool Dismissed { get; set; }
     }
 }

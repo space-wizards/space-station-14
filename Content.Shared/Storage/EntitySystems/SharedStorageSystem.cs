@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Coordinates;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
@@ -11,6 +12,7 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Lock;
+using Content.Shared.Materials;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
@@ -96,6 +98,9 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeAllEvent<StorageInsertItemIntoLocationEvent>(OnInsertItemIntoLocation);
         SubscribeAllEvent<StorageRemoveItemEvent>(OnRemoveItem);
         SubscribeAllEvent<StorageSaveItemLocationEvent>(OnSaveItemLocation);
+
+        SubscribeLocalEvent<StorageComponent, GotReclaimedEvent>(OnReclaimed);
+
         UpdatePrototypeCache();
     }
 
@@ -288,7 +293,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay, new AreaPickupDoAfterEvent(GetNetEntityList(validStorables)), uid, target: uid)
                 {
                     BreakOnDamage = true,
-                    BreakOnUserMove = true,
+                    BreakOnMove = true,
                     NeedHand = true
                 };
 
@@ -390,6 +395,11 @@ public abstract class SharedStorageSystem : EntitySystem
         }
 
         args.Handled = true;
+    }
+
+    private void OnReclaimed(EntityUid uid, StorageComponent storageComp, GotReclaimedEvent args)
+    {
+        _containerSystem.EmptyContainer(storageComp.Container, destination: args.ReclaimerCoordinates);
     }
 
     private void OnDestroy(EntityUid uid, StorageComponent storageComp, DestructionEventArgs args)

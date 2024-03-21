@@ -46,6 +46,7 @@ ui-options-show-looc-on-head = Show LOOC chat above characters head
 ui-options-fancy-speech = Show names in speech bubbles
 ui-options-fancy-name-background = Add background to speech bubble names
 ui-options-enable-color-name = Add colors to character names
+ui-options-colorblind-friendly = Colorblind friendly mode
 ui-options-reduced-motion = Reduce motion of visual effects
 ui-options-screen-shake-intensity = Screen shake intensity
 ui-options-screen-shake-percent = { TOSTRING($intensity, "P0") }
