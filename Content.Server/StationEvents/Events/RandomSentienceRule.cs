@@ -2,6 +2,7 @@
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.StationEvents.Components;
+using Content.Shared.Item;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -11,8 +12,8 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
     {
         HashSet<EntityUid> stationsToNotify = new();
 
-        var targetList = new List<Entity<SentienceTargetComponent>>();
-        var query = EntityQueryEnumerator<SentienceTargetComponent>();
+        var targetList = new List<Entity<ItemComponent>>();
+        var query = EntityQueryEnumerator<ItemComponent>();
         while (query.MoveNext(out var targetUid, out var target))
         {
             targetList.Add((targetUid, target));
@@ -20,7 +21,7 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
 
         RobustRandom.Shuffle(targetList);
 
-        var toMakeSentient = RobustRandom.Next(2, 5);
+        var toMakeSentient = RobustRandom.Next(20, 50);
         var groups = new HashSet<string>();
 
         foreach (var target in targetList)
@@ -33,7 +34,7 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
             EnsureComp<GhostTakeoverAvailableComponent>(target);
             ghostRole.RoleName = MetaData(target).EntityName;
             ghostRole.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", ghostRole.RoleName));
-            groups.Add(Loc.GetString(target.Comp.FlavorKind));
+            groups.Add(Loc.GetString(Name(target)));
         }
 
         if (groups.Count == 0)
