@@ -294,7 +294,7 @@
         orGroup: GiftPool
       - id: ClothingHeadHatFlowerCrown
         orGroup: GiftPool
-      - id: ClothingHeadHatHairflower
+      - id: FoodPoppy
         orGroup: GiftPool
       - id: ClothingMaskClown
         orGroup: GiftPool
