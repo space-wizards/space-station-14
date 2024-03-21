@@ -3,7 +3,7 @@ using Content.Shared.Roles;
 
 namespace Content.Server.Roles;
 
-[RegisterComponent]
+[RegisterComponent, ExclusiveAntagonist]
 public sealed partial class TurfTaggerRoleComponent : AntagonistRoleComponent
 {
     /// <summary>
