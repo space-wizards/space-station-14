@@ -22,7 +22,7 @@
   - type: Construction
     graph: NukeCraft
     node: cart
-    defaultTarget: painted
+    targetNode: painted
 
 - type: entity
   parent: ImprovisedNuclearBombCart
@@ -37,7 +37,7 @@
   - type: Construction
     graph: NukeCraft
     node: insides
-    defaultTarget: painted
+    targetNode: painted
 
 - type: entity
   parent: ImprovisedNuclearBombCart
@@ -52,7 +52,7 @@
   - type: Construction
     graph: NukeCraft
     node: pipe
-    defaultTarget: painted
+    targetNode: painted
 
 - type: entity
   parent: ImprovisedNuclearBombCart
@@ -67,7 +67,7 @@
   - type: Construction
     graph: NukeCraft
     node: gun
-    defaultTarget: painted
+    targetNode: painted
 
 - type: entity
   parent: ImprovisedNuclearBombCart
@@ -82,7 +82,7 @@
   - type: Construction
     graph: NukeCraft
     node: bullet
-    defaultTarget: painted
+    targetNode: painted
 
 - type: entity
   parent: ImprovisedNuclearBombCart
@@ -110,7 +110,7 @@
   - type: Construction
     graph: NukeCraft
     node: uranium
-    defaultTarget: painted
+    targetNode: painted
 
 - type: entity
   parent: ImprovisedNuclearBombCart
@@ -143,7 +143,7 @@
   - type: Construction
     graph: NukeCraft
     node: finished
-    defaultTarget: painted
+    targetNode: painted
 
 - type: entity
   parent: ImprovisedNuclearBomb
