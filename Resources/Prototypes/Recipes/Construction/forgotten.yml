@@ -1,0 +1,50 @@
+
+# "Forgotten" - catergories for things whose crafts are initially unknown to players and they must first learn them through books
+
+- type: construction
+  name: fire amulet
+  id: AmuletFireProtection
+  graph: MysticAmuletProtection
+  startNode: start
+  targetNode: fire
+  category: construction-category-forgotten
+  description: Crumbs of unknown energies will protect you from fire.
+  icon: { sprite: Clothing/Neck/Misc/amulet_fire.rsi, state: icon }
+  objectType: Item
+  needLearn: true
+
+- type: construction
+  name: cold amulet
+  id: AmuletColdProtection
+  graph: MysticAmuletProtection
+  startNode: start
+  targetNode: cold
+  category: construction-category-forgotten
+  description: Crumbs of unknown energies will protect you from the cosmic cold.
+  icon: { sprite: Clothing/Neck/Misc/amulet_cold.rsi, state: icon }
+  objectType: Item
+  needLearn: true
+
+- type: construction
+  name: shock amulet
+  id: AmuletShockProtection
+  graph: MysticAmuletProtection
+  startNode: start
+  targetNode: shock
+  category: construction-category-forgotten
+  description: Crumbs of unknown energies will protect you from electricity.
+  icon: { sprite: Clothing/Neck/Misc/amulet_shock.rsi, state: icon }
+  objectType: Item
+  needLearn: true
+
+- type: construction
+  name: poison amulet
+  id: AmuletPoisonProtection
+  graph: MysticAmuletProtection
+  startNode: start
+  targetNode: poison
+  category: construction-category-forgotten
+  description: Crumbs of unknown energies will protect you from poison.
+  icon: { sprite: Clothing/Neck/Misc/amulet_poison.rsi, state: icon }
+  objectType: Item
+  needLearn: true

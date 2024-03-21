@@ -1,4 +1,4 @@
-﻿using Content.Shared.Construction.Conditions;
+using Content.Shared.Construction.Conditions;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -71,6 +71,12 @@ public sealed partial class ConstructionPrototype : IPrototype
     /// </summary>
     [DataField("entityWhitelist")]
     public EntityWhitelist? EntityWhitelist = null;
+
+    /// <summary>
+    /// Does the player need to learn the recipe to be able to craft this item?
+    /// </summary>
+    [DataField]
+    public bool NeedLearn = false;
 
     [DataField("category")] public string Category { get; private set; } = "";
 

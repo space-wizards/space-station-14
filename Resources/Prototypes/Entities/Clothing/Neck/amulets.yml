@@ -1,0 +1,71 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckAmuletFireProtection
+  name: mystical amulet
+  description: Crumbs of unknown energies will protect you from fire.
+  suffix: Fire
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/amulet_fire.rsi
+  - type: TemperatureProtection
+    coefficient: 0.005
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Heat: 0.90
+  - type: Construction
+    graph: MysticAmuletProtection
+    node: fire
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckAmuletColdProtection
+  name: mystical amulet
+  suffix: Cold
+  description: Crumbs of unknown energies will protect you from the cosmic cold.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/amulet_cold.rsi
+  - type: TemperatureProtection
+    coefficient: 0.005
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Cold: 0.90
+  - type: Construction
+    graph: MysticAmuletProtection
+    node: cold
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckAmuletPoisonProtection
+  name: mystical amulet
+  suffix: Poison
+  description: Crumbs of unknown energies will protect you from poison.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/amulet_poison.rsi
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Poison: 0.90
+  - type: Construction
+    graph: MysticAmuletProtection
+    node: poison
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckAmuletShockProtection
+  name: mystical amulet
+  suffix: Shock
+  description: Crumbs of unknown energies will protect you from electricity.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/amulet_shock.rsi
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Shock: 0.90
+  - type: Construction
+    graph: MysticAmuletProtection
+    node: shock

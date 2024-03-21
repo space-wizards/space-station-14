@@ -1,0 +1,11 @@
+- type: entity
+  name: amulet crafting
+  parent: BookRandom
+  id: BookLearnAmulets
+  components:
+  - type: PaperRecipeTeacher
+    recipes:
+    - AmuletFireProtection
+    - AmuletColdProtection
+    - AmuletShockProtection
+    - AmuletPoisonProtection
