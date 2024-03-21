@@ -6,7 +6,7 @@
     edges:
     - to: cart
       steps:
-      - material: WoodPlank
+      - material: Wood
         amount: 15
         icon:
           sprite: Objects/Materials/materials.rsi
