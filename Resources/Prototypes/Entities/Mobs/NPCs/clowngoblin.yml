@@ -60,10 +60,6 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
-  - type: MobState
-    thresholds:
-      0: Alive
-      150: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
     baseSprintSpeed : 5
