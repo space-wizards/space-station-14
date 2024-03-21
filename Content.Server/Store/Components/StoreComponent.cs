@@ -1,6 +1,7 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Robust.Shared.Audio;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
@@ -59,6 +60,30 @@ public sealed partial class StoreComponent : Component
     [ViewVariables]
     public HashSet<ListingData> LastAvailableListings = new();
 
+    /// <summary>
+    ///     All current entities bought from this shop. Useful for keeping track of refunds and upgrades.
+    /// </summary>
+    [ViewVariables, DataField]
+    public List<EntityUid> BoughtEntities = new();
+
+    /// <summary>
+    ///     The total balance spent in this store. Used for refunds.
+    /// </summary>
+    [ViewVariables, DataField]
+    public Dictionary<string, FixedPoint2> BalanceSpent = new();
+
+    /// <summary>
+    ///     Controls if the store allows refunds
+    /// </summary>
+    [ViewVariables, DataField]
+    public bool RefundAllowed;
+
+    /// <summary>
+    ///     The map the store was originally from, used to block refunds if the map is changed
+    /// </summary>
+    [DataField]
+    public EntityUid? StartingMap;
+
     #region audio
     /// <summary>
     /// The sound played to the buyer when a purchase is succesfully made.
@@ -78,3 +103,17 @@ public readonly record struct StoreAddedEvent;
 /// </summary>
 [ByRefEvent]
 public readonly record struct StoreRemovedEvent;
+
+/// <summary>
+///     Broadcast when an Entity with the <see cref="StoreRefundComponent"/> is deleted
+/// </summary>
+[ByRefEvent]
+public readonly struct RefundEntityDeletedEvent
+{
+    public EntityUid Uid { get; }
+
+    public RefundEntityDeletedEvent(EntityUid uid)
+    {
+        Uid = uid;
+    }
+}

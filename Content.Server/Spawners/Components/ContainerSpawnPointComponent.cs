@@ -8,13 +8,13 @@ namespace Content.Server.Spawners.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(ContainerSpawnPointSystem))]
-public sealed partial class ContainerSpawnPointComponent : Component
+public sealed partial class ContainerSpawnPointComponent : Component, ISpawnPoint
 {
     /// <summary>
     /// The ID of the container that this entity will spawn players into
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public string ContainerId;
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    public string ContainerId = string.Empty;
 
     /// <summary>
     /// An optional job specifier
@@ -26,5 +26,5 @@ public sealed partial class ContainerSpawnPointComponent : Component
     /// The type of spawn point
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SpawnPointType SpawnType = SpawnPointType.Unset;
+    public SpawnPointType SpawnType { get; set; } = SpawnPointType.Unset;
 }

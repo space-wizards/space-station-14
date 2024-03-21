@@ -267,7 +267,7 @@ namespace Content.Server.Administration.Managers
 
             msg.AvailableCommands = commands.ToArray();
 
-            _netMgr.ServerSendMessage(msg, session.ConnectedClient);
+            _netMgr.ServerSendMessage(msg, session.Channel);
         }
 
         private void PlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -389,7 +389,7 @@ namespace Content.Server.Administration.Managers
 
         private static bool IsLocal(ICommonSession player)
         {
-            var ep = player.ConnectedClient.RemoteEndPoint;
+            var ep = player.Channel.RemoteEndPoint;
             var addr = ep.Address;
             if (addr.IsIPv4MappedToIPv6)
             {

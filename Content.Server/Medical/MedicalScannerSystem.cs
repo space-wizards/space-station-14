@@ -7,7 +7,6 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Content.Server.Cloning.Components;
-using Content.Server.Construction;
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking.Events;
 using Content.Server.Power.EntitySystems;
@@ -45,8 +44,6 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<MedicalScannerComponent, DragDropTargetEvent>(OnDragDropOn);
             SubscribeLocalEvent<MedicalScannerComponent, PortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<MedicalScannerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
-            SubscribeLocalEvent<MedicalScannerComponent, RefreshPartsEvent>(OnRefreshParts);
-            SubscribeLocalEvent<MedicalScannerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
             SubscribeLocalEvent<MedicalScannerComponent, CanDropTargetEvent>(OnCanDragDropOn);
         }
 
@@ -248,18 +245,6 @@ namespace Content.Server.Medical
             _containerSystem.Remove(contained, scannerComponent.BodyContainer);
             _climbSystem.ForciblySetClimbing(contained, uid);
             UpdateAppearance(uid, scannerComponent);
-        }
-
-        private void OnRefreshParts(EntityUid uid, MedicalScannerComponent component, RefreshPartsEvent args)
-        {
-            var ratingFail = args.PartRatings[component.MachinePartCloningFailChance];
-
-            component.CloningFailChanceMultiplier = MathF.Pow(component.PartRatingFailMultiplier, ratingFail - 1);
-        }
-
-        private void OnUpgradeExamine(EntityUid uid, MedicalScannerComponent component, UpgradeExamineEvent args)
-        {
-            args.AddPercentageUpgrade("medical-scanner-upgrade-cloning", component.CloningFailChanceMultiplier);
         }
     }
 }

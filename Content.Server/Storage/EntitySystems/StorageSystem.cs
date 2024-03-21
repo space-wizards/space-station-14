@@ -132,7 +132,8 @@ public sealed partial class StorageSystem : SharedStorageSystem
         silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && _useDelay.IsDelayed((uid, useDelay));
         if (!silent)
         {
-            _audio.PlayPvs(storageComp.StorageOpenSound, uid);
+            if (!storageComp.IsUiOpen)
+                _audio.PlayPvs(storageComp.StorageOpenSound, uid);
             if (useDelay != null)
                 _useDelay.TryResetDelay((uid, useDelay));
         }

@@ -100,7 +100,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 if(_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(SpaceWindSound))
                 {
-                    var coordinates = tile.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager);
+                    var coordinates = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
                     _audio.PlayPvs(SpaceWindSound, coordinates, AudioParams.Default.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
                 }
             }
@@ -163,7 +163,7 @@ namespace Content.Server.Atmos.EntitySystems
                         gridAtmosphere.Comp.UpdateCounter,
                         tile.PressureDifference,
                         tile.PressureDirection, 0,
-                        tile.PressureSpecificTarget?.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager) ?? EntityCoordinates.Invalid,
+                        tile.PressureSpecificTarget != null ? _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.PressureSpecificTarget.GridIndices) : EntityCoordinates.Invalid,
                         gridWorldRotation,
                         xforms.GetComponent(entity),
                         body);
@@ -238,7 +238,7 @@ namespace Content.Server.Atmos.EntitySystems
                     // TODO: Technically these directions won't be correct but uhh I'm just here for optimisations buddy not to fix my old bugs.
                     if (throwTarget != EntityCoordinates.Invalid)
                     {
-                        var pos = ((throwTarget.ToMap(EntityManager).Position - xform.WorldPosition).Normalized() + dirVec).Normalized();
+                        var pos = ((throwTarget.ToMap(EntityManager, _transformSystem).Position - xform.WorldPosition).Normalized() + dirVec).Normalized();
                         _physics.ApplyLinearImpulse(uid, pos * moveForce, body: physics);
                     }
                     else

@@ -8,7 +8,7 @@ using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mind;
-using Robust.Shared.Audio;
+using Content.Shared.Mobs.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -30,15 +30,18 @@ public abstract class SharedActionsSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<InstantActionComponent, MapInitEvent>(OnInit);
-        SubscribeLocalEvent<EntityTargetActionComponent, MapInitEvent>(OnInit);
-        SubscribeLocalEvent<WorldTargetActionComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<InstantActionComponent, MapInitEvent>(OnActionMapInit);
+        SubscribeLocalEvent<EntityTargetActionComponent, MapInitEvent>(OnActionMapInit);
+        SubscribeLocalEvent<WorldTargetActionComponent, MapInitEvent>(OnActionMapInit);
+
+        SubscribeLocalEvent<InstantActionComponent, ComponentShutdown>(OnActionShutdown);
+        SubscribeLocalEvent<EntityTargetActionComponent, ComponentShutdown>(OnActionShutdown);
+        SubscribeLocalEvent<WorldTargetActionComponent, ComponentShutdown>(OnActionShutdown);
 
         SubscribeLocalEvent<ActionsComponent, DidEquipEvent>(OnDidEquip);
         SubscribeLocalEvent<ActionsComponent, DidEquipHandEvent>(OnHandEquipped);
@@ -61,10 +64,19 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
     }
 
-    private void OnInit(EntityUid uid, BaseActionComponent component, MapInitEvent args)
+    private void OnActionMapInit(EntityUid uid, BaseActionComponent component, MapInitEvent args)
     {
-        if (component.Charges != null)
-            component.MaxCharges = component.Charges.Value;
+        if (component.Charges == null)
+            return;
+
+        component.MaxCharges ??= component.Charges.Value;
+        Dirty(uid, component);
+    }
+
+    private void OnActionShutdown(EntityUid uid, BaseActionComponent component, ComponentShutdown args)
+    {
+        if (component.AttachedEntity != null && !TerminatingOrDeleted(component.AttachedEntity.Value))
+            RemoveAction(component.AttachedEntity.Value, uid, action: component);
     }
 
     private void OnShutdown(EntityUid uid, ActionsComponent component, ComponentShutdown args)
@@ -341,6 +353,13 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!action.Enabled)
             return;
 
+        // check for action use prevention
+        // TODO: make code below use this event with a dedicated component
+        var attemptEv = new ActionAttemptEvent(user);
+        RaiseLocalEvent(actionEnt, ref attemptEv);
+        if (attemptEv.Cancelled)
+            return;
+
         var curTime = GameTiming.CurTime;
         // TODO: Check for charge recovery timer
         if (action.Cooldown.HasValue && action.Cooldown.Value.End > curTime)
@@ -351,6 +370,9 @@ public abstract class SharedActionsSystem : EntitySystem
             ResetCharges(actionEnt);
 
         BaseActionEvent? performEvent = null;
+
+        if (action.CheckConsciousness && !_actionBlockerSystem.CanConsciouslyPerformAction(user))
+            return;
 
         // Validate request by checking action blockers and the like:
         switch (action)

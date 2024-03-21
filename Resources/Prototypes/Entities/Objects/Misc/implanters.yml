@@ -18,6 +18,8 @@
       blacklist:
         components:
         - Guardian # no holoparasite macrobomb wombo combo
+        tags:
+        - Unimplantable
       currentMode: Draw
       implanterSlot:
         name: Implant
@@ -117,6 +119,8 @@
           implantOnly:
             True: {state: broken}
             False: {state: implanter1}
+    - type: Tag
+      tags: []
 
 #Fun implanters
 

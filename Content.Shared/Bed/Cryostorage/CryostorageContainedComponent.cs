@@ -8,19 +8,21 @@ namespace Content.Shared.Bed.Cryostorage;
 /// This is used to track an entity that is currently being held in Cryostorage.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class CryostorageContainedComponent : Component
 {
     /// <summary>
-    /// Whether or not this entity is being stored on another map or is just chilling in a container
+    /// If true, the player's mind won't be removed from their body when they are moved into cryosleep
+    /// allowing them to rejoin later.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool StoredWhileDisconnected;
+    [DataField]
+    public bool AllowReEnteringBody;
 
     /// <summary>
     /// The time at which the cryostorage grace period ends.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [AutoPausedField]
     public TimeSpan? GracePeriodEndTime;
 
     /// <summary>

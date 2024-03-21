@@ -11,9 +11,10 @@
     sprite: Objects/Tools/Cowtools/haycutters.rsi
     state: haycutters
   - type: MeleeWeapon
+    wideAnimationRotation: -90
     damage:
       types:
-        Pierce: 0
+        Piercing: 0
     attackRate: 2
   - type: Tool
     qualities:
@@ -93,7 +94,7 @@
     useSound:
       path: /Audio/Items/crowbar.ogg
     speed: 0.05
-  - type: TilePrying
+  - type: ToolTileCompatible
   - type: Prying
 
 - type: entity

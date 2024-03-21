@@ -9,81 +9,54 @@
   "states": [
     {
       "name": "fox",
+      "directions": 4
+    },
+    {
+      "name": "fox-moving",
       "directions": 4,
       "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+	    [
+	      0.2,
+		  0.2,
+		  0.2,
+		  0.2
+	    ],
+	    [
+	      0.2,
+		  0.2,
+		  0.2,
+		  0.2
+	    ],      
+		[
+	      0.2,
+		  0.2,
+		  0.2,
+		  0.2
+	    ],
+	    [
+	      0.2,
+		  0.2,
+		  0.2,
+		  0.2
+	    ]
+	  ]
     },
     {
-      "name": "fox_dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "fox_dead"
     },
     {
-      "name": "fox_deadcollar",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "fox_deadcollar"
     },
     {
-      "name": "fox_deadtag",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "fox_deadtag"
     },
     {
       "name": "foxcollar",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "foxtag",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     }
   ]
 }

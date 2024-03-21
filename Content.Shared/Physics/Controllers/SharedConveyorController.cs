@@ -100,10 +100,10 @@ public abstract class SharedConveyorController : VirtualController
             transform.LocalPosition = localPos;
 
             // Force it awake for collisionwake reasons.
-            Physics.SetAwake(entity, body, true);
+            Physics.SetAwake((entity, body), true);
             Physics.SetSleepTime(body, 0f);
         }
-        Dirty(comp);
+        Dirty(uid, comp);
     }
 
     private static Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelative)

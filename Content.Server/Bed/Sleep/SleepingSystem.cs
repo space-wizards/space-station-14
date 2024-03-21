@@ -7,6 +7,7 @@ using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Slippery;
@@ -45,6 +46,7 @@ namespace Content.Server.Bed.Sleep
             SubscribeLocalEvent<SleepingComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<SleepingComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<SleepingComponent, SlipAttemptEvent>(OnSlip);
+            SubscribeLocalEvent<SleepingComponent, ConsciousAttemptEvent>(OnConsciousAttempt);
             SubscribeLocalEvent<ForcedSleepingComponent, ComponentInit>(OnInit);
         }
 
@@ -80,14 +82,14 @@ namespace Content.Server.Bed.Sleep
         }
 
         /// <summary>
-        /// Wake up if we take an instance of more than 2 damage.
+        /// Wake up on taking an instance of damage at least the value of WakeThreshold.
         /// </summary>
         private void OnDamageChanged(EntityUid uid, SleepingComponent component, DamageChangedEvent args)
         {
             if (!args.DamageIncreased || args.DamageDelta == null)
                 return;
 
-            if (args.DamageDelta.Total >= component.WakeThreshold)
+            if (args.DamageDelta.GetTotal() >= component.WakeThreshold)
                 TryWaking(uid, component);
         }
 
@@ -172,6 +174,12 @@ namespace Content.Server.Bed.Sleep
         {
             args.Cancel();
         }
+
+        private void OnConsciousAttempt(EntityUid uid, SleepingComponent component, ConsciousAttemptEvent args)
+        {
+            args.Cancel();
+        }
+
 
         private void OnInit(EntityUid uid, ForcedSleepingComponent component, ComponentInit args)
         {

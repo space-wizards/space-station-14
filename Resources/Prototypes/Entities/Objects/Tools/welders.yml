@@ -47,6 +47,8 @@
       params:
         variation: 0.250
         volume: -12
+    deactivatedSoundOnHitNoDamage:
+      collection: MetalThud
     activatedDamage:
         types:
             Heat: 8
@@ -70,6 +72,8 @@
     damage:
       types:
         Blunt: 5 #i mean... i GUESS you could use it like that
+    soundHit:
+      collection: MetalThud
   - type: RefillableSolution
     solution: Welder
   - type: SolutionContainerManager
@@ -183,8 +187,8 @@
       Welder:
         reagents:
         - ReagentId: WeldingFuel
-          Quantity: 25
-        maxVol: 25
+          Quantity: 50
+        maxVol: 50
   - type: Tool
     speed: 0.7
   - type: PointLight

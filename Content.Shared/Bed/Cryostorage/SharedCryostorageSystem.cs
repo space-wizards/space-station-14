@@ -37,19 +37,11 @@ public abstract class SharedCryostorageSystem : EntitySystem
         SubscribeLocalEvent<CryostorageComponent, CanDropTargetEvent>(OnCanDropTarget);
 
         SubscribeLocalEvent<CryostorageContainedComponent, EntGotRemovedFromContainerMessage>(OnRemovedContained);
-        SubscribeLocalEvent<CryostorageContainedComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<CryostorageContainedComponent, ComponentShutdown>(OnShutdownContained);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
 
-        _configuration.OnValueChanged(CCVars.GameCryoSleepRejoining, OnCvarChanged);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _configuration.UnsubValueChanged(CCVars.GameCryoSleepRejoining, OnCvarChanged);
+        Subs.CVar(_configuration, CCVars.GameCryoSleepRejoining, OnCvarChanged, true);
     }
 
     private void OnCvarChanged(bool value)
@@ -132,16 +124,9 @@ public abstract class SharedCryostorageSystem : EntitySystem
 
     private void OnRemovedContained(Entity<CryostorageContainedComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
-        var (_, comp) = ent;
-        if (!comp.StoredWhileDisconnected)
+        var (uid, comp) = ent;
+        if (!IsInPausedMap(uid))
             RemCompDeferred(ent, comp);
-    }
-
-    private void OnUnpaused(Entity<CryostorageContainedComponent> ent, ref EntityUnpausedEvent args)
-    {
-        var comp = ent.Comp;
-        if (comp.GracePeriodEndTime != null)
-            comp.GracePeriodEndTime = comp.GracePeriodEndTime.Value + args.PausedTime;
     }
 
     private void OnShutdownContained(Entity<CryostorageContainedComponent> ent, ref ComponentShutdown args)
@@ -175,5 +160,13 @@ public abstract class SharedCryostorageSystem : EntitySystem
         var map = _mapManager.CreateMap();
         _mapManager.SetMapPaused(map, true);
         PausedMap = _mapManager.GetMapEntityId(map);
+    }
+
+    public bool IsInPausedMap(Entity<TransformComponent?> entity)
+    {
+        var (_, comp) = entity;
+        comp ??= Transform(entity);
+
+        return comp.MapUid != null && comp.MapUid == PausedMap;
     }
 }

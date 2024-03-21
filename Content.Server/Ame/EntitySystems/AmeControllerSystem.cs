@@ -6,14 +6,10 @@ using Content.Server.Ame.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
-using Content.Shared.Ame;
+using Content.Shared.Ame.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
-using Content.Shared.Hands.Components;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
 using Content.Shared.Mind.Components;
-using Content.Shared.Popups;
-using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -30,20 +26,27 @@ public sealed class AmeControllerSystem : EntitySystem
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AmeControllerComponent, ComponentStartup>(OnComponentStartup);
-        SubscribeLocalEvent<AmeControllerComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<AmeControllerComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<AmeControllerComponent, ComponentRemove>(OnRemove);
+        SubscribeLocalEvent<AmeControllerComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
+        SubscribeLocalEvent<AmeControllerComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<AmeControllerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<AmeControllerComponent, UiButtonPressedMessage>(OnUiButtonPressed);
+    }
+
+    private void OnInit(EntityUid uid, AmeControllerComponent component, ComponentInit args)
+    {
+        _itemSlots.AddItemSlot(uid, SharedAmeControllerComponent.FuelSlotId, component.FuelSlot);
+
+        UpdateUi(uid, component);
     }
 
     public override void Update(float frameTime)
@@ -59,6 +62,22 @@ public sealed class AmeControllerSystem : EntitySystem
         }
     }
 
+    private void OnRemove(EntityUid uid, AmeControllerComponent component, ComponentRemove args)
+    {
+        _itemSlots.RemoveItemSlot(uid, component.FuelSlot);
+    }
+
+    private void OnItemSlotChanged(EntityUid uid, AmeControllerComponent component, ContainerModifiedMessage args)
+    {
+        if (!component.Initialized)
+            return;
+
+        if (args.Container.ID != component.FuelSlot.ID)
+            return;
+
+        UpdateUi(uid, component);
+    }
+
     private void UpdateController(EntityUid uid, TimeSpan curTime, AmeControllerComponent? controller = null, NodeContainerComponent? nodes = null)
     {
         if (!Resolve(uid, ref controller))
@@ -71,23 +90,24 @@ public sealed class AmeControllerSystem : EntitySystem
 
         if (!controller.Injecting)
             return;
+
         if (!TryGetAMENodeGroup(uid, out var group, nodes))
             return;
 
-        if (TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var fuelJar))
+        if (TryComp<AmeFuelContainerComponent>(controller.FuelSlot.Item, out var fuelContainer))
         {
             // if the jar is empty shut down the AME
-            if (fuelJar.FuelAmount <= 0)
+            if (fuelContainer.FuelAmount <= 0)
             {
                 SetInjecting(uid, false, null, controller);
             }
             else
             {
-                var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
+                var availableInject = Math.Min(controller.InjectionAmount, fuelContainer.FuelAmount);
                 var powerOutput = group.InjectFuel(availableInject, out var overloading);
                 if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
                     powerOutlet.MaxSupply = powerOutput;
-                fuelJar.FuelAmount -= availableInject;
+                fuelContainer.FuelAmount -= availableInject;
                 // only play audio if we actually had an injection
                 if (availableInject > 0)
                     _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
@@ -138,11 +158,28 @@ public sealed class AmeControllerSystem : EntitySystem
             currentPowerSupply = powerOutlet.CurrentSupply / 1000;
         }
 
-        var hasJar = Exists(controller.JarSlot.ContainedEntity);
-        if (!hasJar || !TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var jar))
-            return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), false, hasJar, 0, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
+        var fuelContainerInSlot = controller.FuelSlot.Item;
+        var hasFuelContainerInSlot = Exists(fuelContainerInSlot);
+        if (!hasFuelContainerInSlot || !TryComp<AmeFuelContainerComponent>(fuelContainerInSlot, out var fuelContainer))
+            return new AmeControllerBoundUserInterfaceState(powered,
+                                                            IsMasterController(uid),
+                                                            false,
+                                                            hasFuelContainerInSlot,
+                                                            0,
+                                                            controller.InjectionAmount,
+                                                            coreCount,
+                                                            currentPowerSupply,
+                                                            targetedPowerSupply);
 
-        return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), controller.Injecting, hasJar, jar.FuelAmount, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
+        return new AmeControllerBoundUserInterfaceState(powered,
+                                                        IsMasterController(uid),
+                                                        controller.Injecting,
+                                                        hasFuelContainerInSlot,
+                                                        fuelContainer.FuelAmount,
+                                                        controller.InjectionAmount,
+                                                        coreCount,
+                                                        currentPowerSupply,
+                                                        targetedPowerSupply);
     }
 
     private bool IsMasterController(EntityUid uid)
@@ -170,23 +207,23 @@ public sealed class AmeControllerSystem : EntitySystem
     {
         if (!Resolve(uid, ref controller))
             return;
+
         if (controller.Injecting)
             return;
 
-        var jar = controller.JarSlot.ContainedEntity;
-        if (!Exists(jar))
+        if (!Exists(controller.FuelSlot.Item))
             return;
 
-        _containerSystem.Remove(jar!.Value, controller.JarSlot);
+        _itemSlots.TryEjectToHands(uid, controller.FuelSlot, user);
+
         UpdateUi(uid, controller);
-        if (Exists(user))
-            _handsSystem.PickupOrDrop(user, jar!.Value);
     }
 
     public void SetInjecting(EntityUid uid, bool value, EntityUid? user = null, AmeControllerComponent? controller = null)
     {
         if (!Resolve(uid, ref controller))
             return;
+
         if (controller.Injecting == value)
             return;
 
@@ -196,6 +233,8 @@ public sealed class AmeControllerSystem : EntitySystem
             powerOut.MaxSupply = 0;
 
         UpdateUi(uid, controller);
+
+        _itemSlots.SetLock(uid, controller.FuelSlot, value);
 
         // Logging
         if (!HasComp<MindContainerComponent>(user))
@@ -263,6 +302,7 @@ public sealed class AmeControllerSystem : EntitySystem
         {
             < 10 => AmeControllerState.Fuck,
             < 50 => AmeControllerState.Critical,
+            < 80 => AmeControllerState.Warning,
             _ => AmeControllerState.On,
         };
 
@@ -275,38 +315,6 @@ public sealed class AmeControllerSystem : EntitySystem
             ameControllerState,
             appearance
         );
-    }
-
-    private void OnComponentStartup(EntityUid uid, AmeControllerComponent comp, ComponentStartup args)
-    {
-        // TODO: Fix this bad name. I'd update maps but then people get mad.
-        comp.JarSlot = _containerSystem.EnsureContainer<ContainerSlot>(uid, AmeControllerComponent.FuelContainerId);
-    }
-
-    private void OnInteractUsing(EntityUid uid, AmeControllerComponent comp, InteractUsingEvent args)
-    {
-        if (!HasComp<HandsComponent>(args.User))
-        {
-            _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-no-hands-text"), uid, args.User);
-            return;
-        }
-
-        if (!HasComp<AmeFuelContainerComponent>(args.Used))
-        {
-            _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-fail"), uid, args.User);
-            return;
-        }
-
-        if (Exists(comp.JarSlot.ContainedEntity))
-        {
-            _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-already-has-jar"), uid, args.User);
-            return;
-        }
-
-        _containerSystem.Insert(args.Used, comp.JarSlot);
-        _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-success"), uid, args.User, PopupType.Medium);
-
-        UpdateUi(uid, comp);
     }
 
     private void OnPowerChanged(EntityUid uid, AmeControllerComponent comp, ref PowerChangedEvent args)
