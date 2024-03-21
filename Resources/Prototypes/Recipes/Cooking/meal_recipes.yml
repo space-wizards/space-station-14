@@ -1210,6 +1210,35 @@
     Oats: 5
 
 - type: microwaveMealRecipe
+  id: RecipeDevilledKidneys
+  name: devilled kidneys recipe
+  result: FoodMealDevilledKidneys
+  time: 15
+  reagents:
+    TableSalt: 5
+    Blackpepper: 5
+  solids:
+    FoodKidneys: 1
+    FoodChili: 1
+    FoodButter: 1
+
+- type: microwaveMealRecipe
+  id: RecipeHaggis
+  name: haggis recipe
+  result: FoodMealHaggis
+  time: 30
+  reagents:
+    TableSalt: 15
+    Blackpepper: 5
+    Oats: 15
+  solids:
+    FoodHeart: 1
+    FoodLiver: 1
+    FoodLungs: 1
+    FoodOnion: 1
+
+
+- type: microwaveMealRecipe
   id: RecipePancake
   name: pancake recipe
   result: FoodBakedPancake
@@ -1887,6 +1916,15 @@
     Wine: 5
   solids:
     FoodMeatSnake: 1
+    FoodKebabSkewer: 1
+
+- type: microwaveMealRecipe
+  id: RecipeAnticucho
+  name: anticucho recipe
+  result: FoodMeatAnticucho
+  time: 5
+  solids:
+    FoodHeart: 1
     FoodKebabSkewer: 1
 
 - type: microwaveMealRecipe

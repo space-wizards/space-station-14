@@ -1521,7 +1521,7 @@
   components:
   - type: Sprite
     state: cutlet
-  - type: Tags
+  - type: Tag
     tags:
     - Raw
     - Meat
@@ -1534,7 +1534,7 @@
   components:
   - type: Sprite
     state: cutlet
-  - type: Tags
+  - type: Tag
     tags:
     - Raw
     - Meat
@@ -1547,7 +1547,7 @@
   components:
   - type: Sprite
     state: cutlet
-  - type: Tags
+  - type: Tag
     tags:
     - Raw
     - Meat
@@ -1560,7 +1560,7 @@
   components:
   - type: Sprite
     state: cutlet
-  - type: Tags
+  - type: Tag
     tags:
     - Raw
     - Meat
@@ -1573,7 +1573,7 @@
   components:
   - type: Sprite
     state: cutlet
-  - type: Tags
+  - type: Tag
     tags:
     - Raw
     - Meat

@@ -176,3 +176,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 12
+
+- type: entity
+  name: anticucho
+  parent: FoodMeatKebab
+  id: FoodMeatAnticucho
+  description: A Peruvian classic! So delicious, you might not realize you're eating heart meat.

@@ -607,3 +607,79 @@
           Quantity: 4
         - ReagentId: Vitamin
           Quantity: 4
+
+- type: entity
+  name: devilled kidneys
+  parent: FoodMealBase
+  id: FoodMealDevilledKidneys
+  description: A hearty Victorian breakfast.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - spicy
+  - type: Sprite
+    state: ribs
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 10
+  - type: Tag
+    tags:
+    - Meat
+
+- type: entity
+  name: haggis
+  parent: FoodMealBase
+  id: FoodMealHaggis
+  description: 'Auld Scotland wants nae skinking ware / That jaups in luggies: / But, if ye wish her gratefu prayer, / Gie her a Haggis!'
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - scotland
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 80 # Go big or go home.
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 50
+        - ReagentId: Vitamin
+          Quantity: 25
+  - type: Sprite
+    state: haggis
+  - type: Tag
+    tags:
+    - Meat
+  - type: Item
+    size: Large
+  - type: SliceableFood
+    count: 5
+    slice: FoodMealHaggisSlice
+
+- type: entity
+  name: slice of haggis
+  parent: FoodMealHaggis
+  id: FoodMealHaggisSlice
+  description: A heaping serving of haggis. You can faintly hear bagpipes.
+  components:
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 5
+  - type: Sprite
+    state: haggis-slice
+  - type: Item
+    size: Tiny

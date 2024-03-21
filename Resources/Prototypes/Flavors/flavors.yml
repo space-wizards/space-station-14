@@ -1028,3 +1028,8 @@
   id: skub
   flavorType: Complex
   description: flavor-complex-skub
+
+- type: flavor
+  id: scotland
+  flavorType: Complex
+  description: flavor-complex-scotland
