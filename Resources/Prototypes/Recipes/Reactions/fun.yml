@@ -200,6 +200,7 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
+
 - type: reaction
   id: Lingium
   impact: Low
