@@ -39,8 +39,15 @@ namespace Content.Server.Traitor.Uplink
         /// <param name="balance">The amount of currency on the uplink. If null, will just use the amount specified in the preset.</param>
         /// <param name="uplinkPresetId">The id of the storepreset</param>
         /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
+        /// <param name="giveDiscounts">Marker that enables discounts for uplink items.</param>
         /// <returns>Whether or not the uplink was added successfully</returns>
-        public bool AddUplink(EntityUid user, FixedPoint2? balance, string uplinkPresetId = "StorePresetUplink", EntityUid? uplinkEntity = null)
+        public bool AddUplink(
+            EntityUid user,
+            FixedPoint2? balance,
+            string uplinkPresetId = "StorePresetUplink",
+            EntityUid? uplinkEntity = null,
+            bool giveDiscounts = false
+        )
         {
             // Try to find target item if none passed
             uplinkEntity ??= FindUplinkTarget(user);
@@ -52,7 +59,9 @@ namespace Content.Server.Traitor.Uplink
             var store = EnsureComp<StoreComponent>(uplinkEntity.Value);
             _store.InitializeFromPreset(uplinkPresetId, uplinkEntity.Value, store);
             var availableListings = _store.GetAvailableListings(user, store.Listings, store.Categories, null);
-            store.Discounts = InitializeDiscounts(availableListings, new DiscountSettings());
+            store.Discounts = giveDiscounts
+                ? InitializeDiscounts(availableListings, new DiscountSettings())
+                : new List<StoreDiscountData>(0);
             store.AccountOwner = user;
             store.Balance.Clear();
 
