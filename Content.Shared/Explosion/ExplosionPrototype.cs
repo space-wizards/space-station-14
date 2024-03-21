@@ -26,6 +26,12 @@ public sealed partial class ExplosionPrototype : IPrototype
     public DamageSpecifier DamagePerIntensity = default!;
 
     /// <summary>
+    ///     Amount of firestacks to apply in addition to igniting.
+    /// </summary>
+    [DataField]
+    public float? FireStacks;
+
+    /// <summary>
     ///     This set of points, together with <see cref="_tileBreakIntensity"/> define a function that maps the
     ///     explosion intensity to a tile break chance via linear interpolation.
     /// </summary>

@@ -6,8 +6,6 @@
   - type: StorageFill
     contents:
       - id: ClothingOuterHardsuitSpatio
-      - id: OxygenTankFilled
-      - id: NitrogenTankFilled
       - id: ClothingShoesBootsMag
       - id: ClothingMaskGasExplorer
       - id: ClothingBeltUtilityFilled

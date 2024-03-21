@@ -52,7 +52,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _map = default!;
 
     private EntityQuery<TransformComponent> _transformQuery;
-    private EntityQuery<DamageableComponent> _damageQuery;
+    private EntityQuery<FlammableComponent> _flammableQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<ProjectileComponent> _projectileQuery;
 
@@ -104,7 +104,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         InitVisuals();
 
         _transformQuery = GetEntityQuery<TransformComponent>();
-        _damageQuery = GetEntityQuery<DamageableComponent>();
+        _flammableQuery = GetEntityQuery<FlammableComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _projectileQuery = GetEntityQuery<ProjectileComponent>();
     }
@@ -291,7 +291,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         if (!_prototypeManager.TryIndex<ExplosionPrototype>(typeId, out var type))
         {
-            Logger.Error($"Attempted to spawn unknown explosion prototype: {type}");
+            Log.Error($"Attempted to spawn unknown explosion prototype: {type}");
             return;
         }
 
@@ -354,7 +354,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         CameraShake(iterationIntensity.Count * 4f, pos, queued.TotalIntensity);
 
         //For whatever bloody reason, sound system requires ENTITY coordinates.
-        var mapEntityCoords = EntityCoordinates.FromMap(EntityManager, _mapManager.GetMapEntityId(pos.MapId), pos);
+        var mapEntityCoords = EntityCoordinates.FromMap(_mapManager.GetMapEntityId(pos.MapId), pos, _transformSystem, EntityManager);
 
         // play sound.
         // for the normal audio, we want everyone in pvs range

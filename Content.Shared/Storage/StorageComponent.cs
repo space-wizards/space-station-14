@@ -47,13 +47,13 @@ namespace Content.Shared.Storage
 
         // TODO: Make area insert its own component.
         [DataField]
-        public bool QuickInsert; // Can insert storables by "attacking" them with the storage entity
+        public bool QuickInsert; // Can insert storables by clicking them with the storage entity
 
         [DataField]
         public bool ClickInsert = true; // Can insert stuff by clicking the storage entity with it
 
         [DataField]
-        public bool AreaInsert;  // "Attacking" with the storage entity causes it to insert all nearby storables after a delay
+        public bool AreaInsert; // Clicking with the storage entity causes it to insert all nearby storables after a delay
 
         [DataField]
         public int AreaInsertRadius = 1;
