@@ -6,7 +6,7 @@
     edges:
     - to: cart
       steps:
-      - material: Wood
+      - material: MaterialWoodPlank
         amount: 15
         icon:
           sprite: Objects/Materials/materials.rsi
@@ -99,10 +99,8 @@
       completed:
       - !type:SpawnPrototype
         prototype: WeaponShotgunImprovised
-        amount: 1
       - !type:SpawnPrototype
         prototype: ShellShotgunUranium
-        amount: 1
       steps:
       - tool: Prying
         doAfter: 3
@@ -120,13 +118,12 @@
       completed:
       - !type:SpawnPrototype
         prototype: EnrichedUranium
-        amount: 1
       steps:
       - tool: Prying
         doAfter: 5
     - to: finished
       steps:
-      - material: SheetMetalBase
+      - material: SheetSteel
         amount: 30
         icon:
           sprite: Objects/Materials/Sheets/metal.rsi
@@ -139,7 +136,7 @@
     - to: uranium
       completed:
       - !type:SpawnPrototype
-        prototype: SheetMetalBase
+        prototype: SheetSteel
         amount: 30
       steps:
       - tool: Prying
