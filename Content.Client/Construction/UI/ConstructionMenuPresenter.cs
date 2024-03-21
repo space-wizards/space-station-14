@@ -12,6 +12,7 @@ using Robust.Client.Utility;
 using Robust.Shared.Enums;
 using Robust.Shared.Graphics;
 using Robust.Shared.Prototypes;
+using Serilog;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Construction.UI
@@ -34,6 +35,8 @@ namespace Content.Client.Construction.UI
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
         private List<ConstructionPrototype> _favoritedRecipes = [];
+        private String _selectedCategory = String.Empty;
+        private string _favoriteCatName = "construction-favorites";
         private bool CraftingAvailable
         {
             get => _uiManager.GetActiveUIWidget<GameTopMenuBar>().CraftingButton.Visible;
@@ -169,8 +172,23 @@ namespace Content.Client.Construction.UI
 
                 if (!string.IsNullOrEmpty(category) && category != "construction-category-all")
                 {
-                    if (recipe.Category != category)
+                    _selectedCategory = category;
+
+                    if (category == _favoriteCatName)
+                    {
+                        if (!_favoritedRecipes.Contains(recipe))
+                        {
+                            continue;
+                        }
+                    }
+                    else if (recipe.Category != category)
+                    {
                         continue;
+                    }
+                }
+                else
+                {
+                    _selectedCategory = String.Empty;
                 }
 
                 recipes.Add(recipe);
@@ -186,14 +204,9 @@ namespace Content.Client.Construction.UI
             // There is apparently no way to set which
         }
 
-        private void PopulateCategories()
+        private void PopulateCategories(string? selectCategory = null)
         {
             var uniqueCategories = new HashSet<string>();
-
-            // hard-coded to show all recipes
-            uniqueCategories.Add("construction-category-all");
-
-            // uniqueCategories.Add("favorites");
 
             foreach (var prototype in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
@@ -202,19 +215,28 @@ namespace Content.Client.Construction.UI
                 if (!string.IsNullOrEmpty(category))
                     uniqueCategories.Add(category);
             }
+            var sortedCategories = uniqueCategories.OrderBy(x => Loc.GetString(x)).ToList();
+            sortedCategories.Insert(0, "construction-category-all");
 
-            _constructionView.Category.Clear();
-
-            var array = uniqueCategories.OrderBy(Loc.GetString).ToArray();
-            Array.Sort(array);
-
-            for (var i = 0; i < array.Length; i++)
+            if (_favoritedRecipes.Count > 0)
             {
-                var category = array[i];
-                _constructionView.Category.AddItem(Loc.GetString(category), i);
+                sortedCategories.Insert(1, _favoriteCatName);
             }
 
-            _constructionView.Categories = array;
+            var categoriesArray = sortedCategories.ToArray();
+            _constructionView.Category.Clear();
+
+            for (var i = 0; i < categoriesArray.Length; i++)
+            {
+                _constructionView.Category.AddItem(Loc.GetString(categoriesArray[i]), i);
+
+                if (!string.IsNullOrEmpty(selectCategory) && selectCategory == categoriesArray[i])
+                {
+                    _constructionView.Category.SelectId(i);
+                }
+            }
+
+            _constructionView.Categories = categoriesArray;
         }
 
         private void PopulateInfo(ConstructionPrototype prototype)
@@ -345,7 +367,20 @@ namespace Content.Client.Construction.UI
                 _favoritedRecipes.Add(_selected);
             }
 
+            if (_selectedCategory == _favoriteCatName)
+            {
+                if (_favoritedRecipes.Count > 0)
+                {
+                    OnViewPopulateRecipes(_constructionView, (string.Empty, _favoriteCatName));
+                }
+                else
+                {
+                    OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
+                }
+            }
+
             PopulateInfo(_selected);
+            PopulateCategories(_selectedCategory);
         }
 
         private void SystemBindingChanged(ConstructionSystem? newSystem)
