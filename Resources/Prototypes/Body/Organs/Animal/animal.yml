@@ -60,6 +60,9 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
+  - type: SliceableFood
+    count: 1
+    slice: FoodLungs
 
 - type: entity
   id: OrganAnimalStomach
@@ -86,6 +89,10 @@
     groups:
     - id: Food
     - id: Drink
+  - type: SliceableFood
+    count: 1
+    slice: FoodStomach
+
 
 - type: entity
   id: OrganMouseStomach
@@ -113,6 +120,9 @@
     groups:
     - id: Alcohol
       rateModifier: 0.1
+  - type: SliceableFood
+    count: 1
+    slice: FoodLiver
 
 - type: entity
   id: OrganAnimalHeart
@@ -130,6 +140,9 @@
     - id: Medicine
     - id: Poison
     - id: Narcotic
+  - type: SliceableFood
+    count: 1
+    slice: FoodStomach
 
 - type: entity
   id: OrganAnimalKidneys
@@ -146,3 +159,6 @@
     maxReagents: 5
     metabolizerTypes: [ Animal ]
     removeEmpty: true
+  - type: SliceableFood
+    count: 1
+    slice: FoodKidneys

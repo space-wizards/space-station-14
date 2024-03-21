@@ -1510,3 +1510,50 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
+
+# Organs
+
+- type: entity
+  name: chopped liver
+  parent: FoodMeatBase
+  id: FoodLiver
+  description: What is this? Chopped liver?
+  components:
+  - type: Sprite
+    state: cutlet
+
+- type: entity
+  name: tripe
+  parent: FoodMeatBase
+  id: FoodStomach
+  description: The lining of a stomach, with all the gross stuff (relatively speaking) carefully scraped away with a knife.
+  components:
+  - type: Sprite
+    state: cutlet
+
+- type: entity
+  name: stripped heart
+  parent: FoodMeatBase
+  id: FoodHeart
+  description: On the bright side, the broken heart isn't what killed them.
+  components:
+  - type: Sprite
+    state: cutlet
+
+- type: entity
+  name: lights
+  parent: FoodMeatBase
+  id: FoodLungs
+  description: Butchered lung, named for their light weight. Makes a telltale whistling sound as it cooks.
+  components:
+  - type: Sprite
+    state: cutlet
+
+- type: entity
+  name: sliced kidney
+  parent: FoodMeatBase
+  id: FoodKidneys
+  description: Not to be confused with the bean. Smells of ammonia.
+  components:
+  - type: Sprite
+    state: cutlet
