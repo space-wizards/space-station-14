@@ -202,17 +202,13 @@
       entity: MaterialGunpowder
 
 - type: reaction
-  id: Lingium
-  impact: Low
-  quantized: true
-  minTemp: 250 
+  id: Lingium # Coding games in the hot sun, i fought the code and the code won
   reactants:
     Doxarubixadone:
       amount: 1
-    Plasma: # Consumed in reaction: steady supply of plasma required for a jug of it
-      amount: 2 
     UnstableMutagen:
+      Amount: 2
+    Plasma:
       amount: 1
-  effects:
-    products:
-     Lingium: 3
+  products:
+    Lingium: 3
