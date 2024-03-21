@@ -56,7 +56,30 @@ public sealed partial class NPCSteeringSystem
             return true;
         }
 
-        return false;
+        // TODO: Ideally for "FreeSpace" we check all entities on the tile and build flags dynamically (pathfinder refactor in future).
+        var ents = _entSetPool.Get();
+        _lookup.GetLocalEntitiesIntersecting(node.GraphUid, node.ChunkOrigin, ents, flags: LookupFlags.Static);
+        var result = true;
+
+        if (ents.Count > 0)
+        {
+            var fixtures = _fixturesQuery.GetComponent(uid);
+            var physics = _physicsQuery.GetComponent(uid);
+
+            foreach (var intersecting in ents)
+            {
+                if (!_physics.IsCurrentlyHardCollidable((uid, fixtures, physics), intersecting))
+                {
+                    continue;
+                }
+
+                result = false;
+                break;
+            }
+        }
+
+        _entSetPool.Return(ents);
+        return result;
     }
 
     /// <summary>
@@ -559,7 +582,7 @@ public sealed partial class NPCSteeringSystem
                 (mask & otherBody.CollisionLayer) == 0x0 &&
                 (layer & otherBody.CollisionMask) == 0x0 ||
                 !_factionQuery.TryGetComponent(ent, out var otherFaction) ||
-                !_npcFaction.IsEntityFriendly(uid, ent, ourFaction, otherFaction) ||
+                !_npcFaction.IsEntityFriendly((uid, ourFaction), (ent, otherFaction)) ||
                 // Use <= 0 so we ignore stationary friends in case.
                 Vector2.Dot(otherBody.LinearVelocity, ourVelocity) <= 0f)
             {
