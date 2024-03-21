@@ -165,14 +165,14 @@ public sealed partial class StoreMenu : DefaultWindow
             }
         }
 
-        var listingInStock = ListingInStock(listing, discountData);
-        if (listingInStock != GetListingPriceString(listing, discountData))
+        var (listingInStock, discount) = ListingInStock(listing, discountData);
+        if (listingInStock != GetListingPriceString(listing, discountData).Price)
         {
             listingName += " (Out of stock)";
             canBuy = false;
         }
 
-        var newListing = new StoreListingControl(listingName, listingDesc, listingInStock, canBuy, texture);
+        var newListing = new StoreListingControl(listingName, listingDesc, listingInStock, discount, canBuy, texture);
         newListing.StoreItemBuyButton.OnButtonDown += args
             => OnListingButtonPressed?.Invoke(args, listing);
 
@@ -185,7 +185,7 @@ public sealed partial class StoreMenu : DefaultWindow
     /// <param name="listing">Data for store item.</param>
     /// <param name="discountData">Discount for item, if applicable.</param>
     /// <returns></returns>
-    public string ListingInStock(ListingData listing, StoreDiscountData? discountData)
+    public (string Price, string Discount) ListingInStock(ListingData listing, StoreDiscountData? discountData)
     {
         var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
 
@@ -193,7 +193,7 @@ public sealed partial class StoreMenu : DefaultWindow
         if (restockTimeSpan > stationTime)
         {
             var timeLeftToBuy = stationTime - restockTimeSpan;
-            return timeLeftToBuy.Duration().ToString(@"mm\:ss");
+            return (timeLeftToBuy.Duration().ToString(@"mm\:ss"), string.Empty);
         }
 
         return GetListingPriceString(listing, discountData);
@@ -219,9 +219,11 @@ public sealed partial class StoreMenu : DefaultWindow
         return true;
     }
 
-    public string GetListingPriceString(ListingData listing, StoreDiscountData? discountData)
+    private (string Price, string Discount) GetListingPriceString(ListingData listing, StoreDiscountData? discountData)
     {
         var text = string.Empty;
+        var maxDiscount = 0f;
+
         if (listing.Cost.Count < 1)
             text = Loc.GetString("store-currency-free");
         else
@@ -229,15 +231,11 @@ public sealed partial class StoreMenu : DefaultWindow
             foreach (var (type, amount) in listing.Cost)
             {
                 var totalAmount = amount;
-                var discountMessage = string.Empty;
-                if (discountData?.DiscountByCurrency.TryGetValue(type, out var value) != null
-                    && value > 0)
+                if (discountData?.DiscountByCurrency.TryGetValue(type, out var discountPercent) != null
+                    && discountPercent > 0)
                 {
-                    totalAmount = Math.Round(totalAmount.Value * (1 - value) / 100);
-                    discountMessage = Loc.GetString(
-                        "store-discount-display",
-                        ("amount", (value * 100).ToString("####"))
-                    );
+                    totalAmount = Math.Round(totalAmount.Value * (1 - discountPercent) / 100);
+                    maxDiscount = Math.Max(maxDiscount, discountPercent);
                 }
 
                 var currency = _prototypeManager.Index<CurrencyPrototype>(type);
@@ -245,12 +243,20 @@ public sealed partial class StoreMenu : DefaultWindow
                             "store-ui-price-display",
                             ("amount", totalAmount),
                             ("currency", Loc.GetString(currency.DisplayName, ("amount", totalAmount)))
-                        )
-                        + discountMessage;
+                        );
             }
         }
 
-        return text.TrimEnd();
+        var discountMessage = string.Empty;
+        if (maxDiscount > 0)
+        {
+            discountMessage = Loc.GetString(
+                "store-ui-discount-display",
+                ("amount", (maxDiscount * 100).ToString("####"))
+            );
+        }
+
+        return (text.TrimEnd(), discountMessage);
     }
 
     private void ClearListings()

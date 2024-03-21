@@ -9,8 +9,14 @@ namespace Content.Client.Store.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class StoreListingControl : Control
 {
-    public StoreListingControl(string itemName, string itemDescription,
-        string price, bool canBuy, Texture? texture = null)
+    public StoreListingControl(
+        string itemName,
+        string itemDescription,
+        string price,
+        string discountText,
+        bool canBuy,
+        Texture? texture = null
+    )
     {
         RobustXamlLoader.Load(this);
 
@@ -19,6 +25,7 @@ public sealed partial class StoreListingControl : Control
 
         StoreItemBuyButton.Text = price;
         StoreItemBuyButton.Disabled = !canBuy;
+        DiscountSubText.Text = discountText;
 
         StoreItemTexture.Texture = texture;
     }
