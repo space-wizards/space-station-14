@@ -32,3 +32,8 @@
   id: Parp
   files:
   - /Audio/Effects/Emotes/parp1.ogg
+
+- type: soundCollection
+  id: WarHorn
+  files:
+  - /Audio/Items/warhorn.ogg
