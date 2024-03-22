@@ -173,6 +173,8 @@
     bodyIconState: body-overlay
     startCuffSound:
       path: /Audio/Misc/honkalarm.ogg
+      params:
+        volume: -10
     endCuffSound:
       path: /Audio/Items/bikehorn.ogg
     startUncuffSound:

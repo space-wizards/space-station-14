@@ -46,7 +46,8 @@ namespace Content.Server.Construction.Conditions
             if (transform.GridUid == null)
                 return false;
 
-            var indices = transform.Coordinates.ToVector2i(entityManager, IoCManager.Resolve<IMapManager>());
+            var transformSys = entityManager.System<SharedTransformSystem>();
+            var indices = transform.Coordinates.ToVector2i(entityManager, IoCManager.Resolve<IMapManager>(), transformSys);
             var lookup = entityManager.EntitySysManager.GetEntitySystem<EntityLookupSystem>();
             var entities = indices.GetEntitiesInTile(transform.GridUid.Value, LookupFlags.Approximate | LookupFlags.Static, lookup);
 

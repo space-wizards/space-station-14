@@ -1375,6 +1375,16 @@
   - UplinkPointless
 
 - type: listing
+  id: UplinkWarhorn
+  name: uplink-warhorn-name
+  description: uplink-warhorn-desc
+  productEntity: SyndieWarhorn
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkPointless
+
+- type: listing
   id: UplinkCostumePyjama
   name: uplink-costume-pyjama-name
   description: uplink-costume-pyjama-desc

@@ -201,13 +201,18 @@ public sealed class PullingSystem : EntitySystem
             }
         }
 
+        var oldPuller = pullableComp.Puller;
+        pullableComp.PullJointId = null;
+        pullableComp.Puller = null;
+        Dirty(pullableUid, pullableComp);
+
         // No more joints with puller -> force stop pull.
-        if (TryComp<PullerComponent>(pullableComp.Puller, out var pullerComp))
+        if (TryComp<PullerComponent>(oldPuller, out var pullerComp))
         {
-            var pullerUid = pullableComp.Puller.Value;
+            var pullerUid = oldPuller.Value;
             _alertsSystem.ClearAlert(pullerUid, AlertType.Pulling);
             pullerComp.Pulling = null;
-            Dirty(pullableComp.Puller.Value, pullerComp);
+            Dirty(oldPuller.Value, pullerComp);
 
             // Messaging
             var message = new PullStoppedMessage(pullerUid, pullableUid);
@@ -218,9 +223,6 @@ public sealed class PullingSystem : EntitySystem
             RaiseLocalEvent(pullableUid, message);
         }
 
-        pullableComp.PullJointId = null;
-        pullableComp.Puller = null;
-        Dirty(pullableUid, pullableComp);
 
         _alertsSystem.ClearAlert(pullableUid, AlertType.Pulled);
     }
