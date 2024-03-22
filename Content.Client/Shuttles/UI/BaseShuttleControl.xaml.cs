@@ -66,11 +66,11 @@ public partial class BaseShuttleControl : MapGridControl
 
     protected void DrawData(DrawingHandleScreen handle, string text)
     {
-        var coordsDimensions = handle.GetDimensions(Font, text, UIScale);
+        var coordsDimensions = handle.GetDimensions(Font, text, 1f);
         const float coordsMargins = 5f;
 
         handle.DrawString(Font,
-            new Vector2(coordsMargins, Height) - new Vector2(0f, coordsDimensions.Y + coordsMargins),
+            new Vector2(coordsMargins, PixelHeight) - new Vector2(0f, coordsDimensions.Y + coordsMargins),
             text,
             Color.FromSrgb(IFFComponent.SelfColor));
     }
