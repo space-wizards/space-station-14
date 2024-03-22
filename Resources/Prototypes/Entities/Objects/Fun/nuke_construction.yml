@@ -20,9 +20,9 @@
         layer:
         - HalfWallLayer
   - type: Construction
-    graph: NukeCraft
+    graph: ImprovisedNukeCraft
     node: cart
-    targetNode: painted
+    defaultTarget: painted
 
 - type: entity
   parent: BaseStructure
@@ -35,9 +35,9 @@
     state: nukecraft_2
     noRot: true
   - type: Construction
-    graph: NukeCraft
+    graph: ImprovisedNukeCraft
     node: insides
-    targetNode: painted
+    defaultTarget: painted
 
 - type: entity
   parent: BaseStructure
@@ -50,9 +50,9 @@
     state: nukecraft_3
     noRot: true
   - type: Construction
-    graph: NukeCraft
+    graph: ImprovisedNukeCraft
     node: pipe
-    targetNode: painted
+    defaultTarget: painted
 
 - type: entity
   parent: BaseStructure
@@ -65,9 +65,9 @@
     state: nukecraft_3
     noRot: true
   - type: Construction
-    graph: NukeCraft
+    graph: ImprovisedNukeCraft
     node: gun
-    targetNode: painted
+    defaultTarget: painted
 
 - type: entity
   parent: BaseStructure
@@ -80,9 +80,9 @@
     state: nukecraft_3
     noRot: true
   - type: Construction
-    graph: NukeCraft
+    graph: ImprovisedNukeCraft
     node: bullet
-    targetNode: painted
+    defaultTarget: painted
 
 - type: entity
   parent: BaseStructure
@@ -108,9 +108,9 @@
   - type: RadiationSource
     intensity: 1
   - type: Construction
-    graph: NukeCraft
+    graph: ImprovisedNukeCraft
     node: uranium
-    targetNode: painted
+    defaultTarget: painted
 
 - type: entity
   parent: BaseStructure
@@ -141,9 +141,9 @@
         layer:
         - HalfWallLayer
   - type: Construction
-    graph: NukeCraft
+    graph: ImprovisedNukeCraft
     node: finished
-    targetNode: painted
+    defaultTarget: painted
 
 - type: entity
   parent: BaseStructure
@@ -155,5 +155,5 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_6
   - type: Construction
-    graph: NukeCraft
-    node: painted
+    graph: ImprovisedNukeCraft
+    defaultTarget: painted

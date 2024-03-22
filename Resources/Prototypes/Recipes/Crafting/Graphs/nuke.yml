@@ -1,12 +1,13 @@
 - type: constructionGraph
-  id: NukeCraft
+  id: ImprovisedNukeCraft
   start: start
   graph:
   - node: start
     edges:
     - to: cart
       steps:
-      - material: MaterialWoodPlank
+      - material: WoodPlank
+        name: wood
         amount: 15
         icon:
           sprite: Objects/Materials/materials.rsi
@@ -28,6 +29,7 @@
       steps:
       - material: MetalRod
         amount: 8
+        name: metal rods
         icon:
           sprite: Objects/Materials/parts.rsi
           state: rods_2
@@ -46,6 +48,7 @@
     - to: pipe
       steps:
       - tag: Pipe
+        name: metal pipe
         icon:
           sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeStraight
@@ -64,6 +67,7 @@
     - to: gun
       steps:
       - tag: WeaponShotgunImprovised
+        name: improvised shotgun
         icon:
           sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
         doAfter: 2
@@ -81,6 +85,7 @@
     - to: bullet
       steps:
       - tag: ShellShotgunUranium
+        name: uranium shotgun shell
         icon:
           sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgunshell.rsi
           layers:
@@ -102,6 +107,7 @@
     - to: uranium
       steps:
       - tag: EnrichedUranium
+        name: enriched uranium
         icon:
           sprite: Objects/Fun/enricheduranium.rsi
         doAfter: 5
@@ -119,6 +125,7 @@
       steps:
       - material: SheetSteel
         amount: 30
+        name: steel
         icon:
           sprite: Objects/Materials/Sheets/metal.rsi
           state: steel_3
@@ -138,6 +145,7 @@
       steps:
       - tag: Crayon
         amount: 1
+        name: a crayon
         icon:
           sprite: Objects/Fun/crayons.rsi
           state: yellow
