@@ -124,7 +124,8 @@ namespace Content.Client.Construction.UI
             TargetDesc.SetMessage(description);
             TargetTexture.Texture = iconTexture;
             FavoriteButton.Visible = true;
-            FavoriteButton.Text = isFavorite ? "construction-add-favorite-button" : "construction-remove-from-favorite-button";
+            FavoriteButton.Text = Loc.GetString(
+                            isFavorite ? "construction-add-favorite-button" : "construction-remove-from-favorite-button");
         }
 
         public void ClearRecipeInfo()

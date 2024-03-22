@@ -36,7 +36,7 @@ namespace Content.Client.Construction.UI
         private ConstructionPrototype? _selected;
         private List<ConstructionPrototype> _favoritedRecipes = [];
         private string _selectedCategory = string.Empty;
-        private string _favoriteCatName = "construction-favorites";
+        private string _favoriteCatName = "construction-category-favorites";
         private string _forAllCategoryName = "construction-category-all";
         private bool CraftingAvailable
         {
