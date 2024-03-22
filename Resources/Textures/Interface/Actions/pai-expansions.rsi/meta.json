@@ -8,7 +8,15 @@
   },
   "states": [
     {
-      "name": "power_monitor"
+      "name": "power_monitor",
+      "delays": [
+        [
+          0.6,
+          0.6,
+          0.6,
+          0.6
+        ]
+      ]
     }
   ]
 }
