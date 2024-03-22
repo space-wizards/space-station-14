@@ -69,7 +69,7 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
-    Drinks:
+    Drink:
       effects:
         - !type:AdjustReagent
           reagent: Coffein
@@ -90,7 +90,7 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
-    Drinks:
+    Drink:
       effects:
         - !type:AdjustReagent
           reagent: Coffein
@@ -130,7 +130,7 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
-    Drinks:
+    Drink:
       effects:
         - !type:AdjustReagent
           reagent: Coffein
@@ -151,7 +151,7 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
-    Drinks:
+    Drink:
       effects:
         - !type:AdjustReagent
           reagent: Coffein
