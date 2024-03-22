@@ -9,6 +9,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.LineEdit;
+using System.Text.RegularExpressions;
 
 namespace Content.Client.Administration.UI.Logs;
 
@@ -277,6 +278,37 @@ public sealed partial class AdminLogsControl : Control
         return SelectedPlayers.Overlaps(label.Log.Players);
     }
 
+
+    /// <summary>
+    /// Filters out logs that don't explicitly contain the search text in the chat content. We only log the content of the player chat input and nothing else.
+    /// </summary>
+    /// <remarks>
+    /// This method is called if the Chat is the only selected log type.
+    /// </remarks>
+    private bool LogMatchesChatContent(AdminLogLabel label)
+    {
+        if (label.Log.Message == null)
+            return true;
+
+        // maybe best not to hardcode, fix later.
+        string pattern = @"from\s*(?<Name>[^,]+),.*content\((?<Content>[^)]+)\)";
+
+        Match match = Regex.Match(label.Log.Message, pattern, RegexOptions.IgnoreCase);
+
+        if (match.Success)
+        {
+            string playerName = match.Groups["Name"].Value.Trim();
+            string content = match.Groups["Content"].Value.Trim();
+
+            bool nameContainsSearchText = playerName.Contains(Search, StringComparison.OrdinalIgnoreCase);
+            bool contentContainsSearchText = content.Contains(Search, StringComparison.OrdinalIgnoreCase);
+
+            return !(nameContainsSearchText && !contentContainsSearchText);
+        }
+
+        return true;
+    }
+
     private bool ShouldShowLog(AdminLogLabel label)
     {
         // Check log type
@@ -291,9 +323,17 @@ public sealed partial class AdminLogsControl : Control
         if (!SelectedImpacts.Contains(label.Log.Impact))
             return false;
 
+        // Filter chat only content
+        if (SelectedTypes.Count == 1 && label.Log.Type == LogType.Chat)
+        {
+            if (!LogMatchesChatContent(label))
+                return false;
+        }
         // Check search
-        if (!label.Log.Message.Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
+        else if (!label.Log.Message.Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
+        {
             return false;
+        }
 
         return true;
     }
