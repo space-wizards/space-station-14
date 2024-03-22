@@ -89,6 +89,7 @@ namespace Content.Client.Construction.UI
             Category.OnItemSelected += obj =>
             {
                 Category.SelectId(obj.Id);
+                SearchBar.SetText(string.Empty);
                 PopulateRecipes?.Invoke(this, (SearchBar.Text, Categories[obj.Id]));
             };
 
