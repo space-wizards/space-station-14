@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Nanotrasen has started installing intercoms with unscrewable panels for
-      wire maintenance.
-    type: Add
-  id: 5707
-  time: '2024-01-14T05:37:28.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23984
 - author: Whisper
   changes:
   - message: Cerberus now has hostile AI
@@ -3804,3 +3796,10 @@
   id: 6206
   time: '2024-03-22T08:20:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26318
+- author: BlitzTheSquishy
+  changes:
+  - message: Irish Coffee recipe adjusted to be more logical
+    type: Tweak
+  id: 6207
+  time: '2024-03-22T08:23:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26327
