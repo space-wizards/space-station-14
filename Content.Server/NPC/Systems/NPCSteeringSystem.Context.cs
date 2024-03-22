@@ -582,7 +582,7 @@ public sealed partial class NPCSteeringSystem
                 (mask & otherBody.CollisionLayer) == 0x0 &&
                 (layer & otherBody.CollisionMask) == 0x0 ||
                 !_factionQuery.TryGetComponent(ent, out var otherFaction) ||
-                !_npcFaction.IsEntityFriendly(uid, ent, ourFaction, otherFaction) ||
+                !_npcFaction.IsEntityFriendly((uid, ourFaction), (ent, otherFaction)) ||
                 // Use <= 0 so we ignore stationary friends in case.
                 Vector2.Dot(otherBody.LinearVelocity, ourVelocity) <= 0f)
             {

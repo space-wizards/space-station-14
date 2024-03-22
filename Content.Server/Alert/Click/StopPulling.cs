@@ -1,6 +1,6 @@
 using Content.Shared.Alert;
-using Content.Shared.Pulling;
-using Content.Shared.Pulling.Components;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using JetBrains.Annotations;
 
 namespace Content.Server.Alert.Click
@@ -15,12 +15,12 @@ namespace Content.Server.Alert.Click
         public void AlertClicked(EntityUid player)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
+            var ps = entManager.System<PullingSystem>();
 
-            var ps = entManager.System<SharedPullingSystem>();
-            var playerTarget = ps.GetPulled(player);
-            if (playerTarget != default && entManager.TryGetComponent(playerTarget, out SharedPullableComponent? playerPullable))
+            if (entManager.TryGetComponent(player, out PullerComponent? puller) &&
+                entManager.TryGetComponent(puller.Pulling, out PullableComponent? pullableComp))
             {
-                ps.TryStopPull(playerPullable);
+                ps.TryStopPull(puller.Pulling.Value, pullableComp, user: player);
             }
         }
     }

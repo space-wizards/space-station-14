@@ -12,13 +12,14 @@
 - type: alarmThreshold
   id: stationPressure
   upperBound: !type:AlarmThresholdSetting
-    threshold: 550 # as defined in Atmospherics.cs
+    threshold: 550 # HazardHighPressure from Atmospherics.cs
   lowerBound: !type:AlarmThresholdSetting
-    threshold: 20 # as defined in Atmospherics.cs
+    # Actual low pressure damage threshold is at 20 kPa, but below ~85 kPa you can't breathe due to lack of oxygen.
+    threshold: 85
   upperWarnAround: !type:AlarmThresholdSetting
-    threshold: 0.7
+    threshold: 0.7 # 385 kPa, WarningHighPressure from Atmospherics.cs
   lowerWarnAround: !type:AlarmThresholdSetting
-    threshold: 2.5
+    threshold: 1.05 # ~90 kPa
 
 # a reminder that all of these are percentages (where 1 is 100%),
 # so 0.01 is 1%,

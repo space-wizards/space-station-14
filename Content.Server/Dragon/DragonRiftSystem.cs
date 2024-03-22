@@ -67,7 +67,7 @@ public sealed class DragonRiftSystem : EntitySystem
             if (comp.State < DragonRiftState.AlmostFinished && comp.Accumulator > comp.MaxAccumulator / 2f)
             {
                 comp.State = DragonRiftState.AlmostFinished;
-                Dirty(comp);
+                Dirty(uid, comp);
 
                 var location = xform.LocalPosition;
                 _chat.DispatchGlobalAnnouncement(Loc.GetString("carp-rift-warning", ("location", location)), playSound: false, colorOverride: Color.Red);
