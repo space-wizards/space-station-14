@@ -33,10 +33,32 @@
   name: power monitoring computer board
   description: A computer printed circuit board for a power monitoring computer.
   components:
-    - type: Sprite
-      state: cpu_engineering
-    - type: ComputerBoard
-      prototype: ComputerPowerMonitoring
+  - type: Sprite
+    state: cpu_engineering
+  - type: ComputerBoard
+    prototype: ComputerPowerMonitoring
+  - type: PAIExpansionCard
+    interface:
+      key: enum.PowerMonitoringConsoleUiKey.Key
+      type: PowerMonitoringConsoleBoundUserInterface
+    action: ActionPAIOpenPowerMonitor
+    components:
+    - type: PowerMonitoringConsole
+    - type: PowerMonitoringCableNetworks
+
+- type: entity
+  noSpawn: true
+  parent: ActionPAIBase
+  id: ActionPAIOpenPowerMonitor
+  name: Open Power Monitor
+  description: "View the station's power levels."
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Interface/Actions/pai-expansions.rsi
+      state: power_monitor
+    event: !type:OpenUiActionEvent
+      key: enum.PowerMonitoringConsoleUiKey.Key
 
 - type: entity
   parent: BaseComputerCircuitboard
