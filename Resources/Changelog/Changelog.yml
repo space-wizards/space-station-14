@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Revolutionaries that are deconverted by headrevs dying get a window shown
-      explaining that they are no longer revs, to help with tunnel vision.
-    type: Tweak
-  id: 5702
-  time: '2024-01-14T03:20:35.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23315
 - author: tday
   changes:
   - message: Add admin logs for thermomachines.
@@ -3809,3 +3801,10 @@
   id: 6201
   time: '2024-03-21T17:42:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26309
+- author: Plykiya
+  changes:
+  - message: Door remote UI now shows the mode it is in.
+    type: Add
+  id: 6202
+  time: '2024-03-22T00:19:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26162
