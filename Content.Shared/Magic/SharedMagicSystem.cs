@@ -91,9 +91,13 @@ public abstract class SharedMagicSystem : EntitySystem
         // Would need a homing projectile ECS
 
         // TODO: Jaunt (should be its own ECS)
+        // Instant action
+        //   When clicked, disappear/reappear
+        //   option to restrict to tiles
+        //   option for requiring entry/exit (blood jaunt)
 
         // TODO: Touch spell
-        // TODO: Wouldn't this just be a touch action ECS?
+        //   Wouldn't this just be a touch action ECS?
         //  1 - When toggled on, show in hand
         //  2 - Block hand when toggled on
         //      - Require free hand
