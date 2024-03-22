@@ -1044,10 +1044,13 @@
   description: Abra Kadabra!
   components:
   - type: Pda
-    id: PirateIDCard
+    id: WizardIDCard
     state: pda-wizard
   - type: Icon
     state: pda-wizard
+  - type: PdaBorderColor
+    borderColor: "#46008C"
+    accentVColor: "#01043B"
 
 - type: entity
   parent: BaseMedicalPDA

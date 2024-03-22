@@ -720,6 +720,7 @@
   components:
   - type: Sprite
     layers:
+    - state: default
     - state: idwizard
   - type: Access
     tags:
