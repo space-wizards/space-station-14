@@ -120,6 +120,12 @@
         - ReagentId: WeldingFuel
           Quantity: 250
         maxVol: 250
+    materialComposition:
+      Steel: 400
+      Glass: 100
+  - type: StaticPrice
+    price: 80
+
 
 - type: entity
   name: advanced industrial welding tool
