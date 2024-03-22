@@ -162,6 +162,7 @@
       - WeaponCapacitorRechargerCircuitboard
       - HandheldStationMap
       - ClothingHeadHatWelding
+      - WelderIndustrial
   - type: EmagLatheRecipes
     emagStaticRecipes:
        - CartridgePistol
