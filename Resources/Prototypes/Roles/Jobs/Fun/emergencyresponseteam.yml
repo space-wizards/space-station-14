@@ -8,7 +8,7 @@
   startingGear: ERTLeaderGearEVA
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-centcom
-  canBeAntag: false
+  canBeAntag: true
   accessGroups:
   - AllAccess
   access:
@@ -76,7 +76,7 @@
   startingGear: ERTEngineerGearEVA
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-centcom
-  canBeAntag: false
+  canBeAntag: true
   accessGroups:
   - AllAccess
   access:
@@ -125,7 +125,7 @@
   startingGear: ERTEngineerGearEVA
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-centcom
-  canBeAntag: false
+  canBeAntag: true
   accessGroups:
   - AllAccess
   access:
@@ -193,7 +193,7 @@
   startingGear: ERTMedicalGearEVA
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-centcom
-  canBeAntag: false
+  canBeAntag: true
   accessGroups:
   - AllAccess
   access:
@@ -240,7 +240,7 @@
   startingGear: ERTJanitorGearEVA
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-centcom
-  canBeAntag: false
+  canBeAntag: true
   accessGroups:
   - AllAccess
   access:
