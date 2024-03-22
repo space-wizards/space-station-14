@@ -29,8 +29,7 @@ atmos-alerts-window-no-active-alerts = [font size=16][color=white]No active aler
 atmos-alerts-window-no-data-available = No data available
 atmos-alerts-window-alerts-being-silenced = Silencing alerts...
 
-atmos-alerts-window-toggle-overlays = Toggle alarm overlays
-atmos-alerts-window-show-inactive-alarms = Inactive alarms
+atmos-alerts-window-toggle-overlays = Toggle alarm displays
 
 atmos-alerts-window-flavor-left = Contact an atmospheric technician for assistance
 atmos-alerts-window-flavor-right = v1.8
