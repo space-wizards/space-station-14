@@ -8,17 +8,6 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_1
     noRot: true
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.45
-        density: 20 #It has wheels and bluespace tech to make it lighter.
-        mask:
-        - MachineMask
-        layer:
-        - HalfWallLayer
   - type: Construction
     graph: ImprovisedNukeCraft
     node: cart
@@ -94,17 +83,6 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_4
     noRot: true
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.45
-        density: 60 #It has wheels and bluespace tech to make it lighter.
-        mask:
-        - MachineMask
-        layer:
-        - HalfWallLayer
   - type: RadiationSource
     intensity: 1
   - type: Construction
@@ -129,17 +107,6 @@
     totalIntensity: 300
   - type: StaticPrice
     price: 50000 # war profits
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.45
-        density: 80 #It has wheels and bluespace tech to make it lighter.
-        mask:
-        - MachineMask
-        layer:
-        - HalfWallLayer
   - type: Construction
     graph: ImprovisedNukeCraft
     node: finished
@@ -156,4 +123,4 @@
     state: nukecraft_6
   - type: Construction
     graph: ImprovisedNukeCraft
-    defaultTarget: painted
+    node: painted
