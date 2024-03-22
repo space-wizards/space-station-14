@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Map labels now adjust to zoom level and UI scale, retaining a consistent
-      look.
-    type: Fix
-  - message: Map labels now have better contrast over walls.
-    type: Tweak
-  - message: Examining (shift-click) the map screen now toggles map labels on/off.
-    type: Tweak
-  id: 5705
-  time: '2024-01-14T05:08:43.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23777
 - author: Ilya246
   changes:
   - message: Nuclear operatives may now buy syndicate bombs without waiting 30 minutes.
@@ -3808,3 +3796,10 @@
   id: 6204
   time: '2024-03-22T01:59:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26312
+- author: lzk228
+  changes:
+  - message: Snoring is now a trait in character preference menu.
+    type: Tweak
+  id: 6205
+  time: '2024-03-22T07:00:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26322
