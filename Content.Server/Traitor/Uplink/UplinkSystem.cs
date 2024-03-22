@@ -78,7 +78,7 @@ namespace Content.Server.Traitor.Uplink
 
         private List<StoreDiscountData> InitializeDiscounts(IEnumerable<ListingData> storeComponent, DiscountSettings settings)
         {
-            var listingsByDiscountCategory = storeComponent.Where(x => x.DiscountOptions.Count > 0)
+            var listingsByDiscountCategory = storeComponent.Where(x => x.DiscountOptions?.Count > 0)
                                                            .GroupBy(x => x.DiscountCategory)
                                                            .ToDictionary(
                                                                x => x.Key,
