@@ -1235,7 +1235,7 @@
     FoodHeart: 1
     FoodLiver: 1
     FoodLungs: 1
-    FoodOnion: 1
+    FoodOnion: 2
 
 
 - type: microwaveMealRecipe
