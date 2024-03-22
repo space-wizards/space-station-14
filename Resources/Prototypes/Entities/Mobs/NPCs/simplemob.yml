@@ -3,6 +3,7 @@
   parent:
   - BaseMob
   - MobDamageable
+  - MobDamageThresholds
   - MobAtmosExposed
   id: BaseSimpleMob
   suffix: AI

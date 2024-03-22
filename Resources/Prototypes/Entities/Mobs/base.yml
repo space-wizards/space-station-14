@@ -44,13 +44,46 @@
   - type: Polymorphable
   - type: StatusIcon
 
+- type: entity
+  save: false
+  id: MobPain
+  abstract: true
+  components:
+  - type: NervousSystem
+
+- type: entity
+  save: false
+  id: MobConsciousness
+  abstract: true
+  components:
+  - type: Consciousness
+    threshold: 30
+
+- type: entity
+  save: false
+  id: MobDamageThresholds
+  abstract: true
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      200: Dead
+
+- type: entity
+  save: false
+  id: MobWoundable
+  abstract: true
+  components:
+  - type: MedicalData #TODO: move this to it's own prototype category
+    #TODO: Root woundable
+
 # Used for mobs that have health and can take damage.
 - type: entity
   save: false
   id: MobDamageable
   abstract: true
   components:
-  - type: MedicalData #TODO: move this to it's own prototype category
   - type: Damageable
     damageContainer: Biological
   - type: Destructible
@@ -64,11 +97,6 @@
   - type: RadiationReceiver
   - type: Stamina
   - type: MobState
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
   - type: MobStateActions
     actions:
       Critical:

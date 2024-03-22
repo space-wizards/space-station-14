@@ -90,6 +90,7 @@ public sealed partial class WoundSystem
         if (woundable.Comp.Health < 0)
         {
             woundable.Comp.Integrity += woundable.Comp.Health;
+            woundable.Comp.Health = 0;
         }
         if (ShouldGibWoundable(woundable))
             return;
