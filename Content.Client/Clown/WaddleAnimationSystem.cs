@@ -57,8 +57,8 @@ public sealed class WaddleAnimationSystem : EntitySystem
         }
 
         var tumbleIntensity = component.LastStep ? 360 - component.TumbleIntensity : component.TumbleIntensity;
-        var len = mover.Sprinting ? 0.333f : 0.666f;
-        
+        var len = mover.Sprinting ? component.AnimationLength/2 : component.AnimationLength;
+
         component.LastStep = !component.LastStep;
 
         var anim = new Animation()

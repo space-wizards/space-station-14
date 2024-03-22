@@ -3,7 +3,7 @@ using Content.Shared.Inventory.Events;
 
 namespace Content.Client.Clown;
 
-public sealed class ClownShoesSystem : EntitySystem
+public sealed class WaddleSystem : EntitySystem
 {
     public override void Initialize()
     {
