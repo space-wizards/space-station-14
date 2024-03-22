@@ -32,7 +32,7 @@
   components:
   - type: RadioSpeaker
     channels:
-    - Handheld
+    - OldBroadcast
   - type: Speech
     speechVerb: Robotic
   - type: Sprite
@@ -55,7 +55,7 @@
   id: OldRadioMicrophone
   components:
   - type: RadioMicrophone
-    broadcastChannel: Handheld
+    broadcastChannel: OldBroadcast
   - type: Sprite
     sprite: Objects/Devices/broadcast_microphone.rsi
     state: icon
