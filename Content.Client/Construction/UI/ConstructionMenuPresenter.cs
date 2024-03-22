@@ -12,7 +12,6 @@ using Robust.Client.Utility;
 using Robust.Shared.Enums;
 using Robust.Shared.Graphics;
 using Robust.Shared.Prototypes;
-using Serilog;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Construction.UI
@@ -218,10 +217,12 @@ namespace Content.Client.Construction.UI
                     uniqueCategories.Add(category);
             }
             var sortedCategories = uniqueCategories.OrderBy(x => Loc.GetString(x)).ToList();
+            // hard-coded to show all recipes
             sortedCategories.Insert(0, _forAllCategoryName);
 
             if (_favoritedRecipes.Count > 0)
             {
+                // hard-coded to show favorites if it need
                 sortedCategories.Insert(1, _favoriteCatName);
             }
 
