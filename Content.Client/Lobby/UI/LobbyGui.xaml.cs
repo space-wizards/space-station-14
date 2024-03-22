@@ -1,5 +1,6 @@
 using Content.Client.Chat.UI;
 using Content.Client.Info;
+using Content.Client.Message;
 using Content.Client.Preferences;
 using Content.Client.Preferences.UI;
 using Content.Client.UserInterface.Screens;
@@ -32,6 +33,8 @@ namespace Content.Client.Lobby.UI
             IoCManager.InjectDependencies(this);
             SetAnchorPreset(MainContainer, LayoutPreset.Wide);
             SetAnchorPreset(Background, LayoutPreset.Wide);
+
+            LobbySong.SetMarkup(Loc.GetString("lobby-state-song-no-song-text"));
 
             LeaveButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");
             OptionsButton.OnPressed += _ => _userInterfaceManager.GetUIController<OptionsUIController>().ToggleWindow();

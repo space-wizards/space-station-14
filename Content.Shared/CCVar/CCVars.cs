@@ -369,6 +369,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> SecretWeightPrototype =
             CVarDef.Create("game.secret_weight_prototype", "Secret", CVar.SERVERONLY);
 
+        /// <summary>
+        /// The id of the sound collection to randomly choose a sound from and play when the round ends.
+        /// </summary>
+        public static readonly CVarDef<string> RoundEndSoundCollection =
+            CVarDef.Create("game.round_end_sound_collection", "RoundEnd", CVar.SERVERONLY);
+
         /*
          * Discord
          */
@@ -1571,6 +1577,13 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> ScreenShakeIntensity =
             CVarDef.Create("accessibility.screen_shake_intensity", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        /// A generic toggle for various visual effects that are color sensitive.
+        /// As of 2/16/24, only applies to progress bar colors.
+        /// </summary>
+        public static readonly CVarDef<bool> AccessibilityColorblindFriendly =
+            CVarDef.Create("accessibility.colorblind_friendly", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*
          * CHAT
