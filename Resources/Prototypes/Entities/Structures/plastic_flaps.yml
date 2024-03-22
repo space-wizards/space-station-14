@@ -90,6 +90,8 @@
   - type: Construction
     graph: PlasticFlapsGraph
     node: airtightFlaps
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   id: PlasticFlapsAirtightOpaque
@@ -111,3 +113,5 @@
   - type: Construction
     graph: PlasticFlapsGraph
     node: airtightopaqueFlaps
+  - type: StaticPrice
+    price: 100
