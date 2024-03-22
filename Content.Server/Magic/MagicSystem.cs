@@ -24,6 +24,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Spawners;
+using Content.Server.Emp;
+using System.Diagnostics;
 
 namespace Content.Server.Magic;
 
@@ -47,6 +49,8 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly EmpSystem _Emp = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
 
     public override void Initialize()
     {
@@ -63,6 +67,7 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
         SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
         SubscribeLocalEvent<ChangeComponentsSpellEvent>(OnChangeComponentsSpell);
+        SubscribeLocalEvent<EMPSpellEvent>(OnEMPSpell);
     }
 
     private void OnDoAfter(EntityUid uid, SpellbookComponent component, DoAfterEvent args)
@@ -86,6 +91,10 @@ public sealed class MagicSystem : EntitySystem
         }
 
         component.SpellActions.Clear();
+        if (component.DeleteAfterLearn)
+        {
+            _entityManager.DeleteEntity(uid);
+        }
     }
 
     private void OnInit(EntityUid uid, SpellbookComponent component, MapInitEvent args)
@@ -103,6 +112,7 @@ public sealed class MagicSystem : EntitySystem
             component.Spells.Add(spell.Value);
         }
     }
+
 
     private void OnUse(EntityUid uid, SpellbookComponent component, UseInHandEvent args)
     {
@@ -151,6 +161,24 @@ public sealed class MagicSystem : EntitySystem
 
         Speak(args);
         args.Handled = true;
+    }
+
+    private void OnEMPSpell(EMPSpellEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+        Speak(args);
+
+        //Get the position of the player
+        var transform = Transform(args.Performer);
+        var coords = transform.MapPosition;
+
+        _audio.PlayPvs(args.EmpSound, args.Performer, AudioParams.Default.WithVolume(args.EmpVolume));
+
+        _Emp.EmpPulse(coords, 4f, 50000, 10f);
+        
     }
 
     private void OnProjectileSpell(ProjectileSpellEvent ev)

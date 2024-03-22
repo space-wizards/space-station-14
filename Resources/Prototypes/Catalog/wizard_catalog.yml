@@ -1,0 +1,119 @@
+- type: listing
+  id: WizardSpawnCarpList
+  name: Spawn Magicarp
+  description: TBA
+  productAction: ActionSpawnMagicarpSpell
+  cost:
+    Magipoints: 2
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WizardForcewallList
+  name: Forcewall
+  description: TBA
+  productAction: ActionForceWall
+  cost:
+     Magipoints: 1
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WizardBlinkList
+  name: Blink
+  description: TBA
+  productAction: ActionBlink
+  cost:
+    Magipoints: 2
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WizardSmiteList
+  name: Smite
+  description: TBA
+  productAction: ActionSmite
+  cost:
+    Magipoints: 3
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WizardKnockList
+  name: Knock
+  description: TBA
+  productAction: ActionKnock
+  cost:
+    Magipoints: 2
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WizardFireballList
+  name: Fireball
+  description: TBA
+  productAction: ActionFireball
+  cost:
+    Magipoints: 2
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WizardMagicMissileList
+  name: Magic Missile
+  description: TBA
+  productAction: ActionMagicMissile
+  cost:
+    Magipoints: 1
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+
+- type: listing
+  id: WizardEmpList
+  name: Disable Technology
+  description: TBA
+  productAction: ActionSpellEMP
+  cost:
+    Magipoints: 1
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WizardTeslaList
+  name: Tesla Ball
+  description: TBA
+  productAction: ActionTeslaBall
+  cost:
+    Magipoints: 2
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+

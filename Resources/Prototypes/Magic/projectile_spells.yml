@@ -45,3 +45,45 @@
       prototype: ProjectileFireball
       posData: !type:TargetCasterPos
       speech: action-speech-spell-fireball
+
+- type: entity
+  id: ActionMagicMissile
+  name: Magic Missile
+  description: Fires an orb that stuns on hit towards the clicked location.
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 15
+    itemIconStyle: BigAction
+    checkCanAccess: false
+    range: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/fireball.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: fireball
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileMagicMissile
+      posData: !type:TargetCasterPos
+      speech: action-speech-spell-magicmissile
+
+- type: entity
+  id: ActionTeslaBall
+  name: Tesla Ball
+  description: Fires a mini tesla ball towards the clicked location
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 25
+    itemIconStyle: BigAction
+    checkCanAccess: false
+    range: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/fireball.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: fireball
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileMagicTesla
+      posData: !type:TargetCasterPos
+      speech: action-speech-spell-teslaball

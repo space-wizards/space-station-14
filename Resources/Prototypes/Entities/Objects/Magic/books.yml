@@ -88,6 +88,45 @@
       ActionFireball: -1
 
 - type: entity
+  id: MagicMissileSpellbook
+  name: magic missile spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: bookfireball
+  - type: Spellbook
+    spells:
+      ActionMagicMissile: -1
+
+- type: entity
+  id: TeslaBallSpellbook
+  name: tesla ball spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: bookfireball
+  - type: Spellbook
+    spells:
+      ActionTeslaBall: -1
+
+- type: entity
+  id: EmpSpellbook
+  name: disable technology spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: bookfireball
+  - type: Spellbook
+    spells:
+      ActionSpellEMP: -1
+
+- type: entity
   id: ScrollRunes
   name: scroll of runes
   parent: BaseSpellbook
