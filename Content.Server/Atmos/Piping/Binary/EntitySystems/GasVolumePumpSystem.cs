@@ -13,6 +13,7 @@ using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
 using Content.Shared.Database;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;

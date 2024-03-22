@@ -1,10 +1,12 @@
-﻿using Robust.Shared.Audio;
+﻿using Content.Shared.Mobs;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Actions;
 
-// TODO this should be an IncludeDataFields of each action component type, not use inheritance
+// TODO ACTIONS make this a seprate component and remove the inheritance stuff.
+// TODO ACTIONS convert to auto comp state?
 
 // TODO add access attribute. Need to figure out what to do with decal & mapping actions.
 // [Access(typeof(SharedActionsSystem))]
@@ -72,9 +74,9 @@ public abstract partial class BaseActionComponent : Component
     [DataField("charges")] public int? Charges;
 
     /// <summary>
-    ///     The max charges this action has, set automatically from <see cref="Charges"/>
+    ///     The max charges this action has. If null, this is set automatically from <see cref="Charges"/> on mapinit.
     /// </summary>
-    public int MaxCharges;
+    [DataField] public int? MaxCharges;
 
     /// <summary>
     ///     If enabled, charges will regenerate after a <see cref="Cooldown"/> is complete
@@ -118,6 +120,12 @@ public abstract partial class BaseActionComponent : Component
     [DataField("checkCanInteract")] public bool CheckCanInteract = true;
 
     /// <summary>
+    /// Whether to check if the user is conscious or not. Can be used instead of <see cref="CheckCanInteract"/>
+    /// for a more permissive check.
+    /// </summary>
+    [DataField] public bool CheckConsciousness = true;
+
+    /// <summary>
     ///     If true, this will cause the action to only execute locally without ever notifying the server.
     /// </summary>
     [DataField("clientExclusive")] public bool ClientExclusive = false;
@@ -130,7 +138,7 @@ public abstract partial class BaseActionComponent : Component
     /// <summary>
     ///     What entity, if any, currently has this action in the actions component?
     /// </summary>
-    [ViewVariables] public EntityUid? AttachedEntity;
+    [DataField] public EntityUid? AttachedEntity;
 
     /// <summary>
     ///     If true, this will cause the the action event to always be raised directed at the action performer/user instead of the action's container/provider.
@@ -171,11 +179,12 @@ public abstract class BaseActionComponentState : ComponentState
     public (TimeSpan Start, TimeSpan End)? Cooldown;
     public TimeSpan? UseDelay;
     public int? Charges;
-    public int MaxCharges;
+    public int? MaxCharges;
     public bool RenewCharges;
     public NetEntity? Container;
     public NetEntity? EntityIcon;
     public bool CheckCanInteract;
+    public bool CheckConsciousness;
     public bool ClientExclusive;
     public int Priority;
     public NetEntity? AttachedEntity;
@@ -203,6 +212,7 @@ public abstract class BaseActionComponentState : ComponentState
         MaxCharges = component.MaxCharges;
         RenewCharges = component.RenewCharges;
         CheckCanInteract = component.CheckCanInteract;
+        CheckConsciousness = component.CheckConsciousness;
         ClientExclusive = component.ClientExclusive;
         Priority = component.Priority;
         AutoPopulate = component.AutoPopulate;

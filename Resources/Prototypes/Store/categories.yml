@@ -9,7 +9,7 @@
 
 #uplink categoires
 - type: storeCategory
-  id: UplinkWeapons
+  id: UplinkWeaponry
   name: store-category-weapons
   priority: 0
 
@@ -24,44 +24,44 @@
   priority: 2
 
 - type: storeCategory
-  id: UplinkMisc
-  name: store-category-misc
+  id: UplinkWearables
+  name: store-category-wearables
   priority: 3
 
 - type: storeCategory
-  id: UplinkBundles
-  name: store-category-bundles
+  id: UplinkChemicals
+  name: store-category-chemicals
   priority: 4
 
 - type: storeCategory
-  id: UplinkTools
-  name: store-category-tools
+  id: UplinkDeception
+  name: store-category-deception
   priority: 5
 
 - type: storeCategory
-  id: UplinkUtility
-  name: store-category-utility
+  id: UplinkDisruption
+  name: store-category-disruption
   priority: 6
 
 - type: storeCategory
   id: UplinkImplants
   name: store-category-implants
-  priority: 6
+  priority: 7
+
+- type: storeCategory
+  id: UplinkAllies
+  name: store-category-allies
+  priority: 8
 
 - type: storeCategory
   id: UplinkJob
   name: store-category-job
-  priority: 7
-
-- type: storeCategory
-  id: UplinkArmor
-  name: store-category-armor
-  priority: 8
+  priority: 9
 
 - type: storeCategory
   id: UplinkPointless
   name: store-category-pointless
-  priority: 9
+  priority: 10
 
 #revenant
 - type: storeCategory

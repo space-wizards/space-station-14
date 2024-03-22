@@ -166,17 +166,15 @@ ClothingHeadHelmetVoidParamed: null
 # 2024-01-19
 DefaultStationBeaconTeslaEngine: null
 
-#2024-01-27
-ClothingBackpackSecurityFilledDetective: ClothingBackpackFilledDetective
-ClothingBackpackDuffelSecurityFilledDetective: ClothingBackpackDuffelFilledDetective
-ClothingBackpackSatchelSecurityFilledDetective: ClothingBackpackSatchelFilledDetective
+# 2024-01-27 (Reverted on 2024-03-10)
+# ClothingBackpackSecurityFilledDetective: ClothingBackpackFilledDetective
+# ClothingBackpackDuffelSecurityFilledDetective: ClothingBackpackDuffelFilledDetective
+# ClothingBackpackSatchelSecurityFilledDetective: ClothingBackpackSatchelFilledDetective
 
 # 2024-01-28
 FoodBoxDonkpocketGondola: FoodBoxDonkpocketPizza
 
 # 2024-01-31
-HandheldCrewMonitorEmpty: null
-HandheldCrewMonitor: null
 SpyCrewMonitor: null
 SpyCrewMonitorEmpty: null
 SyndiCrewMonitor: null
@@ -214,3 +212,40 @@ VehicleJanicartDestroyed: null
 # 2024-02-01
 YellowOxygenTank: OxygenTank
 YellowOxygenTankFilled: OxygenTankFilled
+
+# 2024-02-19
+Drone: null
+SpawnMobDrone: null
+Onestar: null # I dont think this is even mapped, but just in case
+
+# 2024-02-22
+SolarAssemblyPart: SolarAssemblyFlatpack
+AmePart: AmePartFlatpack
+AmePartStealObjective: AmePartFlatpackStealObjective
+Observationskit: null
+
+# 2024-02-26
+CrateBaseWeldable: CrateGenericSteel
+
+# 2024-03-7
+AirlockExternalEasyPry: AirlockExternal
+AirlockExternalGlassEasyPry: AirlockExternalGlass
+AirlockGlassShuttleEasyPry: AirlockGlassShuttle
+AirlockShuttleEasyPry: AirlockShuttle
+AirlockExternalEasyPryLocked: AirlockExternalLocked
+AirlockExternalGlassEasyPryLocked: AirlockExternalGlassLocked
+AirlockGlassShuttleEasyPryLocked: AirlockExternalGlassShuttleLocked
+AirlockShuttleEasyPryLocked: AirlockExternalShuttleLocked
+
+#2024-03-10
+ClothingBackpackFilledDetective: ClothingBackpackSecurityFilledDetective
+ClothingBackpackDuffelFilledDetective: ClothingBackpackDuffelSecurityFilledDetective
+ClothingBackpackSatchelFilledDetective: ClothingBackpackSatchelSecurityFilledDetective
+
+# 2024-03-11
+ImprovisedExplosive: FireBomb
+ImprovisedExplosiveEmpty: FireBombEmpty
+ImprovisedExplosiveFuel: FireBombFuel
+
+# 2024-03-21
+RPED: null

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: PelletShotgunSlug
   name: pellet (.50 slug)
   noSpawn: true
@@ -26,7 +26,7 @@
       types:
         Blunt: 10
   - type: StaminaDamageOnCollide
-    damage: 55 # 2 hits to stun
+    damage: 40 # 3 hits to stun
 
 - type: entity
   id: PelletShotgun
@@ -81,12 +81,13 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
+    state: shard
   - type: Projectile
     damage:
       types:
         Piercing: 3
-        Slash: 3 #remember, it's metal shrapnel!
+        Slash: 3 
+        
 
 - type: entity
   id: PelletShotgunTranquilizer

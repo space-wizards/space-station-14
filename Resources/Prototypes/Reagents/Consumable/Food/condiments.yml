@@ -78,6 +78,16 @@
   recognizable: true
 
 - type: reagent
+  id: LaughinSyrup
+  name: reagent-name-laughin-syrup
+  group: Foods
+  desc: reagent-desc-laughin-syrup
+  physicalDesc: reagent-physical-desc-funny
+  flavor: sweet
+  color: "#803280"
+  recognizable: true
+
+- type: reagent
   id: Mayo
   name: reagent-name-mayo
   group: Foods

@@ -7,11 +7,9 @@ using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
 
@@ -46,8 +44,7 @@ public sealed class LockSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
     {
-        _appearanceSystem.SetData(uid, StorageVisuals.CanLock, true);
-        _appearanceSystem.SetData(uid, StorageVisuals.Locked, lockComp.Locked);
+        _appearanceSystem.SetData(uid, LockVisuals.Locked, lockComp.Locked);
     }
 
     private void OnActivated(EntityUid uid, LockComponent lockComp, ActivateInWorldEvent args)
@@ -114,7 +111,7 @@ public sealed class LockSystem : EntitySystem
             return _doAfter.TryStartDoAfter(
                 new DoAfterArgs(EntityManager, user, lockComp.LockTime, new LockDoAfter(), uid, uid)
                 {
-                    BreakOnDamage = true, BreakOnTargetMove = true, BreakOnUserMove = true, RequireCanInteract = true,
+                    BreakOnDamage = true, BreakOnMove = true, RequireCanInteract = true,
                     NeedHand = true
                 });
         }
@@ -124,7 +121,7 @@ public sealed class LockSystem : EntitySystem
         _audio.PlayPredicted(lockComp.LockSound, uid, user);
 
         lockComp.Locked = true;
-        _appearanceSystem.SetData(uid, StorageVisuals.Locked, true);
+        _appearanceSystem.SetData(uid, LockVisuals.Locked, true);
         Dirty(uid, lockComp);
 
         var ev = new LockToggledEvent(true);
@@ -155,7 +152,7 @@ public sealed class LockSystem : EntitySystem
         _audio.PlayPredicted(lockComp.UnlockSound, uid, user);
 
         lockComp.Locked = false;
-        _appearanceSystem.SetData(uid, StorageVisuals.Locked, false);
+        _appearanceSystem.SetData(uid, LockVisuals.Locked, false);
         Dirty(uid, lockComp);
 
         var ev = new LockToggledEvent(false);
@@ -190,7 +187,7 @@ public sealed class LockSystem : EntitySystem
             return _doAfter.TryStartDoAfter(
                 new DoAfterArgs(EntityManager, user, lockComp.LockTime, new UnlockDoAfter(), uid, uid)
                 {
-                    BreakOnDamage = true, BreakOnTargetMove = true, BreakOnUserMove = true, RequireCanInteract = true,
+                    BreakOnDamage = true, BreakOnMove = true, RequireCanInteract = true,
                     NeedHand = true
                 });
         }
@@ -249,8 +246,16 @@ public sealed class LockSystem : EntitySystem
     {
         if (!component.Locked || !component.BreakOnEmag)
             return;
-        _audio.PlayPredicted(component.UnlockSound, uid, null);
-        _appearanceSystem.SetData(uid, StorageVisuals.Locked, false);
+
+        _audio.PlayPredicted(component.UnlockSound, uid, args.UserUid);
+
+        component.Locked = false;
+        _appearanceSystem.SetData(uid, LockVisuals.Locked, false);
+        Dirty(uid, component);
+
+        var ev = new LockToggledEvent(false);
+        RaiseLocalEvent(uid, ref ev, true);
+
         RemComp<LockComponent>(uid); //Literally destroys the lock as a tell it was emagged
         args.Handled = true;
     }

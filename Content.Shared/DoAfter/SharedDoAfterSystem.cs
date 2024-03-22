@@ -157,7 +157,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         if (doAfter.Delay <= TimeSpan.Zero)
         {
-            Logger.Warning("Awaited instant DoAfters are not supported fully supported");
+            Log.Warning("Awaited instant DoAfters are not supported fully supported");
             return DoAfterStatus.Finished;
         }
 
@@ -214,12 +214,11 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         args.NetUser = GetNetEntity(args.User);
         args.NetEventTarget = GetNetEntity(args.EventTarget);
 
-        if (args.BreakOnUserMove || args.BreakOnTargetMove)
+        if (args.BreakOnMove)
             doAfter.UserPosition = Transform(args.User).Coordinates;
 
-        if (args.Target != null && args.BreakOnTargetMove)
+        if (args.Target != null && args.BreakOnMove)
         {
-            // Target should never be null if the bool is set.
             var targetPosition = Transform(args.Target.Value).Coordinates;
             doAfter.UserPosition.TryDistance(EntityManager, targetPosition, out doAfter.TargetDistance);
         }

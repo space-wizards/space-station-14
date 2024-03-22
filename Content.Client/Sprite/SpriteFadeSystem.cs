@@ -39,7 +39,7 @@ public sealed class SpriteFadeSystem : EntitySystem
     {
         base.FrameUpdate(frameTime);
 
-        var player = _playerManager.LocalPlayer?.ControlledEntity;
+        var player = _playerManager.LocalEntity;
         var spriteQuery = GetEntityQuery<SpriteComponent>();
         var change = ChangeRate * frameTime;
 

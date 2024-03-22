@@ -5,6 +5,8 @@
   id: FoodBowlBase
   abstract: true
   components:
+  - type: Item
+    storedRotation: -90
   - type: Food
     trash: FoodBowlBig
     utensil: Spoon
@@ -804,6 +806,10 @@
             Quantity: 4
           - ReagentId: Allicin
             Quantity: 3
+  - type: Tag
+    tags:
+    - ChiliBowl
+
 
 - type: entity
   name: cold chili
@@ -828,6 +834,9 @@
             Quantity: 8
           - ReagentId: Vitamin
             Quantity: 4
+  - type: Tag
+    tags:
+    - ChiliBowl
 
 - type: entity
   name: chili con carnival
@@ -858,6 +867,9 @@
             Quantity: 4
           - ReagentId: Allicin
             Quantity: 3
+  - type: Tag
+    tags:
+    - ChiliBowl
 
 - type: entity
   name: monkey's delight

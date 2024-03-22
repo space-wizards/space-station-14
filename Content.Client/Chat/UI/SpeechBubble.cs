@@ -182,20 +182,9 @@ namespace Content.Client.Chat.UI
             return msg;
         }
 
-        protected string ExtractSpeechSubstring(ChatMessage message, string tag)
-        {
-            var rawmsg = message.WrappedMessage;
-            var tagStart = rawmsg.IndexOf($"[{tag}]");
-            var tagEnd = rawmsg.IndexOf($"[/{tag}]");
-            if (tagStart < 0 || tagEnd < 0) //the above return -1 if the tag's not found, which in turn will cause the below to throw an exception. a blank speech bubble is far more noticeably broken than the bubble not appearing at all -bhijn
-                return "";
-            tagStart += tag.Length + 2;
-            return rawmsg.Substring(tagStart, tagEnd - tagStart);
-        }
-
         protected FormattedMessage ExtractAndFormatSpeechSubstring(ChatMessage message, string tag, Color? fontColor = null)
         {
-            return FormatSpeech(ExtractSpeechSubstring(message, tag), fontColor);
+            return FormatSpeech(SharedChatSystem.GetStringInsideTag(message, tag), fontColor);
         }
 
     }
@@ -263,7 +252,8 @@ namespace Content.Client.Chat.UI
             var bubbleContent = new RichTextLabel
             {
                 MaxWidth = SpeechMaxWidth,
-                Margin = new Thickness(2, 6, 2, 2)
+                Margin = new Thickness(2, 6, 2, 2),
+                StyleClasses = { "bubbleContent" }
             };
 
             //We'll be honest. *Yes* this is hacky. Doing this in a cleaner way would require a bottom-up refactor of how saycode handles sending chat messages. -Myr

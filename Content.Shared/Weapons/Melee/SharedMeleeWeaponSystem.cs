@@ -68,7 +68,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MeleeWeaponComponent, EntityUnpausedEvent>(OnMeleeUnpaused);
         SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnMeleeSelected);
         SubscribeLocalEvent<MeleeWeaponComponent, ShotAttemptedEvent>(OnMeleeShotAttempted);
         SubscribeLocalEvent<MeleeWeaponComponent, GunShotEvent>(OnMeleeShot);
@@ -110,11 +109,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             component.NextAttack = gun.NextFire;
             Dirty(uid, component);
         }
-    }
-
-    private void OnMeleeUnpaused(EntityUid uid, MeleeWeaponComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextAttack += args.PausedTime;
     }
 
     private void OnMeleeSelected(EntityUid uid, MeleeWeaponComponent component, HandSelectedEvent args)
@@ -524,23 +518,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                     $"{ToPrettyString(user):actor} melee attacked (light) {ToPrettyString(target.Value):subject} using {ToPrettyString(meleeUid):tool} and dealt {damageResult.GetTotal():damage} damage");
             }
 
-            PlayHitSound(target.Value, user, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound);
         }
-        else
-        {
-            if (hitEvent.HitSoundOverride != null)
-            {
-                Audio.PlayPredicted(hitEvent.HitSoundOverride, meleeUid, user);
-            }
-            else if (!GetDamage(meleeUid, user, component).Any() && component.HitSound != null)
-            {
-                Audio.PlayPredicted(component.HitSound, meleeUid, user);
-            }
-            else
-            {
-                Audio.PlayPredicted(component.NoDamageSound, meleeUid, user);
-            }
-        }
+
+        PlayHitSound(target.Value, user, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound, component.NoDamageSound);
 
         if (damageResult?.GetTotal() > FixedPoint2.Zero)
         {
@@ -677,22 +657,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         if (entities.Count != 0)
         {
-            if (appliedDamage.GetTotal() > FixedPoint2.Zero)
-            {
-                var target = entities.First();
-                PlayHitSound(target, user, GetHighestDamageSound(appliedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound);
-            }
-            else
-            {
-                if (hitEvent.HitSoundOverride != null)
-                {
-                    Audio.PlayPredicted(hitEvent.HitSoundOverride, meleeUid, user);
-                }
-                else
-                {
-                    Audio.PlayPredicted(component.NoDamageSound, meleeUid, user);
-                }
-            }
+            var target = entities.First();
+            PlayHitSound(target, user, GetHighestDamageSound(appliedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound, component.NoDamageSound);
         }
 
         if (appliedDamage.GetTotal() > FixedPoint2.Zero)
@@ -736,7 +702,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         return true;
     }
 
-    public void PlayHitSound(EntityUid target, EntityUid? user, string? type, SoundSpecifier? hitSoundOverride, SoundSpecifier? hitSound)
+    public void PlayHitSound(EntityUid target, EntityUid? user, string? type, SoundSpecifier? hitSoundOverride, SoundSpecifier? hitSound, SoundSpecifier? noDamageSound)
     {
         var playedSound = false;
 
@@ -776,6 +742,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             else if (hitSound != null)
             {
                 Audio.PlayPredicted(hitSound, coords, user, AudioParams.Default.WithVariation(DamagePitchVariation));
+                playedSound = true;
+            }
+            else if (noDamageSound != null)
+            {
+                Audio.PlayPredicted(noDamageSound, coords, user, AudioParams.Default.WithVariation(DamagePitchVariation));
                 playedSound = true;
             }
         }

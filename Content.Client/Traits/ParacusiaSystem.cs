@@ -30,7 +30,7 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        if (_player.LocalPlayer?.ControlledEntity is not EntityUid localPlayer)
+        if (_player.LocalEntity is not EntityUid localPlayer)
             return;
 
         PlayParacusiaSounds(localPlayer);
