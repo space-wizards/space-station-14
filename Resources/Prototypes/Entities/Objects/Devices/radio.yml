@@ -44,6 +44,9 @@
   - type: Item
     sprite: Objects/Devices/communication.rsi
     heldPrefix: old-radio
+  - type: Construction
+    graph: BroadcastRadio
+    node: oldRadio
   - type: Tag
     tags:
     - OldRadio
