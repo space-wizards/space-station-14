@@ -1,5 +1,7 @@
 ﻿using Content.Shared.LegallyDistinctSpaceFerret;
+using Robust.Client.Audio;
 using Robust.Client.GameObjects;
+using Robust.Shared.Audio;
 
 namespace Content.Client.LegallyDistinctSpaceFerret;
 

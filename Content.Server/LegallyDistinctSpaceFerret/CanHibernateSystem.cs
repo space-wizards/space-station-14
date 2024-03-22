@@ -1,10 +1,8 @@
 ﻿using Content.Server.Actions;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Popups;
-using Content.Server.Roles;
 using Content.Shared.Interaction.Components;
 using Content.Shared.LegallyDistinctSpaceFerret;
 using Content.Shared.Mind;
@@ -22,6 +20,7 @@ public sealed class CanHibernateSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -55,8 +54,12 @@ public sealed class CanHibernateSystem : EntitySystem
             return;
         }
 
-        // Notify of success
-        RaiseLocalEvent(new EntityHibernateAttemptSuccessEvent(uid));
+        if (_mind.TryGetObjectiveComp<HibernateConditionComponent>(uid, out var hibernateCondition))
+        {
+            _audio.PlayPvs(new SoundPathSpecifier(hibernateCondition.SuccessSfx), uid);
+            _popup.PopupEntity(Loc.GetString(hibernateCondition.SuccessMessage), uid, PopupType.Large);
+            hibernateCondition.Hibernated = true;
+        }
 
         // Kick player out
         var mind = _mind.GetMind(uid);
