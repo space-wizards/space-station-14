@@ -246,11 +246,6 @@
   id: Weh
   category: Vocal
   chatMessages: [Wehs!]
-
-- type: emote
-  id: LizardWeh
-  category: Vocal
-  chatMessages: [Wehs!]
   chatTriggers:
     - weh
     - weh.
