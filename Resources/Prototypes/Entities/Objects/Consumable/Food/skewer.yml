@@ -182,3 +182,11 @@
   parent: FoodMeatKebab
   id: FoodMeatAnticucho
   description: A Peruvian classic! So delicious, you might not realize you're eating heart meat.
+  components:
+  - type: Sprite
+    layers:
+      - state: skewer
+      - state: skewer-heart1
+      - state: skewer-heart2
+      - state: skewer-heart3
+      - state: skewer-heart4

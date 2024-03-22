@@ -619,7 +619,7 @@
       - meaty
       - spicy
   - type: Sprite
-    state: ribs
+    state: devilledkidneys
   - type: SolutionContainerManager
     solutions:
       food:
