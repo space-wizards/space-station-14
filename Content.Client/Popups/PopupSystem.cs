@@ -28,6 +28,7 @@ namespace Content.Client.Popups
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
         [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
         [Dependency] private readonly ExamineSystemShared _examine = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public IReadOnlyList<WorldPopupLabel> WorldLabels => _aliveWorldLabels;
         public IReadOnlyList<CursorPopupLabel> CursorLabels => _aliveCursorLabels;
@@ -54,6 +55,7 @@ namespace Content.Client.Popups
                     _uiManager,
                     _uiManager.GetUIController<PopupUIController>(),
                     _examine,
+                    _transform,
                     this));
         }
 
