@@ -245,8 +245,8 @@
     - GeigerCounter
 
 - type: entity
-  id: BorgModuleConstruction
-  parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
+  id: BorgModuleConstruction # todo: make it so borgs can hold any kind of 'sheet' and make less duct tape fixes
+  parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ] 
   name: construction cyborg module
   components:
   - type: Sprite
@@ -256,7 +256,9 @@
   - type: ItemBorgModule
     items:
     - SheetSteelLingering0
+    - SheetPlasteelLingering0
     - SheetGlassLingering0
+    - SheetRGlassLingering0
     - PartRodMetalLingering0
     - FloorTileItemSteelLingering0
 
