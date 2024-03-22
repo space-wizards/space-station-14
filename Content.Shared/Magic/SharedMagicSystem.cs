@@ -70,20 +70,30 @@ public abstract class SharedMagicSystem : EntitySystem
         //    3 - The event to trigger once the do-after finishes
 
         // TODO: Polymorph Spell (Self)
+        // Poly self to fish, or two other forms.
+        // Can only swap to that form if chosen
+        // if health goes below a certain threshhold, user transforms back (with that much health lost)
+        // which includes any damage done to that form
 
         // TODO: Polymorph Spell (Others, rng, projectile)
 
         // TODO: Inanimate objects to life
+        // Needs its own ECS
 
         // TODO: Flesh2Stone
+        // Entity Target spell
 
         // TODO: Lightning Spell
+        // Should just fire lightning, try to prevent arc back to caster
 
         // TODO: Magic Missile
+        // Instant action, target any player on screen
+        // Would need a homing projectile ECS
 
         // TODO: Jaunt (should be its own ECS)
 
         // TODO: Touch spell
+        // TODO: Wouldn't this just be a touch action ECS?
         //  1 - When toggled on, show in hand
         //  2 - Block hand when toggled on
         //      - Require free hand
