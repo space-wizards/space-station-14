@@ -2126,3 +2126,67 @@
     - type: Icon
       sprite: Objects/Consumable/Drinks/bloodglass.rsi
       state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkAmericano
+  suffix: americano
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Americano
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/americano.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkGlace
+  suffix: glace
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Glace
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/glace.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkFrappe
+  suffix: frappe
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Frappe
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/frappe.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkRaf
+  suffix: raf
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Raf
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/raf.rsi
+    state: icon

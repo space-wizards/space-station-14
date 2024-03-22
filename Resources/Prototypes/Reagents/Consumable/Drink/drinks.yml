@@ -15,6 +15,9 @@
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
+      - !type:AdjustReagent
+        reagent: Coffein
+        amount: 0.1
 
 - type: reagent
   id: HotCocoa
@@ -32,6 +35,9 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Theobromine
+        amount: 0.05
+      - !type:AdjustReagent
+        reagent: Coffein
         amount: 0.05
 
 - type: reagent
@@ -62,6 +68,12 @@
   metamorphicMaxFillLevels: 1
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  metabolisms:
+    Drinks:
+      effects:
+        - !type:AdjustReagent
+          reagent: Coffein
+          amount: 0.05
 
 - type: reagent
   id: GreenTea
@@ -77,6 +89,12 @@
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  metabolisms:
+    Drinks:
+      effects:
+        - !type:AdjustReagent
+          reagent: Coffein
+          amount: 0.05
 
 - type: reagent
   id: Grenadine
@@ -111,6 +129,12 @@
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  metabolisms:
+    Drinks:
+      effects:
+        - !type:AdjustReagent
+          reagent: Coffein
+          amount: 0.03
 
 - type: reagent
   id: IcedGreenTea
@@ -126,6 +150,12 @@
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  metabolisms:
+    Drinks:
+      effects:
+        - !type:AdjustReagent
+          reagent: Coffein
+          amount: 0.03
 
 - type: reagent
   id: IcedTea
@@ -149,6 +179,9 @@
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
+      - !type:AdjustReagent
+        reagent: Coffein
+        amount: 0.1
 
 - type: reagent
   id: JuiceBerryPoison
@@ -286,6 +319,9 @@
   metabolisms:
     Drink:
       effects:
+      - !type:AdjustReagent
+        reagent: Coffein
+        amount: 0.1
       - !type:SatiateThirst
         factor: 6
     Poison:
@@ -336,6 +372,9 @@
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
+      - !type:AdjustReagent
+        reagent: Coffein
+        amount: 0.15
 
 - type: reagent
   id: TonicWater
@@ -472,3 +511,84 @@
       effects:
       - !type:SatiateThirst
         factor: 0.6
+
+- type: reagent
+  id: Americano
+  name: reagent-name-americano
+  parent: Coffee
+  desc: reagent-desc-americano
+  color: "#5d3d00"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/americano.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 1
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:AdjustReagent
+        reagent: Coffein
+        amount: 0.05
+
+- type: reagent
+  id: Glace
+  name: reagent-name-glace
+  parent: Coffee
+  desc: reagent-desc-glace
+  physicalDesc: reagent-physical-desc-fizzy-and-creamy
+  flavor: icecream
+  color: "#FFE8BC"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/glace.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:AdjustReagent
+        reagent: Coffein
+        amount: 0.05
+
+- type: reagent
+  id: Frappe
+  name: reagent-name-frappe
+  parent: Coffee
+  desc: reagent-desc-frappe
+  physicalDesc: reagent-physical-desc-milky
+  color: "#4f3d1d"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/frappe.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:AdjustReagent
+        reagent: Coffein
+        amount: 0.04
+
+- type: reagent
+  id: Raf
+  name: reagent-name-raf
+  parent: Coffee
+  desc: reagent-desc-raf
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: creamy
+  color: "#FFE8BC"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/raf.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:AdjustReagent
+        reagent: Coffein
+        amount: 0.02

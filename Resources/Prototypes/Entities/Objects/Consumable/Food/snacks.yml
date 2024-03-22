@@ -136,6 +136,8 @@
           Quantity: 3
         - ReagentId: CocoaPowder
           Quantity: 1
+        - ReagentId: Coffein
+          Quantity: 0.05
 
 - type: entity
   name: energy bar
