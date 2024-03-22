@@ -199,7 +199,10 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void UpdateUiState(EntityUid uid)
         {
-            var comp = Comp<ReagentGrinderComponent>(uid);
+            ReagentGrinderComponent? grinderComp = null;
+            if (!Resolve(uid, ref grinderComp))
+                return;
+
             var inputContainer = _containerSystem.EnsureContainer<Container>(uid, SharedReagentGrinder.InputContainerId);
             var outputContainer = _itemSlotsSystem.GetItemOrNull(uid, SharedReagentGrinder.BeakerSlotId);
             Solution? containerSolution = null;
@@ -221,7 +224,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 this.IsPowered(uid, EntityManager),
                 canJuice,
                 canGrind,
-                comp.AutoMode,
+                grinderComp.AutoMode,
                 GetNetEntityArray(inputContainer.ContainedEntities.ToArray()),
                 containerSolution?.Contents.ToArray()
             );
