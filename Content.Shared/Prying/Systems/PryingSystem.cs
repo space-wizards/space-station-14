@@ -136,8 +136,7 @@ public sealed class PryingSystem : EntitySystem
         var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(modEv.BaseTime * modEv.PryTimeModifier / toolModifier), new DoorPryDoAfterEvent(), target, target, tool)
         {
             BreakOnDamage = true,
-            BreakOnUserMove = true,
-            BreakOnWeightlessMove = true,
+            BreakOnMove = true,
         };
 
         if (tool != null)
