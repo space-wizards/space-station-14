@@ -61,7 +61,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         {
             case StoreUpdateState msg:
                 _menu.UpdateBalance(msg.Balance);
-                _menu.PopulateStoreCategoryButtons(msg.Listings);
+                _menu.PopulateStoreCategoryButtons(msg.Listings, msg.Discounts);
 
                 _menu.UpdateListing(msg.Listings.ToList(), msg.Discounts);
                 _menu.SetFooterVisibility(msg.ShowFooter);

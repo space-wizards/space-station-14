@@ -19,6 +19,8 @@ namespace Content.Client.Store.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class StoreMenu : DefaultWindow
 {
+    private const string DiscountedCategoryPrototypeKey = "DiscountedItems";
+    
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -86,11 +88,15 @@ public sealed partial class StoreMenu : DefaultWindow
         // maybe read clients prototypes instead?
         ClearListings();
         var storeDiscounts = discounts.Where(x => x.Count > 0)
-                                         .ToDictionary(x => x.ListingId);
+                                      .ToDictionary(x => x.ListingId);
 
         foreach (var item in sorted)
         {
             storeDiscounts.TryGetValue(item.ID, out var discountData);
+            if (discountData != null)
+            {
+                item.Categories.Add(DiscountedCategoryPrototypeKey);
+            }
             AddListingGui(item, discountData);
         }
     }
@@ -240,10 +246,10 @@ public sealed partial class StoreMenu : DefaultWindow
 
                 var currency = _prototypeManager.Index<CurrencyPrototype>(type);
                 text += Loc.GetString(
-                            "store-ui-price-display",
-                            ("amount", totalAmount),
-                            ("currency", Loc.GetString(currency.DisplayName, ("amount", totalAmount)))
-                        );
+                    "store-ui-price-display",
+                    ("amount", totalAmount),
+                    ("currency", Loc.GetString(currency.DisplayName, ("amount", totalAmount)))
+                );
             }
         }
 
@@ -264,7 +270,7 @@ public sealed partial class StoreMenu : DefaultWindow
         StoreListingsContainer.Children.Clear();
     }
 
-    public void PopulateStoreCategoryButtons(HashSet<ListingData> listings)
+    public void PopulateStoreCategoryButtons(HashSet<ListingData> listings, List<StoreDiscountData> discounts)
     {
         var allCategories = new List<StoreCategoryPrototype>();
         foreach (var listing in listings)
@@ -275,6 +281,13 @@ public sealed partial class StoreMenu : DefaultWindow
                 if (!allCategories.Contains(proto))
                     allCategories.Add(proto);
             }
+        }
+
+        if (discounts.Any(x => x.Count > 0))
+        {
+            var proto = _prototypeManager.Index<StoreCategoryPrototype>(DiscountedCategoryPrototypeKey);
+
+            allCategories.Add(proto);
         }
 
         allCategories = allCategories.OrderBy(c => c.Priority).ToList();
