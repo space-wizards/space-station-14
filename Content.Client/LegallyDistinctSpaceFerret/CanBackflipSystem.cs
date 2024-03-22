@@ -1,5 +1,4 @@
-﻿using Content.Shared.Interaction.Components;
-using Content.Shared.LegallyDistinctSpaceFerret;
+﻿using Content.Shared.LegallyDistinctSpaceFerret;
 using Robust.Client.Animations;
 using Robust.Client.Audio;
 using Robust.Client.GameObjects;
@@ -9,22 +8,23 @@ using Robust.Shared.Player;
 
 namespace Content.Client.LegallyDistinctSpaceFerret;
 
-public sealed class LegallyDistinctSpaceFerretSystem : EntitySystem
+public sealed class CanBackflipSystem : EntitySystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
+
+    public const string BackflipKey = "backflip";
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeNetworkEvent<DoABackFlipEvent>(OnBackflipEvent);
-        SubscribeNetworkEvent<GoEepyEvent>(OnEepyEvent);
     }
 
     public void OnBackflipEvent(DoABackFlipEvent args)
     {
-        if (!TryGetEntity(args.Backflipper, out var uid))
+        if (!TryGetEntity(args.Actioner, out var uid))
         {
             return;
         }
@@ -47,22 +47,8 @@ public sealed class LegallyDistinctSpaceFerretSystem : EntitySystem
                     }
                 }
             }
-        }, "backflip");
+        }, BackflipKey);
+
         _audio.PlayEntity(new SoundPathSpecifier(args.SfxSource), Filter.Local(), uid.Value, false);
-    }
-
-    public void OnEepyEvent(GoEepyEvent args)
-    {
-        if (!TryGetEntity(args.Eepier, out var uid))
-        {
-            return;
-        }
-
-        if (!TryComp<SpriteComponent>(uid, out var comp))
-        {
-            return;
-        }
-
-        comp.LayerSetState(0, "legallydistinctspaceferret_eepy");
     }
 }

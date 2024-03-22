@@ -6,12 +6,15 @@
   components:
   # Basics
   - type: LegallyDistinctSpaceFerret
-    outOfRangeMessage: legallydistinctspaceferret-out-of-range
-    notEnoughNutrientsMessage: legallydistinctspaceferret-not-enough-nutrients
-    youWinMessage: legallydistinctspaceferret-you-win-popup
     roleIntroSfx: /Audio/Animals/wawa_intro.ogg
-    roleOutroSfx: /Audio/Animals/wawa_outro.ogg
+    antagProtoId: LegallyDistinctSpaceFerret
+  - type: BrainrotAura
+  - type: CanBackflip
     clappaSfx: /Audio/Animals/slugclappa.ogg
+  - type: CanHibernate
+    tooFarFromHibernationSpot: legallydistinctspaceferret-out-of-range
+    notEnoughNutrientsMessage: legallydistinctspaceferret-not-enough-nutrients
+    spriteStateId: legallydistinctspaceferret_eepy
   - type: NameIdentifier
     group: LegallyDistinctSpaceFerret
   - type: ReplacementAccent
@@ -186,6 +189,8 @@
       sprite: Mobs/Animals/legallydistinctspaceferret.rsi
       state: legallydistinctspaceferret_eepy
   - type: HibernateCondition
+    successMessage: legallydistinctspaceferret-you-win-popup
+    successSfx: /Audio/Animals/wawa_outro.ogg
 
 - type: accent
   id: legallydistinctspaceferret

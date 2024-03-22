@@ -1,34 +1,22 @@
-﻿using System.Threading;
-using Content.Server.Actions;
-using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.Chat.Managers;
+﻿using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.GenericAntag;
-using Content.Server.Ghost.Roles.Components;
 using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Roles;
 using Content.Server.StationEvents.Events;
-using Content.Shared.Interaction.Components;
 using Content.Shared.LegallyDistinctSpaceFerret;
 using Content.Shared.Mind;
-using Content.Shared.Mobs.Components;
-using Content.Shared.NPC;
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Shared.Objectives.Components;
-using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
-using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.LegallyDistinctSpaceFerret;
 
 public sealed class LegallyDistinctSpaceFerretSystem : EntitySystem
 {
-    [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
@@ -42,129 +30,33 @@ public sealed class LegallyDistinctSpaceFerretSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<LegallyDistinctSpaceFerretComponent, GenericAntagCreatedEvent>(OnInit);
-        SubscribeLocalEvent<LegallyDistinctSpaceFerretComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<LegallyDistinctSpaceFerretComponent, BackflipActionEvent>(OnBackflipAction);
-        SubscribeLocalEvent<LegallyDistinctSpaceFerretComponent, EepyActionEvent>(OnEepyAction);
         SubscribeLocalEvent<LegallyDistinctSpaceFerretComponent, InteractionAttemptFailed>(OnInteractFailed);
-        SubscribeLocalEvent<HibernateConditionComponent, ObjectiveGetProgressEvent>(OnHibernateGetProgress);
-        SubscribeLocalEvent<ConsumeNutrientsConditionComponent, ObjectiveGetProgressEvent>(OnConsumeNutrientsGetProgress);
         SubscribeLocalEvent<LegallyDistinctSpaceFerretComponent, HungerModifiedEvent>(OnHungerModified);
     }
 
     private void OnInit(EntityUid uid, LegallyDistinctSpaceFerretComponent component, GenericAntagCreatedEvent args)
     {
-        _actions.AddAction(uid, ref component.BackflipActionEntity, component.BackflipAction, uid);
-        _actions.AddAction(uid, ref component.EepyActionEntity, component.EepyAction, uid);
-
         var mind = args.Mind;
 
         if (mind.Session == null)
             return;
 
         var session = mind.Session;
-        _audio.PlayGlobal(new SoundPathSpecifier(component.RoleIntroSfx), Filter.Empty().AddPlayer(session), false, AudioParams.Default.WithVolume(0.66f));
-        _chatMan.DispatchServerMessage(session, Loc.GetString("legallydistinctspaceferret-role-greeting"));
-
-        _role.MindAddRole(args.MindId, new LegallyDistinctSpaceFerretRoleComponent()
-        {
-            PrototypeId = component.AntagProtoId
-        }, mind);
-
         _role.MindAddRole(args.MindId, new RoleBriefingComponent
         {
             Briefing = Loc.GetString("legallydistinctspaceferret-role-briefing")
         }, mind);
-
-        component.BrainrotEffectCanceller = new CancellationTokenSource();
-
-        var mobs = new HashSet<Entity<MobStateComponent>>();
-
-        Timer.SpawnRepeating(TimeSpan.FromSeconds(1), () =>
+        _role.MindAddRole(args.MindId, new LegallyDistinctSpaceFerretRoleComponent()
         {
-            _lookup.GetEntitiesInRange(Transform(uid).Coordinates, component.BrainRotAuraRadius, mobs);
-            foreach (var comp in mobs)
-            {
-                if (HasComp<LegallyDistinctSpaceFerretComponent>(comp.Owner) || HasComp<BrainrotComponent>(comp.Owner))
-                {
-                    continue;
-                }
-
-                RaiseLocalEvent(new TooCloseToLDSFEvent(comp.Owner, uid, component.BrainRotAuraRadius));
-            }
-        }, component.BrainrotEffectCanceller.Token);
+            PrototypeId = component.AntagProtoId
+        }, mind);
+        _role.MindPlaySound(args.MindId, new SoundPathSpecifier(component.RoleIntroSfx), mind);
+        _chatMan.DispatchServerMessage(session, Loc.GetString("legallydistinctspaceferret-role-greeting"));
     }
 
-    private void OnShutdown(EntityUid uid, LegallyDistinctSpaceFerretComponent component, ComponentShutdown args)
+    public void OnInteractFailed(EntityUid uid, LegallyDistinctSpaceFerretComponent _, InteractionAttemptFailed args)
     {
-        _actions.RemoveAction(uid, component.BackflipActionEntity);
-        _actions.RemoveAction(uid, component.EepyActionEntity);
-
-        component.BrainrotEffectCanceller.Cancel();
-    }
-
-    public void OnInteractFailed(EntityUid uid, LegallyDistinctSpaceFerretComponent comp, InteractionAttemptFailed args)
-    {
-        OnBackflipAction(uid, comp, new BackflipActionEvent());
-    }
-
-    public void OnBackflipAction(EntityUid uid, LegallyDistinctSpaceFerretComponent comp, BackflipActionEvent args)
-    {
-        RaiseNetworkEvent(new DoABackFlipEvent(GetNetEntity(uid), comp.ClappaSfx));
-
-        args.Handled = true;
-    }
-
-    public void OnEepyAction(EntityUid uid, LegallyDistinctSpaceFerretComponent comp, EepyActionEvent args)
-    {
-        if (_mind.TryGetObjectiveComp<ConsumeNutrientsConditionComponent>(uid, out var nutrientsCondition) && nutrientsCondition.NutrientsConsumed / nutrientsCondition.NutrientsRequired < 1.0)
-        {
-            _popup.PopupEntity(Loc.GetString(comp.NotEnoughNutrientsMessage), uid, PopupType.SmallCaution);
-
-            return;
-        }
-
-        var scrubbers = _lookup.GetEntitiesInRange<GasVentScrubberComponent>(Transform(uid).Coordinates, 2f);
-        if (scrubbers.Count <= 0)
-        {
-            _popup.PopupEntity(Loc.GetString(comp.OutOfRangeMessage), uid, PopupType.SmallCaution);
-
-            return;
-        }
-
-        // Popup that you won!
-        _popup.PopupEntity(Loc.GetString(comp.YouWinMessage), uid, PopupType.Large);
-
-        // Play SFX for all!
-        _audio.PlayPvs(new SoundPathSpecifier(comp.RoleOutroSfx), uid, AudioParams.Default.WithVolume(0.66f));
-
-        // Green text!
-        if (_mind.TryGetObjectiveComp<HibernateConditionComponent>(uid, out var obj))
-        {
-            obj.Hibernated = true;
-        }
-
-        var mind = _mind.GetMind(uid);
-        if (mind != null)
-        {
-            _ticker.OnGhostAttempt(mind.Value, false);
-        }
-
-        AddComp<BlockMovementComponent>(uid);
-        RemComp<ActiveNPCComponent>(uid);
-        RemComp<GhostTakeoverAvailableComponent>(uid);
-
-        RaiseNetworkEvent(new GoEepyEvent(GetNetEntity(uid)));
-        args.Handled = true;
-    }
-
-    private void OnHibernateGetProgress(EntityUid uid, HibernateConditionComponent comp, ref ObjectiveGetProgressEvent args)
-    {
-        args.Progress = comp.Hibernated ? 1.0f : 0.0f;
-    }
-
-    private void OnConsumeNutrientsGetProgress(EntityUid uid, ConsumeNutrientsConditionComponent comp, ref ObjectiveGetProgressEvent args)
-    {
-        args.Progress = comp.NutrientsConsumed / comp.NutrientsRequired;
+        RaiseLocalEvent(uid, new BackflipActionEvent());
     }
 
     private void OnHungerModified(EntityUid uid, LegallyDistinctSpaceFerretComponent comp, HungerModifiedEvent args)
@@ -177,25 +69,10 @@ public sealed class LegallyDistinctSpaceFerretSystem : EntitySystem
 }
 
 [RegisterComponent, Access(typeof(LegallyDistinctSpaceFerretSystem)), ExclusiveAntagonist]
-public sealed class LegallyDistinctSpaceFerretRoleComponent : AntagonistRoleComponent;
+public sealed partial class LegallyDistinctSpaceFerretRoleComponent : AntagonistRoleComponent;
 
 [RegisterComponent]
-public sealed class ConsumeNutrientsConditionComponent : Component
-{
-    [DataField]
-    public float NutrientsRequired = 150.0f;
-
-    public float NutrientsConsumed;
-}
-
-[RegisterComponent]
-public sealed class HibernateConditionComponent : Component
-{
-    public bool Hibernated;
-}
-
-[RegisterComponent]
-public sealed class LegallyDistinctSpaceFerretSpawnRuleComponent : Component;
+public sealed partial class LegallyDistinctSpaceFerretSpawnRuleComponent : Component;
 
 public sealed class LegallyDistinctSpaceFerretSpawnRule : StationEventSystem<LegallyDistinctSpaceFerretSpawnRuleComponent>
 {
