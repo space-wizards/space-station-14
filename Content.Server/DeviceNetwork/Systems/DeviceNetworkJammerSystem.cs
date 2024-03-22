@@ -1,10 +1,12 @@
 using Content.Server.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Components;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
 public sealed class DeviceNetworkJammerSystem : EntitySystem
 {
+    [Dependency] private TransformSystem _transform = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -24,8 +26,8 @@ public sealed class DeviceNetworkJammerSystem : EntitySystem
             if (!jammerComp.JammableNetworks.Contains(ev.NetworkId))
                 continue;
 
-            if ((jammerXform.Coordinates.TryDistance(EntityManager, ev.SenderTransform.Coordinates, out var distance) && distance <= jammerComp.Range)
-                || (jammerXform.Coordinates.TryDistance(EntityManager, xform.Coordinates, out var recvDistance) && recvDistance <= jammerComp.Range))
+            if (jammerXform.Coordinates.InRange(EntityManager, _transform, ev.SenderTransform.Coordinates, jammerComp.Range)
+                || jammerXform.Coordinates.InRange(EntityManager, _transform, xform.Coordinates, jammerComp.Range))
             {
                 ev.Cancel();
                 return;
