@@ -88,6 +88,8 @@
       collection: MaleCry
     Weh:
       collection: Weh
+    LizardWeh:
+      collection: Weh
 
 - type: emoteSounds
   id: MaleSlime

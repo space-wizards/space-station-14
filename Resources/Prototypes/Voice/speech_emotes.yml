@@ -248,6 +248,18 @@
   chatMessages: [Wehs!]
 
 - type: emote
+  id: LizardWeh
+  category: Vocal
+  chatMessages: [Wehs!]
+  chatTriggers:
+    - weh
+    - weh.
+    - weh!
+    - wehs
+    - wehs.
+    - wehs!
+
+- type: emote
   id: Chirp
   category: Vocal
   chatMessages: [chirps!]
