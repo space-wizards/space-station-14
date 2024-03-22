@@ -44,14 +44,14 @@ public sealed class LegallyDistinctSpaceFerretSystem : EntitySystem
         var session = mind.Session;
         _role.MindAddRole(args.MindId, new RoleBriefingComponent
         {
-            Briefing = Loc.GetString("legallydistinctspaceferret-role-briefing")
+            Briefing = Loc.GetString(component.RoleBriefing)
         }, mind);
         _role.MindAddRole(args.MindId, new LegallyDistinctSpaceFerretRoleComponent()
         {
             PrototypeId = component.AntagProtoId
         }, mind);
         _role.MindPlaySound(args.MindId, new SoundPathSpecifier(component.RoleIntroSfx), mind);
-        _chatMan.DispatchServerMessage(session, Loc.GetString("legallydistinctspaceferret-role-greeting"));
+        _chatMan.DispatchServerMessage(session, Loc.GetString(component.RoleGreeting));
     }
 
     public void OnInteractFailed(EntityUid uid, LegallyDistinctSpaceFerretComponent _, InteractionAttemptFailed args)

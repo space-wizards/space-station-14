@@ -8,6 +8,8 @@
   - type: LegallyDistinctSpaceFerret
     roleIntroSfx: /Audio/Animals/wawa_intro.ogg
     antagProtoId: LegallyDistinctSpaceFerret
+    roleBriefing: legallydistinctspaceferret-role-briefing
+    roleGreeting: legallydistinctspaceferret-role-greeting
   - type: BrainrotAura
   - type: CanBackflip
     clappaSfx: /Audio/Animals/slugclappa.ogg

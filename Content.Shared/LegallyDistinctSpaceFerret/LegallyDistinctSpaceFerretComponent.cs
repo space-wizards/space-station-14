@@ -16,4 +16,10 @@ public sealed partial class LegallyDistinctSpaceFerretComponent : Component
 
     [DataField]
     public ProtoId<AntagPrototype> AntagProtoId = "";
+
+    [DataField]
+    public string RoleBriefing = "";
+
+    [DataField]
+    public string RoleGreeting = "";
 }
