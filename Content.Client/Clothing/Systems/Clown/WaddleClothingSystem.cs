@@ -1,9 +1,10 @@
-﻿using Content.Shared.Clown;
+﻿using Content.Shared.Clothing.Components.Clown;
+using Content.Shared.Clown;
 using Content.Shared.Inventory.Events;
 
-namespace Content.Client.Clown;
+namespace Content.Client.Clothing.Systems.Clown;
 
-public sealed class WaddleSystem : EntitySystem
+public sealed class WaddleClothingSystem : EntitySystem
 {
     public override void Initialize()
     {

@@ -12,6 +12,9 @@ public struct ClownStoppedWalkingEvent(EntityUid entity)
     public EntityUid Entity = entity;
 }
 
+/// <summary>
+/// Defines something as having a waddle animation when it moves.
+/// </summary>
 [RegisterComponent]
 public sealed partial class WaddleAnimationComponent : Component
 {
