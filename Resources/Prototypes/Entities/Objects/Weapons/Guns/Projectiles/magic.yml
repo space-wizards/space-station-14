@@ -100,10 +100,10 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
-    - state: fireball
+    - state: ice
       shader: unshaded
   - type: StaminaDamageOnHit
-    damage: 10
+    damage: 25
 
 - type: entity
   id: ProjectileAnomalyFireball

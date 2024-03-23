@@ -13,7 +13,7 @@
       path: /Audio/Magic/fireball.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
-      state: fireball
+      state: magicmissile
     event: !type:ProjectileSpellEvent
       prototype: ProjectileMagicMissile
       posData: !type:TargetCasterPos
@@ -31,10 +31,10 @@
     checkCanAccess: false
     range: 60
     sound: !type:SoundPathSpecifier
-      path: /Audio/Magic/fireball.ogg
+      path: /Audio/Magic/iceburst.ogg
     icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: fireball
+      sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+      state: ice
     event: !type:ProjectileSpellEvent
       prototype: ProjectileIceBurst
       posData: !type:TargetCasterPos
@@ -52,10 +52,10 @@
     checkCanAccess: false
     range: 60
     sound: !type:SoundPathSpecifier
-      path: /Audio/Magic/fireball.ogg
+      path: /Audio/Magic/lightning.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
-      state: fireball
+      state: tesla
     event: !type:ProjectileSpellEvent
       prototype: ProjectileMagicTesla
       posData: !type:TargetCasterPos

@@ -13,7 +13,7 @@ public sealed partial class AnimateDeadSpellEvent : InstantActionEvent, ISpeakSp
     public float Range = 4f;
 
     [DataField("knockSound")]
-    public SoundSpecifier AnimateSound = new SoundPathSpecifier("/Audio/Magic/knock.ogg");
+    public SoundSpecifier AnimateSound = new SoundPathSpecifier("/Audio/Magic/staff_healing.ogg");
 
     /// <summary>
     /// Volume control for the spell.

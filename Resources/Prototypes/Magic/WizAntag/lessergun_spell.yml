@@ -9,8 +9,8 @@
     range: 4
     itemIconStyle: BigAction
     icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: spell_default
+      sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+      state: base
     event: !type:WorldSpawnSpellEvent
       prototypes:
       - id: WeaponSniperMosin

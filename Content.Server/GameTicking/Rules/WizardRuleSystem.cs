@@ -159,15 +159,16 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
 
             _mindSystem.AddObjective(mindId, mind, objective.Value);
         }
-        MakeBriefing(player);
+        _antagSelection.SendBriefing(player, MakeBriefing(player), null, wizardRule.GreetingSound);
+       // MakeBriefing(player);
 
         // SpawnItems(player);
 
     }
 
-    private string MakeBriefing(EntityUid thief)
+    private string MakeBriefing(EntityUid wizard)
     {
-        var isHuman = HasComp<HumanoidAppearanceComponent>(thief);
+        var isHuman = HasComp<HumanoidAppearanceComponent>(wizard);
         var briefing = "\n";
         briefing = isHuman
             ? Loc.GetString("wizard-welcome")
@@ -308,6 +309,8 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
             SpawnMap(wizardRule);
         }
 
+        _antagSelection.SendBriefing(entity, MakeBriefing(entity), null, wizardRule.GreetingSound);
+
 
     }
 
@@ -317,30 +320,13 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
     }
 
 
-/*
-private bool SpawnMapOld(Entity<WizardRuleComponent> ent)
-{
-    ent.Comp.WizardPlanet = _mapManager.CreateMap();
-    var gameMap = _prototypeManager.Index(ent.Comp.OutpostMapPrototype);
-    ent.Comp.WizardOutpost = GameTicker.LoadGameMap(gameMap, ent.Comp.WizardPlanet.Value, null)[0];
-    var query = EntityQueryEnumerator<WizardShuttleComponent, TransformComponent>();
-    while (query.MoveNext(out var grid, out _, out var shuttleTransform))
-    {
-        if (shuttleTransform.MapID != ent.Comp.WizardPlanet)
-            continue;
 
-        ent.Comp.WizardShuttle = grid;
-        break;
-    }
-    return true;
-}
-*/
 
 // Didnt write this, took it from PirateRuleSystem.cs cause it looks like it'd work
 private void SpawnMap(WizardRuleComponent component)
     {
 
-        var map = "/Maps/Shuttles/wizard.yml";
+        var map = "/Maps/Shuttles/wizardimproved.yml";
         var xformQuery = GetEntityQuery<TransformComponent>();
 
         var aabbs = EntityQuery<StationDataComponent>().SelectMany(x =>

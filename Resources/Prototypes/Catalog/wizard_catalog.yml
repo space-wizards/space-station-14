@@ -1,7 +1,7 @@
 - type: listing
   id: WizardSpawnCarpList
   name: Spawn Magicarp
-  description: TBA
+  description: Summon Magicarp to fight with you, they will attack you too though
   productAction: ActionSpawnMagicarpSpell
   cost:
     Magipoints: 2
@@ -14,7 +14,7 @@
 - type: listing
   id: WizardForcewallList
   name: Forcewall
-  description: TBA
+  description: Create a magical wall that blocks all projectiles but not people
   productAction: ActionForceWall
   cost:
      Magipoints: 1
@@ -27,7 +27,7 @@
 - type: listing
   id: WizardBlinkList
   name: Blink
-  description: TBA
+  description: Teleport anywhere that your cursor can reach
   productAction: ActionBlink
   cost:
     Magipoints: 2
@@ -40,10 +40,10 @@
 - type: listing
   id: WizardSmiteList
   name: Smite
-  description: TBA
+  description: Instantly gib anyone close enough to touch
   productAction: ActionSmite
   cost:
-    Magipoints: 3
+    Magipoints: 4
   categories:
   - WizardSpells
   conditions:
@@ -53,7 +53,7 @@
 - type: listing
   id: WizardKnockList
   name: Knock
-  description: TBA
+  description: Use this spell to open all pesky locked doors nearby.
   productAction: ActionKnock
   cost:
     Magipoints: 2
@@ -66,7 +66,7 @@
 - type: listing
   id: WizardFireballList
   name: Fireball
-  description: TBA
+  description: Shoot an explosive fireball at your cursor.
   productAction: ActionFireball
   cost:
     Magipoints: 2
@@ -79,7 +79,7 @@
 - type: listing
   id: WizardMagicMissileList
   name: Magic Missile
-  description: TBA
+  description: Shoot a magical orb that stuns on contact.
   productAction: ActionMagicMissile
   cost:
     Magipoints: 1
@@ -93,7 +93,7 @@
 - type: listing
   id: WizardEmpList
   name: Disable Technology
-  description: TBA
+  description: Show technology whos boss with this spell
   productAction: ActionSpellEMP
   cost:
     Magipoints: 1
@@ -106,7 +106,7 @@
 - type: listing
   id: WizardTeslaList
   name: Tesla Ball
-  description: TBA
+  description: This spell will stun and deal hefty damage to anyone hit.
   productAction: ActionTeslaBall
   cost:
     Magipoints: 2
@@ -119,7 +119,7 @@
 - type: listing
   id: WizardAnimateDeadList
   name: Animate Dead
-  description: TBA
+  description: Use this spell to recruit any corpses to your side!
   productAction: ActionAnimateDead
   cost:
     Magipoints: 3
@@ -132,7 +132,7 @@
 - type: listing
   id: WizardSmokeList
   name: Smoke
-  description: TBA
+  description: Now you see me now you dont
   productAction: ActionSmokeSpell
   cost:
     Magipoints: 1
@@ -145,7 +145,7 @@
 - type: listing
   id: WizardIceBurstList
   name: Ice Burst
-  description: TBA
+  description: This spell shoots out an ice crystal that deals decent cold damage as well as some stamina damage
   productAction: ActionIceBurst
   cost:
     Magipoints: 2
@@ -158,7 +158,7 @@
 - type: listing
   id: WizardBlindList
   name: Blind
-  description: TBA
+  description: Theyll never see it coming
   productAction: ActionBlind
   cost:
     Magipoints: 1
@@ -171,7 +171,7 @@
 - type: listing
   id: WizardSwapList
   name: Swap
-  description: TBA
+  description: Swap positions with any chosen target using this spell and maybe even teleport unsuspecting victims into space
   productAction: ActionSwapSpell
   cost:
     Magipoints: 2
@@ -184,7 +184,7 @@
 - type: listing
   id: WizardCluwneList
   name: Clown's Revenge
-  description: TBA
+  description: Channel the power of the Honkmother and cluwne-ify anyone of your choosing temporarily
   productAction: ActionClownify
   cost:
     Magipoints: 3
@@ -197,7 +197,7 @@
 - type: listing
   id: WizardDevolveList
   name: Devolve
-  description: TBA
+  description: Ooh ooh ah ah
   productAction: ActionDevolve
   cost:
     Magipoints: 2
@@ -210,7 +210,7 @@
 - type: listing
   id: WizardLesserGunList
   name: Summon Lesser Gun
-  description: TBA
+  description: Who needs magic when you have bullets
   productAction: ActionLesserGun
   cost:
     Magipoints: 2
@@ -219,5 +219,7 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+
 
 

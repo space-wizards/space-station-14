@@ -13,9 +13,9 @@
     canTargetSelf: false
     interactOnMiss: false
     sound: !type:SoundPathSpecifier
-      path: /Audio/Magic/disintegrate.ogg
+      path: /Audio/Magic/staff_chaos.ogg
     icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: gib
+      sprite: Mobs/Species/Human/organs.rsi
+      state: eyeball-r
     event: !type:BlindSpellEvent
       speech: action-speech-spell-blind

@@ -472,6 +472,7 @@ public sealed class MagicSystem : EntitySystem
             // _audio.PlayPvs(args.AnimateSound, args.Performer, AudioParams.Default.WithVolume(args.Anima));
 
             //Look for doors and don't open them if they're already open.
+            _audio.PlayPvs(args.AnimateSound, args.Performer, AudioParams.Default.WithVolume(args.AnimateVolume));
             foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))
             {
                 if (!TryComp<MobStateComponent>(entity, out var mobState))

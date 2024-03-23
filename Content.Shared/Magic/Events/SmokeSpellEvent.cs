@@ -5,15 +5,10 @@ namespace Content.Shared.Magic.Events;
 
 public sealed partial class SmokeSpellEvent : InstantActionEvent, ISpeakSpell
 {
-    /// <summary>
-    /// The range this spell opens doors in
-    /// 4f is the default
-    /// </summary>
-    [DataField("range")]
-    public float Range = 4f;
+
 
     [DataField("knockSound")]
-    public SoundSpecifier SmokeSound = new SoundPathSpecifier("/Audio/Magic/knock.ogg");
+    public SoundSpecifier SmokeSound = new SoundPathSpecifier("/Audio/Effects/smoke.ogg");
 
     /// <summary>
     /// Volume control for the spell.
