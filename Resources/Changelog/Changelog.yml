@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Bhijn and Myr
-  changes:
-  - message: You can now open and close your eyes while cuffed if the action to do
-      so is available to you. (Such as if it was granted via blindness)
-    type: Fix
-  id: 5714
-  time: '2024-01-15T05:11:21.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24097
 - author: Flareguy
   changes:
   - message: Made lava & liquid plasma significantly less lethal.
@@ -3799,3 +3791,14 @@
   id: 6213
   time: '2024-03-23T17:30:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26361
+- author: Tayrtahn
+  changes:
+  - message: Clumsy characters can no longer avoid bonking their heads by using the
+      Climb verb.
+    type: Fix
+  - message: Clumsy characters are less likely to bonk their heads when trying to
+      climb.
+    type: Tweak
+  id: 6214
+  time: '2024-03-23T19:29:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24977
