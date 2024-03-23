@@ -244,9 +244,9 @@
 - type: construction
   name: nuclear fission device
   id: improvisednuclearbomb
-  graph: PipeBomb
+  graph: ImprovisedNukeCraft
   startNode: start
-  targetNode: pipebomb
+  targetNode: painted
   category: construction-category-misc
   objectType: Item
   description: A full nuclear explosive.

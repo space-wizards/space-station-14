@@ -70,6 +70,7 @@
         name: improvised shotgun
         icon:
           sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+          state: icon
         doAfter: 2
   - node: gun
     entity: ImprovisedNuclearBombInsidesGun
@@ -110,6 +111,7 @@
         name: enriched uranium
         icon:
           sprite: Objects/Fun/enricheduranium.rsi
+          state: icon
         doAfter: 5
   - node: uranium
     entity: ImprovisedNuclearBombInsidesUranium
