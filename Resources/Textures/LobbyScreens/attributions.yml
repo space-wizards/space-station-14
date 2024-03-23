@@ -37,4 +37,7 @@
   license: "CC-BY-NC-SA-3.0"
 
 - files: ["goob.webp"]
-- license: "CC-BY-NC-SA-3.0"
+  license: "CC-BY-NC-SA-3.0"
+
+- files: ["what.webp"]
+  license: "CC-BY-NC-SA-3.0"
