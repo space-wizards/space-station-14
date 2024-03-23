@@ -47,7 +47,7 @@ namespace Content.Client.IconSmoothing
             var xform = Transform(uid);
             if (xform.Anchored)
             {
-                component.LastPosition = _mapManager.TryGetGrid(xform.GridUid, out var grid)
+                component.LastPosition = TryComp<MapGridComponent>(xform.GridUid, out var grid)
                     ? (xform.GridUid.Value, grid.TileIndicesFor(xform.Coordinates))
                     : (null, new Vector2i(0, 0));
 
@@ -134,7 +134,7 @@ namespace Content.Client.IconSmoothing
 
             Vector2i pos;
 
-            if (transform.Anchored && _mapManager.TryGetGrid(transform.GridUid, out var grid))
+            if (transform.Anchored && TryComp<MapGridComponent>(transform.GridUid, out var grid))
             {
                 pos = grid.CoordinatesToTile(transform.Coordinates);
             }
@@ -144,7 +144,7 @@ namespace Content.Client.IconSmoothing
                 if (comp.LastPosition is not (EntityUid gridId, Vector2i oldPos))
                     return;
 
-                if (!_mapManager.TryGetGrid(gridId, out grid))
+                if (!TryComp(gridId, out grid))
                     return;
 
                 pos = oldPos;
@@ -206,7 +206,7 @@ namespace Content.Client.IconSmoothing
                 {
                     var directions = DirectionFlag.None;
 
-                    if (_mapManager.TryGetGrid(xform.GridUid, out grid))
+                    if (TryComp(xform.GridUid, out grid))
                     {
                         var pos = grid.TileIndicesFor(xform.Coordinates);
 
@@ -240,7 +240,7 @@ namespace Content.Client.IconSmoothing
 
             if (xform.Anchored)
             {
-                if (!_mapManager.TryGetGrid(xform.GridUid, out grid))
+                if (!TryComp(xform.GridUid, out grid))
                 {
                     Log.Error($"Failed to calculate IconSmoothComponent sprite in {uid} because grid {xform.GridUid} was missing.");
                     return;
