@@ -60,11 +60,11 @@
   - type: RadioMicrophone
     broadcastChannel: OldBroadcast
   - type: Sprite
-    sprite: Objects/Devices/broadcast_microphone.rsi
+    sprite: Objects/Fun/Instruments/microphone.rsi
     state: icon
   - type: Item
     size: Small
-    sprite: Objects/Devices/broadcast_microphone.rsi
+    sprite: Objects/Fun/Instruments/microphone.rsi
   - type: Tag
     tags:
     - BroadcastMicrophone
