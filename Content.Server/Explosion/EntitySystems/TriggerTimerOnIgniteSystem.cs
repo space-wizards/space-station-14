@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Explosion.Components;
 using Robust.Shared.Random;
+using Content.Shared.Trigger;
+using Content.Server.IgnitionSource;
 
 
 namespace Content.Server.Explosion
@@ -21,6 +23,8 @@ namespace Content.Server.Explosion
     {
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
 
 
         public override void Initialize()
@@ -32,6 +36,10 @@ namespace Content.Server.Explosion
 
         private void OnInteracted(EntityUid uid, OnIgniteTimerTriggerComponent component, InteractUsingEvent args)
         {
+            if(TryComp<IgnitionSourceComponent>(args.Used, out var comp)) {
+                Log.Debug("This is a good ignition source!");
+            }
+
             if (args.Handled)
                 return;
 
@@ -48,6 +56,9 @@ namespace Content.Server.Explosion
             _popupSystem.PopupEntity(Loc.GetString("trigger-activated", ("device", uid)), args.User, args.User);
             Log.Debug("You used this with another item!");
             var triggerEvent = new TriggerEvent(uid, args.User);
+
+            if (TryComp<AppearanceComponent>(uid, out var appearance))
+                _appearance.SetData(uid, TriggerVisuals.VisualState, TriggerVisualState.Primed, appearance);
             //Log.Debug(uid.ToString());
             //Log.Debug(args.User.ToString());
             //EntityManager.EventBus.RaiseLocalEvent(uid, triggerEvent, true);
