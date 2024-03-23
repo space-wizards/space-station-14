@@ -32,3 +32,13 @@
     preset: StorePresetWizard
     balance:
       Magipoints: 6
+
+- type: entity
+  parent: BaseSpellbookShop
+  id: BaseSpellbookShopDBG
+  suffix: DEBUG
+  components:
+  - type: Store
+    preset: StorePresetWizard
+    balance:
+      Magipoints: 1337

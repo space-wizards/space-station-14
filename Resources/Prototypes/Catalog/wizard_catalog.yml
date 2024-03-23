@@ -116,4 +116,108 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: WizardAnimateDeadList
+  name: Animate Dead
+  description: TBA
+  productAction: ActionAnimateDead
+  cost:
+    Magipoints: 3
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WizardSmokeList
+  name: Smoke
+  description: TBA
+  productAction: ActionSmokeSpell
+  cost:
+    Magipoints: 1
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WizardIceBurstList
+  name: Ice Burst
+  description: TBA
+  productAction: ActionIceBurst
+  cost:
+    Magipoints: 2
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WizardBlindList
+  name: Blind
+  description: TBA
+  productAction: ActionBlind
+  cost:
+    Magipoints: 1
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WizardSwapList
+  name: Swap
+  description: TBA
+  productAction: ActionSwapSpell
+  cost:
+    Magipoints: 2
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WizardCluwneList
+  name: Clown's Revenge
+  description: TBA
+  productAction: ActionClownify
+  cost:
+    Magipoints: 3
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WizardDevolveList
+  name: Devolve
+  description: TBA
+  productAction: ActionDevolve
+  cost:
+    Magipoints: 2
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WizardLesserGunList
+  name: Summon Lesser Gun
+  description: TBA
+  productAction: ActionLesserGun
+  cost:
+    Magipoints: 2
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 

@@ -17,3 +17,24 @@
         amount: 3
       offset: 0, 1
       speech: action-speech-spell-summon-magicarp
+
+
+- type: entity
+  id: ActionLesserGun
+  name: Summon Lesser Gun
+  description: This spell creates a regular mosin for you.
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 60
+    range: 4
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: spell_default
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: WeaponSniperMosin
+        amount: 1
+      offset: 0, 0
+      speech: action-speech-spell-lessergun

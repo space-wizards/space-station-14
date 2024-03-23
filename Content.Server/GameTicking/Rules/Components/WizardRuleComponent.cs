@@ -15,9 +15,8 @@ namespace Content.Server.GameTicking.Rules.Components;
 public sealed partial class WizardRuleComponent : Component
 {
 
-    public MapId? WizardPlanet;
+    public EntityUid  WizardShuttle = EntityUid.Invalid;
     public EntityUid? WizardOutpost;
-    public EntityUid? WizardShuttle;
 
     [DataField]
     public List<ICommonSession> Wizards = new();

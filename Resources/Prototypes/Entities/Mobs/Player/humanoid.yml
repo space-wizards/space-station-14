@@ -511,3 +511,6 @@
   components:
     - type: Loadout
       prototypes: [WizardBlueGear]
+    - type: NpcFactionMember
+      factions:
+      - Wizard

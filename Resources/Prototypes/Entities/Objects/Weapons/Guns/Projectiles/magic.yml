@@ -31,6 +31,38 @@
     fireStacks: 0.35
 
 - type: entity
+  id: ProjectileFireballNuke
+  name: nuclear fireball
+  description: Guh oh.
+  parent: BulletRocket
+  noSpawn: true
+  components:
+  - type: PointLight
+    color: "#E25822"
+    radius: 4.0
+    energy: 10.0
+  - type: Projectile
+    damage:
+      types:
+        Heat: 1000
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: fireball
+      shader: unshaded
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 50
+    intensitySlope: 6
+    totalIntensity: 20000
+    maxTileBreak: 50
+  - type: IgnitionSource
+    temperature: 400
+    ignited: true
+  - type: IgniteOnCollide
+    fireStacks: 1
+
+- type: entity
   id: ProjectileMagicMissile
   name: magic missile
   description: Smells like magic.
@@ -53,6 +85,25 @@
   - type: StunOnCollide
     stunAmount: 5
     knockdownAmount: 3
+
+- type: entity
+  id: ProjectileIceBurst
+  name: ice burst
+  description: Brrrrr.
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Cold: 20
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: fireball
+      shader: unshaded
+  - type: StaminaDamageOnHit
+    damage: 10
 
 - type: entity
   id: ProjectileAnomalyFireball

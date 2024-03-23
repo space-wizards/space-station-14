@@ -35,6 +35,12 @@ using JetBrains.Annotations;
 using System.Reflection.Metadata.Ecma335;
 using Content.Shared.NPC.Systems;
 using Content.Server.Preferences.Managers;
+using Robust.Server.GameObjects;
+using Prometheus;
+using Robust.Server.Maps;
+using System.Numerics;
+using Content.Shared.Mind;
+using Content.Server.Objectives;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -50,6 +56,7 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
     [Dependency] private readonly IServerPreferencesManager _pref = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
@@ -58,6 +65,7 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly InventorySystem _inventoryManager = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
+    [Dependency] private readonly ObjectivesSystem _objectives = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -77,6 +85,7 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
         // SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
         //  SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
+        SubscribeLocalEvent<WizardRoleComponent, GetBriefingEvent>(GetBriefing);
 
     }
 
@@ -85,6 +94,7 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
     {
         // I took this one from the Thief Rule System lol
         var query = QueryActiveRules();
+        
         while (query.MoveNext(out var uid, out _, out var comp, out var gameRule))
         {
             // Finds eligible players to add to the list
@@ -105,7 +115,9 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
             var wizards = _antagSelection.ChooseAntags(wizardCount, eligiblePlayers);
 
             MakeWizard(wizards, comp);
+            SpawnMap(comp);
         }
+       
     }
 
     public void MakeWizard(List<EntityUid> players, WizardRuleComponent wizardRule)
@@ -127,7 +139,7 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
         if (HasComp<WizardRoleComponent>(mindId))
             return;
 
-        // no session would break things
+        // no session would probably break things
         if (!_mindSystem.TryGetSession(mind, out var session))
             return;
 
@@ -139,8 +151,30 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
             PrototypeId = wizardRule.WizardPrototypeId,
         }, silent: true);
 
+        for (var pick = 0; pick < 3 && 4 > 3; pick++)
+        {
+            var objective = _objectives.GetRandomObjective(mindId, mind, "WizardObjectiveGroups");
+            if (objective == null)
+                continue;
+
+            _mindSystem.AddObjective(mindId, mind, objective.Value);
+        }
+        MakeBriefing(player);
+
         // SpawnItems(player);
 
+    }
+
+    private string MakeBriefing(EntityUid thief)
+    {
+        var isHuman = HasComp<HumanoidAppearanceComponent>(thief);
+        var briefing = "\n";
+        briefing = isHuman
+            ? Loc.GetString("wizard-welcome")
+            : Loc.GetString("wizard-welcome");
+
+        briefing += "\n \n" + Loc.GetString("wizard-description") + "\n";
+        return briefing;
     }
 
     public void SetupWizard(EntityUid mob, string name, HumanoidCharacterProfile? profile, WizardRuleComponent component)
@@ -153,16 +187,17 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
 
         var gear = _prototypeManager.Index(component.GearProto);
         _stationSpawning.EquipStartingGear(mob, gear, profile);
+        _inventoryManager.SpawnItemOnEntity(mob, "BaseSpellbookShop6MP");
 
         _npcFaction.RemoveFaction(mob, "NanoTrasen", false);
-        _npcFaction.AddFaction(mob, "Wizard Federation");
+        _npcFaction.AddFaction(mob, "WizardFederation");
+        _npcFaction.MakeHostile("WizardFederation", "NanoTrasen");
 
     }
 
     public void SpawnWizards(WizardRuleComponent component)
     {
-        if (component.WizardOutpost is not { Valid: true } outpostUid)
-            return;
+      
 
         var spawns = new List<EntityCoordinates>();
         foreach (var (_, meta, xform) in EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
@@ -170,15 +205,13 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
             if (meta.EntityPrototype?.ID != component.SpawnPointProto.Id)
                 continue;
 
-            if (xform.ParentUid != component.WizardOutpost)
-                continue;
 
             spawns.Add(xform.Coordinates);
             break;
         }
         if (spawns.Count == 0)
         {
-            spawns.Add(Transform(outpostUid).Coordinates);
+            spawns.Add(Transform(component.WizardShuttle).Coordinates);
         }
 
         foreach (var session in component.Wizards)
@@ -249,36 +282,95 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
             return;
 
         SpawnItems(entity);
+        _inventoryManager.SpawnItemOnEntity(entity, "BaseSpellbookShop6MP");
+        _npcFaction.RemoveFaction(entity, "NanoTrasen", false);
+        _npcFaction.AddFaction(entity, "Wizard");
+
+
 
         var wizardRule = EntityQuery<WizardRuleComponent>().FirstOrDefault();
+
+        for (var pick = 0; pick < 3 && 4 > 3; pick++)
+        {
+            var objective = _objectives.GetRandomObjective(mindId, mind, "WizardObjectiveGroups");
+            if (objective == null)
+                continue;
+
+            _mindSystem.AddObjective(mindId, mind, objective.Value);
+        }
+
+
         if (wizardRule == null)
         {
             // Adds wizard gamerule if not already existing
             GameTicker.StartGameRule("Wizard", out var ruleEntity);
             wizardRule = Comp<WizardRuleComponent>(ruleEntity);
+            SpawnMap(wizardRule);
         }
-
 
 
     }
 
-    private bool SpawnMap(Entity<WizardRuleComponent> ent)
+    public void GetBriefing(Entity<WizardRoleComponent> entity, ref GetBriefingEvent args)
     {
-        ent.Comp.WizardPlanet = _mapManager.CreateMap();
-        var gameMap = _prototypeManager.Index(ent.Comp.OutpostMapPrototype);
-        ent.Comp.WizardOutpost = GameTicker.LoadGameMap(gameMap, ent.Comp.WizardPlanet.Value, null)[0];
-        var query = EntityQueryEnumerator<WizardShuttleComponent, TransformComponent>();
-        while (query.MoveNext(out var grid, out _, out var shuttleTransform))
-        {
-            if (shuttleTransform.MapID != ent.Comp.WizardPlanet)
-                continue;
-
-            ent.Comp.WizardShuttle = grid;
-            break;
-        }
-        return true;
+        args.Append(MakeBriefing(entity));
     }
 
+
+/*
+private bool SpawnMapOld(Entity<WizardRuleComponent> ent)
+{
+    ent.Comp.WizardPlanet = _mapManager.CreateMap();
+    var gameMap = _prototypeManager.Index(ent.Comp.OutpostMapPrototype);
+    ent.Comp.WizardOutpost = GameTicker.LoadGameMap(gameMap, ent.Comp.WizardPlanet.Value, null)[0];
+    var query = EntityQueryEnumerator<WizardShuttleComponent, TransformComponent>();
+    while (query.MoveNext(out var grid, out _, out var shuttleTransform))
+    {
+        if (shuttleTransform.MapID != ent.Comp.WizardPlanet)
+            continue;
+
+        ent.Comp.WizardShuttle = grid;
+        break;
+    }
+    return true;
+}
+*/
+
+// Didnt write this, took it from PirateRuleSystem.cs cause it looks like it'd work
+private void SpawnMap(WizardRuleComponent component)
+    {
+
+        var map = "/Maps/Shuttles/wizard.yml";
+        var xformQuery = GetEntityQuery<TransformComponent>();
+
+        var aabbs = EntityQuery<StationDataComponent>().SelectMany(x =>
+                x.Grids.Select(x =>
+                    xformQuery.GetComponent(x).WorldMatrix.TransformBox(_mapManager.GetGridComp(x).LocalAABB)))
+            .ToArray();
+
+        var aabb = aabbs[0];
+
+        for (var i = 1; i < aabbs.Length; i++)
+        {
+            aabb.Union(aabbs[i]);
+        }
+
+        // (Not commented?)
+        var a = MathF.Max(aabb.Height / 2f, aabb.Width / 2f) * 2.5f;
+
+        var gridId = _map.LoadGrid(GameTicker.DefaultMap, map, new MapLoadOptions
+        {
+            Offset = aabb.Center + new Vector2(a, a),
+            LoadMap = false,
+        });
+
+        if (!gridId.HasValue)
+            return;
+
+        component.WizardShuttle = gridId.Value;
+
+    }
+    
 
     private void MoveWizards(WizardRuleComponent component)
     {

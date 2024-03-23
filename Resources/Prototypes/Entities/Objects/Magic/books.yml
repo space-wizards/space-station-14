@@ -127,6 +127,123 @@
       ActionSpellEMP: -1
 
 - type: entity
+  id: AnimateDeadSpellbook
+  name: animate dead spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: bookfireball
+  - type: Spellbook
+    spells:
+      ActionAnimateDead: -1
+
+- type: entity
+  id: IceBurstSpellbook
+  name: ice burst spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: bookfireball
+  - type: Spellbook
+    spells:
+      ActionIceBurst: -1
+
+- type: entity
+  id: BlindSpellbook
+  name: blind spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: bookfireball
+  - type: Spellbook
+    spells:
+      ActionBlindSpell: -1
+
+- type: entity
+  id: SmokeSpellbook
+  name: smoke spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: bookfireball
+  - type: Spellbook
+    spells:
+      ActionSmokeSpell: -1
+
+- type: entity
+  id: MindswapSpellbook
+  name: mindswap spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: bookfireball
+  - type: Spellbook
+    spells:
+      ActionMindswap: -1
+
+- type: entity
+  id: SwapSpellbook
+  name: swap spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: bookfireball
+  - type: Spellbook
+    spells:
+      ActionSwapSpell: -1
+
+- type: entity
+  id: LesserGunSpellbook
+  name: summon lesser gun spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: bookfireball
+  - type: Spellbook
+    spells:
+      ActionLesserGun: -1
+
+- type: entity
+  id: ClownifySpellbook
+  name: clown's revenge spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: bookfireball
+  - type: Spellbook
+    spells:
+      ActionClownify: -1
+
+- type: entity
+  id: DevolveSpellbook
+  name: devolve spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: bookfireball
+  - type: Spellbook
+    spells:
+      ActionDevolve: -1
+
+- type: entity
   id: ScrollRunes
   name: scroll of runes
   parent: BaseSpellbook
