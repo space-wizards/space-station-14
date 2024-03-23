@@ -40,5 +40,5 @@ reagent-desc-norepinephric-acid = A smooth chemical that blocks the optical rece
 reagent-name-tear-gas = tear gas
 reagent-desc-tear-gas = A chemical that causes severe irritation and crying, commonly used in riot control.
 
-reagent-name-coffein = coffein
-reagent-desc-coffein = A mild stimulant, helps you get a college degree.
+reagent-name-coffeine = coffeine
+reagent-desc-coffeine = A mild stimulant, helps you get a college degree.

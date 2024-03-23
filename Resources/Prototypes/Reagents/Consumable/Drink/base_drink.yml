@@ -30,7 +30,7 @@
       - !type:SatiateThirst
         factor: 2
       - !type:AdjustReagent
-        reagent: Coffein
+        reagent: Coffeine
         amount: 0.15
   plantMetabolism:
   - !type:PlantAdjustNutrition

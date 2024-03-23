@@ -136,7 +136,7 @@
           Quantity: 3
         - ReagentId: CocoaPowder
           Quantity: 1
-        - ReagentId: Coffein
+        - ReagentId: Coffeine
           Quantity: 0.05
 
 - type: entity

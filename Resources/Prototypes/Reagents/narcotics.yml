@@ -398,10 +398,10 @@
           min: 20
 
 - type: reagent
-  id: Coffein
-  name: reagent-name-coffein
+  id: Coffeine
+  name: reagent-name-coffeine
   group: Narcotic
-  desc: reagent-desc-coffein
+  desc: reagent-desc-coffeine
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: bitter
   color: "#000000"
@@ -419,8 +419,3 @@
         damage:
           types:
             Poison: 1
-    Narcotic:
-      effects:
-      - !type:MovespeedModifier
-        walkSpeedModifier: 1.01
-        sprintSpeedModifier: 1.02

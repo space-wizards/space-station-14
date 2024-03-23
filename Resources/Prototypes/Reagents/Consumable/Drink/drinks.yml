@@ -16,7 +16,7 @@
         reagent: Theobromine
         amount: 0.05
       - !type:AdjustReagent
-        reagent: Coffein
+        reagent: Coffeine
         amount: 0.1
 
 - type: reagent
@@ -37,7 +37,7 @@
         reagent: Theobromine
         amount: 0.05
       - !type:AdjustReagent
-        reagent: Coffein
+        reagent: Coffeine
         amount: 0.05
 
 - type: reagent
@@ -72,7 +72,7 @@
     Drink:
       effects:
         - !type:AdjustReagent
-          reagent: Coffein
+          reagent: Coffeine
           amount: 0.05
 
 - type: reagent
@@ -93,7 +93,7 @@
     Drink:
       effects:
         - !type:AdjustReagent
-          reagent: Coffein
+          reagent: Coffeine
           amount: 0.05
 
 - type: reagent
@@ -133,7 +133,7 @@
     Drink:
       effects:
         - !type:AdjustReagent
-          reagent: Coffein
+          reagent: Coffeine
           amount: 0.03
 
 - type: reagent
@@ -154,7 +154,7 @@
     Drink:
       effects:
         - !type:AdjustReagent
-          reagent: Coffein
+          reagent: Coffeine
           amount: 0.03
 
 - type: reagent
@@ -180,7 +180,7 @@
         reagent: Theobromine
         amount: 0.05
       - !type:AdjustReagent
-        reagent: Coffein
+        reagent: Coffeine
         amount: 0.1
 
 - type: reagent
@@ -320,7 +320,7 @@
     Drink:
       effects:
       - !type:AdjustReagent
-        reagent: Coffein
+        reagent: Coffeine
         amount: 0.1
       - !type:SatiateThirst
         factor: 6
@@ -373,7 +373,7 @@
         reagent: Theobromine
         amount: 0.05
       - !type:AdjustReagent
-        reagent: Coffein
+        reagent: Coffeine
         amount: 0.15
 
 - type: reagent
@@ -528,7 +528,7 @@
     Drink:
       effects:
       - !type:AdjustReagent
-        reagent: Coffein
+        reagent: Coffeine
         amount: 0.05
 
 - type: reagent
@@ -549,7 +549,7 @@
     Drink:
       effects:
       - !type:AdjustReagent
-        reagent: Coffein
+        reagent: Coffeine
         amount: 0.05
 
 - type: reagent
@@ -569,7 +569,7 @@
     Drink:
       effects:
       - !type:AdjustReagent
-        reagent: Coffein
+        reagent: Coffeine
         amount: 0.04
 
 - type: reagent
@@ -590,5 +590,5 @@
     Drink:
       effects:
       - !type:AdjustReagent
-        reagent: Coffein
+        reagent: Coffeine
         amount: 0.02

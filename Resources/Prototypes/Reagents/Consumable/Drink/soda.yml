@@ -43,7 +43,7 @@
         reagent: Theobromine
         amount: 0.05
       - !type:AdjustReagent
-        reagent: Coffein
+        reagent: Coffeine
         amount: 0.3
 
 - type: reagent
@@ -92,7 +92,7 @@
     Drink:
       effects:
       - !type:AdjustReagent
-        reagent: Coffein
+        reagent: Coffeine
         amount: 0.3
 
 - type: reagent
