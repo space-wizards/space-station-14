@@ -9,27 +9,25 @@ namespace Content.Server.Administration.Managers;
 
 public sealed partial class AdminManager
 {
-    static AdminManager()
+    private Dictionary<int, (int active, int afk, int deadminned)>? _adminOnlineCounts;
+
+    private const int SentinelRankId = -1;
+
+    [Dependency] private readonly IMetricsManager _metrics = default!;
+    [Dependency] private readonly IAfkManager _afkManager = default!;
+    [Dependency] private readonly IMeterFactory _meterFactory = default!;
+
+    private void InitializeMetrics()
     {
-        var meter = new Meter("SS14.AdminManager");
+        _metrics.UpdateMetrics += MetricsOnUpdateMetrics;
+
+        var meter = _meterFactory.Create("SS14.AdminManager");
 
         meter.CreateObservableGauge(
             "admins_online_count",
             MeasureAdminCount,
             null,
             "The count of online admins");
-    }
-
-    private static Dictionary<int, (int active, int afk, int deadminned)>? _adminOnlineCounts;
-
-    private const int SentinelRankId = -1;
-
-    [Dependency] private readonly IMetricsManager _metrics = default!;
-    [Dependency] private readonly IAfkManager _afkManager = default!;
-
-    private void InitializeMetrics()
-    {
-        _metrics.UpdateMetrics += MetricsOnUpdateMetrics;
     }
 
     private void MetricsOnUpdateMetrics()
@@ -74,7 +72,7 @@ public sealed partial class AdminManager
         _adminOnlineCounts = dict;
     }
 
-    private static IEnumerable<Measurement<int>> MeasureAdminCount()
+    private IEnumerable<Measurement<int>> MeasureAdminCount()
     {
         if (_adminOnlineCounts == null)
             yield break;
