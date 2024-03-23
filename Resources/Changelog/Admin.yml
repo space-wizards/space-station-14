@@ -112,5 +112,14 @@ Entries:
   id: 15
   time: '2024-03-13T22:46:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26091
+- author: PJB3005
+  changes:
+  - message: Admin messages are now shown as "seen" even if the player dismisses them
+      only temporarily. Also, it is impossible for players to play without dismissing
+      the message (temporary or permanent).
+    type: Tweak
+  id: 16
+  time: '2024-03-21T15:15:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26223
 Name: Admin
 Order: 1

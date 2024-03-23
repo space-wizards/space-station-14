@@ -34,6 +34,7 @@ namespace Content.Server.Guardian
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -324,7 +325,7 @@ namespace Content.Server.Guardian
             if (!guardianComponent.GuardianLoose)
                 return;
 
-            if (!guardianXform.Coordinates.InRange(EntityManager, hostXform.Coordinates, guardianComponent.DistanceAllowed))
+            if (!guardianXform.Coordinates.InRange(EntityManager, _transform, hostXform.Coordinates, guardianComponent.DistanceAllowed))
                 RetractGuardian(hostUid, hostComponent, guardianUid, guardianComponent);
         }
 
