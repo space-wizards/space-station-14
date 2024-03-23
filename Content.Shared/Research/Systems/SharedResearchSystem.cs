@@ -24,23 +24,20 @@ public abstract class SharedResearchSystem : EntitySystem
         UpdateTechnologyCards(uid, component);
     }
 
-    public void UpdateTechnologyCards(EntityUid uid, TechnologyDatabaseComponent? component = null)
+    protected void UpdateTechnologyCards(EntityUid uid, TechnologyDatabaseComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
-        var availableTechnology = GetAvailableTechnologies(uid, component);
-        _random.Shuffle(availableTechnology);
-
         component.CurrentTechnologyCards.Clear();
-        foreach (var discipline in component.SupportedDisciplines)
-        {
-            var selected = availableTechnology.FirstOrDefault(p => p.Discipline == discipline);
-            if (selected == null)
-                continue;
 
-            component.CurrentTechnologyCards.Add(selected.ID);
+        var availableTechnology = GetAvailableTechnologies(uid, component);
+
+        foreach (var tech in availableTechnology)
+        {
+            component.CurrentTechnologyCards.Add(tech.ID);
         }
+
         Dirty(uid, component);
     }
 
