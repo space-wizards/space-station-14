@@ -203,7 +203,7 @@
       entity: MaterialGunpowder
 
 - type: reaction
-  id: Lingium # Coding games in the hot sun, i fought the code and the code won
+  id: lingium # Failing checks in the hot sun, i fought the code and the code won
   reactants:
     Doxarubixadone:
       amount: 1
@@ -212,4 +212,4 @@
     Plasma:
       amount: 1
   products:
-    Lingium: 3
+    lingium: 3
