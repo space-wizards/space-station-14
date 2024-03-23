@@ -248,7 +248,7 @@
   startNode: start
   targetNode: painted
   category: construction-category-misc
-  objectType: Structure
+  objectType: Item
   description: A full nuclear explosive.
   icon:
     sprite: Objects/Devices/nuke.rsi
