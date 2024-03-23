@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -93,7 +94,9 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (tile.Air == null)
             {
-                if (other.Tile != null)
+                // TODO ATMOS: why does this need to check if a tile exists if it doesn't use the tile?
+                if (TryComp<MapGridComponent>(other.GridIndex, out var grid)
+                    && _mapSystem.TryGetTileRef(other.GridIndex, grid, other.GridIndices, out var _))
                 {
                     TemperatureShareOpenToSolid(other, tile);
                 }

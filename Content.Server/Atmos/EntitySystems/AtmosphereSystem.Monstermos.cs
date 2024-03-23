@@ -668,7 +668,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (adj == null)
             {
                 var nonNull = tile.AdjacentTiles.Where(x => x != null).Count();
-                Log.Error($"Encountered null adjacent tile in {nameof(AdjustEqMovement)}. Dir: {direction}, Tile: {tile.Tile}, non-null adj count: {nonNull}, Trace: {Environment.StackTrace}");
+                Log.Error($"Encountered null adjacent tile in {nameof(AdjustEqMovement)}. Dir: {direction}, Tile: ({tile.GridIndex}, {tile.GridIndices}), non-null adj count: {nonNull}, Trace: {Environment.StackTrace}");
                 return;
             }
 
