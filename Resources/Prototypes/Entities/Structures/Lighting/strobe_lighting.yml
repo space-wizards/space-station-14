@@ -137,17 +137,6 @@
       path: "/Audio/Misc/siren.ogg"
 
 - type: entity
-  id: PoweredStrobeLightAdmin
-  suffix: "Empty, admin"
-  parent: PoweredStrobeLightEmpty
-  components:
-  - type: AmbientSound
-    volume: 0
-    range: 10
-    sound:
-      path: "/Audio/Effects/Lightning/strobeadmin.ogg"
-
-- type: entity
   id: PoweredStrobeLightEpsilon
   suffix: "Empty, epsilon"
   parent: PoweredStrobeLightEmpty
