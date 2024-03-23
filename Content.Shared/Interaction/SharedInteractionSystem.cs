@@ -16,10 +16,10 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.MouseRotator;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Content.Shared.Pulling;
-using Content.Shared.Pulling.Components;
 using Content.Shared.Tag;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
@@ -61,7 +61,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
-        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
+        [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -172,7 +172,7 @@ namespace Content.Shared.Interaction
         {
             if (!ValidateClientInput(session, coords, uid, out var userEntity))
             {
-                Logger.InfoS("system.interaction", $"TryPullObject input validation failed");
+                Log.Info($"TryPullObject input validation failed");
                 return true;
             }
 
@@ -186,10 +186,10 @@ namespace Content.Shared.Interaction
             if (!InRangeUnobstructed(userEntity.Value, uid, popup: true))
                 return false;
 
-            if (!TryComp(uid, out SharedPullableComponent? pull))
+            if (!TryComp(uid, out PullableComponent? pull))
                 return false;
 
-            _pullSystem.TogglePull(userEntity.Value, pull);
+            _pullSystem.TogglePull(uid, userEntity.Value, pull);
             return false;
         }
 
@@ -204,7 +204,7 @@ namespace Content.Shared.Interaction
             // client sanitization
             if (!TryComp(item, out TransformComponent? itemXform) || !ValidateClientInput(args.SenderSession, itemXform.Coordinates, item, out var user))
             {
-                Logger.InfoS("system.interaction", $"Inventory interaction validation failed.  Session={args.SenderSession}");
+                Log.Info($"Inventory interaction validation failed.  Session={args.SenderSession}");
                 return;
             }
 
@@ -226,7 +226,7 @@ namespace Content.Shared.Interaction
             // client sanitization
             if (!ValidateClientInput(session, coords, uid, out var user))
             {
-                Logger.InfoS("system.interaction", $"Alt-use input validation failed");
+                Log.Info($"Alt-use input validation failed");
                 return true;
             }
 
@@ -240,7 +240,7 @@ namespace Content.Shared.Interaction
             // client sanitization
             if (!ValidateClientInput(session, coords, uid, out var userEntity))
             {
-                Logger.InfoS("system.interaction", $"Use input validation failed");
+                Log.Info($"Use input validation failed");
                 return true;
             }
 
@@ -460,7 +460,7 @@ namespace Content.Shared.Interaction
                 return false;
 
             if (!HasComp<NoRotateOnInteractComponent>(user) && !HasComp<MouseRotatorComponent>(user))
-                _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager));
+                _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager, _transform));
 
             return true;
         }
@@ -548,7 +548,7 @@ namespace Content.Shared.Interaction
 
             if (length > MaxRaycastRange)
             {
-                Logger.Warning("InRangeUnobstructed check performed over extreme range. Limiting CollisionRay size.");
+                Log.Warning("InRangeUnobstructed check performed over extreme range. Limiting CollisionRay size.");
                 length = MaxRaycastRange;
             }
 
@@ -613,7 +613,7 @@ namespace Content.Shared.Interaction
             Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
             var inRange = true;
             MapCoordinates originPos = default;
-            var targetPos = otherCoordinates.ToMap(EntityManager);
+            var targetPos = otherCoordinates.ToMap(EntityManager, _transform);
             Angle targetRot = default;
 
             // So essentially:
@@ -786,7 +786,7 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null,
             bool popup = false)
         {
-            return InRangeUnobstructed(origin, other.ToMap(EntityManager), range, collisionMask, predicate, popup);
+            return InRangeUnobstructed(origin, other.ToMap(EntityManager, _transform), range, collisionMask, predicate, popup);
         }
 
         /// <summary>
@@ -922,7 +922,7 @@ namespace Content.Shared.Interaction
         {
             if (!ValidateClientInput(session, coords, uid, out var user))
             {
-                Logger.InfoS("system.interaction", $"ActivateItemInWorld input validation failed");
+                Log.Info($"ActivateItemInWorld input validation failed");
                 return false;
             }
 
@@ -1101,14 +1101,13 @@ namespace Content.Shared.Interaction
 
             if (!coords.IsValid(EntityManager))
             {
-                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
+                Log.Info($"Invalid Coordinates: client={session}, coords={coords}");
                 return false;
             }
 
             if (IsClientSide(uid))
             {
-                Logger.WarningS("system.interaction",
-                    $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
+                Log.Warning($"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
                 return false;
             }
 
@@ -1116,15 +1115,13 @@ namespace Content.Shared.Interaction
 
             if (userEntity == null || !userEntity.Value.Valid)
             {
-                Logger.WarningS("system.interaction",
-                    $"Client sent interaction with no attached entity. Session={session}");
+                Log.Warning($"Client sent interaction with no attached entity. Session={session}");
                 return false;
             }
 
             if (!Exists(userEntity))
             {
-                Logger.WarningS("system.interaction",
-                    $"Client attempted interaction with a non-existent attached entity. Session={session},  entity={userEntity}");
+                Log.Warning($"Client attempted interaction with a non-existent attached entity. Session={session},  entity={userEntity}");
                 return false;
             }
 

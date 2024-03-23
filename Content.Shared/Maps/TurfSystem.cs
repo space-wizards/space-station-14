@@ -92,7 +92,7 @@ public sealed class TurfSystem : EntitySystem
     /// </summary>
     public EntityCoordinates GetTileCenter(TileRef turf)
     {
-        var grid = _mapMan.GetGrid(turf.GridUid);
+        var grid = Comp<MapGridComponent>(turf.GridUid);
         var center = (turf.GridIndices + new Vector2(0.5f, 0.5f)) * grid.TileSize;
         return new EntityCoordinates(turf.GridUid, center);
     }
