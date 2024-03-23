@@ -215,7 +215,7 @@ public sealed class SpreaderSystem : EntitySystem
                 xformQuery.TryGetComponent(dock.DockedWith, out var dockedXform) &&
                 TryComp<MapGridComponent>(dockedXform.GridUid, out var dockedGrid))
             {
-                neighborTiles.Add((ent.Value, dockedGrid, _map.CoordinatesToTile(ent.Value, dockedGrid, dockedXform.Coordinates), xform.LocalRotation.ToAtmosDirection(), dockedXform.LocalRotation.ToAtmosDirection()));
+                neighborTiles.Add((dockedXform.GridUid.Value, dockedGrid, _map.CoordinatesToTile(dockedXform.GridUid.Value, dockedGrid, dockedXform.Coordinates), xform.LocalRotation.ToAtmosDirection(), dockedXform.LocalRotation.ToAtmosDirection()));
             }
 
             // If we're on a blocked tile work out which directions we can go.

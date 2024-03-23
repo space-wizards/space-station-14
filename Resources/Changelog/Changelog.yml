@@ -1,123 +1,4 @@
 ﻿Entries:
-- author: degradka
-  changes:
-  - message: Prevent oversized items from being placed in the microwave.
-    type: Fix
-  id: 5697
-  time: '2024-01-13T21:11:10.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24026
-- author: Bhijn and Myr
-  changes:
-  - message: The QM's uniform has received a redesign, making it more visually distinguishable
-      for those with colorblindness.
-    type: Tweak
-  id: 5698
-  time: '2024-01-14T02:45:06.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24055
-- author: lzk228
-  changes:
-  - message: Removed archaic accent.
-    type: Remove
-  id: 5699
-  time: '2024-01-14T02:45:54.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24052
-- author: 21Melkuu
-  changes:
-  - message: Added Mayo to the Chefvend.
-    type: Add
-  id: 5700
-  time: '2024-01-14T02:47:19.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24017
-- author: Aexxie
-  changes:
-  - message: Lizards' punch animation now matches their damage type
-    type: Fix
-  - message: Spiders now deal piercing damage instead of slash damage when unarmed,
-      as intended. Their animation has been changed to the biting animation as well.
-    type: Fix
-  id: 5701
-  time: '2024-01-14T03:08:20.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24019
-- author: deltanedas
-  changes:
-  - message: Revolutionaries that are deconverted by headrevs dying get a window shown
-      explaining that they are no longer revs, to help with tunnel vision.
-    type: Tweak
-  id: 5702
-  time: '2024-01-14T03:20:35.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23315
-- author: tday
-  changes:
-  - message: Add admin logs for thermomachines.
-    type: Add
-  id: 5703
-  time: '2024-01-14T04:05:45.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24056
-- author: degradka
-  changes:
-  - message: The HOS's dresser now contains a neck gaiter.
-    type: Add
-  id: 5704
-  time: '2024-01-14T04:12:37.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24003
-- author: Errant
-  changes:
-  - message: Map labels now adjust to zoom level and UI scale, retaining a consistent
-      look.
-    type: Fix
-  - message: Map labels now have better contrast over walls.
-    type: Tweak
-  - message: Examining (shift-click) the map screen now toggles map labels on/off.
-    type: Tweak
-  id: 5705
-  time: '2024-01-14T05:08:43.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23777
-- author: Ilya246
-  changes:
-  - message: Nuclear operatives may now buy syndicate bombs without waiting 30 minutes.
-    type: Tweak
-  id: 5706
-  time: '2024-01-14T05:25:19.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24022
-- author: Tayrtahn
-  changes:
-  - message: Nanotrasen has started installing intercoms with unscrewable panels for
-      wire maintenance.
-    type: Add
-  id: 5707
-  time: '2024-01-14T05:37:28.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23984
-- author: Whisper
-  changes:
-  - message: Cerberus now has hostile AI
-    type: Add
-  id: 5708
-  time: '2024-01-14T10:19:36.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24028
-- author: Psychpsyo
-  changes:
-  - message: Plates and money now go into inventories sideways, as they should.
-    type: Tweak
-  id: 5709
-  time: '2024-01-14T16:44:17.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24075
-- author: themias
-  changes:
-  - message: Graves require a shovel or spade (trowel) to dig
-    type: Tweak
-  - message: Graves decay bodies faster
-    type: Tweak
-  id: 5710
-  time: '2024-01-14T16:47:32.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23646
-- author: Nairodian
-  changes:
-  - message: Added four new reagent slimes, Mute Toxin, Norepinephric Acid, Ephedrine,
-      and Robust Harvest.
-    type: Add
-  id: 5711
-  time: '2024-01-14T22:14:19.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24087
 - author: Dygon
   changes:
   - message: The particle decelerator's projectile now deals less damage, has a shorter
@@ -3812,3 +3693,112 @@
   id: 6196
   time: '2024-03-19T03:48:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26251
+- author: Errant
+  changes:
+  - message: Thrown objects can no longer slip while they are still in flight.
+    type: Tweak
+  id: 6197
+  time: '2024-03-20T11:57:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24494
+- author: Killerqu00
+  changes:
+  - message: Airlock wires are now different between departments.
+    type: Tweak
+  id: 6198
+  time: '2024-03-20T16:07:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26247
+- author: Tayrtahn
+  changes:
+  - message: Pizza is no longer considered a fruit.
+    type: Tweak
+  id: 6199
+  time: '2024-03-20T19:03:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26293
+- author: jamessimo
+  changes:
+  - message: Ratkings and Rat servants eyes now glow in the dark
+    type: Tweak
+  id: 6200
+  time: '2024-03-21T13:16:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26300
+- author: nikthechampiongr
+  changes:
+  - message: Scram! implant no longer allows for someone to keep pulling you when
+      it teleports you.
+    type: Fix
+  id: 6201
+  time: '2024-03-21T17:42:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26309
+- author: Plykiya
+  changes:
+  - message: Door remote UI now shows the mode it is in.
+    type: Add
+  id: 6202
+  time: '2024-03-22T00:19:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26162
+- author: metalgearsloth
+  changes:
+  - message: Fix some shuttle console stuff surrounding the Map screen.
+    type: Fix
+  id: 6203
+  time: '2024-03-22T01:57:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26305
+- author: nikthechampiongr
+  changes:
+  - message: You can now move again if you stop being pulled while in cuffs.
+    type: Fix
+  id: 6204
+  time: '2024-03-22T01:59:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26312
+- author: lzk228
+  changes:
+  - message: Snoring is now a trait in character preference menu.
+    type: Tweak
+  id: 6205
+  time: '2024-03-22T07:00:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26322
+- author: liltenhead
+  changes:
+  - message: reduced the odds of budget insulated gloves being insulated and increased
+      the damage multipliers on bad gloves.
+    type: Tweak
+  id: 6206
+  time: '2024-03-22T08:20:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26318
+- author: BlitzTheSquishy
+  changes:
+  - message: Irish Coffee recipe adjusted to be more logical
+    type: Tweak
+  id: 6207
+  time: '2024-03-22T08:23:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26327
+- author: SlamBamActionman
+  changes:
+  - message: Space glue/lube tubes can now be used through the right-click menu.
+    type: Tweak
+  id: 6208
+  time: '2024-03-22T09:37:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26002
+- author: RenQ
+  changes:
+  - message: brought back the classic long bedhead as an alternative to the current
+      one.
+    type: Add
+  id: 6209
+  time: '2024-03-22T17:35:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26336
+- author: metalgearsloth
+  changes:
+  - message: Fix NPCs getting stuck on railings.
+    type: Fix
+  id: 6210
+  time: '2024-03-23T01:42:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26351
+- author: Ubaser
+  changes:
+  - message: You can now purchase a set of 4 throwing knives in the uplink as a bundle
+      for 12 TC.
+    type: Add
+  id: 6211
+  time: '2024-03-23T04:13:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26026
