@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Nairodian
-  changes:
-  - message: Added four new reagent slimes, Mute Toxin, Norepinephric Acid, Ephedrine,
-      and Robust Harvest.
-    type: Add
-  id: 5711
-  time: '2024-01-14T22:14:19.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24087
 - author: Dygon
   changes:
   - message: The particle decelerator's projectile now deals less damage, has a shorter
@@ -3802,3 +3794,11 @@
   id: 6210
   time: '2024-03-23T01:42:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26351
+- author: Ubaser
+  changes:
+  - message: You can now purchase a set of 4 throwing knives in the uplink as a bundle
+      for 12 TC.
+    type: Add
+  id: 6211
+  time: '2024-03-23T04:13:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26026
