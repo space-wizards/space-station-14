@@ -174,7 +174,10 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
         var count = GetTargetAntagCount(ent, playerPool, def);
         for (var i = 0; i < count; i++)
         {
-            MakeAntag(ent, playerPool.PickAndTake(_random), def);
+            if (!playerPool.TryPickAndTake(_random, out var session))
+                break;
+
+            MakeAntag(ent, session, def);
         }
     }
 

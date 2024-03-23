@@ -26,7 +26,7 @@ public sealed partial class AntagSelectionComponent : Component
 }
 
 [DataDefinition]
-public partial struct AntagSelectionDefinition
+public partial struct AntagSelectionDefinition()
 {
     [DataField]
     public List<ProtoId<AntagPrototype>> PrefRoles = new();

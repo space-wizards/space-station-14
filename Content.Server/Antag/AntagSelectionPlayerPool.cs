@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -29,19 +30,20 @@ public sealed class AntagSelectionPlayerPool(
     /// </summary>
     private readonly List<ICommonSession> _rawPool = rawPool;
 
-    //todo a version of this that doesn't throw would be nice
-    public ICommonSession PickAndTake(IRobustRandom random)
+    public bool TryPickAndTake(IRobustRandom random, [NotNullWhen(true)] out ICommonSession? session)
     {
-        if (_primaryPool.Count != 0)
-            return random.PickAndTake(_primaryPool);
-        if (_secondaryPool.Count != 0)
-            return random.PickAndTake(_secondaryPool);
-        if (_fallbackPool.Count != 0)
-            return random.PickAndTake(_fallbackPool);
-        if (_rawPool.Count != 0)
-            return random.PickAndTake(_rawPool);
+        session = null;
 
-        throw new InvalidOperationException("No players left to select from!");
+        if (_primaryPool.Count != 0)
+            session = random.PickAndTake(_primaryPool);
+        else if (_secondaryPool.Count != 0)
+            session = random.PickAndTake(_secondaryPool);
+        else if (_fallbackPool.Count != 0)
+            session = random.PickAndTake(_fallbackPool);
+        else if (_rawPool.Count != 0)
+            session = random.PickAndTake(_rawPool);
+
+        return session != null;
     }
 
     public int Count => _primaryPool.Count + _secondaryPool.Count + _fallbackPool.Count + _rawPool.Count;
