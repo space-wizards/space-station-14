@@ -13,22 +13,6 @@ namespace Content.Shared.Maps
     public static class TurfHelpers
     {
         /// <summary>
-        ///     Attempts to get the turf at map indices with grid id or null if no such turf is found.
-        /// </summary>
-        public static TileRef GetTileRef(this Vector2i vector2i, EntityUid gridId, IEntityManager? entityManager = null)
-        {
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
-
-            if (!entityManager.TryGetComponent<MapGridComponent>(gridId, out var grid))
-                return default;
-
-            if (!grid.TryGetTileRef(vector2i, out var tile))
-                return default;
-
-            return tile;
-        }
-
-        /// <summary>
         ///     Attempts to get the turf at a certain coordinates or null if no such turf is found.
         /// </summary>
         public static TileRef? GetTileRef(this EntityCoordinates coordinates, IEntityManager? entityManager = null, IMapManager? mapManager = null)
@@ -68,7 +52,7 @@ namespace Content.Shared.Maps
         /// </summary>
         public static bool IsSpace(this Tile tile, ITileDefinitionManager? tileDefinitionManager = null)
         {
-            return tile.GetContentTileDefinition(tileDefinitionManager).IsSpace;
+            return tile.GetContentTileDefinition(tileDefinitionManager).MapAtmosphere;
         }
 
         /// <summary>
@@ -114,15 +98,6 @@ namespace Content.Shared.Maps
                 return Enumerable.Empty<EntityUid>();
 
             return GetEntitiesInTile(turf.Value, flags, lookupSystem);
-        }
-
-        /// <summary>
-        ///     Helper that returns all entities in a turf.
-        /// </summary>
-        [Obsolete("Use the lookup system")]
-        public static IEnumerable<EntityUid> GetEntitiesInTile(this Vector2i indices, EntityUid gridId, LookupFlags flags = LookupFlags.Static, EntityLookupSystem? lookupSystem = null)
-        {
-            return GetEntitiesInTile(indices.GetTileRef(gridId), flags, lookupSystem);
         }
 
         /// <summary>
