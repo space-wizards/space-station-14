@@ -717,6 +717,8 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         _sanitizer.TrySanitizeOutSmilies(newMessage, source, out newMessage, out emoteStr);
 
+        newMessage = FormattedMessage.EscapeText(newMessage);
+
         return newMessage;
     }
 
