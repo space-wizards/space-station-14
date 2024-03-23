@@ -8,18 +8,16 @@ namespace Content.Server.Administration.Commands;
 
 [UsedImplicitly]
 [AdminCommand(AdminFlags.Stealth)]
-public sealed class StealthminCommand : IConsoleCommand
+public sealed class StealthminCommand : LocalizedCommands
 {
-    public string Command => "stealthmin";
-    public string Description => "Toggle whether others can see you in adminwho";
-    public string Help => "Usage: stealthmin\nUse stealthmin to toggle whether you appear in the output of the adminwho command.";
+    public override string Command => "stealthmin";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine("You cannot use this command from the server console.");
+                shell.WriteLine(Loc.GetString("cmd-stealthmin-no-console"));
                 return;
             }
 
