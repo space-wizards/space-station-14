@@ -100,17 +100,11 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_5
     noRot: true
-  - type: Nuke
-    explosionType: Default
-    maxIntensity: 100
-    intensitySlope: 5
-    totalIntensity: 300
   - type: StaticPrice
     price: 50000 # war profits
   - type: Construction
     graph: ImprovisedNukeCraft
     node: finished
-    defaultTarget: painted
 
 - type: entity
   parent: BaseStructure

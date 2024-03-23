@@ -244,7 +244,7 @@
 - type: construction
   name: nuclear fission device
   id: improvisednuclearbomb
-  graph: NukeCraft
+  graph: ImprovisedNukeCraft
   startNode: start
   targetNode: painted
   category: construction-category-misc
