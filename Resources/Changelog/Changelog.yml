@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Dygon
-  changes:
-  - message: The particle decelerator's projectile now deals less damage, has a shorter
-      lifespan and can be reflected by objects that reflect energy projectiles.
-    type: Tweak
-  - message: Bullet grenade projectiles no longer penetrate walls.
-    type: Fix
-  id: 5712
-  time: '2024-01-14T23:39:09.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24032
 - author: Rainbeon
   changes:
   - message: Added Aloxadone, a cryogenics chemical for treating patients with third
@@ -3802,3 +3792,11 @@
   id: 6211
   time: '2024-03-23T04:13:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26026
+- author: ElectroJr
+  changes:
+  - message: Fixed a bug where partially airtight entities (e.g., thin windows or
+      doors) could let air leak out into space.
+    type: Fix
+  id: 6212
+  time: '2024-03-23T16:34:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/22521
