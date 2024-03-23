@@ -21,6 +21,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Spawners;
@@ -118,9 +119,8 @@ public sealed class MagicSystem : EntitySystem
     {
         var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.LearnTime, new SpellbookDoAfterEvent(), uid, target: uid)
         {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
             BreakOnDamage = true,
+            BreakOnMove = true,
             NeedHand = true //What, are you going to read with your eyes only??
         };
 
@@ -168,7 +168,7 @@ public sealed class MagicSystem : EntitySystem
         foreach (var pos in GetSpawnPositions(xform, ev.Pos))
         {
             // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
-            var mapPos = pos.ToMap(EntityManager);
+            var mapPos = pos.ToMap(EntityManager, _transformSystem);
             var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var gridUid, out _)
                 ? pos.WithEntityId(gridUid, EntityManager)
                 : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
@@ -217,7 +217,7 @@ public sealed class MagicSystem : EntitySystem
                 // This is shit but you get the idea.
                 var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
 
-                if (!_mapManager.TryGetGrid(casterXform.GridUid, out var mapGrid))
+                if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
                     return new List<EntityCoordinates>();
 
                 if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))

@@ -149,7 +149,8 @@ namespace Content.Server.Atmos.EntitySystems
                 return Atmospherics.OneAtmosphere;
             }
 
-            return (environmentPressure + barotrauma.LowPressureModifier) * (barotrauma.LowPressureMultiplier);
+            var modified = (environmentPressure + barotrauma.LowPressureModifier) * (barotrauma.LowPressureMultiplier);
+            return Math.Min(modified, Atmospherics.OneAtmosphere);
         }
 
         /// <summary>
@@ -162,7 +163,8 @@ namespace Content.Server.Atmos.EntitySystems
                 return Atmospherics.OneAtmosphere;
             }
 
-            return (environmentPressure + barotrauma.HighPressureModifier) * (barotrauma.HighPressureMultiplier);
+            var modified = (environmentPressure + barotrauma.HighPressureModifier) * (barotrauma.HighPressureMultiplier);
+            return Math.Max(modified, Atmospherics.OneAtmosphere);
         }
 
         public bool TryGetPressureProtectionValues(
@@ -224,69 +226,64 @@ namespace Content.Server.Atmos.EntitySystems
                     pressure = MathF.Max(mixture.Pressure, 1f);
                 }
 
-                switch (pressure)
+                pressure = pressure switch
                 {
-                    // Low pressure.
-                    case <= Atmospherics.WarningLowPressure:
-                        pressure = GetFeltLowPressure(uid, barotrauma, pressure);
+                    // Adjust pressure based on equipment. Works differently depending on if it's "high" or "low".
+                    <= Atmospherics.WarningLowPressure => GetFeltLowPressure(uid, barotrauma, pressure),
+                    >= Atmospherics.WarningHighPressure => GetFeltHighPressure(uid, barotrauma, pressure),
+                    _ => pressure
+                };
 
-                        if (pressure > Atmospherics.WarningLowPressure)
-                            goto default;
+                if (pressure <= Atmospherics.HazardLowPressure)
+                {
+                    // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
+                    _damageableSystem.TryChangeDamage(uid, barotrauma.Damage * Atmospherics.LowPressureDamage, true, false);
 
-                        // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
-                        _damageableSystem.TryChangeDamage(uid, barotrauma.Damage * Atmospherics.LowPressureDamage, true, false);
+                    if (!barotrauma.TakingDamage)
+                    {
+                        barotrauma.TakingDamage = true;
+                        _adminLogger.Add(LogType.Barotrauma, $"{ToPrettyString(uid):entity} started taking low pressure damage");
+                    }
 
-                        if (!barotrauma.TakingDamage)
-                        {
-                            barotrauma.TakingDamage = true;
-                            _adminLogger.Add(LogType.Barotrauma, $"{ToPrettyString(uid):entity} started taking low pressure damage");
-                        }
+                    _alertsSystem.ShowAlert(uid, AlertType.LowPressure, 2);
+                }
+                else if (pressure >= Atmospherics.HazardHighPressure)
+                {
+                    var damageScale = MathF.Min(((pressure / Atmospherics.HazardHighPressure) - 1) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
 
-                        if (pressure <= Atmospherics.HazardLowPressure)
-                        {
-                            _alertsSystem.ShowAlert(uid, AlertType.LowPressure, 2);
+                    // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
+                    _damageableSystem.TryChangeDamage(uid, barotrauma.Damage * damageScale, true, false);
+
+                    if (!barotrauma.TakingDamage)
+                    {
+                        barotrauma.TakingDamage = true;
+                        _adminLogger.Add(LogType.Barotrauma, $"{ToPrettyString(uid):entity} started taking high pressure damage");
+                    }
+
+                    _alertsSystem.ShowAlert(uid, AlertType.HighPressure, 2);
+                }
+                else
+                {
+                    // Within safe pressure limits
+                    if (barotrauma.TakingDamage)
+                    {
+                        barotrauma.TakingDamage = false;
+                        _adminLogger.Add(LogType.Barotrauma, $"{ToPrettyString(uid):entity} stopped taking pressure damage");
+                    }
+
+                    // Set correct alert.
+                    switch (pressure)
+                    {
+                        case <= Atmospherics.WarningLowPressure:
+                            _alertsSystem.ShowAlert(uid, AlertType.LowPressure, 1);
                             break;
-                        }
-
-                        _alertsSystem.ShowAlert(uid, AlertType.LowPressure, 1);
-                        break;
-
-                    // High pressure.
-                    case >= Atmospherics.WarningHighPressure:
-                        pressure = GetFeltHighPressure(uid, barotrauma, pressure);
-
-                        if (pressure < Atmospherics.WarningHighPressure)
-                            goto default;
-
-                        var damageScale = MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
-
-                        // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
-                        _damageableSystem.TryChangeDamage(uid, barotrauma.Damage * damageScale, true, false);
-
-                        if (!barotrauma.TakingDamage)
-                        {
-                            barotrauma.TakingDamage = true;
-                            _adminLogger.Add(LogType.Barotrauma, $"{ToPrettyString(uid):entity} started taking high pressure damage");
-                        }
-
-                        if (pressure >= Atmospherics.HazardHighPressure)
-                        {
-                            _alertsSystem.ShowAlert(uid, AlertType.HighPressure, 2);
+                        case >= Atmospherics.WarningHighPressure:
+                            _alertsSystem.ShowAlert(uid, AlertType.HighPressure, 1);
                             break;
-                        }
-
-                        _alertsSystem.ShowAlert(uid, AlertType.HighPressure, 1);
-                        break;
-
-                    // Normal pressure.
-                    default:
-                        if (barotrauma.TakingDamage)
-                        {
-                            barotrauma.TakingDamage = false;
-                            _adminLogger.Add(LogType.Barotrauma, $"{ToPrettyString(uid):entity} stopped taking pressure damage");
-                        }
-                        _alertsSystem.ClearAlertCategory(uid, AlertCategory.Pressure);
-                        break;
+                        default:
+                            _alertsSystem.ClearAlertCategory(uid, AlertCategory.Pressure);
+                            break;
+                    }
                 }
             }
         }
