@@ -47,9 +47,11 @@
           Quantity: 5
   - type: Metabolizer
     updateFrequency: 1.5
-  - type: SliceableFood
-    count: 1
-    slice: FoodStomach
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: FoodStomach
+      amount: 1
 
 - type: entity
   id: OrganArachnidLungs
@@ -85,9 +87,11 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: SliceableFood
-    count: 1
-    slice: FoodLungs
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: FoodLungs
+      amount: 1
 
 - type: entity
   id: OrganArachnidHeart
@@ -105,9 +109,11 @@
     - id: Medicine
     - id: Poison
     - id: Narcotic
-  - type: SliceableFood
-    count: 1
-    slice: FoodHeart
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: FoodHeart
+      amount: 1
 
 - type: entity
   id: OrganArachnidLiver
@@ -125,9 +131,11 @@
     groups:
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
-  - type: SliceableFood
-    count: 1
-    slice: FoodLiver
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: FoodLiver
+      amount: 1
 
 - type: entity
   id: OrganArachnidKidneys
@@ -146,9 +154,11 @@
     maxReagents: 5
     metabolizerTypes: [Animal]
     removeEmpty: true
-  - type: SliceableFood
-    count: 1
-    slice: FoodKidneys
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: FoodKidneys
+      amount: 1
 
 
 - type: entity
