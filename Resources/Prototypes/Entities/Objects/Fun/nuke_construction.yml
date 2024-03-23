@@ -8,6 +8,10 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_1
     noRot: true
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: cart
+    defaultTarget: painted
 
 - type: entity
   parent: BaseStructure
@@ -19,6 +23,10 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_2
     noRot: true
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: insides
+    defaultTarget: painted
 
 - type: entity
   parent: BaseStructure
@@ -30,6 +38,10 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_3
     noRot: true
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: pipe
+    defaultTarget: painted
 
 - type: entity
   parent: BaseStructure
@@ -41,6 +53,10 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_3
     noRot: true
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: gun
+    defaultTarget: painted
 
 - type: entity
   parent: BaseStructure
@@ -52,6 +68,10 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_3
     noRot: true
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: bullet
+    defaultTarget: painted
 
 - type: entity
   parent: BaseStructure
@@ -65,6 +85,10 @@
     noRot: true
   - type: RadiationSource
     intensity: 1
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: uranium
+    defaultTarget: painted
 
 - type: entity
   parent: BaseStructure
@@ -78,6 +102,10 @@
     noRot: true
   - type: StaticPrice
     price: 50000 # war profits
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: finished
+    defaultTarget: painted
 
 - type: entity
   parent: BaseStructure
@@ -88,3 +116,6 @@
   - type: Sprite
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_6
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: painted
