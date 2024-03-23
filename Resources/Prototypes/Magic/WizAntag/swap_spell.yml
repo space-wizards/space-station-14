@@ -1,0 +1,22 @@
+- type: entity
+  id: ActionSwapSpell
+  name: Swap
+  description: Swap positions with a target
+  noSpawn: true
+  components:
+  - type: EntityTargetAction
+    useDelay: 30
+    range: 16
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/disintegrate.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: gib
+    event: !type:SwapSpellEvent
+      speech: action-speech-spell-swap

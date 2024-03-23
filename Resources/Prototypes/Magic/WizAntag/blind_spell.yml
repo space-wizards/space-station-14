@@ -1,0 +1,21 @@
+- type: entity
+  id: ActionBlind
+  name: Blind
+  description: Temporarily blinds a target.
+  noSpawn: true
+  components:
+  - type: EntityTargetAction
+    useDelay: 30
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/disintegrate.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: gib
+    event: !type:BlindSpellEvent
+      speech: action-speech-spell-blind

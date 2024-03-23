@@ -95,7 +95,7 @@
   - type: Sprite
     sprite: Objects/Magic/spellbooks.rsi
     layers:
-    - state: bookfireball
+    - state: bookmagicmissile
   - type: Spellbook
     spells:
       ActionMagicMissile: -1
@@ -108,7 +108,7 @@
   - type: Sprite
     sprite: Objects/Magic/spellbooks.rsi
     layers:
-    - state: bookfireball
+    - state: bookteslaball
   - type: Spellbook
     spells:
       ActionTeslaBall: -1
@@ -121,7 +121,7 @@
   - type: Sprite
     sprite: Objects/Magic/spellbooks.rsi
     layers:
-    - state: bookfireball
+    - state: bookemp
   - type: Spellbook
     spells:
       ActionSpellEMP: -1
@@ -134,7 +134,7 @@
   - type: Sprite
     sprite: Objects/Magic/spellbooks.rsi
     layers:
-    - state: bookfireball
+    - state: bookanimatedead
   - type: Spellbook
     spells:
       ActionAnimateDead: -1
@@ -147,7 +147,7 @@
   - type: Sprite
     sprite: Objects/Magic/spellbooks.rsi
     layers:
-    - state: bookfireball
+    - state: bookiceburst
   - type: Spellbook
     spells:
       ActionIceBurst: -1
@@ -160,10 +160,10 @@
   - type: Sprite
     sprite: Objects/Magic/spellbooks.rsi
     layers:
-    - state: bookfireball
+    - state: bookblind
   - type: Spellbook
     spells:
-      ActionBlindSpell: -1
+      ActionBlind: -1
 
 - type: entity
   id: SmokeSpellbook
@@ -173,7 +173,7 @@
   - type: Sprite
     sprite: Objects/Magic/spellbooks.rsi
     layers:
-    - state: bookfireball
+    - state: booksmoke
   - type: Spellbook
     spells:
       ActionSmokeSpell: -1
@@ -199,7 +199,7 @@
   - type: Sprite
     sprite: Objects/Magic/spellbooks.rsi
     layers:
-    - state: bookfireball
+    - state: bookswap
   - type: Spellbook
     spells:
       ActionSwapSpell: -1
@@ -212,7 +212,7 @@
   - type: Sprite
     sprite: Objects/Magic/spellbooks.rsi
     layers:
-    - state: bookfireball
+    - state: booklessergun
   - type: Spellbook
     spells:
       ActionLesserGun: -1
@@ -225,7 +225,7 @@
   - type: Sprite
     sprite: Objects/Magic/spellbooks.rsi
     layers:
-    - state: bookfireball
+    - state: bookclownify
   - type: Spellbook
     spells:
       ActionClownify: -1
@@ -238,7 +238,7 @@
   - type: Sprite
     sprite: Objects/Magic/spellbooks.rsi
     layers:
-    - state: bookfireball
+    - state: bookdevolve
   - type: Spellbook
     spells:
       ActionDevolve: -1

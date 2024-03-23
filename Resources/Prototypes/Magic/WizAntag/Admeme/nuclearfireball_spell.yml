@@ -1,11 +1,11 @@
- type: entity
-  id: ActionMagicMissile
-  name: Magic Missile
-  description: Fires an orb that stuns on hit towards the clicked location.
+- type: entity
+  id: ActionFireballNuke
+  name: Nuclear Fireball
+  description: What makes me a good Demoman?
   noSpawn: true
   components:
   - type: WorldTargetAction
-    useDelay: 15
+    useDelay: 1
     itemIconStyle: BigAction
     checkCanAccess: false
     range: 60
@@ -15,6 +15,6 @@
       sprite: Objects/Magic/magicactions.rsi
       state: fireball
     event: !type:ProjectileSpellEvent
-      prototype: ProjectileMagicMissile
+      prototype: ProjectileFireballNuke
       posData: !type:TargetCasterPos
-      speech: action-speech-spell-magicmissile
+      speech: action-speech-spell-fireball
