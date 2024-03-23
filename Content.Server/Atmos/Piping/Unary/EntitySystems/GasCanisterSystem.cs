@@ -136,7 +136,7 @@ public sealed class GasCanisterSystem : EntitySystem
 
         for (int i = 0; i < containedGasArray.Length; i++)
         {
-            containedGasDict.Add((Gas)i, canister.Air.Moles[i]);
+            containedGasDict.Add((Gas)i, canister.Air[i]);
         }
 
         _adminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} set the valve on {ToPrettyString(uid):canister} to {args.Valve:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
