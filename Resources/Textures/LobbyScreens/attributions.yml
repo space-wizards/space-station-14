@@ -35,5 +35,6 @@
 
 - files: ["behonker.webp"]
   license: "CC-BY-NC-SA-3.0"
-  copyright: "InCrah on twitter / @in_crah"
-  source: "https://twitter.com/in_crah"
+
+- files: ["goob.png"]
+- license: "CC-BY-NC-SA-3.0"
