@@ -15,7 +15,7 @@ public sealed partial class BonkableComponent : Component
     /// Chance of bonk triggering if the user is clumsy.
     /// </summary>
     [DataField("bonkClumsyChance")]
-    public float BonkClumsyChance = 0.75f;
+    public float BonkClumsyChance = 0.5f;
 
     /// <summary>
     /// Sound to play when bonking.
@@ -42,5 +42,5 @@ public sealed partial class BonkableComponent : Component
     /// How long it takes to bonk.
     /// </summary>
     [DataField("bonkDelay")]
-    public float BonkDelay = 0.8f;
+    public float BonkDelay = 1.5f;
 }
