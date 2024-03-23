@@ -5,6 +5,9 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Connection.Whitelist.Conditions;
 
+/// <summary>
+/// Condition that matches if the player has played for a certain amount of time.
+/// </summary>
 public sealed partial class ConditionPlaytime : WhitelistCondition
 {
     [DataField]

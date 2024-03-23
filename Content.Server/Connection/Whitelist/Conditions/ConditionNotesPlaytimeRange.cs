@@ -2,6 +2,9 @@
 
 namespace Content.Server.Connection.Whitelist.Conditions;
 
+/// <summary>
+/// Condition that matches if the player has notes within a certain playtime range.
+/// </summary>
 public sealed partial class ConditionNotesPlaytimeRange : WhitelistCondition
 {
     [DataField]

@@ -6,6 +6,9 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Connection.Whitelist.Conditions;
 
+/// <summary>
+/// Condition that matches if the player has notes within a certain date range.
+/// </summary>
 public sealed partial class ConditionNotesDateRange : WhitelistCondition
 {
     [DataField]
