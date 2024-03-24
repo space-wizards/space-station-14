@@ -40,6 +40,7 @@ namespace Content.Server.Connection
 
         private ISawmill _sawmill = default!;
         private PlayerConnectionWhitelistPrototype[]? _whitelists;
+        private readonly Dictionary<NetUserId, List<IAdminRemarksRecord>> _adminRemarksCache = new();
 
         public void Initialize()
         {
@@ -267,7 +268,7 @@ namespace Content.Server.Connection
                         break;
                     case { } t when t == typeof(ConditionNotesDateRange):
                         var conditionNotes = (ConditionNotesDateRange)condition;
-                        var remarks = await _db.GetAllAdminRemarks(data.UserId.UserId);
+                        var remarks = await GetAdminRemarks(data.UserId);
                         remarks = remarks.Where(x => x.CreatedAt > DateTime.Now.AddDays(-conditionNotes.Range)).ToList();
                         if (!conditionNotes.IncludeExpired)
                             // If we're not including expired notes, filter them out.
@@ -319,7 +320,7 @@ namespace Content.Server.Connection
                         break;
                     case { } t when t == typeof(ConditionNotesPlaytimeRange):
                         var conditionNotesPlaytimeRange = (ConditionNotesPlaytimeRange)condition;
-                        var remarksPlaytimeRange = await _db.GetAllAdminRemarks(data.UserId.UserId);
+                        var remarksPlaytimeRange = await GetAdminRemarks(data.UserId);
                         // In order to filter by playtime, we need to do the following: playtimeAtNote >= overallPlaytime - Range
                         var overallPlaytime = await _db.GetPlayTimes(data.UserId);
                         var overallTracker = overallPlaytime.Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
@@ -407,6 +408,20 @@ namespace Content.Server.Connection
             var assigned = new NetUserId(Guid.NewGuid());
             await _db.AssignUserIdAsync(name, assigned);
             return assigned;
+        }
+
+        private async Task<List<IAdminRemarksRecord>> GetAdminRemarks(NetUserId userId)
+        {
+            if (_adminRemarksCache.TryGetValue(userId, out var remarks))
+            {
+                return remarks;
+            }
+
+            var records = await _db.GetAllAdminRemarks(userId.UserId);
+            _adminRemarksCache.Add(userId, records);
+            return records;
+            // I could make the remarks in the cache expire after a certain amount of time, but the usecases of where you would want them to expire are low.
+            // Rounds take like a max of 2/2.5 hours. So, it's not worth it.
         }
 
         public void PostInit()
