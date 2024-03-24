@@ -27,6 +27,9 @@
             "name": "AtmosphericTechnician"
         },
         {
+            "name": "Wizard"
+        },
+        {
             "name": "Nanotrasen"
         },
         {
@@ -172,9 +175,8 @@
         },
         {
             "name": "MindShield",
-            "delays":
-            [
-                [1.0,1.0]
+            "delays": [
+                [ 1.0, 1.0 ]
             ]
         },
         {

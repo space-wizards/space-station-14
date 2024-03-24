@@ -1,0 +1,14 @@
+
+- type: entity
+  id: NuclearFireballSpellbook
+  name: nuclear fireball spellbook
+  parent: BaseSpellbook
+  suffix: ADMEME
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: booknuclearfireball
+  - type: Spellbook
+    spells:
+      ActionFireballNuke: -1
