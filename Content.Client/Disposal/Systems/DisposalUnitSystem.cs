@@ -101,12 +101,16 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         sprite.LayerSetVisible(DisposalUnitVisualLayers.Base, state == VisualState.Anchored);
         sprite.LayerSetVisible(DisposalUnitVisualLayers.BaseFlush, state is VisualState.Flushing or VisualState.Charging);
 
+        sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseCharging, out var chargingLayer);
+        var chargingState = sprite.LayerGetState(chargingLayer);
+
         // This is a transient state so not too worried about replaying in range.
         if (state == VisualState.Flushing)
         {
             if (!_animationSystem.HasRunningAnimation(uid, AnimationKey))
             {
-                var flushState = new RSI.StateId("disposal-flush");
+                sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseFlush, out var flushLayer);
+                var flushState = sprite.LayerGetState(flushLayer);
 
                 // Setup the flush animation to play
                 var anim = new Animation
@@ -124,7 +128,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                                 // Return to base state (though, depending on how the unit is
                                 // configured we might get an appearance change event telling
                                 // us to go to charging state)
-                                new AnimationTrackSpriteFlick.KeyFrame("disposal-charging", (float) unit.FlushDelay.TotalSeconds)
+                                new AnimationTrackSpriteFlick.KeyFrame(chargingState, (float) unit.FlushDelay.TotalSeconds)
                             }
                         },
                     }
@@ -147,7 +151,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         }
         else if (state == VisualState.Charging)
         {
-            sprite.LayerSetState(DisposalUnitVisualLayers.BaseFlush, new RSI.StateId("disposal-charging"));
+            sprite.LayerSetState(DisposalUnitVisualLayers.BaseFlush, chargingState);
         }
         else
         {
