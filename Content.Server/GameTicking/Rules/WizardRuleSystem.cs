@@ -41,6 +41,8 @@ using Robust.Server.Maps;
 using System.Numerics;
 using Content.Shared.Mind;
 using Content.Server.Objectives;
+using SixLabors.ImageSharp.Processing.Processors.Quantization;
+using Content.Shared.Objectives.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -84,13 +86,14 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
         // SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         // SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
         //  SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
-        SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
+        SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
         SubscribeLocalEvent<WizardRoleComponent, GetBriefingEvent>(GetBriefing);
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
 
     }
 
 
-    private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
+    private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
     {
         // I took this one from the Thief Rule System lol
         var query = QueryActiveRules();
@@ -98,7 +101,7 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
         while (query.MoveNext(out var uid, out _, out var comp, out var gameRule))
         {
             // Finds eligible players to add to the list
-            var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.WizardPrototypeId, acceptableAntags: AntagAcceptability.All, allowNonHumanoids: true);
+            var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.PlayerPool, comp.WizardPrototypeId, acceptableAntags: AntagAcceptability.NotExclusive, allowNonHumanoids: true);
 
             // No eligible players = no wizards
             if (eligiblePlayers.Count == 0)
@@ -151,14 +154,7 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
             PrototypeId = wizardRule.WizardPrototypeId,
         }, silent: true);
 
-        for (var pick = 0; pick < 3 && 4 > 3; pick++)
-        {
-            var objective = _objectives.GetRandomObjective(mindId, mind, "WizardObjectiveGroups");
-            if (objective == null)
-                continue;
-
-            _mindSystem.AddObjective(mindId, mind, objective.Value);
-        }
+       
         _antagSelection.SendBriefing(player, MakeBriefing(player), null, wizardRule.GreetingSound);
        // MakeBriefing(player);
 
@@ -286,19 +282,12 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
         _inventoryManager.SpawnItemOnEntity(entity, "BaseSpellbookShop6MP");
         _npcFaction.RemoveFaction(entity, "NanoTrasen", false);
         _npcFaction.AddFaction(entity, "Wizard");
-
+        _objectives.TryCreateObjective(mindId, mind, "WizardObjective");
 
 
         var wizardRule = EntityQuery<WizardRuleComponent>().FirstOrDefault();
 
-        for (var pick = 0; pick < 3 && 4 > 3; pick++)
-        {
-            var objective = _objectives.GetRandomObjective(mindId, mind, "WizardObjectiveGroups");
-            if (objective == null)
-                continue;
-
-            _mindSystem.AddObjective(mindId, mind, objective.Value);
-        }
+       
 
 
         if (wizardRule == null)
@@ -319,10 +308,13 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
         args.Append(MakeBriefing(entity));
     }
 
+    private void OnRoundEndText(RoundEndTextAppendEvent ev)
+    {
+        ev.AddLine(Loc.GetString("wizard-round-end"));
+    }
 
 
-
-// Didnt write this, took it from PirateRuleSystem.cs cause it looks like it'd work
+// Didnt write this, took it from PirateRuleSystem.cs cause it looks like it'd work (it did)
 private void SpawnMap(WizardRuleComponent component)
     {
 

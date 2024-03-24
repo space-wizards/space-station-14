@@ -6,3 +6,7 @@ wizard-no-one-ready = No players readied up! Can't start Wizards.
 
 wizard-welcome = You are a Wizard, magic sturs within your body. You feel the need to bring chaos to the station!
 wizard-list-name = [color=#A020F0]Wizard[/color]
+
+wizard-end-round = [color=plum]The Wizard Federation is satisfied.[/color]
+
+wizard-round-end-user-was-wizard = - [color=plum]{$name}[/color] ([color=gray]{$username}[/color]) was a wizard!

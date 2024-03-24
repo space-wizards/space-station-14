@@ -23,10 +23,16 @@ public sealed partial class WizardRuleComponent : Component
     public List<ICommonSession> Wizards = new();
 
     [DataField]
+    public Dictionary<string, string> WizardNames = new();
+
+    [DataField]
     public ProtoId<StartingGearPrototype> GearProto = "WizardBlueGear";
 
     [DataField]
     public int MaxWizards = 1;
+
+    [DataField]
+    public int MaxObjectiveDifficulty = 3;
 
     [DataField]
     public ProtoId<AntagPrototype> WizardPrototypeId = "Wizard";

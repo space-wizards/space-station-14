@@ -4,87 +4,15 @@
   id: BaseWizardObjective
   components:
   - type: Objective
-    issuer: federation
+    issuer: wizard
+  - type: RoleRequirement
+    roles:
+      components:
+      - WizardRole
 
-- type: entity
-  noSpawn: true
-  parent: [BaseWizardObjective, BaseLivingObjective]
-  id: WizSurviveObjective
-  name: Survive the shift
-  description: The Wizard Federation has deemed you useful, you must stay alive.
-  components:
-  - type: Objective
-    difficulty: 1.3
-    icon:
-      sprite: Structures/Furniture/chairs.rsi
-      state: shuttle
-  - type: SurviveCondition
-
-
-- type: entity
-  noSpawn: true
-  parent: [BaseWizardObjective, BaseKillObjective]
-  id: WizKillRandomPersonObjective
-  description: The Wizard Federation has ordered you to kill this individual.
-  components:
-  - type: Objective
-    difficulty: 1.75
-    unique: false
-  - type: TargetObjective
-    title: objective-condition-kill-person-title
-  - type: PickRandomPerson
-
-- type: entity
-  noSpawn: true
-  parent: [BaseWizardObjective, BaseKillObjective]
-  id: WizKillRandomHeadObjective
-  description: This individual of power has said mean things about the Wizard Federation, kill them please.
-  components:
-  - type: Objective
-    difficulty: 3.0
-    unique: true
-  - type: TargetObjective
-    title: objective-condition-kill-head-title
-  - type: PickRandomHead
-  - type: KillPersonCondition
-    # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
-    # if ce flies a shittle to centcom you better find a way onto it
-    requireDead: true
 
 - type: entity
   abstract: true
-  parent: BaseTraitorStealObjective
-  id: BaseWizCMOStealObjective
-  components:
-  - type: NotJobRequirement
-    job: ChiefMedicalOfficer
-  - type: StealCondition
-    owner: job-name-cmo
-
-- type: entity
-  noSpawn: true
-  parent: BaseWizCMOStealObjective
-  id: WizCMOHyposprayStealObjective
-  components:
-  - type: StealCondition
-    stealGroup: Hypospray
-
-- type: entity
-  abstract: true
-  parent: BaseStealObjective
-  id: BaseRDStealObjective
-  components:
-  - type: NotJobRequirement
-    job: ResearchDirector
-  - type: StealCondition
-    owner: job-name-rd
-
-
-- type: entity
-  noSpawn: true
-  parent: BaseRDStealObjective
-  id: WizHandTeleporterStealObjective
-  components:
-  - type: StealCondition
-    stealGroup: HandTeleporter
-
+  parent: BaseObjective
+  id: WizardOnlyObjective
+  description: This station is so boring, spice it up a little with a little chaos!
