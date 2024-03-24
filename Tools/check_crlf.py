@@ -14,6 +14,7 @@ def main() -> int:
 
 
 def get_text_files() -> Iterable[str]:
+    # https://stackoverflow.com/a/24350112/4678631
     process = subprocess.run(
         ["git", "grep", "--cached", "-Il", ""],
         check=True,
@@ -24,6 +25,7 @@ def get_text_files() -> Iterable[str]:
         yield x.strip()
 
 def is_file_crlf(path: str) -> bool:
+    # https://stackoverflow.com/a/29697732/4678631
     with open(path, "rb") as f:
         for line in f:
             if line.endswith(b"\r\n"):
