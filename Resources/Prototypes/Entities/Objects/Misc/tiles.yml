@@ -1100,6 +1100,23 @@
     stackType: FloorTileAstroIce
 
 - type: entity
+  id: FloorTileItemAstroSnow
+  parent: FloorTileItemBase
+  name: astro-snow
+  description: Fake snow that's as fluffy as the real thing, while being easily removable!
+  components:
+  - type: Sprite
+    state: snow
+  - type: Item
+    heldPrefix: snow
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroSnow
+  - type: Stack
+    stackType: FloorTileAstroSnow
+
+- type: entity
   name: large wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodLarge

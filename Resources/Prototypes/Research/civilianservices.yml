@@ -113,6 +113,7 @@
   - FauxTileMowedAstroGrass
   - FauxTileJungleAstroGrass
   - FauxTileAstroIce
+  - FauxTileAstroSnow
 
 - type: technology
   id: BiochemicalStasis

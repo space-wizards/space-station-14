@@ -1906,6 +1906,15 @@
   itemDrop: FloorTileItemAstroIce
 
 - type: tile
+  id: FloorAstroSnow
+  name: tiles-astro-snow
+  parent: FloorSnow
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroSnow
+
+- type: tile
   id: FloorWoodLarge
   name: tiles-wood-large
   sprite: /Textures/Tiles/wood_large.png
