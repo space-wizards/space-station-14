@@ -74,9 +74,8 @@ public sealed partial class WoundSystem
         //We will handle that with another listener
         if (args.DamageDelta == null)
             return;
-        var woundable =  new Entity<WoundableComponent>(owner, woundableComp);
-        CreateWoundsFromDamage(woundable, args.DamageDelta);
-        ApplyDamageToWoundable(woundable, args.DamageDelta);
+        CreateWoundsFromDamage(new Entity<WoundableComponent?>(owner, woundableComp), args.DamageDelta);
+        ApplyDamageToWoundable(new Entity<WoundableComponent>(owner, woundableComp), args.DamageDelta);
     }
 
     private void ApplyDamageToWoundable(Entity<WoundableComponent> woundable, DamageSpecifier damageSpec)
@@ -121,6 +120,8 @@ public sealed partial class WoundSystem
         }
         if (dirty)
             Dirty(woundable);
+        if (_netManager.IsClient)
+            return;
         if (woundable.Comp.Integrity <= 0)
             TryGibWoundable(woundable);
     }
@@ -128,6 +129,7 @@ public sealed partial class WoundSystem
 
     private bool TryGibWoundable(Entity<WoundableComponent> woundable)
     {
+
         if (woundable.Comp.Integrity > 0)
             return false;
 
@@ -135,7 +137,5 @@ public sealed partial class WoundSystem
         woundable.Comp.Integrity = 0;
         Log.Debug($"{ToPrettyString(woundable.Owner)} is at 0 integrity and should have been destroyed (Part Gibbing not implemented yet).");
         return true;
-
-        return false;
     }
 }

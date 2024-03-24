@@ -9,18 +9,24 @@ public sealed partial class ConsciousnessTraumaComponent : Component
     /// <summary>
     /// How much are we decreasing our consciousness cap
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 CapDelta = 0;
 
     /// <summary>
     /// How much are we decreasing our consciousness
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 Delta = 0;
 
     /// <summary>
     /// How much we should change the consciousness multiplier by
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 MultiplierDelta = 0;
+
+    /// <summary>
+    /// How much we should change the consciousness multiplier by
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public FixedPoint2 ModifierDelta = 0;
 }

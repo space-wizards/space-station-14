@@ -12,7 +12,7 @@ public sealed partial class ConsciousnessComponent : Component
     /// <summary>
     /// Unconsciousness threshold, ie: when does this entity pass-out/enter-crit
     /// </summary>
-    [DataField("Threshold",required: true), AutoNetworkedField]
+    [DataField("threshold",required: true), AutoNetworkedField]
     public FixedPoint2 RawThreshold = 30;
 
     /// <summary>
@@ -20,7 +20,7 @@ public sealed partial class ConsciousnessComponent : Component
     /// when this value reaches 0 the entity is dead.
     /// Do not use this directly, use GetConsciousness on the system instead as it properly applies mults/mods and clamps.
     /// </summary>
-    [DataField("Consciousness"), AutoNetworkedField]
+    [DataField("consciousness"), AutoNetworkedField]
     public FixedPoint2 RawValue = MaxConsciousness;
 
     /// <summary>
@@ -63,7 +63,7 @@ public sealed partial class ConsciousnessComponent : Component
     public FixedPoint2 ExpectedProviderCount = 1;
 
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
-    public List<EntityUid?> LinkedProviders = new();
+    public List<EntityUid> LinkedProviders = new();
 
     public FixedPoint2 Consciousness => FixedPoint2.Clamp(RawValue * Multiplier + Modifier, 0, Cap);
     public FixedPoint2 Cap => FixedPoint2.Clamp(RawCap, 0, MaxConsciousness);

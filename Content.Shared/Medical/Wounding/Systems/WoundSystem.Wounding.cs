@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -15,8 +13,6 @@ namespace Content.Shared.Medical.Wounding.Systems;
 
 public sealed partial class WoundSystem
 {
-
-    [Dependency] private readonly INetManager _netManager = default!;
     private const float DefaultSeverity = 100;
     private const float SplatterDamageMult = 1.0f;
     private const float NonCoreDamageChance = 0.5f;
@@ -48,7 +44,6 @@ public sealed partial class WoundSystem
 
 
     #region WoundDestruction
-
     public void RemoveWound(Entity<WoundComponent> wound, Entity<WoundableComponent>? woundableParent)
     {
         if (_netManager.IsClient)
@@ -84,27 +79,51 @@ public sealed partial class WoundSystem
 
     #region WoundCreation
 
-    public void CreateWoundsFromDamage(Entity<WoundableComponent> woundable, DamageSpecifier damageSpec)
+    public bool CreateWoundOnWoundable(Entity<WoundableComponent?> woundable, EntProtoId woundProtoId)
     {
+        return CreateWoundOnWoundable(woundable, woundProtoId, 100);
+    }
+
+    public bool CreateWoundOnWoundable(Entity<WoundableComponent?> woundable, EntProtoId woundProtoId,
+        FixedPoint2 severity)
+    {
+        if (!Resolve(woundable, ref woundable.Comp))
+            return false;
+        AddWound(new Entity<WoundableComponent>(woundable, woundable.Comp), woundProtoId, severity,
+            out var wound);
+        return wound != null;
+    }
+
+    public void CreateWoundsFromDamage(Entity<WoundableComponent?> woundable, DamageSpecifier damageSpec)
+    {
+        if (!Resolve(woundable, ref woundable.Comp))
+            return;
+        var validWoundable = new Entity<WoundableComponent>(woundable, woundable.Comp);
         foreach (var (damageTypeId, damage) in damageSpec.DamageDict)
         {
             //If damage is negative (healing) skip because wound healing is handled with internal logic.
             if (damage < 0)
                 continue;
-            if (!TryGetWoundProtoFromDamage(woundable, new(damageTypeId), damage,
+            if (!TryGetWoundProtoFromDamage(validWoundable, new(damageTypeId), damage,
                     out var protoId, out var overflow))
                 return;
-            AddWound(woundable, protoId, DefaultSeverity);
+            AddWound(validWoundable, protoId, DefaultSeverity);
         }
     }
 
     private void AddWound(Entity<WoundableComponent> woundable, EntProtoId woundProtoId, FixedPoint2 severity)
     {
+        AddWound(woundable, woundProtoId, severity, out _);
+    }
+
+    private void AddWound(Entity<WoundableComponent> woundable, EntProtoId woundProtoId, FixedPoint2 severity, out Entity<WoundComponent>? newWound)
+    {
+        newWound = null;
         if (_netManager.IsClient)
             return; //TempHack to prevent addition from running on the client, wounds are updated from the network
 
-        var newWound = CreateWound(woundProtoId, severity);
-        var attempt = new CreateWoundAttemptEvent(woundable, newWound);
+        newWound = CreateWound(woundProtoId, severity);
+        var attempt = new CreateWoundAttemptEvent(woundable, newWound.Value);
         RaiseLocalEvent(woundable, ref attempt);
         if (woundable.Comp.Body != null)
             RaiseLocalEvent(woundable.Comp.Body.Value, ref attempt);
@@ -112,13 +131,15 @@ public sealed partial class WoundSystem
         {
             //if we aren't adding this wound, nuke it because it's not being attached to anything.
             QueueDel(newWound);
+            newWound = null;
             return;
         }
         if (!_containerSystem.TryGetContainer(woundable, WoundableComponent.WoundableContainerId, out var container)
-            || !_containerSystem.Insert(new(newWound.Owner, null, null, null), container)
+            || !_containerSystem.Insert(new(newWound.Value.Owner, null, null, null), container)
            )
         {
             Log.Error($"{ToPrettyString(woundable.Owner)} does not have a woundable container, or insertion is not possible! This should never happen!");
+            newWound = null;
             return;
         }
     }

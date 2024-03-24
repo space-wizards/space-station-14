@@ -8,23 +8,25 @@ using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Medical.Consciousness.Systems;
 
 public sealed class ConsciousnessSystem : EntitySystem
 {
-
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-
-
-    //TODO: fix how consciousness cap/clamping works, do not actually clamp the value, use either consciousnessCap/Consciousness depending on which is lower instead!
+    [Dependency] private readonly INetManager _netManager = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<ConsciousnessComponent,UpdateMobStateEvent>(OnMobstateChanged);
         SubscribeLocalEvent<ConsciousnessComponent,MapInitEvent>(ConsciousnessInit);
-        SubscribeLocalEvent<ConsciousnessProviderComponent, OrganRemovedFromBodyEvent>(OnProviderRemoved);
-        SubscribeLocalEvent<ConsciousnessProviderComponent, OrganAddedToBodyEvent>(OnProviderAdded);
+        if (!_netManager.IsClient) //Prevent providers from being added twice (once on client/server).
+                                   //Eventually replace with proper overrides
+        {
+            SubscribeLocalEvent<ConsciousnessProviderComponent, OrganRemovedFromBodyEvent>(OnProviderRemoved);
+            SubscribeLocalEvent<ConsciousnessProviderComponent, OrganAddedToBodyEvent>(OnProviderAdded);
+        }
     }
 
     private void OnProviderAdded(EntityUid providerUid, ConsciousnessProviderComponent provider, ref OrganAddedToBodyEvent args)
@@ -70,6 +72,30 @@ public sealed class ConsciousnessSystem : EntitySystem
         RaiseConsciousnessEvent(uid, ref ev);
     }
 
+    public void ChangeConsciousness(Entity<ConsciousnessComponent?, MobStateComponent?> conscious, FixedPoint2 consciousnessDelta)
+    {
+        if (!Resolve(conscious, ref conscious.Comp1, ref conscious.Comp2))
+            return;
+        var delta = FixedPoint2.Clamp(
+            conscious.Comp1.RawValue+consciousnessDelta * conscious.Comp1.Multiplier +  conscious.Comp1.Modifier,
+            0,
+            conscious.Comp1.Cap) -  conscious.Comp1.Consciousness;
+        var attemptEv = new ChangeConsciousnessAttemptEvent(new Entity<ConsciousnessComponent>(conscious, conscious.Comp1), delta);
+        RaiseConsciousnessEvent(conscious, ref attemptEv);
+        if (attemptEv.Canceled)
+            return;
+
+        conscious.Comp1.RawValue += consciousnessDelta;
+        Dirty(conscious.Owner, conscious.Comp1);
+        if (delta == 0)
+            return;
+        var ev = new ConsciousnessChangedEvent(new Entity<ConsciousnessComponent>(conscious, conscious.Comp1), delta);
+        RaiseConsciousnessEvent(conscious, ref ev);
+
+        UpdateConsciousness(conscious, conscious.Comp1, conscious.Comp2);
+        Dirty(conscious, conscious.Comp1);
+    }
+
     public void ChangeConsciousnessModifier(Entity<ConsciousnessComponent?, MobStateComponent?> conscious, FixedPoint2 modifierDelta)
     {
         if (!Resolve(conscious, ref conscious.Comp1, ref conscious.Comp2))
@@ -83,7 +109,7 @@ public sealed class ConsciousnessSystem : EntitySystem
         if (attemptEv.Canceled)
             return;
 
-        conscious.Comp1.Modifier = modifierDelta;
+        conscious.Comp1.Modifier += modifierDelta;
         Dirty(conscious.Owner, conscious.Comp1);
         if (delta == 0)
             return;
@@ -109,7 +135,7 @@ public sealed class ConsciousnessSystem : EntitySystem
         if (attemptEv.Canceled)
             return;
 
-        conscious.Comp1.Multiplier = multiplierDelta;
+        conscious.Comp1.Multiplier += multiplierDelta;
         Dirty(conscious.Owner, conscious.Comp1);
         if (delta == 0)
             return;
