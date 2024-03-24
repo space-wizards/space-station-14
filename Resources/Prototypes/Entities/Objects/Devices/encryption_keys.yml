@@ -45,7 +45,7 @@
   parent: EncryptionKey
   id: EncryptionKeyCentCom
   name: central command encryption key
-  description: An encryption key used by captain's bosses.
+  description: An encryption key used by head of station's bosses.
   components:
   - type: EncryptionKey
     channels:

@@ -212,7 +212,7 @@
 - type: entity
   parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorCaptainCarapace
-  name: "captain's carapace"
+  name: "head of station's carapace"
   description: "An armored chestpiece that provides protection whilst still offering maximum mobility and flexibility. Issued only to the station's finest."
   components:
   - type: Sprite

@@ -237,8 +237,8 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitCap
-  name: captain's hardsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
+  name: head of station's hardsuit helmet
+  description: Special hardsuit helmet, made for the head of station.
   components:
   - type: BreathMask
   - type: Sprite
