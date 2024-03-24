@@ -218,12 +218,14 @@ public partial class AtmosphereSystem
         return GetHeatCapacity(GetTileMixture(gridUid, mapUid, tile) ?? GasMixture.SpaceGas);
     }
 
-    public IEnumerable<GasMixture> GetAdjacentTileMixtures(EntityUid gridUid, Vector2i tile, bool includeBlocked = false, bool excite = false)
+    public TileMixtureEnumerator GetAdjacentTileMixtures(EntityUid gridUid, Vector2i tile, bool includeBlocked = false, bool excite = false)
     {
-        var ev = new GetAdjacentTileMixturesMethodEvent(gridUid, tile, includeBlocked, excite);
-        RaiseLocalEvent(gridUid, ref ev);
+        if (!_atmosQuery.TryGetComponent(gridUid, out var atmos))
+            return TileMixtureEnumerator.Empty;
 
-        return ev.Result ?? Enumerable.Empty<GasMixture>();
+        return !atmos.Tiles.TryGetValue(tile, out var atmosTile)
+            ? TileMixtureEnumerator.Empty
+            : new(atmosTile.AdjacentTiles);
     }
 
     public void HotspotExpose(EntityUid gridUid, Vector2i tile, float exposedTemperature, float exposedVolume,
@@ -292,10 +294,6 @@ public partial class AtmosphereSystem
 
     [ByRefEvent] private record struct IsTileSpaceMethodEvent
         (EntityUid? Grid, EntityUid? Map, Vector2i Tile, MapGridComponent? MapGridComponent = null, bool Result = true, bool Handled = false);
-
-    [ByRefEvent] private record struct GetAdjacentTileMixturesMethodEvent
-        (EntityUid Grid, Vector2i Tile, bool IncludeBlocked, bool Excite,
-            IEnumerable<GasMixture>? Result = null, bool Handled = false);
 
     [ByRefEvent] private record struct HotspotExposeMethodEvent
         (EntityUid Grid, EntityUid? SparkSourceUid, Vector2i Tile, float ExposedTemperature, float ExposedVolume, bool soh, bool Handled = false);

@@ -7,6 +7,8 @@ public struct TileMixtureEnumerator
     public readonly TileAtmosphere?[] Tiles;
     public int Index = 0;
 
+    public static readonly TileMixtureEnumerator Empty = new(Array.Empty<TileAtmosphere>());
+
     internal TileMixtureEnumerator(TileAtmosphere?[] tiles)
     {
         Tiles = tiles;

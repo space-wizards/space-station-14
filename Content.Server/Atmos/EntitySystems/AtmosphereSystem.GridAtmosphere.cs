@@ -24,7 +24,6 @@ public sealed partial class AtmosphereSystem
         SubscribeLocalEvent<GridAtmosphereComponent, GetAllMixturesMethodEvent>(GridGetAllMixtures);
         SubscribeLocalEvent<GridAtmosphereComponent, ReactTileMethodEvent>(GridReactTile);
         SubscribeLocalEvent<GridAtmosphereComponent, IsTileSpaceMethodEvent>(GridIsTileSpace);
-        SubscribeLocalEvent<GridAtmosphereComponent, GetAdjacentTileMixturesMethodEvent>(GridGetAdjacentTileMixtures);
         SubscribeLocalEvent<GridAtmosphereComponent, HotspotExposeMethodEvent>(GridHotspotExpose);
         SubscribeLocalEvent<GridAtmosphereComponent, HotspotExtinguishMethodEvent>(GridHotspotExtinguish);
         SubscribeLocalEvent<GridAtmosphereComponent, IsHotspotActiveMethodEvent>(GridIsHotspotActive);
@@ -176,30 +175,6 @@ public sealed partial class AtmosphereSystem
             return;
 
         args.Result = tile.Space;
-        args.Handled = true;
-    }
-
-    private void GridGetAdjacentTileMixtures(EntityUid uid, GridAtmosphereComponent component,
-        ref GetAdjacentTileMixturesMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!component.Tiles.TryGetValue(args.Tile, out var tile))
-            return;
-
-        IEnumerable<GasMixture> EnumerateAdjacent(GridAtmosphereComponent grid, TileAtmosphere t)
-        {
-            foreach (var adj in t.AdjacentTiles)
-            {
-                if (adj?.Air == null)
-                    continue;
-
-                yield return adj.Air;
-            }
-        }
-
-        args.Result = EnumerateAdjacent(component, tile);
         args.Handled = true;
     }
 
