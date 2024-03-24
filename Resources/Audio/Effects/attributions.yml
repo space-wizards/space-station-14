@@ -221,3 +221,8 @@
   copyright: TGStation at 3df5d3b42bfb6b3b5adba1067ab41f83816255bb
   license: CC-BY-SA-3.0
   source: https://github.com/tgstation/tgstation/blob/3df5d3b42bfb6b3b5adba1067ab41f83816255bb/sound/misc/server-ready.ogg
+
+- files: [beep_landmine.ogg]
+  copyright: '"beep_landmine.ogg" by kaktuscsc of Discord for SS14'
+  license: "CC-BY-SA-3.0"
+  source: https://github.com/YuriyKiss/space-station-14/commit/971a135a9c83aed46e967aac9302ab5b35562b5f
