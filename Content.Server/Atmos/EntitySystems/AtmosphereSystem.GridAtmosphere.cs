@@ -22,7 +22,6 @@ public sealed partial class AtmosphereSystem
 
         SubscribeLocalEvent<GridAtmosphereComponent, IsSimulatedGridMethodEvent>(GridIsSimulated);
         SubscribeLocalEvent<GridAtmosphereComponent, GetAllMixturesMethodEvent>(GridGetAllMixtures);
-        SubscribeLocalEvent<GridAtmosphereComponent, GetTileMixtureMethodEvent>(GridGetTileMixture);
         SubscribeLocalEvent<GridAtmosphereComponent, ReactTileMethodEvent>(GridReactTile);
         SubscribeLocalEvent<GridAtmosphereComponent, IsTileSpaceMethodEvent>(GridIsTileSpace);
         SubscribeLocalEvent<GridAtmosphereComponent, GetAdjacentTilesMethodEvent>(GridGetAdjacentTiles);
@@ -153,22 +152,6 @@ public sealed partial class AtmosphereSystem
 
         // Return the enumeration over all the tiles in the atmosphere.
         args.Mixtures = EnumerateMixtures(uid, component, args.Excite);
-        args.Handled = true;
-    }
-
-    private void GridGetTileMixture(EntityUid uid, GridAtmosphereComponent component,
-        ref GetTileMixtureMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!component.Tiles.TryGetValue(args.Tile, out var tile))
-            return; // Do NOT handle the event if we don't have that tile, the map will handle it instead.
-
-        if (args.Excite)
-            component.InvalidatedCoords.Add(args.Tile);
-
-        args.Mixture = tile.Air;
         args.Handled = true;
     }
 

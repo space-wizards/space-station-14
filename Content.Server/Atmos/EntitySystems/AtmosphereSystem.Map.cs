@@ -13,7 +13,6 @@ public partial class AtmosphereSystem
         SubscribeLocalEvent<MapAtmosphereComponent, ComponentInit>(OnMapStartup);
         SubscribeLocalEvent<MapAtmosphereComponent, ComponentRemove>(OnMapRemove);
         SubscribeLocalEvent<MapAtmosphereComponent, IsTileSpaceMethodEvent>(MapIsTileSpace);
-        SubscribeLocalEvent<MapAtmosphereComponent, GetTileMixtureMethodEvent>(MapGetTileMixture);
         SubscribeLocalEvent<MapAtmosphereComponent, ComponentGetState>(OnMapGetState);
         SubscribeLocalEvent<GridAtmosphereComponent, EntParentChangedMessage>(OnGridParentChanged);
     }
@@ -36,15 +35,6 @@ public partial class AtmosphereSystem
             return;
 
         args.Result = component.Space;
-        args.Handled = true;
-    }
-
-    private void MapGetTileMixture(EntityUid uid, MapAtmosphereComponent component, ref GetTileMixtureMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Mixture = component.Mixture;
         args.Handled = true;
     }
 

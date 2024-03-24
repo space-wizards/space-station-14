@@ -139,7 +139,7 @@ public partial class AtmosphereSystem
         return mixtures;
     }
 
-    public GasMixture? GetTileMixture (Entity<TransformComponent?> entity, MapGridComponent? grid = null, bool excite = false)
+    public GasMixture? GetTileMixture (Entity<TransformComponent?> entity, bool excite = false)
     {
         if (!Resolve(entity.Owner, ref entity.Comp))
             return null;
@@ -150,30 +150,21 @@ public partial class AtmosphereSystem
 
     public GasMixture? GetTileMixture(EntityUid? gridUid, EntityUid? mapUid, Vector2i gridTile, bool excite = false)
     {
-        var ev = new GetTileMixtureMethodEvent(gridUid, mapUid, gridTile, excite);
-
         // If we've been passed a grid, try to let it handle it.
-        if(gridUid.HasValue)
+        if (_atmosQuery.TryGetComponent(gridUid, out var gridAtmos)
+            && gridAtmos.Tiles.TryGetValue(gridTile, out var tile))
         {
-            DebugTools.Assert(_mapManager.IsGrid(gridUid.Value));
-            RaiseLocalEvent(gridUid.Value, ref ev, false);
+            if (excite)
+                gridAtmos.InvalidatedCoords.Add(gridTile);
+
+            return tile.Air;
         }
 
-        if (ev.Handled)
-            return ev.Mixture;
-
-        // We either don't have a grid, or the event wasn't handled.
-        // Let the map handle it instead, and also broadcast the event.
-        if(mapUid.HasValue)
-        {
-            DebugTools.Assert(_mapManager.IsMap(mapUid.Value));
-            RaiseLocalEvent(mapUid.Value, ref ev, true);
-        }
-        else
-            RaiseLocalEvent(ref ev);
+        if (_mapAtmosQuery.TryGetComponent(mapUid, out var mapAtmos))
+            return mapAtmos.Mixture;
 
         // Default to a space mixture... This is a space game, after all!
-        return ev.Mixture ?? GasMixture.SpaceGas;
+        return GasMixture.SpaceGas;
     }
 
     public ReactionResult ReactTile(EntityUid gridId, Vector2i tile)
@@ -303,9 +294,6 @@ public partial class AtmosphereSystem
 
     [ByRefEvent] private record struct GetAllMixturesMethodEvent
         (EntityUid Grid, bool Excite = false, IEnumerable<GasMixture>? Mixtures = null, bool Handled = false);
-
-    [ByRefEvent] private record struct GetTileMixtureMethodEvent
-        (EntityUid? GridUid, EntityUid? MapUid, Vector2i Tile, bool Excite = false, GasMixture? Mixture = null, bool Handled = false);
 
     [ByRefEvent] private record struct ReactTileMethodEvent
         (EntityUid GridId, Vector2i Tile, ReactionResult Result = default, bool Handled = false);
