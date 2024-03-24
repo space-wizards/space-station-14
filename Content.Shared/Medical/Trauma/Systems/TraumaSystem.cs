@@ -44,13 +44,13 @@ public sealed partial class TraumaSystem : EntitySystem
 
     private void ApplyConsciousnessTrauma(EntityUid uid, ConsciousnessTraumaComponent trauma, ref WoundAppliedToBody args)
     {
-        _consciousnessSystem.AddConsciousnessCap(
+        _consciousnessSystem.ChangeConsciousnessCap(
             new Entity<ConsciousnessComponent?, MobStateComponent?>(args.Body.Owner, null, null),
             trauma.CapDelta);
     }
     private void RemoveConsciousnessTrauma(EntityUid uid, ConsciousnessTraumaComponent trauma, ref WoundRemovedFromBody args)
     {
-        _consciousnessSystem.AddConsciousnessCap(
+        _consciousnessSystem.ChangeConsciousnessCap(
             new Entity<ConsciousnessComponent?, MobStateComponent?>(args.Body.Owner, null, null),
             -trauma.CapDelta);
     }

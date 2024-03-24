@@ -27,30 +27,32 @@ public sealed class ConsciousnessSystem : EntitySystem
         SubscribeLocalEvent<ConsciousnessProviderComponent, OrganAddedToBodyEvent>(OnProviderAdded);
     }
 
-    private void OnProviderAdded(EntityUid uid, ConsciousnessProviderComponent provider, ref OrganAddedToBodyEvent args)
+    private void OnProviderAdded(EntityUid providerUid, ConsciousnessProviderComponent provider, ref OrganAddedToBodyEvent args)
     {
         if (!TryComp<ConsciousnessComponent>(args.Body, out var consciousness))
             return;
-        if (consciousness.LinkedBrain == null)
+        if (consciousness.LinkedProviders.Count < consciousness.ExpectedProviderCount)
         {
-            consciousness.LinkedBrain = uid;
+            consciousness.LinkedProviders.Add(providerUid);
+            ChangeConsciousnessModifier(
+                new Entity<ConsciousnessComponent?, MobStateComponent?>(args.Body, consciousness, null),
+                1/consciousness.ExpectedProviderCount * ConsciousnessComponent.MaxConsciousness);
             Dirty(args.Body, consciousness);
             return;
         }
-        consciousness.LinkedBrain = uid;
-        AddConsciousnessModifier(
-            new Entity<ConsciousnessComponent?, MobStateComponent?>(args.Body, consciousness, null),
-            ConsciousnessComponent.MaxConsciousness);
+        Log.Error($"Tried to add consciousness provider to {ToPrettyString(args.Body)} which already has maximum number of providers!");
     }
 
-    private void OnProviderRemoved(EntityUid brainUid, ConsciousnessProviderComponent provider, ref OrganRemovedFromBodyEvent args)
+    private void OnProviderRemoved(EntityUid providerUid, ConsciousnessProviderComponent provider, ref OrganRemovedFromBodyEvent args)
     {
-        if (!TryComp<ConsciousnessComponent>(args.OldBody, out var consciousness) || consciousness.LinkedBrain != brainUid)
+        if (!TryComp<ConsciousnessComponent>(args.OldBody, out var consciousness)
+            || consciousness.LinkedProviders.Count != 0
+            || !consciousness.LinkedProviders.Remove(providerUid))
             return;
-        consciousness.LinkedBrain = EntityUid.Invalid;
-        AddConsciousnessModifier(
+        Dirty(args.OldBody, consciousness);
+        ChangeConsciousnessModifier(
             new Entity<ConsciousnessComponent?, MobStateComponent?>(args.OldBody, consciousness, null),
-            -ConsciousnessComponent.MaxConsciousness);
+            -1/consciousness.ExpectedProviderCount * ConsciousnessComponent.MaxConsciousness);
     }
 
     private void ConsciousnessInit(EntityUid uid, ConsciousnessComponent consciousness, MapInitEvent args)
@@ -61,26 +63,30 @@ public sealed class ConsciousnessSystem : EntitySystem
     private void OnMobstateChanged(EntityUid uid, ConsciousnessComponent consciousness, ref UpdateMobStateEvent args)
     {
         //Do nothing if mobstate handling is set to be overriden or if we are conscious
-        if (consciousness.OverridenByMobstate || GetConsciousness(consciousness) > 0)
+        if (consciousness.OverridenByMobstate || consciousness.Consciousness > 0)
             return;
         args.State = MobState.Dead;
         var ev = new EntityConsciousnessKillEvent(new Entity<ConsciousnessComponent>(uid, consciousness));
         RaiseConsciousnessEvent(uid, ref ev);
     }
 
-    public void AddConsciousnessModifier(Entity<ConsciousnessComponent?, MobStateComponent?> conscious, FixedPoint2 modifierToAdd)
+    public void ChangeConsciousnessModifier(Entity<ConsciousnessComponent?, MobStateComponent?> conscious, FixedPoint2 modifierDelta)
     {
         if (!Resolve(conscious, ref conscious.Comp1, ref conscious.Comp2))
             return;
-
-        var newMod = modifierToAdd + conscious.Comp1.Modifier;
-        var delta = GetConsciousness(conscious) - CalculateNewConsciousness(conscious.Comp1, newConsciousnessModifier: newMod);
+        var delta = FixedPoint2.Clamp(
+            conscious.Comp1.RawValue * conscious.Comp1.Multiplier +  conscious.Comp1.Modifier+modifierDelta,
+            0,
+            conscious.Comp1.Cap) -  conscious.Comp1.Consciousness;
         var attemptEv = new ChangeConsciousnessAttemptEvent(new Entity<ConsciousnessComponent>(conscious, conscious.Comp1), delta);
         RaiseConsciousnessEvent(conscious, ref attemptEv);
         if (attemptEv.Canceled)
             return;
 
-        conscious.Comp1.Modifier = newMod;
+        conscious.Comp1.Modifier = modifierDelta;
+        Dirty(conscious.Owner, conscious.Comp1);
+        if (delta == 0)
+            return;
         var ev = new ConsciousnessChangedEvent(new Entity<ConsciousnessComponent>(conscious, conscious.Comp1), delta);
         RaiseConsciousnessEvent(conscious, ref ev);
 
@@ -88,45 +94,57 @@ public sealed class ConsciousnessSystem : EntitySystem
         Dirty(conscious, conscious.Comp1);
     }
 
-    public void AddConsciousnessMultiplier(Entity<ConsciousnessComponent?, MobStateComponent?> conscious, FixedPoint2 multiplierToAdd)
+    public void ChangeConsciousnessMultiplier(Entity<ConsciousnessComponent?, MobStateComponent?> conscious,
+        FixedPoint2 multiplierDelta)
     {
         if (!Resolve(conscious, ref conscious.Comp1, ref conscious.Comp2))
             return;
-        var newMult = multiplierToAdd + conscious.Comp1.Modifier;
-        if (newMult < 0) //clamp multiplier to never go below 0
-            newMult = 0;
-        var delta = GetConsciousness(conscious) - CalculateNewConsciousness(conscious.Comp1, newConsciousnessMultiplier: newMult);
-        var attemptEv = new ChangeConsciousnessAttemptEvent(new Entity<ConsciousnessComponent>(conscious, conscious.Comp1), delta);
+        var delta = FixedPoint2.Clamp(
+            conscious.Comp1.RawValue * (conscious.Comp1.Multiplier+multiplierDelta) + conscious.Comp1.Modifier,
+            0,
+            conscious.Comp1.Cap) -  conscious.Comp1.Consciousness;
+        var attemptEv = new ChangeConsciousnessAttemptEvent(
+            new Entity<ConsciousnessComponent>(conscious, conscious.Comp1), delta);
         RaiseConsciousnessEvent(conscious, ref attemptEv);
         if (attemptEv.Canceled)
             return;
 
-        conscious.Comp1.Multiplier = newMult;
-        var ev = new ConsciousnessChangedEvent(new Entity<ConsciousnessComponent>(conscious, conscious.Comp1), delta);
+        conscious.Comp1.Multiplier = multiplierDelta;
+        Dirty(conscious.Owner, conscious.Comp1);
+        if (delta == 0)
+            return;
+        var ev = new ConsciousnessChangedEvent(
+            new Entity<ConsciousnessComponent>(conscious, conscious.Comp1), delta);
         RaiseConsciousnessEvent(conscious, ref ev);
 
         UpdateConsciousness(conscious, conscious.Comp1, conscious.Comp2);
         Dirty(conscious, conscious.Comp1);
     }
 
-    public void AddConsciousnessCap(Entity<ConsciousnessComponent?, MobStateComponent?> conscious, FixedPoint2 capToAdd, bool warnIfOverflow = true)
+    public void ChangeConsciousnessCap(Entity<ConsciousnessComponent?, MobStateComponent?> conscious, FixedPoint2 capDelta,
+        bool warnIfOverflow = true)
     {
         if (!Resolve(conscious, ref conscious.Comp1, ref conscious.Comp2))
             return;
-        if (capToAdd + conscious.Comp1.Cap > ConsciousnessComponent.MaxConsciousness)
-        {
-            Log.Warning($"Tried to add consciousness cap to {ToPrettyString(conscious.Owner)} " +
-                        $"but it would exceed the maxConsciousness value. The result will be clamped to {ConsciousnessComponent.MaxConsciousness}");
-        }
-        var newCap = FixedPoint2.Clamp(capToAdd + conscious.Comp1.Modifier, 0, ConsciousnessComponent.MaxConsciousness);
-        var delta = GetConsciousness(conscious) - CalculateNewConsciousness(conscious.Comp1, newConsciousnessCap:newCap);
-        var attemptEv = new ChangeConsciousnessAttemptEvent(new Entity<ConsciousnessComponent>(conscious, conscious.Comp1), delta);
+        var newCap = FixedPoint2.Clamp(
+            capDelta + conscious.Comp1.Modifier, 0, ConsciousnessComponent.MaxConsciousness);
+
+        var delta = FixedPoint2.Clamp(
+            conscious.Comp1.RawValue * (conscious.Comp1.Multiplier) + conscious.Comp1.Modifier,
+            0,
+            conscious.Comp1.Cap+capDelta) -  conscious.Comp1.Consciousness;
+        var attemptEv = new ChangeConsciousnessAttemptEvent(
+            new Entity<ConsciousnessComponent>(conscious, conscious.Comp1), delta);
         RaiseConsciousnessEvent(conscious, ref attemptEv);
         if (attemptEv.Canceled)
             return;
 
-        conscious.Comp1.Cap = newCap;
-        var ev = new ConsciousnessChangedEvent(new Entity<ConsciousnessComponent>(conscious, conscious.Comp1), delta);
+        conscious.Comp1.RawCap = newCap;
+        Dirty(conscious.Owner, conscious.Comp1);
+        if (delta == 0)
+            return;
+        var ev = new ConsciousnessChangedEvent(
+            new Entity<ConsciousnessComponent>(conscious, conscious.Comp1), delta);
         RaiseConsciousnessEvent(conscious, ref ev);
 
         UpdateConsciousness(conscious, conscious.Comp1, conscious.Comp2);
@@ -147,47 +165,6 @@ public sealed class ConsciousnessSystem : EntitySystem
         Dirty(consciousEntity,consciousness);
     }
 
-    public FixedPoint2 GetConsciousness(Entity<ConsciousnessComponent?> conscious)
-    {
-        return !Resolve(conscious, ref conscious.Comp) ? 0 : CalculateNewConsciousness(conscious.Comp);
-    }
-
-    public FixedPoint2 GetConsciousness(ConsciousnessComponent consciousness)
-    {
-        return CalculateNewConsciousness(consciousness);
-    }
-
-    public FixedPoint2 CalculateNewConsciousness(
-        ConsciousnessComponent consciousness,
-        FixedPoint2? newRawConsciousness = null,
-        FixedPoint2? newConsciousnessMultiplier = null,
-        FixedPoint2? newConsciousnessModifier = null,
-        FixedPoint2? newConsciousnessCap = null)
-    {
-        newRawConsciousness ??= consciousness.RawValue;
-        newConsciousnessMultiplier ??= consciousness.Multiplier;
-        newConsciousnessModifier ??= consciousness.Modifier;
-        newConsciousnessCap ??= consciousness.Cap;
-        return CalculateConsciousness(
-            newRawConsciousness.Value,
-            newConsciousnessMultiplier.Value,
-            newConsciousnessModifier.Value,
-            newConsciousnessCap.Value);
-    }
-
-
-    public FixedPoint2 CalculateConsciousness(
-        FixedPoint2 rawConsciousness,
-        FixedPoint2 consciousnessMultiplier,
-        FixedPoint2 consciousnessModifier,
-        FixedPoint2 consciousnessCap)
-    {
-        return FixedPoint2.Clamp(
-            rawConsciousness * consciousnessMultiplier + consciousnessModifier,
-            0,
-            consciousnessCap);
-    }
-
     private void RaiseConsciousnessEvent<T>(EntityUid target, ref T eventToRaise) where T : struct
     {
         RaiseLocalEvent(target, ref eventToRaise);
@@ -202,14 +179,14 @@ public sealed class ConsciousnessSystem : EntitySystem
 
     private void UpdateConsciousness(EntityUid consciousEnt, ConsciousnessComponent consciousness, MobStateComponent mobState)
     {
-        var newConsciousness = CalculateNewConsciousness(consciousness);
-        SetConscious(consciousEnt, consciousness, newConsciousness <= consciousness.Threshold);
+        var consciousnessValue = consciousness.Consciousness;
+        SetConscious(consciousEnt, consciousness, consciousnessValue  <= consciousness.RawThreshold);
         if (consciousness.OverridenByMobstate)
             return; //prevent any mobstate updates when override is enabled
 
         var attemptEv = new EntityConsciousnessKillAttemptEvent(new Entity<ConsciousnessComponent>(consciousEnt, consciousness));
         RaiseConsciousnessEvent(consciousEnt, ref attemptEv);
-        if (!attemptEv.Canceled && newConsciousness <= 0 && mobState.CurrentState != MobState.Dead)
+        if (!attemptEv.Canceled && consciousnessValue <= 0 && mobState.CurrentState != MobState.Dead)
         {
             _mobStateSystem.UpdateMobState(consciousEnt, mobState);
         }

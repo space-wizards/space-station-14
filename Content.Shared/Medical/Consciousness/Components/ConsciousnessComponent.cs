@@ -12,8 +12,8 @@ public sealed partial class ConsciousnessComponent : Component
     /// <summary>
     /// Unconsciousness threshold, ie: when does this entity pass-out/enter-crit
     /// </summary>
-    [DataField(required: true), AutoNetworkedField]
-    public FixedPoint2 Threshold = 30;
+    [DataField("Threshold",required: true), AutoNetworkedField]
+    public FixedPoint2 RawThreshold = 30;
 
     /// <summary>
     /// The current unmodified consciousness value, if this is below the threshold the entity is in crit and
@@ -40,8 +40,8 @@ public sealed partial class ConsciousnessComponent : Component
     /// <summary>
     /// The current maximum consciousness value, consciousness is clamped with this value.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public FixedPoint2 Cap = MaxConsciousness;
+    [DataField("Cap"), AutoNetworkedField]
+    public FixedPoint2 RawCap = MaxConsciousness;
 
     /// <summary>
     /// Is consciousness being prevented from changing mobstate
@@ -56,10 +56,17 @@ public sealed partial class ConsciousnessComponent : Component
     public bool IsConscious = true;
 
     /// <summary>
-    /// Brain that is hosting this consciousness
+    /// How many consciousness providers do we expect to be fully functioning,
+    /// each removed provider will decrease consciousness by 1/ExpectedProviderCount * 100
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
-    public EntityUid? LinkedBrain;
+    public FixedPoint2 ExpectedProviderCount = 1;
+
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
+    public List<EntityUid?> LinkedProviders = new();
+
+    public FixedPoint2 Consciousness => FixedPoint2.Clamp(RawValue * Multiplier + Modifier, 0, Cap);
+    public FixedPoint2 Cap => FixedPoint2.Clamp(RawCap, 0, MaxConsciousness);
 
     public const float MaxConsciousness = 100f;
 }
