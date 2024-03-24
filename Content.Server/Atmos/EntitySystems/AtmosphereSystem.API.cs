@@ -218,14 +218,6 @@ public partial class AtmosphereSystem
         return GetHeatCapacity(GetTileMixture(gridUid, mapUid, tile) ?? GasMixture.SpaceGas);
     }
 
-    public IEnumerable<Vector2i> GetAdjacentTiles(EntityUid gridUid, Vector2i tile)
-    {
-        var ev = new GetAdjacentTilesMethodEvent(gridUid, tile);
-        RaiseLocalEvent(gridUid, ref ev);
-
-        return ev.Result ?? Enumerable.Empty<Vector2i>();
-    }
-
     public IEnumerable<GasMixture> GetAdjacentTileMixtures(EntityUid gridUid, Vector2i tile, bool includeBlocked = false, bool excite = false)
     {
         var ev = new GetAdjacentTileMixturesMethodEvent(gridUid, tile, includeBlocked, excite);
@@ -300,9 +292,6 @@ public partial class AtmosphereSystem
 
     [ByRefEvent] private record struct IsTileSpaceMethodEvent
         (EntityUid? Grid, EntityUid? Map, Vector2i Tile, MapGridComponent? MapGridComponent = null, bool Result = true, bool Handled = false);
-
-    [ByRefEvent] private record struct GetAdjacentTilesMethodEvent
-        (EntityUid Grid, Vector2i Tile, IEnumerable<Vector2i>? Result = null, bool Handled = false);
 
     [ByRefEvent] private record struct GetAdjacentTileMixturesMethodEvent
         (EntityUid Grid, Vector2i Tile, bool IncludeBlocked, bool Excite,
