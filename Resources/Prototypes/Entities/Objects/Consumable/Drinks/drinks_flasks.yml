@@ -57,8 +57,8 @@
 - type: entity
   parent: FlaskBase
   id: DrinkFlask
-  name: captain's flask
-  description: A metal flask belonging to the captain
+  name: head of station's flask
+  description: A metal flask belonging to the head of station
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/flask.rsi

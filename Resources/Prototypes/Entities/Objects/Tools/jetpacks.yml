@@ -142,7 +142,7 @@
 - type: entity
   id: JetpackCaptain
   parent: BaseJetpack
-  name: captain's jetpack
+  name: head of station's jetpack
   suffix: Empty
   components:
   - type: Sprite
@@ -165,7 +165,7 @@
 - type: entity
   id: JetpackCaptainFilled
   parent: JetpackCaptain
-  name: captain's jetpack
+  name: head of station's jetpack
   suffix: Filled
   components:
   - type: GasTank

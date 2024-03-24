@@ -314,7 +314,7 @@
     state: pda-chaplain
 
 - type: entity
-  name: quartermaster PDA
+  name: head of supply PDA
   parent: BasePDA
   id: QuartermasterPDA
   description: PDA for the guy that orders the guns.
@@ -428,7 +428,7 @@
 - type: entity
   parent: BasePDA
   id: CaptainPDA
-  name: captain PDA
+  name: head of station PDA
   description: Surprisingly no different from your PDA.
   components:
   - type: Pda
@@ -448,7 +448,7 @@
 - type: entity
   parent: BasePDA
   id: HoPPDA
-  name: head of personnel PDA
+  name: head of service PDA
   description: Looks like it's been chewed on.
   components:
   - type: Pda
@@ -469,7 +469,7 @@
 - type: entity
   parent: BasePDA
   id: CEPDA
-  name: chief engineer PDA
+  name: head of singularity PDA
   description: Looks like it's barely been used.
   components:
   - type: Pda
@@ -499,7 +499,7 @@
 - type: entity
   parent: BaseMedicalPDA
   id: CMOPDA
-  name: chief medical officer PDA
+  name: head of still just a week away PDA
   description: Extraordinarily shiny and sterile. Has a built-in health analyzer.
   components:
   - type: Pda
@@ -563,7 +563,7 @@
 - type: entity
   parent: BasePDA
   id: RnDPDA
-  name: research director PDA
+  name: head of science PDA
   description: It appears surprisingly ordinary.
   components:
   - type: Pda

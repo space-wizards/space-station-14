@@ -4,7 +4,7 @@
   - Revolutionaries are antagonists that are sponsored by the Syndicate to take over the station.
 
   ## Head Revolutionaries
-  
+
 <Box>
   <GuideEntityEmbed Entity="Flash" Caption="Flash"/>
   <GuideEntityEmbed Entity="ClothingEyesGlassesSunglasses" Caption="Sunglasses"/>
@@ -42,13 +42,13 @@
   ## Objectives
 
   You must eliminate or exile all of the following Command staff on station in no particular order.
-  - Captain
-  - Head of Personnel
-  - Chief Engineer
-  - Research Director
-  - Quartermaster
+  - Head of Station
+  - Head of Service
+  - Head of Singularity
+  - Head of Science
+  - Head of Supply
   - Head of Security
-  - Chief Medical Officer
+  - Head of Still Just a Week Away
 
   Remember, your objective is to take over the station and not to destroy it so try to minimize damage where possible. Viva la revolución!
 </Document>

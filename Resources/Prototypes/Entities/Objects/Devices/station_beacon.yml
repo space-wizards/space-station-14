@@ -140,7 +140,7 @@
 - type: entity
   parent: DefaultStationBeaconCommand
   id: DefaultStationBeaconCaptainsQuarters
-  suffix: Captain's Quarters
+  suffix: Head of Station's Quarters
   components:
   - type: NavMapBeacon
     text: station-beacon-captain
