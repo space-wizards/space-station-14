@@ -1,1 +1,0 @@
-﻿namespace Content.Shared.Clown;
