@@ -493,3 +493,24 @@
       description: ghost-role-information-cluwne-description
     - type: GhostTakeoverAvailable
     - type: Cluwne
+
+- type: entity
+  id: RandomHumanoidSpawnerWizard
+  name: wizard
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Human/parts.rsi
+      state: full
+    - type: RandomMetadata
+      nameSegments: [ names_wizard ]
+    - type: RandomHumanoidSpawner
+      settings: Wizard
+
+- type: randomHumanoidSettings
+  id: Wizard
+  components:
+    - type: Loadout
+      prototypes: [WizardBlueGear]
+    - type: NpcFactionMember
+      factions:
+      - Wizard

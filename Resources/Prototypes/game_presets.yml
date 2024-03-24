@@ -79,7 +79,7 @@
     - sandbox
   name: sandbox-title
   description: sandbox-description
-  showInVote: false # Not suitable for use without admin intervention, since entity spamming can quickly crash a server
+  showInVote: true
   maxPlayers: 5
   rules:
     - Sandbox
@@ -119,6 +119,19 @@
   showInVote: false
   rules:
     - Nukeops
+    - SubGamemodesRule
+    - BasicStationEventScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
+  id: Wizard
+  alias:
+    - wizard
+  name: wizard-title
+  description: wizard-description
+  showInVote: false
+  rules:
+    - Wizard
     - SubGamemodesRule
     - BasicStationEventScheduler
     - BasicRoundstartVariation

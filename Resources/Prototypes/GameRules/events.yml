@@ -419,7 +419,7 @@
   - type: StationEvent
     earliestStart: 45
     weight: 5
-    minimumPlayers: 20
+    minimumPlayers: 10
     reoccurrenceDelay: 30
     duration: 1
   - type: LoneOpsSpawnRule

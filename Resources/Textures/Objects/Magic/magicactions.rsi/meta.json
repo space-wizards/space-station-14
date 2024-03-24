@@ -26,7 +26,13 @@
       "name": "magicmissile"
     },
     {
-      "name": "gib"
+        "name": "gib"
+    },
+    {
+        "name": "devolve"
+    },
+    {
+        "name": "tesla"
     }
   ]
 }
