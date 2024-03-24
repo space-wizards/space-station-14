@@ -20,7 +20,6 @@ public sealed partial class AtmosphereSystem
 
         #region Atmos API Subscriptions
 
-        SubscribeLocalEvent<GridAtmosphereComponent, HasAtmosphereMethodEvent>(GridHasAtmosphere);
         SubscribeLocalEvent<GridAtmosphereComponent, IsSimulatedGridMethodEvent>(GridIsSimulated);
         SubscribeLocalEvent<GridAtmosphereComponent, GetAllMixturesMethodEvent>(GridGetAllMixtures);
         SubscribeLocalEvent<GridAtmosphereComponent, GetTileMixtureMethodEvent>(GridGetTileMixture);
@@ -118,15 +117,6 @@ public sealed partial class AtmosphereSystem
                 newGridAtmos.InvalidatedCoords.Add(indices);
             }
         }
-    }
-
-    private void GridHasAtmosphere(EntityUid uid, GridAtmosphereComponent component, ref HasAtmosphereMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Result = true;
-        args.Handled = true;
     }
 
     private void GridIsSimulated(EntityUid uid, GridAtmosphereComponent component, ref IsSimulatedGridMethodEvent args)

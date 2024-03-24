@@ -49,13 +49,7 @@ public partial class AtmosphereSystem
         return GetTileMixture(gridUid, mapUid, position, excite);
     }
 
-    public bool HasAtmosphere(EntityUid gridUid)
-    {
-        var ev = new HasAtmosphereMethodEvent(gridUid);
-        RaiseLocalEvent(gridUid, ref ev);
-
-        return ev.Result;
-    }
+    public bool HasAtmosphere(EntityUid gridUid) => _atmosQuery.HasComponent(gridUid);
 
     public bool SetSimulatedGrid(EntityUid gridUid, bool simulated)
     {
@@ -282,9 +276,6 @@ public partial class AtmosphereSystem
         RaiseLocalEvent(gridUid, ref ev);
         return ev.Result;
     }
-
-    [ByRefEvent] private record struct HasAtmosphereMethodEvent
-        (EntityUid Grid, bool Result = false, bool Handled = false);
 
     [ByRefEvent] private record struct SetSimulatedGridMethodEvent
         (EntityUid Grid, bool Simulated, bool Handled = false);
