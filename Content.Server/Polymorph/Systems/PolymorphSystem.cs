@@ -119,7 +119,17 @@ public sealed partial class PolymorphSystem : EntitySystem
 
     private void OnPolymorphActionEvent(Entity<PolymorphableComponent> ent, ref PolymorphActionEvent args)
     {
-        PolymorphEntity(ent, args.Prototype.Configuration);
+        PolymorphPrototype? proto = null;
+
+        if (args.Prototype != null)
+            proto = args.Prototype;
+        else if (!string.IsNullOrEmpty(args.ProtoId))
+            proto = _proto.Index(args.ProtoId);
+
+        if (proto is null)
+            return;
+
+        PolymorphEntity(ent, proto.Configuration);
     }
 
     private void OnRevertPolymorphActionEvent(Entity<PolymorphedEntityComponent> ent,
