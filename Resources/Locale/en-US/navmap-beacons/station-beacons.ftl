@@ -23,7 +23,7 @@ station-beacon-chemistry = Chem
 station-beacon-cryonics = Cryopods
 station-beacon-cmo = HoS
 station-beacon-morgue = Morgue
-station-beacon-surgery = Surgery
+station-beacon-surgery = Just a Week Away
 
 station-beacon-science = Science
 station-beacon-research-and-development = Research
