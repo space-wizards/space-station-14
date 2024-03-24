@@ -268,22 +268,33 @@ public partial class AtmosphereSystem
             atmos.PipeNets.Remove(pipeNet);
     }
 
-    public bool AddAtmosDevice(EntityUid gridUid, AtmosDeviceComponent device)
+    public bool AddAtmosDevice(Entity<GridAtmosphereComponent?> grid, Entity<AtmosDeviceComponent> device)
     {
-        // TODO: check device is on grid
+        DebugTools.Assert(device.Comp.JoinedGrid == null);
+        DebugTools.Assert(Transform(device).GridUid == grid);
 
-        var ev = new AddAtmosDeviceMethodEvent(gridUid, device);
-        RaiseLocalEvent(gridUid, ref ev);
-        return ev.Result;
+        if (!_atmosQuery.Resolve(grid, ref grid.Comp))
+            return false;
+
+        if (!grid.Comp.AtmosDevices.Add(device))
+            return false;
+
+        device.Comp.JoinedGrid = grid;
+        return true;
     }
 
-    public bool RemoveAtmosDevice(EntityUid gridUid, AtmosDeviceComponent device)
+    public bool RemoveAtmosDevice(Entity<GridAtmosphereComponent?> grid, Entity<AtmosDeviceComponent> device)
     {
-        // TODO: check device is on grid
+        DebugTools.Assert(device.Comp.JoinedGrid == grid);
 
-        var ev = new RemoveAtmosDeviceMethodEvent(gridUid, device);
-        RaiseLocalEvent(gridUid, ref ev);
-        return ev.Result;
+        if (!_atmosQuery.Resolve(grid, ref grid.Comp))
+            return false;
+
+        if (!grid.Comp.AtmosDevices.Remove(device))
+            return false;
+
+        device.Comp.JoinedGrid = null;
+        return true;
     }
 
     [ByRefEvent] private record struct SetSimulatedGridMethodEvent
@@ -303,10 +314,4 @@ public partial class AtmosphereSystem
 
     [ByRefEvent] private record struct IsHotspotActiveMethodEvent
         (EntityUid Grid, Vector2i Tile, bool Result = false, bool Handled = false);
-
-    [ByRefEvent] private record struct AddAtmosDeviceMethodEvent
-        (EntityUid Grid, AtmosDeviceComponent Device, bool Result = false, bool Handled = false);
-
-    [ByRefEvent] private record struct RemoveAtmosDeviceMethodEvent
-        (EntityUid Grid, AtmosDeviceComponent Device, bool Result = false, bool Handled = false);
 }

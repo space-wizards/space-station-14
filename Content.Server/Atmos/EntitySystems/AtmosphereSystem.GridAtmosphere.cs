@@ -25,8 +25,6 @@ public sealed partial class AtmosphereSystem
         SubscribeLocalEvent<GridAtmosphereComponent, ReactTileMethodEvent>(GridReactTile);
         SubscribeLocalEvent<GridAtmosphereComponent, HotspotExtinguishMethodEvent>(GridHotspotExtinguish);
         SubscribeLocalEvent<GridAtmosphereComponent, IsHotspotActiveMethodEvent>(GridIsHotspotActive);
-        SubscribeLocalEvent<GridAtmosphereComponent, AddAtmosDeviceMethodEvent>(GridAddAtmosDevice);
-        SubscribeLocalEvent<GridAtmosphereComponent, RemoveAtmosDeviceMethodEvent>(GridRemoveAtmosDevice);
 
         #endregion
     }
@@ -310,33 +308,6 @@ public sealed partial class AtmosphereSystem
 
         // New temperature is the arithmetic mean of the sum of the adjacent temperatures...
         tile.Air.Temperature = totalTemperature / count;
-    }
-
-    private void GridAddAtmosDevice(Entity<GridAtmosphereComponent> grid, ref AddAtmosDeviceMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!grid.Comp.AtmosDevices.Add((args.Device.Owner, args.Device)))
-            return;
-
-        args.Device.JoinedGrid = grid;
-        args.Handled = true;
-        args.Result = true;
-    }
-
-    private void GridRemoveAtmosDevice(EntityUid uid, GridAtmosphereComponent component,
-        ref RemoveAtmosDeviceMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!component.AtmosDevices.Remove((args.Device.Owner, args.Device)))
-            return;
-
-        args.Device.JoinedGrid = null;
-        args.Handled = true;
-        args.Result = true;
     }
 
     /// <summary>
