@@ -252,16 +252,17 @@ namespace Content.Server.Connection
                 string denyMessage;
                 switch (condition.GetType())
                 {
-                    case { } t when t == typeof(ConditionAlwaysDeny):
+                    case { } t when t == typeof(ConditionAlwaysMatch):
                         matched = true;
                         denyMessage = Loc.GetString("whitelist-always-deny");
                         break;
                     case { } t when t == typeof(ConditionManualWhitelist):
-                        matched = await _db.GetWhitelistStatusAsync(data.UserId);
+                        matched = !(await _db.GetWhitelistStatusAsync(data.UserId));
                         denyMessage = Loc.GetString("whitelist-manual");
                         break;
                     case { } t when t == typeof(ConditionManualBlacklist):
-                        matched = !(await _db.GetBlacklistStatusAsync(data.UserId));
+                        var blacklisted = await _db.GetBlacklistStatusAsync(data.UserId);
+                        matched = blacklisted;
                         denyMessage = Loc.GetString("whitelist-blacklisted");
                         break;
                     case { } t when t == typeof(ConditionNotesDateRange):
@@ -280,7 +281,10 @@ namespace Content.Server.Connection
 
                             // We want to filter out secret notes if we're not including them.
                             if (!conditionNotes.IncludeSecret && adminNoteRecord.Secret)
+                            {
+                                remarksCopy.Remove(adminRemarksRecord);
                                 continue;
+                            }
 
                             // At this point, we need to remove the note if it's not within the severity range.
                             if (adminNoteRecord.Severity < conditionNotes.MinimumSeverity)
@@ -289,12 +293,13 @@ namespace Content.Server.Connection
                             }
                         }
 
-                        matched = remarksCopy.Count == 0;
+                        matched = remarksCopy.Count > 0;
                         denyMessage = Loc.GetString("whitelist-notes");
                         break;
                     case { } t when t == typeof(ConditionPlayerCount):
                         var conditionPlayerCount = (ConditionPlayerCount)condition;
                         var count = _plyMgr.PlayerCount;
+                        // Match if the player count is within the range.
                         matched = count >= conditionPlayerCount.MinimumPlayers && count <= conditionPlayerCount.MaximumPlayers;
                         denyMessage = Loc.GetString("whitelist-player-count");
                         break;
@@ -308,7 +313,7 @@ namespace Content.Server.Connection
                         }
                         else
                         {
-                            matched = tracker.TimeSpent.TotalMinutes >= conditionPlaytime.MinimumPlaytime;
+                            matched = tracker.TimeSpent.TotalMinutes < conditionPlaytime.MinimumPlaytime;
                         }
                         denyMessage = Loc.GetString("whitelist-playtime", ("minutes", conditionPlaytime.MinimumPlaytime));
                         break;
@@ -337,16 +342,20 @@ namespace Content.Server.Connection
 
                             // We want to filter out secret notes if we're not including them.
                             if (!conditionNotesPlaytimeRange.IncludeSecret && adminNoteRecord.Secret)
+                            {
+                                copy.Remove(adminRemarksRecord);
                                 continue;
+                            }
 
                             // At this point, we need to remove the note if it's not within the severity range.
                             if (adminNoteRecord.Severity < conditionNotesPlaytimeRange.MinimumSeverity)
                             {
                                 copy.Remove(adminRemarksRecord);
+                                continue;
                             }
                         }
 
-                        matched = copy.Count == 0;
+                        matched = copy.Count > 0;
                         denyMessage = Loc.GetString("whitelist-notes");
                         break;
                     default:
@@ -354,6 +363,7 @@ namespace Content.Server.Connection
                 }
 
                 sawmill.Debug($"User {data.UserName} whitelist condition {condition.GetType().Name} result: {matched}");
+                sawmill.Debug($"Action: {condition.Action.ToString()}");
 
                 switch (condition.Action)
                 {
