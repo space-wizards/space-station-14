@@ -111,7 +111,8 @@ public sealed record AdminMessageRecord(
     bool Deleted,
     PlayerRecord? DeletedBy,
     DateTimeOffset? DeletedAt,
-    bool Seen) : IAdminRemarksRecord;
+    bool Seen,
+    bool Dismissed) : IAdminRemarksRecord;
 
 
 public sealed record PlayerRecord(
