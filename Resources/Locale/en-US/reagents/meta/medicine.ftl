@@ -52,6 +52,9 @@ reagent-desc-barozine = A potent chemical that prevents pressure damage. Causes 
 reagent-name-phalanximine = phalanximine
 reagent-desc-phalanximine = An advanced chemical used in the treatment of cancer. Causes moderate radiation poisoning on organics and vomiting. Can potentially remove the death gene on plants.
 
+reagent-name-polypyrylium-oligomers = Polypyrylium Oligomers
+reagent-desc-polypyrylium-oligomers = A purple mixture of short polyelectrolyte chains not easily synthesized in the laboratory. Heals asphyxiation and brute damage. Stops bleeding over time.
+
 reagent-name-ambuzol = ambuzol
 reagent-desc-ambuzol = A highly engineered substance able to halt the progression of a zombie infection.
 

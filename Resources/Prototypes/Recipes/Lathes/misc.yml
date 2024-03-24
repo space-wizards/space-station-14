@@ -8,6 +8,15 @@
     Glass: 50
 
 - type: latheRecipe
+  id: LedLightTube
+  result: LedLightTube
+  category: Lights
+  completetime: 2
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
   id: SodiumLightTube
   result: SodiumLightTube
   category: Lights
@@ -28,6 +37,15 @@
 - type: latheRecipe
   id: LightBulb
   result: LightBulb
+  category: Lights
+  completetime: 2
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
+  id: LedLightBulb
+  result: LedLightBulb
   category: Lights
   completetime: 2
   materials:
@@ -76,15 +94,6 @@
     Wood: 100
 
 - type: latheRecipe
-  id: Drone
-  result: Drone
-  completetime: 6
-  materials:
-    Steel: 500
-    Glass: 500
-    Plastic: 500
-
-- type: latheRecipe
   id: SynthesizerInstrument
   result: SynthesizerInstrument
   completetime: 4
@@ -101,6 +110,13 @@
   materials:
     Steel: 100
     Plastic: 50
+
+- type: latheRecipe
+  id: AirTank
+  result: AirTank
+  completetime: 4
+  materials:
+    Steel: 300
 
 - type: latheRecipe
   id: ClothingShoesBootsMagSci
@@ -154,3 +170,19 @@
   completetime: 2
   materials:
     Steel: 100
+
+- type: latheRecipe
+  id: HandheldStationMap
+  result: HandheldStationMapEmpty
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  id: ClothingHeadHatWelding
+  result: ClothingHeadHatWelding
+  completetime: 2
+  materials:
+    Steel: 400
+    Glass: 200

@@ -205,19 +205,23 @@ namespace Content.Server.Cargo.Systems
             // Try to fulfill from any station where possible, if the pad is not occupied.
             foreach (var trade in _listEnts)
             {
-                var tradePads = GetCargoPallets(trade);
+                var tradePads = GetCargoPallets(trade, BuySellType.Buy);
                 _random.Shuffle(tradePads);
 
                 var freePads = GetFreeCargoPallets(trade, tradePads);
-
-                foreach (var pad in freePads)
+                if (freePads.Count >= order.OrderQuantity) //check if the station has enough free pallets
                 {
-                    var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
-
-                    if (FulfillOrder(order, coordinates, orderDatabase.PrinterOutput))
+                    foreach (var pad in freePads)
                     {
-                        tradeDestination = trade;
-                        break;
+                        var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
+
+                        if (FulfillOrder(order, coordinates, orderDatabase.PrinterOutput))
+                        {
+                            tradeDestination = trade;
+                            order.NumDispatched++;
+                            if (order.OrderQuantity <= order.NumDispatched) //Spawn a crate on free pellets until the order is fulfilled.
+                                break;
+                        }
                     }
                 }
 

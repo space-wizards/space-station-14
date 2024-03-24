@@ -1,4 +1,4 @@
-<component name="ProjectRunConfigurationManager">
+﻿<component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Content Server+Client" type="CompoundRunConfigurationType">
     <toRun name="Content.Client" type="DotNetProject" />
     <toRun name="Content.Server" type="DotNetProject" />

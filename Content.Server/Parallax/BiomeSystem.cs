@@ -29,6 +29,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
 using Robust.Shared.Utility;
+using ChunkIndicesEnumerator = Robust.Shared.Map.Enumerators.ChunkIndicesEnumerator;
 
 namespace Content.Server.Parallax;
 
@@ -83,15 +84,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
         SubscribeLocalEvent<FTLStartedEvent>(OnFTLStarted);
         SubscribeLocalEvent<ShuttleFlattenEvent>(OnShuttleFlatten);
-        _configManager.OnValueChanged(CVars.NetMaxUpdateRange, SetLoadRange, true);
+        Subs.CVar(_configManager, CVars.NetMaxUpdateRange, SetLoadRange, true);
         InitializeCommands();
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(ProtoReload);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _configManager.UnsubValueChanged(CVars.NetMaxUpdateRange, SetLoadRange);
     }
 
     private void ProtoReload(PrototypesReloadedEventArgs obj)
@@ -1006,20 +1001,13 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         light.AmbientLightColor = Color.FromHex("#D8B059");
         Dirty(mapUid, light, metadata);
 
-        // Atmos
-        var atmos = EnsureComp<MapAtmosphereComponent>(mapUid);
-
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int) Gas.Oxygen] = 21.824779f;
         moles[(int) Gas.Nitrogen] = 82.10312f;
 
-        var mixture = new GasMixture(2500)
-        {
-            Temperature = 293.15f,
-            Moles = moles,
-        };
+        var mixture = new GasMixture(moles, Atmospherics.T20C);
 
-        _atmos.SetMapAtmosphere(mapUid, false, mixture, atmos);
+        _atmos.SetMapAtmosphere(mapUid, false, mixture);
     }
 
     /// <summary>

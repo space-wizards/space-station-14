@@ -1,14 +1,18 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
+using Robust.Shared.Network;
+using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Stunnable;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Slippery;
 
@@ -29,6 +33,7 @@ public sealed class SlipperySystem : EntitySystem
         SubscribeLocalEvent<SlipperyComponent, StepTriggerAttemptEvent>(HandleAttemptCollide);
         SubscribeLocalEvent<SlipperyComponent, StepTriggeredEvent>(HandleStepTrigger);
         SubscribeLocalEvent<NoSlipComponent, SlipAttemptEvent>(OnNoSlipAttempt);
+        SubscribeLocalEvent<ThrownItemComponent, SlipCausingAttemptEvent>(OnThrownSlipAttempt);
         // as long as slip-resistant mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
         SubscribeLocalEvent<NoSlipComponent, InventoryRelayedEvent<SlipAttemptEvent>>((e, c, ev) => OnNoSlipAttempt(e, c, ev.Args));
     }
@@ -54,6 +59,11 @@ public sealed class SlipperySystem : EntitySystem
         args.Cancel();
     }
 
+    private void OnThrownSlipAttempt(EntityUid uid, ThrownItemComponent comp, ref SlipCausingAttemptEvent args)
+    {
+        args.Cancelled = true;
+    }
+
     private bool CanSlip(EntityUid uid, EntityUid toSlip)
     {
         return !_container.IsEntityInContainer(uid)
@@ -70,6 +80,11 @@ public sealed class SlipperySystem : EntitySystem
         if (attemptEv.Cancelled)
             return;
 
+        var attemptCausingEv = new SlipCausingAttemptEvent();
+        RaiseLocalEvent(uid, ref attemptCausingEv);
+        if (attemptCausingEv.Cancelled)
+            return;
+
         var ev = new SlipEvent(other);
         RaiseLocalEvent(uid, ref ev);
 
@@ -78,7 +93,11 @@ public sealed class SlipperySystem : EntitySystem
             _physics.SetLinearVelocity(other, physics.LinearVelocity * component.LaunchForwardsMultiplier, body: physics);
 
             if (component.SuperSlippery)
-                EnsureComp<SlidingComponent>(other);
+            {
+                var sliding = EnsureComp<SlidingComponent>(other);
+                sliding.CollidingEntities.Add(uid);
+                DebugTools.Assert(_physics.GetContactingEntities(other, physics).Contains(uid));
+            }
         }
 
         var playSound = !_statusEffects.HasStatusEffect(other, "KnockedDown");
@@ -105,7 +124,13 @@ public sealed class SlipAttemptEvent : CancellableEntityEventArgs, IInventoryRel
 }
 
 /// <summary>
-///     This event is raised directed at an entity that CAUSED some other entity to slip (e.g., the banana peel).
+/// Raised on an entity that is causing the slip event (e.g, the banana peel), to determine if the slip attempt should be cancelled.
 /// </summary>
+/// <param name="Cancelled">If the slip should be cancelled</param>
+[ByRefEvent]
+public record struct SlipCausingAttemptEvent (bool Cancelled);
+
+/// Raised on an entity that CAUSED some other entity to slip (e.g., the banana peel).
+/// <param name="Slipped">The entity being slipped</param>
 [ByRefEvent]
 public readonly record struct SlipEvent(EntityUid Slipped);
