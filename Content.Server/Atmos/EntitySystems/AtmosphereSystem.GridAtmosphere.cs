@@ -23,7 +23,6 @@ public sealed partial class AtmosphereSystem
         SubscribeLocalEvent<GridAtmosphereComponent, IsSimulatedGridMethodEvent>(GridIsSimulated);
         SubscribeLocalEvent<GridAtmosphereComponent, GetAllMixturesMethodEvent>(GridGetAllMixtures);
         SubscribeLocalEvent<GridAtmosphereComponent, ReactTileMethodEvent>(GridReactTile);
-        SubscribeLocalEvent<GridAtmosphereComponent, IsTileSpaceMethodEvent>(GridIsTileSpace);
         SubscribeLocalEvent<GridAtmosphereComponent, HotspotExposeMethodEvent>(GridHotspotExpose);
         SubscribeLocalEvent<GridAtmosphereComponent, HotspotExtinguishMethodEvent>(GridHotspotExtinguish);
         SubscribeLocalEvent<GridAtmosphereComponent, IsHotspotActiveMethodEvent>(GridIsHotspotActive);
@@ -162,19 +161,6 @@ public sealed partial class AtmosphereSystem
             return;
 
         args.Result = tile.Air is { } air ? React(air, tile) : ReactionResult.NoReaction;
-        args.Handled = true;
-    }
-
-    private void GridIsTileSpace(EntityUid uid, GridAtmosphereComponent component, ref IsTileSpaceMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        // We don't have that tile, so let the map handle it.
-        if (!component.Tiles.TryGetValue(args.Tile, out var tile))
-            return;
-
-        args.Result = tile.Space;
         args.Handled = true;
     }
 

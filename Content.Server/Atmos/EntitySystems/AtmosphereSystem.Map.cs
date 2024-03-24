@@ -12,7 +12,6 @@ public partial class AtmosphereSystem
     {
         SubscribeLocalEvent<MapAtmosphereComponent, ComponentInit>(OnMapStartup);
         SubscribeLocalEvent<MapAtmosphereComponent, ComponentRemove>(OnMapRemove);
-        SubscribeLocalEvent<MapAtmosphereComponent, IsTileSpaceMethodEvent>(MapIsTileSpace);
         SubscribeLocalEvent<MapAtmosphereComponent, ComponentGetState>(OnMapGetState);
         SubscribeLocalEvent<GridAtmosphereComponent, EntParentChangedMessage>(OnGridParentChanged);
     }
@@ -27,15 +26,6 @@ public partial class AtmosphereSystem
     {
         if (!TerminatingOrDeleted(uid))
             RefreshAllGridMapAtmospheres(uid);
-    }
-
-    private void MapIsTileSpace(EntityUid uid, MapAtmosphereComponent component, ref IsTileSpaceMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Result = component.Space;
-        args.Handled = true;
     }
 
     private void OnMapGetState(EntityUid uid, MapAtmosphereComponent component, ref ComponentGetState args)

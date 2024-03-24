@@ -4,7 +4,6 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
@@ -188,24 +187,18 @@ public partial class AtmosphereSystem
 
     public bool IsTileSpace(EntityUid? gridUid, EntityUid? mapUid, Vector2i tile, MapGridComponent? mapGridComp = null)
     {
-        var ev = new IsTileSpaceMethodEvent(gridUid, mapUid, tile, mapGridComp);
+        if (_atmosQuery.TryGetComponent(gridUid, out var gridAtmos) &&
+            gridAtmos.Tiles.TryGetValue(tile, out var tileAtmos))
+        {
+            return tileAtmos.Space;
+        }
 
-        // Try to let the grid (if any) handle it...
-        if (gridUid.HasValue)
-            RaiseLocalEvent(gridUid.Value, ref ev, false);
-
-        // If we didn't have a grid or the event wasn't handled
-        // we let the map know, and also broadcast the event while at it!
-        if (mapUid.HasValue && !ev.Handled)
-            RaiseLocalEvent(mapUid.Value, ref ev, true);
-
-        // We didn't have a map, and the event isn't handled, therefore broadcast the event.
-        else if (!mapUid.HasValue && !ev.Handled)
-            RaiseLocalEvent(ref ev);
+        if (_mapAtmosQuery.TryGetComponent(mapUid, out var mapAtmos))
+            return mapAtmos.Space;
 
         // If nothing handled the event, it'll default to true.
         // Oh well, this is a space game after all, deal with it!
-        return ev.Result;
+        return true;
     }
 
     public bool IsTileMixtureProbablySafe(EntityUid? gridUid, EntityUid mapUid, Vector2i tile)
@@ -291,9 +284,6 @@ public partial class AtmosphereSystem
 
     [ByRefEvent] private record struct ReactTileMethodEvent
         (EntityUid GridId, Vector2i Tile, ReactionResult Result = default, bool Handled = false);
-
-    [ByRefEvent] private record struct IsTileSpaceMethodEvent
-        (EntityUid? Grid, EntityUid? Map, Vector2i Tile, MapGridComponent? MapGridComponent = null, bool Result = true, bool Handled = false);
 
     [ByRefEvent] private record struct HotspotExposeMethodEvent
         (EntityUid Grid, EntityUid? SparkSourceUid, Vector2i Tile, float ExposedTemperature, float ExposedVolume, bool soh, bool Handled = false);
