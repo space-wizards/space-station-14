@@ -150,7 +150,7 @@ public partial class AtmosphereSystem
     {
         // If we've been passed a grid, try to let it handle it.
         if (grid is {} gridEnt
-            && Resolve(gridEnt, ref gridEnt.Comp)
+            && Resolve(gridEnt, ref gridEnt.Comp, false)
             && gridEnt.Comp.Tiles.TryGetValue(gridTile, out var tile))
         {
             if (excite)
@@ -159,7 +159,7 @@ public partial class AtmosphereSystem
             return tile.Air;
         }
 
-        if (map is {} mapEnt && _mapAtmosQuery.Resolve(mapEnt, ref mapEnt.Comp))
+        if (map is {} mapEnt && _mapAtmosQuery.Resolve(mapEnt, ref mapEnt.Comp, false))
             return mapEnt.Comp.Mixture;
 
         // Default to a space mixture... This is a space game, after all!
