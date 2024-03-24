@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Made lava & liquid plasma significantly less lethal.
-    type: Tweak
-  id: 5715
-  time: '2024-01-15T06:33:05.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24100
 - author: EmoGarbage404
   changes:
   - message: Added cryogenic sleep units. Disconnecting or ghosting inside one of
@@ -3802,3 +3795,11 @@
   id: 6214
   time: '2024-03-23T19:29:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24977
+- author: nikthechampiongr
+  changes:
+  - message: Door remotes can now only control doors specific to their type and do
+      not use the access of their user.
+    type: Tweak
+  id: 6215
+  time: '2024-03-24T00:48:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26371
