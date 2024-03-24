@@ -271,7 +271,7 @@ public partial class AtmosphereSystem
         DebugTools.Assert(device.Comp.JoinedGrid == null);
         DebugTools.Assert(Transform(device).GridUid == grid);
 
-        if (!_atmosQuery.Resolve(grid, ref grid.Comp))
+        if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
             return false;
 
         if (!grid.Comp.AtmosDevices.Add(device))
