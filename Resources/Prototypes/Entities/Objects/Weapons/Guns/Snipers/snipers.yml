@@ -143,9 +143,9 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-      - CartridgeDebug
+      - CartridgeMortis
     capacity: 1
-    proto: CartridgeDebug
+    proto: CartridgeMortis
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mortis.ogg

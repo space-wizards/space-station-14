@@ -186,6 +186,7 @@
     - !type:CreateEntityReactionEffect
       entity: EnrichedUranium
 
+- type: reaction
   id: Gunpowder # Own a musket for home defense, cause that's what the founding fathers intended!
   impact: Low
   quantized: true
@@ -201,17 +202,14 @@
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
 
- id: Lingium
-  impact: Low
-  quantized: true
-  minTemp: 250 
+- type: reaction
+  id: lingium # Failing checks in the hot sun, i fought the code and the code won
   reactants:
-    Doxarubixadone:
-      amount: 1
+    UnstableMutagen:
+      amount: 2
     Plasma: # Consumed in reaction: steady supply of plasma required for a jug of it
       amount: 2 
-    Uranium:
+    UnstableMutagen:
       amount: 1
-  effects:
-    products:
-     Lingium: 3
+  products:
+    lingium: 3
