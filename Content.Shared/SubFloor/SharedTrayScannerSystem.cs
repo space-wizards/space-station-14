@@ -35,7 +35,7 @@ public abstract class SharedTrayScannerSystem : EntitySystem
             return;
 
         scanner.Enabled = enabled;
-        Dirty(scanner);
+        Dirty(uid, scanner);
 
         // We don't remove from _activeScanners on disabled, because the update function will handle that, as well as
         // managing the revealed subfloor entities

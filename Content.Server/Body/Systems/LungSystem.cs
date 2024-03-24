@@ -77,7 +77,7 @@ public sealed class LungSystem : EntitySystem
         foreach (var gas in Enum.GetValues<Gas>())
         {
             var i = (int) gas;
-            var moles = lung.Air.Moles[i];
+            var moles = lung.Air[i];
             if (moles <= 0)
                 continue;
             var reagent = _atmosphereSystem.GasReagents[i];

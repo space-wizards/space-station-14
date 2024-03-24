@@ -262,8 +262,7 @@ namespace Content.Server.Strip
                 Hidden = stealth,
                 AttemptFrequency = AttemptFrequency.EveryTick,
                 BreakOnDamage = true,
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
+                BreakOnMove = true,
                 NeedHand = true,
                 DuplicateCondition = DuplicateConditions.SameTool
             };
@@ -356,8 +355,7 @@ namespace Content.Server.Strip
                 Hidden = stealth,
                 AttemptFrequency = AttemptFrequency.EveryTick,
                 BreakOnDamage = true,
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
+                BreakOnMove = true,
                 NeedHand = true,
                 BreakOnHandChange = false, // Allow simultaneously removing multiple items.
                 DuplicateCondition = DuplicateConditions.SameTool
@@ -454,8 +452,7 @@ namespace Content.Server.Strip
                 Hidden = stealth,
                 AttemptFrequency = AttemptFrequency.EveryTick,
                 BreakOnDamage = true,
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
+                BreakOnMove = true,
                 NeedHand = true,
                 DuplicateCondition = DuplicateConditions.SameTool
             };
@@ -554,8 +551,7 @@ namespace Content.Server.Strip
                 Hidden = stealth,
                 AttemptFrequency = AttemptFrequency.EveryTick,
                 BreakOnDamage = true,
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
+                BreakOnMove = true,
                 NeedHand = true,
                 BreakOnHandChange = false, // Allow simultaneously removing multiple items.
                 DuplicateCondition = DuplicateConditions.SameTool

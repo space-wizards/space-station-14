@@ -638,13 +638,13 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Remove gravity",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Structures/Machines/gravity_generator.rsi"), "off"),
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/Structures/Machines/gravity_generator.rsi"), "off"),
             Act = () =>
             {
                 var grav = EnsureComp<MovementIgnoreGravityComponent>(args.Target);
                 grav.Weightless = true;
 
-                Dirty(grav);
+                Dirty(args.Target, grav);
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-remove-gravity-description"),
@@ -741,7 +741,7 @@ public sealed partial class AdminVerbSystem
                 var movementSpeed = EnsureComp<MovementSpeedModifierComponent>(args.Target);
                 (movementSpeed.BaseSprintSpeed, movementSpeed.BaseWalkSpeed) = (movementSpeed.BaseWalkSpeed, movementSpeed.BaseSprintSpeed);
 
-                Dirty(movementSpeed);
+                Dirty(args.Target, movementSpeed);
 
                 _popupSystem.PopupEntity(Loc.GetString("admin-smite-run-walk-swap-prompt"), args.Target,
                     args.Target, PopupType.LargeCaution);

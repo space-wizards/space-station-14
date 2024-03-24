@@ -104,8 +104,7 @@ public sealed class RCDSystem : EntitySystem
             BreakOnDamage = true,
             NeedHand = true,
             BreakOnHandChange = true,
-            BreakOnUserMove = true,
-            BreakOnTargetMove = args.Target != null,
+            BreakOnMove = true,
             AttemptFrequency = AttemptFrequency.EveryTick
         };
 
@@ -133,7 +132,7 @@ public sealed class RCDSystem : EntitySystem
                 return;
         }
 
-        var mapGrid = _mapMan.GetGrid(gridId.Value);
+        var mapGrid = Comp<MapGridComponent>(gridId.Value);
         var tile = mapGrid.GetTileRef(location);
 
         if (!IsRCDStillValid(uid, comp, args.Event.User, args.Event.Target, mapGrid, tile, args.Event.StartingMode))
@@ -158,7 +157,7 @@ public sealed class RCDSystem : EntitySystem
                 return;
         }
 
-        var mapGrid = _mapMan.GetGrid(gridId.Value);
+        var mapGrid = Comp<MapGridComponent>(gridId.Value);
         var tile = mapGrid.GetTileRef(location);
         var snapPos = mapGrid.TileIndicesFor(location);
 
@@ -313,7 +312,7 @@ public sealed class RCDSystem : EntitySystem
         var mode = (int) comp.Mode;
         mode = ++mode % RcdModeCount;
         comp.Mode = (RcdMode) mode;
-        Dirty(comp);
+        Dirty(uid, comp);
 
         var msg = Loc.GetString("rcd-component-change-mode", ("mode", comp.Mode.ToString()));
         _popup.PopupClient(msg, uid, user);
