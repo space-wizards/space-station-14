@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Stimpack price has been reduced to 4 TC
-    type: Tweak
-  id: 5718
-  time: '2024-01-15T09:30:37.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24117
 - author: Nimfar11
   changes:
   - message: Adds the ability to build blast doors.
@@ -3796,3 +3789,10 @@
   id: 6217
   time: '2024-03-24T05:19:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26378
+- author: ElectroJr
+  changes:
+  - message: Fixed the cargo & emergency shuttle not being airtight.
+    type: Fix
+  id: 6218
+  time: '2024-03-24T16:17:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26382
