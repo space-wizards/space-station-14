@@ -14,44 +14,26 @@ public sealed class LandMineSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<LandMineComponent, StepTriggeredEvent>(HandleStepTriggered);
+        SubscribeLocalEvent<LandMineComponent, StepTriggeredOnEvent>(HandleStepOnTriggered);
+        SubscribeLocalEvent<LandMineComponent, StepTriggeredOffEvent>(HandleStepOffTriggered);
 
         SubscribeLocalEvent<LandMineComponent, StepTriggerAttemptEvent>(HandleStepTriggerAttempt);
     }
 
-    private void HandleStepTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredEvent args)
-    {
-        if (component.TriggerImmediately && !args.IsStepOff ||
-            !component.TriggerImmediately && args.IsStepOff)
-        {
-            _trigger.Trigger(uid, args.Tripper);
-        }
-        else if (!component.TriggerImmediately && !args.IsStepOff)
-        {
-            ShowLandminePopup(uid, args.Tripper);
-            PlayLandmineActivatedSound(uid, component);
-        }
-    }
-
-    private void ShowLandminePopup(EntityUid uid, EntityUid tripper)
+    private void HandleStepOnTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOnEvent args)
     {
         _popupSystem.PopupCoordinates(
-                Loc.GetString("land-mine-triggered", ("mine", uid)),
-                Transform(uid).Coordinates,
-                tripper,
-                PopupType.LargeCaution);
+            Loc.GetString("land-mine-triggered", ("mine", uid)),
+            Transform(uid).Coordinates,
+            args.Tripper,
+            PopupType.LargeCaution);
+
+        _audioSystem.PlayPvs(component.Sound, uid);
     }
 
-    private void PlayLandmineActivatedSound(EntityUid uid, LandMineComponent component)
+    private void HandleStepOffTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOffEvent args)
     {
-        SoundSpecifier? triggerSound = component.TriggerSound;
-
-        if (triggerSound == null)
-        {
-            return;
-        }
-
-        _audioSystem.PlayPvs(triggerSound, uid);
+        _trigger.Trigger(uid, args.Tripper);
     }
 
     private static void HandleStepTriggerAttempt(EntityUid uid, LandMineComponent component, ref StepTriggerAttemptEvent args)

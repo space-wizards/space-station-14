@@ -6,15 +6,8 @@ namespace Content.Server.LandMines;
 public sealed partial class LandMineComponent : Component
 {
     /// <summary>
-    /// Defines whether landmine will explode when stepping on it or when stepping off it
-    /// True - StepTrigger, False - StepOffTrigger
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool TriggerImmediately = false;
-
-    /// <summary>
     /// Trigger sound effect when stepping onto landmine
     /// </summary>
-    [DataField("sound"), ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier? TriggerSound = default;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier? Sound;
 }

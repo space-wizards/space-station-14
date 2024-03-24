@@ -113,8 +113,16 @@ public sealed class StepTriggerSystem : EntitySystem
             return;
         }
 
-        var evStep = new StepTriggeredEvent { IsStepOff = false, Source = uid, Tripper = otherUid };
-        RaiseLocalEvent(uid, ref evStep, true);
+        if (component.StepOn)
+        {
+            var evStep = new StepTriggeredOnEvent(uid, otherUid);
+            RaiseLocalEvent(uid, ref evStep);
+        }
+        else
+        {
+            var evStep = new StepTriggeredOffEvent(uid, otherUid);
+            RaiseLocalEvent(uid, ref evStep);
+        }
 
         component.CurrentlySteppedOn.Add(otherUid);
         Dirty(uid, component);
@@ -134,7 +142,7 @@ public sealed class StepTriggerSystem : EntitySystem
 
         var msg = new StepTriggerAttemptEvent { Source = uid, Tripper = otherUid };
 
-        RaiseLocalEvent(uid, ref msg, true);
+        RaiseLocalEvent(uid, ref msg);
 
         return msg.Continue && !msg.Cancelled;
     }
@@ -167,8 +175,11 @@ public sealed class StepTriggerSystem : EntitySystem
         component.CurrentlySteppedOn.Remove(otherUid);
         Dirty(uid, component);
 
-        var evStepOff = new StepTriggeredEvent { IsStepOff = true, Source = uid, Tripper = otherUid };
-        RaiseLocalEvent(uid, ref evStepOff);
+        if (component.StepOn)
+        {
+            var evStepOff = new StepTriggeredOffEvent(uid, otherUid);
+            RaiseLocalEvent(uid, ref evStepOff);
+        }
 
         if (component.Colliding.Count == 0)
         {
@@ -237,12 +248,14 @@ public struct StepTriggerAttemptEvent
     public bool Cancelled;
 }
 
+/// <summary>
+/// Raised when an entity stands on a steptrigger initially (assuming it has both on and off states).
+/// </summary>
 [ByRefEvent]
-public readonly struct StepTriggeredEvent
-{
-    // Added the boolean here; sometimes we would have to make 
-    // different actions on default step and step off (e.g. LandMineSystem)
-    public readonly bool IsStepOff { get; init; }
-    public readonly EntityUid Source { get; init; }
-    public readonly EntityUid Tripper { get; init; }
-}
+public readonly record struct StepTriggeredOnEvent(EntityUid Source, EntityUid Tripper);
+
+/// <summary>
+/// Raised when an entity leaves a steptrigger if it has on and off states OR when an entity intersects a steptrigger.
+/// </summary>
+[ByRefEvent]
+public readonly record struct StepTriggeredOffEvent(EntityUid Source, EntityUid Tripper);

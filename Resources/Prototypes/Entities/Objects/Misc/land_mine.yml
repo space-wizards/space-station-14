@@ -41,6 +41,7 @@
             maxDistance: 10
   - type: StepTrigger
     requiredTriggeredSpeed: 0
+    stepOn: true
 
 - type: entity
   name: kick mine
@@ -60,7 +61,6 @@
   - type: Construction
     graph: ModularMineGraph
     node: emptyCase
-  - type: LandMine
 
 - type: entity
   name: explosive mine
