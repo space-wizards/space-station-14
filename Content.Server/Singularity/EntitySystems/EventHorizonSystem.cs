@@ -230,7 +230,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// </summary>
     public void ConsumeTile(EntityUid hungry, TileRef tile, EventHorizonComponent eventHorizon)
     {
-        ConsumeTiles(hungry, new List<(Vector2i, Tile)>(new[] { (tile.GridIndices, Tile.Empty) }), tile.GridUid, _mapMan.GetGrid(tile.GridUid), eventHorizon);
+        ConsumeTiles(hungry, new List<(Vector2i, Tile)>(new[] { (tile.GridIndices, Tile.Empty) }), tile.GridUid, Comp<MapGridComponent>(tile.GridUid), eventHorizon);
     }
 
     /// <summary>
@@ -238,7 +238,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// </summary>
     public void AttemptConsumeTile(EntityUid hungry, TileRef tile, EventHorizonComponent eventHorizon)
     {
-        AttemptConsumeTiles(hungry, new TileRef[1] { tile }, tile.GridUid, _mapMan.GetGrid(tile.GridUid), eventHorizon);
+        AttemptConsumeTiles(hungry, new TileRef[1] { tile }, tile.GridUid, Comp<MapGridComponent>(tile.GridUid), eventHorizon);
     }
 
     /// <summary>

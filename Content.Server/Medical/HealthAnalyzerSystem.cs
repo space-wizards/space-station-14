@@ -76,9 +76,8 @@ public sealed class HealthAnalyzerSystem : EntitySystem
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, uid.Comp.ScanDelay, new HealthAnalyzerDoAfterEvent(), uid, target: args.Target, used: uid)
         {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
-            NeedHand = true
+            NeedHand = true,
+            BreakOnMove = true
         });
     }
 

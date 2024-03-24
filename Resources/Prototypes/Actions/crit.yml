@@ -1,4 +1,4 @@
-﻿# Actions added to mobs in crit.
+# Actions added to mobs in crit.
 - type: entity
   id: ActionCritSuccumb
   name: Succumb
@@ -8,6 +8,7 @@
   - type: InstantAction
     itemIconStyle: NoItem
     checkCanInteract: false
+    checkConsciousness: false
     icon:
       sprite: Mobs/Ghosts/ghost_human.rsi
       state: icon
@@ -22,6 +23,7 @@
   - type: InstantAction
     itemIconStyle: NoItem
     checkCanInteract: false
+    checkConsciousness: false
     icon:
       sprite: Interface/Actions/actions_crit.rsi
       state: fakedeath
@@ -37,6 +39,7 @@
   - type: InstantAction
     itemIconStyle: NoItem
     checkCanInteract: false
+    checkConsciousness: false
     icon:
       sprite: Interface/Actions/actions_crit.rsi
       state: lastwords

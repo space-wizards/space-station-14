@@ -34,7 +34,13 @@
   id: Balloon
 
 - type: Tag
+  id: Banana
+
+- type: Tag
   id: BananaPeel
+
+- type: Tag
+  id: Bandana
 
 - type: Tag
   id: BaseballBat
@@ -43,7 +49,13 @@
   id: BBQsauce
 
 - type: Tag
+  id: Bedsheet
+
+- type: Tag
   id: Bee
+
+- type: Tag
+  id: Beer
 
 - type: Tag
   id: BikeHorn
@@ -205,6 +217,9 @@
   id: Bottle
 
 - type: Tag
+  id: BoxCardboard
+
+- type: Tag
   id: BoxHug
 
 - type: Tag
@@ -350,6 +365,9 @@
   id: ChemDispensable # container that can go into the chem dispenser
 
 - type: Tag
+  id: ChiliBowl
+
+- type: Tag
   id: Cigarette
 
 - type: Tag
@@ -402,6 +420,9 @@
 
 - type: Tag #Ohioans die happy
   id: Corn
+
+- type: Tag
+  id: CottonBoll
 
 - type: Tag
   id: Cow
@@ -653,6 +674,9 @@
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
 
 - type: Tag
+  id: Haunted
+
+- type: Tag
   id: Head
 
 - type: Tag
@@ -675,6 +699,9 @@
 
 - type: Tag
   id: HighSecDoor
+
+- type: Tag
+  id: HiViz
 
 - type: Tag
   id: Hoe
@@ -840,6 +867,9 @@
   id: MicroBomb
 
 - type: Tag
+  id: MicrowaveMachineBoard
+
+- type: Tag
   id: MimeBelt
 
 - type: Tag
@@ -880,6 +910,9 @@
 
 - type: Tag
   id: NoBlockAnchoring
+
+- type: Tag
+  id: NoPaint
 
 - type: Tag
   id: NozzleBackTank
@@ -1137,6 +1170,9 @@
   id: StationMapElectronics
 
 - type: Tag
+  id: Steak
+
+- type: Tag
   id: StringInstrument
 
 - type: Tag
@@ -1188,6 +1224,9 @@
   id: Torch
 
 - type: Tag
+  id: ToyRubberDuck
+
+- type: Tag
   id: ToySidearm
 
 - type: Tag
@@ -1204,6 +1243,9 @@
 
 - type: Tag
   id: UraniumGlassShard
+
+- type: Tag
+  id: Vegetable
 
 - type: Tag
   id: VimPilot
@@ -1243,6 +1285,9 @@
 
 - type: Tag
   id: Window
+
+- type: Tag
+  id: Wine
 
 - type: Tag
   id: Wirecutter
