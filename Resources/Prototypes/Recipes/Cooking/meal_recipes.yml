@@ -936,6 +936,18 @@
     FoodBowlBig: 1
     MaterialBones1: 1
 
+- type: microwaveMealRecipe
+  id: RecipeSourLung
+  name: sour lung recipe
+  result: FoodSoupSourLung
+  time: 10
+  reagents:
+    Cream: 5
+    Vinegar: 5
+  solids:
+    FoodBowlBig: 1
+    FoodLungs: 1
+
 #Pies
 
 - type: microwaveMealRecipe

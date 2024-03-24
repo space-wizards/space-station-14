@@ -1240,3 +1240,33 @@
           Quantity: 1 # Everybody gets one.
         - ReagentId: Vitamin
           Quantity: 14
+
+- type: entity
+  name: sour lung
+  parent: FoodBowlBase
+  id: FoodSoupSourLung
+  description: Thinly sliced lung, smothered in vinegar before adding cream, which is turned sour. Not quite as disgusting as it sounds.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - sour
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: sourlung
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 4
+          - ReagentId: Protein
+            Quantity: 4
+          - ReagentId: Vitamin
+            Quantity: 7
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
