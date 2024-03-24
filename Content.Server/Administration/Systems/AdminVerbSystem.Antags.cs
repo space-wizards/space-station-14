@@ -18,7 +18,6 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
     [Dependency] private readonly RevolutionaryRuleSystem _revolutionaryRule = default!;
-    [Dependency] private readonly WizardRuleSystem _wizardRule = default!;
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
@@ -121,19 +120,5 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-verb-make-thief"),
         };
         args.Verbs.Add(thief);
-
-        Verb wizard = new()
-        {
-            Text = Loc.GetString("admin-verb-text-make-wizard"),
-            Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Rsi(new("/Textures/Clothing/Head/Hats/wizardhat.rsi"), "icon"),
-            Act = () =>
-            {
-                _wizardRule.AdminMakeWizard(args.Target);
-            },
-            Impact = LogImpact.High,
-            Message = Loc.GetString("admin-verb-make-wizard"),
-        };
-        args.Verbs.Add(wizard);
     }
 }

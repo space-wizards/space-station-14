@@ -103,15 +103,3 @@
   id: BaseSurviveObjective
   components:
   - type: SurviveCondition
-
-- type: entity
-  abstract: true
-  parent: BaseObjective
-  id: BaseWizardObjective
-  components:
-  - type: Objective
-    issuer: wizard
-  - type: RoleRequirement
-    roles:
-      components:
-      - WizardRole

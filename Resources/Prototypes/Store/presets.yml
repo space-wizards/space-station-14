@@ -15,12 +15,3 @@
   - UplinkPointless
   currencyWhitelist:
   - Telecrystal
-
-- type: storePreset
-  id: StorePresetWizard
-  storeName: Spellbook
-  categories:
-  - WizardSpells
-  - WizardItems
-  currencyWhitelist:
-  - Magipoints
