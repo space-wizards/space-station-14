@@ -1954,6 +1954,9 @@
     fillPrototype: SeedsGrenadeFruit
     maxGrenadesCount: 10
     grenadeType: enum.GrenadeType.Shoot
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
   - type: Tag
     tags:
     - Fruit
