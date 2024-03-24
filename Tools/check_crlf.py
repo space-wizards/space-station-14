@@ -7,7 +7,7 @@ def main() -> int:
     any_failed = False
     for file_name in get_text_files():
         if is_file_crlf(file_name):
-            print(f"::error file={file_name},title=File contains CRLF line endings::This file was committed with CRLF new lines. Please make sure your git client is configured correctly and you are not uploading files directly to GitHub via the web interface.")
+            print(f"::error file={file_name},title=File contains CRLF line endings::The file '{file_name}' was committed with CRLF new lines. Please make sure your git client is configured correctly and you are not uploading files directly to GitHub via the web interface.")
             any_failed = True
 
     return 1 if any_failed else 0
