@@ -30,6 +30,7 @@ using Content.Server.NPC.Components;
 using Content.Shared.Preferences;
 using Content.Server.NPC.Systems;
 using Content.Server.Spawners.Components;
+using Content.Shared.Preferences;
 using Content.Server.Weapons.Melee.WeaponRandom;
 using JetBrains.Annotations;
 using System.Reflection.Metadata.Ecma335;
@@ -43,6 +44,8 @@ using Content.Shared.Mind;
 using Content.Server.Objectives;
 using SixLabors.ImageSharp.Processing.Processors.Quantization;
 using Content.Shared.Objectives.Components;
+using Content.Server.GameTicking.Events;
+using Content.Server.Ghost.Roles.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -55,11 +58,11 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IServerPreferencesManager _pref = default!;
+    [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
@@ -72,6 +75,10 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
     private ISawmill _sawmill = default!;
 
 
+
+
+
+
     [ValidatePrototypeId<AntagPrototype>]
     private const string WizardId = "Wizard";
 
@@ -82,240 +89,68 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
     {
         base.Initialize();
 
-        _sawmill = _logManager.GetSawmill("Wizards");
-        // SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
-        // SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
-        //  SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
-        SubscribeLocalEvent<WizardRoleComponent, GetBriefingEvent>(GetBriefing);
-        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+        // SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
 
     }
 
+    protected override void Started(EntityUid uid, WizardRuleComponent component, GameRuleComponent gameRule,
+      GameRuleStartedEvent args)
+    {
+        base.Started(uid, component, gameRule, args);
+
+        //if (GameTicker.RunLevel == GameRunLevel.InRound)
+           // SpawnOperativesForGhostRoles(uid, component);
+    }
+
+    private void OnStartAttempt(RoundStartAttemptEvent ev)
+    {
+        TryRoundStartAttempt(ev, "placeholder");
+    }
 
     private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
     {
-        // I took this one from the Thief Rule System lol
         var query = QueryActiveRules();
-        
-        while (query.MoveNext(out var uid, out _, out var comp, out var gameRule))
+        while (query.MoveNext(out var uid, out _, out var wizards, out _))
         {
-            // Finds eligible players to add to the list
-            var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.PlayerPool, comp.WizardPrototypeId, acceptableAntags: AntagAcceptability.NotExclusive, allowNonHumanoids: true);
 
-            // No eligible players = no wizards
-            if (eligiblePlayers.Count == 0)
-            {
-                Log.Warning($"No eligible wizards found, ending game rule {ToPrettyString(uid):rule}");
-                GameTicker.EndGameRule(uid, gameRule);
-                continue;
-            }
+            SpawnMap(wizards);
 
-            //Calculate number of wizards to choose
-            var wizardCount = _random.Next(1, comp.MaxWizards + 1);
-
-            //Select our wizards
-            var wizards = _antagSelection.ChooseAntags(wizardCount, eligiblePlayers);
-
-            MakeWizard(wizards, comp);
-            SpawnMap(comp);
-        }
-       
-    }
-
-    public void MakeWizard(List<EntityUid> players, WizardRuleComponent wizardRule)
-    {
-        foreach (var wizard in players)
-        {
-            MakeWizard(wizard, wizardRule);
-        }
-    }
-
-    public void MakeWizard(EntityUid player, WizardRuleComponent wizardRule)
-    {
-
-        // no mind = no magic (real)
-        if (!_mindSystem.TryGetMind(player, out var mindId, out var mind))
-            return;
-
-        // players who are already wizards cannot become wizards a second time
-        if (HasComp<WizardRoleComponent>(mindId))
-            return;
-
-        // no session would probably break things
-        if (!_mindSystem.TryGetSession(mind, out var session))
-            return;
-
-        wizardRule.Wizards.Add(session);
-
-
-        _roles.MindAddRole(mindId, new WizardRoleComponent
-        {
-            PrototypeId = wizardRule.WizardPrototypeId,
-        }, silent: true);
-
-       
-        _antagSelection.SendBriefing(player, MakeBriefing(player), null, wizardRule.GreetingSound);
-       // MakeBriefing(player);
-
-        // SpawnItems(player);
-
-    }
-
-    private string MakeBriefing(EntityUid wizard)
-    {
-        var isHuman = HasComp<HumanoidAppearanceComponent>(wizard);
-        var briefing = "\n";
-        briefing = isHuman
-            ? Loc.GetString("wizard-welcome")
-            : Loc.GetString("wizard-welcome");
-
-        briefing += "\n \n" + Loc.GetString("wizard-description") + "\n";
-        return briefing;
-    }
-
-    public void SetupWizard(EntityUid mob, string name, HumanoidCharacterProfile? profile, WizardRuleComponent component)
-    {
-        _metaData.SetEntityName(mob, name);
-        EnsureComp<WizardRoleComponent>(mob);
-
-        if (profile != null)
-            _humanoid.LoadProfile(mob, profile);
-
-        var gear = _prototypeManager.Index(component.GearProto);
-        _stationSpawning.EquipStartingGear(mob, gear, profile);
-        _inventoryManager.SpawnItemOnEntity(mob, "BaseSpellbookShop6MP");
-
-        _npcFaction.RemoveFaction(mob, "NanoTrasen", false);
-        _npcFaction.AddFaction(mob, "WizardFederation");
-        _npcFaction.MakeHostile("WizardFederation", "NanoTrasen");
-
-    }
-
-    public void SpawnWizards(WizardRuleComponent component)
-    {
-      
-
-        var spawns = new List<EntityCoordinates>();
-        foreach (var (_, meta, xform) in EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
-        {
-            if (meta.EntityPrototype?.ID != component.SpawnPointProto.Id)
+            //Handle there being nobody readied up
+            if (ev.PlayerPool.Count == 0)
                 continue;
 
+            var wizardEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, wizards.WizardPrototypeId);
+            //Calculate how large the nukeops team needs to be
+            var wizardSelectionCandidates = _antagSelection.CalculateAntagCount(_playerManager.PlayerCount, 20, 1);
 
-            spawns.Add(xform.Coordinates);
-            break;
-        }
-        if (spawns.Count == 0)
-        {
-            spawns.Add(Transform(component.WizardShuttle).Coordinates);
-        }
+            //Select Nukies
+            //Select Commander, priority : commanderEligible, agentEligible, operativeEligible, all players
+            var selectedWizard = _antagSelection.ChooseAntags(1, wizardEligible, ev.PlayerPool).FirstOrDefault();
 
-        foreach (var session in component.Wizards)
-        {
-            if (session != null)
+            //Create the team!
+            //If the session is null, they will be spawned as ghost roles (provided the cvar is set)
+            // var wizkids = new List<ICommonSession> { selectedWizard };
+            var wizkids = new List<WizardSpawn> { new WizardSpawn(selectedWizard) };
+            if (wizardSelectionCandidates > 1)
+                wizkids.Add(new WizardSpawn(selectedWizard));
+
+            
+
+            SpawnWizards(wizkids, true, wizards);
+
+            foreach (var wizSpawn in wizkids)
             {
-                var profile = _pref.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
-                if (!_prototypeManager.TryIndex(profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies, out SpeciesPrototype? species))
-                {
-                    species = _prototypeManager.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies);
-                }
+                if (wizSpawn.Session == null)
+                    continue;
 
-                var mob = Spawn(species.Prototype, RobustRandom.Pick(spawns));
-                SetupWizard(mob, "Default", profile, component);
-
-                var newMind = _mindSystem.CreateMind(session.UserId, "Default");
-                _mindSystem.SetUserId(newMind, session.UserId);
-                _roles.MindAddRole(newMind, new WizardRoleComponent
-                {
-                    PrototypeId = component.WizardPrototypeId,
-                }, silent: true);
-
-                _mindSystem.TransferTo(newMind, mob);
-            }
-    }
-    }
-
-
-
-    public void SpawnItems(EntityUid player)
-    {
-        // holy shit this is so jank
-        // TODO - Make this system run through a gear prototype thing
-        EntityManager.TryGetComponent(player, out InventoryComponent? inventoryComponent);
-        RemoveItems(player);
-        _inventoryManager.SpawnItemInSlot(player, "shoes", "ClothingShoesWizard", true, true, inventoryComponent);
-        _inventoryManager.SpawnItemInSlot(player, "jumpsuit", "ClothingUniformJumpsuitColorDarkBlue", true, true, inventoryComponent);
-        _inventoryManager.SpawnItemInSlot(player, "back", "ClothingBackpackFilled", true, false, inventoryComponent);
-        _inventoryManager.SpawnItemInSlot(player, "head", "ClothingHeadHatWizard", true, true, inventoryComponent);
-        _inventoryManager.SpawnItemInSlot(player, "outerClothing", "ClothingOuterWizard", true, true, inventoryComponent);
-        _inventoryManager.SpawnItemInSlot(player, "id", "WizardPDA", true, true, inventoryComponent);
-        _inventoryManager.SpawnItemInSlot(player, "ears", "ClothingHeadsetService", true, true, inventoryComponent);
-        _inventoryManager.SpawnItemInSlot(player, "innerClothingSkirt", "ClothingUniformJumpskirtColorDarkBlue", true, false, inventoryComponent);
-        _inventoryManager.SpawnItemInSlot(player, "satchel", "ClothingBackpackSatchelFilled", true, false, inventoryComponent);
-        _inventoryManager.SpawnItemInSlot(player, "duffelbag", "ClothingBackpackDuffelFilled", true, false, inventoryComponent);
-    }
-
-    public void RemoveItems(EntityUid player)
-    {
-        // checks for pre-existing items and deletes them
-        EntityManager.TryGetComponent(player, out InventoryComponent? inventoryComponent);
-        if (_inventoryManager.TryGetSlots(player, out var slots))
-        {
-            foreach (var slot in slots)
-            {
-                if (_inventoryManager.TryGetSlotEntity(player, slot.Name, out var itemUid, inventoryComponent))
-                {
-                    _entityManager.DeleteEntity(itemUid);
-                }
+                GameTicker.PlayerJoinGame(wizSpawn.Session);
             }
         }
     }
 
-    public void AdminMakeWizard(EntityUid entity)
-    {
-        // Admin Verb for wizard-ification
-        if (!_mindSystem.TryGetMind(entity, out var mindId, out var mind))
-            return;
-
-        SpawnItems(entity);
-        _inventoryManager.SpawnItemOnEntity(entity, "BaseSpellbookShop6MP");
-        _npcFaction.RemoveFaction(entity, "NanoTrasen", false);
-        _npcFaction.AddFaction(entity, "Wizard");
-        _objectives.TryCreateObjective(mindId, mind, "WizardObjective");
-
-
-        var wizardRule = EntityQuery<WizardRuleComponent>().FirstOrDefault();
-
-       
-
-
-        if (wizardRule == null)
-        {
-            // Adds wizard gamerule if not already existing
-            GameTicker.StartGameRule("Wizard", out var ruleEntity);
-            wizardRule = Comp<WizardRuleComponent>(ruleEntity);
-            SpawnMap(wizardRule);
-        }
-
-        _antagSelection.SendBriefing(entity, MakeBriefing(entity), null, wizardRule.GreetingSound);
-
-
-    }
-
-    public void GetBriefing(Entity<WizardRoleComponent> entity, ref GetBriefingEvent args)
-    {
-        args.Append(MakeBriefing(entity));
-    }
-
-    private void OnRoundEndText(RoundEndTextAppendEvent ev)
-    {
-        ev.AddLine(Loc.GetString("wizard-round-end"));
-    }
-
-
-// Didnt write this, took it from PirateRuleSystem.cs cause it looks like it'd work (it did)
-private void SpawnMap(WizardRuleComponent component)
+    private void SpawnMap(WizardRuleComponent component)
     {
 
         var map = "/Maps/Shuttles/wizardimproved.yml";
@@ -346,13 +181,196 @@ private void SpawnMap(WizardRuleComponent component)
             return;
 
         component.WizardShuttle = gridId.Value;
-
     }
-    
 
-    private void MoveWizards(WizardRuleComponent component)
+    public void SetupWizard(EntityUid mob, string name, HumanoidCharacterProfile? profile, WizardRuleComponent component)
     {
+        _metaData.SetEntityName(mob, name);
+        EnsureComp<WizardRoleComponent>(mob);
+
+        if (profile != null)
+            _humanoid.LoadProfile(mob, profile);
+
+        var gear = _prototypeManager.Index(component.GearProto);
+        _stationSpawning.EquipStartingGear(mob, gear, profile);
+        _inventoryManager.SpawnItemOnEntity(mob, "BaseSpellbookShop6MP");
+
+        _npcFaction.RemoveFaction(mob, "NanoTrasen", false);
+        _npcFaction.AddFaction(mob, "WizardFederation");
+        _npcFaction.MakeHostile("WizardFederation", "NanoTrasen");
+
+    }
+
+    private void SpawnWizards(List<WizardSpawn> sessions, bool spawnGhostRoles, WizardRuleComponent component)
+    {
+ 
+
+        var spawns = new List<EntityCoordinates>();
+        foreach (var (_, meta, xform) in EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
+        {
+            if (meta.EntityPrototype?.ID != component.SpawnPointProto.Id)
+                continue;
+
+            if (xform.ParentUid != component.WizardShuttle)
+                continue;
+
+            spawns.Add(xform.Coordinates);
+            break;
+        }
+
+        //Fallback, spawn at the centre of the map
+        if (spawns.Count == 0)
+        {
+            spawns.Add(Transform(component.WizardShuttle).Coordinates);
+            _sawmill.Warning($"Fell back to default spawn for nukies!");
+        }
+
+        //Spawn the team
+        foreach (var wizSessions in sessions)
+        {
+
+        
+
+            
+
+            var wizardAntag = component.WizardPrototypeId;
+
+            //If a session is available, spawn mob and transfer mind into it
+            if (wizSessions.Session != null)
+            {
+                var profile = _prefs.GetPreferences(wizSessions.Session.UserId).SelectedCharacter as HumanoidCharacterProfile;
+                if (!_prototypeManager.TryIndex(profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies, out SpeciesPrototype? species))
+                {
+                    species = _prototypeManager.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies);
+                }
+
+                var mob = Spawn(species.Prototype, RobustRandom.Pick(spawns));
+                var name = "Wizkid";
+                if (TryComp<HumanoidAppearanceComponent>(mob, out var humanoid))
+                {
+                    var newProfile = HumanoidCharacterProfile.RandomWithSpecies(humanoid.Species);
+                    _humanoid.LoadProfile(mob, newProfile, humanoid);
+                    _metaData.SetEntityName(mob, newProfile.Name);
+                    name = newProfile.Name;
+                }
+
+
+                SetupWizard(mob, name, profile, component);
+
+                var newMind = _mind.CreateMind(wizSessions.Session.UserId, name);
+                _mind.SetUserId(newMind, wizSessions.Session.UserId);
+                _roles.MindAddRole(newMind, new WizardRoleComponent { PrototypeId = component.WizardPrototypeId });
+
+                // Automatically de-admin players who are being made nukeops
+                if (_cfg.GetCVar(CCVars.AdminDeadminOnJoin) && _adminManager.IsAdmin(wizSessions.Session))
+                    _adminManager.DeAdmin(wizSessions.Session);
+
+                _mind.TransferTo(newMind, mob);
+                _antagSelection.SendBriefing(mob, MakeBriefing(mob), null, component.GreetingSound);
+            }
+            //Otherwise, spawn as a ghost role
+           /* else if (spawnGhostRoles)
+            {
+                var spawnPoint = Spawn(component.SpawnPointProto, RobustRandom.Pick(spawns));
+                var ghostRole = EnsureComp<GhostRoleComponent>(spawnPoint);
+                EnsureComp<GhostRoleMobSpawnerComponent>(spawnPoint);
+                ghostRole.RoleName = Loc.GetString(name);
+                ghostRole.RoleDescription = "wip";
+            }*/
+        }
+    }
+
+    public void RemoveItems(EntityUid player)
+    {
+        // checks for pre-existing items and deletes them
+        EntityManager.TryGetComponent(player, out InventoryComponent? inventoryComponent);
+        if (_inventoryManager.TryGetSlots(player, out var slots))
+        {
+            foreach (var slot in slots)
+            {
+                if (_inventoryManager.TryGetSlotEntity(player, slot.Name, out var itemUid, inventoryComponent))
+                {
+                    _entityManager.DeleteEntity(itemUid);
+                }
+            }
+        }
+    }
+
+    public void SpawnItems(EntityUid player)
+    {
+        // holy shit this is so jank
+        // TODO - Make this system run through a gear prototype thing
+        EntityManager.TryGetComponent(player, out InventoryComponent? inventoryComponent);
+        RemoveItems(player);
+        _inventoryManager.SpawnItemInSlot(player, "shoes", "ClothingShoesWizard", true, true, inventoryComponent);
+        _inventoryManager.SpawnItemInSlot(player, "jumpsuit", "ClothingUniformJumpsuitColorDarkBlue", true, true, inventoryComponent);
+        _inventoryManager.SpawnItemInSlot(player, "back", "ClothingBackpackFilled", true, false, inventoryComponent);
+        _inventoryManager.SpawnItemInSlot(player, "head", "ClothingHeadHatWizard", true, true, inventoryComponent);
+        _inventoryManager.SpawnItemInSlot(player, "outerClothing", "ClothingOuterWizard", true, true, inventoryComponent);
+        _inventoryManager.SpawnItemInSlot(player, "id", "WizardPDA", true, true, inventoryComponent);
+        _inventoryManager.SpawnItemInSlot(player, "ears", "ClothingHeadsetService", true, true, inventoryComponent);
+        _inventoryManager.SpawnItemInSlot(player, "innerClothingSkirt", "ClothingUniformJumpskirtColorDarkBlue", true, false, inventoryComponent);
+        _inventoryManager.SpawnItemInSlot(player, "satchel", "ClothingBackpackSatchelFilled", true, false, inventoryComponent);
+        _inventoryManager.SpawnItemInSlot(player, "duffelbag", "ClothingBackpackDuffelFilled", true, false, inventoryComponent);
+    }
+
+    public void AdminMakeWizard(EntityUid entity)
+    {
+        // Admin Verb for wizard-ification
+        if (!_mind.TryGetMind(entity, out var mindId, out var mind))
+            return;
+
+        SpawnItems(entity);
+        _inventoryManager.SpawnItemOnEntity(entity, "BaseSpellbookShop6MP");
+        _npcFaction.RemoveFaction(entity, "NanoTrasen", false);
+        _npcFaction.AddFaction(entity, "Wizard");
+
+
+        var wizardRule = EntityQuery<WizardRuleComponent>().FirstOrDefault();
+
+
+
+
+        if (wizardRule == null)
+        {
+            // Adds wizard gamerule if not already existing
+            GameTicker.StartGameRule("Wizard", out var ruleEntity);
+            wizardRule = Comp<WizardRuleComponent>(ruleEntity);
+            SpawnMap(wizardRule);
+        }
+
+        _antagSelection.SendBriefing(entity, MakeBriefing(entity), null, wizardRule.GreetingSound);
 
 
     }
+
+    private void OnRoundEndText(RoundEndTextAppendEvent ev)
+    {
+        ev.AddLine(Loc.GetString("wizard-end-round"));
+    }
+
+    private string MakeBriefing(EntityUid wizard)
+    {
+        var isHuman = HasComp<HumanoidAppearanceComponent>(wizard);
+        var briefing = "\n";
+        briefing = isHuman
+            ? Loc.GetString("wizard-welcome")
+            : Loc.GetString("wizard-welcome");
+
+        briefing += "\n \n" + Loc.GetString("wizard-description") + "\n";
+        return briefing;
+    }
+
+    private sealed class WizardSpawn
+    {
+        public ICommonSession? Session { get; private set; }
+
+        public WizardSpawn(ICommonSession? session)
+        {
+            Session = session;
+        }
+    }
+
+
 }
+
