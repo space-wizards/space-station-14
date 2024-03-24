@@ -571,3 +571,23 @@
       seedId: cotton
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/cotton.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of pomegranate seeds
+  id: PomegranateSeeds
+  components:
+  - type: Seed
+    seedId: pomegranate
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pomegranate.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of grenade fruit seeds
+  id: GrenadeFruitSeeds
+  components:
+  - type: Seed
+    seedId: grenadefruit
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/grenadefruit.rsi

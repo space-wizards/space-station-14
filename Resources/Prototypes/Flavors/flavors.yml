@@ -1058,3 +1058,13 @@
   id: violets
   flavorType: Complex
   description: flavor-complex-violets
+
+- type: flavor
+  id: pomegranate
+  flavorType: Complex
+  description: flavor-complex-pomegranate
+
+- type: flavor
+  id: grenadefruit
+  flavorType: Complex
+  description: flavor-complex-grenadefruit

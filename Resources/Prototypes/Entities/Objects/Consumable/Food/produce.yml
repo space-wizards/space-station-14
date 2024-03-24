@@ -1869,3 +1869,91 @@
     tags:
     - ClothMade
     - CottonBoll
+
+- type: entity
+  name: pomegranate
+  parent: FoodProduceBase
+  id: FoodPomegranate
+  description: Pomegranate contains small berry like beads that protect seeds.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - pomegranate
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pomegranate.rsi
+  - type: Produce
+    seedId: orange
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 3
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuicePomegranate
+        Quantity: 6
+  - type: Tag
+    tags:
+    - Fruit
+
+- type: entity
+  name: grenade fruit
+  parent: [FoodProduceBase, ItemHeftyBase]
+  id: FoodGrenadeFruit
+  description: Grenade Fruit, Fragile. Explodes on impact sending it's seeds with high velocity. Used for biofuel.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - grenadefruit
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 9
+        reagents:
+        - ReagentId: Sulfur
+          Quantity: 3
+        - ReagentId: Hydrogen
+          Quantity: 3
+        - ReagentId: Ethanol
+          Quantity: 3
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/grenadefruit.rsi
+  - type: Produce
+    seedId: grenadefruit
+  - type: Extractable
+    grindableSolutionName: food
+    juiceSolution:
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 15
+  - type: Damageable
+    damageContainer: Biological
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
+      - !type:TriggerBehavior
+  - type: ChemicalAmmo
+    solution: food
+  - type: ClusterGrenade
+    fillPrototype: SeedsGrenadeFruit
+    maxGrenadesCount: 10
+    grenadeType: enum.GrenadeType.Shoot
+  - type: Tag
+    tags:
+    - Fruit
