@@ -10,6 +10,11 @@
   displayName: store-currency-display-stolen-essence
   canWithdraw: false
 
+- type: currency
+  id: Magipoints
+  displayName: store-currency-display-magipoints
+  canWithdraw: false
+
 #debug
 - type: currency
   id: DebugDollar

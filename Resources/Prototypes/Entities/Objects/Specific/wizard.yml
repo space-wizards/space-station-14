@@ -1,0 +1,44 @@
+- type: entity
+  parent: BaseItem
+  id: BaseSpellbookShop
+  name: wizardry spellbook
+  description: An old tome filled with instructions on many spells.
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: spellbook
+  - type: Item
+    sprite: Objects/Magic/spellbooks.rsi
+    heldPrefix: spellbook
+  - type: UserInterface
+    interfaces:
+    - key: enum.StoreUiKey.Key
+      type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    preset: StorePresetWizard
+    balance:
+      Magipoints: 0
+
+- type: entity
+  parent: BaseSpellbookShop
+  id: BaseSpellbookShop6MP
+  suffix: 6 MP
+  components:
+  - type: Store
+    preset: StorePresetWizard
+    balance:
+      Magipoints: 6
+
+- type: entity
+  parent: BaseSpellbookShop
+  id: BaseSpellbookShopDBG
+  suffix: DEBUG
+  components:
+  - type: Store
+    preset: StorePresetWizard
+    balance:
+      Magipoints: 1337
