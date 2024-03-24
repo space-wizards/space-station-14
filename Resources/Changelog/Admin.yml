@@ -121,5 +121,13 @@ Entries:
   id: 16
   time: '2024-03-21T15:15:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26223
+- author: nikthechampiongr
+  changes:
+  - message: The stealthmin command has been added. Admins with the Stealth permission
+      can now hide themselves from adminwho except for other admins with that permission.
+    type: Add
+  id: 17
+  time: '2024-03-24T15:39:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26263
 Name: Admin
 Order: 1
