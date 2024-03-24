@@ -68,3 +68,13 @@
   id: RevenantAbilities
   name: store-category-abilities
 
+#wizard
+- type: storeCategory
+  id: WizardSpells
+  name: store-category-abilities
+  priority: 1
+
+- type: storeCategory
+  id: WizardItems
+  name: store-category-magicitems
+  priority: 2
