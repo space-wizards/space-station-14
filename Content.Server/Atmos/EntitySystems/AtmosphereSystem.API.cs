@@ -258,14 +258,14 @@ public partial class AtmosphereSystem
 
     public void AddPipeNet(EntityUid gridUid, PipeNet pipeNet)
     {
-        var ev = new AddPipeNetMethodEvent(gridUid, pipeNet);
-        RaiseLocalEvent(gridUid, ref ev);
+        if (_atmosQuery.TryGetComponent(gridUid, out var atmos))
+            atmos.PipeNets.Add(pipeNet);
     }
 
     public void RemovePipeNet(EntityUid gridUid, PipeNet pipeNet)
     {
-        var ev = new RemovePipeNetMethodEvent(gridUid, pipeNet);
-        RaiseLocalEvent(gridUid, ref ev);
+        if (_atmosQuery.TryGetComponent(gridUid, out var atmos))
+            atmos.PipeNets.Remove(pipeNet);
     }
 
     public bool AddAtmosDevice(EntityUid gridUid, AtmosDeviceComponent device)
@@ -303,12 +303,6 @@ public partial class AtmosphereSystem
 
     [ByRefEvent] private record struct IsHotspotActiveMethodEvent
         (EntityUid Grid, Vector2i Tile, bool Result = false, bool Handled = false);
-
-    [ByRefEvent] private record struct AddPipeNetMethodEvent
-        (EntityUid Grid, PipeNet PipeNet, bool Handled = false);
-
-    [ByRefEvent] private record struct RemovePipeNetMethodEvent
-        (EntityUid Grid, PipeNet PipeNet, bool Handled = false);
 
     [ByRefEvent] private record struct AddAtmosDeviceMethodEvent
         (EntityUid Grid, AtmosDeviceComponent Device, bool Result = false, bool Handled = false);
