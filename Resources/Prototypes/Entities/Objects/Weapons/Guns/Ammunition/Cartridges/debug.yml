@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseCartridge
-  id: CartridgeDebug
+  id: CartridgeMortis
   name: cartridge (faithful)
   components:
   - type: Tag
@@ -8,7 +8,7 @@
     - Cartridge
     - CartridgeAntiMateriel
   - type: CartridgeAmmo
-    proto: BulletDebug
+    proto: BulletMortis
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/large_casing.rsi
     layers:
