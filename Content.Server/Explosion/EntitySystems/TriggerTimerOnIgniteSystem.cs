@@ -36,34 +36,31 @@ namespace Content.Server.Explosion
 
         private void OnInteracted(EntityUid uid, OnIgniteTimerTriggerComponent component, InteractUsingEvent args)
         {
-            if(TryComp<IgnitionSourceComponent>(args.Used, out var comp)) {
-                Log.Debug("This is a good ignition source!");
+            if (TryComp<IgnitionSourceComponent>(args.Used, out var comp)) {
+                if(comp.Ignited == true)
+                {
+                    if (args.Handled)
+                        return;
+
+                    var active = AddComp<ActiveTimerTriggerComponent>(uid);
+                    active.TimeRemaining = component.Delay;
+                    active.User = args.User;
+                    active.BeepSound = component.BeepSound;
+                    active.BeepInterval = component.BeepInterval;
+                    active.TimeUntilBeep = component.InitialBeepDelay ?? 0f;
+                    active.TimeUntilBeep = component.InitialBeepDelay == null ? active.BeepInterval : component.InitialBeepDelay.Value;
+
+                    var ev = new ActiveTimerTriggerEvent(uid, args.User);
+                    RaiseLocalEvent(uid, ref ev);
+                    _popupSystem.PopupEntity(Loc.GetString("trigger-activated", ("device", uid)), args.User, args.User);
+                    Log.Debug("You used this with another item!");
+                    var triggerEvent = new TriggerEvent(uid, args.User);
+
+                    if (TryComp<AppearanceComponent>(uid, out var appearance))
+                        _appearance.SetData(uid, TriggerVisuals.VisualState, TriggerVisualState.Primed, appearance);
+
+                }
             }
-
-            if (args.Handled)
-                return;
-
-            var active = AddComp<ActiveTimerTriggerComponent>(uid);
-            active.TimeRemaining = component.Delay;
-            active.User = args.User;
-            active.BeepSound = component.BeepSound;
-            active.BeepInterval = component.BeepInterval;
-            active.TimeUntilBeep = component.InitialBeepDelay ?? 0f;
-            active.TimeUntilBeep = component.InitialBeepDelay == null ? active.BeepInterval : component.InitialBeepDelay.Value;
-
-            var ev = new ActiveTimerTriggerEvent(uid, args.User);
-            RaiseLocalEvent(uid, ref ev);
-            _popupSystem.PopupEntity(Loc.GetString("trigger-activated", ("device", uid)), args.User, args.User);
-            Log.Debug("You used this with another item!");
-            var triggerEvent = new TriggerEvent(uid, args.User);
-
-            if (TryComp<AppearanceComponent>(uid, out var appearance))
-                _appearance.SetData(uid, TriggerVisuals.VisualState, TriggerVisualState.Primed, appearance);
-            //Log.Debug(uid.ToString());
-            //Log.Debug(args.User.ToString());
-            //EntityManager.EventBus.RaiseLocalEvent(uid, triggerEvent, true);
-            //return triggerEvent.Handled;
-
         }
 
         private void OnUseInHand(EntityUid uid, OnIgniteTimerTriggerComponent component, UseInHandEvent args)
