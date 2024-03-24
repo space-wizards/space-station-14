@@ -243,9 +243,24 @@
     - buzzes!
 
 - type: emote
+  id: JuiceWeh
+  category: Vocal
+  chatMessages: [Wehs!]
+
+- type: emote
   id: Weh
   category: Vocal
   chatMessages: [Wehs!]
+  chatTriggers:
+    - weh
+    - weh.
+    - weh!
+    - wehs
+    - wehs.
+    - wehs!
+    - wehing
+    - wehing.
+    - wehing!
 
 - type: emote
   id: Chirp
