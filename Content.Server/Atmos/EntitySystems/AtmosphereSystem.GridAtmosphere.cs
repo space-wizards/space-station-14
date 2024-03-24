@@ -23,7 +23,6 @@ public sealed partial class AtmosphereSystem
         SubscribeLocalEvent<GridAtmosphereComponent, IsSimulatedGridMethodEvent>(GridIsSimulated);
         SubscribeLocalEvent<GridAtmosphereComponent, GetAllMixturesMethodEvent>(GridGetAllMixtures);
         SubscribeLocalEvent<GridAtmosphereComponent, GetTileMixtureMethodEvent>(GridGetTileMixture);
-        SubscribeLocalEvent<GridAtmosphereComponent, GetTileMixturesMethodEvent>(GridGetTileMixtures);
         SubscribeLocalEvent<GridAtmosphereComponent, ReactTileMethodEvent>(GridReactTile);
         SubscribeLocalEvent<GridAtmosphereComponent, IsTileSpaceMethodEvent>(GridIsTileSpace);
         SubscribeLocalEvent<GridAtmosphereComponent, GetAdjacentTilesMethodEvent>(GridGetAdjacentTiles);
@@ -171,32 +170,6 @@ public sealed partial class AtmosphereSystem
 
         args.Mixture = tile.Air;
         args.Handled = true;
-    }
-
-    private void GridGetTileMixtures(EntityUid uid, GridAtmosphereComponent component,
-        ref GetTileMixturesMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Handled = true;
-        args.Mixtures = new GasMixture?[args.Tiles.Count];
-
-        for (var i = 0; i < args.Tiles.Count; i++)
-        {
-            var tile = args.Tiles[i];
-            if (!component.Tiles.TryGetValue(tile, out var atmosTile))
-            {
-                // need to get map atmosphere
-                args.Handled = false;
-                continue;
-            }
-
-            if (args.Excite)
-                component.InvalidatedCoords.Add(tile);
-
-            args.Mixtures[i] = atmosTile.Air;
-        }
     }
 
     private void GridReactTile(EntityUid uid, GridAtmosphereComponent component, ref ReactTileMethodEvent args)

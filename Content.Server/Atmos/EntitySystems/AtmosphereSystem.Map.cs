@@ -14,7 +14,6 @@ public partial class AtmosphereSystem
         SubscribeLocalEvent<MapAtmosphereComponent, ComponentRemove>(OnMapRemove);
         SubscribeLocalEvent<MapAtmosphereComponent, IsTileSpaceMethodEvent>(MapIsTileSpace);
         SubscribeLocalEvent<MapAtmosphereComponent, GetTileMixtureMethodEvent>(MapGetTileMixture);
-        SubscribeLocalEvent<MapAtmosphereComponent, GetTileMixturesMethodEvent>(MapGetTileMixtures);
         SubscribeLocalEvent<MapAtmosphereComponent, ComponentGetState>(OnMapGetState);
         SubscribeLocalEvent<GridAtmosphereComponent, EntParentChangedMessage>(OnGridParentChanged);
     }
@@ -47,19 +46,6 @@ public partial class AtmosphereSystem
 
         args.Mixture = component.Mixture;
         args.Handled = true;
-    }
-
-    private void MapGetTileMixtures(EntityUid uid, MapAtmosphereComponent component, ref GetTileMixturesMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-        args.Handled = true;
-        args.Mixtures ??= new GasMixture?[args.Tiles.Count];
-
-        for (var i = 0; i < args.Tiles.Count; i++)
-        {
-            args.Mixtures[i] ??= component.Mixture;
-        }
     }
 
     private void OnMapGetState(EntityUid uid, MapAtmosphereComponent component, ref ComponentGetState args)

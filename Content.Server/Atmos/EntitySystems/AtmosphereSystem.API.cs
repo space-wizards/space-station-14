@@ -87,38 +87,56 @@ public partial class AtmosphereSystem
 
     public GasMixture?[]? GetTileMixtures(EntityUid? gridUid, EntityUid? mapUid, List<Vector2i> tiles, bool excite = false)
     {
-        var ev = new GetTileMixturesMethodEvent(gridUid, mapUid, tiles, excite);
+        GasMixture?[]? mixtures = null;
+        var handled = false;
 
         // If we've been passed a grid, try to let it handle it.
-        if (gridUid.HasValue)
+        if (_atmosQuery.TryGetComponent(gridUid, out var gridAtmos))
         {
-            DebugTools.Assert(_mapManager.IsGrid(gridUid.Value));
-            RaiseLocalEvent(gridUid.Value, ref ev, false);
+            handled = true;
+            mixtures = new GasMixture?[tiles.Count];
+
+            for (var i = 0; i < tiles.Count; i++)
+            {
+                var tile = tiles[i];
+                if (!gridAtmos.Tiles.TryGetValue(tile, out var atmosTile))
+                {
+                    // need to get map atmosphere
+                    handled = false;
+                    continue;
+                }
+
+                mixtures[i] = atmosTile.Air;
+
+                if (excite)
+                    gridAtmos.InvalidatedCoords.Add(tile);
+            }
         }
 
-        if (ev.Handled)
-            return ev.Mixtures;
+        if (handled)
+            return mixtures;
 
         // We either don't have a grid, or the event wasn't handled.
         // Let the map handle it instead, and also broadcast the event.
-        if (mapUid.HasValue)
+        if (_mapAtmosQuery.TryGetComponent(mapUid, out var mapAtmos))
         {
-            DebugTools.Assert(_mapManager.IsMap(mapUid.Value));
-            RaiseLocalEvent(mapUid.Value, ref ev, true);
-        }
-        else
-            RaiseLocalEvent(ref ev);
+            mixtures ??= new GasMixture?[tiles.Count];
 
-        if (ev.Handled)
-            return ev.Mixtures;
+            for (var i = 0; i < tiles.Count; i++)
+            {
+                mixtures[i] ??= mapAtmos.Mixture;
+            }
+
+            return mixtures;
+        }
 
         // Default to a space mixture... This is a space game, after all!
-        ev.Mixtures ??= new GasMixture?[tiles.Count];
+        mixtures ??= new GasMixture?[tiles.Count];
         for (var i = 0; i < tiles.Count; i++)
         {
-            ev.Mixtures[i] ??= GasMixture.SpaceGas;
+            mixtures[i] ??= GasMixture.SpaceGas;
         }
-        return ev.Mixtures;
+        return mixtures;
     }
 
     public GasMixture? GetTileMixture (Entity<TransformComponent?> entity, MapGridComponent? grid = null, bool excite = false)
@@ -285,9 +303,6 @@ public partial class AtmosphereSystem
 
     [ByRefEvent] private record struct GetAllMixturesMethodEvent
         (EntityUid Grid, bool Excite = false, IEnumerable<GasMixture>? Mixtures = null, bool Handled = false);
-
-    [ByRefEvent] private record struct GetTileMixturesMethodEvent
-        (EntityUid? GridUid, EntityUid? MapUid, List<Vector2i> Tiles, bool Excite = false, GasMixture?[]? Mixtures = null, bool Handled = false);
 
     [ByRefEvent] private record struct GetTileMixtureMethodEvent
         (EntityUid? GridUid, EntityUid? MapUid, Vector2i Tile, bool Excite = false, GasMixture? Mixture = null, bool Handled = false);
