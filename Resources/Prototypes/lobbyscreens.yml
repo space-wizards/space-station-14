@@ -37,3 +37,11 @@
 - type: lobbyBackground
   id: Behonker
   background: /Textures/LobbyScreens/behonker.webp
+
+- type: lobbyBackground
+  id: Goob
+  background: /Textures/LobbyScreens/goob.webp
+
+- type: lobbyBackground
+  id: What
+  background: /Textures/LobbyScreens/what.webp
