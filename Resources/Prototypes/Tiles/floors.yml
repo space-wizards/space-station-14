@@ -1897,7 +1897,7 @@
   sprite: /Textures/Tiles/Planet/Snow/ice.png
   baseTurf: Plating
   isSubfloor: false
-  deconstructTools: [ Welding ]
+  deconstructTools: [ Prying ]
   friction: 0.05
   heatCapacity: 10000
   mobFriction: 0.5
