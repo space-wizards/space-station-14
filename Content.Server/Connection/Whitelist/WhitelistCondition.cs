@@ -17,6 +17,7 @@ public abstract partial class WhitelistCondition
     /// What action should be taken if this condition is met?
     /// Defaults to <see cref="ConditionAction.Next"/>.
     /// </summary>
+    [DataField]
     public ConditionAction Action { get; set; } = ConditionAction.Next;
 }
 
