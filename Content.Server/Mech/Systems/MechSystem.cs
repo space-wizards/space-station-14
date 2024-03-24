@@ -110,7 +110,7 @@ public sealed partial class MechSystem : SharedMechSystem
         component.Energy = battery.CurrentCharge;
         component.MaxEnergy = battery.MaxCharge;
 
-        Dirty(component);
+        Dirty(uid, component);
         _actionBlocker.UpdateCanMove(uid);
     }
 
@@ -140,7 +140,7 @@ public sealed partial class MechSystem : SharedMechSystem
         component.Energy = component.MaxEnergy;
 
         _actionBlocker.UpdateCanMove(uid);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnRemoveEquipmentMessage(EntityUid uid, MechComponent component, MechEquipmentRemoveMessage args)
@@ -338,7 +338,7 @@ public sealed partial class MechSystem : SharedMechSystem
         {
             Log.Debug($"Battery charge was not equal to mech charge. Battery {batteryComp.CurrentCharge}. Mech {component.Energy}");
             component.Energy = batteryComp.CurrentCharge;
-            Dirty(component);
+            Dirty(uid, component);
         }
         _actionBlocker.UpdateCanMove(uid);
         return true;
@@ -358,7 +358,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
         _actionBlocker.UpdateCanMove(uid);
 
-        Dirty(component);
+        Dirty(uid, component);
         UpdateUserInterface(uid, component);
     }
 
@@ -373,7 +373,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
         _actionBlocker.UpdateCanMove(uid);
 
-        Dirty(component);
+        Dirty(uid, component);
         UpdateUserInterface(uid, component);
     }
 
