@@ -43,15 +43,15 @@ public sealed partial class ShuttleSystem
 
         var ourVelocity = _physics.GetLinearVelocity(uid, ourPoint, ourBody, ourXform);
         var otherVelocity = _physics.GetLinearVelocity(args.OtherEntity, otherPoint, otherBody, otherXform);
-        var jungleDiffSquared = (ourVelocity - otherVelocity).LengthSquared();
+        var jungleDiff = (ourVelocity - otherVelocity).Length();
 
-        if (jungleDiffSquared < MinimumImpactVelocity * MinimumImpactVelocity)
+        if (jungleDiff < MinimumImpactVelocity)
         {
             return;
         }
 
         var coordinates = new EntityCoordinates(ourXform.MapUid.Value, args.WorldPoint);
-        var volume = MathF.Min(10f, 1f * MathF.Pow(MathF.Sqrt(jungleDiffSquared), 0.5f) - 5f);
+        var volume = MathF.Min(10f, 1f * MathF.Pow(jungleDiff, 0.5f) - 5f);
         var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(volume);
 
         _audio.PlayPvs(_shuttleImpactSound, coordinates, audioParams);

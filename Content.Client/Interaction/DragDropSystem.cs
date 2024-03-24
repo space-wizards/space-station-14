@@ -528,15 +528,15 @@ public sealed class DragDropSystem : SharedDragDropSystem
         {
             // check if dragging should begin
             case DragState.MouseDown:
+            {
+                var screenPos = _inputManager.MouseScreenPosition;
+                if ((_mouseDownScreenPos!.Value.Position - screenPos.Position).Length() > _deadzone)
                 {
-                    var screenPos = _inputManager.MouseScreenPosition;
-                    if ((_mouseDownScreenPos!.Value.Position - screenPos.Position).LengthSquared() > _deadzone * _deadzone)
-                    {
-                        StartDrag();
-                    }
-
-                    break;
+                    StartDrag();
                 }
+
+                break;
+            }
             case DragState.Dragging:
                 UpdateDrag(frameTime);
                 break;

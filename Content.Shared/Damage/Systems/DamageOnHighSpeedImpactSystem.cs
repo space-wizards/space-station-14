@@ -33,9 +33,9 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         if (!EntityManager.HasComponent<DamageableComponent>(uid))
             return;
 
-        var speedSquared = args.OurBody.LinearVelocity.LengthSquared();
+        var speed = args.OurBody.LinearVelocity.Length();
 
-        if (speedSquared < component.MinimumSpeed * component.MinimumSpeed)
+        if (speed < component.MinimumSpeed)
             return;
 
         if (component.LastHit != null
@@ -47,7 +47,7 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         if (_robustRandom.Prob(component.StunChance))
             _stun.TryStun(uid, TimeSpan.FromSeconds(component.StunSeconds), true);
 
-        var damageScale = component.SpeedDamageFactor * MathF.Sqrt(speedSquared) / component.MinimumSpeed;
+        var damageScale = component.SpeedDamageFactor * speed / component.MinimumSpeed;
 
         _damageable.TryChangeDamage(uid, component.Damage * damageScale);
 

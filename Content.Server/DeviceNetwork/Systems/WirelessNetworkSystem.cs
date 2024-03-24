@@ -25,7 +25,7 @@ namespace Content.Server.DeviceNetwork.Systems
                 return;
 
             if (xform.MapID != args.SenderTransform.MapID
-                || (ownPosition - xform.WorldPosition).LengthSquared() > sendingComponent.Range * sendingComponent.Range)
+                || (ownPosition - xform.WorldPosition).Length() > sendingComponent.Range)
             {
                 args.Cancel();
             }

@@ -561,7 +561,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     {
         // In pixels
         const float BeaconSnapRange = 32f;
-        var nearestValueSquared = float.MaxValue;
+        float nearestValue = float.MaxValue;
         foundLocalPos = Vector2.Zero;
         foundBeacon = default;
 
@@ -586,16 +586,16 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             if (!area.Contains(localPos.Floored()))
                 continue;
 
-            var distanceSquared = (localPos - mousePos).LengthSquared();
+            var distance = (localPos - mousePos).Length();
 
-            if (distanceSquared > BeaconSnapRange * BeaconSnapRange * UIScale * UIScale ||
-                distanceSquared > nearestValueSquared)
+            if (distance > BeaconSnapRange * UIScale ||
+                distance > nearestValue)
             {
                 continue;
             }
 
             foundLocalPos = localPos;
-            nearestValueSquared = distanceSquared;
+            nearestValue = distance;
             foundBeacon = beaconObj;
         }
 

@@ -142,7 +142,7 @@ public sealed partial class TriggerSystem
                 if (Deleted(collidingUid))
                     continue;
 
-                if (colliding.LinearVelocity.LengthSquared() < trigger.TriggerSpeed * trigger.TriggerSpeed)
+                if (colliding.LinearVelocity.Length() < trigger.TriggerSpeed)
                     continue;
 
                 // Trigger!

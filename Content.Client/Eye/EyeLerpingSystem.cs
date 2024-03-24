@@ -182,7 +182,7 @@ public sealed class EyeLerpingSystem : EntitySystem
             // Handle zoom
             var zoomDiff = Vector2.Lerp(lerpInfo.LastZoom, lerpInfo.TargetZoom, tickFraction);
 
-            if ((zoomDiff - lerpInfo.TargetZoom).LengthSquared() < lerpMinimum * lerpMinimum)
+            if ((zoomDiff - lerpInfo.TargetZoom).Length() < lerpMinimum)
             {
                 _eye.SetZoom(entity, lerpInfo.TargetZoom, eye);
             }

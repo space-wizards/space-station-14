@@ -118,13 +118,13 @@ public sealed class PoissonDiskSampler
             for (var i = (int) Math.Max(0, qIndex.X - 2);
                  i < Math.Min(settings.GridWidth, qIndex.X + 3) && !tooClose;
                  i++)
-                for (var j = (int) Math.Max(0, qIndex.Y - 2);
-                    j < Math.Min(settings.GridHeight, qIndex.Y + 3) && !tooClose;
-                    j++)
-                {
-                    if (state.Grid[i, j].HasValue && (state.Grid[i, j]!.Value - q).LengthSquared() < settings.MinimumDistance * settings.MinimumDistance)
-                        tooClose = true;
-                }
+            for (var j = (int) Math.Max(0, qIndex.Y - 2);
+                 j < Math.Min(settings.GridHeight, qIndex.Y + 3) && !tooClose;
+                 j++)
+            {
+                if (state.Grid[i, j].HasValue && (state.Grid[i, j]!.Value - q).Length() < settings.MinimumDistance)
+                    tooClose = true;
+            }
 
             if (!tooClose)
             {

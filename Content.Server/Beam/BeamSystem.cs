@@ -158,7 +158,7 @@ public sealed class BeamSystem : SharedBeamSystem
         var beamStartPos = userMapPos.Offset(calculatedDistance.Normalized());
 
         //Don't divide by zero
-        if (calculatedDistance.LengthSquared() == 0)
+        if (calculatedDistance.Length() == 0)
             return;
 
         if (controller != null && TryComp<BeamComponent>(controller, out var controllerBeamComp))

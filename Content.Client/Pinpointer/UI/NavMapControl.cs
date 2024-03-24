@@ -175,7 +175,7 @@ public partial class NavMapControl : MapGridControl
                 return;
 
             // If the cursor has moved a significant distance, exit
-            if ((StartDragPosition - args.PointerLocation.Position).LengthSquared() > MinDragDistance * MinDragDistance)
+            if ((StartDragPosition - args.PointerLocation.Position).Length() > MinDragDistance)
                 return;
 
             // Get the clicked position
@@ -188,23 +188,23 @@ public partial class NavMapControl : MapGridControl
 
             // Find closest tracked entity in range
             var closestEntity = NetEntity.Invalid;
-            var closestDistanceSquared = float.PositiveInfinity;
+            var closestDistance = float.PositiveInfinity;
 
             foreach ((var currentEntity, var blip) in TrackedEntities)
             {
                 if (!blip.Selectable)
                     continue;
 
-                var currentDistanceSquared = (blip.Coordinates.ToMapPos(EntManager, _transformSystem) - worldPosition).LengthSquared();
+                var currentDistance = (blip.Coordinates.ToMapPos(EntManager, _transformSystem) - worldPosition).Length();
 
-                if (closestDistanceSquared < currentDistanceSquared || currentDistanceSquared * MinimapScale * MinimapScale > MaxSelectableDistance * MaxSelectableDistance)
+                if (closestDistance < currentDistance || currentDistance * MinimapScale > MaxSelectableDistance)
                     continue;
 
                 closestEntity = currentEntity;
-                closestDistanceSquared = currentDistanceSquared;
+                closestDistance = currentDistance;
             }
 
-            if (closestDistanceSquared > MaxSelectableDistance * MaxSelectableDistance || !closestEntity.IsValid())
+            if (closestDistance > MaxSelectableDistance || !closestEntity.IsValid())
                 return;
 
             TrackedEntitySelectedAction.Invoke(closestEntity);

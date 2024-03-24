@@ -105,7 +105,7 @@ public sealed class StepTriggerSystem : EntitySystem
         // this is hard to explain
         var intersect = Box2.Area(otherAabb.Intersect(ourAabb));
         var ratio = Math.Max(intersect / Box2.Area(otherAabb), intersect / Box2.Area(ourAabb));
-        if (otherPhysics.LinearVelocity.LengthSquared() < component.RequiredTriggeredSpeed * component.RequiredTriggeredSpeed
+        if (otherPhysics.LinearVelocity.Length() < component.RequiredTriggeredSpeed
             || component.CurrentlySteppedOn.Contains(otherUid)
             || ratio < component.IntersectRatio
             || !CanTrigger(uid, otherUid, component))

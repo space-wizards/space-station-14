@@ -302,9 +302,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         var delta = (gen2Coords - gen1Coords).Position;
         var dirVec = delta.Normalized();
-        var stopDistSquared = delta.LengthSquared();
+        var stopDist = delta.Length();
         var currentOffset = dirVec;
-        while (currentOffset.LengthSquared() < stopDistSquared)
+        while (currentOffset.Length() < stopDist)
         {
             var currentCoords = gen1Coords.Offset(currentOffset);
             var newField = Spawn(firstGen.Comp.CreatedField, currentCoords);

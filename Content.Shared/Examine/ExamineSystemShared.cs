@@ -161,25 +161,24 @@ namespace Content.Shared.Examine
                 other.MapId == MapId.Nullspace) return false;
 
             var dir = other.Position - origin.Position;
-            var lengthSquared = dir.LengthSquared();
+            var length = dir.Length();
 
             // If range specified also check it
             // TODO: This rounding check is here because the API is kinda eh
-            if (range > 0f && lengthSquared > range * range + 0.01f) return false;
+            if (range > 0f && length > range + 0.01f) return false;
 
-            if (MathHelper.CloseTo(lengthSquared, 0)) return true;
+            if (MathHelper.CloseTo(length, 0)) return true;
 
-            if (lengthSquared > MaxRaycastRange * MaxRaycastRange)
+            if (length > MaxRaycastRange)
             {
                 Log.Warning("InRangeUnOccluded check performed over extreme range. Limiting CollisionRay size.");
-                lengthSquared = MaxRaycastRange * MaxRaycastRange;
+                length = MaxRaycastRange;
             }
 
+            var occluderSystem = Get<OccluderSystem>();
             IoCManager.Resolve(ref entMan);
-            var occluderSystem = entMan.System<OccluderSystem>();
 
-            var length = MathF.Sqrt(lengthSquared);
-            var ray = new Ray(origin.Position, dir / length);
+            var ray = new Ray(origin.Position, dir.Normalized());
             var rayResults = occluderSystem
                 .IntersectRayWithPredicate(origin.MapId, ray, length, state, predicate, false).ToList();
 
