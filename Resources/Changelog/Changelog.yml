@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added cryogenic sleep units. Disconnecting or ghosting inside one of
-      these pods will keep your body secure and free up your job slot on the station.
-    type: Add
-  - message: Added cryogenics access, which allows someone to retrieve items from
-      inside of cryogenic sleep units. This is given to security and command by default.
-    type: Add
-  id: 5716
-  time: '2024-01-15T06:35:28.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24096
 - author: Bhijn and Myr
   changes:
   - message: Attempting to weld without protection will now cause eye damage proper.
@@ -3803,3 +3792,10 @@
   id: 6215
   time: '2024-03-24T00:48:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26371
+- author: DrSmugleaf
+  changes:
+  - message: Empty marking categories are now hidden in the markings picker.
+    type: Tweak
+  id: 6216
+  time: '2024-03-24T04:01:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26377
