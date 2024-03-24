@@ -99,6 +99,8 @@
       type: InstrumentBoundUserInterface
     - key: enum.HealthAnalyzerUiKey.Key
       type: HealthAnalyzerBoundUserInterface
+    - key: enum.AnomalyScannerUiKey.Key
+      type: AnomalyScannerBoundUserInterface
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -113,6 +115,12 @@
     scanDelay: 1
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
+
+- type: entity
+  parent: BasePDA
+  id: BaseR&dPDA
+  components:
+  - type: AnomalyScanner
 
 - type: entity
   parent: BasePDA
@@ -175,7 +183,7 @@
     state: pda-interncadet
 
 - type: entity
-  parent: BasePDA
+  parent: BaseR&dPDA
   id: ResearchAssistantPDA
   name: research assistant PDA
   description: Why isn't it purple?
@@ -561,7 +569,7 @@
     state: pda-chemistry
 
 - type: entity
-  parent: BasePDA
+  parent: BaseR&dPDA
   id: RnDPDA
   name: research director PDA
   description: It appears surprisingly ordinary.
@@ -577,7 +585,7 @@
     state: pda-rd
 
 - type: entity
-  parent: BasePDA
+  parent: BaseR&dPDA
   id: SciencePDA
   name: science PDA
   description: It's covered with an unknown gooey substance.
@@ -979,7 +987,7 @@
     state: pda-seniorengineer
 
 - type: entity
-  parent: BasePDA
+  parent: BaseR&dPDA
   id: SeniorResearcherPDA
   name: senior researcher PDA
   description: Looks like it's been through years of chemical burns and explosions.
