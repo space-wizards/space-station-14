@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: YAML Linter
+    name: CRLF Check
     if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
