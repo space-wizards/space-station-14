@@ -499,7 +499,7 @@
 - type: stack
   id: FloorTileAstroSnow
   name: astro-snow floor
-  spawn: FloorTileItemAstroSmow
+  spawn: FloorTileItemAstroSnow
   maxCount: 30
   itemSize: 5
 
