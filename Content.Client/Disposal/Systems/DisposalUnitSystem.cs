@@ -101,16 +101,18 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         sprite.LayerSetVisible(DisposalUnitVisualLayers.Base, state == VisualState.Anchored);
         sprite.LayerSetVisible(DisposalUnitVisualLayers.BaseFlush, state is VisualState.Flushing or VisualState.Charging);
 
-        sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseCharging, out var chargingLayer);
-        var chargingState = sprite.LayerGetState(chargingLayer);
+        var chargingState = sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseCharging, out var chargingLayer)
+            ? sprite.LayerGetState(chargingLayer)
+            : new RSI.StateId("disposal-charging");
 
         // This is a transient state so not too worried about replaying in range.
         if (state == VisualState.Flushing)
         {
             if (!_animationSystem.HasRunningAnimation(uid, AnimationKey))
             {
-                sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseFlush, out var flushLayer);
-                var flushState = sprite.LayerGetState(flushLayer);
+                var flushState = sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseFlush, out var flushLayer)
+                    ? sprite.LayerGetState(flushLayer)
+                    : new RSI.StateId("disposal-flush");
 
                 // Setup the flush animation to play
                 var anim = new Animation
