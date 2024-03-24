@@ -216,3 +216,8 @@
   copyright: Bhijn and Myr (github username deathride58)
   license: CC0-1.0
   source: https://github.com/space-wizards/space-station-14/pull/23212
+
+- files: ["newplayerping.ogg"]
+  copyright: TGStation at 3df5d3b42bfb6b3b5adba1067ab41f83816255bb
+  license: CC-BY-SA-3.0
+  source: https://github.com/tgstation/tgstation/blob/3df5d3b42bfb6b3b5adba1067ab41f83816255bb/sound/misc/server-ready.ogg
