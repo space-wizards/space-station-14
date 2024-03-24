@@ -221,6 +221,23 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: wooden bench
+  id: ChairWoodBench
+  graph: Seat
+  startNode: start
+  targetNode: chairWoodBench
+  category: construction-category-furniture
+  description: Did you get a splinter? Well, at least it’s eco friendly.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: wooden-bench
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: comfortable red bench
   id: RedComfBench
   graph: Seat

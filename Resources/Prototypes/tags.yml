@@ -674,6 +674,9 @@
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
 
 - type: Tag
+  id: Haunted
+
+- type: Tag
   id: Head
 
 - type: Tag
@@ -907,6 +910,9 @@
 
 - type: Tag
   id: NoBlockAnchoring
+
+- type: Tag
+  id: NoPaint
 
 - type: Tag
   id: NozzleBackTank
@@ -1216,6 +1222,9 @@
 
 - type: Tag
   id: Torch
+
+- type: Tag
+  id: ToyRubberDuck
 
 - type: Tag
   id: ToySidearm

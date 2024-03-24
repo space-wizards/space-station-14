@@ -64,8 +64,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
-    private ISawmill _sawmill = default!;
-
     private const float ShuttleSpawnBuffer = 1f;
 
     private bool _emergencyShuttleEnabled;
@@ -75,7 +73,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
     public override void Initialize()
     {
-        _sawmill = Logger.GetSawmill("shuttle.emergency");
         _emergencyShuttleEnabled = _configManager.GetCVar(CCVars.EmergencyShuttleEnabled);
         // Don't immediately invoke as roundstart will just handle it.
         Subs.CVar(_configManager, CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
@@ -391,7 +388,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     {
         if (component.MapEntity != null || component.Entity != null)
         {
-            _sawmill.Warning("Attempted to re-add an existing centcomm map.");
+            Log.Warning("Attempted to re-add an existing centcomm map.");
             return;
         }
 
@@ -416,7 +413,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         if (string.IsNullOrEmpty(component.Map.ToString()))
         {
-            _sawmill.Warning("No CentComm map found, skipping setup.");
+            Log.Warning("No CentComm map found, skipping setup.");
             return;
         }
 
@@ -491,11 +488,11 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         if (shuttle == null)
         {
-            _sawmill.Error($"Unable to spawn emergency shuttle {shuttlePath} for {ToPrettyString(uid)}");
+            Log.Error($"Unable to spawn emergency shuttle {shuttlePath} for {ToPrettyString(uid)}");
             return;
         }
 
-        centcomm.ShuttleIndex += _mapManager.GetGrid(shuttle.Value).LocalAABB.Width + ShuttleSpawnBuffer;
+        centcomm.ShuttleIndex += Comp<MapGridComponent>(shuttle.Value).LocalAABB.Width + ShuttleSpawnBuffer;
 
         // Update indices for all centcomm comps pointing to same map
         var query = AllEntityQuery<StationCentcommComponent>();
