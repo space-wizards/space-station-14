@@ -111,3 +111,7 @@ seeds-pumpkin-name = pumpkin
 seeds-pumpkin-display-name = pumpkins
 seeds-cotton-name = cotton
 seeds-cotton-display-name = cotton plant
+seeds-pomegranate-name = pomegranate
+seeds-pomegranate-display-name = pomegranate plant
+seeds-grenadefruit-name = grenade fruit
+seeds-grenadefruit-display-name = grenade fruit plant

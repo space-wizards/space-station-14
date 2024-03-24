@@ -125,3 +125,12 @@
   physicalDesc: reagent-physical-desc-sweet
   flavor: watermelon
   color: "#EF3520"
+
+- type: reagent
+  id: JuicePomegranate
+  name: reagent-name-juice-pomegranate
+  parent: BaseJuice
+  desc: reagent-desc-juice-pomegranate
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: pomegranate
+  color: "#9F0001"

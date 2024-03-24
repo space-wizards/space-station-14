@@ -7,6 +7,7 @@ using Robust.Shared.Random;
 using Content.Server.Weapons.Ranged.Systems;
 using System.Numerics;
 using Content.Shared.Explosion.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 
@@ -84,6 +85,9 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                 var segmentAngle = 360 / grenadesInserted;
                 var grenadeDelay = 0f;
 
+                // If GrenadeType is GrenadeType.Shoot, keep track of projectiles for AmmoShotEvent
+                var shotProjectiles = new List<EntityUid>(clug.UnspawnedCount);
+
                 while (TryGetGrenade(uid, clug, out var grenade))
                 {
                     // var distance = random.NextFloat() * _throwDistance;
@@ -98,6 +102,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                     {
                         case GrenadeType.Shoot:
                             ShootProjectile(grenade, angle, clug, uid);
+                            shotProjectiles.Add(grenade);
                             break;
                         case GrenadeType.Throw:
                             ThrowGrenade(grenade, angle, clug);
@@ -114,6 +119,16 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                         RaiseLocalEvent(uid, ref ev);
                     }
                 }
+
+                // If GrenadeType is GrenadeType.Shoot, raise AmmoShotEvent
+                if (Equals(clug.GrenadeType, GrenadeType.Shoot))
+                {
+                    RaiseLocalEvent(uid, new AmmoShotEvent()
+                    {
+                        FiredProjectiles = shotProjectiles,
+                    });
+                }
+
                 // delete the empty shell of the clusterbomb
                 Del(uid);
             }
@@ -141,6 +156,16 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         _throwingSystem.TryThrow(grenade, direction, clug.Velocity);
     }
 
+    private void ShootProjectileChems(EntityUid grenade, Angle angle, ClusterGrenadeComponent clug, EntityUid clugUid)
+    {
+        var direction = angle.ToVec().Normalized();
+
+        if (clug.RandomSpread)
+            direction = _random.NextVector2().Normalized();
+
+        _gun.ShootProjectile(grenade, direction, Vector2.One.Normalized(), clugUid);
+
+    }
     private bool TryGetGrenade(EntityUid clugUid, ClusterGrenadeComponent component, out EntityUid grenade)
     {
         grenade = default;

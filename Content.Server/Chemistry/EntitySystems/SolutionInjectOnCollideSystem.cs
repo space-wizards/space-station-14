@@ -39,7 +39,16 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
                 return;
         }
 
-        var solRemoved = _solutionContainersSystem.SplitSolution(solution.Value, component.TransferAmount);
+        // Make sure 'TryAddToChemicals' of 'bloodstream' will not fail if we try to inject more than it has 'AvailableVolume'
+        var validSolutionAmount = component.TransferAmount;
+        if (bloodstream.ChemicalSolution != null)
+        {
+            var availableVolume = bloodstream.ChemicalSolution.Value.Comp.Solution.AvailableVolume;
+            if (validSolutionAmount > availableVolume)
+                validSolutionAmount = availableVolume;
+        }
+
+        var solRemoved = _solutionContainersSystem.SplitSolution(solution.Value, validSolutionAmount);
         var solRemovedVol = solRemoved.Volume;
 
         var solToInject = solRemoved.SplitSolution(solRemovedVol * component.TransferEfficiency);
