@@ -139,7 +139,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             var attackerPos = Transform(entity).MapPosition;
 
             if (mousePos.MapId != attackerPos.MapId ||
-                (attackerPos.Position - mousePos.Position).Length() > weapon.Range)
+                (attackerPos.Position - mousePos.Position).LengthSquared() > weapon.Range * weapon.Range)
             {
                 return;
             }

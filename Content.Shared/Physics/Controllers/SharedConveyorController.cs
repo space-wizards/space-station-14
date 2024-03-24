@@ -109,7 +109,7 @@ public abstract class SharedConveyorController : VirtualController
 
     private static Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelative)
     {
-        if (speed == 0 || direction.Length() == 0)
+        if (speed == 0 || direction.LengthSquared() == 0)
             return Vector2.Zero;
 
         /*
@@ -125,7 +125,7 @@ public abstract class SharedConveyorController : VirtualController
         var p = direction * (Vector2.Dot(itemRelative, direction) / Vector2.Dot(direction, direction));
         var r = itemRelative - p;
 
-        if (r.Length() < 0.1)
+        if (r.LengthSquared() < 0.01)
         {
             var velocity = direction * speed;
             return velocity * frameTime;

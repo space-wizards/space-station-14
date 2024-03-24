@@ -145,7 +145,8 @@ namespace Content.Server.Power.EntitySystems
                 if (!receiver.Connectable || receiver.Provider != null)
                     continue;
 
-                if ((Transform(entity).LocalPosition - xform.LocalPosition).Length() <= Math.Min(range, receiver.ReceptionRange))
+                var rangeCheck = Math.Min(range, receiver.ReceptionRange);
+                if ((Transform(entity).LocalPosition - xform.LocalPosition).LengthSquared() <= rangeCheck * rangeCheck)
                     yield return (entity, receiver);
             }
         }
@@ -261,7 +262,7 @@ namespace Content.Server.Power.EntitySystems
             var xformQuery = GetEntityQuery<TransformComponent>();
 
             ExtensionCableProviderComponent? closestCandidate = null;
-            var closestDistanceFound = float.MaxValue;
+            var closestDistanceFoundSquared = float.MaxValue;
             foreach (var entity in nearbyEntities)
             {
                 if (entity == owner || !cableQuery.TryGetComponent(entity, out var provider) || !provider.Connectable)
@@ -276,19 +277,23 @@ namespace Content.Server.Power.EntitySystems
                 // Find the closest provider
                 if (!xformQuery.TryGetComponent(entity, out var entityXform))
                     continue;
-                var distance = (entityXform.LocalPosition - xform.LocalPosition).Length();
-                if (distance >= closestDistanceFound)
+                var distanceSquared = (entityXform.LocalPosition - xform.LocalPosition).LengthSquared();
+                if (distanceSquared >= closestDistanceFoundSquared)
                     continue;
 
                 closestCandidate = provider;
-                closestDistanceFound = distance;
+                closestDistanceFoundSquared = distanceSquared;
             }
 
             // Make sure the provider is in range before claiming success
-            if (closestCandidate != null && closestDistanceFound <= Math.Min(range, closestCandidate.TransferRange))
+            if (closestCandidate != null)
             {
-                foundProvider = closestCandidate;
-                return true;
+                var rangeCheck = Math.Min(range, closestCandidate.TransferRange);
+                if (closestDistanceFoundSquared <= rangeCheck * rangeCheck)
+                {
+                    foundProvider = closestCandidate;
+                    return true;
+                }
             }
 
             foundProvider = null;

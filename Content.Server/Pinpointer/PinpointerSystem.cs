@@ -187,12 +187,12 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
     private Distance CalculateDistance(Vector2 vec, PinpointerComponent pinpointer)
     {
-        var dist = vec.Length();
-        if (dist <= pinpointer.ReachedDistance)
+        var distSquared = vec.LengthSquared();
+        if (distSquared <= pinpointer.ReachedDistance * pinpointer.ReachedDistance)
             return Distance.Reached;
-        else if (dist <= pinpointer.CloseDistance)
+        else if (distSquared <= pinpointer.CloseDistance * pinpointer.CloseDistance)
             return Distance.Close;
-        else if (dist <= pinpointer.MediumDistance)
+        else if (distSquared <= pinpointer.MediumDistance * pinpointer.MediumDistance)
             return Distance.Medium;
         else
             return Distance.Far;

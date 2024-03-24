@@ -78,11 +78,11 @@ public sealed class SingularityAttractorSystem : EntitySystem
                 continue;
 
             var biasBy = mapPos.Position - singuloMapPos.Position;
-            var length = biasBy.Length();
-            if (length <= MinAttractRange)
+            var lengthSquared = biasBy.LengthSquared();
+            if (lengthSquared <= MinAttractRange * MinAttractRange)
                 return;
 
-            biasBy = Vector2.Normalize(biasBy) * (attractor.BaseRange / length);
+            biasBy = Vector2.Normalize(biasBy) * (attractor.BaseRange / MathF.Sqrt(lengthSquared));
 
             walk.BiasVector += biasBy;
         }

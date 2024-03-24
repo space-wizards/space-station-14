@@ -177,7 +177,7 @@ public sealed partial class NPCSteeringSystem
         {
             // What's our tolerance for arrival.
             // If it's a pathfinding node it might be different to the destination.
-            arrived = direction.Length() <= steering.Range;
+            arrived = direction.LengthSquared() <= steering.Range * steering.Range;
         }
         // If next node is a free tile then get within its bounds.
         // This is to avoid popping it too early
@@ -189,7 +189,7 @@ public sealed partial class NPCSteeringSystem
         // TODO: Consider melee range or the likes.
         else
         {
-            arrived = direction.Length() <= SharedInteractionSystem.InteractionRange - 0.05f;
+            arrived = direction.LengthSquared() <= (SharedInteractionSystem.InteractionRange - 0.05f) * (SharedInteractionSystem.InteractionRange - 0.05f);
         }
 
         // Are we in range

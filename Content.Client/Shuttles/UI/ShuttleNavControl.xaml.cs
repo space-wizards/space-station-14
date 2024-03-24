@@ -257,7 +257,8 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 var position = state.Coordinates.Position;
                 var uiPosition = matrix.Transform(position);
 
-                if (uiPosition.Length() > (WorldRange * 2f) - DockScale)
+                var comparison = (WorldRange * 2f) - DockScale;
+                if (uiPosition.LengthSquared() > comparison * comparison)
                     continue;
 
                 var color = Color.ToSrgb(Color.Magenta);

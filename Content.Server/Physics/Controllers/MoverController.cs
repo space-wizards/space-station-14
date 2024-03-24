@@ -236,7 +236,7 @@ namespace Content.Server.Physics.Controllers
         /// </summary>
         private Vector2 ObtainMaxVel(Vector2 vel, ShuttleComponent shuttle)
         {
-            if (vel.Length() == 0f)
+            if (vel.LengthSquared() == 0f)
                 return Vector2.Zero;
 
             // this math could PROBABLY be simplified for performance
@@ -324,7 +324,7 @@ namespace Content.Server.Physics.Controllers
                         brakeInput += brakes;
                     }
 
-                    if (strafe.Length() > 0f)
+                    if (strafe.LengthSquared() > 0f)
                     {
                         var offsetRotation = consoleXform.LocalRotation;
                         linearInput += offsetRotation.RotateVec(strafe);
@@ -344,7 +344,7 @@ namespace Content.Server.Physics.Controllers
                 // Handle shuttle movement
                 if (brakeInput > 0f)
                 {
-                    if (body.LinearVelocity.Length() > 0f)
+                    if (body.LinearVelocity.LengthSquared() > 0f)
                     {
                         // Minimum brake velocity for a direction to show its thrust appearance.
                         const float appearanceThreshold = 0.1f;
@@ -401,7 +401,7 @@ namespace Content.Server.Physics.Controllers
                         var maxVelocity = (-body.LinearVelocity).Length() / forceMul;
 
                         // Don't overshoot
-                        if (impulse.Length() > maxVelocity)
+                        if (impulse.LengthSquared() > maxVelocity * maxVelocity)
                             impulse = impulse.Normalized() * maxVelocity;
 
                         PhysicsSystem.ApplyForce(shuttleUid, impulse, body: body);
@@ -437,7 +437,7 @@ namespace Content.Server.Physics.Controllers
                     }
                 }
 
-                if (linearInput.Length().Equals(0f))
+                if (linearInput.LengthSquared().Equals(0f))
                 {
                     PhysicsSystem.SetSleepingAllowed(shuttleUid, body, true);
 
@@ -509,17 +509,17 @@ namespace Content.Server.Physics.Controllers
 
                     var finalForce = Vector2Dot(totalForce, properAccel.Normalized()) * properAccel.Normalized();
 
-                    if (localVel.Length() >= maxVelocity.Length() && Vector2.Dot(totalForce, localVel) > 0f)
+                    if (localVel.LengthSquared() >= maxVelocity.LengthSquared() && Vector2.Dot(totalForce, localVel) > 0f)
                         finalForce = Vector2.Zero; // burn would be faster if used as such
 
-                    if (finalForce.Length() > properAccel.Length())
+                    if (finalForce.LengthSquared() > properAccel.LengthSquared())
                         finalForce = properAccel; // don't overshoot
 
                     //Log.Info($"shuttle: maxVelocity {maxVelocity} totalForce {totalForce} finalForce {finalForce} forceMul {forceMul} properAccel {properAccel}");
 
                     finalForce = shuttleNorthAngle.RotateVec(finalForce);
 
-                    if (finalForce.Length() > 0f)
+                    if (finalForce.LengthSquared() > 0f)
                         PhysicsSystem.ApplyForce(shuttleUid, finalForce, body: body);
                 }
 

@@ -102,10 +102,11 @@ namespace Content.Shared.Friction
 
         private void ReduceLinearVelocity(EntityUid uid, bool prediction, PhysicsComponent body, float friction, float frameTime)
         {
-            var speed = body.LinearVelocity.Length();
+            var speedSquared = body.LinearVelocity.LengthSquared();
 
-            if (speed <= 0.0f)
+            if (speedSquared <= 0.0f)
                 return;
+            var speed = MathF.Sqrt(speedSquared);
 
             // This is the *actual* amount that speed will drop by, we just do some multiplication around it to be easier.
             var drop = 0.0f;

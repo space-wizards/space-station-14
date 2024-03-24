@@ -534,25 +534,25 @@ namespace Content.Shared.Interaction
                 return true;
 
             var dir = other.Position - origin.Position;
-            var length = dir.Length();
+            var lengthSquared = dir.LengthSquared();
 
             // If range specified also check it
-            if (range > 0f && length > range)
+            if (range > 0f && lengthSquared > range * range)
                 return false;
 
-            if (MathHelper.CloseTo(length, 0))
+            if (MathHelper.CloseTo(lengthSquared, 0))
                 return true;
 
             predicate ??= _ => false;
 
-            if (length > MaxRaycastRange)
+            if (lengthSquared > MaxRaycastRange * MaxRaycastRange)
             {
                 Log.Warning("InRangeUnobstructed check performed over extreme range. Limiting CollisionRay size.");
-                length = MaxRaycastRange;
+                lengthSquared = MaxRaycastRange * MaxRaycastRange;
             }
 
             var ray = new CollisionRay(origin.Position, dir.Normalized(), (int) collisionMask);
-            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, length, predicate.Invoke, false).ToList();
+            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, MathF.Sqrt(lengthSquared), predicate.Invoke, false).ToList();
 
             return rayResults.Count == 0;
         }

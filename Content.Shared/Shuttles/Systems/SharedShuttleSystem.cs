@@ -146,7 +146,6 @@ public abstract partial class SharedShuttleSystem : EntitySystem
 
         // Just checks if any grids inside of a buffer range at the target position.
         _grids.Clear();
-        var ftlRange = FTLRange;
         var mapCoordinates = coordinates.ToMap(EntityManager, XformSystem);
 
         var ourPos = Maps.GetGridPosition((shuttleUid, shuttlePhysics, shuttleXform));
@@ -155,7 +154,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         var targetPosition = mapCoordinates.Position;
 
         // Check range even if it's cross-map.
-        if ((targetPosition - ourPos).Length() > FTLRange)
+        if ((targetPosition - ourPos).LengthSquared() > FTLRange * FTLRange)
         {
             return false;
         }
@@ -171,7 +170,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
                 if (exclusionCoords.MapId != mapCoordinates.MapId)
                     continue;
 
-                if ((mapCoordinates.Position - exclusionCoords.Position).Length() <= exclusion.Range)
+                if ((mapCoordinates.Position - exclusionCoords.Position).LengthSquared() <= exclusion.Range * exclusion.Range)
                     return false;
             }
         }

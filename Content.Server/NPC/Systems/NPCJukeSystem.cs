@@ -173,9 +173,9 @@ public sealed class NPCJukeSystem : EntitySystem
 
                 // TODO: Probably add in our bounds and target bounds for ideal distance.
                 var idealDistance = weapon.Range * 4f;
-                var obstacleDistance = obstacleDirection.Length();
+                var obstacleDistanceSquared = obstacleDirection.LengthSquared();
 
-                if (obstacleDistance > idealDistance || obstacleDistance == 0f)
+                if (obstacleDistanceSquared > idealDistance * idealDistance || obstacleDistanceSquared == 0f)
                 {
                     // Don't want to get too far.
                     return;
@@ -184,9 +184,9 @@ public sealed class NPCJukeSystem : EntitySystem
                 obstacleDirection = args.OffsetRotation.RotateVec(obstacleDirection);
                 var norm = obstacleDirection.Normalized();
 
-                var weight = obstacleDistance <= args.Steering.Radius
+                var weight = obstacleDistanceSquared <= args.Steering.Radius
                     ? 1f
-                    : (idealDistance - obstacleDistance) / idealDistance;
+                    : (idealDistance - MathF.Sqrt(obstacleDistanceSquared)) / idealDistance;
 
                 for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
                 {

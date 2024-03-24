@@ -39,7 +39,7 @@ public abstract class SharedDockingSystem : EntitySystem
 
     public bool InRange(MapCoordinates mapPosA, MapCoordinates mapPosB)
     {
-        return (mapPosA.Position - mapPosB.Position).Length() <= DockRange;
+        return (mapPosA.Position - mapPosB.Position).LengthSquared() <= DockRange * DockRange;
     }
 
     public bool InAlignment(MapCoordinates mapPosA, Angle worldRotA, MapCoordinates mapPosB, Angle worldRotB)

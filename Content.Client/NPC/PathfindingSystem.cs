@@ -219,16 +219,16 @@ namespace Content.Client.NPC
                             continue;
 
                         PathfindingBreadcrumb? nearest = null;
-                        var nearestDistance = float.MaxValue;
+                        var nearestDistanceSquared = float.MaxValue;
 
                         foreach (var crumb in chunk.Value)
                         {
                             var crumbMapPos = worldMatrix.Transform(_system.GetCoordinate(chunk.Key, crumb.Coordinates));
-                            var distance = (crumbMapPos - mouseWorldPos.Position).Length();
+                            var distanceSquared = (crumbMapPos - mouseWorldPos.Position).LengthSquared();
 
-                            if (distance < nearestDistance)
+                            if (distanceSquared < nearestDistanceSquared)
                             {
-                                nearestDistance = distance;
+                                nearestDistanceSquared = distanceSquared;
                                 nearest = crumb;
                             }
                         }

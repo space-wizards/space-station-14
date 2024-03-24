@@ -167,22 +167,23 @@ public abstract partial class SharedHandsSystem
     private Vector2 GetFinalDropCoordinates(EntityUid user, MapCoordinates origin, MapCoordinates target)
     {
         var dropVector = target.Position - origin.Position;
-        var requestedDropDistance = dropVector.Length();
-        var dropLength = dropVector.Length();
+        var requestedDropDistanceSquared = dropVector.LengthSquared();
+        var dropLengthSquared = dropVector.LengthSquared();
 
         if (ShouldIgnoreRestrictions(user))
         {
-            if (dropVector.Length() > SharedInteractionSystem.InteractionRange)
+            if (requestedDropDistanceSquared > SharedInteractionSystem.InteractionRangeSquared)
             {
                 dropVector = dropVector.Normalized() * SharedInteractionSystem.InteractionRange;
                 target = new MapCoordinates(origin.Position + dropVector, target.MapId);
             }
 
-            dropLength = _interactionSystem.UnobstructedDistance(origin, target, predicate: e => e == user);
+            var dropLength = _interactionSystem.UnobstructedDistance(origin, target, predicate: e => e == user);
+            dropLengthSquared = dropLength * dropLength;
         }
 
-        if (dropLength < requestedDropDistance)
-            return origin.Position + dropVector.Normalized() * dropLength;
+        if (dropLengthSquared < requestedDropDistanceSquared)
+            return origin.Position + dropVector.Normalized() * MathF.Sqrt(dropLengthSquared);
         return target.Position;
     }
 

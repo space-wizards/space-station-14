@@ -216,8 +216,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
             ? xform.LocalPosition - state.Player.LocalPosition
             : state.TransformSystem.GetWorldPosition(xform) - state.MapPos;
 
-        var range = delta.Length();
-        if (range >= ambientComp.Range)
+        if (delta.LengthSquared() >= ambientComp.Range * ambientComp.Range)
             return true;
 
         string key;
@@ -228,7 +227,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
             key = ((SoundCollectionSpecifier) ambientComp.Sound).Collection ?? string.Empty;
 
         // Prioritize far away & loud sounds.
-        var importance = range * (ambientComp.Volume + 32);
+        var importance = delta.Length() * (ambientComp.Volume + 32);
         state.SourceDict.GetOrNew(key).Add((importance, ambientComp));
         return true;
     }

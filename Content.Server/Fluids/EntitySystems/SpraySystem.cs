@@ -100,8 +100,8 @@ public sealed class SpraySystem : EntitySystem
             var target = userMapPos
                 .Offset((diffNorm + rotation.ToVec()).Normalized() * diffLength + quarter);
 
-            var distance = (target.Position - userMapPos.Position).Length();
-            if (distance > entity.Comp.SprayDistance)
+            var distanceSquared = (target.Position - userMapPos.Position).LengthSquared();
+            if (distanceSquared > entity.Comp.SprayDistance * entity.Comp.SprayDistance)
                 target = userMapPos.Offset(diffNorm * entity.Comp.SprayDistance);
 
             var adjustedSolutionAmount = entity.Comp.TransferAmount / entity.Comp.VaporAmount;
@@ -111,7 +111,7 @@ public sealed class SpraySystem : EntitySystem
                 break;
 
             // Spawn the vapor cloud onto the grid/map the user is present on. Offset the start position based on how far the target destination is.
-            var vaporPos = userMapPos.Offset(distance < 1 ? quarter : threeQuarters);
+            var vaporPos = userMapPos.Offset(distanceSquared < 1 ? quarter : threeQuarters);
             var vapor = Spawn(entity.Comp.SprayedPrototype, vaporPos);
             var vaporXform = xformQuery.GetComponent(vapor);
 
