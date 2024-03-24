@@ -65,8 +65,8 @@
 - type: entity
   parent: ClothingHeadsetCargo
   id: ClothingHeadsetQM
-  name: qm headset
-  description: A headset used by the quartermaster.
+  name: HoS headset
+  description: A headset used by the head of supply.
   components:
   - type: ContainerFill
     containers:
@@ -125,8 +125,8 @@
 - type: entity
   parent: ClothingHeadsetEngineering
   id: ClothingHeadsetCE
-  name: ce headset
-  description: A headset for the chief engineer to ignore all emergency calls on.
+  name: HoS headset
+  description: A headset for the head of singularity to ignore all emergency calls on.
   components:
   - type: ContainerFill
     containers:
@@ -154,8 +154,8 @@
 - type: entity
   parent: ClothingHeadsetMedical
   id: ClothingHeadsetCMO
-  name: cmo headset
-  description: A headset used by the CMO.
+  name: HoS headset
+  description: A headset used by the HoS.
   components:
   - type: ContainerFill
     containers:
@@ -215,7 +215,7 @@
 - type: entity
   parent: ClothingHeadsetScience
   id: ClothingHeadsetRD
-  name: rd headset
+  name: HoS headset
   description: Lamarr used to love chewing on this...
   components:
   - type: ContainerFill
