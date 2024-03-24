@@ -39,7 +39,7 @@ public sealed class MedicalMenuSystem : EntitySystem
 
     }
 
-    private void SetupMedicalUI(EntityUid uid, MedicalDataComponent component, GetVerbsEvent<Verb> args)
+    private void SetupMedicalUI(EntityUid uid, MedicalDataComponent medData, GetVerbsEvent<Verb> args)
     {
             if (!args.CanInteract
                 || !_containerSystem.IsInSameOrParentContainer(args.User, args.Target)

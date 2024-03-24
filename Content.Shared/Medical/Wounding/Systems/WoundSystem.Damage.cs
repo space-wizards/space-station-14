@@ -82,36 +82,60 @@ public sealed partial class WoundSystem
     private void ApplyDamageToWoundable(Entity<WoundableComponent> woundable, DamageSpecifier damageSpec)
     {
         woundable.Comp.Health -= damageSpec.GetTotal();
+        Dirty(woundable);
         if (woundable.Comp.Health > woundable.Comp.MaxHealth)
         {
             woundable.Comp.Health = woundable.Comp.MaxHealth;
             return;
         }
+        ValidateWoundable(woundable);
+    }
+
+    private void ValidateWoundable(Entity<WoundableComponent> woundable)
+    {
+        var dirty = false;
+
+        if (woundable.Comp.Health > woundable.Comp.MaxHealth)
+        {
+            woundable.Comp.Health = woundable.Comp.MaxHealth;
+            dirty = true;
+        }
+
         if (woundable.Comp.Health < 0)
         {
             woundable.Comp.Integrity += woundable.Comp.Health;
             woundable.Comp.Health = 0;
+            dirty = true;
         }
-        if (ShouldGibWoundable(woundable))
-            return;
-        Dirty(woundable);
+
+        if (woundable.Comp.IntegrityCap > woundable.Comp.MaxIntegrity)
+        {
+            woundable.Comp.IntegrityCap = woundable.Comp.MaxIntegrity;
+            dirty = true;
+        }
+
+        if (woundable.Comp.Integrity > woundable.Comp.IntegrityCap)
+        {
+            woundable.Comp.Integrity = woundable.Comp.IntegrityCap;
+            dirty = true;
+        }
+        if (dirty)
+            Dirty(woundable);
+        if (woundable.Comp.Integrity <= 0)
+            TryGibWoundable(woundable);
     }
 
-    private bool ShouldGibWoundable(Entity<WoundableComponent> woundable)
+
+    private bool TryGibWoundable(Entity<WoundableComponent> woundable)
     {
-        if (woundable.Comp.Integrity > woundable.Comp.MaxIntegrity)
-        {
-            woundable.Comp.Integrity = woundable.Comp.MaxIntegrity;
-            Dirty(woundable);
+        if (woundable.Comp.Integrity > 0)
             return false;
-        }
-        if (woundable.Comp.Integrity <= 0)
-        {
-            //TODO: gib woundable. Setting int to 0 is placeholder until partloss is implemented
-            woundable.Comp.Integrity = 0;
-            Log.Debug($"{ToPrettyString(woundable.Owner)} is at 0 integrity and should have been destroyed (Part Gibbing not implemented yet).");
-            return true;
-        }
+
+        //TODO: gib woundable. Setting int to 0 is placeholder until partloss is implemented
+        woundable.Comp.Integrity = 0;
+        Log.Debug($"{ToPrettyString(woundable.Owner)} is at 0 integrity and should have been destroyed (Part Gibbing not implemented yet).");
+        return true;
+
         return false;
     }
 }

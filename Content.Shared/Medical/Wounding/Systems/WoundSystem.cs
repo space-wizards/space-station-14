@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Content.Shared.Gibbing.Systems;
 using Content.Shared.Medical.Wounding.Components;
 using Robust.Shared.Containers;
@@ -44,4 +45,23 @@ public sealed partial class WoundSystem : EntitySystem
             woundable.Integrity = woundable.IntegrityCap;
         _containerSystem.EnsureContainer<Container>(owner, WoundableComponent.WoundableContainerId);
     }
+
+    public void ChangeIntegrity(Entity<WoundableComponent> woundable, FixedPoint2 deltaIntegrity)
+    {
+        woundable.Comp.Integrity += deltaIntegrity;
+        ValidateWoundable(woundable);
+    }
+
+    public void ChangeIntegrityCap(Entity<WoundableComponent> woundable, FixedPoint2 deltaIntegrityCap)
+    {
+        woundable.Comp.IntegrityCap += deltaIntegrityCap;
+        ValidateWoundable(woundable);
+    }
+
+    public void ChangeHealthCap(Entity<WoundableComponent> woundable, FixedPoint2 deltaHealthCap)
+    {
+        woundable.Comp.HealthCap += deltaHealthCap;
+        ValidateWoundable(woundable);
+    }
+
 }

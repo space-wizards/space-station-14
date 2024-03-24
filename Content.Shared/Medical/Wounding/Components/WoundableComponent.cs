@@ -1,9 +1,7 @@
 ﻿using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Content.Shared.Medical.Trauma.Systems;
 using Content.Shared.Medical.Wounding.Prototypes;
 using Content.Shared.Medical.Wounding.Systems;
-using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
@@ -11,7 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Medical.Wounding.Components;
 
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(WoundSystem), typeof(TraumaSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(WoundSystem))]
 public sealed partial class WoundableComponent : Component
 {
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]

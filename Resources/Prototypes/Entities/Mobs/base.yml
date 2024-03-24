@@ -76,7 +76,6 @@
   abstract: true
   components:
   - type: MedicalData #TODO: move this to it's own prototype category
-    #TODO: Root woundable
 
 # Used for mobs that have health and can take damage.
 - type: entity

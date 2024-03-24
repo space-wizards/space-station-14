@@ -10,11 +10,11 @@ public sealed partial class IntegrityTraumaComponent : Component
     /// How much are we decreasing our woundables integrity cap, expressed as a percentage (/100) of maximum
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public FixedPoint2 IntegrityCapDecrease = 0;
+    public FixedPoint2 IntegrityCapDelta = 0;
 
     /// <summary>
     /// How much damage are we applying to integrity, expressed as a percentage (/100) of maximum integrity
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public FixedPoint2 IntegrityDamage = 0;
+    public FixedPoint2 IntegrityDelta = 0;
 }

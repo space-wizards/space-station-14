@@ -19,12 +19,21 @@ public sealed partial class NervousSystemComponent : Component
     public Dictionary<FixedPoint2, MedicalConditionThreshold> ConditionThresholds = new();
 
     [DataField, AutoNetworkedField]
-    public FixedPoint2 NominalMaxPain = 100;
+    public FixedPoint2 RawPainCap = 100;
 
     [DataField, AutoNetworkedField]
-    public FixedPoint2 MitigatedPercentage = 0;
+    public FixedPoint2 MaxPain = 100;
 
-    public FixedPoint2 Pain => RawPain * Multiplier - RawPain * MitigatedPercentage/100;
+    public FixedPoint2 MitigatedPercentage => FixedPoint2.Clamp(RawMitigatedPercentage, 0, 100);
+
+    [DataField, AutoNetworkedField]
+    public FixedPoint2 RawMitigatedPercentage = 0;
+
+    public FixedPoint2 PainCap => FixedPoint2.Clamp(RawPainCap, 0, MaxPain);
+
+    public FixedPoint2 MitigatedPain => RawPain * MitigatedPercentage / 100;
+
+    public FixedPoint2 Pain => FixedPoint2.Clamp(RawPain* Multiplier - MitigatedPain, 0 , PainCap)  ;
 
     [NetSerializable, Serializable]
     [DataRecord]
