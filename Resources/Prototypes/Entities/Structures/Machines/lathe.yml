@@ -319,6 +319,8 @@
       - WelderExperimental
       - JawsOfLife
       - FauxTileAstroGrass
+      - FauxTileMowedAstroGrass
+      - FauxTileJungleAstroGrass
       - FauxTileAstroIce
       - OreBagOfHolding
       - DeviceQuantumSpinInverter

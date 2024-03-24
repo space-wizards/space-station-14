@@ -122,5 +122,7 @@ tiles-hull-reinforced = exterior reinforced hull plating
 tiles-web = web tile
 tiles-chromite = chromite
 tiles-astro-grass = astro-grass
+tiles-mowed-astro-grass = mowed astro-grass
+tiles-jungle-astro-grass = jungle astro-grass
 tiles-astro-ice = astro-ice
 tiles-wood-large = large wood

@@ -1866,11 +1866,29 @@
     West: /Textures/Tiles/Planet/Grass/double_edge.png
   baseTurf: Plating
   isSubfloor: false
-  deconstructTools: [ Prying ]
+  deconstructTools: [ Cutting ]
   footstepSounds:
     collection: FootstepGrass
   itemDrop: FloorTileItemAstroGrass
   heatCapacity: 10000
+
+- type: tile
+  id: FloorMowedAstroGrass
+  name: tiles-mowed-astro-grass
+  parent: FloorGrass
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Cutting ]
+  itemDrop: FloorTileItemMowedAstroGrass
+
+- type: tile
+  id: FloorJungleAstroGrass
+  name: tiles-jungle-astro-grass
+  parent: FloorGrassJungle
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Cutting ]
+  itemDrop: FloorTileItemJungleAstroGrass
 
 # Ice
 - type: tile
@@ -1879,7 +1897,7 @@
   sprite: /Textures/Tiles/Planet/Snow/ice.png
   baseTurf: Plating
   isSubfloor: false
-  deconstructTools: [ Prying ]
+  deconstructTools: [ Welding ]
   friction: 0.05
   heatCapacity: 10000
   mobFriction: 0.5
