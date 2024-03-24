@@ -23,7 +23,6 @@ public sealed partial class AtmosphereSystem
         SubscribeLocalEvent<GridAtmosphereComponent, IsSimulatedGridMethodEvent>(GridIsSimulated);
         SubscribeLocalEvent<GridAtmosphereComponent, GetAllMixturesMethodEvent>(GridGetAllMixtures);
         SubscribeLocalEvent<GridAtmosphereComponent, ReactTileMethodEvent>(GridReactTile);
-        SubscribeLocalEvent<GridAtmosphereComponent, HotspotExposeMethodEvent>(GridHotspotExpose);
         SubscribeLocalEvent<GridAtmosphereComponent, HotspotExtinguishMethodEvent>(GridHotspotExtinguish);
         SubscribeLocalEvent<GridAtmosphereComponent, IsHotspotActiveMethodEvent>(GridIsHotspotActive);
         SubscribeLocalEvent<GridAtmosphereComponent, AddPipeNetMethodEvent>(GridAddPipeNet);
@@ -237,18 +236,6 @@ public sealed partial class AtmosphereSystem
         var air = map.Mixture;
         DebugTools.Assert(air.Immutable);
         return (air, map.Space);
-    }
-
-    private void GridHotspotExpose(EntityUid uid, GridAtmosphereComponent component, ref HotspotExposeMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!component.Tiles.TryGetValue(args.Tile, out var tile))
-            return;
-
-        HotspotExpose(component, tile, args.ExposedTemperature, args.ExposedVolume, args.soh, args.SparkSourceUid);
-        args.Handled = true;
     }
 
     private void GridHotspotExtinguish(EntityUid uid, GridAtmosphereComponent component,

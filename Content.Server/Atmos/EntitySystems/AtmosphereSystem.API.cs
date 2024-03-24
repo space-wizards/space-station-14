@@ -224,8 +224,21 @@ public partial class AtmosphereSystem
     public void HotspotExpose(EntityUid gridUid, Vector2i tile, float exposedTemperature, float exposedVolume,
         EntityUid? sparkSourceUid = null, bool soh = false)
     {
-        var ev = new HotspotExposeMethodEvent(gridUid, sparkSourceUid, tile, exposedTemperature, exposedVolume, soh);
-        RaiseLocalEvent(gridUid, ref ev);
+        if (!_atmosQuery.TryGetComponent(gridUid, out var atmos))
+            return;
+
+        if (atmos.Tiles.TryGetValue(tile, out var atmosTile))
+            HotspotExpose(atmos, atmosTile, exposedTemperature, exposedVolume, soh, sparkSourceUid);
+    }
+
+    public void HotspotExpose(TileAtmosphere tile, float exposedTemperature, float exposedVolume,
+        EntityUid? sparkSourceUid = null, bool soh = false)
+    {
+        if (!_atmosQuery.TryGetComponent(tile.GridIndex, out var atmos))
+            return;
+
+        DebugTools.Assert(atmos.Tiles.TryGetValue(tile.GridIndices, out var tmp) && tmp == tile);
+        HotspotExpose(atmos, tile, exposedTemperature, exposedVolume, soh, sparkSourceUid);
     }
 
     public void HotspotExtinguish(EntityUid gridUid, Vector2i tile)
@@ -284,9 +297,6 @@ public partial class AtmosphereSystem
 
     [ByRefEvent] private record struct ReactTileMethodEvent
         (EntityUid GridId, Vector2i Tile, ReactionResult Result = default, bool Handled = false);
-
-    [ByRefEvent] private record struct HotspotExposeMethodEvent
-        (EntityUid Grid, EntityUid? SparkSourceUid, Vector2i Tile, float ExposedTemperature, float ExposedVolume, bool soh, bool Handled = false);
 
     [ByRefEvent] private record struct HotspotExtinguishMethodEvent
         (EntityUid Grid, Vector2i Tile, bool Handled = false);
