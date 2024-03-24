@@ -41,9 +41,9 @@ public sealed partial class TelepathySystem : EntitySystem
                 telepathy.Act = () =>
                 {
                     _quickDialog.OpenDialog(player, "Пробратся в мысли", "Сообщение", (string message) =>
-                {
-                    _prayerSystem.SendSubtleMessage(targetActor.PlayerSession, player, message, "Вы слышите загадочный голос в своей голове" == "" ? Loc.GetString("prayer-popup-subtle-default") : "Вы слышите загадочный голос в своей голове");
-                });
+                    {
+                        _prayerSystem.SendSubtleMessage(targetActor.PlayerSession, player, message, Loc.GetString("prayer-popup-subtle-default"));
+                    });
                 };
                 args.Verbs.Add(telepathy);
             }
