@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Audio;
+﻿using Content.Shared.Mobs;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -119,6 +120,12 @@ public abstract partial class BaseActionComponent : Component
     [DataField("checkCanInteract")] public bool CheckCanInteract = true;
 
     /// <summary>
+    /// Whether to check if the user is conscious or not. Can be used instead of <see cref="CheckCanInteract"/>
+    /// for a more permissive check.
+    /// </summary>
+    [DataField] public bool CheckConsciousness = true;
+
+    /// <summary>
     ///     If true, this will cause the action to only execute locally without ever notifying the server.
     /// </summary>
     [DataField("clientExclusive")] public bool ClientExclusive = false;
@@ -177,6 +184,7 @@ public abstract class BaseActionComponentState : ComponentState
     public NetEntity? Container;
     public NetEntity? EntityIcon;
     public bool CheckCanInteract;
+    public bool CheckConsciousness;
     public bool ClientExclusive;
     public int Priority;
     public NetEntity? AttachedEntity;
@@ -204,6 +212,7 @@ public abstract class BaseActionComponentState : ComponentState
         MaxCharges = component.MaxCharges;
         RenewCharges = component.RenewCharges;
         CheckCanInteract = component.CheckCanInteract;
+        CheckConsciousness = component.CheckConsciousness;
         ClientExclusive = component.ClientExclusive;
         Priority = component.Priority;
         AutoPopulate = component.AutoPopulate;

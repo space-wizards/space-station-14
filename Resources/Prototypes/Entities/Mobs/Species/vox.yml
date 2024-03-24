@@ -43,7 +43,7 @@
     bloodReagent: AmmoniaBlood
   - type: MeleeWeapon
     soundHit:
-      path: /Audio/Weapons/pierce.ogg
+      collection: AlienClaw
     angle: 30
     animation: WeaponArcClaw
     damage:
