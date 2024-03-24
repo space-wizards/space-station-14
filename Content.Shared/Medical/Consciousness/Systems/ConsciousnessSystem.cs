@@ -74,7 +74,7 @@ public sealed class ConsciousnessSystem : EntitySystem
 
     public void ChangeConsciousness(Entity<ConsciousnessComponent?, MobStateComponent?> conscious, FixedPoint2 consciousnessDelta)
     {
-        if (!Resolve(conscious, ref conscious.Comp1, ref conscious.Comp2))
+        if (consciousnessDelta == 0 || !Resolve(conscious, ref conscious.Comp1, ref conscious.Comp2))
             return;
         var delta = FixedPoint2.Clamp(
             conscious.Comp1.RawValue+consciousnessDelta * conscious.Comp1.Multiplier +  conscious.Comp1.Modifier,
@@ -98,7 +98,7 @@ public sealed class ConsciousnessSystem : EntitySystem
 
     public void ChangeConsciousnessModifier(Entity<ConsciousnessComponent?, MobStateComponent?> conscious, FixedPoint2 modifierDelta)
     {
-        if (!Resolve(conscious, ref conscious.Comp1, ref conscious.Comp2))
+        if (modifierDelta == 0 || !Resolve(conscious, ref conscious.Comp1, ref conscious.Comp2))
             return;
         var delta = FixedPoint2.Clamp(
             conscious.Comp1.RawValue * conscious.Comp1.Multiplier +  conscious.Comp1.Modifier+modifierDelta,
@@ -123,7 +123,7 @@ public sealed class ConsciousnessSystem : EntitySystem
     public void ChangeConsciousnessMultiplier(Entity<ConsciousnessComponent?, MobStateComponent?> conscious,
         FixedPoint2 multiplierDelta)
     {
-        if (!Resolve(conscious, ref conscious.Comp1, ref conscious.Comp2))
+        if (multiplierDelta == 0 || !Resolve(conscious, ref conscious.Comp1, ref conscious.Comp2))
             return;
         var delta = FixedPoint2.Clamp(
             conscious.Comp1.RawValue * (conscious.Comp1.Multiplier+multiplierDelta) + conscious.Comp1.Modifier,
@@ -150,7 +150,7 @@ public sealed class ConsciousnessSystem : EntitySystem
     public void ChangeConsciousnessCap(Entity<ConsciousnessComponent?, MobStateComponent?> conscious, FixedPoint2 capDelta,
         bool warnIfOverflow = true)
     {
-        if (!Resolve(conscious, ref conscious.Comp1, ref conscious.Comp2))
+        if (capDelta == 0 || !Resolve(conscious, ref conscious.Comp1, ref conscious.Comp2))
             return;
         var newCap = FixedPoint2.Clamp(
             capDelta + conscious.Comp1.Modifier, 0, ConsciousnessComponent.MaxConsciousness);

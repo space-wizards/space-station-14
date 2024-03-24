@@ -122,11 +122,9 @@ public partial class SharedBodySystem
         var ev = new BodyPartAddedEvent(slotId, partUid, component);
         RaiseLocalEvent(bodyUid, ref ev);
 
-        if (bodyComp != null)
-        {
-            var ev2 = new BodyPartAddedToBodyEvent(slotId, bodyUid, bodyComp, component);
-            RaiseLocalEvent(partUid, ref ev2);
-        }
+        bodyComp = Comp<BodyComponent>(bodyUid);
+        var ev2 = new BodyPartAddedToBodyEvent(slotId, bodyUid, bodyComp, component);
+        RaiseLocalEvent(partUid, ref ev2);
 
         AddLeg(partUid, bodyUid, component, bodyComp);
     }
@@ -145,14 +143,12 @@ public partial class SharedBodySystem
 
         var ev = new BodyPartRemovedEvent(slotId, partUid, component);
         RaiseLocalEvent(bodyUid, ref ev);
-        if (bodyComp != null)
-        {
-            var ev2 = new BodyPartRemovedFromBodyEvent(slotId, bodyUid, bodyComp, component);
-            RaiseLocalEvent(partUid, ref ev2);
-        }
+
+        bodyComp = Comp<BodyComponent>(bodyUid);
+        var ev2 = new BodyPartAddedToBodyEvent(slotId, bodyUid, bodyComp, component);
+        RaiseLocalEvent(partUid, ref ev2);
 
         RemoveLeg(partUid, bodyUid, component);
-        PartRemoveDamage(bodyUid, component, bodyComp);
     }
 
     private void AddLeg(EntityUid uid, EntityUid bodyUid, BodyPartComponent component, BodyComponent? bodyComp = null)
@@ -183,19 +179,6 @@ public partial class SharedBodySystem
             {
                 Standing.Down(bodyUid);
             }
-        }
-    }
-
-    private void PartRemoveDamage(EntityUid parent, BodyPartComponent component, BodyComponent? bodyComp = null)
-    {
-        if (!Resolve(parent, ref bodyComp, false))
-            return;
-
-        if (!_timing.ApplyingState && component.IsVital && !GetBodyChildrenOfType(parent, component.PartType, bodyComp).Any())
-        {
-            // TODO BODY SYSTEM KILL : remove this when wounding and required parts are implemented properly
-            var damage = new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Bloodloss"), 300);
-            Damageable.TryChangeDamage(parent, damage);
         }
     }
 
