@@ -318,7 +318,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         pilotComponent.Console = uid;
         ActionBlockerSystem.UpdateCanMove(entity);
         pilotComponent.Position = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
-        Dirty(pilotComponent);
+        Dirty(entity, pilotComponent);
     }
 
     public void RemovePilot(EntityUid pilotUid, PilotComponent pilotComponent)

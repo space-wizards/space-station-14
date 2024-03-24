@@ -67,7 +67,10 @@ namespace Content.Server.Bed.Sleep
                 if (TryComp<SleepEmitSoundComponent>(uid, out var sleepSound))
                 {
                     var emitSound = EnsureComp<SpamEmitSoundComponent>(uid);
-                    emitSound.Sound = sleepSound.Snore;
+                    if (HasComp<SnoringComponent>(uid))
+                    {
+                        emitSound.Sound = sleepSound.Snore;
+                    }
                     emitSound.PlayChance = sleepSound.Chance;
                     emitSound.RollInterval = sleepSound.Interval;
                     emitSound.PopUp = sleepSound.PopUp;

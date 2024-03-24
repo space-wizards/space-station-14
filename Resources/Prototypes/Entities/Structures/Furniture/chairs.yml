@@ -343,6 +343,8 @@
     damage:
       types:
         Blunt: 8
+    soundHit:
+      collection: MetalThud
   - type: Construction
     graph: Seat
     node: chairFolding

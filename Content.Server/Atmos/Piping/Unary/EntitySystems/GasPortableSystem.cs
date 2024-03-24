@@ -7,15 +7,14 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Construction.Components;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
     public sealed class GasPortableSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
@@ -58,7 +57,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         {
             port = null;
 
-            if (!_mapManager.TryGetGrid(gridId, out var grid))
+            if (!TryComp<MapGridComponent>(gridId, out var grid))
                 return false;
 
             foreach (var entityUid in grid.GetLocal(coordinates))
