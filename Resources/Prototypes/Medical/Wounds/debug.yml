@@ -4,7 +4,7 @@
   components:
   - type: Wound
   - type: IntegrityTrauma
-    IntegrityDelta: -9999 #this will destroy any part
+    integrityDecrease: 9999 #this will destroy any part
 
 - type: entity
   id: PainWound
@@ -12,7 +12,7 @@
   components:
   - type: Wound
   - type: PainTrauma
-    PainDelta: -2
+    painDecrease: 2
 
 
 - type: entity
@@ -21,7 +21,7 @@
   components:
   - type: Wound
   - type: PainTrauma
-    PainDelta: -50
+    painDecrease: 50
 
 - type: entity
   id: MinorConsciousWound
@@ -29,7 +29,7 @@
   components:
   - type: Wound
   - type: ConsciousnessTrauma
-    delta: 5
+    decrease: 5
 
 - type: entity
   id: ConsciousCritWound
@@ -37,7 +37,7 @@
   components:
   - type: Wound
   - type: ConsciousnessTrauma
-    delta: 70
+    decrease: 70
 
 - type: entity
   id: ConsciousKillWound
@@ -45,4 +45,4 @@
   components:
   - type: Wound
   - type: ConsciousnessTrauma
-    delta: 100
+    decrease: 100

@@ -9,6 +9,6 @@ public sealed partial class HealthTraumaComponent : Component
     /// <summary>
     /// How much are we decreasing our woundables health cap, expressed as a percentage (/100) of maximum
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public FixedPoint2 HealthCapDelta = 0;
+    [DataField, AutoNetworkedField]
+    public FixedPoint2 HealthCapDecrease = 0;
 }

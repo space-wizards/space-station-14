@@ -27,18 +27,26 @@ public sealed partial class TraumaSystem : EntitySystem
 
     private void ApplyPainTrauma(EntityUid uid, PainTraumaComponent pain, ref WoundAppliedToBody args)
     {
-        _painSystem.ChangePain(new Entity<NervousSystemComponent?>(uid, null), pain.PainDelta);
-        _painSystem.ChangeCap(new Entity<NervousSystemComponent?>(uid, null), pain.PainCapDelta);
-        _painSystem.ChangeMultiplier(new Entity<NervousSystemComponent?>(uid, null), pain.PainMultiplierDelta);
-        _painSystem.ChangeMitigation(new Entity<NervousSystemComponent?>(uid, null), pain.PainMultiplierDelta);
+        _painSystem.ChangePain(new Entity<NervousSystemComponent?>(uid, null),
+            -pain.PainDecrease);
+        _painSystem.ChangeCap(new Entity<NervousSystemComponent?>(uid, null),
+            -pain.PainCapDecrease);
+        _painSystem.ChangeMultiplier(new Entity<NervousSystemComponent?>(uid, null),
+            -pain.PainMultiplierDecrease);
+        _painSystem.ChangeMitigation(new Entity<NervousSystemComponent?>(uid, null),
+            -pain.PainMultiplierDecrease);
     }
 
     private void RemovePainTrauma(EntityUid uid, PainTraumaComponent pain, ref WoundRemovedFromBody args)
     {
-        _painSystem.ChangePain(new Entity<NervousSystemComponent?>(uid, null), -pain.PainDelta);
-        _painSystem.ChangeCap(new Entity<NervousSystemComponent?>(uid, null), -pain.PainCapDelta);
-        _painSystem.ChangeMultiplier(new Entity<NervousSystemComponent?>(uid, null), -pain.PainMultiplierDelta);
-        _painSystem.ChangeMitigation(new Entity<NervousSystemComponent?>(uid, null), -pain.PainMultiplierDelta);
+        _painSystem.ChangePain(new Entity<NervousSystemComponent?>(uid, null),
+            pain.PainDecrease);
+        _painSystem.ChangeCap(new Entity<NervousSystemComponent?>(uid, null),
+            pain.PainCapDecrease);
+        _painSystem.ChangeMultiplier(new Entity<NervousSystemComponent?>(uid, null),
+            pain.PainMultiplierDecrease);
+        _painSystem.ChangeMitigation(new Entity<NervousSystemComponent?>(uid, null),
+            pain.PainMultiplierDecrease);
     }
 
 
@@ -46,61 +54,61 @@ public sealed partial class TraumaSystem : EntitySystem
     {
         _consciousnessSystem.ChangeConsciousness(
             new Entity<ConsciousnessComponent?, MobStateComponent?>(args.Body.Owner, null, null),
-            trauma.Delta
+            -trauma.Decrease
         );
         _consciousnessSystem.ChangeConsciousnessCap(
             new Entity<ConsciousnessComponent?, MobStateComponent?>(args.Body.Owner, null, null),
-            trauma.CapDelta);
+            -trauma.CapDecrease);
 
         _consciousnessSystem.ChangeConsciousnessMultiplier(
             new Entity<ConsciousnessComponent?, MobStateComponent?>(args.Body.Owner, null, null),
-            trauma.MultiplierDelta
+            -trauma.MultiplierDecrease
         );
         _consciousnessSystem.ChangeConsciousnessModifier(
             new Entity<ConsciousnessComponent?, MobStateComponent?>(args.Body.Owner, null, null),
-            trauma.ModifierDelta
+            -trauma.ModifierDecrease
         );
     }
     private void RemoveConsciousnessTrauma(EntityUid uid, ConsciousnessTraumaComponent trauma, ref WoundRemovedFromBody args)
     {
         _consciousnessSystem.ChangeConsciousness(
             new Entity<ConsciousnessComponent?, MobStateComponent?>(args.Body.Owner, null, null),
-            -trauma.Delta
+            trauma.Decrease
         );
         _consciousnessSystem.ChangeConsciousnessCap(
             new Entity<ConsciousnessComponent?, MobStateComponent?>(args.Body.Owner, null, null),
-            -trauma.CapDelta);
+            trauma.CapDecrease);
 
         _consciousnessSystem.ChangeConsciousnessMultiplier(
             new Entity<ConsciousnessComponent?, MobStateComponent?>(args.Body.Owner, null, null),
-            -trauma.MultiplierDelta
+            trauma.MultiplierDecrease
         );
         _consciousnessSystem.ChangeConsciousnessModifier(
             new Entity<ConsciousnessComponent?, MobStateComponent?>(args.Body.Owner, null, null),
-            -trauma.ModifierDelta
+            trauma.ModifierDecrease
         );
     }
 
     private void ApplyIntegrityTrauma(EntityUid uid, IntegrityTraumaComponent trauma, ref WoundCreatedEvent args)
     {
-        _woundSystem.ChangeIntegrity(args.ParentWoundable, trauma.IntegrityDelta);
-        _woundSystem.ChangeIntegrityCap(args.ParentWoundable, trauma.IntegrityCapDelta);
+        _woundSystem.ChangeIntegrity(args.ParentWoundable, -trauma.IntegrityDecrease);
+        _woundSystem.ChangeIntegrityCap(args.ParentWoundable, -trauma.IntegrityCapDecrease);
     }
 
     private void RemoveIntegrityTrauma(EntityUid uid, IntegrityTraumaComponent trauma, ref WoundDestroyedEvent args)
     {
-        _woundSystem.ChangeIntegrity(args.ParentWoundable, -trauma.IntegrityDelta);
-        _woundSystem.ChangeIntegrityCap(args.ParentWoundable, -trauma.IntegrityCapDelta);
+        _woundSystem.ChangeIntegrity(args.ParentWoundable, trauma.IntegrityDecrease);
+        _woundSystem.ChangeIntegrityCap(args.ParentWoundable, trauma.IntegrityCapDecrease);
     }
 
     private void ApplyHealthTrauma(EntityUid uid, HealthTraumaComponent trauma, ref WoundCreatedEvent args)
     {
-        _woundSystem.ChangeHealthCap(args.ParentWoundable, trauma.HealthCapDelta);
+        _woundSystem.ChangeHealthCap(args.ParentWoundable, -trauma.HealthCapDecrease);
     }
 
     private void RemoveHealthTrauma(EntityUid uid, HealthTraumaComponent trauma, ref WoundDestroyedEvent args)
     {
-        _woundSystem.ChangeHealthCap(args.ParentWoundable, -trauma.HealthCapDelta);
+        _woundSystem.ChangeHealthCap(args.ParentWoundable, trauma.HealthCapDecrease);
     }
 
     #region Helpers
