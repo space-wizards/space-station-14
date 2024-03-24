@@ -19,6 +19,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Communications;
 using Content.Shared.Database;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Emag.Components;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -302,6 +303,9 @@ namespace Content.Server.Communications
             };
 
             _deviceNetworkSystem.QueuePacket(uid, null, payload, net.TransmitFrequency);
+
+            if (message.Session.AttachedEntity != null)
+                _adminLogger.Add(LogType.DeviceNetwork, LogImpact.Low, $"{ToPrettyString(message.Session.AttachedEntity.Value):player} has sent the following broadcast: {message.Message:msg}");
         }
 
         private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)

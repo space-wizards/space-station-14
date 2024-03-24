@@ -588,8 +588,8 @@
   id: AgentIDCard
   suffix: Agent
   components:
-  - type: IdCard
-    jobTitle: Passenger
+  - type: PresetIdCard
+    job: Passenger
   - type: Access
     tags:
     - Maintenance
@@ -646,6 +646,7 @@
     - JobIconServiceWorker
     - JobIconSecurityCadet
     - JobIconZookeeper
+    - JobIconVisitor
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
     inHandsOnly: true

@@ -19,6 +19,7 @@
           Quantity: 8
   - type: Item
     size: Small
+    storedRotation: -90
 
 # Kebabs
 
@@ -96,7 +97,7 @@
 
 - type: entity
   name: lizard-tail kebab
-  parent: FoodSkewerBase
+  parent: FoodMeatKebab
   id: FoodMeatLizardtailKebab
   description: Severed lizard tail on a stick.
   components:

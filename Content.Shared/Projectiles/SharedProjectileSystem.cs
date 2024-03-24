@@ -35,7 +35,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
-        SubscribeLocalEvent<ProjectileComponent, AfterProjectileHitEvent>(AfterProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
@@ -55,10 +54,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         args.Handled = true;
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.RemovalTime.Value,
-            new RemoveEmbeddedProjectileEvent(), eventTarget: uid, target: uid)
-        {
-            DistanceThreshold = SharedInteractionSystem.InteractionRange,
-        });
+            new RemoveEmbeddedProjectileEvent(), eventTarget: uid, target: uid));
     }
 
     private void OnEmbedRemove(EntityUid uid, EmbeddableProjectileComponent component, RemoveEmbeddedProjectileEvent args)
@@ -252,9 +248,3 @@ public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, Projectile
 /// </summary>
 [ByRefEvent]
 public record struct ProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null);
-
-/// <summary>
-/// Raised after a projectile has dealt it's damage.
-/// </summary>
-[ByRefEvent]
-public record struct AfterProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, Fixture Fixture);

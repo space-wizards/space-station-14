@@ -9,3 +9,6 @@ marking-ScarTopSurgeryShort = Top Surgery Scar (Short)
 
 marking-ScarTopSurgeryLong-scar_top_surgery_long = Top Surgery Scar
 marking-ScarTopSurgeryLong = Top Surgery Scar (Long)
+
+marking-ScarChest-scar_chest = Chest Scar
+marking-ScarChest = Chest Scar
