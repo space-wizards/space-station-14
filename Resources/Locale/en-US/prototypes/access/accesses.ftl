@@ -16,7 +16,7 @@ id-card-access-level-atmospherics = Atmospherics
 id-card-access-level-research-director = Head of Science
 id-card-access-level-research = Research
 
-id-card-access-level-chief-medical-officer = Head of Surgery
+id-card-access-level-chief-medical-officer = Head of Still Just a Week Away
 id-card-access-level-medical = Medical
 id-card-access-level-chemistry = Chemistry
 id-card-access-level-paramedic = Paramedic

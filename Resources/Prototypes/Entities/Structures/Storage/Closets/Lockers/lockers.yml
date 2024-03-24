@@ -244,7 +244,7 @@
 - type: entity
   id: LockerChiefMedicalOfficer
   parent: LockerBaseSecure
-  name: chief medical officer's locker
+  name: head of still just a week away's locker
   components:
   - type: Appearance
   - type: EntityStorageVisuals
@@ -258,7 +258,7 @@
 - type: entity
   id: LockerResearchDirector
   parent: LockerBase
-  name: research director's locker
+  name: head of science's locker
   components:
   - type: Appearance
   - type: EntityStorageVisuals

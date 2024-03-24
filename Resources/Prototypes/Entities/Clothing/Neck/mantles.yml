@@ -23,7 +23,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleCMO
-  name: head of surgery's mantle
+  name: head of still just a week away's mantle
   description: For a CMO that has been in enough medbays to know that more PPE means less central command dry cleaning visits when the shift is over.
   components:
   - type: Sprite

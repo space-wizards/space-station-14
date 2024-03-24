@@ -222,7 +222,7 @@
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineChiefMedicalOfficer
-  name: head of surgery figure
+  name: head of still just a week away figure
   description: A figurine depicting the glorious head of the Medical department.
   components:
   - type: Sprite

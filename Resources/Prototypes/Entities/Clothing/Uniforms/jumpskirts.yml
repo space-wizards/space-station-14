@@ -111,8 +111,8 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCMO
-  name: head of surgery's jumpskirt
-  description: It's a jumpskirt worn by those with the experience to be Head of Surgery. It provides minor biological protection.
+  name: head of still just a week away's jumpskirt
+  description: It's a jumpskirt worn by those with the experience to be Head of Still Just a Week Away. It provides minor biological protection.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi

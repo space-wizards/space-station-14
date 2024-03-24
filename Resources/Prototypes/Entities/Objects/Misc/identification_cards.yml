@@ -394,7 +394,7 @@
 - type: entity
   parent: IDCardStandard
   id: CMOIDCard
-  name: head of surgery ID card
+  name: head of still just a week away ID card
   components:
   - type: Sprite
     layers:

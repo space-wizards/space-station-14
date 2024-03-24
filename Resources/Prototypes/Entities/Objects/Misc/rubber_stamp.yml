@@ -106,7 +106,7 @@
     state: stamp-ce
 
 - type: entity
-  name: head of surgery's rubber stamp
+  name: head of still just a week away's rubber stamp
   parent: RubberStampBase
   id: RubberStampCMO
   suffix: DO NOT MAP

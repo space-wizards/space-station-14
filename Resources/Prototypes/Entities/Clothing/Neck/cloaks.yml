@@ -45,7 +45,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingCloakCmo
-  name: head of surgery's cloak
+  name: head of still just a week away's cloak
   description: A sterile blue cloak with a green cross, radiating with a sense of duty and willingness to help others.
   components:
   - type: Sprite

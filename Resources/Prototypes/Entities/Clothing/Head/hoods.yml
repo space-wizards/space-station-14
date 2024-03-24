@@ -21,7 +21,7 @@
   id: ClothingHeadHatHoodBioCmo
   name: bio hood
   suffix: CMO
-  description: An advanced hood for heads of surgery that protects the head and face from biological contaminants.
+  description: An advanced hood for heads of still just a week away that protects the head and face from biological contaminants.
   components:
   - type: IdentityBlocker
   - type: Sprite
@@ -294,7 +294,7 @@
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCMO
   noSpawn: true
-  name: head of surgery's winter coat hood
+  name: head of still just a week away's winter coat hood
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/Coat/hoodcmo.rsi
