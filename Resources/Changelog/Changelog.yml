@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: tday
-  changes:
-  - message: Explosion and Chemical Reaction admin logs now use grid-relative coordinates
-      when possible.
-    type: Fix
-  id: 5721
-  time: '2024-01-16T07:53:46.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24136
 - author: Dygon
   changes:
   - message: Flare shells now embed into whatever they hit.
@@ -3798,3 +3790,10 @@
   id: 6220
   time: '2024-03-24T22:02:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26412
+- author: SoulFN
+  changes:
+  - message: The borg tool module now has an industrial welding tool.
+    type: Tweak
+  id: 6221
+  time: '2024-03-24T22:35:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26332
