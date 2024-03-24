@@ -1,7 +1,9 @@
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.Piping.EntitySystems
 {
@@ -32,6 +34,14 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         public void JoinAtmosphere(Entity<AtmosDeviceComponent> ent)
         {
+            if (ent.Comp.JoinedGrid != null)
+            {
+                DebugTools.Assert(HasComp<GridAtmosphereComponent>(ent.Comp.JoinedGrid));
+                DebugTools.Assert(Transform(ent).GridUid == ent.Comp.JoinedGrid);
+                DebugTools.Assert(ent.Comp.RequireAnchored == Transform(ent).Anchored);
+                return;
+            }
+
             var component = ent.Comp;
             var transform = Transform(ent);
 
