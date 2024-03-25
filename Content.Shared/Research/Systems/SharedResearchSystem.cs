@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -219,16 +220,52 @@ public abstract class SharedResearchSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        var discipline = PrototypeManager.Index<TechDisciplinePrototype>(prototype.Discipline);
+        var discipline = PrototypeManager.Index(prototype.Discipline);
         if (prototype.Tier < discipline.LockoutTier)
             return;
         component.MainDiscipline = prototype.Discipline;
         Dirty(uid, component);
     }
 
+    public bool TryRemoveTechnology(ProtoId<TechnologyPrototype> tech, Entity<TechnologyDatabaseComponent> entity)
+    {
+        return TryRemoveTechnology(PrototypeManager.Index(tech), entity);
+    }
+
+    [PublicAPI]
+    public bool TryRemoveTechnology(TechnologyPrototype tech, Entity<TechnologyDatabaseComponent> entity)
+    {
+        if (!entity.Comp.UnlockedTechnologies.Remove(tech.ID))
+            return false;
+
+        // check to make sure we didn't somehow get the recipe from another tech.
+        // unlikely, but whatever
+        var recipes = tech.RecipeUnlocks;
+        foreach (var recipe in recipes)
+        {
+            var hasTechElsewhere = false;
+            foreach (var unlockedTech in entity.Comp.UnlockedTechnologies)
+            {
+                var unlockedTechProto = PrototypeManager.Index<TechnologyPrototype>(unlockedTech);
+
+                if (!unlockedTechProto.RecipeUnlocks.Contains(recipe))
+                    continue;
+                hasTechElsewhere = true;
+                break;
+            }
+
+            if (!hasTechElsewhere)
+                entity.Comp.UnlockedRecipes.Remove(recipe);
+        }
+        Dirty(entity, entity.Comp);
+        UpdateTechnologyCards(entity, entity);
+        return true;
+    }
+
     /// <summary>
     /// Clear all unlocked technologies from the database.
     /// </summary>
+    [PublicAPI]
     public void ClearTechs(EntityUid uid, TechnologyDatabaseComponent? comp = null)
     {
         if (!Resolve(uid, ref comp) || comp.UnlockedTechnologies.Count == 0)

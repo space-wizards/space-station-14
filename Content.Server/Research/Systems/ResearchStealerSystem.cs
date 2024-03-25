@@ -1,11 +1,13 @@
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Systems;
+using Robust.Shared.Random;
 
 namespace Content.Server.Research.Systems;
 
 public sealed class ResearchStealerSystem : SharedResearchStealerSystem
 {
     [Dependency] private readonly SharedResearchSystem _research = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -24,10 +26,20 @@ public sealed class ResearchStealerSystem : SharedResearchStealerSystem
         if (!TryComp<TechnologyDatabaseComponent>(target, out var database))
             return;
 
-        var ev = new ResearchStolenEvent(uid, target, database.UnlockedTechnologies);
+        var ev = new ResearchStolenEvent(uid, target, new());
+        var count = _random.Next(comp.MinToSteal, comp.MaxToSteal + 1);
+        for (var i = 0; i < count; i++)
+        {
+            if (database.UnlockedTechnologies.Count == 0)
+                break;
+
+            var toRemove = _random.Pick(database.UnlockedTechnologies);
+            _research.TryRemoveTechnology(toRemove, (target, database));
+            ev.Techs.Add(toRemove);
+        }
         RaiseLocalEvent(uid, ref ev);
-        // oops, no more advanced lasers!
-        _research.ClearTechs(target, database);
+
+        args.Handled = true;
     }
 }
 
@@ -36,4 +48,4 @@ public sealed class ResearchStealerSystem : SharedResearchStealerSystem
 /// Techs contains every technology id researched.
 /// </summary>
 [ByRefEvent]
-public record struct ResearchStolenEvent(EntityUid Used, EntityUid Target, List<String> Techs);
+public record struct ResearchStolenEvent(EntityUid Used, EntityUid Target, List<string> Techs);
