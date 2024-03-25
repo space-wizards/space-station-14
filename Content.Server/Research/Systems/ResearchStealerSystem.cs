@@ -34,8 +34,8 @@ public sealed class ResearchStealerSystem : SharedResearchStealerSystem
                 break;
 
             var toRemove = _random.Pick(database.UnlockedTechnologies);
-            _research.TryRemoveTechnology(toRemove, (target, database));
-            ev.Techs.Add(toRemove);
+            if (_research.TryRemoveTechnology((target, database), toRemove))
+                ev.Techs.Add(toRemove);
         }
         RaiseLocalEvent(uid, ref ev);
 
@@ -44,7 +44,7 @@ public sealed class ResearchStealerSystem : SharedResearchStealerSystem
 }
 
 /// <summary>
-/// Event raised on the user when research is stolen from a R&D server.
+/// Event raised on the user when research is stolen from a RND server.
 /// Techs contains every technology id researched.
 /// </summary>
 [ByRefEvent]

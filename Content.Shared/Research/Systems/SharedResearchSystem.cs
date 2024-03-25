@@ -227,13 +227,19 @@ public abstract class SharedResearchSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    public bool TryRemoveTechnology(ProtoId<TechnologyPrototype> tech, Entity<TechnologyDatabaseComponent> entity)
+    /// <summary>
+    /// Removes a technology and its recipes from a technology database.
+    /// </summary>
+    public bool TryRemoveTechnology(Entity<TechnologyDatabaseComponent> entity, ProtoId<TechnologyPrototype> tech)
     {
-        return TryRemoveTechnology(PrototypeManager.Index(tech), entity);
+        return TryRemoveTechnology(entity, PrototypeManager.Index(tech));
     }
 
+    /// <summary>
+    /// Removes a technology and its recipes from a technology database.
+    /// </summary>
     [PublicAPI]
-    public bool TryRemoveTechnology(TechnologyPrototype tech, Entity<TechnologyDatabaseComponent> entity)
+    public bool TryRemoveTechnology(Entity<TechnologyDatabaseComponent> entity, TechnologyPrototype tech)
     {
         if (!entity.Comp.UnlockedTechnologies.Remove(tech.ID))
             return false;
