@@ -24,6 +24,7 @@
     shoes: ClothingShoesColorWhite
     id: ResearchAssistantPDA
     ears: ClothingHeadsetScience
+    pocket2: BookScientistsGuidebook
   innerClothingSkirt: ClothingUniformJumpskirtColorWhite
   satchel: ClothingBackpackSatchelScienceFilled
   duffelbag: ClothingBackpackDuffelScienceFilled

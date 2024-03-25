@@ -17,7 +17,7 @@
     count: 1
   - type: Tag
     tags:
-      - DroneUsable
+      - NoPaint
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -228,6 +228,44 @@
       - FloorLino
   - type: Stack
     stackType: FloorTileLino
+
+- type: entity
+  name: filled brass plate
+  parent: FloorTileItemBase
+  id: FloorTileItemBrassFilled
+  components:
+  - type: Sprite
+    state: brass-filled
+  - type: Item
+    heldPrefix: brass
+  - type: FloorTile
+    outputs:
+      - PlatingBrass
+      - FloorBrassFilled
+  - type: Stack
+    stackType: FloorTileBrassFilled
+  - type: Construction
+    graph: TilesBrass
+    node: filledPlate
+
+- type: entity
+  name: smooth brass plate
+  parent: FloorTileItemBase
+  id: FloorTileItemBrassReebe
+  components:
+  - type: Sprite
+    state: reebe
+  - type: Item
+    heldPrefix: brass
+  - type: FloorTile
+    outputs:
+      - PlatingBrass
+      - FloorBrassReebe
+  - type: Stack
+    stackType: FloorTileBrassReebe
+  - type: Construction
+    graph: TilesBrass
+    node: reebe
 
 - type: entity
   name: dirty tile
@@ -745,6 +783,38 @@
   - type: Stack
     stackType: FloorTileStackShuttleRed
 
+- type: entity
+  name: grey shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleGrey
+  components:
+  - type: Sprite
+    state: shuttlegrey
+  - type: Item
+    heldPrefix: shuttlegrey
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorShuttleGrey
+  - type: Stack
+    stackType: FloorTileStackShuttleGrey
+
+- type: entity
+  name: black shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleBlack
+  components:
+  - type: Sprite
+    state: shuttleblack
+  - type: Item
+    heldPrefix: shuttleblack
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorShuttleBlack
+  - type: Stack
+    stackType: FloorTileStackShuttleBlack
+
 # Materials
 - type: entity
   name: gold floor
@@ -997,3 +1067,22 @@
     - FloorAstroIce
   - type: Stack
     stackType: FloorTileAstroIce
+
+- type: entity
+  name: large wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodLarge
+  components:
+  - type: Sprite
+    state: wood-large
+  - type: Item
+    heldPrefix: wood
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodLarge
+  - type: Stack
+    stackType: FloorTileWoodLarge
+  - type: Construction
+    graph: TileWoodLarge
+    node: woodtilelarge

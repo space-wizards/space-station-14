@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: green glowstick
   parent: BaseItem
   id: GlowstickBase
@@ -60,6 +60,9 @@
           maxDuration: 10 # 300.0
           startValue: 5.0
           endValue: 1.5
+    - type: Tag
+      tags:
+      - Trash
 
 - type: entity
   name: red glowstick

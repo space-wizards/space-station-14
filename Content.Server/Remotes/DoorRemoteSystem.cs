@@ -10,6 +10,7 @@ using Content.Server.Doors.Systems;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Examine;
 using static Content.Server.Remotes.DoorRemoteComponent;
 
 namespace Content.Server.Remotes
@@ -17,11 +18,11 @@ namespace Content.Server.Remotes
     public sealed class DoorRemoteSystem : EntitySystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly DoorBoltSystem _bolts = default!;
         [Dependency] private readonly AirlockSystem _airlock = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly ExamineSystemShared _examine = default!;
         // I'm so sorry [Dependency] private readonly SharedAirlockSystem _sharedAirlockSystem = default!;
 
         public override void Initialize()
@@ -65,10 +66,9 @@ namespace Content.Server.Remotes
             if (args.Handled
                 || args.Target == null
                 || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
-                // The remote can be used anywhere the user can see the door.
-                // This doesn't work that well, but I don't know of an alternative
-                || !_interactionSystem.InRangeUnobstructed(args.User, args.Target.Value,
-                    SharedInteractionSystem.MaxRaycastRange, CollisionGroup.Opaque))
+                // Only able to control doors if they are within your vision and within your max range.
+                // Not affected by mobs or machines anymore.
+                || !_examine.InRangeUnOccluded(args.User, args.Target.Value, SharedInteractionSystem.MaxRaycastRange, null))
             {
                 return;
             }
@@ -105,7 +105,7 @@ namespace Content.Server.Remotes
                     {
                         if (!boltsComp.BoltWireCut)
                         {
-                            _bolts.SetBoltsWithAudio(args.Target.Value, boltsComp, !boltsComp.BoltsDown);
+                            _doorSystem.SetBoltsDown((args.Target.Value, boltsComp), !boltsComp.BoltsDown, args.User);
                             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");
                         }
                     }

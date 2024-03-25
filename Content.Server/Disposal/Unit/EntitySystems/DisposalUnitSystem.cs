@@ -68,7 +68,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<DisposalUnitComponent, AnchorStateChangedEvent>(OnAnchorChanged);
-        SubscribeLocalEvent<DisposalUnitComponent, EntityUnpausedEvent>(OnUnpaused);
         // TODO: Predict me when hands predicted
         SubscribeLocalEvent<DisposalUnitComponent, ContainerRelayMovementEntityEvent>(OnMovement);
         SubscribeLocalEvent<DisposalUnitComponent, PowerChangedEvent>(OnPowerChange);
@@ -101,14 +100,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             component.Powered,
             component.Engaged,
             GetNetEntityList(component.RecentlyEjected));
-    }
-
-    private void OnUnpaused(EntityUid uid, SharedDisposalUnitComponent component, ref EntityUnpausedEvent args)
-    {
-        if (component.NextFlush != null)
-            component.NextFlush = component.NextFlush.Value + args.PausedTime;
-
-        component.NextPressurized += args.PausedTime;
     }
 
     private void AddDisposalAltVerbs(EntityUid uid, SharedDisposalUnitComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -198,7 +189,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
-        AfterInsert(uid, component, args.Args.Target.Value, args.Args.User);
+        AfterInsert(uid, component, args.Args.Target.Value, args.Args.User, doInsert: true);
 
         args.Handled = true;
     }
@@ -349,7 +340,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (!args.Powered)
         {
             component.NextFlush = null;
-            Dirty(component);
+            Dirty(uid, component);
             return;
         }
 
@@ -405,7 +396,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         component.State = state;
         UpdateVisualState(uid, component);
         UpdateInterface(uid, component, component.Powered);
-        Dirty(component, metadata);
+        Dirty(uid, component, metadata);
 
         if (state == DisposalsPressureState.Ready)
         {
@@ -486,7 +477,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         }
 
         if (count != component.RecentlyEjected.Count)
-            Dirty(component, metadata);
+            Dirty(uid, component, metadata);
     }
 
     public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid? userId, DisposalUnitComponent? unit = null)
@@ -512,7 +503,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         if (delay <= 0 || userId == null)
         {
-            AfterInsert(unitId, unit, toInsertId, userId);
+            AfterInsert(unitId, unit, toInsertId, userId, doInsert: true);
             return true;
         }
 
@@ -521,8 +512,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         var doAfterArgs = new DoAfterArgs(EntityManager, userId.Value, delay, new DisposalDoAfterEvent(), unitId, target: toInsertId, used: unitId)
         {
             BreakOnDamage = true,
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
+            BreakOnMove = true,
             NeedHand = false
         };
 
@@ -793,14 +783,14 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         var flushTime = TimeSpan.FromSeconds(Math.Min((component.NextFlush ?? TimeSpan.MaxValue).TotalSeconds, automaticTime.TotalSeconds));
 
         component.NextFlush = flushTime;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
-    public void AfterInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid inserted, EntityUid? user = null)
+    public void AfterInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid inserted, EntityUid? user = null, bool doInsert = false)
     {
         _audioSystem.PlayPvs(component.InsertSound, uid);
 
-        if (!_containerSystem.Insert(inserted, component.Container))
+        if (doInsert && !_containerSystem.Insert(inserted, component.Container))
             return;
 
         if (user != inserted && user != null)

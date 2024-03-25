@@ -99,7 +99,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             return;
 
         var xform = Transform(ent);
-        var entityCoords = xform.Coordinates.ToMap(EntityManager);
+        var entityCoords = xform.Coordinates.ToMap(EntityManager, _xform);
 
         // try to find a valid position to teleport to, teleport to whatever works if we can't
         var targetCoords = new MapCoordinates();
@@ -131,6 +131,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
                 break;
         }
         _xform.SetWorldPosition(ent, targetCoords.Position);
+        _xform.AttachToGridOrMap(ent, xform);
         _audio.PlayPvs(implant.TeleportSound, ent);
 
         args.Handled = true;

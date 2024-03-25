@@ -25,6 +25,7 @@ materials-meat = meat
 materials-web = silk
 materials-bones = bone
 materials-coal = coal
+materials-gunpowder = gunpowder
 
 # Ores
 materials-raw-iron = raw iron
@@ -34,3 +35,4 @@ materials-raw-silver = raw silver
 materials-raw-plasma = raw plasma
 materials-raw-uranium = raw uranium
 materials-raw-bananium = raw bananium
+materials-raw-salt = raw salt
