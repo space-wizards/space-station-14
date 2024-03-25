@@ -158,6 +158,19 @@
     state: stamp-hos
 
 - type: entity
+  name: janitor's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampJanitor
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-janitor
+    stampedColor: "#8803fc"
+    stampState: "paper_stamp-janitor"
+  - type: Sprite
+    state: stamp-janitor
+
+- type: entity
   name: mime's rubber stamp
   parent: RubberStampBase
   id: RubberStampMime

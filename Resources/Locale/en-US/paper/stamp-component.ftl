@@ -11,6 +11,7 @@ stamp-component-stamped-name-denied = DENIED
 stamp-component-stamped-name-approved = APPROVED
 stamp-component-stamped-name-hop = Head of Personnel
 stamp-component-stamped-name-hos = Head of Security
+stamp-component-stamped-name-janitor = Janitor
 stamp-component-stamped-name-qm = Quartermaster
 stamp-component-stamped-name-rd = Research Director
 stamp-component-stamped-name-warden = Warden

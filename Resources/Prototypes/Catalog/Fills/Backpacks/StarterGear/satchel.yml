@@ -161,6 +161,16 @@
 
 - type: entity
   noSpawn: true
+  parent: ClothingBackpackSatchelFilled
+  id: ClothingBackpackSatchelJanitorFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: RubberStampJanitor
+
+- type: entity
+  noSpawn: true
   parent: ClothingBackpackSatchelEngineering
   id: ClothingBackpackSatchelEngineeringFilled
   components:
