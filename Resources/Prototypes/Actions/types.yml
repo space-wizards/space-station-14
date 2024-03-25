@@ -350,3 +350,15 @@
       itemIconStyle: NoItem
       useDelay: 1 # emote spam
       event: !type:ToggleActionEvent
+
+- type: entity
+  id: ActionTwoHandWielding
+  name: action-name-two-hand-wielding
+  description: action-description-two-hand-wielding
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/web.png
+    iconOn: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
+    event: !type:TwoHandWieldingActionEvent
+    useDelay: 10

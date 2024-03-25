@@ -1,6 +1,8 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Wieldable.Components;
 
@@ -30,6 +32,12 @@ public sealed partial class WieldableComponent : Component
     public string? WieldedInhandPrefix = "wielded";
 
     public string? OldInhandPrefix = null;
+
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string TwoHandWieldingAction = "ActionTwoHandWielding";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? TwoHandWieldingEntity;
 }
 
 [Serializable, NetSerializable]

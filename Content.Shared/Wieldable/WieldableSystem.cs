@@ -16,6 +16,7 @@ using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
+using Content.Shared.Actions;
 
 namespace Content.Shared.Wieldable;
 
@@ -29,6 +30,7 @@ public sealed class WieldableSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly UseDelaySystem _delay = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
+    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
 
     public override void Initialize()
     {
@@ -47,6 +49,10 @@ public sealed class WieldableSystem : EntitySystem
         SubscribeLocalEvent<GunWieldBonusComponent, GunRefreshModifiersEvent>(OnGunRefreshModifiers);
 
         SubscribeLocalEvent<IncreaseDamageOnWieldComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
+
+        SubscribeLocalEvent<WieldableComponent, GetItemActionsEvent>(OnGetActions);
+        SubscribeLocalEvent<WieldableComponent, ComponentShutdown>(OnCompRemove);
+        SubscribeLocalEvent<WieldableComponent, TwoHandWieldingActionEvent>(OnActionPerform);
     }
 
     private void OnMeleeAttempt(EntityUid uid, MeleeRequiresWieldComponent component, ref AttemptMeleeEvent args)
@@ -125,6 +131,29 @@ public sealed class WieldableSystem : EntitySystem
             args.Handled = TryWield(uid, component, args.User);
         else
             args.Handled = TryUnwield(uid, component, args.User);
+    }
+
+    // if (component.CombatToggleActionEntity != null)
+    // _actionsSystem.SetToggled(component.CombatToggleActionEntity, component.IsInCombatMode);
+    private void OnGetActions(EntityUid uid, WieldableComponent component, GetItemActionsEvent args)
+    {
+        _actionsSystem.AddAction(uid, ref component.TwoHandWieldingEntity, component.TwoHandWieldingAction);
+    }
+
+    private void OnCompRemove(EntityUid uid, WieldableComponent comp, ComponentShutdown args)
+    {
+        _actionsSystem.RemoveAction(uid, comp.TwoHandWieldingEntity);
+    }
+    private void OnActionPerform(EntityUid uid, WieldableComponent component, TwoHandWieldingActionEvent args)
+    {
+        Log.Debug($"on action click!");
+
+        // if (!component.Wielded)
+        //     args.Handled = TryWield(uid, component, args.);
+        // else
+        //     args.Handled = TryUnwield(uid, component, args.User);
+
+        _actionsSystem.SetToggled(component.TwoHandWieldingEntity, false);
     }
 
     public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet = false)
@@ -276,3 +305,5 @@ public sealed class WieldableSystem : EntitySystem
         args.Damage += component.BonusDamage;
     }
 }
+
+public sealed partial class TwoHandWieldingActionEvent : InstantActionEvent { }
