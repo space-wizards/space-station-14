@@ -10,6 +10,9 @@
   - type: Sprite
     sprite: Objects/Weapons/Throwable/rock.rsi
     state: icon
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/hit_kick.ogg
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/pet_rock.rsi
