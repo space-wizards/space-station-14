@@ -57,7 +57,7 @@
 
 
 - type: entity
-  id: SeedsGrenadeFruit
+  id: SeedsBombegranate
   name: seed (shard, chemical)
   noSpawn: true
   parent: BaseBullet

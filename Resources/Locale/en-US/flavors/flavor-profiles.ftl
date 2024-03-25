@@ -124,7 +124,7 @@ flavor-complex-nettles = like nettles
 flavor-complex-jungle = like jungle
 flavor-complex-vegetables = like vegetables
 flavor-complex-pomegranate = like pomegranate
-flavor-complex-grenadefruit = like fuel
+flavor-complex-bombegranate = like fuel
 # use it when there multiple types of veggies
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)

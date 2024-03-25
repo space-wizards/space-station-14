@@ -584,10 +584,10 @@
 
 - type: entity
   parent: SeedBase
-  name: packet of grenade fruit seeds
-  id: GrenadeFruitSeeds
+  name: packet of bombegranate seeds
+  id: BombegranateSeeds
   components:
   - type: Seed
-    seedId: grenadefruit
+    seedId: bombegranate
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/grenadefruit.rsi
+    sprite: Objects/Specific/Hydroponics/bombegranate.rsi

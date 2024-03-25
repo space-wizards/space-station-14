@@ -113,5 +113,5 @@ seeds-cotton-name = cotton
 seeds-cotton-display-name = cotton plant
 seeds-pomegranate-name = pomegranate
 seeds-pomegranate-display-name = pomegranate plant
-seeds-grenadefruit-name = grenade fruit
-seeds-grenadefruit-display-name = grenade fruit plant
+seeds-bombegranate-name = bombegranate
+seeds-bombegranate-display-name = bombegranate plant

@@ -1065,6 +1065,6 @@
   description: flavor-complex-pomegranate
 
 - type: flavor
-  id: grenadefruit
+  id: bombegranate
   flavorType: Complex
-  description: flavor-complex-grenadefruit
+  description: flavor-complex-bombegranate

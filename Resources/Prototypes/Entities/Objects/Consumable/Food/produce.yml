@@ -1902,14 +1902,14 @@
     - Fruit
 
 - type: entity
-  name: grenade fruit
+  name: bombegranate
   parent: [FoodProduceBase, ItemHeftyBase]
-  id: FoodGrenadeFruit
-  description: Grenade Fruit, Fragile. Explodes on impact sending it's seeds with high velocity. Used for biofuel.
+  id: FoodBombegranate
+  description: Bombegranate, Fragile. Explodes on impact sending it's seeds with high velocity. Used for biofuel.
   components:
   - type: FlavorProfile
     flavors:
-    - grenadefruit
+    - bombegranate
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1922,9 +1922,9 @@
         - ReagentId: Ethanol
           Quantity: 3
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/grenadefruit.rsi
+    sprite: Objects/Specific/Hydroponics/bombegranate.rsi
   - type: Produce
-    seedId: grenadefruit
+    seedId: bombegranate
   - type: Extractable
     grindableSolutionName: food
     juiceSolution:
@@ -1951,7 +1951,7 @@
   - type: ChemicalAmmo
     solution: food
   - type: ClusterGrenade
-    fillPrototype: SeedsGrenadeFruit
+    fillPrototype: SeedsBombegranate
     maxGrenadesCount: 10
     grenadeType: enum.GrenadeType.Shoot
   - type: ContainerContainer
