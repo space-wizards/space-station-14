@@ -1514,7 +1514,7 @@
   productPrototypes:
   - FoodPomegranate
   mutationPrototypes:
-  - grenadefruit
+  - bombegranate
   harvestRepeat: Repeat
   lifespan: 55
   maturation: 6
@@ -1533,14 +1533,14 @@
       PotencyDivisor: 5
 
 - type: seed
-  id: grenadefruit
-  name: seeds-grenadefruit-name
+  id: bombegranate
+  name: seeds-bombegranate-name
   noun: seeds-noun-seeds
-  displayName: seeds-grenadefruit-display-name
-  plantRsi: Objects/Specific/Hydroponics/grenadefruit.rsi
-  packetPrototype: GrenadeFruitSeeds
+  displayName: seeds-bombegranate-display-name
+  plantRsi: Objects/Specific/Hydroponics/bombegranate.rsi
+  packetPrototype: BombegranateSeeds
   productPrototypes:
-  - FoodGrenadeFruit
+  - FoodBombegranate
   harvestRepeat: Repeat
   lifespan: 55
   maturation: 6
