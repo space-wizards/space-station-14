@@ -216,3 +216,8 @@
   copyright: Bhijn and Myr (github username deathride58)
   license: CC0-1.0
   source: https://github.com/space-wizards/space-station-14/pull/23212
+
+- files: [oof.ogg]
+  copyright: '"hurt2.wav" by thecheeseman of Freesound.org. Edited.'
+  license: CC-BY-4.0
+  source: https://freesound.org/people/thecheeseman/sounds/44429
