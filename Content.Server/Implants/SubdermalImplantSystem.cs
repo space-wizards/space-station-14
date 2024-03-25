@@ -115,7 +115,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
         var grids = _lookupSystem.GetEntitiesInRange<MapGridComponent>(entityCoords, implant.TeleportRadius).ToList();
         _random.Shuffle(grids);
-        var targetCoords = entityCoords; // If we somehow fail to find a suitable tile then we essentially we just don't teleport.
+        MapCoordinates? targetCoords = null;
 
         foreach (var grid in grids)
         {
@@ -161,11 +161,13 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
                 break;
         }
 
-        _xform.SetWorldPosition(ent, targetCoords.Position);
-        _xform.AttachToGridOrMap(ent, xform);
-        _audio.PlayPvs(implant.TeleportSound, ent);
-
-        args.Handled = true;
+        if (targetCoords != null)
+        {
+            _xform.SetWorldPosition(ent, targetCoords.Value.Position);
+            _xform.AttachToGridOrMap(ent, xform);
+            _audio.PlayPvs(implant.TeleportSound, ent);
+            args.Handled = true;
+        }
     }
 
     private void OnDnaScramblerImplant(EntityUid uid, SubdermalImplantComponent component, UseDnaScramblerImplantEvent args)
