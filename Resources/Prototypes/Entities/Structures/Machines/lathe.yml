@@ -318,7 +318,10 @@
       - WelderExperimental
       - JawsOfLife
       - FauxTileAstroGrass
+      - FauxTileMowedAstroGrass
+      - FauxTileJungleAstroGrass
       - FauxTileAstroIce
+      - FauxTileAstroSnow
       - OreBagOfHolding
       - DeviceQuantumSpinInverter
   - type: EmagLatheRecipes
