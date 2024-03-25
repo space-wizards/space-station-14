@@ -1881,6 +1881,12 @@
       path: /Audio/Animals/parrot_raught.ogg
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: GhostRole
+    prob: 0.1
+    makeSentient: true
+    name: ghost-role-information-parrot-name
+    description: ghost-role-information-parrot-description
+  - type: GhostTakeoverAvailable
 
 - type: entity
   name: penguin
