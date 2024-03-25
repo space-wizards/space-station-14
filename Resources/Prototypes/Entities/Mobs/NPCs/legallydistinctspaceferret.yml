@@ -1,0 +1,305 @@
+﻿- type: entity
+  name: Legally Distinct Space Ferret
+  id: MobLegallyDistinctSpaceFerret
+  parent: MobBaseAncestor
+  description: There's apparently a cult who worship these adorable vermin. It's a shame they cause Brainrot. Skug.
+  components:
+  # Basics
+  - type: LegallyDistinctSpaceFerret
+    roleIntroSfx: /Audio/Animals/wawa_intro.ogg
+    antagProtoId: LegallyDistinctSpaceFerret
+    roleBriefing: legallydistinctspaceferret-role-briefing
+    roleGreeting: legallydistinctspaceferret-role-greeting
+  - type: BrainrotAura
+  - type: CanBackflip
+    clappaSfx: /Audio/Animals/slugclappa.ogg
+  - type: CanHibernate
+    tooFarFromHibernationSpot: legallydistinctspaceferret-out-of-range
+    notEnoughNutrientsMessage: legallydistinctspaceferret-not-enough-nutrients
+    spriteStateId: legallydistinctspaceferret_eepy
+  - type: NameIdentifier
+    group: LegallyDistinctSpaceFerret
+  - type: ReplacementAccent
+    accent: legallydistinctspaceferret
+  - type: Sprite
+    drawdepth: SmallMobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/legallydistinctspaceferret.rsi
+      state: legallydistinctspaceferret
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: RandomSprite
+    getAllGroups: true
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        legallydistinctspaceferret: LegallyDistinctSpaceFerretColors
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: legallydistinctspaceferret
+      Critical:
+        Base: legallydistinctspaceferret_oof
+      Dead:
+        Base: legallydistinctspaceferret_rip
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Critical
+      125: Dead
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 285
+    currentTemperature: 310.15
+    specificHeat: 42
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 4 # Good eatin', though. You monster.
+  # They wawa
+  - type: Speech
+    speechVerb: Wawa
+    speechSounds: Wawa
+  - type: TypingIndicator
+    proto: moth
+  # They hard to pet
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-legallydistinctspaceferret
+    interactFailureString: petting-failure-legallydistinctspaceferret
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/wawa_chillin.ogg
+    interactFailureSound:
+      path: /Audio/Animals/wawa_chatter.ogg
+  # They nyoom and go under doors/tables
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 5 # nyoom
+    baseSprintSpeed: 7 # NYOOOOOM
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 30
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 15 # NOM - Do NOT mess with skugs.
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 120
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  # Round impact
+  - type: GhostRole
+    prob: 1
+    makeSentient: true
+    name: ghost-role-information-legallydistinctspaceferret-name
+    description: ghost-role-information-legallydistinctspaceferret-description
+  - type: Food
+  - type: Hunger
+    baseDecayRate: 0.3
+  - type: GenericAntag
+    rule: LegallyDistinctSpaceFerretRule
+  # L.D.S.F.'s can have IDs because ... why not, honestly
+  - type: Inventory
+    templateId: legallydistinctspaceferret
+  - type: InventorySlots
+
+  # Midround antagonist, spawned via random event
+- type: entity
+  parent: BaseGameRule
+  id: LegallyDistinctSpaceFerretSpawn
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    duration: 1
+    minimumPlayers: 10
+  - type: LegallyDistinctSpaceFerretSpawnRule
+
+- type: entity
+  id: SpawnPointGhostLegallyDistinctSpaceFerret
+  name: ghost role spawn point
+  suffix: legally distinct space ferret
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: ghost-role-information-legallydistinctspaceferret-name
+    description: ghost-role-information-legallydistinctspaceferret-description
+    rules: ghost-role-information-legallydistinctspaceferret-rules
+  - type: GhostRoleMobSpawner
+    prototype: MobLegallyDistinctSpaceFerret
+  - type: Sprite
+    sprite: Mobs/Animals/legallydistinctspaceferret.rsi
+    layers:
+    - state: legallydistinctspaceferret_eepy
+
+- type: entity
+  noSpawn: true
+  parent: BaseGameRule
+  id: LegallyDistinctSpaceFerretRule
+  components:
+  - type: GenericAntagRule
+    agentName: legallydistinctspaceferret-round-end-agent-name
+    objectives:
+    - ConsumeNutrientsObjective
+    - HibernateObjective
+
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseLegallyDistinctSpaceFerretObjective
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: legallydistinctspaceferret
+  - type: RoleRequirement
+    roles:
+      components:
+      - LegallyDistinctSpaceFerretRole
+
+- type: entity
+  parent: BaseLegallyDistinctSpaceFerretObjective
+  id: ConsumeNutrientsObjective
+  description: Consume enough food to survive.
+  components:
+  - type: Objective
+    icon:
+      sprite: Mobs/Animals/legallydistinctspaceferret.rsi
+      state: legallydistinctspaceferret_eepy
+  - type: ConsumeNutrientsCondition
+    nutrientsRequired: 10.0
+
+- type: entity
+  parent: BaseLegallyDistinctSpaceFerretObjective
+  id: HibernateObjective
+  description: Hibernate in a gas scrubber.
+  components:
+  - type: Objective
+    icon:
+      sprite: Mobs/Animals/legallydistinctspaceferret.rsi
+      state: legallydistinctspaceferret_eepy
+  - type: HibernateCondition
+    successMessage: legallydistinctspaceferret-you-win-popup
+    successSfx: /Audio/Animals/wawa_outro.ogg
+
+- type: accent
+  id: legallydistinctspaceferret
+  fullReplacements:
+  - accent-words-legallydistinctspaceferret-1
+  - accent-words-legallydistinctspaceferret-2
+  - accent-words-legallydistinctspaceferret-3
+  - accent-words-legallydistinctspaceferret-4
+  - accent-words-legallydistinctspaceferret-5
+  - accent-words-legallydistinctspaceferret-6
+  - accent-words-legallydistinctspaceferret-7
+  - accent-words-legallydistinctspaceferret-8
+
+- type: speechVerb
+  id: Wawa
+  speechVerbStrings:
+  - chat-speech-verb-wawa-1
+  - chat-speech-verb-wawa-2
+  - chat-speech-verb-wawa-3
+
+- type: palette
+  id: LegallyDistinctSpaceFerretColors
+  name: LegallyDistinctSpaceFerretColors
+  colors:
+    Default: "#ffffff"
+    Innocent: "#f6f439"
+    Angry: "#dc5864"
+    Eldritch: "#dc5864"
+    Forgotten: "#111111"
+    Fat: "#fefcab"
+    WarCriminal: "#ab3430"
+    Cocaine: "#679cfe"
+    Mutant: "#7824a0"
+    Damned: "#98e652"
+
+- type: entity
+  id: ActionBackflip
+  name: Backflip
+  description: DO A BACKFLIP!
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 3
+    icon: deprecated.rsi/deprecated.png
+    event: !type:BackflipActionEvent
+    checkCanInteract: false
+
+- type: entity
+  id: ActionEepy
+  name: Eepy
+  description: Hibernate. This ends your time as a Legally Distinct Space Ferret. Happy April Fools!
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 100
+    icon: { sprite: Mobs/Animals/legallydistinctspaceferret.rsi, state: legallydistinctspaceferret_eepy }
+    event: !type:EepyActionEvent
+    checkCanInteract: false
+
+- type: speechSounds
+  id: Wawa
+  saySound:
+    path: /Audio/Animals/wawa_statement.ogg
+  askSound:
+    path: /Audio/Animals/wawa_question.ogg
+  exclaimSound:
+    path: /Audio/Animals/wawa_exclaim.ogg
+
+- type: antag
+  id: LegallyDistinctSpaceFerret
+  name: roles-antag-legallydistinctspaceferret-agent-name
+  antagonist: true
+  setPreference: false
+  objective: roles-antag-legallydistinctspaceferret-objective
+
+- type: inventoryTemplate
+  id: legallydistinctspaceferret
+  slots:
+  - name: head
+    slotTexture: head
+    slotFlags: HEAD
+    uiWindowPos: 1,2
+    strippingWindowPos: 0,0
+    displayName: Head
+  - name: ears
+    slotTexture: ears
+    slotFlags: EARS
+    stripTime: 3
+    uiWindowPos: 0,2
+    strippingWindowPos: 1,2
+    displayName: Ears
+  - name: mask
+    slotTexture: mask
+    slotFlags: MASK
+    uiWindowPos: 0,1
+    strippingWindowPos: 1,1
+    displayName: Mask
+  - name: id
+    slotTexture: id
+    slotFlags: IDCARD
+    slotGroup: SecondHotbar
+    stripTime: 6
+    uiWindowPos: 2,1
+    strippingWindowPos: 2,4
+    displayName: ID
+
+- type: nameIdentifierGroup
+  id: LegallyDistinctSpaceFerret
+  minValue: 1
+  maxValue: 99 # I fucking dare you to spawn more than 100 wawa
