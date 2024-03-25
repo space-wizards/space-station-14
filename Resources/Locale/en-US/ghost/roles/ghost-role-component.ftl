@@ -50,6 +50,9 @@ ghost-role-information-monkey-description = Ook ook!
 ghost-role-information-kobold-name = Kobold
 ghost-role-information-kobold-description = Be the little gremlin you are, yell at people and beg for meat!
 
+ghost-role-information-parrot-name = Parrot
+ghost-role-information-parrot-description = BRAWWK! You're a parrot, speaking parrot!
+
 ghost-role-information-rat-king-name = Rat King
 ghost-role-information-rat-king-description = You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
 ghost-role-information-rat-king-rules = You are an antagonist, scavenge, attack, and grow your hoard!
