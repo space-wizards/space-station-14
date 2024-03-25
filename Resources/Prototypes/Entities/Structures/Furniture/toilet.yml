@@ -22,7 +22,7 @@
       map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
     - state: dispover-handle
       map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
-    - map: [ "LidVisualState.LidOpen" ]
+    - map: [ "DoorVisualState.DoorOpen" ]
     - map: [ "SeatVisualState.SeatUp" ]
   - type: Rotatable
   - type: Transform
@@ -57,6 +57,8 @@
   - type: Appearance
   - type: SecretStash
     secretPartName: secret-stash-part-toilet
+    examineStash: toilet-component-on-examine-found-hidden-item
+    openableStash: true
   - type: Drain
     autoDrain: false
   - type: StaticPrice
@@ -89,10 +91,10 @@
         SeatVisualState.SeatUp:
           SeatUp: { state: disposal-up }
           SeatDown: { state: disposal-down }
-      enum.ToiletVisuals.LidVisualState:
-        LidVisualState.LidOpen:
-          LidOpen: { state: disposal-open }
-          LidClosed: { state: disposal-closed }
+      enum.StashVisuals.DoorVisualState:
+        DoorVisualState.DoorOpen:
+          DoorOpen: { state: disposal-open }
+          DoorClosed: { state: disposal-closed }
 
 - type: entity
   id: ToiletDirtyWater

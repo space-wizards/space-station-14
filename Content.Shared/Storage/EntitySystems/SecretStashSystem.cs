@@ -5,21 +5,35 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
+using Content.Shared.Interaction;
+using Content.Shared.Tools.Systems;
+using Robust.Shared.Timing;
+using Content.Shared.Examine;
 
 namespace Content.Shared.Storage.EntitySystems
 {
+    /// <summary>
+    /// Secret Stash allows an item to be hidden within.
+    /// </summary>
     public sealed class SecretStashSystem : EntitySystem
     {
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
+        [Dependency] private readonly SharedToolSystem _tool = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<SecretStashComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<SecretStashComponent, DestructionEventArgs>(OnDestroyed);
+            SubscribeLocalEvent<SecretStashComponent, StashPryDoAfterEvent>(OnSecretStashPried);
+            SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<SecretStashComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<SecretStashComponent, ExaminedEvent>(OnExamine);
         }
 
         private void OnInit(EntityUid uid, SecretStashComponent component, ComponentInit args)
@@ -40,6 +54,73 @@ namespace Content.Shared.Storage.EntitySystems
             if (!Resolve(uid, ref component))
                 return false;
             return component.ItemContainer.ContainedEntity != null;
+        }
+
+        private void OnInteractUsing(EntityUid uid, SecretStashComponent component, InteractUsingEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (!component.OpenableStash)
+                return;
+
+            // is player trying place or lift off cistern lid?
+            if (_tool.UseTool(args.Used, args.User, uid, component.PryDoorTime, component.PryingQuality, new StashPryDoAfterEvent()))
+                args.Handled = true;
+            // maybe player is trying to hide something inside cistern?
+            else if (component.ToggleOpen)
+            {
+                TryHideItem(uid, args.User, args.Used);
+                args.Handled = true;
+            }
+        }
+
+        private void OnInteractHand(EntityUid uid, SecretStashComponent component, InteractHandEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (!component.OpenableStash)
+                return;
+
+            // trying to get something from stash?
+            if (component.ToggleOpen)
+            {
+                var gotItem = TryGetItem(uid, args.User);
+                if (gotItem)
+                {
+                    args.Handled = true;
+                    return;
+                }
+            }
+            args.Handled = true;
+        }
+
+        private void OnSecretStashPried(EntityUid uid, SecretStashComponent component, StashPryDoAfterEvent args)
+        {
+            if (args.Cancelled)
+                return;
+
+            ToggleOpen(uid, component);
+        }
+
+        public void ToggleOpen(EntityUid uid, SecretStashComponent? component = null, MetaDataComponent? meta = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            component.ToggleOpen = !component.ToggleOpen;
+
+            UpdateAppearance(uid, component);
+            Dirty(uid, component, meta);
+        }
+
+        private void UpdateAppearance(EntityUid uid, SecretStashComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            _appearance.SetData(uid, StashVisuals.DoorVisualState, component.ToggleOpen ? DoorVisualState.DoorOpen : DoorVisualState.DoorClosed);
         }
 
         /// <summary>
@@ -116,6 +197,18 @@ namespace Content.Shared.Storage.EntitySystems
             _popupSystem.PopupClient(successMsg, uid, userUid);
 
             return true;
+        }
+
+        private void OnExamine(EntityUid uid, SecretStashComponent component, ExaminedEvent args)
+        {
+            if (args.IsInDetailsRange && component.ToggleOpen)
+            {
+                if (HasItemInside(uid))
+                {
+                    var msg = Loc.GetString(component.ExamineStash);
+                    args.PushMarkup(msg);
+                }
+            }
         }
 
         private string GetSecretPartName(EntityUid uid, SecretStashComponent stash)
