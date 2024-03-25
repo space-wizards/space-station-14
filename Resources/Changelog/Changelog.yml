@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Resprited buckets.
-    type: Tweak
-  id: 5723
-  time: '2024-01-16T13:47:53.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23866
-- author: Lank
-  changes:
-  - message: Added a new "follow" command.
-    type: Add
-  - message: Replaced the ahelp menu's "Teleport to" verb with "Follow".
-    type: Tweak
-  id: 5724
-  time: '2024-01-17T01:26:15.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24142
 - author: Dygon
   changes:
   - message: Water gun and spray nozzle projectiles now properly collide with objects.
@@ -3795,3 +3779,17 @@
   id: 6222
   time: '2024-03-25T00:43:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26413
+- author: Luminight
+  changes:
+  - message: Wooden fence gate sprites are no longer swapped.
+    type: Fix
+  id: 6223
+  time: '2024-03-25T00:55:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26409
+- author: Callmore
+  changes:
+  - message: Holoprojectors no longer come with a cell when made at a lathe.
+    type: Tweak
+  id: 6224
+  time: '2024-03-25T00:55:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26405
