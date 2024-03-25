@@ -7,6 +7,7 @@ using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
@@ -89,17 +90,10 @@ public sealed class ReflectSystem : EntitySystem
             args.Cancelled = true;
     }
 
-    private bool TryReflectProjectile(EntityUid user, EntityUid reflector, EntityUid projectile, ProjectileComponent? projectileComp = null, ReflectComponent? reflect = null)
+    private void ReflectProjectile(EntityUid user, Entity<PhysicsComponent, ReflectComponent> reflector, EntityUid projectile)
     {
-        if (!Resolve(reflector, ref reflect, false) ||
-            !reflect.Enabled ||
-            !TryComp<ReflectiveComponent>(projectile, out var reflective) ||
-            (reflect.Reflects & reflective.Reflective) == 0x0 ||
-            !_random.Prob(reflect.ReflectProb) ||
-            !TryComp<PhysicsComponent>(projectile, out var physics))
-        {
-            return false;
-        }
+        var physics = reflector.Comp1;
+        var reflect = reflector.Comp2;
 
         var rotation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2).Opposite();
         var existingVelocity = _physics.GetMapLinearVelocity(projectile, component: physics);
@@ -114,6 +108,76 @@ public sealed class ReflectSystem : EntitySystem
         var locRot = Transform(projectile).LocalRotation;
         var newRot = rotation.RotateVec(locRot.ToVec());
         _transform.SetLocalRotation(projectile, newRot.ToAngle());
+    }
+
+    private bool ReflectProjectileToNearestTarget(Entity<PhysicsComponent, ReflectComponent> reflector, EntityUid projectile)
+    {
+        if (!TryComp(projectile, out ProjectileComponent? projectileComponent) ||
+            !TryComp(reflector, out ReflectToNearestTargetComponent? reflectToNearest))
+        {
+            return false;
+        }
+
+        var physics = reflector.Comp1;
+        var reflect = reflector.Comp2;
+
+        var query = EntityQueryEnumerator<MobStateComponent>();
+        EntityUid? targettedEnt = null;
+        float targettedEntDistance = reflectToNearest.MaxDistance;
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (uid != projectileComponent.Shooter && !reflectToNearest.IncludeShooter)
+                continue;
+
+            var distance = (_physics.GetPhysicsTransform(uid).Position - _physics.GetPhysicsTransform(reflector).Position).Length();
+
+            if (distance < targettedEntDistance)
+            {
+                targettedEntDistance = distance;
+                targettedEnt = uid;
+            }
+        }
+
+        if (targettedEnt is null)
+            return false;
+
+        var target = targettedEnt.Value;
+
+        var mobTransform = _physics.GetPhysicsTransform(target);
+        var projectileTransform = _physics.GetPhysicsTransform(reflector);
+
+        var direction = (mobTransform.Position - projectileTransform.Position).Normalized();
+
+        var variation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
+        var existingVelocityMagnitude = _physics.GetMapLinearVelocity(projectile, component: physics).Length();
+
+        var newVelocity = variation.RotateVec(direction) * existingVelocityMagnitude;
+
+
+        _physics.SetLinearVelocity(projectile, newVelocity, body: physics);
+
+        var locRot = Transform(projectile).LocalRotation;
+        var newRot = (newVelocity.ToAngle()).RotateVec(locRot.ToVec());
+        _transform.SetLocalRotation(projectile, newRot.ToAngle());
+
+        return true;
+    }
+
+    private bool TryReflectProjectile(EntityUid user, EntityUid reflector, EntityUid projectile, ProjectileComponent? projectileComp = null, ReflectComponent? reflect = null)
+    {
+        if (!Resolve(reflector, ref reflect, false) ||
+            !reflect.Enabled ||
+            !TryComp<ReflectiveComponent>(projectile, out var reflective) ||
+            (reflect.Reflects & reflective.Reflective) == 0x0 ||
+            !_random.Prob(reflect.ReflectProb) ||
+            !TryComp<PhysicsComponent>(projectile, out var physics))
+        {
+            return false;
+        }
+
+        if (!TryComp(reflector, out ReflectToNearestTargetComponent? reflectToNearest) ||
+            !ReflectProjectileToNearestTarget((reflector, physics, reflect), projectile))
+            ReflectProjectile(user, (reflector, physics, reflect), projectile);
 
         if (_netManager.IsServer)
         {

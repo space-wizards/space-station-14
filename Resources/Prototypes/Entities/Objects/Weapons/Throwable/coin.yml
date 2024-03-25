@@ -1,0 +1,14 @@
+- type: entity
+  parent: BaseItem
+  id: SupermurderCoin
+  name: coin
+  description: + RICOCHET
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Throwable/coin.rsi
+    state: icon
+  - type: ReflectToNearestTarget
+  - type: DestroyOnReflect
+  - type: Reflect
+    spread: 0
+    reflectProb: 1
