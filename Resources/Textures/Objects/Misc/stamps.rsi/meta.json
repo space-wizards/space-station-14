@@ -8,55 +8,55 @@
     },
     "states": [
         {
-          "name": "stamp-cap"
+            "name": "stamp-cap"
         },
         {
-          "name": "stamp-ce"
+            "name": "stamp-ce"
         },
         {
-          "name": "stamp-centcom"
+            "name": "stamp-centcom"
         },
         {
-          "name": "stamp-chaplain"
+            "name": "stamp-chaplain"
         },
         {
-          "name": "stamp-clown"
+            "name": "stamp-clown"
         },
         {
-          "name": "stamp-cmo"
+            "name": "stamp-cmo"
         },
         {
-          "name": "stamp-deny"
+            "name": "stamp-deny"
         },
         {
-          "name": "stamp-hop"
+            "name": "stamp-hop"
         },
         {
-          "name": "stamp-hos"
+            "name": "stamp-hos"
         },
         {
-          "name": "stamp-janitor"
+            "name": "stamp-janitor"
         },
         {
-          "name": "stamp-ok"
+            "name": "stamp-ok"
         },
         {
-          "name": "stamp-mime"
+            "name": "stamp-mime"
         },
         {
-          "name": "stamp-qm"
+            "name": "stamp-qm"
         },
         {
-          "name": "stamp-rd"
+            "name": "stamp-rd"
         },
         {
-          "name": "stamp-syndicate"
+            "name": "stamp-syndicate"
         },
         {
-          "name": "stamp-trader"
+            "name": "stamp-trader"
         },
         {
-          "name": "stamp-warden"
+            "name": "stamp-warden"
         }
     ]
 }
