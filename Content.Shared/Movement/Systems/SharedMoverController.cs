@@ -318,10 +318,10 @@ namespace Content.Shared.Movement.Systems
 
         private void Friction(float minimumFrictionSpeed, float frameTime, float friction, ref Vector2 velocity)
         {
-            var speed = velocity.Length();
-
-            if (speed < minimumFrictionSpeed)
+            if (velocity.IsShorterThan(minimumFrictionSpeed))
                 return;
+
+            var speed = velocity.Length();
 
             var drop = 0f;
 

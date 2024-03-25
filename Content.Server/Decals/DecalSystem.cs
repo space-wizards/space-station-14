@@ -329,7 +329,7 @@ namespace Content.Server.Decals
 
             foreach (var (uid, decal) in chunk.Decals)
             {
-                if ((position - decal.Coordinates - new Vector2(0.5f, 0.5f)).Length() > distance)
+                if ((position - decal.Coordinates - new Vector2(0.5f, 0.5f)).IsLongerThan(distance))
                     continue;
 
                 if (validDelegate == null || validDelegate(decal))

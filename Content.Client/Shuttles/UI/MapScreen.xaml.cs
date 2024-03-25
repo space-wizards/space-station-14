@@ -373,7 +373,7 @@ public sealed partial class MapScreen : BoxContainer
             var yMapPos = _shuttles.GetMapCoordinates(y.mapobj);
             var xMapPos = _shuttles.GetMapCoordinates(x.mapobj);
 
-            return (yMapPos.Position - shuttlePos).Length().CompareTo((xMapPos.Position - shuttlePos).Length());
+            return (int) (yMapPos.Position - shuttlePos).CompareLengthTo(xMapPos.Position - shuttlePos);
         });
     }
 

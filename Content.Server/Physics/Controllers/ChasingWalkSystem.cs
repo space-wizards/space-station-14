@@ -94,7 +94,7 @@ public sealed class ChasingWalkSystem : VirtualController
         var pos2 = _transform.GetWorldPosition(component.ChasingEntity.Value);
 
         var delta = pos2 - pos1;
-        var speed = delta.Length() > 0 ? delta.Normalized() * component.Speed : Vector2.Zero;
+        var speed = delta.IsLongerThan(0) ? delta.Normalized() * component.Speed : Vector2.Zero;
 
         _physics.SetLinearVelocity(uid, speed);
         _physics.SetBodyStatus(physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.

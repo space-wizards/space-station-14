@@ -482,6 +482,27 @@ namespace Content.Shared.Interaction
             int collisionMask = (int) InRangeUnobstructedMask,
             Ignored? predicate = null)
         {
+            return MathF.Sqrt(UnobstructedDistanceSquared(origin, other, collisionMask, predicate));
+        }
+
+        /// <summary>
+        ///     Traces a ray from coords to otherCoords and returns the square of the length
+        ///     of the vector between coords and the ray's first hit.
+        /// </summary>
+        /// <param name="origin">Set of coordinates to use.</param>
+        /// <param name="other">Other set of coordinates to use.</param>
+        /// <param name="collisionMask">the mask to check for collisions</param>
+        /// <param name="predicate">
+        ///     A predicate to check whether to ignore an entity or not.
+        ///     If it returns true, it will be ignored.
+        /// </param>
+        /// <returns>Square of the length of resulting ray.</returns>
+        public float UnobstructedDistanceSquared(
+            MapCoordinates origin,
+            MapCoordinates other,
+            int collisionMask = (int) InRangeUnobstructedMask,
+            Ignored? predicate = null)
+        {
             var dir = other.Position - origin.Position;
 
             if (dir.LengthSquared().Equals(0f))
@@ -492,9 +513,9 @@ namespace Content.Shared.Interaction
             var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, dir.Length(), predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0)
-                return dir.Length();
+                return dir.LengthSquared();
 
-            return (rayResults[0].HitPos - origin.Position).Length();
+            return (rayResults[0].HitPos - origin.Position).LengthSquared();
         }
 
         /// <summary>

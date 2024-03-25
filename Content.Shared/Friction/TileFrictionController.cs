@@ -102,21 +102,22 @@ namespace Content.Shared.Friction
 
         private void ReduceLinearVelocity(EntityUid uid, bool prediction, PhysicsComponent body, float friction, float frameTime)
         {
-            var speed = body.LinearVelocity.Length();
+            var velocity = body.LinearVelocity;
 
-            if (speed <= 0.0f)
+            if (velocity.IsShorterThanOrEqualTo(0.0f))
                 return;
 
             // This is the *actual* amount that speed will drop by, we just do some multiplication around it to be easier.
             var drop = 0.0f;
             float control;
 
+            var speed = velocity.Length();
             if (friction > 0.0f)
             {
                 // TBH I can't really tell if this makes a difference.
                 if (!prediction)
                 {
-                    control = speed < _stopSpeed ? _stopSpeed : speed;
+                    control = velocity.IsShorterThan(_stopSpeed) ? _stopSpeed : speed;
                 }
                 else
                 {
@@ -125,6 +126,7 @@ namespace Content.Shared.Friction
 
                 drop += control * friction * frameTime;
             }
+
 
             var newSpeed = MathF.Max(0.0f, speed - drop);
 
