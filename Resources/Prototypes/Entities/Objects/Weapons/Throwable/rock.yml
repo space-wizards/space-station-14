@@ -1,0 +1,29 @@
+- type: entity
+  name: rock
+  parent: BaseItem
+  id: BaseRock
+  description: A rock.
+  abstract: true
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Weapons/Throwable/rock.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/pet_rock.rsi
+    slots:
+    - HEAD
+  - type: StaminaDamageOnCollide
+    damage: 10
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 4
+
+- type: entity
+  name: rock
+  id: ThrowingRock
+  parent: BaseRock
+  description: A perfectly shaped rock for throwing. Bonk!

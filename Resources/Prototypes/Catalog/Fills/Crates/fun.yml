@@ -388,3 +388,20 @@
         amount: 1
         prob: 0.05
 
+- type: entity
+  name: pet rock family
+  description: Contains pet rocks, perfect for starting a new family.
+  id: CratePetRocks
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+    - id: FredRock
+      amount: 1
+    - id: RoxieRock
+      amount: 1
+    - id: PetRock
+      amount: 1
+    - id: ThrowingRock
+      amount: 3
+      prob: 0.50

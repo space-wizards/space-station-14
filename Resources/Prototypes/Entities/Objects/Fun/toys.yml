@@ -1496,3 +1496,60 @@
       params:
         volume: -9
         maxDistance: 3
+
+- type: entity
+  parent: BaseRock
+  id: PetRock
+  name: pet rock
+  description: The perfect pet!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pet_rock.rsi
+    state: icon
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 10
+  - type: StaticPrice
+    price: 1
+
+- type: entity
+  parent: BaseRock
+  id: FredRock
+  name: fred
+  description: The bestest pet rock boy in the galaxy!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/fred.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Blood
+          Quantity: 5
+  - type: StaticPrice
+    price: 5
+
+- type: entity
+  parent: BaseRock
+  id: RoxieRock
+  name: roxie
+  description: The bestest pet rock girl in the galaxy!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/roxie.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Blood
+          Quantity: 5
+  - type: StaticPrice
+    price: 5
