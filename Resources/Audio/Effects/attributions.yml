@@ -93,6 +93,11 @@
   license: Custom
   source: https://gdc.sonniss.com
 
+- files: ["church_bell1.ogg", "church_bell2.ogg", "church_bell3.ogg", "church_bell4.ogg"]
+  copyright: '"the bell of my schools church.wav" by fonografico https://freesound.org/s/636113/". Pitch variations created via edits by Sphiral.'
+  license: "CC0-1.0"
+  source: https://freesound.org/people/fonografico/sounds/636113/?
+
 - files: ["pop.ogg"]
   copyright: '"pop.ogg" by mirrorcult of GitHub.com'
   license: "CC0-1.0"

@@ -3,9 +3,11 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.ImmovableRod;
 using Content.Server.StationEvents.Components;
 using Content.Server.Weapons.Ranged.Systems;
-using Robust.Shared.Spawners;
+using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
+using System.Linq;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -19,7 +21,10 @@ public sealed class ImmovableRodRule : StationEventSystem<ImmovableRodRuleCompon
     {
         base.Started(uid, component, gameRule, args);
 
-        var proto = _prototypeManager.Index<EntityPrototype>(component.RodPrototype);
+        var protoName = EntitySpawnCollection.GetSpawns(component.RodPrototypes).First();
+
+        var proto = _prototypeManager.Index<EntityPrototype>(protoName);
+
         if (proto.TryGetComponent<ImmovableRodComponent>(out var rod) && proto.TryGetComponent<TimedDespawnComponent>(out var despawn))
         {
             TryFindRandomTile(out _, out _, out _, out var targetCoords);
@@ -27,12 +32,12 @@ public sealed class ImmovableRodRule : StationEventSystem<ImmovableRodRuleCompon
             var angle = RobustRandom.NextAngle();
             var direction = angle.ToVec();
             var spawnCoords = targetCoords.ToMap(EntityManager, _transform).Offset(-direction * speed * despawn.Lifetime / 2);
-            var ent = Spawn(component.RodPrototype, spawnCoords);
+            var ent = Spawn(protoName, spawnCoords);
             _gun.ShootProjectile(ent, direction, Vector2.Zero, uid, speed: speed);
         }
         else
         {
-            Sawmill.Error($"Invalid immovable rod prototype: {component.RodPrototype}");
+            Sawmill.Error($"Invalid immovable rod prototype: {protoName}");
         }
     }
 }
