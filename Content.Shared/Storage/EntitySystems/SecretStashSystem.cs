@@ -7,7 +7,6 @@ using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Systems;
-using Robust.Shared.Timing;
 using Content.Shared.Examine;
 
 namespace Content.Shared.Storage.EntitySystems
@@ -23,7 +22,6 @@ namespace Content.Shared.Storage.EntitySystems
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedToolSystem _tool = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
 
         public override void Initialize()
         {
