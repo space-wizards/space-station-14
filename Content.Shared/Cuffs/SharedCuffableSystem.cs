@@ -3,12 +3,10 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
-using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
-using Content.Shared.Effects;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -19,7 +17,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Popups;
@@ -29,12 +26,12 @@ using Content.Shared.Stunnable;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
 
 namespace Content.Shared.Cuffs
@@ -47,8 +44,6 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
-        [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -95,9 +90,8 @@ namespace Content.Shared.Cuffs
         private void OnUncuffAttempt(ref UncuffAttemptEvent args)
         {
             if (args.Cancelled)
-            {
                 return;
-            }
+
             if (!Exists(args.User) || Deleted(args.User))
             {
                 // Should this even be possible?
@@ -109,23 +103,29 @@ namespace Content.Shared.Cuffs
             // This is because the CanInteract blocking of the cuffs prevents self-uncuff.
             if (args.User == args.Target)
             {
-                // This UncuffAttemptEvent check should probably be In MobStateSystem, not here?
-                if (_mobState.IsIncapacitated(args.User))
+                if (!TryComp<CuffableComponent>(args.User, out var cuffable))
                 {
+                    DebugTools.Assert($"{args.User} tried to uncuff themselves but they are not cuffable.");
+                    return;
+                }
+
+                // We temporarily allow interactions so the cuffable system does not block itself.
+                // It's assumed that this will always be false.
+                // Otherwise they would not be trying to uncuff themselves.
+                cuffable.CanStillInteract = true;
+                Dirty(args.User, cuffable);
+
+                if (!_actionBlocker.CanInteract(args.User, args.User))
                     args.Cancelled = true;
-                }
-                else
-                {
-                    // TODO Find a way for cuffable to check ActionBlockerSystem.CanInteract() without blocking itself
-                }
+
+                cuffable.CanStillInteract = false;
+                Dirty(args.User, cuffable);
             }
             else
             {
                 // Check if the user can interact.
                 if (!_actionBlocker.CanInteract(args.User, args.Target))
-                {
                     args.Cancelled = true;
-                }
             }
 
             if (args.Cancelled)
