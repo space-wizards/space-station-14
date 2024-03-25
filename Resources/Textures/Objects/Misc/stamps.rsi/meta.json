@@ -7,56 +7,56 @@
         "y": 32
     },
     "states": [
-    {
-      "name": "stamp-cap"
-    },
-    {
-      "name": "stamp-ce"
-    },
-    {
-      "name": "stamp-centcom"
-    },
-    {
-      "name": "stamp-chaplain"
-    },
-    {
-      "name": "stamp-clown"
-    },
-    {
-      "name": "stamp-cmo"
-    },
-    {
-      "name": "stamp-deny"
-    },
-    {
-      "name": "stamp-hop"
-    },
-    {
-      "name": "stamp-hos"
-    },
-    {
-      "name": "stamp-janitor"
-    },
-    {
-      "name": "stamp-ok"
-    },
-    {
-      "name": "stamp-mime"
-    },
-    {
-      "name": "stamp-qm"
-    },
-    {
-      "name": "stamp-rd"
-    },
-    {
-      "name": "stamp-syndicate"
-    },
-    {
-      "name": "stamp-trader"
-    },
-    {
-      "name": "stamp-warden"
-    }
-  ]
+        {
+          "name": "stamp-cap"
+        },
+        {
+          "name": "stamp-ce"
+        },
+        {
+          "name": "stamp-centcom"
+        },
+        {
+          "name": "stamp-chaplain"
+        },
+        {
+          "name": "stamp-clown"
+        },
+        {
+          "name": "stamp-cmo"
+        },
+        {
+          "name": "stamp-deny"
+        },
+        {
+          "name": "stamp-hop"
+        },
+        {
+          "name": "stamp-hos"
+        },
+        {
+          "name": "stamp-janitor"
+        },
+        {
+          "name": "stamp-ok"
+        },
+        {
+          "name": "stamp-mime"
+        },
+        {
+          "name": "stamp-qm"
+        },
+        {
+          "name": "stamp-rd"
+        },
+        {
+          "name": "stamp-syndicate"
+        },
+        {
+          "name": "stamp-trader"
+        },
+        {
+          "name": "stamp-warden"
+        }
+    ]
 }
