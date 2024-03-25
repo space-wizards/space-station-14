@@ -31,6 +31,7 @@ public sealed class WieldableSystem : EntitySystem
     [Dependency] private readonly UseDelaySystem _delay = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly SharedActionsSystem _actionContainer = default!;
 
     public override void Initialize()
     {
@@ -50,8 +51,9 @@ public sealed class WieldableSystem : EntitySystem
 
         SubscribeLocalEvent<IncreaseDamageOnWieldComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
 
+        SubscribeLocalEvent<WieldableComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<WieldableComponent, ComponentRemove>(OnRemoveComp);
         SubscribeLocalEvent<WieldableComponent, GetItemActionsEvent>(OnGetActions);
-        SubscribeLocalEvent<WieldableComponent, ComponentShutdown>(OnCompRemove);
         SubscribeLocalEvent<WieldableComponent, TwoHandWieldingActionEvent>(OnActionPerform);
     }
 
@@ -133,17 +135,24 @@ public sealed class WieldableSystem : EntitySystem
             args.Handled = TryUnwield(uid, component, args.User);
     }
 
-    // if (component.CombatToggleActionEntity != null)
-    // _actionsSystem.SetToggled(component.CombatToggleActionEntity, component.IsInCombatMode);
-    private void OnGetActions(EntityUid uid, WieldableComponent component, GetItemActionsEvent args)
+    private void OnMapInit(EntityUid uid, WieldableComponent component, MapInitEvent args)
     {
-        _actionsSystem.AddAction(uid, ref component.TwoHandWieldingEntity, component.TwoHandWieldingAction);
+        // add the action
+        _actionContainer.AddAction(uid, ref component.TwoHandWieldingEntity, component.TwoHandWieldingAction);
     }
 
-    private void OnCompRemove(EntityUid uid, WieldableComponent comp, ComponentShutdown args)
+    private void OnRemoveComp(EntityUid uid, WieldableComponent component, ComponentRemove args)
     {
-        _actionsSystem.RemoveAction(uid, comp.TwoHandWieldingEntity);
+        // remove the action
+        _actionContainer.RemoveAction(uid, component.TwoHandWieldingEntity);
     }
+
+    private void OnGetActions(EntityUid uid, WieldableComponent component, GetItemActionsEvent args)
+    {
+        // just add the action in action set
+        args.AddAction(ref component.TwoHandWieldingEntity, component.TwoHandWieldingAction);
+    }
+
     private void OnActionPerform(EntityUid uid, WieldableComponent component, TwoHandWieldingActionEvent args)
     {
         Log.Debug($"on action click!");
