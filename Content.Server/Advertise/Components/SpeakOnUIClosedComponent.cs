@@ -1,4 +1,5 @@
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Shared.Advertise;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Advertise.Components;
 
@@ -12,8 +13,8 @@ public sealed partial class SpeakOnUIClosedComponent : Component
     /// <summary>
     /// The identifier for the message pack prototype containing messages to be spoken by this entity.
     /// </summary>
-    [DataField("pack", customTypeSerializer: typeof(PrototypeIdSerializer<MessagePackPrototype>), required: true)]
-    public string PackPrototypeId { get; private set; } = string.Empty;
+    [DataField("pack", required: true)]
+    public ProtoId<MessagePackPrototype> PackPrototypeId { get; private set; }
 
     /// <summary>
     /// Is this component active? If false, no messages will be spoken.

@@ -27,7 +27,7 @@ public sealed class AdvertiseSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<AdvertiseComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<AdvertiseComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AdvertiseComponent, PowerChangedEvent>(OnPowerChanged);
 
         SubscribeLocalEvent<ApcPowerReceiverComponent, AdvertiseEnableChangeAttemptEvent>(OnPowerReceiverEnableChangeAttempt);
@@ -37,7 +37,7 @@ public sealed class AdvertiseSystem : EntitySystem
         _nextCheckTime = TimeSpan.MaxValue;
     }
 
-    private void OnComponentInit(EntityUid uid, AdvertiseComponent advertise, ComponentInit args)
+    private void OnMapInit(EntityUid uid, AdvertiseComponent advertise, MapInitEvent args)
     {
         RefreshTimer(uid, advertise);
     }
@@ -70,8 +70,8 @@ public sealed class AdvertiseSystem : EntitySystem
         if (!Resolve(uid, ref advertise))
             return;
 
-        if (_prototypeManager.TryIndex(advertise.PackPrototypeId, out MessagePackPrototype? advertisements))
-            _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.Messages)), InGameICChatType.Speak, true);
+        if (_prototypeManager.TryIndex(advertise.PackPrototypeId, out var advertisements))
+            _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.Messages)), InGameICChatType.Speak, hideChat: true);
     }
 
     public void SetEnabled(EntityUid uid, bool enable, AdvertiseComponent? advertise = null)
