@@ -1,6 +1,4 @@
 using Content.Shared.Clothing.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
@@ -12,10 +10,9 @@ namespace Content.Shared.Clothing.EntitySystems;
 
 public sealed partial class PilotedClothingSystem : EntitySystem
 {
-    [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedMoverController _moverController = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -36,7 +33,7 @@ public sealed partial class PilotedClothingSystem : EntitySystem
         if (entity.Comp.PilotWhitelist != null && !entity.Comp.PilotWhitelist.IsValid(args.Entity))
             return;
 
-        entity.Comp.Pilot = _entMan.GetNetEntity(args.Entity);
+        entity.Comp.Pilot = args.Entity;
         Dirty(entity);
 
         // Attempt to setup control link, if Pilot and Wearer are both present.
@@ -46,10 +43,12 @@ public sealed partial class PilotedClothingSystem : EntitySystem
     private void OnEntRemoved(Entity<PilotedClothingComponent> entity, ref EntRemovedFromContainerMessage args)
     {
         // Make sure the removed entity is actually the pilot.
-        if (_entMan.GetNetEntity(args.Entity) != entity.Comp.Pilot)
+        if (args.Entity != entity.Comp.Pilot)
             return;
 
         StopPiloting(entity);
+        entity.Comp.Pilot = null;
+        Dirty(entity);
     }
 
     private void OnEquipped(Entity<PilotedClothingComponent> entity, ref GotEquippedEvent args)
@@ -58,11 +57,11 @@ public sealed partial class PilotedClothingSystem : EntitySystem
             return;
 
         // Make sure the clothing item was equipped to the right slot, and not just held in a hand.
-        var isCorrectSlot = clothing.Slots.HasFlag(args.SlotFlags);
+        var isCorrectSlot = (clothing.Slots & args.SlotFlags) != Inventory.SlotFlags.NONE;
         if (!isCorrectSlot)
             return;
 
-        entity.Comp.Wearer = _entMan.GetNetEntity(args.Equipee);
+        entity.Comp.Wearer = args.Equipee;
         Dirty(entity);
 
         // Attempt to setup control link, if Pilot and Wearer are both present.
@@ -72,6 +71,9 @@ public sealed partial class PilotedClothingSystem : EntitySystem
     private void OnUnequipped(Entity<PilotedClothingComponent> entity, ref GotUnequippedEvent args)
     {
         StopPiloting(entity);
+
+        entity.Comp.Wearer = null;
+        Dirty(entity);
     }
 
     /// <summary>
@@ -87,23 +89,16 @@ public sealed partial class PilotedClothingSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted)
             return false;
 
-        var pilotEnt = _entMan.GetEntity(entity.Comp.Pilot.Value);
-        var wearerEnt = _entMan.GetEntity(entity.Comp.Wearer.Value);
+        var pilotEnt = entity.Comp.Pilot.Value;
+        var wearerEnt = entity.Comp.Wearer.Value;
 
         // Add component to block prediction of wearer
-        AddComp<PilotedByClothingComponent>(wearerEnt);
+        EnsureComp<PilotedByClothingComponent>(wearerEnt);
 
         if (entity.Comp.RelayMovement)
         {
             // Establish movement input relay.
             _moverController.SetRelay(pilotEnt, wearerEnt);
-        }
-
-        if (entity.Comp.RelayInteraction)
-        {
-            // Establish click input relay.
-            var interactionRelay = EnsureComp<InteractionRelayComponent>(pilotEnt);
-            _interaction.SetRelay(pilotEnt, wearerEnt, interactionRelay);
         }
 
         var pilotEv = new StartedPilotingClothingEvent(entity, wearerEnt);
@@ -125,12 +120,11 @@ public sealed partial class PilotedClothingSystem : EntitySystem
             return false;
 
         // Clean up components on the Pilot
-        var pilotEnt = _entMan.GetEntity(entity.Comp.Pilot.Value);
+        var pilotEnt = entity.Comp.Pilot.Value;
         RemCompDeferred<RelayInputMoverComponent>(pilotEnt);
-        RemCompDeferred<InteractionRelayComponent>(pilotEnt);
 
         // Clean up components on the Wearer
-        var wearerEnt = _entMan.GetEntity(entity.Comp.Wearer.Value);
+        var wearerEnt = entity.Comp.Wearer.Value;
         RemCompDeferred<MovementRelayTargetComponent>(wearerEnt);
         RemCompDeferred<PilotedByClothingComponent>(wearerEnt);
 
@@ -141,10 +135,6 @@ public sealed partial class PilotedClothingSystem : EntitySystem
         // Raise an event on the Wearer
         var wearerEv = new StoppedBeingPilotedByClothing(entity, pilotEnt);
         RaiseLocalEvent(wearerEnt, ref wearerEv);
-
-        entity.Comp.Pilot = null;
-        entity.Comp.Wearer = null;
-        Dirty(entity);
 
         return true;
     }

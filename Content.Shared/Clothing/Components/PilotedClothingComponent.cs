@@ -21,27 +21,18 @@ public sealed partial class PilotedClothingComponent : Component
     [DataField]
     public bool RelayMovement = true;
 
-    /// <summary>
-    /// Should click interaction input be relayed from the pilot to the target?
-    /// </summary>
-    /// <remarks>
-    /// This doesn't work very well right now, so it's disabled by default.
-    /// If improvements are made to interaction relays, consider using it.
-    /// </remarks>
-    [DataField]
-    public bool RelayInteraction;
 
     /// <summary>
     /// Reference to the entity contained in the clothing and acting as pilot.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public NetEntity? Pilot;
+    public EntityUid? Pilot;
 
     /// <summary>
     /// Reference to the entity wearing this clothing who will be controlled by the pilot.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public NetEntity? Wearer;
+    public EntityUid? Wearer;
 
     public bool IsActive => Pilot != null && Wearer != null;
 }
