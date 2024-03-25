@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Veritius
-  changes:
-  - message: You can now dramatically execute cuffed people.
-    type: Add
-  - message: You can now kill yourself with guns.
-    type: Add
-  id: 5726
-  time: '2024-01-17T08:45:45.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24150
 - author: TurboTrackerss14
   changes:
   - message: Added Mothroach Burger.
@@ -3793,3 +3784,12 @@
   id: 6225
   time: '2024-03-25T00:58:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26398
+- author: IProduceWidgets
+  changes:
+  - message: More varieties of astro-grass are now available.
+    type: Add
+  - message: Astro-grass must now be cut instead of pried.
+    type: Tweak
+  id: 6226
+  time: '2024-03-25T01:14:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26381
