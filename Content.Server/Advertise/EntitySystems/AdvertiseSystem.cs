@@ -70,7 +70,7 @@ public sealed class AdvertiseSystem : EntitySystem
         if (!Resolve(uid, ref advertise))
             return;
 
-        if (_prototypeManager.TryIndex(advertise.PackPrototypeId, out var advertisements))
+        if (_prototypeManager.TryIndex(advertise.Pack, out var advertisements))
             _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.Messages)), InGameICChatType.Speak, hideChat: true);
     }
 

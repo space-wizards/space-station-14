@@ -28,8 +28,8 @@ public sealed partial class AdvertiseComponent : Component
     /// <summary>
     /// The identifier for the advertisements pack prototype.
     /// </summary>
-    [DataField("pack", required: true)]
-    public ProtoId<MessagePackPrototype> PackPrototypeId { get; private set; }
+    [DataField(required: true)]
+    public ProtoId<MessagePackPrototype> Pack { get; private set; }
 
     /// <summary>
     /// The next time an advertisement will be said.

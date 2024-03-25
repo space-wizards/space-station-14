@@ -38,7 +38,7 @@ public sealed partial class SpeakOnUIClosedSystem : EntitySystem
         if (!entity.Comp.Enabled)
             return false;
 
-        if (!_prototypeManager.TryIndex(entity.Comp.PackPrototypeId, out MessagePackPrototype? messagePack))
+        if (!_prototypeManager.TryIndex(entity.Comp.Pack, out MessagePackPrototype? messagePack))
             return false;
 
         var message = Loc.GetString(_random.Pick(messagePack.Messages), ("name", Name(entity)));

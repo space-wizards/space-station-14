@@ -13,8 +13,8 @@ public sealed partial class SpeakOnUIClosedComponent : Component
     /// <summary>
     /// The identifier for the message pack prototype containing messages to be spoken by this entity.
     /// </summary>
-    [DataField("pack", required: true)]
-    public ProtoId<MessagePackPrototype> PackPrototypeId { get; private set; }
+    [DataField(required: true)]
+    public ProtoId<MessagePackPrototype> Pack { get; private set; }
 
     /// <summary>
     /// Is this component active? If false, no messages will be spoken.
