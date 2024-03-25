@@ -22,6 +22,9 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     private const string AnimationKey = "disposal_unit_animation";
 
+    private const string DefaultFlushState = "disposal-flush";
+    private const string DefaultChargeState = "disposal-charging";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -103,7 +106,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         var chargingState = sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseCharging, out var chargingLayer)
             ? sprite.LayerGetState(chargingLayer)
-            : new RSI.StateId("disposal-charging");
+            : new RSI.StateId(DefaultChargeState);
 
         // This is a transient state so not too worried about replaying in range.
         if (state == VisualState.Flushing)
@@ -112,7 +115,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             {
                 var flushState = sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseFlush, out var flushLayer)
                     ? sprite.LayerGetState(flushLayer)
-                    : new RSI.StateId("disposal-flush");
+                    : new RSI.StateId(DefaultFlushState);
 
                 // Setup the flush animation to play
                 var anim = new Animation
