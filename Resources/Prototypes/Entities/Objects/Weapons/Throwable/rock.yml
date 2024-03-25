@@ -1,7 +1,7 @@
 - type: entity
   name: rock
   parent: BaseItem
-  id: BaseRock
+  id: BasePebble
   description: A rock.
   abstract: true
   components:
@@ -25,5 +25,5 @@
 - type: entity
   name: rock
   id: ThrowingRock
-  parent: BaseRock
+  parent: BasePebble
   description: A perfectly shaped rock for throwing. Bonk!

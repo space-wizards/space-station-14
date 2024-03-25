@@ -1498,7 +1498,7 @@
         maxDistance: 3
 
 - type: entity
-  parent: BaseRock
+  parent: BasePebble
   id: PetRock
   name: pet rock
   description: The perfect pet!
@@ -1513,7 +1513,7 @@
     price: 1
 
 - type: entity
-  parent: BaseRock
+  parent: BasePebble
   id: FredRock
   name: fred
   description: The bestest pet rock boy in the galaxy!
@@ -1534,7 +1534,7 @@
     price: 5
 
 - type: entity
-  parent: BaseRock
+  parent: BasePebble
   id: RoxieRock
   name: roxie
   description: The bestest pet rock girl in the galaxy!
