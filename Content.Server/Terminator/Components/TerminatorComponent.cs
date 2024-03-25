@@ -1,6 +1,4 @@
 using Content.Server.Terminator.Systems;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Terminator.Components;
 

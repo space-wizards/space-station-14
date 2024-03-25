@@ -90,9 +90,9 @@ public abstract class SharedObjectivesSystem : EntitySystem
     /// Get the title, description, icon and progress of an objective using <see cref="ObjectiveGetInfoEvent"/>.
     /// If any of them are null it is logged and null is returned.
     /// </summary>
-    /// <param name="uid"/>ID of the condition entity</param>
-    /// <param name="mindId"/>ID of the player's mind entity</param>
-    /// <param name="mind"/>Mind component of the player's mind</param>
+    /// <param name="uid">ID of the condition entity</param>
+    /// <param name="mindId">ID of the player's mind entity</param>
+    /// <param name="mind">Mind component of the player's mind</param/>
     public ObjectiveInfo? GetInfo(EntityUid uid, EntityUid mindId, MindComponent? mind = null)
     {
         if (!Resolve(mindId, ref mind))
@@ -124,5 +124,45 @@ public abstract class SharedObjectivesSystem : EntitySystem
             return;
 
         comp.Icon = icon;
+    }
+
+    /// <summary>
+    /// Checks if a given objective is complete.
+    /// </summary>
+    public bool ObjectiveComplete(Entity<MindComponent> mind, EntityUid ent)
+    {
+        return GetInfo(ent, mind, mind) is { } objectiveInfo && objectiveInfo.Progress >= 1;
+    }
+
+    /// <summary>
+    /// Returns true if all the objectives for a given entity are complete.
+    /// </summary>
+    public bool AllObjectivesComplete(EntityUid uid)
+    {
+        if (!_mind.TryGetMind(uid, out var mind, out var mindComp))
+            return true;
+
+        foreach (var objective in mindComp.Objectives)
+        {
+            if (!ObjectiveComplete((mind, mindComp), objective))
+                return false;
+        }
+
+        return true;
+    }
+
+
+    /// <summary>
+    /// Returns true if all the objectives for a given entity are complete.
+    /// </summary>
+    public bool AllObjectivesComplete(Entity<MindComponent> ent)
+    {
+        foreach (var objective in ent.Comp.Objectives)
+        {
+            if (!ObjectiveComplete(ent, objective))
+                return false;
+        }
+
+        return true;
     }
 }

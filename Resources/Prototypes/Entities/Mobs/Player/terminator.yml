@@ -5,6 +5,12 @@
   components:
   - type: ZombieImmune # yeah no
   - type: FlashImmunity # no brain to brainwash, eyes are robotic
+  - type: Explosive
+    explosionType: MicroBomb
+    totalIntensity: 120
+    intensitySlope: 5
+    maxIntensity: 30
+    canCreateVacuum: false
 
 - type: entity
   parent: [MobHuman, MobTerminatorBase]
