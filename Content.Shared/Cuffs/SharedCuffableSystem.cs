@@ -310,6 +310,7 @@ namespace Content.Shared.Cuffs
 
             if (!args.Cancelled && TryAddNewCuffs(target, user, uid, cuffable))
             {
+                component.Used = true;
                 _audio.PlayPredicted(component.EndCuffSound, uid, user);
 
                 _popup.PopupEntity(Loc.GetString("handcuff-component-cuff-observer-success-message",
@@ -613,7 +614,7 @@ namespace Content.Shared.Cuffs
             if (!Resolve(target, ref cuffable) || !Resolve(cuffsToRemove, ref cuff))
                 return;
 
-            if (cuff.Removing || TerminatingOrDeleted(cuffsToRemove) || TerminatingOrDeleted(target))
+            if (!cuff.Used || cuff.Removing || TerminatingOrDeleted(cuffsToRemove) || TerminatingOrDeleted(target))
                 return;
 
             if (user != null)
@@ -625,6 +626,7 @@ namespace Content.Shared.Cuffs
             }
 
             cuff.Removing = true;
+            cuff.Used = false;
             _audio.PlayPredicted(cuff.EndUncuffSound, target, user);
 
             var isOwner = user == target;
