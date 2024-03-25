@@ -312,7 +312,7 @@ public sealed class RCDSystem : EntitySystem
         var mode = (int) comp.Mode;
         mode = ++mode % RcdModeCount;
         comp.Mode = (RcdMode) mode;
-        Dirty(comp);
+        Dirty(uid, comp);
 
         var msg = Loc.GetString("rcd-component-change-mode", ("mode", comp.Mode.ToString()));
         _popup.PopupClient(msg, uid, user);

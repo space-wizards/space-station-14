@@ -177,7 +177,7 @@
     - Screwdriver
     - Wirecutter
     - Multitool
-    - Welder
+    - WelderIndustrial
 
 # cargo modules
 - type: entity
