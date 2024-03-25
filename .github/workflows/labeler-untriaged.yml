@@ -1,0 +1,13 @@
+﻿name: "Labels: Untriaged"
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  add_label:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions-ecosystem/action-add-labels@v1
+      with:
+        labels: "Status: Untriaged"

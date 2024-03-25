@@ -71,6 +71,15 @@
     path: /Audio/Animals/monkey_scream.ogg
 
 - type: speechSounds
+  id: Parrot
+  saySound:
+    path: /Audio/Animals/parrot_raught.ogg
+  askSound:
+    path: /Audio/Animals/parrot_raught.ogg
+  exclaimSound:
+    path: /Audio/Animals/parrot_raught.ogg
+
+- type: speechSounds
   id: Lizard
   saySound:
     path: /Audio/Voice/Talk/lizard.ogg
