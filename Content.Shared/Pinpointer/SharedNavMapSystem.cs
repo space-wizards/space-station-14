@@ -8,13 +8,6 @@ public abstract class SharedNavMapSystem : EntitySystem
 {
     public const byte ChunkSize = 4;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<NavMapBeaconComponent, MapInitEvent>(OnNavMapBeaconMapInit);
-    }
-
     /// <summary>
     /// Converts the chunk's tile into a bitflag for the slot.
     /// </summary>
@@ -36,13 +29,6 @@ public abstract class SharedNavMapSystem : EntitySystem
         DebugTools.Assert(GetFlag(result) == flag);
 
         return new Vector2i(x, y);
-    }
-
-    private void OnNavMapBeaconMapInit(EntityUid uid, NavMapBeaconComponent component, MapInitEvent args)
-    {
-        component.Text ??= string.Empty;
-        component.Text = Loc.GetString(component.Text);
-        Dirty(uid, component);
     }
 
     [Serializable, NetSerializable]
