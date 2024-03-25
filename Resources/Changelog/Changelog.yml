@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dygon
-  changes:
-  - message: Water gun and spray nozzle projectiles now properly collide with objects.
-    type: Fix
-  id: 5725
-  time: '2024-01-17T08:21:59.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24175
 - author: Veritius
   changes:
   - message: You can now dramatically execute cuffed people.
@@ -3793,3 +3786,10 @@
   id: 6224
   time: '2024-03-25T00:55:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26405
+- author: IProduceWidgets
+  changes:
+  - message: The captain can now return his laser to the glass display box.
+    type: Fix
+  id: 6225
+  time: '2024-03-25T00:58:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26398
