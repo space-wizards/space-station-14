@@ -1,60 +1,4 @@
 ﻿Entries:
-- author: tday
-  changes:
-  - message: Explosion and Chemical Reaction admin logs now use grid-relative coordinates
-      when possible.
-    type: Fix
-  id: 5721
-  time: '2024-01-16T07:53:46.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24136
-- author: Dygon
-  changes:
-  - message: Flare shells now embed into whatever they hit.
-    type: Tweak
-  - message: Flare shells ignite mobs again.
-    type: Fix
-  id: 5722
-  time: '2024-01-16T09:17:05.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23648
-- author: Ubaser
-  changes:
-  - message: Resprited buckets.
-    type: Tweak
-  id: 5723
-  time: '2024-01-16T13:47:53.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23866
-- author: Lank
-  changes:
-  - message: Added a new "follow" command.
-    type: Add
-  - message: Replaced the ahelp menu's "Teleport to" verb with "Follow".
-    type: Tweak
-  id: 5724
-  time: '2024-01-17T01:26:15.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24142
-- author: Dygon
-  changes:
-  - message: Water gun and spray nozzle projectiles now properly collide with objects.
-    type: Fix
-  id: 5725
-  time: '2024-01-17T08:21:59.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24175
-- author: Veritius
-  changes:
-  - message: You can now dramatically execute cuffed people.
-    type: Add
-  - message: You can now kill yourself with guns.
-    type: Add
-  id: 5726
-  time: '2024-01-17T08:45:45.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24150
-- author: TurboTrackerss14
-  changes:
-  - message: Added Mothroach Burger.
-    type: Add
-  id: 5727
-  time: '2024-01-17T08:46:34.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24156
 - author: Ubaser
   changes:
   - message: Robohand gloves now have a unique sprite and can be found in the RoboDrobe.
@@ -3798,3 +3742,54 @@
   id: 6220
   time: '2024-03-24T22:02:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26412
+- author: SoulFN
+  changes:
+  - message: The borg tool module now has an industrial welding tool.
+    type: Tweak
+  id: 6221
+  time: '2024-03-24T22:35:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26332
+- author: IProduceWidgets
+  changes:
+  - message: Ammo techfab now accepts ingot and cloth material types.
+    type: Fix
+  id: 6222
+  time: '2024-03-25T00:43:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26413
+- author: Luminight
+  changes:
+  - message: Wooden fence gate sprites are no longer swapped.
+    type: Fix
+  id: 6223
+  time: '2024-03-25T00:55:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26409
+- author: Callmore
+  changes:
+  - message: Holoprojectors no longer come with a cell when made at a lathe.
+    type: Tweak
+  id: 6224
+  time: '2024-03-25T00:55:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26405
+- author: IProduceWidgets
+  changes:
+  - message: The captain can now return his laser to the glass display box.
+    type: Fix
+  id: 6225
+  time: '2024-03-25T00:58:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26398
+- author: IProduceWidgets
+  changes:
+  - message: More varieties of astro-grass are now available.
+    type: Add
+  - message: Astro-grass must now be cut instead of pried.
+    type: Tweak
+  id: 6226
+  time: '2024-03-25T01:14:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26381
+- author: Tayrtahn
+  changes:
+  - message: Parrots now sound more like parrots when they talk. RAWWK!
+    type: Add
+  id: 6227
+  time: '2024-03-25T01:26:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26340
