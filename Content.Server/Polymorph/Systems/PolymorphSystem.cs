@@ -124,7 +124,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (args.Prototype != null)
             proto = args.Prototype;
         else if (!string.IsNullOrEmpty(args.ProtoId))
-            proto = _proto.Index(args.ProtoId);
+            proto = _proto.Index(args.ProtoId.Value);
 
         if (proto is null)
             return;
