@@ -1,4 +1,5 @@
-﻿using Content.Server.Cuffs;
+﻿using System.Linq;
+using Content.Server.Cuffs;
 using Content.Server.Forensics;
 using Content.Server.Humanoid;
 using Content.Server.Implants.Components;
@@ -21,6 +22,7 @@ using Robust.Shared.Random;
 using System.Numerics;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Implants;
 
@@ -37,6 +39,8 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
     [Dependency] private readonly PullingSystem _pullingSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
 
@@ -109,35 +113,54 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         var xform = Transform(ent);
         var entityCoords = xform.Coordinates.ToMap(EntityManager, _xform);
 
-        // try to find a valid position to teleport to, teleport to whatever works if we can't
-        var targetCoords = new MapCoordinates();
-        for (var i = 0; i < implant.TeleportAttempts; i++)
+        var grids = _lookupSystem.GetEntitiesInRange<MapGridComponent>(entityCoords, implant.TeleportRadius).ToList();
+        _random.Shuffle(grids);
+        var targetCoords = entityCoords; // If we somehow fail to find a suitable tile then we essentially we just don't teleport.
+
+        foreach (var grid in grids)
         {
-            var distance = implant.TeleportRadius * MathF.Sqrt(_random.NextFloat()); // to get an uniform distribution
-            targetCoords = entityCoords.Offset(_random.NextAngle().ToVec() * distance);
+            var valid = false;
 
-            // prefer teleporting to grids
-            if (!_mapManager.TryFindGridAt(targetCoords, out var gridUid, out var grid))
-                continue;
+            var range = (float) Math.Sqrt(implant.TeleportRadius);
+            var box = Box2.CenteredAround(entityCoords.Position, new Vector2(range, range));
+            var tilesInRange = _mapSystem.GetTilesEnumerator(grid.Owner, grid.Comp, box, false);
+            var tileList = new List<TileRef>();
 
-            // the implant user probably does not want to be in your walls
-            var valid = true;
-            foreach (var entity in grid.GetAnchoredEntities(targetCoords))
+            while (tilesInRange.MoveNext(out var tile))
             {
-                if (!_physicsQuery.TryGetComponent(entity, out var body))
-                    continue;
-
-                if (body.BodyType != BodyType.Static ||
-                    !body.Hard ||
-                    (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
-                    continue;
-
-                valid = false;
-                break;
+                tileList.Add(tile);
             }
+
+            _random.Shuffle(tileList);
+
+            foreach (var tile in tileList)
+            {
+                valid = true;
+                foreach(var entity in _mapSystem.GetAnchoredEntities(grid.Owner, grid.Comp, tile.GridIndices))
+                {
+                    if (!_physicsQuery.TryGetComponent(entity, out var body))
+                        continue;
+
+                    if (body.BodyType != BodyType.Static ||
+                        !body.Hard ||
+                        (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
+                        continue;
+
+                    valid = false;
+                    break;
+                }
+
+                if (valid)
+                {
+                    targetCoords = _mapSystem.GridTileToWorld(grid.Owner, grid.Comp, tile.GridIndices);
+                    break;
+                }
+            }
+
             if (valid)
                 break;
         }
+
         _xform.SetWorldPosition(ent, targetCoords.Position);
         _xform.AttachToGridOrMap(ent, xform);
         _audio.PlayPvs(implant.TeleportSound, ent);
