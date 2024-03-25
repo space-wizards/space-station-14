@@ -161,15 +161,15 @@ namespace Content.Shared.Examine
                 other.MapId == MapId.Nullspace) return false;
 
             var dir = other.Position - origin.Position;
+            var length = dir.Length();
 
             // If range specified also check it
             // TODO: This rounding check is here because the API is kinda eh
-            if (range > 0f && dir.IsLongerThan(range + 0.01f)) return false;
+            if (range > 0f && length > range + 0.01f) return false;
 
-            var length = dir.Length();
             if (MathHelper.CloseTo(length, 0)) return true;
 
-            if (dir.IsLongerThan(MaxRaycastRange))
+            if (length > MaxRaycastRange)
             {
                 Log.Warning("InRangeUnOccluded check performed over extreme range. Limiting CollisionRay size.");
                 length = MaxRaycastRange;

@@ -31,13 +31,12 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
             if (camera.ActiveViewers.Count == 0)
                 continue;
 
-            if (xform.MapID != sourceXform.MapID)
-                continue;
-
             // get range to camera. This way wispers will still appear as obfuscated if they are too far from the camera's microphone
-            var diff = sourcePos - _xforms.GetWorldPosition(xform, xformQuery);
+            var range = (xform.MapID != sourceXform.MapID)
+                ? -1
+                : (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).Length();
 
-            if (diff.IsShorterThan(0) || diff.IsLongerThan(ev.VoiceRange))
+            if (range < 0 || range > ev.VoiceRange)
                 continue;
 
             foreach (var viewer in camera.ActiveViewers)
@@ -45,7 +44,7 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
                 // if the player has not already received the chat message, send it to them but don't log it to the chat
                 // window. This is simply so that it appears in camera.
                 if (TryComp(viewer, out ActorComponent? actor))
-                    ev.Recipients.TryAdd(actor.PlayerSession, new ICChatRecipientData(diff.Length(), false, true));
+                    ev.Recipients.TryAdd(actor.PlayerSession, new ICChatRecipientData(range, false, true));
             }
         }
     }

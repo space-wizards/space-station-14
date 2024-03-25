@@ -121,13 +121,14 @@ public partial class RadiationSystem
 
         // get direction from rad source to destination and its distance
         var dir = destWorld - sourceWorld;
+        var dist = dir.Length();
 
         // check if receiver is too far away
-        if (dir.IsLongerThan(GridcastMaxDistance))
+        if (dist > GridcastMaxDistance)
             return null;
 
         // will it even reach destination considering distance penalty
-        var rads = incomingRads - slope * dir.Length();
+        var rads = incomingRads - slope * dist;
 
         // Apply rad modifier if the source is enclosed within a radiation blocking container
         rads = GetAdjustedRadiationIntensity(sourceUid, rads);

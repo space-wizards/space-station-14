@@ -128,24 +128,24 @@ public sealed class DragDropHelper<T>
         {
             // check if dragging should begin
             case DragState.MouseDown:
+            {
+                var screenPos = _inputManager.MouseScreenPosition;
+                if ((_mouseDownScreenPos.Position - screenPos.Position).IsLongerThan(_deadzone))
                 {
-                    var screenPos = _inputManager.MouseScreenPosition;
-                    if ((_mouseDownScreenPos.Position - screenPos.Position).IsLongerThan(_deadzone))
-                    {
-                        StartDragging();
-                    }
-
-                    break;
+                    StartDragging();
                 }
+
+                break;
+            }
             case DragState.Dragging:
+            {
+                if (!_onContinueDrag.Invoke(frameTime))
                 {
-                    if (!_onContinueDrag.Invoke(frameTime))
-                    {
-                        EndDrag();
-                    }
-
-                    break;
+                    EndDrag();
                 }
+
+                break;
+            }
         }
     }
 

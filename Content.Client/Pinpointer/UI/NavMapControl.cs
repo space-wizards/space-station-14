@@ -188,7 +188,7 @@ public partial class NavMapControl : MapGridControl
 
             // Find closest tracked entity in range
             var closestEntity = NetEntity.Invalid;
-            var closestDistanceSquared = float.PositiveInfinity;
+            var closestDistance = float.PositiveInfinity;
 
             foreach ((var currentEntity, var blip) in TrackedEntities)
             {
@@ -197,14 +197,14 @@ public partial class NavMapControl : MapGridControl
 
                 var currentDistance = (blip.Coordinates.ToMapPos(EntManager, _transformSystem) - worldPosition).Length();
 
-                if (closestDistanceSquared < currentDistance || currentDistance * currentDistance * MinimapScale * MinimapScale > MaxSelectableDistance)
+                if (closestDistance < currentDistance || currentDistance * MinimapScale > MaxSelectableDistance)
                     continue;
 
                 closestEntity = currentEntity;
-                closestDistanceSquared = currentDistance;
+                closestDistance = currentDistance;
             }
 
-            if (closestDistanceSquared > MaxSelectableDistance || !closestEntity.IsValid())
+            if (closestDistance > MaxSelectableDistance || !closestEntity.IsValid())
                 return;
 
             TrackedEntitySelectedAction.Invoke(closestEntity);
