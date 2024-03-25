@@ -95,7 +95,7 @@ public sealed partial class HandcuffComponent : Component
 }
 
 /// <summary>
-/// Event fired on the User when the User attempts to cuff the Target.
+/// Event fired on the User when the User attempts to uncuff the Target.
 /// Should generate popups on the User.
 /// </summary>
 [ByRefEvent]

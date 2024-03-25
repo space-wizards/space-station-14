@@ -629,8 +629,6 @@ namespace Content.Shared.Cuffs
             cuff.Used = false;
             _audio.PlayPredicted(cuff.EndUncuffSound, target, user);
 
-            var isOwner = user == target;
-
             _container.Remove(cuffsToRemove, cuffable.Container);
 
             if (_net.IsServer)
@@ -646,43 +644,42 @@ namespace Content.Shared.Cuffs
                 {
                     _hands.PickupOrDrop(user, cuffsToRemove);
                 }
+            }
 
-                // Only play popups on server because popups suck
-                if (cuffable.CuffedHandCount == 0)
+            if (cuffable.CuffedHandCount == 0)
+            {
+                if (user != null)
+                    _popup.PopupPredicted(Loc.GetString("cuffable-component-remove-cuffs-success-message"), user.Value, user.Value);
+
+                if (target != user && user != null)
                 {
-                    if (user != null)
-                        _popup.PopupEntity(Loc.GetString("cuffable-component-remove-cuffs-success-message"), user.Value, user.Value);
-
-                    if (target != user && user != null)
-                    {
-                        _popup.PopupEntity(Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message",
-                            ("otherName", Identity.Name(user.Value, EntityManager, user))), target, target);
-                        _adminLog.Add(LogType.Action, LogImpact.Medium,
-                            $"{ToPrettyString(user):player} has successfully uncuffed {ToPrettyString(target):player}");
-                    }
-                    else
-                    {
-                        _adminLog.Add(LogType.Action, LogImpact.Medium,
-                            $"{ToPrettyString(user):player} has successfully uncuffed themselves");
-                    }
+                    _popup.PopupPredicted(Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message",
+                        ("otherName", Identity.Name(user.Value, EntityManager, user))), target, target);
+                    _adminLog.Add(LogType.Action, LogImpact.Medium,
+                        $"{ToPrettyString(user):player} has successfully uncuffed {ToPrettyString(target):player}");
                 }
-                else if (user != null)
+                else
                 {
-                    if (user != target)
-                    {
-                        _popup.PopupEntity(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message",
-                            ("cuffedHandCount", cuffable.CuffedHandCount),
-                            ("otherName", Identity.Name(user.Value, EntityManager, user.Value))), user.Value, user.Value);
-                        _popup.PopupEntity(Loc.GetString(
-                            "cuffable-component-remove-cuffs-by-other-partial-success-message",
-                            ("otherName", Identity.Name(user.Value, EntityManager, user.Value)),
-                            ("cuffedHandCount", cuffable.CuffedHandCount)), target, target);
-                    }
-                    else
-                    {
-                        _popup.PopupEntity(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message",
-                            ("cuffedHandCount", cuffable.CuffedHandCount)), user.Value, user.Value);
-                    }
+                    _adminLog.Add(LogType.Action, LogImpact.Medium,
+                        $"{ToPrettyString(user):player} has successfully uncuffed themselves");
+                }
+            }
+            else if (user != null)
+            {
+                if (user != target)
+                {
+                    _popup.PopupPredicted(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message",
+                        ("cuffedHandCount", cuffable.CuffedHandCount),
+                        ("otherName", Identity.Name(user.Value, EntityManager, user.Value))), user.Value, user.Value);
+                    _popup.PopupPredicted(Loc.GetString(
+                        "cuffable-component-remove-cuffs-by-other-partial-success-message",
+                        ("otherName", Identity.Name(user.Value, EntityManager, user.Value)),
+                        ("cuffedHandCount", cuffable.CuffedHandCount)), target, target);
+                }
+                else
+                {
+                    _popup.PopupPredicted(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message",
+                        ("cuffedHandCount", cuffable.CuffedHandCount)), user.Value, user.Value);
                 }
             }
             cuff.Removing = false;
