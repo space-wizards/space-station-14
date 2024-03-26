@@ -53,9 +53,9 @@ public sealed class ImmovableRodSystem : EntitySystem
     {
         if (EntityManager.TryGetComponent(uid, out PhysicsComponent? phys))
         {
-            _physics.SetLinearDamping(phys, 0f);
-            _physics.SetFriction(phys, 0f);
-            _physics.SetBodyStatus(phys, BodyStatus.InAir);
+            _physics.SetLinearDamping(uid, phys, 0f);
+            _physics.SetFriction(uid, phys, 0f);
+            _physics.SetBodyStatus(uid, phys, BodyStatus.InAir);
 
             if (!component.RandomizeVelocity)
                 return;

@@ -5,16 +5,19 @@ namespace Content.Shared.Audio;
 
 public abstract class SharedAmbientSoundSystem : EntitySystem
 {
+    private EntityQuery<AmbientSoundComponent> _query;
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<AmbientSoundComponent, ComponentGetState>(GetCompState);
         SubscribeLocalEvent<AmbientSoundComponent, ComponentHandleState>(HandleCompState);
+        _query = GetEntityQuery<AmbientSoundComponent>();
     }
 
     public virtual void SetAmbience(EntityUid uid, bool value, AmbientSoundComponent? ambience = null)
     {
-        if (!Resolve(uid, ref ambience, false) || ambience.Enabled == value)
+        if (!_query.Resolve(uid, ref ambience, false) || ambience.Enabled == value)
             return;
 
         ambience.Enabled = value;
@@ -24,7 +27,7 @@ public abstract class SharedAmbientSoundSystem : EntitySystem
 
     public virtual void SetRange(EntityUid uid, float value, AmbientSoundComponent? ambience = null)
     {
-        if (!Resolve(uid, ref ambience, false) || MathHelper.CloseToPercent(ambience.Range, value))
+        if (!_query.Resolve(uid, ref ambience, false) || MathHelper.CloseToPercent(ambience.Range, value))
             return;
 
         ambience.Range = value;
@@ -39,7 +42,7 @@ public abstract class SharedAmbientSoundSystem : EntitySystem
 
     public virtual void SetVolume(EntityUid uid, float value, AmbientSoundComponent? ambience = null)
     {
-        if (!Resolve(uid, ref ambience, false) || MathHelper.CloseToPercent(ambience.Volume, value))
+        if (!_query.Resolve(uid, ref ambience, false) || MathHelper.CloseToPercent(ambience.Volume, value))
             return;
 
         ambience.Volume = value;
@@ -48,7 +51,7 @@ public abstract class SharedAmbientSoundSystem : EntitySystem
 
     public virtual void SetSound(EntityUid uid, SoundSpecifier sound, AmbientSoundComponent? ambience = null)
     {
-        if (!Resolve(uid, ref ambience, false) || ambience.Sound == sound)
+        if (!_query.Resolve(uid, ref ambience, false) || ambience.Sound == sound)
             return;
 
         ambience.Sound = sound;
