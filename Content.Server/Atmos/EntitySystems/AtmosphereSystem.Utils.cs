@@ -78,12 +78,13 @@ public partial class AtmosphereSystem
             if (!_airtightQuery.TryGetComponent(ent, out var airtight))
                 continue;
 
+            fixVacuum |= airtight.FixVacuum;
+
             if(!airtight.AirBlocked)
                 continue;
 
             blockedDirs |= airtight.AirBlockedDirection;
             noAirWhenBlocked |= airtight.NoAirWhenFullyAirBlocked;
-            fixVacuum |= airtight.FixVacuum;
 
             if (blockedDirs == AtmosDirection.All && noAirWhenBlocked && fixVacuum)
                 break;
