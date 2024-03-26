@@ -478,12 +478,18 @@
 
 - type: entity
   name: pet rock carrier
-  parent: HappyHonk
+  parent: BaseStorageItem
   id: PetRockCarrier
   description: A home for the bestest pets in the galaxy!
   components:
+  - type: Sprite
+    sprite: Objects/Fun/pet_rock_box.rsi
+    state: icon
   - type: Item
     size: Normal
+  - type: Storage
+    grid:
+    - 0,0,1,1
   - type: StorageFill
     contents:
       - id: NormalRock
@@ -496,9 +502,5 @@
       - id: RoxieRock
         amount: 1
         prob: 0.3
-  - type: Storage
-    grid:
-    - 0,0,1,1
-  - type: Sprite
-    sprite: Objects/Fun/pet_rock_box.rsi
-    state: box
+
+

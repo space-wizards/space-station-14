@@ -214,7 +214,7 @@
     sprite: Objects/Fun/pet_rock.rsi
     state: fred
   product: CratePetRocks
-  cost: 500
+  cost: 1500
   category: cargoproduct-category-name-fun
   group: market
 

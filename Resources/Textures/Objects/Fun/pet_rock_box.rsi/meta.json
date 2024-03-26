@@ -8,18 +8,18 @@
   },
   "states": [
     {
-      "name": "box"
-    },
-    {
-      "name": "box-open"
-    },
-    {
-      "name": "box-inhand-left",
+      "name": "inhand-left",
       "directions": 4
     },
     {
-      "name": "box-inhand-right",
+      "name": "inhand-right",
       "directions": 4
+    },
+    {
+        "name": "icon"
+    },
+    {
+        "name": "icon-open"
     }
   ]
 }
