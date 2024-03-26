@@ -104,7 +104,6 @@
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
   - type: Airtight
-    fixVacuum: true
     noAirWhenFullyAirBlocked: false
   - type: RadiationBlocker
     resistance: 3
