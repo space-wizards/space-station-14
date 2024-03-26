@@ -4,7 +4,7 @@
   text: "/ServerInfo/Guidebook/Chemicals.xml"
   children:
   - Elements
-  - Medicinal
+  - Medicine
   - Narcotics
   - Pyrotechnic
   - Toxins
@@ -21,9 +21,9 @@
   filterEnabled: True
 
 - type: guideEntry
-  id: Medicinal
-  name: guide-entry-medicinal
-  text: "/ServerInfo/Guidebook/ChemicalTabs/Medicinal.xml"
+  id: ChemicalsMedicine
+  name: guide-entry-chemicalsmedicine
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Medicine.xml"
   filterEnabled: True
 
 - type: guideEntry
