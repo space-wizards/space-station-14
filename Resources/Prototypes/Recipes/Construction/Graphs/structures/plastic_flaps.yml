@@ -13,6 +13,7 @@
           - material: Plastic
             amount: 5
             doAfter: 10
+
   - node: plasticFlaps
     entity: PlasticFlapsClear
     edges:
@@ -23,4 +24,74 @@
             amount: 5
         steps:
           - tool: Anchoring
+            doAfter: 10
+
+      - to: opaqueFlaps
+        completed:
+          - !type:SnapToGrid { }
+        steps:
+          - tool: Welding
+            doAfter: 5
+
+      - to: airtightFlaps
+        completed:
+          - !type:SnapToGrid { }
+        steps:
+          - material: Plastic
+            amount: 5
+            doAfter: 5
+          - tool: Screwing
+            doAfter: 5
+
+  - node: opaqueFlaps
+    entity: PlasticFlapsOpaque
+    edges:
+      - to: start
+        completed:
+          - !type:SpawnPrototype
+            prototype: SheetPlastic
+            amount: 5
+        steps:
+          - tool: Anchoring
+            doAfter: 10
+
+      - to: airtightopaqueFlaps
+        completed:
+          - !type:SnapToGrid { }
+        steps:
+          - material: Plastic
+            amount: 5
+            doAfter: 5
+          - tool: Screwing
+            doAfter: 5
+
+  - node: airtightFlaps
+    entity: PlasticFlapsAirtightClear
+    edges:
+      - to: plasticFlaps
+        completed:
+          - !type:SpawnPrototype
+            prototype: SheetPlastic
+            amount: 5
+        steps:
+          - tool: Screwing
+            doAfter: 10
+
+      - to: airtightopaqueFlaps #test
+        completed:
+          - !type:SnapToGrid { }
+        steps:
+          - tool: Welding
+            doAfter: 5
+
+  - node: airtightopaqueFlaps
+    entity: PlasticFlapsAirtightOpaque
+    edges:
+      - to: opaqueFlaps
+        completed:
+          - !type:SpawnPrototype
+            prototype: SheetPlastic
+            amount: 5
+        steps:
+          - tool: Screwing
             doAfter: 10
