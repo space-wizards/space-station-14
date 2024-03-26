@@ -211,8 +211,8 @@
 - type: cargoProduct
   id: FunPetRocks
   icon:
-    sprite: Objects/Fun/fred.rsi
-    state: icon
+    sprite: Objects/Fun/pet_rock.rsi
+    state: fred
   product: CratePetRocks
   cost: 500
   category: cargoproduct-category-name-fun
