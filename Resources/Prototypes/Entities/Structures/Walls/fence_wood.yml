@@ -12,7 +12,6 @@
           "/Audio/Weapons/boxingpunch1.ogg"
   - type: Tag
     tags:
-    - RCDDeconstructWhitelist
     - Wooden
   - type: Sprite
     sprite: Structures/Walls/wooden_fence.rsi
@@ -24,6 +23,10 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2
   - type: Destructible
     thresholds:
     - trigger:
