@@ -1882,7 +1882,7 @@
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: GhostRole
-    prob: 0.025
+    prob: 0.05
     makeSentient: true
     name: ghost-role-information-parrot-name
     description: ghost-role-information-parrot-description
