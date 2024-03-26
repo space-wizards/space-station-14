@@ -8,7 +8,7 @@
   - type: Item
     size: Tiny
   - type: Sprite
-    sprite: Objects/Weapons/Throwable/rock.rsi
+    sprite: Objects/Weapons/Throwable/pet_rock.rsi
     state: icon
   - type: EmitSoundOnCollide
     sound:

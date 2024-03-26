@@ -1519,7 +1519,8 @@
   description: The bestest pet rock boy in the galaxy!
   components:
   - type: Sprite
-    sprite: Objects/Fun/fred.rsi
+    sprite: Objects/Fun/pet_rock.rsi
+    state: fred
   - type: PhysicalComposition
     materialComposition:
       Steel: 10
@@ -1540,7 +1541,8 @@
   description: The bestest pet rock girl in the galaxy!
   components:
   - type: Sprite
-    sprite: Objects/Fun/roxie.rsi
+    sprite: Objects/Fun/pet_rock.rsi
+    state: roxie
   - type: PhysicalComposition
     materialComposition:
       Steel: 10

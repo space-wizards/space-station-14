@@ -11,6 +11,12 @@
         "name": "icon"
       },
       {
+        "name": "fred"
+      },
+      {
+        "name": "roxie"
+      },
+      {
         "name": "inhand-right",
         "directions": 4
       },
