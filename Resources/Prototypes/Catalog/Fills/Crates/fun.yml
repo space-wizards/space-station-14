@@ -398,6 +398,3 @@
     contents:
     - id: PetRockCarrier
       amount: 5
-    - id: PetRockCarrier
-      amount: 2
-      prob: 0.3

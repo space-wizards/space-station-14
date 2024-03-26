@@ -1585,7 +1585,7 @@
   id: NamedPetRock
   name: pet rock
   suffix: Random Name
-  description:
+  description: Don't worry, this rock is your friend.
   components:
   - type: RandomMetadata # He's your best friend.
     nameSegments:
