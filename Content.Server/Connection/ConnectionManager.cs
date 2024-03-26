@@ -363,32 +363,32 @@ namespace Content.Server.Connection
                         throw new NotImplementedException($"Whitelist condition {condition.GetType().Name} not implemented");
                 }
 
-                sawmill.Debug($"User {data.UserName} whitelist condition {condition.GetType().Name} result: {matched}");
-                sawmill.Debug($"Action: {condition.Action.ToString()}");
+                sawmill.Verbose($"User {data.UserName} whitelist condition {condition.GetType().Name} result: {matched}");
+                sawmill.Verbose($"Action: {condition.Action.ToString()}");
 
                 switch (condition.Action)
                 {
                     case ConditionAction.Allow:
                         if (matched)
                         {
-                            sawmill.Debug($"User {data.UserName} passed whitelist condition {condition.GetType().Name} and it's a breaking condition");
+                            sawmill.Verbose($"User {data.UserName} passed whitelist condition {condition.GetType().Name} and it's a breaking condition");
                             return (true, denyMessage);
                         }
                         break;
                     case ConditionAction.Deny:
                         if (matched)
                         {
-                            sawmill.Debug($"User {data.UserName} failed whitelist condition {condition.GetType().Name}");
+                            sawmill.Verbose($"User {data.UserName} failed whitelist condition {condition.GetType().Name}");
                             return (false, denyMessage);
                         }
                         break;
                     default:
-                        sawmill.Debug($"User {data.UserName} failed whitelist condition {condition.GetType().Name} but it's not a breaking condition");
+                        sawmill.Verbose($"User {data.UserName} failed whitelist condition {condition.GetType().Name} but it's not a breaking condition");
                         break;
                 }
             }
 
-            sawmill.Debug($"User {data.UserName} passed all whitelist conditions");
+            sawmill.Verbose($"User {data.UserName} passed all whitelist conditions");
             return (true, null);
         }
 
