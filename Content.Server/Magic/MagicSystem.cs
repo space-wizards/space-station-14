@@ -42,6 +42,12 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.Mind;
 using Content.Shared.StatusEffect;
 using Content.Server.Polymorph.Systems;
+using Content.Server.Chemistry.ReagentEffects;
+using SQLitePCL;
+using Content.Server;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Magic;
 
@@ -76,13 +82,17 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly PolymorphSystem _polymorph = default!;
-
+    [Dependency] private readonly DamageableSystem _damaging = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
 
 
 
     public override void Initialize()
     {
         base.Initialize();
+
+
 
         SubscribeLocalEvent<SpellbookComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<SpellbookComponent, UseInHandEvent>(OnUse);
@@ -103,6 +113,7 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<SwapSpellEvent>(OnSwapSpell);
         SubscribeLocalEvent<ClownifySpellEvent>(OnClownifySpell);
         SubscribeLocalEvent<DevolveSpellEvent>(OnDevolveSpell);
+        SubscribeLocalEvent<HealSpellEvent>(OnHealSpell);
     }
 
     private void OnDoAfter(EntityUid uid, SpellbookComponent component, DoAfterEvent args)
@@ -601,6 +612,36 @@ public sealed class MagicSystem : EntitySystem
         Speak(ev);
 
         _polymorph.PolymorphEntity(ev.Target, "ArtifactMonkey");
+    }
+
+    private void OnHealSpell(HealSpellEvent ev)
+    {
+        if (ev.Handled)
+            return;
+
+        ev.Handled = true;
+        Speak(ev);
+        var healBlunt = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Blunt"), -30);
+        var healSlash = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Slash"), -30);
+        var healPierce = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Piercing"), -30);
+        var healHeat = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Heat"), -30);
+        var healCold = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Cold"), -30);
+        var healPoison = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Poison"), -30);
+        var healRadiation = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Radiation"), -30);
+        var healAsphyxiation = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), -30);
+        var healBloodloss = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Bloodloss"), -30);
+        var healCell = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Cellular"), -30);
+        _damaging.TryChangeDamage(ev.Target, healBlunt);
+        _damaging.TryChangeDamage(ev.Target, healSlash);
+        _damaging.TryChangeDamage(ev.Target, healPierce);
+        _damaging.TryChangeDamage(ev.Target, healHeat);
+        _damaging.TryChangeDamage(ev.Target, healCold);
+        _damaging.TryChangeDamage(ev.Target, healPoison);
+        _damaging.TryChangeDamage(ev.Target, healRadiation);
+        _damaging.TryChangeDamage(ev.Target, healBloodloss);
+        _damaging.TryChangeDamage(ev.Target, healAsphyxiation);
+        _damaging.TryChangeDamage(ev.Target, healCell);
+        _bloodstream.TryModifyBleedAmount(ev.Target, -100);
     }
 
     #endregion

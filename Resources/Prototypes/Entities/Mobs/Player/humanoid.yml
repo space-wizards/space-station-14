@@ -506,11 +506,33 @@
     - type: RandomHumanoidSpawner
       settings: Wizard
 
+- type: entity
+  id: RandomHumanoidSpawnerWizardApprentice
+  name: wizard apprentice
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Human/parts.rsi
+      state: full
+    - type: RandomMetadata
+      nameSegments: [ names_wizard ]
+    - type: RandomHumanoidSpawner
+      settings: WizardApprentice
+
 - type: randomHumanoidSettings
   id: Wizard
   components:
     - type: Loadout
       prototypes: [WizardBlueGear]
+    - type: NpcFactionMember
+      factions:
+      - Wizard
+
+
+- type: randomHumanoidSettings
+  id: WizardApprentice
+  components:
+    - type: Loadout
+      prototypes: [WizardBlueGearApprentice]
     - type: NpcFactionMember
       factions:
       - Wizard
