@@ -27,7 +27,7 @@
     id: ParamedicPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalEMTFilled
+    pocket1: ParamedicHandheldCrewMonitor
   innerClothingSkirt: ClothingUniformJumpskirtParamedic
   satchel: ClothingBackpackSatchelParamedicFilled
   duffelbag: ClothingBackpackDuffelParamedicFilled
-  pocket1: ParamedicHandheldCrewMonitor
