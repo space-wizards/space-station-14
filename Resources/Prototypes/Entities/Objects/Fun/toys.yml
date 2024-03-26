@@ -1498,7 +1498,49 @@
         maxDistance: 3
 
 - type: entity
-  parent: BasePebble
+  name: rock
+  parent: BaseItem
+  id: BasePetRock
+  description: A normal rock.
+  abstract: true
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Fun/pet_rock.rsi
+    state: icon
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/hit_kick.ogg
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/pet_rock.rsi
+    slots:
+    - HEAD
+  - type: StaminaDamageOnCollide
+    damage: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 3
+
+- type: entity
+  parent: BasePetRock
+  id: NormalRock
+  name: rock
+  description: A perfectly shaped throwing rock. Bonk!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pet_rock.rsi
+    state: icon
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 10
+  - type: StaticPrice
+    price: 1
+
+- type: entity
+  parent: BasePetRock
   id: PetRock
   name: pet rock
   description: The perfect pet!
@@ -1513,7 +1555,7 @@
     price: 1
 
 - type: entity
-  parent: BasePebble
+  parent: BasePetRock
   id: FredRock
   name: fred
   description: The bestest pet rock boy in the galaxy!
@@ -1535,7 +1577,7 @@
     price: 5
 
 - type: entity
-  parent: BasePebble
+  parent: BasePetRock
   id: RoxieRock
   name: roxie
   description: The bestest pet rock girl in the galaxy!

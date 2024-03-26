@@ -475,3 +475,30 @@
     layers:
       - state: box
       - state: darts
+
+- type: entity
+  name: pet rock carrier
+  parent: HappyHonk
+  id: PetRockCarrier
+  description: A home for the bestest pets in the galaxy!
+  components:
+  - type: Item
+    size: Normal
+  - type: StorageFill
+    contents:
+      - id: NormalRock
+        amount: 1
+      - id: PetRock
+        amount: 1
+      - id: FredRock
+        amount: 1
+        prob: 0.3
+      - id: RoxieRock
+        amount: 1
+        prob: 0.3
+  - type: Storage
+    grid:
+    - 0,0,1,1
+  - type: Sprite
+    sprite:
+    state:
