@@ -190,6 +190,7 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
+      - id: ParamedicHandheldCrewMonitor
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -210,6 +211,7 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
+      - id: ParamedicHandheldCrewMonitor
 
 - type: entity
   id: LockerResearchDirectorFilledHardsuit
