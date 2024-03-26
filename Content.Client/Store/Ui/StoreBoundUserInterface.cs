@@ -1,10 +1,6 @@
 using Content.Shared.Store;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using System.Linq;
-using System.Threading;
-using Serilog;
-using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Store.Ui;
 
@@ -42,11 +38,6 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         _menu.OnWithdrawAttempt += (_, type, amount) =>
         {
             SendMessage(new StoreRequestWithdrawMessage(type, amount));
-        };
-
-        _menu.OnRefreshButtonPressed += (_) =>
-        {
-            SendMessage(new StoreRequestUpdateInterfaceMessage());
         };
 
         _menu.OnRefundAttempt += (_) =>
