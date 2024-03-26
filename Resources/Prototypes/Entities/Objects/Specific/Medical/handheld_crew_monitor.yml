@@ -1,10 +1,9 @@
 - type: entity
+  abstract: true
   name: handheld crew monitor
-  suffix: DO NOT MAP
   parent:
   - BaseItem
   - PowerCellSlotSmallItem
-  # CMO-only bud, don't add more.
   id: HandheldCrewMonitor
   description: A hand-held crew monitor displaying the status of suit sensors.
   components:
@@ -23,6 +22,7 @@
       - key: enum.CrewMonitoringUIKey.Key
         type: CrewMonitoringBoundUserInterface
   - type: CrewMonitoringConsole
+    playNoise: true
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
@@ -31,6 +31,13 @@
   - type: StationLimitedNetwork
   - type: StaticPrice
     price: 500
+
+- type: entity
+  name: cmo's handheld crew monitor
+  parent: HandheldCrewMonitor
+  suffix: DO NOT MAP
+  id: CMOHandheldCrewMonitor
+  components:
   - type: Tag
     tags:
     - HighRiskItem
@@ -38,8 +45,55 @@
     stealGroup: HandheldCrewMonitor
 
 - type: entity
-  id: HandheldCrewMonitorEmpty
+  id: CMOHandheldCrewMonitorEmpty
+  parent: CMOHandheldCrewMonitor
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+
+- type: entity
+  name: paramedic handheld crew monitor
   parent: HandheldCrewMonitor
+  id: ParamedicHandheldCrewMonitor
+  description: A paramedic-specific hand-held crew monitor displaying the status of suit sensors. It only shows crew in a critical state or already dead.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
+    state: paramedic
+  - type: CrewMonitoringConsole
+    showConsciousListings: false
+    playNoise: true
+
+- type: entity
+  id: ParamedicHandheldCrewMonitorEmpty
+  parent: ParamedicHandheldCrewMonitor
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+
+- type: entity
+  name: security handheld crew monitor
+  parent: HandheldCrewMonitor
+  id: SecurityHandheldCrewMonitor
+  description: A security-specific hand-held crew monitor displaying the status of suit sensors.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
+    state: security
+  - type: CrewMonitoringConsole
+    trackedDepartments:
+      - Command
+      - Security
+
+- type: entity
+  id: SecurityHandheldCrewMonitorEmpty
+  parent: SecurityHandheldCrewMonitor
   suffix: Empty
   components:
   - type: ItemSlots

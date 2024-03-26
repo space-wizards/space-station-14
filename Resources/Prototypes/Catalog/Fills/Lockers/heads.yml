@@ -274,6 +274,7 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
+      - id: SecurityHandheldCrewMonitor
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -298,6 +299,7 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
+      - id: SecurityHandheldCrewMonitor
 
 - type: entity
   id: LockerFreezerVaultFilled

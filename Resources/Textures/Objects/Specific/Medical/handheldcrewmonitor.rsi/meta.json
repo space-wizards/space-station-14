@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/commit/ab4abf318f293a701754656dd4e9261eb70f8824#diff-9ab5c8a5e47ab7cfaeadd859a23e32b05de1fe839e99ea767fd7e340b6385d67",
+    "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/commit/ab4abf318f293a701754656dd4e9261eb70f8824#diff-9ab5c8a5e47ab7cfaeadd859a23e32b05de1fe839e99ea767fd7e340b6385d67, paramedic & security versions by rosieposieeee (github)",
     "states": [
         {
             "name": "scanner",
@@ -16,6 +16,34 @@
                     0.4
                 ]
             ]
+        },
+        {
+            "name": "paramedic",
+            "directions": 1,
+            "delays": [
+                [
+                    0.4,
+                    0.4
+                ]
+            ]
+        },
+        {
+            "name": "security",
+            "directions": 1,
+            "delays": [
+                [
+                    0.4,
+                    0.4
+                ]
+            ]
+        },
+        {
+            "name": "paramedic_icon",
+            "directions": 1
+        },
+        {
+            "name": "security_icon",
+            "directions": 1
         },
         {
             "name": "icon",

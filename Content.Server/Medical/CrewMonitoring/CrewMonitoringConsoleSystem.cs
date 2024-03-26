@@ -67,8 +67,58 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         if (xform.GridUid != null)
             EnsureComp<NavMapComponent>(xform.GridUid.Value);
 
-        // Update all sensors info
+        // Get all sensors info
         var allSensors = component.ConnectedSensors.Values.ToList();
-        _uiSystem.SetUiState(bui, new CrewMonitoringState(allSensors));
+        // The sensors we will be outputting to the monitor
+        var outputSensors = new List<SuitSensorStatus>();
+
+        foreach (var listing in allSensors)
+        {
+            // Check to ensure this listing is in one of our tracked departments or roles
+            var is_valid_role = false;
+            foreach (var department in component.TrackedDepartments)
+            {
+
+                if (listing.JobDepartments.Contains(department) || department == "All")
+                {
+                    is_valid_role = true;
+                    break;
+                }
+            }
+            foreach (var job in component.TrackedJobs)
+            {
+                if (listing.Job == job)
+                {
+                    is_valid_role = true;
+                    break;
+                }
+            }
+
+
+            if (is_valid_role)
+            {
+                // Only add conscious listings if we're supposed to
+                var is_valid_listing = false;
+                if (component.ShowConsciousListings)
+                {
+                    is_valid_listing = true;
+                }
+                else
+                {
+                    if (listing.TotalDamage > 100)
+                    {
+                        is_valid_listing = true;
+                    }
+                }
+
+                if (is_valid_listing)
+                {
+                    outputSensors.Add(listing);
+                }
+            }
+        }
+
+        _uiSystem.SetUiState(bui, new CrewMonitoringState(outputSensors));
+
     }
 }
