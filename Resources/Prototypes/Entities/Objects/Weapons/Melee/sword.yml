@@ -95,8 +95,8 @@
   - type: Wieldable
   - type: GunRequiresWield
   - type: Item
-    size: Ginormous
-    sprite: Objects/Weapons/Melee/spellsword.rsi
+    size: Normal
+    sprite: Objects/Weapons/Melee/spellblade.rsi
   - type: DisarmMalus
 
 
