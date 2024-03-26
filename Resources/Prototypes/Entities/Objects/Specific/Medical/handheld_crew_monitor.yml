@@ -4,7 +4,7 @@
   parent:
   - BaseItem
   - PowerCellSlotSmallItem
-  id: HandheldCrewMonitor
+  id: BaseHandheldCrewMonitor
   description: A hand-held crew monitor displaying the status of suit sensors.
   components:
   - type: Sprite
@@ -34,7 +34,7 @@
 
 - type: entity
   name: cmo's handheld crew monitor
-  parent: HandheldCrewMonitor
+  parent: BaseHandheldCrewMonitor
   suffix: DO NOT MAP
   id: CMOHandheldCrewMonitor
   components:
@@ -56,7 +56,7 @@
 
 - type: entity
   name: paramedic handheld crew monitor
-  parent: HandheldCrewMonitor
+  parent: BaseHandheldCrewMonitor
   id: ParamedicHandheldCrewMonitor
   description: A paramedic-specific hand-held crew monitor displaying the status of suit sensors. It only shows crew in a critical state or already dead.
   components:
@@ -79,7 +79,7 @@
 
 - type: entity
   name: security handheld crew monitor
-  parent: HandheldCrewMonitor
+  parent: BaseHandheldCrewMonitor
   id: SecurityHandheldCrewMonitor
   description: A security-specific hand-held crew monitor displaying the status of suit sensors.
   components:

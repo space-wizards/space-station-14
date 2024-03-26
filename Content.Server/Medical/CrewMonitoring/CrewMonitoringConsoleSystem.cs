@@ -75,13 +75,13 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         foreach (var listing in allSensors)
         {
             // Check to ensure this listing is in one of our tracked departments or roles
-            var is_valid_role = false;
+            var isValidRole = false;
             foreach (var department in component.TrackedDepartments)
             {
 
                 if (listing.JobDepartments.Contains(department) || department == "All")
                 {
-                    is_valid_role = true;
+                    isValidRole = true;
                     break;
                 }
             }
@@ -89,13 +89,13 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
             {
                 if (listing.Job == job)
                 {
-                    is_valid_role = true;
+                    isValidRole = true;
                     break;
                 }
             }
 
 
-            if (is_valid_role)
+            if (isValidRole)
             {
                 // Only add conscious listings if we're supposed to
                 var is_valid_listing = false;
