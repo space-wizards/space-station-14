@@ -4,6 +4,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.PowerCell;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Medical.SuitSensor;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
 
@@ -13,6 +14,7 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
 {
     [Dependency] private readonly PowerCellSystem _cell = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -98,20 +100,20 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
             if (isValidRole)
             {
                 // Only add conscious listings if we're supposed to
-                var is_valid_listing = false;
+                var isValidListing = false;
                 if (component.ShowConsciousListings)
                 {
-                    is_valid_listing = true;
+                    isValidListing = true;
                 }
                 else
                 {
-                    if (listing.TotalDamage > 100)
+                    if (_mobState.IsCritical(uid) || _mobState.IsDead(uid) || _mobState.IsIncapacitated(uid))
                     {
-                        is_valid_listing = true;
+                        isValidListing = true;
                     }
                 }
 
-                if (is_valid_listing)
+                if (isValidListing)
                 {
                     outputSensors.Add(listing);
                 }
