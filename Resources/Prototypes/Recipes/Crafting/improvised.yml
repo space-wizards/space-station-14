@@ -214,3 +214,16 @@
     sprite: Clothing/Head/Hats/straw_hat.rsi
     state: icon
   objectType: Item
+
+- type: construction
+  name: coin
+  id: supermurderCoin
+  graph: SupermurderCoin
+  startNode: start
+  targetNode: coin
+  category: construction-category-weapons
+  description: A coin that reflects all bullets to the nearest target. Single use only.
+  icon:
+    sprite: Objects/Weapons/Throwable/coin.rsi
+    state: icon
+  objectType: Item

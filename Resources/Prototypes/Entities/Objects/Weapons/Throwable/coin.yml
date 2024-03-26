@@ -22,6 +22,7 @@
         mask:
         - ItemMask
         layer:
-        - ThrownItem
+        - BulletImpassable
+        - Opaque
         restitution: 0.3
         friction: 0.2
