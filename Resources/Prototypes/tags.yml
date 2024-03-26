@@ -1158,6 +1158,9 @@
   id: SpiderCraft
 
 - type: Tag
+  id: WizardNonApprentice
+
+- type: Tag
   id: SpookyFog
 
 - type: Tag
