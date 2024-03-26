@@ -361,4 +361,4 @@
     icon: Interface/Actions/web.png
     iconOn: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
     event: !type:TwoHandWieldingActionEvent
-    useDelay: 10
+    useDelay: 2

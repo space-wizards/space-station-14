@@ -37,11 +37,9 @@ public sealed class WieldableSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
         SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
         SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
-        SubscribeLocalEvent<WieldableComponent, GetVerbsEvent<InteractionVerb>>(AddToggleWieldVerb);
 
         SubscribeLocalEvent<MeleeRequiresWieldComponent, AttemptMeleeEvent>(OnMeleeAttempt);
         SubscribeLocalEvent<GunRequiresWieldComponent, AttemptShootEvent>(OnShootAttempt);
@@ -101,29 +99,6 @@ public sealed class WieldableSystem : EntitySystem
         }
     }
 
-    private void AddToggleWieldVerb(EntityUid uid, WieldableComponent component, GetVerbsEvent<InteractionVerb> args)
-    {
-        if (args.Hands == null || !args.CanAccess || !args.CanInteract)
-            return;
-
-        if (!_handsSystem.IsHolding(args.User, uid, out _, args.Hands))
-            return;
-
-        // TODO VERB TOOLTIPS Make CanWield or some other function return string, set as verb tooltip and disable
-        // verb. Or just don't add it to the list if the action is not executable.
-
-        // TODO VERBS ICON
-        InteractionVerb verb = new()
-        {
-            Text = component.Wielded ? Loc.GetString("wieldable-verb-text-unwield") : Loc.GetString("wieldable-verb-text-wield"),
-            Act = component.Wielded
-                ? () => TryUnwield(uid, component, args.User)
-                : () => TryWield(uid, component, args.User)
-        };
-
-        args.Verbs.Add(verb);
-    }
-
     private void OnUseInHand(EntityUid uid, WieldableComponent component, UseInHandEvent args)
     {
         if (args.Handled)
@@ -155,14 +130,12 @@ public sealed class WieldableSystem : EntitySystem
 
     private void OnActionPerform(EntityUid uid, WieldableComponent component, TwoHandWieldingActionEvent args)
     {
-        Log.Debug($"on action click!");
+        if (!component.Wielded)
+            args.Handled = TryWield(uid, component, args.Performer);
+        else
+            args.Handled = TryUnwield(uid, component, args.Performer);
 
-        // if (!component.Wielded)
-        //     args.Handled = TryWield(uid, component, args.);
-        // else
-        //     args.Handled = TryUnwield(uid, component, args.User);
-
-        _actionsSystem.SetToggled(component.TwoHandWieldingEntity, false);
+        _actionsSystem.SetToggled(component.TwoHandWieldingEntity, component.Wielded);
     }
 
     public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet = false)
