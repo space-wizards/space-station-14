@@ -94,15 +94,15 @@ public sealed class PryingSystem : EntitySystem
         id = null;
 
         // We don't care about displaying a message if no tool was used.
-        if (!CanPry(target, user, out _))
+        if (!TryComp<PryUnpoweredComponent>(target, out var unpoweredComp) || !CanPry(target, user, out _, unpoweredComp: unpoweredComp))
             // If we have reached this point we want the event that caused this
             // to be marked as handled.
             return true;
 
-        return StartPry(target, user, null, 0.1f, out id); // hand-prying is much slower
+        return StartPry(target, user, null, unpoweredComp.PryModifier, out id);
     }
 
-    private bool CanPry(EntityUid target, EntityUid user, out string? message, PryingComponent? comp = null)
+    private bool CanPry(EntityUid target, EntityUid user, out string? message, PryingComponent? comp = null, PryUnpoweredComponent? unpoweredComp = null)
     {
         BeforePryEvent canev;
 
@@ -112,7 +112,7 @@ public sealed class PryingSystem : EntitySystem
         }
         else
         {
-            if (!TryComp<PryUnpoweredComponent>(target, out _))
+            if (!Resolve(target, ref unpoweredComp))
             {
                 message = null;
                 return false;
