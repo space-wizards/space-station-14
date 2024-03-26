@@ -51,7 +51,7 @@
             min: 1
             max: 2
   - type: WallMount
-    Arc: 360
+    arc: 360
         
 - type: entity
   id: HospitalCurtains
