@@ -32,7 +32,7 @@ namespace Content.Server.Atmos.Components
         /// <summary>
         /// If true, entities on this tile will attempt to draw air from surrounding tiles when they become unblocked
         /// and currently have no air. This is generally only required when <see cref="NoAirWhenFullyAirBlocked"/> is
-        /// true.
+        /// true, or if the entity is likely to occupy the same tile as another no-air airtight entity.
         /// </summary>
         [DataField]
         public bool FixVacuum { get; set; } = true;
