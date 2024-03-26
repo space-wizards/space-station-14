@@ -3,7 +3,7 @@
 namespace Content.Shared.Medical.Consciousness.Components;
 
 
-[RegisterComponent, Access(typeof(ConsciousnessSystem))]
+[RegisterComponent, Access(typeof(ConsciousnessSystem)), AutoGenerateComponentState]
 public sealed partial class ConsciousnessProviderComponent : Component
 {
     [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
