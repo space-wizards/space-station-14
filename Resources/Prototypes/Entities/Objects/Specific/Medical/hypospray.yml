@@ -407,8 +407,6 @@
         maxVol: 10
   - type: RefillableSolution
     solution: hypospray
-  - type: ExaminableSolution
-    solution: hypospray
   - type: Hypospray
     onlyMobs: false
   - type: UseDelay
