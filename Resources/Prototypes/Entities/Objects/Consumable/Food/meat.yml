@@ -377,12 +377,12 @@
       food:
         reagents:
         - ReagentId: Ichor
-          Quantity: 2
+          Quantity: 10
   - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: Ichor
-        Quantity: 2
+        Quantity: 10
 
 - type: entity
   name: raw rat meat
@@ -400,6 +400,9 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 3
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatCutlet
 
 - type: entity
   name: raw lizard meat
@@ -452,7 +455,7 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-        - ReagentId: Toxin
+        - ReagentId: GastroToxin
           Quantity: 4
         - ReagentId: Fat
           Quantity: 4
@@ -715,6 +718,7 @@
     tags:
     - Cooked
     - Meat
+    - Steak
   - type: Sprite
     layers:
     - state: plain-cooked
@@ -751,7 +755,6 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           bacon-cooked: ""
-      - enum.DamageStateVisualLayers.Base:
           bacon2-cooked: ""
   - type: SolutionContainerManager
     solutions:
@@ -775,6 +778,7 @@
     tags:
     - Cooked
     - Meat
+    - Steak
   - type: Sprite
     layers:
     - state: product-cooked
@@ -867,7 +871,6 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           chicken-fried: ""
-      - enum.DamageStateVisualLayers.Base:
           chicken2-fried: ""
   - type: SolutionContainerManager
     solutions:
@@ -944,6 +947,7 @@
     tags:
     - Cooked
     - Meat
+    - Steak
   - type: Sprite
     layers:
     - state: goliath-cooked
@@ -973,6 +977,7 @@
     tags:
     - Cooked
     - Meat
+    - Steak
   - type: Sprite
     layers:
     - state: rouny-cooked
@@ -998,6 +1003,7 @@
     tags:
     - Cooked
     - Meat
+    - Steak
   - type: Sprite
     layers:
     - state: lizard-cooked

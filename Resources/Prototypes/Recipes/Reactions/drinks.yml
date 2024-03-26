@@ -324,14 +324,14 @@
     GinTonic: 3
 
 - type: reaction
-  id: Goldschlager
+  id: Gildlager
   reactants:
     Gold:
       amount: 1
     Vodka:
       amount: 10
   products:
-    Goldschlager: 10
+    Gildlager: 10
 
 - type: reaction
   id: Grog
@@ -454,11 +454,11 @@
   id: IrishCoffee
   reactants:
     Coffee:
-      amount: 2
+      amount: 1
     IrishCream:
-      amount: 2
+      amount: 1
   products:
-    IrishCoffee: 4
+    IrishCoffee: 2
 
 - type: reaction
   id: IrishCream

@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork.Components;
-using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Database;
@@ -13,6 +12,7 @@ using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.Audio;
@@ -255,7 +255,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     /// </summary>
     private void UpdateModeAppearance(EntityUid userUid, EntityUid configuratorUid, NetworkConfiguratorComponent configurator)
     {
-        Dirty(configurator);
+        Dirty(configuratorUid, configurator);
         _appearanceSystem.SetData(configuratorUid, NetworkConfiguratorVisuals.Mode, configurator.LinkModeActive);
 
         var pitch = configurator.LinkModeActive ? 1 : 0.8f;
@@ -532,6 +532,13 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     /// </summary>
     private void OnUiClosed(EntityUid uid, NetworkConfiguratorComponent component, BoundUIClosedEvent args)
     {
+        if (!args.UiKey.Equals(NetworkConfiguratorUiKey.Configure)
+            && !args.UiKey.Equals(NetworkConfiguratorUiKey.Link)
+            && !args.UiKey.Equals(NetworkConfiguratorUiKey.List))
+        {
+            return;
+        }
+
         if (TryComp(component.ActiveDeviceList, out DeviceListComponent? list))
         {
             list.Configurators.Remove(uid);

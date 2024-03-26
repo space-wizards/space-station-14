@@ -1,0 +1,29 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         xmlns:system="clr-namespace:System;assembly=System.Runtime"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+         Margin="0 0 0 8">
+    <PanelContainer StyleClasses="AngleRect" ModulateSelfOverride="#2b2b31"/>
+    <BoxContainer Orientation="Vertical" SetHeight="60">
+        <Control HorizontalExpand="True" SetHeight="27">
+            <PanelContainer>
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BorderColor="#3B3E56" BorderThickness="0 0 0 1"/>
+                </PanelContainer.PanelOverride>
+            </PanelContainer>
+            <Label Name="TitleLabel" Margin="12 0 6 0" HorizontalAlignment="Left"/>
+        </Control>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label FontColorOverride="#b1b1b2" StyleClasses="LabelSmall" Name="AuthorLabel" Margin="14 6 6 6"/>
+            <Control HorizontalExpand="True"/>
+            <Label FontColorOverride="#b1b1b2" StyleClasses="LabelSmall" Name="PublishTimeLabel" Margin="6 6 6 6"/>
+            <controls:ConfirmButton Name="DeleteButton" Text="{Loc news-write-ui-delete-text}"
+                    HorizontalAlignment="Right" Margin="8 6 6 6" SetHeight="19" SetWidth="52" Access="Public">
+                <Button.StyleClasses>
+                    <system:String>ButtonSmall</system:String>
+                    <system:String>ButtonColorRed</system:String>
+                </Button.StyleClasses>
+            </controls:ConfirmButton>
+        </BoxContainer>
+    </BoxContainer>
+</Control>

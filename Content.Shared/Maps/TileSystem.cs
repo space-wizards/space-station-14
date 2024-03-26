@@ -26,11 +26,28 @@ public sealed class TileSystem : EntitySystem
     /// </summary>
     public byte PickVariant(ContentTileDefinition tile)
     {
+        return PickVariant(tile, _robustRandom.GetRandom());
+    }
+
+    /// <summary>
+    ///     Returns a weighted pick of a tile variant.
+    /// </summary>
+    public byte PickVariant(ContentTileDefinition tile, int seed)
+    {
+        var rand = new System.Random(seed);
+        return PickVariant(tile, rand);
+    }
+
+    /// <summary>
+    ///     Returns a weighted pick of a tile variant.
+    /// </summary>
+    public byte PickVariant(ContentTileDefinition tile, System.Random random)
+    {
         var variants = tile.PlacementVariants;
 
         var sum = variants.Sum();
         var accumulated = 0f;
-        var rand = _robustRandom.NextFloat() * sum;
+        var rand = random.NextFloat() * sum;
 
         for (byte i = 0; i < variants.Length; ++i)
         {
@@ -42,6 +59,23 @@ public sealed class TileSystem : EntitySystem
 
         // Shouldn't happen
         throw new InvalidOperationException($"Invalid weighted variantize tile pick for {tile.ID}!");
+    }
+
+    /// <summary>
+    ///     Returns a tile with a weighted random variant.
+    /// </summary>
+    public Tile GetVariantTile(ContentTileDefinition tile, System.Random random)
+    {
+        return new Tile(tile.TileId, variant: PickVariant(tile, random));
+    }
+
+    /// <summary>
+    ///     Returns a tile with a weighted random variant.
+    /// </summary>
+    public Tile GetVariantTile(ContentTileDefinition tile, int seed)
+    {
+        var rand = new System.Random(seed);
+        return new Tile(tile.TileId, variant: PickVariant(tile, rand));
     }
 
     public bool PryTile(Vector2i indices, EntityUid gridId)
@@ -65,22 +99,7 @@ public sealed class TileSystem : EntitySystem
 
         var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.TypeId];
 
-        if (!tileDef.CanCrowbar && !(pryPlating && tileDef.CanAxe))
-            return false;
-
-        return DeconstructTile(tileRef);
-    }
-
-    public bool CutTile(TileRef tileRef)
-    {
-        var tile = tileRef.Tile;
-
-        if (tile.IsEmpty)
-            return false;
-
-        var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.TypeId];
-
-        if (!tileDef.CanWirecutter)
+        if (!tileDef.CanCrowbar)
             return false;
 
         return DeconstructTile(tileRef);
@@ -112,7 +131,7 @@ public sealed class TileSystem : EntitySystem
         return true;
     }
 
-    private bool DeconstructTile(TileRef tileRef)
+    public bool DeconstructTile(TileRef tileRef)
     {
         if (tileRef.Tile.IsEmpty)
             return false;

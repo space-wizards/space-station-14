@@ -1,4 +1,4 @@
-﻿- type: construction
+- type: construction
   name: baseball bat
   id: bat
   graph: WoodenBat
@@ -125,6 +125,19 @@
   objectType: Item
 
 - type: construction
+  name: flower wreath
+  id: flowerwreath
+  graph: flowerwreath
+  startNode: start
+  targetNode: flowerwreath
+  category: construction-category-clothing
+  description: "A wreath of colourful flowers."
+  icon:
+    sprite: Clothing/Neck/Misc/flower-wreath.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
   name: damp rag
   id: rag
   graph: Rag
@@ -151,6 +164,19 @@
     state: icon
 
 - type: construction
+  name: improvised shotgun shell
+  id: ShellShotgunImprovised
+  graph: ImprovisedShotgunShellGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a Barn
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: improvised
+
+- type: construction
   name: rifle stock
   id: riflestock
   graph: RifleStockGraph
@@ -164,11 +190,11 @@
     state: icon
 
 - type: construction
-  name: improvised explosive device
-  id: improvisedexplosive
-  graph: ImprovisedExplosive
+  name: fire bomb
+  id: firebomb
+  graph: FireBomb
   startNode: start
-  targetNode: ied
+  targetNode: firebomb
   category: construction-category-weapons
   objectType: Item
   description: A weak, improvised incendiary device.
@@ -188,3 +214,29 @@
     sprite: Objects/Materials/materials.rsi
     state: cloth_3
   objectType: Item
+
+- type: construction
+  name: straw hat
+  id: strawHat
+  graph: StrawHat
+  startNode: start
+  targetNode: strawhat
+  category: construction-category-clothing
+  description: A fancy hat for hot days! Not recommended to wear near fires.
+  icon:
+    sprite: Clothing/Head/Hats/straw_hat.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: pipe bomb
+  id: pipebomb
+  graph: PipeBomb
+  startNode: start
+  targetNode: pipebomb
+  category: construction-category-weapons
+  objectType: Item
+  description: An improvised explosive made from pipes and wire.
+  icon:
+    sprite: Objects/Weapons/Bombs/pipebomb.rsi
+    state: icon

@@ -65,7 +65,7 @@
           True: {state: stunbaton_on}
           False: {state: stunbaton_off}
   - type: StaticPrice
-    price: 100
+    price: 80
   - type: Riggable
   - type: SolutionContainerManager
     solutions:
@@ -97,11 +97,13 @@
     damage:
       types:
         Blunt: 20
+    soundHit:
+      collection: MetalThud
     bluntStaminaDamageFactor: 1.5
   - type: Item
     size: Normal
   - type: Clothing
-    sprite: Objects\Weapons\Melee\truncheon.rsi
+    sprite: Objects/Weapons/Melee/truncheon.rsi
     quickEquip: false
     slots:
     - Belt
@@ -109,7 +111,7 @@
     malus: 0.225
   - type: Appearance
   - type: StaticPrice
-    price: 100
+    price: 80
   - type: GuideHelp
     guides:
     - Security
@@ -179,7 +181,6 @@
       sound:
         path: /Audio/Weapons/flash.ogg
     - type: FlashOnTrigger
-      repeating: true
       range: 3
     - type: TriggerOnProximity
       enabled: true
@@ -187,6 +188,7 @@
       shape:
         !type:PhysShapeCircle
           radius: 2
+      repeating: true
     - type: Anchorable
     - type: Sprite
       sprite: Objects/Weapons/pflash.rsi

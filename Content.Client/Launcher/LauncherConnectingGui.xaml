@@ -33,10 +33,6 @@
                         <Button Name="ReconnectButton" Text="{Loc 'connecting-reconnect'}"
                                 HorizontalAlignment="Center"
                                 VerticalExpand="True" VerticalAlignment="Bottom" />
-                        <Button Name="RedialButton" Text="{Loc 'connecting-redial'}"
-                                Disabled="True"
-                                HorizontalAlignment="Center"
-                                VerticalExpand="True" VerticalAlignment="Bottom" />
                     </BoxContainer>
                 </Control>
                 <Label Name="ConnectingAddress" StyleClasses="LabelSubText" HorizontalAlignment="Center" />
@@ -54,4 +50,17 @@
             </BoxContainer>
         </BoxContainer>
     </Control>
+    <!-- Bottom window for tips -->
+    <PanelContainer Name="LoginTips" StyleClasses="AngleRect" Margin="0 10" MaxWidth="600" VerticalExpand="True" VerticalAlignment="Bottom">
+        <BoxContainer Orientation="Vertical" VerticalExpand="True">
+            <controls:StripeBack>
+                <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label Name="LoginTipTitle" Text="Tip" StyleClasses="LabelHeading" Align="Center"/>
+                </BoxContainer>
+            </controls:StripeBack>
+            <BoxContainer Orientation="Vertical" Margin="5 5 5 5" >
+                <RichTextLabel Name="LoginTip" VerticalExpand="True" />
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
 </Control>

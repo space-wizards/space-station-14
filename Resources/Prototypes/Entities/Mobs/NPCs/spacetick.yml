@@ -74,7 +74,6 @@
           Quantity: 5
   - type: MeleeChemicalInjector
     solution: melee
-  - type: GhostTakeoverAvailable
   - type: ReplacementAccent
     accent: genericAggressive
   - type: Speech
@@ -86,6 +85,5 @@
   parent: MobTick
   suffix: "Salvage Ruleset"
   components:
-  - type: GhostTakeoverAvailable
   - type: SalvageMobRestrictions
 

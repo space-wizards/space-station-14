@@ -110,8 +110,17 @@
 
 - type: material
   id: Coal
+  stackEntity: Coal1
   name: materials-coal
   unit: materials-unit-piece
   icon: { sprite: Objects/Materials/ore.rsi, state: coal }
   color: "#404040"
+  price: 0
+
+- type: material
+  id: Gunpowder
+  name: materials-gunpowder
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Misc/reagent_fillings.rsi, state: powderpile }
+  color: "#A9A9A9"
   price: 0

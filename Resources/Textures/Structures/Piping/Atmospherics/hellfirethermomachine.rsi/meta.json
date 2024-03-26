@@ -1,0 +1,38 @@
+{
+    "version":1,
+    "size":{"x":32,"y":32},
+    "copyright":"Base sprites taken from tgstation, split to display on two layers (machinebody/panel) by Menshin, and recolored and edited by EmoGarbage404 (github)",
+    "license":"CC-BY-SA-3.0",
+    "states":[
+        {
+            "name":"freezerOff",
+            "directions":1
+        },
+        {
+            "name":"freezerPanelOpen",
+            "directions":1
+        },
+        {
+            "name":"freezerOn",
+            "directions":1,
+            "delays":[ [ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1] ]
+        },
+        {
+            "name":"heaterOff",
+            "directions":1
+        },
+        {
+            "name":"heaterPanelOpen",
+            "directions":1
+        },
+        {
+            "name":"heaterOn",
+            "directions":1,
+            "delays":[ [ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1] ]
+        },
+        {
+            "name":"pipe",
+            "directions":4
+        }
+    ]
+}

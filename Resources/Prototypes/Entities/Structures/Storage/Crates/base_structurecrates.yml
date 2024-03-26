@@ -48,6 +48,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Appearance
   - type: EntityStorageVisuals
     stateDoorOpen: open
@@ -75,6 +78,7 @@
 - type: entity
   parent: CrateGeneric
   id: CrateBaseWeldable
+  noSpawn: true
   components:
   - type: Weldable
   - type: ResistLocker
@@ -82,8 +86,10 @@
 - type: entity
   parent: CrateBaseWeldable
   id: CrateBaseSecure
+  suffix: Secure
   components:
   - type: Lock
+  - type: LockVisuals
   - type: AccessReader
   - type: Icon
     sprite: Structures/Storage/Crates/secure.rsi
@@ -98,7 +104,7 @@
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -111,6 +117,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Construction
     graph: CrateSecure
     node: cratesecure

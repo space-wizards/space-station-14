@@ -68,6 +68,10 @@
     consumeEntities: false
   - type: TeslaEnergyBall
     spawnProto: TeslaMiniEnergyBall
+    soundCollapse:
+      path: /Audio/Effects/tesla_collapse.ogg
+      params:
+        variation: 0.3
   - type: LightningArcShooter
     arcDepth: 3
     maxLightningArc: 4

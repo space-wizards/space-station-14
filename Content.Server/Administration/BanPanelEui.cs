@@ -13,7 +13,7 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Administration;
 
-public sealed class BanPanelEui : BaseEui, IPostInjectInit
+public sealed class BanPanelEui : BaseEui
 {
     [Dependency] private readonly IBanManager _banManager = default!;
     [Dependency] private readonly IEntityManager _entities = default!;
@@ -23,7 +23,7 @@ public sealed class BanPanelEui : BaseEui, IPostInjectInit
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IAdminManager _admins = default!;
 
-    private ISawmill _sawmill = default!;
+    private readonly ISawmill _sawmill;
 
     private NetUserId? PlayerId { get; set; }
     private string PlayerName { get; set; } = string.Empty;
@@ -35,6 +35,8 @@ public sealed class BanPanelEui : BaseEui, IPostInjectInit
     public BanPanelEui()
     {
         IoCManager.InjectDependencies(this);
+
+        _sawmill = _log.GetSawmill("admin.bans_eui");
     }
 
     public override EuiStateBase GetNewState()
@@ -184,10 +186,5 @@ public sealed class BanPanelEui : BaseEui, IPostInjectInit
         }
 
         StateDirty();
-    }
-
-    public void PostInject()
-    {
-        _sawmill = _log.GetSawmill("admin.bans_eui");
     }
 }

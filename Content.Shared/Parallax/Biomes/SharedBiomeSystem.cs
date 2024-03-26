@@ -16,6 +16,7 @@ public abstract class SharedBiomeSystem : EntitySystem
     [Dependency] protected readonly IPrototypeManager ProtoManager = default!;
     [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] protected readonly ITileDefinitionManager TileDefManager = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
 
     protected const byte ChunkSize = 8;
 
@@ -94,6 +95,14 @@ public abstract class SharedBiomeSystem : EntitySystem
             return true;
         }
 
+        return TryGetTile(indices, layers, seed, grid, out tile);
+    }
+
+    /// <summary>
+    /// Gets the underlying biome tile, ignoring any existing tile that may be there.
+    /// </summary>
+    public bool TryGetTile(Vector2i indices, List<IBiomeLayer> layers, int seed, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
+    {
         for (var i = layers.Count - 1; i >= 0; i--)
         {
             var layer = layers[i];
@@ -150,13 +159,8 @@ public abstract class SharedBiomeSystem : EntitySystem
         // Pick a variant tile if they're available as well
         if (variantCount > 1)
         {
-            var variantValue = (noise.GetNoise(indices.X * 8, indices.Y * 8, variantCount) + 1f) / 2f;
-            variant = (byte) Pick(variantCount, variantValue);
-
-            if (variants != null)
-            {
-                variant = variants[variant];
-            }
+            var variantValue = (noise.GetNoise(indices.X * 8, indices.Y * 8, variantCount) + 1f) * 100;
+            variant = _tile.PickVariant(tileDef, (int) variantValue);
         }
 
         tile = new Tile(tileDef.TileId, 0, variant);

@@ -25,11 +25,12 @@ namespace Content.Server.Stunnable.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<BatteryComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<StunbatonComponent, SolutionContainerChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
             SubscribeLocalEvent<StunbatonComponent, ItemToggleActivateAttemptEvent>(TryTurnOn);
             SubscribeLocalEvent<StunbatonComponent, ItemToggledEvent>(ToggleDone);
+            SubscribeLocalEvent<StunbatonComponent, ChargeChangedEvent>(OnChargeChanged);
         }
 
         private void OnStaminaHitAttempt(Entity<StunbatonComponent> entity, ref StaminaDamageOnHitAttemptEvent args)
@@ -38,25 +39,21 @@ namespace Content.Server.Stunnable.Systems
             !TryComp<BatteryComponent>(entity.Owner, out var battery) || !_battery.TryUseCharge(entity.Owner, entity.Comp.EnergyPerUse, battery))
             {
                 args.Cancelled = true;
-                return;
-            }
-
-            if (battery.CurrentCharge < entity.Comp.EnergyPerUse)
-            {
-                _itemToggle.Toggle(entity.Owner, predicted: false);
             }
         }
 
-        private void OnExamined(Entity<BatteryComponent> entity, ref ExaminedEvent args)
+        private void OnExamined(Entity<StunbatonComponent> entity, ref ExaminedEvent args)
         {
             var onMsg = _itemToggle.IsActivated(entity.Owner)
             ? Loc.GetString("comp-stunbaton-examined-on")
             : Loc.GetString("comp-stunbaton-examined-off");
             args.PushMarkup(onMsg);
 
-            var chargeMessage = Loc.GetString("stunbaton-component-on-examine-charge",
-                ("charge", (int) (entity.Comp.CurrentCharge / entity.Comp.MaxCharge * 100)));
-            args.PushMarkup(chargeMessage);
+            if (TryComp<BatteryComponent>(entity.Owner, out var battery))
+            {
+                var count = (int) (battery.CurrentCharge / entity.Comp.EnergyPerUse);
+                args.PushMarkup(Loc.GetString("melee-battery-examine", ("color", "yellow"), ("count", count)));
+            }
         }
 
         private void ToggleDone(Entity<StunbatonComponent> entity, ref ItemToggledEvent args)
@@ -104,6 +101,15 @@ namespace Content.Server.Stunnable.Systems
                 Used = used,
                 User = user
             });
+        }
+
+        private void OnChargeChanged(Entity<StunbatonComponent> entity, ref ChargeChangedEvent args)
+        {
+            if (TryComp<BatteryComponent>(entity.Owner, out var battery) &&
+                battery.CurrentCharge < entity.Comp.EnergyPerUse)
+            {
+                _itemToggle.TryDeactivate(entity.Owner, predicted: false);
+            }
         }
     }
 }

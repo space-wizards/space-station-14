@@ -57,6 +57,7 @@
   - type: Weldable
     time: 10
   - type: Airlock
+  - type: NavMapDoor
   - type: DoorBolt
   - type: AccessReader
   - type: Appearance
@@ -79,7 +80,6 @@
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
   - type: Airtight
-    fixVacuum: true
   - type: Occluder
   - type: Damageable
     damageContainer: StructuralInorganic

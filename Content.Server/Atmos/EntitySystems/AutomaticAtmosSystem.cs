@@ -27,8 +27,12 @@ public sealed class AutomaticAtmosSystem : EntitySystem
         // Also, these calls are surprisingly slow.
         // TODO: Make tiledefmanager cache the IsSpace property, and turn this lookup-through-two-interfaces into
         // TODO: a simple array lookup, as tile IDs are likely contiguous, and there's at most 2^16 possibilities anyway.
-        if (!((ev.OldTile.IsSpace(_tileDefinitionManager) && !ev.NewTile.IsSpace(_tileDefinitionManager)) ||
-            (!ev.OldTile.IsSpace(_tileDefinitionManager) && ev.NewTile.IsSpace(_tileDefinitionManager))) ||
+
+        var oldSpace = ev.OldTile.IsSpace(_tileDefinitionManager);
+        var newSpace = ev.NewTile.IsSpace(_tileDefinitionManager);
+
+        if (!(oldSpace && !newSpace ||
+            !oldSpace && newSpace) ||
             _atmosphereSystem.HasAtmosphere(ev.Entity))
             return;
 
@@ -39,7 +43,7 @@ public sealed class AutomaticAtmosSystem : EntitySystem
         if (physics.Mass / ShuttleSystem.TileMassMultiplier >= 7.0f)
         {
             AddComp<GridAtmosphereComponent>(ev.Entity);
-            Logger.InfoS("atmos", $"Giving grid {ev.Entity} GridAtmosphereComponent.");
+            Log.Info($"Giving grid {ev.Entity} GridAtmosphereComponent.");
         }
         // It's not super important to remove it should the grid become too small again.
         // If explosions ever gain the ability to outright shatter grids, do rethink this.

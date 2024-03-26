@@ -3,11 +3,13 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Overlays;
 using Content.Shared.PDA;
+using Content.Shared.Security.Components;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
+
 public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
@@ -30,9 +32,9 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
             return;
         }
 
-        var healthIcons = DecideSecurityIcon(uid);
+        var securityIcons = DecideSecurityIcon(uid);
 
-        @event.StatusIcons.AddRange(healthIcons);
+        @event.StatusIcons.AddRange(securityIcons);
     }
 
     private IReadOnlyList<StatusIconPrototype> DecideSecurityIcon(EntityUid uid)
@@ -73,7 +75,11 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
                 result.Add(icon);
         }
 
-        // Add arrest icons here, WYCI.
+        if (TryComp<CriminalRecordComponent>(uid, out var record))
+        {
+            if(_prototypeMan.TryIndex<StatusIconPrototype>(record.StatusIcon.Id, out var criminalIcon))
+                result.Add(criminalIcon);
+        }
 
         return result;
     }

@@ -1,5 +1,6 @@
 ﻿using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.Projectiles;
 
 namespace Content.Server.Chemistry.Components;
 

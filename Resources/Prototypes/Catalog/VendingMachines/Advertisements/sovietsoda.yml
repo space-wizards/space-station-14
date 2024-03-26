@@ -1,4 +1,4 @@
-﻿- type: advertisementsPack
+- type: advertisementsPack
   id: BodaAds
   advertisements:
   - advertisement-sovietsoda-1
@@ -6,3 +6,9 @@
   - advertisement-sovietsoda-3
   - advertisement-sovietsoda-4
   - advertisement-sovietsoda-5
+  - advertisement-sovietsoda-6
+  thankyous:
+  - vending-machine-thanks
+  - thankyou-sovietsoda-1
+  - thankyou-sovietsoda-2
+  - thankyou-sovietsoda-3

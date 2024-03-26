@@ -1,7 +1,8 @@
 # Low value
 - type: biomeMarkerLayer
-  id: OreTin
+  id: OreIron
   entityMask:
+    AsteroidRock: AsteroidRockTin
     WallRock: WallRockTin
     WallRockBasalt: WallRockBasaltTin
     WallRockChromite: WallRockChromiteTin
@@ -15,6 +16,7 @@
 - type: biomeMarkerLayer
   id: OreQuartz
   entityMask:
+    AsteroidRock: AsteroidRockQuartz
     WallRock: WallRockQuartz
     WallRockBasalt: WallRockBasaltQuartz
     WallRockChromite: WallRockChromiteQuartz
@@ -27,6 +29,7 @@
 - type: biomeMarkerLayer
   id: OreCoal
   entityMask:
+    AsteroidRock: AsteroidRockCoal
     WallRock: WallRockCoal
     WallRockBasalt: WallRockBasaltCoal
     WallRockChromite: WallRockChromiteCoal
@@ -37,11 +40,26 @@
   maxGroupSize: 20
   radius: 4
 
+- type: biomeMarkerLayer
+  id: OreSalt
+  entityMask:
+    AsteroidRock: AsteroidRockSalt
+    WallRock: WallRockSalt
+    WallRockBasalt: WallRockBasaltSalt
+    WallRockChromite: WallRockChromiteSalt
+    WallRockSand: WallRockSandSalt
+    WallRockSnow: WallRockSnowSalt
+  maxCount: 30
+  minGroupSize: 10
+  maxGroupSize: 20
+  radius: 4
+
 # Medium value
 # Gold
 - type: biomeMarkerLayer
   id: OreGold
   entityMask:
+    AsteroidRock: AsteroidRockGold
     WallRock: WallRockGold
     WallRockBasalt: WallRockBasaltGold
     WallRockChromite: WallRockChromiteGold
@@ -56,6 +74,7 @@
 - type: biomeMarkerLayer
   id: OreSilver
   entityMask:
+    AsteroidRock: AsteroidRockSilver
     WallRock: WallRockSilver
     WallRockBasalt: WallRockBasaltSilver
     WallRockChromite: WallRockChromiteSilver
@@ -71,6 +90,7 @@
 - type: biomeMarkerLayer
   id: OrePlasma
   entityMask:
+    AsteroidRock: AsteroidRockPlasma
     WallRock: WallRockPlasma
     WallRockBasalt: WallRockBasaltPlasma
     WallRockChromite: WallRockChromitePlasma
@@ -85,6 +105,7 @@
 - type: biomeMarkerLayer
   id: OreUranium
   entityMask:
+    AsteroidRock: AsteroidRockUranium
     WallRock: WallRockUranium
     WallRockBasalt: WallRockBasaltUranium
     WallRockChromite: WallRockChromiteUranium
@@ -98,6 +119,7 @@
 - type: biomeMarkerLayer
   id: OreBananium
   entityMask:
+    AsteroidRock: AsteroidRockBananium
     WallRock: WallRockBananium
     WallRockBasalt: WallRockBasaltBananium
     WallRockChromite: WallRockChromiteBananium
@@ -112,6 +134,7 @@
 - type: biomeMarkerLayer
   id: OreArtifactFragment
   entityMask:
+    AsteroidRock: AsteroidRockArtifactFragment
     WallRock: WallRockArtifactFragment
     WallRockBasalt: WallRockBasaltArtifactFragment
     WallRockChromite: WallRockChromiteArtifactFragment

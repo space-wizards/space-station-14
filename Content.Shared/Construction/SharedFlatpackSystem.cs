@@ -20,7 +20,6 @@ namespace Content.Shared.Construction;
 public abstract class SharedFlatpackSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
@@ -41,7 +40,6 @@ public abstract class SharedFlatpackSystem : EntitySystem
         SubscribeLocalEvent<FlatpackComponent, ExaminedEvent>(OnFlatpackExamined);
 
         SubscribeLocalEvent<FlatpackCreatorComponent, ContainerIsRemovingAttemptEvent>(OnCreatorRemovingAttempt);
-        SubscribeLocalEvent<FlatpackCreatorComponent, EntityUnpausedEvent>(OnCreatorUnpaused);
     }
 
     private void OnFlatpackInteractUsing(Entity<FlatpackComponent> ent, ref InteractUsingEvent args)
@@ -67,8 +65,9 @@ public abstract class SharedFlatpackSystem : EntitySystem
         }
 
         var buildPos = _map.TileIndicesFor(grid, gridComp, xform.Coordinates);
-        var intersecting = _entityLookup.GetEntitiesIntersecting(buildPos.ToEntityCoordinates(grid, _mapManager).Offset(new Vector2(0.5f, 0.5f))
-            , LookupFlags.Dynamic | LookupFlags.Static);
+        var coords = _map.ToCenterCoordinates(grid, buildPos);
+
+        var intersecting = _entityLookup.GetEntitiesIntersecting(coords, LookupFlags.Dynamic | LookupFlags.Static);
 
         // todo make this logic smarter.
         // This should eventually allow for shit like building microwaves on tables and such.
@@ -110,18 +109,17 @@ public abstract class SharedFlatpackSystem : EntitySystem
             args.Cancel();
     }
 
-    private void OnCreatorUnpaused(Entity<FlatpackCreatorComponent> ent, ref EntityUnpausedEvent args)
+    public void SetupFlatpack(Entity<FlatpackComponent?> ent, EntityUid? board)
     {
-        ent.Comp.PackEndTime += args.PausedTime;
-    }
-
-    public void SetupFlatpack(Entity<FlatpackComponent?> ent, Entity<MachineBoardComponent?> machineBoard)
-    {
-        if (!Resolve(ent, ref ent.Comp) || !Resolve(machineBoard, ref machineBoard.Comp))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (machineBoard.Comp.Prototype is not { } machinePrototypeId)
-            return;
+        EntProtoId machinePrototypeId;
+        string? entityPrototype;
+        if (TryComp<MachineBoardComponent>(board, out var machineBoard) && machineBoard.Prototype is not null)
+            machinePrototypeId = machineBoard.Prototype;
+        else if (TryComp<ComputerBoardComponent>(board, out var computerBoard) && computerBoard.Prototype is not null)
+            machinePrototypeId = computerBoard.Prototype;
 
         var comp = ent.Comp!;
         var machinePrototype = PrototypeManager.Index(machinePrototypeId);
@@ -133,13 +131,25 @@ public abstract class SharedFlatpackSystem : EntitySystem
         comp.Entity = machinePrototypeId;
         Dirty(ent, comp);
 
-        Appearance.SetData(ent, FlatpackVisuals.Machine, MetaData(machineBoard).EntityPrototype?.ID ?? string.Empty);
+        if (board is null)
+            return;
+
+        Appearance.SetData(ent, FlatpackVisuals.Machine, MetaData(board.Value).EntityPrototype?.ID ?? string.Empty);
     }
 
-    public Dictionary<string, int> GetFlatpackCreationCost(Entity<FlatpackCreatorComponent> entity, Entity<MachineBoardComponent> machineBoard)
+    public Dictionary<string, int> GetFlatpackCreationCost(Entity<FlatpackCreatorComponent> entity, Entity<MachineBoardComponent>? machineBoard = null)
     {
-        var cost = MachinePart.GetMachineBoardMaterialCost(machineBoard, -1);
-        foreach (var (mat, amount) in entity.Comp.BaseMaterialCost)
+        Dictionary<string, int> cost = new();
+        Dictionary<ProtoId<MaterialPrototype>, int> baseCost;
+        if (machineBoard is not null)
+        {
+            cost = MachinePart.GetMachineBoardMaterialCost(machineBoard.Value, -1);
+            baseCost = entity.Comp.BaseMachineCost;
+        }
+        else
+            baseCost = entity.Comp.BaseComputerCost;
+
+        foreach (var (mat, amount) in baseCost)
         {
             cost.TryAdd(mat, 0);
             cost[mat] -= amount;

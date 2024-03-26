@@ -1,4 +1,6 @@
-﻿default-program-name = Program
+device-pda-slot-component-slot-name-cartridge = Cartridge
+
+default-program-name = Program
 notekeeper-program-name = Notekeeper
 news-read-program-name = Station news
 
@@ -16,4 +18,4 @@ log-probe-program-name = LogProbe
 log-probe-scan = Downloaded logs from {$device}!
 log-probe-label-time = Time
 log-probe-label-accessor = Accessed by
-log-probe-label-number = Number
+log-probe-label-number = #

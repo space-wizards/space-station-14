@@ -233,6 +233,8 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
         if (args.Function == ContentKeyFunctions.MoveStoredItem)
         {
+            DraggingRotation = control.Location.Rotation;
+
             _menuDragHelper.MouseDown(control);
             _menuDragHelper.Update(0f);
 
