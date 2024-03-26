@@ -218,35 +218,29 @@ namespace Content.Client.Construction.UI
             }
 
             var sortedProtoCategories = uniqueCategories.OrderBy(x => Loc.GetString(x)).ToArray();
-            var categoriesRawArray = new string?[sortedProtoCategories.Length + 2];
-            Array.Copy(sortedProtoCategories, 0, categoriesRawArray, 2, sortedProtoCategories.Length);
-
-            // hard-coded to show all recipes
-            categoriesRawArray[0] = _forAllCategoryName;
 
             var isFavorites = _favoritedRecipes.Count > 0;
 
+            var categoriesArray = new string[sortedProtoCategories.Length + (isFavorites ? 2 : 1)];
+
+            // hard-coded to show all recipes
+            categoriesArray[0] = _forAllCategoryName;
+
             // hard-coded to show favorites if it need
-            categoriesRawArray[1] = isFavorites ? _favoriteCatName : null;
+            if (isFavorites)
+                categoriesArray[1] = _favoriteCatName;
+
+            Array.Copy(sortedProtoCategories, 0, categoriesArray, (isFavorites ? 2 : 1), sortedProtoCategories.Length);
 
             _constructionView.OptionCategories.Clear();
 
-            var categoriesArray = new string[
-                isFavorites ? categoriesRawArray.Length : categoriesRawArray.Length - 1];
-
-            var i = 0;
-            foreach (var category in categoriesRawArray)
+            for (var i = 0; i < categoriesArray.Length; i++)
             {
-                if (category == null)
-                    continue;
+                _constructionView.OptionCategories.AddItem(Loc.GetString(categoriesArray[i]), i);
 
-                _constructionView.OptionCategories.AddItem(Loc.GetString(category), i);
-                categoriesArray[i] = category;
-
-                if (!string.IsNullOrEmpty(selectCategory) && selectCategory == category)
+                if (!string.IsNullOrEmpty(selectCategory) && selectCategory == categoriesArray[i])
                     _constructionView.OptionCategories.SelectId(i);
 
-                i++;
             }
 
             _constructionView.Categories = categoriesArray;
