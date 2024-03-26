@@ -111,18 +111,45 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             _pullingSystem.TryStopPull(ent, pull);
 
         var xform = Transform(ent);
-        var entityCoords = xform.Coordinates.ToMap(EntityManager, _xform);
+        var targetCoords = SelectRandomTileInRange(xform, implant.TeleportRadius);
 
-        var grids = _lookupSystem.GetEntitiesInRange<MapGridComponent>(entityCoords, implant.TeleportRadius).ToList();
+        if (targetCoords != null)
+        {
+            _xform.SetWorldPosition(ent, targetCoords.Value.Position);
+            _xform.AttachToGridOrMap(ent, xform);
+            _audio.PlayPvs(implant.TeleportSound, ent);
+            args.Handled = true;
+        }
+    }
+
+    private MapCoordinates? SelectRandomTileInRange(TransformComponent userXform, float radius)
+    {
+        var userCoords = userXform.Coordinates.ToMap(EntityManager, _xform);
+        var grids = _lookupSystem.GetEntitiesInRange<MapGridComponent>(userCoords, radius).ToList();
         _random.Shuffle(grids);
+
+        // Give preference to the grid the entity is currently on.
+        var idx = grids.FindIndex(grid => grid.Owner == userXform.GridUid);
+        if (idx != -1)
+        {
+            if (_random.Prob(0.66f))
+            {
+                (grids[0], grids[idx]) = (grids[idx], grids[0]);
+            }
+            else
+            {
+                (grids[^1], grids[idx]) = (grids[idx], grids[^1]);
+            }
+        }
+
         MapCoordinates? targetCoords = null;
 
         foreach (var grid in grids)
         {
             var valid = false;
 
-            var range = (float) Math.Sqrt(implant.TeleportRadius);
-            var box = Box2.CenteredAround(entityCoords.Position, new Vector2(range, range));
+            var range = (float) Math.Sqrt(radius);
+            var box = Box2.CenteredAround(userCoords.Position, new Vector2(range, range));
             var tilesInRange = _mapSystem.GetTilesEnumerator(grid.Owner, grid.Comp, box, false);
             var tileList = new List<TileRef>();
 
@@ -161,13 +188,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
                 break;
         }
 
-        if (targetCoords != null)
-        {
-            _xform.SetWorldPosition(ent, targetCoords.Value.Position);
-            _xform.AttachToGridOrMap(ent, xform);
-            _audio.PlayPvs(implant.TeleportSound, ent);
-            args.Handled = true;
-        }
+        return targetCoords;
     }
 
     private void OnDnaScramblerImplant(EntityUid uid, SubdermalImplantComponent component, UseDnaScramblerImplantEvent args)
