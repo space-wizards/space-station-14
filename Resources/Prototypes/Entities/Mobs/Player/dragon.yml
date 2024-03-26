@@ -6,6 +6,10 @@
   description: A flying leviathan, loosely related to space carps.
   abstract: true
   components:
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      270: 0.7
+      360: 0.5
   - type: Bloodstream
     bloodMaxVolume: 650
   - type: GhostRole
