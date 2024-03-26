@@ -22,7 +22,7 @@ namespace Content.Client.Construction.UI
         // It isn't optimal to expose UI controls like this, but the UI control design is
         // questionable so it can't be helped.
         string[] Categories { get; set; }
-        OptionButton Category { get; }
+        OptionButton OptionCategories { get; }
 
         bool EraseButtonPressed { get; set; }
         bool BuildButtonPressed { get; set; }
@@ -85,10 +85,11 @@ namespace Content.Client.Construction.UI
             Recipes.OnItemSelected += obj => RecipeSelected?.Invoke(this, obj.ItemList[obj.ItemIndex]);
             Recipes.OnItemDeselected += _ => RecipeSelected?.Invoke(this, null);
 
-            SearchBar.OnTextChanged += _ => PopulateRecipes?.Invoke(this, (SearchBar.Text, Categories[Category.SelectedId]));
-            Category.OnItemSelected += obj =>
+            SearchBar.OnTextChanged += _ =>
+                PopulateRecipes?.Invoke(this, (SearchBar.Text, Categories[OptionCategories.SelectedId]));
+            OptionCategories.OnItemSelected += obj =>
             {
-                Category.SelectId(obj.Id);
+                OptionCategories.SelectId(obj.Id);
                 SearchBar.SetText(string.Empty);
                 PopulateRecipes?.Invoke(this, (SearchBar.Text, Categories[obj.Id]));
             };

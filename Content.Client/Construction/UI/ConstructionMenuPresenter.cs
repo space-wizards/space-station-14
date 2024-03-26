@@ -216,25 +216,37 @@ namespace Content.Client.Construction.UI
                 if (!string.IsNullOrEmpty(category))
                     uniqueCategories.Add(category);
             }
-            var sortedCategories = uniqueCategories.OrderBy(x => Loc.GetString(x)).ToList();
+
+            var sortedProtoCategories = uniqueCategories.OrderBy(x => Loc.GetString(x)).ToArray();
+            var categoriesRawArray = new string?[sortedProtoCategories.Length + 2];
+            Array.Copy(sortedProtoCategories, 0, categoriesRawArray, 2, sortedProtoCategories.Length);
+
             // hard-coded to show all recipes
-            sortedCategories.Insert(0, _forAllCategoryName);
+            categoriesRawArray[0] = _forAllCategoryName;
 
-            if (_favoritedRecipes.Count > 0)
+            var isFavorites = _favoritedRecipes.Count > 0;
+
+            // hard-coded to show favorites if it need
+            categoriesRawArray[1] = isFavorites ? _favoriteCatName : null;
+
+            _constructionView.OptionCategories.Clear();
+
+            var categoriesArray = new string[
+                isFavorites ? categoriesRawArray.Length : categoriesRawArray.Length - 1];
+
+            var i = 0;
+            foreach (var category in categoriesRawArray)
             {
-                // hard-coded to show favorites if it need
-                sortedCategories.Insert(1, _favoriteCatName);
-            }
+                if (category == null)
+                    continue;
 
-            var categoriesArray = sortedCategories.ToArray();
-            _constructionView.Category.Clear();
+                _constructionView.OptionCategories.AddItem(Loc.GetString(category), i);
+                categoriesArray[i] = category;
 
-            for (var i = 0; i < categoriesArray.Length; i++)
-            {
-                _constructionView.Category.AddItem(Loc.GetString(categoriesArray[i]), i);
+                if (!string.IsNullOrEmpty(selectCategory) && selectCategory == category)
+                    _constructionView.OptionCategories.SelectId(i);
 
-                if (!string.IsNullOrEmpty(selectCategory) && selectCategory == categoriesArray[i])
-                    _constructionView.Category.SelectId(i);
+                i++;
             }
 
             _constructionView.Categories = categoriesArray;
