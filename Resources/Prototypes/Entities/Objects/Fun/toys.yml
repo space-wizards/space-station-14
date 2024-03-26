@@ -1522,7 +1522,7 @@
     prob: 1
     makeSentient: true
     allowSpeech: true
-    allowMovement: false
+    allowMovement: true
     name: ghost-role-information-petrock-name
     description: ghost-role-information-petrock-description
   - type: GhostTakeoverAvailable
@@ -1531,12 +1531,20 @@
     sprite: Objects/Fun/pet_rock.rsi
     slots:
     - HEAD
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0.02
+    baseSprintSpeed: 0.04
+  - type: NoRotateOnInteract
+  - type: NoRotateOnMove
   - type: StaminaDamageOnCollide
     damage: 5
   - type: DamageOtherOnHit
     damage:
       types:
         Blunt: 3
+  - type: Tag
+    tags:
+      - CannotSuicide
 
 - type: entity
   parent: BasePetRock
@@ -1564,6 +1572,8 @@
   - type: Sprite
     sprite: Objects/Fun/pet_rock.rsi
     state: icon
+  - type: NameIdentifier
+    group: GenericNumber
   - type: PhysicalComposition
     materialComposition:
       Steel: 10

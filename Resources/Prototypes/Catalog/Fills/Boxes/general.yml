@@ -502,5 +502,12 @@
       - id: RoxieRock
         amount: 1
         prob: 0.3
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        base:
+          True: { state: icon-open }
+          False: { state: icon }
+  - type: Appearance
 
 
