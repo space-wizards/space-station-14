@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
@@ -57,6 +58,17 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
                 return;
             }
 
+            // Check if we are trying to implant a implant which is already implanted
+            if (implant.HasValue && !component.AllowMultipleImplants && CheckSameImplant(target, implant.Value))
+            {
+                var name = Identity.Name(target, EntityManager, args.User);
+                var msg = Loc.GetString("implanter-component-implant-already", ("implant", implant), ("target", name));
+                _popup.PopupEntity(msg, target, args.User);
+                args.Handled = true;
+                return;
+            }
+
+
             //Implant self instantly, otherwise try to inject the target.
             if (args.User == target)
                 Implant(target, target, uid, component);
@@ -65,6 +77,15 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         }
 
         args.Handled = true;
+    }
+
+    public bool CheckSameImplant(EntityUid target, EntityUid implant)
+    {
+        if (!TryComp<ImplantedComponent>(target, out var implanted))
+            return false;
+
+        var implantPrototype = Prototype(implant);
+        return implanted.ImplantContainer.ContainedEntities.Any(entity => Prototype(entity) == implantPrototype);
     }
 
     /// <summary>
@@ -78,9 +99,8 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     {
         var args = new DoAfterArgs(EntityManager, user, component.ImplantTime, new ImplantEvent(), implanter, target: target, used: implanter)
         {
-            BreakOnUserMove = true,
-            BreakOnTargetMove = true,
             BreakOnDamage = true,
+            BreakOnMove = true,
             NeedHand = true,
         };
 
@@ -105,9 +125,8 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     {
         var args = new DoAfterArgs(EntityManager, user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
         {
-            BreakOnUserMove = true,
-            BreakOnTargetMove = true,
             BreakOnDamage = true,
+            BreakOnMove = true,
             NeedHand = true,
         };
 

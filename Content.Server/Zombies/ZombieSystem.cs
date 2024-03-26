@@ -54,7 +54,7 @@ namespace Content.Server.Zombies
 
             SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<ZombieComponent, EmoteEvent>(OnEmote, before:
-                new []{typeof(VocalSystem), typeof(BodyEmotesSystem)});
+                new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });
 
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
@@ -69,6 +69,12 @@ namespace Content.Server.Zombies
 
         private void OnPendingMapInit(EntityUid uid, PendingZombieComponent component, MapInitEvent args)
         {
+            if (_mobState.IsDead(uid))
+            {
+                ZombifyEntity(uid);
+                return;
+            }
+
             component.NextTick = _timing.CurTime + TimeSpan.FromSeconds(1f);
             component.GracePeriod = _random.Next(component.MinInitialInfectedGrace, component.MaxInitialInfectedGrace);
             _actions.AddAction(uid, ref component.Action, component.ZombifySelfActionPrototype);
@@ -197,7 +203,7 @@ namespace Content.Server.Zombies
 
             var min = component.MinZombieInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
-            var chance = (max-min) * ((total - items)/total) + min;
+            var chance = (max - min) * ((total - items) / total) + min;
             return chance;
         }
 
@@ -262,7 +268,7 @@ namespace Content.Server.Zombies
                 _humanoidAppearance.SetBaseLayerColor(target, layer, info.Color);
                 _humanoidAppearance.SetBaseLayerId(target, layer, info.Id);
             }
-            if(TryComp<HumanoidAppearanceComponent>(target, out var appcomp))
+            if (TryComp<HumanoidAppearanceComponent>(target, out var appcomp))
             {
                 appcomp.EyeColor = zombiecomp.BeforeZombifiedEyeColor;
             }

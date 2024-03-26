@@ -5,6 +5,7 @@ using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
@@ -165,8 +166,6 @@ public sealed partial class StoreSystem
 
         if (!IsOnStartingMap(uid, component))
             component.RefundAllowed = false;
-        else
-            component.RefundAllowed = true;
 
         //subtract the cash
         foreach (var (currency, value) in listing.Cost)
@@ -250,10 +249,12 @@ public sealed partial class StoreSystem
                 HandleRefundComp(uid, component, upgradeActionId.Value);
         }
 
-        //broadcast event
         if (listing.ProductEvent != null)
         {
-            RaiseLocalEvent(listing.ProductEvent);
+            if (!listing.RaiseProductEventOnUser)
+                RaiseLocalEvent(listing.ProductEvent);
+            else
+                RaiseLocalEvent(buyer, listing.ProductEvent);
         }
 
         //log dat shit.
@@ -323,7 +324,9 @@ public sealed partial class StoreSystem
         if (!component.RefundAllowed || component.BoughtEntities.Count == 0)
             return;
 
-        for (var i = component.BoughtEntities.Count; i >= 0; i--)
+        _admin.Add(LogType.StoreRefund, LogImpact.Low, $"{ToPrettyString(buyer):player} has refunded their purchases from {ToPrettyString(uid):store}");
+
+        for (var i = component.BoughtEntities.Count - 1; i >= 0; i--)
         {
             var purchase = component.BoughtEntities[i];
 
@@ -332,13 +335,15 @@ public sealed partial class StoreSystem
 
             component.BoughtEntities.RemoveAt(i);
 
-            if (_actions.TryGetActionData(purchase, out var actionComponent))
+            if (_actions.TryGetActionData(purchase, out var actionComponent, logError: false))
             {
                 _actionContainer.RemoveAction(purchase, actionComponent);
             }
 
             EntityManager.DeleteEntity(purchase);
         }
+
+        component.BoughtEntities.Clear();
 
         foreach (var (currency, value) in component.BalanceSpent)
         {

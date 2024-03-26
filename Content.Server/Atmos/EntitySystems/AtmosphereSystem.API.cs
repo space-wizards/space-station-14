@@ -85,10 +85,10 @@ public partial class AtmosphereSystem
         return ev.Mixtures!;
     }
 
-    public void InvalidateTile(EntityUid gridUid, Vector2i tile)
+    public void InvalidateTile(Entity<GridAtmosphereComponent?> entity, Vector2i tile)
     {
-        var ev = new InvalidateTileMethodEvent(gridUid, tile);
-        RaiseLocalEvent(gridUid, ref ev);
+        if (_atmosQuery.Resolve(entity.Owner, ref entity.Comp, false))
+            entity.Comp.InvalidatedCoords.Add(tile);
     }
 
     public GasMixture?[]? GetTileMixtures(EntityUid? gridUid, EntityUid? mapUid, List<Vector2i> tiles, bool excite = false)
@@ -176,11 +176,11 @@ public partial class AtmosphereSystem
 
     public bool IsTileAirBlocked(EntityUid gridUid, Vector2i tile, AtmosDirection directions = AtmosDirection.All, MapGridComponent? mapGridComp = null)
     {
-        var ev = new IsTileAirBlockedMethodEvent(gridUid, tile, directions, mapGridComp);
-        RaiseLocalEvent(gridUid, ref ev);
+        if (!Resolve(gridUid, ref mapGridComp))
+            return false;
 
-        // If nothing handled the event, it'll default to true.
-        return ev.Result;
+        var data = GetAirtightData(gridUid, mapGridComp, tile);
+        return data.BlockedDirections.IsFlagSet(directions);
     }
 
     public bool IsTileSpace(EntityUid? gridUid, EntityUid? mapUid, Vector2i tile, MapGridComponent? mapGridComp = null)
@@ -231,12 +231,6 @@ public partial class AtmosphereSystem
         return ev.Result ?? Enumerable.Empty<GasMixture>();
     }
 
-    public void UpdateAdjacent(EntityUid gridUid, Vector2i tile, MapGridComponent? mapGridComp = null)
-    {
-        var ev = new UpdateAdjacentMethodEvent(gridUid, tile, mapGridComp);
-        RaiseLocalEvent(gridUid, ref ev);
-    }
-
     public void HotspotExpose(EntityUid gridUid, Vector2i tile, float exposedTemperature, float exposedVolume,
         EntityUid? sparkSourceUid = null, bool soh = false)
     {
@@ -257,12 +251,6 @@ public partial class AtmosphereSystem
 
         // If not handled, this will be false. Just like in space!
         return ev.Result;
-    }
-
-    public void FixTileVacuum(EntityUid gridUid, Vector2i tile)
-    {
-        var ev = new FixTileVacuumMethodEvent(gridUid, tile);
-        RaiseLocalEvent(gridUid, ref ev);
     }
 
     public void AddPipeNet(EntityUid gridUid, PipeNet pipeNet)
@@ -307,9 +295,6 @@ public partial class AtmosphereSystem
     [ByRefEvent] private record struct GetAllMixturesMethodEvent
         (EntityUid Grid, bool Excite = false, IEnumerable<GasMixture>? Mixtures = null, bool Handled = false);
 
-    [ByRefEvent] private record struct InvalidateTileMethodEvent
-        (EntityUid Grid, Vector2i Tile, bool Handled = false);
-
     [ByRefEvent] private record struct GetTileMixturesMethodEvent
         (EntityUid? GridUid, EntityUid? MapUid, List<Vector2i> Tiles, bool Excite = false, GasMixture?[]? Mixtures = null, bool Handled = false);
 
@@ -318,16 +303,6 @@ public partial class AtmosphereSystem
 
     [ByRefEvent] private record struct ReactTileMethodEvent
         (EntityUid GridId, Vector2i Tile, ReactionResult Result = default, bool Handled = false);
-
-    [ByRefEvent] private record struct IsTileAirBlockedMethodEvent
-        (EntityUid Grid, Vector2i Tile, AtmosDirection Direction = AtmosDirection.All, MapGridComponent? MapGridComponent = null, bool Result = false, bool Handled = false)
-    {
-        /// <summary>
-        ///     True if one of the enabled blockers has <see cref="AirtightComponent.NoAirWhenFullyAirBlocked"/>. Note
-        ///     that this does not actually check if all directions are blocked.
-        /// </summary>
-        public bool NoAir = false;
-    }
 
     [ByRefEvent] private record struct IsTileSpaceMethodEvent
         (EntityUid? Grid, EntityUid? Map, Vector2i Tile, MapGridComponent? MapGridComponent = null, bool Result = true, bool Handled = false);
@@ -339,9 +314,6 @@ public partial class AtmosphereSystem
         (EntityUid Grid, Vector2i Tile, bool IncludeBlocked, bool Excite,
             IEnumerable<GasMixture>? Result = null, bool Handled = false);
 
-    [ByRefEvent] private record struct UpdateAdjacentMethodEvent
-        (EntityUid Grid, Vector2i Tile, MapGridComponent? MapGridComponent = null, bool Handled = false);
-
     [ByRefEvent] private record struct HotspotExposeMethodEvent
         (EntityUid Grid, EntityUid? SparkSourceUid, Vector2i Tile, float ExposedTemperature, float ExposedVolume, bool soh, bool Handled = false);
 
@@ -350,9 +322,6 @@ public partial class AtmosphereSystem
 
     [ByRefEvent] private record struct IsHotspotActiveMethodEvent
         (EntityUid Grid, Vector2i Tile, bool Result = false, bool Handled = false);
-
-    [ByRefEvent] private record struct FixTileVacuumMethodEvent
-        (EntityUid Grid, Vector2i Tile, bool Handled = false);
 
     [ByRefEvent] private record struct AddPipeNetMethodEvent
         (EntityUid Grid, PipeNet PipeNet, bool Handled = false);

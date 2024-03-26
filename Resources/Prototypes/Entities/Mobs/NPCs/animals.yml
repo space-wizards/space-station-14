@@ -1019,6 +1019,8 @@
     bloodMaxVolume: 300
     # if you fuck with the gorilla he will harambe you
   - type: MeleeWeapon
+    soundHit:
+      collection: Punch
     damage:
       types:
         Blunt: 20
@@ -1209,6 +1211,15 @@
       path: /Audio/Animals/ferret_happy.ogg
     interactFailureSound:
       path: /Audio/Items/wirecutter.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 30
+    animation: WeaponArcBite
+    damage:
+      types:
+        Blunt: 3
+        Piercing: 3
   - type: Butcherable
     butcheringType: Spike
     spawned:
@@ -1347,12 +1358,13 @@
     baseSprintSpeed: 5
   - type: MeleeWeapon
     soundHit:
-      path: /Audio/Weapons/pierce.ogg
+      collection: AlienClaw
     angle: 30
-    animation: WeaponArcPunch
+    animation: WeaponArcClaw
     damage:
       types:
-        Piercing: 9
+        Slash: 5
+        Piercing: 4
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 285
@@ -1853,6 +1865,13 @@
     spawned:
     - id: FoodMeat
       amount: 1
+  - type: Speech
+    speechSounds: Parrot
+    speechVerb: Parrot
+  - type: Vocal
+    sounds:
+      Unsexed: Parrot
+  - type: ParrotAccent
   - type: InteractionPopup
     successChance: 0.6
     interactSuccessString: petting-success-bird
@@ -2420,6 +2439,22 @@
       gender: epicene
   - type: Bloodstream
     bloodMaxVolume: 100
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 8
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: HTN
+    rootTask:
+      task: RuminantHostileCompound
   - type: Tag
     tags:
     - VimPilot
@@ -3186,4 +3221,3 @@
   components:
   - type: ReplacementAccent
     accent: nymph
-    

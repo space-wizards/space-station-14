@@ -6,20 +6,16 @@ using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.Popups;
-using Content.Server.UserInterface;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal.Components;
-using Content.Shared.Hands.Components;
-using Content.Shared.Movement.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
 using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
 
@@ -27,8 +23,6 @@ namespace Content.Server.Disposal.Tube
 {
     public sealed class DisposalTubeSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
@@ -122,7 +116,7 @@ namespace Content.Server.Disposal.Tube
                     if (trimmed == "")
                         continue;
 
-                    router.Tags.Add(tag.Trim());
+                    router.Tags.Add(trimmed);
                 }
 
                 _audioSystem.PlayPvs(router.ClickSound, uid, AudioParams.Default.WithVolume(-2f));
@@ -349,7 +343,7 @@ namespace Content.Server.Disposal.Tube
             var oppositeDirection = nextDirection.GetOpposite();
 
             var xform = Transform(target);
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
                 return null;
 
             var position = xform.Coordinates;

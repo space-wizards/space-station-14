@@ -92,6 +92,12 @@ public sealed partial class AtmosphereSystem
                if (tile == null)
                    continue;
 
+               if (!_mapSystem.TryGetTile(gridComp, indices, out var gTile) || gTile.IsEmpty)
+               {
+                   gridAtmosphere.Tiles.Remove(indices);
+                   continue;
+               }
+
                if (tile.Immutable && !IsTileSpace(euid, transform.MapUid, indices, gridComp))
                {
                    tile = new GasMixture(tile.Volume) { Temperature = tile.Temperature };

@@ -110,7 +110,9 @@ public sealed partial class ZombieComponent : Component, IAntagStatusIconCompone
         {
             { "Blunt", -0.4 },
             { "Slash", -0.2 },
-            { "Piercing", -0.2 }
+            { "Piercing", -0.2 },
+            { "Heat", -0.02 },
+            { "Shock", -0.02 }
         }
     };
 
@@ -139,6 +141,12 @@ public sealed partial class ZombieComponent : Component, IAntagStatusIconCompone
     /// </summary>
     [DataField("greetSoundNotification")]
     public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
+
+    /// <summary>
+    ///     Hit sound on zombie bite.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier BiteSound = new SoundPathSpecifier("/Audio/Effects/bite.ogg");
 
     /// <summary>
     /// The blood reagent of the humanoid to restore in case of cloning
