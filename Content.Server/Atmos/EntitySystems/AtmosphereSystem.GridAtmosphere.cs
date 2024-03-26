@@ -399,10 +399,7 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
-    private void GridFixTileVacuum(
-        Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
-        TileAtmosphere tile,
-        float volume)
+    private void GridFixTileVacuum(TileAtmosphere tile)
     {
         DebugTools.AssertNotNull(tile.Air);
         DebugTools.Assert(tile.Air?.Immutable == false );
@@ -415,6 +412,9 @@ public sealed partial class AtmosphereSystem
             if (adj?.Air != null)
                 count++;
         }
+
+        if (count == 0)
+            return;
 
         var ratio = 1f / count;
         var totalTemperature = 0f;
