@@ -500,5 +500,5 @@
     grid:
     - 0,0,1,1
   - type: Sprite
-    sprite:
-    state:
+    sprite: Objects/Fun/pet_rock_box.rsi
+    state: icon

@@ -1504,14 +1504,28 @@
   description: A normal rock.
   abstract: true
   components:
+  - type: InteractionPopup
+    successChance: 0.99
+    interactSuccessString: petting-success-rock
+    interactFailureString: petting-failure-rock
+    interactSuccessSpawn: EffectHearts
   - type: Item
     size: Tiny
+  - type: Anchorable # Only known way to pet the rock.
   - type: Sprite
     sprite: Objects/Fun/pet_rock.rsi
     state: icon
   - type: EmitSoundOnCollide
     sound:
       path: /Audio/Effects/hit_kick.ogg
+  - type: GhostRole
+    prob: 1
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: false
+    name: ghost-role-information-petrock-name
+    description: ghost-role-information-petrock-description
+  - type: GhostTakeoverAvailable
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/pet_rock.rsi
@@ -1533,6 +1547,8 @@
   - type: Sprite
     sprite: Objects/Fun/pet_rock.rsi
     state: icon
+  - type: GhostRole
+    prob: 0
   - type: PhysicalComposition
     materialComposition:
       Steel: 10
@@ -1545,6 +1561,25 @@
   name: pet rock
   description: The perfect pet!
   components:
+  - type: Sprite
+    sprite: Objects/Fun/pet_rock.rsi
+    state: icon
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 10
+  - type: StaticPrice
+    price: 1
+
+- type: entity
+  parent: BasePetRock
+  id: NamedPetRock
+  name: pet rock
+  suffix: Random Name
+  description:
+  components:
+  - type: RandomMetadata # He's your best friend.
+    nameSegments:
+    - names_first_male
   - type: Sprite
     sprite: Objects/Fun/pet_rock.rsi
     state: icon
