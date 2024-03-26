@@ -18,7 +18,6 @@ public sealed partial class ConsciousnessComponent : Component
     /// <summary>
     /// The current unmodified consciousness value, if this is below the threshold the entity is in crit and
     /// when this value reaches 0 the entity is dead.
-    /// Do not use this directly, use GetConsciousness on the system instead as it properly applies mults/mods and clamps.
     /// </summary>
     [DataField("consciousness"), AutoNetworkedField]
     public FixedPoint2 RawValue = MaxConsciousness;
@@ -60,7 +59,7 @@ public sealed partial class ConsciousnessComponent : Component
     /// each removed provider will decrease consciousness by 1/ExpectedProviderCount * 100
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
-    public FixedPoint2 ExpectedProviderCount = 1;
+    public int ExpectedProviderCount = 1;
 
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
     public List<EntityUid> LinkedProviders = new();

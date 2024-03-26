@@ -12,12 +12,14 @@ public partial class SharedBodySystem
     private void AddOrgan(EntityUid uid, EntityUid bodyUid, EntityUid parentPartUid, OrganComponent component)
     {
         component.Body = bodyUid;
-        var ev = new OrganAddedEvent(parentPartUid);
+        var ev = new OrganAddedEvent(new Entity<BodyPartComponent>(parentPartUid, Comp<BodyPartComponent>(parentPartUid)));
         RaiseLocalEvent(uid,ref ev);
 
         if (component.Body != null)
         {
-            var ev2 = new OrganAddedToBodyEvent(component.Body.Value, parentPartUid);
+            var ev2 = new OrganAddedToBodyEvent(
+                new Entity<BodyComponent>(component.Body.Value, Comp<BodyComponent>(component.Body.Value)),
+                new Entity<BodyPartComponent>(parentPartUid, Comp<BodyPartComponent>(parentPartUid)));
             RaiseLocalEvent(uid, ref ev2);
         }
         Dirty(uid, component);
@@ -25,12 +27,14 @@ public partial class SharedBodySystem
 
     private void RemoveOrgan(EntityUid uid, EntityUid parentPartUid, OrganComponent component)
     {
-        var ev = new OrganRemovedEvent(parentPartUid);
+        var ev = new OrganRemovedEvent(new Entity<BodyPartComponent>(parentPartUid, Comp<BodyPartComponent>(parentPartUid)));
         RaiseLocalEvent(uid, ref ev);
 
         if (component.Body != null)
         {
-            var ev2 = new OrganRemovedFromBodyEvent(component.Body.Value, parentPartUid);
+            var ev2 = new OrganRemovedFromBodyEvent(
+                new Entity<BodyComponent>(component.Body.Value, Comp<BodyComponent>(component.Body.Value)),
+                new Entity<BodyPartComponent>(parentPartUid, Comp<BodyPartComponent>(parentPartUid)));
             RaiseLocalEvent(uid, ref ev2);
         }
 

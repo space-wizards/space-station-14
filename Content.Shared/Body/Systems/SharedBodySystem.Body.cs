@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
@@ -10,7 +11,6 @@ using Content.Shared.Gibbing.Components;
 using Content.Shared.Gibbing.Events;
 using Content.Shared.Gibbing.Systems;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -102,10 +102,10 @@ public partial class SharedBodySystem
         // One-time setup
         // Obviously can't run in Init to avoid double-spawns on save / load.
         var prototype = Prototypes.Index(body.Prototype.Value);
-        MapInitBody(bodyId, prototype);
+        MapInitBody(bodyId, body, prototype);
     }
 
-    private void MapInitBody(EntityUid bodyEntity, BodyPrototype prototype)
+    private void MapInitBody(EntityUid bodyEntity, BodyComponent body, BodyPrototype prototype)
     {
         var protoRoot = prototype.Slots[prototype.Root];
         if (protoRoot.Part == null)
@@ -120,6 +120,11 @@ public partial class SharedBodySystem
         // Setup the rest of the body entities.
         SetupOrgans(rootPartEntity, rootPart, protoRoot.Organs);
         MapInitParts(rootPartEntity, prototype);
+
+        body.BodyInitialized = true;
+        var ev = new BodyInitializedEvent();
+        RaiseLocalEvent(bodyEntity, ref ev);
+        Dirty(bodyEntity, body);
     }
 
     private void OnBodyCanDrag(EntityUid uid, BodyComponent component, ref CanDragEvent args)

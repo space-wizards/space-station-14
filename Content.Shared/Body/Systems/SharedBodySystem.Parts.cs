@@ -80,7 +80,9 @@ public partial class SharedBodySystem
 
                 if (organComp.Body != null)
                 {
-                    var ev = new OrganRemovedFromBodyEvent(organComp.Body.Value, uid);
+                    var ev = new OrganRemovedFromBodyEvent(
+                        new Entity<BodyComponent>(organComp.Body.Value, Comp<BodyComponent>(organComp.Body.Value)),
+                        new Entity<BodyPartComponent>(uid, component));
                     RaiseLocalEvent(organ, ref ev);
                 }
 
@@ -88,7 +90,9 @@ public partial class SharedBodySystem
                 organComp.Body = bodyUid;
                 if (bodyUid != null)
                 {
-                    var ev = new OrganAddedToBodyEvent(bodyUid.Value, uid);
+                    var ev = new OrganAddedToBodyEvent(
+                        new Entity<BodyComponent>(bodyUid.Value, Comp<BodyComponent>(bodyUid.Value)),
+                        new Entity<BodyPartComponent>(uid, component));
                     RaiseLocalEvent(organ, ref ev);
                 }
 

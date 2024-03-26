@@ -23,17 +23,11 @@ public sealed partial class WoundableComponent : Component
     [DataField, AutoNetworkedField]
     public bool SplatterDamageOnDestroy = true;
 
-    [DataField, AutoNetworkedField]
-    public EntProtoId? AmputationWoundProto = null;
+    [DataField, AutoNetworkedField]//TODO: Change back to EntProtoId
+    public string? AmputationWoundProto = null;
 
     [DataField(required:true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<WoundingMetadata,DamageTypePrototype>)), AutoNetworkedField]
     public Dictionary<string, WoundingMetadata> Config = new();
-
-    /// <summary>
-    /// Last applied Damagetype
-    /// </summary>
-    [DataField,ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
-    public ProtoId<DamageTypePrototype> LastAppliedDamageType;
 
     /// <summary>
     /// What percentage of CURRENT HEALTH should be healed each healing update.

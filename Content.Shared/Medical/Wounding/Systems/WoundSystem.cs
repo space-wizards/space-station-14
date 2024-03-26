@@ -1,4 +1,6 @@
-﻿using Content.Shared.Body.Systems;
+﻿using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
+using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Gibbing.Systems;
@@ -28,7 +30,7 @@ public sealed partial class WoundSystem : EntitySystem
     public override void Initialize()
     {
         if (!_netManager.IsClient)
-            SubscribeLocalEvent<WoundableComponent, ComponentInit>(OnWoundableInit);
+            SubscribeLocalEvent<WoundableComponent, MapInitEvent>(WoundableInit);
         InitWounding();
         InitBodyListeners();
         InitDamage();
@@ -38,7 +40,7 @@ public sealed partial class WoundSystem : EntitySystem
     {
     }
 
-    private void OnWoundableInit(EntityUid owner, WoundableComponent woundable, ref ComponentInit args)
+    private void WoundableInit(EntityUid owner, WoundableComponent woundable, ref MapInitEvent args)
     {
         woundable.HealthCap = woundable.MaxHealth;
         woundable.IntegrityCap = woundable.MaxIntegrity;
