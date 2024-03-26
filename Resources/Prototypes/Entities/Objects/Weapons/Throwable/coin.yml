@@ -12,3 +12,16 @@
   - type: Reflect
     spread: 0
     reflectProb: 1
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        layer:
+        - ThrownItem
+        restitution: 0.3
+        friction: 0.2
