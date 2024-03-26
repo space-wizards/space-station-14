@@ -221,8 +221,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         if (solution.GetPrimaryReagentId() is { } reagent)
             AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
-        else
-            AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, string.Empty, appearanceComponent);
     }
 
 
@@ -290,8 +288,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         if (solution.GetPrimaryReagentId() is { } reagent)
             AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
-        else
-            AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, string.Empty, appearanceComponent);
     }
 
     /// <summary>

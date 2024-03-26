@@ -21,10 +21,10 @@ chat-manager-whisper-headset-on-message = You can't whisper on the radio!
 chat-manager-server-wrap-message = [bold]{$message}[/bold]
 chat-manager-sender-announcement-wrap-message = [font size=14][bold]{$sender} Announcement:[/font][font size=12]
                                                 {$message}[/bold][/font]
-chat-manager-entity-say-wrap-message = [BubbleHeader][bold]{$entityName}[/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent]{$message}[/BubbleContent]"[/font]
-chat-manager-entity-say-bold-wrap-message = [BubbleHeader][bold]{$entityName}[/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent][bold]{$message}[/bold][/BubbleContent]"[/font]
+chat-manager-entity-say-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent]{$message}[/BubbleContent]"[/font]
+chat-manager-entity-say-bold-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent][bold]{$message}[/bold][/BubbleContent]"[/font]
 
-chat-manager-entity-whisper-wrap-message = [font size=11][italic][BubbleHeader]{$entityName}[/BubbleHeader] whispers,"[BubbleContent]{$message}[/BubbleContent]"[/italic][/font]
+chat-manager-entity-whisper-wrap-message = [font size=11][italic][BubbleHeader][Name]{$entityName}[/Name][/BubbleHeader] whispers,"[BubbleContent]{$message}[/BubbleContent]"[/italic][/font]
 chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic][BubbleHeader]Someone[/BubbleHeader] whispers, "[BubbleContent]{$message}[/BubbleContent]"[/italic][/font]
 
 # THE() is not used here because the entity and its name can technically be disconnected if a nameOverride is passed...
@@ -92,6 +92,10 @@ chat-speech-verb-skeleton-1 = rattles
 chat-speech-verb-skeleton-2 = clacks
 chat-speech-verb-skeleton-3 = gnashes
 
+chat-speech-verb-vox-1 = screeches
+chat-speech-verb-vox-2 = shrieks
+chat-speech-verb-vox-3 = croaks
+
 chat-speech-verb-canine-1 = barks
 chat-speech-verb-canine-2 = woofs
 chat-speech-verb-canine-3 = howls
@@ -105,6 +109,10 @@ chat-speech-verb-large-mob-2 = growls
 chat-speech-verb-monkey-1 = chimpers
 chat-speech-verb-monkey-2 = screeches
 
+chat-speech-verb-parrot-1 = squawks
+chat-speech-verb-parrot-2 = tweets
+chat-speech-verb-parrot-3 = chirps
+
 chat-speech-verb-cluwne-1 = giggles
 chat-speech-verb-cluwne-2 = guffaws
 chat-speech-verb-cluwne-3 = laughs
@@ -113,3 +121,7 @@ chat-speech-verb-ghost-1 = complains
 chat-speech-verb-ghost-2 = breathes
 chat-speech-verb-ghost-3 = hums
 chat-speech-verb-ghost-4 = mutters
+
+chat-speech-verb-electricity-1 = crackles
+chat-speech-verb-electricity-2 = buzzes
+chat-speech-verb-electricity-3 = screeches

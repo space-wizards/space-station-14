@@ -6,15 +6,19 @@
     ClothingBackpackSatchelMedical: 4
     ClothingUniformJumpsuitMedicalDoctor: 4
     ClothingUniformJumpskirtMedicalDoctor: 4
-    ClothingEyesEyepatchHudMedical: 1
+    ClothingHeadHatBeretMedic: 4
     ClothingHeadNurseHat: 4
     ClothingOuterCoatLab: 4
     ClothingShoesColorWhite: 4
     ClothingHandsGlovesLatex: 4
+    ClothingHandsGlovesNitrile: 2
     ClothingHeadsetMedical: 4
     ClothingOuterWinterMed: 2
     ClothingOuterHospitalGown: 5
     UniformScrubsColorGreen: 4
     UniformScrubsColorBlue: 4
     UniformScrubsColorPurple: 4
+    ClothingHeadHatSurgcapGreen: 4 
+    ClothingHeadHatSurgcapBlue: 4
+    ClothingHeadHatSurgcapPurple: 4
     ClothingShoesBootsWinterMed: 2

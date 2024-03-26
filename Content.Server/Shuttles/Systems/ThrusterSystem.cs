@@ -12,6 +12,7 @@ using Content.Shared.Physics;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Temperature;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -51,9 +52,6 @@ public sealed class ThrusterSystem : EntitySystem
         SubscribeLocalEvent<ThrusterComponent, EndCollideEvent>(OnEndCollide);
 
         SubscribeLocalEvent<ThrusterComponent, ExaminedEvent>(OnThrusterExamine);
-
-        SubscribeLocalEvent<ThrusterComponent, RefreshPartsEvent>(OnRefreshParts);
-        SubscribeLocalEvent<ThrusterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
         SubscribeLocalEvent<ShuttleComponent, TileChangedEvent>(OnShuttleTileChange);
     }
@@ -98,7 +96,7 @@ public sealed class ThrusterSystem : EntitySystem
             return;
 
         var tilePos = args.NewTile.GridIndices;
-        var grid = _mapManager.GetGrid(uid);
+        var grid = Comp<MapGridComponent>(uid);
         var xformQuery = GetEntityQuery<TransformComponent>();
         var thrusterQuery = GetEntityQuery<ThrusterComponent>();
 
@@ -204,12 +202,10 @@ public sealed class ThrusterSystem : EntitySystem
         if (component.Type == ThrusterType.Linear)
         {
             oldShuttleComponent.LinearThrust[oldDirection] -= component.Thrust;
-            oldShuttleComponent.BaseLinearThrust[oldDirection] -= component.BaseThrust;
             DebugTools.Assert(oldShuttleComponent.LinearThrusters[oldDirection].Contains(uid));
             oldShuttleComponent.LinearThrusters[oldDirection].Remove(uid);
 
             shuttleComponent.LinearThrust[direction] += component.Thrust;
-            shuttleComponent.BaseLinearThrust[direction] += component.BaseThrust;
             DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(uid));
             shuttleComponent.LinearThrusters[direction].Add(uid);
         }
@@ -283,7 +279,6 @@ public sealed class ThrusterSystem : EntitySystem
                 var direction = (int) xform.LocalRotation.GetCardinalDir() / 2;
 
                 shuttleComponent.LinearThrust[direction] += component.Thrust;
-                shuttleComponent.BaseLinearThrust[direction] += component.BaseThrust;
                 DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(uid));
                 shuttleComponent.LinearThrusters[direction].Add(uid);
 
@@ -382,7 +377,6 @@ public sealed class ThrusterSystem : EntitySystem
                 var direction = (int) angle.Value.GetCardinalDir() / 2;
 
                 shuttleComponent.LinearThrust[direction] -= component.Thrust;
-                shuttleComponent.BaseLinearThrust[direction] -= component.BaseThrust;
                 DebugTools.Assert(shuttleComponent.LinearThrusters[direction].Contains(uid));
                 shuttleComponent.LinearThrusters[direction].Remove(uid);
                 break;
@@ -443,7 +437,7 @@ public sealed class ThrusterSystem : EntitySystem
             return true;
 
         var (x, y) = xform.LocalPosition + xform.LocalRotation.Opposite().ToWorldVec();
-        var tile = _mapManager.GetGrid(xform.GridUid.Value).GetTileRef(new Vector2i((int) Math.Floor(x), (int) Math.Floor(y)));
+        var tile = Comp<MapGridComponent>(xform.GridUid.Value).GetTileRef(new Vector2i((int) Math.Floor(x), (int) Math.Floor(y)));
 
         return tile.Tile.IsSpace();
     }
@@ -576,24 +570,6 @@ public sealed class ThrusterSystem : EntitySystem
                 _appearance.SetData(uid, ThrusterVisualState.Thrusting, false, appearance);
             }
         }
-    }
-
-    private void OnRefreshParts(EntityUid uid, ThrusterComponent component, RefreshPartsEvent args)
-    {
-        if (component.IsOn) // safely disable thruster to prevent negative thrust
-            DisableThruster(uid, component);
-
-        var thrustRating = args.PartRatings[component.MachinePartThrust];
-
-        component.Thrust = component.BaseThrust * MathF.Pow(component.PartRatingThrustMultiplier, thrustRating - 1);
-
-        if (component.Enabled && CanEnable(uid, component))
-            EnableThruster(uid, component);
-    }
-
-    private void OnUpgradeExamine(EntityUid uid, ThrusterComponent component, UpgradeExamineEvent args)
-    {
-        args.AddPercentageUpgrade("thruster-comp-upgrade-thrust", component.Thrust / component.BaseThrust);
     }
 
     #endregion

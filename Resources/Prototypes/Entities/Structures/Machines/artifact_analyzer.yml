@@ -106,9 +106,6 @@
         hard: False
   - type: Transform
     noRot: false
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.80
-    scaling: Exponential
   - type: TraversalDistorter
   - type: ItemPlacer
     # don't limit the number of artifacts that can be biased

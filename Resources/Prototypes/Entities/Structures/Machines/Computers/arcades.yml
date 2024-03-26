@@ -63,6 +63,9 @@
     - PlushieSpaceLizard
     - PlushieNuke
     - PlushieCarp
+    - PlushieMagicarp
+    - PlushieHolocarp
+    - PlushieRainbowCarp
     - PlushieRatvar
     - PlushieNar
     - PlushieSnake
@@ -72,6 +75,7 @@
     - PlushieRouny
     - PlushieBee
     - PlushieSlime
+    - BalloonNT
     - BalloonCorgi
     - ToySword
     - CrayonBox
@@ -88,6 +92,7 @@
     - PlushieHampter
     - PlushiePenguin
     - PlushieHuman
+    - ClothingHeadHatCowboyRed
   - type: WiresPanel
   - type: Wires
     layoutId: Arcade

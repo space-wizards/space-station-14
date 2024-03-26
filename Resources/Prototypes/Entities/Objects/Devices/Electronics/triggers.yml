@@ -24,9 +24,10 @@
       delay: 5
       delayOptions: [3, 5, 10, 15, 30]
       initialBeepDelay: 0
-      beepSound: /Audio/Machines/Nuke/general_beep.ogg
-      params:
-        volume: -2
+      beepSound:
+        path: /Audio/Machines/Nuke/general_beep.ogg
+        params:
+          volume: -2
     - type: StaticPrice
       price: 40
 

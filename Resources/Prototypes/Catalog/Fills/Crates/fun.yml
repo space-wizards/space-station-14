@@ -182,17 +182,6 @@
         amount: 6
 
 - type: entity
-  id: CrateFunATV
-  parent: CrateLivestock
-  name: ATV crate
-  description: An Absolutely Taxable Vehicle to help cargo with hauling.
-  components:
-  - type: StorageFill
-    contents:
-      - id: VehicleATV
-      - id: VehicleKeyATV
-
-- type: entity
   id: CrateFunSadTromboneImplants
   parent: CrateGenericSteel
   name: sad trombone implants
@@ -259,17 +248,6 @@
         amount: 4
 
 - type: entity
-  id: CrateFunSyndicateSegway
-  parent: CrateLivestock
-  name: Syndicate segway crate
-  description: A crate containing a two-wheeler that will help you escape from the security officers. Or not.
-  components:
-    - type: StorageFill
-      contents:
-        - id: VehicleSyndicateSegway
-        - id: VehicleKeySyndicateSegway
-
-- type: entity
   id: CrateFunBoxing
   parent: CrateGenericSteel
   name: boxing crate
@@ -310,17 +288,25 @@
   components:
   - type: StorageFill
     contents:
+      - id: SnapPopBox
       - id: CrazyGlue
-        amount: 2
       - id: PlasticBanana
+      - id: FunnyPaint
+        orGroup: Paint
+        prob: 0.5
+      - id: FunnyPaintYellow
+        orGroup: Paint
+        prob: 0.5
       - id: WhoopieCushion
       - id: ToyHammer
       - id: MrChips
-        orGroup: GiftPool
+        prob: 0.5
+        orGroup: Dummy
       - id: MrDips
-        orGroup: Giftpool
+        prob: 0.5
+        orGroup: Dummy
       - id: RevolverCapGun
-      - id: VehicleUnicycleFolded
+      - id: BalloonNT
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
       - id: BeachBall
@@ -350,6 +336,41 @@
       - id: MysteryFigureBox
         amount: 15
         prob: 0.05
+
+- type: entity
+  id: CrateFunSprayPaints
+  name: spray paint crate
+  description: a crate filled with spray paint.
+  parent: CratePlastic
+  suffix: Spray Paint
+  components:
+  - type: StorageFill
+    contents:
+      - id: SprayPaintBlue
+        amount: 2
+        prob: 0.33
+      - id: SprayPaintRed
+        amount: 2
+        prob: 0.33
+      - id: SprayPaintOrange
+        amount: 2
+        prob: 0.33
+      - id: SprayPaintBlack
+        amount: 2
+        prob: 0.33
+      - id: SprayPaintGreen
+        amount: 2
+        prob: 0.33
+      - id: SprayPaintPurple
+        amount: 2
+        prob: 0.33
+      - id: SprayPaintWhite
+        amount: 2
+        prob: 0.33
+      - id: DeathPaint
+        amount: 2
+      - id: DeathPaintTwo
+        amount: 2
 
 - type: entity
   name: dartboard box set

@@ -11,7 +11,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
 using Robust.UnitTesting;
 
 namespace Content.IntegrationTests.Tests.Preferences
@@ -56,6 +55,7 @@ namespace Content.IntegrationTests.Tests.Preferences
                 ),
                 ClothingPreference.Jumpskirt,
                 BackpackPreference.Backpack,
+                SpawnPriorityPreference.None,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
@@ -115,6 +115,17 @@ namespace Content.IntegrationTests.Tests.Preferences
             await db.SaveCharacterSlotAsync(username, null, 1);
             var prefs = await db.GetPlayerPreferencesAsync(username);
             Assert.That(!prefs.Characters.Any(p => p.Key != 0));
+            await pair.CleanReturnAsync();
+        }
+
+        [Test]
+        public async Task TestNoPendingDatabaseChanges()
+        {
+            var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            var db = GetDb(server);
+            Assert.That(async () => await db.HasPendingModelChanges(), Is.False,
+                "The database has pending model changes. Add a new migration to apply them. See https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations");
             await pair.CleanReturnAsync();
         }
 

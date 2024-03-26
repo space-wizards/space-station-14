@@ -3,10 +3,10 @@ using Content.Server.Paper;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Labels;
+using Content.Shared.Labels.Components;
+using Content.Shared.Labels.EntitySystems;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Labels
 {
@@ -14,7 +14,7 @@ namespace Content.Server.Labels
     /// A system that lets players see the contents of a label on an object.
     /// </summary>
     [UsedImplicitly]
-    public sealed class LabelSystem : EntitySystem
+    public sealed class LabelSystem : SharedLabelSystem
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -26,12 +26,21 @@ namespace Content.Server.Labels
         {
             base.Initialize();
 
-            SubscribeLocalEvent<LabelComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<LabelComponent, MapInitEvent>(OnLabelCompMapInit);
             SubscribeLocalEvent<PaperLabelComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<PaperLabelComponent, ComponentRemove>(OnComponentRemove);
             SubscribeLocalEvent<PaperLabelComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<PaperLabelComponent, EntRemovedFromContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<PaperLabelComponent, ExaminedEvent>(OnExamined);
+        }
+
+        private void OnLabelCompMapInit(EntityUid uid, LabelComponent component, MapInitEvent args)
+        {
+            if (!string.IsNullOrEmpty(component.CurrentLabel))
+            {
+                component.CurrentLabel = Loc.GetString(component.CurrentLabel);
+                Dirty(uid, component);
+            }
         }
 
         /// <summary>
@@ -58,6 +67,8 @@ namespace Content.Server.Labels
                 label.CurrentLabel = null;
                 label.OriginalName = null;
 
+                Dirty(uid, label);
+
                 return;
             }
 
@@ -65,6 +76,8 @@ namespace Content.Server.Labels
             label.OriginalName ??= metadata.EntityName;
             label.CurrentLabel = text;
             _metaData.SetEntityName(uid, $"{label.OriginalName} ({text})", metadata);
+
+            Dirty(uid, label);
         }
 
         private void OnComponentInit(EntityUid uid, PaperLabelComponent component, ComponentInit args)
@@ -80,19 +93,6 @@ namespace Content.Server.Labels
         private void OnComponentRemove(EntityUid uid, PaperLabelComponent component, ComponentRemove args)
         {
             _itemSlotsSystem.RemoveItemSlot(uid, component.LabelSlot);
-        }
-
-        private void OnExamine(EntityUid uid, LabelComponent? label, ExaminedEvent args)
-        {
-            if (!Resolve(uid, ref label))
-                return;
-
-            if (label.CurrentLabel == null)
-                return;
-
-            var message = new FormattedMessage();
-            message.AddText(Loc.GetString("hand-labeler-has-label", ("label", label.CurrentLabel)));
-            args.PushMessage(message);
         }
 
         private void OnExamined(EntityUid uid, PaperLabelComponent comp, ExaminedEvent args)
