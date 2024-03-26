@@ -222,6 +222,19 @@
     stock: 1
 
 - type: listing
+  id: WizardHealList
+  name: Heal
+  description: The Wizard Federation has decided to provide a healing spell since you all cant stop dying
+  productAction: ActionHealSpell
+  cost:
+    Magipoints: 2
+  categories:
+  - WizardSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
   id: WizardSpellbladelist
   name: Spellblade
   description: A powerful magic sword, can shoot fire bolts when you wield it
