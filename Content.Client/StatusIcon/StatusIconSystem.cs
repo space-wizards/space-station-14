@@ -1,7 +1,11 @@
 using Content.Shared.CCVar;
+using Content.Shared.Ghost;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
+using Content.Shared.Stealth.Components;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Shared.Configuration;
 
 namespace Content.Client.StatusIcon;
@@ -13,6 +17,7 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
 {
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     private bool _globalEnabled;
     private bool _localEnabled;
@@ -22,17 +27,6 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
     {
         Subs.CVar(_configuration, CCVars.LocalStatusIconsEnabled, OnLocalStatusIconChanged, true);
         Subs.CVar(_configuration, CCVars.GlobalStatusIconsEnabled, OnGlobalStatusIconChanged, true);
-
-        _configuration.OnValueChanged(CCVars.LocalStatusIconsEnabled, OnLocalStatusIconChanged, true);
-        _configuration.OnValueChanged(CCVars.GlobalStatusIconsEnabled, OnGlobalStatusIconChanged, true);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _configuration.UnsubValueChanged(CCVars.LocalStatusIconsEnabled, OnLocalStatusIconChanged);
-        _configuration.UnsubValueChanged(CCVars.GlobalStatusIconsEnabled, OnGlobalStatusIconChanged);
     }
 
     private void OnLocalStatusIconChanged(bool obj)
@@ -65,8 +59,7 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
         if (meta.EntityLifeStage >= EntityLifeStage.Terminating)
             return list;
 
-        var inContainer = (meta.Flags & MetaDataFlags.InContainer) != 0;
-        var ev = new GetStatusIconsEvent(list, inContainer);
+        var ev = new GetStatusIconsEvent(list);
         RaiseLocalEvent(uid, ref ev);
         return ev.StatusIcons;
     }
@@ -74,25 +67,22 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
     /// <summary>
     /// For overlay to check if an entity can be seen.
     /// </summary>
-    public bool IsVisible(EntityUid uid)
+    public bool IsVisible(Entity<MetaDataComponent> ent, StatusIconData proto)
     {
         // ghosties can always see them
-        var viewer = _playerMan.LocalPlayer?.ControlledEntity;
-        if (_ghostQuery.HasComponent(viewer))
+        var viewer = _playerManager.LocalSession?.AttachedEntity;
+        if (HasComp<GhostComponent>(viewer))
             return true;
 
-        if (_spriteQuery.TryGetComponent(uid, out var sprite) && !sprite.Visible)
+        if (proto.HideInContainer && (ent.Comp.Flags & MetaDataFlags.InContainer) != 0)
             return false;
 
-        var ev = new StatusIconVisibleEvent(true);
-        RaiseLocalEvent(uid, ref ev);
-        return ev.Visible;
+        if (proto.HideTo.IsValid(ent, EntityManager))
+            return false;
+
+        if (!proto.ShowTo.IsValid(ent, EntityManager))
+            return false;
+
+        return true;
     }
 }
-
-/// <summary>
-/// Raised on an entity to check if it should draw hud icons.
-/// Used to check invisibility etc inside the screen bounds.
-/// </summary>
-[ByRefEvent]
-public record struct StatusIconVisibleEvent(bool Visible);

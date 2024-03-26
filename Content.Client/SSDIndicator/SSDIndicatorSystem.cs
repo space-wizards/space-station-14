@@ -30,7 +30,6 @@ public sealed class SSDIndicatorSystem : EntitySystem
     {
         if (component.IsSSD &&
             _cfg.GetCVar(CCVars.ICShowSSDIndicator) &&
-            !args.InContainer &&
             !_mobState.IsDead(uid) &&
             !HasComp<ActiveNPCComponent>(uid) &&
             TryComp<MindContainerComponent>(uid, out var mindContainer) &&

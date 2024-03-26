@@ -4,10 +4,16 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Zombie
+  showTo:
+    components:
+      - ShowAntagIcons
 
 - type: statusIcon
   id: RevolutionaryFaction
   priority: 11
+  showTo:
+    components:
+      - ShowAntagIcons
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Revolutionary
@@ -15,6 +21,9 @@
 - type: statusIcon
   id: HeadRevolutionaryFaction
   priority: 11
+  showTo:
+    components:
+      - ShowAntagIcons
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: HeadRevolutionary

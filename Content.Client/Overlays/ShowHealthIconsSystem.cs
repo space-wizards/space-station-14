@@ -47,7 +47,7 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
 
     private void OnGetStatusIconsEvent(EntityUid uid, DamageableComponent damageableComponent, ref GetStatusIconsEvent args)
     {
-        if (!IsActive || args.InContainer)
+        if (!IsActive)
             return;
 
         var healthIcons = DecideHealthIcons(damageableComponent);
@@ -66,7 +66,7 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
         var result = new List<StatusIconPrototype>();
 
         // Here you could check health status, diseases, mind status, etc. and pick a good icon, or multiple depending on whatever.
-        if (damageableComponent?.DamageContainerID == "Biological" &&
+        if (damageableComponent.DamageContainerID == "Biological" &&
             _prototypeMan.TryIndex<StatusIconPrototype>(HealthIconFine, out var healthyIcon))
         {
             result.Add(healthyIcon);

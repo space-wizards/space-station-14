@@ -18,7 +18,7 @@ public sealed class ShowSyndicateIconsSystem : EquipmentHudSystem<ShowSyndicateI
 
     private void OnGetStatusIconsEvent(EntityUid uid, NukeOperativeComponent nukeOperativeComponent, ref GetStatusIconsEvent args)
     {
-        if (!IsActive || args.InContainer)
+        if (!IsActive)
         {
             return;
         }
@@ -40,4 +40,3 @@ public sealed class ShowSyndicateIconsSystem : EquipmentHudSystem<ShowSyndicateI
         return result;
     }
 }
-
