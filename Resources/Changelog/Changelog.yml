@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Eating/drinking sounds should be hopefully significantly less grating
-    type: Tweak
-  id: 5732
-  time: '2024-01-17T16:46:07.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24195
 - author: notafet
   changes:
   - message: Chemical, booze, and soda dispensers now dispense reagents from stock
@@ -3793,3 +3786,11 @@
   id: 6231
   time: '2024-03-26T00:16:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26250
+- author: EmoGarbage404
+  changes:
+  - message: Ninjas no longer wipe all technologies when using their gloves on a research
+      server.
+    type: Tweak
+  id: 6232
+  time: '2024-03-26T00:52:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26421
