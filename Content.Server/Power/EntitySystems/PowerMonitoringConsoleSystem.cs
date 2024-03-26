@@ -17,6 +17,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.GameTicking.Components;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -723,8 +724,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         }
     }
 
-    // Designates a supplied entity as a 'collection master'. Other entities which share this 
-    // entities collection name and are attached on the same load network are assigned this entity 
+    // Designates a supplied entity as a 'collection master'. Other entities which share this
+    // entities collection name and are attached on the same load network are assigned this entity
     // as the master that represents them on the console UI. This way you can have one device
     // represent multiple connected devices
     private void AssignEntityAsCollectionMaster

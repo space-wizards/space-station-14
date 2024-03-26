@@ -99,9 +99,9 @@
   components:
   - type: GameRule
     minPlayers: 5
-    #delay:
-    #  min: 240
-    #  max: 420
+    delay:
+      min: 240
+      max: 420
   - type: TraitorRule
   - type: AntagSelection
     definitions:
@@ -161,9 +161,9 @@
   components:
   - type: GameRule
     minPlayers: 20
-    #delay:
-    #  min: 600
-    #  max: 900
+    delay:
+      min: 600
+      max: 900
   - type: ZombieRule
   - type: AntagSelection
     definitions:

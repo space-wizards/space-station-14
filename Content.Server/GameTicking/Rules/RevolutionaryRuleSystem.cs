@@ -30,6 +30,7 @@ using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Linq;
+using Content.Server.GameTicking.Components;
 
 namespace Content.Server.GameTicking.Rules;
 

@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Server.Administration.Commands;
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
