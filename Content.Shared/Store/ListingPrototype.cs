@@ -27,13 +27,13 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// The name of the listing. If empty, uses the entity's name (if present)
     /// </summary>
     [DataField]
-    public LocId? Name;
+    public string? Name;
 
     /// <summary>
     /// The description of the listing. If empty, uses the entity's description (if present)
     /// </summary>
     [DataField]
-    public LocId? Description;
+    public string? Description;
 
     /// <summary>
     /// The categories that this listing applies to. Used for filtering a listing for a store.

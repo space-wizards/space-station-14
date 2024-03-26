@@ -32,7 +32,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         _menu.OnCategoryButtonPressed += (_, category) =>
         {
             _menu.CurrentCategory = category;
-            SendMessage(new StoreRequestUpdateInterfaceMessage());
+            _menu?.UpdateListing();
         };
 
         _menu.OnWithdrawAttempt += (_, type, amount) =>
@@ -40,7 +40,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
             SendMessage(new StoreRequestWithdrawMessage(type, amount));
         };
 
-        _menu.OnRefundAttempt += (_) =>
+        _menu.OnRefundAttempt += _ =>
         {
             SendMessage(new StoreRequestRefundMessage());
         };

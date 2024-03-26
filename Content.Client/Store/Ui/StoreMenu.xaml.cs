@@ -30,6 +30,8 @@ public sealed partial class StoreMenu : DefaultWindow
     public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Balance = new();
     public string CurrentCategory = string.Empty;
 
+    private List<ListingData> _cachedListings = new();
+
     public StoreMenu(string name)
     {
         RobustXamlLoader.Load(this);
@@ -68,10 +70,12 @@ public sealed partial class StoreMenu : DefaultWindow
         WithdrawButton.Disabled = disabled;
     }
 
-    public void UpdateListing(List<ListingData> listings)
+    public void UpdateListing(List<ListingData>? listings = null)
     {
-        var sorted = listings.OrderBy(l => l.Priority).ThenBy(l => l.Cost.Values.Sum());
+        if (listings != null)
+            _cachedListings = listings;
 
+        var sorted = _cachedListings.OrderBy(l => l.Priority).ThenBy(l => l.Cost.Values.Sum());
 
         // should probably chunk these out instead. to-do if this clogs the internet tubes.
         // maybe read clients prototypes instead?
@@ -204,12 +208,17 @@ public sealed partial class StoreMenu : DefaultWindow
 
         CategoryListContainer.Children.Clear();
 
+        var group = new ButtonGroup();
         foreach (var proto in allCategories)
         {
             var catButton = new StoreCategoryButton
             {
                 Text = Loc.GetString(proto.Name),
-                Id = proto.ID
+                Id = proto.ID,
+                Pressed = proto.ID == CurrentCategory,
+                Group = group,
+                ToggleMode = true,
+                StyleClasses = { "OpenBoth" }
             };
 
             catButton.OnPressed += args => OnCategoryButtonPressed?.Invoke(args, catButton.Id);
