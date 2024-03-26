@@ -1519,7 +1519,7 @@
     sound:
       path: /Audio/Effects/hit_kick.ogg
   - type: GhostRole
-    prob: 1
+    prob: 0.05
     makeSentient: true
     allowSpeech: true
     allowMovement: true
@@ -1556,7 +1556,7 @@
     sprite: Objects/Fun/pet_rock.rsi
     state: icon
   - type: GhostRole
-    prob: 0
+    prob: 0.001 # The rare sentient normal rock
   - type: PhysicalComposition
     materialComposition:
       Steel: 10
@@ -1585,7 +1585,7 @@
   id: NamedPetRock
   name: pet rock
   suffix: Random Name
-  description: Don't worry, this rock is your friend.
+  description: Rocks are your friends, even when nobody else is.
   components:
   - type: RandomMetadata # He's your best friend.
     nameSegments:
