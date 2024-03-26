@@ -165,6 +165,64 @@
         Brute: 12
 
 - type: entity
+  parent: BaseMobDragon
+  id: MobDragonNanotrasen
+  name: mr nanotrasen
+  description: The true CEO of nanotrasen.
+  components:
+  - type: Inventory
+    templateId: mrnanotrasen
+  - type: InventorySlots
+  - type: Loadout
+    prototypes: [ MobMrNanotrasenGear ]
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        alive: Rainbow
+  - type: Sprite
+    sprite: Mobs/Aliens/Carps/mr_nanotrasen.rsi
+    noRot: true
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: alive-unshaded
+      shader: unshaded
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+        BaseUnshaded: alive-unshaded
+      Critical:
+        Base: crit
+        BaseUnshaded: crit-unshaded
+      Dead:
+        Base: dead
+        BaseUnshaded: dead-unshaded
+  - type: GhostRole
+    name: Mr Nanotrasen
+    description: Eat people who annoy you, rant about profits, gloat for asset protection.
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      100: 0.7
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      200: Dead
+  - type: Butcherable
+    spawned:
+    - id: SpaceCash30000
+      amount: 10
+  - type: MeleeWeapon
+    damage:
+      groups:
+        Brute: 45 # Special Centcomm :tm: Teeth
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+
+- type: entity
   id: ActionSpawnRift
   name: Summon Carp Rift
   description: Summons a carp rift that will periodically spawns carps.

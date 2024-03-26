@@ -71,6 +71,9 @@
       "name": "crit"
     },
     {
+      "name": "crit-unshaded"
+    },
+    {
       "name": "dead"
     },
 	  {

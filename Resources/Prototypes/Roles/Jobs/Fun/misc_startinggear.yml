@@ -342,3 +342,9 @@
     shoes: ClothingShoesClownBanana
     jumpsuit: ClothingUniformJumpsuitClownBanana
     mask: ClothingMaskClownBanana
+
+# Mr Nanotrasen
+- type: startingGear
+  id: MobMrNanotrasenGear
+  equipment:
+    id: CentcomPDA
