@@ -90,8 +90,6 @@
     trackedDepartments:
       - Command
       - Security
-    trackedJobs:
-      - Prisoner
 
 - type: entity
   id: SecurityHandheldCrewMonitorEmpty
