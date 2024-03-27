@@ -10,7 +10,9 @@
         state: icon
   - type: RandomSpawner
     prototypes:
+      - ParadiseArcade
+    chance: 0.50
+    rarePrototypes:
       - BlockGameArcade
       - SpaceVillainArcadeFilled
-      - ParadiseArcade
-    chance: 1
+    rareChance: 0.50
