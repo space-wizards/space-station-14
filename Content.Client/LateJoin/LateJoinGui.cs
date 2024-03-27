@@ -342,6 +342,7 @@ namespace Content.Client.LateJoin
         public string JobId { get; }
         public string JobLocalisedName { get; }
         public uint? Amount { get; private set; }
+        private bool _initialised = false;
 
         public JobButton(Label jobLabel, string jobId, string jobLocalisedName, uint? amount)
         {
@@ -350,18 +351,19 @@ namespace Content.Client.LateJoin
             JobLocalisedName = jobLocalisedName;
             RefreshLabel(amount);
             AddStyleClass(StyleClassButton);
+            _initialised = true;
         }
 
         public void RefreshLabel(uint? amount)
         {
-            if (Amount == amount)
+            if (Amount == amount && _initialised)
             {
                 return;
             }
             Amount = amount;
 
-            JobLabel.Text = JobId != null ?
-                Loc.GetString("late-join-gui-job-slot-capped", ("jobName", JobLocalisedName), ("amount", Amount != null ? Amount : 0)) :
+            JobLabel.Text = Amount != null ?
+                Loc.GetString("late-join-gui-job-slot-capped", ("jobName", JobLocalisedName), ("amount", Amount)) :
                 Loc.GetString("late-join-gui-job-slot-uncapped", ("jobName", JobLocalisedName));
         }
     }
