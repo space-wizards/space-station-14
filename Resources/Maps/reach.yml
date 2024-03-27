@@ -9495,7 +9495,7 @@ entities:
     - type: Transform
       pos: -26.5,-0.5
       parent: 407
-- proto: CMOHandheldCrewMonitor
+- proto: HandheldCrewMonitor
   entities:
   - uid: 2137
     components:
