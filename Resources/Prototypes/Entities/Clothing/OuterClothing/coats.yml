@@ -197,9 +197,9 @@
   description: A suit that protects against minor chemical spills. Has a purple stripe on the shoulder.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/rndcoat.rsi
+    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/rndcoat.rsi
+    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -227,9 +227,9 @@
   description: Woven with top of the line technology, this labcoat helps protect against radiation in similar way to the experimental hardsuit.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/rd_coat.rsi
+    sprite: Clothing/OuterClothing/Coats/labcoat_rd.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/rd_coat.rsi
+    sprite: Clothing/OuterClothing/Coats/labcoat_rd.rsi
   - type: Armor
     modifiers:
       coefficients:

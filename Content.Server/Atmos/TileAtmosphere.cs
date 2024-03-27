@@ -28,6 +28,9 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public TileAtmosphere? PressureSpecificTarget { get; set; }
 
+        /// <summary>
+        /// This is either the pressure difference, or the quantity of moles transferred if monstermos is enabled.
+        /// </summary>
         [ViewVariables]
         public float PressureDifference { get; set; }
 
