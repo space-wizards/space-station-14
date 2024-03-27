@@ -230,9 +230,9 @@ public sealed partial class CargoSystem
 
     #region Station
 
-    private bool SellPallets(EntityUid gridUid, EntityUid? station, out double amount)
+    private bool SellPallets(EntityUid gridUid, out double amount)
     {
-        station ??= _station.GetOwningStation(gridUid);
+        //station ??= _station.GetOwningStation(gridUid);
         GetPalletGoods(gridUid, out var toSell, out amount);
 
         Log.Debug($"Cargo sold {toSell.Count} entities for {amount}");
@@ -240,11 +240,9 @@ public sealed partial class CargoSystem
         if (toSell.Count == 0)
             return false;
 
-        if (station != null)
-        {
-            var ev = new EntitySoldEvent(station.Value, toSell);
-            RaiseLocalEvent(ref ev);
-        }
+
+        var ev = new EntitySoldEvent(toSell);
+        RaiseLocalEvent(ref ev);
 
         foreach (var ent in toSell)
         {
@@ -332,7 +330,7 @@ public sealed partial class CargoSystem
             return;
         }
 
-        if (!SellPallets(gridUid, null, out var price))
+        if (!SellPallets(gridUid, out var price))
             return;
 
         var stackPrototype = _protoMan.Index<StackPrototype>(component.CashType);
@@ -354,4 +352,4 @@ public sealed partial class CargoSystem
 /// deleted but after the price has been calculated.
 /// </summary>
 [ByRefEvent]
-public readonly record struct EntitySoldEvent(EntityUid Station, HashSet<EntityUid> Sold);
+public readonly record struct EntitySoldEvent(HashSet<EntityUid> Sold);
