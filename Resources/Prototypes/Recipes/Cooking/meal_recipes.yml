@@ -34,7 +34,7 @@
   time: 10
   solids:
     FoodBreadBun: 1
-    BaseBallBat: 1
+    WoodenClub: 1 #I mean, you can use it like a baseball bat.
 
 - type: microwaveMealRecipe
   id: RecipeBearger

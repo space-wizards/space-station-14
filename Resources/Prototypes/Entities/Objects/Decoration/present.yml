@@ -226,7 +226,7 @@
         orGroup: GiftPool
       - id: Machete
         orGroup: GiftPool
-      - id: BaseBallBat
+      - id: WoodenClub
         orGroup: GiftPool
       - id: CombatKnife
         orGroup: GiftPool

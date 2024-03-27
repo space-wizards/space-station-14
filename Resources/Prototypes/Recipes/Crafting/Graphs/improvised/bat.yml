@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: WoodenBat
   start: start
   graph:
@@ -10,4 +10,4 @@
               amount: 5
               doAfter: 4
     - node: bat
-      entity: BaseBallBat
+      entity: WoodenClub
