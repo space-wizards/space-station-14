@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Volotomite
-  changes:
-  - message: Flippo can burn plasma now!
-    type: Fix
-  id: 5735
-  time: '2024-01-18T00:28:32.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24207
-- author: Ubaser
-  changes:
-  - message: The paramedic's void suit now has a helmet toggle.
-    type: Tweak
-  id: 5736
-  time: '2024-01-18T15:26:59.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24229
 - author: Ubaser
   changes:
   - message: Carrots now properly contain Oculine, and you can Juice them to obtain
@@ -3791,3 +3777,20 @@
   id: 6234
   time: '2024-03-26T04:44:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26441
+- author: nikthechampiongr
+  changes:
+  - message: Handcuffs will no longer try to uncuff themselves when they stop being
+      dragged.
+    type: Fix
+  id: 6235
+  time: '2024-03-26T19:15:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26434
+- author: Nairodian
+  changes:
+  - message: Added disablers to every security officer locker.
+    type: Add
+  - message: Any way to obtain rubber bullets has been removed.
+    type: Remove
+  id: 6236
+  time: '2024-03-27T15:11:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26470
