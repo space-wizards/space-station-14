@@ -112,3 +112,9 @@
   license: "CC0-1.0"
   copyright: "mattyharm on freesound.org"
   source: "https://freesound.org/people/mattyharm/sounds/432995/"
+
+- files:
+  - wilhelm_scream.ogg
+  license: "CC0-1.0"
+  copyright: "Wikipedia Foundation, originally Internet Archive"
+  source: "https://commons.wikimedia.org/wiki/File:Wilhelm_Scream.ogg"

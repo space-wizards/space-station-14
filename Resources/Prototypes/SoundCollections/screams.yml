@@ -7,6 +7,7 @@
     - /Audio/Voice/Human/malescream_4.ogg
     - /Audio/Voice/Human/malescream_5.ogg
     - /Audio/Voice/Human/malescream_6.ogg
+    - /Audio/Voice/Human/wilhelm_scream.ogg
 
 - type: soundCollection
   id: FemaleScreams
