@@ -1,0 +1,138 @@
+# Miscellaneous
+- type: loadoutGroup
+  id: Trinkets
+  name: loadout-group-trinkets
+  minLimit: 0
+  loadouts:
+  - PlushieLizard
+
+# Engineer
+- type: loadoutGroup
+  id: StationEngineerHead
+  name: loadout-group-station-engineer-head
+  loadouts:
+  - StationEngineerHead
+  - SeniorEngineerBeret
+
+- type: loadoutGroup
+  id: StationEngineerJumpsuit
+  name: loadout-group-station-engineer-jumpsuit
+  loadouts:
+  - StationEngineerJumpsuit
+  - StationEngineerJumpskirt
+  - SeniorEngineerJumpsuit
+  - SeniorEngineerJumpskirt
+
+- type: loadoutGroup
+  id: StationEngineerBackpack
+  name: loadout-group-station-engineer-backpack
+  loadouts:
+  - StationEngineerBackpack
+  - StationEngineerSatchel
+  - StationEngineerDuffel
+  - SeniorEngineerBackpack
+  - SeniorEngineerSatchel
+  - SeniorEngineerDuffel
+
+- type: loadoutGroup
+  id: StationEngineerOuterClothing
+  name: loadout-group-station-engineer-outerclothing
+  minLimit: 0
+  loadouts:
+  - StationEngineerOuterVest
+
+- type: loadoutGroup
+  id: StationEngineerID
+  name: loadout-group-station-engineer-id
+  loadouts:
+  - StationEngineerPDA
+  - SeniorEngineerPDA
+
+# Science
+
+- type: loadoutGroup
+  id: ScientistHead
+  name: loadout-group-scientist-head
+  minLimit: 0
+  loadouts:
+  - ScientificBeret
+
+- type: loadoutGroup
+  id: ScientistNeck
+  name: loadout-group-scientist-neck
+  minLimit: 0
+  loadouts:
+  - ScientistTie
+
+- type: loadoutGroup
+  id: ScientistJumpsuit
+  name: loadout-group-scientist-jumpsuit
+  loadouts:
+  - ScientistJumpsuit
+  - ScientistJumpskirt
+  - SeniorResearcherJumpsuit
+  - SeniorResearcherJumpskirt
+
+- type: loadoutGroup
+  id: ScientistBackpack
+  name: loadout-group-scientist-backpack
+  loadouts:
+  - ScientistBackpack
+  - ScientistSatchel
+  - ScientistDuffel
+  - SeniorResearcherBackpack
+  - SeniorResearcherSatchel
+  - SeniorResearcherDuffel
+
+- type: loadoutGroup
+  id: ScientistOuterClothing
+  name: loadout-group-scientist-outerclothing
+  minLimit: 0
+  loadouts:
+  - RegularLabCoat
+  - ScienceLabCoat
+  - SeniorResearcherLabCoat
+
+- type: loadoutGroup
+  id: ScientistPDA
+  name: loadout-group-scientist-id
+  loadouts:
+  - ScientistPDA
+  - SeniorResearcherPDA
+
+# Security
+- type: loadoutGroup
+  id: SecurityHead
+  name: loadout-group-security-head
+  minLimit: 0
+  loadouts:
+  - SecurityHelmet
+  - SecurityBeret
+  - SecurityHat
+
+- type: loadoutGroup
+  id: SecurityJumpsuit
+  name: loadout-group-security-jumpsuit
+  loadouts:
+  - SecurityJumpsuit
+  - SecurityJumpskirt
+  - SeniorOfficerJumpsuit
+  - SeniorOfficerJumpskirt
+
+- type: loadoutGroup
+  id: SecurityBackpack
+  name: loadout-group-security-backpack
+  loadouts:
+  - SecurityBackpack
+  - SecuritySatchel
+  - SecurityDuffel
+  - SeniorOfficerBackpack
+  - SeniorOfficerSatchel
+  - SeniorOfficerDuffel
+
+- type: loadoutGroup
+  id: SecurityPDA
+  name: loadout-group-security-id
+  loadouts:
+  - SecurityPDA
+  - SeniorOfficerPDA

@@ -1,0 +1,7 @@
+<BoxContainer xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Buffer space so we have 10 margin between controls but also 10 to the borders -->
+    <PanelContainer StyleClasses="AngleRect" HorizontalExpand="True">
+        <BoxContainer Name="LoadoutsContainer" Orientation="Vertical"/>
+    </PanelContainer>
+</BoxContainer>
