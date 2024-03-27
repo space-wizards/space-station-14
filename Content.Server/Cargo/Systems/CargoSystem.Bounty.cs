@@ -11,6 +11,7 @@ using Content.Shared.Database;
 using Content.Shared.NameIdentifier;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
+using Robust.Packaging.AssetProcessing;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
@@ -34,6 +35,7 @@ public sealed partial class CargoSystem
     {
         SubscribeLocalEvent<CargoBountyConsoleComponent, BoundUIOpenedEvent>(OnBountyConsoleOpened);
         SubscribeLocalEvent<CargoBountyConsoleComponent, BountyPrintLabelMessage>(OnPrintLabelMessage);
+        SubscribeLocalEvent<CargoBountyConsoleComponent, BountySkipMessage>(OnSkipBountyMessage);
         SubscribeLocalEvent<CargoBountyLabelComponent, PriceCalculationEvent>(OnGetBountyPrice);
         SubscribeLocalEvent<EntitySoldEvent>(OnSold);
         SubscribeLocalEvent<StationCargoBountyDatabaseComponent, MapInitEvent>(OnMapInit);
@@ -67,6 +69,25 @@ public sealed partial class CargoSystem
         component.NextPrintTime = _timing.CurTime + component.PrintDelay;
         SetupBountyLabel(label, bounty.Value);
         _audio.PlayPvs(component.PrintSound, uid);
+    }
+
+    private void OnSkipBountyMessage(EntityUid uid, CargoBountyConsoleComponent component, BountySkipMessage args)
+    {
+        if (_timing.CurTime < component.NextSkipTime)
+            return;
+
+        if (_station.GetOwningStation(uid) is not { } station)
+            return;
+
+        if (!TryGetBountyFromId(station, args.BountyId, out var bounty))
+            return;
+
+        if (true) // TODO check access here!
+        {
+            // TODO skip da bounty
+            component.NextSkipTime = _timing.CurTime + component.SkipDelay;
+            _audio.PlayPvs(component.SkipSound, uid);
+        }
     }
 
     public void SetupBountyLabel(EntityUid uid, CargoBountyData bounty, PaperComponent? paper = null, CargoBountyLabelComponent? label = null)

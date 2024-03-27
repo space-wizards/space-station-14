@@ -14,7 +14,8 @@ public sealed partial class BountyEntry : BoxContainer
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
-    public Action? OnButtonPressed;
+    public Action? OnLabelButtonPressed;
+    public Action? OnSkipButtonPressed;
 
     public TimeSpan EndTime;
 
@@ -38,6 +39,7 @@ public sealed partial class BountyEntry : BoxContainer
         DescriptionLabel.SetMarkup(Loc.GetString("bounty-console-description-label", ("description", Loc.GetString(bountyPrototype.Description))));
         IdLabel.SetMarkup(Loc.GetString("bounty-console-id-label", ("id", bounty.Id)));
 
-        PrintButton.OnPressed += _ => OnButtonPressed?.Invoke();
+        PrintButton.OnPressed += _ => OnLabelButtonPressed?.Invoke();
+        SkipButton.OnPressed += _ => OnSkipButtonPressed?.Invoke();
     }
 }
