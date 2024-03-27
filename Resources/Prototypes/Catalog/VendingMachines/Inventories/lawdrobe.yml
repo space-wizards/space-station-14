@@ -28,10 +28,10 @@
     ClothingUniformJumpsuitLawyerBlackStripe: 1
     ClothingUniformJumpsuitLawyerBlueStripe: 1
     LuxuryPen: 2
- contrabandInventory:
+  contrabandInventory:
     ClothingOuterRobesJudge: 1
     ClothingHeadHatPwig: 1
     # "Legally" obtained currency
     SpaceCash100: 2
- emaggedInventory:
+  emaggedInventory:
     CyberPen: 1

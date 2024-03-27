@@ -118,10 +118,11 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             // PVS was turned off, ensure data gets sent to all clients.
-            foreach (var (grid, meta) in EntityQuery<GasTileOverlayComponent, MetaDataComponent>(true))
+            var query = EntityQueryEnumerator<GasTileOverlayComponent, MetaDataComponent>();
+            while (query.MoveNext(out var uid, out var grid, out var meta))
             {
                 grid.ForceTick = _gameTiming.CurTick;
-                Dirty(grid, meta);
+                Dirty(uid, grid, meta);
             }
         }
 
@@ -171,7 +172,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var id = VisibleGasId[i];
                 var gas = _atmosphereSystem.GetGas(id);
-                var moles = mixture?.Moles[id] ?? 0f;
+                var moles = mixture?[id] ?? 0f;
                 ref var opacity = ref data.Opacity[i];
 
                 if (moles < gas.GasMolesVisible)
@@ -216,13 +217,13 @@ namespace Content.Server.Atmos.EntitySystems
                 oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity);
             }
 
-            if (tile.Air != null)
+            if (tile is {Air: not null, NoGridTile: false})
             {
                 for (var i = 0; i < VisibleGasId.Length; i++)
                 {
                     var id = VisibleGasId[i];
                     var gas = _atmosphereSystem.GetGas(id);
-                    var moles = tile.Air.Moles[id];
+                    var moles = tile.Air[id];
                     ref var oldOpacity = ref oldData.Opacity[i];
 
                     if (moles < gas.GasMolesVisible)
@@ -264,9 +265,10 @@ namespace Content.Server.Atmos.EntitySystems
         private void UpdateOverlayData(GameTick curTick)
         {
             // TODO parallelize?
-            foreach (var (overlay, gam, meta) in EntityQuery<GasTileOverlayComponent, GridAtmosphereComponent, MetaDataComponent>(true))
+            var query = EntityQueryEnumerator<GasTileOverlayComponent, GridAtmosphereComponent, MetaDataComponent>();
+            while (query.MoveNext(out var uid, out var overlay, out var gam, out var meta))
             {
-                bool changed = false;
+                var changed = false;
                 foreach (var index in overlay.InvalidTiles)
                 {
                     var chunkIndex = GetGasChunkIndices(index);
@@ -278,7 +280,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 if (changed)
-                    Dirty(overlay, meta);
+                    Dirty(uid, overlay, meta);
 
                 overlay.InvalidTiles.Clear();
             }

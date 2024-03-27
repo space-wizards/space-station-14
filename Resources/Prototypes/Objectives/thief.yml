@@ -142,20 +142,7 @@
   - type: Objective
     difficulty: 0.7
 
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealCollectionObjective
-  id: CannabisStealCollectionObjective
-  components:
-  - type: NotJobRequirement
-    job: Botanist
-  - type: StealCondition
-    stealGroup: Cannabis
-    minCollectionSize: 20
-    maxCollectionSize: 30
-    verifyMapExistence: false
-  - type: Objective
-    difficulty: 0.5
+
 
 - type: entity
   noSpawn: true
@@ -536,48 +523,12 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealAnimalObjective
-  id: HamletStealObjective
-  components:
-  - type: NotJobRequirement
-    job: Captain
-  - type: StealCondition
-    stealGroup: AnimalHamlet
-  - type: Objective
-    difficulty: 1
-
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealAnimalObjective
   id: ShivaStealObjective
   components:
   - type: NotJobRequirement
     job: SecurityOfficer
   - type: StealCondition
     stealGroup: AnimalShiva
-  - type: Objective
-    difficulty: 2
-
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealAnimalObjective
-  id: SmileStealObjective
-  components:
-  - type: NotJobRequirement
-    job: Scientist
-  - type: StealCondition
-    stealGroup: AnimalSmile
-  - type: Objective
-    difficulty: 1
-
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealAnimalObjective
-  id: PunPunStealObjective
-  components:
-  - type: NotJobRequirement
-    job: Bartender
-  - type: StealCondition
-    stealGroup: AnimalPunPun
   - type: Objective
     difficulty: 2
 
