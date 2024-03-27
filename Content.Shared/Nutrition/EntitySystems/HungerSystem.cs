@@ -69,6 +69,8 @@ public sealed class HungerSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
         SetHunger(uid, component.CurrentHunger + amount, component);
+
+        RaiseLocalEvent(uid, new HungerModifiedEvent(amount));
     }
 
     /// <summary>
@@ -211,3 +213,7 @@ public sealed class HungerSystem : EntitySystem
     }
 }
 
+public sealed class HungerModifiedEvent(float amount) : EntityEventArgs
+{
+    public float Amount = amount;
+}

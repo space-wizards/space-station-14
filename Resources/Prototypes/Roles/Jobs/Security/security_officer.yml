@@ -10,7 +10,7 @@
   startingGear: SecurityOfficerGear
   icon: "JobIconSecurityOfficer"
   supervisors: job-supervisors-hos
-  canBeAntag: false
+  canBeAntag: true
   access:
   - Security
   - Brig

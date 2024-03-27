@@ -23,7 +23,7 @@
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineHeadOfPersonnel
-  name: head of personnel figure
+  name: head of service figure
   description: A figurine depicting the glorious head of all personnel, away from their office as usual.
   components:
   - type: Sprite
@@ -96,8 +96,8 @@
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineCaptain
-  name: captain figure
-  description: A figurine depicting the standard outfit of a captain belonging to a civilian-sector Nanotrasen vessel.
+  name: head of station figure
+  description: A figurine depicting the standard outfit of a head of station belonging to a civilian-sector Nanotrasen vessel.
   components:
   - type: Sprite
     state: captain
@@ -168,7 +168,7 @@
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineQuartermaster
-  name: quartermaster figure
+  name: head of supply figure
   description: A figurine depicting the glorious head of the Cargo department.
   components:
   - type: Sprite
@@ -177,7 +177,7 @@
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineChiefEngineer
-  name: chief engineer figure
+  name: head of singularity figure
   description: A figurine depicting the glorious head of the Engineering department.
   components:
   - type: Sprite
@@ -204,7 +204,7 @@
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineResearchDirector
-  name: research director figure
+  name: head of science figure
   description: A figurine depicting the glorious head of the Science department.
   components:
   - type: Sprite
@@ -222,7 +222,7 @@
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineChiefMedicalOfficer
-  name: chief medical officer figure
+  name: head of still just a week away figure
   description: A figurine depicting the glorious head of the Medical department.
   components:
   - type: Sprite

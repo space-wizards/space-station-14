@@ -21,7 +21,7 @@
   id: ClothingHeadHatHoodBioCmo
   name: bio hood
   suffix: CMO
-  description: An advanced hood for chief medical officers that protects the head and face from biological contaminants.
+  description: An advanced hood for heads of still just a week away that protects the head and face from biological contaminants.
   components:
   - type: IdentityBlocker
   - type: Sprite
@@ -237,8 +237,8 @@
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCaptain
   noSpawn: true
-  name: captain's winter coat hood
-  description: An expensive hood, to keep the captain's head warm.
+  name: head of station's winter coat hood
+  description: An expensive hood, to keep the head of station's head warm.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/Coat/hoodcaptain.rsi
@@ -260,7 +260,7 @@
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCE
   noSpawn: true
-  name: chief engineer's winter coat hood
+  name: head of singularity's winter coat hood
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/Coat/hoodce.rsi
@@ -294,7 +294,7 @@
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCMO
   noSpawn: true
-  name: chief medical officer's winter coat hood
+  name: head of still just a week away's winter coat hood
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/Coat/hoodcmo.rsi
@@ -316,7 +316,7 @@
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterHOP
   noSpawn: true
-  name: head of personel's winter coat hood
+  name: head of service's winter coat hood
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/Coat/hoodhop.rsi
@@ -404,7 +404,7 @@
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterQM
   noSpawn: true
-  name: quartermaster's coat hood
+  name: head of supply's coat hood
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/Coat/hoodqm.rsi
@@ -415,7 +415,7 @@
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterRD
   noSpawn: true
-  name: research director's coat hood
+  name: head of science's coat hood
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/Coat/hoodrd.rsi

@@ -75,7 +75,7 @@
 - type: entity
   parent: ClothingMaskGasAtmos
   id: ClothingMaskGasCaptain
-  name: captain's gas mask
+  name: head of station's gas mask
   description: Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone.
   components:
   - type: Sprite

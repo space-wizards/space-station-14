@@ -102,7 +102,7 @@
 - type: entity
   parent: IDCardStandard
   id: CaptainIDCard
-  name: captain ID card
+  name: head of station ID card
   components:
   - type: Sprite
     layers:
@@ -219,7 +219,7 @@
 - type: entity
   parent: IDCardStandard
   id: QuartermasterIDCard
-  name: quartermaster ID card
+  name: head of supply ID card
   components:
     - type: Sprite
       layers:
@@ -366,7 +366,7 @@
 - type: entity
   parent: IDCardStandard
   id: HoPIDCard
-  name: head of personnel ID card
+  name: head of service ID card
   components:
   - type: Sprite
     layers:
@@ -380,7 +380,7 @@
 - type: entity
   parent: IDCardStandard
   id: CEIDCard
-  name: chief engineer ID card
+  name: head of singularity ID card
   components:
   - type: Sprite
     layers:
@@ -394,7 +394,7 @@
 - type: entity
   parent: IDCardStandard
   id: CMOIDCard
-  name: chief medical officer ID card
+  name: head of still just a week away ID card
   components:
   - type: Sprite
     layers:
@@ -408,7 +408,7 @@
 - type: entity
   parent: IDCardStandard
   id: RDIDCard
-  name: research director ID card
+  name: head of science ID card
   components:
   - type: Sprite
     layers:

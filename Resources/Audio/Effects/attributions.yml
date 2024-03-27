@@ -217,7 +217,13 @@
   license: CC0-1.0
   source: https://github.com/space-wizards/space-station-14/pull/23212
 
+- files: [oof.ogg]
+  copyright: '"hurt2.wav" by thecheeseman of Freesound.org. Edited.'
+  license: CC-BY-4.0
+  source: https://freesound.org/people/thecheeseman/sounds/44429
+
 - files: ["metal-pipe-falling.ogg"]
   copyright: "Taken from thenotcheeseman via freesound.org and mixed from stereo to mono."
   license: CC0-1.0
   source: "https://freesound.org/people/thenotcheeseman/sounds/679206/"
+
