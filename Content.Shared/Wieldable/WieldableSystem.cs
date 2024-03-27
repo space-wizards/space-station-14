@@ -99,17 +99,6 @@ public sealed class WieldableSystem : EntitySystem
         }
     }
 
-    private void OnUseInHand(EntityUid uid, WieldableComponent component, UseInHandEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!component.Wielded)
-            args.Handled = TryWield(uid, component, args.User);
-        else
-            args.Handled = TryUnwield(uid, component, args.User);
-    }
-
     private void OnMapInit(EntityUid uid, WieldableComponent component, MapInitEvent args)
     {
         // add the action
@@ -126,14 +115,24 @@ public sealed class WieldableSystem : EntitySystem
     {
         // just add the action in action set
         args.AddAction(ref component.TwoHandWieldingEntity, component.TwoHandWieldingAction);
+        _actionsSystem.SetToggled(component.TwoHandWieldingEntity, component.Wielded);
     }
 
     private void OnActionPerform(EntityUid uid, WieldableComponent component, TwoHandWieldingActionEvent args)
     {
         if (!component.Wielded)
+        {
+            if (TryComp(uid, out UseDelayComponent? useDelay))
+                _actionContainer.SetUseDelay(component.TwoHandWieldingEntity, useDelay.Delay);
+
             args.Handled = TryWield(uid, component, args.Performer);
+        }
         else
+        {
+            _actionContainer.SetUseDelay(component.TwoHandWieldingEntity, TimeSpan.Zero);
+
             args.Handled = TryUnwield(uid, component, args.Performer);
+        }
 
         _actionsSystem.SetToggled(component.TwoHandWieldingEntity, component.Wielded);
     }
@@ -287,5 +286,3 @@ public sealed class WieldableSystem : EntitySystem
         args.Damage += component.BonusDamage;
     }
 }
-
-public sealed partial class TwoHandWieldingActionEvent : InstantActionEvent { }

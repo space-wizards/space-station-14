@@ -361,4 +361,4 @@
     icon: { sprite: Interface/Actions/wieldable.rsi, state: onehand }
     iconOn: { sprite: Interface/Actions/wieldable.rsi, state: hands }
     event: !type:TwoHandWieldingActionEvent
-    useDelay: 2
+
