@@ -125,7 +125,7 @@ public sealed class ReflectSystem : EntitySystem
         var query = EntityQueryEnumerator<MobStateComponent>();
         EntityUid? targettedEnt = null;
         float targettedEntDistance = reflectToNearest.MaxDistance;
-        while (query.MoveNext(out var uid, out var comp))
+        while (user == reflector.Owner && query.MoveNext(out var uid, out var comp))
         {
             if (comp is not { CurrentState: MobState.Alive })
                 continue;
@@ -154,9 +154,10 @@ public sealed class ReflectSystem : EntitySystem
         }
 
         Vector2 newVelocity;
+        var existingVelocityMagnitude = _physics.GetMapLinearVelocity(projectile, component: physics).Length();
 
         if (targettedEnt is null)
-            newVelocity = _random.NextAngle(360).ToVec();
+            newVelocity = _random.NextAngle(360).ToVec() * existingVelocityMagnitude;
         else
         {
             var target = targettedEnt.Value;
@@ -170,7 +171,6 @@ public sealed class ReflectSystem : EntitySystem
                 return true;
 
             var variation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
-            var existingVelocityMagnitude = _physics.GetMapLinearVelocity(projectile, component: physics).Length();
 
             newVelocity = variation.RotateVec(direction.Normalized()) * existingVelocityMagnitude;
         }
@@ -256,8 +256,6 @@ public sealed class ReflectSystem : EntitySystem
         EntityUid? shooter,
         [NotNullWhen(true)] out Vector2? newDirection)
     {
-        DebugTools.AssertEqual(user, reflector.Owner);
-
         newDirection = null;
 
         if (!TryComp(reflector, out ReflectToNearestTargetComponent? reflectToNearest))
@@ -265,7 +263,7 @@ public sealed class ReflectSystem : EntitySystem
 
         var query = EntityQueryEnumerator<MobStateComponent>();
         float targettedEntDistance = reflectToNearest.MaxDistance;
-        while (query.MoveNext(out var uid, out var comp))
+        while (user == reflector.Owner && query.MoveNext(out var uid, out var comp))
         {
             if (comp is not { CurrentState: MobState.Alive })
                 continue;
