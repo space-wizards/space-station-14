@@ -178,7 +178,7 @@ public partial class AtmosphereSystem
 
     public bool IsTileAirBlocked(EntityUid gridUid, Vector2i tile, AtmosDirection directions = AtmosDirection.All, MapGridComponent? mapGridComp = null)
     {
-        if (!Resolve(gridUid, ref mapGridComp))
+        if (!Resolve(gridUid, ref mapGridComp, false))
             return false;
 
         var data = GetAirtightData(gridUid, mapGridComp, tile);
@@ -187,13 +187,13 @@ public partial class AtmosphereSystem
 
     public bool IsTileSpace(Entity<GridAtmosphereComponent?>? grid, Entity<MapAtmosphereComponent?>? map, Vector2i tile)
     {
-        if (grid is {} gridEnt && _atmosQuery.Resolve(gridEnt, ref gridEnt.Comp)
+        if (grid is {} gridEnt && _atmosQuery.Resolve(gridEnt, ref gridEnt.Comp, false)
             && gridEnt.Comp.Tiles.TryGetValue(tile, out var tileAtmos))
         {
             return tileAtmos.Space;
         }
 
-        if (map is {} mapEnt && _mapAtmosQuery.Resolve(mapEnt, ref mapEnt.Comp))
+        if (map is {} mapEnt && _mapAtmosQuery.Resolve(mapEnt, ref mapEnt.Comp, false))
             return mapEnt.Comp.Space;
 
         // If nothing handled the event, it'll default to true.
@@ -213,7 +213,7 @@ public partial class AtmosphereSystem
 
     public TileMixtureEnumerator GetAdjacentTileMixtures(Entity<GridAtmosphereComponent?> grid, Vector2i tile, bool includeBlocked = false, bool excite = false)
     {
-        if (!_atmosQuery.Resolve(grid, ref grid.Comp))
+        if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
             return TileMixtureEnumerator.Empty;
 
         return !grid.Comp.Tiles.TryGetValue(tile, out var atmosTile)
@@ -224,7 +224,7 @@ public partial class AtmosphereSystem
     public void HotspotExpose(Entity<GridAtmosphereComponent?> grid, Vector2i tile, float exposedTemperature, float exposedVolume,
         EntityUid? sparkSourceUid = null, bool soh = false)
     {
-        if (!_atmosQuery.Resolve(grid, ref grid.Comp))
+        if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
             return;
 
         if (grid.Comp.Tiles.TryGetValue(tile, out var atmosTile))
@@ -258,12 +258,12 @@ public partial class AtmosphereSystem
 
     public bool AddPipeNet(Entity<GridAtmosphereComponent?> grid, PipeNet pipeNet)
     {
-        return _atmosQuery.Resolve(grid, ref grid.Comp) && grid.Comp.PipeNets.Add(pipeNet);
+        return _atmosQuery.Resolve(grid, ref grid.Comp, false) && grid.Comp.PipeNets.Add(pipeNet);
     }
 
     public bool RemovePipeNet(Entity<GridAtmosphereComponent?> grid, PipeNet pipeNet)
     {
-        return _atmosQuery.Resolve(grid, ref grid.Comp) && grid.Comp.PipeNets.Remove(pipeNet);
+        return _atmosQuery.Resolve(grid, ref grid.Comp, false) && grid.Comp.PipeNets.Remove(pipeNet);
     }
 
     public bool AddAtmosDevice(Entity<GridAtmosphereComponent?> grid, Entity<AtmosDeviceComponent> device)
@@ -285,7 +285,7 @@ public partial class AtmosphereSystem
     {
         DebugTools.Assert(device.Comp.JoinedGrid == grid);
 
-        if (!_atmosQuery.Resolve(grid, ref grid.Comp))
+        if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
             return false;
 
         if (!grid.Comp.AtmosDevices.Remove(device))
