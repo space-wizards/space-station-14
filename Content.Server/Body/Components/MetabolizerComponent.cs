@@ -1,6 +1,7 @@
 ﻿using Content.Server.Body.Systems;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.FixedPoint;
+using Content.Shared.Medical.Circulatory.Components;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
@@ -25,7 +26,7 @@ namespace Content.Server.Body.Components
         ///     From which solution will this metabolizer attempt to metabolize chemicals
         /// </summary>
         [DataField("solution")]
-        public string SolutionName { get; set; } = BloodstreamComponent.DefaultChemicalsSolutionName;
+        public string SolutionName { get; set; } = "chemicals";
 
         /// <summary>
         ///     Does this component use a solution on it's parent entity (the body) or itself

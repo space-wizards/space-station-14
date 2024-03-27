@@ -733,10 +733,11 @@
   - type: Damageable
     damageModifierSet: SlimePet
   - type: Bloodstream
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.8
+    #TODO Bloodstream: re-implement this
+#    bloodlossHealDamage:
+#      types:
+#        Bloodloss:
+#          -0.8
   - type: Temperature
     heatDamageThreshold: 800
     coldDamageThreshold: 0

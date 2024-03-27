@@ -150,8 +150,9 @@ namespace Content.Server.Zombies
                 zombiecomp.BeforeZombifiedSkinColor = huApComp.SkinColor;
                 zombiecomp.BeforeZombifiedEyeColor = huApComp.EyeColor;
                 zombiecomp.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
-                if (TryComp<BloodstreamComponent>(target, out var stream))
-                    zombiecomp.BeforeZombifiedBloodReagent = stream.BloodReagent;
+                //TODO: re-implement bloodType saving for zombies
+                //if (TryComp<BloodstreamComponent>(target, out var stream))
+                    //zombiecomp.BeforeZombifiedBloodReagent = stream.BloodReagent;
 
                 _humanoidAppearance.SetSkinColor(target, zombiecomp.SkinColor, verify: false, humanoid: huApComp);
 
@@ -193,9 +194,11 @@ namespace Content.Server.Zombies
 
             //This makes it so the zombie doesn't take bloodloss damage.
             //NOTE: they are supposed to bleed, just not take damage
-            _bloodstream.SetBloodLossThreshold(target, 0f);
+            //_bloodstream.SetBloodLossThreshold(target, 0f);
             //Give them zombie blood
-            _bloodstream.ChangeBloodReagent(target, zombiecomp.NewBloodReagent);
+            //_bloodstream.ChangeBloodReagent(target, zombiecomp.NewBloodReagent);
+            //TODO: re-implement zombie blood
+
 
             //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
             _inventory.TryUnequip(target, "gloves", true, true);

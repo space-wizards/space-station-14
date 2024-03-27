@@ -1,5 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Medical.Circulatory.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
@@ -26,8 +27,10 @@ namespace Content.Server.Chemistry.ReactionEffects
 
             cleanseRate *= args.Scale;
 
-            var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
-            bloodstreamSys.FlushChemicals(args.SolutionEntity, args.Reagent.ID, cleanseRate);
+            //TODO: refactor chem flushing from bloodstream (why does this even exist)
+
+            // var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
+            // bloodstreamSys.FlushChemicals(args.SolutionEntity, args.Reagent.ID, cleanseRate);
         }
     }
 }

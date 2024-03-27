@@ -7,7 +7,8 @@
   abstract: true
   components:
   - type: Bloodstream
-    bloodMaxVolume: 650
+    #TODO Bloodstream: re-implement this
+#    bloodMaxVolume: 650
   - type: GhostRole
     allowMovement: true
     allowSpeech: true

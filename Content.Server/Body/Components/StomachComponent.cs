@@ -27,7 +27,7 @@ namespace Content.Server.Body.Components
         ///     What solution should this stomach push reagents into, on the body?
         /// </summary>
         [DataField]
-        public string BodySolutionName = BloodstreamComponent.DefaultChemicalsSolutionName;
+        public string BodySolutionName = "chemicals";
 
         /// <summary>
         ///     Time in seconds between reagents being ingested and them being

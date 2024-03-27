@@ -31,6 +31,8 @@ using Content.Shared.Database;
 using Content.Shared.Electrocution;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Medical.Circulatory.Components;
+using Content.Shared.Medical.Circulatory.Systems;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -267,7 +269,8 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new ("/Textures/Fluids/tomato_splat.rsi"), "puddle-1"),
                 Act = () =>
                 {
-                    _bloodstreamSystem.SpillAllSolutions(args.Target, bloodstream);
+                    //TODO: re-implement admin remove blood smite
+                    //_bloodstreamSystem.SpillAllSolutions(args.Target, bloodstream);
                     var xform = Transform(args.Target);
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-blood-self"), args.Target,
                         args.Target, PopupType.LargeCaution);

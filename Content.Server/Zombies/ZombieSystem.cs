@@ -29,7 +29,6 @@ namespace Content.Server.Zombies
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly ServerInventorySystem _inv = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
@@ -272,7 +271,8 @@ namespace Content.Server.Zombies
                 appcomp.EyeColor = zombiecomp.BeforeZombifiedEyeColor;
             }
             _humanoidAppearance.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor, false);
-            _bloodstream.ChangeBloodReagent(target, zombiecomp.BeforeZombifiedBloodReagent);
+            //TODO: re-implement zombie bloodstream swapping
+            //_bloodstream.ChangeBloodReagent(target, zombiecomp.BeforeZombifiedBloodReagent);
 
             _metaData.SetEntityName(target, zombiecomp.BeforeZombifiedEntityName);
             return true;

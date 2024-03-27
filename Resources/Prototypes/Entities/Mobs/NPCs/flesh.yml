@@ -42,7 +42,8 @@
     - id: FoodMeat
       amount: 1
   - type: Bloodstream
-    bloodMaxVolume: 100
+    #TODO Bloodstream: re-implement this
+#    bloodMaxVolume: 100
   - type: CombatMode
   - type: MeleeWeapon
     soundHit:
@@ -240,7 +241,8 @@
     - id: FoodMeat
       amount: 1
   - type: Bloodstream
-    bloodMaxVolume: 100
+    #TODO Bloodstream: re-implement this
+#    bloodMaxVolume: 100
   - type: CombatMode
   - type: MeleeWeapon
     soundHit:

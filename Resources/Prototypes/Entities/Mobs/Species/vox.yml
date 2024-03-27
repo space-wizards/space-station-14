@@ -40,7 +40,8 @@
         sprite: Mobs/Effects/brute_damage.rsi
         color: "#7a8bf2"
   - type: Bloodstream
-    bloodReagent: AmmoniaBlood
+    #TODO Bloodstream: re-implement this
+#    bloodReagent: AmmoniaBlood
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw

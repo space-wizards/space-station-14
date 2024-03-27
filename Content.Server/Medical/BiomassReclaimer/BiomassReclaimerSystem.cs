@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Server.Body.Components;
 using Content.Server.Botany.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
@@ -19,6 +18,7 @@ using Content.Shared.Jittering;
 using Content.Shared.Medical;
 using Content.Shared.Mind;
 using Content.Shared.Materials;
+using Content.Shared.Medical.Circulatory.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;

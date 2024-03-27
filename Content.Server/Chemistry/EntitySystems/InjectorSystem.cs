@@ -11,6 +11,8 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Medical.Circulatory.Components;
+using Content.Shared.Medical.Circulatory.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Stacks;
 
@@ -54,13 +56,14 @@ public sealed class InjectorSystem : SharedInjectorSystem
         }
         else if (injector.Comp.ToggleState == InjectorToggleMode.Draw)
         {
-            // Draw from a bloodstream, if the target has that
-            if (TryComp<BloodstreamComponent>(target, out var stream) &&
-                SolutionContainers.ResolveSolution(target, stream.BloodSolutionName, ref stream.BloodSolution))
-            {
-                TryDraw(injector, (target, stream), stream.BloodSolution.Value, user);
-                return;
-            }
+            //TODO: hook up TryDraw again on InjectorSystem
+            // // Draw from a bloodstream, if the target has that
+            // if (TryComp<BloodstreamComponent>(target, out var stream) &&
+            //     SolutionContainers.ResolveSolution(target, stream.BloodSolutionName, ref stream.BloodSolution))
+            // {
+            //     TryDraw(injector, (target, stream), stream.BloodSolution.Value, user);
+            //     return;
+            // }
 
             // Draw from an object (food, beaker, etc)
             if (SolutionContainers.TryGetDrawableSolution(target, out var drawableSolution, out _))
@@ -217,35 +220,37 @@ public sealed class InjectorSystem : SharedInjectorSystem
     private void TryInjectIntoBloodstream(Entity<InjectorComponent> injector, Entity<BloodstreamComponent> target,
         EntityUid user)
     {
-        // Get transfer amount. May be smaller than _transferAmount if not enough room
-        if (!SolutionContainers.ResolveSolution(target.Owner, target.Comp.ChemicalSolutionName,
-                ref target.Comp.ChemicalSolution, out var chemSolution))
-        {
-            Popup.PopupEntity(
-                Loc.GetString("injector-component-cannot-inject-message",
-                    ("target", Identity.Entity(target, EntityManager))), injector.Owner, user);
-            return;
-        }
+        //TODO: re-implement injection on InjectorSystem
 
-        var realTransferAmount = FixedPoint2.Min(injector.Comp.TransferAmount, chemSolution.AvailableVolume);
-        if (realTransferAmount <= 0)
-        {
-            Popup.PopupEntity(
-                Loc.GetString("injector-component-cannot-inject-message",
-                    ("target", Identity.Entity(target, EntityManager))), injector.Owner, user);
-            return;
-        }
-
-        // Move units from attackSolution to targetSolution
-        var removedSolution = SolutionContainers.SplitSolution(target.Comp.ChemicalSolution.Value, realTransferAmount);
-
-        _blood.TryAddToChemicals(target, removedSolution, target.Comp);
-
-        _reactiveSystem.DoEntityReaction(target, removedSolution, ReactionMethod.Injection);
-
-        Popup.PopupEntity(Loc.GetString("injector-component-inject-success-message",
-            ("amount", removedSolution.Volume),
-            ("target", Identity.Entity(target, EntityManager))), injector.Owner, user);
+        // // Get transfer amount. May be smaller than _transferAmount if not enough room
+        // if (!SolutionContainers.ResolveSolution(target.Owner, target.Comp.ChemicalSolutionName,
+        //         ref target.Comp.ChemicalSolution, out var chemSolution))
+        // {
+        //     Popup.PopupEntity(
+        //         Loc.GetString("injector-component-cannot-inject-message",
+        //             ("target", Identity.Entity(target, EntityManager))), injector.Owner, user);
+        //     return;
+        // }
+        //
+        // var realTransferAmount = FixedPoint2.Min(injector.Comp.TransferAmount, chemSolution.AvailableVolume);
+        // if (realTransferAmount <= 0)
+        // {
+        //     Popup.PopupEntity(
+        //         Loc.GetString("injector-component-cannot-inject-message",
+        //             ("target", Identity.Entity(target, EntityManager))), injector.Owner, user);
+        //     return;
+        // }
+        //
+        // // Move units from attackSolution to targetSolution
+        // var removedSolution = SolutionContainers.SplitSolution(target.Comp.ChemicalSolution.Value, realTransferAmount);
+        //
+        // _blood.TryAddToChemicals(target, removedSolution, target.Comp);
+        //
+        // _reactiveSystem.DoEntityReaction(target, removedSolution, ReactionMethod.Injection);
+        //
+        // Popup.PopupEntity(Loc.GetString("injector-component-inject-success-message",
+        //     ("amount", removedSolution.Volume),
+        //     ("target", Identity.Entity(target, EntityManager))), injector.Owner, user);
 
         Dirty(injector);
         AfterInject(injector, target);
@@ -371,20 +376,21 @@ public sealed class InjectorSystem : SharedInjectorSystem
     {
         var drawAmount = (float) transferAmount;
 
-        if (SolutionContainers.ResolveSolution(target.Owner, target.Comp.ChemicalSolutionName,
-                ref target.Comp.ChemicalSolution))
-        {
-            var chemTemp = SolutionContainers.SplitSolution(target.Comp.ChemicalSolution.Value, drawAmount * 0.15f);
-            SolutionContainers.TryAddSolution(injectorSolution, chemTemp);
-            drawAmount -= (float) chemTemp.Volume;
-        }
-
-        if (SolutionContainers.ResolveSolution(target.Owner, target.Comp.BloodSolutionName,
-                ref target.Comp.BloodSolution))
-        {
-            var bloodTemp = SolutionContainers.SplitSolution(target.Comp.BloodSolution.Value, drawAmount);
-            SolutionContainers.TryAddSolution(injectorSolution, bloodTemp);
-        }
+        //TODO: re-implement  blood drawing on InjectorSystem
+        // if (SolutionContainers.ResolveSolution(target.Owner, target.Comp.ChemicalSolutionName,
+        //         ref target.Comp.ChemicalSolution))
+        // {
+        //     var chemTemp = SolutionContainers.SplitSolution(target.Comp.ChemicalSolution.Value, drawAmount * 0.15f);
+        //     SolutionContainers.TryAddSolution(injectorSolution, chemTemp);
+        //     drawAmount -= (float) chemTemp.Volume;
+        // }
+        //
+        // if (SolutionContainers.ResolveSolution(target.Owner, target.Comp.BloodSolutionName,
+        //         ref target.Comp.BloodSolution))
+        // {
+        //     var bloodTemp = SolutionContainers.SplitSolution(target.Comp.BloodSolution.Value, drawAmount);
+        //     SolutionContainers.TryAddSolution(injectorSolution, bloodTemp);
+        // }
 
         Popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",
             ("amount", transferAmount),

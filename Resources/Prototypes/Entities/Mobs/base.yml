@@ -233,9 +233,10 @@
   - type: InjectableSolution
     solution: chemicals
   - type: Bloodstream
-    bloodlossDamage:
-      types:
-        Bloodloss: 0.5
-    bloodlossHealDamage:
-      types:
-        Bloodloss: -1
+    #TODO Bloodstream: re-implement this
+#    bloodlossDamage:
+#      types:
+#        Bloodloss: 0.5
+#    bloodlossHealDamage:
+#      types:
+#        Bloodloss: -1

@@ -33,7 +33,8 @@
         sprite: Mobs/Effects/brute_damage.rsi
         color: "#2cf274"
   - type: Bloodstream
-    bloodReagent: Slime # TODO Color slime blood based on their slime color or smth
+    #TODO Bloodstream: re-implement this
+#    bloodReagent: Slime # TODO Color slime blood based on their slime color or smth
   - type: Barotrauma
     damage:
       types:
