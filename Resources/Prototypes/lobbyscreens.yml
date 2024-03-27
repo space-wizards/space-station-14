@@ -18,6 +18,3 @@
   id: gugel
   background: /Textures/LobbyScreens/gugel.webp
   
-  - type: lobbyBackground
-  id: aineias
-  background: /Textures/LobbyScreens/aineias.webp
