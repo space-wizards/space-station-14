@@ -14,7 +14,6 @@ using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
@@ -40,7 +39,6 @@ public sealed class ReflectSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
 
     public override void Initialize()
     {
@@ -115,7 +113,7 @@ public sealed class ReflectSystem : EntitySystem
         _transform.SetLocalRotation(projectile, newRot.ToAngle());
     }
 
-    private bool ReflectProjectileToNearestTarget(Entity<ReflectComponent> reflector, Entity<PhysicsComponent> projectile)
+    private bool ReflectProjectileToNearestTarget(EntityUid user, Entity<ReflectComponent> reflector, Entity<PhysicsComponent> projectile)
     {
         if (!TryComp(projectile, out ProjectileComponent? projectileComponent) ||
             !TryComp(reflector, out ReflectToNearestTargetComponent? reflectToNearest))
@@ -138,6 +136,9 @@ public sealed class ReflectSystem : EntitySystem
             var reflectorPos = _physics.GetPhysicsTransform(reflector).Position;
             var dirToTarget = (_physics.GetPhysicsTransform(uid).Position - reflectorPos);
             var distance = dirToTarget.Length();
+
+            if (distance <= 0.1f)
+                continue;
 
             if (distance > targettedEntDistance)
                 continue;
@@ -171,7 +172,7 @@ public sealed class ReflectSystem : EntitySystem
             var variation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
             var existingVelocityMagnitude = _physics.GetMapLinearVelocity(projectile, component: physics).Length();
 
-            newVelocity = variation.RotateVec(direction) * existingVelocityMagnitude;
+            newVelocity = variation.RotateVec(direction.Normalized()) * existingVelocityMagnitude;
         }
 
         _physics.SetLinearVelocity(projectile, newVelocity, body: physics);
@@ -195,8 +196,8 @@ public sealed class ReflectSystem : EntitySystem
 
         var setShooter = false;
 
-        if (!TryComp(reflector, out ReflectToNearestTargetComponent? reflectToNearest) ||
-            !ReflectProjectileToNearestTarget((reflector, reflect), (projectile, physics)))
+        if (!HasComp<ReflectToNearestTargetComponent>(reflector) ||
+            !ReflectProjectileToNearestTarget(user, (reflector, reflect), (projectile, physics)))
         {
             ReflectProjectile(user, (reflector, reflect), (projectile, physics));
             setShooter = true;
@@ -220,8 +221,6 @@ public sealed class ReflectSystem : EntitySystem
         {
             _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected {ToPrettyString(projectile)}");
         }
-
-
 
         if (HasComp<DestroyOnReflectComponent>(reflector))
             QueueDel(reflector);
@@ -252,12 +251,15 @@ public sealed class ReflectSystem : EntitySystem
     }
 
     private bool ReflectToNearestTargetHitscan(
+        EntityUid user,
         Entity<ReflectComponent> reflector,
         EntityUid? shooter,
-        Vector2 direction,
         [NotNullWhen(true)] out Vector2? newDirection)
     {
+        DebugTools.AssertEqual(user, reflector.Owner);
+
         newDirection = null;
+
         if (!TryComp(reflector, out ReflectToNearestTargetComponent? reflectToNearest))
             return false;
 
@@ -274,6 +276,9 @@ public sealed class ReflectSystem : EntitySystem
             var reflectorPos = _physics.GetPhysicsTransform(reflector).Position;
             var dirToTarget = (_physics.GetPhysicsTransform(uid).Position - reflectorPos);
             var distance = dirToTarget.Length();
+
+            if (distance <= 0.1f)
+                continue;
 
             if (distance > targettedEntDistance)
                 continue;
@@ -320,8 +325,8 @@ public sealed class ReflectSystem : EntitySystem
             _audio.PlayPvs(reflect.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
         }
 
-        if ((!TryComp(reflector, out ReflectToNearestTargetComponent? reflectToNearest)
-            || !ReflectToNearestTargetHitscan((reflector, reflect), shooter, direction, out newDirection)
+        if ((!HasComp<ReflectToNearestTargetComponent>(reflector)
+            || !ReflectToNearestTargetHitscan(user, (reflector, reflect), shooter, out newDirection)
             ) &&
             !ReflectHitscan(reflect, direction, out newDirection))
             return false;

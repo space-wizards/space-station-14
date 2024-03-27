@@ -1,13 +1,13 @@
 ﻿- type: constructionGraph
-  id: SupermurderCoin
+  id: Coin
   start: start
   graph:
-  - node: start
-    edges:
-    - to: bat
-      steps:
-      - material: Steel
-        amount: 1
-        doAfter: 2
-  - node: coin
-    entity: SupermurderCoin
+    - node: start
+      edges:
+        - to: coin
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+    - node: coin
+      entity: ReflectionCoin

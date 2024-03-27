@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseItem
-  id: SupermurderCoin
+  id: ReflectionCoin
   name: coin
   description: + RICOCHET
   components:
@@ -26,3 +26,8 @@
         - Opaque
         restitution: 0.3
         friction: 0.2
+  - type: Construction
+    graph: Coin
+    node: coin
+  - type: Item
+    size: Small
