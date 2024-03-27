@@ -1518,7 +1518,6 @@
   - type: EmitSoundOnCollide
     sound:
       path: /Audio/Effects/hit_kick.ogg
-  - type: GhostTakeoverAvailable
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/pet_rock.rsi
@@ -1550,6 +1549,12 @@
     state: icon
   - type: GhostRole
     prob: 0.001 # The rare sentient normal rock
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-petrock-name
+    description: ghost-role-information-petrock-description
+  - type: GhostTakeoverAvailable
   - type: PhysicalComposition
     materialComposition:
       Steel: 10
@@ -1572,6 +1577,7 @@
     allowMovement: true
     name: ghost-role-information-petrock-name
     description: ghost-role-information-petrock-description
+  - type: GhostTakeoverAvailable
   - type: NameIdentifier
     group: GenericNumber
   - type: PhysicalComposition
@@ -1597,6 +1603,7 @@
     allowMovement: true
     name: ghost-role-information-petrock-name
     description: ghost-role-information-petrock-description
+  - type: GhostTakeoverAvailable
   - type: Sprite
     sprite: Objects/Fun/pet_rock.rsi
     state: icon
@@ -1622,6 +1629,7 @@
     allowMovement: true
     name: ghost-role-information-petrock-name
     description: ghost-role-information-petrock-description
+  - type: GhostTakeoverAvailable
   - type: PhysicalComposition
     materialComposition:
       Steel: 10
@@ -1651,6 +1659,7 @@
     allowMovement: true
     name: ghost-role-information-petrock-name
     description: ghost-role-information-petrock-description
+  - type: GhostTakeoverAvailable
   - type: PhysicalComposition
     materialComposition:
       Steel: 10
