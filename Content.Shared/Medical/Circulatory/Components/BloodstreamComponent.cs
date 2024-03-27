@@ -7,7 +7,7 @@ namespace Content.Shared.Medical.Circulatory.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class BloodstreamComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan NextUpdate;
 
     #region SimulationRelated
@@ -15,14 +15,14 @@ public sealed partial class BloodstreamComponent : Component
     /// <summary>
     /// The healthy volume for this bloodstream.
     /// </summary>
-    [DataField(required: true)]
-    public FixedPoint2 HealthyVolume = 0;
+    [DataField, AutoNetworkedField] //TODO: Required
+    public FixedPoint2 HealthyVolume = 500;
 
     /// <summary>
     /// The maximum volume for this bloodstream (this may be exceeded with heavy negative effects)
     /// </summary>
-    [DataField(required: true)]
-    public FixedPoint2 MaxVolume = 0;
+    [DataField, AutoNetworkedField] //TODO: Required
+    public FixedPoint2 MaxVolume = 200;
 
     /// <summary>
     /// This is the value that blood gets changed by each update (aka Delta).
@@ -67,7 +67,7 @@ public sealed partial class BloodstreamComponent : Component
     /// the linked defined bloodtypes. It also provides the list of possible bloodtypes and the likelihood of
     /// spawning with a particular one.
     /// </summary>
-    [DataField(required: true), AutoNetworkedField]
+    [DataField, AutoNetworkedField] //TODO: Required
     public string BloodGroup; //TODO: convert back to protoID
 
     /// <summary>
