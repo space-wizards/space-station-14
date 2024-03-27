@@ -1518,13 +1518,6 @@
   - type: EmitSoundOnCollide
     sound:
       path: /Audio/Effects/hit_kick.ogg
-  - type: GhostRole
-    prob: 0.05
-    makeSentient: true
-    allowSpeech: true
-    allowMovement: true
-    name: ghost-role-information-petrock-name
-    description: ghost-role-information-petrock-description
   - type: GhostTakeoverAvailable
   - type: Clothing
     quickEquip: false
@@ -1572,6 +1565,13 @@
   - type: Sprite
     sprite: Objects/Fun/pet_rock.rsi
     state: icon
+  - type: GhostRole
+    prob: 0.01 # Prevent ghostrole bloat
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-petrock-name
+    description: ghost-role-information-petrock-description
   - type: NameIdentifier
     group: GenericNumber
   - type: PhysicalComposition
@@ -1582,7 +1582,7 @@
 
 - type: entity
   parent: BasePetRock
-  id: NamedPetRock
+  id: NamedPetRock # This one's randomly named so you can randomly get Steven the pet rock.
   name: pet rock
   suffix: Random Name
   description: Rocks are your friends, even when nobody else is.
@@ -1590,6 +1590,13 @@
   - type: RandomMetadata # He's your best friend.
     nameSegments:
     - names_first_male
+  - type: GhostRole
+    prob: 0.01
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-petrock-name
+    description: ghost-role-information-petrock-description
   - type: Sprite
     sprite: Objects/Fun/pet_rock.rsi
     state: icon
@@ -1608,6 +1615,13 @@
   - type: Sprite
     sprite: Objects/Fun/pet_rock.rsi
     state: fred
+  - type: GhostRole
+    prob: 0.05
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-petrock-name
+    description: ghost-role-information-petrock-description
   - type: PhysicalComposition
     materialComposition:
       Steel: 10
@@ -1630,6 +1644,13 @@
   - type: Sprite
     sprite: Objects/Fun/pet_rock.rsi
     state: roxie
+  - type: GhostRole
+    prob: 0.05
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-petrock-name
+    description: ghost-role-information-petrock-description
   - type: PhysicalComposition
     materialComposition:
       Steel: 10
