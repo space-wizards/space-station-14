@@ -260,7 +260,7 @@ public abstract partial class SharedGunSystem
         args.Capacity = component.Capacity;
     }
 
-    private void UpdateBallisticAppearance(EntityUid uid, BallisticAmmoProviderComponent component)
+    public void UpdateBallisticAppearance(EntityUid uid, BallisticAmmoProviderComponent component)
     {
         if (!Timing.IsFirstTimePredicted || !TryComp<AppearanceComponent>(uid, out var appearance))
             return;

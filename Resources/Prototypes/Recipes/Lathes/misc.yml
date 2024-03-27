@@ -151,8 +151,29 @@
     Plastic: 100
 
 - type: latheRecipe
+  id: FauxTileMowedAstroGrass
+  result: FloorTileItemMowedAstroGrass
+  completetime: 1
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: FauxTileJungleAstroGrass
+  result: FloorTileItemJungleAstroGrass
+  completetime: 1
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
   id: FauxTileAstroIce
   result: FloorTileItemAstroIce
+  completetime: 1
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: FauxTileAstroSnow
+  result: FloorTileItemAstroSnow
   completetime: 1
   materials:
     Plastic: 100
