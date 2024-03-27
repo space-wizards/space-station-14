@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "take from fulpstation https://github.com/fulpstation/fulpstation/blob/320b3b2865c981e178179c28362280b41839134a/fulp_modules/features/halloween/2020/2020_icons.dmi",
+  "states": [
+    {
+      "name": "hands"
+    },
+    {
+      "name": "onehand"
+    }
+  ]
+}

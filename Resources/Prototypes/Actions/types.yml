@@ -358,7 +358,7 @@
   noSpawn: true
   components:
   - type: InstantAction
-    icon: Interface/Actions/web.png
-    iconOn: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
+    icon: { sprite: Interface/Actions/wieldable.rsi, state: onehand }
+    iconOn: { sprite: Interface/Actions/wieldable.rsi, state: hands }
     event: !type:TwoHandWieldingActionEvent
     useDelay: 2
