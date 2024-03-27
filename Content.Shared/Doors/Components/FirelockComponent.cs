@@ -1,3 +1,4 @@
+using Robust.Shared.GameStates;
 using Content.Shared.Doors.Components;
 
 namespace Content.Shared.Doors.Components
@@ -7,9 +8,16 @@ namespace Content.Shared.Doors.Components
     /// auto-closing on depressurization, air/fire alarm interactions, and preventing normal door functions when
     /// retaining pressure..
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class FirelockComponent : Component
     {
+        /// <summary>
+        /// Networked powered status for firelock to allow for proper client prediction
+        /// </summary>
+        /// <returns></returns>
+        [DataField, AutoNetworkedField]
+        public bool Powered;
+
         /// <summary>
         /// Pry time modifier to be used when the firelock is currently closed due to fire or pressure.
         /// </summary>
