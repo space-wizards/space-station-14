@@ -22,7 +22,16 @@
       - key: enum.CrewMonitoringUIKey.Key
         type: CrewMonitoringBoundUserInterface
   - type: CrewMonitoringConsole
-    playNoise: true
+    trackedDepartments:
+      - Command
+      - Security
+      - Service
+      - Civilian
+      - Cargo
+      - Engineering
+      - Medical
+      - Science
+      - Specific
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
@@ -65,7 +74,16 @@
     state: paramedic
   - type: CrewMonitoringConsole
     showConsciousListings: false
-    playNoise: true
+    trackedDepartments:
+      - Command
+      - Security
+      - Service
+      - Civilian
+      - Cargo
+      - Engineering
+      - Medical
+      - Science
+      - Specific
 
 - type: entity
   id: ParamedicHandheldCrewMonitorEmpty

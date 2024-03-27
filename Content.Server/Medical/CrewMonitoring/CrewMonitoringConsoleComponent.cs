@@ -23,7 +23,7 @@ public sealed partial class CrewMonitoringConsoleComponent : Component
     ///     Departments to show on this console. Useful for, IE, a security-only monitor for the brigmedic.
     /// </summary>
     [DataField]
-    public List<ProtoId<DepartmentPrototype>> TrackedDepartments { get; set; } = ["All"];
+    public List<ProtoId<DepartmentPrototype>> TrackedDepartments { get; set; } = default!;
 
     /// <summary>
     ///     Specific jobs to show on this console. Useful for, IE, a prisoner-only monitor for the Warden.
