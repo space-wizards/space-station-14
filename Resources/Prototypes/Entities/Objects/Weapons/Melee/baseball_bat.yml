@@ -1,8 +1,8 @@
 - type: entity
-  name: baseball bat
+  name: wooden club
   parent: BaseItem
-  id: BaseBallBat
-  description: A robust baseball bat.
+  id: WoodenClub
+  description: An improvised blunt weapon made of wood.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/baseball_bat.rsi
@@ -40,7 +40,7 @@
 
 - type: entity
   name: knockback stick
-  parent: BaseBallBat
+  parent: WoodenClub
   id: WeaponMeleeKnockbackStick
   description: And then he spleefed all over.
   suffix: Do not map
