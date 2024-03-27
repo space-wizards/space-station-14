@@ -33,6 +33,7 @@
     id: DetectivePDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltHolsterFilled
+    pcoket1: WeaponDisabler
   innerClothingSkirt: ClothingUniformJumpskirtDetective
   satchel: ClothingBackpackSatchelSecurityFilledDetective
   duffelbag: ClothingBackpackDuffelSecurityFilledDetective

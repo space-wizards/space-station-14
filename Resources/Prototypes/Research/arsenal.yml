@@ -54,7 +54,7 @@
     state: beanbag
   discipline: Arsenal
   tier: 1
-  cost: 5000
+  cost: 12000
   recipeUnlocks:
   - ShellShotgunBeanbag
   - CartridgePistolRubber
