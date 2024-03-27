@@ -9,21 +9,11 @@ namespace Content.Server.Chat.Commands;
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
 public sealed class DeleteChatMessageCommand : ToolshedCommand
 {
-    public string Command => "delmsg";
-    public string Description => Loc.GetString("delete-message-command-description");
-    public string Help => Loc.GetString("delete -message-command-help");
+    [Dependency] private readonly ChatRepository _repository = default!;
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    [CommandImplementation]
+    public void DeleteChatMessage([PipedArgument] uint messageId)
     {
-        var repo = IoCManager.Resolve<ChatRepository>();
-
-        if (!uint.TryParse(args[0], out var result))
-        {
-            shell.WriteError("can't delete chat message: invalid number argument");
-
-            return;
-        }
-
-        repo.Delete(result);
+        _repository.Delete(messageId);
     }
 }
