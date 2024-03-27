@@ -16,7 +16,6 @@ using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Serilog;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -203,7 +202,7 @@ public sealed partial class CargoSystem
         FillBountyDatabase(entity);
     }
 
-    public bool IsBountyComplete(EntityUid container, EntityUid? station, out HashSet<EntityUid> bountyEntities)
+    public bool IsBountyComplete(EntityUid container, out HashSet<EntityUid> bountyEntities)
     {
         if (!TryGetBountyLabel(container, out _, out var component))
         {
@@ -211,7 +210,7 @@ public sealed partial class CargoSystem
             return false;
         }
 
-        station ??= component.AssociatedStationId;
+        var station = component.AssociatedStationId;
         if (station == null)
         {
             bountyEntities = new();
@@ -321,7 +320,7 @@ public sealed partial class CargoSystem
                 var children = GetBountyEntities(ent);
                 foreach (var child in children)
                 {
-                 entities.Add(child);
+                    entities.Add(child);
                 }
             }
         }
