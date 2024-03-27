@@ -86,14 +86,7 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
 
         entity.Comp.Enabled = enabled;
 
-        if (!enabled)
-            entity.Comp.DisabledTime = _timing.CurTime;
-        else
-        {
-            var elapsed = _timing.CurTime - entity.Comp.DisabledTime;
-            entity.Comp.NextSound += elapsed;
-        }
-
-        Dirty(entity);
+        if (enabled)
+            SpamEmitSoundReset((entity, entity.Comp));
     }
 }

@@ -41,10 +41,4 @@ public sealed partial class SpamEmitSoundComponent : BaseEmitSoundComponent
     [DataField, AutoNetworkedField]
     [Access(typeof(SharedEmitSoundSystem))]
     public bool Enabled = true;
-
-    /// <summary>
-    /// Stores the time at which the component was disabled.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan DisabledTime;
 }
