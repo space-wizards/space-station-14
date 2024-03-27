@@ -7,7 +7,7 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.Chat.Commands;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
-public sealed class DeleteChatMessageCommand : IConsoleCommand
+public sealed class DeleteChatMessageCommand : ToolshedCommand
 {
     public string Command => "delmsg";
     public string Description => Loc.GetString("delete-message-command-description");

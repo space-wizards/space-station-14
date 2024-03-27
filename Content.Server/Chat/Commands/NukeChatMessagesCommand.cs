@@ -8,7 +8,7 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.Chat.Commands;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
-public sealed class NukeChatMessagesUsernameCommand : IConsoleCommand
+public sealed class NukeChatMessagesUsernameCommand : ToolshedCommand
 {
     public string Command => "nukeusernames";
     public string Description => Loc.GetString("nuke-messages-username-command-description");
@@ -37,7 +37,7 @@ public sealed class NukeChatMessagesUsernameCommand : IConsoleCommand
 }
 
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
-public sealed class NukeChatMessagesUserIdCommand : IConsoleCommand
+public sealed class NukeChatMessagesUserIdCommand : ToolshedCommand
 {
     public string Command => "nukeuserids";
     public string Description => Loc.GetString("nuke-messages-id-command-description");
