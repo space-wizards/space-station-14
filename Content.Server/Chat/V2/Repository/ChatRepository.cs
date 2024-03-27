@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Numerics;
 using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Repository;
 using Robust.Server.Player;

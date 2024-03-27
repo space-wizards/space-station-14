@@ -4,6 +4,7 @@ using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
 using Content.Server.Afk;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.V2.Repository;
 using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.Discord;
@@ -58,6 +59,7 @@ namespace Content.Server.IoC
             IoCManager.Register<PoissonDiskSampler>();
             IoCManager.Register<DiscordWebhook>();
             IoCManager.Register<ServerDbEntryManager>();
+            IoCManager.Register<ChatRepository>();
         }
     }
 }
