@@ -23,5 +23,6 @@ public sealed partial class CargoBountyLabelComponent : Component
     /// <summary>
     /// The Station System to check and remove bounties from
     /// </summary>
-    public EntityUid? AssociatedStationId = null;
+    [DataField]
+    public EntityUid? AssociatedStationId;
 }

@@ -232,7 +232,6 @@ public sealed partial class CargoSystem
 
     private bool SellPallets(EntityUid gridUid, out double amount)
     {
-        //station ??= _station.GetOwningStation(gridUid);
         GetPalletGoods(gridUid, out var toSell, out amount);
 
         Log.Debug($"Cargo sold {toSell.Count} entities for {amount}");
