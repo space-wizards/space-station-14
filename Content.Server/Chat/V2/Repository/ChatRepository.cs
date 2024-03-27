@@ -21,7 +21,6 @@ public sealed class ChatRepository : EntitySystem
     private uint _nextMessageId = 1;
     private Dictionary<uint, ChatRecord> _messages = new();
     private Dictionary<string, Dictionary<uint, ChatRecord>> _playerMessages = new();
-    private Dictionary<string, string> _userNamesToIds = new();
 
     public override void Initialize()
     {
@@ -52,26 +51,11 @@ public sealed class ChatRepository : EntitySystem
 
         ev.Id = messageId;
 
-        var location = new Vector2();
-        var map = "";
-
-        if (TryComp<TransformComponent>(ev.Sender, out var comp))
-        {
-            location = comp.Coordinates.Position;
-
-            if (comp.MapUid != null)
-            {
-                map = Name(comp.MapUid.Value);
-            }
-        }
-
         var storedEv = new ChatRecord
         {
             UserName = session.Name,
             UserId = session.UserId.UserId.ToString(),
             EntityName = Name(ev.Sender),
-            Location = location,
-            Map = map,
             StoredEvent = ev
         };
 
@@ -84,8 +68,6 @@ public sealed class ChatRepository : EntitySystem
         }
 
         set.Add(messageId, storedEv);
-
-        _userNamesToIds[storedEv.UserName] = storedEv.UserId;
 
         RaiseLocalEvent(ev.Sender, new MessageCreatedEvent(ev), true);
 
@@ -179,14 +161,14 @@ public sealed class ChatRepository : EntitySystem
     /// client modders who could use that information to cheat/metagrudge/etc >:(</remarks>
     public bool NukeForUsername(string userName, [NotNullWhen(false)] out string? reason)
     {
-        if (!_userNamesToIds.TryGetValue(userName, out var userId))
+        if (!_player.TryGetUserId(userName, out var userId))
         {
             reason = "username doesn't equate to a userId in the repository";
 
             return false;
         }
 
-        return NukeForUserId(userId, out reason);
+        return NukeForUserId(userId.UserId.ToString(), out reason);
     }
 
     /// <summary>
@@ -233,6 +215,5 @@ public sealed class ChatRepository : EntitySystem
         _nextMessageId = 1;
         _messages.Clear();
         _playerMessages.Clear();
-        _userNamesToIds.Clear();
     }
 }

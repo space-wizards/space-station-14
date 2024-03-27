@@ -1,0 +1,6 @@
+delete-message-command-description = Delete a specific chat message
+delete-message-command-help-text = delmsg <id>
+nuke-messages-username-command-description = Delete all of the supplied usernames' chat messages posted during this round
+nuke-messages-username-command-help-text = nukeusernames <username> <username> <username> <username>...
+nuke-messages-id-command-description = Delete all of the supplied userIds' chat messages posted during this round
+nuke-messages-id-command-help-text = nukeuserids <username> <username> <username> <username>...
