@@ -1,6 +1,9 @@
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Content.Shared.Mobs;
+using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
@@ -62,7 +65,18 @@ namespace Content.Shared.Damage
         public FixedPoint2 TotalDamage;
 
         [DataField("radiationDamageTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
-        public List<string> RadiationDamageTypeIDs = new() {"Radiation"};
+        public List<string> RadiationDamageTypeIDs = new() { "Radiation" };
+
+        [DataField]
+        public Dictionary<MobState, ProtoId<StatusIconPrototype>> HealthIcons = new()
+        {
+            { MobState.Alive, "HealthIconFine" },
+            { MobState.Critical, "HealthIconCritical" },
+            { MobState.Dead, "HealthIconDead" },
+        };
+
+        [DataField]
+        public ProtoId<StatusIconPrototype> RottingIcon = "HealthIconRotting";
     }
 
     [Serializable, NetSerializable]

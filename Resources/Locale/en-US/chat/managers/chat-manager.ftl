@@ -109,6 +109,10 @@ chat-speech-verb-large-mob-2 = growls
 chat-speech-verb-monkey-1 = chimpers
 chat-speech-verb-monkey-2 = screeches
 
+chat-speech-verb-parrot-1 = squawks
+chat-speech-verb-parrot-2 = tweets
+chat-speech-verb-parrot-3 = chirps
+
 chat-speech-verb-cluwne-1 = giggles
 chat-speech-verb-cluwne-2 = guffaws
 chat-speech-verb-cluwne-3 = laughs
