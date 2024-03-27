@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Carrots now properly contain Oculine, and you can Juice them to obtain
-      the raw chemical.
-    type: Fix
-  id: 5737
-  time: '2024-01-18T15:28:01.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24228
 - author: koteq
   changes:
   - message: Jugs with the same labels are now correctly grouped and sorted in the
@@ -3794,3 +3786,12 @@
   id: 6236
   time: '2024-03-27T15:11:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26470
+- author: Ghagliiarghii
+  changes:
+  - message: Removed Donk Pocket Bounty from Cargo
+    type: Remove
+  - message: Removed Box of Hugs Bounty from Cargo
+    type: Remove
+  id: 6237
+  time: '2024-03-27T21:50:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26481
