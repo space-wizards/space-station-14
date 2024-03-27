@@ -53,6 +53,14 @@ public sealed partial class HandcuffComponent : Component
     public bool Removing;
 
     /// <summary>
+    /// Whether the cuffs are currently being used to cuff someone.
+    /// We need the extra information for when the virtual item is deleted because that can happen when you simply stop
+    /// pulling them on the ground.
+    /// </summary>
+    [DataField]
+    public bool Used;
+
+    /// <summary>
     ///     The path of the RSI file used for the player cuffed overlay.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
@@ -87,7 +95,7 @@ public sealed partial class HandcuffComponent : Component
 }
 
 /// <summary>
-/// Event fired on the User when the User attempts to cuff the Target.
+/// Event fired on the User when the User attempts to uncuff the Target.
 /// Should generate popups on the User.
 /// </summary>
 [ByRefEvent]

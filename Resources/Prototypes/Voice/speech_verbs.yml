@@ -114,6 +114,13 @@
   - chat-speech-verb-monkey-2
 
 - type: speechVerb
+  id: Parrot
+  speechVerbStrings:
+  - chat-speech-verb-parrot-1
+  - chat-speech-verb-parrot-2
+  - chat-speech-verb-parrot-3
+
+- type: speechVerb
   id: Cluwne
   speechVerbStrings:
   - chat-speech-verb-cluwne-1
