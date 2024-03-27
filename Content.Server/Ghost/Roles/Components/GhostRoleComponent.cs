@@ -11,7 +11,8 @@ namespace Content.Server.Ghost.Roles.Components
 
         [DataField("description")] private string _roleDescription = "Unknown";
 
-        [DataField("rules")] private string _roleRules = "";
+        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.None)]
+        [DataField("rules")] public string _rules = "ghost-role-component-default-rules";
 
         [DataField("requirements")]
         public HashSet<JobRequirement>? Requirements;
@@ -57,15 +58,7 @@ namespace Content.Server.Ghost.Roles.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
-        public string RoleRules
-        {
-            get => Loc.GetString(_roleRules);
-            set
-            {
-                _roleRules = value;
-                EntitySystem.Get<GhostRoleSystem>().UpdateAllEui();
-            }
-        }
+        public string RoleRules => Loc.GetString(_rules);
 
         [DataField("allowSpeech")]
         [ViewVariables(VVAccess.ReadWrite)]

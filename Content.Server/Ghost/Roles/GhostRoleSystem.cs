@@ -56,7 +56,7 @@ namespace Content.Server.Ghost.Roles
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindRemovedMessage>(OnMindRemoved);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
-            SubscribeLocalEvent<GhostRoleComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<GhostRoleComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<GhostRoleComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<GhostRoleComponent, EntityPausedEvent>(OnPaused);
             SubscribeLocalEvent<GhostRoleComponent, EntityUnpausedEvent>(OnUnpaused);
@@ -317,7 +317,7 @@ namespace Content.Server.Ghost.Roles
             UpdateAllEui();
         }
 
-        private void OnInit(Entity<GhostRoleComponent> ent, ref ComponentInit args)
+        private void OnMapInit(Entity<GhostRoleComponent> ent, ref MapInitEvent args)
         {
             var role = ent.Comp;
             if (role.Probability < 1f && !_random.Prob(role.Probability))
@@ -326,9 +326,16 @@ namespace Content.Server.Ghost.Roles
                 return;
             }
 
-            if (role.RoleRules == "")
-                role.RoleRules = Loc.GetString("ghost-role-component-default-rules");
             RegisterGhostRole(ent);
+        }
+
+        public void UpdateRules(Entity<GhostRoleComponent?> ent, string rules)
+        {
+            if (!Resolve(ent, ref ent.Comp))
+                return;
+
+            ent.Comp._rules = rules;
+            UpdateAllEui();
         }
 
         private void OnShutdown(Entity<GhostRoleComponent> role, ref ComponentShutdown args)
