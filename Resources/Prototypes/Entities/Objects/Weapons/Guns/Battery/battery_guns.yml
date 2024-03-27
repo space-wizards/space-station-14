@@ -725,7 +725,7 @@
   - type: Gun
     fireRate: 2
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg #wawa
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: CartridgeEnergyShotgunWide
     fireCost: 200
@@ -736,8 +736,6 @@
     - proto: CartridgeEnergyShotgunNarrow
       fireCost: 200
     - proto: CartridgeEnergyShotgunDisabler
-      fireCost: 200
-    - proto: CartridgeEnergyShotgunIon
       fireCost: 200
   - type: Item
     size: Normal

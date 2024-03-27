@@ -50,11 +50,3 @@
     proto: BulletDisablerSmg
     count: 3 
     spread: 9 #technically stronger than disabler if you aim properly
-
-- type: entity
-  id: CartridgeEnergyShotgunIon
-  name: ion configuration
-  parent: BaseCartridgeEnergy
-  components:
-  - type: CartridgeAmmo
-    proto: BulletIonRifle
