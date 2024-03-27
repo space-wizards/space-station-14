@@ -3,7 +3,7 @@
 /// <summary>
 /// This handles...
 /// </summary>
-public sealed class BloodstreamSystem : EntitySystem
+public sealed partial class BloodstreamSystem : EntitySystem
 {
     //TODO: Cvar this!
     private const float UpdateInterval = 1.0f;

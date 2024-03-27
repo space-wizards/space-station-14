@@ -8,7 +8,7 @@ namespace Content.Shared.Medical.Circulatory.Components;
 public sealed partial class BloodstreamComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public TimeSpan NextUpdate;
+    public TimeSpan NextUpdate = new TimeSpan();
 
     #region SimulationRelated
 
@@ -42,13 +42,13 @@ public sealed partial class BloodstreamComponent : Component
     /// The bloodstream solution
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? BloodSolution;
+    public EntityUid? BloodSolution = null;
 
     /// <summary>
     /// The solution to "drip" onto the ground or soak into clothing
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? SpillSolution;
+    public EntityUid? SpillSolution  = null;
 
     /// <summary>
     /// The reagent that represents the combination of both bloodcells and plasma.
@@ -56,7 +56,7 @@ public sealed partial class BloodstreamComponent : Component
     /// This is a cached value from BloodDefinitionPrototype and should not be modified!
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string BloodReagent;
+    public string BloodReagent = string.Empty;
 
     #endregion
 
@@ -68,7 +68,7 @@ public sealed partial class BloodstreamComponent : Component
     /// spawning with a particular one.
     /// </summary>
     [DataField, AutoNetworkedField] //TODO: Required
-    public string BloodGroup; //TODO: convert back to protoID
+    public string BloodGroup = string.Empty; //TODO: convert back to protoID
 
     /// <summary>
     /// If set to true, check blood transfusions to make sure that they do not contain antibodies that are
