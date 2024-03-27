@@ -721,7 +721,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
-        //Check if examinable solution requires you to hold the item in hand.
         if (!CanSeeHiddenSolution(entity,args.Examiner))
             return;
 
@@ -821,7 +820,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
-        //Check if examinable solution requires you to hold the item in hand.
         if (!CanSeeHiddenSolution(entity,args.User))
             return;
 
@@ -874,17 +872,15 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         return msg;
     }
 
+    //Check if examinable solution requires you to hold the item in hand.
     private bool CanSeeHiddenSolution(Entity<ExaminableSolutionComponent> entity, EntityUid examiner)
     {
         //Is the Hidden enabled?
         if (!entity.Comp.Hidden)
             return true;
         //Iterate over hands, if any, for examinable entity.
-        TryComp<HandsComponent>(examiner, out var hands);
-        if (hands == null)
-            return true;
-        var found = hands.Hands.Values.Any(hand => hand.HeldEntity == entity);
-        return found;
+        var hasHands = TryComp<HandsComponent>(examiner, out var hands);
+        return hasHands && hands != null && hands.Hands.Values.Any(hand => hand.HeldEntity == entity);
     }
 
     #endregion Event Handlers
