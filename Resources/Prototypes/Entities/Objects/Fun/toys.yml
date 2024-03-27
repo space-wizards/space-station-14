@@ -1554,7 +1554,6 @@
     allowMovement: true
     name: ghost-role-information-petrock-name
     description: ghost-role-information-petrock-description
-  - type: GhostTakeoverAvailable
   - type: PhysicalComposition
     materialComposition:
       Steel: 10
@@ -1577,7 +1576,6 @@
     allowMovement: true
     name: ghost-role-information-petrock-name
     description: ghost-role-information-petrock-description
-  - type: GhostTakeoverAvailable
   - type: NameIdentifier
     group: GenericNumber
   - type: PhysicalComposition
@@ -1603,7 +1601,6 @@
     allowMovement: true
     name: ghost-role-information-petrock-name
     description: ghost-role-information-petrock-description
-  - type: GhostTakeoverAvailable
   - type: Sprite
     sprite: Objects/Fun/pet_rock.rsi
     state: icon
@@ -1629,7 +1626,6 @@
     allowMovement: true
     name: ghost-role-information-petrock-name
     description: ghost-role-information-petrock-description
-  - type: GhostTakeoverAvailable
   - type: PhysicalComposition
     materialComposition:
       Steel: 10
@@ -1659,7 +1655,6 @@
     allowMovement: true
     name: ghost-role-information-petrock-name
     description: ghost-role-information-petrock-description
-  - type: GhostTakeoverAvailable
   - type: PhysicalComposition
     materialComposition:
       Steel: 10
