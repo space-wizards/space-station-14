@@ -44,10 +44,10 @@ public sealed partial class ArtifactSystem
 
     private int GetValidNodeId()
     {
-        var id = _random.Next(100, 999);
+        var id = _random.Next(100, 1000);
         while (_usedNodeIds.Contains(id))
         {
-            id = _random.Next(100, 999);
+            id = _random.Next(100, 1000);
         }
 
         _usedNodeIds.Add(id);
