@@ -230,7 +230,7 @@
     nodes:
       cordage:
         !type:CableNode
-        nodeGroupID: MVPower #This makes them join MV cables, but were only using the visualizer.
+        nodeGroupID: ExCable #This makes them join MV cables, but were only using the visualizer.
   - type: CableVisualizer
     statePrefix: excable_
   - type: Explosive

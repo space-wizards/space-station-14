@@ -19,7 +19,7 @@ namespace Content.Server.Power.NodeGroups
         void RemoveCharger(BatteryChargerComponent charger);
     }
 
-    [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower)]
+    [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower, NodeGroupID.ExCable)]
     [UsedImplicitly]
     public sealed partial class PowerNet : BasePowerNet<IPowerNet>, IPowerNet
     {
