@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: koteq
-  changes:
-  - message: Jugs with the same labels are now correctly grouped and sorted in the
-      context menu.
-    type: Tweak
-  id: 5738
-  time: '2024-01-18T22:18:53.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24243
 - author: EmoGarbage404
   changes:
   - message: Duplicate players will no longer spawn in cryogenic sleep units.
@@ -3795,3 +3787,10 @@
   id: 6237
   time: '2024-03-27T21:50:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26481
+- author: Vermidia
+  changes:
+  - message: Artifact node IDs are now only 3-digits long
+    type: Tweak
+  id: 6238
+  time: '2024-03-27T23:26:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26482
