@@ -1,13 +1,11 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
-using Content.Shared.Audio;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Physics;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -54,7 +52,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (HasComp<MobStateComponent>(uid) &&
                     TryComp<PhysicsComponent>(uid, out var body))
                 {
-                    _physics.SetBodyStatus(body, BodyStatus.OnGround);
+                    _physics.SetBodyStatus(uid, body, BodyStatus.OnGround);
                 }
 
                 if (TryComp<FixturesComponent>(uid, out var fixtures))
@@ -77,7 +75,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!TryComp<FixturesComponent>(uid, out var fixtures))
                 return;
 
-            _physics.SetBodyStatus(body, BodyStatus.InAir);
+            _physics.SetBodyStatus(uid, body, BodyStatus.InAir);
 
             foreach (var (id, fixture) in fixtures.Fixtures)
             {
@@ -96,9 +94,9 @@ namespace Content.Server.Atmos.EntitySystems
             // TODO ATMOS finish this
 
             // Don't play the space wind sound on tiles that are on fire...
-            if(tile.PressureDifference > 15 && !tile.Hotspot.Valid)
+            if (tile.PressureDifference > 15 && !tile.Hotspot.Valid)
             {
-                if(_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(SpaceWindSound))
+                if (_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(SpaceWindSound))
                 {
                     var coordinates = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
                     _audio.PlayPvs(SpaceWindSound, coordinates, AudioParams.Default.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
@@ -238,7 +236,7 @@ namespace Content.Server.Atmos.EntitySystems
                     // TODO: Technically these directions won't be correct but uhh I'm just here for optimisations buddy not to fix my old bugs.
                     if (throwTarget != EntityCoordinates.Invalid)
                     {
-                        var pos = ((throwTarget.ToMap(EntityManager).Position - xform.WorldPosition).Normalized() + dirVec).Normalized();
+                        var pos = ((throwTarget.ToMap(EntityManager, _transformSystem).Position - xform.WorldPosition).Normalized() + dirVec).Normalized();
                         _physics.ApplyLinearImpulse(uid, pos * moveForce, body: physics);
                     }
                     else

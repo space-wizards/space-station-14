@@ -3,14 +3,12 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Robust.Server.GameObjects;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.Piping.EntitySystems;
 
 public sealed class AtmosPipeAppearanceSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
@@ -31,7 +29,7 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
         if (!Resolve(uid, ref appearance, ref container, ref xform, false))
             return;
 
-        if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+        if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
 
         // get connected entities
