@@ -16,5 +16,12 @@ namespace Content.Server.Atmos.Components
         public SlotFlags AllowedSlots = SlotFlags.MASK | SlotFlags.HEAD;
         public bool IsFunctional;
         public EntityUid? ConnectedInternalsEntity;
+
+        /// <summary>
+        /// Tool will automatically turn on internals when it is next equipped
+        /// This feature will turn itself off after the first time it's used
+        /// </summary>
+        [DataField]
+        public bool AutomaticActivation = false;
     }
 }

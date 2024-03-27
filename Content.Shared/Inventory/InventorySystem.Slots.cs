@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -105,15 +106,31 @@ public partial class InventorySystem : EntitySystem
         return new InventorySlotEnumerator(entity.Comp, flags);
     }
 
-    public bool TryGetSlots(EntityUid uid, [NotNullWhen(true)] out SlotDefinition[]? slotDefinitions)
+    public bool TryGetSlots(EntityUid uid, [NotNullWhen(true)] out SlotDefinition[]? slotDefinitions, bool maskLast = false)
     {
         if (!TryComp(uid, out InventoryComponent? inv))
         {
             slotDefinitions = null;
             return false;
         }
-
         slotDefinitions = inv.Slots;
+
+        // If necessary, we move the mask slot to the end of the array. This makes it possible to auto-active the spawned character's internals
+        // But it would interfere with other systems which need the current slot order, so it's only used when called by EquipStartingGear()
+        if (maskLast)
+        {
+            var slotIndex = Array.FindIndex(slotDefinitions, slot => slot.Name == "mask");
+
+            if (slotIndex >= 0)
+            {
+                var slotDefinitionsList = slotDefinitions.ToList();
+                var maskSlot = slotDefinitions[slotIndex];
+                slotDefinitionsList.RemoveAt(slotIndex);
+                slotDefinitionsList.Add(maskSlot);
+                slotDefinitions = slotDefinitionsList.ToArray();
+            }
+        }
+
         return true;
     }
 
