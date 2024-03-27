@@ -17,8 +17,7 @@ namespace Content.Server.StationEvents.Events
         {
             base.Started(uid, component, gameRule, args);
 
-            var mod = Math.Sqrt(GetSeverityModifier());
-            component.WaveCounter = (int) (RobustRandom.Next(component.MinimumWaves, component.MaximumWaves) * mod);
+            component.WaveCounter = RobustRandom.Next(component.MinimumWaves, component.MaximumWaves);
         }
 
         protected override void ActiveTick(EntityUid uid, MeteorSwarmRuleComponent component, GameRuleComponent gameRule, float frameTime)
@@ -29,8 +28,6 @@ namespace Content.Server.StationEvents.Events
                 return;
             }
 
-            var mod = GetSeverityModifier();
-
             component.Cooldown -= frameTime;
 
             if (component.Cooldown > 0f)
@@ -38,7 +35,7 @@ namespace Content.Server.StationEvents.Events
 
             component.WaveCounter--;
 
-            component.Cooldown += (component.MaximumCooldown - component.MinimumCooldown) * RobustRandom.NextFloat() / mod + component.MinimumCooldown;
+            component.Cooldown += (component.MaximumCooldown - component.MinimumCooldown) * RobustRandom.NextFloat() + component.MinimumCooldown;
 
             Box2? playableArea = null;
             var mapId = GameTicker.DefaultMap;
@@ -71,9 +68,9 @@ namespace Content.Server.StationEvents.Events
                 var spawnPosition = new MapCoordinates(center + offset, mapId);
                 var meteor = Spawn("MeteorLarge", spawnPosition);
                 var physics = EntityManager.GetComponent<PhysicsComponent>(meteor);
-                _physics.SetBodyStatus(physics, BodyStatus.InAir);
-                _physics.SetLinearDamping(physics, 0f);
-                _physics.SetAngularDamping(physics, 0f);
+                _physics.SetBodyStatus(meteor, physics, BodyStatus.InAir);
+                _physics.SetLinearDamping(meteor, physics, 0f);
+                _physics.SetAngularDamping(meteor, physics, 0f);
                 _physics.ApplyLinearImpulse(meteor, -offset.Normalized() * component.MeteorVelocity * physics.Mass, body: physics);
                 _physics.ApplyAngularImpulse(
                     meteor,

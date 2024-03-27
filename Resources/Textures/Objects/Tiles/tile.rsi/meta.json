@@ -37,6 +37,15 @@
     {
       "name": "blue"
     },
+	{
+	  "name": "brass"
+	},
+	{
+	  "name": "brass-filled"
+	},
+	{
+	  "name": "reebe"
+	},
     {
       "name": "lime"
     },
@@ -133,6 +142,12 @@
       "name": "carpet-pink"
     },
     {
+      "name": "carpet-cyan"
+    },
+    {
+      "name": "carpet-white"
+    },
+    {
       "name": "hydro"
     },
     {
@@ -194,6 +209,12 @@
     },
     {
       "name": "shuttlered"
+    },
+    {
+      "name": "shuttlegrey"
+    },
+    {
+      "name": "shuttleblack"
     },
     {
       "name": "carpetclown"
@@ -295,6 +316,22 @@
     },
     {
       "name": "carpet-pink-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "carpet-cyan-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "carpet-cyan-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "carpet-white-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "carpet-white-inhand-right",
       "directions": 4
     },
     {
@@ -408,6 +445,9 @@
     {
       "name": "hydro-inhand-left",
       "directions": 4
+    },
+    {
+      "name": "wood-large"
     }
   ]
 }

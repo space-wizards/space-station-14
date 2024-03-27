@@ -6,7 +6,7 @@ using Content.Server.Inventory;
 using Content.Server.Popups;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Chat;
@@ -197,7 +197,8 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
         if (!CryoSleepRejoiningEnabled || !comp.AllowReEnteringBody)
         {
-            if (userId != null && Mind.TryGetMind(userId.Value, out var mind))
+            if (userId != null && Mind.TryGetMind(userId.Value, out var mind) &&
+                HasComp<CryostorageContainedComponent>(mind.Value.Comp.CurrentEntity))
             {
                 _gameTicker.OnGhostAttempt(mind.Value, false);
             }

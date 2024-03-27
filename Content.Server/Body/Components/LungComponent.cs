@@ -1,5 +1,6 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.Body.Systems;
+using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
 
@@ -27,4 +28,10 @@ public sealed partial class LungComponent : Component
     /// </summary>
     [DataField]
     public Entity<SolutionComponent>? Solution = null;
+
+    /// <summary>
+    /// The type of gas this lung needs. Used only for the breathing alerts, not actual metabolism.
+    /// </summary>
+    [DataField]
+    public AlertType Alert = AlertType.LowOxygen;
 }

@@ -70,7 +70,7 @@ namespace Content.Server.Tools
             _solutionContainer.RemoveReagent(entity.Comp.FuelSolution.Value, entity.Comp.FuelReagent, entity.Comp.FuelLitCost);
 
             // Logging
-            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(entity.Owner):welder} on");
+            AdminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(entity.Owner):welder} on");
 
             _ignitionSource.SetIgnited(entity.Owner);
 
@@ -88,7 +88,7 @@ namespace Content.Server.Tools
         public void TurnOff(Entity<WelderComponent> entity, ref ItemToggleDeactivateAttemptEvent args)
         {
             // Logging
-            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(entity.Owner):welder} off");
+            AdminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(entity.Owner):welder} off");
 
             _ignitionSource.SetIgnited(entity.Owner, false);
 
@@ -152,9 +152,9 @@ namespace Content.Server.Tools
                 {
                     _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-in-tank", ("owner", args.Target)), entity, args.User);
                 }
-            }
 
-            args.Handled = true;
+                args.Handled = true;
+            }
         }
 
         private void OnWelderToolUseAttempt(Entity<WelderComponent> entity, ref DoAfterAttemptEvent<ToolDoAfterEvent> args)

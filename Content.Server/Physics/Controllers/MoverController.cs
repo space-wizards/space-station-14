@@ -6,17 +6,16 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
-using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using DroneConsoleComponent = Content.Server.Shuttles.DroneConsoleComponent;
 using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Physics.Controllers
 {
     public sealed class MoverController : SharedMoverController
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ThrusterSystem _thruster = default!;
         [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
@@ -249,8 +248,8 @@ namespace Content.Server.Physics.Controllers
 
             var horizIndex = vel.X > 0 ? 1 : 3; // east else west
             var vertIndex = vel.Y > 0 ? 2 : 0; // north else south
-            var horizComp = vel.X != 0 ? MathF.Pow(Vector2.Dot(vel, new (shuttle.BaseLinearThrust[horizIndex] / shuttle.LinearThrust[horizIndex], 0f)), 2) : 0;
-            var vertComp = vel.Y != 0 ? MathF.Pow(Vector2.Dot(vel, new (0f, shuttle.BaseLinearThrust[vertIndex] / shuttle.LinearThrust[vertIndex])), 2) : 0;
+            var horizComp = vel.X != 0 ? MathF.Pow(Vector2.Dot(vel, new (shuttle.LinearThrust[horizIndex] / shuttle.LinearThrust[horizIndex], 0f)), 2) : 0;
+            var vertComp = vel.Y != 0 ? MathF.Pow(Vector2.Dot(vel, new (0f, shuttle.LinearThrust[vertIndex] / shuttle.LinearThrust[vertIndex])), 2) : 0;
 
             return shuttle.BaseMaxLinearVelocity * vel * MathF.ReciprocalSqrtEstimate(horizComp + vertComp);
         }
@@ -276,7 +275,7 @@ namespace Content.Server.Physics.Controllers
 
                 var gridId = xform.GridUid;
                 // This tries to see if the grid is a shuttle and if the console should work.
-                if (!_mapManager.TryGetGrid(gridId, out var _) ||
+                if (!TryComp<MapGridComponent>(gridId, out var _) ||
                     !shuttleQuery.TryGetComponent(gridId, out var shuttleComponent) ||
                     !shuttleComponent.Enabled)
                     continue;

@@ -29,11 +29,9 @@ public sealed class RottingSystem : SharedRottingSystem
         base.Initialize();
 
         SubscribeLocalEvent<PerishableComponent, MapInitEvent>(OnPerishableMapInit);
-        SubscribeLocalEvent<PerishableComponent, EntityUnpausedEvent>(OnPerishableUnpaused);
         SubscribeLocalEvent<PerishableComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<PerishableComponent, ExaminedEvent>(OnPerishableExamined);
 
-        SubscribeLocalEvent<RottingComponent, EntityUnpausedEvent>(OnRottingUnpaused);
         SubscribeLocalEvent<RottingComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<RottingComponent, MobStateChangedEvent>(OnRottingMobStateChanged);
         SubscribeLocalEvent<RottingComponent, BeingGibbedEvent>(OnGibbed);
@@ -47,11 +45,6 @@ public sealed class RottingSystem : SharedRottingSystem
         component.RotNextUpdate = _timing.CurTime + component.PerishUpdateRate;
     }
 
-    private void OnPerishableUnpaused(EntityUid uid, PerishableComponent component, ref EntityUnpausedEvent args)
-    {
-        component.RotNextUpdate += args.PausedTime;
-    }
-
     private void OnMobStateChanged(EntityUid uid, PerishableComponent component, MobStateChangedEvent args)
     {
         if (args.NewMobState != MobState.Dead && args.OldMobState != MobState.Dead)
@@ -62,11 +55,6 @@ public sealed class RottingSystem : SharedRottingSystem
 
         component.RotAccumulator = TimeSpan.Zero;
         component.RotNextUpdate = _timing.CurTime + component.PerishUpdateRate;
-    }
-
-    private void OnRottingUnpaused(EntityUid uid, RottingComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextRotUpdate += args.PausedTime;
     }
 
     private void OnShutdown(EntityUid uid, RottingComponent component, ComponentShutdown args)
@@ -133,7 +121,8 @@ public sealed class RottingSystem : SharedRottingSystem
             return;
         }
 
-        var description = "perishable-" + stage;
+        var isMob = HasComp<MobStateComponent>(perishable);
+        var description = "perishable-" + stage + (!isMob ? "-nonmob" : string.Empty);
         args.PushMarkup(Loc.GetString(description, ("target", Identity.Entity(perishable, EntityManager))));
     }
 

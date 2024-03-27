@@ -56,7 +56,8 @@ namespace Content.Server.Ghost.Roles
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindRemovedMessage>(OnMindRemoved);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
-            SubscribeLocalEvent<GhostRoleComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<GhostRoleComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<GhostRoleComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<GhostRoleComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<GhostRoleComponent, EntityPausedEvent>(OnPaused);
             SubscribeLocalEvent<GhostRoleComponent, EntityUnpausedEvent>(OnUnpaused);
@@ -163,7 +164,7 @@ namespace Content.Server.Ghost.Roles
                 var response = new GhostUpdateGhostRoleCountEvent(GetGhostRolesInfo().Length);
                 foreach (var player in _playerManager.Sessions)
                 {
-                    RaiseNetworkEvent(response, player.ConnectedClient);
+                    RaiseNetworkEvent(response, player.Channel);
                 }
             }
         }
@@ -173,7 +174,7 @@ namespace Content.Server.Ghost.Roles
             if (args.NewStatus == SessionStatus.InGame)
             {
                 var response = new GhostUpdateGhostRoleCountEvent(_ghostRoles.Count);
-                RaiseNetworkEvent(response, args.Session.ConnectedClient);
+                RaiseNetworkEvent(response, args.Session.Channel);
             }
         }
 
@@ -317,17 +318,14 @@ namespace Content.Server.Ghost.Roles
             UpdateAllEui();
         }
 
-        private void OnInit(Entity<GhostRoleComponent> ent, ref ComponentInit args)
+        private void OnMapInit(Entity<GhostRoleComponent> ent, ref MapInitEvent args)
         {
-            var role = ent.Comp;
-            if (role.Probability < 1f && !_random.Prob(role.Probability))
-            {
-                RemComp<GhostRoleComponent>(ent);
-                return;
-            }
+            if (ent.Comp.Probability < 1f && !_random.Prob(ent.Comp.Probability))
+                RemCompDeferred<GhostRoleComponent>(ent);
+        }
 
-            if (role.RoleRules == "")
-                role.RoleRules = Loc.GetString("ghost-role-component-default-rules");
+        private void OnStartup(Entity<GhostRoleComponent> ent, ref ComponentStartup args)
+        {
             RegisterGhostRole(ent);
         }
 

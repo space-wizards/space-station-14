@@ -39,7 +39,7 @@
         Blunt: 10
   - type: PhysicalComposition
     materialComposition:
-      Steel: 400
+      Steel: 185
   - type: StaticPrice
     price: 20
 
@@ -65,19 +65,6 @@
     sprite: Objects/Tanks/oxygen.rsi
   - type: Clothing
     sprite: Objects/Tanks/oxygen.rsi
-
-- type: entity
-  parent: OxygenTank
-  id: YellowOxygenTank
-  name: oxygen tank
-  description: A standard cylindrical gas tank for oxygen. This one is yellow.
-  components:
-  - type: Sprite
-    sprite: Objects/Tanks/yellow.rsi
-  - type: Item
-    sprite: Objects/Tanks/yellow.rsi
-  - type: Clothing
-    sprite: Objects/Tanks/yellow.rsi
 
 - type: entity
   parent: GasTankRoundBase

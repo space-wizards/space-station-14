@@ -50,6 +50,13 @@
   - type: Anchorable
   - type: Pullable
   - type: AmeController
+    fuelSlot:
+      whitelist:
+        components:
+        - AmeFuelContainer
+      whitelistFailPopup: ame-controller-component-fuel-slot-fail-whitelist
+      lockedFailPopup: ame-controller-component-fuel-slot-fail-locked
+      insertSuccessPopup: ame-controller-component-fuel-slot-success-insert
   - type: Explosive
     explosionType: Default
     intensitySlope: 5
@@ -67,6 +74,7 @@
         display:
           Off: { visible: false }
           On: { state: control_on, visible: true }
+          Warning: { state: control_warning, visible: true }
           Critical: { state: control_critical, visible: true }
           Fuck: { state: control_fuck, visible: true }
   - type: NodeContainer
@@ -85,9 +93,10 @@
     state: static
   - type: PowerSupplier
     supplyRate: 0
+  - type: ItemSlots
   - type: ContainerContainer
     containers:
-      AmeFuel: !type:ContainerSlot {}
+      fuelSlot: !type:ContainerSlot
   - type: GuideHelp
     guides: [ AME, Power ]
   - type: Electrified

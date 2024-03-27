@@ -34,9 +34,6 @@
   - type: Wires
     boardName: wires-board-name-chemdispenser
     layoutId: ChemDispenser
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.75
-    scaling: Exponential
   - type: GuideHelp
     guides:
     - Chemicals

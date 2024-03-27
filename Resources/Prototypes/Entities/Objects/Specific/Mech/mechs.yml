@@ -48,6 +48,8 @@
       types:
         Blunt: 25 #thwack
         Structural: 20
+    soundHit:
+      collection: MetalThud
   - type: Puller
     needsHands: false
   - type: InputMover
@@ -230,7 +232,7 @@
   parent: BaseMech
   id: MechVim
   name: Vim
-  description: A minature exosuit from Nanotrasen, developed to let the irreplacable station pets live a little longer.
+  description: A miniature exosuit from Nanotrasen, developed to let the irreplaceable station pets live a little longer.
   components:
   - type: Sprite
     drawdepth: Mobs
