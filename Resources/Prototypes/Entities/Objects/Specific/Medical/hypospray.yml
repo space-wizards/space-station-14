@@ -407,6 +407,9 @@
         maxVol: 10
   - type: RefillableSolution
     solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+    hidden: true # Allow examination only when held in hand.
   - type: Hypospray
     onlyMobs: false
   - type: UseDelay
