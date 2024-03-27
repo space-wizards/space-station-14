@@ -324,18 +324,9 @@ namespace Content.Server.Ghost.Roles
                 RemCompDeferred<GhostRoleComponent>(ent);
         }
 
-        private void OnStartup(Entity<GhostRoleComponent> ent, ComponentStartup args)
+        private void OnStartup(Entity<GhostRoleComponent> ent, ref ComponentStartup args)
         {
             RegisterGhostRole(ent);
-        }
-
-        public void UpdateRules(Entity<GhostRoleComponent?> ent, string rules)
-        {
-            if (!Resolve(ent, ref ent.Comp))
-                return;
-
-            ent.Comp._rules = rules;
-            UpdateAllEui();
         }
 
         private void OnShutdown(Entity<GhostRoleComponent> role, ref ComponentShutdown args)
