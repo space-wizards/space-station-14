@@ -12,4 +12,5 @@
     prototypes:
       - BlockGameArcade
       - SpaceVillainArcadeFilled
+      - ParadiseArcade
     chance: 1

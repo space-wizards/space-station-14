@@ -303,6 +303,15 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: ParadiseArcadeComputerCircuitboard
+  name: paradise arcade board
+  description: A computer printed circuit board for a paradise arcade cabinet.
+  components:
+  - type: ComputerBoard
+    prototype: ParadiseArcade
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: ParticleAcceleratorComputerCircuitboard
   name: PA control box computer board
   description: A computer printed circuit board for a particle accelerator control box.

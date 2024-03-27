@@ -1,0 +1,10 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                Title="{Loc 'paradise-arcade-window-title'}"
+
+                Resizable="False">
+    <BoxContainer Orientation="Vertical" Margin="4" MinWidth="500">
+        <Label Text="{Loc 'paradise-arcade-button-label'}"></Label>
+        <Button Name="ConnectButton" Text="{Loc 'paradise-arcade-button-text'}"></Button>
+    </BoxContainer>
+</controls:FancyWindow>
