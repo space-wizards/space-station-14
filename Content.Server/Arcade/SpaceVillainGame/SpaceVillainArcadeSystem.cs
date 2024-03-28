@@ -1,6 +1,8 @@
 using Content.Server.Power.Components;
 using Content.Shared.UserInterface;
 using Content.Server.Advertise;
+using Content.Server.Advertise.Components;
+using Content.Server.Advertise.EntitySystems;
 using static Content.Shared.Arcade.SharedSpaceVillainArcadeComponent;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -121,7 +123,7 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
 
         if (ent.Comp.ShouldSayThankYou && TryComp<AdvertiseComponent>(ent.Owner, out var advertise))
         {
-            _advertise.SayThankYou(ent.Owner, advertise);
+            _advertise.SayAdvertisement(ent.Owner, advertise);
             ent.Comp.ShouldSayThankYou = false;
         }
     }
