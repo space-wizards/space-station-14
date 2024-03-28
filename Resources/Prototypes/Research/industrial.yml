@@ -65,12 +65,13 @@
   cost: 7500
   recipeUnlocks:
   - PortableGeneratorPacmanMachineCircuitboard
-  - PortableGeneratorSuperPacmanMachineCircuitboard
   - PortableGeneratorJrPacmanMachineCircuitboard
   - PowerComputerCircuitboard #the actual solar panel itself should be in here
   - SolarControlComputerCircuitboard
   - SolarTrackerElectronics
   - EmitterCircuitboard
+  - APCElectronicsHigh
+  - APCElectronicsSuper
 
 - type: technology
   id: AtmosphericTech
@@ -177,6 +178,21 @@
     - JawsOfLife
     - BorgModuleAdvancedTool
     - BorgModuleRCD
+
+- type: technology
+  id: AdvancedPowerGeneration
+  name: research-technology-advanced-power-generation
+  icon:
+    sprite: Structures/Power/Generation/portable_generator.rsi
+    state: portgen3
+  discipline: Industrial
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - PortableGeneratorSuperPacmanMachineCircuitboard
+  - APCElectronicsHyper
+  technologyPrerequisites:
+  - PowerGeneration
 
 # Tier 3
 

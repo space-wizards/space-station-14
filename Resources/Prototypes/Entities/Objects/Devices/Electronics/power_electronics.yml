@@ -16,6 +16,46 @@
         Silicon: 20
     - type: StaticPrice
       price: 34
+    - type: Tag
+      tags:
+        - DroneUsable
+        - APCElectronicsBasic
+
+- type: entity
+  id: APCElectronicsHigh
+  parent: APCElectronics
+  name: APC electronics high capacity
+  components:
+    - type: StaticPrice
+      price: 68
+    - type: Tag
+      tags:
+        - DroneUsable
+        - APCElectronicsHigh
+
+- type: entity
+  id: APCElectronicsSuper
+  parent: APCElectronics
+  name: APC electronics super capacity
+  components:
+    - type: StaticPrice
+      price: 136
+    - type: Tag
+      tags:
+        - DroneUsable
+        - APCElectronicsSuper
+
+- type: entity
+  id: APCElectronicsHyper
+  parent: APCElectronics
+  name: APC electronics hyper capacity
+  components:
+    - type: StaticPrice
+      price: 272
+    - type: Tag
+      tags:
+        - DroneUsable
+        - APCElectronicsHyper
 
 # Wallmount Substation
 - type: entity

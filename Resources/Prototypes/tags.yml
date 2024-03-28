@@ -16,6 +16,18 @@
   id: Ambrosia
 
 - type: Tag
+  id: APCElectronicsBasic
+
+- type: Tag
+  id: APCElectronicsHigh
+
+- type: Tag
+  id: APCElectronicsSuper
+
+- type: Tag
+  id: APCElectronicsHyper
+
+- type: Tag
   id: AppraisalTool
 
 - type: Tag
