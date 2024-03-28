@@ -8,9 +8,4 @@ namespace Content.Shared.Item.ItemToggle.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ItemToggleHotComponent : Component
 {
-    /// <summary>
-    ///     Item becomes hot when active.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
-    public bool IsHotWhenActivated = true;
 }

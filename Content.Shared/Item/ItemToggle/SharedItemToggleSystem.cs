@@ -232,8 +232,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
     /// </summary>
     private void OnIsHotEvent(EntityUid uid, ItemToggleHotComponent itemToggleHot, IsHotEvent args)
     {
-        if (itemToggleHot.IsHotWhenActivated)
-            args.IsHot = IsActivated(uid);
+        args.IsHot |= IsActivated(uid);
     }
 
     /// <summary>
