@@ -9,7 +9,7 @@
             - !type:SnapToGrid
               southRotation: true
           steps:
-            - material: Bananium
+            - material: Bananium #what
               amount: 1
               doAfter: 0
 
@@ -30,3 +30,8 @@
       entity: CableDetDetonator
       edges:
         - to: detonationCable
+        completed:
+          - !type:SnapToGrid
+            southRotation: true
+        steps:
+          - prototype: 
