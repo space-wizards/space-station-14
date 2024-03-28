@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared;
 using NUnit.Framework;
@@ -7,10 +7,9 @@ using Robust.UnitTesting;
 
 namespace Content.Tests.Shared;
 
-[TestFixture]
+[TestFixture, TestOf(typeof(Span<Direction>)), Parallelizable(ParallelScope.Self)]
 public sealed class DirectionRandomizerTest : RobustUnitTest
 {
-    [Test]
     [TestCase(new[]
     {
         Direction.East,
@@ -41,11 +40,7 @@ public sealed class DirectionRandomizerTest : RobustUnitTest
         randomizer.Shuffle();
         foreach (var direction in randomizer)
         {
-            if (set.Contains(direction))
-            {
-                set.Remove(direction);
-            }
-            else
+            if (!set.Remove(direction))
             {
                 // Asserts no double direction
                 Assert.Fail("Post randomization the enumerator had repeated direction");
@@ -54,7 +49,6 @@ public sealed class DirectionRandomizerTest : RobustUnitTest
         // Because of above foreach this asserts
         // rand[1,2,3] - [1,2,3] == {}
         // i.e. randomized set minus original set is empty
-        Assert.That(set.Count == 0, "Each element must appear once ");
-
+        Assert.That(set, Is.Empty, "Each element must appear once ");
     }
 }
