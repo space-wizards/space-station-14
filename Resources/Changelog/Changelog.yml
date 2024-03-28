@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix bolting guns causing exceptions.
-    type: Fix
-  id: 5745
-  time: '2024-01-19T10:14:42.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24283
 - author: mirrorcult
   changes:
   - message: Destruction & impact sounds have been reworked in general, you should
@@ -3798,3 +3791,10 @@
   id: 6244
   time: '2024-03-28T06:32:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25452
+- author: deltanedas
+  changes:
+  - message: Voicemasks can now mimic speech verbs, like flutters or growls.
+    type: Tweak
+  id: 6245
+  time: '2024-03-28T06:36:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25768
