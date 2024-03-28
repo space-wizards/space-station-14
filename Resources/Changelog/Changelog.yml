@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Repo
-  changes:
-  - message: Round restarts require minimum ghost levels on populated servers.
-    type: Fix
-  id: 5743
-  time: '2024-01-19T07:10:05.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23453
 - author: metalgearsloth
   changes:
   - message: Added ability to put spesos directly into cargo request consoles.
@@ -3796,3 +3789,12 @@
   id: 6242
   time: '2024-03-28T05:53:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26437
+- author: Tayrtahn
+  changes:
+  - message: Arcade machines now advertise and make noise to bring in players.
+    type: Add
+  - message: Space Villain arcade machines have a new screen animation.
+    type: Tweak
+  id: 6243
+  time: '2024-03-28T06:28:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24200
