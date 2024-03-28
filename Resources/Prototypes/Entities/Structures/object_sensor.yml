@@ -1,0 +1,49 @@
+- type: entity
+  id: ObjectSensor
+  parent: [ BaseMachine, ConstructibleMachine]
+  name: object sensor
+  description: A sensor that detects how many objects are near it.
+  components:
+  - type: Sprite
+    sprite: Structures/object_sensor.rsi
+    layers:
+    - state: icon
+    - state: light
+      map: [ "enum.ToggleVisuals.Layer" ]
+      visible: false
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: UseDelay
+    delay: 0.5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        mask:
+        - ItemMask
+      collider:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        mask:
+        - ItemMask
+        layer:
+        - HighImpassable
+        hard: false
+  - type: ObjectSensor
+  - type: DeviceLinkSource
+    ports:
+    - ObjectSensor1Object
+    - ObjectSensor2Objects
+    - ObjectSensor3Objects
+    - ObjectSensor4OrMoreObjects
+  - type: Machine
+    board: ObjectSensorCircuitboard

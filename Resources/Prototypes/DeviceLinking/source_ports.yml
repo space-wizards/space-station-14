@@ -149,3 +149,23 @@
   id: PowerDischarging
   name: signal-port-name-power-discharging
   description: signal-port-description-power-discharging
+
+- type: sourcePort
+  id: ObjectSensor1Object
+  name: signal-port-name-object-sensor-1
+  description: signal-port-description-object-sensor-1
+
+- type: sourcePort
+  id: ObjectSensor2Objects
+  name: signal-port-name-object-sensor-2
+  description: signal-port-description-object-sensor-2
+
+- type: sourcePort
+  id: ObjectSensor3Objects
+  name: signal-port-name-object-sensor-3
+  description: signal-port-description-object-sensor-3
+
+- type: sourcePort
+  id: ObjectSensor4OrMoreObjects
+  name: signal-port-name-object-sensor-4-or-more
+  description: signal-port-description-object-sensor-4-or-more
