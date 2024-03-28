@@ -1,0 +1,4 @@
+﻿<mapping:MappingDoNotMeasure
+    xmlns="https://spacestation14.io"
+    xmlns:mapping="clr-namespace:Content.Client.Mapping">
+</mapping:MappingDoNotMeasure>

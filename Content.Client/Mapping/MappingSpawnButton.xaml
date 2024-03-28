@@ -1,0 +1,22 @@
+﻿<mapping:MappingSpawnButton
+    xmlns="https://spacestation14.io"
+    xmlns:mapping="clr-namespace:Content.Client.Mapping">
+    <BoxContainer Orientation="Vertical">
+        <Control>
+            <Button Name="Button" Access="Public" ToggleMode="True" StyleClasses="ButtonSquare" />
+            <BoxContainer Orientation="Horizontal">
+                <LayeredTextureRect Name="Texture" Access="Public" MinSize="32 32"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Stretch="KeepAspectCentered" CanShrink="True" />
+                <Control SetSize="32 32" Name="CollapseButtonWrapper">
+                    <Button Name="CollapseButton" Access="Public" Text="▶"
+                            ToggleMode="True" StyleClasses="ButtonSquare" SetSize="32 32" />
+                </Control>
+                <Label Name="Label" Access="Public" VerticalAlignment="Center"
+                       HorizontalExpand="True" ClipText="True" />
+            </BoxContainer>
+        </Control>
+        <BoxContainer Name="ChildrenPrototypes" Access="Public" Orientation="Vertical"
+                      Margin="24 0 0 0" />
+    </BoxContainer>
+</mapping:MappingSpawnButton>
