@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Duplicate players will no longer spawn in cryogenic sleep units.
-    type: Fix
-  id: 5739
-  time: '2024-01-19T00:27:21.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24251
 - author: lapatison
   changes:
   - message: Guidebooks can now be found in random bookshelves.
@@ -3794,3 +3787,11 @@
   id: 6238
   time: '2024-03-27T23:26:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26482
+- author: Jake Huxell
+  changes:
+  - message: Fixed late join menu scrolling to the top whenever a new player joins
+      the round.
+    type: Fix
+  id: 6239
+  time: '2024-03-28T01:43:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26483
