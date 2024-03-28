@@ -9,6 +9,13 @@
     state: icon
   - type: Item
     size: Huge
+  - type: Appearance
+  - type: SubFloorHide
+  - type: Anchorable
+  - type: CollideOnAnchor
+    enable: false
+  - type: Transform
+    anchored: false
   - type: Clothing
     quickEquip: false
     slots:
