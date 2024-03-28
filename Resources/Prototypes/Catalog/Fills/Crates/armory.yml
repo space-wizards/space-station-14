@@ -69,3 +69,14 @@
       amount: 2
     - id: MagazinePistol
       amount: 4
+
+- type: entity
+  id: CrateArmoryIonRifle
+  parent: CrateWeaponSecure
+  name: ion rifle crate
+  description: Contains two standard-issue ion-electronic disruptor rifles.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponIonRifle
+        amount: 2

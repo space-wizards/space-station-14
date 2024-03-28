@@ -57,3 +57,13 @@
   cost: 5200
   category: cargoproduct-category-name-armory
   group: market
+
+- type: cargoProduct
+  id: ArmoryIonRifle
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/ion_rifle.rsi
+    state: icon
+  product: CrateArmoryIonRifle
+  cost: 4000
+  category: Armory
+  group: market
