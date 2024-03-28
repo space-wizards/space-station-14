@@ -20,7 +20,6 @@ public sealed class PermanentBlindnessSystem : EntitySystem
     {
         SubscribeLocalEvent<PermanentBlindnessComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<PermanentBlindnessComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<PermanentBlindnessComponent, EyeDamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<PermanentBlindnessComponent, ExaminedEvent>(OnExamined);
     }
 
@@ -42,23 +41,7 @@ public sealed class PermanentBlindnessSystem : EntitySystem
         if (!_entityManager.TryGetComponent<BlindableComponent>(blindness, out var blindable))
             return;
 
-        var damageToDeal = (int) BlurryVisionComponent.MaxMagnitude - blindable.EyeDamage;
-
-        if (damageToDeal <= 0)
-            return;
-
-        _blinding.AdjustEyeDamage(blindness.Owner, damageToDeal);
-    }
-
-    private void OnDamageChanged(Entity<PermanentBlindnessComponent> blindness, ref EyeDamageChangedEvent args)
-    {
-        if (args.Damage >= BlurryVisionComponent.MaxMagnitude)
-            return;
-
-        if (!_entityManager.TryGetComponent<BlindableComponent>(blindness, out var blindable))
-            return;
-
-        var damageRestoration = (int) BlurryVisionComponent.MaxMagnitude - args.Damage;
-        _blinding.AdjustEyeDamage(blindness.Owner, damageRestoration);
+        var maxMagnitudeInt = (int) BlurryVisionComponent.MaxMagnitude;
+        _blinding.SetMinDamage(new Entity<BlindableComponent?>(blindness.Owner, blindable), maxMagnitudeInt);
     }
 }
