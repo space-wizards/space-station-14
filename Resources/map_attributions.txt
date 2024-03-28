@@ -49,3 +49,5 @@
 - files: ["core.yml"]
   authors: Ubaser
 
+- files: ["phobos.yml"]
+  authors: DarkDan, RoboticFloof
