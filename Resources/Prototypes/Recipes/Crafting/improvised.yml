@@ -227,3 +227,16 @@
     sprite: Clothing/Head/Hats/straw_hat.rsi
     state: icon
   objectType: Item
+
+- type: construction
+  name: coin
+  id: coin
+  graph: Coin
+  startNode: start
+  targetNode: coin
+  category: construction-category-weapons
+  description: A coin that reflects bullets and lasers to the nearest target. Single use only.
+  icon:
+    sprite: Objects/Weapons/Throwable/coin.rsi
+    state: icon
+  objectType: Item

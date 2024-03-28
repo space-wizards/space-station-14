@@ -1,0 +1,13 @@
+﻿- type: constructionGraph
+  id: Coin
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: coin
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+    - node: coin
+      entity: ReflectionCoin

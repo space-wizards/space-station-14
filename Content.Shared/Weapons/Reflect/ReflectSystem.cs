@@ -7,17 +7,21 @@ using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Reflect;
 
@@ -89,17 +93,10 @@ public sealed class ReflectSystem : EntitySystem
             args.Cancelled = true;
     }
 
-    private bool TryReflectProjectile(EntityUid user, EntityUid reflector, EntityUid projectile, ProjectileComponent? projectileComp = null, ReflectComponent? reflect = null)
+    private void ReflectProjectile(EntityUid user, Entity<ReflectComponent> reflector, Entity<PhysicsComponent> projectile)
     {
-        if (!Resolve(reflector, ref reflect, false) ||
-            !reflect.Enabled ||
-            !TryComp<ReflectiveComponent>(projectile, out var reflective) ||
-            (reflect.Reflects & reflective.Reflective) == 0x0 ||
-            !_random.Prob(reflect.ReflectProb) ||
-            !TryComp<PhysicsComponent>(projectile, out var physics))
-        {
-            return false;
-        }
+        var physics = projectile.Comp;
+        var reflect = reflector.Comp;
 
         var rotation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2).Opposite();
         var existingVelocity = _physics.GetMapLinearVelocity(projectile, component: physics);
@@ -114,6 +111,97 @@ public sealed class ReflectSystem : EntitySystem
         var locRot = Transform(projectile).LocalRotation;
         var newRot = rotation.RotateVec(locRot.ToVec());
         _transform.SetLocalRotation(projectile, newRot.ToAngle());
+    }
+
+    private bool ReflectProjectileToNearestTarget(EntityUid user, Entity<ReflectComponent> reflector, Entity<PhysicsComponent> projectile)
+    {
+        if (!TryComp(projectile, out ProjectileComponent? projectileComponent) ||
+            !TryComp(reflector, out ReflectToNearestTargetComponent? reflectToNearest))
+            return false;
+
+        var physics = projectile.Comp;
+        var reflect = reflector.Comp;
+
+        var query = EntityQueryEnumerator<MobStateComponent>();
+        EntityUid? targettedEnt = null;
+        float targettedEntDistance = reflectToNearest.MaxDistance;
+        while (user == reflector.Owner && query.MoveNext(out var uid, out var comp))
+        {
+            if (comp is not { CurrentState: MobState.Alive })
+                continue;
+
+            if (uid == projectileComponent.Shooter && !reflectToNearest.IncludeShooter)
+                continue;
+
+            var reflectorPos = _physics.GetPhysicsTransform(reflector).Position;
+            var dirToTarget = (_physics.GetPhysicsTransform(uid).Position - reflectorPos);
+            var distance = dirToTarget.Length();
+
+            if (distance <= 0.1f)
+                continue;
+
+            if (distance > targettedEntDistance)
+                continue;
+
+            var ray = new CollisionRay(reflectorPos, dirToTarget.Normalized(), (int) CollisionGroup.BulletImpassable);
+            var rayCastResults = _physics.IntersectRay(Transform(reflector).MapID, ray, distance, reflector, returnOnFirstHit: false).FirstOrNull();
+
+            if (rayCastResults is { } && rayCastResults.Value.HitEntity != uid)
+                continue;
+
+            targettedEntDistance = distance;
+            targettedEnt = uid;
+        }
+
+        Vector2 newVelocity;
+        var existingVelocityMagnitude = _physics.GetMapLinearVelocity(projectile, component: physics).Length();
+
+        if (targettedEnt is null)
+            newVelocity = _random.NextAngle(360).ToVec() * existingVelocityMagnitude;
+        else
+        {
+            var target = targettedEnt.Value;
+
+            var mobTransform = _physics.GetPhysicsTransform(target);
+            var projectileTransform = _physics.GetPhysicsTransform(reflector);
+
+            var direction = (mobTransform.Position - projectileTransform.Position);
+
+            if (direction.LengthSquared() <= 0.1)
+                return true;
+
+            var variation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
+
+            newVelocity = variation.RotateVec(direction.Normalized()) * existingVelocityMagnitude;
+        }
+
+        _physics.SetLinearVelocity(projectile, newVelocity, body: physics);
+
+        _transform.SetLocalRotation(projectile, newVelocity.ToAngle());
+
+        return true;
+    }
+
+    private bool TryReflectProjectile(EntityUid user, EntityUid reflector, EntityUid projectile, ProjectileComponent? projectileComp = null, ReflectComponent? reflect = null)
+    {
+        if (!Resolve(reflector, ref reflect, false) ||
+            !reflect.Enabled ||
+            !TryComp<ReflectiveComponent>(projectile, out var reflective) ||
+            (reflect.Reflects & reflective.Reflective) == 0x0 ||
+            !_random.Prob(reflect.ReflectProb) ||
+            !TryComp<PhysicsComponent>(projectile, out var physics))
+        {
+            return false;
+        }
+
+        var setShooter = false;
+
+        if (!HasComp<ReflectToNearestTargetComponent>(reflector) ||
+            !ReflectProjectileToNearestTarget(user, (reflector, reflect), (projectile, physics)))
+        {
+            ReflectProjectile(user, (reflector, reflect), (projectile, physics));
+            setShooter = true;
+        }
 
         if (_netManager.IsServer)
         {
@@ -121,7 +209,7 @@ public sealed class ReflectSystem : EntitySystem
             _audio.PlayPvs(reflect.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
         }
 
-        if (Resolve(projectile, ref projectileComp, false))
+        if (setShooter && Resolve(projectile, ref projectileComp, false))
         {
             _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected {ToPrettyString(projectile)} from {ToPrettyString(projectileComp.Weapon)} shot by {projectileComp.Shooter}");
 
@@ -133,6 +221,9 @@ public sealed class ReflectSystem : EntitySystem
         {
             _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected {ToPrettyString(projectile)}");
         }
+
+        if (HasComp<DestroyOnReflectComponent>(reflector))
+            QueueDel(reflector);
 
         return true;
     }
@@ -150,6 +241,64 @@ public sealed class ReflectSystem : EntitySystem
             args.Direction = dir.Value;
             args.Reflected = true;
         }
+    }
+
+    private bool ReflectHitscan(ReflectComponent reflect, Vector2 direction, [NotNullWhen(true)] out Vector2? newDirection)
+    {
+        var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
+        newDirection = -spread.RotateVec(direction);
+        return true;
+    }
+
+    private bool ReflectToNearestTargetHitscan(
+        EntityUid user,
+        Entity<ReflectComponent> reflector,
+        EntityUid? shooter,
+        [NotNullWhen(true)] out Vector2? newDirection)
+    {
+        newDirection = null;
+
+        if (!TryComp(reflector, out ReflectToNearestTargetComponent? reflectToNearest))
+            return false;
+
+        var query = EntityQueryEnumerator<MobStateComponent>();
+        float targettedEntDistance = reflectToNearest.MaxDistance;
+        while (user == reflector.Owner && query.MoveNext(out var uid, out var comp))
+        {
+            if (comp is not { CurrentState: MobState.Alive })
+                continue;
+
+            if (uid == shooter && !reflectToNearest.IncludeShooter)
+                continue;
+
+            var reflectorPos = _physics.GetPhysicsTransform(reflector).Position;
+            var dirToTarget = (_physics.GetPhysicsTransform(uid).Position - reflectorPos);
+            var distance = dirToTarget.Length();
+
+            if (distance <= 0.1f)
+                continue;
+
+            if (distance > targettedEntDistance)
+                continue;
+
+            var ray = new CollisionRay(reflectorPos, dirToTarget.Normalized(), (int) CollisionGroup.BulletImpassable);
+            var rayCastResults = _physics.IntersectRay(Transform(reflector).MapID, ray, distance, reflector, returnOnFirstHit: false).FirstOrNull();
+
+            if (rayCastResults is { } && rayCastResults.Value.HitEntity != uid)
+                continue;
+
+            targettedEntDistance = distance;
+            newDirection = dirToTarget.Normalized();
+        }
+
+        if (newDirection is null)
+            newDirection = _random.NextAngle(360).ToVec();
+
+        var variation = _random.NextAngle(-reflector.Comp.Spread / 2, reflector.Comp.Spread / 2);
+
+        newDirection = variation.RotateVec(newDirection.Value);
+
+        return true;
     }
 
     private bool TryReflectHitscan(
@@ -174,8 +323,14 @@ public sealed class ReflectSystem : EntitySystem
             _audio.PlayPvs(reflect.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
         }
 
-        var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
-        newDirection = -spread.RotateVec(direction);
+        if ((!HasComp<ReflectToNearestTargetComponent>(reflector)
+            || !ReflectToNearestTargetHitscan(user, (reflector, reflect), shooter, out newDirection)
+            ) &&
+            !ReflectHitscan(reflect, direction, out newDirection))
+            return false;
+
+        if (HasComp<DestroyOnReflectComponent>(reflector))
+            QueueDel(reflector);
 
         if (shooter != null)
             _adminLogger.Add(LogType.HitScanHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected hitscan from {ToPrettyString(shotSource)} shot by {ToPrettyString(shooter.Value)}");
