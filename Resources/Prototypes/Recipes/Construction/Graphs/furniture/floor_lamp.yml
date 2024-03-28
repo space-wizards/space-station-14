@@ -1,0 +1,58 @@
+﻿- type: constructionGraph
+  id: FloorLamp
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: floorLamp
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 3
+            - tag: LightBulb
+              icon:
+                sprite: Objects/Power/light_bulb.rsi
+                state: normal
+              name: any light bulb
+              doAfter: 2
+
+    - node: floorLamp
+      entity: FloorLamp
+      edges:
+        - to: floorLampHeaded
+          steps:
+            - tag: FloorLampHead
+              icon:
+                sprite: Clothing/Head/Misc/floor_lamp_head.rsi
+                state: icon
+              name: floor lamp head
+              doAfter: 2
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 3
+            - !type:SpawnPrototype
+              prototype: LightBulb
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            
+    - node: floorLampHeaded
+      entity: FloorLampHeaded
+      edges:
+        - to: floorLamp
+          completed:
+            - !type:SpawnPrototype
+              prototype: ClothingHeadFloorLampHeadHat
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: FloorLamp
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2

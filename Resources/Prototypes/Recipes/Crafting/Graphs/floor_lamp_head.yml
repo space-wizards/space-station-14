@@ -1,0 +1,14 @@
+- type: constructionGraph
+  id: FloorLampHead
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: floorLampHead
+          steps:
+            - material: Cloth
+              amount: 3
+              doAfter: 2
+
+    - node: floorLampHead
+      entity: ClothingHeadFloorLampHeadHat

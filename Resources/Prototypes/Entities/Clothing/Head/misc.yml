@@ -278,3 +278,20 @@
       - WhitelistChameleon
   - type: StaticPrice
     price: 1
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadFloorLampHeadHat
+  name: floor lamp head
+  description: Put it on and become a floor lamp.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/floor_lamp_head.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/floor_lamp_head.rsi
+  - type: Construction
+    graph: FloorLampHead
+    node: floorLampHead
+  - type: Tag
+    tags:
+      - FloorLampHead

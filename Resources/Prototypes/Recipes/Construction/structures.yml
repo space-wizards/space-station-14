@@ -1658,3 +1658,33 @@
     state: closed
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  name: wooden blinds
+  id: BlindsWood
+  graph: Blinds
+  startNode: startWoodBlinds
+  targetNode: woodBlinds
+  category: construction-category-structures
+  description: Something similar to curtains, but solid.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  icon:
+    sprite: Structures/Doors/Blinds/wood_blinds.rsi
+    state: closed
+
+- type: construction
+  name: metal blinds
+  id: BlindsMetal
+  graph: Blinds
+  startNode: startMetalBlinds
+  targetNode: metalBlinds
+  category: construction-category-structures
+  description: Something similar to curtains, but solid.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  icon:
+    sprite: Structures/Doors/Blinds/metal_blinds.rsi
+    state: closed

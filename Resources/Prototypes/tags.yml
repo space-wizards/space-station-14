@@ -1315,3 +1315,9 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+- type: Tag
+  id: LightBulb
+
+- type: Tag
+  id: FloorLampHead

@@ -1,0 +1,65 @@
+﻿- type: constructionGraph
+  id: Blinds
+  start: startWoodBlinds
+  graph:
+    - node: startWoodBlinds
+      edges:
+        - to: frameWood
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: WoodPlank
+              amount: 3
+              doAfter: 1
+
+    - node: frameWood
+      entity: BlindsWoodFrame
+      edges:
+        - to: woodBlinds
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            
+    - node: woodBlinds
+      entity: BlindsWood
+      edges:
+        - to: startWoodBlinds
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+    - node: startMetalBlinds
+      edges:
+        - to: frameMetal
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 3
+              doAfter: 1
+
+    - node: frameMetal
+      entity: BlindsMetalFrame
+      edges:
+        - to: metalBlinds
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            
+    - node: metalBlinds
+      entity: BlindsMetal
+      edges:
+        - to: startMetalBlinds
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2

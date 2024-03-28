@@ -1,0 +1,32 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sprited by github:DreamlyJack(624946166152298517)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "full"
+        },
+        {
+            "name": "floor-lamp-head"
+        },
+        {
+            "name": "floor-lamp-stick" 
+        },
+        {
+            "name": "floor-lamp-light" 
+        },
+        {
+            "name": "floor-lamp-lamp"
+        },
+        {
+            "name": "floor-lamp-lamp-light" 
+        },
+        {
+            "name": "floor-lamp-lamp-broken" 
+        }
+    ]
+}

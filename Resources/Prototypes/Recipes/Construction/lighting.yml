@@ -63,3 +63,18 @@
   description: A high powered light tube containing a green crystal
   icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
   objectType: Item
+
+- type: construction
+  name: floor lamp
+  id: FloorLamp
+  graph: FloorLamp
+  startNode: start
+  targetNode: floorLampHeaded
+  category: construction-category-utilities
+  description: A light bulb on a stand with a fabric hat
+  icon: { sprite: Structures/Furniture/floor_lamp.rsi, state: full }
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
