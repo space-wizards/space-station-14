@@ -1,17 +1,19 @@
 using System.Linq;
-using System.Net.Http;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.Discord;
 using Content.Server.GameTicking;
+using Content.Server.Maps;
+using Content.Shared.Access.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Mind;
+using Discord;
+using Discord.Rest;
+using Discord.WebSocket;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared;
@@ -21,6 +23,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Color = Discord.Color;
 
 namespace Content.Server.Administration.Systems
 {
@@ -34,49 +37,186 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IPlayerLocator _playerLocator = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
+        [Dependency] private readonly DiscordLink _discord = default!;
+        [Dependency] private readonly EntityManager _entityManager = default!;
+        [Dependency] private readonly AdminSystem _adminSystem = default!;
+        [Dependency] private readonly IGameMapManager _mapManager = default!;
+        [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!;
         [Dependency] private readonly IAfkManager _afkManager = default!;
 
         private ISawmill _sawmill = default!;
-        private readonly HttpClient _httpClient = new();
-        private string _webhookUrl = string.Empty;
-        private WebhookData? _webhookData;
-        private string _footerIconUrl = string.Empty;
-        private string _avatarUrl = string.Empty;
-        private string _serverName = string.Empty;
-        private readonly Dictionary<NetUserId, (string? id, string username, string description, string? characterName, GameRunLevel lastRunLevel)> _relayMessages = new();
-        private Dictionary<NetUserId, string> _oldMessageIds = new();
-        private readonly Dictionary<NetUserId, Queue<string>> _messageQueues = new();
-        private readonly HashSet<NetUserId> _processingChannels = new();
         private readonly Dictionary<NetUserId, (TimeSpan Timestamp, bool Typing)> _typingUpdateTimestamps = new();
         private string _overrideClientName = string.Empty;
 
-        // Max embed description length is 4096, according to https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
-        // Keep small margin, just to be safe
-        private const ushort DescriptionMax = 4000;
-
-        // Maximum length a message can be before it is cut off
-        // Should be shorter than DescriptionMax
-        private const ushort MessageLengthCap = 3000;
-
-        // Text to be used to cut off messages that are too long. Should be shorter than MessageLengthCap
-        private const string TooLongText = "... **(too long)**";
-
-        private int _maxAdditionalChars;
+        // Ahelp relay
+        private readonly Dictionary<NetUserId, Queue<string>> _messageQueues = new();
+        private string _footerIconUrl = string.Empty;
+        private string _serverName = string.Empty;
+        private readonly HashSet<NetUserId> _processingChannels = new();
+        private readonly Dictionary<NetUserId, (RestThreadChannel channel, GameRunLevel lastRunLevel)> _relayMessages = new();
+        /// <summary>
+        ///     A dictionary of old relays that were removed from the relay messages.
+        ///     This is used to give a reference to the old relay channel to the admins. If for example, the round restarts, as the relay messages are cleared, the old relays are moved here.
+        /// </summary>
+        private readonly Dictionary<NetUserId, (RestThreadChannel channel, GameRunLevel lastRunLevel)> _oldRelayMessages = new();
+        private ulong _channelId = 0;
+        private bool _showThatTheMessageWasFromDiscord = true;
 
         public override void Initialize()
         {
             base.Initialize();
-            Subs.CVar(_config, CCVars.DiscordAHelpWebhook, OnWebhookChanged, true);
+            _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
+
             Subs.CVar(_config, CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged, true);
-            Subs.CVar(_config, CCVars.DiscordAHelpAvatar, OnAvatarChanged, true);
             Subs.CVar(_config, CVars.GameHostName, OnServerNameChanged, true);
             Subs.CVar(_config, CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
-            _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
-            _maxAdditionalChars = GenerateAHelpMessage("", "", true, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, playedSound: false).Length;
+            Subs.CVar(_config, CCVars.AdminAhelpRelayChannelId, OnChannelIdChanged, true);
+            Subs.CVar(_config, CCVars.AdminAhelpRelayShowDiscord, OnShowDiscordChanged, true);
+            
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
+            _discord.OnMessageReceived += OnDiscordMessageReceived;
+            _discord.OnCommandReceived += OnReceiveNewRelay;
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
             SubscribeNetworkEvent<BwoinkClientTypingUpdated>(OnClientTypingUpdated);
+        }
+
+        private void OnShowDiscordChanged(bool show)
+        {
+            _showThatTheMessageWasFromDiscord = show;
+        }
+        private async void OnReceiveNewRelay(CommandReceivedEventArgs commandArgs)
+        {
+            if (commandArgs.Command != "ahelp")
+                return;
+
+            // Check if args are valid
+            if (commandArgs.Arguments.Length != 1)
+            {
+                // Don't respond to user, multiple servers may be running on the same bot.
+                return;
+            }
+
+            // Try to find user
+            var username = commandArgs.Arguments[0];
+            if (!_playerManager.TryGetSessionByUsername(username, out var session))
+            {
+                // Don't respond to user, multiple servers may be running on the same bot.
+                return;
+            }
+
+            // Check if user is already in ahelp
+            if (_relayMessages.TryGetValue(session.UserId, out var relay))
+            {
+                await commandArgs.Message.Channel.SendMessageAsync("**Warning**: There is already an ahelp thread for this player.");
+                await commandArgs.Message.Channel.SendMessageAsync($"<#{relay.channel.Id}>");
+                return;
+            }
+
+            var charName = _minds.GetCharacterName(session.UserId);
+            var lookup = await _playerLocator.LookupIdAsync(session.UserId);
+
+            if (lookup is null)
+            {
+                _sawmill.Warning($"Failed to lookup Discord ID for {charName} ({session.UserId}).");
+                await commandArgs.Message.Channel.SendMessageAsync("**Warning**: Failed to lookup Discord ID for player.");
+                return;
+            }
+
+            // Create new ahelp thread
+            var channel = await RequestNewRelay($"{lookup.Username} ({charName}) - {_gameTicker.RoundId}", session.UserId);
+            if (channel is null)
+            {
+                await commandArgs.Message.Channel.SendMessageAsync("**Warning**: Failed to create ahelp thread.");
+                return;
+            }
+
+            // Add to relay messages
+            relay = (channel, _gameTicker.RunLevel);
+            _relayMessages[session.UserId] = relay;
+
+            // Notify admins
+            await channel.SendMessageAsync($"**Info:** Thread created. Further messages will be relayed to the player. <@{commandArgs.Message.Author.Id}>");
+            await commandArgs.Message.Channel.SendMessageAsync($"<#{relay.channel.Id}>");
+        }
+
+        private void OnChannelIdChanged(string obj)
+        {
+            if (string.IsNullOrEmpty(obj))
+            {
+                // No warning, this is a valid case. The relay is just disabled.
+                return;
+            }
+
+            if (!ulong.TryParse(obj, out var id))
+            {
+                _sawmill.Warning("Invalid channel ID.");
+                return;
+            }
+
+            _channelId = id;
+        }
+
+        private void OnDiscordMessageReceived(SocketMessage arg)
+        {
+            if (arg.Channel is not SocketThreadChannel threadChannel)
+                return;
+
+            if (threadChannel.ParentChannel.Id != _channelId)
+                return;
+
+            if (arg.Author.IsBot) // Not ignoring bots would probably cause a loop.
+                return;
+
+            foreach (var messages in _relayMessages)
+            {
+                if (messages.Value.channel.Id != threadChannel.Id)
+                    continue;
+
+                if (!_playerManager.TryGetSessionById(messages.Key, out var session))
+                {
+                    _sawmill.Warning($"Failed to find session for {messages.Key.UserId}.");
+                    // Respond with error message to inform admins that the player is not online.
+                    arg.Channel.SendMessageAsync("**Warning**: Failed to find session for player. They may not be online.");
+                    continue;
+                }
+
+                if (arg.Content.Trim().StartsWith("-"))
+                    continue; // That is a comment for breadmemes to discuss within the thread
+
+                // Command handling.
+                // I do this here instead of OnCommandReceived because I need to know the session and I want to avoid code duplication.
+                if (arg.Content.StartsWith(_discord.BotPrefix))
+                {
+                    var contentWithoutPrefix = arg.Content.Remove(0, _discord.BotPrefix.Length);
+                    switch (contentWithoutPrefix)
+                    {
+                        case "status":
+                            var embed = GenerateEmbed(session);
+                            arg.Channel.SendMessageAsync(embed: embed.Build());
+                            break;
+                        default:
+                            arg.Channel.SendMessageAsync("**Warning**: Unknown command.");
+                            break;
+                    }
+                    continue;
+                }
+
+                // It was originally blue, but that blue tone was too dark, then lucky said I should make it yellow. So now it's yellow.
+                var content = "[color=yellow] (d) " + arg.Author.Username + "[/color]: " + arg.Content;
+                if (!_showThatTheMessageWasFromDiscord)
+                    content = "[color=red]" + arg.Author.Username + "[/color]: " + arg.Content;
+
+                var msg = new BwoinkTextMessage(messages.Key, messages.Key, content);
+                RaiseNetworkEvent(msg, session.ConnectedClient);
+
+                LogBwoink(msg);
+
+                foreach (var admin in GetTargetAdmins())
+                {
+                    RaiseNetworkEvent(msg, admin);
+                }
+            }
         }
 
         private void OnOverrideChanged(string obj)
@@ -86,14 +226,50 @@ namespace Content.Server.Administration.Systems
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
+            if (_relayMessages.TryGetValue(e.Session.UserId, out var relay))
+            {
+                switch (e.NewStatus)
+                {
+                    case SessionStatus.Connected:
+                        relay.channel.SendMessageAsync($"**Warning**: {e.Session.Name} has reconnected. Further messages will be relayed to them.");
+                        // Also send it in the in-game chat. This is to make sure admins in-game are aware of the reconnection.
+                        foreach (var admin in GetTargetAdmins())
+                        {
+                            RaiseNetworkEvent(new BwoinkTextMessage(e.Session.UserId, e.Session.UserId, "Player has reconnected."), admin);
+                        }
+                        break;
+                    case SessionStatus.Disconnected:
+                        relay.channel.SendMessageAsync($"**Warning**: {e.Session.Name} has disconnected. Any messages sent to them will not be received.");
+                        foreach (var admin in GetTargetAdmins())
+                        {
+                            RaiseNetworkEvent(new BwoinkTextMessage(e.Session.UserId, e.Session.UserId, "Player has disconnected."), admin);
+                        }
+                        break;
+                }
+            }
+
             if (e.NewStatus != SessionStatus.InGame)
                 return;
 
-            RaiseNetworkEvent(new BwoinkDiscordRelayUpdated(!string.IsNullOrWhiteSpace(_webhookUrl)), e.Session);
+            RaiseNetworkEvent(new BwoinkDiscordRelayUpdated(_discord.IsConnected), e.Session);
         }
 
         private void OnGameRunLevelChanged(GameRunLevelChangedEvent args)
         {
+            foreach (var relayMessage in _relayMessages)
+            {
+                var text = args.New switch
+                {
+                    GameRunLevel.PreRoundLobby => "\n\n:arrow_forward: _**Pre-round lobby started**_\n",
+                    GameRunLevel.InRound => "\n\n:arrow_forward: _**Round started**_\n",
+                    GameRunLevel.PostRound => "\n\n:stop_button: _**Post-round started**_\n",
+                    _ => throw new ArgumentOutOfRangeException(nameof(_gameTicker.RunLevel),
+                        $"{_gameTicker.RunLevel} was not matched.")
+                };
+
+                relayMessage.Value.channel.SendMessageAsync(text);
+            }
+
             // Don't make a new embed if we
             // 1. were in the lobby just now, and
             // 2. are not entering the lobby or directly into a new round.
@@ -103,15 +279,16 @@ namespace Content.Server.Administration.Systems
                 return;
             }
 
-            // Store the Discord message IDs of the previous round
-            _oldMessageIds = new Dictionary<NetUserId, string>();
-            foreach (var message in _relayMessages)
+            _oldRelayMessages.Clear();
+            foreach (var item in _relayMessages)
             {
-                var id = message.Value.id;
-                if (id == null)
-                    return;
+                _oldRelayMessages.Add(item.Key, item.Value);
+            }
 
-                _oldMessageIds[message.Key] = id;
+            // Send info message to the relay channels, that the relay is now OFF.
+            foreach (var relayMessage in _relayMessages)
+            {
+                relayMessage.Value.channel.SendMessageAsync("**Warning**: Relay closed. Server is restarting or round ended. Any messages sent to will not be received.");
             }
 
             _relayMessages.Clear();
@@ -147,213 +324,211 @@ namespace Content.Server.Administration.Systems
             _serverName = obj;
         }
 
-        private async void OnWebhookChanged(string url)
+        public override void Shutdown()
         {
-            _webhookUrl = url;
+            base.Shutdown();
 
-            RaiseNetworkEvent(new BwoinkDiscordRelayUpdated(!string.IsNullOrWhiteSpace(url)));
-
-            if (url == string.Empty)
-                return;
-
-            // Basic sanity check and capturing webhook ID and token
-            var match = Regex.Match(url, @"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$");
-
-            if (!match.Success)
+            _sawmill.Debug("Shutting down AHELP system. Sending shutdown messages to all relay channels.");
+            foreach (var message in _relayMessages)
             {
-                // TODO: Ideally, CVar validation during setting should be better integrated
-                Log.Warning("Webhook URL does not appear to be valid. Using anyways...");
-                return;
+                message.Value.channel.SendMessageAsync("**Warning**: Server is shutting down. Any messages sent to will not be received.", false, null,null, AllowedMentions.None);
             }
 
-            if (match.Groups.Count <= 2)
-            {
-                Log.Error("Could not get webhook ID or token.");
-                return;
-            }
+            _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
+            _discord.OnMessageReceived -= OnDiscordMessageReceived;
+            _discord.OnCommandReceived -= OnReceiveNewRelay;
 
-            var webhookId = match.Groups[1].Value;
-            var webhookToken = match.Groups[2].Value;
-
-            // Fire and forget
-            await SetWebhookData(webhookId, webhookToken);
+            _relayMessages.Clear(); // Just in case.
+            _oldRelayMessages.Clear();
         }
 
-        private async Task SetWebhookData(string id, string token)
-        {
-            var response = await _httpClient.GetAsync($"https://discord.com/api/v10/webhooks/{id}/{token}");
 
-            var content = await response.Content.ReadAsStringAsync();
-            if (!response.IsSuccessStatusCode)
-            {
-                _sawmill.Log(LogLevel.Error, $"Discord returned bad status code when trying to get webhook data (perhaps the webhook URL is invalid?): {response.StatusCode}\nResponse: {content}");
-                return;
-            }
-
-            _webhookData = JsonSerializer.Deserialize<WebhookData>(content);
-        }
 
         private void OnFooterIconChanged(string url)
         {
             _footerIconUrl = url;
         }
 
-        private void OnAvatarChanged(string url)
-        {
-            _avatarUrl = url;
-        }
-
         private async void ProcessQueue(NetUserId userId, Queue<string> messages)
         {
-            // Whether an embed already exists for this player
-            var exists = _relayMessages.TryGetValue(userId, out var existingEmbed);
-
-            // Whether the message will become too long after adding these new messages
-            var tooLong = exists && messages.Sum(msg => Math.Min(msg.Length, MessageLengthCap) + "\n".Length)
-                    + existingEmbed.description.Length > DescriptionMax;
-
-            // If there is no existing embed, or it is getting too long, we create a new embed
-            if (!exists || tooLong)
+            // If there is no relay, we need a new one.
+            if (!_relayMessages.TryGetValue(userId, out var relay))
             {
+                var charName = _minds.GetCharacterName(userId);
                 var lookup = await _playerLocator.LookupIdAsync(userId);
 
-                if (lookup == null)
+                if (lookup is null)
                 {
-                    _sawmill.Log(LogLevel.Error, $"Unable to find player for NetUserId {userId} when sending discord webhook.");
-                    _relayMessages.Remove(userId);
+                    _sawmill.Warning($"Failed to lookup Discord ID for {charName} ({userId}).");
                     return;
                 }
 
-                var linkToPrevious = string.Empty;
-
-                // If we have all the data required, we can link to the embed of the previous round or embed that was too long
-                if (_webhookData is { GuildId: { } guildId, ChannelId: { } channelId })
+                var newRelay = await RequestNewRelay($"{lookup.Username} ({charName}) - {_gameTicker.RoundId}", userId);
+                if (newRelay is null)
                 {
-                    if (tooLong && existingEmbed.id != null)
+                    _processingChannels.Remove(userId);
+                    return;
+                }
+
+                relay = (newRelay, _gameTicker.RunLevel);
+                _relayMessages[userId] = relay;
+            }
+
+            while (messages.TryDequeue(out var msg))
+            {
+                if (msg.Length > 2000) // Discord message limit
+                {
+                    var split = Regex.Split(msg, @"(?<=\G.{2000})", RegexOptions.Singleline);
+                    foreach (var s in split)
                     {
-                        linkToPrevious = $"**[Go to previous embed of this round](https://discord.com/channels/{guildId}/{channelId}/{existingEmbed.id})**\n";
-                    }
-                    else if (_oldMessageIds.TryGetValue(userId, out var id) && !string.IsNullOrEmpty(id))
-                    {
-                        linkToPrevious = $"**[Go to last round's conversation with this player](https://discord.com/channels/{guildId}/{channelId}/{id})**\n";
+                        // This looks fucking awful. Thanks discord.net
+                        await relay.channel.SendMessageAsync(s, false, null, null, new AllowedMentions(AllowedMentionTypes.None));
                     }
                 }
-
-                var characterName = _minds.GetCharacterName(userId);
-                existingEmbed = (null, lookup.Username, linkToPrevious, characterName, _gameTicker.RunLevel);
-            }
-
-            // Previous message was in another RunLevel, so show that in the embed
-            if (existingEmbed.lastRunLevel != _gameTicker.RunLevel)
-            {
-                existingEmbed.description += _gameTicker.RunLevel switch
+                else
                 {
-                    GameRunLevel.PreRoundLobby => "\n\n:arrow_forward: _**Pre-round lobby started**_\n",
-                    GameRunLevel.InRound => "\n\n:arrow_forward: _**Round started**_\n",
-                    GameRunLevel.PostRound => "\n\n:stop_button: _**Post-round started**_\n",
-                    _ => throw new ArgumentOutOfRangeException(nameof(_gameTicker.RunLevel), $"{_gameTicker.RunLevel} was not matched."),
-                };
-
-                existingEmbed.lastRunLevel = _gameTicker.RunLevel;
-            }
-
-            // Add available messages to the embed description
-            while (messages.TryDequeue(out var message))
-            {
-                // In case someone thinks they're funny
-                if (message.Length > MessageLengthCap)
-                    message = message[..(MessageLengthCap - TooLongText.Length)] + TooLongText;
-
-                existingEmbed.description += $"\n{message}";
-            }
-
-            var payload = GeneratePayload(existingEmbed.description, existingEmbed.username, existingEmbed.characterName);
-
-            // If there is no existing embed, create a new one
-            // Otherwise patch (edit) it
-            if (existingEmbed.id == null)
-            {
-                var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true",
-                    new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
-
-                var content = await request.Content.ReadAsStringAsync();
-                if (!request.IsSuccessStatusCode)
-                {
-                    _sawmill.Log(LogLevel.Error, $"Discord returned bad status code when posting message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}");
-                    _relayMessages.Remove(userId);
-                    return;
-                }
-
-                var id = JsonNode.Parse(content)?["id"];
-                if (id == null)
-                {
-                    _sawmill.Log(LogLevel.Error, $"Could not find id in json-content returned from discord webhook: {content}");
-                    _relayMessages.Remove(userId);
-                    return;
-                }
-
-                existingEmbed.id = id.ToString();
-            }
-            else
-            {
-                var request = await _httpClient.PatchAsync($"{_webhookUrl}/messages/{existingEmbed.id}",
-                    new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
-
-                if (!request.IsSuccessStatusCode)
-                {
-                    var content = await request.Content.ReadAsStringAsync();
-                    _sawmill.Log(LogLevel.Error, $"Discord returned bad status code when patching message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}");
-                    _relayMessages.Remove(userId);
-                    return;
+                    await relay.channel.SendMessageAsync(msg, false, null, null, new AllowedMentions(AllowedMentionTypes.None));
                 }
             }
-
-            _relayMessages[userId] = existingEmbed;
 
             _processingChannels.Remove(userId);
         }
 
-        private WebhookPayload GeneratePayload(string messages, string username, string? characterName = null)
+        private async Task<RestThreadChannel?> RequestNewRelay(string title, NetUserId targetPlayer)
         {
-            // Add character name
-            if (characterName != null)
-                username += $" ({characterName})";
-
-            // If no admins are online, set embed color to red. Otherwise green
-            var color = GetNonAfkAdmins().Count > 0 ? 0x41F097 : 0xFF0000;
-
-            // Limit server name to 1500 characters, in case someone tries to be a little funny
-            var serverName = _serverName[..Math.Min(_serverName.Length, 1500)];
-
-            var round = _gameTicker.RunLevel switch
+            if (!_discord.IsConnected)
+                return null;
+            if (!_playerManager.TryGetSessionById(targetPlayer, out var playerUid))
             {
-                GameRunLevel.PreRoundLobby => _gameTicker.RoundId == 0
-                    ? "pre-round lobby after server restart" // first round after server restart has ID == 0
-                    : $"pre-round lobby for round {_gameTicker.RoundId + 1}",
-                GameRunLevel.InRound => $"round {_gameTicker.RoundId}",
-                GameRunLevel.PostRound => $"post-round {_gameTicker.RoundId}",
-                _ => throw new ArgumentOutOfRangeException(nameof(_gameTicker.RunLevel), $"{_gameTicker.RunLevel} was not matched."),
-            };
+                _sawmill.Error($"Requested new relay, but player session for {targetPlayer.UserId} was not found.");
+                return null;
+            }
 
-            return new WebhookPayload
+            var embed = GenerateEmbed(playerUid);
+
+            var guild = _discord.GetGuild();
+            if (guild is null)
             {
-                Username = username,
-                AvatarUrl = string.IsNullOrWhiteSpace(_avatarUrl) ? null : _avatarUrl,
-                Embeds = new List<WebhookEmbed>
+                _sawmill.Error("Requested new relay, but guild was not found.");
+                return null;
+            }
+
+            var relay = await guild
+                    .GetForumChannel(_channelId)
+                    .CreatePostAsync(title,
+                        ThreadArchiveDuration.OneHour,
+                        null,
+                        null,
+                        embed.Build()
+                    );
+
+            // If the relay is not null, give a list of available commands for the admins to use.
+            if (relay is not null)
+            {
+                await relay.SendMessageAsync($"Use `{_discord.BotPrefix}status` to regenerate the status embed as seen above. `-` in the beginning of a message will be cause the message to not be relayed to the player.");
+
+                // Check if there are old relays for this player, if so, inform the admins about it.
+                if (_oldRelayMessages.TryGetValue(targetPlayer, out var oldRelay))
+                {
+                    await relay.SendMessageAsync($"**Info**: Jump to previous thread: <#{oldRelay.channel.Id}>");
+                    _oldRelayMessages.Remove(targetPlayer);
+                }
+            }
+
+            return relay;
+        }
+
+        private EmbedBuilder GenerateEmbed(ICommonSession session)
+        {
+            var clr = GetNonAfkAdmins().Count > 0 ? Color.Green : Color.Red;
+            var job = "No entity attached";
+            var entityName = "No entity attached";
+            if (session.AttachedEntity.HasValue)
+            {
+                if (_idCardSystem.TryFindIdCard(session.AttachedEntity.Value, out var idCard))
+                {
+                    job = idCard.Comp.JobTitle ?? "Unknown";
+                }
+
+                var name = Prototype(session.AttachedEntity.Value);
+                if (name != null)
+                {
+                    entityName = name.ID;
+                }
+            }
+
+            var gameRules = string.Join(", ", _gameTicker.GetActiveGameRules()
+                .Select(addedGameRule => _entityManager.MetaQuery.GetComponent(addedGameRule))
+                .Select(meta => meta.EntityPrototype?.ID ?? meta.EntityPrototype?.Name ?? "Unknown")
+                .ToList());
+
+            if (gameRules == string.Empty)
+                gameRules = "None";
+
+            var embed = new EmbedBuilder()
+            {
+                Footer = new EmbedFooterBuilder()
+                {
+                    IconUrl = _footerIconUrl
+                },
+                Fields = new List<EmbedFieldBuilder>()
                 {
                     new()
                     {
-                        Description = messages,
-                        Color = color,
-                        Footer = new WebhookEmbedFooter
-                        {
-                            Text = $"{serverName} ({round})",
-                            IconUrl = string.IsNullOrWhiteSpace(_footerIconUrl) ? null : _footerIconUrl
-                        },
+                        Name = "Current Preset",
+                        Value = _gameTicker.Preset?.ID ?? "Unknown"
                     },
+                    new()
+                    {
+                        Name = "Active Gamerules",
+                        Value = gameRules
+                    },
+                    new()
+                    {
+                        Name = "Server Name",
+                        Value = _serverName
+                    },
+                    new()
+                    {
+                        Name = "Round ID",
+                        Value = _gameTicker.RoundId
+                    },
+                    new()
+                    {
+                        Name = "Antag Status",
+                        Value = _adminSystem.PlayerList
+                            .Where(p => p.Key == session.UserId)
+                            .Any(p => p.Value.Antag)
+                            ? "Yes"
+                            : "No"
+                    },
+                    new()
+                    {
+                        Name = "Map",
+                        Value = _mapManager.GetSelectedMap()?.MapName ?? "Unknown"
+                    },
+                    new()
+                    {
+                        Name = "Job on ID card",
+                        Value = job
+                    },
+                    new()
+                    {
+                        Name = "Current Entity Name",
+                        Value = entityName
+                    },
+                    new()
+                    {
+                        Name = "Run Level",
+                        Value = _gameTicker.RunLevel.ToString()
+                    }
                 },
+                Color = clr,
             };
+
+            return embed;
         }
+
 
         public override void Update(float frameTime)
         {
@@ -457,21 +632,14 @@ namespace Content.Server.Administration.Systems
                 }
             }
 
-            var sendsWebhook = _webhookUrl != string.Empty;
+            var sendsWebhook = _discord.IsConnected && _channelId != 0;
             if (sendsWebhook)
             {
                 if (!_messageQueues.ContainsKey(msg.UserId))
                     _messageQueues[msg.UserId] = new Queue<string>();
 
-                var str = message.Text;
-                var unameLength = senderSession.Name.Length;
-
-                if (unameLength + str.Length + _maxAdditionalChars > DescriptionMax)
-                {
-                    str = str[..(DescriptionMax - _maxAdditionalChars - unameLength)];
-                }
                 var nonAfkAdmins = GetNonAfkAdmins();
-                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, playedSound: playSound, noReceivers: nonAfkAdmins.Count == 0));
+                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, EscapeMarkdown(message.Text), !personalChannel, nonAfkAdmins.Count == 0));
             }
 
             if (admins.Count != 0 || sendsWebhook)
@@ -499,10 +667,11 @@ namespace Content.Server.Administration.Systems
                 .ToList();
         }
 
-        private static string GenerateAHelpMessage(string username, string message, bool admin, string roundTime, GameRunLevel roundState, bool playedSound, bool noReceivers = false)
+        private string GenerateAHelpMessage(string username, string message, bool admin, bool noReceivers = false, bool playedSound = false)
         {
             var stringbuilder = new StringBuilder();
 
+            stringbuilder.Append($@"`{_gameTicker.RoundDuration():hh\:mm\:ss}` - ");
             if (admin)
                 stringbuilder.Append(":outbox_tray:");
             else if (noReceivers)
@@ -510,13 +679,17 @@ namespace Content.Server.Administration.Systems
             else
                 stringbuilder.Append(":inbox_tray:");
 
-            if(roundTime != string.Empty && roundState == GameRunLevel.InRound)
-                stringbuilder.Append($" **{roundTime}**");
             if (!playedSound)
                 stringbuilder.Append(" **(S)**");
+
             stringbuilder.Append($" **{username}:** ");
             stringbuilder.Append(message);
             return stringbuilder.ToString();
+        }
+
+        private static string EscapeMarkdown(string text)
+        {
+            return Regex.Replace(text, @"([*_`])|(```)", "\\$1");
         }
     }
 }
