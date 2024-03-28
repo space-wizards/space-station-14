@@ -40,6 +40,49 @@
       offset: 0.0
 
 - type: entity
+  name: Salvage Chemical Barrel Spawner
+  id: SalvageChemicalBarrelSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Storage/barrel.rsi
+          state: metal_grey
+    - type: RandomSpawner
+      rarePrototypes:
+          - ChemicalBarrelExplosiveFilled
+          - WoodenKegBeer
+          - WoodenKegRootBeer
+          - WoodenKegWine
+      rareChance: 0.05
+      prototypes:
+          - ChemicalBarrelCarbon
+          - ChemicalBarrelIodine
+          - ChemicalBarrelFluorine
+          - ChemicalBarrelChlorine
+          - ChemicalBarrelAluminium
+          - ChemicalBarrelPhosphorus
+          - ChemicalBarrelSulfur
+          - ChemicalBarrelSilicon
+          - ChemicalBarrelHydrogen
+          - ChemicalBarrelLithium
+          - ChemicalBarrelSodium
+          - ChemicalBarrelPotassium
+          - ChemicalBarrelRadium
+          - ChemicalBarrelIron
+          - ChemicalBarrelCopper
+          - ChemicalBarrelGold
+          - ChemicalBarrelMercury
+          - ChemicalBarrelSilver
+          - ChemicalBarrelEthanol
+          - ChemicalBarrelSugar
+          - ChemicalBarrelNitrogen
+          - ChemicalBarrelOxygen
+      chance: 0.95
+      offset: 0.0
+
+- type: entity
   name: Salvage Canister Spawner
   id: SalvageCanisterSpawner
   parent: MarkerBase

@@ -1,0 +1,631 @@
+- type: entity
+  parent: CrateGeneric
+  id: WoodenBarrel
+  name: wooden barrel
+  description: A musty old wooden barrel.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/barrel.rsi
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Objects/Storage/barrel.rsi
+    state: base
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: WoodenBarrel
+    node: woodenbarrel
+    containers:
+    - entity_storage
+  - type: StaticPrice
+    price: 50
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.4"
+        density: 150
+        mask:
+        - SmallMobMask #this is so they can go under plastic flaps
+        layer:
+        - MachineLayer
+  - type: Climbable
+
+- type: entity
+  parent: StorageTank
+  id: WoodenKeg
+  name: wooden keg
+  description: A musty old wooden keg, with a tap attached to the front.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        canMix: true
+  - type: ExaminableSolution
+    solution: tank
+  - type: UserInterface
+    interfaces:
+      - key: enum.TransferAmountUiKey.Key
+        type: TransferAmountBoundUserInterface
+  - type: DrawableSolution
+    solution: tank
+  - type: InjectableSolution
+    solution: tank
+  - type: Drink
+    solution: tank
+  - type: Spillable
+    solution: tank
+  - type: DumpableSolution
+    solution: tank
+  - type: Sprite
+    sprite: Objects/Storage/keg.rsi
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Wood
+  - type: StaticPrice
+    price: 50
+  - type: Construction
+    graph: WoodenKeg
+    node: woodenkeg
+    containers:
+    - entity_storage
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.4"
+        density: 200
+        mask:
+        - SmallMobMask #this is so they can go under plastic flaps
+        layer:
+        - MachineLayer
+  - type: Transform
+    noRot: false
+
+- type: entity
+  id: MetalBarrelGrey
+  name: metal barrel
+  parent: WoodenKeg
+  description: A metal keg. It can be filled with liquid.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/barrel.rsi
+    layers:
+    - state: metal_grey
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: Transform
+    noRot: true
+
+- type: entity
+  id: MetalBarrelBlue
+  parent: MetalBarrelGrey
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/barrel.rsi
+    layers:
+    - state: metal_blue
+
+- type: entity
+  id: MetalBarrelRed
+  parent: MetalBarrelGrey
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/barrel.rsi
+    layers:
+    - state: metal_red
+
+- type: entity
+  id: MetalBarrelYellow
+  parent: MetalBarrelGrey
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/barrel.rsi
+    layers:
+    - state: metal_yellow
+
+- type: entity
+  id: MetalBarrelGreen
+  parent: MetalBarrelGrey
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/barrel.rsi
+    layers:
+    - state: metal_green
+
+- type: entity
+  id: ChemicalBarrelExplosiveEmpty
+  parent: MetalBarrelGrey
+  name: explosive barrel
+  suffix: Empty
+  description: The ancient and mysterious symbol on the front is believed to have once meant 'Use me as cover!' in days of yore.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/barrel.rsi
+    layers:
+    - state: metal_red
+    - state: metal_explosive_label
+
+- type: entity
+  id: ChemicalBarrelExplosiveFilled
+  parent: ChemicalBarrelExplosiveEmpty
+  suffix: Filled
+  components:
+  - type: StaticPrice
+    price: 300
+  - type: Label
+    currentLabel: reagent-name-welding-fuel
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+          - ReagentId: WeldingFuel
+            Quantity: 500
+  - type: DamageOnToolInteract
+    tools:
+    - Welding
+    weldingDamage:
+      types:
+        Heat: 10
+  - type: PacifismDangerousAttack
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 80
+
+- type: entity
+  parent: MetalBarrelGrey
+  id: ChemicalBarrelCarbon
+  name: chemical barrel (carbon)
+  components:
+    - type: StaticPrice
+      price: 500
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_grey
+      - state: metal_warning_label
+    - type: Label
+      currentLabel: reagent-name-carbon
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Carbon
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelIodine
+  name: chemical barrel (iodine)
+  components:
+    - type: Label
+      currentLabel: reagent-name-iodine
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_red
+      - state: metal_warning_label
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Iodine
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelFluorine
+  name: chemical barrel (fluorine)
+  components:
+    - type: Label
+      currentLabel: reagent-name-fluorine
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_blue
+      - state: metal_warning_label
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Fluorine
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelChlorine
+  name: chemical barrel (chlorine)
+  components:
+    - type: Label
+      currentLabel: reagent-name-chlorine
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_green
+      - state: metal_warning_label
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Chlorine
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelAluminium
+  name: chemical barrel (aluminium)
+  components:
+    - type: Label
+      currentLabel: reagent-name-aluminium
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Aluminium
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelPhosphorus
+  name: chemical barrel (phosphorus)
+  components:
+    - type: Label
+      currentLabel: reagent-name-phosphorus
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_red
+      - state: metal_warning_label
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Phosphorus
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelSulfur
+  name: chemical barrel (sulfur)
+  components:
+    - type: Label
+      currentLabel: reagent-name-sulfur
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_yellow
+      - state: metal_warning_label
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Sulfur
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelSilicon
+  name: chemical barrel (silicon)
+  components:
+    - type: Label
+      currentLabel: reagent-name-silicon
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Silicon
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelHydrogen
+  name: chemical barrel (hydrogen)
+  components:
+    - type: Label
+      currentLabel: reagent-name-hydrogen
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_red
+      - state: metal_warning_label
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Hydrogen
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelLithium
+  name: chemical barrel (lithium)
+  components:
+    - type: Label
+      currentLabel: reagent-name-lithium
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Lithium
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelSodium
+  name: chemical barrel (sodium)
+  components:
+    - type: Label
+      currentLabel: reagent-name-sodium
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Sodium
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelPotassium
+  name: chemical barrel (potassium)
+  components:
+    - type: Label
+      currentLabel: reagent-name-potassium
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_yellow
+      - state: metal_warning_label
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Potassium
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelRadium
+  name: chemical barrel (radium)
+  components:
+    - type: Label
+      currentLabel: reagent-name-radium
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_green
+      - state: metal_warning_label
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Radium
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelIron
+  name: chemical barrel (iron)
+  components:
+    - type: Label
+      currentLabel: reagent-name-iron
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Iron
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelCopper
+  name: chemical barrel (copper)
+  components:
+    - type: Label
+      currentLabel: reagent-name-copper
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_red
+      - state: metal_warning_label
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Copper
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelGold
+  name: chemical barrel (gold)
+  components:
+    - type: Label
+      currentLabel: reagent-name-gold
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_yellow
+      - state: metal_warning_label
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Gold
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelMercury
+  name: chemical barrel (mercury)
+  components:
+    - type: Label
+      currentLabel: reagent-name-mercury
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Mercury
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelSilver
+  name: chemical barrel (silver)
+  components:
+    - type: Label
+      currentLabel: reagent-name-silver
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Silver
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelEthanol
+  name: chemical barrel (ethanol)
+  components:
+    - type: Label
+      currentLabel: reagent-name-ethanol
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_blue
+      - state: metal_warning_label
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Ethanol
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelSugar
+  name: chemical barrel (sugar)
+  components:
+    - type: Label
+      currentLabel: reagent-name-sugar
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_blue
+      - state: metal_warning_label
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Sugar
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelNitrogen
+  name: chemical barrel (nitrogen)
+  components:
+    - type: Label
+      currentLabel: reagent-name-nitrogen
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_red
+      - state: metal_warning_label
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Nitrogen
+              Quantity: 500
+
+- type: entity
+  parent: ChemicalBarrelCarbon
+  id: ChemicalBarrelOxygen
+  name: chemical barrel (oxygen)
+  components:
+    - type: Label
+      currentLabel: reagent-name-oxygen
+    - type: Sprite
+      sprite: Objects/Storage/barrel.rsi
+      layers:
+      - state: metal_blue
+      - state: metal_warning_label
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Oxygen
+              Quantity: 500
+
+- type: entity
+  parent: WoodenKeg
+  name: root beer keg
+  description: A musty old wooden keg, with a tap attached to the front. Smells like root beer.
+  id: WoodenKegRootBeer
+  components:
+    - type: Label
+      currentLabel: reagent-name-root-beer
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: RootBeer
+              Quantity: 500
+
+- type: entity
+  parent: WoodenKeg
+  name: beer keg
+  description: A musty old wooden keg, with a tap attached to the front. Smells like beer.
+  id: WoodenKegBeer
+  components:
+    - type: Label
+      currentLabel: reagent-name-beer
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Beer
+              Quantity: 500
+
+- type: entity
+  parent: WoodenKeg
+  name: wine keg
+  description: A musty old wooden keg, with a tap attached to the front. Smells like wine.
+  id: WoodenKegWine
+  components:
+    - type: Label
+      currentLabel: reagent-name-wine
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Wine
+              Quantity: 500

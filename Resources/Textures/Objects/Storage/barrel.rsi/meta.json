@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation PR https://github.com/tgstation/tgstation/pull/38977, modified by rosieposieeee",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "open"
+    },
+    {
+      "name": "closed"
+    },
+    {
+      "name": "metal_grey"
+    },
+    {
+      "name": "metal_red"
+    },
+    {
+      "name": "metal_blue"
+    },
+    {
+      "name": "metal_yellow"
+    },
+    {
+      "name": "metal_green"
+    },
+    {
+      "name": "metal_warning_label"
+    },
+    {
+      "name": "metal_explosive_label"
+    }
+  ]
+}
