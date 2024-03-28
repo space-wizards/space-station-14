@@ -25,7 +25,6 @@
     trackedDepartments:
       - Command
       - Security
-      - Service
       - Civilian
       - Cargo
       - Engineering
