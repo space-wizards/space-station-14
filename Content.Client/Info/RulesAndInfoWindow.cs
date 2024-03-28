@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Info
 {
@@ -62,7 +63,12 @@ namespace Content.Client.Info
 
         private static Control MakeSection(string title, string path, bool markup, IResourceManager res)
         {
-            return new InfoSection(title, res.ContentFileReadAllText($"/ServerInfo/{path}"), markup);
+            var text = res.ContentFileReadAllText($"/ServerInfo/{path}");
+            // I either call the entire guidebook-specific DocumentParsingManager... or I can just prune <Document>
+            var entries = text.Split();
+            entries = entries[1..^1];
+            text = string.Join("\n", entries);
+            return new InfoSection(title, FormattedMessage.FromMarkup(text), markup);
         }
 
     }

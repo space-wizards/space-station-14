@@ -18,6 +18,42 @@
   text: "/ServerInfo/Guidebook/Writing.xml"
 
 - type: guideEntry
+  id: Rules
+  name: guide-entry-rules
+  text: "/ServerInfo/Guidebook/Rules/Rules.xml"
+  children:
+  - SiliconRules
+  - SecurityCommandRules
+  - SpaceLaw
+  - StandardOperatingProcedure
+  - AlertProcedure
+
+- type: guideEntry
+  id: SiliconRules
+  name: guide-entry-silicon-rules
+  text: "/ServerInfo/Guidebook/Rules/SiliconRules.xml"
+
+- type: guideEntry
+  id: SecurityCommandRules
+  name: guide-entry-security-command-rules
+  text: "/ServerInfo/Guidebook/Rules/SecurityCommandRules.xml"
+
+- type: guideEntry
+  id: SpaceLaw
+  name: guide-entry-space-law
+  text: "/ServerInfo/Guidebook/Rules/SpaceLaw.xml"
+
+- type: guideEntry
+  id: StandardOperatingProcedure
+  name: guide-entry-standard-operating-procedure
+  text: "/ServerInfo/Guidebook/Rules/StandardOperatingProcedure.xml"
+
+- type: guideEntry
+  id: AlertProcedure
+  name: guide-entry-alert-procedure
+  text: "/ServerInfo/Guidebook/Rules/AlertProcedure.xml"
+
+- type: guideEntry
   id: Glossary
   name: guide-entry-glossary
   text: "/ServerInfo/Guidebook/Glossary.xml"
