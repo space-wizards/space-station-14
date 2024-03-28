@@ -4,7 +4,7 @@ using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.Toolshed;
 
-namespace Content.Server.Chat.Commands;
+namespace Content.Server.Chat.V2.Commands;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
 public sealed class DeleteChatMessageCommand : ToolshedCommand
