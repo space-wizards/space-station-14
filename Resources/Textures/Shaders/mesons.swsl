@@ -1,0 +1,4 @@
+void fragment() {
+    highp float gree = sin(FRAGCOORD.y / SCREEN_PIXEL_SIZE / 3.14159 + TIME).x;
+    COLOR = vec4(0, gree*gree*0.5 + 0.5, 0, 0.2);
+}

@@ -99,3 +99,9 @@
   id: Cataracts
   kind: source
   path: "/Textures/Shaders/cataracts.swsl"
+
+# Jank
+- type: shader
+  id: Mesons
+  kind: source
+  path: "/Textures/Shaders/mesons.swsl"
