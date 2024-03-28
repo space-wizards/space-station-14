@@ -1,6 +1,8 @@
 ﻿using Content.Shared.Whitelist;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Silicons.Borgs.Components;
@@ -75,6 +77,9 @@ public sealed partial class BorgChassisComponent : Component
 
     [DataField("noMindState")]
     public string NoMindState = string.Empty;
+
+    [DataField("borgJobIcon"), ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<StatusIconPrototype> BorgJobIcon = "JobIconBorg";
     #endregion
 }
 
