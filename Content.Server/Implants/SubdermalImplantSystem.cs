@@ -15,13 +15,13 @@ using Content.Shared.Popups;
 using Content.Shared.Preferences;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using System.Numerics;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
+using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Implants;
@@ -30,7 +30,6 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 {
     [Dependency] private readonly CuffableSystem _cuffable = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly StoreSystem _store = default!;
@@ -115,14 +114,14 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
         if (targetCoords != null)
         {
-            _xform.SetWorldPosition(ent, targetCoords.Value.Position);
+            _xform.SetCoordinates(ent, targetCoords.Value);
             _xform.AttachToGridOrMap(ent, xform);
             _audio.PlayPvs(implant.TeleportSound, ent);
             args.Handled = true;
         }
     }
 
-    private MapCoordinates? SelectRandomTileInRange(TransformComponent userXform, float radius)
+    private EntityCoordinates? SelectRandomTileInRange(TransformComponent userXform, float radius)
     {
         var userCoords = userXform.Coordinates.ToMap(EntityManager, _xform);
         var grids = _lookupSystem.GetEntitiesInRange<MapGridComponent>(userCoords, radius).ToList();
@@ -142,7 +141,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             }
         }
 
-        MapCoordinates? targetCoords = null;
+        EntityCoordinates? targetCoords = null;
 
         foreach (var grid in grids)
         {
@@ -151,26 +150,25 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             var range = (float) Math.Sqrt(radius);
             var box = Box2.CenteredAround(userCoords.Position, new Vector2(range, range));
             var tilesInRange = _mapSystem.GetTilesEnumerator(grid.Owner, grid.Comp, box, false);
-            var tileList = new List<TileRef>();
+            var tileList = new ValueList<Vector2i>();
 
             while (tilesInRange.MoveNext(out var tile))
             {
-                tileList.Add(tile);
+                tileList.Add(tile.GridIndices);
             }
 
-            _random.Shuffle(tileList);
-
-            foreach (var tile in tileList)
+            while (tileList.Count != 0)
             {
+                var tile = tileList.RemoveSwap(_random.Next(tileList.Count));
                 valid = true;
-                foreach(var entity in _mapSystem.GetAnchoredEntities(grid.Owner, grid.Comp, tile.GridIndices))
+                foreach (var entity in _mapSystem.GetAnchoredEntities(grid.Owner, grid.Comp, tile))
                 {
                     if (!_physicsQuery.TryGetComponent(entity, out var body))
                         continue;
 
                     if (body.BodyType != BodyType.Static ||
                         !body.Hard ||
-                        (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
+                        (body.CollisionLayer & (int) CollisionGroup.MobMask) == 0)
                         continue;
 
                     valid = false;
@@ -179,7 +177,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
                 if (valid)
                 {
-                    targetCoords = _mapSystem.GridTileToWorld(grid.Owner, grid.Comp, tile.GridIndices);
+                    targetCoords = new EntityCoordinates(grid.Owner, _mapSystem.TileCenterToVector(grid, tile));
                     break;
                 }
             }
