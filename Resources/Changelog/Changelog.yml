@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Added trade stations for cargo instead of FTL.
-    type: Add
-  id: 5741
-  time: '2024-01-19T02:02:28.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23863
 - author: Emisse
   changes:
   - message: Title2 to lobby music
@@ -3795,3 +3788,10 @@
   id: 6240
   time: '2024-03-28T04:06:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26469
+- author: Simyon
+  changes:
+  - message: The space dragon can now open doors by bumping into them!
+    type: Tweak
+  id: 6241
+  time: '2024-03-28T05:41:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26490
