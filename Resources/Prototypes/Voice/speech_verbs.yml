@@ -133,6 +133,7 @@
 
 - type: speechVerb
   id: Parrot
+  name: chat-speech-verb-name-parrot
   speechVerbStrings:
   - chat-speech-verb-parrot-1
   - chat-speech-verb-parrot-2
