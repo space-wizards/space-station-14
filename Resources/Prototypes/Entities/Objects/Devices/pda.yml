@@ -74,6 +74,7 @@
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
+      - MessagesCartridge
       - NewsReaderCartridge
     cartridgeSlot:
       priority: -1
@@ -669,6 +670,7 @@
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
+      - MessagesCartridge
       - NewsReaderCartridge
       - LogProbeCartridge
 
@@ -753,6 +755,7 @@
     uiKey: enum.PdaUiKey.Key
     preinstalled:
       - NotekeeperCartridge
+      - MessagesCartridgeSyndicate
     cartridgeSlot:
       priority: -1
       name: Cartridge
@@ -1054,6 +1057,7 @@
     uiKey: enum.PdaUiKey.Key
     preinstalled:
       - NotekeeperCartridge
+      - MessagesCartridge
     cartridgeSlot:
       priority: -1
       name: Cartridge

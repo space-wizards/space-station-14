@@ -83,3 +83,63 @@
       - EncryptionKeySecurity
       - EncryptionKeyService
       - EncryptionKeyCommand
+
+- type: entity
+  id: MessagesServer
+  parent: BaseMachinePowered
+  name: PDA messaging server
+  description: Server that allows PDA messaging to function on the station.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/server.rsi
+    layers:
+      - state: server
+      - state: variant-research
+      - state: server_o
+        map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: ApcPowerReceiver
+    powerLoad: 200
+    priority: Low
+  - type: ExtensionCableReceiver
+  - type: WiresPanel
+  - type: Wires
+    layoutId: rndserver
+  - type: WiresVisuals
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+  - type: Appearance
+  - type: AmbientSound
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/server_fans.ogg
+  - type: MessagesServer
+
+- type: entity
+  id: SyndicateMessagesServer
+  parent: MessagesServer
+  name: Syndicate PDA messaging server
+  description: Server that allows PDA messaging between Syndicate operatives to function.
+  components:
+  - type: MessagesServer
+    encryptionKey: Syndicate
