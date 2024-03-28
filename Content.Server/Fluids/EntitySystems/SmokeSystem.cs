@@ -41,6 +41,7 @@ public sealed class SmokeSystem : EntitySystem
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly BloodstreamSystem _blood = default!;
     [Dependency] private readonly InternalsSystem _internals = default!;
+    [Dependency] private readonly SmokeFilterSystem _smokeFilter = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -273,6 +274,19 @@ public sealed class SmokeSystem : EntitySystem
         var cloneSolution = solution.Clone();
         var availableTransfer = FixedPoint2.Min(cloneSolution.Volume, component.TransferRate);
         var transferAmount = FixedPoint2.Min(availableTransfer, chemSolution.AvailableVolume);
+
+
+
+        if (!blockIngestion)
+        {
+            var ev = new FilterWorkingEvent(entity, false);
+            RaiseLocalEvent(entity, ref ev, true);
+            if (ev.IsActive)
+            {
+                var particlepassValue = ev.Particlepass ?? FixedPoint2.Zero;
+                transferAmount = transferAmount * particlepassValue;
+            }
+        }
         var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
         foreach (var reagentQuantity in transferSolution.Contents.ToArray())

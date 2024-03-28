@@ -41,7 +41,7 @@
   parent: ClothingMaskGas
   id: ClothingMaskGasSyndicate
   name: syndicate gas mask
-  description: A close-fitting tactical mask that can be connected to an air supply.
+  description: A close-fitting tactical mask that can be connected to an air supply with integrated particle filter.
   components:
   - type: Sprite
     sprite: Clothing/Mask/gassyndicate.rsi
@@ -49,6 +49,7 @@
     sprite: Clothing/Mask/gassyndicate.rsi
   - type: FlashImmunity
   - type: EyeProtection
+  - type: FilterMask
   - type: Armor
     modifiers:
       coefficients:
@@ -102,7 +103,7 @@
   parent: ClothingMaskGas
   id: ClothingMaskGasExplorer
   name: explorer gas mask
-  description: A military-grade gas mask that can be connected to an air supply.
+  description: A military-grade gas mask that can be connected to an air supply and with integrated particle filter.
   components:
   - type: Sprite
     sprite: Clothing/Mask/gasexplorer.rsi
@@ -115,6 +116,7 @@
         Slash: 0.90
         Piercing: 0.95
         Heat: 0.95
+  - type: FilterMask
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -327,7 +329,7 @@
   parent: ClothingMaskGasExplorer
   id: ClothingMaskGasSwat
   name: swat gas mask
-  description: A elite issue Security gas mask.
+  description: A elite issue Security gas mask with integrated particle filter.
   components:
   - type: Sprite
     sprite: Clothing/Mask/swat.rsi
@@ -343,7 +345,7 @@
   parent: ClothingMaskGasExplorer
   id: ClothingMaskGasMerc
   name: mercenary gas mask
-  description: Slightly outdated, but reliable military-style gas mask.
+  description: Slightly outdated, but reliable military-style gas mask with integrated particle filter.
   components:
   - type: Sprite
     sprite: Clothing/Mask/merc.rsi
@@ -354,7 +356,7 @@
   parent: ClothingMaskGasSyndicate
   id: ClothingMaskGasERT
   name: ert gas mask
-  description: The gas mask of the elite squad of the ERT.
+  description: The gas mask of the elite squad of the ERT with integrated particle filter.
   components:
   - type: Sprite
     sprite: Clothing/Mask/ert.rsi
@@ -370,7 +372,7 @@
   parent: ClothingMaskGasERT
   id: ClothingMaskGasDeathSquad
   name: death squad gas mask
-  description: A unique gas mask for the NT's most elite squad.
+  description: A unique gas mask for the NT's most elite squad with integrated particle filter.
   components:
   - type: Sprite
     sprite: Clothing/Mask/squadron.rsi
@@ -598,4 +600,5 @@
     storedRotation: -90
   - type: EyeProtection
   - type: BreathMask
+  - type: FilterMask
   - type: IdentityBlocker
