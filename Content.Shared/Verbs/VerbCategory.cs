@@ -83,5 +83,9 @@ namespace Content.Shared.Verbs
         public static readonly VerbCategory Lever = new("verb-categories-lever", null);
 
         public static readonly VerbCategory SelectType = new("verb-categories-select-type", null);
+
+        public static readonly VerbCategory SelectTarget = new("verb-categories-select-target", null);
+
+        public static readonly VerbCategory SearchClosest = new("verb-categories-search-closest", null);
     }
 }

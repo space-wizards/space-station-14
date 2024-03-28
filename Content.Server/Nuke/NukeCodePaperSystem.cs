@@ -4,13 +4,15 @@ using Content.Server.Fax;
 using Content.Server.Paper;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Examine;
+using Content.Shared.Nuke;
 using Content.Shared.Paper;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Nuke
 {
-    public sealed class NukeCodePaperSystem : EntitySystem
+    public sealed class NukeCodePaperSystem : SharedNukeCodePaperSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
@@ -23,6 +25,7 @@ namespace Content.Server.Nuke
             base.Initialize();
             SubscribeLocalEvent<NukeCodePaperComponent, MapInitEvent>(OnMapInit,
                 after: new []{ typeof(NukeLabelSystem) });
+            SubscribeLocalEvent<NukeCodePaperComponent, ExaminedEvent>(OnExamined);
         }
 
         private void OnMapInit(EntityUid uid, NukeCodePaperComponent component, MapInitEvent args)
@@ -121,6 +124,11 @@ namespace Content.Server.Nuke
                     continue;
                 }
 
+                if (TryComp<NukeCodePaperComponent>(uid, out var nukeCodePaper))
+                {
+                    nukeCodePaper.Nuke = nukeUid;
+                }
+
                 codesMessage.PushNewline();
                 codesMessage.AddMarkup(Loc.GetString("nuke-codes-list", ("name", MetaData(nukeUid).EntityName), ("code", nuke.Code)));
                 break;
@@ -129,6 +137,13 @@ namespace Content.Server.Nuke
             if (!codesMessage.IsEmpty)
                 nukeCode = Loc.GetString("nuke-codes-message")+codesMessage;
             return !codesMessage.IsEmpty;
+        }
+        private void OnExamined(EntityUid uid, NukeCodePaperComponent paperComp, ExaminedEvent args)
+        {
+            if (!args.IsInDetailsRange)
+                return;
+
+            args.PushMarkup(Loc.GetString($"nuke-codes-barcode"));
         }
     }
 }

@@ -20,6 +20,8 @@
   - type: Tag
     tags:
     - HighRiskItem
+    - PinpointerScannable
+    - RealDisk
   - type: StealTarget
     stealGroup: NukeDisk
 
@@ -35,3 +37,7 @@
     state: icon
   - type: StaticPrice
     price: 1 # it's worth even less than normal items. Perfection.
+  - type: Tag
+    tags:
+    - PinpointerScannable
+    - FakeDisk
