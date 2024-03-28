@@ -7,6 +7,7 @@ using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Medical.Circulatory.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.StatusEffect;
@@ -72,15 +73,16 @@ namespace Content.Server.Medical
 
                 var vomitAmount = solutionSize;
 
-                // Takes 10% of the chemicals removed from the chem stream
-                if (_solutionContainer.ResolveSolution(uid, bloodStream.ChemicalSolutionName, ref bloodStream.ChemicalSolution))
-                {
-                    var vomitChemstreamAmount = _solutionContainer.SplitSolution(bloodStream.ChemicalSolution.Value, vomitAmount);
-                    vomitChemstreamAmount.ScaleSolution(chemMultiplier);
-                    solution.AddSolution(vomitChemstreamAmount, _proto);
-
-                    vomitAmount -= (float) vomitChemstreamAmount.Volume;
-                }
+                //TODO: refactor vomit with digestion/better metabolism. Also why are we adding bloodstream contents to vomit?
+                // // Takes 10% of the chemicals removed from the chem stream
+                // if (_solutionContainer.ResolveSolution(uid, bloodStream.ChemicalSolutionName, ref bloodStream.ChemicalSolution))
+                // {
+                //     var vomitChemstreamAmount = _solutionContainer.SplitSolution(bloodStream.ChemicalSolution.Value, vomitAmount);
+                //     vomitChemstreamAmount.ScaleSolution(chemMultiplier);
+                //     solution.AddSolution(vomitChemstreamAmount, _proto);
+                //
+                //     vomitAmount -= (float) vomitChemstreamAmount.Volume;
+                // }
 
                 // Makes a vomit solution the size of 90% of the chemicals removed from the chemstream
                 solution.AddReagent("Vomit", vomitAmount); // TODO: Dehardcode vomit prototype

@@ -1,0 +1,17 @@
+﻿- type: entity
+  id: MinorPenetratingWound
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: PenetratingWound
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: SeverePenetratingWound
+  parent: BaseHealingWound
+  components:
+  - type: Wound

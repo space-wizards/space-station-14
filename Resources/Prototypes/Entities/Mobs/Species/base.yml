@@ -3,6 +3,9 @@
   parent:
   - BaseMob
   - MobDamageable
+  - MobConsciousness
+  - MobWoundable
+  - MobPain
   - MobCombat
   id: BaseMobSpecies
   abstract: true

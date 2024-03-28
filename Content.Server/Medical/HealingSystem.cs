@@ -13,6 +13,8 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Medical;
+using Content.Shared.Medical.Circulatory.Components;
+using Content.Shared.Medical.Circulatory.Systems;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -61,23 +63,24 @@ public sealed class HealingSystem : EntitySystem
             return;
         }
 
-        // Heal some bloodloss damage.
-        if (healing.BloodlossModifier != 0)
-        {
-            if (!TryComp<BloodstreamComponent>(entity, out var bloodstream))
-                return;
-            var isBleeding = bloodstream.BleedAmount > 0;
-            _bloodstreamSystem.TryModifyBleedAmount(entity.Owner, healing.BloodlossModifier);
-            if (isBleeding != bloodstream.BleedAmount > 0)
-            {
-                dontRepeat = true;
-                _popupSystem.PopupEntity(Loc.GetString("medical-item-stop-bleeding"), entity, args.User);
-            }
-        }
-
-        // Restores missing blood
-        if (healing.ModifyBloodLevel != 0)
-            _bloodstreamSystem.TryModifyBloodLevel(entity.Owner, healing.ModifyBloodLevel);
+        //TODO: remove bloodloss healing entirely.
+        // // Heal some bloodloss damage.
+        // if (healing.BloodlossModifier != 0)
+        // {
+        //     if (!TryComp<BloodstreamComponent>(entity, out var bloodstream))
+        //         return;
+        //     var isBleeding = bloodstream.BleedAmount > 0;
+        //     _bloodstreamSystem.TryModifyBleedAmount(entity.Owner, healing.BloodlossModifier);
+        //     if (isBleeding != bloodstream.BleedAmount > 0)
+        //     {
+        //         dontRepeat = true;
+        //         _popupSystem.PopupEntity(Loc.GetString("medical-item-stop-bleeding"), entity, args.User);
+        //     }
+        // }
+        //
+        // // Restores missing blood
+        // if (healing.ModifyBloodLevel != 0)
+        //     _bloodstreamSystem.TryModifyBloodLevel(entity.Owner, healing.ModifyBloodLevel);
 
         var healed = _damageable.TryChangeDamage(entity.Owner, healing.Damage, true, origin: args.Args.User);
 
@@ -171,12 +174,13 @@ public sealed class HealingSystem : EntitySystem
         if (TryComp<StackComponent>(uid, out var stack) && stack.Count < 1)
             return false;
 
-        var anythingToDo =
-            HasDamage(targetDamage, component) ||
-            component.ModifyBloodLevel > 0 // Special case if healing item can restore lost blood...
-                && TryComp<BloodstreamComponent>(target, out var bloodstream)
-                && _solutionContainerSystem.ResolveSolution(target, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution)
-                && bloodSolution.Volume < bloodSolution.MaxVolume; // ...and there is lost blood to restore.
+        //TODO: healing system needs to be completely refactored to fit newMed.
+        var anythingToDo = HasDamage(targetDamage, component);
+            // HasDamage(targetDamage, component) ||
+            // component.ModifyBloodLevel > 0 // Special case if healing item can restore lost blood...
+            //     && TryComp<BloodstreamComponent>(target, out var bloodstream)
+            //     && _solutionContainerSystem.ResolveSolution(target, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution)
+            //     && bloodSolution.Volume < bloodSolution.MaxVolume; // ...and there is lost blood to restore.
 
         if (!anythingToDo)
         {

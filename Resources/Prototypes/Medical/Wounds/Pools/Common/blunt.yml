@@ -1,0 +1,9 @@
+- type: woundPool
+  id: CommonBlunt
+  wounds:
+    2: MinorBruise
+    5: Bruise
+    10: SevereBruise
+    25: CriticalBruise
+    75: Crush
+    90: SevereCrush

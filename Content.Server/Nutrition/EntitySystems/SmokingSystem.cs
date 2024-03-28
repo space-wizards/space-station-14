@@ -1,10 +1,7 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Components;
-using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Forensics;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -24,7 +21,6 @@ namespace Content.Server.Nutrition.EntitySystems
     {
         [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
@@ -140,17 +136,17 @@ namespace Content.Server.Nutrition.EntitySystems
                 if (inhaledSolution.Volume == FixedPoint2.Zero)
                     continue;
 
-                // This is awful. I hate this so much.
-                // TODO: Please, someone refactor containers and free me from this bullshit.
-                if (!_container.TryGetContainingContainer(uid, out var containerManager) ||
-                    !(_inventorySystem.TryGetSlotEntity(containerManager.Owner, "mask", out var inMaskSlotUid) && inMaskSlotUid == uid) ||
-                    !TryComp(containerManager.Owner, out BloodstreamComponent? bloodstream))
-                {
-                    continue;
-                }
-
-                _reactiveSystem.DoEntityReaction(containerManager.Owner, inhaledSolution, ReactionMethod.Ingestion);
-                _bloodstreamSystem.TryAddToChemicals(containerManager.Owner, inhaledSolution, bloodstream);
+                //TODO: convert this to use the new breathing system instead of directly injecting chems into bloodstream when smoking
+                // // This is awful. I hate this so much.
+                // if (!_container.TryGetContainingContainer(uid, out var containerManager) ||
+                //     !(_inventorySystem.TryGetSlotEntity(containerManager.Owner, "mask", out var inMaskSlotUid) && inMaskSlotUid == uid) ||
+                //     !TryComp(containerManager.Owner, out BloodstreamComponent? bloodstream))
+                // {
+                //     continue;
+                // }
+                //
+                // _reactiveSystem.DoEntityReaction(containerManager.Owner, inhaledSolution, ReactionMethod.Ingestion);
+                // _bloodstreamSystem.TryAddToChemicals(containerManager.Owner, inhaledSolution, bloodstream);
             }
 
             _timer -= UpdateTimer;

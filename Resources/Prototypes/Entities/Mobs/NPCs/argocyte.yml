@@ -18,16 +18,17 @@
   - type: ReplacementAccent
     accent: xeno
   - type: Bloodstream
-    bloodReagent: FerrochromicAcid
-    bloodMaxVolume: 75 #we don't want the map to become pools of blood
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          0.5
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -1
+    #TODO Bloodstream: re-implment this
+#    bloodReagent: FerrochromicAcid
+#    bloodMaxVolume: 75 #we don't want the map to become pools of blood
+#    bloodlossDamage:
+#      types:
+#        Bloodloss:
+#          0.5
+#    bloodlossHealDamage:
+#      types:
+#        Bloodloss:
+#          -1
   - type: Insulated
   - type: CombatMode
   - type: MeleeWeapon

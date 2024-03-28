@@ -56,7 +56,8 @@
     - id: FoodMeatXeno
       amount: 1
   - type: Bloodstream
-    bloodMaxVolume: 50
+    #TODO Bloodstream: re-implement this
+#    bloodMaxVolume: 50
   - type: CombatMode
   - type: MeleeWeapon
     soundHit:

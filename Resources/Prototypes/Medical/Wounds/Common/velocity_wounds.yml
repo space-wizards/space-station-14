@@ -1,0 +1,17 @@
+﻿- type: entity
+  id: MinorVelocityWound
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: VelocityWound
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: SevereVelocityWound
+  parent: BaseHealingWound
+  components:
+  - type: Wound

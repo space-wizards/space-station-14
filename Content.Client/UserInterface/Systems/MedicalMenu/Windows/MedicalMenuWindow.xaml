@@ -1,0 +1,31 @@
+﻿<windows:MedicalMenuWindow
+    xmlns="https://spacestation14.io"
+    xmlns:med="clr-namespace:Content.Client.UserInterface.Systems.MedicalMenu.Controls"
+    xmlns:windows="clr-namespace:Content.Client.UserInterface.Systems.MedicalMenu.Windows"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    MinSize="400 400">
+    <BoxContainer Orientation = "Vertical">
+        <BoxContainer
+            Orientation="Horizontal">
+        </BoxContainer>
+        <TabContainer
+            HorizontalExpand="True"
+            VerticalExpand="True"
+            >
+            <med:OverviewPage
+                Name="OverviewTab"
+                Access="Internal"
+            />
+            <med:TriagePage
+                Name="TriageTab"
+                Access="Internal"
+            />
+            <med:SurgeryPage
+                Name="SurgeryTab"
+                Access="Internal"
+            />
+        </TabContainer>
+    </BoxContainer>
+
+
+</windows:MedicalMenuWindow>

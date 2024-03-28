@@ -10,36 +10,39 @@ namespace Content.Shared.Body.Systems;
 public partial class SharedBodySystem
 {
     private void AddOrgan(
-        Entity<OrganComponent> organEnt,
+        Entity<OrganComponent> organ,
         EntityUid bodyUid,
         EntityUid parentPartUid)
     {
-        organEnt.Comp.Body = bodyUid;
-        var addedEv = new OrganAddedEvent(parentPartUid);
-        RaiseLocalEvent(organEnt, ref addedEv);
+        organ.Comp.Body = bodyUid;
+        var ev = new OrganAddedEvent(new Entity<BodyPartComponent>(parentPartUid, Comp<BodyPartComponent>(parentPartUid)));
+        RaiseLocalEvent(organ,ref ev);
 
-        if (organEnt.Comp.Body is not null)
+        if (organ.Comp.Body != null)
         {
-            var addedInBodyEv = new OrganAddedToBodyEvent(bodyUid, parentPartUid);
-            RaiseLocalEvent(organEnt, ref addedInBodyEv);
+            var ev2 = new OrganAddedToBodyEvent(
+                new Entity<BodyComponent>(organ.Comp.Body.Value, Comp<BodyComponent>(organ.Comp.Body.Value)),
+                new Entity<BodyPartComponent>(parentPartUid, Comp<BodyPartComponent>(parentPartUid)));
+            RaiseLocalEvent(organ.Comp.Body.Value, ref ev2);
         }
-
-        Dirty(organEnt, organEnt.Comp);
+        Dirty(organ);
     }
 
-    private void RemoveOrgan(Entity<OrganComponent> organEnt, EntityUid parentPartUid)
+    private void RemoveOrgan(Entity<OrganComponent> organ, EntityUid parentPartUid)
     {
-        var removedEv = new OrganRemovedEvent(parentPartUid);
-        RaiseLocalEvent(organEnt, ref removedEv);
+        var ev = new OrganRemovedEvent(new Entity<BodyPartComponent>(parentPartUid, Comp<BodyPartComponent>(parentPartUid)));
+        RaiseLocalEvent(organ, ref ev);
 
-        if (organEnt.Comp.Body is { Valid: true } bodyUid)
+        if (organ.Comp.Body is { Valid: true } bodyUid)
         {
-            var removedInBodyEv = new OrganRemovedFromBodyEvent(bodyUid, parentPartUid);
-            RaiseLocalEvent(organEnt, ref removedInBodyEv);
+            var ev2 = new OrganRemovedFromBodyEvent(
+                new Entity<BodyComponent>(organ.Comp.Body.Value, Comp<BodyComponent>(organ.Comp.Body.Value)),
+                new Entity<BodyPartComponent>(parentPartUid, Comp<BodyPartComponent>(parentPartUid)));
+            RaiseLocalEvent(organ.Comp.Body.Value, ref ev2);
         }
 
-        organEnt.Comp.Body = null;
-        Dirty(organEnt, organEnt.Comp);
+        organ.Comp.Body = null;
+        Dirty(organ);
     }
 
     /// <summary>

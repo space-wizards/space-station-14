@@ -1,0 +1,28 @@
+﻿- type: entity
+  id: SurfaceAvulsion
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: MinorTissueAvulsion
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+- type: entity
+  id: TissueAvulsion
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: SevereTissueAvulsion
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: Amputation
+  parent: BaseHealingWound
+  components:
+  - type: Wound

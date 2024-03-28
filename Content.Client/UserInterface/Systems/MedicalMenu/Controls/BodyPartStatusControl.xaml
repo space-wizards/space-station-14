@@ -1,0 +1,72 @@
+﻿<med:BodyPartStatusControl
+    xmlns="https://spacestation14.io"
+    xmlns:med="clr-namespace:Content.Client.UserInterface.Systems.MedicalMenu.Controls"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    VerticalAlignment="Stretch"
+    HorizontalAlignment="Stretch"
+    HorizontalExpand="True"
+    Orientation="Vertical"
+    MinSize="150 10">
+    <ContainerButton MinHeight="35"
+                     ToggleMode="True"
+                     HorizontalExpand="True">
+        <BoxContainer
+            Orientation="Horizontal"
+            HorizontalAlignment="Stretch"
+            HorizontalExpand="True">
+            <TextureRect
+                Name="Chevron"
+                Access="Private"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="2 0"
+                SizeFlagsStretchRatio="1" />
+            <Label
+                Text="UnknownBodyPart"
+                Access="Private"
+                Name="BodyPartLabel"
+                SizeFlagsStretchRatio="1" />
+            <controls:VSpacer
+                Spacing="30"
+                HorizontalExpand="True"
+                HorizontalAlignment="Stretch"
+                SizeFlagsStretchRatio="1" />
+            <Label
+                Text="Unknown"
+                Access="Private"
+                Name="BodyPartStatusLabel" />
+        </BoxContainer>
+    </ContainerButton>
+    <CollapsibleBody>
+        <PanelContainer
+            Name="ContentsPanel"
+            Access="Private">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat
+                    BackgroundColor="#252525"
+                    />
+            </PanelContainer.PanelOverride>
+
+            <BoxContainer
+                Orientation="Vertical">
+
+                <BoxContainer
+                    Orientation="Vertical"
+                    HorizontalExpand="True"
+                    VerticalExpand="True">
+                    <controls:Placeholder
+                        PlaceholderText="STUFF GOES HERE" />
+                    <controls:HLine />
+                    <BoxContainer
+                        Name="Contents"
+                        Access="Private"
+                        Orientation="Vertical"
+                        HorizontalExpand="True"
+                        VerticalExpand="True"
+                        Margin="20 0 0 0" />
+                </BoxContainer>
+            </BoxContainer>
+        </PanelContainer>
+    </CollapsibleBody>
+</med:BodyPartStatusControl>

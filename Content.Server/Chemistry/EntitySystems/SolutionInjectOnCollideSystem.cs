@@ -3,6 +3,8 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.Medical.Circulatory.Components;
+using Content.Shared.Medical.Circulatory.Systems;
 using Content.Shared.Projectiles;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -43,7 +45,7 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
         var solRemovedVol = solRemoved.Volume;
 
         var solToInject = solRemoved.SplitSolution(solRemovedVol * component.TransferEfficiency);
-
-        _bloodstreamSystem.TryAddToChemicals(target, solToInject, bloodstream);
+        //TODO: Re-implement injection on SolutionInjectOnCollideSystem
+        //_bloodstreamSystem.TryAddToChemicals(target, solToInject, bloodstream);
     }
 }

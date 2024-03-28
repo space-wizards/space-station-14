@@ -1,0 +1,17 @@
+﻿- type: entity
+  id: MinorIncision
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: Incision
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: LargeIncision
+  parent: BaseHealingWound
+  components:
+  - type: Wound

@@ -34,7 +34,6 @@ namespace Content.Server.Weapons.Melee;
 public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -271,8 +270,9 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
-        var hitBloodstreams = new List<(EntityUid Entity, BloodstreamComponent Component)>();
-        var bloodQuery = GetEntityQuery<BloodstreamComponent>();
+        //TODO: re-implement blood staining on melee weapons
+        //var hitBloodstreams = new List<(EntityUid Entity, BloodstreamComponent Component)>();
+        //var bloodQuery = GetEntityQuery<BloodstreamComponent>();
 
         foreach (var hit in args.HitEntities)
         {
@@ -286,22 +286,22 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 continue;
             }
 
-            if (bloodQuery.TryGetComponent(hit, out var bloodstream))
-                hitBloodstreams.Add((hit, bloodstream));
-        }
-
-        if (!hitBloodstreams.Any())
-            return;
-
-        var removedSolution = _solutions.SplitSolution(solutionContainer.Value, entity.Comp.TransferAmount * hitBloodstreams.Count);
-        var removedVol = removedSolution.Volume;
-        var solutionToInject = removedSolution.SplitSolution(removedVol * entity.Comp.TransferEfficiency);
-        var volPerBloodstream = solutionToInject.Volume * (1 / hitBloodstreams.Count);
-
-        foreach (var (ent, bloodstream) in hitBloodstreams)
-        {
-            var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
-            _bloodstream.TryAddToChemicals(ent, individualInjection, bloodstream);
+        //     if (bloodQuery.TryGetComponent(hit, out var bloodstream))
+        //         hitBloodstreams.Add((hit, bloodstream));
+        // }
+        //
+        // if (!hitBloodstreams.Any())
+        //     return;
+        //
+        // var removedSolution = _solutions.SplitSolution(solutionContainer.Value, entity.Comp.TransferAmount * hitBloodstreams.Count);
+        // var removedVol = removedSolution.Volume;
+        // var solutionToInject = removedSolution.SplitSolution(removedVol * entity.Comp.TransferEfficiency);
+        // var volPerBloodstream = solutionToInject.Volume * (1 / hitBloodstreams.Count);
+        //
+        // foreach (var (ent, bloodstream) in hitBloodstreams)
+        // {
+        //     var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
+        //     _bloodstream.TryAddToChemicals(ent, individualInjection, bloodstream);
         }
     }
 }

@@ -1,0 +1,18 @@
+﻿- type: entity
+  id: Cut
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: Laceration
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: SevereLaceration
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+

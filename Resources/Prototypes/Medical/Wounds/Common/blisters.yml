@@ -1,0 +1,17 @@
+﻿- type: entity
+  id: MinorBlister
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: Blister
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: SevereBlister
+  parent: BaseHealingWound
+  components:
+  - type: Wound

@@ -40,6 +40,7 @@
   name: brain
   description: "The source of incredible, unending intelligence. Honk."
   components:
+  - type: ConsciousnessProvider
   - type: Sprite
     state: brain
   - type: Organ
@@ -67,7 +68,7 @@
   - type: FlavorProfile
     flavors:
       - people
-  
+
 - type: entity
   id: OrganHumanEyes
   parent: BaseHumanOrgan

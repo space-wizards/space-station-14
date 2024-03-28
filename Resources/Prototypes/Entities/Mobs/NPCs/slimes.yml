@@ -60,15 +60,16 @@
     damageContainer: Biological
     damageModifierSet: Slime
   - type: Bloodstream
-    bloodReagent: Slime
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          0.5
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.25
+    #TODO Bloodstream: re-implement this
+#    bloodReagent: Slime
+#    bloodlossDamage:
+#      types:
+#        Bloodloss:
+#          0.5
+#    bloodlossHealDamage:
+#      types:
+#        Bloodloss:
+#          -0.25
   - type: Barotrauma
     damage:
       types:

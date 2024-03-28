@@ -1,0 +1,36 @@
+﻿
+- type: entity
+  id: MinorBruise
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: Bruise
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: SevereBruise
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: CriticalBruise
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: Crush
+  parent: BaseHealingWound
+  components:
+  - type: Wound
+
+- type: entity
+  id: SevereCrush
+  parent: BaseHealingWound
+  components:
+  - type: Wound

@@ -44,7 +44,8 @@
       - !type:WashCreamPieReaction
   # Damage (Self)
   - type: Bloodstream
-    bloodReagent: CopperBlood
+    #TODO Bloodstream: re-implement this
+#    bloodReagent: CopperBlood
   # Damage (Others)
   - type: MeleeWeapon
     animation: WeaponArcBite

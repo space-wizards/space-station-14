@@ -1,0 +1,39 @@
+﻿<med:OverviewPage
+    xmlns="https://spacestation14.io"
+    xmlns:med="clr-namespace:Content.Client.UserInterface.Systems.MedicalMenu.Controls"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Orientation="Vertical"
+    HorizontalExpand="True"
+    VerticalExpand="True"
+    >
+    <BoxContainer
+        Orientation="Horizontal"
+        HorizontalExpand="True"
+        VerticalExpand="True"
+        >
+        <med:TargetBodyStatus
+            Name="TargetStatus"
+            Access="Internal"
+        />
+        <ScrollContainer HorizontalExpand="True"
+                         VerticalExpand="True"
+                         HorizontalAlignment="Right"
+                         MinSize="300 200"
+        >
+            <BoxContainer
+                Name="Contents"
+                Access="Private"
+                Orientation="Vertical"
+                HorizontalExpand="True"
+            >
+                <!-- This is in case we are targeting an entity without a root -->
+                <Label
+                    Text="No Body Parts Found!"
+                    Name="NoPartErrorText"
+                    Access="Private"
+                    SizeFlagsStretchRatio="1"
+                />
+            </BoxContainer>
+        </ScrollContainer>
+    </BoxContainer>
+</med:OverviewPage>

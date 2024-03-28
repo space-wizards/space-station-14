@@ -112,6 +112,9 @@
   - BaseMob
   - MobCombat
   - MobDamageable
+  - MobWoundable
+  - MobPain
+  - MobConsciousness
   - MobSiliconBase
   - MobTerminatorBase
   id: MobTerminatorEndoskeleton
@@ -138,11 +141,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      # gibbed at 200 so cant go crit
-      200: Dead
   # incase some weird stuff happens and the crew adopts a terminator
   - type: Repairable
     doAfterDelay: 15

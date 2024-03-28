@@ -1,0 +1,15 @@
+- type: woundPool
+  id: CommonPiercing
+  wounds:
+    2: MinorBruise
+    4: Bruise
+    6: SevereBruise
+    8: CriticalBruise
+    10: MinorPenetratingWound
+    15: MinorPunctureWound
+    20: PunctureWound
+    35: PenetratingWound
+    50: SeverePunctureWound
+    65: PenetratingWound
+    80: SeverePenetratingWound
+    90: SevereTissueAvulsion

@@ -3,6 +3,7 @@
   parent:
   - BaseMob
   - MobDamageable
+  - MobDamageThresholds
   - MobAtmosExposed
   id: BaseSimpleMob
   suffix: AI
@@ -100,7 +101,8 @@
       - Pacified
       - StaminaModifier
   - type: Bloodstream
-    bloodMaxVolume: 150
+    #TODO Bloodstream: re-implement this
+#    bloodMaxVolume: 150
   - type: MobPrice
     price: 150
   - type: FloatingVisuals

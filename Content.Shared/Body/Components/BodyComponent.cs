@@ -38,6 +38,9 @@ public sealed partial class BodyComponent : Component
     [DataField, AutoNetworkedField]
     public int RequiredLegs;
 
+    [AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
+    public bool BodyInitialized = false;
+
     [ViewVariables]
     [DataField, AutoNetworkedField]
     public HashSet<EntityUid> LegEntities = new();

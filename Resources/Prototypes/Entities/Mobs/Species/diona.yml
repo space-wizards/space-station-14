@@ -31,7 +31,8 @@
       - id: FoodMeatPlant
         amount: 5
   - type: Bloodstream
-    bloodReagent: Water
+    #TODO Bloodstream: re-implement this
+#    bloodReagent: Water
   - type: Reactive
     groups:
       Flammable: [ Touch ]

@@ -44,6 +44,39 @@
   - type: Polymorphable
   - type: StatusIcon
 
+- type: entity
+  save: false
+  id: MobPain
+  abstract: true
+  components:
+  - type: NervousSystem
+
+- type: entity
+  save: false
+  id: MobConsciousness
+  abstract: true
+  components:
+  - type: Consciousness
+    threshold: 30
+
+- type: entity
+  save: false
+  id: MobDamageThresholds
+  abstract: true
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      200: Dead
+
+- type: entity
+  save: false
+  id: MobWoundable
+  abstract: true
+  components:
+  - type: MedicalData #TODO: move this to it's own prototype category
+
 # Used for mobs that have health and can take damage.
 - type: entity
   save: false
@@ -63,11 +96,6 @@
   - type: RadiationReceiver
   - type: Stamina
   - type: MobState
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
   - type: MobStateActions
     actions:
       Critical:
@@ -207,9 +235,10 @@
   - type: InjectableSolution
     solution: chemicals
   - type: Bloodstream
-    bloodlossDamage:
-      types:
-        Bloodloss: 0.5
-    bloodlossHealDamage:
-      types:
-        Bloodloss: -1
+    #TODO Bloodstream: re-implement this
+#    bloodlossDamage:
+#      types:
+#        Bloodloss: 0.5
+#    bloodlossHealDamage:
+#      types:
+#        Bloodloss: -1

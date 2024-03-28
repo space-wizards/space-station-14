@@ -1,0 +1,16 @@
+﻿- type: entity
+  id: BaseWound
+  abstract: true
+  components:
+  - type: Wound
+
+- type: entity
+  id: BaseHealingWound
+  parent: BaseWound
+  abstract: true
+  components:
+  - type: Healable
+
+
+
+

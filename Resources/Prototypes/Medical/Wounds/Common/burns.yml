@@ -1,0 +1,116 @@
+﻿#base burn wounds
+- type: entity
+  id: FirstDegreeBurnBase
+  parent: BaseHealingWound
+  abstract: true
+  components:
+  - type: Wound
+
+- type: entity
+  id: SecondDegreeBurnBase
+  parent: BaseHealingWound
+  abstract: true
+  components:
+  - type: Wound
+
+- type: entity
+  id: ThirdDegreeBurnBase
+  parent: BaseHealingWound
+  abstract: true
+  components:
+  - type: Wound
+
+# === Thermal ===
+- type: entity
+  id: FirstDegreeThermalBurn
+  parent: FirstDegreeBurnBase
+  components:
+  - type: Wound
+
+- type: entity
+  id: SecondDegreeThermalBurn
+  parent: SecondDegreeBurnBase
+  components:
+  - type: Wound
+
+- type: entity
+  id: ThirdDegreeThermalBurn
+  parent: ThirdDegreeBurnBase
+  components:
+  - type: Wound
+
+# === Frostbite ===
+- type: entity
+  id: FirstDegreeFrostbite
+  parent: FirstDegreeBurnBase
+  components:
+  - type: Wound
+
+- type: entity
+  id: SecondDegreeFrostbite
+  parent: SecondDegreeBurnBase
+  components:
+  - type: Wound
+
+- type: entity
+  id: ThirdDegreeFrostbite
+  parent: ThirdDegreeBurnBase
+  components:
+  - type: Wound
+
+# === Chemical ===
+- type: entity
+  id: FirstDegreeChemBurn
+  parent: FirstDegreeBurnBase
+  components:
+  - type: Wound
+
+- type: entity
+  id: SecondDegreeChemBurn
+  parent: SecondDegreeBurnBase
+  components:
+  - type: Wound
+
+- type: entity
+  id: ThirdDegreeChemBurn
+  parent: ThirdDegreeBurnBase
+  components:
+  - type: Wound
+
+# === Electrical ===
+- type: entity
+  id: FirstDegreeElectricalBurn
+  parent: FirstDegreeBurnBase
+  components:
+  - type: Wound
+
+- type: entity
+  id: SecondDegreeElectricalBurn
+  parent: SecondDegreeBurnBase
+  components:
+  - type: Wound
+
+- type: entity
+  id: ThirdDegreeElectricalBurn
+  parent: ThirdDegreeBurnBase
+  components:
+  - type: Wound
+
+# === Radiation ===
+- type: entity
+  id: FirstDegreeRadiationBurn
+  parent: FirstDegreeBurnBase
+  components:
+  - type: Wound
+
+- type: entity
+  id: SecondDegreeRadiationBurn
+  parent: SecondDegreeBurnBase
+  components:
+  - type: Wound
+
+- type: entity
+  id: ThirdDegreeRadiationBurn
+  parent: ThirdDegreeBurnBase
+  components:
+  - type: Wound

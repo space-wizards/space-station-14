@@ -1,0 +1,19 @@
+﻿<med:TargetBodyStatus
+    xmlns="https://spacestation14.io"
+    xmlns:med="clr-namespace:Content.Client.UserInterface.Systems.MedicalMenu.Controls"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Orientation="Vertical"
+    >
+    <BoxContainer
+        Orientation="Horizontal">
+        <Label Text="Target: "/>
+        <Label
+            Name="TargetName"
+            Access="Private"
+            Text="No Target"
+            />
+    </BoxContainer>
+    <controls:Placeholder
+        PlaceholderText="Target Info Goes here"
+        />
+</med:TargetBodyStatus>

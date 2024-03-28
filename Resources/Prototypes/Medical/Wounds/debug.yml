@@ -1,0 +1,48 @@
+﻿- type: entity
+  id: InstaGibWound
+  parent: BaseWound
+  components:
+  - type: Wound
+  - type: IntegrityTrauma
+    integrityDecrease: 9999 #this will destroy any part
+
+- type: entity
+  id: PainWound
+  parent: BaseWound
+  components:
+  - type: Wound
+  - type: PainTrauma
+    painDecrease: 2
+
+
+- type: entity
+  id: MassivePainWound
+  parent: BaseWound
+  components:
+  - type: Wound
+  - type: PainTrauma
+    painDecrease: 50
+
+- type: entity
+  id: MinorConsciousWound
+  parent: BaseWound
+  components:
+  - type: Wound
+  - type: ConsciousnessTrauma
+    decrease: 5
+
+- type: entity
+  id: ConsciousCritWound
+  parent: BaseWound
+  components:
+  - type: Wound
+  - type: ConsciousnessTrauma
+    decrease: 70
+
+- type: entity
+  id: ConsciousKillWound
+  parent: BaseWound
+  components:
+  - type: Wound
+  - type: ConsciousnessTrauma
+    decrease: 100

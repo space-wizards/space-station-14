@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.Gibbing.Components;
 using Content.Shared.Gibbing.Events;
@@ -93,6 +93,10 @@ public sealed class GibbingSystem : EntitySystem
         List<string>? excludedContainers = null,
         bool logMissingGibable = false)
     {
+        //TODO: Placeholder for testing! Replace with proper bodypart gibbing implementation!
+        if (!HasComp<TransformComponent>(outerEntity))
+            return false;
+
         if (!Resolve(gibbable, ref gibbable.Comp, logMissing: false))
         {
             DropEntity(gibbable, Transform(outerEntity), randomSpreadMod, ref droppedEntities,
