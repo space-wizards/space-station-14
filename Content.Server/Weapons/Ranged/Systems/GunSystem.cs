@@ -4,6 +4,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Cargo.Systems;
 using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Radiation.Components;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Damage;
@@ -21,6 +22,7 @@ using Content.Shared.Weapons.Reflect;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -183,8 +185,6 @@ public sealed partial class GunSystem : SharedGunSystem
                     break;
                 case HitscanPrototype hitscan:
 
-                    EntityUid? lastHit = null;
-
                     var from = fromMap;
                     // can't use map coords above because funny FireEffects
                     var fromEffect = fromCoordinates;
@@ -193,76 +193,128 @@ public sealed partial class GunSystem : SharedGunSystem
                     //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
                     var lastUser = user ?? gunUid;
 
+                    List<EntityUid> hitList = new();
                     if (hitscan.Reflective != ReflectType.None)
                     {
                         for (var reflectAttempt = 0; reflectAttempt < 3; reflectAttempt++)
                         {
-                            var ray = new CollisionRay(from.Position, dir, hitscan.CollisionMask);
+                            var reflected = false;
+
+                            var ray = new CollisionRay(from.Position, dir, (int) hitscan.CollisionMask);
                             var rayCastResults =
                                 Physics.IntersectRay(from.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
-                            if (!rayCastResults.Any())
+                            if (rayCastResults.Count == 0)
                                 break;
 
-                            var result = rayCastResults[0];
-                            var hit = result.HitEntity;
-                            lastHit = hit;
+                            //If nothing blocks it, laser length is max length.
+                            var result = hitscan.MaxLength;
 
-                            FireEffects(fromEffect, result.Distance, dir.Normalized().ToAngle(), hitscan, hit);
-
-                            var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false);
-                            RaiseLocalEvent(hit, ref ev);
-
-                            if (!ev.Reflected)
-                                break;
-
-                            fromEffect = Transform(hit).Coordinates;
-                            from = fromEffect.ToMap(EntityManager, _transform);
-                            dir = ev.Direction;
-                            lastUser = hit;
-                        }
-                    }
-
-                    if (lastHit != null)
-                    {
-                        var hitEntity = lastHit.Value;
-                        if (hitscan.StaminaDamage > 0f)
-                            _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source: user);
-
-                        var dmg = hitscan.Damage;
-
-                        var hitName = ToPrettyString(hitEntity);
-                        if (dmg != null)
-                            dmg = Damageable.TryChangeDamage(hitEntity, dmg, origin: user);
-
-                        // check null again, as TryChangeDamage returns modified damage values
-                        if (dmg != null)
-                        {
-                            if (!Deleted(hitEntity))
+                            //Set the distance to the first target it can't penetrate.
+                            foreach (var target in rayCastResults)
                             {
-                                if (dmg.Any())
+                                var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false);
+                                RaiseLocalEvent(target.HitEntity, ref ev);
+
+                                //Don't penetrate if the target reflects the laser.
+                                if (ev.Reflected)
                                 {
-                                    _color.RaiseEffect(Color.Red, new List<EntityUid>() { hitEntity }, Filter.Pvs(hitEntity, entityManager: EntityManager));
+                                    result = target.Distance;
+                                    FireEffects(fromEffect, result, dir.Normalized().ToAngle(), hitscan, hitList);
+
+                                    fromEffect = Transform(target.HitEntity).Coordinates;
+                                    from = fromEffect.ToMap(EntityManager, _transform);
+                                    dir = ev.Direction;
+                                    lastUser = target.HitEntity;
+                                    reflected = true;
+                                    break;
                                 }
 
-                                // TODO get fallback position for playing hit sound.
-                                PlayImpactSound(hitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
+                                hitList.Add(target.HitEntity);
+
+                                //Don't penetrate if hitscan can't penetrate at all or if too many targets have been hit.
+                                if (!hitscan.CanPenetrate ||
+                                    hitscan.PenetrationPower < hitList.Count &&
+                                    !hitscan.BlockedByRadiationResistance)
+                                {
+                                    result = target.Distance;
+                                    break;
+                                }
+
+                                //Don't penetrate if the target's CollisionLayer is higher than
+                                //the hitscan's PenetrationLayer.
+                                if (TryComp<PhysicsComponent>(target.HitEntity, out var physics) &&
+                                    hitscan.PenetrationLayer != null &&
+                                    physics.CollisionLayer > (int) hitscan.PenetrationLayer)
+                                {
+                                    result = target.Distance;
+                                    break;
+                                }
+
+                                //Don't penetrate if the targets radiation resistance is equal to or higher
+                                //than the hitscan's penetration power.
+                                if (TryComp<RadiationBlockerComponent>(target.HitEntity, out var radiation) &&
+                                    hitscan.BlockedByRadiationResistance &&
+                                    radiation.RadResistance >= hitscan.PenetrationPower)
+                                {
+                                    result = target.Distance;
+                                    break;
+                                }
                             }
 
-                            if (user != null)
+                            FireEffects(fromEffect, result, dir.Normalized().ToAngle(), hitscan, hitList);
+                            if (!reflected)
+                                break;
+                        }
+
+                        //Deal damage to all targets hit.
+                        if (hitList.Count != 0)
+                        {
+                            foreach (var hitEntity in hitList)
                             {
-                                Logs.Add(LogType.HitScanHit,
-                                    $"{ToPrettyString(user.Value):user} hit {hitName:target} using hitscan and dealt {dmg.GetTotal():damage} damage");
-                            }
-                            else
-                            {
-                                Logs.Add(LogType.HitScanHit,
-                                    $"{hitName:target} hit by hitscan dealing {dmg.GetTotal():damage} damage");
+                                if (hitEntity == lastUser)
+                                    continue;
+
+                                if (hitscan.StaminaDamage > 0f)
+                                    _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source: user);
+
+                                var dmg = hitscan.Damage;
+
+                                var hitName = ToPrettyString(hitEntity);
+                                if (dmg != null)
+                                    dmg = Damageable.TryChangeDamage(hitEntity, dmg, origin: user);
+
+                                // check null again, as TryChangeDamage returns modified damage values
+                                if (dmg != null)
+                                {
+                                    if (!Deleted(hitEntity))
+                                    {
+                                        if (dmg.Any())
+                                        {
+                                            _color.RaiseEffect(Color.Red, new List<EntityUid>() { hitEntity },
+                                                Filter.Pvs(hitEntity, entityManager: EntityManager));
+                                        }
+
+                                        // TODO get fallback position for playing hit sound.
+                                        PlayImpactSound(hitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
+                                    }
+
+                                    if (user != null)
+                                    {
+                                        Logs.Add(LogType.HitScanHit,
+                                            $"{ToPrettyString(user.Value):user} hit {hitName:target} using hitscan and dealt {dmg.GetTotal():damage} damage");
+                                    }
+                                    else
+                                    {
+                                        Logs.Add(LogType.HitScanHit,
+                                            $"{hitName:target} hit by hitscan dealing {dmg.GetTotal():damage} damage");
+                                    }
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        FireEffects(fromEffect, hitscan.MaxLength, dir.ToAngle(), hitscan);
+                        else
+                        {
+                            FireEffects(fromEffect, hitscan.MaxLength, dir.ToAngle(), hitscan);
+                        }
                     }
 
                     Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
@@ -373,7 +425,7 @@ public sealed partial class GunSystem : SharedGunSystem
     // TODO: Pseudo RNG so the client can predict these.
     #region Hitscan effects
 
-    private void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle mapDirection, HitscanPrototype hitscan, EntityUid? hitEntity = null)
+    private void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle mapDirection, HitscanPrototype hitscan, List<EntityUid>? hitEntity = null)
     {
         // Lord
         // Forgive me for the shitcode I am about to do

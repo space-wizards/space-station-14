@@ -80,8 +80,12 @@
   id: XrayLaser
   damage:
     types:
-      Heat: 10
-      Radiation: 10
+      Heat: 5
+      Radiation: 15
+  maxLength: 10
+  canPenetrate: true
+  blockedByRadiationResistance: true
+  collisionMask: BulletImpassable
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_xray
