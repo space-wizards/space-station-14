@@ -9,7 +9,6 @@ using Content.Shared.Gibbing.Components;
 using Content.Shared.Gibbing.Events;
 using Content.Shared.Gibbing.Systems;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -30,8 +29,10 @@ public partial class SharedBodySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly GibbingSystem _gibbingSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+
     private const float GibletLaunchImpulse = 8;
     private const float GibletLaunchImpulseVariance = 3;
+
     private void InitializeBody()
     {
         // Body here to handle root body parts.
@@ -43,7 +44,7 @@ public partial class SharedBodySystem
         SubscribeLocalEvent<BodyComponent, CanDragEvent>(OnBodyCanDrag);
     }
 
-    private void OnBodyInserted(EntityUid uid, BodyComponent component, EntInsertedIntoContainerMessage args)
+    private void OnBodyInserted(Entity<BodyComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
         // Root body part?
         var slotId = args.Container.ID;
@@ -51,21 +52,21 @@ public partial class SharedBodySystem
         if (slotId != BodyRootContainerId)
             return;
 
-        var entity = args.Entity;
+        var insertedUid = args.Entity;
 
-        if (TryComp(entity, out BodyPartComponent? childPart))
+        if (TryComp(insertedUid, out BodyPartComponent? part))
         {
-            AddPart(uid, entity, slotId, childPart);
-            RecursiveBodyUpdate(entity, uid, childPart);
+            AddPart((ent, ent), (insertedUid, part), slotId);
+            RecursiveBodyUpdate((insertedUid, part), ent);
         }
 
-        if (TryComp(entity, out OrganComponent? organ))
+        if (TryComp(insertedUid, out OrganComponent? organ))
         {
-            AddOrgan(entity, uid, uid, organ);
+            AddOrgan((insertedUid, organ), ent, ent);
         }
     }
 
-    private void OnBodyRemoved(EntityUid uid, BodyComponent component, EntRemovedFromContainerMessage args)
+    private void OnBodyRemoved(Entity<BodyComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         // Root body part?
         var slotId = args.Container.ID;
@@ -73,55 +74,55 @@ public partial class SharedBodySystem
         if (slotId != BodyRootContainerId)
             return;
 
-        var entity = args.Entity;
-        DebugTools.Assert(!TryComp(entity, out BodyPartComponent? b) || b.Body == uid);
-        DebugTools.Assert(!TryComp(entity, out OrganComponent? o) || o.Body == uid);
+        var removedUid = args.Entity;
+        DebugTools.Assert(!TryComp(removedUid, out BodyPartComponent? b) || b.Body == ent);
+        DebugTools.Assert(!TryComp(removedUid, out OrganComponent? o) || o.Body == ent);
 
-        if (TryComp(entity, out BodyPartComponent? childPart))
+        if (TryComp(removedUid, out BodyPartComponent? part))
         {
-            RemovePart(uid, entity, slotId, childPart);
-            RecursiveBodyUpdate(entity, null, childPart);
+            RemovePart((ent, ent), (removedUid, part), slotId);
+            RecursiveBodyUpdate((removedUid, part), null);
         }
 
-        if (TryComp(entity, out OrganComponent? organ))
-            RemoveOrgan(entity, uid, organ);
+        if (TryComp(removedUid, out OrganComponent? organ))
+            RemoveOrgan((removedUid, organ), ent);
     }
 
-    private void OnBodyInit(EntityUid bodyId, BodyComponent body, ComponentInit args)
+    private void OnBodyInit(Entity<BodyComponent> ent, ref ComponentInit args)
     {
         // Setup the initial container.
-        body.RootContainer = Containers.EnsureContainer<ContainerSlot>(bodyId, BodyRootContainerId);
+        ent.Comp.RootContainer = Containers.EnsureContainer<ContainerSlot>(ent, BodyRootContainerId);
     }
 
-    private void OnBodyMapInit(EntityUid bodyId, BodyComponent body, MapInitEvent args)
+    private void OnBodyMapInit(Entity<BodyComponent> ent, ref MapInitEvent args)
     {
-        if (body.Prototype == null)
+        if (ent.Comp.Prototype is null)
             return;
 
         // One-time setup
         // Obviously can't run in Init to avoid double-spawns on save / load.
-        var prototype = Prototypes.Index(body.Prototype.Value);
-        MapInitBody(bodyId, prototype);
+        var prototype = Prototypes.Index(ent.Comp.Prototype.Value);
+        MapInitBody(ent, prototype);
     }
 
     private void MapInitBody(EntityUid bodyEntity, BodyPrototype prototype)
     {
         var protoRoot = prototype.Slots[prototype.Root];
-        if (protoRoot.Part == null)
+        if (protoRoot.Part is null)
             return;
 
         // This should already handle adding the entity to the root.
-        var rootPartEntity = SpawnInContainerOrDrop(protoRoot.Part, bodyEntity, BodyRootContainerId);
-        var rootPart = Comp<BodyPartComponent>(rootPartEntity);
+        var rootPartUid = SpawnInContainerOrDrop(protoRoot.Part, bodyEntity, BodyRootContainerId);
+        var rootPart = Comp<BodyPartComponent>(rootPartUid);
         rootPart.Body = bodyEntity;
-        Dirty(rootPartEntity, rootPart);
+        Dirty(rootPartUid, rootPart);
 
         // Setup the rest of the body entities.
-        SetupOrgans(rootPartEntity, rootPart, protoRoot.Organs);
-        MapInitParts(rootPartEntity, prototype);
+        SetupOrgans((rootPartUid, rootPart), protoRoot.Organs);
+        MapInitParts(rootPartUid, prototype);
     }
 
-    private void OnBodyCanDrag(EntityUid uid, BodyComponent component, ref CanDragEvent args)
+    private void OnBodyCanDrag(Entity<BodyComponent> ent, ref CanDragEvent args)
     {
         args.Handled = true;
     }
@@ -169,7 +170,7 @@ public partial class SharedBodySystem
                 var partSlot = CreatePartSlot(parentEntity, connection, childPartComponent.PartType, parentPartComponent);
                 var cont = Containers.GetContainer(parentEntity, GetPartSlotContainerId(connection));
 
-                if (partSlot == null || !Containers.Insert(childPart, cont))
+                if (partSlot is null || !Containers.Insert(childPart, cont))
                 {
                     Log.Error($"Could not create slot for connection {connection} in body {prototype.ID}");
                     QueueDel(childPart);
@@ -177,7 +178,7 @@ public partial class SharedBodySystem
                 }
 
                 // Add organs
-                SetupOrgans(childPart, childPartComponent, connectionSlot.Organs);
+                SetupOrgans((childPart, childPartComponent), connectionSlot.Organs);
 
                 // Enqueue it so we can also get its neighbors.
                 frontier.Enqueue(connection);
@@ -185,16 +186,16 @@ public partial class SharedBodySystem
         }
     }
 
-    private void SetupOrgans(EntityUid partId, BodyPartComponent partComponent, Dictionary<string, string> organs)
+    private void SetupOrgans(Entity<BodyPartComponent> ent, Dictionary<string, string> organs)
     {
         foreach (var (organSlotId, organProto) in organs)
         {
-            var slot = CreateOrganSlot(organSlotId, partId, partComponent);
-            SpawnInContainerOrDrop(organProto, partId, GetOrganContainerId(organSlotId));
+            var slot = CreateOrganSlot((ent, ent), organSlotId);
+            SpawnInContainerOrDrop(organProto, ent, GetOrganContainerId(organSlotId));
 
-            if (slot == null)
+            if (slot is null)
             {
-                Log.Error($"Could not create organ for slot {organSlotId} in {ToPrettyString(partId)}");
+                Log.Error($"Could not create organ for slot {organSlotId} in {ToPrettyString(ent)}");
             }
         }
     }
@@ -202,12 +203,14 @@ public partial class SharedBodySystem
     /// <summary>
     /// Gets all body containers on this entity including the root one.
     /// </summary>
-    public IEnumerable<BaseContainer> GetBodyContainers(EntityUid id, BodyComponent? body = null,
+    public IEnumerable<BaseContainer> GetBodyContainers(
+        EntityUid id,
+        BodyComponent? body = null,
         BodyPartComponent? rootPart = null)
     {
-        if (!Resolve(id, ref body, false) ||
-            body.RootContainer.ContainedEntity == null ||
-            !Resolve(body.RootContainer.ContainedEntity.Value, ref rootPart))
+        if (!Resolve(id, ref body, logMissing: false)
+            || body.RootContainer.ContainedEntity is null
+            || !Resolve(body.RootContainer.ContainedEntity.Value, ref rootPart))
         {
             yield break;
         }
@@ -223,13 +226,15 @@ public partial class SharedBodySystem
     /// <summary>
     /// Gets all child body parts of this entity, including the root entity.
     /// </summary>
-    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildren(EntityUid? id, BodyComponent? body = null,
+    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildren(
+        EntityUid? id,
+        BodyComponent? body = null,
         BodyPartComponent? rootPart = null)
     {
-        if (id == null ||
-            !Resolve(id.Value, ref body, false) ||
-            body.RootContainer.ContainedEntity == null ||
-            !Resolve(body.RootContainer.ContainedEntity.Value, ref rootPart))
+        if (id is null
+            || !Resolve(id.Value, ref body, logMissing: false)
+            || body.RootContainer.ContainedEntity is null
+            || !Resolve(body.RootContainer.ContainedEntity.Value, ref rootPart))
         {
             yield break;
         }
@@ -240,9 +245,11 @@ public partial class SharedBodySystem
         }
     }
 
-    public IEnumerable<(EntityUid Id, OrganComponent Component)> GetBodyOrgans(EntityUid? bodyId, BodyComponent? body = null)
+    public IEnumerable<(EntityUid Id, OrganComponent Component)> GetBodyOrgans(
+        EntityUid? bodyId,
+        BodyComponent? body = null)
     {
-        if (bodyId == null || !Resolve(bodyId.Value, ref body, false))
+        if (bodyId is null || !Resolve(bodyId.Value, ref body, logMissing: false))
             yield break;
 
         foreach (var part in GetBodyChildren(bodyId, body))
@@ -260,10 +267,15 @@ public partial class SharedBodySystem
     /// <param name="bodyId"></param>
     /// <param name="body"></param>
     /// <returns></returns>
-    public IEnumerable<BodyPartSlot> GetBodyAllSlots(EntityUid bodyId, BodyComponent? body = null)
+    public IEnumerable<BodyPartSlot> GetBodyAllSlots(
+        EntityUid bodyId,
+        BodyComponent? body = null)
     {
-        if (!Resolve(bodyId, ref body, false) || body.RootContainer.ContainedEntity == null)
+        if (!Resolve(bodyId, ref body, logMissing: false)
+            || body.RootContainer.ContainedEntity is null)
+        {
             yield break;
+        }
 
         foreach (var slot in GetAllBodyPartSlots(body.RootContainer.ContainedEntity.Value))
         {
@@ -279,12 +291,11 @@ public partial class SharedBodySystem
         Vector2? splatDirection = null,
         float splatModifier = 1,
         Angle splatCone = default,
-        SoundSpecifier? gibSoundOverride = null
-        )
+        SoundSpecifier? gibSoundOverride = null)
     {
         var gibs = new HashSet<EntityUid>();
 
-        if (!Resolve(bodyId, ref body, false))
+        if (!Resolve(bodyId, ref body, logMissing: false))
             return gibs;
 
         var root = GetRootPartOrNull(bodyId, body);
@@ -311,7 +322,7 @@ public partial class SharedBodySystem
                     launchImpulseVariance:GibletLaunchImpulseVariance, launchCone: splatCone);
             }
         }
-        if(TryComp<InventoryComponent>(bodyId, out var inventory))
+        if (TryComp<InventoryComponent>(bodyId, out var inventory))
         {
             foreach (var item in _inventory.GetHandOrInventoryEntities(bodyId))
             {
