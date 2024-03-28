@@ -2,6 +2,7 @@ using Content.Server.Explosion.Components;
 using Content.Server.Sticky.Events;
 using Content.Shared.Examine;
 using Content.Shared.Explosion.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -14,7 +15,7 @@ public sealed partial class TriggerSystem
 
     private void InitializeOnUse()
     {
-        SubscribeLocalEvent<OnUseTimerTriggerComponent, UseInHandEvent>(OnTimerUse);
+        SubscribeLocalEvent<OnUseTimerTriggerComponent, ActivateInWorldEvent>(OnTimerUse);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, EntityStuckEvent>(OnStuck);
@@ -166,7 +167,7 @@ public sealed partial class TriggerSystem
         }
     }
 
-    private void OnTimerUse(EntityUid uid, OnUseTimerTriggerComponent component, UseInHandEvent args)
+    private void OnTimerUse(EntityUid uid, OnUseTimerTriggerComponent component, ActivateInWorldEvent args)
     {
         if (args.Handled || HasComp<AutomatedTimerComponent>(uid) || component.UseVerbInstead)
             return;

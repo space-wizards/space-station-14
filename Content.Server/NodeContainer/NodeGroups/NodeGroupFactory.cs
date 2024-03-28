@@ -68,5 +68,6 @@ namespace Content.Server.NodeContainer.NodeGroups
         /// <seealso cref="TegSystem"/>
         /// <seealso cref="TegNodeGroup"/>
         Teg,
+        ExCable,
     }
 }

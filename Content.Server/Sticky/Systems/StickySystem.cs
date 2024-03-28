@@ -1,3 +1,4 @@
+using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Sticky.Components;
 using Content.Server.Sticky.Events;
@@ -29,6 +30,15 @@ public sealed class StickySystem : EntitySystem
         SubscribeLocalEvent<StickyComponent, StickyDoAfterEvent>(OnStickFinished);
         SubscribeLocalEvent<StickyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StickyComponent, GetVerbsEvent<Verb>>(AddUnstickVerb);
+        SubscribeLocalEvent<StickyComponent, CanInteractWhileInsideContainerEvent>(OnCanInteractWhileInsideContainer);
+    }
+
+    private void OnCanInteractWhileInsideContainer(EntityUid uid, StickyComponent component, CanInteractWhileInsideContainerEvent args)
+    {
+        if (args.Container.ID != StickerSlotId)
+            return;
+
+        args.Handled = true;
     }
 
     private void OnAfterInteract(EntityUid uid, StickyComponent component, AfterInteractEvent args)

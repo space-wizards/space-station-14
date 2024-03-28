@@ -101,6 +101,8 @@
   - FlashPayload
   - ExplosivePayload
   - ChemicalPayload
+  - CableDetStack
+  - EmptyDetonator
 
 - type: technology
   id: ConcentratedLaserWeaponry

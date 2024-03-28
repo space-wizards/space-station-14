@@ -184,3 +184,70 @@
         acts: [ "Destruction" ]
   - type: CableVisualizer
     statePrefix: lvcable_
+
+# Explosive cable below
+
+- type: entity
+  name: explosive cord
+  id: CableDet
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+    noRot: true
+  # TODO: Remove both of these, same with CollideOnAnchor
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+  - type: Sprite
+    color: Yellow
+    sprite: Structures/Power/Cables/ex_cable.rsi
+    state: excable_0
+  - type: Icon
+    color: Yellow
+    sprite: Structures/Power/Cables/ex_cable.rsi
+    state: excable_4
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 22
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:ExplodeBehavior
+  - type: CollideOnAnchor
+  - type: Appearance
+  - type: CableVis
+    node: cordage
+  - type: NodeContainer
+    nodes:
+      cordage:
+        !type:CableNode
+        nodeGroupID: ExCable
+  - type: CableVisualizer
+    statePrefix: excable_
+  - type: Explosive
+    explosionType: DemolitionCharge
+    totalIntensity: 10
+    intensitySlope: 5
+    maxIntensity: 5
+    canCreateVacuum: false
+  - type: TriggerOnSignal
+  - type: DeviceLinkSink
+    ports:
+      - Trigger
+  - type: ExplodeOnTrigger
+  - type: Construction
+    graph: DetCable
+    node: detonationCable
+  - type: Tag
+    tags:
+    - ExCable
