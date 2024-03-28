@@ -419,6 +419,62 @@
     Cloth: 300
 
 - type: latheRecipe
+  id: ClothingOuterCoatLab
+  result: ClothingOuterCoatLab
+  completetime: 5
+  materials:
+    Cloth: 400
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitVirology
+  result: ClothingUniformJumpsuitVirology
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtVirology
+  result: ClothingUniformJumpskirtVirology
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingOuterCoatLabViro
+  result: ClothingOuterCoatLabViro
+  completetime: 5
+  materials:
+    Cloth: 400
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitGenetics
+  result: ClothingUniformJumpsuitGenetics
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtGenetics
+  result: ClothingUniformJumpskirtGenetics
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingOuterCoatLabGene
+  result: ClothingOuterCoatLabGene
+  completetime: 5
+  materials:
+    Cloth: 400
+
+- type: latheRecipe
+  id: ClothingOuterCoatLabChem
+  result: ClothingOuterCoatLabChem
+  completetime: 5
+  materials:
+    Cloth: 400
+
+- type: latheRecipe
   id: ClothingUniformJumpsuitSeniorPhysician
   result: ClothingUniformJumpsuitSeniorPhysician
   completetime: 4
@@ -431,6 +487,13 @@
   completetime: 4
   materials:
     Cloth: 300
+
+- type: latheRecipe
+  id: ClothingOuterCoatLabSeniorPhysician
+  result: ClothingOuterCoatLabSeniorPhysician
+  completetime: 5
+  materials:
+    Cloth: 400
 
 - type: latheRecipe
   id: ClothingUniformJumpsuitMime
