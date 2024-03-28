@@ -23,7 +23,7 @@ namespace Content.Client.GameTicking.Managers
         /// <summary>
         /// The current round-end window. Could be used to support re-opening the window after closing it.
         /// </summary>
-        private RoundEndSummaryWindow? _window;
+        public RoundEndSummaryWindow? Window;
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
@@ -61,6 +61,8 @@ namespace Content.Client.GameTicking.Managers
             SubscribeNetworkEvent<TickerJobsAvailableEvent>(UpdateJobsAvailable);
 
             _initialized = true;
+
+            Window = new RoundEndSummaryWindow(_entityManager);
         }
 
         private void LateJoinStatus(TickerLateJoinStatusEvent message)
@@ -133,11 +135,11 @@ namespace Content.Client.GameTicking.Managers
             RestartSound = message.RestartSound;
 
             // Don't open duplicate windows (mainly for replays).
-            if (_window?.RoundId == message.RoundId)
+            if (Window?.RoundId == message.RoundId)
                 return;
 
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
-            _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, _entityManager);
+            Window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, _entityManager);
         }
     }
 }
