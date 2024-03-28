@@ -106,9 +106,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             if (!MathHelper.CloseTo(electrocution.TimeLeft, 0))
                 continue;
 
-            // Welcome to the grave of power-based electrocution damage.
-            // Do not re-add this. Someone is going to make a cranked up 30 MW hog and insta kill half the station.
-            // It isn't worth it. You've been warned. -emo
+            // We tried damage scaling based on power in the past and it really wasn't good.
+            // Various scaling types didn't fix tiders and HV grilles instantly critting players.
 
             QueueDel(uid);
         }
