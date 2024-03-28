@@ -63,6 +63,8 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/meson.rsi
   - type: EyeProtection
+  - type: Meson
+    mesonType: Walls
 
 - type: entity
   parent: ClothingEyesBase

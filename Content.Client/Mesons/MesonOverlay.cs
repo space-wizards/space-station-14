@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Mesons;
 
-public sealed class MesonOverlay : Overlay
+public sealed partial class MesonOverlay : Overlay
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -31,7 +31,7 @@ public sealed class MesonOverlay : Overlay
 
         var playerEntity = _playerManager.LocalSession?.AttachedEntity;
 
-        if (playerEntity == null)
+        if (playerEntity is null)
             return false;
 
         return true;
