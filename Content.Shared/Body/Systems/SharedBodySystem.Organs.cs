@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
@@ -9,7 +9,10 @@ namespace Content.Shared.Body.Systems;
 
 public partial class SharedBodySystem
 {
-    private void AddOrgan(EntityUid uid, EntityUid bodyUid, EntityUid parentPartUid, OrganComponent component)
+    private void AddOrgan(
+        Entity<OrganComponent> organEnt,
+        EntityUid bodyUid,
+        EntityUid parentPartUid)
     {
         component.Body = bodyUid;
         var ev = new OrganAddedEvent(new Entity<BodyPartComponent>(parentPartUid, Comp<BodyPartComponent>(parentPartUid)));
@@ -25,12 +28,12 @@ public partial class SharedBodySystem
         Dirty(uid, component);
     }
 
-    private void RemoveOrgan(EntityUid uid, EntityUid parentPartUid, OrganComponent component)
+    private void RemoveOrgan(Entity<OrganComponent> organEnt, EntityUid parentPartUid)
     {
         var ev = new OrganRemovedEvent(new Entity<BodyPartComponent>(parentPartUid, Comp<BodyPartComponent>(parentPartUid)));
         RaiseLocalEvent(uid, ref ev);
 
-        if (component.Body != null)
+        if (organEnt.Comp.Body is { Valid: true } bodyUid)
         {
             var ev2 = new OrganRemovedFromBodyEvent(
                 new Entity<BodyComponent>(component.Body.Value, Comp<BodyComponent>(component.Body.Value)),
@@ -38,21 +41,21 @@ public partial class SharedBodySystem
             RaiseLocalEvent(uid, ref ev2);
         }
 
-        component.Body = null;
-        Dirty(uid, component);
+        organEnt.Comp.Body = null;
+        Dirty(organEnt, organEnt.Comp);
     }
 
     /// <summary>
     /// Creates the specified organ slot on the parent entity.
     /// </summary>
-    private OrganSlot? CreateOrganSlot(string slotId, EntityUid parent, BodyPartComponent? part = null)
+    private OrganSlot? CreateOrganSlot(Entity<BodyPartComponent?> parentEnt, string slotId)
     {
-        if (!Resolve(parent, ref part, false))
+        if (!Resolve(parentEnt, ref parentEnt.Comp, logMissing: false))
             return null;
 
-        Containers.EnsureContainer<ContainerSlot>(parent, GetOrganContainerId(slotId));
+        Containers.EnsureContainer<ContainerSlot>(parentEnt, GetOrganContainerId(slotId));
         var slot = new OrganSlot(slotId);
-        part.Organs.Add(slotId, slot);
+        parentEnt.Comp.Organs.Add(slotId, slot);
         return slot;
     }
 
@@ -67,20 +70,23 @@ public partial class SharedBodySystem
     {
         slot = null;
 
-        if (parent == null || !Resolve(parent.Value, ref part, false))
+        if (parent is null || !Resolve(parent.Value, ref part, logMissing: false))
         {
             return false;
         }
 
         Containers.EnsureContainer<ContainerSlot>(parent.Value, GetOrganContainerId(slotId));
         slot = new OrganSlot(slotId);
-        return part.Organs.TryAdd(slotId,slot.Value);
+        return part.Organs.TryAdd(slotId, slot.Value);
     }
 
     /// <summary>
     /// Returns whether the slotId exists on the partId.
     /// </summary>
-    public bool CanInsertOrgan(EntityUid partId, string slotId, BodyPartComponent? part = null)
+    public bool CanInsertOrgan(
+        EntityUid partId,
+        string slotId,
+        BodyPartComponent? part = null)
     {
         return Resolve(partId, ref part) && part.Organs.ContainsKey(slotId);
     }
@@ -88,26 +94,32 @@ public partial class SharedBodySystem
     /// <summary>
     /// Returns whether the specified organ slot exists on the partId.
     /// </summary>
-    public bool CanInsertOrgan(EntityUid partId, OrganSlot slot, BodyPartComponent? part = null)
+    public bool CanInsertOrgan(
+        EntityUid partId,
+        OrganSlot slot,
+        BodyPartComponent? part = null)
     {
         return CanInsertOrgan(partId, slot.Id, part);
     }
 
-    public bool InsertOrgan(EntityUid partId, EntityUid organId, string slotId, BodyPartComponent? part = null, OrganComponent? organ = null)
+    public bool InsertOrgan(
+        EntityUid partId,
+        EntityUid organId,
+        string slotId,
+        BodyPartComponent? part = null,
+        OrganComponent? organ = null)
     {
-        if (!Resolve(organId, ref organ, false) ||
-            !Resolve(partId, ref part, false) ||
-            !CanInsertOrgan(partId, slotId, part))
+        if (!Resolve(organId, ref organ, logMissing: false)
+            || !Resolve(partId, ref part, logMissing: false)
+            || !CanInsertOrgan(partId, slotId, part))
         {
             return false;
         }
 
         var containerId = GetOrganContainerId(slotId);
 
-        if (!Containers.TryGetContainer(partId, containerId, out var container))
-            return false;
-
-        return Containers.Insert(organId, container);
+        return Containers.TryGetContainer(partId, containerId, out var container)
+            && Containers.Insert(organId, container);
     }
 
     /// <summary>
@@ -120,10 +132,8 @@ public partial class SharedBodySystem
 
         var parent = container.Owner;
 
-        if (!HasComp<BodyPartComponent>(parent))
-            return false;
-
-        return Containers.Remove(organId, container);
+        return HasComp<BodyPartComponent>(parent)
+            && Containers.Remove(organId, container);
     }
 
     /// <summary>
@@ -135,8 +145,8 @@ public partial class SharedBodySystem
         BodyPartComponent? part = null,
         OrganComponent? organ = null)
     {
-        if (!Resolve(partId, ref part, false) ||
-            !Resolve(organId, ref organ, false))
+        if (!Resolve(partId, ref part, logMissing: false)
+            || !Resolve(organId, ref organ, logMissing: false))
         {
             return false;
         }

@@ -1,12 +1,8 @@
-﻿namespace Content.Shared.Body.Events
-{
-    public sealed class SweatAttemptEvent : CancellableEntityEventArgs
-    {
-        public SweatAttemptEvent(EntityUid uid)
-        {
-            Uid = uid;
-        }
+namespace Content.Shared.Body.Events;
 
-        public EntityUid Uid { get; }
-    }
+[ByRefEvent]
+public record struct SweatAttemptEvent(EntityUid Uid)
+{
+    public readonly EntityUid Uid = Uid;
+    public bool Cancelled = false;
 }

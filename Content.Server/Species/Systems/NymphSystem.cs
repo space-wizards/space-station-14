@@ -22,7 +22,7 @@ public sealed partial class NymphSystem : EntitySystem
         SubscribeLocalEvent<NymphComponent, OrganRemovedFromBodyEvent>(OnRemovedFromPart);
     }
 
-    private void OnRemovedFromPart(EntityUid uid, NymphComponent comp, OrganRemovedFromBodyEvent args)
+    private void OnRemovedFromPart(EntityUid uid, NymphComponent comp, ref OrganRemovedFromBodyEvent args)
     {
         if (!_timing.IsFirstTimePredicted)
             return;

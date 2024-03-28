@@ -165,9 +165,8 @@ namespace Content.Server.Medical.BiomassReclaimer
             var delay = reclaimer.Comp.BaseInsertionDelay * physics.FixturesMass;
             _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, delay, new ReclaimerDoAfterEvent(), reclaimer, target: args.Target, used: args.Used)
             {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
-                NeedHand = true
+                NeedHand = true,
+                BreakOnMove = true
             });
         }
 

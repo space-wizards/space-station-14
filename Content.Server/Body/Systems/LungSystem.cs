@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.Components;
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
@@ -26,21 +26,24 @@ public sealed class LungSystem : EntitySystem
         SubscribeLocalEvent<BreathToolComponent, ItemMaskToggledEvent>(OnMaskToggled);
     }
 
-    private void OnGotUnequipped(EntityUid uid, BreathToolComponent component, GotUnequippedEvent args)
+    private void OnGotUnequipped(Entity<BreathToolComponent> ent, ref GotUnequippedEvent args)
     {
-        _atmosphereSystem.DisconnectInternals(component);
+        _atmosphereSystem.DisconnectInternals(ent);
     }
 
-    private void OnGotEquipped(EntityUid uid, BreathToolComponent component, GotEquippedEvent args)
+    private void OnGotEquipped(Entity<BreathToolComponent> ent, ref GotEquippedEvent args)
     {
+        if ((args.SlotFlags & ent.Comp.AllowedSlots) == 0)
+        {
+            return;
+        }
 
-        if ((args.SlotFlags & component.AllowedSlots) == 0) return;
-        component.IsFunctional = true;
+        ent.Comp.IsFunctional = true;
 
         if (TryComp(args.Equipee, out InternalsComponent? internals))
         {
-            component.ConnectedInternalsEntity = args.Equipee;
-            _internals.ConnectBreathTool((args.Equipee, internals), uid);
+            ent.Comp.ConnectedInternalsEntity = args.Equipee;
+            _internals.ConnectBreathTool((args.Equipee, internals), ent);
         }
     }
 
@@ -77,11 +80,11 @@ public sealed class LungSystem : EntitySystem
         foreach (var gas in Enum.GetValues<Gas>())
         {
             var i = (int) gas;
-            var moles = lung.Air.Moles[i];
+            var moles = lung.Air[i];
             if (moles <= 0)
                 continue;
             var reagent = _atmosphereSystem.GasReagents[i];
-            if (reagent == null) continue;
+            if (reagent is null) continue;
 
             var amount = moles * Atmospherics.BreathMolesToReagentMultiplier;
             solution.AddReagent(reagent, amount);
