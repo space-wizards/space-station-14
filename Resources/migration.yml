@@ -213,6 +213,10 @@ VehicleJanicartDestroyed: null
 YellowOxygenTank: OxygenTank
 YellowOxygenTankFilled: OxygenTankFilled
 
+# 2024-02-12
+FoodDonutBlumpkin: FoodDonutBluePumpkin
+FoodDonutJellyBlumpkin: FoodDonutJellyBluePumpkin
+
 # 2024-02-19
 Drone: null
 SpawnMobDrone: null
