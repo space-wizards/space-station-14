@@ -35,12 +35,25 @@
   parent: BaseFoam
   id: Smoke
   name: smoke
-  noSpawn: true
   components:
   - type: Occluder
   - type: Sprite
     sprite: Effects/chemsmoke.rsi
     state: chemsmoke
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: BaseFoam
+  id: Mist
+  name: mist
+  components:
+  - type: Sprite
+    sprite: Effects/chemmist.rsi
+    state: chemmist
   - type: TimedDespawn
     lifetime: 10
   - type: Tag

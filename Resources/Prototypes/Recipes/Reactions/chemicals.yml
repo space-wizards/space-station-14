@@ -136,6 +136,24 @@
         path: /Audio/Effects/smoke.ogg
 
 - type: reaction
+  id: Mist
+  priority: 10
+  impact: High
+  reactants:
+    Phosphorus:
+      amount: 1
+    Sodium:
+      amount: 1
+    Sugar:
+      amount: 1
+  effects:
+    - !type:AreaReactionEffect
+      duration: 10
+      prototypeId: Mist
+      sound:
+        path: /Audio/Effects/smoke.ogg
+
+- type: reaction
   id: Foam
   priority: 10
   impact: High
