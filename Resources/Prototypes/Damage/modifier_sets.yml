@@ -297,7 +297,7 @@
     Heat: 2.5
     Caustic: 0.0
 
-# terminator's flesh damage set
+# exterminator's flesh damage set
 - type: damageModifierSet
   id: CyberneticFlesh
   coefficients:
@@ -314,7 +314,7 @@
     Poison: 0.0
     Cellular: 0.0
 
-# terminator's endoskeleton damage set
+# exterminator's endoskeleton damage set
 - type: damageModifierSet
   id: Cybernetic
   coefficients:

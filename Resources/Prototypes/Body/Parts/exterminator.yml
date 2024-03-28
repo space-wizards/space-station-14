@@ -1,13 +1,13 @@
 - type: entity
   abstract: true
   parent: BaseItem
-  id: PartTerminator
+  id: PartExterminator
   name: nt-800 body part
   components:
   - type: Sprite
-    sprite: Mobs/Species/Terminator/parts.rsi
+    sprite: Mobs/Species/Exterminator/parts.rsi
   - type: Icon
-    sprite: Mobs/Species/Terminator/parts.rsi
+    sprite: Mobs/Species/Exterminator/parts.rsi
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Cybernetic
@@ -21,8 +21,8 @@
     price: 200
 
 - type: entity
-  parent: PartTerminator
-  id: TorsoTerminator
+  parent: PartExterminator
+  id: TorsoExterminator
   name: nt-800 torso
   components:
   - type: Sprite
@@ -33,8 +33,8 @@
     partType: Torso
 
 - type: entity
-  parent: PartTerminator
-  id: HeadTerminator
+  parent: PartExterminator
+  id: HeadExterminator
   name: nt-800 skull
   description: Its red eyes have powered down... for now.
   components:
@@ -44,7 +44,7 @@
     state: skull_icon
   - type: BodyPart
     partType: Head
-  # killing a terminators worth big bucks
+  # killing an exterminators worth big bucks
   - type: StaticPrice
     price: 2000
   - type: Tag
@@ -52,8 +52,8 @@
     - Head
 
 - type: entity
-  parent: PartTerminator
-  id: LeftArmTerminator
+  parent: PartExterminator
+  id: LeftArmExterminator
   name: left nt-800 arm
   components:
   - type: Sprite
@@ -65,8 +65,8 @@
     symmetry: Left
 
 - type: entity
-  parent: PartTerminator
-  id: RightArmTerminator
+  parent: PartExterminator
+  id: RightArmExterminator
   name: right nt-800 arm
   components:
   - type: Sprite
@@ -78,8 +78,8 @@
     symmetry: Right
 
 - type: entity
-  parent: PartTerminator
-  id: LeftHandTerminator
+  parent: PartExterminator
+  id: LeftHandExterminator
   name: left nt-800 hand
   components:
   - type: Sprite
@@ -91,8 +91,8 @@
     symmetry: Left
 
 - type: entity
-  parent: PartTerminator
-  id: RightHandTerminator
+  parent: PartExterminator
+  id: RightHandExterminator
   name: right nt-800 hand
   components:
   - type: Sprite
@@ -104,8 +104,8 @@
     symmetry: Right
 
 - type: entity
-  parent: PartTerminator
-  id: LeftLegTerminator
+  parent: PartExterminator
+  id: LeftLegExterminator
   name: left nt-800 leg
   components:
   - type: Sprite
@@ -118,8 +118,8 @@
   - type: MovementBodyPart
 
 - type: entity
-  parent: PartTerminator
-  id: RightLegTerminator
+  parent: PartExterminator
+  id: RightLegExterminator
   name: right nt-800 leg
   components:
   - type: Sprite
@@ -132,8 +132,8 @@
   - type: MovementBodyPart
 
 - type: entity
-  parent: PartTerminator
-  id: LeftFootTerminator
+  parent: PartExterminator
+  id: LeftFootExterminator
   name: left nt-800 foot
   components:
   - type: Sprite
@@ -145,8 +145,8 @@
     symmetry: Left
 
 - type: entity
-  parent: PartTerminator
-  id: RightFootTerminator
+  parent: PartExterminator
+  id: RightFootExterminator
   name: right nt-800 foot
   components:
   - type: Sprite

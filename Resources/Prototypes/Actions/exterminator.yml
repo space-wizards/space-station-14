@@ -1,0 +1,14 @@
+- type: entity
+  id: ActionExterminatorFreedom
+  name: Break Free
+  description: Use your superhuman strength to break out of any hand restraints.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    itemIconStyle: BigAction
+    priority: 18
+    icon:
+      sprite: Actions/Implants/implants.rsi
+      state: freedom
+    event: !type:BreakFreeEvent

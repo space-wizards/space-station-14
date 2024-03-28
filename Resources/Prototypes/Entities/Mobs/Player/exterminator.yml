@@ -1,30 +1,32 @@
 # stuff common to flesh and endoskeleton
 - type: entity
   abstract: true
-  id: MobTerminatorBase
+  id: MobExterminatorBase
   components:
   - type: ZombieImmune # yeah no
   - type: FlashImmunity # no brain to brainwash, eyes are robotic
-
-- type: entity
-  parent: [MobHuman, MobTerminatorBase]
-  id: MobHumanTerminator
-  # uses random name generator dont worry
-  name: exterminator
-  components:
-  - type: Terminator
-  - type: GenericAntag
-    rule: Exterminator
-  # reduced barotrauma damage
-  - type: Barotrauma
-    damage:
-      types:
-        Blunt: 0.1
   # 4x stamina, faster recovery
   - type: Stamina
     decay: 6
     cooldown: 1
     critThreshold: 400
+
+- type: entity
+  parent: [MobHuman, MobExterminatorBase]
+  id: MobHumanExterminator
+  # uses random name generator dont worry
+  name: exterminator
+  components:
+  - type: Exterminator
+  - type: GenericAntag
+    rule: Exterminator
+  - type: Freedom
+    action: ActionExterminatorFreedom
+  # reduced barotrauma damage
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.1
   # immune to space drugs, pax, temporary blindness
   - type: StatusEffects
     allowed:
@@ -60,12 +62,12 @@
   - type: Temperature
     heatDamageThreshold: 390
     coldDamageThreshold: 240
-  # take terminator flesh damage
+  # take exterminator flesh damage
   - type: Damageable
     damageModifierSet: CyberneticFlesh
   # only organ is an endoskeleton, which is transferred when flesh dies
   - type: Body
-    prototype: TerminatorFlesh
+    prototype: ExterminatorFlesh
   # endoskeleton transformation when either you would get burned to crit or killed by any damage
   # you will become an endoskeleton as your last chance to kill the target
   - type: Destructible
@@ -77,7 +79,7 @@
         damage: 100
       behaviors:
       - !type:PopupBehavior
-        popup: terminator-endoskeleton-burn-popup
+        popup: exterminator-endoskeleton-burn-popup
         popupType: LargeCaution
       - !type:GibBehavior
     - trigger:
@@ -85,9 +87,14 @@
         damage: 200
       behaviors:
       - !type:PopupBehavior
-        popup: terminator-endoskeleton-gib-popup
+        popup: exterminator-endoskeleton-gib-popup
         popupType: LargeCaution
       - !type:GibBehavior
+  # dont need to eat
+  - type: Hunger
+    baseDecayRate: 0
+  - type: Thirst
+    baseDecayRate: 0
   # faster than humans when damaged
   - type: SlowOnDamage
     speedModifierThresholds:
@@ -113,19 +120,19 @@
   - MobCombat
   - MobDamageable
   - MobSiliconBase
-  - MobTerminatorBase
-  id: MobTerminatorEndoskeleton
+  - MobExterminatorBase
+  id: MobExterminatorEndoskeleton
   # you are now valid
   name: nt-800 "exterminator" endoskeleton
   description: The inner powerhouse of Susnet's infiltrator androids. Ridiculously hard alloy on the inside, unassuming flesh on the outside.
   components:
   - type: HumanoidAppearance
-    species: Terminator
+    species: Exterminator
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.5
     baseSprintSpeed: 3.0
   - type: Sprite
-    sprite: Mobs/Species/Terminator/parts.rsi
+    sprite: Mobs/Species/Exterminator/parts.rsi
   - type: Fixtures
     fixtures:
       fix1:
@@ -143,13 +150,13 @@
       0: Alive
       # gibbed at 200 so cant go crit
       200: Dead
-  # incase some weird stuff happens and the crew adopts a terminator
+  # incase some weird stuff happens and the crew adopts an exterminator
   - type: Repairable
     doAfterDelay: 15
     allowSelfRepair: false
   - type: Body
-    prototype: TerminatorEndoskeleton
-  # lets it sit in the terminator flesh's brain slot
+    prototype: ExterminatorEndoskeleton
+  # lets it sit in the exterminator flesh's brain slot
   - type: Organ
   - type: Brain
   - type: TypingIndicator
@@ -170,7 +177,7 @@
       # a keepsake or a gift for cargo
       - !type:SpawnEntitiesBehavior
         spawn:
-          HeadTerminator:
+          HeadExterminator:
             min: 1
             max: 1
       - !type:DoActsBehavior

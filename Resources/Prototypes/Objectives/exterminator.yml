@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   parent: BaseObjective
-  id: BaseTerminatorObjective
+  id: BaseExterminatorObjective
   components:
   - type: Objective
     difficulty: 1
@@ -9,11 +9,11 @@
   - type: RoleRequirement
     roles:
       components:
-      - TerminatorRole
+      - ExterminatorRole
 
 - type: entity
   noSpawn: true
-  parent: [BaseTerminatorObjective, BaseKillObjective]
+  parent: [BaseExterminatorObjective, BaseKillObjective]
   id: TerminateObjective
   description: Follow your programming and terminate the target.
   components:
@@ -22,19 +22,19 @@
   - type: TargetObjective
     title: objective-terminate-title
   - type: PickRandomPerson
-  - type: TerminatorTargetOverride
+  - type: ExterminatorTargetOverride
   - type: KillPersonCondition
     requireDead: true
 
 - type: entity
   noSpawn: true
-  parent: BaseTerminatorObjective
+  parent: BaseExterminatorObjective
   id: ShutDownObjective
   name: Shut down
   description: Once the mission is complete die to prevent our technology from being stolen.
   components:
   - type: Objective
     icon:
-      sprite: Mobs/Species/Terminator/parts.rsi
+      sprite: Mobs/Species/Exterminator/parts.rsi
       state: skull_icon
   - type: DieCondition

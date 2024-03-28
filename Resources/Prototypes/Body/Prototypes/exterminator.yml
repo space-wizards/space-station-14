@@ -1,6 +1,6 @@
 # not quite human...
 - type: body
-  id: TerminatorFlesh
+  id: ExterminatorFlesh
   name: exterminator
   root: torso
   slots:
@@ -9,7 +9,7 @@
       connections:
       - torso
       organs:
-        brain: MobTerminatorEndoskeleton
+        brain: MobExterminatorEndoskeleton
     torso:
       part: TorsoHuman
       connections:
@@ -42,44 +42,43 @@
     left foot:
       part: LeftFootHuman
 
-# TODO: terminator body parts
 - type: body
-  id: TerminatorEndoskeleton
-  name: terminatorEndoskeleton
+  id: ExterminatorEndoskeleton
+  name: exterminatorEndoskeleton
   root: torso
   slots:
     head:
-      part: HeadTerminator
+      part: HeadExterminator
       connections:
       - torso
     torso:
-      part: TorsoTerminator
+      part: TorsoExterminator
       connections:
       - left arm
       - right arm
       - left leg
       - right leg
     right arm:
-      part: RightArmTerminator
+      part: RightArmExterminator
       connections:
       - right hand
     left arm:
-      part: LeftArmTerminator
+      part: LeftArmExterminator
       connections:
       - left hand
     right hand:
-      part: RightHandTerminator
+      part: RightHandExterminator
     left hand:
-      part: LeftHandTerminator
+      part: LeftHandExterminator
     right leg:
-      part: RightLegTerminator
+      part: RightLegExterminator
       connections:
       - right foot
     left leg:
-      part: LeftLegTerminator
+      part: LeftLegExterminator
       connections:
       - left foot
     right foot:
-      part: RightFootTerminator
+      part: RightFootExterminator
     left foot:
-      part: LeftFootTerminator
+      part: LeftFootExterminator

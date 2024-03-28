@@ -1,0 +1,6 @@
+- type: antag
+  id: Exterminator
+  name: roles-antag-exterminator-name
+  antagonist: true
+  setPreference: false
+  objective: roles-antag-exterminator-objective

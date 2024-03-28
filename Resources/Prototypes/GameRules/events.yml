@@ -283,7 +283,7 @@
 
 - type: entity
   parent: BaseGameRule
-  id: TerminatorSpawn
+  id: ExterminatorSpawn
   noSpawn: true
   components:
   - type: StationEvent
@@ -292,7 +292,7 @@
     earliestStart: 30
     minimumPlayers: 20
   - type: RandomSpawnRule
-    prototype: SpawnPointGhostTerminator
+    prototype: SpawnPointGhostExterminator
 
 - type: entity
   id: VentClog

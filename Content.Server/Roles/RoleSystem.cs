@@ -10,12 +10,12 @@ public sealed class RoleSystem : SharedRoleSystem
         base.Initialize();
 
         SubscribeAntagEvents<DragonRoleComponent>();
+        SubscribeAntagEvents<ExterminatorRoleComponent>();
         SubscribeAntagEvents<InitialInfectedRoleComponent>();
         SubscribeAntagEvents<NinjaRoleComponent>();
         SubscribeAntagEvents<NukeopsRoleComponent>();
         SubscribeAntagEvents<RevolutionaryRoleComponent>();
         SubscribeAntagEvents<SubvertedSiliconRoleComponent>();
-        SubscribeAntagEvents<TerminatorRoleComponent>();
         SubscribeAntagEvents<TraitorRoleComponent>();
         SubscribeAntagEvents<ZombieRoleComponent>();
         SubscribeAntagEvents<ThiefRoleComponent>();

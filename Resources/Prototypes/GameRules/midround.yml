@@ -41,7 +41,7 @@
   id: Exterminator
   components:
   - type: GenericAntagRule
-    agentName: terminator-round-end-agent-name
+    agentName: exterminator-round-end-agent-name
     objectives:
     - TerminateObjective
     - ShutDownObjective
