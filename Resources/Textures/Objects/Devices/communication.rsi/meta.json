@@ -69,8 +69,11 @@
       "name": "off-walkietalkie-inhand-left",
       "directions": 4
     },
-	{
+	  {
       "name": "old-radio"
+    },
+    {
+      "name": "old-radio-off"
     },
     {
       "name": "old-radio-inhand-left",
@@ -78,6 +81,14 @@
     },
     {
       "name": "old-radio-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "off-old-radio-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "off-old-radio-inhand-right",
       "directions": 4
     }
   ]

@@ -41,3 +41,14 @@
   description: A power network checking device for signals.
   icon: { sprite: Objects/Devices/gates.rsi, state: power_sensor }
   objectType: Item
+
+- type: construction
+  name: radio
+  id: OldRadio
+  graph: BroadcastRadio
+  startNode: start
+  targetNode: oldRadio
+  category: construction-category-tools
+  description: A radio, connected to some radio channel.
+  icon: { sprite: Objects/Devices/communication.rsi, state: old-radio }
+  objectType: Item

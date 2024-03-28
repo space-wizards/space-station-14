@@ -79,6 +79,14 @@
   longRange: true
 
 - type: radioChannel
+  id: OldBroadcast
+  name: chat-radio-broadcast
+  keycode: 'r'
+  frequency: 1604
+  color: "#3b5773"
+  longRange: true
+
+- type: radioChannel
   id: Binary
   name: chat-radio-binary
   keycode: 'b'

@@ -1,0 +1,16 @@
+﻿- type: constructionGraph
+  id: BroadcastRadio
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: oldRadio
+          steps:
+            - material: Steel
+              amount: 3
+              doAfter: 4
+            - material: Cable
+              amount: 2
+              doAfter: 4
+    - node: oldRadio
+      entity: OldRadio
