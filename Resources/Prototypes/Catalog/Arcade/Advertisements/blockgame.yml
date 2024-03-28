@@ -1,4 +1,4 @@
-- type: advertisementsPack
+- type: messagePack
   id: BlockGameAds
   advertisements:
     - advertisement-block-game-1

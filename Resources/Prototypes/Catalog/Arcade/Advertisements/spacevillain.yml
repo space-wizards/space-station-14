@@ -1,4 +1,4 @@
-- type: advertisementsPack
+- type: messagePack
   id: SpaceVillainAds
   advertisements:
     - advertisement-space-villain-1
