@@ -1,6 +1,8 @@
 using Content.Server.Power.Components;
 using Content.Shared.UserInterface;
 using Content.Server.Advertise;
+using Content.Server.Advertise.Components;
+using Content.Server.Advertise.EntitySystems;
 using Content.Shared.Arcade;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -96,7 +98,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
             component.Player = null;
             if (component.ShouldSayThankYou && TryComp<AdvertiseComponent>(uid, out var advertise))
             {
-                _advertise.SayThankYou(uid, advertise);
+                _advertise.SayAdvertisement(uid, advertise);
                 component.ShouldSayThankYou = false;
             }
         }
