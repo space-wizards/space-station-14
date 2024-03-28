@@ -15,7 +15,4 @@ public sealed partial class ElectrocutionComponent : Component
 
     [DataField("timeLeft")]
     public float TimeLeft;
-
-    [DataField("accumDamage")]
-    public float AccumulatedDamage;
 }

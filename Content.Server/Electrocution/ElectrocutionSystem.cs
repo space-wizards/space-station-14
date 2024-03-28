@@ -62,9 +62,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [ValidatePrototypeId<DamageTypePrototype>]
     private const string DamageType = "Shock";
 
-    // Yes, this is absurdly small for a reason.
-    private const float ElectrifiedScalePerWatt = 1E-6f;
-
     // Multiply and shift the log scale for shock damage.
     private const float RecursiveDamageMultiplier = 0.75f;
     private const float RecursiveTimeMultiplier = 0.8f;
@@ -100,29 +97,19 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     private void UpdateElectrocutions(float frameTime)
     {
         var query = EntityQueryEnumerator<ElectrocutionComponent, PowerConsumerComponent>();
-        while (query.MoveNext(out var uid, out var electrocution, out var consumer))
+        while (query.MoveNext(out var uid, out var electrocution, out _))
         {
             var timePassed = Math.Min(frameTime, electrocution.TimeLeft);
 
             electrocution.TimeLeft -= timePassed;
-            electrocution.AccumulatedDamage += consumer.ReceivedPower * ElectrifiedScalePerWatt * timePassed;
 
             if (!MathHelper.CloseTo(electrocution.TimeLeft, 0))
                 continue;
 
-            if (EntityManager.EntityExists(electrocution.Electrocuting))
-            {
-                // TODO: damage should be scaled by shock damage multiplier
-                // TODO: better paralyze/jitter timing
-                var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(DamageType), (int) electrocution.AccumulatedDamage);
+            // Welcome to the grave of power-based electrocution damage.
+            // Do not re-add this. Someone is going to make a cranked up 30 MW hog and insta kill half the station.
+            // It isn't worth it. You've been warned. -emo
 
-                var actual = _damageable.TryChangeDamage(electrocution.Electrocuting, damage, origin: electrocution.Source);
-                if (actual != null)
-                {
-                    _adminLogger.Add(LogType.Electrocution,
-                        $"{ToPrettyString(electrocution.Electrocuting):entity} received {actual.GetTotal():damage} powered electrocution damage from {ToPrettyString(electrocution.Source):source}");
-                }
-            }
             QueueDel(uid);
         }
     }
