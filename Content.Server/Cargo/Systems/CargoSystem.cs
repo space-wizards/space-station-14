@@ -37,7 +37,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly StationSystem _station = default!;

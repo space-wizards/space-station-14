@@ -1,4 +1,3 @@
-using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition.EntitySystems;
@@ -30,7 +29,6 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly OpenableSystem _openable = default!;
 
         public override void Initialize()

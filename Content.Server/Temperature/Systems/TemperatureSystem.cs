@@ -11,7 +11,6 @@ using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
-using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Temperature.Systems;
@@ -22,7 +21,6 @@ public sealed class TemperatureSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
 
     /// <summary>
     ///     All the components that will have their damage updated at the end of the tick.

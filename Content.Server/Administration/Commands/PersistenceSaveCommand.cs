@@ -1,11 +1,6 @@
-using Content.Server.GameTicking;
-using Content.Server.Ghost.Components;
-using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
-using Content.Shared.Ghost;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -17,7 +12,6 @@ namespace Content.Server.Administration.Commands;
 public sealed class PersistenceSave : IConsoleCommand
 {
     [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IEntitySystemManager _system = default!;
     [Dependency] private readonly IMapManager _map = default!;
 

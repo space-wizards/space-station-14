@@ -67,7 +67,8 @@ namespace Content.IntegrationTests.Tests.Fluids
 
             await server.WaitAssertion(() =>
             {
-                var coordinates = grid.ToCoordinates();
+                var gridOwner = grid.Owner;
+                var coordinates = gridOwner.ToCoordinates();
                 var solution = new Solution("Water", FixedPoint2.New(20));
 
                 Assert.That(spillSystem.TrySpillAt(coordinates, solution, out _), Is.False);

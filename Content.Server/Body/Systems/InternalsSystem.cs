@@ -1,7 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
-using Content.Server.Hands.Systems;
 using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -11,7 +10,6 @@ using Content.Shared.Internals;
 using Content.Shared.Inventory;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;

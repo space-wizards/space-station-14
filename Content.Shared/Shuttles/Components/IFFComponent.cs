@@ -10,11 +10,6 @@ namespace Content.Shared.Shuttles.Components;
 [Access(typeof(SharedShuttleSystem))]
 public sealed partial class IFFComponent : Component
 {
-    /// <summary>
-    /// Should we show IFF by default?
-    /// </summary>
-    public const bool ShowIFFDefault = true;
-
     public static readonly Color SelfColor = Color.MediumSpringGreen;
 
     /// <summary>

@@ -27,7 +27,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     public sealed class GasVolumePumpSystem : EntitySystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;

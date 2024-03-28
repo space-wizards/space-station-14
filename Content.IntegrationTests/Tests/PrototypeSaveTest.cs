@@ -59,7 +59,8 @@ public sealed class PrototypeSaveTest
 
             var tileDefinition = tileDefinitionManager["FloorSteel"]; // Wires n such disable ambiance while under the floor
             var tile = new Tile(tileDefinition.TileId);
-            var coordinates = grid.ToCoordinates();
+            var gridOwner = grid.Owner;
+            var coordinates = gridOwner.ToCoordinates();
 
             grid.SetTile(coordinates, tile);
         });
@@ -94,7 +95,8 @@ public sealed class PrototypeSaveTest
         await server.WaitAssertion(() =>
         {
             Assert.That(!mapManager.IsMapInitialized(mapId));
-            var testLocation = grid.ToCoordinates();
+            var gridOwner = grid.Owner;
+            var testLocation = gridOwner.ToCoordinates();
 
             Assert.Multiple(() =>
             {

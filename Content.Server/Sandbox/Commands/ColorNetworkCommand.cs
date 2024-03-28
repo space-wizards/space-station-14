@@ -11,7 +11,6 @@ namespace Content.Server.Sandbox.Commands
     [AnyCommand]
     public sealed class ColorNetworkCommand : IConsoleCommand
     {
-        [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
 
         public string Command => "colornetwork";

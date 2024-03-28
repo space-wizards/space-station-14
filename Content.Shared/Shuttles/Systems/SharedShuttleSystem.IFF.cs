@@ -28,11 +28,6 @@ public abstract partial class SharedShuttleSystem
 
     public string? GetIFFLabel(EntityUid gridUid, bool self = false, IFFComponent? component = null)
     {
-        if (!IFFComponent.ShowIFFDefault)
-        {
-            return null;
-        }
-
         var entName = MetaData(gridUid).EntityName;
 
         if (self)

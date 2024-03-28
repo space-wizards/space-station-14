@@ -2,9 +2,7 @@ using System.Linq;
 using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
-using Content.Server.Cloning;
 using Content.Server.Emoting.Systems;
-using Content.Server.Inventory;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Cloning;
@@ -31,7 +29,6 @@ namespace Content.Server.Zombies
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly ServerInventorySystem _inv = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
         [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
