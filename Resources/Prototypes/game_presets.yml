@@ -20,6 +20,8 @@
     - Revolutionary
     - Zombie
     - RampingStationEventScheduler
+    - TurfWar
+    - BasicRoundstartVariation
 
 - type: gamePreset
   id: Extended
@@ -165,3 +167,18 @@
     - Pirates
     - BasicStationEventScheduler
     - BasicRoundstartVariation
+
+# standalone preset for testing
+- type: gamePreset
+  id: TurfWar
+  alias:
+  - turf
+  - turfwar
+  - turftagging
+  name: turf-war-title
+  description: turf-war-description
+  showInVote: false
+  rules:
+  - TurfWar
+  - BasicStationEventScheduler
+  - BasicRoundstartVariation

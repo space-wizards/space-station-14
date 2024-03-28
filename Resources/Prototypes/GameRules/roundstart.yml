@@ -5,6 +5,19 @@
   components:
   - type: GameRule
 
+# a rule that has common subgamemode rules, roundstart is fairly normal so there is time for them to play out
+- type: entity
+  abstract: true
+  parent: BaseGameRule
+  id: BaseSubGamemodesRule
+  components:
+  - type: SubGamemodes
+    rules:
+    - id: Thief
+      prob: 0.5
+    - id: TurfWar
+      prob: 0.25
+
 - type: entity
   noSpawn: true
   parent: BaseGameRule
@@ -65,7 +78,7 @@
 
 - type: entity
   id: Nukeops
-  parent: BaseGameRule
+  parent: BaseSubGamemodesRule
   noSpawn: true
   components:
   - type: GameRule
@@ -82,14 +95,14 @@
 
 - type: entity
   id: Traitor
-  parent: BaseGameRule
+  parent: BaseSubGamemodesRule
   noSpawn: true
   components:
   - type: TraitorRule
 
 - type: entity
   id: Revolutionary
-  parent: BaseGameRule
+  parent: BaseSubGamemodesRule
   noSpawn: true
   components:
   - type: RevolutionaryRule
@@ -114,6 +127,23 @@
   noSpawn: true
   components:
   - type: ZombieRule
+  # thieves would not get far as zombies, but doors will stay painted after taggers get infected
+  # funny people in zombie apocalypse vandalising instead of trying to survive
+  - type: SubGamemodes
+    rules:
+    - id: TurfWar
+      prob: 0.25
+
+- type: entity
+  noSpawn: true
+  parent: BaseGameRule
+  id: TurfWar
+  components:
+  - type: TurfWarRule
+    # 10-30 people
+    playersPerTagger: 5
+    min: 2
+    max: 6
 
 # event schedulers
 - type: entity
