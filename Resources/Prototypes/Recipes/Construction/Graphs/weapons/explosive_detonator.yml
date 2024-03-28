@@ -3,6 +3,14 @@
   start: start
   graph:
   
+  - node: start
+    edges:
+    - to: emptyDetonator
+      steps:
+      - material: Bananium
+        amount: 1
+        doAfter: 1
+  
   - node: emptyDetonator
     entity: EmptyDetonator
     actions:
