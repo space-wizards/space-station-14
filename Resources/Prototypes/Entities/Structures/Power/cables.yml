@@ -187,9 +187,6 @@
 
 # Explosive cable below
 
-- type: Tag
-  id: Detonator
-
 - type: entity
   id: CableDet
   placement:

@@ -491,6 +491,9 @@
   id: Debug
 
 - type: Tag
+  id: Detonator
+
+- type: Tag
   id: Dice
 
 - type: Tag
