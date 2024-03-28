@@ -1,5 +1,6 @@
 using Content.Server.Power.Components;
 using Content.Shared.UserInterface;
+using Content.Server.Advertise;
 using Content.Shared.Arcade;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -9,6 +10,7 @@ namespace Content.Server.Arcade.BlockGame;
 public sealed class BlockGameArcadeSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly AdvertiseSystem _advertise = default!;
 
     public override void Initialize()
     {
@@ -89,7 +91,15 @@ public sealed class BlockGameArcadeSystem : EntitySystem
             UpdatePlayerStatus(uid, component.Player, blockGame: component);
         }
         else
+        {
+            // Everybody's gone
             component.Player = null;
+            if (component.ShouldSayThankYou && TryComp<AdvertiseComponent>(uid, out var advertise))
+            {
+                _advertise.SayThankYou(uid, advertise);
+                component.ShouldSayThankYou = false;
+            }
+        }
 
         UpdatePlayerStatus(uid, temp, blockGame: component);
     }
@@ -103,6 +113,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
             _uiSystem.CloseAll(bui);
         component.Player = null;
         component.Spectators.Clear();
+        component.ShouldSayThankYou = false;
     }
 
     private void OnPlayerAction(EntityUid uid, BlockGameArcadeComponent component, BlockGameMessages.BlockGamePlayerActionMessage msg)
@@ -121,6 +132,8 @@ public sealed class BlockGameArcadeSystem : EntitySystem
             component.Game.StartGame();
             return;
         }
+
+        component.ShouldSayThankYou = true;
 
         component.Game.ProcessInput(msg.PlayerAction);
     }

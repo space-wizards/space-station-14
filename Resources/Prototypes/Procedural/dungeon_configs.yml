@@ -162,3 +162,200 @@
         SouthEast: BrickTileWhiteInnerSe
         NorthWest: BrickTileWhiteInnerNw
         NorthEast: BrickTileWhiteInnerNe
+
+- type: dungeonConfig
+  id: Mineshaft
+  generator: !type:PrefabDunGen
+    tile: FloorCaveDrought
+    roomWhitelist:
+      - Mineshaft
+    presets:
+      - Bucket
+      - Wow
+      - SpaceShip
+      - Tall
+  postGeneration:
+
+  - !type:CorridorPostGen
+      tile: FloorCaveDrought
+      width: 3
+
+  - !type:DungeonEntrancePostGen
+      count: 5
+      tile: FloorCaveDrought
+      entities:
+        - RandomWoodenWall
+
+  - !type:RoomEntrancePostGen
+      tile: FloorCaveDrought
+      entities:
+        - RandomWoodenWall
+
+  - !type:EntranceFlankPostGen
+      tile: FloorCaveDrought
+      entities:
+        - RandomWoodenWall
+
+  - !type:ExternalWindowPostGen
+      tile: FloorCaveDrought
+      entities:
+        - RandomWoodenWall
+
+  - !type:WallMountPostGen
+      tile: FloorCaveDrought
+      spawns:
+        # Ore
+        - id: WallRockSalt
+          prob: 0.6
+          orGroup: content
+        - id: WallRockCoal
+          prob: 0.6
+          orGroup: content
+        - id: WallRockTin
+          prob: 0.4
+          orGroup: content
+        - id: WallMining
+          prob: 0.8
+          orGroup: content
+
+  - !type:BoundaryWallPostGen
+      tile: FloorCaveDrought
+      wall: WallRock
+      cornerWall: WallRock
+
+  - !type:AutoCablingPostGen
+      entity: Catwalk
+
+  - !type:JunctionPostGen
+      tile: FloorCaveDrought
+      width: 3
+      entities:
+        - RandomWoodenSupport
+
+  - !type:CornerClutterPostGen
+      contents:
+        - id: RandomStalagmiteOrCrystal
+          amount: 1
+
+- type: dungeonConfig
+  id: SnowyLabs
+  generator: !type:PrefabDunGen
+    roomWhitelist:
+      - SnowyLabs
+    presets:
+      - Bucket
+      - Wow
+      - SpaceShip
+      - Tall
+  postGeneration:
+    - !type:CorridorPostGen
+      width: 3
+
+    - !type:DungeonEntrancePostGen
+      count: 2
+
+    - !type:RoomEntrancePostGen
+      entities:
+        - CableApcExtension
+        - AirlockFreezerHydroponicsLocked
+
+    - !type:EntranceFlankPostGen
+      entities:
+        - Grille
+        - Window
+
+    - !type:ExternalWindowPostGen
+      entities:
+        - Grille
+        - Window
+
+    - !type:WallMountPostGen
+      spawns:
+        # Posters
+        - id: RandomPosterLegit
+          orGroup: content
+        - id: ExtinguisherCabinetFilled
+          prob: 0.2
+          orGroup: content
+        - id: RandomPainting
+          prob: 0.05
+          orGroup: content
+        - id: IntercomScience
+          prob: 0.1
+          orGroup: content
+
+    - !type:BoundaryWallPostGen
+        tile: FloorSteel
+        wall: WallSilver
+        cornerWall: WallSilver
+
+    - !type:JunctionPostGen
+      width: 1
+      entities:
+        - AirlockHydroGlassLocked
+
+    - !type:JunctionPostGen
+      entities:
+        - AirlockHydroGlassLocked
+
+    - !type:AutoCablingPostGen
+
+    - !type:CornerClutterPostGen
+      contents:
+        - id: PottedPlantRandom
+          amount: 1
+
+    - !type:CorridorDecalSkirtingPostGen
+      color: "#4cc7aa96"
+      cardinalDecals:
+        South: BrickTileWhiteLineS
+        East: BrickTileWhiteLineE
+        North: BrickTileWhiteLineN
+        West: BrickTileWhiteLineW
+      cornerDecals:
+        SouthEast: BrickTileWhiteCornerSe
+        SouthWest: BrickTileWhiteCornerSw
+        NorthEast: BrickTileWhiteCornerNe
+        NorthWest: BrickTileWhiteCornerNw
+      pocketDecals:
+        SouthWest: BrickTileWhiteInnerSw
+        SouthEast: BrickTileWhiteInnerSe
+        NorthWest: BrickTileWhiteInnerNw
+        NorthEast: BrickTileWhiteInnerNe
+
+# todo: Add a biome dungeon generator
+# Add corridor first gens that place rooms on top
+# Add a worm corridor gen (place subsequent corridors somewhere randomly along the path)
+# Place room entrances on ends of corridors touching a tile
+# Remove all room tiles from corridors
+# Fix paths up and try to reconnect all corridor tiles
+# Add a postgen step to spread rooms out, though it shouldn't spread into corridor exteriors
+
+- type: dungeonConfig
+  id: Haunted
+  generator: !type:PrefabDunGen
+    tile: FloorCaveDrought
+    roomWhitelist:
+    - Mineshaft
+    presets:
+    - Bucket
+    - Wow
+    - SpaceShip
+    - Tall
+  postGeneration:
+    - !type:WormCorridorPostGen
+      width: 3
+      tile: FloorCaveDrought
+
+    - !type:CorridorClutterPostGen
+      contents:
+      - id: FloraStalagmite1
+      - id: FloraStalagmite2
+      - id: FloraStalagmite3
+      - id: FloraStalagmite4
+      - id: FloraStalagmite5
+      - id: FloraStalagmite6
+
+    - !type:BoundaryWallPostGen
+      tile: FloorCaveDrought
+      wall: WallRock

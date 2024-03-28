@@ -48,6 +48,17 @@
   heatCapacity: 10000
 
 - type: tile
+  id: PlatingBrass
+  name: tiles-brass-plating
+  sprite: /Textures/Tiles/Misc/clockwork/clockwork_floor.png
+  baseTurf: Lattice
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepPlating
+  friction: 0.3
+  heatCapacity: 10000
+
+- type: tile
   id: PlatingSnow
   name: tiles-snow-plating
   sprite: /Textures/Tiles/snow_plating.png #Not in the snow planet RSI because it doesn't have any metadata. Should probably be moved to its own folder later.
@@ -87,4 +98,3 @@
   isSpace: true
   itemDrop: PartRodMetal1
   heatCapacity: 10000
-

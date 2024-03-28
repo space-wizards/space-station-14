@@ -5,6 +5,7 @@
   description: What can be better then late evening under the sky with guitar and friends.
   components:
   - type: Sprite
+    noRot: true
     sprite: Structures/Decoration/bonfire.rsi
     layers:
       - state: bonfire
@@ -30,6 +31,9 @@
     sound:
       path: /Audio/Ambience/Objects/fireplace.ogg
   - type: AlwaysHot
+  - type: Tag
+    tags:
+      - NoPaint
 
 - type: entity
   id: LegionnaireBonfire

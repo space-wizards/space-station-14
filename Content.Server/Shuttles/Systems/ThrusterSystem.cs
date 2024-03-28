@@ -12,6 +12,7 @@ using Content.Shared.Physics;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Temperature;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -95,7 +96,7 @@ public sealed class ThrusterSystem : EntitySystem
             return;
 
         var tilePos = args.NewTile.GridIndices;
-        var grid = _mapManager.GetGrid(uid);
+        var grid = Comp<MapGridComponent>(uid);
         var xformQuery = GetEntityQuery<TransformComponent>();
         var thrusterQuery = GetEntityQuery<ThrusterComponent>();
 
@@ -436,7 +437,7 @@ public sealed class ThrusterSystem : EntitySystem
             return true;
 
         var (x, y) = xform.LocalPosition + xform.LocalRotation.Opposite().ToWorldVec();
-        var tile = _mapManager.GetGrid(xform.GridUid.Value).GetTileRef(new Vector2i((int) Math.Floor(x), (int) Math.Floor(y)));
+        var tile = Comp<MapGridComponent>(xform.GridUid.Value).GetTileRef(new Vector2i((int) Math.Floor(x), (int) Math.Floor(y)));
 
         return tile.Tile.IsSpace();
     }

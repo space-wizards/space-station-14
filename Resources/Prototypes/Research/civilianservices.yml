@@ -110,7 +110,10 @@
   cost: 5000
   recipeUnlocks:
   - FauxTileAstroGrass
+  - FauxTileMowedAstroGrass
+  - FauxTileJungleAstroGrass
   - FauxTileAstroIce
+  - FauxTileAstroSnow
 
 - type: technology
   id: BiochemicalStasis

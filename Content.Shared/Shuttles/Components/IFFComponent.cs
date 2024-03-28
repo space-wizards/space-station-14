@@ -15,10 +15,12 @@ public sealed partial class IFFComponent : Component
     /// </summary>
     public const bool ShowIFFDefault = true;
 
+    public static readonly Color SelfColor = Color.MediumSpringGreen;
+
     /// <summary>
     /// Default color to use for IFF if no component is found.
     /// </summary>
-    public static readonly Color IFFColor = Color.Aquamarine;
+    public static readonly Color IFFColor = Color.Gold;
 
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public IFFFlags Flags = IFFFlags.None;

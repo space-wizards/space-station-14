@@ -117,3 +117,19 @@
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 6
+
+- type: explosion
+  id: FireBomb
+  damagePerIntensity:
+    types:
+      Heat: 1
+      Blunt: 2
+      Piercing: 3
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 6
+  fireStacks: 2
+
+# STOP
+# BEFORE YOU ADD MORE EXPLOSION TYPES CONSIDER IF AN EXISTING ONE IS SUITABLE
+# ADDING NEW ONES IS PROHIBITIVELY EXPENSIVE

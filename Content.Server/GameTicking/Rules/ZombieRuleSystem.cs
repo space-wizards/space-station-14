@@ -244,10 +244,23 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     /// </remarks>
     private void InfectInitialPlayers(ZombieRuleComponent component)
     {
-        //Get all players with initial infected enabled, and exclude those with the ZombieImmuneComponent
-        var eligiblePlayers = _antagSelection.GetEligiblePlayers(_playerManager.Sessions, component.PatientZeroPrototypeId, includeAllJobs: true, customExcludeCondition: x => HasComp<ZombieImmuneComponent>(x) || HasComp<InitialInfectedExemptComponent>(x));
-        //And get all players, excluding ZombieImmune - to fill any leftover initial infected slots
-        var allPlayers = _antagSelection.GetEligiblePlayers(_playerManager.Sessions, component.PatientZeroPrototypeId, acceptableAntags: Shared.Antag.AntagAcceptability.All, includeAllJobs: true, ignorePreferences: true, customExcludeCondition: HasComp<ZombieImmuneComponent>);
+        //Get all players with initial infected enabled, and exclude those with the ZombieImmuneComponent and roles with CanBeAntag = False
+        var eligiblePlayers = _antagSelection.GetEligiblePlayers(
+            _playerManager.Sessions,
+            component.PatientZeroPrototypeId,
+            includeAllJobs: false,
+            customExcludeCondition: player => HasComp<ZombieImmuneComponent>(player) || HasComp<InitialInfectedExemptComponent>(player) 
+            );
+
+        //And get all players, excluding ZombieImmune and roles with CanBeAntag = False - to fill any leftover initial infected slots
+        var allPlayers = _antagSelection.GetEligiblePlayers(
+            _playerManager.Sessions,
+            component.PatientZeroPrototypeId,
+            acceptableAntags: Shared.Antag.AntagAcceptability.All,
+            includeAllJobs: false ,
+            ignorePreferences: true,
+            customExcludeCondition: HasComp<ZombieImmuneComponent> 
+            );
 
         //If there are no players to choose, abort
         if (allPlayers.Count == 0)

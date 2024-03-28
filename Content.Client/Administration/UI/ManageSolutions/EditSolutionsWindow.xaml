@@ -12,7 +12,7 @@
         <BoxContainer Name="VolumeBox" Orientation="Vertical" HorizontalExpand="True" Margin="0 4"/>
 
         <!-- The temperature / heat capacity / thermal energy of the solution -->
-        <Collapsible Orientation="Vertical">
+        <Collapsible>
             <CollapsibleHeading Name="ThermalHeading" Title="{Loc 'admin-solutions-window-thermals'}" />
             <CollapsibleBody>
                 <BoxContainer Name="ThermalBox" Orientation="Vertical" HorizontalExpand="True" Margin="0 4"/>
@@ -23,7 +23,7 @@
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="0 4">
             <BoxContainer Name="ReagentList" Orientation="Vertical"/>
         </ScrollContainer>
-        
+
         <Button Name="AddButton" Text="{Loc 'admin-solutions-window-add-new-button'}" HorizontalExpand="True"  Margin="0 4"/>
     </BoxContainer>
 </DefaultWindow>
