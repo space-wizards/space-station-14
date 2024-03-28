@@ -368,7 +368,6 @@ public sealed class PullingSystem : EntitySystem
     public bool TryStartPull(EntityUid pullerUid, EntityUid pullableUid, EntityUid? user = null,
         PullerComponent? pullerComp = null, PullableComponent? pullableComp = null)
     {
-
         if (!Resolve(pullerUid, ref pullerComp, false) ||
             !Resolve(pullableUid, ref pullableComp, false))
         {
@@ -395,7 +394,7 @@ public sealed class PullingSystem : EntitySystem
         if (oldPullable != null)
         {
             // Well couldn't stop the old one.
-            if (!TryStopPull(oldPullable.Value, pullableComp, pullerComp.Pulling))
+            if (!TryStopPull(oldPullable.Value, pullableComp, user))
                 return false;
         }
 
