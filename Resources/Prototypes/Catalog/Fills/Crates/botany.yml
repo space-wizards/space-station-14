@@ -65,7 +65,7 @@
   id: CrateHydroponicsSeeds
   parent: CrateHydroponics
   name: seeds crate
-  description: Big things have small beginnings. Contains twelve different seeds.
+  description: Big things have small beginnings. Contains twenty-three different seeds.
   components:
   - type: StorageFill
     contents:
@@ -91,3 +91,4 @@
       - id: GrapeSeeds
       - id: WatermelonSeeds
       - id: PeaSeeds
+      - id: PomegranateSeeds
