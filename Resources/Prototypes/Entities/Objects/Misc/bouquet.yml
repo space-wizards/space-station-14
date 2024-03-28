@@ -1,0 +1,16 @@
+- type: entity
+  name: PoppyBouquet
+  parent: BaseItem
+  id: PoppyBouquet
+  description: It's a great way to honor the memory of an assistant who was killed through your fault.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/poppybouquet.rsi
+    state: icon
+    scale: 1.15,1.15
+  - type: Item
+    size: Normal
+    sprite: Objects/Misc/poppybouquet.rsi
+  - type: Construction
+    graph: PoppyBouquet
+    node: PoppyBouquet

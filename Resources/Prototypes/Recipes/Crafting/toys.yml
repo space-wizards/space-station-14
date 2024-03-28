@@ -23,3 +23,14 @@
   icon:
     sprite: Clothing/OuterClothing/Suits/iansuit.rsi
     state: icon
+
+- type: construction
+  name: PoppyBouquet
+  id: PoppyBouquet
+  graph: PoppyBouquet
+  startNode: start
+  targetNode: PoppyBouquet
+  category: construction-category-misc
+  description: A bouquet of the best flowers that you could grow. At least you tried...
+  icon: { sprite: Objects/Misc/poppybouquet.rsi, state: icon }
+  objectType: Item
