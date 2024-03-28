@@ -1,0 +1,8 @@
+﻿- type: body
+  id: Decoy
+  name: decoy
+  root: root
+  # fake part
+  slots:
+    root:
+      part: null
