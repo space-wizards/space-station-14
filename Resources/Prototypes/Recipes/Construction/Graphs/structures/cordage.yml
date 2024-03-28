@@ -9,7 +9,7 @@
             - !type:SnapToGrid
               southRotation: true
           steps:
-            - material: Bananium #what
+            - material: Bananium 
               amount: 1
               doAfter: 0
 
