@@ -12,6 +12,5 @@ public enum FaxMachineVisuals : byte
 public enum FaxMachineVisualState : byte
 {
     Normal,
-    Inserting,
     Printing
 }

@@ -17,6 +17,7 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Paper;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -42,6 +43,7 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly FaxecuteSystem _faxecute = default!;
 
     private const string PaperSlotId = "Paper";
 
@@ -51,7 +53,7 @@ public sealed class FaxSystem : EntitySystem
     /// </summary>
     [ValidatePrototypeId<EntityPrototype>]
     private const string DefaultPaperPrototypeId = "Paper";
-    
+
     [ValidatePrototypeId<EntityPrototype>]
     private const string OfficePaperPrototypeId = "PaperOffice";
 
@@ -313,12 +315,22 @@ public sealed class FaxSystem : EntitySystem
 
     private void OnCopyButtonPressed(EntityUid uid, FaxMachineComponent component, FaxCopyMessage args)
     {
-        Copy(uid, component, args);
+        if (HasComp<MobStateComponent>(component.PaperSlot.Item))
+        {
+            _faxecute.Faxecute(uid, component); /// when button pressed it will hurt the mob.
+        }
+        else
+            Copy(uid, component, args);
     }
 
     private void OnSendButtonPressed(EntityUid uid, FaxMachineComponent component, FaxSendMessage args)
     {
-        Send(uid, component, args.Session.AttachedEntity);
+        if (HasComp<MobStateComponent>(component.PaperSlot.Item))
+        {
+            _faxecute.Faxecute(uid, component); /// when button pressed it will hurt the mob.
+        }
+        else
+            Send(uid, component, args.Session.AttachedEntity);
     }
 
     private void OnRefreshButtonPressed(EntityUid uid, FaxMachineComponent component, FaxRefreshMessage args)
@@ -336,14 +348,24 @@ public sealed class FaxSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        if (component.PaperSlot.Item == null)
+            return;
+
+        if (!TryComp<FaxableObjectComponent>(component.PaperSlot.Item.Value, out var faxable))
+            return;
+
+        component.InsertingState = faxable.InsertingState;
+
         if (component.InsertingTimeRemaining > 0)
-            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
+        {
+            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, true);
+            Dirty(uid, component);
+        }
         else if (component.PrintingTimeRemaining > 0)
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
         else
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Normal);
     }
-
     private void UpdateUserInterface(EntityUid uid, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -409,8 +431,8 @@ public sealed class FaxSystem : EntitySystem
         else
             prototype = DefaultPaperPrototypeId;
 
-        var name  = Loc.GetString("fax-machine-printed-paper-name");
-        
+        var name = Loc.GetString("fax-machine-printed-paper-name");
+
         var printout = new FaxPrintout(args.Content, name, prototype);
         component.PrintingQueue.Enqueue(printout);
         component.SendTimeoutRemaining += component.SendTimeout;
@@ -482,7 +504,7 @@ public sealed class FaxSystem : EntitySystem
             return;
 
         if (!TryComp<MetaDataComponent>(sendEntity, out var metadata) ||
-            !TryComp<PaperComponent>(sendEntity, out var paper))
+           !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
 
         var payload = new NetworkPayload()
