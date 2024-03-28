@@ -4,6 +4,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Labels;
 using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -17,6 +18,7 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
 using Content.Shared.Interaction;
+using Content.Shared.Labels.Components;
 using Content.Shared.Paper;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -36,6 +38,7 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly PaperSystem _paperSystem = default!;
+    [Dependency] private readonly LabelSystem _labelSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
@@ -288,11 +291,12 @@ public sealed class FaxSystem : EntitySystem
                         !args.Data.TryGetValue(FaxConstants.FaxPaperContentData, out string? content))
                         return;
 
+                    args.Data.TryGetValue(FaxConstants.FaxPaperLabelData, out string? label);
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampStateData, out string? stampState);
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<StampDisplayInfo>? stampedBy);
                     args.Data.TryGetValue(FaxConstants.FaxPaperPrototypeData, out string? prototypeId);
 
-                    var printout = new FaxPrintout(content, name, prototypeId, stampState, stampedBy);
+                    var printout = new FaxPrintout(content, name, label, prototypeId, stampState, stampedBy);
                     Receive(uid, printout, args.SenderAddress);
 
                     break;
@@ -307,6 +311,7 @@ public sealed class FaxSystem : EntitySystem
 
     private void OnFileButtonPressed(EntityUid uid, FaxMachineComponent component, FaxFileMessage args)
     {
+        args.Label = args.Label?[..Math.Min(args.Label.Length, FaxFileMessageValidation.MaxLabelSize)];
         args.Content = args.Content[..Math.Min(args.Content.Length, FaxFileMessageValidation.MaxContentSize)];
         PrintFile(uid, component, args);
     }
@@ -411,7 +416,7 @@ public sealed class FaxSystem : EntitySystem
 
         var name  = Loc.GetString("fax-machine-printed-paper-name");
         
-        var printout = new FaxPrintout(args.Content, name, prototype);
+        var printout = new FaxPrintout(args.Content, name, args.Label, prototype);
         component.PrintingQueue.Enqueue(printout);
         component.SendTimeoutRemaining += component.SendTimeout;
 
@@ -442,9 +447,14 @@ public sealed class FaxSystem : EntitySystem
             !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
 
+        TryComp<LabelComponent>(sendEntity, out var labelComponent);
+        var label = labelComponent?.CurrentLabel;
+        var name = labelComponent?.OriginalName ?? metadata.EntityName;
+
         // TODO: See comment in 'Send()' about not being able to copy whole entities
         var printout = new FaxPrintout(paper.Content,
-                                       metadata.EntityName,
+                                       name,
+                                       label,
                                        metadata.EntityPrototype?.ID ?? DefaultPaperPrototypeId,
                                        paper.StampState,
                                        paper.StampedBy);
@@ -485,10 +495,15 @@ public sealed class FaxSystem : EntitySystem
             !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
 
+        TryComp<LabelComponent>(sendEntity, out var labelComponent);
+        var label = labelComponent?.CurrentLabel;
+        var name = labelComponent?.OriginalName ?? metadata.EntityName;
+
         var payload = new NetworkPayload()
         {
             { DeviceNetworkConstants.Command, FaxConstants.FaxPrintCommand },
-            { FaxConstants.FaxPaperNameData, metadata.EntityName },
+            { FaxConstants.FaxPaperNameData, name },
+            { FaxConstants.FaxPaperLabelData, label },
             { FaxConstants.FaxPaperContentData, paper.Content },
         };
 
@@ -565,6 +580,12 @@ public sealed class FaxSystem : EntitySystem
         }
 
         _metaData.SetEntityName(printed, printout.Name);
+
+        if (printout.Label is { } label)
+        {
+            _labelSystem.Label(printed, label);
+        }
+
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{component.FaxName}\" {ToPrettyString(uid)} printed {ToPrettyString(printed)}: {printout.Content}");
     }
 
