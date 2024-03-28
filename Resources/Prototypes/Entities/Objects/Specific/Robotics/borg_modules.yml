@@ -346,12 +346,13 @@
     - state: icon-treatment
   - type: ItemBorgModule
     items:
+    - HandheldHealthAnalyzerUnpowered
     - Brutepack10Lingering
     - Ointment10Lingering
     - Gauze10Lingering
     - Bloodpack10Lingering
     - Syringe
-    - Dropper
+
 
 - type: entity
   id: BorgModuleDefibrillator
@@ -378,6 +379,8 @@
   - type: ItemBorgModule
     items:
     - HandheldHealthAnalyzerUnpowered
+    - MedicatedSuture10Lingering
+    - RegenerativeMesh10Lingering
     - Beaker
     - Beaker
     - BorgDropper
