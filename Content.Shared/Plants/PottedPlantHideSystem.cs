@@ -1,18 +1,15 @@
-﻿using Content.Server.Plants.Components;
-using Content.Server.Popups;
-using Content.Server.Storage.Components;
-using Content.Server.Storage.EntitySystems;
-using Content.Shared.Audio;
+using Content.Shared.Popups;
+using Content.Shared.Storage.Components;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 
-namespace Content.Server.Plants.Systems
+namespace Content.Shared.Plants
 {
     public sealed class PottedPlantHideSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly SecretStashSystem _stashSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
 

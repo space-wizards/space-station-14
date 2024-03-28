@@ -4,24 +4,240 @@
         "x": 32,
         "y": 32
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/2cb66bae0e253e13d37f8939e0983bb94fee243e",
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Made by brainfood1183 (github) for ss14",
     "states": [
         {
-            "name": "closed_toilet_seat_down",
-            "directions": 4
+            "name": "condisposal",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
         },
         {
-            "name": "closed_toilet_seat_up",
-            "directions": 4
+            "name": "disposal-open",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
         },
         {
-            "name": "open_toilet_seat_down",
-            "directions": 4
+            "name": "disposal-closed",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
         },
         {
-            "name": "open_toilet_seat_up",
-            "directions": 4
+            "name": "disposal",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "disposal-up",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "disposal-down",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "disposal-charging",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "disposal-flush",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "dispover-charge",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "dispover-full",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "dispover-handle",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "dispover-ready",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
         }
     ]
 }

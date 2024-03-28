@@ -1,14 +1,18 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Toilet.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Hands.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Item;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -115,6 +119,12 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         // TODO: Probably just need a disposable tag.
         var storable = HasComp<ItemComponent>(entity);
         if (!storable && !HasComp<BodyComponent>(entity))
+            return false;
+
+        if (component.Blacklist?.IsValid(entity, EntityManager) == true)
+            return false;
+
+        if (component.Whitelist != null && component.Whitelist?.IsValid(entity, EntityManager) != true)
             return false;
 
         //Check if the entity is a mob and if mobs can be inserted
