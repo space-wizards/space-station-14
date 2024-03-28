@@ -7,7 +7,6 @@ using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameStates;
@@ -72,10 +71,9 @@ namespace Content.Server.Tools
 
         public void TurnOn(Entity<WelderComponent> entity, EntityUid? user)
         {
-            if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp.FuelSolutionName, ref entity.Comp.FuelSolution, out var solution))
+            if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp.FuelSolutionName, ref entity.Comp.FuelSolution))
                 return;
 
-            _ignitionSource.SetIgnited(entity.Owner);
             _solutionContainer.RemoveReagent(entity.Comp.FuelSolution.Value, entity.Comp.FuelReagent, entity.Comp.FuelLitCost);
             AdminLogger.Add(LogType.InteractActivate, LogImpact.Low,
                 $"{ToPrettyString(user):user} toggled {ToPrettyString(entity.Owner):welder} on");
@@ -94,7 +92,6 @@ namespace Content.Server.Tools
         {
             AdminLogger.Add(LogType.InteractActivate, LogImpact.Low,
                 $"{ToPrettyString(user):user} toggled {ToPrettyString(entity.Owner):welder} off");
-            _ignitionSource.SetIgnited(entity.Owner, false);
             _activeWelders.Remove(entity);
         }
 
@@ -187,7 +184,9 @@ namespace Content.Server.Tools
             if (_welderTimer < WelderUpdateTimer)
                 return;
 
-            // TODO Use an "active welder" component instead, EntityQuery over that.
+            // TODO Serialization. _activeWelders is not serialized.
+            // Need to use some "active" component, and EntityQuery over that.
+            // Probably best to generalize it to a "ToggleableFuelDrain" component.
             foreach (var tool in _activeWelders.ToArray())
             {
                 if (!TryComp(tool, out WelderComponent? welder)
