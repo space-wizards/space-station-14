@@ -119,8 +119,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
             var randomY = RobustRandom.Next((int) aabb.Bottom, (int) aabb.Top);
 
             tile = new Vector2i(randomX, randomY);
-            if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tile,
-                    mapGridComp: gridComp)
+            if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tile)
                 || _atmosphere.IsTileAirBlocked(targetGrid, tile, mapGridComp: gridComp))
             {
                 continue;
