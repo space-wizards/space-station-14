@@ -1,9 +1,10 @@
 - type: constructionGraph
   id: DetonatorGraph
-  start: emptyDetonator
+  start: start
   graph:
+  
   - node: emptyDetonator
-    entity: EmptyDetonator   
+    entity: EmptyDetonator
     actions:
     - !type:AppearanceChange
     edges:
@@ -34,7 +35,7 @@
         doAfter: 0.5
 
   - node: wiredDetonator
-    entity: WiredDetonator  
+    entity: WiredDetonator
     actions:
     - !type:AppearanceChange
     - !type:PlaySound
