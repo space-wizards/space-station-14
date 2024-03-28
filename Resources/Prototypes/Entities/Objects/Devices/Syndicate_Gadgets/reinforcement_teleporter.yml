@@ -29,9 +29,9 @@
 
 - type: entity
   parent: ReinforcementRadioSyndicate
-  id: ReinforcementRadioSyndicateMonkey
-  name: syndicate monkey reinforcement radio
-  description: Calls in a specially trained monkey to assist you.
+  id: ReinforcementRadioSyndicateAncestor
+  name: syndicate genetic ancestor reinforcement radio
+  description: Calls in a specially trained ancestor of your choosing to assist you.
   components:
   - type: GhostRole
     name: ghost-role-information-syndicate-monkey-reinforcement-name
@@ -39,14 +39,16 @@
     rules: ghost-role-information-syndicate-monkey-reinforcement-rules
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgent
+    selectablePrototypes: ["SyndicateMonkey", "SyndicateKobold"]
 
 - type: entity
-  parent: ReinforcementRadioSyndicateMonkey
-  id: ReinforcementRadioSyndicateMonkeyNukeops # Reinforcement radio exclusive to nukeops uplink
+  parent: ReinforcementRadioSyndicateAncestor
+  id: ReinforcementRadioSyndicateAncestorNukeops # Reinforcement radio exclusive to nukeops uplink
   suffix: NukeOps
   components:
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgentNukeops
+    selectablePrototypes: ["SyndicateMonkeyNukeops", "SyndicateKoboldNukeops"]
 
 - type: entity
   parent: ReinforcementRadioSyndicate
