@@ -15,6 +15,7 @@
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
   - type: Paper
+    isStampable: true
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
     closeOnHandDeselect: false
