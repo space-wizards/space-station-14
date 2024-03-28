@@ -378,6 +378,13 @@
   name: evidence locker
   description: To store bags of bullet casings and detainee belongings.
   components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    # why make new sprite when unused sprite works fine?
+    # ...i'm totally not just saying that because my new sprite was too glitchy to show up
+    stateBaseClosed: armory
+    stateDoorOpen: armory_open
+    stateDoorClosed: armory_door
   - type: AccessReader
     access: [["Security"]]
 
