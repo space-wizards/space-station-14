@@ -15,8 +15,8 @@
             - tag: GlassShard
               name: Glass Shard
               icon:
-                sprite: Objects/Materials/Shards/shard.rsi
-                state: shard1
+                sprite: Objects/Materials/Shards/glass/default.rsi
+                state: shard3
               doAfter: 1
     - node: spear
       entity: Spear
@@ -38,8 +38,8 @@
             - tag: ReinforcedGlassShard
               name: Reinforced Glass Shard
               icon:
-                sprite: Objects/Materials/Shards/shard.rsi
-                state: shard1
+                sprite: Objects/Materials/Shards/glass/reinforced.rsi
+                state: r-shard3
               doAfter: 1
     - node: spear
       entity: SpearReinforced
@@ -61,8 +61,8 @@
             - tag: PlasmaGlassShard
               name: Plasma Glass Shard
               icon:
-                sprite: Objects/Materials/Shards/shard.rsi
-                state: shard1
+                sprite: Objects/Materials/Shards/glass/plasma.rsi
+                state: p-shard3
               doAfter: 1
     - node: spear
       entity: SpearPlasma
@@ -84,8 +84,8 @@
             - tag: UraniumGlassShard
               name: Uranium Glass Shard
               icon:
-                sprite: Objects/Materials/Shards/shard.rsi
-                state: shard1
+                sprite: Objects/Materials/Shards/glass/uranium.rsi
+                state: u-shard3
               doAfter: 1
     - node: spear
       entity: SpearUranium

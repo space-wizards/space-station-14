@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: ImprovisedArrow
   start: start
   graph:
@@ -15,7 +15,7 @@
       - tag: GlassShard
         name: Glass Shard
         icon:
-          sprite: Objects/Materials/Shards/shard.rsi
+          sprite: Objects/Materials/Shards/glass/default.rsi
           state: shard1
         doAfter: 0.5
 

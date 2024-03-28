@@ -24,7 +24,7 @@
       - tag: GlassShard
         name: Glass Shard
         icon:
-          sprite: Objects/Materials/Shards/shard.rsi
+          sprite: Objects/Materials/Shards/glass/default.rsi
           state: shard1
         doAfter: 1
       - material: Cloth
@@ -59,8 +59,8 @@
       - tag: ReinforcedGlassShard
         name: Reinforced Glass Shard
         icon:
-          sprite: Objects/Materials/Shards/shard.rsi
-          state: shard1
+          sprite: Objects/Materials/Shards/glass/reinforced.rsi
+          state: r-shard2
         doAfter: 1
       - material: Cloth
         amount: 1
@@ -94,8 +94,8 @@
       - tag: PlasmaGlassShard
         name: Plasma Glass Shard
         icon:
-          sprite: Objects/Materials/Shards/shard.rsi
-          state: shard1
+          sprite: Objects/Materials/Shards/glass/plasma.rsi
+          state: p-shard2
         doAfter: 1
       - material: Cloth
         amount: 1
@@ -129,8 +129,8 @@
       - tag: UraniumGlassShard
         name: Uranium Glass Shard
         icon:
-          sprite: Objects/Materials/Shards/shard.rsi
-          state: shard1
+          sprite: Objects/Materials/Shards/glass/uranium.rsi
+          state: u-shard2
         doAfter: 1
       - material: Cloth
         amount: 1

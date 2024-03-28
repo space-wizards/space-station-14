@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: Windoor
+  id: Windoor #TODO: Fix windoor multisprite
   start: start
   graph:
   - node: start

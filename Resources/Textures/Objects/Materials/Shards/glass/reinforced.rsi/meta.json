@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Icon from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/b5b4edd4e46efc2ee2d3c1ce5aff82d80ddc461e, reshaded reinforced varient by Sphiral",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "r-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "r-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "r-shard3"
+    },
+    {
+      "name": "r-shard2"
+    },
+    {
+      "name": "r-shard1"
+    }
+  ]
+}
