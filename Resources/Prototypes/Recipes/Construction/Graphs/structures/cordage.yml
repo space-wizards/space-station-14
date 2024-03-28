@@ -24,4 +24,9 @@
           - !type:DeleteEntity {}
           steps:
             - tool: Cutting
-              doAfter: 0
+              doAfter: 5
+    
+    - node: detonationCableDetonator
+      entity: CableDetDetonator
+      edges:
+        - to: detonationCable

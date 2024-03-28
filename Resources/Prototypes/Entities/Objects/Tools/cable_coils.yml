@@ -227,9 +227,9 @@
 - type: entity
   parent: CableStack
   id: CableDetStack
-  name: det cord coil
+  name: explosive cord
   suffix: Full
-  description: Det cord for removing whatever is in your way.
+  description: Explosive cord for removing whatever is in your way.
   components:
   - type: Stack
     stackType: CableDet
@@ -251,7 +251,7 @@
     overTile: true
   - type: Appearance
   - type: Extractable
-    grindableSolutionName: mvcable
+    grindableSolutionName: excable
   - type: SolutionContainerManager
     solutions:
       mvcable:
