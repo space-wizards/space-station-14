@@ -77,6 +77,13 @@ public sealed partial class ExplosionPrototype : IPrototype
     [DataField("smallSoundIterationThreshold")]
     public int SmallSoundIterationThreshold = 6;
 
+    /// <summary>
+    /// How far away another explosion in the same tick can be and be combined.
+    /// Total intensity is added to the original queued explosion.
+    /// </summary>
+    [DataField]
+    public float MaxCombineDistance = 1f;
+
     [DataField("sound")]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("Explosion");
 
