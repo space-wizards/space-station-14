@@ -87,3 +87,15 @@ reagent-desc-white-gilgamesh = A sickening mixture of milk and beer. Makes you f
 
 reagent-name-mopwata = mopwata
 reagent-desc-mopwata = Dirty, stagnant mop water.
+
+reagent-name-americano = americano
+reagent-desc-americano = It's served all over the space.
+
+reagent-name-glace = glace
+reagent-desc-glace = Mixing hot and cold is unhealthy but so yammy.
+
+reagent-name-frappe = frappe
+reagent-desc-frappe = It's like this coffee wants you to put all the syrups in it.
+
+reagent-name-raf = raf
+reagent-desc-raf = It's like a white Russian, but without the vodka.
