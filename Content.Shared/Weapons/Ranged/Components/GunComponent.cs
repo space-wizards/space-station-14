@@ -228,6 +228,18 @@ public sealed partial class GunComponent : Component
     /// </summary>
     [DataField]
     public bool ClumsyProof = false;
+
+    /// <summary>
+    /// The amount of penetrations the gun adds to projectiles shot by the gun.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float? PenetrationModifier;
+
+    /// <summary>
+    /// The damage multiplier added to projectiles shot by the gun.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float? DamageMultiplier;
 }
 
 [Flags]

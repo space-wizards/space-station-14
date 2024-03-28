@@ -9,5 +9,7 @@
       types:
         Piercing: 40
         Structural: 30
+  - type: CanPenetrate
+    penetrationPower: 0
   - type: StaminaDamageOnCollide
     damage: 35

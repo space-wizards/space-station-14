@@ -73,4 +73,10 @@ public sealed partial class ProjectileComponent : Component
     /// </summary>
     [DataField]
     public bool DamagedEntity;
+
+    /// <summary>
+    ///     Whether this projectile has already received the gun's modifiers.
+    /// </summary>
+    [DataField]
+    public bool GunModifiersApplied;
 }
