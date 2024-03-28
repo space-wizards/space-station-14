@@ -90,3 +90,46 @@
     nameSegments:
     - names_ninja_title
     - names_ninja
+
+# Lost Pirate
+- type: entity
+  name: Pirate
+  parent: MobHuman
+  id: MobHumanLostPirate
+  components:
+  - type: NpcFactionMember
+    factions:
+      - Syndicate
+  - type: RandomHumanoidAppearance
+    randomizeName: true
+  - type: Loadout
+    prototypes: [PirateGear]
+
+- type: entity
+  name: Pirate Captain
+  parent: MobHuman
+  id: MobHumanLostCaptainPirate
+  components:
+  - type: NpcFactionMember
+    factions:
+      - Syndicate
+  - type: RandomHumanoidAppearance
+    randomizeName: true
+  - type: Loadout
+    prototypes: [PirateCaptainGear]
+
+- type: entity
+  name: Firstmate Pirate
+  parent: MobHuman
+  id: MobHumanLostFirstmatePirate
+  components:
+  - type: NpcFactionMember
+    factions:
+      - Syndicate
+  - type: RandomHumanoidAppearance
+    randomizeName: true
+  - type: Loadout
+    prototypes: [PirateFirstmateGear]
+  
+  
+  

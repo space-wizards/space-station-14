@@ -12,7 +12,7 @@
     - type: Timer
     - type: TimedSpawner
       prototypes:
-        - MobSpirate
+        - MobHumanLostPirate
         - MobCivilian
       chance: 0.75
       intervalSeconds: 60

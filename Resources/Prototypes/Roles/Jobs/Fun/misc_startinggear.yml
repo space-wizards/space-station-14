@@ -342,3 +342,53 @@
     shoes: ClothingShoesClownBanana
     jumpsuit: ClothingUniformJumpsuitClownBanana
     mask: ClothingMaskClownBanana
+
+#Pierates
+
+- type: startingGear
+  id: PirateGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPirate
+    back: ClothingBackpackPirateFilled
+    head: ClothingHeadBandBlack
+    shoes: ClothingShoesBootsLaceup
+    id: PiratePDA
+    ears: ClothingHeadsetFreelance
+    belt: ClothingBeltUtility
+    pocket1: AppraisalTool
+  innerClothingSkirt: ClothingUniformJumpsuitPirate
+  satchel: ClothingBackpackPirateFilled
+  duffelbag: ClothingBackpackPirateFilled
+
+- type: startingGear
+  id: PirateCaptainGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPirate
+    back: ClothingBackpackPirateFilled
+    head: ClothingHeadHatPirate
+    shoes: ClothingShoesBootsLaceup
+    id: PiratePDA
+    ears: ClothingHeadsetAltFreelancer
+    belt: ClothingBeltUtility
+    pocket1: AppraisalTool
+    pocket2: EnergyCutlass
+    outerClothing: ClothingOuterCoatPirate
+  innerClothingSkirt: ClothingUniformJumpskirtColorLightBrown
+  satchel: ClothingBackpackPirateFilled
+  duffelbag: ClothingBackpackPirateFilled
+
+- type: startingGear
+  id: PirateFirstmateGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPirate
+    back: ClothingBackpackPirateFilled
+    head: ClothingHeadHatPirateTricord
+    shoes: ClothingShoesBootsLaceup
+    id: PiratePDA
+    ears: ClothingHeadsetFreelance
+    belt: ClothingBeltUtility
+    pocket1: AppraisalTool
+    outerClothing: ClothingOuterCoatGentle
+  innerClothingSkirt: ClothingUniformJumpsuitPirate
+  satchel: ClothingBackpackPirateFilled
+  duffelbag: ClothingBackpackPirateFilled
