@@ -7,6 +7,7 @@ using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Labels
 {
@@ -74,7 +75,7 @@ namespace Content.Server.Labels
 
             // Update label
             label.OriginalName ??= metadata.EntityName;
-            label.CurrentLabel = text;
+            label.CurrentLabel = FormattedMessage.EscapeText(text);
             _metaData.SetEntityName(uid, $"{label.OriginalName} ({text})", metadata);
 
             Dirty(uid, label);
