@@ -55,3 +55,6 @@
     preset: StorePresetWizard
     balance:
       Magipoints: 1337
+  - type: Tag
+    tags:
+    - WizardNonApprentice
