@@ -1,0 +1,81 @@
+<BoxContainer xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:s="clr-namespace:Content.Client.Stylesheets"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+         Orientation="Vertical" HorizontalExpand ="True" Margin="0 0 0 3">
+
+    <!-- Device selection button -->
+    <Button Name="FocusButton" HorizontalExpand="True" SetHeight="32" Margin="12 0 0 0" StyleClasses="OpenBoth" Access="Public">
+        <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Horizontal">
+
+            <!-- Alarm state -->
+            <TextureRect Stretch="Keep" HorizontalAlignment="Left" Margin="-20 -2 0 0" ModulateSelfOverride="#25252a" TexturePath="/Textures/Interface/AtmosMonitoring/status_bg.png">
+                <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Horizontal" Margin="8 0">
+                    <TextureRect Name="ArrowTexture" VerticalAlignment="Center" SetSize="12 12" Stretch="KeepAspectCentered" Margin="3 0" TexturePath="/Textures/Interface/Nano/triangle_right.png"></TextureRect>
+                    <Label Name="AlarmStateLabel" HorizontalExpand="True" HorizontalAlignment="Center" FontColorOverride="#5A5A5A" Text="{Loc 'atmos-alerts-window-invalid-state'}"></Label>
+                </BoxContainer>
+            </TextureRect>
+
+            <!-- Alarm name -->
+            <Label Name="AlarmNameLabel" Text="???" HorizontalExpand="True" HorizontalAlignment="Center" Margin="5 0"></Label>
+        </BoxContainer>
+    </Button>
+
+    <!-- Panel that appears on selecting the device -->
+    <PanelContainer Name="FocusContainer" HorizontalExpand="True" Margin="1 -1 1 0" ReservesSpace="False" Visible="False" Access="Public">
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#25252a"/>
+        </PanelContainer.PanelOverride>
+        <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical">
+
+            <!-- Atmosphere status -->
+            <Control>
+
+                <!-- Main container for displaying atmospheric data -->
+                <BoxContainer Name="MainDataContainer" HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical" ReservesSpace="False" Visible="False">
+                    <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
+                        <Label Name="TemperatureHeaderLabel" Text="{Loc 'atmos-alerts-window-temperature-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 2 0 0" SetHeight="24"></Label>
+                        <Label Name="PressureHeaderLabel" Text="{Loc 'atmos-alerts-window-pressure-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 2 0 0" SetHeight="24"></Label>
+                        <Label Name="OxygenationHeaderLabel" Text="{Loc 'atmos-alerts-window-oxygenation-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 2 0 0" SetHeight="24"></Label>
+                    </BoxContainer>
+                    <PanelContainer HorizontalExpand="True">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#202023"/>
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
+                            <Label Name="TemperatureLabel" Text="???" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#5A5A5A" Margin="0 2 0 0" SetHeight="24"></Label>
+                            <Label Name="PressureLabel" Text="???" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#5A5A5A" Margin="0 2 0 0" SetHeight="24"></Label>
+                            <Label Name="OxygenationLabel" Text="???" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#5A5A5A" Margin="0 2 0 0" SetHeight="24"></Label>
+                        </BoxContainer>
+                    </PanelContainer>
+                    <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
+                        <Label Name="GasesHeaderLabel" Text="{Loc 'atmos-alerts-window-other-gases-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 4 0 0" SetHeight="24"></Label>
+                    </BoxContainer>
+                    <PanelContainer HorizontalExpand="True">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#202023"/>
+                        </PanelContainer.PanelOverride>
+
+                        <!-- Gas entries added via C# code -->
+                        <GridContainer Name="GasGridContainer" HorizontalExpand="True" Columns = "4"></GridContainer>
+                    </PanelContainer>
+                </BoxContainer>
+
+                <!-- If the alarm is inactive, this is label is diplayed instead -->
+                <Label Name="NoDataLabel" Text="{Loc 'atmos-alerts-window-no-data-available'}" HorizontalAlignment="Center" Margin="0 15" FontColorOverride="#a9a9a9" ReservesSpace="False" Visible="False"></Label>
+
+                <!-- Silencing progress bar -->
+                <controls:StripeBack Name="SilenceAlarmProgressBar" ReservesSpace="False" Visible="False" Access="Public">
+                    <PanelContainer>
+                        <Label Text="{Loc 'atmos-alerts-window-alerts-being-silenced'}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 5 5 5"/>
+                    </PanelContainer>
+                </controls:StripeBack>
+            </Control>
+
+            <!-- Check box for silencing this alarm -->
+            <CheckBox Name="SilenceCheckBox" Text="{Loc 'atmos-alerts-window-silence-alerts'}" HorizontalAlignment="Left" Margin="5 5 5 5" Access="Public"></CheckBox>
+        </BoxContainer>
+    </PanelContainer>
+
+</BoxContainer>
