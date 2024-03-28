@@ -8,6 +8,8 @@
     Train:
       stationProto: StandardNanotrasenStation
       components:
+        - type: StationRandomTransform
+          enableStationRotation: false
         - type: StationNameSetup
           mapNameTemplate: 'Train "Sentipode" {0}-{1}'
           nameGenerator:
