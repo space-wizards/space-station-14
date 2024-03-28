@@ -243,3 +243,27 @@
       layers:
         - state: crypt_rusted
         - state: pirate_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyBugged1
+  name: surveillance device encryption key.
+  description: An encryption key used by those in the know, whether you want them to be or not.
+  components:
+    - type: EncryptionKey
+      channels:
+        - Bugged1
+      defaultChannel: Bugged1
+    - type: Sprite
+      layers:
+        - state: crypt_rusted
+        - state: pirate_label
+
+- type: entity
+  parent: EncryptionKeyBugged1
+  id: EncryptionKeyBugged2
+  components:
+    - type: EncryptionKey
+      channels:
+        - Bugged2
+      defaultChannel: Bugged2

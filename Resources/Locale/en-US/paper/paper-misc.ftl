@@ -26,3 +26,15 @@ book-text-ame-scribbles = I don't know if you're trained already, so I hope this
       The golden rule is 2 injection for every 1 core. You can go lower to save fuel.
       Higher will burn the engine out and eventually make it explode. Don't.
       Don't forget to refuel it, it tends to stop at the worst possible time.
+
+book-text-surveillance-instructions = {"["}head = 2] Assembly Instructions: [/head]
+      To put together your completely legal and definitely sanctioned microphone simply follow these four easy steps.
+      
+      1. Place an encryption key into a legally accessed communications server. Any will do.
+      2. Place the second key on the same frequency into a headset of your choice.
+      3. Turn your listening device on by flicking the switch on the back.
+      4. Discretely deposit your listening device in the area or on the person of your choice.
+      X. Try not to get caught spying on the chef so you know if its taco night.
+      
+      {"["}color = red] Disclaimer: The manufacturer provides this product for entertainment and educational purposes only. 
+      Its creation does not endorse or encourage any form of unauthorized surveillance or illegal activities. [/color]

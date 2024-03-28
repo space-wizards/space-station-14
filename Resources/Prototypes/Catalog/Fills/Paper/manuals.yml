@@ -23,3 +23,11 @@
       type: PaperBoundUserInterface
   - type: Paper
     content: book-text-holoparasite-info
+
+- type: entity
+  id: PaperWrittenSurveillanceInstructions
+  suffix: "surveillance instructions"
+  parent: Paper
+  components:
+  - type: Paper
+    content: book-text-surveillance-instructions

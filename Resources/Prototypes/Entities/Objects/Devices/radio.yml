@@ -23,3 +23,40 @@
   - type: Tag
     tags:
     - Radio
+
+- type: entity
+  name: Base microphone bug
+  description: I think it... can hear me?
+  parent: BaseItem
+  id: BaseRadioBugged
+  abstract: true
+  components:
+  - type: RadioMicrophone
+    broadcastChannel: CentCom
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    state: bug
+  - type: Item
+    size: Tiny
+    sprite: Objects/Devices/communication.rsi
+    heldPrefix: checker
+  - type: Tag
+    tags:
+    - Radio
+    - Trash
+
+- type: entity
+  name: suspicious object
+  parent: BaseRadioBugged
+  id: RadioBugged1
+  components:
+  - type: RadioMicrophone
+    broadcastChannel: Bugged1
+
+- type: entity
+  name: suspicious object
+  parent: BaseRadioBugged
+  id: RadioBugged2
+  components:
+  - type: RadioMicrophone
+    broadcastChannel: Bugged2

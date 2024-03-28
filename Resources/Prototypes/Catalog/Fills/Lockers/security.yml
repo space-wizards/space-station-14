@@ -126,6 +126,8 @@
       - id: ClothingHandsGlovesForensic
       - id: RubberStampDetective
       - id: HoloprojectorSecurity
+      - id: BoxSurveillance1
+      - id: BoxSurveillance2
       - id: BoxEvidenceMarkers
 
 - type: entity

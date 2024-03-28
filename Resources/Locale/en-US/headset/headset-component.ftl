@@ -19,3 +19,5 @@ chat-radio-freelance = Freelance
 # not headset but whatever
 chat-radio-handheld = Handheld
 chat-radio-binary = Binary
+chat-radio-bugged1 = Bug1136
+chat-radio-bugged2 = Bug1952

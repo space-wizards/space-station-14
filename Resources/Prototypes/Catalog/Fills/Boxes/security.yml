@@ -81,3 +81,45 @@
     layers:
       - state: box_security
       - state: forensic
+
+- type: entity
+  name: covert surveillance box
+  parent: BoxCardboard
+  id: BoxSurveillance1
+  description: A box of... why do you ask?
+  components:
+  - type: Item
+    shape:
+    - 0,0,1,1
+  - type: StorageFill
+    contents:
+    - id: EncryptionKeyBugged1
+      amount: 2
+    - id: RadioBugged1
+      amount: 2
+    - id: PaperWrittenSurveillanceInstructions
+  - type: Sprite
+    layers:
+      - state: box_security
+      - state: encryptokey
+
+- type: entity
+  name: covert surveillance box
+  parent: BoxCardboard
+  id: BoxSurveillance2
+  description: A box of... why do you ask?
+  components:
+  - type: Item
+    shape:
+    - 0,0,1,1
+  - type: StorageFill
+    contents:
+    - id: EncryptionKeyBugged2
+      amount: 2
+    - id: RadioBugged2
+      amount: 2
+    - id: PaperWrittenSurveillanceInstructions
+  - type: Sprite
+    layers:
+      - state: box_security
+      - state: encryptokey
