@@ -79,6 +79,10 @@
     explosionType: Default
     intensitySlope: 1.5
     maxIntensity: 200
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Plastic: 100
   - type: GuideHelp
     guides:
     - Security

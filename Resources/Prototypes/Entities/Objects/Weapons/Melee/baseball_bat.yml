@@ -36,6 +36,9 @@
     node: bat
   - type: UseDelay
     delay: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 250
   - type: Tag
     tags:
     - BaseballBat

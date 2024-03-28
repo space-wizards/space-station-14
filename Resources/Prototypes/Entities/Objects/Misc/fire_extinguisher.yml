@@ -54,6 +54,9 @@
         enabled:
           True: { state: fire_extinguisher_closed }
           False: { state: fire_extinguisher_open }
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
 
 - type: entity
   name: extinguisher spray
