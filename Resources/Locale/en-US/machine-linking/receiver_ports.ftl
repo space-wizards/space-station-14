@@ -70,6 +70,9 @@ signal-port-description-set-particle-epsilon = Sets the type of particle this de
 signal-port-name-set-particle-zeta = Set particle type: zeta
 signal-port-description-set-particle-zeta = Sets the type of particle this device emits to zeta.
 
+signal-port-name-set-particle-sigma = Set particle type: sigma
+signal-port-description-set-particle-sigma = Sets the type of particle this device emits to sigma.
+
 signal-port-name-logic-input-a = Input A
 signal-port-description-logic-input-a = First input of a logic gate.
 

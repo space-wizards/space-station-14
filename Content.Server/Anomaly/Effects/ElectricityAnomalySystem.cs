@@ -28,7 +28,7 @@ public sealed class ElectricityAnomalySystem : EntitySystem
 
     private void OnPulse(Entity<ElectricityAnomalyComponent> anomaly, ref AnomalyPulseEvent args)
     {
-        var range = anomaly.Comp.MaxElectrocuteRange * args.Stability;
+        var range = anomaly.Comp.MaxElectrocuteRange * args.Stability * args.PowerModifier;
 
         int boltCount = (int)MathF.Floor(MathHelper.Lerp((float)anomaly.Comp.MinBoltCount, (float)anomaly.Comp.MaxBoltCount, args.Severity));
 
@@ -37,7 +37,7 @@ public sealed class ElectricityAnomalySystem : EntitySystem
 
     private void OnSupercritical(Entity<ElectricityAnomalyComponent> anomaly, ref AnomalySupercriticalEvent args)
     {
-        var range = anomaly.Comp.MaxElectrocuteRange * 3;
+        var range = anomaly.Comp.MaxElectrocuteRange * 3 * args.PowerModifier;
 
         _emp.EmpPulse(_transform.GetMapCoordinates(anomaly), range, anomaly.Comp.EmpEnergyConsumption, anomaly.Comp.EmpDisabledDuration);
         _lightning.ShootRandomLightnings(anomaly, range, anomaly.Comp.MaxBoltCount * 3, arcDepth: 3);

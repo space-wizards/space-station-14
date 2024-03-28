@@ -21,6 +21,7 @@
     anchored: false
   - type: Physics
     bodyType: Static
+    bodyStatus: InAir
   - type: Fixtures
     fixtures:
       fix1:
@@ -47,6 +48,9 @@
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/Effects/teleport_arrival.ogg
+  - type: SecretDataAnomaly
+    randomStartSecretMin: 0
+    randomStartSecretMax: 2
 
 - type: entity
   id: AnomalyPyroclastic
@@ -119,11 +123,11 @@
     castShadows: false
   - type: GravityAnomaly
   - type: GravityWell
-  - type: RadiationSource
+  - type: RadiationSource  
   - type: Physics
     bodyType: Dynamic
     bodyStatus: InAir
-  - type: CanMoveInAir
+  - type: CanMoveInAir  
   - type: RandomWalk
   - type: SingularityDistortion
     intensity: 1000
@@ -598,7 +602,7 @@
     color: "#6270bb"
   - type: Anomaly
     animationTime: 6
-    offset: 0.05, 0
+    offset: 0, 0
     corePrototype: AnomalyCoreFlora
     coreInertPrototype: AnomalyCoreFloraInert
     anomalyContactDamage:
