@@ -209,6 +209,16 @@
   group: market
 
 - type: cargoProduct
+  id: FunPetRocks
+  icon:
+    sprite: Objects/Fun/pet_rock.rsi
+    state: fred
+  product: CratePetRocks
+  cost: 1500
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
   id: FunCrateGambling
   icon:
     sprite: Objects/Economy/cash.rsi

@@ -33,6 +33,9 @@ ghost-role-information-smile-description = The sweetest creature in the world. S
 ghost-role-information-punpun-name = Pun Pun
 ghost-role-information-punpun-description = An honorable member of the monkey society in charge of the bar and helping the bartenders in any way he can.
 
+ghost-role-information-petrock-name = Pet rock
+ghost-role-information-petrock-description = You are a sentient pet rock, exist in a perpetual state of harmony as a mineral aboard a space station.
+
 ghost-role-information-xeno-name = Xeno
 ghost-role-information-xeno-description = You are a xeno, co-operate with your hive to kill all crewmembers!
 ghost-role-information-xeno-rules = You are an antagonist, smack, slash, and wack!

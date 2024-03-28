@@ -346,6 +346,15 @@
     - id: LidSalami
       prob: 0.01
       orGroup: NotUseful
+    - id: FredRock
+      prob: 0.01
+      orGroup: NotUseful
+    - id: RoxieRock
+      prob: 0.01
+      orGroup: NotUseful
+    - id: PetRock
+      prob: 0.01
+      orGroup: NotUseful
     - id: MobHamsterHamlet
       prob: 0.01
       orGroup: NotUseful

@@ -388,3 +388,13 @@
         amount: 1
         prob: 0.05
 
+- type: entity
+  name: pet rock village
+  description: Contains enough pet rocks to furnish a whole village!
+  id: CratePetRocks
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+    - id: PetRockCarrier
+      amount: 5

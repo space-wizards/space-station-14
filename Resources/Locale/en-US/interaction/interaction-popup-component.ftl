@@ -88,3 +88,7 @@ hugging-success-generic-target = { CAPITALIZE(THE($user)) } hugs you.
 petting-success-tesla = You pet {THE($target)}, violating the laws of nature and physics.
 
 petting-failure-tesla = You reach out towards {THE($target)}, but it zaps your hand away.
+
+petting-success-rock = You pet {THE($target)} on {POSS-ADJ($target)} rocky little head.
+
+petting-failure-rock = You fail to pet {THE($target)}, a non-moving object. Good job!

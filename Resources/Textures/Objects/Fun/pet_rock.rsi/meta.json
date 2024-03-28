@@ -1,0 +1,32 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Taken from https://github.com/ParadiseSS13/Paradise/pull/21792",
+    "states": [
+      {
+        "name": "icon"
+      },
+      {
+        "name": "fred"
+      },
+      {
+        "name": "roxie"
+      },
+      {
+        "name": "inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "equipped-HELMET",
+        "directions": 4
+      }
+    ]
+  }
