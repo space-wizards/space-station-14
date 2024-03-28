@@ -1,0 +1,11 @@
+- type: entity
+  id: SpawnPointAdventurer
+  parent: SpawnPointJobBase
+  name: adventurer
+  components:
+  - type: SpawnPoint
+    job_id: Adventurer
+  - type: Sprite
+    layers:
+      - state: green
+      - state: zookeeper #TODO Replace
