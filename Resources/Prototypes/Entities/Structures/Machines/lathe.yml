@@ -256,6 +256,7 @@
     - Dropper
     - ClothingEyesGlassesChemical
     dynamicRecipes:
+      - Plantanalyzer
       - PowerDrill
       - MiningDrill
       - AnomalyScanner
