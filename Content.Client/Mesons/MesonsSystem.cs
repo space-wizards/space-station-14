@@ -4,14 +4,13 @@ using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.GameTicking;
 using Robust.Shared.Player;
 
-namespace Content.Client.Mesons;
+namespace Content.Client.Mesons.Blinding;
 
-public sealed class MesonSystem : EntitySystem
+public sealed class MesonsSystem : EntitySystem
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
 
-
-    private MesonOverlay _overlay = default!;
+    private MesonsOverlay _overlay = default!;
 
     public override void Initialize()
     {
