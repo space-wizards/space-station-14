@@ -98,7 +98,7 @@ public sealed partial class AtmosphereSystem
                    continue;
                }
 
-               if (tile.Immutable && !IsTileSpace(euid, transform.MapUid, indices, gridComp))
+               if (tile.Immutable && !IsTileSpace(euid, transform.MapUid, indices))
                {
                    tile = new GasMixture(tile.Volume) { Temperature = tile.Temperature };
                    tileMain.Air = tile;
