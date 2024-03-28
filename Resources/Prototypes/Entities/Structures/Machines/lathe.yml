@@ -666,6 +666,7 @@
       - TargetHuman
       - TargetSyndicate
       - TargetClown
+      - ClothingNeckBodyCamera
       - MagazineBoxLightRiflePractice
       - MagazineBoxMagnumPractice
       - MagazineBoxPistolPractice

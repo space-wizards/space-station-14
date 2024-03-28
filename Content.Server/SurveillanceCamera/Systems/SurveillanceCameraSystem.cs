@@ -160,16 +160,12 @@ public sealed class SurveillanceCameraSystem : EntitySystem
     private void OnSetName(EntityUid uid, SurveillanceCameraComponent component, SurveillanceCameraSetupSetName args)
     {
         if (args.UiKey is not SurveillanceCameraSetupUiKey key
-            || key != SurveillanceCameraSetupUiKey.Camera
-            || string.IsNullOrEmpty(args.Name)
-            || args.Name.Length > CameraNameLimit)
+            || key != SurveillanceCameraSetupUiKey.Camera)
         {
             return;
         }
 
-        component.CameraId = args.Name;
-        component.NameSet = true;
-        UpdateSetupInterface(uid, component);
+        SetName(uid, args.Name, component);
     }
 
     private void OnSetNetwork(EntityUid uid, SurveillanceCameraComponent component,
@@ -287,6 +283,24 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         }
 
         UpdateVisuals(camera, component);
+    }
+
+    public void SetName(EntityUid camera, string name, SurveillanceCameraComponent? component = null)
+    {
+        if (!Resolve(camera, ref component))
+        {
+            return;
+        }
+
+        if (string.IsNullOrEmpty(name)
+            || name.Length > CameraNameLimit)
+        {
+            return;
+        }
+
+        component.CameraId = name;
+        component.NameSet = true;
+        UpdateSetupInterface(camera, component);
     }
 
     public void AddActiveViewer(EntityUid camera, EntityUid player, EntityUid? monitor = null, SurveillanceCameraComponent? component = null, ActorComponent? actor = null)

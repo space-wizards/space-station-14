@@ -1,0 +1,47 @@
+- type: entity
+  parent: Clothing
+  id: ClothingNeckBodyCamera
+  name: bodycamera
+  description: Wearable camera to ensure accountability and responsibility.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    state: icon
+    sprite: Clothing/Neck/Misc/bodycamera.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/bodycamera.rsi
+    quickEquip: true
+    slots:
+    - neck
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCameraSecurity
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+    nameSet: true
+  - type: SurveillanceCameraMicrophone
+    range: 3
+    blacklist:
+      components:
+        - SurveillanceCamera
+        - SurveillanceCameraMonitor
+        - RadioSpeaker
+  - type: ActiveListener
+    range: 3
+  - type: Eye
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: BodyCamera
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+  - type: PowerCellDraw
+    drawRate: 0.6
