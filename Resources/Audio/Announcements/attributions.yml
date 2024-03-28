@@ -42,3 +42,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Paradise, volume and pitch changed, merged with redalert.ogg"
   source: "https://github.com/ParadiseSS13/Paradise/blob/07b26ee6b4a11a0607986d322ee007020569feae/sound/effects/siren.ogg"
+
+- files: ["intercept.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/95731342b97167d7883ff091d389f79c36442ee6/sound/ai/default/intercept.ogg"
