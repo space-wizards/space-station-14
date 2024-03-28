@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: Title2 to lobby music
-    type: Add
-  id: 5742
-  time: '2024-01-19T02:47:20.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24254
 - author: Repo
   changes:
   - message: Round restarts require minimum ghost levels on populated servers.
@@ -3795,3 +3788,11 @@
   id: 6241
   time: '2024-03-28T05:41:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26490
+- author: EmoGarbage404
+  changes:
+  - message: Various announcements now announce location on the map (near Medical,
+      etc.) instead of simply displaying coordinates.
+    type: Tweak
+  id: 6242
+  time: '2024-03-28T05:53:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26437
