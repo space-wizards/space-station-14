@@ -919,4 +919,29 @@
   - type: Tag
     tags:
     - Meat
+
+- type: entity
+  name: hyper-realistic sandwich
+  parent: FoodBurgerBase
+  id: FoodSandwichHyperrealistic
+  description: Its on a whole 'nother axis!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - magical
+  - type: Sprite
+    sprite: Objects/Consumable/Food/hyperrealistic.rsi
+    state: hyperrealistic
+    scale: 0.125, 0.125
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 75
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Protein
+          Quantity: 20
+        - ReagentId: SpaceDrugs
+          Quantity: 20
     
