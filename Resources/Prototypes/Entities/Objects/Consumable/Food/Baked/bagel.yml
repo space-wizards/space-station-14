@@ -1,0 +1,66 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_baked_whole.yml & food_baked_single.yml
+# Base
+
+- type: entity
+  parent: FoodInjectableBase
+  id: FoodBagelBase
+  abstract: true
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/bagel.rsi
+  - type: Tag
+    tags:
+    - Bagel
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+
+- type: entity
+  name: bagel
+  parent: FoodBagelBase
+  id: FoodBagel
+  description: A delicious bagel.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+  - type: Food
+  - type: Sprite
+    layers:
+    - state: bagel
+  - type: Tag
+    tags:
+    - Bagel
+
+- type: entity
+  name: poppyseed bagel
+  parent: FoodBagelBase
+  id: FoodBagelPoppy
+  description: A delicious bagel topped with bicaridine-infused poppyseeds.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - medicine
+  - type: Sprite
+    state: bagel-poppy
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 5
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Bagel
