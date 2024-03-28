@@ -14,6 +14,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Shared.MouseRotator;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
@@ -458,7 +459,7 @@ namespace Content.Shared.Interaction
             if (coordinates.GetMapId(EntityManager) != Transform(user).MapID)
                 return false;
 
-            if (!HasComp<NoRotateOnInteractComponent>(user))
+            if (!HasComp<NoRotateOnInteractComponent>(user) && !HasComp<MouseRotatorComponent>(user))
                 _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager, _transform));
 
             return true;

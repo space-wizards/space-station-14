@@ -102,6 +102,18 @@ namespace Content.Shared.Movement.Components
         [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
         public float? FrictionNoInput;
 
+        /// <summary>
+        /// A multiplier used when a character is walking in reverse.
+        /// </summary>
+        [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
+        public float BackwardsMovementModifier = 1f;
+
+        /// <summary>
+        /// An angle that is used to determine when <see cref="BackwardsMovementModifier"/> appplies.
+        /// </summary>
+        [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
+        public Angle BackwardsAngle = Angle.FromDegrees(135);
+
         [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
         public float BaseWalkSpeed { get; set; } = DefaultBaseWalkSpeed;
 

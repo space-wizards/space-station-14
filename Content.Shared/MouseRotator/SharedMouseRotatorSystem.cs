@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Interaction;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.MouseRotator;
 

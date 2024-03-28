@@ -241,13 +241,34 @@ namespace Content.Shared.Movement.Systems
             var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
             Friction(minimumFrictionSpeed, frameTime, friction, ref velocity);
 
+            var worldRot = _transform.GetWorldRotation(xform);
+
+            var backwardsModifier = 1f;
+            if (!weightless && moveSpeedComponent != null)
+            {
+                var velocityAngle = physicsComponent.LinearVelocity.ToWorldAngle();
+                var rot = worldRot.Opposite().Reduced();
+
+                var halfAngle = moveSpeedComponent.BackwardsAngle.Theta / 2;
+                var upperAngle = (rot  + halfAngle).Reduced();
+                var lowerAngle = (rot  - halfAngle).Reduced();
+
+                var upperDist = Math.Abs(Angle.ShortestDistance(velocityAngle, upperAngle));
+                var lowerDist = Math.Abs(Angle.ShortestDistance(velocityAngle, lowerAngle));
+
+                if (upperDist <= halfAngle && lowerDist <= halfAngle * 2 ||
+                    lowerDist <= halfAngle && upperDist <= halfAngle * 2)
+                {
+                    backwardsModifier = moveSpeedComponent.BackwardsMovementModifier;
+                }
+            }
+
             if (worldTotal != Vector2.Zero)
             {
                 if (!NoRotateQuery.HasComponent(uid))
                 {
                     // TODO apparently this results in a duplicate move event because "This should have its event run during
                     // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
-                    var worldRot = _transform.GetWorldRotation(xform);
                     _transform.SetLocalRotation(xform, xform.LocalRotation + worldTotal.ToWorldAngle() - worldRot);
                 }
 
@@ -277,6 +298,7 @@ namespace Content.Shared.Movement.Systems
             if (!weightless || touching)
                 Accelerate(ref velocity, in worldTotal, accel, frameTime);
 
+            velocity *= backwardsModifier;
             PhysicsSystem.SetLinearVelocity(physicsUid, velocity, body: physicsComponent);
 
             // Ensures that players do not spiiiiiiin
