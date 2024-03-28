@@ -82,6 +82,12 @@ public sealed partial class HumanoidAppearanceComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public Color? CachedFacialHairColor;
+
+    /// <summary>
+    ///     Whether any nose/snout markings should be hidden on equipping masks
+    /// </summary>
+    [DataField]
+    public bool HideNoseOnEquip = false;
 }
 
 [DataDefinition]
