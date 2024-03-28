@@ -1,0 +1,84 @@
+﻿- type: entity
+  id: Turnstile
+  parent: BaseStructure
+  name: turnstile
+  description: One-way access - control the flow of foot traffic.
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/smash.ogg"
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Doors/turnstile.rsi
+    noRot: true
+    drawdepth: Mobs
+    state: idle
+  - type: Rotatable
+  - type: Transform
+    noRot: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49" # same dimensions as a door for tall turnstile, prevents objects being thrown through
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - AirlockLayer
+  - type: Turnstile
+    turnSound:
+      path: /Audio/Effects/unbuckle.ogg
+    bumpSound:
+      collection: FenceRattle
+  - type: Appearance
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: FlimsyMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 350
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Construction
+    graph: Turnstile
+    node: turnstile
+  placement:
+    mode: SnapgridCenter
+
+- type: entity
+  id: TurnstileShort
+  parent: Turnstile
+  name: short turnstile
+  description: A smaller, less-secure turnstile.
+  components:
+  - type: Climbable
+    delay: 5.0
+    startClimbSound:
+      collection: FenceRattle
+    finishClimbSound:
+      collection: FenceRattle
+  - type: Sprite
+    state: idle_short
+  - type: Construction
+    graph: TurnstileShort
+    node: turnstileshort
+  - type: Anchorable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.05" # short turnstile has smaller bounds and acts more like machinery-sized object, allows thrown objects
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
