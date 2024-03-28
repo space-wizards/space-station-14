@@ -11,41 +11,39 @@ namespace Content.Server.Atmos.EntitySystems;
 
 public partial class AtmosphereSystem
 {
-    public GasMixture? GetContainingMixture(EntityUid uid, bool ignoreExposed = false, bool excite = false, TransformComponent? transform = null)
+    public GasMixture? GetContainingMixture(Entity<TransformComponent?> ent, bool ignoreExposed = false, bool excite = false)
     {
-        if (!ignoreExposed)
+        if (!Resolve(ent, ref ent.Comp))
+            return null;
+
+        return GetContainingMixture(ent, ent.Comp.GridUid, ent.Comp.MapUid, ignoreExposed, excite);
+    }
+
+    public GasMixture? GetContainingMixture(
+        Entity<TransformComponent?> ent,
+        Entity<GridAtmosphereComponent?>? grid,
+        Entity<MapAtmosphereComponent?>? map,
+        bool ignoreExposed = false,
+        bool excite = false)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return null;
+
+        if (!ignoreExposed && !ent.Comp.Anchored)
         {
             // Used for things like disposals/cryo to change which air people are exposed to.
-            var ev = new AtmosExposedGetAirEvent(uid, excite);
-
-            // Give the entity itself a chance to handle this.
-            RaiseLocalEvent(uid, ref ev, false);
-
+            var ev = new AtmosExposedGetAirEvent((ent, ent.Comp), excite);
+            RaiseLocalEvent(ent, ref ev);
             if (ev.Handled)
                 return ev.Gas;
 
-            // We need to get the parent now, so we need the transform... If the parent is invalid, we can't do much else.
-            if(!Resolve(uid, ref transform) || !transform.ParentUid.IsValid() || transform.MapUid == null)
-                return GetTileMixture(null, null, Vector2i.Zero, excite);
-
-            // Give the parent entity a chance to handle the event...
-            RaiseLocalEvent(transform.ParentUid, ref ev, false);
-
-            if (ev.Handled)
-                return ev.Gas;
-        }
-        // Oops, we did a little bit of code duplication...
-        else if(!Resolve(uid, ref transform))
-        {
-            return GetTileMixture(null, null, Vector2i.Zero, excite);
+            // TODO ATMOS: recursively iterate up through parents
+            // This really needs recursive InContainer metadata flag for performance
+            // And ideally some fast way to get the innermost airtight container.
         }
 
-
-        var gridUid = transform.GridUid;
-        var mapUid = transform.MapUid;
-        var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
-
-        return GetTileMixture(gridUid, mapUid, position, excite);
+        var position = _transformSystem.GetGridTilePositionOrDefault((ent, ent.Comp));
+        return GetTileMixture(grid, map, position, excite);
     }
 
     public bool HasAtmosphere(EntityUid gridUid) => _atmosQuery.HasComponent(gridUid);

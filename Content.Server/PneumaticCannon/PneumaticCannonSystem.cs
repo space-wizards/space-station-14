@@ -94,7 +94,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
             return;
 
         // this should always be possible, as we'll eject the gas tank when it no longer is
-        var environment = _atmos.GetContainingMixture(cannon, false, true);
+        var environment = _atmos.GetContainingMixture(cannon.Owner, false, true);
         var removed = _gasTank.RemoveAir(gas.Value, component.GasUsage);
         if (environment != null && removed != null)
         {

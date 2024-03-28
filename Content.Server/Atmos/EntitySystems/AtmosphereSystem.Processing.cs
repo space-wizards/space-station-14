@@ -507,7 +507,8 @@ namespace Content.Server.Atmos.EntitySystems
             return num * AtmosTime;
         }
 
-        private bool ProcessAtmosDevices(GridAtmosphereComponent atmosphere)
+        private bool ProcessAtmosDevices(EntityUid owner, GridAtmosphereComponent atmosphere,
+            Entity<MapAtmosphereComponent?> map)
         {
             if (!atmosphere.ProcessingPaused)
             {
@@ -521,7 +522,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             var time = _gameTiming.CurTime;
             var number = 0;
-            var ev = new AtmosDeviceUpdateEvent(RealAtmosTime());
+            var ev = new AtmosDeviceUpdateEvent(RealAtmosTime(), (owner, atmosphere), map);
             while (atmosphere.CurrentRunAtmosDevices.TryDequeue(out var device))
             {
                 RaiseLocalEvent(device, ref ev);
@@ -565,12 +566,11 @@ namespace Content.Server.Atmos.EntitySystems
                 var ent = _currentRunAtmosphere[_currentRunAtmosphereIndex];
                 var (owner, atmosphere, visuals, grid, xform) = ent;
 
-                if (!TryComp(owner, out TransformComponent? x)
-                    || x.MapUid == null
-                    || TerminatingOrDeleted(x.MapUid.Value)
-                    || x.MapID == MapId.Nullspace)
+                if (xform.MapUid == null
+                    || TerminatingOrDeleted(xform.MapUid.Value)
+                    || xform.MapID == MapId.Nullspace)
                 {
-                    Log.Error($"Attempted to process atmos without a map? Entity: {ToPrettyString(owner)}. Map: {ToPrettyString(x?.MapUid)}. MapId: {x?.MapID}");
+                    Log.Error($"Attempted to process atmos without a map? Entity: {ToPrettyString(owner)}. Map: {ToPrettyString(xform?.MapUid)}. MapId: {xform?.MapID}");
                     continue;
                 }
 
@@ -584,6 +584,8 @@ namespace Content.Server.Atmos.EntitySystems
 
                 // We subtract it so it takes lost time into account.
                 atmosphere.Timer -= AtmosTime;
+
+                var map = new Entity<MapAtmosphereComponent?>(xform.MapUid.Value, _mapAtmosQuery.CompOrNull(xform.MapUid.Value));
 
                 switch (atmosphere.State)
                 {
@@ -680,7 +682,7 @@ namespace Content.Server.Atmos.EntitySystems
                         atmosphere.State = AtmosphereProcessingState.AtmosDevices;
                         continue;
                     case AtmosphereProcessingState.AtmosDevices:
-                        if (!ProcessAtmosDevices(atmosphere))
+                        if (!ProcessAtmosDevices(owner, atmosphere, map))
                         {
                             atmosphere.ProcessingPaused = true;
                             return;
