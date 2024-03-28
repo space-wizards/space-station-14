@@ -21,6 +21,13 @@ public sealed partial class MeleeWeaponComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool AltDisarm = true;
 
+
+    /// <summary>
+    /// If true attack will hit items.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool HitItem = false;
+
     /// <summary>
     /// Should the melee weapon's damage stats be examinable.
     /// </summary>

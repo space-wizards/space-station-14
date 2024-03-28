@@ -1,0 +1,59 @@
+- type: entity
+  name: boingo glove
+  parent: BaseItem
+  id: PneumaticBoxingGlove
+  description: A pressure powered boxing glove with enough force to launch victims through the air.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/boingo_glove.rsi
+    layers:
+    - state: icon
+    - state: tank
+      map: [ "tank" ]
+      visible: false
+  - type: Appearance
+  - type: GasPoweredThrower
+    gasUsage: 0.25
+  - type: Item
+    size: Large
+  - type: MeleeWeapon
+    attackRate: 0.5
+    angle: 0
+    hitItem: true
+    animation: WeaponArcFist
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 0
+    soundHit:
+      path: /Audio/Weapons/boingopunch.ogg
+  - type: StaminaDamageOnHit
+    damage: 15
+  - type: MeleeThrowOnHit
+    enabled: false
+  - type: ItemMapper
+    containerWhitelist: [gas_tank]
+    mapLayers:
+      tank:
+        whitelist:
+          components:
+          - GasTank
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      gas_tank: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      gas_tank:
+        name: pneumatic-cannon-component-itemslot-name
+        whitelist:
+          components:
+          - GasTank
+        insertSound:
+          path: /Audio/Weapons/click.ogg
+          params:
+            volume: -3
+  - type: Construction
+    graph: BoingoGlove
+    node: boingo

@@ -173,3 +173,14 @@
   description: Bones and silk combined together.
   icon: { sprite: Objects/Weapons/Melee/bone_spear.rsi, state: spear }
   objectType: Item
+
+- type: construction
+  name: boingo glove
+  id: BoingoGlove
+  graph: BoingoGlove
+  startNode: start
+  targetNode: boingo
+  category: construction-category-weapons
+  description: A pressure powered boxing glove capable of launching objects into the air.
+  icon: { sprite: Objects/Weapons/Melee/boingo_glove.rsi, state: icon }
+  objectType: Item

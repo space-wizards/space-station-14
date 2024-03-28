@@ -1,0 +1,29 @@
+- type: constructionGraph
+  id: BoingoGlove
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: boingo
+      steps:
+      - tag: Pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+        name: pipe
+      - tag: Handcuffs
+        icon:
+          sprite: Objects/Misc/cablecuffs.rsi
+          state: cuff
+          color: red
+        name: cuffs
+      - tag: BoxingGlove
+        icon:
+          sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
+          state: icon
+        name: boxing glove
+      - material: Steel
+        amount: 6
+        doAfter: 10
+  - node: boingo
+    entity: PneumaticBoxingGlove

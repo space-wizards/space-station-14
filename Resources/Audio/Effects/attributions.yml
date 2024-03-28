@@ -222,6 +222,11 @@
   license: CC0-1.0
   source: https://github.com/space-wizards/space-station-14/pull/23212
 
+- files: ["boing.ogg"]
+  copyright: "tgstation"
+  license: "CC-BY-SA-3.0"
+  source: "https://github.com/Ghommie/tgstation/blob/34981308860b3888741d0a134aaf2ea1a6488554/sound/effects/boing.ogg"
+
 - files: ["newplayerping.ogg"]
   copyright: TGStation at 3df5d3b42bfb6b3b5adba1067ab41f83816255bb
   license: CC-BY-SA-3.0
@@ -230,4 +235,5 @@
 - files: [beep_landmine.ogg]
   copyright: '"beep_landmine.ogg" by kaktuscsc of Discord for SS14'
   license: "CC-BY-SA-3.0"
+  source: https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Effects/beep_landmine.ogg
   source: https://github.com/YuriyKiss/space-station-14/commit/971a135a9c83aed46e967aac9302ab5b35562b5f

@@ -223,6 +223,9 @@
   id: BoxHug
 
 - type: Tag
+  id: BoxingGlove
+
+- type: Tag
   id: BrassInstrument
 
 - type: Tag

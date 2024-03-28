@@ -87,3 +87,8 @@
   license: "CC0-1.0"
   copyright: "Taken from 0ne_one111yt on freesound.org"
   source: "https://freesound.org/people/0ne_one111yt/sounds/478213/"
+
+- files: ["boingoglove.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from boing.ogg from tgstation"
+  source: "https://github.com/Ghommie/tgstation/blob/34981308860b3888741d0a134aaf2ea1a6488554/sound/effects/boing.ogg"
