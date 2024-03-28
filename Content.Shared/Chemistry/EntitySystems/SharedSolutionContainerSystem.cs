@@ -13,6 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Content.Shared.Hands.Components;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -720,6 +721,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
+        if (!CanSeeHiddenSolution(entity,args.Examiner))
+            return;
+
         var primaryReagent = solution.GetPrimaryReagentId();
 
         if (string.IsNullOrEmpty(primaryReagent?.Prototype))
@@ -816,6 +820,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
+        if (!CanSeeHiddenSolution(entity,args.User))
+            return;
+
         var target = args.Target;
         var user = args.User;
         var verb = new ExamineVerb()
@@ -863,6 +870,17 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
 
         return msg;
+    }
+
+    //Check if examinable solution requires you to hold the item in hand.
+    private bool CanSeeHiddenSolution(Entity<ExaminableSolutionComponent> entity, EntityUid examiner)
+    {
+        //Is the Hidden enabled?
+        if (!entity.Comp.Hidden)
+            return true;
+        //Iterate over hands, if any, for examinable entity.
+        var hasHands = TryComp<HandsComponent>(examiner, out var hands);
+        return hasHands && hands != null && hands.Hands.Values.Any(hand => hand.HeldEntity == entity);
     }
 
     #endregion Event Handlers

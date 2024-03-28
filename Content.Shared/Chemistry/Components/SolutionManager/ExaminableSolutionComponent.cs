@@ -5,4 +5,7 @@ public sealed partial class ExaminableSolutionComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string Solution = "default";
+
+    [DataField]
+    public bool Hidden = false;
 }
