@@ -10,6 +10,7 @@ marking-used = {$marking-name}
 marking-used-forced = {$marking-name} (Forced)
 marking-slot-add = Add
 marking-slot-remove = Remove
+marking-color-choose = Choose color
 
 # Categories
 
