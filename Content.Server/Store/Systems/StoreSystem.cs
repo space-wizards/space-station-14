@@ -7,7 +7,6 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Store;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using System.Linq;
 
@@ -179,7 +178,7 @@ public sealed partial class StoreSystem : EntitySystem
         component.Preset = preset.ID;
         component.CurrencyWhitelist.UnionWith(preset.CurrencyWhitelist);
         component.Categories.UnionWith(preset.Categories);
-        if (component.Balance == new Dictionary<string, FixedPoint2>() && preset.InitialBalance != null) //if we don't have a value stored, use the preset
+        if (component.Balance.Count == 0 && preset.InitialBalance != null) //if we don't have a value stored, use the preset
             TryAddCurrency(preset.InitialBalance, uid, component);
 
         var ui = _ui.GetUiOrNull(uid, StoreUiKey.Key);
