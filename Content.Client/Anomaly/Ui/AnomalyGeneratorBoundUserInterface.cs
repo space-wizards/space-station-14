@@ -45,10 +45,5 @@ public sealed class AnomalyGeneratorBoundUserInterface : BoundUserInterface
 
         _window?.Dispose();
     }
-
-    public void SetPowerSwitch(bool on)
-    {
-        SendMessage(new SharedGravityGeneratorComponent.SwitchGeneratorMessage(on));
-    }
 }
 
