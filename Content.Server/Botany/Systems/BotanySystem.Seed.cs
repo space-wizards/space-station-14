@@ -95,7 +95,7 @@ public sealed partial class BotanySystem : EntitySystem
             var name = Loc.GetString(seed.DisplayName);
             args.PushMarkup(Loc.GetString($"seed-component-description", ("seedName", name)));
             args.PushMarkup(Loc.GetString($"seed-component-plant-yield-text", ("seedYield", seed.Yield)));
-            args.PushMarkup(Loc.GetString($"seed-component-plant-potency-text", ("seedPotency", seed.Potency)));
+            args.PushMarkup(Loc.GetString($"seed-component-plant-potency-text", ("seedPotency", seed.BasePotency)));
         }
     }
 
@@ -121,16 +121,16 @@ public sealed partial class BotanySystem : EntitySystem
         return seed;
     }
 
-    public IEnumerable<EntityUid> AutoHarvest(SeedData proto, EntityCoordinates position, int yieldMod = 1)
+    public IEnumerable<EntityUid> AutoHarvest(SeedData proto, float potencyBonus, EntityCoordinates position, float yieldMod = 1f)
     {
         if (position.IsValid(EntityManager) &&
             proto.ProductPrototypes.Count > 0)
-            return GenerateProduct(proto, position, yieldMod);
+            return GenerateProduct(proto, potencyBonus, position, yieldMod);
 
         return Enumerable.Empty<EntityUid>();
     }
 
-    public IEnumerable<EntityUid> Harvest(SeedData proto, EntityUid user, int yieldMod = 1)
+    public IEnumerable<EntityUid> Harvest(SeedData proto, float potencyBonus, EntityUid user, float yieldMod = 1f)
     {
         if (proto.ProductPrototypes.Count == 0 || proto.Yield <= 0)
         {
@@ -140,18 +140,18 @@ public sealed partial class BotanySystem : EntitySystem
 
         var name = Loc.GetString(proto.DisplayName);
         _popupSystem.PopupCursor(Loc.GetString("botany-harvest-success-message", ("name", name)), user, PopupType.Medium);
-        return GenerateProduct(proto, Transform(user).Coordinates, yieldMod);
+        return GenerateProduct(proto, potencyBonus, Transform(user).Coordinates, yieldMod);
     }
 
-    public IEnumerable<EntityUid> GenerateProduct(SeedData proto, EntityCoordinates position, int yieldMod = 1)
+    public IEnumerable<EntityUid> GenerateProduct(SeedData proto, float potencyBonus, EntityCoordinates position, float yieldMod = 1f)
     {
         var totalYield = 0;
         if (proto.Yield > -1)
         {
-            if (yieldMod < 0)
-                totalYield = proto.Yield;
+            if (yieldMod < 0f)
+                totalYield = 0;
             else
-                totalYield = proto.Yield * yieldMod;
+                totalYield = (int) Math.Round((float) proto.Yield * yieldMod);
 
             totalYield = Math.Max(1, totalYield);
         }
@@ -172,9 +172,10 @@ public sealed partial class BotanySystem : EntitySystem
             var produce = EnsureComp<ProduceComponent>(entity);
 
             produce.Seed = proto;
+            produce.ProducePotency = proto.BasePotency + potencyBonus;
             ProduceGrown(entity, produce);
 
-            _appearance.SetData(entity, ProduceVisuals.Potency, proto.Potency);
+            _appearance.SetData(entity, ProduceVisuals.Potency, produce.ProducePotency);
 
             if (proto.Mysterious)
             {

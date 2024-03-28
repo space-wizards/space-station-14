@@ -176,7 +176,7 @@ public partial class SeedData
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("harvestRepeat")] public HarvestType HarvestRepeat = HarvestType.NoRepeat;
 
-    [DataField("potency")] public float Potency = 1f;
+    [DataField("potency")] public float BasePotency = 1f;
 
     /// <summary>
     ///     If true, cannot be harvested for seeds. Balances hybrids and
@@ -288,7 +288,7 @@ public partial class SeedData
             Production = Production,
             GrowthStages = GrowthStages,
             HarvestRepeat = HarvestRepeat,
-            Potency = Potency,
+            BasePotency = BasePotency,
 
             Seedless = Seedless,
             Viable = Viable,
@@ -351,7 +351,7 @@ public partial class SeedData
             Production = Production,
             GrowthStages = other.GrowthStages,
             HarvestRepeat = HarvestRepeat,
-            Potency = Potency,
+            BasePotency = BasePotency,
 
             Seedless = Seedless,
             Viable = Viable,

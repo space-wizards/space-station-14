@@ -21,4 +21,10 @@ public sealed partial class ProduceComponent : SharedProduceComponent
     /// </summary>
     [DataField("seedId", customTypeSerializer: typeof(PrototypeIdSerializer<SeedPrototype>))]
     public string? SeedId;
+
+    /// <summary>
+    ///     Potency of the given piece of produce, calculated from the seed data and any additional bonuses.
+    /// </summary>
+    [DataField]
+    public float ProducePotency;
 }

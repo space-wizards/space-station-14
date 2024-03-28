@@ -12,13 +12,15 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     public sealed partial class RobustHarvest : ReagentEffect
     {
         [DataField]
-        public int PotencyLimit = 50;
+        public int PotencyLimit = 45;
 
         [DataField]
         public int PotencyIncrease = 3;
 
         [DataField]
-        public int PotencySeedlessThreshold = 30;
+        public float YieldReductionProbability = 0.1f;
+
+
 
         public override void Effect(ReagentEffectArgs args)
         {
@@ -31,21 +33,16 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
             var plantHolder = args.EntityManager.System<PlantHolderSystem>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            if (plantHolderComp.Seed.Potency < PotencyLimit)
+            if (plantHolderComp.PotencyBonus < PotencyLimit)
             {
                 plantHolder.EnsureUniqueSeed(args.SolutionEntity, plantHolderComp);
-                plantHolderComp.Seed.Potency = Math.Min(plantHolderComp.Seed.Potency + PotencyIncrease, PotencyLimit);
-
-                if (plantHolderComp.Seed.Potency > PotencySeedlessThreshold)
-                {
-                    plantHolderComp.Seed.Seedless = true;
-                }
+                plantHolderComp.PotencyBonus = Math.Min(plantHolderComp.PotencyBonus + PotencyIncrease, PotencyLimit);
             }
-            else if (plantHolderComp.Seed.Yield > 1 && random.Prob(0.1f))
+            else if ((float) plantHolderComp.Seed.Yield * plantHolderComp.YieldMod > 1f && random.Prob(YieldReductionProbability))
             {
                 // Too much of a good thing reduces yield
                 plantHolder.EnsureUniqueSeed(args.SolutionEntity, plantHolderComp);
-                plantHolderComp.Seed.Yield--;
+                plantHolderComp.YieldMod -= 1f / (float)plantHolderComp.Seed.Yield;
             }
         }
 
