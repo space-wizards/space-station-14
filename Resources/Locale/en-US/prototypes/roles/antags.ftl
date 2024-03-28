@@ -33,3 +33,6 @@ roles-antag-thief-objective = Add some NT property to your personal collection w
 
 roles-antag-terminator-name = Exterminator
 roles-antag-terminator-objective = Kill the target at all costs, the future depends on it.
+
+roles-antag-wizard-name = Wizard
+roles-antag-wizard-objective = Cause chaos on behalf of the Wizard Federation.

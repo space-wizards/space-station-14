@@ -15,3 +15,10 @@ store-category-pointless = Pointless
 
 # Revenant
 store-category-abilities = Abilities
+
+# Wizard
+store-category-offensivespells = Offensive
+store-category-defensivespells = Defensive
+store-category-mobilityspells = Mobility
+store-category-assistancespells = Assistance
+store-category-magicitems = Items

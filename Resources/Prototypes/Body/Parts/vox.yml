@@ -4,6 +4,7 @@
   id: PartVox
   parent: BaseItem
   name: "vox body part"
+  description: "birb"
   abstract: true
   components:
   - type: Damageable

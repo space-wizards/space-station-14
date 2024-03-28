@@ -172,7 +172,22 @@
     Laughter: 2
 
 - type: reaction
-  id: Gunpowder
+  id: CreateEnrichedUranium
+  impact: Low
+  quantized: true
+  reactants:
+    Uranium-235:
+      amount: 55
+    Fluorine:
+      amount: 35
+    Uranium-234:
+      amount: 10
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: EnrichedUranium
+
+- type: reaction
+  id: Gunpowder # Own a musket for home defense, cause that's what the founding fathers intended!
   impact: Low
   quantized: true
   minTemp: 374
@@ -186,3 +201,15 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
+
+- type: reaction
+  id: lingium # Failing checks in the hot sun, i fought the code and the code won
+  reactants:
+    UnstableMutagen:
+      amount: 2
+    Plasma: # Consumed in reaction: steady supply of plasma required for a jug of it
+      amount: 2 
+    UnstableMutagen:
+      amount: 1
+  products:
+    lingium: 3
