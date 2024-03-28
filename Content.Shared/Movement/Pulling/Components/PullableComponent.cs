@@ -13,7 +13,7 @@ public sealed partial class PullableComponent : Component
     /// The current entity pulling this component.
     /// </summary>
     [AutoNetworkedField, DataField]
-    public EntityUid? Puller;
+    public EntityUid? Puller { get; set; }
 
     /// <summary>
     /// The pull joint.
@@ -36,4 +36,10 @@ public sealed partial class PullableComponent : Component
     [Access(typeof(Systems.PullingSystem), Other = AccessPermissions.ReadExecute)]
     [AutoNetworkedField, DataField]
     public bool PrevFixedRotation;
+
+    public PullableComponent()
+    {
+
+    }
+
 }

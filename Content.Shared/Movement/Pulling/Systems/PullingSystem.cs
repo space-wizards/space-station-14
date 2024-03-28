@@ -269,7 +269,7 @@ public sealed class PullingSystem : EntitySystem
         }
 
         Dirty(player, pullerComp);
-        _throwing.TryThrow(pulled.Value, fromUserCoords, user: player, strength: 4f, animated: false, recoil: false, playSound: false);
+        _throwing.TryThrow(pulled.Value, fromUserCoords, user: player, strength: 4f, animated: false, recoil: false, playSound: false, doSpin: false);
         return false;
     }
 
@@ -368,15 +368,18 @@ public sealed class PullingSystem : EntitySystem
     public bool TryStartPull(EntityUid pullerUid, EntityUid pullableUid, EntityUid? user = null,
         PullerComponent? pullerComp = null, PullableComponent? pullableComp = null)
     {
+
         if (!Resolve(pullerUid, ref pullerComp, false) ||
             !Resolve(pullableUid, ref pullableComp, false))
         {
             return false;
         }
 
+        //are we already pulling that obj
         if (pullerComp.Pulling == pullableUid)
             return true;
 
+        //check if i can pull it
         if (!CanPull(pullerUid, pullableUid))
             return false;
 
@@ -392,7 +395,7 @@ public sealed class PullingSystem : EntitySystem
         if (oldPullable != null)
         {
             // Well couldn't stop the old one.
-            if (!TryStopPull(oldPullable.Value, pullableComp, user))
+            if (!TryStopPull(oldPullable.Value, pullableComp, pullerComp.Pulling))
                 return false;
         }
 
