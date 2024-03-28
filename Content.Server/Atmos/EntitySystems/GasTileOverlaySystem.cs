@@ -172,7 +172,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var id = VisibleGasId[i];
                 var gas = _atmosphereSystem.GetGas(id);
-                var moles = mixture?.Moles[id] ?? 0f;
+                var moles = mixture?[id] ?? 0f;
                 ref var opacity = ref data.Opacity[i];
 
                 if (moles < gas.GasMolesVisible)
@@ -217,13 +217,13 @@ namespace Content.Server.Atmos.EntitySystems
                 oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity);
             }
 
-            if (tile.Air != null)
+            if (tile is {Air: not null, NoGridTile: false})
             {
                 for (var i = 0; i < VisibleGasId.Length; i++)
                 {
                     var id = VisibleGasId[i];
                     var gas = _atmosphereSystem.GetGas(id);
-                    var moles = tile.Air.Moles[id];
+                    var moles = tile.Air[id];
                     ref var oldOpacity = ref oldData.Opacity[i];
 
                     if (moles < gas.GasMolesVisible)

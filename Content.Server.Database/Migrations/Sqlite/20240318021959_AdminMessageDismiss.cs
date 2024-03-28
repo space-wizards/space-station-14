@@ -17,7 +17,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                 nullable: false,
                 defaultValue: false);
 
-            migrationBuilder.Sql("UPDATE admin_messages SET dismissed = seen");
+            migrationBuilder.Sql("UPDATE admin_messages SET dismissed = seen;");
 
             migrationBuilder.AddCheckConstraint(
                 name: "NotDismissedAndSeen",

@@ -9,13 +9,13 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Respawn;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Respawn;
 
 public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
@@ -84,7 +84,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         if (!component.Respawn || !HasComp<StationMemberComponent>(entityGridUid) || entityMapUid == null)
             return;
 
-        if (!_mapManager.TryGetGrid(entityGridUid, out var grid) || MetaData(entityGridUid.Value).EntityLifeStage >= EntityLifeStage.Terminating)
+        if (!TryComp<MapGridComponent>(entityGridUid, out var grid) || MetaData(entityGridUid.Value).EntityLifeStage >= EntityLifeStage.Terminating)
             return;
 
         if (TryFindRandomTile(entityGridUid.Value, entityMapUid.Value, 10, out var coords))
@@ -146,7 +146,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
     {
         targetCoords = EntityCoordinates.Invalid;
 
-        if (!_mapManager.TryGetGrid(targetGrid, out var grid))
+        if (!TryComp<MapGridComponent>(targetGrid, out var grid))
             return false;
 
         var xform = Transform(targetGrid);
