@@ -10,24 +10,25 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
-using Robust.Shared.Audio;
+using Content.Shared.NPC.Systems;
+using Content.Shared.Zombies;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Dragon;
 
 public sealed partial class DragonSystem : EntitySystem
 {
     [Dependency] private readonly CarpRiftsConditionSystem _carpRifts = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private readonly NpcFactionSystem _faction = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private EntityQuery<CarpRiftsConditionComponent> _objQuery;
 
@@ -55,6 +56,7 @@ public sealed partial class DragonSystem : EntitySystem
         SubscribeLocalEvent<DragonComponent, RefreshMovementSpeedModifiersEvent>(OnDragonMove);
         SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<DragonComponent, GenericAntagCreatedEvent>(OnCreated);
+        SubscribeLocalEvent<DragonComponent, EntityZombifiedEvent>(OnZombified);
     }
 
     public override void Update(float frameTime)
@@ -137,7 +139,7 @@ public sealed partial class DragonSystem : EntitySystem
         var xform = Transform(uid);
 
         // Have to be on a grid fam
-        if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+        if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
         {
             _popup.PopupEntity(Loc.GetString("carp-rift-anchor"), uid, uid);
             return;
@@ -146,7 +148,7 @@ public sealed partial class DragonSystem : EntitySystem
         // cant stack rifts near eachother
         foreach (var (_, riftXform) in EntityQuery<DragonRiftComponent, TransformComponent>(true))
         {
-            if (riftXform.Coordinates.InRange(EntityManager, xform.Coordinates, RiftRange))
+            if (riftXform.Coordinates.InRange(EntityManager, _transform, xform.Coordinates, RiftRange))
             {
                 _popup.PopupEntity(Loc.GetString("carp-rift-proximity", ("proximity", RiftRange)), uid, uid);
                 return;
@@ -200,6 +202,12 @@ public sealed partial class DragonSystem : EntitySystem
         {
             Briefing = Loc.GetString("dragon-role-briefing")
         }, mind);
+    }
+
+    private void OnZombified(Entity<DragonComponent> ent, ref EntityZombifiedEvent args)
+    {
+        // prevent carp attacking zombie dragon
+        _faction.AddFaction(ent.Owner, ent.Comp.Faction);
     }
 
     private void Roar(EntityUid uid, DragonComponent comp)

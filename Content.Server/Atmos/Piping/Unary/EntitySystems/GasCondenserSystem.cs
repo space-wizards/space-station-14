@@ -45,7 +45,7 @@ public sealed class GasCondenserSystem : EntitySystem
         var removed = inlet.Air.Remove(molesToConvert);
         for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
         {
-            var moles = removed.Moles[i];
+            var moles = removed[i];
             if (moles <= 0)
                 continue;
 

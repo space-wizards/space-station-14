@@ -1,11 +1,13 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.Guidebook;
 using Content.Client.Humanoid;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
@@ -115,6 +117,8 @@ namespace Content.Client.Preferences.UI
             _preferencesManager = preferencesManager;
             _configurationManager = configurationManager;
             _markingManager = IoCManager.Resolve<MarkingManager>();
+
+            SpeciesInfoButton.ToolTip = Loc.GetString("humanoid-profile-editor-guidebook-button-tooltip");
 
             #region Left
 
@@ -523,8 +527,28 @@ namespace Content.Client.Preferences.UI
 
             preferencesManager.OnServerDataLoaded += LoadServerData;
 
+            SpeciesInfoButton.OnPressed += OnSpeciesInfoButtonPressed;
+
+            UpdateSpeciesGuidebookIcon();
 
             IsDirty = false;
+        }
+
+        private void OnSpeciesInfoButtonPressed(BaseButton.ButtonEventArgs args)
+        {
+            var guidebookController = UserInterfaceManager.GetUIController<GuidebookUIController>();
+            var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
+            var page = "Species";
+            if (_prototypeManager.HasIndex<GuideEntryPrototype>(species))
+                page = species;
+
+            if (_prototypeManager.TryIndex<GuideEntryPrototype>("Species", out var guideRoot))
+            {
+                var dict = new Dictionary<string, GuideEntry>();
+                dict.Add("Species", guideRoot);
+                //TODO: Don't close the guidebook if its already open, just go to the correct page
+                guidebookController.ToggleGuidebook(dict, includeChildren:true, selected: page);
+            }
         }
 
         private void ToggleClothes(BaseButton.ButtonEventArgs obj)
@@ -790,6 +814,7 @@ namespace Content.Client.Preferences.UI
             CMarkings.SetSpecies(newSpecies); // Repopulate the markings tab as well.
             UpdateSexControls(); // update sex for new species
             RebuildSpriteView(); // they might have different inv so we need a new dummy
+            UpdateSpeciesGuidebookIcon();
             IsDirty = true;
             _needUpdatePreview = true;
         }
@@ -939,6 +964,25 @@ namespace Content.Client.Preferences.UI
                 }
             }
 
+        }
+
+        public void UpdateSpeciesGuidebookIcon()
+        {
+            SpeciesInfoButton.StyleClasses.Clear();
+
+            var species = Profile?.Species;
+            if (species is null)
+                return;
+
+            if (!_prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesProto))
+                return;
+
+            // Don't display the info button if no guide entry is found
+            if (!_prototypeManager.HasIndex<GuideEntryPrototype>(species))
+                return;
+
+            var style = speciesProto.GuideBookIcon;
+            SpeciesInfoButton.StyleClasses.Add(style);
         }
 
         private void UpdateMarkings()

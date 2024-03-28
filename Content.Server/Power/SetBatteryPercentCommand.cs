@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -39,7 +40,8 @@ namespace Content.Server.Power
                 shell.WriteLine($"No battery found with id {id}.");
                 return;
             }
-            battery.CurrentCharge = (battery.MaxCharge * percent) / 100;
+            var system = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<BatterySystem>();
+            system.SetCharge(id.Value, battery.MaxCharge * percent / 100, battery);
             // Don't acknowledge b/c people WILL forall this
         }
     }

@@ -1,0 +1,63 @@
+﻿- type: constructionGraph
+  id: ClockworkGirder
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: clockGirder
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Brass
+              amount: 2
+              doAfter: 1
+
+    - node: clockGirder
+      entity: ClockworkGirder
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetBrass1
+              amount: 2
+            - !type:DeleteEntity {}
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+        - to: clockworkWall
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: MetalRod
+              amount: 2
+              doAfter: 2
+            - material: Brass
+              amount: 2
+              doAfter: 1
+
+    - node: clockworkWall
+      entity: WallClock
+      edges:
+        - to: clockGirder
+          completed:
+            - !type:GivePrototype
+              prototype: PartRodMetal1
+              amount: 2
+            - !type:GivePrototype
+              prototype: SheetBrass1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 10
+            - tool: Cutting
+              doAfter: 1
+            - tool: Prying
+              doAfter: 2

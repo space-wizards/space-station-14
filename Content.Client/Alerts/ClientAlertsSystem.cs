@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Alerts;
 
@@ -12,6 +13,7 @@ public sealed class ClientAlertsSystem : AlertsSystem
 {
     public AlertOrderPrototype? AlertOrder { get; set; }
 
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -33,7 +35,7 @@ public sealed class ClientAlertsSystem : AlertsSystem
 
         AlertOrder = _prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
         if (AlertOrder == null)
-            Log.Error("alert", "no alertOrder prototype found, alerts will be in random order");
+            Log.Error("No alertOrder prototype found, alerts will be in random order");
     }
 
     public IReadOnlyDictionary<AlertKey, AlertState>? ActiveAlerts
@@ -49,24 +51,23 @@ public sealed class ClientAlertsSystem : AlertsSystem
 
     protected override void AfterShowAlert(Entity<AlertsComponent> alerts)
     {
-        if (_playerManager.LocalEntity != alerts.Owner)
-            return;
-
-        SyncAlerts?.Invoke(this, alerts.Comp.Alerts);
+        UpdateHud(alerts);
     }
 
-    protected override void AfterClearAlert(Entity<AlertsComponent> alertsComponent)
+    protected override void AfterClearAlert(Entity<AlertsComponent> alerts)
     {
-        if (_playerManager.LocalEntity != alertsComponent.Owner)
-            return;
-
-        SyncAlerts?.Invoke(this, alertsComponent.Comp.Alerts);
+        UpdateHud(alerts);
     }
 
-    private void ClientAlertsHandleState(EntityUid uid, AlertsComponent component, ref AfterAutoHandleStateEvent args)
+    private void ClientAlertsHandleState(Entity<AlertsComponent> alerts, ref AfterAutoHandleStateEvent args)
     {
-        if (_playerManager.LocalEntity == uid)
-            SyncAlerts?.Invoke(this, component.Alerts);
+        UpdateHud(alerts);
+    }
+
+    private void UpdateHud(Entity<AlertsComponent> entity)
+    {
+        if (_playerManager.LocalEntity == entity.Owner)
+            SyncAlerts?.Invoke(this, entity.Comp.Alerts);
     }
 
     private void OnPlayerAttached(EntityUid uid, AlertsComponent component, LocalPlayerAttachedEvent args)

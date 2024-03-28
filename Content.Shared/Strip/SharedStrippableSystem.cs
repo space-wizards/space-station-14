@@ -14,12 +14,12 @@ public abstract class SharedStrippableSystem : EntitySystem
         SubscribeLocalEvent<StrippableComponent, DragDropDraggedEvent>(OnDragDrop);
     }
 
-    public (float Time, bool Stealth) GetStripTimeModifiers(EntityUid user, EntityUid target, float initialTime)
+    public (TimeSpan Time, bool Stealth) GetStripTimeModifiers(EntityUid user, EntityUid target, TimeSpan initialTime)
     {
         var userEv = new BeforeStripEvent(initialTime);
-        RaiseLocalEvent(user, userEv);
+        RaiseLocalEvent(user, ref userEv);
         var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
-        RaiseLocalEvent(target, ev);
+        RaiseLocalEvent(target, ref ev);
         return (ev.Time, ev.Stealth);
     }
 

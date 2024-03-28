@@ -14,7 +14,7 @@ A large portion of Xenoarchaeology gameplay revolves around the interpretation o
 
 - [color=#a4885c]Edges:[/color] the amount of nodes that are connected to the current node. Using this, you can calculate the total number of nodes as well as organize a map of their connections.
 
-- [color=#a4885c]Current value:[/color] the amount of research points an artifact is currently worth. This is an important factor in choosing when to stop research and destroy the artifact in exchange for points.
+- [color=#a4885c]Unextracted value:[/color] the amount of research points an artifact will give when extracted. Extracting sets this to zero and traversing new nodes increases it.
 
 Reports are a helpful tool in manipulating an artifact, especially in the later stages where you are traversing nodes that have already been activated. 
 <Box>

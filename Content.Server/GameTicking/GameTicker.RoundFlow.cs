@@ -301,12 +301,6 @@ namespace Content.Server.GameTicking
 
             RunLevel = GameRunLevel.PostRound;
 
-            // The lobby song is set here instead of in RestartRound,
-            // because ShowRoundEndScoreboard triggers the start of the music playing
-            // at the end of a round, and this needs to be set before RestartRound
-            // in order for the lobby song status display to be accurate.
-            LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
-
             ShowRoundEndScoreboard(text);
             SendRoundEndDiscordMessage();
         }
@@ -394,8 +388,17 @@ namespace Content.Server.GameTicking
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
             var sound = RoundEndSoundCollection == null ? null : _audio.GetSound(new SoundCollectionSpecifier(RoundEndSoundCollection));
 
-            RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId,
-                listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong, sound));
+            var roundEndMessageEvent = new RoundEndMessageEvent(
+                gamemodeTitle,
+                roundEndText,
+                roundDuration,
+                RoundId,
+                listOfPlayerInfoFinal.Length,
+                listOfPlayerInfoFinal,
+                sound
+            );
+            RaiseNetworkEvent(roundEndMessageEvent);
+            RaiseLocalEvent(roundEndMessageEvent);
 
             _replayRoundPlayerInfo = listOfPlayerInfoFinal;
             _replayRoundText = roundEndText;

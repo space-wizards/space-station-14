@@ -2,6 +2,7 @@ using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Shuttles.Components;
@@ -25,25 +26,19 @@ public sealed partial class FTLComponent : Component
     public float Accumulator = 0f;
 
     /// <summary>
-    /// Target Uid to dock with at the end of FTL.
+    /// Coordinates to arrive it: May be relative to another grid (for docking) or map coordinates.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("targetUid")]
-    public EntityUid? TargetUid;
-
-    [ViewVariables(VVAccess.ReadWrite), DataField("targetCoordinates")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public EntityCoordinates TargetCoordinates;
 
-    /// <summary>
-    /// Should we dock with the target when arriving or show up nearby.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("dock")]
-    public bool Dock;
+    [DataField]
+    public Angle TargetAngle;
 
     /// <summary>
     /// If we're docking after FTL what is the prioritised dock tag (if applicable).
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("priorityTag", customTypeSerializer:typeof(PrototypeIdSerializer<TagPrototype>))]
-    public string? PriorityTag;
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public ProtoId<TagPrototype>? PriorityTag;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("soundTravel")]
     public SoundSpecifier? TravelSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_progress.ogg")
@@ -51,5 +46,6 @@ public sealed partial class FTLComponent : Component
         Params = AudioParams.Default.WithVolume(-3f).WithLoop(true)
     };
 
+    [DataField]
     public EntityUid? TravelStream;
 }
