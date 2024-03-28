@@ -28,9 +28,9 @@
           mapNameTemplate: "Dev"
         - type: StationJobs
           overflowJobs:
-          - Captain
+          - NoviceAdventurer #CrystallPunk Dev replacement
           availableJobs:
-            Captain: [ -1, -1 ]
+            NoviceAdventurer: [ -1, -1 ] #CrystallPunk Dev replacement
 
 - type: gameMap
   id: TestTeg

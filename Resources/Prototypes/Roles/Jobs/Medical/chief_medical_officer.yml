@@ -4,6 +4,7 @@
   id: ChiefMedicalOfficer
   name: job-name-cmo
   description: job-description-cmo
+  setPreference: false
   playTimeTracker: JobChiefMedicalOfficer
   requirements:
     - !type:RoleTimeRequirement

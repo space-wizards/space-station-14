@@ -1,0 +1,1 @@
+department-Mercenary = Гильдия наемников

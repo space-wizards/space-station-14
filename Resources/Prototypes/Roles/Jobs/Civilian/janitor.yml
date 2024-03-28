@@ -2,6 +2,7 @@
   id: Janitor
   name: job-name-janitor
   description: job-description-janitor
+  setPreference: false
   playTimeTracker: JobJanitor
   startingGear: JanitorGear
   icon: "JobIconJanitor"

@@ -2,6 +2,7 @@
   id: ServiceWorker
   name: job-name-serviceworker
   description: job-description-serviceworker
+  setPreference: false
   playTimeTracker: JobServiceWorker
   startingGear: ServiceWorkerGear
   icon: "JobIconServiceWorker"

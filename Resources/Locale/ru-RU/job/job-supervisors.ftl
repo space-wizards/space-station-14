@@ -1,0 +1,1 @@
+job-supervisors-everyone = вообще всем

@@ -2,6 +2,7 @@
   id: Detective
   name: job-name-detective
   description: job-description-detective
+  setPreference: false
   playTimeTracker: JobDetective
   requirements:
   - !type:DepartmentTimeRequirement

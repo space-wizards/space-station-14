@@ -2,6 +2,7 @@
   id: MedicalDoctor
   name: job-name-doctor
   description: job-description-doctor
+  setPreference: false
   playTimeTracker: JobMedicalDoctor
   requirements:
     - !type:DepartmentTimeRequirement

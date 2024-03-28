@@ -2,6 +2,7 @@
   id: CargoTechnician
   name: job-name-cargotech
   description: job-description-cargotech
+  setPreference: false
   playTimeTracker: JobCargoTechnician
   startingGear: CargoTechGear
   icon: "JobIconCargoTechnician"

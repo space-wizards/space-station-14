@@ -2,6 +2,7 @@
   id: HeadOfPersonnel
   name: job-name-hop
   description: job-description-hop
+  setPreference: false
   playTimeTracker: JobHeadOfPersonnel
   requirements:
     - !type:DepartmentTimeRequirement

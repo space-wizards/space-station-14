@@ -2,6 +2,7 @@
   id: SecurityCadet
   name: job-name-cadet
   description: job-description-cadet
+  setPreference: false
   playTimeTracker: JobSecurityCadet
   requirements:
     - !type:OverallPlaytimeRequirement

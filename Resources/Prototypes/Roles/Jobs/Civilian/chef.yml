@@ -2,6 +2,7 @@
   id: Chef
   name: job-name-chef
   description: job-description-chef
+  setPreference: false
   playTimeTracker: JobChef
   requirements:
     - !type:DepartmentTimeRequirement

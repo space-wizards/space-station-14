@@ -2,6 +2,7 @@
   id: MedicalIntern
   name: job-name-intern
   description: job-description-intern
+  setPreference: false
   playTimeTracker: JobMedicalIntern
   requirements:
     - !type:DepartmentTimeRequirement

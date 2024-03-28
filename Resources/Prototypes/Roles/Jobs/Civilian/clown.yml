@@ -2,6 +2,7 @@
   id: Clown
   name: job-name-clown
   description: job-description-clown
+  setPreference: false
   playTimeTracker: JobClown
   startingGear: ClownGear
   icon: "JobIconClown"

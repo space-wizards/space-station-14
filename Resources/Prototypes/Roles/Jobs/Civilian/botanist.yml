@@ -2,6 +2,7 @@
   id: Botanist
   name: job-name-botanist
   description: job-description-botanist
+  setPreference: false
   playTimeTracker: JobBotanist
   startingGear: BotanistGear
   icon: "JobIconBotanist"
