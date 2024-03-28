@@ -1,5 +1,6 @@
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Popups;
 using Content.Shared.Temperature;
 using Content.Shared.Toggleable;
 using Content.Shared.Wieldable;
@@ -20,6 +21,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -82,6 +84,14 @@ public abstract class SharedItemToggleSystem : EntitySystem
                 _audio.PlayPredicted(itemToggle.SoundFailToActivate, uid, user);
             else
                 _audio.PlayPvs(itemToggle.SoundFailToActivate, uid);
+
+            if (attempt.Popup != null && user != null)
+            {
+                if (predicted)
+                    _popup.PopupClient(attempt.Popup, uid, user.Value);
+                else
+                    _popup.PopupEntity(attempt.Popup, uid, user.Value);
+            }
 
             return false;
         }
@@ -146,9 +156,6 @@ public abstract class SharedItemToggleSystem : EntitySystem
         var toggleUsed = new ItemToggledEvent(predicted, Activated: true, user);
         RaiseLocalEvent(uid, ref toggleUsed);
 
-        var activev = new ItemToggleActivatedEvent(user);
-        RaiseLocalEvent(uid, ref activev);
-
         itemToggle.Activated = true;
         Dirty(uid, itemToggle);
     }
@@ -179,9 +186,6 @@ public abstract class SharedItemToggleSystem : EntitySystem
 
         var toggleUsed = new ItemToggledEvent(predicted, Activated: false, user);
         RaiseLocalEvent(uid, ref toggleUsed);
-
-        var activev = new ItemToggleDeactivatedEvent(user);
-        RaiseLocalEvent(uid, ref activev);
 
         itemToggle.Activated = false;
         Dirty(uid, itemToggle);

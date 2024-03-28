@@ -55,6 +55,11 @@ public record struct ItemToggleActivateAttemptEvent(EntityUid? User)
 {
     public bool Cancelled = false;
     public readonly EntityUid? User = User;
+
+    /// <summary>
+    /// Pop-up that gets shown to users explaining why the attempt was cancelled.
+    /// </summary>
+    public string? Popup { get; set; }
 }
 
 /// <summary>
@@ -75,23 +80,5 @@ public readonly record struct ItemToggledEvent(bool Predicted, bool Activated, E
 {
     public readonly bool Predicted = Predicted;
     public readonly bool Activated = Activated;
-    public readonly EntityUid? User = User;
-}
-
-/// <summary>
-/// Raised directed on an entity when an itemtoggle is activated.
-/// </summary>
-[ByRefEvent]
-public readonly record struct ItemToggleActivatedEvent(EntityUid? User)
-{
-    public readonly EntityUid? User = User;
-}
-
-/// <summary>
-/// Raised directed on an entity when an itemtoggle is deactivated.
-/// </summary>
-[ByRefEvent]
-public readonly record struct ItemToggleDeactivatedEvent(EntityUid? User)
-{
     public readonly EntityUid? User = User;
 }
