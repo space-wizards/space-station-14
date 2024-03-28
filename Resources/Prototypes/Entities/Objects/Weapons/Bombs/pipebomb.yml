@@ -1,5 +1,44 @@
 - type: entity
-  parent: GrenadeBase
+  abstract: true
+  parent: BaseItem
+  id: IgniteBombBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/grenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: Item
+    size: Small
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Belt
+#  - type: OnUseTimerTrigger
+#    delay: 3.5
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Appearance
+  - type: AnimationPlayer
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: primed }
+          Unprimed: { state: icon }
+
+
+- type: entity
+  parent: IgniteBombBase
   id: PipeBomb
   name: pipe bomb
   description: An improvised explosive made from pipes and wire.
@@ -10,7 +49,7 @@
     - state: base
       map: ["enum.TriggerVisualLayers.Base"]
     - state: wires
-  - type: OnUseTimerTrigger # todo: make it activate through welder/lighter/fire instead
+  - type: OnIgniteTimerTrigger
     delay: 5
     examinable: false
     initialBeepDelay: 0
@@ -60,3 +99,5 @@
     graph: PipeBomb
     node: cable
     defaultTarget: pipebomb
+
+
