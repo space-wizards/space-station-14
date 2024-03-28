@@ -59,6 +59,18 @@
     state: target_h
 
 - type: entity
+  name: moving target
+  id: TargetMoving
+  parent: TargetHuman
+  description: A shooting target. This one moves.
+  components:
+  - type: RandomWalk
+    minSpeed: 4
+    maxSpeed: 6
+    minStepCooldown: 0.3
+    maxStepCooldown: 0.5
+
+- type: entity
   name: syndicate target
   id: TargetSyndicate
   parent: BaseTarget

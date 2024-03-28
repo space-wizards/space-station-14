@@ -664,6 +664,7 @@
       - MagazineBoxLightRifle
       - SpeedLoaderMagnum
       - TargetHuman
+      - TargetMoving
       - TargetSyndicate
       - TargetClown
       - MagazineBoxLightRiflePractice
