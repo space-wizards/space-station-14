@@ -1,0 +1,25 @@
+<cartridges:CriminalRecordsCartridgeUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+                                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                                 xmlns="https://spacestation14.io" Margin="1 0 2 0">
+    <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+      <controls:StripeBack>
+        <PanelContainer>
+          <Label Align="Center" Text="{Loc 'criminal-records-cartridge-heading'}" StyleClasses="LabelBig" />
+        </PanelContainer>
+      </controls:StripeBack>
+      <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 10">
+        <Label Text="Record Filters:" Margin="20 0 0 0"/>
+        <Control HorizontalExpand="True"/>
+        <CheckBox Text="Show Wanted" Pressed="true"/>
+        <Control HorizontalExpand="True"/>
+        <CheckBox Text="Show Detained" Pressed="true" Margin="0 0 20 0" />
+      </BoxContainer>
+      <PanelContainer StyleClasses="LowDivider"/>
+      <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" >
+          <GridContainer Margin="10 0 0 0" HorizontalExpand="True" Columns="3" Name="Criminals"/>
+        </ScrollContainer>
+      </BoxContainer>
+    </BoxContainer>
+</cartridges:CriminalRecordsCartridgeUiFragment>

@@ -4,6 +4,9 @@ default-program-name = Program
 notekeeper-program-name = Notekeeper
 news-read-program-name = Station news
 
+criminal-records-program-name = Criminal Records
+criminal-records-cartridge-heading = People Of Interest
+
 crew-manifest-program-name = Crew manifest
 crew-manifest-cartridge-loading = Loading ...
 
