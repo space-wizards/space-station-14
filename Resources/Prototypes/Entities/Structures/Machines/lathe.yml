@@ -835,6 +835,7 @@
       - BluespaceBeaker
       - SyringeBluespace
       - SyringeCryostasis
+      - MedicalHypospray
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: StealTarget

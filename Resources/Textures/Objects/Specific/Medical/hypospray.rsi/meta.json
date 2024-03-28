@@ -20,6 +20,9 @@
       "name": "hypo"
     },
     {
+      "name": "medhypo"
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },
