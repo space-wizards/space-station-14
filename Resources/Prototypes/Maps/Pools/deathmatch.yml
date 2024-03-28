@@ -1,4 +1,4 @@
-#- type: gameMapPool
-#  id: DeathMatchMapPool
-#  maps:
-#  - MeteorArena
+- type: gameMapPool
+  id: DeathMatchMapPool
+  maps:
+  - MeteorArena
