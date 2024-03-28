@@ -8,6 +8,8 @@
     useDelay: 10
     range: 16 # default examine-range.
     # ^ should probably add better validation that the clicked location is on the users screen somewhere,
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/blink.ogg
     itemIconStyle: BigAction
     checkCanAccess: false
     repeat: true

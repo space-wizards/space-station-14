@@ -1,5 +1,7 @@
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Interaction;
+using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -14,6 +16,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {
@@ -38,10 +41,20 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, ActionOnInteractComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled || component.ActionEntities == null)
+        if (args.Handled)
             return;
 
-        var options = GetValidActions<InstantActionComponent>(component.ActionEntities);
+        var actionEnts = component.ActionEntities;
+
+        if (actionEnts is null)
+        {
+            if (!TryComp<ActionsContainerComponent>(uid,  out var actionsContainerComponent))
+                return;
+
+            actionEnts = actionsContainerComponent.Container.ContainedEntities.ToList();
+        }
+
+        var options = GetValidActions<InstantActionComponent>(actionEnts);
         if (options.Count == 0)
             return;
 
@@ -55,13 +68,23 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
     private void OnAfterInteract(EntityUid uid, ActionOnInteractComponent component, AfterInteractEvent args)
     {
-        if (args.Handled || component.ActionEntities == null)
+        if (args.Handled)
             return;
+
+        var actionEnts = component.ActionEntities;
+
+        if (actionEnts is null)
+        {
+            if (!TryComp<ActionsContainerComponent>(uid,  out var actionsContainerComponent))
+                return;
+
+            actionEnts = actionsContainerComponent.Container.ContainedEntities.ToList();
+        }
 
         // First, try entity target actions
         if (args.Target != null)
         {
-            var entOptions = GetValidActions<EntityTargetActionComponent>(component.ActionEntities, args.CanReach);
+            var entOptions = GetValidActions<EntityTargetActionComponent>(actionEnts, args.CanReach);
             for (var i = entOptions.Count - 1; i >= 0; i--)
             {
                 var action = entOptions[i].Comp;

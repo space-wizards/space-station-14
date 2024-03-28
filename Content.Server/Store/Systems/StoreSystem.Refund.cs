@@ -1,4 +1,4 @@
-﻿using Content.Server.Store.Components;
+using Content.Server.Store.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Store.Systems;

@@ -12,11 +12,6 @@ public sealed partial class ProjectileSpellEvent : WorldTargetActionEvent, ISpea
     [DataField("prototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype = default!;
 
-    /// <summary>
-    /// Gets the targeted spawn positions; may lead to multiple entities being spawned.
-    /// </summary>
-    [DataField("posData")] public MagicSpawnData Pos = new TargetCasterPos();
-
     [DataField("speech")]
     public string? Speech { get; private set; }
 }
