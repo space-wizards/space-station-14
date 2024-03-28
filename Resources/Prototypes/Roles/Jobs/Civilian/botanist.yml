@@ -20,9 +20,10 @@
 - type: startingGear
   id: BotanistGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitHydroponics
+    jumpsuit: ClothingUniformJumpsuitClown
     back: ClothingBackpackHydroponicsFilled
-    shoes: ClothingShoesColorBrown
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClownUnremoveable
     id: BotanistPDA
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterApronBotanist

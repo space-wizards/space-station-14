@@ -21,6 +21,7 @@
     head: ClothingHeadHatCargosoft
     jumpsuit: ClothingUniformJumpsuitCargo
     back: ClothingBackpackCargoFilled
+    mask: ClothingMaskClownUnremoveable
     shoes: ClothingShoesColorBlack
     id: CargoPDA
     ears: ClothingHeadsetCargo

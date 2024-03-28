@@ -24,7 +24,8 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorWhite
     back: ClothingBackpackMedicalFilled
-    shoes: ClothingShoesColorWhite
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClownUnremoveable
     id: MedicalInternPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled

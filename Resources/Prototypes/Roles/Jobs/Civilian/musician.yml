@@ -22,7 +22,8 @@
     jumpsuit: ClothingUniformJumpsuitMusician
     back: ClothingBackpackMusicianFilled
     eyes: ClothingEyesGlassesSunglasses
-    shoes: ClothingShoesBootsLaceup
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClownUnremoveable
     id: MusicianPDA
     ears: ClothingHeadsetService
   satchel: ClothingBackpackSatchelMusicianFilled

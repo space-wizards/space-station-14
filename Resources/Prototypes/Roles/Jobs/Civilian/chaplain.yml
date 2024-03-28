@@ -21,7 +21,8 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitChaplain
     back: ClothingBackpackChaplainFilled
-    shoes: ClothingShoesColorBlack
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClownUnremoveable
     id: ChaplainPDA
     ears: ClothingHeadsetService
   innerClothingSkirt: ClothingUniformJumpskirtChaplain

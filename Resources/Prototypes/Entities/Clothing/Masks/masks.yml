@@ -210,6 +210,13 @@
 
 - type: entity
   parent: ClothingMaskClown
+  noSpawn: true
+  id: ClothingMaskClownUnremoveable
+  components:
+  - type: Unremoveable
+
+- type: entity
+  parent: ClothingMaskClown
   id: ClothingMaskClownBanana
   name: banana clown wig and mask
   components:

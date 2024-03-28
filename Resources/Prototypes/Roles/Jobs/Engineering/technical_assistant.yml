@@ -27,7 +27,8 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorYellow
     back: ClothingBackpackEngineeringFilled
-    shoes: ClothingShoesBootsWork
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClownUnremoveable
     id: TechnicalAssistantPDA
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
