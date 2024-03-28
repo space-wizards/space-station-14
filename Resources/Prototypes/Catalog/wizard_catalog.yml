@@ -6,7 +6,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - AssistanceSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -20,7 +20,7 @@
   cost:
      Magipoints: 1
   categories:
-  - WizardSpells
+  - DefensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -33,7 +33,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - MobilitySpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -46,7 +46,7 @@
   cost:
     Magipoints: 4
   categories:
-  - WizardSpells
+  - OffensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -59,7 +59,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - MobilitySpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -72,7 +72,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - OffensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -85,7 +85,7 @@
   cost:
     Magipoints: 1
   categories:
-  - WizardSpells
+  - OffensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -99,7 +99,7 @@
   cost:
     Magipoints: 1
   categories:
-  - WizardSpells
+  - DefensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -112,7 +112,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - OffensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -125,7 +125,7 @@
   cost:
     Magipoints: 3
   categories:
-  - WizardSpells
+  - AssistanceSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -138,7 +138,7 @@
   cost:
     Magipoints: 1
   categories:
-  - WizardSpells
+  - DefensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -151,7 +151,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - OffensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -164,7 +164,7 @@
   cost:
     Magipoints: 1
   categories:
-  - WizardSpells
+  - DefensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -177,7 +177,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - MobilitySpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -190,7 +190,7 @@
   cost:
     Magipoints: 3
   categories:
-  - WizardSpells
+  - DefensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -203,7 +203,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - DefensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -216,7 +216,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - AssistanceSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -229,7 +229,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - AssistanceSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1

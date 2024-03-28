@@ -502,21 +502,22 @@
       sprite: Mobs/Species/Human/parts.rsi
       state: full
     - type: RandomMetadata
-      nameSegments: [ names_wizard ]
+      nameSegments: [names_wizard]
     - type: RandomHumanoidSpawner
-      settings: Wizard
+      settings: WizardApprentice
 
 - type: entity
+  parent: BaseMobHuman
   id: RandomHumanoidSpawnerWizardApprentice
   name: wizard apprentice
   components:
     - type: Sprite
       sprite: Mobs/Species/Human/parts.rsi
       state: full
+    - type: Loadout
+      prototypes: [WizardBlueGearApprentice]
     - type: RandomMetadata
-      nameSegments: [ names_wizard ]
-    - type: RandomHumanoidSpawner
-      settings: WizardApprentice
+      nameSegments: [names_wizard_first, names_wizard_last]
 
 - type: randomHumanoidSettings
   id: Wizard
