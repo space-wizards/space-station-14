@@ -65,10 +65,9 @@
     solution: melee
   - type: InjectableSolution
     solution: melee
-  - type: SolutionInjectOnCollide
+  - type: SolutionInjectOnEmbed
     transferAmount: 2
-    fixtureId: "throw-fixture"
-    blockSlots: NONE
+    solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 2
   - type: Wieldable
