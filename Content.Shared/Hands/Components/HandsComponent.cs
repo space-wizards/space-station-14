@@ -32,6 +32,12 @@ public sealed partial class HandsComponent : Component
     public List<string> SortedHands = new();
 
     /// <summary>
+    ///     If true, the items in the hands won't be affected by explosions.
+    /// </summary>
+    [DataField]
+    public bool DisableExplosionRecursion = false;
+
+    /// <summary>
     ///     The amount of throw impulse per distance the player is from the throw target.
     /// </summary>
     [DataField("throwForceMultiplier")]
