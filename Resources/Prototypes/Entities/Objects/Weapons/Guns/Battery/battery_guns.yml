@@ -708,3 +708,46 @@
   - type: Appearance
   - type: StaticPrice
     price: 750
+
+- type: entity
+  name: energy shotgun
+  parent: BaseWeaponBattery
+  id: WeaponEnergyShotgun
+  description: An unique energy shotgun, often used by the Head of Security. It uses multiple configurations, mainly lethal, non-lethal and ion. 
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
+  - type: Gun
+    fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: CartridgeEnergyShotgunWide
+    fireCost: 200
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: CartridgeEnergyShotgunWide
+      fireCost: 200
+    - proto: CartridgeEnergyShotgunNarrow
+      fireCost: 200
+    - proto: CartridgeEnergyShotgunDisabler
+      fireCost: 200
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
+    sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
+    heldPrefix: energy
+  - type: Tag
+    tags:
+    - HighRiskItem
+  - type: StealTarget
+    stealGroup: WeaponEnergyShotgun
