@@ -1,10 +1,10 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/32a2e3e4ceda3ef442c1496cbc6c6a896d684702",
+  "copyright": "Abomination created by MACMAN2003. Based off of the nuclear authentication disk sprite. April fools!",
   "size": {
-    "x": 32,
-    "y": 32
+    "x": 1024,
+    "y": 1024
   },
   "states": [
     {
