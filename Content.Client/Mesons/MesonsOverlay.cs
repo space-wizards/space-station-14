@@ -15,8 +15,9 @@ public sealed class MesonsOverlay : Overlay
     //
     // [Dependency] private readonly InventorySystem _inventory = default!;
 
+    public new int? ZIndex = -5;
     public override bool RequestScreenTexture => true;
-    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
     private readonly ShaderInstance _mesonsShader;
 
     public MesonsOverlay()

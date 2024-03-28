@@ -1,5 +1,3 @@
-uniform sampler2D LIGHT_TEXTURE;
-
 void fragment() {
-    COLOR = vec4(texture(LIGHT_TEXTURE, FRAGCOORD.xy).rgb, 0.5);
+    COLOR = vec4(0, mod(FRAGCOORD.y, 2), 0, 0.5);
 }
