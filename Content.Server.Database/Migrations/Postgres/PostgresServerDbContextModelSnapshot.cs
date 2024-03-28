@@ -512,6 +512,19 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("assigned_user_id", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.Blacklist", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("UserId")
+                        .HasName("PK_blacklist");
+
+                    b.ToTable("blacklist", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
                 {
                     b.Property<int>("Id")

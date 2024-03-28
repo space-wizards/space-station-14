@@ -1,0 +1,6 @@
+﻿- type: PlayerConnectionWhitelist
+  id: basicWhitelist # Basic whitelist using only the ManualWhitelist condition
+  conditions:
+    - !type:ConditionManualWhitelist
+      action: Deny
+    # Passing ConditionManualWhitelist means the player is whitelisted
