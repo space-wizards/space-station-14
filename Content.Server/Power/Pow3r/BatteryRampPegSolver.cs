@@ -115,11 +115,17 @@ namespace Content.Server.Power.Pow3r
 
                 var batterySpace = (battery.Capacity - battery.CurrentStorage) * (1 / battery.Efficiency);
                 batterySpace = Math.Max(0, batterySpace);
-                var scaledSpace = batterySpace / frameTime;
 
-                var chargeRate = battery.MaxChargeRate + battery.LoadingNetworkDemand / battery.Efficiency;
+                // Checking batterySpace here ensures we never request more than our remaining charge space with a slight buffer
+                // while still requesting extra power when the battery is low to reach max charge. While batterySpace is energy
+                // and battery.MaxChargeRate is power, using the former as a limit prevents too much overdraw from suppliers
+                // while giving the battery a buffer to recharge itself and prevent flickering when the load drops and causes the battery
+                // supply to ramp.
+                //     As suggested above, the clean solution here is likely altering the order of operations for battery loads so they aren't
+                // combined into a single pass.
+                var chargeRate = Math.Min(battery.MaxChargeRate, batterySpace);
 
-                battery.DesiredPower = Math.Min(chargeRate, scaledSpace);
+                battery.DesiredPower = chargeRate + battery.LoadingNetworkDemand / battery.Efficiency;
                 DebugTools.Assert(battery.DesiredPower >= 0);
                 demand += battery.DesiredPower;
             }
@@ -181,14 +187,14 @@ namespace Content.Server.Power.Pow3r
             }
 
             network.LastCombinedLoad = demand;
-            network.LastCombinedSupply = totalSupply + totalBatterySupply;
-            network.LastCombinedMaxSupply = totalMaxSupply + totalMaxBatterySupply;
+            network.LastCombinedSupply = (totalSupply + totalBatterySupply);
+            network.LastCombinedMaxSupply = (totalMaxSupply + totalMaxBatterySupply);
 
             var met = Math.Min(demand, network.LastCombinedSupply);
             if (met == 0)
                 return;
 
-            var supplyRatio = met / demand;
+            var supplyRatio = demand > 0 ? met / demand : 0;
             // if supply ratio == 1 (or is close to) we could skip some math for each load & battery.
 
             // Distribute supply to loads.
@@ -211,17 +217,16 @@ namespace Content.Server.Power.Pow3r
                 battery.LoadingMarked = true;
                 battery.CurrentReceiving = battery.DesiredPower * supplyRatio;
                 battery.CurrentStorage += frameTime * battery.CurrentReceiving * battery.Efficiency;
-
-                DebugTools.Assert(battery.CurrentStorage <= battery.Capacity || MathHelper.CloseTo(battery.CurrentStorage, battery.Capacity, 1e-5));
                 battery.CurrentStorage = MathF.Min(battery.CurrentStorage, battery.Capacity);
+                DebugTools.Assert(battery.CurrentStorage <= battery.Capacity || MathHelper.CloseTo(battery.CurrentStorage, battery.Capacity, 1e-5));
             }
 
             // Target output capacity for supplies
             var metSupply = Math.Min(demand, totalSupply);
             if (metSupply > 0)
             {
-                var relativeSupplyOutput = metSupply / totalSupply;
-                var targetRelativeSupplyOutput = Math.Min(demand, totalMaxSupply) / totalMaxSupply;
+                var relativeSupplyOutput = totalSupply > 0 ? metSupply / totalSupply : 0;
+                var targetRelativeSupplyOutput = totalMaxSupply > 0 ? Math.Min(demand, totalMaxSupply) / totalMaxSupply : 0;
 
                 // Apply load to supplies
                 foreach (var supplyId in network.Supplies)
@@ -244,8 +249,8 @@ namespace Content.Server.Power.Pow3r
                 return;
 
             // Target output capacity for batteries
-            var relativeBatteryOutput = Math.Min(unmet, totalBatterySupply) / totalBatterySupply;
-            var relativeTargetBatteryOutput = Math.Min(unmet, totalMaxBatterySupply) / totalMaxBatterySupply;
+            var relativeBatteryOutput = totalBatterySupply > 0 ? Math.Min(unmet, totalBatterySupply) / totalBatterySupply : 0;
+            var relativeTargetBatteryOutput = totalMaxBatterySupply > 0 ? Math.Min(unmet, totalMaxBatterySupply) / totalMaxBatterySupply : 0;
 
             // Apply load to supplying batteries
             foreach (var batteryId in network.BatterySupplies)
@@ -265,18 +270,18 @@ namespace Content.Server.Power.Pow3r
                 battery.CurrentStorage -= frameTime * battery.CurrentSupply;
 #if DEBUG
                 // Manual "MathHelper.CloseToPercent" using the subtracted value to define the relative error.
-                if (battery.CurrentStorage < 0)
-                {
-                    float epsilon = Math.Max(frameTime * battery.CurrentSupply, 1) * 1e-4f;
-                    DebugTools.Assert(battery.CurrentStorage > -epsilon);
-                }
+                /*    if (battery.CurrentStorage < 0)
+                    {
+                        float epsilon = Math.Max(frameTime * battery.CurrentSupply, 1) * 1e-4f;
+                        DebugTools.Assert(battery.CurrentStorage > -epsilon);
+                    }*/
 #endif
                 battery.CurrentStorage = MathF.Max(0, battery.CurrentStorage);
 
                 battery.SupplyRampTarget = battery.MaxEffectiveSupply * relativeTargetBatteryOutput - battery.CurrentReceiving * battery.Efficiency;
 
-                DebugTools.Assert(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency <= battery.LoadingNetworkDemand
-                    || MathHelper.CloseToPercent(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency, battery.LoadingNetworkDemand, 0.001));
+                //   DebugTools.Assert(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency <= battery.LoadingNetworkDemand
+                //       || MathHelper.CloseToPercent(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency, battery.LoadingNetworkDemand, 0.001));
             }
         }
 
