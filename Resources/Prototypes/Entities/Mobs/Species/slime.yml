@@ -12,6 +12,22 @@
   - type: Body
     prototype: Slime
     requiredLegs: 2
+  # they like eat it idk lol
+  - type: Storage
+    grid:
+    - 0,0,1,2
+    maxItemSize: Large
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  # to prevent bag open/honk spam
+  - type: UseDelay
+    delay: 0.5
   - type: HumanoidAppearance
     species: SlimePerson
   - type: Speech
@@ -27,6 +43,16 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Slime
+  - type: Geras
+  - type: PassiveDamage # Around 8 damage a minute healed
+    allowedStates:
+    - Alive
+    damageCap: 35
+    damage:
+      types:
+        Heat: -0.14
+      groups:
+        Brute: -0.14
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
