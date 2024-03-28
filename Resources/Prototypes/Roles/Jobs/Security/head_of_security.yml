@@ -34,7 +34,7 @@
   - Cryogenics
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant ]
+    implants: [ CommandMindShieldImplant ]
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff

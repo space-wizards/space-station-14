@@ -28,18 +28,30 @@ public sealed class MindShieldSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SubdermalImplantComponent, ImplantImplantedEvent>(ImplantCheck);
+        SubscribeLocalEvent<SubdermalImplantComponent, ImplantImplantedEvent>(ImplantAddedCheck);
+        SubscribeLocalEvent<SubdermalImplantComponent, ImplantRemovedEvent>(ImplantRemovedCheck);
     }
 
     /// <summary>
-    /// Checks if the implant was a mindshield or not
+    /// Checks if the added implant was a mindshield or not
     /// </summary>
-    public void ImplantCheck(EntityUid uid, SubdermalImplantComponent comp, ref ImplantImplantedEvent ev)
+    public void ImplantAddedCheck(EntityUid uid, SubdermalImplantComponent comp, ref ImplantImplantedEvent ev)
     {
         if (_tag.HasTag(ev.Implant, MindShieldTag) && ev.Implanted != null)
         {
             EnsureComp<MindShieldComponent>(ev.Implanted.Value);
             MindShieldRemovalCheck(ev.Implanted.Value, ev.Implant);
+        }
+    }
+
+    /// <summary>
+    /// Checks if the removed implant was a mindshield or not
+    /// </summary>
+    public void ImplantRemovedCheck(EntityUid uid, SubdermalImplantComponent comp, ref ImplantRemovedEvent ev)
+    {
+        if (_tag.HasTag(ev.Implant, MindShieldTag) && ev.Implanted != null)
+        {
+            RemCompDeferred<MindShieldComponent>(ev.Implanted.Value);
         }
     }
 
