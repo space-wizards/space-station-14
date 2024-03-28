@@ -1,9 +1,10 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Rotation;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Standing
@@ -13,9 +14,18 @@ namespace Content.Shared.Standing
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
 
         // If StandingCollisionLayer value is ever changed to more than one layer, the logic needs to be edited.
         private const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable;
+        private const string StandingSensorFixtureName = "standing-sensor";
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<StandingStateComponent, EndCollideEvent>(OnStandingEndCollide);
+        }
 
         public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
         {
@@ -67,12 +77,22 @@ namespace Content.Shared.Standing
             {
                 foreach (var (key, fixture) in fixtureComponent.Fixtures)
                 {
-                    if ((fixture.CollisionMask & StandingCollisionLayer) == 0)
+                    if ((fixture.CollisionMask & StandingCollisionLayer) == 0 || fixture.Hard == false)
                         continue;
 
                     standingState.ChangedFixtures.Add(key);
                     _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask & ~StandingCollisionLayer, manager: fixtureComponent);
                 }
+
+                // Create a temporary sensor to continue registering contacts in the disabled collision layer
+                _fixtureSystem.TryCreateFixture(
+                    uid,
+                    new PhysShapeCircle(0.1f),
+                    StandingSensorFixtureName,
+                    collisionLayer: (int) CollisionGroup.None,
+                    collisionMask: StandingCollisionLayer,
+                    hard: false,
+                    manager: fixtureComponent);
             }
 
             // check if component was just added or streamed to client
@@ -120,15 +140,62 @@ namespace Content.Shared.Standing
 
             if (TryComp(uid, out FixturesComponent? fixtureComponent))
             {
-                foreach (var key in standingState.ChangedFixtures)
+                if (!HasStandingCollisionLayerContacts(uid, fixtureComponent))
                 {
-                    if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
-                        _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask | StandingCollisionLayer, fixtureComponent);
+                    RestoreChangedFixtures(uid, standingState, fixtureComponent);
                 }
             }
-            standingState.ChangedFixtures.Clear();
 
             return true;
+        }
+
+        private static bool HasStandingCollisionLayerContacts(EntityUid uid, FixturesComponent fixtureComponent)
+        {
+            if (fixtureComponent.Fixtures.TryGetValue(StandingSensorFixtureName, out var sensor))
+            {
+                foreach (var contact in sensor.Contacts.Values)
+                {
+                    var otherFixture = contact.EntityA == uid ? contact.FixtureB : contact.FixtureA;
+                    if (otherFixture?.Hard == true)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private void OnStandingEndCollide(EntityUid uid, StandingStateComponent standingState, ref EndCollideEvent args)
+        {
+            if (args.OurFixtureId != StandingSensorFixtureName || !standingState.Standing)
+                return;
+
+            foreach (var otherFixture in args.OurFixture.Contacts.Keys)
+            {
+                if (otherFixture == args.OtherFixture)
+                    continue;
+
+                // If the sensor still colliding with something else, do not restore fixtures
+                if (otherFixture.Hard)
+                    return;
+            }
+
+            RestoreChangedFixtures(uid, standingState);
+        }
+
+        private void RestoreChangedFixtures(EntityUid uid, StandingStateComponent? standingState = null, FixturesComponent? fixtures = null)
+        {
+            if (!Resolve(uid, ref standingState, ref fixtures, false))
+                return;
+
+            foreach (var key in standingState.ChangedFixtures)
+            {
+                if (fixtures.Fixtures.TryGetValue(key, out var fixture))
+                    _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask | StandingCollisionLayer, fixtures);
+            }
+            standingState.ChangedFixtures.Clear();
+            _fixtureSystem.DestroyFixture(uid, StandingSensorFixtureName, manager: fixtures);
         }
     }
 
