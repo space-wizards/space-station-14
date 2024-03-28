@@ -1,3 +1,4 @@
+using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Robust.Client.GameObjects;
 
@@ -10,7 +11,17 @@ public sealed class FirelockSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<FirelockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
         SubscribeLocalEvent<FirelockComponent, AppearanceChangeEvent>(OnAppearanceChange);
+    }
+
+    private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
+    {
+        if (!component.Powered)
+        {
+            args.Cancel();
+        }
     }
 
     private void OnAppearanceChange(EntityUid uid, FirelockComponent comp, ref AppearanceChangeEvent args)

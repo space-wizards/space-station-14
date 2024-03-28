@@ -48,6 +48,12 @@ namespace Content.Server.Doors.Systems
 
         private void PowerChanged(EntityUid uid, FirelockComponent component, ref PowerChangedEvent args)
         {
+            if (component.Powered != args.Powered)
+            {
+                component.Powered = args.Powered;
+                Dirty(uid, component);
+            }
+
             // TODO this should REALLLLY not be door specific appearance thing.
             _appearance.SetData(uid, DoorVisuals.Powered, args.Powered);
         }
@@ -136,8 +142,17 @@ namespace Content.Server.Doors.Systems
             // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
             var overrideAccess = (args.User != null) && _accessReaderSystem.IsAllowed(args.User.Value, uid);
 
-            if (!this.IsPowered(uid, EntityManager) || (!overrideAccess && IsHoldingPressureOrFire(uid, component)))
+            var isPowered = this.IsPowered(uid, EntityManager);
+            if (!isPowered || (!overrideAccess && IsHoldingPressureOrFire(uid, component)))
+            {
+                if (args.User != null && !isPowered)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-unpowered-message"),
+                    uid, args.User.Value, PopupType.Medium);
+                }
+
                 args.Cancel();
+            }
         }
 
         private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, ref GetPryTimeModifierEvent args)
