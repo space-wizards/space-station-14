@@ -1,0 +1,117 @@
+- type: species
+  id: GoonHuman
+  name: species-name-human
+  roundStart: false
+  prototype: MobGoonHuman
+  sprites: MobGoonHumanSprites
+  markingLimits: MobHumanMarkingLimits
+  dollPrototype: MobGoonHumanDummy
+  skinColoration: HumanToned
+
+- type: speciesBaseSprites
+  id: MobGoonHumanSprites
+  sprites:
+    Head: MobGoonHumanHead
+    Hair: MobHumanoidAnyMarking
+    FacialHair: MobHumanoidAnyMarking
+    Snout: MobHumanoidAnyMarking
+    Chest: MobGoonHumanTorso
+    Eyes: MobGoonHumanEyes
+    LArm: MobGoonHumanLArm
+    RArm: MobGoonHumanRArm
+    LHand: MobGoonHumanLHand
+    RHand: MobGoonHumanRHand
+    LLeg: MobGoonHumanLLeg
+    RLeg: MobGoonHumanRLeg
+    LFoot: MobGoonHumanLFoot
+    RFoot: MobGoonHumanRFoot
+
+- type: humanoidBaseSprite
+  id: MobGoonHumanEyes
+  baseSprite:
+    sprite: Mobs/Customization/eyes.rsi
+    state: goon_human_eyes
+
+- type: humanoidBaseSprite
+  id: MobGoonHumanHead
+  baseSprite:
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobGoonHumanHeadMale
+  baseSprite:
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobGoonHumanHeadFemale
+  baseSprite:
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobGoonHumanTorso
+  baseSprite:
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobGoonHumanTorsoMale
+  baseSprite:
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobGoonHumanTorsoFemale
+  baseSprite:
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobGoonHumanLLeg
+  baseSprite:
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobGoonHumanLArm
+  baseSprite:
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobGoonHumanLHand
+  baseSprite:
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobGoonHumanLFoot
+  baseSprite:
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobGoonHumanRLeg
+  baseSprite:
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobGoonHumanRArm
+  baseSprite:
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobGoonHumanRHand
+  baseSprite:
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobGoonHumanRFoot
+  baseSprite:
+    sprite: Mobs/Species/GoonHuman/parts.rsi
+    state: r_foot

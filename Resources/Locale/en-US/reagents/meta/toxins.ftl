@@ -75,3 +75,6 @@ reagent-desc-vestine = Has an adverse reaction within the body causing major jit
 
 reagent-name-tazinide = tazinide
 reagent-desc-tazinide = A highly dangerous metallic mixture which can interfere with most movement through an electrifying current.
+
+reagent-name-goon-human-mutator = goon human mutator
+reagent-desc-goon-human-mutator = Turns you into a goonstation human. Huh.

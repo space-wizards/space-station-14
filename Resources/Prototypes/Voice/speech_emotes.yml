@@ -248,6 +248,24 @@
   chatMessages: [Wehs!]
 
 - type: emote
+  id: Fart
+  category: Vocal
+  chatMessages: [farts]
+  chatTriggers:
+    - fart
+    - fart!
+    - fart.
+    - farts
+    - farts.
+    - farts!
+    - farted
+    - farted.
+    - farted!
+    - farting
+    - farting.
+    - farting!
+
+- type: emote
   id: Chirp
   category: Vocal
   chatMessages: [chirps!]

@@ -85,6 +85,16 @@
     inventory: Transfer
 
 - type: polymorph
+  id: GoonHumanMorph
+  configuration:
+    entity: MobGoonHuman
+    forced: true
+    inventory: Transfer
+    transferName: true
+    revertOnCrit: false
+    revertOnDeath: true
+
+- type: polymorph
   id: AMIVMorph
   configuration:
     entity: MobMonkey
