@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Body.Systems;
 using Content.Shared.Body.Part;
 using Content.Shared.Destructible;
 using Content.Shared.Hands;
@@ -25,8 +26,7 @@ public sealed class InnateToolSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<InnateToolComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<InnateToolComponent, HandCountChangedEvent>(OnHandCountChanged);
+        SubscribeLocalEvent<InnateToolComponent, MapInitEvent>(OnMapInit, after: [typeof(BodySystem)]);
         SubscribeLocalEvent<InnateToolComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<InnateToolComponent, DestructionEventArgs>(OnDestroyed);
     }
@@ -36,27 +36,23 @@ public sealed class InnateToolSystem : EntitySystem
         if (component.Tools.Count == 0)
             return;
 
-        component.ToSpawn = EntitySpawnCollection.GetSpawns(component.Tools, _robustRandom);
-    }
-
-    private void OnHandCountChanged(EntityUid uid, InnateToolComponent component, HandCountChangedEvent args)
-    {
-        if (component.ToSpawn.Count == 0)
-            return;
-
         var spawnCoord = Transform(uid).Coordinates;
 
-        var toSpawn = component.ToSpawn.First();
-
-        var item = Spawn(toSpawn, spawnCoord);
-        AddComp<UnremoveableComponent>(item);
-        if (!_sharedHandsSystem.TryPickupAnyHand(uid, item, checkActionBlocker: false))
+        if (TryComp<HandsComponent>(uid, out var hands))
         {
-            QueueDel(item);
-            component.ToSpawn.Clear();
+            var items = EntitySpawnCollection.GetSpawns(component.Tools, _robustRandom).Take(hands.Hands.Count).ToList();
+            foreach (var entry in items)
+            {
+                var item = Spawn(entry, spawnCoord);
+                AddComp<UnremoveableComponent>(item);
+                if (!_sharedHandsSystem.TryPickupAnyHand(uid, item, false))
+                {
+                    QueueDel(item);
+                    continue;
+                }
+                component.ToolUids.Add(item);
+            }
         }
-        component.ToSpawn.Remove(toSpawn);
-        component.ToolUids.Add(item);
     }
 
     private void OnShutdown(EntityUid uid, InnateToolComponent component, ComponentShutdown args)
