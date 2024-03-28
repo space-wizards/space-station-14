@@ -87,6 +87,7 @@
   id: Arcade
   wires:
   - !type:PowerWireAction
+  - !type:SpeechWireAction
   - !type:ArcadeOverflowWireAction
   - !type:ArcadePlayerInvincibleWireAction
   - !type:ArcadeEnemyInvincibleWireAction
