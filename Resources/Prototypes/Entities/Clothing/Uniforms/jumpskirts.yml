@@ -925,3 +925,102 @@
       - state: equipped-INNERCLOTHING-jumpskirt
       - state: equipped-INNERCLOTHING-shirt
         color: "#b30000"
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtLawyerBrown
+  name: brown lawyer suitskirt
+  description: A subtle brown suitskirt with a green tie, worn by lawyers and 90s movie extras.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerbrown.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerbrown.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtLawyerGreen
+  name: green lawyer suitskirt
+  description: A faded green suitskirt with a brown tie, worn by lawyers and 90s movie extras.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/lawyergreen.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/lawyergreen.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtLawyerPantsuit
+  name: good lawyer pantsuit
+  description: An outfit suitable for more than just pro bono work. 
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/lawyergoodpantsuit.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/lawyergoodpantsuit.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtLawyerRedAltSkirt
+  name: unpleated red lawyer suitskirt
+  description: A flashy red suitskirt worn by lawyers and show-offs. This one looks a bit more businesslike.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerredaltskirt.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerredaltskirt.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtLawyerBlueAltSkirt
+  name: unpleated blue lawyer suitskirt
+  description: A flashy blue suitskirt worn by lawyers and show-offs. This one looks a bit more businesslike.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerbluealtskirt.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerbluealtskirt.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtLawyerBlackAltSkirt
+  name: unpleated black lawyer suitskirt
+  description: A subtle black suitskirt worn by lawyers and gangsters. This one looks a bit more businesslike.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerblackaltskirt.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerblackaltskirt.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtLawyerPurpleAltSkirt
+  name: unpleated purple lawyer suitskirt
+  description: A stylish purple piece worn by lawyers and show people. This one looks a bit more businesslike.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerpurplealtskirt.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/lawyerpurplealtskirt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtLawyerBrownAltSkirt
+  name: unpleated brown lawyer suitskirt
+  description: A subtle brown suitskirt with a green tie, worn by lawyers and 90s movie extras. This one looks a bit more businesslike.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerbrown.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerbrown.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtLawyerGreenAltSkirt
+  name: unpleated green lawyer suitskirt
+  description: A faded green suitskirt with a brown tie, worn by lawyers and 90s movie extras. This one looks a bit more businesslike.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/lawyergreenaltskirt.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/lawyergreenaltskirt.rsi
