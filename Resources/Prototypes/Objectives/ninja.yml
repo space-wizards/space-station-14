@@ -39,8 +39,8 @@
       sprite: Structures/Machines/server.rsi
       state: server
   - type: NumberObjective
-    min: 5
-    max: 10
+    min: 9
+    max: 13
     title: objective-condition-steal-research-title
   - type: StealResearchCondition
 

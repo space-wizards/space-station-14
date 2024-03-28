@@ -409,7 +409,7 @@ public sealed partial class AdminVerbSystem
                     var fixtures = Comp<FixturesComponent>(args.Target);
                     xform.Anchored = false; // Just in case.
                     _physics.SetBodyType(args.Target, BodyType.Dynamic, manager: fixtures, body: physics);
-                    _physics.SetBodyStatus(physics, BodyStatus.InAir);
+                    _physics.SetBodyStatus(args.Target, physics, BodyStatus.InAir);
                     _physics.WakeBody(args.Target, manager: fixtures, body: physics);
 
                     foreach (var fixture in fixtures.Fixtures.Values)
@@ -424,8 +424,8 @@ public sealed partial class AdminVerbSystem
 
                     _physics.SetLinearVelocity(args.Target, _random.NextVector2(1.5f, 1.5f), manager: fixtures, body: physics);
                     _physics.SetAngularVelocity(args.Target, MathF.PI * 12, manager: fixtures, body: physics);
-                    _physics.SetLinearDamping(physics, 0f);
-                    _physics.SetAngularDamping(physics, 0f);
+                    _physics.SetLinearDamping(args.Target, physics, 0f);
+                    _physics.SetAngularDamping(args.Target, physics, 0f);
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-smite-pinball-description")
@@ -444,7 +444,7 @@ public sealed partial class AdminVerbSystem
                     xform.Anchored = false; // Just in case.
 
                     _physics.SetBodyType(args.Target, BodyType.Dynamic, body: physics);
-                    _physics.SetBodyStatus(physics, BodyStatus.InAir);
+                    _physics.SetBodyStatus(args.Target, physics, BodyStatus.InAir);
                     _physics.WakeBody(args.Target, manager: fixtures, body: physics);
 
                     foreach (var fixture in fixtures.Fixtures.Values)
@@ -454,8 +454,8 @@ public sealed partial class AdminVerbSystem
 
                     _physics.SetLinearVelocity(args.Target, _random.NextVector2(8.0f, 8.0f), manager: fixtures, body: physics);
                     _physics.SetAngularVelocity(args.Target, MathF.PI * 12, manager: fixtures, body: physics);
-                    _physics.SetLinearDamping(physics, 0f);
-                    _physics.SetAngularDamping(physics, 0f);
+                    _physics.SetLinearDamping(args.Target, physics, 0f);
+                    _physics.SetAngularDamping(args.Target, physics, 0f);
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-smite-yeet-description")
