@@ -1,5 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Shared.UserInterface;
+using Content.Server.Advertise;
+using Content.Server.Advertise.Components;
 using Content.Shared.Arcade;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -9,6 +11,7 @@ namespace Content.Server.Arcade.BlockGame;
 public sealed class BlockGameArcadeSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SpeakOnUIClosedSystem _speakOnUIClosed = default!;
 
     public override void Initialize()
     {
@@ -88,8 +91,6 @@ public sealed class BlockGameArcadeSystem : EntitySystem
             component.Spectators.Remove(component.Player);
             UpdatePlayerStatus(uid, component.Player, blockGame: component);
         }
-        else
-            component.Player = null;
 
         UpdatePlayerStatus(uid, temp, blockGame: component);
     }
@@ -121,6 +122,9 @@ public sealed class BlockGameArcadeSystem : EntitySystem
             component.Game.StartGame();
             return;
         }
+
+        if (TryComp<SpeakOnUIClosedComponent>(uid, out var speakComponent))
+            _speakOnUIClosed.TrySetFlag((uid, speakComponent));
 
         component.Game.ProcessInput(msg.PlayerAction);
     }
