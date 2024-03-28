@@ -37,6 +37,7 @@
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58
+    pocket2: SecurityHandheldCrewMonitor
   innerClothingSkirt: ClothingUniformJumpskirtWarden
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled

@@ -185,11 +185,12 @@
       - id: ClothingHeadHatBeretCmo
       - id: ClothingOuterHardsuitMedical
       - id: Hypospray
-      - id: HandheldCrewMonitor
+      - id: CMOHandheldCrewMonitor
       - id: DoorRemoteMedical
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
+      - id: ParamedicHandheldCrewMonitor
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -205,11 +206,12 @@
       - id: ClothingBackpackDuffelSurgeryFilled
       - id: ClothingMaskSterile
       - id: Hypospray
-      - id: HandheldCrewMonitor
+      - id: CMOHandheldCrewMonitor
       - id: DoorRemoteMedical
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
+      - id: ParamedicHandheldCrewMonitor
 
 - type: entity
   id: LockerResearchDirectorFilledHardsuit
@@ -274,6 +276,7 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
+      - id: SecurityHandheldCrewMonitor
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -298,6 +301,7 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
+      - id: SecurityHandheldCrewMonitor
 
 - type: entity
   id: LockerFreezerVaultFilled
