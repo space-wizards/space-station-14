@@ -44,4 +44,3 @@
     agentName: terminator-round-end-agent-name
     objectives:
     - TerminateObjective
-    - ShutDownObjective
