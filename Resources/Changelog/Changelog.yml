@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lapatison
-  changes:
-  - message: Guidebooks can now be found in random bookshelves.
-    type: Tweak
-  id: 5740
-  time: '2024-01-19T00:32:00.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24036
 - author: metalgearsloth
   changes:
   - message: Added trade stations for cargo instead of FTL.
@@ -3795,3 +3788,10 @@
   id: 6239
   time: '2024-03-28T01:43:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26483
+- author: blueDev2
+  changes:
+  - message: Generalized bounties to allow selling them off-station
+    type: Tweak
+  id: 6240
+  time: '2024-03-28T04:06:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26469
