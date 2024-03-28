@@ -378,8 +378,8 @@
   - type: ItemBorgModule
     items:
     - HandheldHealthAnalyzerUnpowered
-    - BorgBeaker
-    - BorgBeaker
+    - Beaker
+    - gBeaker
     - BorgDropper
     - BorgHypo
 
