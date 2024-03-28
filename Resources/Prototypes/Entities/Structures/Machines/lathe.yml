@@ -103,6 +103,7 @@
       - AirTank
       - GasAnalyzer
       - UtilityBelt
+      - GasTankNitrogenBooster
       - Fulton
       - FultonBeacon
       - Pickaxe

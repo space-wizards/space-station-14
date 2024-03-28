@@ -60,7 +60,7 @@
           doAfter: 2
 
     - node: substation
-      entity: BaseSubstationWall
+      entity: SubstationWallBasicEmpty
       edges:
       - to: parts
         conditions:

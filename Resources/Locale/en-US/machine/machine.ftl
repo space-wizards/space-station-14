@@ -7,11 +7,18 @@ machine-upgrade-decreased-by-percentage = [color=yellow]{CAPITALIZE($upgraded)}[
 machine-upgrade-increased-by-amount = [color=yellow]{CAPITALIZE($upgraded)}[/color] increased by {$difference}.
 machine-upgrade-decreased-by-amount = [color=yellow]{CAPITALIZE($upgraded)}[/color] decreased by {$difference}.
 machine-upgrade-not-upgraded = [color=yellow]{CAPITALIZE($upgraded)}[/color] not upgraded.
+machine-upgrade-max-upgrade = [color=yellow]{CAPITALIZE($upgraded)}[/color] fully upgraded.
 
 machine-part-name-capacitor = Capacitor
 machine-part-name-manipulator = Manipulator
 machine-part-name-matter-bin = Matter Bin
 machine-part-name-power-cell = Power Cell
+
+upgrade-power-draw = power draw
+upgrade-max-charge = max charge
+upgrade-power-supply = power supply
+upgrade-power-supply-ramping = power ramp rate
+upgrade-nitrogenbooster-lifetime = conduit lifetime
 
 two-way-lever-left = push left
 two-way-lever-right = push right
