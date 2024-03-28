@@ -98,7 +98,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
             component.Player = null;
             if (component.ShouldSayThankYou && TryComp<AdvertiseComponent>(uid, out var advertise))
             {
-                _advertise.SayThankYou(uid, advertise);
+                _advertise.SayAdvertisement(uid, advertise);
                 component.ShouldSayThankYou = false;
             }
         }
