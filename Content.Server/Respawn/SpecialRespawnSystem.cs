@@ -130,6 +130,10 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
     private void Respawn(EntityUid oldEntity, string prototype, EntityCoordinates coords)
     {
         var entity = Spawn(prototype, coords);
+        var ev = new SpecialRespawnEvent(entity, oldEntity, coords);
+
+        RaiseLocalEvent(entity, ref ev, true);
+
         _adminLog.Add(LogType.Respawn, LogImpact.High, $"{ToPrettyString(oldEntity)} was deleted and was respawned at {coords.ToMap(EntityManager, _transform)} as {ToPrettyString(entity)}");
         _chat.SendAdminAlert($"{MetaData(oldEntity).EntityName} was deleted and was respawned as {ToPrettyString(entity)}");
     }
@@ -190,5 +194,20 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
             return false;
 
         return true;
+    }
+}
+
+[ByRefEvent]
+public readonly struct SpecialRespawnEvent
+{
+    public readonly EntityUid NewEntity;
+    public readonly EntityUid OldEntity;
+    public readonly EntityCoordinates Coordinates;
+
+    public SpecialRespawnEvent(EntityUid newEntity, EntityUid oldEntity, EntityCoordinates coordinates)
+    {
+        NewEntity = newEntity;
+        OldEntity = oldEntity;
+        Coordinates = coordinates;
     }
 }
