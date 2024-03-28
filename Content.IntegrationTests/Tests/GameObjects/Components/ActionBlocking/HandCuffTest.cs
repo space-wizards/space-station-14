@@ -67,7 +67,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 secondCuffs = entityManager.SpawnEntity("HandcuffsDummy", coordinates);
 
                 var coords = xformSys.GetWorldPosition(otherHuman, xformQuery);
-                xformSys.SetWorldPosition(human, coords, xformQuery);
+                xformSys.SetWorldPosition(human, coords);
 
                 // Test for components existing
                 Assert.Multiple(() =>
