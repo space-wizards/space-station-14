@@ -1,5 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Shared.Damage;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Body.Components
 {
@@ -7,36 +8,49 @@ namespace Content.Server.Body.Components
     public sealed partial class RespiratorComponent : Component
     {
         /// <summary>
-        ///     Saturation level. Reduced by CycleDelay each tick.
+        ///     The next time that this body will inhale or exhale.
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan NextUpdate;
+
+        /// <summary>
+        ///     The interval between updates. Each update is either inhale or exhale,
+        ///     so a full cycle takes twice as long.
+        /// </summary>
+        [DataField]
+        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(2);
+
+        /// <summary>
+        ///     Saturation level. Reduced by UpdateInterval each tick.
         ///     Can be thought of as 'how many seconds you have until you start suffocating' in this configuration.
         /// </summary>
-        [DataField("saturation")]
+        [DataField]
         public float Saturation = 5.0f;
 
         /// <summary>
         ///     At what level of saturation will you begin to suffocate?
         /// </summary>
-        [DataField("suffocationThreshold")]
+        [DataField]
         public float SuffocationThreshold;
 
-        [DataField("maxSaturation")]
+        [DataField]
         public float MaxSaturation = 5.0f;
 
-        [DataField("minSaturation")]
+        [DataField]
         public float MinSaturation = -2.0f;
 
         // TODO HYPEROXIA?
 
-        [DataField("damage", required: true)]
+        [DataField(required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
 
-        [DataField("damageRecovery", required: true)]
+        [DataField(required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier DamageRecovery = default!;
 
-        [DataField("gaspPopupCooldown")]
-        public TimeSpan GaspPopupCooldown { get; private set; } = TimeSpan.FromSeconds(8);
+        [DataField]
+        public TimeSpan GaspPopupCooldown = TimeSpan.FromSeconds(8);
 
         [ViewVariables]
         public TimeSpan LastGaspPopupTime;
@@ -55,11 +69,6 @@ namespace Content.Server.Body.Components
 
         [ViewVariables]
         public RespiratorStatus Status = RespiratorStatus.Inhaling;
-
-        [DataField("cycleDelay")]
-        public float CycleDelay = 2.0f;
-
-        public float AccumulatedFrametime;
     }
 }
 
