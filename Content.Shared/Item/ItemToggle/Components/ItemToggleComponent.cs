@@ -16,7 +16,7 @@ public sealed partial class ItemToggleComponent : Component
     /// <summary>
     ///     The item's toggle state.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool Activated = false;
 
     /// <summary>
@@ -45,6 +45,12 @@ public sealed partial class ItemToggleComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public SoundSpecifier? SoundFailToActivate;
+
+    /// <summary>
+    /// Whether or not to toggle the entity's lights on or off.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    public bool ToggleLight = true;
 }
 
 /// <summary>
