@@ -1,0 +1,18 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/ss220-space/Paradise/commit/ad0f9d53331522a4f6d9bb0ab3327e472b582362",
+    "states":[
+        {
+            "name": "muhtar",
+            "directions": 4
+        },
+        {
+            "name": "muhtar_dead"
+        }
+    ]
+}
