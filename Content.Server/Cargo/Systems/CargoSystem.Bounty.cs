@@ -4,10 +4,12 @@ using Content.Server.Cargo.Components;
 using Content.Server.Labels;
 using Content.Server.NameIdentifier;
 using Content.Server.Paper;
+using Content.Shared.Access.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.Doors.Systems;
 using Content.Shared.NameIdentifier;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
@@ -82,12 +84,22 @@ public sealed partial class CargoSystem
         if (!TryGetBountyFromId(station, args.BountyId, out var bounty))
             return;
 
-        if (true) // TODO check access here!
+        if (HasAccess(uid,args.)) // TODO check access here!
         {
-            // TODO skip da bounty
-            component.NextSkipTime = _timing.CurTime + component.SkipDelay;
-            _audio.PlayPvs(component.SkipSound, uid);
+            return;
         }
+        // TODO skip da bounty
+        component.NextSkipTime = _timing.CurTime + component.SkipDelay;
+        _audio.PlayPvs(component.SkipSound, uid);
+    }
+
+    public bool HasAccess(EntityUid uid, EntityUid? user = null)
+    {
+        if (user is null)
+            return false;
+        if (TryComp<AccessReaderComponent>(uid, out var accessReaderComponent))
+            return _accessReaderSystem.IsAllowed(user.Value, uid, accessReaderComponent);
+        return true;
     }
 
     public void SetupBountyLabel(EntityUid uid, CargoBountyData bounty, PaperComponent? paper = null, CargoBountyLabelComponent? label = null)

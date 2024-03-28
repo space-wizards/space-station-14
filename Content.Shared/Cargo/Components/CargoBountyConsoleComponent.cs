@@ -78,9 +78,11 @@ public sealed class BountyPrintLabelMessage : BoundUserInterfaceMessage
 public sealed class BountySkipMessage : BoundUserInterfaceMessage
 {
     public string BountyId;
+    public EntityUid SkippingEntityUid;
 
-    public BountySkipMessage(string bountyId)
+    public BountySkipMessage(string bountyId, EntityUid skippingEntityUid)
     {
         BountyId = bountyId;
+        SkippingEntityUid = skippingEntityUid;
     }
 }
