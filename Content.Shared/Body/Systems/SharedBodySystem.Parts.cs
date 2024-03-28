@@ -61,14 +61,14 @@ public partial class SharedBodySystem
             RemoveOrgan((removedUid, organ), ent);
     }
 
-    private void RecursiveBodyUpdate(Entity<BodyPartComponent> ent, EntityUid? bodyUid)
+    private void RecursiveBodyUpdate(Entity<BodyPartComponent> body, EntityUid? bodyUid)
     {
-        ent.Comp.Body = bodyUid;
-        Dirty(ent, ent.Comp);
+        body.Comp.Body = bodyUid;
+        Dirty(body);
 
-        foreach (var slotId in ent.Comp.Organs.Keys)
+        foreach (var slotId in body.Comp.Organs.Keys)
         {
-            if (!Containers.TryGetContainer(ent, GetOrganContainerId(slotId), out var container))
+            if (!Containers.TryGetContainer(body, GetOrganContainerId(slotId), out var container))
                 continue;
 
             foreach (var organ in container.ContainedEntities)
@@ -81,8 +81,8 @@ public partial class SharedBodySystem
                 if (organComp.Body != null)
                 {
                     var ev = new OrganRemovedFromBodyEvent(
-                        new Entity<BodyComponent>(organComp.Body.Value, Comp<BodyComponent>(organComp.Body.Value)),
-                        new Entity<BodyPartComponent>(uid, component));
+                        (organComp.Body.Value, Comp<BodyComponent>(organComp.Body.Value)),
+                        body);
                     RaiseLocalEvent(organ, ref ev);
                 }
 
@@ -91,17 +91,17 @@ public partial class SharedBodySystem
                 if (bodyUid != null)
                 {
                     var ev = new OrganAddedToBodyEvent(
-                        new Entity<BodyComponent>(bodyUid.Value, Comp<BodyComponent>(bodyUid.Value)),
-                        new Entity<BodyPartComponent>(uid, component));
+                        (bodyUid.Value, Comp<BodyComponent>(bodyUid.Value)),
+                        body);
                     RaiseLocalEvent(organ, ref ev);
                 }
 
             }
         }
 
-        foreach (var slotId in ent.Comp.Children.Keys)
+        foreach (var slotId in body.Comp.Children.Keys)
         {
-            if (!Containers.TryGetContainer(ent, GetPartSlotContainerId(slotId), out var container))
+            if (!Containers.TryGetContainer(body, GetPartSlotContainerId(slotId), out var container))
                 continue;
 
             foreach (var containedUid in container.ContainedEntities)
@@ -113,40 +113,41 @@ public partial class SharedBodySystem
     }
 
     protected virtual void AddPart(
-        Entity<BodyComponent?> bodyEnt,
-        Entity<BodyPartComponent> partEnt,
+        Entity<BodyComponent?> body,
+        Entity<BodyPartComponent> bodyPart,
         string slotId)
     {
-        Dirty(partEnt, partEnt.Comp);
-        partEnt.Comp.Body = bodyEnt;
+        Dirty(bodyPart);
+        bodyPart.Comp.Body = body;
 
-        var ev = new BodyPartAddedEvent(slotId, partUid, component);
-        RaiseLocalEvent(bodyUid, ref ev);
+        var ev = new BodyPartAddedEvent(slotId, bodyPart);
+        RaiseLocalEvent(body, ref ev);
 
-        bodyComp = Comp<BodyComponent>(bodyUid);
-        var ev2 = new BodyPartAddedToBodyEvent(slotId, bodyUid, bodyComp, component);
-        RaiseLocalEvent(partUid, ref ev2);
+        var bodyComp = body.Comp ?? Comp<BodyComponent>(body);
 
-        AddLeg(partUid, bodyUid, component, bodyComp);
+        var ev2 = new BodyPartAddedToBodyEvent(slotId, (body, bodyComp), bodyPart);
+        RaiseLocalEvent(bodyPart, ref ev2);
+
+        AddLeg(bodyPart, body);
     }
 
     protected virtual void RemovePart(
-        Entity<BodyComponent?> bodyEnt,
-        Entity<BodyPartComponent> partEnt,
+        Entity<BodyComponent?> body,
+        Entity<BodyPartComponent> bodyPart,
         string slotId)
     {
-        Resolve(bodyEnt, ref bodyEnt.Comp, logMissing: false);
-        Dirty(partEnt, partEnt.Comp);
-        partEnt.Comp.Body = null;
+        Resolve(body, ref body.Comp, logMissing: false);
+        Dirty(bodyPart, bodyPart.Comp);
+        bodyPart.Comp.Body = null;
 
-        var ev = new BodyPartRemovedEvent(slotId, partUid, component);
-        RaiseLocalEvent(bodyUid, ref ev);
+        var ev = new BodyPartRemovedEvent(slotId, bodyPart);
+        RaiseLocalEvent(body, ref ev);
 
-        bodyComp = Comp<BodyComponent>(bodyUid);
-        var ev2 = new BodyPartAddedToBodyEvent(slotId, bodyUid, bodyComp, component);
-        RaiseLocalEvent(partUid, ref ev2);
+        var bodyComp = body.Comp ?? Comp<BodyComponent>(body);
+        var ev2 = new BodyPartAddedToBodyEvent(slotId, (body, bodyComp), bodyPart);
+        RaiseLocalEvent(bodyPart, ref ev2);
 
-        RemoveLeg(partUid, bodyUid, component);
+        RemoveLeg(bodyPart, body);
     }
 
     private void AddLeg(Entity<BodyPartComponent> legEnt, Entity<BodyComponent?> bodyEnt)

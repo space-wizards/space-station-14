@@ -10,7 +10,7 @@ public readonly record struct BodyPartRemovedEvent(string Slot, Entity<BodyPartC
 
 
 [ByRefEvent]
-public readonly record struct BodyPartAddedToBodyEvent(string Slot, EntityUid BodyUid, BodyComponent Body, BodyPartComponent Part);
+public readonly record struct BodyPartAddedToBodyEvent(string Slot, Entity<BodyComponent> Body, Entity<BodyPartComponent> Part);
 
 [ByRefEvent]
-public readonly record struct BodyPartRemovedFromBodyEvent(string Slot, EntityUid BodyUid, BodyComponent Body, BodyPartComponent Part);
+public readonly record struct BodyPartRemovedFromBodyEvent(string Slot, Entity<BodyComponent> OldBody, Entity<BodyPartComponent> Part);

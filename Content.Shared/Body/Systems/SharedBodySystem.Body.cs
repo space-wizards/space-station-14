@@ -96,37 +96,37 @@ public partial class SharedBodySystem
         ent.Comp.RootContainer = Containers.EnsureContainer<ContainerSlot>(ent, BodyRootContainerId);
     }
 
-    private void OnBodyMapInit(Entity<BodyComponent> ent, ref MapInitEvent args)
+    private void OnBodyMapInit(Entity<BodyComponent> body, ref MapInitEvent args)
     {
-        if (ent.Comp.Prototype is null)
+        if (body.Comp.Prototype is null)
             return;
 
         // One-time setup
         // Obviously can't run in Init to avoid double-spawns on save / load.
-        var prototype = Prototypes.Index(body.Prototype.Value);
-        MapInitBody(bodyId, body, prototype);
+        var prototype = Prototypes.Index(body.Comp.Prototype.Value);
+        MapInitBody(body, prototype);
     }
 
-    private void MapInitBody(EntityUid bodyEntity, BodyComponent body, BodyPrototype prototype)
+    private void MapInitBody(Entity<BodyComponent> body, BodyPrototype prototype)
     {
         var protoRoot = prototype.Slots[prototype.Root];
         if (protoRoot.Part is null)
             return;
 
         // This should already handle adding the entity to the root.
-        var rootPartUid = SpawnInContainerOrDrop(protoRoot.Part, bodyEntity, BodyRootContainerId);
+        var rootPartUid = SpawnInContainerOrDrop(protoRoot.Part, body, BodyRootContainerId);
         var rootPart = Comp<BodyPartComponent>(rootPartUid);
-        rootPart.Body = bodyEntity;
+        rootPart.Body = body;
         Dirty(rootPartUid, rootPart);
 
         // Setup the rest of the body entities.
-        MapInitParts(rootPartEntity, prototype);
+        MapInitParts(rootPartUid, prototype);
 
-        body.BodyInitialized = true;
+        body.Comp.BodyInitialized = true;
         var ev = new BodyInitializedEvent();
-        RaiseLocalEvent(bodyEntity, ref ev);
-        Dirty(bodyEntity, body);
-        SetupOrgans(rootPartEntity, rootPart, protoRoot.Organs);
+        RaiseLocalEvent(body, ref ev);
+        Dirty(body);
+        SetupOrgans((rootPartUid, rootPart), protoRoot.Organs);
     }
 
     private void OnBodyCanDrag(Entity<BodyComponent> ent, ref CanDragEvent args)
