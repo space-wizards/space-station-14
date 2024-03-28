@@ -8,7 +8,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: AmePart
+      - id: AmePartFlatpack
         amount: 9
 
 - type: entity
@@ -42,17 +42,18 @@
   components:
   - type: StorageFill
     contents:
-      - id: Emitter
+      - id: Emitter # TODO change to flatpack
 
 - type: entity
   id: CrateEngineeringSingularityCollector
   parent: CrateEngineeringSecure
   name: radiation collector crate
-  description: A radiation collector, best used for singularity engines.
+  description: A radiation collector, best used for singularity engines. Plasma is included.
   components:
   - type: StorageFill
     contents:
-      - id: RadiationCollectorFullTank
+      - id: RadiationCollectorFlatpack
+      - id: PlasmaTankFilled
 
 - type: entity
   id: CrateEngineeringSingularityContainment
@@ -62,7 +63,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ContainmentFieldGenerator
+      - id: ContainmentFieldGeneratorFlatpack
 
 - type: entity
   id: CrateEngineeringSingularityGenerator
@@ -72,7 +73,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: SingularityGenerator
+      - id: SingularityGeneratorFlatpack
 
 # Particle Accelerator
 
@@ -113,7 +114,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: DebugGenerator
+      - id: DebugGenerator # TODO change to flatpack
 
 - type: entity
   id: CrateEngineeringSolar
@@ -123,7 +124,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: SolarAssemblyPart
+      - id: SolarAssemblyFlatpack
         amount: 6
 
 - type: entity
@@ -147,7 +148,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: TeslaGenerator
+      - id: TeslaGeneratorFlatpack
 
 - type: entity
   id: CrateEngineeringTeslaCoil
@@ -157,7 +158,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: TeslaCoil
+      - id: TeslaCoilFlatpack
 
 - type: entity
   id: CrateEngineeringTeslaGroundingRod
@@ -167,4 +168,4 @@
   components:
   - type: StorageFill
     contents:
-      - id: TeslaGroundingRod
+      - id: TeslaGroundingRodFlatpack

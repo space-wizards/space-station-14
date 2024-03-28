@@ -68,6 +68,7 @@
           - /Maps/Ruins/djstation.yml
           - /Maps/Ruins/old_ai_sat.yml
           - /Maps/Ruins/relaystation.yml
+          - /Maps/Ruins/syndicate_dropship.yml
           - /Maps/Ruins/whiteship_ancient.yml
           - /Maps/Ruins/whiteship_bluespacejumper.yml
 
@@ -108,6 +109,12 @@
   components:
   - type: SiliconLawProvider
     laws: Crewsimov
+
+- type: entity
+  id: BaseStationNews
+  abstract: true
+  components:
+    - type: StationNews
 
 - type: entity
   id: BaseStationAllEventsEligible

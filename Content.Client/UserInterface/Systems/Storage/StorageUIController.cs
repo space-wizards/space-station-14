@@ -233,9 +233,21 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
         if (args.Function == ContentKeyFunctions.MoveStoredItem)
         {
+            DraggingRotation = control.Location.Rotation;
+
             _menuDragHelper.MouseDown(control);
             _menuDragHelper.Update(0f);
 
+            args.Handle();
+        }
+        else if (args.Function == ContentKeyFunctions.SaveItemLocation)
+        {
+            if (_container?.StorageEntity is not {} storage)
+                return;
+
+            _entity.RaisePredictiveEvent(new StorageSaveItemLocationEvent(
+                _entity.GetNetEntity(control.Entity),
+                _entity.GetNetEntity(storage)));
             args.Handle();
         }
         else if (args.Function == ContentKeyFunctions.ExamineEntity)

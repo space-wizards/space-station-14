@@ -3,8 +3,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Inventory;
-using JetBrains.Annotations;
-using Robust.Shared.Physics.Events;
+using Content.Shared.Projectiles;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -17,17 +16,15 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SolutionInjectOnCollideComponent, StartCollideEvent>(HandleInjection);
+        SubscribeLocalEvent<SolutionInjectOnCollideComponent, ProjectileHitEvent>(HandleInjection);
     }
 
-    private void HandleInjection(Entity<SolutionInjectOnCollideComponent> ent, ref StartCollideEvent args)
+    private void HandleInjection(Entity<SolutionInjectOnCollideComponent> ent, ref ProjectileHitEvent args)
     {
         var component = ent.Comp;
-        var target = args.OtherEntity;
+        var target = args.Target;
 
-        if (!args.OtherBody.Hard ||
-            args.OurFixtureId != ent.Comp.FixtureId ||
-            !EntityManager.TryGetComponent<BloodstreamComponent>(target, out var bloodstream) ||
+        if (!TryComp<BloodstreamComponent>(target, out var bloodstream) ||
             !_solutionContainersSystem.TryGetInjectableSolution(ent.Owner, out var solution, out _))
         {
             return;

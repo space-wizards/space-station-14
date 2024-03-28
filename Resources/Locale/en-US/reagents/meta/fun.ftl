@@ -21,3 +21,9 @@ reagent-desc-razorium = A strange, non-newtonian chemical. It is produced when t
 
 reagent-name-fresium = Fresium
 reagent-desc-fresium = A mysterious compound that slows the vibration of atoms and molecules... somehow. In layman's terms, it makes things cold... REALLY cold. Can cause long-lasting movement issues if ingested.
+
+reagent-name-laughter = Laughter
+reagent-desc-laughter = Some say that this is the best medicine, but recent studies have proven that to be untrue.
+
+reagent-name-weh = juice that makes you Weh
+reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!

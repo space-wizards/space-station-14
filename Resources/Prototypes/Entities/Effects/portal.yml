@@ -68,3 +68,58 @@
     lifetime: 120
   - type: Portal
     canTeleportToOtherMaps: true
+
+- type: entity
+  id: PortalGatewayBlue
+  parent: BasePortal
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/gateway.rsi
+    color: SkyBlue
+    layers:
+    - state: portal
+  - type: PointLight
+    color: SkyBlue
+    radius: 3
+    energy: 1
+    netsync: false
+
+- type: entity
+  id: PortalGatewayOrange
+  parent: BasePortal
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/gateway.rsi
+    color: OrangeRed
+    layers:
+    - state: portal
+  - type: PointLight
+    color: OrangeRed
+    radius: 3
+    energy: 1
+    netsync: false
+
+- type: entity
+  id: ShadowPortal
+  name: shadow rift
+  description: Looks unstable.
+  parent: [ BasePortal, BaseShadow ]
+  components:
+  - type: Portal
+    arrivalSound: /Audio/Items/hiss.ogg
+    departureSound: /Audio/Items/hiss.ogg
+  - type: Sprite
+    state: portal-artifact
+    color: "#793a80dd"
+  - type: PointLight
+    color: "#793a80dd"
+    radius: 3
+    energy: 1
+    netsync: false
+  - type: AmbientSound
+    range: 6
+    volume: -3
+    sound:
+      path: /Audio/Ambience/anomaly_scary.ogg

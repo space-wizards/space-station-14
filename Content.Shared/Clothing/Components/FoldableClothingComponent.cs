@@ -17,4 +17,17 @@ public sealed partial class FoldableClothingComponent : Component
     /// </summary>
     [DataField]
     public SlotFlags? UnfoldedSlots;
+
+
+    /// <summary>
+    /// What equipped prefix does this have while in folded form?
+    /// </summary>
+    [DataField]
+    public string? FoldedEquippedPrefix;
+
+    /// <summary>
+    /// What held prefix does this have while in folded form?
+    /// </summary>
+    [DataField]
+    public string? FoldedHeldPrefix;
 }

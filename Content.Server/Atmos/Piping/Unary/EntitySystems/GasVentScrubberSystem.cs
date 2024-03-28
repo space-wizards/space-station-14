@@ -15,6 +15,7 @@ using Content.Shared.Atmos.Piping.Unary.Visuals;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Audio;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Tools.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -76,7 +77,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             // Scrub adjacent tiles too.
-            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true))
+            var enumerator = _atmosphereSystem.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true);
+            while (enumerator.MoveNext(out var adjacent))
             {
                 Scrub(timeDelta, scrubber, adjacent, outlet);
             }

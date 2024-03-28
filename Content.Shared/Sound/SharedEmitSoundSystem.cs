@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -23,9 +24,8 @@ namespace Content.Shared.Sound;
 [UsedImplicitly]
 public abstract class SharedEmitSoundSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly INetManager _netMan = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
@@ -42,7 +42,6 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         SubscribeLocalEvent<EmitSoundOnPickupComponent, GotEquippedHandEvent>(OnEmitSoundOnPickup);
         SubscribeLocalEvent<EmitSoundOnDropComponent, DroppedEvent>(OnEmitSoundOnDrop);
 
-        SubscribeLocalEvent<EmitSoundOnCollideComponent, EntityUnpausedEvent>(OnEmitSoundUnpaused);
         SubscribeLocalEvent<EmitSoundOnCollideComponent, StartCollideEvent>(OnEmitSoundOnCollide);
     }
 
@@ -55,7 +54,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
     {
         if (!args.PlaySound ||
             !TryComp<TransformComponent>(uid, out var xform) ||
-            !_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            !TryComp<MapGridComponent>(xform.GridUid, out var grid))
         {
             return;
         }
@@ -119,18 +118,13 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         }
     }
 
-    private void OnEmitSoundUnpaused(EntityUid uid, EmitSoundOnCollideComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextSound += args.PausedTime;
-    }
-
     private void OnEmitSoundOnCollide(EntityUid uid, EmitSoundOnCollideComponent component, ref StartCollideEvent args)
     {
         if (!args.OurFixture.Hard ||
             !args.OtherFixture.Hard ||
             !TryComp<PhysicsComponent>(uid, out var physics) ||
             physics.LinearVelocity.Length() < component.MinimumVelocity ||
-            _timing.CurTime < component.NextSound ||
+            Timing.CurTime < component.NextSound ||
             MetaData(uid).EntityPaused)
         {
             return;
@@ -142,12 +136,16 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
         var fraction = MathF.Min(1f, (physics.LinearVelocity.Length() - component.MinimumVelocity) / MaxVolumeVelocity);
         var volume = MinVolume + (MaxVolume - MinVolume) * fraction;
-        component.NextSound = _timing.CurTime + EmitSoundOnCollideComponent.CollideCooldown;
+        component.NextSound = Timing.CurTime + EmitSoundOnCollideComponent.CollideCooldown;
         var sound = component.Sound;
 
         if (_netMan.IsServer && sound != null)
         {
             _audioSystem.PlayPvs(_audioSystem.GetSound(sound), uid, AudioParams.Default.WithVolume(volume));
         }
+    }
+
+    public virtual void SetEnabled(Entity<SpamEmitSoundComponent?> entity, bool enabled)
+    {
     }
 }

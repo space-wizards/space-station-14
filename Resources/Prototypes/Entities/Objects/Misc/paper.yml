@@ -18,6 +18,7 @@
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
     closeOnHandDeselect: false
+    requireHands: false
   - type: UserInterface
     interfaces:
     - key: enum.PaperUiKey.Key
@@ -61,6 +62,7 @@
     solution: food
     delay: 7
     forceFeedDelay: 7
+  - type: BadFood
   - type: SolutionContainerManager
     solutions:
       food:
@@ -668,6 +670,7 @@
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     damage:
       types:
         Blunt: 10

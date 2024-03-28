@@ -1,0 +1,45 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:ui="clr-namespace:Content.Client.MassMedia.Ui"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    Title="{Loc 'news-write-ui-default-title'}"
+    MinSize="348 443"
+    SetSize="348 443">
+
+    <ui:ArticleEditorPanel Name="ArticleEditorPanel" HorizontalAlignment="Left" VerticalExpand="True"
+                           MinWidth="410" MinHeight="370" Margin="0 0 0 30" Access="Public" Visible="False"/>
+
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <Control VerticalExpand="True" HorizontalExpand="True" Margin="10 10 10 0">
+            <PanelContainer Name="MainPanel" HorizontalExpand="False" VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#202023" />
+                </PanelContainer.PanelOverride>
+            </PanelContainer>
+            <ScrollContainer Name="ArticleListScrollbar" HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
+                <BoxContainer Name="ArticlesContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="6 6 6 6">
+                </BoxContainer>
+            </ScrollContainer>
+        </Control>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="12 7 12 9">
+            <BoxContainer Orientation="Horizontal">
+                <Label Name="ArticleCount" Text="{Loc news-write-ui-article-count-0}"/>
+            </BoxContainer>
+            <Control HorizontalExpand="True"/>
+            <Control>
+                <Button Name="ButtonCreate" SetHeight="26" MinWidth="83" Text="{Loc news-write-ui-create-text}"/>
+            </Control>
+        </BoxContainer>
+        <Control SetHeight="30" Margin="2 0 0 0">
+            <PanelContainer Name="FooterPanel">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BorderColor="#5A5A5A" BorderThickness="0 2 0 0" />
+                </PanelContainer.PanelOverride>
+            </PanelContainer>
+            <BoxContainer Name="ContentFooter" HorizontalExpand="True" SetHeight="28">
+                <Label Text="{Loc news-write-ui-footer-text}" VerticalAlignment="Center" Margin="6 0" StyleClasses="PdaContentFooterText"/>
+            </BoxContainer>
+        </Control>
+    </BoxContainer>
+</controls:FancyWindow>

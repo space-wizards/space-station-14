@@ -75,7 +75,7 @@ namespace Content.Server.Atmos.Reactions
                 var mixTemperature = mixture.Temperature;
                 if (mixTemperature > Atmospherics.FireMinimumTemperatureToExist)
                 {
-                    atmosphereSystem.HotspotExpose(location.GridIndex, location.GridIndices, mixTemperature, mixture.Volume);
+                    atmosphereSystem.HotspotExpose(location, mixTemperature, mixture.Volume);
                 }
             }
 

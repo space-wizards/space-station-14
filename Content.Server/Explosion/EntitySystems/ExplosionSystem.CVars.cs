@@ -15,34 +15,13 @@ public sealed partial class ExplosionSystem : EntitySystem
 
     private void SubscribeCvars()
     {
-        _cfg.OnValueChanged(CCVars.ExplosionTilesPerTick, SetTilesPerTick, true);
-        _cfg.OnValueChanged(CCVars.ExplosionThrowLimit, SetThrowLimit, true);
-        _cfg.OnValueChanged(CCVars.ExplosionSleepNodeSys, SetSleepNodeSys, true);
-        _cfg.OnValueChanged(CCVars.ExplosionMaxArea, SetMaxArea, true);
-        _cfg.OnValueChanged(CCVars.ExplosionMaxIterations, SetMaxIterations, true);
-        _cfg.OnValueChanged(CCVars.ExplosionMaxProcessingTime, SetMaxProcessingTime, true);
-        _cfg.OnValueChanged(CCVars.ExplosionIncrementalTileBreaking, SetIncrementalTileBreaking, true);
-        _cfg.OnValueChanged(CCVars.ExplosionSingleTickAreaLimit, SetSingleTickAreaLimit, true);
+        Subs.CVar(_cfg, CCVars.ExplosionTilesPerTick, value => TilesPerTick = value, true);
+        Subs.CVar(_cfg, CCVars.ExplosionThrowLimit, value => ThrowLimit = value, true);
+        Subs.CVar(_cfg, CCVars.ExplosionSleepNodeSys, value => SleepNodeSys = value, true);
+        Subs.CVar(_cfg, CCVars.ExplosionMaxArea, value => MaxArea = value, true);
+        Subs.CVar(_cfg, CCVars.ExplosionMaxIterations, value => MaxIterations = value, true);
+        Subs.CVar(_cfg, CCVars.ExplosionMaxProcessingTime, value => MaxProcessingTime = value, true);
+        Subs.CVar(_cfg, CCVars.ExplosionIncrementalTileBreaking, value => IncrementalTileBreaking = value, true);
+        Subs.CVar(_cfg, CCVars.ExplosionSingleTickAreaLimit, value => SingleTickAreaLimit = value, true);
     }
-
-    private void UnsubscribeCvars()
-    {
-        _cfg.UnsubValueChanged(CCVars.ExplosionTilesPerTick, SetTilesPerTick);
-        _cfg.UnsubValueChanged(CCVars.ExplosionThrowLimit, SetThrowLimit);
-        _cfg.UnsubValueChanged(CCVars.ExplosionSleepNodeSys, SetSleepNodeSys);
-        _cfg.UnsubValueChanged(CCVars.ExplosionMaxArea, SetMaxArea);
-        _cfg.UnsubValueChanged(CCVars.ExplosionMaxIterations, SetMaxIterations);
-        _cfg.UnsubValueChanged(CCVars.ExplosionMaxProcessingTime, SetMaxProcessingTime);
-        _cfg.UnsubValueChanged(CCVars.ExplosionIncrementalTileBreaking, SetIncrementalTileBreaking);
-        _cfg.UnsubValueChanged(CCVars.ExplosionSingleTickAreaLimit, SetSingleTickAreaLimit);
-    }
-
-    private void SetTilesPerTick(int value) => TilesPerTick = value;
-    private void SetThrowLimit(int value) => ThrowLimit = value;
-    private void SetSleepNodeSys(bool value) => SleepNodeSys = value;
-    private void SetMaxArea(int value) => MaxArea = value;
-    private void SetMaxIterations(int value) => MaxIterations = value;
-    private void SetMaxProcessingTime(float value) => MaxProcessingTime = value;
-    private void SetIncrementalTileBreaking(bool value) => IncrementalTileBreaking = value;
-    private void SetSingleTickAreaLimit(int value) => SingleTickAreaLimit = value;
 }

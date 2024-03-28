@@ -83,16 +83,16 @@
     dangerousRedFore: "#BB3232"
     disabledFore: "#5A5A5A"
 - type: uiTheme
-  id: SS14ErisTheme
-  path: /Textures/Interface/Eris/
+  id: SS14AshenTheme
+  path: /Textures/Interface/Ashen/
   colors:
     whiteText: "#FFF5EE"
-    slotSelectedGold: "#e6b812"
-    slotColor: "#0f1215"
-    slotOutline: "#333850"
-    slotText: "#333850"
-    nanoGold: "#A88B5E"
-    goodGreenFore: "#31843E"
-    concerningOrangeFore: "#A5762F"
-    dangerousRedFore: "#BB3232"
-    disabledFore: "#5A5A5A"
+    slotSelectedGold: "#FFF5EE"
+    slotColor: "#FFF5EE"
+    slotOutline: "#FFF5EE"
+    slotText: "#FFF5EE"
+    nanoGold: "#FFF5EE"
+    goodGreenFore: "#FFF5EE"
+    concerningOrangeFore: "#FFF5EE"
+    dangerousRedFore: "#FFF5EE"
+    disabledFore: "#FFF5EE"

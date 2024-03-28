@@ -10,7 +10,7 @@ namespace Content.Shared.Timing;
 /// Currently it only supports a single delay per entity, this means that for things that have two delay interactions they will share one timer, so this can cause issues. For example, the bible has a delay when opening the storage UI and when applying it's interaction effect, and they share the same delay.
 /// </remarks>
 [RegisterComponent]
-[NetworkedComponent, AutoGenerateComponentState]
+[NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(UseDelaySystem))]
 public sealed partial class UseDelayComponent : Component
 {
@@ -18,12 +18,14 @@ public sealed partial class UseDelayComponent : Component
     /// When the delay starts.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [AutoPausedField]
     public TimeSpan DelayStartTime;
 
     /// <summary>
     /// When the delay ends.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [AutoPausedField]
     public TimeSpan DelayEndTime;
 
     /// <summary>

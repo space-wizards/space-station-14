@@ -462,6 +462,9 @@
       "name": "secure_door"
     },
     {
+      "name": "secure_icon"
+    },
+    {
       "name": "secure_open"
     },
     {
