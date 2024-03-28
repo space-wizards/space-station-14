@@ -55,11 +55,12 @@
               min: 0
               max: 1
     - type: Temperature
+    - type: TemperatureDamageThresholds
       heatDamage:
         types:
           Heat: 5
       coldDamage: {}
-      ColdDamageThreshold: 0
+      coldDamageThreshold: 0
     - type: Flammable
       fireSpread: true
       cold:
@@ -142,11 +143,12 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: Temperature
+    - type: TemperatureDamageThresholds
       heatDamage:
         types:
           Heat: 5
       coldDamage: {}
-      ColdDamageThreshold: 0
+      coldDamageThreshold: 0
     - type: Flammable
       fireSpread: true
       cold:

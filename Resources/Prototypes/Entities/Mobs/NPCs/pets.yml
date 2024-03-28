@@ -738,6 +738,7 @@
         Bloodloss:
           -0.8
   - type: Temperature
+  - type: TemperatureDamageThresholds
     heatDamageThreshold: 800
     coldDamageThreshold: 0
   - type: MeleeWeapon

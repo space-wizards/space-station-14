@@ -58,6 +58,7 @@
         Heat: 6.0
   # slightly wider thresholds
   - type: Temperature
+  - type: TemperatureDamageThresholds
     heatDamageThreshold: 390
     coldDamageThreshold: 240
   # take terminator flesh damage

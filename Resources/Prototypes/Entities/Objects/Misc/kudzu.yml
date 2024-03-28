@@ -54,11 +54,12 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: Temperature
+    - type: TemperatureDamageThresholds
       heatDamage:
         types:
           Heat: 5
       coldDamage: {}
-      ColdDamageThreshold: 0
+      coldDamageThreshold: 0
     - type: Flammable
       fireSpread: true #If you walk into incredibly dense, flaming vines, you can expect to burn.
       cold:
@@ -220,6 +221,7 @@
           Cold: -1.0
           Blunt: -0.5 # Needs to be balanced (approx 3x) with vacuum damage to stall but not kill Kudzu
     - type: Temperature
+    - type: TemperatureDamageThresholds
       heatDamage:
         types:
           Heat: 10

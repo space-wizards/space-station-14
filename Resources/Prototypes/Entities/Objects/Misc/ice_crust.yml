@@ -44,10 +44,11 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: Temperature
+    - type: TemperatureDamageThresholds
       heatDamage:
         types:
           Heat: 5
       coldDamage: {}
-      ColdDamageThreshold: 0
+      coldDamageThreshold: 0
     - type: FrictionContacts
       
