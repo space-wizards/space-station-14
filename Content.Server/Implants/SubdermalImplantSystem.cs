@@ -1,4 +1,5 @@
-﻿using Content.Server.Cuffs;
+﻿using System.Linq;
+using Content.Server.Cuffs;
 using Content.Server.Forensics;
 using Content.Server.Humanoid;
 using Content.Server.Implants.Components;
@@ -14,13 +15,14 @@ using Content.Shared.Popups;
 using Content.Shared.Preferences;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using System.Numerics;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
+using Robust.Shared.Collections;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Implants;
 
@@ -28,7 +30,6 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 {
     [Dependency] private readonly CuffableSystem _cuffable = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly StoreSystem _store = default!;
@@ -37,6 +38,8 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
     [Dependency] private readonly PullingSystem _pullingSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
 
@@ -107,42 +110,83 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             _pullingSystem.TryStopPull(ent, pull);
 
         var xform = Transform(ent);
-        var entityCoords = xform.Coordinates.ToMap(EntityManager, _xform);
+        var targetCoords = SelectRandomTileInRange(xform, implant.TeleportRadius);
 
-        // try to find a valid position to teleport to, teleport to whatever works if we can't
-        var targetCoords = new MapCoordinates();
-        for (var i = 0; i < implant.TeleportAttempts; i++)
+        if (targetCoords != null)
         {
-            var distance = implant.TeleportRadius * MathF.Sqrt(_random.NextFloat()); // to get an uniform distribution
-            targetCoords = entityCoords.Offset(_random.NextAngle().ToVec() * distance);
+            _xform.SetCoordinates(ent, targetCoords.Value);
+            _xform.AttachToGridOrMap(ent, xform);
+            _audio.PlayPvs(implant.TeleportSound, ent);
+            args.Handled = true;
+        }
+    }
 
-            // prefer teleporting to grids
-            if (!_mapManager.TryFindGridAt(targetCoords, out var gridUid, out var grid))
-                continue;
+    private EntityCoordinates? SelectRandomTileInRange(TransformComponent userXform, float radius)
+    {
+        var userCoords = userXform.Coordinates.ToMap(EntityManager, _xform);
+        var grids = _lookupSystem.GetEntitiesInRange<MapGridComponent>(userCoords, radius).ToList();
+        _random.Shuffle(grids);
 
-            // the implant user probably does not want to be in your walls
-            var valid = true;
-            foreach (var entity in grid.GetAnchoredEntities(targetCoords))
+        // Give preference to the grid the entity is currently on.
+        var idx = grids.FindIndex(grid => grid.Owner == userXform.GridUid);
+        if (idx != -1)
+        {
+            if (_random.Prob(0.66f))
             {
-                if (!_physicsQuery.TryGetComponent(entity, out var body))
-                    continue;
-
-                if (body.BodyType != BodyType.Static ||
-                    !body.Hard ||
-                    (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
-                    continue;
-
-                valid = false;
-                break;
+                (grids[0], grids[idx]) = (grids[idx], grids[0]);
             }
+            else
+            {
+                (grids[^1], grids[idx]) = (grids[idx], grids[^1]);
+            }
+        }
+
+        EntityCoordinates? targetCoords = null;
+
+        foreach (var grid in grids)
+        {
+            var valid = false;
+
+            var range = (float) Math.Sqrt(radius);
+            var box = Box2.CenteredAround(userCoords.Position, new Vector2(range, range));
+            var tilesInRange = _mapSystem.GetTilesEnumerator(grid.Owner, grid.Comp, box, false);
+            var tileList = new ValueList<Vector2i>();
+
+            while (tilesInRange.MoveNext(out var tile))
+            {
+                tileList.Add(tile.GridIndices);
+            }
+
+            while (tileList.Count != 0)
+            {
+                var tile = tileList.RemoveSwap(_random.Next(tileList.Count));
+                valid = true;
+                foreach (var entity in _mapSystem.GetAnchoredEntities(grid.Owner, grid.Comp, tile))
+                {
+                    if (!_physicsQuery.TryGetComponent(entity, out var body))
+                        continue;
+
+                    if (body.BodyType != BodyType.Static ||
+                        !body.Hard ||
+                        (body.CollisionLayer & (int) CollisionGroup.MobMask) == 0)
+                        continue;
+
+                    valid = false;
+                    break;
+                }
+
+                if (valid)
+                {
+                    targetCoords = new EntityCoordinates(grid.Owner, _mapSystem.TileCenterToVector(grid, tile));
+                    break;
+                }
+            }
+
             if (valid)
                 break;
         }
-        _xform.SetWorldPosition(ent, targetCoords.Position);
-        _xform.AttachToGridOrMap(ent, xform);
-        _audio.PlayPvs(implant.TeleportSound, ent);
 
-        args.Handled = true;
+        return targetCoords;
     }
 
     private void OnDnaScramblerImplant(EntityUid uid, SubdermalImplantComponent component, UseDnaScramblerImplantEvent args)
