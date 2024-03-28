@@ -67,7 +67,7 @@
 - type: entity
   abstract: true
   parent: ClothingOuterStorageFoldableBase
-  id: ClothingOuterStorageFoldableBaseFlipped
+  id: ClothingOuterStorageFoldableBaseOpened
   suffix: opened
   components:
   - type: Foldable
