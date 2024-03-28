@@ -1,8 +1,7 @@
-﻿using Content.Server.IdentityManagement;
+using Content.Server.IdentityManagement;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;
-using Content.Shared.Prototypes;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -13,9 +12,7 @@ namespace Content.Server.Clothing.Systems;
 
 public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
 
     public override void Initialize()
@@ -28,7 +25,8 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void OnMapInit(EntityUid uid, ChameleonClothingComponent component, MapInitEvent args)
     {
-        SetSelectedPrototype(uid, component.Default, true, component);
+        if (component.Default.HasValue)
+            SetSelectedPrototype(uid, component.Default.Value, true, component);
     }
 
     private void OnVerb(EntityUid uid, ChameleonClothingComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -63,14 +61,14 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (!Resolve(uid, ref component))
             return;
 
-        var state = new ChameleonBoundUserInterfaceState(component.Slot, component.Default);
+        var state = new ChameleonBoundUserInterfaceState(component.Slot, component.Default, component.Whitelist);
         _uiSystem.TrySetUiState(uid, ChameleonUiKey.Key, state);
     }
 
     /// <summary>
     ///     Change chameleon items name, description and sprite to mimic other entity prototype.
     /// </summary>
-    public void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false,
+    public void SetSelectedPrototype(EntityUid uid, EntProtoId protoId, bool forceUpdate = false,
         ChameleonClothingComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
@@ -81,14 +79,19 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (component.Default == protoId && !forceUpdate)
             return;
 
-        // make sure that it is valid change
-        if (string.IsNullOrEmpty(protoId) || !_proto.TryIndex(protoId, out EntityPrototype? proto))
+        // Dont trust anything from clients
+        if (string.IsNullOrEmpty(protoId))
             return;
-        if (!IsValidTarget(proto, component.Slot))
+
+        if (!Proto.TryIndex(protoId, out EntityPrototype? prototype))
             return;
+
+        if (!IsValidTarget(prototype, component.Slot, component.Whitelist))
+            return;
+
         component.Default = protoId;
 
-        UpdateIdentityBlocker(uid, component, proto);
+        UpdateIdentityBlocker(uid, component, prototype);
         UpdateVisuals(uid, component);
         UpdateUi(uid, component);
         Dirty(uid, component);
@@ -96,8 +99,11 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void UpdateIdentityBlocker(EntityUid uid, ChameleonClothingComponent component, EntityPrototype proto)
     {
-        if (proto.HasComponent<IdentityBlockerComponent>(_factory))
-            EnsureComp<IdentityBlockerComponent>(uid);
+        if (proto.TryGetComponent<IdentityBlockerComponent>(out var protoIdentityBlocker, Factory))
+        {
+            var identityBlocker = EnsureComp<IdentityBlockerComponent>(uid);
+            identityBlocker.Coverage = protoIdentityBlocker.Coverage;
+        }
         else
             RemComp<IdentityBlockerComponent>(uid);
 

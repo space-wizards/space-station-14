@@ -16,6 +16,10 @@
       mode: SensorOff
     - type: ChameleonClothing
       slot: [innerclothing]
+      whitelist:
+        tags:
+          - WhitelistChameleon
+        requireAll: true
       default: ClothingUniformJumpsuitColorBlack
     - type: UserInterface
       interfaces:

@@ -102,6 +102,7 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+    - WhitelistChameleon
   - type: Input
     context: "human"
 
@@ -671,6 +672,10 @@
       - NotekeeperCartridge
       - NewsReaderCartridge
       - LogProbeCartridge
+  - type: Tag # Remove chameleon whitelist tag
+    tags:
+    - DoorBumpOpener
+    
 
 - type: entity
   parent: CentcomPDA
@@ -679,6 +684,9 @@
   components:
   - type: Pda
     id: CentcomIDCardSyndie
+  - type: Tag # Remove chameleon whitelist tag
+    tags:
+    - DoorBumpOpener
 
 - type: entity
   parent: CentcomPDA
@@ -687,6 +695,9 @@
   components:
   - type: Pda
     id: CentcomIDCardDeathsquad
+  - type: Tag # Remove chameleon whitelist tag
+    tags:
+    - DoorBumpOpener
 
 - type: entity
   parent: BasePDA
@@ -788,6 +799,9 @@
   components:
   - type: Pda
     id: ERTChaplainIDCard
+  - type: Tag # Remove chameleon whitelist tag
+    tags:
+    - DoorBumpOpener
 
 - type: entity
   parent: ERTLeaderPDA
@@ -798,6 +812,9 @@
   components:
   - type: Pda
     id: ERTEngineerIDCard
+  - type: Tag # Remove chameleon whitelist tag
+    tags:
+    - DoorBumpOpener
 
 - type: entity
   parent: ERTLeaderPDA
@@ -808,6 +825,9 @@
   components:
   - type: Pda
     id: ERTJanitorIDCard
+  - type: Tag # Remove chameleon whitelist tag
+    tags:
+    - DoorBumpOpener
 
 - type: entity
   parent: ERTLeaderPDA
@@ -818,6 +838,9 @@
   components:
   - type: Pda
     id: ERTMedicIDCard
+  - type: Tag # Remove chameleon whitelist tag
+    tags:
+    - DoorBumpOpener
   - type: HealthAnalyzer
     scanDelay: 1
     scanningEndSound:
@@ -832,6 +855,9 @@
   components:
   - type: Pda
     id: ERTSecurityIDCard
+  - type: Tag # Remove chameleon whitelist tag
+    tags:
+    - DoorBumpOpener
 
 - type: entity
   parent: ERTLeaderPDA

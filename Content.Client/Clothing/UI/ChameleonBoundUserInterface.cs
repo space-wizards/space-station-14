@@ -1,7 +1,7 @@
-﻿using Content.Client.Clothing.Systems;
+using Content.Client.Clothing.Systems;
 using Content.Shared.Clothing.Components;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Clothing.UI;
 
@@ -34,11 +34,11 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
         if (state is not ChameleonBoundUserInterfaceState st)
             return;
 
-        var targets = _chameleon.GetValidTargets(st.Slot);
+        var targets = _chameleon.GetValidTargets(st.Slot, st.Whitelist);
         _menu?.UpdateState(targets, st.SelectedId);
     }
 
-    private void OnIdSelected(string selectedId)
+    private void OnIdSelected(EntProtoId selectedId)
     {
         SendMessage(new ChameleonPrototypeSelectedMessage(selectedId));
     }

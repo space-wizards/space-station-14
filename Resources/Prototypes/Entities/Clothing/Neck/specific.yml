@@ -13,6 +13,10 @@
       sprite: Clothing/Neck/Scarfs/red.rsi
     - type: ChameleonClothing
       slot: [neck]
+      whitelist:
+        tags:
+          - WhitelistChameleon
+        requireAll: true
       default: ClothingNeckScarfStripedRed
     - type: UserInterface
       interfaces:

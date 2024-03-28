@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Client.Clothing.Systems;
 using Content.Client.Stylesheets;
@@ -17,10 +17,10 @@ public sealed partial class ChameleonMenu : DefaultWindow
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     private readonly SpriteSystem _sprite;
-    public event Action<string>? OnIdSelected;
+    public event Action<EntProtoId>? OnIdSelected;
 
-    private IEnumerable<string> _possibleIds = Enumerable.Empty<string>();
-    private string? _selectedId;
+    private IEnumerable<EntProtoId> _possibleIds = Enumerable.Empty<EntProtoId>();
+    private EntProtoId? _selectedId;
     private string _searchFilter = "";
 
     public ChameleonMenu()
@@ -32,7 +32,7 @@ public sealed partial class ChameleonMenu : DefaultWindow
         Search.OnTextChanged += OnSearchEntered;
     }
 
-    public void UpdateState(IEnumerable<string> possibleIds, string? selectedId)
+    public void UpdateState(IEnumerable<EntProtoId> possibleIds, string? selectedId)
     {
         _possibleIds = possibleIds;
         _selectedId = selectedId;
@@ -57,7 +57,7 @@ public sealed partial class ChameleonMenu : DefaultWindow
             if (!_prototypeManager.TryIndex(id, out EntityPrototype? proto))
                 continue;
 
-            var lowId = id.ToLowerInvariant();
+            var lowId = id.ToString().ToLowerInvariant();
             var lowName = proto.Name.ToLowerInvariant();
             if (!lowId.Contains(searchFilterLow) && !lowName.Contains(_searchFilter))
                 continue;

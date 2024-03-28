@@ -1,4 +1,5 @@
 using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
@@ -92,6 +93,39 @@ namespace Content.Shared.Whitelist
             {
                 var tagSystem = entityManager.System<TagSystem>();
                 return RequireAll ? tagSystem.HasAllTags(tags, Tags) : tagSystem.HasAnyTag(tags, Tags);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns whether a given entity prototype fits the whitelist
+        /// </summary>
+        /// <param name="proto">The entity prototype to match</param>
+        /// <returns>True if the prototype matches the whitelist</returns>
+        public bool IsValid(EntityPrototype proto, IComponentFactory factory, IEntityManager? entityManager = null)
+        {
+            if (Components != null && _registrations == null)
+                UpdateRegistrations();
+
+            IoCManager.Resolve(ref entityManager);
+            if (_registrations != null)
+            {
+                foreach (var reg in _registrations)
+                {
+                    if (proto.Components.ContainsKey(reg.Name))
+                    {
+                        if (!RequireAll)
+                            return true;
+                    }
+                    else if (RequireAll)
+                        return false;
+                }
+            }
+
+            if (Tags != null && entityManager.TrySystem<TagSystem>(out var tagSystem) && proto.TryGetComponent<TagComponent>(out var tagComponent, factory))
+            {
+                return RequireAll ? tagSystem.HasAllTags(tagComponent, Tags) : tagSystem.HasAnyTag(tagComponent, Tags);
             }
 
             return false;

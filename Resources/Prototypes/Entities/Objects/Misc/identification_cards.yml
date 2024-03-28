@@ -655,6 +655,12 @@
     - DoorBumpOpener
   - type: ChameleonClothing
     slot: [idcard]
+    whitelist:
+      components:
+        - IdCard
+      tags:
+        - WhitelistChameleon
+      requireAll: true
     default: PassengerIDCard
   - type: UserInterface
     interfaces:

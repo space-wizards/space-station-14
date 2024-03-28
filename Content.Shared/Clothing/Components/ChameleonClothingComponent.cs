@@ -1,5 +1,6 @@
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -16,16 +17,20 @@ public sealed partial class ChameleonClothingComponent : Component
     /// <summary>
     ///     Filter possible chameleon options by their slot flag.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables]
     [DataField(required: true)]
     public SlotFlags Slot;
 
     /// <summary>
     ///     EntityPrototype id that chameleon item is trying to mimic.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables]
     [DataField(required: true), AutoNetworkedField]
     public EntProtoId? Default;
+
+    [ViewVariables]
+    [DataField]
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     ///     Current user that wears chameleon clothing.
@@ -38,21 +43,23 @@ public sealed partial class ChameleonClothingComponent : Component
 public sealed class ChameleonBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly SlotFlags Slot;
-    public readonly string? SelectedId;
+    public readonly EntProtoId? SelectedId;
+    public readonly EntityWhitelist? Whitelist;
 
-    public ChameleonBoundUserInterfaceState(SlotFlags slot, string? selectedId)
+    public ChameleonBoundUserInterfaceState(SlotFlags slot, EntProtoId? selectedId, EntityWhitelist? whitelist)
     {
         Slot = slot;
         SelectedId = selectedId;
+        Whitelist = whitelist;
     }
 }
 
 [Serializable, NetSerializable]
 public sealed class ChameleonPrototypeSelectedMessage : BoundUserInterfaceMessage
 {
-    public readonly string SelectedId;
+    public readonly EntProtoId SelectedId;
 
-    public ChameleonPrototypeSelectedMessage(string selectedId)
+    public ChameleonPrototypeSelectedMessage(EntProtoId selectedId)
     {
         SelectedId = selectedId;
     }
