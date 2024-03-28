@@ -15,7 +15,7 @@ namespace Content.Server.Power.Components
         public string? CablePrototypeId = "CableHV";
 
         /// <summary>
-        /// What kind of wire prevents placing this wire over it as NodeGroupID.
+        /// What kind of wire prevents placing this wire over it as CableType.
         /// </summary>
         [DataField]
         public CableType BlockingCableType = CableType.HighVoltage;
