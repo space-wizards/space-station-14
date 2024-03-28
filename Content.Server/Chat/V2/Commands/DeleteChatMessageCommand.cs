@@ -8,10 +8,7 @@ namespace Content.Server.Chat.V2.Commands;
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
 public sealed class DeleteChatMessageCommand : ToolshedCommand
 {
-    public string Description => Loc.GetString("delete-message-command-description");
-    public string Help => Loc.GetString("delete -message-command-help");
-
-    [CommandImplementation]
+    [CommandImplementation("id")]
     public void DeleteChatMessage([PipedArgument] uint messageId)
     {
         IoCManager.Resolve<ChatRepository>().Delete(messageId);
