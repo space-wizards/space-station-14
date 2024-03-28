@@ -16,6 +16,10 @@
             <cc:UICommandButton Command="callshuttle" Text="{Loc admin-player-actions-window-shuttle}" WindowType="{x:Type at:AdminShuttleWindow}"/>
             <cc:CommandButton Command="adminlogs" Text="{Loc admin-player-actions-window-admin-logs}"/>
             <cc:CommandButton Command="faxui" Text="{Loc admin-player-actions-window-admin-fax}"/>
+            <cc:CommandButton Command="changevisibility 2" Text="{Loc admin-player-actions-window-mark-visible}"/>
+            <cc:CommandButton Command="changevisibility 7" Text="{Loc admin-player-actions-window-mark-invisible}"/>
+            <cc:CommandButton Command="togglefollow false" Text="{Loc admin-player-actions-window-mark-mark-follow}"/>
+            <cc:CommandButton Command="togglefollow true" Text="{Loc admin-player-actions-window-mark-mark-not-follow}"/>
         </GridContainer>
     </BoxContainer>
 </Control>

@@ -8,3 +8,7 @@ admin-player-actions-window-shuttle = (Re)call Shuttle
 admin-player-actions-window-admin-logs = Admin Logs
 admin-player-actions-window-admin-notes = Admin Notes
 admin-player-actions-window-admin-fax = Admin Fax
+admin-player-actions-window-mark-visible = Mark ghost visible
+admin-player-actions-window-mark-invisible = Mark ghost invisible
+admin-player-actions-window-mark-mark-follow = Mark followable
+admin-player-actions-window-mark-mark-not-follow = Mark not followable
