@@ -19,7 +19,7 @@ public sealed partial class RadioMicrophoneComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("listenRange")]
-    public int ListenRange  = 4;
+    public int ListenRange = 4;
 
     [DataField("enabled")]
     public bool Enabled = false;
@@ -33,6 +33,12 @@ public sealed partial class RadioMicrophoneComponent : Component
     /// </summary>
     [DataField("toggleOnInteract")]
     public bool ToggleOnInteract = true;
+
+    /// <summary>
+    // The radio frequency on which the message will be transmitted
+    /// </summary>
+    [DataField]
+    public int Frequency = 1459; // Common channel frequency
 
     /// <summary>
     /// Whether or not the speaker must have an

@@ -6,9 +6,12 @@
   components:
   - type: RadioMicrophone
     broadcastChannel: Handheld
+    toggleOnInteract: false
+    frequency: 1330
   - type: RadioSpeaker
     channels:
     - Handheld
+    toggleOnInteract: false
   - type: Speech
     speechVerb: Robotic
   - type: Sprite
@@ -20,6 +23,12 @@
   - type: Item
     sprite: Objects/Devices/communication.rsi
     heldPrefix: walkietalkie
+  - type: ActivatableUI
+    key: enum.HandheldRadioUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.HandheldRadioUiKey.Key
+        type: HandheldRadioBoundUserInterface
   - type: Tag
     tags:
     - Radio
