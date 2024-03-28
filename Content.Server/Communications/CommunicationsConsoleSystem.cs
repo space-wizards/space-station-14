@@ -186,8 +186,7 @@ namespace Content.Server.Communications
 
         private static bool CanBroadcast(CommunicationsConsoleComponent comp)
         {
-            // No broadcast delay
-            return true;
+            return comp.AnnouncementCooldownRemaining <= 0f;
         }
 
         private bool CanUse(EntityUid user, EntityUid console)
