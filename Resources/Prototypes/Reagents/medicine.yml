@@ -312,9 +312,8 @@
       effects:
       - !type:HealthChange
         conditions:
-          # they gotta be in crit first
-        - !type:MobStateCondition
-          mobstate: Critical
+        - !type:TotalDamage
+          min: 90
         - !type:ReagentThreshold
           min: 0
           max: 20
@@ -323,8 +322,8 @@
             Asphyxiation: -3
             Poison: -0.5
           groups:
-            Brute: -0.5
-            Burn: -0.5
+            Brute: -1
+            Burn: -1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -351,6 +350,12 @@
           min: 1
         reagent: Histamine
         amount: 4
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:TotalDamage
+          min: 90
+        key: PressureImmunity
+        component: PressureImmunity
       - !type:GenericStatusEffect
         key: Stun
         time: 0.75
