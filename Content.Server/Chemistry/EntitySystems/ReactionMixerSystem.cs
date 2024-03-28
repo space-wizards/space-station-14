@@ -1,13 +1,20 @@
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.Popups;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-public sealed partial class ChemistrySystem
+public sealed partial class ReactionMixerSystem : EntitySystem
 {
-    public void InitializeMixing()
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainers = default!;
+
+    public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<ReactionMixerComponent, AfterInteractEvent>(OnAfterInteract);
     }
 
