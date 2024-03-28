@@ -10,6 +10,7 @@ using Content.Server.Station.Systems;
 using Content.Server.Zombies;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
+using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -41,6 +42,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
@@ -302,6 +304,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
         //Add the zombify action
         _action.AddAction(entity, ref pending.Action, component.ZombifySelfActionPrototype, entity);
+
+        //Give starting items
+        _inventory.SpawnItemsOnEntity(entity, component.StarterItems);
 
         //Get names for the round end screen, incase they leave mid-round
         var inCharacterName = MetaData(entity).EntityName;

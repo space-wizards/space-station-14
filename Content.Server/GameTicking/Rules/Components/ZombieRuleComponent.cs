@@ -83,4 +83,10 @@ public sealed partial class ZombieRuleComponent : Component
 
     [DataField]
     public EntProtoId ZombifySelfActionPrototype = "ActionTurnUndead";
+
+    /// <summary>
+    /// Things that will be given to patient zero
+    /// </summary>
+    [DataField]
+    public List<EntProtoId> StarterItems = new() { "SyringeRomerol" };
 }
