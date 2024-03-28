@@ -410,6 +410,10 @@ public sealed class DrinkSystem : EntitySystem
             !_body.TryGetBodyOrganComponents<StomachComponent>(ev.User, out var stomachs, body))
             return;
 
+        // Make sure the solution exists
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solution))
+            return;
+
         // no drinking from living drinks, have to kill them first.
         if (_mobState.IsAlive(entity))
             return;
