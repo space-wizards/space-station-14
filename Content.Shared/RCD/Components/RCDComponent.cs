@@ -1,19 +1,9 @@
-using Content.Shared.Maps;
 using Content.Shared.RCD.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.RCD.Components;
-
-public enum RcdMode : byte
-{
-    Floors,
-    Walls,
-    Airlock,
-    Deconstruct
-}
 
 /// <summary>
 /// Main component for the RCD
@@ -25,27 +15,35 @@ public enum RcdMode : byte
 public sealed partial class RCDComponent : Component
 {
     /// <summary>
-    /// Time taken to do an action like placing a wall
+    /// List of RCD prototypes that the device comes loaded with
     /// </summary>
-    [DataField("delay"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public float Delay = 2f;
+    [DataField, AutoNetworkedField]
+    public HashSet<ProtoId<RCDPrototype>> AvailablePrototypes = new();
 
-    [DataField("swapModeSound")]
-    public SoundSpecifier SwapModeSound = new SoundPathSpecifier("/Audio/Items/genhit.ogg");
-
-    [DataField("successSound")]
+    /// <summary>
+    /// Sound that plays when a RCD operation successfully completes
+    /// </summary>
+    [DataField]
     public SoundSpecifier SuccessSound = new SoundPathSpecifier("/Audio/Items/deconstruct.ogg");
 
     /// <summary>
-    /// What mode are we on? Can be floors, walls, airlock, deconstruct.
+    /// The ProtoId of the currently selected RCD prototype
     /// </summary>
-    [DataField("mode"), AutoNetworkedField]
-    public RcdMode Mode = RcdMode.Floors;
+    [DataField, AutoNetworkedField]
+    public ProtoId<RCDPrototype> ProtoId = "Invalid";
 
     /// <summary>
-    /// ID of the floor to create when using the floor mode.
+    /// A cached copy of currently selected RCD prototype
     /// </summary>
-    [DataField("floor", customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>))]
-    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public string Floor = "FloorSteel";
+    /// <remarks>
+    /// If the ProtoId is changed, make sure to update the CachedPrototype as well
+    /// </remarks>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public RCDPrototype CachedPrototype = default!;
+
+    /// <summary>
+    /// The direction constructed entities will face upon spawning
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Direction ConstructionDirection = Direction.South;
 }
