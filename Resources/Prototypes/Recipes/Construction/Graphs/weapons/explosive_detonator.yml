@@ -15,6 +15,7 @@
         doAfter: 0.5
 
   - node: detonatorWithTrigger
+    entity: EmptyDetonator
     actions:
     - !type:AppearanceChange
     - !type:PlaySound

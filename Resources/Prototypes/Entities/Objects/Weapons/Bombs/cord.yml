@@ -9,7 +9,7 @@
   - type: Stack
     stackType: CableDet
     baseLayer: base
-    layerStates: # appears like MV cable
+    layerStates:
     - coilex-10
     - coilex-20
     - coilex-30
