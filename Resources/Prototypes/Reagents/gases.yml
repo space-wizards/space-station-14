@@ -35,6 +35,14 @@
         ratios:
           CarbonDioxide: 1.0
           Oxygen: -1.0
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: 2 #Liquid O2 is cold and will cause damage if injected.
+      - !type:AdjustTemperature
+        amount: -5000 #Since Liquid O2 is so cold, we reduce the temperature of anyone it is injected into.
 
 - type: reagent
   id: Plasma
@@ -161,6 +169,14 @@
       # We need a metabolism effect on reagent removal
       #- !type:AdjustAlert
       #  alertType: CarbonDioxide
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: 2
+      - !type:AdjustTemperature
+        amount: -5000
 
 - type: reagent
   id: Nitrogen
@@ -177,7 +193,9 @@
       - !type:HealthChange
         damage:
           types:
-            Cold: 1 # liquid nitrogen is cold
+            Cold: 2 # liquid nitrogen is cold
+      - !type:AdjustTemperature
+        amount: -5000
     Gas:
       effects:
       - !type:Oxygenate
@@ -284,6 +302,14 @@
         damage:
           types:
             Poison: 0.25
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: 2
+      - !type:AdjustTemperature
+        amount: -5000
 
 - type: reagent
   id: Frezon
@@ -340,3 +366,11 @@
         - !type:ReagentThreshold
           reagent: Frezon
           min: 1
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: 2
+      - !type:AdjustTemperature
+        amount: -8000
