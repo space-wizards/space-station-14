@@ -12,9 +12,6 @@ public partial class AtmosphereSystem
     {
         SubscribeLocalEvent<MapAtmosphereComponent, ComponentInit>(OnMapStartup);
         SubscribeLocalEvent<MapAtmosphereComponent, ComponentRemove>(OnMapRemove);
-        SubscribeLocalEvent<MapAtmosphereComponent, IsTileSpaceMethodEvent>(MapIsTileSpace);
-        SubscribeLocalEvent<MapAtmosphereComponent, GetTileMixtureMethodEvent>(MapGetTileMixture);
-        SubscribeLocalEvent<MapAtmosphereComponent, GetTileMixturesMethodEvent>(MapGetTileMixtures);
         SubscribeLocalEvent<MapAtmosphereComponent, ComponentGetState>(OnMapGetState);
         SubscribeLocalEvent<GridAtmosphereComponent, EntParentChangedMessage>(OnGridParentChanged);
     }
@@ -29,37 +26,6 @@ public partial class AtmosphereSystem
     {
         if (!TerminatingOrDeleted(uid))
             RefreshAllGridMapAtmospheres(uid);
-    }
-
-    private void MapIsTileSpace(EntityUid uid, MapAtmosphereComponent component, ref IsTileSpaceMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Result = component.Space;
-        args.Handled = true;
-    }
-
-    private void MapGetTileMixture(EntityUid uid, MapAtmosphereComponent component, ref GetTileMixtureMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Mixture = component.Mixture;
-        args.Handled = true;
-    }
-
-    private void MapGetTileMixtures(EntityUid uid, MapAtmosphereComponent component, ref GetTileMixturesMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-        args.Handled = true;
-        args.Mixtures ??= new GasMixture?[args.Tiles.Count];
-
-        for (var i = 0; i < args.Tiles.Count; i++)
-        {
-            args.Mixtures[i] ??= component.Mixture;
-        }
     }
 
     private void OnMapGetState(EntityUid uid, MapAtmosphereComponent component, ref ComponentGetState args)

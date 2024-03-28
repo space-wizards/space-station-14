@@ -88,7 +88,11 @@ namespace Content.Server.Lathe
 
                 if (xform.GridUid != null)
                 {
-                    _environments.AddRange(_atmosphere.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true));
+                    var enumerator = _atmosphere.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true);
+                    while (enumerator.MoveNext(out var mix))
+                    {
+                        _environments.Add(mix);
+                    }
                 }
 
                 if (_environments.Count > 0)
