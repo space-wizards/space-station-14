@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Destruction & impact sounds have been reworked in general, you should
-      expect better sounds/more variance/actually playing sounds when applicable
-    type: Add
-  - message: Melee hit sounds being cut off when an entity is destroyed has been fixed
-    type: Fix
-  id: 5746
-  time: '2024-01-19T15:33:08.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24282
 - author: SpeltIncorrectyl
   changes:
   - message: Emagging the artifact crusher now stops it from being opened while it
@@ -3798,3 +3788,11 @@
   id: 6245
   time: '2024-03-28T06:36:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25768
+- author: EmoGarbage404
+  changes:
+  - message: Electrocution damage is no longer based on the power supplied and is
+      instead based on the wire voltage (LV, MV, or HV).
+    type: Tweak
+  id: 6246
+  time: '2024-03-28T20:44:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26455
