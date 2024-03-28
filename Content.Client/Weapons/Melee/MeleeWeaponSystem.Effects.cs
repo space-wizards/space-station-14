@@ -1,15 +1,18 @@
 using System.Numerics;
 using Content.Client.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Movement.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.Map;
+using Robust.Client.Player;
 
 namespace Content.Client.Weapons.Melee;
 
 public sealed partial class MeleeWeaponSystem
 {
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
     private const string FadeAnimationKey = "melee-fade";
     private const string SlashAnimationKey = "melee-slash";
     private const string ThrustAnimationKey = "melee-thrust";
@@ -56,7 +59,35 @@ public sealed partial class MeleeWeaponSystem
                 angle *= -1;
         }
         sprite.NoRotation = true;
-        sprite.Rotation = localPos.ToWorldAngle();
+
+        var localPlayer = _player.LocalSession?.AttachedEntity;
+
+        var attackDirObserverSpace = localPos;
+        if (_xformQuery.TryGetComponent(localPlayer, out var observerXform))
+        {
+            // localPos describes the direction of the attack in the space of the grid that
+            // the user is attached to. If the observer is on a different grid from the user,
+            // we need to transform that direction into observer space.
+            var userGrid = userXform.GridUid;
+            var observerGrid = observerXform.GridUid;
+            if (observerGrid != userGrid)
+            {
+                var userGridRotation = userGrid != null ? TransformSystem.GetWorldRotation((EntityUid)userGrid) : 0;
+                var obsGridRotation = observerGrid != null ? TransformSystem.GetWorldRotation((EntityUid)observerGrid) : 0;
+                var observerFromUser = (userGridRotation - obsGridRotation);
+                attackDirObserverSpace = observerFromUser.RotateVec(localPos);
+            }
+        }
+
+        sprite.Rotation = attackDirObserverSpace.ToWorldAngle();
+
+        if (TryComp(localPlayer, out InputMoverComponent? moverComponent))
+        {
+            // Sprite rotation is in view space; we need to adjust the
+            // rotation by the rotation of the camera.
+            sprite.Rotation -= moverComponent.TargetRelativeRotation;
+        }
+
         var distance = Math.Clamp(localPos.Length() / 2f, 0.2f, 1f);
 
         var xform = _xformQuery.GetComponent(animationUid);
