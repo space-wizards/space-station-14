@@ -73,3 +73,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "Kira"
   source: "my computer"
+
+- files: ["bufftf2men.ogg"]
+  license: "no idea lmao"
+  copyright: "Joji"
+  source: "my computer"

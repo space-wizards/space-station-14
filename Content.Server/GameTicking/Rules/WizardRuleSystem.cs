@@ -193,7 +193,7 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
 
         var gear = _prototypeManager.Index(component.GearProto);
         _stationSpawning.EquipStartingGear(mob, gear, profile);
-        _inventoryManager.SpawnItemOnEntity(mob, "BaseSpellbookShop6MP");
+        _inventoryManager.SpawnItemOnEntity(mob, "BaseSpellbookShop10MP");
 
         _npcFaction.RemoveFaction(mob, "NanoTrasen", false);
         _npcFaction.AddFaction(mob, "WizardFederation");
@@ -321,7 +321,7 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
             return;
 
         SpawnItems(entity);
-        _inventoryManager.SpawnItemOnEntity(entity, "BaseSpellbookShop6MP");
+        _inventoryManager.SpawnItemOnEntity(entity, "BaseSpellbookShop10MP");
         _npcFaction.RemoveFaction(entity, "NanoTrasen", false);
         _npcFaction.AddFaction(entity, "Wizard");
 

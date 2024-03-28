@@ -15,3 +15,4 @@ action-speech-spell-clownify = NWOLC YRGNA!
 action-speech-spell-devolve = FREYAL LGARDE!
 action-speech-spell-smoke = NAHLAP SO'RYU!
 action-speech-spell-lessergun = MUH'GUHN!
+action-speech-spell-heal = PAHN GYRLU!

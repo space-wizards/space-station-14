@@ -1,25 +1,26 @@
 - type: listing
   id: WizardSpawnCarpList
   name: Spawn Magicarp
-  description: Summon Magicarp to fight with you, they will attack you too though
+  description: Summon Magicarp to fight with you
   productAction: ActionSpawnMagicarpSpell
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - AssistanceSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
 
+
 - type: listing
   id: WizardForcewallList
   name: Forcewall
-  description: Create a magical wall that blocks all projectiles but not people
+  description: Create a magical wall that blocks all projectiles but not people.
   productAction: ActionForceWall
   cost:
      Magipoints: 1
   categories:
-  - WizardSpells
+  - DefensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -27,12 +28,12 @@
 - type: listing
   id: WizardBlinkList
   name: Blink
-  description: Teleport anywhere that your cursor can reach
+  description: Teleport anywhere that your cursor can reach.
   productAction: ActionBlink
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - MobilitySpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -40,12 +41,12 @@
 - type: listing
   id: WizardSmiteList
   name: Smite
-  description: Instantly gib anyone close enough to touch
+  description: Instantly gib anyone close enough to touch.
   productAction: ActionSmite
   cost:
     Magipoints: 4
   categories:
-  - WizardSpells
+  - OffensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -58,7 +59,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - MobilitySpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -71,7 +72,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - OffensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -84,7 +85,7 @@
   cost:
     Magipoints: 1
   categories:
-  - WizardSpells
+  - OffensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -93,12 +94,12 @@
 - type: listing
   id: WizardEmpList
   name: Disable Technology
-  description: Show technology whos boss with this spell
+  description: Show technology whos boss with this spell.
   productAction: ActionSpellEMP
   cost:
     Magipoints: 1
   categories:
-  - WizardSpells
+  - DefensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -111,7 +112,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - OffensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -119,12 +120,12 @@
 - type: listing
   id: WizardAnimateDeadList
   name: Animate Dead
-  description: Use this spell to recruit any corpses to your side!
+  description: Use this spell to recruit any corpses to your side.
   productAction: ActionAnimateDead
   cost:
     Magipoints: 3
   categories:
-  - WizardSpells
+  - AssistanceSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -137,7 +138,7 @@
   cost:
     Magipoints: 1
   categories:
-  - WizardSpells
+  - DefensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -150,7 +151,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - OffensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -163,7 +164,7 @@
   cost:
     Magipoints: 1
   categories:
-  - WizardSpells
+  - DefensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -176,7 +177,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - MobilitySpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -189,7 +190,7 @@
   cost:
     Magipoints: 3
   categories:
-  - WizardSpells
+  - DefensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -202,7 +203,7 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - DefensiveSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -215,11 +216,48 @@
   cost:
     Magipoints: 2
   categories:
-  - WizardSpells
+  - AssistanceSpells
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: WizardHealList
+  name: Heal
+  description: The Wizard Federation has decided to provide a healing spell since you all cant stop dying
+  productAction: ActionHealSpell
+  cost:
+    Magipoints: 2
+  categories:
+  - AssistanceSpells
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
 
+- type: listing
+  id: WizardSpellbladelist
+  name: Spellblade
+  description: A powerful magic sword, can shoot fire bolts when you wield it
+  productEntity: Spellblade
+  cost:
+    Magipoints: 2
+  categories:
+  - WizardItems
 
+- type: listing
+  id: WizardApprenticeList
+  name: Apprenticeship Contract
+  description: Send a request to the Wizard Federation asking to recieve an apprentice
+  productEntity: WizardApprenticeContract
+  cost:
+    Magipoints: 3
+  categories:
+  - WizardItems
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - WizardNonApprentice
 

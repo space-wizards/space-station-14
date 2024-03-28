@@ -22,5 +22,9 @@
   categories:
   - WizardSpells
   - WizardItems
+  - OffensiveSpells
+  - DefensiveSpells
+  - MobilitySpells
+  - AssistanceSpells
   currencyWhitelist:
   - Magipoints

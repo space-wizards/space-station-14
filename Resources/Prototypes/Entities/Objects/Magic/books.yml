@@ -244,6 +244,19 @@
       ActionDevolve: -1
 
 - type: entity
+  id: HealSpellbook
+  name: heal spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: bookheal
+  - type: Spellbook
+    spells:
+      ActionHealSpell: -1
+
+- type: entity
   id: ScrollRunes
   name: scroll of runes
   parent: BaseSpellbook

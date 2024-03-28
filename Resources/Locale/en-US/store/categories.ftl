@@ -17,5 +17,8 @@ store-category-pointless = Pointless
 store-category-abilities = Abilities
 
 # Wizard
-store-category-spells = Spells
-store-category-magicitems = Misc
+store-category-offensivespells = Offensive
+store-category-defensivespells = Defensive
+store-category-mobilityspells = Mobility
+store-category-assistancespells = Assistance
+store-category-magicitems = Items

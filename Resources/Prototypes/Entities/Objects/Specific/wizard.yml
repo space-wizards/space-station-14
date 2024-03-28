@@ -35,6 +35,19 @@
 
 - type: entity
   parent: BaseSpellbookShop
+  id: BaseSpellbookShop10MP
+  suffix: 10 MP
+  components:
+  - type: Store
+    preset: StorePresetWizard
+    balance:
+      Magipoints: 10
+  - type: Tag
+    tags:
+    - WizardNonApprentice
+
+- type: entity
+  parent: BaseSpellbookShop
   id: BaseSpellbookShopDBG
   suffix: DEBUG
   components:
@@ -42,3 +55,6 @@
     preset: StorePresetWizard
     balance:
       Magipoints: 1337
+  - type: Tag
+    tags:
+    - WizardNonApprentice

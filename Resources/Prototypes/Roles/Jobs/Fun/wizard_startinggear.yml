@@ -14,6 +14,21 @@
   duffelbag: ClothingBackpackDuffelFilled
 
 - type: startingGear
+  id: WizardBlueGearApprentice
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorDarkBlue
+    back: ClothingBackpackFilled
+    head: ClothingHeadHatWizard
+    outerClothing: ClothingOuterWizard
+    shoes: ClothingShoesWizard
+    belt: BaseSpellbookShop6MP
+    id: WizardPDA
+    ears: ClothingHeadsetService
+  innerClothingSkirt: ClothingUniformJumpskirtColorDarkBlue
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
+
+- type: startingGear
   id: WizardRedGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorRed
