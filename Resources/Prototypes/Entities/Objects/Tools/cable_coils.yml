@@ -235,16 +235,16 @@
     stackType: CableDet
     baseLayer: base
     layerStates: # appears like MV cable
-    - coilmv-10
-    - coilmv-20
-    - coilmv-30
+    - coilex-10
+    - coilex-20
+    - coilex-30
   - type: Sprite
-    state: coilmv-30
+    state: coilex-30
     layers:
-    - state: coilmv-30
+    - state: coilex-30
       map: ["base"]
   - type: Item
-    heldPrefix: coilmv
+    heldPrefix: coilex
   - type: CablePlacer
     cablePrototypeID: CableDet
     blockingCableType: ExCable
@@ -298,7 +298,7 @@
   suffix: 10
   components:
   - type: Sprite
-    state: coilmv-10
+    state: coilex-10
   - type: Stack
     count: 10
   - type: Explosive # TODO: some how make stacking logic handle the explosion scaling. Maybe also something for lingering stacks.
@@ -317,7 +317,7 @@
   suffix: 1
   components:
   - type: Sprite
-    state: coilmv-10
+    state: coilex-10
   - type: Stack
     count: 1
   - type: Explosive

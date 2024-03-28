@@ -2,31 +2,11 @@
   id: DetonatorGraph
   start: emptyDetonator
   graph:
-
   - node: emptyDetonator
-    entity: EmptyDetonator      
+    entity: EmptyDetonator   
     actions:
     - !type:AppearanceChange
     edges:
-    - to: wiredDetonator
-      steps:
-      - material: Cable
-        doAfter: 0.5
-
-  - node: wiredDetonator
-    entity: WiredDetonator      
-    actions:
-    - !type:AppearanceChange
-    - !type:PlaySound
-      sound: /Audio/Machines/button.ogg
-    edges:
-    - to: emptyDetonator
-      steps:
-      - tool: Cutting
-        doAfter: 0.5
-        completed:
-        - !type:SpawnPrototype
-          prototype: CableApcStack1
     - to: detonatorWithTrigger
       steps:
       - component: PayloadTrigger
@@ -39,13 +19,32 @@
     - !type:AppearanceChange
     - !type:PlaySound
       sound: /Audio/Machines/button.ogg
-    - !type:AdminLog
-      message: "A detonator cap was crafted"
     edges:
-    - to: wiredDetonator
+    - to: emptyDetonator
       steps:
       - tool: Prying
         doAfter: 0.5
         completed:
         - !type:EmptyContainer
           container: payloadTrigger
+    - to: wiredDetonator
+      steps:
+      - material: CableDet
+        doAfter: 0.5
+
+  - node: wiredDetonator
+    entity: WiredDetonator  
+    actions:
+    - !type:AppearanceChange
+    - !type:PlaySound
+      sound: /Audio/Machines/button.ogg
+    - !type:AdminLog
+      message: "A detonator cap was crafted"
+    edges:
+    - to: detonatorWithTrigger
+      steps:
+      - tool: Cutting
+        doAfter: 0.5
+        completed:
+        - !type:SpawnPrototype
+          prototype: CableDetStack1

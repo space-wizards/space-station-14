@@ -1,4 +1,6 @@
 using Content.Server.Administration.Managers;
+using Content.Server.Interaction;
+using Content.Server.Sticky.Components;
 using Content.Shared.Administration;
 using Content.Shared.Explosion;
 using Content.Shared.Ghost;
@@ -40,12 +42,26 @@ public sealed partial class StorageSystem : SharedStorageSystem
         });
         SubscribeLocalEvent<StorageComponent, BeforeExplodeEvent>(OnExploded);
 
+        SubscribeLocalEvent<StorageComponent, CanInteractWhileInsideContainerEvent>(OnCanInteractWhileInsideContainer);
+
         SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenBackpack, InputCmdHandler.FromDelegate(HandleOpenBackpack))
             .Bind(ContentKeyFunctions.OpenBelt, InputCmdHandler.FromDelegate(HandleOpenBelt))
             .Register<StorageSystem>();
+    }
+
+    private void OnCanInteractWhileInsideContainer(EntityUid uid, StorageComponent component, CanInteractWhileInsideContainerEvent args)
+    {
+        if (component.Container.ID != args.Container.ID)
+            return;
+
+        if (!TryComp(args.User, out ActorComponent? actor))
+            return;
+
+        // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
+        args.Handled = _uiSystem.SessionHasOpenUi(args.Container.Owner, StorageComponent.StorageUiKey.Key, actor.PlayerSession);
     }
 
     private void AddUiVerb(EntityUid uid, StorageComponent component, GetVerbsEvent<ActivationVerb> args)

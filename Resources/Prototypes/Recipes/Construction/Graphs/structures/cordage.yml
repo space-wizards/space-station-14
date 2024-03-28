@@ -24,14 +24,4 @@
           - !type:DeleteEntity {}
           steps:
             - tool: Cutting
-              doAfter: 5
-    
-    - node: detonationCableDetonator
-      entity: CableDetDetonator
-      edges:
-        - to: detonationCable
-        completed:
-          - !type:SnapToGrid
-            southRotation: true
-        steps:
-          - prototype: 
+              doAfter: 0.5

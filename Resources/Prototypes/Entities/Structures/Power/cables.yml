@@ -187,10 +187,11 @@
 
 # Explosive cable below
 
+- type: Tag
+  id: Detonator
+
 - type: entity
   id: CableDet
-  name: explosive cord
-  description: Explosive cord for removing whatever is in your way.
   placement:
     mode: SnapgridCenter
   components:
@@ -241,21 +242,14 @@
     intensitySlope: 5
     maxIntensity: 5
     canCreateVacuum: false
+  - type: TriggerOnSignal
+  - type: DeviceLinkSink
+    ports:
+      - Trigger
+  - type: ExplodeOnTrigger
   - type: Construction
     graph: DetCable
     node: detonationCable
-
-- type: entity
-  id: CableDetDetonator
-  parent: CableDet
-  name: explosive cord with detonator
-  description: Explosive cord with a detonator affixed. This seems dangerous.
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Sprite
-    color: Yellow
-    sprite: Structures/Power/Cables/ex_cable.rsi
-    state: excable_0
-    state: detonator
-  - type: ExplodeOnTrigger
+  - type: Tag
+    tags:
+    - Detonator

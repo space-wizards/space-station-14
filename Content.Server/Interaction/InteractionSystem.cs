@@ -33,17 +33,12 @@ namespace Content.Server.Interaction
             if (!_container.TryGetContainingContainer(target, out var container))
                 return false;
 
-            if (!TryComp(container.Owner, out StorageComponent? storage))
+            var ev = new CanInteractWhileInsideContainerEvent(user, container);
+            RaiseLocalEvent(target, ev);
+            if (!ev.Handled)
                 return false;
 
-            if (storage.Container?.ID != container.ID)
-                return false;
-
-            if (!TryComp(user, out ActorComponent? actor))
-                return false;
-
-            // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
-            return _uiSystem.SessionHasOpenUi(container.Owner, StorageComponent.StorageUiKey.Key, actor.PlayerSession);
+            return true;
         }
 
         private void HandleUserInterfaceRangeCheck(ref BoundUserInterfaceCheckRangeEvent ev)
@@ -59,6 +54,18 @@ namespace Content.Server.Interaction
             {
                 ev.Result = BoundUserInterfaceRangeResult.Fail;
             }
+        }
+    }
+
+    public sealed class CanInteractWhileInsideContainerEvent : HandledEntityEventArgs
+    {
+        public readonly EntityUid User;
+        public readonly BaseContainer Container;
+
+        public CanInteractWhileInsideContainerEvent(EntityUid user, BaseContainer container)
+        {
+            User = user;
+            Container = container;
         }
     }
 }
