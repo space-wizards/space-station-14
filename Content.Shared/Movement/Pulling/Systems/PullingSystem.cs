@@ -374,11 +374,9 @@ public sealed class PullingSystem : EntitySystem
             return false;
         }
 
-        //are we already pulling that obj
         if (pullerComp.Pulling == pullableUid)
             return true;
 
-        //check if i can pull it
         if (!CanPull(pullerUid, pullableUid))
             return false;
 
