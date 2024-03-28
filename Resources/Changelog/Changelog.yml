@@ -1,4 +1,4 @@
-﻿Entries:
+Entries:
 - author: metalgearsloth
   changes:
   - message: Added trade stations for cargo instead of FTL.
@@ -3795,3 +3795,41 @@
   id: 6240
   time: '2024-03-28T04:06:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26469
+- author: Simyon
+  changes:
+  - message: The space dragon can now open doors by bumping into them!
+    type: Tweak
+  id: 6241
+  time: '2024-03-28T05:41:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26490
+- author: EmoGarbage404
+  changes:
+  - message: Various announcements now announce location on the map (near Medical,
+      etc.) instead of simply displaying coordinates.
+    type: Tweak
+  id: 6242
+  time: '2024-03-28T05:53:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26437
+- author: Tayrtahn
+  changes:
+  - message: Arcade machines now advertise and make noise to bring in players.
+    type: Add
+  - message: Space Villain arcade machines have a new screen animation.
+    type: Tweak
+  id: 6243
+  time: '2024-03-28T06:28:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24200
+- author: EmoGarbage404
+  changes:
+  - message: The revenant essence alert now displays the exact amount of essence.
+    type: Add
+  id: 6244
+  time: '2024-03-28T06:32:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25452
+- author: deltanedas
+  changes:
+  - message: Voicemasks can now mimic speech verbs, like flutters or growls.
+    type: Tweak
+  id: 6245
+  time: '2024-03-28T06:36:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25768
