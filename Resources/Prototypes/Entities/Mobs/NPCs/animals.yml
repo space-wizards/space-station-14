@@ -1828,6 +1828,19 @@
     tags:
     - VimPilot
 
+- type: entity
+  name: frog with horns
+  parent: MobFrog
+  id: MobFrogHorns
+  description: Does it seem like the horns are too big?
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: frog
+      sprite: Mobs/Animals/froghorns.rsi
+
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
   name: parrot
