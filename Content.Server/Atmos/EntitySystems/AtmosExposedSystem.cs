@@ -24,6 +24,8 @@ namespace Content.Server.Atmos.EntitySystems
 
     /// <summary>
     ///     Event that tries to query the mixture a certain entity is exposed to.
+    ///     This is mainly intended for use with entities inside of containers.
+    ///     This event is not raised for entities that are directly parented to the grid.
     /// </summary>
     [ByRefEvent]
     public struct AtmosExposedGetAirEvent
@@ -31,7 +33,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     The entity we want to query this for.
         /// </summary>
-        public readonly EntityUid Entity;
+        public readonly Entity<TransformComponent> Entity;
 
         /// <summary>
         ///     The mixture that the entity is exposed to. Output parameter.
@@ -39,9 +41,9 @@ namespace Content.Server.Atmos.EntitySystems
         public GasMixture? Gas = null;
 
         /// <summary>
-        ///     Whether to invalidate the mixture, if possible.
+        ///     Whether to excite the mixture, if possible.
         /// </summary>
-        public bool Invalidate = false;
+        public readonly bool Excite = false;
 
         /// <summary>
         ///     Whether this event has been handled or not.
@@ -49,10 +51,10 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         public bool Handled = false;
 
-        public AtmosExposedGetAirEvent(EntityUid entity, bool invalidate = false)
+        public AtmosExposedGetAirEvent(Entity<TransformComponent> entity, bool excite = false)
         {
             Entity = entity;
-            Invalidate = invalidate;
+            Excite = excite;
         }
     }
 }

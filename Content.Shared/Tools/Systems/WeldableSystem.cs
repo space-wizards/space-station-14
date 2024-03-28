@@ -15,14 +15,7 @@ public sealed class WeldableSystem : EntitySystem
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-
-    public bool IsWelded(EntityUid uid, WeldableComponent? component = null)
-    {
-        if (!Resolve(uid, ref component, false))
-            return false;
-
-        return component.IsWelded;
-    }
+    private EntityQuery<WeldableComponent> _query;
 
     public override void Initialize()
     {
@@ -31,6 +24,13 @@ public sealed class WeldableSystem : EntitySystem
         SubscribeLocalEvent<WeldableComponent, WeldFinishedEvent>(OnWeldFinished);
         SubscribeLocalEvent<LayerChangeOnWeldComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<WeldableComponent, ExaminedEvent>(OnExamine);
+
+        _query = GetEntityQuery<WeldableComponent>();
+    }
+
+    public bool IsWelded(EntityUid uid, WeldableComponent? component = null)
+    {
+        return _query.Resolve(uid, ref component, false) && component.IsWelded;
     }
 
     private void OnExamine(EntityUid uid, WeldableComponent component, ExaminedEvent args)
@@ -49,7 +49,7 @@ public sealed class WeldableSystem : EntitySystem
 
     private bool CanWeld(EntityUid uid, EntityUid tool, EntityUid user, WeldableComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!_query.Resolve(uid, ref component))
             return false;
 
         // Other component systems
@@ -63,7 +63,7 @@ public sealed class WeldableSystem : EntitySystem
 
     private bool TryWeld(EntityUid uid, EntityUid tool, EntityUid user, WeldableComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!_query.Resolve(uid, ref component))
             return false;
 
         if (!CanWeld(uid, tool, user, component))
@@ -115,17 +115,13 @@ public sealed class WeldableSystem : EntitySystem
 
     private void UpdateAppearance(EntityUid uid, WeldableComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
-            return;
-
-        if (!TryComp(uid, out AppearanceComponent? appearance))
-            return;
-        _appearance.SetData(uid, WeldableVisuals.IsWelded, component.IsWelded, appearance);
+        if (_query.Resolve(uid, ref component))
+            _appearance.SetData(uid, WeldableVisuals.IsWelded, component.IsWelded);
     }
 
     public void SetWeldedState(EntityUid uid, bool state, WeldableComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!_query.Resolve(uid, ref component))
             return;
 
         if (component.IsWelded == state)
@@ -141,7 +137,7 @@ public sealed class WeldableSystem : EntitySystem
 
     public void SetWeldingTime(EntityUid uid, TimeSpan time, WeldableComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!_query.Resolve(uid, ref component))
             return;
 
         if (component.WeldingTime.Equals(time))

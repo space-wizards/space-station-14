@@ -26,10 +26,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
 
-            if (!tile.Excited)
-            {
-                AddActiveTile(gridAtmosphere, tile);
-            }
+            AddActiveTile(gridAtmosphere, tile);
 
             if (!tile.Hotspot.SkippedFirstProcess)
             {

@@ -66,9 +66,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnPumpUpdated(EntityUid uid, GasPressurePumpComponent pump, ref AtmosDeviceUpdateEvent args)
         {
             if (!pump.Enabled
-                || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                || !_nodeContainer.TryGetNode(nodeContainer, pump.InletName, out PipeNode? inlet)
-                || !_nodeContainer.TryGetNode(nodeContainer, pump.OutletName, out PipeNode? outlet))
+                || !_nodeContainer.TryGetNodes(uid, pump.InletName, pump.OutletName, out PipeNode? inlet, out PipeNode? outlet))
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 return;

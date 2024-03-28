@@ -16,7 +16,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!directions.IsFlagSet(direction))
                     continue;
 
-                var adjacent = tile.AdjacentTiles[direction.ToIndex()];
+                var adjacent = tile.AdjacentTiles[i];
 
                 // TODO ATMOS handle adjacent being null.
                 if (adjacent == null || adjacent.ThermalConductivity == 0f)

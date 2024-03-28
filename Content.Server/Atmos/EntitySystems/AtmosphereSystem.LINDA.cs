@@ -52,11 +52,7 @@ namespace Content.Server.Atmos.EntitySystems
                     shouldShareAir = true;
                 } else if (CompareExchange(tile.Air, enemyTile.Air) != GasCompareResult.NoExchange)
                 {
-                    if (!enemyTile.Excited)
-                    {
-                        AddActiveTile(gridAtmosphere, enemyTile);
-                    }
-
+                    AddActiveTile(gridAtmosphere, enemyTile);
                     if (ExcitedGroups)
                     {
                         var excitedGroup = tile.ExcitedGroup;
@@ -91,7 +87,7 @@ namespace Content.Server.Atmos.EntitySystems
                         }
                         else
                         {
-                            ConsiderPressureDifference(gridAtmosphere, enemyTile, direction.GetOpposite(), -difference);
+                            ConsiderPressureDifference(gridAtmosphere, enemyTile, i.ToOppositeDir(), -difference);
                         }
                     }
 
@@ -146,7 +142,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="tile">Tile Atmosphere to be activated.</param>
         private void AddActiveTile(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
         {
-            if (tile.Air == null)
+            if (tile.Air == null || tile.Excited)
                 return;
 
             tile.Excited = true;

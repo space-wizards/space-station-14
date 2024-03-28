@@ -11,7 +11,7 @@ namespace Content.Server.Electrocution
         [DataField("cable")]
         public EntityUid CableEntity;
         [DataField("node")]
-        public string? NodeName;
+        public string NodeName = default!;
 
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
@@ -20,11 +20,7 @@ namespace Content.Server.Electrocution
             IEntityManager entMan)
         {
             var _nodeContainer = entMan.System<NodeContainerSystem>();
-
-            if (!nodeQuery.TryGetComponent(CableEntity, out var nodeContainer))
-                yield break;
-
-            if (_nodeContainer.TryGetNode(nodeContainer, NodeName, out Node? node))
+            if (_nodeContainer.TryGetNode(CableEntity, NodeName, out Node? node))
                 yield return node;
         }
     }
