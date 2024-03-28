@@ -49,6 +49,34 @@
         factor: 1
 
 - type: reagent
+  id: CoconutWater
+  name: reagent-name-coconut-water
+  parent: BaseDrink
+  desc: reagent-desc-coconut-water
+  physicalDesc: reagent-physical-desc-milky
+  flavor: nutty
+  color: "#f4eadb"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4 # Coconut water is 94% water
+
+- type: reagent
+  id: CreamOfCoconut
+  name: reagent-name-cream-of-coconut
+  parent: BaseDrink
+  desc: reagent-desc-cream-of-coconut
+  physicalDesc: reagent-physical-desc-syrupy
+  flavor: creamy
+  color: "#FFEABF"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+
+- type: reagent
   id: CafeLatte
   name: reagent-name-cafe-latte
   parent: BaseDrink
@@ -405,6 +433,26 @@
       effects:
       - !type:SatiateHunger
         factor: 4
+
+- type: reagent
+  id: ArnoldPalmer
+  name: reagent-name-arnold-palmer
+  parent: BaseAlcohol
+  desc: reagent-desc-arnold-palmer
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: arnoldpalmer
+  color: "#d8cc5d"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/arnoldpalmer.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
 
 - type: reagent
   id: Pilk
