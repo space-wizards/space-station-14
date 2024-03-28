@@ -165,6 +165,24 @@
     inHandsFillBaseName: -fill-
 
 - type: entity
+  name: beaker
+  parent: BaseBeakerMetallic
+  description: Used to contain a moderate amount of chemicals and solutions.
+  id: BorgBeaker
+  suffix: "Borg"
+  components:
+  - type: Spillable
+    solution: beaker
+  - type: StaticPrice
+    price: 10
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beaker
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
+
+
+- type: entity
   name: cryoxadone beaker
   description: Filled with a reagent used in cryogenic tubes.
   parent: Beaker
