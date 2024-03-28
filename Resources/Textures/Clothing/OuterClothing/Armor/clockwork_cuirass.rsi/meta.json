@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/2f82eae1ab64d0b93d40492b72945f6756baa676/icons/mob/suit.dmi and https://github.com/tgstation/tgstation/blob/38d1749ff5dda94575bf9ffed98fe8b0e72cef0e/icons/obj/clothing/clockwork_garb.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+	{
+		"name": "icon"
+	},
+	{
+	  "name": "inhand-left",
+	  "directions": 4
+	},
+	{
+	  "name": "inhand-right",
+	  "directions": 4
+	}
+  ]
+}

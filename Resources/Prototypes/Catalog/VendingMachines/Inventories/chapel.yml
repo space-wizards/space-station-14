@@ -21,10 +21,16 @@
     BoxCandleSmall: 2
     Urn: 5
   emaggedInventory:
+    ClothingOuterArmorClockwork: 1
+    ClothingHeadHelmetClockwork: 1
     ClothingOuterArmorCult: 1
     ClothingHeadHelmetCult: 1
     ClothingOuterRobesCult: 3
     ClothingHeadHatHoodCulthood: 3
+    ClothingOuterRobesClockwork: 3
+    ClothingHeadHatHoodClockwork: 3
+    ClothingHandsGlovesClockwork: 4
+    ClothingShoesClockwork: 4
     ClothingShoesCult: 4
     BedsheetCult: 4
     ClothingNeckScarfStripedBlack: 3

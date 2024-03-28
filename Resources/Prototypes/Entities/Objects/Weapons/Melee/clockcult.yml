@@ -1,0 +1,32 @@
+- type: entity
+  name: ratvarian spear
+  parent: BaseItem
+  id: RatvarianSpear
+  description: A heavy, razor-sharp spear made of brass. It thrums with barely-contained energy.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/ratvarian_spear.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 0.75
+    damage:
+      types:
+        Piercing: 3
+        Slash: 10
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Piercing: 2
+        Slash: 2
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt

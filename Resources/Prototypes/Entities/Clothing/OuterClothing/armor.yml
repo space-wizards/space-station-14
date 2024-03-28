@@ -101,6 +101,25 @@
 
 - type: entity
   parent: ClothingOuterBaseLarge
+  id: ClothingOuterArmorClockwork
+  name: clockwork cuirass
+  description: A bulky cuirass made of brass.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/clockwork_cuirass.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/clockwork_cuirass.rsi
+  - type: Armor #identical to acolyte armor due to balance, change when clockcult becomes real
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.6
+        Heat: 0.5
+  - type: GroupExamine
+
+- type: entity
+  parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorCult
   name: acolyte armor
   description: An evil-looking piece of cult armor, made of bones.

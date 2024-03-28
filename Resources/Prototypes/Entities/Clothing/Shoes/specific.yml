@@ -87,6 +87,17 @@
     netsync: false
 
 - type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesClockwork
+  name: clockwork treads
+  description: Industrial boots made of brass. They're very heavy.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/clockwork_treads.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/clockwork_treads.rsi
+
+- type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesCult
   name: cult shoes
