@@ -3833,3 +3833,12 @@ Entries:
   id: 6245
   time: '2024-03-28T06:36:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25768
+- author: EmoGarbage404
+  changes:
+  - message: Electrocution damage is no longer based on the power supplied and is
+      instead based on the wire voltage (LV, MV, or HV).
+    type: Tweak
+  id: 6246
+  time: '2024-03-28T20:44:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26455
+  url: https://github.com/space-wizards/space-station-14/pull/25768
