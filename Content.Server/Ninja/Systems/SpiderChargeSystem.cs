@@ -19,6 +19,7 @@ public sealed class SpiderChargeSystem : EntitySystem
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
 
     public override void Initialize()
     {
@@ -76,10 +77,10 @@ public sealed class SpiderChargeSystem : EntitySystem
     /// </summary>
     private void OnExplode(EntityUid uid, SpiderChargeComponent comp, TriggerEvent args)
     {
-        if (comp.Planter == null || !_mind.TryGetObjectiveComp<SpiderChargeConditionComponent>(comp.Planter.Value, out var obj))
+        if (!TryComp<SpaceNinjaComponent>(comp.Planter, out var ninja))
             return;
 
         // assumes the target was destroyed, that the charge wasn't moved somehow
-        obj.Detonated = true;
+        _ninja.DetonatedSpiderCharge((comp.Planter.Value, ninja));
     }
 }

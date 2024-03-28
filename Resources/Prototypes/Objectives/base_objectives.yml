@@ -103,3 +103,11 @@
   id: BaseSurviveObjective
   components:
   - type: SurviveCondition
+
+# objective progress is controlled by a system and not the objective itself
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseCodeObjective
+  components:
+  - type: CodeCondition
