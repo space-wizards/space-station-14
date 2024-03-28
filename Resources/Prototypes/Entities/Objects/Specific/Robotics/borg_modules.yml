@@ -517,8 +517,8 @@
   components:
     - type: Sprite
       layers:
-        - state: syndicate
-        - state: icon-syndicate
+      - state: syndicate
+      - state: icon-syndicate
     - type: ItemBorgModule
       items:
         - Crowbar
@@ -533,8 +533,8 @@
   components:
     - type: Sprite
       layers:
-        - state: syndicate
-        - state: icon-syndicate
+      - state: syndicate
+      - state: icon-syndicate
     - type: ItemBorgModule
       items:
         - EnergySwordDouble
@@ -548,8 +548,8 @@
   components:
     - type: Sprite
       layers:
-        - state: syndicate
-        - state: icon-syndicate
+      - state: syndicate
+      - state: icon-syndicate
     - type: ItemBorgModule
       items:
         - WeaponLightMachineGunL6C
