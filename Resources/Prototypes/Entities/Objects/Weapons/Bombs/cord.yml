@@ -23,6 +23,10 @@
   - type: CablePlacer
     cablePrototypeID: CableDet
     blockingCableType: ExCable
+    usePlaceOverBlacklist: true
+    blacklist:
+      tags:
+        - ExCable
     overTile: true
   - type: Appearance
   - type: Extractable

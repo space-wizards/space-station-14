@@ -35,10 +35,21 @@ public sealed partial class CableSystem
         if ((!component.OverTile && !tileDef.IsSubFloor) || !tileDef.Sturdy)
             return;
 
-        foreach (var anchored in grid.GetAnchoredEntities(snapPos))
+        if (component.UsePlaceOverBlacklist == true)
         {
-            if (TryComp<CableComponent>(anchored, out var wire) && wire.CableType == component.BlockingCableType)
-                return;
+            foreach (var anchored in grid.GetAnchoredEntities(snapPos))
+            {
+                if (component.Blacklist?.IsValid(anchored) ?? false)
+                    return;
+            }
+        }
+        else
+        {
+            foreach (var anchored in grid.GetAnchoredEntities(snapPos))
+            {
+                if (TryComp<CableComponent>(anchored, out var wire) && wire.CableType == component.BlockingCableType)
+                    return;
+            }
         }
 
         if (TryComp<StackComponent>(placer, out var stack) && !_stack.Use(placer, 1, stack))

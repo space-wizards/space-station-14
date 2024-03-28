@@ -491,9 +491,6 @@
   id: Debug
 
 - type: Tag
-  id: Detonator
-
-- type: Tag
   id: Dice
 
 - type: Tag
@@ -549,6 +546,9 @@
 
 - type: Tag
   id: Enzyme
+
+- type: Tag
+  id: ExCable
 
 - type: Tag
   id: ExplosivePassable

@@ -188,6 +188,7 @@
 # Explosive cable below
 
 - type: entity
+  name: explosive cord
   id: CableDet
   placement:
     mode: SnapgridCenter
@@ -249,4 +250,4 @@
     node: detonationCable
   - type: Tag
     tags:
-    - Detonator
+    - ExCable

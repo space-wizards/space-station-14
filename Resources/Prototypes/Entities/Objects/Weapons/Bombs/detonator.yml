@@ -64,7 +64,7 @@
     unstickPopupSuccess: comp-sticky-success-unstick-bomb
     whitelist:
       tags:
-      - Detonator      
+      - ExCable      
     blacklist: # can't stick it to other items
       components:
       - Item
