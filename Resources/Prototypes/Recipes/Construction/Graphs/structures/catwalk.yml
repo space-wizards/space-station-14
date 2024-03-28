@@ -23,3 +23,30 @@
           - !type:DeleteEntity {}
           steps:
             - tool: Cutting
+              doAfter: 1
+        
+        - to: AcceleratingCatwalk
+          steps:
+            - material: Cable
+              amount: 1
+            - tag: CapacitorStockPart
+              name: Capacitor Stock Part
+              icon:
+                sprite: Objects/Misc/stock_parts.rsi
+                state: capacitor
+              doAfter: 1
+    
+    - node: AcceleratingCatwalk
+      entity: AcceleratingCatwalk
+      edges:
+        - to: Catwalk
+          completed:
+          - !type:SpawnPrototype
+            prototype: CapacitorStockPart
+            amount: 1
+          - !type:SpawnPrototype
+            prototype: CableApcStack1
+            amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 1
