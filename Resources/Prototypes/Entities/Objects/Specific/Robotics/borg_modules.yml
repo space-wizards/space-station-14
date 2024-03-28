@@ -379,7 +379,7 @@
     items:
     - HandheldHealthAnalyzerUnpowered
     - Beaker
-    - gBeaker
+    - Beaker
     - BorgDropper
     - BorgHypo
 
