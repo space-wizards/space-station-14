@@ -27,7 +27,7 @@ public sealed class LoadoutGroupPrototype : IPrototype
     /// Maximum limit for the category.
     /// </summary>
     [DataField]
-    public int? MaxLimit;
+    public int MaxLimit = 1;
 
     [DataField(required: true)]
     public List<ProtoId<LoadoutPrototype>> Loadouts = new();

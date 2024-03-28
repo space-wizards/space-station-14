@@ -196,11 +196,12 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
                 // Order loadout selections by the order they appear on the prototype.
                 foreach (var group in loadout.SelectedLoadouts.OrderBy(x => loadoutProto.Groups.FindIndex(e => e == x.Key)))
                 {
-                    if (group.Value == null)
-                        continue;
-
-                    var startingGear = _prototypeManager.Index<StartingGearPrototype>(group.Value);
-                    EquipStartingGear(entity.Value, startingGear);
+                    foreach (var items in group.Value)
+                    {
+                        // Handle any extra data here.
+                        var startingGear = _prototypeManager.Index<StartingGearPrototype>(items.Prototype);
+                        EquipStartingGear(entity.Value, startingGear);
+                    }
                 }
             }
         }

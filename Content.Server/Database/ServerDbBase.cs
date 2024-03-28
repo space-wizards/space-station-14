@@ -13,6 +13,7 @@ using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Preferences.Loadouts.Effects;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
@@ -220,7 +221,10 @@ namespace Content.Server.Database
                     var groupLoadouts = loadout.SelectedLoadouts.GetOrNew(group.GroupName);
                     foreach (var profLoadout in group.Loadouts)
                     {
-                        groupLoadouts.Add(profLoadout);
+                        groupLoadouts.Add(new Loadout()
+                        {
+                            Prototype = profLoadout.LoadoutName,
+                        });
                     }
                 }
 
@@ -318,7 +322,10 @@ namespace Content.Server.Database
 
                     foreach (var loadout in groupLoadouts)
                     {
-                        profileGroup.Loadouts.Add(loadout);
+                        profileGroup.Loadouts.Add(new ProfileLoadout()
+                        {
+                            LoadoutName = loadout.Prototype,
+                        });
                     }
 
                     dz.Groups.Add(profileGroup);

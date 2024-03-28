@@ -1,11 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Random;
 using Robust.Shared.Collections;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Preferences.Loadouts.Effects;
+namespace Content.Shared.Preferences.Loadouts;
 
 /// <summary>
 /// Contains all of the selected data for a role's loadout.
@@ -30,7 +31,7 @@ public sealed class RoleLoadout
         var groupRemove = new ValueList<string>();
         var protoManager = collection.Resolve<IPrototypeManager>();
 
-        foreach (var (group, loadout) in SelectedLoadouts)
+        foreach (var (group, groupLoadouts) in SelectedLoadouts)
         {
             // Dump if Group doesn't exist
             if (!protoManager.TryIndex(group, out var groupProto))
@@ -39,26 +40,40 @@ public sealed class RoleLoadout
                 continue;
             }
 
-            // Set to default if
-            // - Group isn't optional and the selection is optional
-            // - Loadout doesn't exist
-            // This can fail if the first one isn't possible due to some effect but this is just a fallback.
-            if (!groupProto.Optional && (loadout == null || !protoManager.HasIndex(loadout.Value)))
-            {
-                SelectedLoadouts[group] =
-                    groupProto.Loadouts.Count > 0 ? groupProto.Loadouts[0] : loadout;
-                continue;
-            }
+            var loadouts = groupLoadouts[..Math.Min(groupLoadouts.Count, groupProto.MaxLimit)];
 
-            // Validate the loadout can be applied (e.g. points).
-            if (loadout != null)
+            // Validate first
+            for (var i = loadouts.Count - 1; i >= 0; i--)
             {
+                var loadout = loadouts[i];
+
+                // Validate the loadout can be applied (e.g. points).
                 if (!IsValid(session, loadout, collection, out _))
                 {
-                    SelectedLoadouts[group] =
-                        groupProto.Loadouts.Count > 0 ? groupProto.Loadouts[0] : loadout;
+                    loadouts.RemoveAt(i);
                 }
             }
+
+            // Apply defaults if required
+            // Technically it's possible for someone to game themselves into loadouts they shouldn't have
+            // If you put invalid ones first but that's your fault for not using sensible defaults
+            if (loadouts.Count < groupProto.MinLimit)
+            {
+                for (var i = 0; i < Math.Min(groupProto.MinLimit, groupProto.Loadouts.Count); i++)
+                {
+                    var defaultLoadout = new Loadout()
+                    {
+                        Prototype = groupProto.Loadouts[i],
+                    };
+
+                    if (loadouts.Contains(defaultLoadout))
+                        continue;
+
+                    SelectedLoadouts[group].Add(defaultLoadout);
+                }
+            }
+
+            SelectedLoadouts[group] = loadouts;
         }
 
         foreach (var value in groupRemove)
@@ -87,37 +102,30 @@ public sealed class RoleLoadout
                 continue;
             }
 
-            ProtoId<LoadoutPrototype>? selected;
-
-            if (groupProto.Optional || groupProto.Loadouts.Count == 0)
-            {
-                selected = null;
-            }
-            else
-            {
-                selected = groupProto.Loadouts[0];
-            }
-
             if (SelectedLoadouts.ContainsKey(group))
                 continue;
 
-            ApplyLoadout(group, selected, entManager);
+            if (groupProto.MinLimit > 0)
+            {
+                // Apply any loadouts we can.
+                for (var j = 0; j < Math.Min(groupProto.MinLimit, groupProto.Loadouts.Count); j++)
+                {
+                    AddLoadout(group, groupProto.Loadouts[j], entManager);
+                }
+            }
         }
     }
 
     /// <summary>
     /// Returns whether a loadout is valid or not.
     /// </summary>
-    public bool IsValid(ICommonSession session, ProtoId<LoadoutPrototype>? loadoutId, IDependencyCollection collection, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool IsValid(ICommonSession session, Loadout loadout, IDependencyCollection collection, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 
-        if (loadoutId == null)
-            return true;
-
         var protoManager = collection.Resolve<IPrototypeManager>();
 
-        if (!protoManager.TryIndex(loadoutId.Value, out var loadoutProto))
+        if (!protoManager.TryIndex(loadout.Prototype, out var loadoutProto))
         {
             // Uhh
             reason = FormattedMessage.FromMarkup("");
@@ -136,11 +144,42 @@ public sealed class RoleLoadout
     /// <summary>
     /// Applies the specified loadout to this group.
     /// </summary>
-    public void ApplyLoadout(ProtoId<LoadoutGroupPrototype> selectedGroup, ProtoId<LoadoutPrototype>? selectedLoadout, IEntityManager entManager)
+    public bool AddLoadout(ProtoId<LoadoutGroupPrototype> selectedGroup, ProtoId<LoadoutPrototype> selectedLoadout, IEntityManager entManager)
     {
-        SelectedLoadouts[selectedGroup] = selectedLoadout;
+        var groupLoadouts = SelectedLoadouts[selectedGroup];
 
-        var ev = new RoleLoadoutUpdatedEvent();
-        entManager.EventBus.RaiseEvent(EventSource.Local, ref ev);
+        for (var i = 0; i < groupLoadouts.Count; i++)
+        {
+            var loadout = groupLoadouts[i];
+
+            if (loadout.Prototype != selectedLoadout)
+                continue;
+
+            DebugTools.Assert(false);
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Applies the specified loadout to this group.
+    /// </summary>
+    public bool RemoveLoadout(ProtoId<LoadoutGroupPrototype> selectedGroup, ProtoId<LoadoutPrototype> selectedLoadout, IEntityManager entManager)
+    {
+        var groupLoadouts = SelectedLoadouts[selectedGroup];
+
+        for (var i = 0; i < groupLoadouts.Count; i++)
+        {
+            var loadout = groupLoadouts[i];
+
+            if (loadout.Prototype != selectedLoadout)
+                continue;
+
+            groupLoadouts.RemoveAt(i);
+            return true;
+        }
+
+        return false;
     }
 }

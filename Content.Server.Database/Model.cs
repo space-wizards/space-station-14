@@ -473,7 +473,7 @@ namespace Content.Server.Database
         /// <summary>
         /// Corresponding loadout prototype.
         /// </summary>
-        public string LoadoutName = string.Empty;
+        public string LoadoutName { get; set; } = string.Empty;
 
         /*
          * Insert extra data here like custom descriptions or colors or whatever.

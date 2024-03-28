@@ -145,7 +145,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
 
                     _loadoutWindow.OnLoadoutPressed += (selectedGroup, selectedLoadout) =>
                     {
-                        _loadout.ApplyLoadout(selectedGroup, selectedLoadout, entManager);
+                        _loadout.AddLoadout(selectedGroup, selectedLoadout, entManager);
                         _loadoutWindow.RefreshLoadouts(_loadout, session, collection);
                         var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
                         controller.UpdateCharacterUI();
