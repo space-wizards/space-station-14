@@ -34,3 +34,23 @@ alert-level-delta-instructions = Crewmembers are advised to listen to heads of s
 alert-level-epsilon = Epsilon
 alert-level-epsilon-announcement = Central Command has ordered the Epsilon security level on the station. Consider all contracts terminated.
 alert-level-epsilon-instructions = Consider all contracts terminated.
+
+alert-level-navy = Navy
+alert-level-navy-announcement = Central Command has ordered the Navy security level on the station. Special guests will be visiting the station. Security is to be on guard and escort the guests as needed. Crewmembers should look professional and tidy their work places.
+alert-level-navy-instructions = Be on your best behaviour.
+
+alert-level-brown = Brown
+alert-level-brown-announcement = The station is deemed to be very filthy. Grab cleaning tools and start cleaning around the station.
+alert-level-brown-instructions = Help clean the station.
+
+alert-level-cyan = Cyan
+alert-level-cyan-announcement = A unprobable time paradox casued by certain crewmembers has been detected in the timeline. Future Central Command is deploying a unit to fix the paradox.
+alert-level-cyan-instructions = Time paradox detected.
+
+alert-level-beige = Beige
+alert-level-beige-announcement = Central Command has seen the shit going on the station, and is just dissapointed in everyone on board. Everyone is required to feel shame.
+alert-level-beige-instructions = Feel shame, for you are a dissapointment to NT.
+
+alert-level-lima = Lima
+alert-level-lima-announcement = Central Command has ordered the Lima security level on the station. There is currently a supernatural or eldritch level abnormallity to the station. All staff on board is investigate and eliminate the abnormallity.
+alert-level-lima-instructions = Investigate and eliminate the supernatural threat to the station.
