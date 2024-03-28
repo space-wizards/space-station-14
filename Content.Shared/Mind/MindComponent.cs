@@ -33,14 +33,14 @@ namespace Content.Shared.Mind
         ///     The session ID of the player owning this mind.
         /// </summary>
         [DataField, AutoNetworkedField, Access(typeof(SharedMindSystem))]
-        public NetUserId? UserId { get; set; }
+        public NetUserId? UserId;
 
         /// <summary>
         ///     The session ID of the original owner, if any.
         ///     May end up used for round-end information (as the owner may have abandoned Mind since)
         /// </summary>
         [DataField, AutoNetworkedField, Access(typeof(SharedMindSystem))]
-        public NetUserId? OriginalOwnerUserId { get; set; }
+        public NetUserId? OriginalOwnerUserId;
 
         /// <summary>
         ///     The first entity that this mind controlled. Used for round end information.
@@ -56,27 +56,27 @@ namespace Content.Shared.Mind
         public bool IsVisitingEntity => VisitingEntity != null;
 
         [DataField, AutoNetworkedField, Access(typeof(SharedMindSystem))]
-        public EntityUid? VisitingEntity { get; set; }
+        public EntityUid? VisitingEntity;
 
         [ViewVariables]
         public EntityUid? CurrentEntity => VisitingEntity ?? OwnedEntity;
 
-        [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-        public string? CharacterName { get; set; }
+        [DataField, AutoNetworkedField]
+        public string? CharacterName;
 
         /// <summary>
         ///     The time of death for this Mind.
         ///     Can be null - will be null if the Mind is not considered "dead".
         /// </summary>
         [DataField]
-        public TimeSpan? TimeOfDeath { get; set; }
+        public TimeSpan? TimeOfDeath;
 
         /// <summary>
         ///     The entity currently owned by this mind.
         ///     Can be null.
         /// </summary>
         [DataField, AutoNetworkedField, Access(typeof(SharedMindSystem))]
-        public EntityUid? OwnedEntity { get; set; }
+        public EntityUid? OwnedEntity;
 
         /// <summary>
         ///     An enumerable over all the objective entities this mind has.
@@ -87,16 +87,14 @@ namespace Content.Shared.Mind
         /// <summary>
         ///     Prevents user from ghosting out
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("preventGhosting")]
-        public bool PreventGhosting { get; set; }
+        [DataField]
+        public bool PreventGhosting;
 
         /// <summary>
         ///     Prevents user from suiciding
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("preventSuicide")]
-        public bool PreventSuicide { get; set; }
+        [DataField]
+        public bool PreventSuicide;
 
         /// <summary>
         ///     The session of the player owning this mind.
