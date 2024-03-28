@@ -227,7 +227,20 @@ Observationskit: null
 # 2024-02-26
 CrateBaseWeldable: CrateGenericSteel
 
-# 2024-03-7
+# 2024-03-05
+BookBotanicalTextbook: BookRandomStory
+BookEscalation: BookRandomStory
+BookEscalationSecurity: BookRandomStory
+BookDemonomiconRandom: BookRandomStory
+BookDemonomicon1: BookRandomStory
+BookDemonomicon2: BookRandomStory
+BookDemonomicon3: BookRandomStory
+BookChemistryInsane: BookRandomStory
+BookGnominomicon: BookRandomStory
+BookFishing: BookRandomStory
+BookDetective: BookRandomStory
+
+# 2024-03-07
 AirlockExternalEasyPry: AirlockExternal
 AirlockExternalGlassEasyPry: AirlockExternalGlass
 AirlockGlassShuttleEasyPry: AirlockGlassShuttle

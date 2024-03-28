@@ -159,6 +159,8 @@
           prob: 0.20
         - id: BarberScissors
           prob: 0.05
+        - id: BookRandomStory
+          prob: 0.1
         # Syndicate loot
         - id: null
           prob: 0.95
