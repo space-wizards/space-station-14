@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Strol20",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cat"
+    },
+    {
+      "name": "laceups"
+    },
+    {
+      "name": "mcgriff"
+    },
+    {
+      "name": "top_Hat"
+    },
+    {
+      "name": "autolat_figure"
+    },
+    {
+      "name": "protolat_figure"
+    },
+    {
+      "name": "box"
+    },
+    {
+      "name": "box-open"
+    },
+    {
+      "name": "card_all"
+    },
+    {
+      "name": "card_cargo"
+    },
+    {
+      "name": "card_comand"
+    },
+    {
+      "name": "card_eng"
+    },
+    {
+      "name": "card_med"
+    },
+    {
+      "name": "card_rnd"
+    },
+    {
+      "name": "card_secure"
+    },
+    {
+      "name": "card_servise"
+    },
+    {
+      "name": "card_train"
+    },
+    {
+      "name": "card_cargo_chest"
+    },
+    {
+      "name": "card_cluwn"
+    },
+    {
+      "name": "card_elec"
+    },
+    {
+      "name": "card_fun"
+    }
+  ]
+}

@@ -178,6 +178,7 @@
       - id: SandBattlemap
       - id: MoonBattlemap
       - id: GrassBattlemap
+      - id: NanopoliaBoxFilled
       - id: DiceBag
         amount: 6
 

@@ -1,0 +1,855 @@
+- type: entity
+  id: NanapoliaTabletopPiece
+  parent: BaseTabletopPiece
+  abstract: true
+  description: A figurine from nanobusines
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+
+- type: entity
+  id: FigurineCat
+  name: Cat Figurine
+  parent: NanapoliaTabletopPiece
+  components:
+  - type: Sprite
+    state: cat
+    
+- type: entity
+  parent: NanapoliaTabletopPiece
+  id: FigurineLaceups
+  name: Laceups Figurine
+  components:
+  - type: Sprite
+    state: laceups
+    
+- type: entity
+  parent: NanapoliaTabletopPiece
+  id: FigurineMcgriff
+  name: Mcgriff Figurine
+  components:
+  - type: Sprite
+    state: mcgriff
+
+- type: entity
+  parent: NanapoliaTabletopPiece
+  id: FigurineTopHat
+  name: Top Hat Figurine
+  components:
+  - type: Sprite
+    state: top_Hat
+
+- type: entity
+  parent: NanapoliaTabletopPiece
+  id: FigurineGreenAutolathe
+  name: Green Autolathe Figurine
+  components:
+  - type: Sprite
+    state: autolat_figure
+
+- type: entity
+  parent: NanapoliaTabletopPiece
+  id: FigurineRedProtolathe
+  name: Red Protolat Figurine
+  components:
+  - type: Sprite
+    state: protolat_figure
+    
+#Game box
+
+- type: entity
+  parent: BoxCardboard
+  id: NanopoliaBox
+  name: Nanobusines Box Tabletop
+  description: It looks like this is an early version of the game that Nanotrasen gives out to workers to evaluate its interestingness
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    drawdepth: SmallObjects
+    layers:
+    - state: box
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: box-open
+      map: ["enum.StorageVisualLayers.Door"]
+  # TODO make the item appear
+  - type: Storage
+    grid:
+    - 0,0,4,4
+    maxItemSize: Normal
+  - type: Item
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    heldPrefix: box
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateDoorOpen: box-open
+    stateDoorClosed: box
+  - type: StaticPrice
+    price: 0
+
+- type: entity
+  parent: NanopoliaBox
+  id: NanopoliaBoxFilled
+  suffix: Filled
+  components:
+  - type: Sprite
+    layers:
+    - state: box
+    - state: box-open
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: StorageFill
+    contents:
+    - id: NanopoliaBoard
+    - id: FigurineRedProtolathe
+    - id: FigurineGreenAutolathe
+    - id: Nanobucks151400
+    - id: d6Dice
+    - id: d6Dice
+    - id: d6Dice
+    - id: NanopoliaCardBox
+
+
+
+#Box for card game
+
+- type: entity
+  parent: BoxCardboard
+  id: NanopoliaCardBox
+  name: Nanobusines Card Box
+  description: Coleccion card from Nanopolia
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/donut.rsi
+    state: box
+  - type: Storage
+    grid:
+    - 0,0,10,2
+    whitelist:
+      tags:
+      - CardNanopolia
+  - type: Item
+    size: Small
+  - type: StorageFill
+    contents:
+    - id: CardArive
+    - id: CardDisposal
+    - id: CardJanitor
+    - id: CardLibrary
+    - id: CardTheater
+    - id: CardAME
+    - id: CardAtmos
+    - id: CardTesla
+    - id: CardHospital
+    - id: CardChemical
+    - id: CardMorgue
+    - id: CardServer
+    - id: CardRobo
+    - id: CardRND
+    - id: CardStorage
+    - id: CardCargoShuttle
+    - id: CardSalvage
+    - id: CardLawyerOffice
+    - id: CardBrig
+    - id: CardArmory
+    - id: CardAiCore
+    - id: CardNuclearStorag
+    - id: CardElec
+    - id: CardFun
+    - id: CardDispoTrain1
+    - id: CardDispoTrain2
+    - id: CardDispoTrain3
+    - id: CardDispoTrain4
+
+  
+
+#Card passengers
+
+- type: entity
+  parent: BaseItem
+  id: CardArive
+  name: card Arive
+  description: |
+      Rent - 4
+      1 autolathe - 20;                                                                     
+      2 autolathe - 60;                                                     
+      3 autolathe - 180;                                                        
+      4 autolathe - 320;
+      protolathe - 450;
+      Coast build 1 autolathe and protolathe - 50
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_all
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: BaseItem
+  id: CardDisposal
+  name: card Disposal
+  description: |
+      Rent - 4
+      1 autolathe - 20;                                                                     
+      2 autolathe - 60;                                                     
+      3 autolathe - 180;                                                        
+      4 autolathe - 320;
+      protolathe - 450;
+      Coast build 1 autolathe and protolathe - 50
+      Collateral value 30
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_all
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+#Card service
+
+- type: entity
+  parent: BaseItem
+  id: CardJanitor
+  name: card Janitor
+  description: |
+      Rent - 6
+      1 autolathe - 30;                                                                     
+      2 autolathe - 90;                                                     
+      3 autolathe - 270;                                                        
+      4 autolathe - 400;
+      protolathe - 550;
+      Coast build 1 autolathe and protolathe - 50
+      Collateral value 50
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_servise
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: BaseItem
+  id: CardLibrary
+  name: card Library
+  description: |
+      Rent - 6
+      1 autolathe - 30;                                                                     
+      2 autolathe - 90;                                                     
+      3 autolathe - 270;                                                        
+      4 autolathe - 400;
+      protolathe - 550;
+      Coast build 1 autolathe and protolathe - 50
+      Collateral value 50
+
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_servise
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: BaseItem
+  id: CardTheater
+  name: card Theater
+  description: |
+      Rent - 6
+      1 autolathe - 30;                                                                     
+      2 autolathe - 90;                                                     
+      3 autolathe - 270;                                                        
+      4 autolathe - 400;
+      protolathe - 550;
+      Coast build 1 autolathe and protolathe - 50
+      Collateral value 50
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_servise
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+#Card engineering
+
+- type: entity
+  parent: BaseItem
+  id: CardAME
+  name: card AME
+  description: |
+      Rent - 12
+      1 autolathe - 60;                                                                     
+      2 autolathe - 180;                                                     
+      3 autolathe - 500;                                                        
+      4 autolathe - 700;
+      protolathe - 900;
+      Coast build 1 autolathe and protolathe - 100
+      Collateral value 80
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_eng
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: BaseItem
+  id: CardAtmos
+  name: Card Atmos
+  description: |
+      Rent - 12
+      1 autolathe - 60;                                                                     
+      2 autolathe - 180;                                                     
+      3 autolathe - 500;                                                        
+      4 autolathe - 700;
+      protolathe - 900;
+      Coast build 1 autolathe and protolathe - 100
+      Collateral value 80
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_eng
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: BaseItem
+  id: CardTesla
+  name: Card Tesla
+  description: |
+      Rent - 12
+      1 autolathe - 60;                                                                     
+      2 autolathe - 180;                                                     
+      3 autolathe - 500;                                                        
+      4 autolathe - 700;
+      protolathe - 900;
+      Coast build 1 autolathe and protolathe - 100
+      Collateral value 80
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_eng
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+
+#Card medical
+
+- type: entity
+  parent: BaseItem
+  id: CardHospital
+  name: Card Hospital
+  description: |
+      Rent - 14
+      1 autolathe - 70;                                                                     
+      2 autolathe - 200;                                                     
+      3 autolathe - 550;                                                        
+      4 autolathe - 750;
+      protolathe - 950;
+      Coast build 1 autolathe and protolathe - 100
+      Collateral value 90
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_med
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: BaseItem
+  id: CardChemical
+  name: Card Chemical
+  description: |
+      Rent - 14
+      1 autolathe - 70;                                                                     
+      2 autolathe - 200;                                                     
+      3 autolathe - 550;                                                        
+      4 autolathe - 750;
+      protolathe - 950;
+      Coast build 1 autolathe and protolathe - 100
+      Collateral value 90
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_med
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: BaseItem
+  id: CardMorgue
+  name: Card Morgue
+  description: |
+      Rent - 14
+      1 autolathe - 70;                                                                     
+      2 autolathe - 200;                                                     
+      3 autolathe - 550;                                                        
+      4 autolathe - 750;
+      protolathe - 950;
+      Coast build 1 autolathe and protolathe - 100
+      Collateral value 90
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_med
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+#Card Research
+
+- type: entity
+  parent: BaseItem
+  id: CardServer
+  name: Card Server
+  description: |
+      Rent - 20
+      1 autolathe - 100;                                                                     
+      2 autolathe - 300;                                                     
+      3 autolathe - 750;                                                        
+      4 autolathe - 925;
+      protolathe - 1100;
+      Coast build 1 autolathe and protolathe - 150
+      Collateral value 120
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_rnd
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: BaseItem
+  id: CardRobo
+  name: Card Robo
+  description: |
+      Rent - 20
+      1 autolathe - 100;                                                                     
+      2 autolathe - 300;                                                     
+      3 autolathe - 750;                                                        
+      4 autolathe - 925;
+      protolathe - 1100;
+      Coast build 1 autolathe and protolathe - 150
+      Collateral value 120
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_rnd
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: BaseItem
+  id: CardRND
+  name: Card RND
+  description: |
+      Rent - 20
+      1 autolathe - 100;                                                                     
+      2 autolathe - 300;                                                     
+      3 autolathe - 750;                                                        
+      4 autolathe - 925;
+      protolathe - 1100;
+      Coast build 1 autolathe and protolathe - 150
+      Collateral value 120
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_rnd
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+#Card Cargo
+
+- type: entity
+  parent: BaseItem
+  id: CardStorage
+  name: Card Storage
+  description: |
+      Rent - 22
+      1 autolathe - 110;                                                                     
+      2 autolathe - 330;                                                     
+      3 autolathe - 800;                                                        
+      4 autolathe - 975;
+      protolathe - 1150;
+      Coast build 1 autolathe and protolathe - 150
+      Collateral value 130
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_cargo
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: BaseItem
+  id: CardCargoShuttle
+  name: Card Cargo Shuttle
+  description: |
+      Rent - 22
+      1 autolathe - 110;                                                                     
+      2 autolathe - 330;                                                     
+      3 autolathe - 800;                                                        
+      4 autolathe - 975;
+      protolathe - 1150;
+      Coast build 1 autolathe and protolathe - 150
+      Collateral value 130
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_cargo
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: BaseItem
+  id: CardSalvage
+  name: Card Salvage
+  description: |
+      Rent - 22
+      1 autolathe - 110;                                                                     
+      2 autolathe - 330;                                                     
+      3 autolathe - 800;                                                        
+      4 autolathe - 975;
+      protolathe - 1150;
+      Coast build 1 autolathe and protolathe - 150
+      Collateral value 130
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_cargo
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+#Card security
+
+- type: entity
+  parent: BaseItem
+  id: CardLawyerOffice
+  name: Card Lawyer Office
+  description: |
+      Rent - 28
+      1 autolathe - 150;                                                                     
+      2 autolathe - 450;                                                     
+      3 autolathe - 1000;                                                        
+      4 autolathe - 1200;
+      protolathe - 1400;
+      Coast build 1 autolathe and protolathe - 200
+      Collateral value 160
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_secure
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: BaseItem
+  id: CardBrig
+  name: Card Brig
+  description: |
+      Rent - 28
+      1 autolathe - 150;                                                                     
+      2 autolathe - 450;                                                     
+      3 autolathe - 1000;                                                        
+      4 autolathe - 1200;
+      protolathe - 1400;
+      Coast build 1 autolathe and protolathe - 200
+      Collateral value 160
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_secure
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: BaseItem
+  id: CardArmory
+  name: Card Armory
+  description: |
+      Rent - 28
+      1 autolathe - 150;                                                                     
+      2 autolathe - 450;                                                     
+      3 autolathe - 1000;                                                        
+      4 autolathe - 1200;
+      protolathe - 1400;
+      Coast build 1 autolathe and protolathe - 200
+      Collateral value 160
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_secure
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+#Card command
+
+- type: entity
+  parent: BaseItem
+  id: CardAiCore
+  name: Card Ai Core
+  description: |
+      Rent - 35
+      1 autolathe - 175;                                                                     
+      2 autolathe - 500;                                                     
+      3 autolathe - 1100;                                                        
+      4 autolathe - 1300;
+      protolathe - 1500;
+      Coast build 1 autolathe and protolathe - 200
+      Collateral value 175
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_comand
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: BaseItem
+  id: CardNuclearStorag
+  name: Card nuclear storag
+  description: |
+      Rent - 35
+      1 autolathe - 175;                                                                     
+      2 autolathe - 500;                                                     
+      3 autolathe - 1100;                                                        
+      4 autolathe - 1300;
+      protolathe - 1500;
+      Coast build 1 autolathe and protolathe - 200
+      Collateral value 175
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_comand
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+#Card other fields
+- type: entity
+  parent: BaseItem
+  id: CardElec
+  name: Card Elec
+  description: |
+      If the player owns a Fun or Elec card, then the rental fee is four times the amount of points won in the cups
+      If the player owns the Fun and Elec cards, then the rent is ten times the amount of points rolled on the dice
+      Collateral value - 75
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_elec
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: BaseItem
+  id: CardFun
+  name: Card Fun
+  description: |
+      If the player owns a Fun or Elec card, then the rental fee is four times the amount of points won in the cups
+      If the player owns the Fun and Elec cards, then the rent is ten times the amount of points rolled on the dice
+      Collateral value - 75
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_fun   
+  - type: Tag
+    tags:
+    - CardNanopolia 
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: BaseItem
+  id: CardDispoTrain1
+  name: Card Disposal Train 1
+  description: |
+      Rent - 25
+      2 Disposal Train - 50;                                                                     
+      3 Disposal Train - 100;  
+      4 Disposal Train - 200;  
+      Collateral value - 25
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_train
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: CardDispoTrain1
+  id: CardDispoTrain2
+  name: Card Disposal Train 2
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_train
+
+
+
+- type: entity
+  parent: CardDispoTrain1
+  id: CardDispoTrain3
+  name: Card Disposal Train 3 
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_train
+
+
+
+- type: entity
+  parent: CardDispoTrain1
+  id: CardDispoTrain4
+  name: Card Disposal Train 4
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_train
+
+
+#Card "chance"
+
+- type: entity
+  parent: BaseItem
+  id: CardCluwn
+  name: Card Cluwn
+  description: A figurine from nanopolia
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_cluwn
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+- type: entity
+  parent: BaseItem
+  id: CardCargoChest
+  name: Card Cargo Chest
+  description: A figurine from nanopolia
+  abstract: false
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanofigure.rsi
+    state: card_cargo_chest
+  - type: Tag
+    tags:
+    - CardNanopolia
+  - type: Item
+    size: Tiny
+
+
+

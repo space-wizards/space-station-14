@@ -1,0 +1,135 @@
+- type: entity
+  parent: BaseItem
+  id: Nanobucks
+  name: ntbucks
+  description: Simple sheets of paper that look like money. At the beginning of the game, each player is given 1500.
+  components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-2
+  - type: Material
+  - type: PhysicalComposition
+  - type: StaticPrice
+    price: 0
+  - type: Stack
+    stackType: TabletopCredit
+    count: 1
+    baseLayer: base
+    layerStates:
+    - nanocash
+    - nanocash_5
+    - nanocash_10
+    - nanocash_20
+    - nanocash_50
+    - nanocash_100
+    - nanocash_500
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/nanobucks.rsi
+    state: nanocash
+    layers:
+    - state: nanocash
+      map: ["base"]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        density: 30
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.2,0.25,0.1"
+        mask:
+        - ItemMask
+  - type: Appearance
+
+- type: material
+  id: TabletopCredit
+  name: ntbucks
+  unit: materials-unit-bill
+  stackEntity: Nanobucks
+  icon: { sprite: /Textures/Objects/Fun/Tabletop/nanobucks.rsi, state: nanocash } 
+  price: 0
+
+- type: stack
+  id: TabletopCredit
+  name: ntbucks
+  icon: { sprite: /Textures/Objects/Fun/Tabletop/nanobucks.rsi, state: nanocash }
+  spawn: Nanobucks
+
+- type: entity
+  parent: Nanobucks
+  id: Nanobucks5
+  suffix: 5
+  components:
+  - type: Icon
+    sprite: Objects/Fun/Tabletop/nanobucks.rsi
+    state: nanocash_5
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent: Nanobucks
+  id: Nanobucks10
+  suffix: 10
+  components:
+  - type: Icon
+    sprite: Objects/Fun/Tabletop/nanobucks.rsi
+    state: nanocash_10
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: Nanobucks
+  id: Nanobucks20
+  suffix: 20
+  components:
+  - type: Icon
+    sprite: Objects/Fun/Tabletop/nanobucks.rsi
+    state: nanocash_20
+  - type: Stack
+    count: 20
+
+- type: entity
+  parent: Nanobucks
+  id: Nanobucks50
+  suffix: 50
+  components:
+  - type: Icon
+    sprite: Objects/Fun/Tabletop/nanobucks.rsi
+    state: nanocash_50
+  - type: Stack
+    count: 50
+
+- type: entity
+  parent: Nanobucks
+  id: Nanobucks100
+  suffix: 100
+  components:
+  - type: Icon
+    sprite: Objects/Fun/Tabletop/nanobucks.rsi
+    state: nanocash_100
+  - type: Stack
+    count: 100
+
+- type: entity
+  parent: Nanobucks
+  id: Nanobucks500
+  suffix: 500
+  components:
+  - type: Icon
+    sprite: Objects/Fun/Tabletop/nanobucks.rsi
+    state: nanocash_500
+  - type: Stack
+    count: 500
+
+- type: entity
+  parent: Nanobucks
+  id: Nanobucks151400
+  suffix: 151400
+  components:
+  - type: Icon
+    sprite: Objects/Fun/Tabletop/nanobucks.rsi
+    state: nanocash_500
+  - type: Stack
+    count: 151400

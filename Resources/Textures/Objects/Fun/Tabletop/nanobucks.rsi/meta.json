@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Strol20",
+  "states": [
+    {
+      "name": "nanocash"
+    },
+    {
+      "name": "nanocash_5"
+    },
+    {
+      "name": "nanocash_10"
+    },
+    {
+      "name": "nanocash_20"
+    },
+    {
+      "name": "nanocash_50"
+    },
+    {
+      "name": "nanocash_100"
+    },
+    {
+      "name": "nanocash_500"
+    }
+  ]
+}
