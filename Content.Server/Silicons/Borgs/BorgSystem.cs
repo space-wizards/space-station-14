@@ -226,9 +226,10 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         var containerEnt = container.Owner;
 
-        if (!TryComp<BorgChassisComponent>(containerEnt, out var chassisComponent) ||
-            container.ID != chassisComponent.BrainContainerId)
+        if (!TryComp<BorgChassisComponent>(containerEnt, out var borgchassisComponent) ||
+            container.ID != borgchassisComponent.BrainContainerId)
             return;
+
 
         if (!_mind.TryGetMind(uid, out var mindId, out var mind) || mind.Session == null)
             return;

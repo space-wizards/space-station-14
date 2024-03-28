@@ -1,0 +1,167 @@
+- type: entity
+  id: StationIA
+  parent: BaseMob
+  name: StationAI
+  description: A Station Slot for positronic brain
+  noSpawn: true
+  abstract: true
+  components:
+    - type: Appearance
+    #- type: ItemSlots
+
+    - type: NameIdentifier
+      group: Silicon
+    #- type: ActivatableUI
+    #  key: enum.BorgUiKey.Key
+    #- type: ActivatableUIRequiresPanel
+    #- type: Wires
+    #  layoutId: Borg
+    #- type: AccessReader
+    #  access: [["Command"]]
+    #- type: Lock
+    #- type: ResistLocker
+    #Player Component
+    - type: Examiner
+    - type: UnblockableSpeech
+    - type: Speech
+      speechVerb: Robotic
+      speechSounds: Pai
+    - type: TypingIndicator
+      proto: robot
+    - type: IntrinsicRadioReceiver
+    - type: IntrinsicRadioTransmitter
+      channels:
+      - Binary
+      - Common
+      - Science
+    - type: ActiveRadio
+      channels:
+      - Binary
+      - Common
+      - Science
+    #For UI
+    - type: IntrinsicUI
+      uis:
+        - key: enum.PowerMonitoringConsoleUiKey.Key
+          toggleAction: ActionAICameraViewer
+    - type: UserInterface
+      interfaces:
+      - key: enum.SiliconLawsUiKey.Key
+        type: SiliconLawBoundUserInterface
+      - key: enum.PowerMonitoringConsoleUiKey.Key
+        type: PowerMonitoringConsoleBoundUserInterface
+    - type: SiliconLawBound
+    - type: SiliconLawProvider
+      laws: Crewsimov
+    - type: EmagSiliconLaw
+    - type: IonStormTarget
+    - type: ActionStationAI
+
+- type: entity
+  parent: [StationIA, BaseStructureDynamic, BaseMachinePowered]
+  id: AICore
+  name: AI-Procesor
+  description: A huge inteligence
+  components:
+    - type: Icon
+      sprite: Structures/Storage/Crates/artifact.rsi
+      state: artifact_container_icon
+    - type: PlaceableSurface
+      isPlaceable: false
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        hv:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: StaticPrice
+      price: 25000
+    - type: Transform
+      noRot: true
+    - type: Sprite
+      drawdepth: Objects
+      sprite: Structures/Storage/Crates/artifact.rsi
+      layers:
+      - state: artifact_container
+        map: ["enum.StorageVisualLayers.Base"]
+    - type: InteractionOutline
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.45
+          density: 50
+          mask:
+          - MachineMask
+          layer:
+          - MachineLayer
+    - type: WiresPanel
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+    - type: StationAI
+    #Need to stop movement
+
+- type: entity
+  parent: BaseMob
+  id: AIObserver
+  name: AIpresence
+  description: See everything
+  #noSpawn: true
+  components:
+  - type: CargoSellBlacklist
+  - type: Sprite
+    overrideContainerOcclusion: true # Ghosts always show up regardless of where they're contained.
+    drawdepth: Ghosts
+    sprite: Mobs/Ghosts/ghost_human.rsi
+    color: "#fff8"
+    layers:
+    - state: animated
+      shader: unshaded
+  - type: ContentEye
+    maxZoom: 1.44,1.44
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 15
+        mask:
+        - GhostImpassable
+  - type: Eye
+    drawFov: true
+  - type: Input
+    context: "ghost"
+  - type: Examiner
+    skipChecks: true
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 12
+    baseWalkSpeed: 8
+  - type: MovementIgnoreGravity
+  - type: Physics
+    bodyType: KinematicController
+    bodyStatus: InAir
+  - type: CanMoveInAir
+  - type: Tag
+    tags:
+    - BypassInteractionRangeChecks
+
+
+
+
+
+

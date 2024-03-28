@@ -11,3 +11,17 @@
       state: state-laws
     event: !type:ToggleLawsScreenEvent
     useDelay: 0.5
+
+
+- type: entity
+  id: ActionAICameraViewer
+  name: Camera interface
+  description: View camera of the station.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_borg.rsi
+      state: state-laws
+    event: !type:ToggleIntrinsicUIEvent { key: enum.PowerMonitoringConsoleUiKey.Key }
