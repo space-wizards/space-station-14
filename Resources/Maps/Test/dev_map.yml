@@ -384,6 +384,7 @@ entities:
     - type: MetaData
     - type: Transform
     - type: Map
+    - type: SpawnMapBiome
     - type: PhysicsMap
     - type: Broadphase
     - type: OccluderTree
