@@ -301,7 +301,9 @@ public sealed class PullingSystem : EntitySystem
             return false;
         }
 
-        if (pullerComp.NeedsHands && !_handsSystem.TryGetEmptyHand(puller, out _))
+        if (pullerComp.NeedsHands
+            && !_handsSystem.TryGetEmptyHand(puller, out _)
+            && pullerComp.Pulling == null)
         {
             return false;
         }
@@ -365,7 +367,7 @@ public sealed class PullingSystem : EntitySystem
         return TogglePull(puller.Pulling.Value, pullerUid, pullable);
     }
 
-    public bool TryStartPull(EntityUid pullerUid, EntityUid pullableUid, EntityUid? user = null,
+    public bool TryStartPull(EntityUid pullerUid, EntityUid pullableUid,
         PullerComponent? pullerComp = null, PullableComponent? pullableComp = null)
     {
         if (!Resolve(pullerUid, ref pullerComp, false) ||
@@ -387,23 +389,18 @@ public sealed class PullingSystem : EntitySystem
         }
 
         // Ensure that the puller is not currently pulling anything.
-        var oldPullable = pullerComp.Pulling;
+        if (TryComp<PullableComponent>(pullerComp.Pulling, out var oldPullable)
+            && !TryStopPull(pullerComp.Pulling.Value, oldPullable, pullerUid))
+            return false;
 
-        if (oldPullable != null)
-        {
-            // Well couldn't stop the old one.
-            if (!TryStopPull(oldPullable.Value, pullableComp, user))
-                return false;
-        }
-
-        // Is the pullable currently being pulled by something else?
+        // Stop anyone else pulling the entity we want to pull
         if (pullableComp.Puller != null)
         {
-            // Uhhh
+            // We're already pulling this item
             if (pullableComp.Puller == pullerUid)
                 return false;
 
-            if (!TryStopPull(pullableUid, pullableComp, pullerUid))
+            if (!TryStopPull(pullableUid, pullableComp, pullableComp.Puller))
                 return false;
         }
 
@@ -469,7 +466,7 @@ public sealed class PullingSystem : EntitySystem
         var pullerUidNull = pullable.Puller;
 
         if (pullerUidNull == null)
-            return false;
+            return true;
 
         var msg = new AttemptStopPullingEvent(user);
         RaiseLocalEvent(pullableUid, msg, true);
