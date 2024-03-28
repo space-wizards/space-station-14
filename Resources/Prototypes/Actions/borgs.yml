@@ -11,3 +11,17 @@
       state: state-laws
     event: !type:ToggleLawsScreenEvent
     useDelay: 0.5
+
+- type: entity
+  id: ActionViewCrewManifest
+  name: View Crew Manifest
+  description: View the View crew manifest station.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_borg.rsi
+      state: state-manifest
+    event: !type:CrewManifestOpenActionEvent
+    useDelay: 0.5

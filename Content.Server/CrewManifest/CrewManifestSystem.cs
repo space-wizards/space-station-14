@@ -5,11 +5,13 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
+using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
 using Content.Shared.GameTicking;
 using Content.Shared.Roles;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.StationRecords;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -26,6 +28,7 @@ public sealed class CrewManifestSystem : EntitySystem
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
 
     /// <summary>
     ///     Cached crew manifest entries. The alternative is to outright
@@ -46,6 +49,42 @@ public sealed class CrewManifestSystem : EntitySystem
 
         SubscribeLocalEvent<CrewManifestViewerComponent, BoundUIClosedEvent>(OnBoundUiClose);
         SubscribeLocalEvent<CrewManifestViewerComponent, CrewManifestOpenUiMessage>(OpenEuiFromBui);
+        SubscribeLocalEvent<BorgCrewManifestViewerComponent, ComponentStartup>(BorgCrewManifestViewerStartup);
+        SubscribeLocalEvent<BorgCrewManifestViewerComponent, CrewManifestOpenActionEvent>(OpenCrewManifest);
+    }
+
+    private void BorgCrewManifestViewerStartup(EntityUid uid, BorgCrewManifestViewerComponent component, ComponentStartup args)
+    {
+        _actions.AddAction(uid, component.ActionViewCrewManifest);
+    }
+
+    private void OpenCrewManifest(EntityUid uid, BorgCrewManifestViewerComponent component, CrewManifestOpenActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        var owningStation = _stationSystem.GetOwningStation(uid);
+        if (owningStation == null || !TryComp<ActorComponent>(args.Performer, out var actor))
+        {
+            return;
+        }
+
+        if (!_openEuis.TryGetValue(owningStation.Value, out var euis))
+        {
+            euis = new();
+            _openEuis.Add(owningStation.Value, euis);
+        }
+
+        if (euis.ContainsKey(actor.PlayerSession))
+        {
+            CloseEui(owningStation.Value, actor.PlayerSession, uid);
+        }
+        else
+        {
+            OpenEui(owningStation.Value, actor.PlayerSession, uid);
+        }
+
+        args.Handled = true;
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)

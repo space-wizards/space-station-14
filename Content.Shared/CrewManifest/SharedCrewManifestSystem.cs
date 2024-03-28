@@ -1,3 +1,4 @@
+using Content.Shared.Actions;
 using Content.Shared.Eui;
 using NetSerializer;
 using Robust.Shared.Serialization;
@@ -69,4 +70,7 @@ public sealed class CrewManifestEntry
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class CrewManifestOpenUiMessage : BoundUserInterfaceMessage
+{}
+
+public sealed partial class CrewManifestOpenActionEvent : InstantActionEvent
 {}
