@@ -182,13 +182,13 @@ namespace Content.Server.Atmos.EntitySystems
             var tileMixture = _atmo.GetContainingMixture(uid, true);
             if (tileMixture != null)
             {
-                gasMixList.Add(new GasMixEntry(Loc.GetString("gas-analyzer-window-environment-tab-label"), tileMixture.Pressure, tileMixture.Temperature,
+                gasMixList.Add(new GasMixEntry(Loc.GetString("gas-analyzer-window-environment-tab-label"), tileMixture.Volume, tileMixture.Pressure, tileMixture.Temperature,
                     GenerateGasEntryArray(tileMixture)));
             }
             else
             {
                 // No gases were found
-                gasMixList.Add(new GasMixEntry(Loc.GetString("gas-analyzer-window-environment-tab-label"), 0f, 0f));
+                gasMixList.Add(new GasMixEntry(Loc.GetString("gas-analyzer-window-environment-tab-label"), 0f, 0f, 0f));
             }
 
             var deviceFlipped = false;
@@ -210,7 +210,7 @@ namespace Content.Server.Atmos.EntitySystems
                     foreach (var mixes in ev.GasMixtures)
                     {
                         if(mixes.Value != null)
-                            gasMixList.Add(new GasMixEntry(mixes.Key, mixes.Value.Pressure, mixes.Value.Temperature, GenerateGasEntryArray(mixes.Value)));
+                            gasMixList.Add(new GasMixEntry(mixes.Key, mixes.Value.Volume, mixes.Value.Pressure, mixes.Value.Temperature, GenerateGasEntryArray(mixes.Value)));
                     }
 
                     deviceFlipped = ev.DeviceFlipped;
@@ -223,7 +223,7 @@ namespace Content.Server.Atmos.EntitySystems
                         foreach (var pair in node.Nodes)
                         {
                             if (pair.Value is PipeNode pipeNode)
-                                gasMixList.Add(new GasMixEntry(pair.Key, pipeNode.Air.Pressure, pipeNode.Air.Temperature, GenerateGasEntryArray(pipeNode.Air)));
+                                gasMixList.Add(new GasMixEntry(pair.Key, pipeNode.Air.Volume, pipeNode.Air.Pressure, pipeNode.Air.Temperature, GenerateGasEntryArray(pipeNode.Air)));
                         }
                     }
                 }
