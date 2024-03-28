@@ -47,8 +47,7 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var eye, out var recoil))
         {
-            var magnitude = recoil.CurrentKick.Length();
-            if (magnitude <= 0.005f)
+            if (recoil.CurrentKick.IsShorterThanOrEqualTo(0.005f))
             {
                 recoil.CurrentKick = Vector2.Zero;
                 _eye.SetOffset(uid, recoil.BaseOffset + recoil.CurrentKick, eye);

@@ -175,7 +175,7 @@ public partial class NavMapControl : MapGridControl
                 return;
 
             // If the cursor has moved a significant distance, exit
-            if ((StartDragPosition - args.PointerLocation.Position).Length() > MinDragDistance)
+            if ((StartDragPosition - args.PointerLocation.Position).IsLongerThan(MinDragDistance))
                 return;
 
             // Get the clicked position

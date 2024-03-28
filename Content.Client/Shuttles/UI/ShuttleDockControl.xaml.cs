@@ -253,7 +253,7 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
                     collisionCenter /= 4;
                     var range = viewedDockPos.Value - collisionCenter;
 
-                    if (range.Length() < SharedDockingSystem.DockingHiglightRange * MinimapScale)
+                    if (range.IsShorterThan(SharedDockingSystem.DockingHiglightRange * MinimapScale))
                     {
                         if (_viewedState?.GridDockedWith == null)
                         {
@@ -265,10 +265,10 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
                             var rotA = _xformSystem.GetWorldRotation(coordsOne.EntityId) + _viewedState!.Angle;
                             var rotB = _xformSystem.GetWorldRotation(coordsTwo.EntityId) + dock.Angle;
 
-                            var distance = (mapOne.Position - mapTwo.Position).Length();
+                            var diff = mapOne.Position - mapTwo.Position;
 
                             var inAlignment = _dockSystem.InAlignment(mapOne, rotA, mapTwo, rotB);
-                            var canDock = distance < SharedDockingSystem.DockRange && inAlignment;
+                            var canDock = diff.IsShorterThan(SharedDockingSystem.DockRange) && inAlignment;
 
                             if (dockButton != null)
                                 dockButton.Disabled = !canDock || !canDockChange;

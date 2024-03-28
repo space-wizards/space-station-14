@@ -130,7 +130,7 @@ public sealed class DragDropHelper<T>
             case DragState.MouseDown:
             {
                 var screenPos = _inputManager.MouseScreenPosition;
-                if ((_mouseDownScreenPos.Position - screenPos.Position).Length() > _deadzone)
+                if ((_mouseDownScreenPos.Position - screenPos.Position).IsLongerThan(_deadzone))
                 {
                     StartDragging();
                 }
