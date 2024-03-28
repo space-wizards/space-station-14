@@ -90,6 +90,7 @@
       path: /Audio/Machines/spinning.ogg
       params:
         volume: -4
+  - type: SolutionSeparator
   - type: ReactionMixer
     reactionTypes:
     - Centrifuge

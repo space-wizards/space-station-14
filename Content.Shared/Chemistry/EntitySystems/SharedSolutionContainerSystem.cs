@@ -21,7 +21,7 @@ namespace Content.Shared.Chemistry.EntitySystems;
 /// The event raised whenever a solution entity is modified.
 /// </summary>
 /// <remarks>
-/// Raised after chemcial reactions and <see cref="SolutionOverflowEvent"/> are handled.
+/// Raised after chemical reactions and <see cref="SolutionOverflowEvent"/> are handled.
 /// </remarks>
 /// <param name="Solution">The solution entity that has been modified.</param>
 [ByRefEvent]
@@ -75,7 +75,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     /// Attempts to resolve a solution associated with an entity.
     /// </summary>
-    /// <param name="container">The entity that holdes the container the solution entity is in.</param>
+    /// <param name="container">The entity that holds the container the solution entity is in.</param>
     /// <param name="name">The name of the solution entities container.</param>
     /// <param name="entity">A reference to a solution entity to load the associated solution entity into. Will be unchanged if not null.</param>
     /// <param name="solution">Returns the solution state of the solution entity.</param>
@@ -161,6 +161,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     /// Version of TryGetSolution that doesn't take or return an entity.
     /// Used for prototypes and with old code parity.
+    /// </summary>
     public bool TryGetSolution(SolutionContainerManagerComponent container, string name, [NotNullWhen(true)] out Solution? solution)
     {
         solution = null;
