@@ -32,7 +32,6 @@
     size: Tiny
   - type: Drink
     solution: food
-    refillable: false
   - type: Openable
     sound:
       collection: packetOpenSounds

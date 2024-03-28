@@ -6,7 +6,7 @@
   components:
   - type: Drink
   - type: Openable
-  - type: PressurizedDrink
+  - type: Shakeable
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -33,6 +33,8 @@
   - type: RefillableSolution
     solution: drink
   - type: DrainableSolution
+    solution: drink
+  - type: PressurizedSolution
     solution: drink
   - type: Appearance
   - type: GenericVisualizer

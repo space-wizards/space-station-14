@@ -105,6 +105,13 @@ namespace Content.Shared.Chemistry.Reagent
         public bool Slippery;
 
         /// <summary>
+        /// How easily this reagent becomes fizzy when aggitated.
+        /// 0 - completely flat, 1 - fizzes up when nudged.
+        /// </summary>
+        [DataField]
+        public float Fizziness;
+
+        /// <summary>
         /// How much reagent slows entities down if it's part of a puddle.
         /// 0 - no slowdown; 1 - can't move.
         /// </summary>

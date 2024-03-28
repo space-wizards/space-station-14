@@ -27,6 +27,7 @@ public abstract partial class SharedOpenableSystem : EntitySystem
         SubscribeLocalEvent<OpenableComponent, UseInHandEvent>(OnUse);
         SubscribeLocalEvent<OpenableComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<OpenableComponent, MeleeHitEvent>(HandleIfClosed);
+        SubscribeLocalEvent<OpenableComponent, AttemptShakeEvent>(CancelIfOpen);
         SubscribeLocalEvent<OpenableComponent, AfterInteractEvent>(HandleIfClosed);
         SubscribeLocalEvent<OpenableComponent, GetVerbsEvent<Verb>>(AddOpenCloseVerbs);
     }
@@ -57,6 +58,13 @@ public abstract partial class SharedOpenableSystem : EntitySystem
     {
         // prevent spilling/pouring/whatever drinks when closed
         args.Handled = !comp.Opened;
+    }
+
+    private void CancelIfOpen(EntityUid uid, OpenableComponent comp, CancellableEntityEventArgs args)
+    {
+        // Prevent shaking open containers
+        if (comp.Opened)
+            args.Cancel();
     }
 
     private void AddOpenCloseVerbs(EntityUid uid, OpenableComponent comp, GetVerbsEvent<Verb> args)
@@ -134,7 +142,7 @@ public abstract partial class SharedOpenableSystem : EntitySystem
     /// <summary>
     /// Sets the opened field and updates open visuals.
     /// </summary>
-    public void SetOpen(EntityUid uid, bool opened = true, OpenableComponent? comp = null)
+    public void SetOpen(EntityUid uid, bool opened = true, OpenableComponent? comp = null, EntityUid? user = null)
     {
         if (!Resolve(uid, ref comp, false) || opened == comp.Opened)
             return;
@@ -144,12 +152,12 @@ public abstract partial class SharedOpenableSystem : EntitySystem
 
         if (opened)
         {
-            var ev = new OpenableOpenedEvent();
+            var ev = new OpenableOpenedEvent(user);
             RaiseLocalEvent(uid, ref ev);
         }
         else
         {
-            var ev = new OpenableClosedEvent();
+            var ev = new OpenableClosedEvent(user);
             RaiseLocalEvent(uid, ref ev);
         }
 
@@ -165,7 +173,7 @@ public abstract partial class SharedOpenableSystem : EntitySystem
         if (!Resolve(uid, ref comp, false) || comp.Opened)
             return false;
 
-        SetOpen(uid, true, comp);
+        SetOpen(uid, true, comp, user);
         Audio.PlayPredicted(comp.Sound, uid, user);
         return true;
     }
@@ -179,7 +187,7 @@ public abstract partial class SharedOpenableSystem : EntitySystem
         if (!Resolve(uid, ref comp, false) || !comp.Opened || !comp.Closeable)
             return false;
 
-        SetOpen(uid, false, comp);
+        SetOpen(uid, false, comp, user);
         if (comp.CloseSound != null)
             Audio.PlayPredicted(comp.CloseSound, uid, user);
         return true;
@@ -190,10 +198,10 @@ public abstract partial class SharedOpenableSystem : EntitySystem
 /// Raised after an Openable is opened.
 /// </summary>
 [ByRefEvent]
-public record struct OpenableOpenedEvent;
+public record struct OpenableOpenedEvent(EntityUid? User = null);
 
 /// <summary>
 /// Raised after an Openable is closed.
 /// </summary>
 [ByRefEvent]
-public record struct OpenableClosedEvent;
+public record struct OpenableClosedEvent(EntityUid? User = null);
