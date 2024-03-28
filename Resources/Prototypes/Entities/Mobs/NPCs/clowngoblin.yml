@@ -1,0 +1,142 @@
+- type: entity
+  save: false
+  parent: SimpleMobBase
+  id: MobClownGoblin
+  name: clown goblin
+  description: Little walking clown mask and shoes. You want to honk their nose!
+  components:
+  - type: Hunger
+    baseDecayRate: 0
+  - type: Thirst
+    baseDecayRate: 0
+  - type: GhostTakeoverAvailable
+  - type: GhostRole
+    prob: 0.25
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-clown-goblin-name
+    description: ghost-role-information-clown-goblin-description
+  - type: Speech
+    speechSounds: BikeHorn
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/clown_goblin.rsi
+    state: goblin
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Dead
+  - type: Physics
+  - type: HTN
+    rootTask:
+      task: MouseCompound
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ClothingShoesClown:
+            min: 1
+            max: 1
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ClothingMaskClown:
+            min: 1
+            max: 1
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.5
+    baseSprintSpeed : 5
+  - type: Appearance
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - FootstepSound
+    - DoorBumpOpener
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.25
+    damageRecovery:
+      types:
+        Asphyxiation: -0.25
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.1
+  - type: Bloodstream
+    bloodMaxVolume: 50
+    bloodReagent: Honk
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
+  - type: CombatMode
+  - type: MeleeWeapon
+    attackRate: 2
+    damage:
+      types:
+        Blunt: 0.5
+    soundHit:
+      collection: BikeHorn
+    animation: WeaponArcFist
+  - type: Vocal
+    sounds:
+      Male: ClownGoblin
+      Female: ClownGoblin
+      Unsexed: ClownGoblin
+
+- type: speechSounds
+  id: BikeHorn
+  saySound:
+    path: /Audio/Items/bikehorn.ogg
+  askSound:
+    path: /Audio/Items/brokenbikehorn.ogg
+  exclaimSound:
+    path: /Audio/Items/desk_bell_ring.ogg
+
+- type: soundCollection
+  id: ClownGoblinScream
+  files:
+    - /Audio/Items/airhorn.ogg
+
+- type: emoteSounds
+  id: ClownGoblin
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: ClownGoblinScream
+
+- type: entity
+  id: ClownGoblinMigration
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    startDelay: 10
+    earliestStart: 5
+    minimumPlayers: 15
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: MobClownGoblin
+      prob: 0.07
