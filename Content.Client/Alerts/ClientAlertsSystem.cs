@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Alerts;
 
@@ -13,7 +12,6 @@ public sealed class ClientAlertsSystem : AlertsSystem
 {
     public AlertOrderPrototype? AlertOrder { get; set; }
 
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

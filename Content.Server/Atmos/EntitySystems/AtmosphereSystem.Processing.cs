@@ -272,7 +272,7 @@ namespace Content.Server.Atmos.EntitySystems
             tile.Air = new GasMixture(volume){Temperature = Atmospherics.T20C};
 
             if (data.FixVacuum)
-                GridFixTileVacuum(ent, tile, volume);
+                GridFixTileVacuum(tile);
         }
 
         private void QueueRunTiles(
