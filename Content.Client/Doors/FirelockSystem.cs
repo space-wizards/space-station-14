@@ -19,9 +19,7 @@ public sealed class FirelockSystem : EntitySystem
     private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
     {
         if (!component.Powered)
-        {
             args.Cancel();
-        }
     }
 
     private void OnAppearanceChange(EntityUid uid, FirelockComponent comp, ref AppearanceChangeEvent args)

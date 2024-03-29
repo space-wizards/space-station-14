@@ -139,18 +139,22 @@ namespace Content.Server.Doors.Systems
 
         private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
         {
-            // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
-            var overrideAccess = (args.User != null) && _accessReaderSystem.IsAllowed(args.User.Value, uid);
-
-            var isPowered = this.IsPowered(uid, EntityManager);
-            if (!isPowered || (!overrideAccess && IsHoldingPressureOrFire(uid, component)))
+            if (!this.IsPowered(uid, EntityManager))
             {
-                if (args.User != null && !isPowered)
+                if (args.User != null)
                 {
                     _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-unpowered-message"),
-                    uid, args.User.Value, PopupType.Medium);
+                        uid, args.User.Value, PopupType.Medium);
                 }
 
+                args.Cancel();
+                return;
+            }
+
+            // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
+            var overrideAccess = (args.User != null) && _accessReaderSystem.IsAllowed(args.User.Value, uid);
+            if (!overrideAccess && IsHoldingPressureOrFire(uid, component))
+            {
                 args.Cancel();
             }
         }
