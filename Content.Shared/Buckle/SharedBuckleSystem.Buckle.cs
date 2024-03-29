@@ -358,7 +358,7 @@ public abstract partial class SharedBuckleSystem
 
         if (TryComp<PhysicsComponent>(buckleUid, out var physics))
         {
-            _physics.ResetDynamics(physics);
+            _physics.ResetDynamics(buckleUid, physics);
         }
 
         if (!buckleComp.PullStrap && TryComp<PullableComponent>(strapUid, out var toPullable))
