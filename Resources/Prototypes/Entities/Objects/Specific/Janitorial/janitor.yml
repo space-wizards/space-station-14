@@ -11,6 +11,8 @@
     damage:
       types:
         Blunt: 10
+    soundHit:
+      collection: MetalThud
   - type: Spillable
     solution: absorbed
   - type: Wieldable
@@ -49,6 +51,8 @@
       damage:
         types:
           Blunt: 10
+      soundHit:
+         collection: MetalThud
     - type: Spillable
       solution: absorbed
     - type: Wieldable
@@ -230,6 +234,7 @@
   - type: StepTrigger
     intersectRatio: 0.2
     requiredTriggeredSpeed: 0
+    stepOn: true
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -251,6 +256,10 @@
         mask:
         - ItemMask
   - type: LandMine
+    sound:
+      path: /Audio/Effects/beep_landmine.ogg
+      params:
+        maxDistance: 10
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: HardBomb  # normally Default and max 5 total 60

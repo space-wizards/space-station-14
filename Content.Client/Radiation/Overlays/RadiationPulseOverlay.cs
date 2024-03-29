@@ -121,7 +121,10 @@ namespace Content.Client.Radiation.Overlays
 
         private bool PulseQualifies(EntityUid pulseEntity, MapCoordinates currentEyeLoc)
         {
-            return _entityManager.GetComponent<TransformComponent>(pulseEntity).MapID == currentEyeLoc.MapId && _entityManager.GetComponent<TransformComponent>(pulseEntity).Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, _entityManager.GetComponent<TransformComponent>(pulseEntity).ParentUid, currentEyeLoc), MaxDist);
+            var transformComponent = _entityManager.GetComponent<TransformComponent>(pulseEntity);
+            var transformSystem = _entityManager.System<SharedTransformSystem>();
+            return transformComponent.MapID == currentEyeLoc.MapId
+                && transformComponent.Coordinates.InRange(_entityManager, transformSystem, EntityCoordinates.FromMap(transformComponent.ParentUid, currentEyeLoc, transformSystem, _entityManager), MaxDist);
         }
 
         private sealed record RadiationShaderInstance(MapCoordinates CurrentMapCoords, float Range, TimeSpan Start, float Duration)
