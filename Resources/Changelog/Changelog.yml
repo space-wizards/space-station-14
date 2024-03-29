@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Agoichi
-  changes:
-  - message: Rebalanced Lobbying Bundle
-    type: Tweak
-  id: 5751
-  time: '2024-01-20T02:35:44.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24303
 - author: Dygon
   changes:
   - message: Storage objects can't be opened anymore while stored in a container.
@@ -3793,3 +3786,11 @@
   id: 6250
   time: '2024-03-29T06:30:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26290
+- author: deltanedas
+  changes:
+  - message: Multiple bombs exploding at once on a tile now combine to have a larger
+      explosion rather than stacking the same small explosion.
+    type: Tweak
+  id: 6251
+  time: '2024-03-29T23:46:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25664
