@@ -68,7 +68,7 @@ public sealed class ThrowingSystem : EntitySystem
     /// <param name="direction">A vector pointing from the entity to its destination.</param>
     /// <param name="strength">How much the direction vector should be multiplied for velocity.</param>
     /// <param name="pushbackRatio">The ratio of impulse applied to the thrower - defaults to 10 because otherwise it's not enough to properly recover from getting spaced</param>
-    /// <param name="doSpin">Optional: Whether spin will be applied to the thrown entity.</param>
+    /// <param name="doSpin">Whether spin will be applied to the thrown entity.</param>
     public void TryThrow(EntityUid uid,
         Vector2 direction,
         float strength = 1.0f,
@@ -103,7 +103,7 @@ public sealed class ThrowingSystem : EntitySystem
     /// <param name="direction">A vector pointing from the entity to its destination.</param>
     /// <param name="strength">How much the direction vector should be multiplied for velocity.</param>
     /// <param name="pushbackRatio">The ratio of impulse applied to the thrower - defaults to 10 because otherwise it's not enough to properly recover from getting spaced</param>
-    /// <param name="doSpin">Optional: Whether spin will be applied to the thrown entity.</param>
+    /// <param name="doSpin">Whether spin will be applied to the thrown entity.</param>
     public void TryThrow(EntityUid uid,
         Vector2 direction,
         PhysicsComponent physics,
