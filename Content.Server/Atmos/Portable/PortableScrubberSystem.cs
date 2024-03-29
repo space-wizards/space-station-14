@@ -86,7 +86,8 @@ namespace Content.Server.Atmos.Portable
             if (!running)
                 return;
             // widenet
-            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true))
+            var enumerator = _atmosphereSystem.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true);
+            while (enumerator.MoveNext(out var adjacent))
             {
                 Scrub(timeDelta, component, adjacent);
             }

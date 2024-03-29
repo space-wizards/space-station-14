@@ -387,3 +387,17 @@
         - state: book6
     - type: Paper
       content: book-text-inspiration
+
+- type: entity
+  parent: BookBase
+  id: BookJanitorTale
+  name: the tales of a tired janitor
+  description: A clean looking book, smelling vaguely of soap and bleach. 
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book0 
+  - type: Paper
+    content: book-text-janitor
+

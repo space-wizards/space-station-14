@@ -285,6 +285,18 @@
 
 - type: entity
   parent: CrateBaseSecure
+  suffix: Armory, Secure
+  id: CrateContrabandStorageSecure
+  name: contraband storage crate
+  description: An armory access locked crate for storing contraband confiscated from suspects or prisoners.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/sec_gear.rsi
+  - type: AccessReader
+    access: [["Armory"]]
+
+- type: entity
+  parent: CrateBaseSecure
   id: CrateCommandSecure
   name: command crate
   components:

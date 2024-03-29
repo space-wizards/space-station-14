@@ -39,12 +39,34 @@ public abstract class SharedInjectorSystem : EntitySystem
 
         if (!HasComp<ActorComponent>(args.User))
             return;
+        var user = args.User;
 
         var (_, component) = entity;
 
-        // Add specific transfer verbs according to the container's size
+        var min = component.MinimumTransferAmount;
+        var max = component.MaximumTransferAmount;
+        var cur = component.TransferAmount;
+        var toggleAmount = cur == max ? min : max;
+
         var priority = 0;
-        var user = args.User;
+        AlternativeVerb toggleVerb = new()
+        {
+            Text = Loc.GetString("comp-solution-transfer-verb-toggle", ("amount", toggleAmount)),
+            Category = VerbCategory.SetTransferAmount,
+            Act = () =>
+            {
+                component.TransferAmount = toggleAmount;
+                Popup.PopupClient(Loc.GetString("comp-solution-transfer-set-amount", ("amount", toggleAmount)), user, user);
+                Dirty(entity);
+            },
+
+            Priority = priority
+        };
+        args.Verbs.Add(toggleVerb);
+
+        priority -= 1;
+
+        // Add specific transfer verbs according to the container's size
         foreach (var amount in TransferAmounts)
         {
             if (amount < component.MinimumTransferAmount || amount > component.MaximumTransferAmount)

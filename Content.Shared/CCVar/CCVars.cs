@@ -261,6 +261,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
 
         /// <summary>
+        /// If a player gets denied connection to the server,
+        /// how long they are forced to wait before attempting to reconnect.
+        /// </summary>
+        public static readonly CVarDef<int> GameServerFullReconnectDelay =
+            CVarDef.Create("game.server_full_reconnect_delay", 30, CVar.SERVERONLY);
+
+        /// <summary>
         /// Whether or not panic bunker is currently enabled.
         /// </summary>
         public static readonly CVarDef<bool> PanicBunkerEnabled =
@@ -773,6 +780,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("admin.see_own_notes", false, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
+        /// Should the server play a quick sound to the active admins whenever a new player joins?
+        /// </summary>
+        public static readonly CVarDef<bool> AdminNewPlayerJoinSound =
+            CVarDef.Create("admin.new_player_join_sound", false, CVar.SERVERONLY);
+
+        /// <summary>
         /// The amount of days before the note starts fading. It will slowly lose opacity until it reaches stale. Set to 0 to disable.
         /// </summary>
         public static readonly CVarDef<double> NoteFreshDays =
@@ -851,6 +864,13 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> AdminAfkTime =
             CVarDef.Create("admin.afk_time", 600f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If true, admins are able to connect even if
+        /// <see cref="SoftMaxPlayers"/> would otherwise block regular players.
+        /// </summary>
+        public static readonly CVarDef<bool> AdminBypassMaxPlayers =
+            CVarDef.Create("admin.bypass_max_players", true, CVar.SERVERONLY);
 
         /*
          * Explosions

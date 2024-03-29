@@ -114,6 +114,8 @@
     damage:
       types:
         Blunt: 4.5
+    soundHit:
+      collection: MetalThud
   - type: Tool
     qualities:
       - Anchoring
@@ -151,6 +153,8 @@
     damage:
       types:
         Blunt: 8
+    soundHit:
+      collection: MetalThud
   - type: Tool
     qualities:
       - Prying
@@ -492,6 +496,8 @@
     damage:
       types:
         Blunt: 14
+    soundHit:
+      collection: MetalThud
   - type: Item
     size: Normal
     sprite: Objects/Tools/shovel.rsi
@@ -525,6 +531,8 @@
     damage:
       types:
         Blunt: 7
+    soundHit:
+      collection: MetalThud
   - type: Tool
     qualities:
     - Rolling

@@ -24,46 +24,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingUniformJumpsuitColorWhite
-        prob: 0.25
-      - id: ClothingUniformJumpskirtColorWhite
-        prob: 0.25
-      - id: ClothingUniformJumpsuitColorBlue
-        prob: 0.25
-      - id: ClothingUniformJumpskirtColorBlue
-        prob: 0.25
-      - id: ClothingUniformJumpsuitColorYellow
-        prob: 0.25
-      - id: ClothingUniformJumpskirtColorYellow
-        prob: 0.25
-      - id: ClothingUniformJumpsuitColorGreen
-        prob: 0.25
-      - id: ClothingUniformJumpskirtColorGreen
-        prob: 0.25
-      - id: ClothingUniformJumpsuitColorOrange
-        prob: 0.25
-      - id: ClothingUniformJumpskirtColorOrange
-        prob: 0.25
-      - id: ClothingUniformJumpsuitColorPink
-        prob: 0.25
-      - id: ClothingUniformJumpskirtColorPink
-        prob: 0.25
-      - id: ClothingUniformJumpsuitColorRed
-        prob: 0.25
-      - id: ClothingUniformJumpskirtColorRed
-        prob: 0.25
-      - id: ClothingUniformJumpsuitColorDarkBlue
-        prob: 0.25
-      - id: ClothingUniformJumpskirtColorDarkBlue
-        prob: 0.25
-      - id: ClothingUniformJumpsuitColorTeal
-        prob: 0.25
-      - id: ClothingUniformJumpskirtColorTeal
-        prob: 0.25
-      - id: ClothingUniformJumpsuitColorPurple
-        prob: 0.25
-      - id: ClothingUniformJumpskirtColorPurple
-        prob: 0.25
       - id: ClothingShoesColorBlack
         amount: 1
       - id: ClothingShoesColorBrown
@@ -74,6 +34,16 @@
         prob: 0.4
       - id: ClothingOuterCoatGentle
         prob: 0.3
+      - id: ClothingUniformRandomShorts
+        amount: 3
+      - id: ClothingUniformRandomArmless
+        amount: 5
+      - id: ClothingUniformRandomStandart
+        amount: 5
+      - id: ClothingUniformRandomBra
+        amount: 5
+      - id: ClothingUniformRandomShirt
+        amount: 4
 
 - type: entity
   id: WardrobeYellowFilled

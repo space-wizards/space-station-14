@@ -52,7 +52,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _map = default!;
 
     private EntityQuery<TransformComponent> _transformQuery;
-    private EntityQuery<DamageableComponent> _damageQuery;
+    private EntityQuery<FlammableComponent> _flammableQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<ProjectileComponent> _projectileQuery;
 
@@ -104,7 +104,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         InitVisuals();
 
         _transformQuery = GetEntityQuery<TransformComponent>();
-        _damageQuery = GetEntityQuery<DamageableComponent>();
+        _flammableQuery = GetEntityQuery<FlammableComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _projectileQuery = GetEntityQuery<ProjectileComponent>();
     }
@@ -331,7 +331,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         CameraShake(iterationIntensity.Count * 4f, epicenter, totalIntensity);
 
         //For whatever bloody reason, sound system requires ENTITY coordinates.
-        var mapEntityCoords = EntityCoordinates.FromMap(EntityManager, _mapManager.GetMapEntityId(epicenter.MapId), epicenter);
+        var mapEntityCoords = EntityCoordinates.FromMap(_mapManager.GetMapEntityId(epicenter.MapId), epicenter, _transformSystem, EntityManager);
 
         // play sound.
         // for the normal audio, we want everyone in pvs range

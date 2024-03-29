@@ -1,7 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
+using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
@@ -11,6 +12,7 @@ using Content.Shared.Stacks;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
@@ -109,6 +111,9 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
             component.Stream = _audio.PlayPredicted(component.Sound, uid, user)?.Entity;
             component.NextSound = Timing.CurTime + component.SoundCooldown;
         }
+
+        var reclaimedEvent = new GotReclaimedEvent(Transform(uid).Coordinates);
+        RaiseLocalEvent(item, ref reclaimedEvent);
 
         var duration = GetReclaimingDuration(uid, item, component);
         // if it's instant, don't bother with all the active comp stuff.
@@ -237,3 +242,6 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         }
     }
 }
+
+[ByRefEvent]
+public record struct GotReclaimedEvent(EntityCoordinates ReclaimerCoordinates);

@@ -246,6 +246,20 @@
     Cloth: 300
 
 - type: latheRecipe
+  id: ClothingUniformJumpsuitSeniorEngineer
+  result: ClothingUniformJumpsuitSeniorEngineer
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtSeniorEngineer
+  result: ClothingUniformJumpskirtSeniorEngineer
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
   id: ClothingUniformJumpsuitHoP
   result: ClothingUniformJumpsuitHoP
   completetime: 4
@@ -405,6 +419,20 @@
     Cloth: 300
 
 - type: latheRecipe
+  id: ClothingUniformJumpsuitSeniorPhysician
+  result: ClothingUniformJumpsuitSeniorPhysician
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtSeniorPhysician
+  result: ClothingUniformJumpskirtSeniorPhysician
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
   id: ClothingUniformJumpsuitMime
   result: ClothingUniformJumpsuitMime
   completetime: 4
@@ -449,6 +477,20 @@
 - type: latheRecipe
   id: ClothingUniformJumpskirtParamedic
   result: ClothingUniformJumpskirtParamedic
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitSeniorOfficer
+  result: ClothingUniformJumpsuitSeniorOfficer
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtSeniorOfficer
+  result: ClothingUniformJumpskirtSeniorOfficer
   completetime: 4
   materials:
     Cloth: 300
@@ -528,6 +570,20 @@
 - type: latheRecipe
   id: ClothingUniformJumpskirtScientist
   result: ClothingUniformJumpskirtScientist
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitSeniorResearcher
+  result: ClothingUniformJumpsuitSeniorResearcher
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtSeniorResearcher
+  result: ClothingUniformJumpskirtSeniorResearcher
   completetime: 4
   materials:
     Cloth: 300
