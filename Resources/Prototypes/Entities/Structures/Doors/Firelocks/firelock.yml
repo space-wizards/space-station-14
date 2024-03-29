@@ -106,6 +106,9 @@
     - type: DoorBolt
     - type: AccessReader
       access: [ [ "Engineering" ] ]
+    - type: PryUnpowered
+      pryModifier: 0.5
+
 
 - type: entity
   id: Firelock
