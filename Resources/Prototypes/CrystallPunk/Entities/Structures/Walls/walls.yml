@@ -1,0 +1,48 @@
+- type: entity
+  abstract: true
+  parent: BaseWall
+  id: CPBaseWall
+  name: стена
+  description: достаточно прочная, чтобы прикрыть вас от угроз или холодного ветра.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+    
+- type: entity
+  id: StoneRuinWall
+  name: каменная стена руин
+  parent: BaseWall
+  description: Эти стены повидали многое, и осталось им недолго.
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Structures/Walls/ruin_stone.rsi
+  - type: Icon
+    sprite: CrystallPunk/Structures/Walls/ruin_stone.rsi
+  - type: IconSmooth
+    key: CPwalls
+    base: brick 
+
+- type: entity
+  id: StoneRuinFragment
+  parent: BaseRock
+  name: обломки каменных руин
+  description: Это все, что осталось от былого величия. 
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Structures/Walls/ruin_stone.rsi
+    snapCardinals: true
+    layers:
+    - state: fragment1
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        fragment1: ""
+        fragment2: ""
+        fragment3: ""
+        fragment4: ""

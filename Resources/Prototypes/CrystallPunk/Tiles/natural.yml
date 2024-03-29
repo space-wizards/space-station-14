@@ -1,0 +1,31 @@
+- type: tile
+  id: FloorPlanetGrassCP
+  name: tiles-cp-grass-floor
+  sprite: /Textures/CrystallPunk/Tiles/Grass/grass.png
+  variants: 8
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  edgeSpritePriority: 1
+  edgeSprites:
+    SouthEast: /Textures/CrystallPunk/Tiles/Grass/single_edge.png
+    NorthEast: /Textures/CrystallPunk/Tiles/Grass/single_edge.png
+    NorthWest: /Textures/CrystallPunk/Tiles/Grass/single_edge.png
+    SouthWest: /Textures/CrystallPunk/Tiles/Grass/single_edge.png
+    South: /Textures/CrystallPunk/Tiles/Grass/double_edge.png
+    East: /Textures/CrystallPunk/Tiles/Grass/double_edge.png
+    North: /Textures/CrystallPunk/Tiles/Grass/double_edge.png
+    West: /Textures/CrystallPunk/Tiles/Grass/double_edge.png
+  baseTurf: FloorPlanetGrass
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepGrass
+  heatCapacity: 10000
+  weather: true
+  indestructible: true
