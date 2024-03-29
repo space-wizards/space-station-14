@@ -172,22 +172,22 @@
     Laughter: 2
 
 - type: reaction
-  id: CreateEnrichedUranium
-  impact: Low
+  id: CreateCrystals
   quantized: true
+  minTemp: 374
   reactants:
-    Uranium-235:
-      amount: 55
-    Fluorine:
-      amount: 35
-    Uranium-234:
-      amount: 10
+    Sugar:
+      amount: 15
+    Water:
+      amount: 15
+    Ethanol:
+      amount: 5
   effects:
     - !type:CreateEntityReactionEffect
-      entity: EnrichedUranium
+      entity: ShardCrystalRandom
 
 - type: reaction
-  id: Gunpowder # Own a musket for home defense, cause that's what the founding fathers intended!
+  id: Gunpowder
   impact: Low
   quantized: true
   minTemp: 374
