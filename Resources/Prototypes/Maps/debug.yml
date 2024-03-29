@@ -24,6 +24,7 @@
     Dev:
       stationProto: StandardNanotrasenStation
       components:
+        - type: StationBiome
         - type: StationNameSetup
           mapNameTemplate: "Dev"
         - type: StationJobs
