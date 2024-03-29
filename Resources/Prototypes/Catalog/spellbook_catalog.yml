@@ -32,6 +32,19 @@
   categories:
     - SpellbookDefensive
 
+- type: listing
+  id: SpellbookPolymorphSpider
+  name: spellbook-polymoprh-spider-name
+  description: spellbook-polymorph-spider-desc
+  productAction: ActionPolymorphWizardSpider
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Need to delist when no more upgrades are available, probably with a condition?
 - type: listing
   id: SpellbookFireballUpgrade

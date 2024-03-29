@@ -8,6 +8,9 @@ spellbook-blink-desc = Don't blink or you'll miss yourself teleporting away.
 spellbook-force-wall-name = Force Wall
 spellbook-force-wall-desc = Make three walls of pure force that you can pass through, but other's can't.
 
+spellbook-polymoprh-spider-name = Spider Polymoprh
+spellbook-polymorph-spider-desc = Transforms you into a spider, man!
+
 # Equipment
 
 # Events

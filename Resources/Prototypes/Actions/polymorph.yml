@@ -14,3 +14,18 @@
   - type: InstantAction
     event: !type:PolymorphActionEvent
     itemIconStyle: NoItem
+
+- type: entity
+  id: ActionPolymorphWizardSpider
+  name: Spider Polymorph
+  description: Polymorphs you into a Spider.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 60
+    event: !type:PolymorphActionEvent
+      protoId: WizardSpider
+    itemIconStyle: NoItem
+    icon:
+      sprite: Mobs/Animals/spider.rsi
+      state: tarantula

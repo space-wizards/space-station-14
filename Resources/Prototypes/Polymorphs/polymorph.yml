@@ -164,3 +164,14 @@
     revertOnDeath: true
     revertOnCrit: true
     duration: 20
+
+# Polymorphs for Wizards polymorph self spell
+- type: polymorph
+  id: WizardSpider
+  configuration:
+    entity: MobGiantSpiderWizard #Not angry so ghosts can't just take over the wizard
+    transferName: true
+    transferHumanoidAppearance: true
+    inventory: None
+    revertOnDeath: true
+    revertOnCrit: true
