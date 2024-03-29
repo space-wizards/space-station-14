@@ -1,0 +1,5 @@
+uniform highp vec4 OVERLAY_COLOR;
+
+void fragment() {
+    COLOR = vec4(vec3(mod(FRAGCOORD.y + floor(TIME * 30), 2)), 1) * OVERLAY_COLOR;
+}

@@ -1,3 +1,4 @@
+using Content.Shared.Mesons;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
@@ -11,19 +12,24 @@ public sealed class MesonsOverlay : Overlay
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly ILightManager _lightManager = default!;
-    // [Dependency] private readonly IClydeViewport _clydeViewport = default!;
-    //
-    // [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly IClyde _clyde = default!;
 
-    public new int? ZIndex = -5;
     public override bool RequestScreenTexture => true;
-    public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
-    private readonly ShaderInstance _mesonsShader;
+    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+
+    private readonly ShaderInstance _scanlineShader;
+    private readonly ShaderInstance _bitMaskShader;
+    private readonly IRenderTexture _bitMask;
 
     public MesonsOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _mesonsShader = _prototypeManager.Index<ShaderPrototype>("Mesons").InstanceUnique();
+
+        _bitMask = _clyde.CreateRenderTarget(
+            _clyde.ScreenSize,
+            new RenderTargetFormatParameters(RenderTargetColorFormat.R8));
+        _scanlineShader = _prototypeManager.Index<ShaderPrototype>("Scanline").InstanceUnique();
+        _bitMaskShader = _prototypeManager.Index<ShaderPrototype>("BitMaskOutline").InstanceUnique();
     }
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
@@ -32,6 +38,8 @@ public sealed class MesonsOverlay : Overlay
 
         if (args.Viewport.Eye != eyeComp.Eye)
             return false;
+
+
 
         var playerEntity = _playerManager.LocalSession?.AttachedEntity;
 
@@ -56,11 +64,23 @@ public sealed class MesonsOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        // _mesonsShader.SetParameter("LIGHT_TEXTURE", _clydeViewport.LightRenderTarget.Texture);
+
+        var query = _entityManager.EntityQueryEnumerator<MesonsViewableComponent>();
+
+        while (query.MoveNext(out var uid, out _))
+        {
+
+        }
+
+        _scanlineShader.SetParameter("OVERLAY_COLOR", new Color(0f, 0.2f, 0f));
+
+        _bitMaskShader.SetParameter("OVERLAY_COLOR", new Color(1f, 1f, 1f));
 
         var worldHandle = args.WorldHandle;
         var viewport = args.WorldBounds;
-        worldHandle.UseShader(_mesonsShader);
+        worldHandle.UseShader(_scanlineShader);
+        worldHandle.DrawRect(viewport, Color.White);
+        worldHandle.UseShader(_bitMaskShader);
         worldHandle.DrawRect(viewport, Color.White);
         worldHandle.UseShader(null);
     }

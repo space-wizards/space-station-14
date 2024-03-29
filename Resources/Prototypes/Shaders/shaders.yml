@@ -100,8 +100,12 @@
   kind: source
   path: "/Textures/Shaders/cataracts.swsl"
 
-# Jank
 - type: shader
-  id: Mesons
+  id: Scanline
   kind: source
-  path: "/Textures/Shaders/mesons.swsl"
+  path: "/Textures/Shaders/scanline.swsl"
+
+- type: shader
+  id: BitMaskOutline
+  kind: source
+  path: "/Textures/Shaders/bitmaskoutline.swsl"

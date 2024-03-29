@@ -1,3 +1,0 @@
-void fragment() {
-    COLOR = vec4(0, mod(FRAGCOORD.y, 2), 0, 0.5);
-}
