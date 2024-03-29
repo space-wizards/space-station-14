@@ -28,7 +28,7 @@ public sealed partial class AtmosDeviceComponent : Component
     /// <summary>
     ///     If non-null, the grid that this device is part of.
     /// </summary>
-    [DataField]
+    [ViewVariables]
     public EntityUid? JoinedGrid = null;
 
     /// <summary>
