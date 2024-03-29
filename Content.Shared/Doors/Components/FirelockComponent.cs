@@ -14,7 +14,6 @@ namespace Content.Shared.Doors.Components
         /// <summary>
         /// Networked powered status for firelock to allow for proper client prediction
         /// </summary>
-        /// <returns></returns>
         [DataField, AutoNetworkedField]
         public bool Powered;
 
