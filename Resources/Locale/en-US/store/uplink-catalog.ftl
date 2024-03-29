@@ -419,5 +419,11 @@ uplink-hypodart-desc = A seemingly unremarkable dart with an enlarged reservoir 
 uplink-barber-scissors-name = Barber Scissors
 uplink-barber-scissors-desc = A good tool to give your fellow agent a nice haircut, unless you want to give it to yourself.
 
+uplink-throngler-name = The Throngler
+uplink-throngler-desc = You're never gonna get it. You're never gonna get it. Please don't get it... 
+
 uplink-backpack-syndicate-name = Syndicate backpack
 uplink-backpack-syndicate-desc = Lightweight explosion-proof а backpack for holding various traitor goods
+
+uplink-warhorn-name = Syndicate Warhorn
+uplink-warhorn-desc = A tool that releases an intimidating sound, great for letting the station know you're nearby.
