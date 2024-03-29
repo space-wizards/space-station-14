@@ -72,7 +72,7 @@ namespace Content.Server.Administration.Systems
             Subs.CVar(_config, CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
             Subs.CVar(_config, CCVars.AdminAhelpRelayChannelId, OnChannelIdChanged, true);
             Subs.CVar(_config, CCVars.AdminAhelpRelayShowDiscord, OnShowDiscordChanged, true);
-            
+
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _discord.OnMessageReceived += OnDiscordMessageReceived;
             _discord.OnCommandReceived += OnReceiveNewRelay;
@@ -465,6 +465,13 @@ namespace Content.Server.Administration.Systems
             if (gameRules == string.Empty)
                 gameRules = "None";
 
+            var playerInfo = _adminSystem.GetCachedPlayerInfo(session.UserId);
+            var antagStatus = "Unknown";
+            if (playerInfo != null)
+            {
+                antagStatus = playerInfo.Antag ? "Yes" : "No";
+            }
+
             var embed = new EmbedBuilder()
             {
                 Footer = new EmbedFooterBuilder()
@@ -496,11 +503,7 @@ namespace Content.Server.Administration.Systems
                     new()
                     {
                         Name = "Antag Status",
-                        Value = _adminSystem.PlayerList
-                            .Where(p => p.Key == session.UserId)
-                            .Any(p => p.Value.Antag)
-                            ? "Yes"
-                            : "No"
+                        Value = antagStatus
                     },
                     new()
                     {
