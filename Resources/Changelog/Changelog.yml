@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: You can now sort lathe recipes by category.
-    type: Add
-  - message: Recipes in lathes are now sorted alphabetically.
-    type: Add
-  id: 5748
-  time: '2024-01-20T00:45:04.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24247
 - author: Scribbles0
   changes:
   - message: Added a new trait, the Unrevivable trait.
@@ -3795,3 +3786,10 @@
   id: 6247
   time: '2024-03-29T02:30:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26498
+- author: Jake Huxell
+  changes:
+  - message: Reduced game build warning count.
+    type: Fix
+  id: 6248
+  time: '2024-03-29T05:28:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26518
