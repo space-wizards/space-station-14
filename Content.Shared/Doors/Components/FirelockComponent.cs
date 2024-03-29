@@ -1,4 +1,4 @@
-using Content.Shared.Doors.Components;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Doors.Components
 {
@@ -7,7 +7,7 @@ namespace Content.Shared.Doors.Components
     /// auto-closing on depressurization, air/fire alarm interactions, and preventing normal door functions when
     /// retaining pressure..
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class FirelockComponent : Component
     {
         /// <summary>
@@ -39,5 +39,28 @@ namespace Content.Shared.Doors.Components
         /// </summary>
         [DataField("alarmAutoClose"), ViewVariables(VVAccess.ReadWrite)]
         public bool AlarmAutoClose = true;
+
+        /// <summary>
+        /// Whether the firelock can open, or is locked due to its environment.
+        /// </summary>
+        public bool IsLocked => Pressure || Fire;
+
+        /// <summary>
+        /// Whether the firelock is holding back a hazardous pressure.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public bool Pressure;
+
+        /// <summary>
+        /// Whether the firelock is holding back fire.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public bool Fire;
+
+        /// <summary>
+        /// Whether the airlock is powered.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public bool Powered;
     }
 }

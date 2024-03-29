@@ -17,14 +17,12 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Server.Doors.Systems
 {
-    public sealed class FirelockSystem : EntitySystem
+    public sealed class FirelockSystem : SharedFirelockSystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
         [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
 
         private static float _visualUpdateInterval = 0.5f;
         private float _accumulatedFrameTime;
@@ -33,8 +31,6 @@ namespace Content.Server.Doors.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<FirelockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
-            SubscribeLocalEvent<FirelockComponent, GetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
             SubscribeLocalEvent<FirelockComponent, DoorStateChangedEvent>(OnUpdateState);
 
             SubscribeLocalEvent<FirelockComponent, BeforeDoorAutoCloseEvent>(OnBeforeDoorAutoclose);
@@ -50,6 +46,8 @@ namespace Content.Server.Doors.Systems
         {
             // TODO this should REALLLLY not be door specific appearance thing.
             _appearance.SetData(uid, DoorVisuals.Powered, args.Powered);
+            component.Powered = args.Powered;
+            Dirty(uid, component);
         }
 
         #region Visuals
@@ -84,6 +82,9 @@ namespace Content.Server.Doors.Systems
                 {
                     var (fire, pressure) = CheckPressureAndFire(uid, firelock, xform, airtight, airtightQuery);
                     _appearance.SetData(uid, DoorVisuals.ClosedLights, fire || pressure, appearance);
+                    firelock.Fire = fire;
+                    firelock.Pressure = pressure;
+                    Dirty(uid, firelock);
                 }
             }
         }
@@ -129,34 +130,6 @@ namespace Content.Server.Doors.Systems
                 }
             }
             return false;
-        }
-
-        private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
-        {
-            // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
-            var overrideAccess = (args.User != null) && _accessReaderSystem.IsAllowed(args.User.Value, uid);
-
-            if (!this.IsPowered(uid, EntityManager) || (!overrideAccess && IsHoldingPressureOrFire(uid, component)))
-                args.Cancel();
-        }
-
-        private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, ref GetPryTimeModifierEvent args)
-        {
-            var state = CheckPressureAndFire(uid, component);
-
-            if (state.Fire)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-fire-message"),
-                    uid, args.User, PopupType.MediumCaution);
-            }
-            else if (state.Pressure)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-pressure-message"),
-                    uid, args.User, PopupType.MediumCaution);
-            }
-
-            if (state.Fire || state.Pressure)
-                args.PryTimeModifier *= component.LockedPryTimeModifier;
         }
 
         private void OnUpdateState(EntityUid uid, FirelockComponent component, DoorStateChangedEvent args)
@@ -209,7 +182,6 @@ namespace Content.Server.Doors.Systems
             var result = CheckPressureAndFire(uid, firelock);
             return result.Pressure || result.Fire;
         }
-
         public (bool Pressure, bool Fire) CheckPressureAndFire(EntityUid uid, FirelockComponent firelock)
         {
             var query = GetEntityQuery<AirtightComponent>();
