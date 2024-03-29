@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Repository;
@@ -19,7 +19,7 @@ public sealed class ChatRepository : EntitySystem
     // Clocks should start at 1, as 0 indicates "clock not set" or "clock forgotten to be set by bad programmer".
     private uint _nextMessageId = 1;
     private Dictionary<uint, ChatRecord> _messages = new();
-    private Dictionary<string, Dictionary<uint, ChatRecord>> _playerMessages = new();
+    private Dictionary<string, List<uint>> _playerMessages = new();
 
     public override void Initialize()
     {
@@ -62,11 +62,11 @@ public sealed class ChatRepository : EntitySystem
 
         if (!_playerMessages.TryGetValue(storedEv.UserId, out var set))
         {
-            set = new Dictionary<uint, ChatRecord>();
+            set = new List<uint>();
             _playerMessages[storedEv.UserId] = set;
         }
 
-        set.Add(messageId, storedEv);
+        set.Add(messageId);
 
         RaiseLocalEvent(ev.Sender, new MessageCreatedEvent(ev), true);
 
@@ -81,23 +81,6 @@ public sealed class ChatRepository : EntitySystem
     public IChatEvent? GetEventFor(uint id)
     {
         return _messages.TryGetValue(id, out var record) ? record.StoredEvent : null;
-    }
-
-    /// <summary>
-    /// Returns the messages associated with the user that owns an entity.
-    /// </summary>
-    /// <param name="entity">The entity which has a user we want the messages of.</param>
-    /// <returns>An array of messages.</returns>
-    public IChatEvent[] GetMessagesFor(EntityUid entity)
-    {
-        if (!_player.TryGetSessionByEntity(entity, out var session))
-        {
-            return [];
-        }
-
-        return _playerMessages.TryGetValue(session.UserId.UserId.ToString(), out var recs)
-            ? recs.Select(rec => rec.Value.StoredEvent).ToArray()
-            : Array.Empty<IChatEvent>();
     }
 
     /// <summary>
@@ -189,15 +172,15 @@ public sealed class ChatRepository : EntitySystem
             return false;
         }
 
-        foreach (var id in dict.Keys)
+        foreach (var id in dict)
         {
             _messages.Remove(id);
         }
 
-        var ev = new MessagesNukedEvent(dict.Keys);
+        var ev = new MessagesNukedEvent(dict);
 
         _playerMessages.Remove(userId);
-        _playerMessages.Add(userId, new Dictionary<uint, ChatRecord>());
+        _playerMessages.Add(userId, new List<uint>());
 
         RaiseLocalEvent(ev);
 
