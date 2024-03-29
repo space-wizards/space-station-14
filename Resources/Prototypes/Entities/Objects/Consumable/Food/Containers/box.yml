@@ -483,6 +483,9 @@
     tags:
     - Trash
     - HappyHonk
+  - type: ReplaceOnSpawn
+    prototype: HappyHonkNukie
+    chance: 0.1
   - type: StorageFill
     contents:
       - id: ToyMouse

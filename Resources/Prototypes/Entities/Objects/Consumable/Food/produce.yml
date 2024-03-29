@@ -257,6 +257,7 @@
         Quantity: 10
   - type: ReplaceOnSpawn
     prototype: ClusterBananaPeel
+    chance: 0.001
   - type: Tag
     tags:
     - Fruit
@@ -661,6 +662,7 @@
         Quantity: 10
   - type: ReplaceOnSpawn
     prototype: HotPotato
+    chance: 0.001
   - type: Tag
     tags:
     - Potato

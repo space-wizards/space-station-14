@@ -70,6 +70,8 @@
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
   - type: StationMap
+  - type: ReplaceOnSpawn
+    prototype: SyndicatePersonalAI
 
 - type: entity
   parent: PersonalAI

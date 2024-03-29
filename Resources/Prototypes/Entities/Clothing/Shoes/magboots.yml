@@ -25,6 +25,8 @@
             False: {state: icon}
     - type: StaticPrice
       price: 200
+    - type: ReplaceOnSpawn
+      prototype: ClothingShoesBootsMagSyndie
     - type: Tag
       tags:
       - WhitelistChameleon
@@ -55,6 +57,8 @@
     price: 750
   - type: StealTarget
     stealGroup: ClothingShoesBootsMagAdv
+  - type: ReplaceOnSpawn
+    chance: 0.0
 
 - type: entity
   parent: ClothingShoesBootsMag

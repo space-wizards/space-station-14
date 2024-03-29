@@ -47,6 +47,8 @@
     damage:
       types:
         Blunt: 10
+  - type: ReplaceOnSpawn
+    prototype: SyndicateJawsOfLife
 
 - type: entity
   name: syndicate jaws of life

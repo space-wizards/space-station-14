@@ -90,6 +90,8 @@
       canCreateVacuum: false
     - type: Defusable
       disposable: false
+    - type: ReplaceOnSpawn
+      prototype: SyndicateBomb
 
 - type: entity
   parent: BaseHardBomb

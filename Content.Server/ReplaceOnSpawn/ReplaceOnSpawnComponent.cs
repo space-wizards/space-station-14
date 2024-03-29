@@ -9,5 +9,5 @@ public sealed partial class ReplaceOnSpawnComponent : Component
     public EntProtoId? Prototype;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float Chance = 0.001f;
+    public float Chance = 0.01f;
 }
