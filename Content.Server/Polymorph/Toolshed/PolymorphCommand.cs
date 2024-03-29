@@ -15,7 +15,7 @@ namespace Content.Server.Polymorph.Toolshed;
 public sealed class PolymorphCommand : ToolshedCommand
 {
     private PolymorphSystem? _system;
-    private IPrototypeManager? _proto;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     [CommandImplementation]
     public EntityUid? Polymorph(
@@ -24,7 +24,6 @@ public sealed class PolymorphCommand : ToolshedCommand
         )
     {
         _system ??= GetSys<PolymorphSystem>();
-        _proto ??= IoCManager.Resolve<IPrototypeManager>();
 
         if (!_proto.TryIndex(protoId, out var prototype))
             return null;
