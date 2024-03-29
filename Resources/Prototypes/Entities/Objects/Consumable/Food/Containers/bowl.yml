@@ -12,6 +12,7 @@
     solutions:
       food:
         maxVol: 50 # enough to make cheese in.
+        canMix: True
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     layers:
