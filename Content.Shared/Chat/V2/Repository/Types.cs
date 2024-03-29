@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using System.Numerics;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chat.V2.Repository;
@@ -7,10 +7,10 @@ namespace Content.Shared.Chat.V2.Repository;
 /// <summary>
 /// The record associated with a specific chat event.
 /// </summary>
-public struct ChatRecord(string userName, string userId, IChatEvent storedEvent, string entityName)
+public struct ChatRecord(string userName, NetUserId userId, IChatEvent storedEvent, string entityName)
 {
     public string UserName = userName;
-    public string UserId = userId;
+    public NetUserId UserId = userId;
     public string EntityName = entityName;
     public IChatEvent StoredEvent = storedEvent;
 }
