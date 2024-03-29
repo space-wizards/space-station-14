@@ -44,7 +44,7 @@ namespace Content.IntegrationTests.Tests
 
         private static readonly string[] GameMaps =
         {
-            "Dev"//, CrystallPunk Map replacement
+            "Dev", //CrystallPunk Map replacement
             //"TestTeg",
             //"Fland",
             //"Meta",
@@ -53,14 +53,14 @@ namespace Content.IntegrationTests.Tests
             //"Omega",
             //"Bagel",
             //"Origin",
-            //"CentComm",
-            //"NukieOutpost",
+            "CentComm",
+            "NukieOutpost",
             //"Box",
             //"Europa",
             //"Saltern",
             //"Core",
             //"Marathon",
-            //"MeteorArena",
+            "MeteorArena",
             //"Atlas",
             //"Reach",
             //"Train"
