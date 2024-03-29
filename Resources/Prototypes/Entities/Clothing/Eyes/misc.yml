@@ -15,50 +15,19 @@
   - type: FlashImmunity
 
 - type: entity
-  parent: [ClothingEyesBase, BaseFoldable]
+  parent: ClothingHeadEyeBaseFlippable
   id: ClothingEyesEyepatch
   name: eyepatch
   description: Yarr.
   components:
-  - type: Appearance
-  - type: Foldable
-    canFoldInsideContainer: true
-    unfoldVerbText: fold-flip-verb
-    foldVerbText: fold-flip-verb
-  - type: FoldableClothing
-    foldedEquippedPrefix: flipped
-    foldedHeldPrefix: flipped
   - type: Sprite
     sprite: Clothing/Eyes/Misc/eyepatch.rsi
-    layers:
-    - state: icon
-      map: [ "unfoldedLayer" ]
-    - state: icon
-      map: ["foldedLayer"]
-      visible: false
-      scale: -1,1
   - type: Clothing
     sprite: Clothing/Eyes/Misc/eyepatch.rsi
   - type: EyeProtection
     protectionTime: 5
 
 - type: entity
-  parent: ClothingEyesEyepatch
+  parent: [ClothingEyesEyepatch, ClothingHeadEyeBaseFlipped]
   id: ClothingEyesEyepatchFlipped
   suffix: flipped
-  components:
-  - type: Foldable
-    folded: true
-  - type: Clothing
-    equippedPrefix: flipped
-  - type: Item
-    heldPrefix: flipped
-  - type: Sprite
-    layers:
-    - state: icon
-      map: [ "unfoldedLayer" ]
-      visible: false
-    - state: icon
-      map: ["foldedLayer"]
-      visible: true
-      scale: -1,1
