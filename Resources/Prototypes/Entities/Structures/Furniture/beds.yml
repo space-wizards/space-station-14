@@ -9,8 +9,8 @@
       types:
         Poison: -0.1
         Blunt: -0.1
-        Slash: -0.1
-        Piercing: -0.1
+        Slash: -0.05
+        Piercing: -0.05
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -74,8 +74,8 @@
         Poison: -0.2
         Cold: -0.4
         Blunt: -0.2
-        Slash: -0.2
-        Piercing: -0.2
+        Slash: -0.1
+        Piercing: -0.1
   - type: Construction
     graph: bed
     node: medicalbed
