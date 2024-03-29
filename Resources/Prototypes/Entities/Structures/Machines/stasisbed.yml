@@ -12,6 +12,8 @@
       types:
         Poison: -0.001
         Blunt: -0.001
+        Slash: -0.001
+        Pierce: -0.001
   - type: Sprite
     sprite: Structures/Machines/stasis_bed.rsi
     noRot: true
