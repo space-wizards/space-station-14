@@ -118,7 +118,10 @@ public sealed partial class PolymorphSystem : EntitySystem
 
     private void OnPolymorphActionEvent(Entity<PolymorphableComponent> ent, ref PolymorphActionEvent args)
     {
-        PolymorphEntity(ent, args.Prototype.Configuration);
+        if (!_proto.TryIndex(args.ProtoId, out var prototype))
+            return;
+
+        PolymorphEntity(ent, prototype.Configuration);
     }
 
     private void OnRevertPolymorphActionEvent(Entity<PolymorphedEntityComponent> ent,
@@ -348,7 +351,9 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (target.Comp.PolymorphActions.ContainsKey(id))
             return;
 
-        var polyProto = _proto.Index(id);
+        if (!_proto.TryIndex(id, out var polyProto))
+            return;
+
         var entProto = _proto.Index(polyProto.Configuration.Entity);
 
         EntityUid? actionId = default!;
@@ -366,7 +371,7 @@ public sealed partial class PolymorphSystem : EntitySystem
 
         baseAction.Icon = new SpriteSpecifier.EntityPrototype(polyProto.Configuration.Entity);
         if (baseAction is InstantActionComponent action)
-            action.Event = new PolymorphActionEvent(prototype: polyProto);
+            action.Event = new PolymorphActionEvent(id);
     }
 
     public void RemovePolymorphAction(ProtoId<PolymorphPrototype> id, Entity<PolymorphableComponent> target)
