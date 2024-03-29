@@ -240,6 +240,16 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
             args.Handle();
         }
+        else if (args.Function == ContentKeyFunctions.SaveItemLocation)
+        {
+            if (_container?.StorageEntity is not {} storage)
+                return;
+
+            _entity.RaisePredictiveEvent(new StorageSaveItemLocationEvent(
+                _entity.GetNetEntity(control.Entity),
+                _entity.GetNetEntity(storage)));
+            args.Handle();
+        }
         else if (args.Function == ContentKeyFunctions.ExamineEntity)
         {
             _entity.System<ExamineSystem>().DoExamine(control.Entity);
