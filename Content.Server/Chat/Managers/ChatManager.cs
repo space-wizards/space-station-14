@@ -125,9 +125,23 @@ namespace Content.Server.Chat.Managers
                 _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server message to {player:Player}: {message}");
         }
 
-        public void SendAdminAnnouncement(string message)
+        public void SendAdminAnnouncement(string message, AdminFlags? flagBlacklist, AdminFlags? flagWhitelist)
         {
-            var clients = _adminManager.ActiveAdmins.Select(p => p.Channel);
+            var clients = _adminManager.ActiveAdmins.Where(p =>
+            {
+                var adminData = _adminManager.GetAdminData(p);
+
+                DebugTools.AssertNotNull(adminData);
+
+                if (adminData == null)
+                    return false;
+
+                if (flagBlacklist != null && adminData.HasFlag(flagBlacklist.Value))
+                    return false;
+
+                return flagWhitelist == null || adminData.HasFlag(flagWhitelist.Value);
+
+            }).Select(p => p.Channel);
 
             var wrappedMessage = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
                 ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")), ("message", FormattedMessage.EscapeText(message)));

@@ -142,20 +142,7 @@
   - type: Objective
     difficulty: 0.7
 
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealCollectionObjective
-  id: CannabisStealCollectionObjective
-  components:
-  - type: NotJobRequirement
-    job: Botanist
-  - type: StealCondition
-    stealGroup: Cannabis
-    minCollectionSize: 20
-    maxCollectionSize: 30
-    verifyMapExistence: false
-  - type: Objective
-    difficulty: 0.5
+
 
 - type: entity
   noSpawn: true
