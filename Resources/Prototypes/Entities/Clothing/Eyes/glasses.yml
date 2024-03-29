@@ -170,6 +170,7 @@
     protectionTime: 5
   - type: Construction
     graph: GlassesSecHUD
+    node: glassesSec
   - type: Tag
     tags:
     - HamsterWearable
