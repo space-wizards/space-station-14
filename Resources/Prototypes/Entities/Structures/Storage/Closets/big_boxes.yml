@@ -83,7 +83,8 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-
+    - type: ReplaceOnSpawn
+      prototype: StealthBox
 
 #For admin spawning only
 - type: entity
