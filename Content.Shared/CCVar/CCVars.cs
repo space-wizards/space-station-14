@@ -771,13 +771,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
 
         /// <summary>
-        ///     The channel that admin messages are sent to.
+        ///     The discord channel id that admin messages are sent to.
         /// </summary>
         public static readonly CVarDef<string> AdminRelayChannelId =
             CVarDef.Create("admin.relay_channel_id", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
-        ///     The **FORUM** channel that admin messages are sent to. If it's not a forum channel, everything will explode.
+        ///     The discord **FORUM** channel id that admin messages are sent to. If it's not a forum channel, everything will explode.
         /// </summary>
         public static readonly CVarDef<string> AdminAhelpRelayChannelId =
             CVarDef.Create("admin.ahelp_relay_channel_id", string.Empty, CVar.SERVERONLY);
@@ -871,7 +871,6 @@ namespace Content.Shared.CCVar
         /// <summary>
         ///     If this is true, the ahelp relay shows that the response was from discord. If this is false, all messages an admin sends will be shown as if the admin was ingame.
         /// </summary>
-        /// <returns></returns>
         public static readonly CVarDef<bool> AdminAhelpRelayShowDiscord =
             CVarDef.Create("admin.ahelp_relay_show_discord", true, CVar.SERVERONLY);
 
@@ -1236,7 +1235,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ooc.enable_during_round", false, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
-        /// The channel that OOC messages are sent to.
+        /// The discord channel id that OOC messages are sent to.
         /// </summary>
         public static readonly CVarDef<string> OocRelayChannelId =
             CVarDef.Create("ooc.relay_channel_id", "", CVar.SERVERONLY);
