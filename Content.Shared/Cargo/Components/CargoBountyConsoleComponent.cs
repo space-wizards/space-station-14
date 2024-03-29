@@ -49,7 +49,7 @@ public sealed partial class CargoBountyConsoleComponent : Component
     /// The sound made when the bounty is skipped.
     /// </summary>
     [DataField("skipSound")]
-    public SoundSpecifier SkipSound = new SoundPathSpecifier("/Audio/Effects/cargo.ogg");
+    public SoundSpecifier SkipSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg");
 }
 
 [NetSerializable, Serializable]
@@ -78,11 +78,9 @@ public sealed class BountyPrintLabelMessage : BoundUserInterfaceMessage
 public sealed class BountySkipMessage : BoundUserInterfaceMessage
 {
     public string BountyId;
-    public EntityUid SkippingEntityUid;
 
-    public BountySkipMessage(string bountyId, EntityUid skippingEntityUid)
+    public BountySkipMessage(string bountyId)
     {
         BountyId = bountyId;
-        SkippingEntityUid = skippingEntityUid;
     }
 }

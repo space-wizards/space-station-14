@@ -84,22 +84,13 @@ public sealed partial class CargoSystem
         if (!TryGetBountyFromId(station, args.BountyId, out var bounty))
             return;
 
-        if (HasAccess(uid,args.)) // TODO check access here!
-        {
-            return;
-        }
         // TODO skip da bounty
-        component.NextSkipTime = _timing.CurTime + component.SkipDelay;
-        _audio.PlayPvs(component.SkipSound, uid);
-    }
-
-    public bool HasAccess(EntityUid uid, EntityUid? user = null)
-    {
-        if (user is null)
-            return false;
-        if (TryComp<AccessReaderComponent>(uid, out var accessReaderComponent))
-            return _accessReaderSystem.IsAllowed(user.Value, uid, accessReaderComponent);
-        return true;
+        if (TryRemoveBounty(station, bounty.Value))
+        {
+            FillBountyDatabase(station);
+            component.NextSkipTime = _timing.CurTime + component.SkipDelay;
+            _audio.PlayPvs(component.SkipSound, uid);
+        }
     }
 
     public void SetupBountyLabel(EntityUid uid, CargoBountyData bounty, PaperComponent? paper = null, CargoBountyLabelComponent? label = null)
