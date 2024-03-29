@@ -2,6 +2,7 @@
   id: Zookeeper
   name: job-name-zookeeper
   description: job-description-zookeeper
+  setPreference: false
   playTimeTracker: JobZookeeper
   startingGear: ZookeeperGear
   icon: "JobIconZookeeper"

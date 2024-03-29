@@ -2,6 +2,7 @@
   id: TechnicalAssistant
   name: job-name-technical-assistant
   description: job-description-technical-assistant
+  setPreference: false
   playTimeTracker: JobTechnicalAssistant
   requirements:
     - !type:OverallPlaytimeRequirement

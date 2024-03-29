@@ -2,6 +2,7 @@
   id: Captain
   name: job-name-captain
   description: job-description-captain
+  setPreference: false
   playTimeTracker: JobCaptain
   requirements:
     - !type:DepartmentTimeRequirement

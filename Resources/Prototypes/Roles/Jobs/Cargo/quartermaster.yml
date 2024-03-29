@@ -2,6 +2,7 @@
   id: Quartermaster
   name: job-name-qm
   description: job-description-qm
+  setPreference: false
   playTimeTracker: JobQuartermaster
   requirements:
     - !type:RoleTimeRequirement

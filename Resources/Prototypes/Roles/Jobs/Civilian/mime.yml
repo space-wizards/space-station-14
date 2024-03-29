@@ -2,6 +2,7 @@
   id: Mime
   name: job-name-mime
   description: job-description-mime
+  setPreference: false
   playTimeTracker: JobMime
   requirements:
     - !type:OverallPlaytimeRequirement

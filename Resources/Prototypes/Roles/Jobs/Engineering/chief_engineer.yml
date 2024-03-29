@@ -2,6 +2,7 @@
   id: ChiefEngineer
   name: job-name-ce
   description: job-description-ce
+  setPreference: false
   playTimeTracker: JobChiefEngineer
   requirements:
     - !type:RoleTimeRequirement

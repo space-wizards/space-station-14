@@ -2,6 +2,7 @@
   id: Borg
   name: job-name-borg
   description: job-description-borg
+  setPreference: false
   playTimeTracker: JobBorg
   requirements:
     - !type:OverallPlaytimeRequirement

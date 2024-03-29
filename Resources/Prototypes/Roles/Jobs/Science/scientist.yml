@@ -2,6 +2,7 @@
   id: Scientist
   name: job-name-scientist
   description: job-description-scientist
+  setPreference: false
   playTimeTracker: JobScientist
   requirements:
     - !type:DepartmentTimeRequirement

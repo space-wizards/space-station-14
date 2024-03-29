@@ -2,6 +2,7 @@
   id: Musician
   name: job-name-musician
   description: job-description-musician
+  setPreference: false
   playTimeTracker: JobMusician
   startingGear: MusicianGear
   icon: "JobIconMusician"

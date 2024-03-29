@@ -2,6 +2,7 @@
   id: AtmosphericTechnician
   name: job-name-atmostech
   description: job-description-atmostech
+  setPreference: false
   playTimeTracker: JobAtmosphericTechnician
   requirements:
     - !type:DepartmentTimeRequirement

@@ -1,7 +1,7 @@
 - type: gameMap
   id: MeteorArena
   mapName: Meteor Arena
-  mapPath: /Maps/Nonstations/meteor-arena.yml
+  mapPath: /Maps/CrystallPunk/meteor-arena.yml
   minPlayers: 0
   stations:
     Arena:
@@ -11,6 +11,6 @@
           mapNameTemplate: "Meteor Arena"
         - type: StationJobs
           overflowJobs:
-            - Passenger
+            - Adventurer #CrystallPunk Dev replacement
           availableJobs:
-            Passenger: [ -1, -1 ]
+            Adventurer: [ -1, -1 ] #CrystallPunk Dev replacement

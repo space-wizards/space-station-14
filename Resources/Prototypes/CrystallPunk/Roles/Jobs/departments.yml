@@ -1,0 +1,6 @@
+- type: department
+  id: Mercenary
+  description: department-Mercenary-description
+  color: "#e6a447"
+  roles:
+  - Adventurer

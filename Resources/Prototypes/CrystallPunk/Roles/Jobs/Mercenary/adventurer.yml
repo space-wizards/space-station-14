@@ -1,0 +1,8 @@
+- type: job
+  id: Adventurer
+  name: job-name-adventurer
+  description: job-description-adventurer
+  playTimeTracker: JobAdventurer
+  startingGear: CargoTechGear #TODO replace
+  icon: "JobIconCargoTechnician" #TODO replace
+  supervisors: job-supervisors-everyone

@@ -2,6 +2,7 @@
   id: ResearchAssistant
   name: job-name-research-assistant
   description: job-description-research-assistant
+  setPreference: false
   playTimeTracker: JobResearchAssistant
   requirements:
     - !type:DepartmentTimeRequirement
