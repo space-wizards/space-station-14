@@ -129,5 +129,12 @@ Entries:
   id: 17
   time: '2024-03-24T15:39:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26263
+- author: lzk228
+  changes:
+  - message: Selected preset for secret is now sent to admin chat.
+    type: Tweak
+  id: 18
+  time: '2024-03-29T05:03:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26500
 Name: Admin
 Order: 1
