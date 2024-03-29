@@ -86,6 +86,7 @@
     solutions:
       drink:
         maxVol: 50
+        canMix: True
 
 - type: entity
   name: base empty carton
@@ -100,6 +101,7 @@
     solutions:
       drink:
         maxVol: 50
+        canMix: True
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 5
@@ -149,6 +151,7 @@
     solutions:
       drink:
         maxVol: 100
+        canMix: True
 
 # Containers
 - type: entity

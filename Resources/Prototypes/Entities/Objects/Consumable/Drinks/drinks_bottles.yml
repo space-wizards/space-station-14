@@ -17,6 +17,7 @@
     solutions:
       drink:
         maxVol: 100
+        canMix: True
   - type: Sprite
     state: icon
     sprite: Objects/Consumable/Drinks/generic_jug.rsi # fallback to generic plastic jug
@@ -129,6 +130,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Absinthe
           Quantity: 100
@@ -145,6 +147,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: BlueCuracao
           Quantity: 100
@@ -169,6 +172,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Nothing
           Quantity: 100
@@ -185,6 +189,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Champagne
           Quantity: 100
@@ -202,6 +207,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Cognac
           Quantity: 100
@@ -220,6 +226,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Cola
           Quantity: 100
@@ -238,6 +245,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Grenadine
           Quantity: 100
@@ -258,6 +266,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Gin
           Quantity: 100
@@ -276,6 +285,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Gildlager
           Quantity: 100
@@ -292,6 +302,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: CoffeeLiqueur
           Quantity: 100
@@ -310,6 +321,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: MelonLiquor
           Quantity: 100
@@ -334,6 +346,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Patron
           Quantity: 100
@@ -349,6 +362,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: PoisonWine
           Quantity: 100
@@ -368,6 +382,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Rum
           Quantity: 100
@@ -386,6 +401,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: SpaceMountainWind
           Quantity: 100
@@ -405,6 +421,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: SpaceUp
           Quantity: 100
@@ -424,6 +441,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Tequila
           Quantity: 100
@@ -442,6 +460,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Vermouth
           Quantity: 100
@@ -460,6 +479,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Vodka
           Quantity: 100
@@ -478,6 +498,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Whiskey
           Quantity: 100
@@ -496,6 +517,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Wine
           Quantity: 100
@@ -522,6 +544,7 @@
     solutions:
       drink:
         maxVol: 50
+        canMix: True
         reagents:
         - ReagentId: Beer
           Quantity: 50
@@ -543,6 +566,7 @@
     solutions:
       drink:
         maxVol: 150
+        canMix: True
         reagents:
         - ReagentId: Beer
           Quantity: 150
@@ -569,6 +593,7 @@
     solutions:
       drink:
         maxVol: 50
+        canMix: True
         reagents:
         - ReagentId: Ale
           Quantity: 50
@@ -587,6 +612,7 @@
     solutions:
       drink:
         maxVol: 150
+        canMix: True
         reagents:
         - ReagentId: Ale
           Quantity: 150
@@ -609,6 +635,7 @@
     solutions:
       drink:
         maxVol: 30
+        canMix: True
         reagents:
         - ReagentId: Water
           Quantity: 30
@@ -639,6 +666,7 @@
     solutions:
       drink:
         maxVol: 150
+        canMix: True
         reagents:
         - ReagentId: SodaWater
           Quantity: 150
@@ -655,6 +683,7 @@
     solutions:
       drink:
         maxVol: 150
+        canMix: True
         reagents:
         - ReagentId: TonicWater
           Quantity: 150
@@ -673,6 +702,7 @@
     solutions:
       drink:
         maxVol: 150
+        canMix: True
         reagents:
         - ReagentId: JuiceLime
           Quantity: 150
@@ -692,6 +722,7 @@
     solutions:
       drink:
         maxVol: 150
+        canMix: True
         reagents:
         - ReagentId: JuiceOrange
           Quantity: 150
@@ -711,6 +742,7 @@
     solutions:
       drink:
         maxVol: 150
+        canMix: True
         reagents:
         - ReagentId: Cream
           Quantity: 150
@@ -733,6 +765,7 @@
     solutions:
       drink:
         maxVol: 300
+        canMix: True
         reagents:
         - ReagentId: Sugar
           Quantity: 300
@@ -748,6 +781,7 @@
     solutions:
       drink:
         maxVol: 300
+        canMix: True
         reagents:
         - ReagentId: LemonLime
           Quantity: 300
@@ -765,6 +799,7 @@
     solutions:
       drink:
         maxVol: 150
+        canMix: True
         reagents:
         - ReagentId: Mead
           Quantity: 150
@@ -782,6 +817,7 @@
     solutions:
       drink:
         maxVol: 300
+        canMix: True
         reagents:
         - ReagentId: Ice
           Quantity: 300
@@ -799,6 +835,7 @@
     solutions:
       drink:
         maxVol: 300
+        canMix: True
         reagents:
         - ReagentId: Coffee
           Quantity: 300
@@ -816,6 +853,7 @@
     solutions:
       drink:
         maxVol: 300
+        canMix: True
         reagents:
         - ReagentId: Tea
           Quantity: 300
@@ -833,6 +871,7 @@
     solutions:
       drink:
         maxVol: 300
+        canMix: True
         reagents:
         - ReagentId: GreenTea
           Quantity: 300
@@ -850,6 +889,7 @@
     solutions:
       drink:
         maxVol: 300
+        canMix: True
         reagents:
         - ReagentId: IcedTea
           Quantity: 300
@@ -865,6 +905,7 @@
     solutions:
       drink:
         maxVol: 300
+        canMix: True
         reagents:
         - ReagentId: DrGibb
           Quantity: 300
@@ -882,6 +923,7 @@
     solutions:
       drink:
         maxVol: 300
+        canMix: True
         reagents:
         - ReagentId: RootBeer
           Quantity: 300
@@ -899,6 +941,7 @@
     solutions:
       drink:
         maxVol: 300
+        canMix: True
         reagents:
         - ReagentId: JuiceWatermelon
           Quantity: 300
@@ -916,6 +959,7 @@
     solutions:
       drink:
         maxVol: 100
+        canMix: True
         reagents:
         - ReagentId: EnergyDrink
           Quantity: 100
@@ -933,4 +977,5 @@
     solutions:
       drink:
         maxVol: 150
+        canMix: True
   - type: Drink

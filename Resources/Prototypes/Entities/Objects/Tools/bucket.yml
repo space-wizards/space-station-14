@@ -26,6 +26,7 @@
     solutions:
       bucket:
         maxVol: 250
+        canMix: True
   - type: SolutionTransfer
     transferAmount: 100
     maxTransferAmount: 100

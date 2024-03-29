@@ -140,6 +140,7 @@
     solutions:
       drink:
         maxVol: 50
+        canMix: True
         reagents:
         - ReagentId: Mopwata
           Quantity: 40

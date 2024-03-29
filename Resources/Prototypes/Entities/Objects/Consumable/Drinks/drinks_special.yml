@@ -8,6 +8,7 @@
     solutions:
       drink:
         maxVol: 100
+        canMix: True
   - type: Drink
   - type: FitsInDispenser
     solution: drink
@@ -42,6 +43,7 @@
     solutions:
       drink:
         maxVol: 5
+        canMix: True
   - type: SolutionTransfer
     transferAmount: 10
     minTransferAmount: 10
@@ -83,6 +85,7 @@
     solutions:
       drink:
         maxVol: 50
+        canMix: True
   - type: SolutionContainerVisuals
     maxFillLevels: 9
     fillBaseName: fill

@@ -12,6 +12,7 @@
     solutions:
       drink:
         maxVol: 30
+        canMix: True
         reagents:
         - ReagentId: JuiceWatermelon
           Quantity: 30
@@ -40,6 +41,7 @@
     solutions:
       drink:
         maxVol: 30
+        canMix: True
         reagents:
         - ReagentId: JuiceWatermelon
           Quantity: 30

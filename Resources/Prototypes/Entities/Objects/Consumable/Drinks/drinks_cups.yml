@@ -10,7 +10,7 @@
     solutions:
       drink:
         maxVol: 20
-        canMix: true
+        canMix: True
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution
@@ -181,6 +181,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: HotCocoa
           Quantity: 20
@@ -209,6 +210,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Coffee
           Quantity: 20
@@ -237,6 +239,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: CafeLatte
           Quantity: 20
@@ -263,6 +266,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Tea
           Quantity: 20
@@ -291,6 +295,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: GreenTea
           Quantity: 20
@@ -319,6 +324,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        canMix: True
         reagents:
         - ReagentId: Water
           Quantity: 20
