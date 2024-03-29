@@ -11,20 +11,11 @@ namespace Content.Server.Chat.V2.Commands;
 public sealed class NukeChatMessagesCommand : ToolshedCommand
 {
     [CommandImplementation("usernames")]
-    public void NukeChatMessagesForUsernames([PipedArgument] IEnumerable<string> usernames)
+    public void Command([PipedArgument] IEnumerable<string> usernames)
     {
         foreach (var username in usernames)
         {
             IoCManager.Resolve<ChatRepository>().NukeForUsername(username, out _);
-        }
-    }
-
-    [CommandImplementation("userids")]
-    public void NukeChatMessagesForUserIDs([PipedArgument] IEnumerable<string> userIDs)
-    {
-        foreach (var username in userIDs)
-        {
-            IoCManager.Resolve<ChatRepository>().NukeForUserId(username, out _);
         }
     }
 }

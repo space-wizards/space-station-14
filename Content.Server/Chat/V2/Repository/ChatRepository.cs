@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Repository;
 using Robust.Server.Player;
+using Robust.Shared.Network;
 using Robust.Shared.Replays;
 
 namespace Content.Server.Chat.V2.Repository;
@@ -19,7 +20,7 @@ public sealed class ChatRepository : EntitySystem
     // Clocks should start at 1, as 0 indicates "clock not set" or "clock forgotten to be set by bad programmer".
     private uint _nextMessageId = 1;
     private Dictionary<uint, ChatRecord> _messages = new();
-    private Dictionary<string, List<uint>> _playerMessages = new();
+    private Dictionary<NetUserId, List<uint>> _playerMessages = new();
 
     public override void Initialize()
     {
@@ -53,7 +54,7 @@ public sealed class ChatRepository : EntitySystem
         var storedEv = new ChatRecord
         {
             UserName = session.Name,
-            UserId = session.UserId.UserId.ToString(),
+            UserId = session.UserId,
             EntityName = Name(ev.Sender),
             StoredEvent = ev
         };
@@ -121,7 +122,7 @@ public sealed class ChatRepository : EntitySystem
 
         _messages.Remove(id);
 
-        if (_playerMessages.TryGetValue(ev.UserName, out var set))
+        if (_playerMessages.TryGetValue(ev.UserId, out var set))
         {
             set.Remove(id);
         }
@@ -150,7 +151,7 @@ public sealed class ChatRepository : EntitySystem
             return false;
         }
 
-        return NukeForUserId(userId.UserId.ToString(), out reason);
+        return NukeForUserId(userId, out reason);
     }
 
     /// <summary>
@@ -163,7 +164,7 @@ public sealed class ChatRepository : EntitySystem
     /// <remarks>Note that this could be a <b>very large</b> event, as we send every single event ID over the wire.
     /// By necessity we can't leak the player-source of chat messages (or if they even have the same origin) because of
     /// client modders who could use that information to cheat/metagrudge/etc >:(</remarks>
-    public bool NukeForUserId(string userId, [NotNullWhen(false)] out string? reason)
+    public bool NukeForUserId(NetUserId userId, [NotNullWhen(false)] out string? reason)
     {
         if (!_playerMessages.TryGetValue(userId, out var dict))
         {
