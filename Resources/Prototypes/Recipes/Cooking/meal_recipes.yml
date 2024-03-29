@@ -948,6 +948,19 @@
     FoodBowlBig: 1
     FoodLungs: 1
 
+- type: microwaveMealRecipe
+  id: RecipeMenudo
+  name: menudo recipe
+  result: FoodSoupMenudo
+  time: 10
+  solids:
+    FoodBowlBig: 1
+    FoodStomach: 1
+    FoodCorn: 1
+    FoodChili: 1
+  reagents:
+    JuiceLime: 5
+
 #Pies
 
 - type: microwaveMealRecipe
