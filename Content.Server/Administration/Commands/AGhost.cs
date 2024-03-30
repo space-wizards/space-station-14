@@ -26,7 +26,7 @@ public sealed class AGhost : LocalizedCommands
         if (args.Length == 1)
         {
             var names = _playerManager.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
-            return CompletionResult.FromHintOptions(names, "[Username]");
+            return CompletionResult.FromHintOptions(names, LocalizationManager.GetString("shell-argument-username-optional-hint"));
         }
 
         return CompletionResult.Empty;
@@ -36,7 +36,7 @@ public sealed class AGhost : LocalizedCommands
     {
         if (args.Length > 1)
         {
-            shell.WriteLine(LocalizationManager.GetString("shell-wrong-arguments-number"));
+            shell.WriteError(LocalizationManager.GetString("shell-wrong-arguments-number"));
             return;
         }
 
@@ -47,14 +47,14 @@ public sealed class AGhost : LocalizedCommands
             // If you are not a player, you require a player argument.
             if (args.Length == 0)
             {
-                shell.WriteLine(LocalizationManager.GetString("shell-need-exactly-one-argument"));
+                shell.WriteError(LocalizationManager.GetString("shell-need-exactly-one-argument"));
                 return;
             }
 
             var didFind = _playerManager.TryGetSessionByUsername(args[0], out player);
             if (!didFind)
             {
-                shell.WriteLine(LocalizationManager.GetString("shell-target-player-does-not-exist"));
+                shell.WriteError(LocalizationManager.GetString("shell-target-player-does-not-exist"));
                 return;
             }
         }
@@ -65,7 +65,7 @@ public sealed class AGhost : LocalizedCommands
             var didFind = _playerManager.TryGetSessionByUsername(args[0], out player);
             if (!didFind)
             {
-                shell.WriteLine(LocalizationManager.GetString("shell-target-player-does-not-exist"));
+                shell.WriteError(LocalizationManager.GetString("shell-target-player-does-not-exist"));
                 return;
             }
         }
@@ -78,7 +78,7 @@ public sealed class AGhost : LocalizedCommands
 
         if (!mindSystem.TryGetMind(player, out var mindId, out var mind))
         {
-            shell.WriteLine(self
+            shell.WriteError(self
                 ? LocalizationManager.GetString("aghost-no-mind-self")
                 : LocalizationManager.GetString("aghost-no-mind-other"));
             return;
