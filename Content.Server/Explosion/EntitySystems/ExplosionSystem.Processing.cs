@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -17,7 +16,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -40,20 +38,20 @@ public sealed partial class ExplosionSystem
     ///     Queue for delayed processing of explosions. If there is an explosion that covers more than <see
     ///     cref="TilesPerTick"/> tiles, other explosions will actually be delayed slightly. Unless it's a station
     ///     nuke, this delay should never really be noticeable.
+    ///     This is also used to combine explosion intensities of the same kind.
     /// </summary>
-    private Queue<Func<Explosion?>> _explosionQueue = new();
+    private Queue<QueuedExplosion> _explosionQueue = new();
+
+    /// <summary>
+    /// All queued explosions that will be processed in <see cref="_explosionQueue"/>.
+    /// These always have the same contents.
+    /// </summary>
+    private HashSet<QueuedExplosion> _queuedExplosions = new();
 
     /// <summary>
     ///     The explosion currently being processed.
     /// </summary>
     private Explosion? _activeExplosion;
-
-    /// <summary>
-    ///     While processing an explosion, the "progress" is sent to clients, so that the explosion fireball effect
-    ///     syncs up with the damage. When the tile iteration increments, an update needs to be sent to clients.
-    ///     This integer keeps track of the last value sent to clients.
-    /// </summary>
-    private int _previousTileIteration;
 
     /// <summary>
     /// This list is used when raising <see cref="BeforeExplodeEvent"/> to avoid allocating a new list per event.
@@ -102,17 +100,16 @@ public sealed partial class ExplosionSystem
                 if (MathF.Max(MaxProcessingTime - 1, 0.1f) < Stopwatch.Elapsed.TotalMilliseconds)
                     break;
 
-                if (!_explosionQueue.TryDequeue(out var spawnNextExplosion))
+                if (!_explosionQueue.TryDequeue(out var queued))
                     break;
 
-                _activeExplosion = spawnNextExplosion();
+                _queuedExplosions.Remove(queued);
+                _activeExplosion = SpawnExplosion(queued);
 
                 // explosion spawning can be null if something somewhere went wrong. (e.g., negative explosion
                 // intensity).
                 if (_activeExplosion == null)
                     continue;
-
-                _previousTileIteration = 0;
 
                 // just a lil nap
                 if (SleepNodeSys)
@@ -877,4 +874,16 @@ sealed class Explosion
         }
         _tileUpdateDict.Clear();
     }
+}
+
+/// <summary>
+/// Data needed to spawn an explosion with <see cref="ExplosionSystem.SpawnExplosion"/>.
+/// </summary>
+public sealed class QueuedExplosion
+{
+    public MapCoordinates Epicenter;
+    public ExplosionPrototype Proto = new();
+    public float TotalIntensity, Slope, MaxTileIntensity, TileBreakScale;
+    public int MaxTileBreak;
+    public bool CanCreateVacuum;
 }

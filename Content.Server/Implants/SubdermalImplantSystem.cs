@@ -115,7 +115,6 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         if (targetCoords != null)
         {
             _xform.SetCoordinates(ent, targetCoords.Value);
-            _xform.AttachToGridOrMap(ent, xform);
             _audio.PlayPvs(implant.TeleportSound, ent);
             args.Handled = true;
         }
