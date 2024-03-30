@@ -7,5 +7,5 @@ public sealed partial class ExaminableSolutionComponent : Component
     public string Solution = "default";
 
     [DataField]
-    public bool Hidden = false;
+    public bool HeldOnly = false;
 }

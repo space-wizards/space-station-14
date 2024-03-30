@@ -875,8 +875,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     //Check if examinable solution requires you to hold the item in hand.
     private bool CanSeeHiddenSolution(Entity<ExaminableSolutionComponent> entity, EntityUid examiner)
     {
-        //Is the Hidden enabled?
-        if (!entity.Comp.Hidden)
+        //Is the HeldOnly enabled?
+        if (!entity.Comp.HeldOnly)
             return true;
         //Iterate over hands, if any, for examinable entity.
         var hasHands = TryComp<HandsComponent>(examiner, out var hands);
