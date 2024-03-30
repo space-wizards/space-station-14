@@ -75,7 +75,7 @@ namespace Content.Server.Labels
 
             // Update label
             label.OriginalName ??= metadata.EntityName;
-            label.CurrentLabel = FormattedMessage.EscapeText(text);
+            label.CurrentLabel = text;
             _metaData.SetEntityName(uid, $"{label.OriginalName} ({text})", metadata);
 
             Dirty(uid, label);
