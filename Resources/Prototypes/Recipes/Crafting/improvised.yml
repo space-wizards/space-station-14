@@ -246,7 +246,7 @@
   id: improvisednuclearbomb
   graph: ImprovisedNukeCraft
   startNode: start
-  targetNode: bullet
+  targetNode: gun
   category: construction-category-misc
   objectType: Item
   description: A full nuclear explosive.
