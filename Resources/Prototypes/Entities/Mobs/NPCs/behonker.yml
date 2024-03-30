@@ -112,7 +112,7 @@
           Radiation: 10
     - type: Input
       context: "human"
-    - type: Bloodstream
+    - type: BleedPool
       #TODO Bloodstream: re-implement this
 #      bloodMaxVolume: 300
 #      bloodReagent: Laughter

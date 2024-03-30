@@ -25,18 +25,18 @@ public sealed partial class BloodstreamComponent : Component
     public FixedPoint2 MaxVolume = 200;
 
     /// <summary>
-    /// This is the value that blood gets changed by each update (aka Delta).
-    /// This value can be positive or negative, for example: a positive value would be if the entity is receiving a transfusion
+    /// How much blood is currently being lost by bleed, this number must be positive
     /// </summary>
     [DataField, AutoNetworkedField]
-    public FixedPoint2 BloodDelta = 0;
-
-
-
+    public FixedPoint2 Bloodloss = 0;
 
     #endregion
 
     #region SolutionRelated
+
+    public const string BloodSolutionId = "bloodstream";
+
+    public const string SpillSolutionId = "bloodSpill";
 
     /// <summary>
     /// The bloodstream solution
@@ -49,6 +49,9 @@ public sealed partial class BloodstreamComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? SpillSolution  = null;
+
+    [DataField]
+    public FixedPoint2 BleedPuddleThreshold = 1.0f;
 
     /// <summary>
     /// The reagent that represents the combination of both bloodcells and plasma.
@@ -68,7 +71,17 @@ public sealed partial class BloodstreamComponent : Component
     /// spawning with a particular one.
     /// </summary>
     [DataField, AutoNetworkedField] //TODO: Required
-    public string BloodGroup = string.Empty; //TODO: convert back to protoID
+    public string BloodDefinition = string.Empty; //TODO: convert back to protoID
+
+    /// <summary>
+    /// If this is defined, it will set this bloodstream to use the specified bloodtype.
+    /// Make sure the bloodtype is in the listed types in bloodDefinition if EnforceBloodTypes is true or
+    /// immediate blood poisoning will occur (maybe you want that I'm not judging).
+    /// If this is null, the bloodtype will be randomly selected from the bloodtypes defined in the blood definition
+    /// according to their probabilities.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string? BloodType = null; //TODO: convert back to protoID
 
     /// <summary>
     /// If set to true, check blood transfusions to make sure that they do not contain antibodies that are

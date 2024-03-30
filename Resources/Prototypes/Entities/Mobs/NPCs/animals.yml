@@ -46,7 +46,7 @@
       path: /Audio/Animals/fox_squeak.ogg
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 50
   - type: ReplacementAccent
@@ -109,7 +109,7 @@
     tags:
     - Bee
     - Trash
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 0.1
   - type: MobPrice
@@ -147,7 +147,7 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
-  - type: Bloodstream
+  - type: BleedPool
     bloodMaxVolume: 0.1
   - type: ZombieImmune
 
@@ -218,7 +218,7 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/chicken_cluck_happy.ogg
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 100
   - type: EggLayer
@@ -342,7 +342,7 @@
         Base: cockroach
       Dead:
         Base: cockroach_dead
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodReagent: InsectBlood
 #    bloodMaxVolume: 20
@@ -481,7 +481,7 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Moth
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodReagent: InsectBlood
   - type: Respirator
@@ -589,7 +589,7 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/duck_quack_happy.ogg
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 100
   - type: EggLayer
@@ -695,7 +695,7 @@
         Base: butterfly
       Dead:
         Base: dead
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 0.1
   - type: MobPrice
@@ -836,7 +836,7 @@
       path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
   - type: ReplacementAccent
     accent: crab
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 50
 #    bloodReagent: CopperBlood
@@ -981,7 +981,7 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/goose_honk.ogg
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 100
   - type: NpcFactionMember
@@ -1024,7 +1024,7 @@
     spawned:
     - id: FoodMeat
       amount: 4
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 300
     # if you fuck with the gorilla he will harambe you
@@ -1594,7 +1594,7 @@
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
     combatToggleAction: ActionCombatModeToggleOff
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 50
   - type: CanEscapeInventory
@@ -1727,7 +1727,7 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/lizard_happy.ogg
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 150
   - type: Damageable
@@ -1780,7 +1780,7 @@
     interactSuccessString: petting-success-generic
     interactFailureString: petting-failure-generic
     interactSuccessSpawn: EffectHearts
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 50
 
@@ -1835,7 +1835,7 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/frog_ribbit.ogg
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 50
   - type: Tag
@@ -1893,7 +1893,7 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/parrot_raught.ogg
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 50
 
@@ -2065,7 +2065,7 @@
     interactSuccessString: petting-success-reptile
     interactFailureString: petting-failure-generic
     interactSuccessSpawn: EffectHearts
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 50
   - type: Damageable
@@ -2155,7 +2155,7 @@
   - type: NoSlip
   - type: Spider
   - type: IgnoreSpiderWeb
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 150
 #    bloodReagent: CopperBlood
@@ -2258,7 +2258,7 @@
         collection: FootstepClownFast
     - type: Speech
       speechVerb: Cluwne
-    - type: Bloodstream
+    - type: BleedPool
       #TODO Bloodstream: re-implement this
 #      bloodMaxVolume: 150
 #      bloodReagent: Laughter
@@ -2455,7 +2455,7 @@
   - type: Grammar
     attributes:
       gender: epicene
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 100
   - type: MeleeWeapon
@@ -2584,7 +2584,7 @@
   - type: Grammar
     attributes:
       gender: epicene
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodReagent: DemonsBlood
   - type: Damageable
@@ -3074,7 +3074,7 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/fox_squeak.ogg
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 60
   - type: CanEscapeInventory
@@ -3184,7 +3184,7 @@
     templateId: pet
   - type: InventorySlots
   - type: Strippable
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodReagent: Water
 #    bloodMaxVolume: 60

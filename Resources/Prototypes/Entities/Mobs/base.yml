@@ -232,8 +232,13 @@
   abstract: true
   components:
   - type: SolutionContainerManager
+    solutions:
+      bloodstream:
+        maxVol: 250
+      bloodSpill:
+        maxVol: 250
   - type: InjectableSolution
-    solution: chemicals
+    solution: bloodstream
   - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodlossDamage:
@@ -242,3 +247,21 @@
 #    bloodlossHealDamage:
 #      types:
 #        Bloodloss: -1
+
+# Used for mobs that have a simplified bloodstream
+# this does not track blood types or have logic for pulse/pressure
+# use this for mobs that do not use body system or do not use advanced body/organ simulation
+- type: entity
+  save: false
+  id: MobSimplifiedBloodstream
+  abstract: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      bloodstream:
+        maxVol: 250
+      bloodSpill:
+        maxVol: 250
+  - type: InjectableSolution
+    solution: bloodstream
+  - type: BleedPool

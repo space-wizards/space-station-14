@@ -1,0 +1,15 @@
+﻿- type: bloodDefinition
+  id: HumanBlood
+  wholeBloodReagent: Blood
+  bloodCellsReagent: Blood #TODO Bloodstream: bloodcells
+  bloodPlasmaReagent: Water #TODO Bloodstream: bloodPlasma
+  bloodTypeDistribution:
+  HumanOPos: 37.4
+  HumanONeg: 6.6
+  HumanAPos: 35.7
+  HumanANeg: 6.3
+  HumanBPos: 8.5
+  HumanBNeg: 1.5
+  HumanABPos: 3.4
+  HumanABNeg: 0.6
+#percentages sourced from: https://stanfordbloodcenter.org/donate-blood/blood-donation-facts/blood-types/

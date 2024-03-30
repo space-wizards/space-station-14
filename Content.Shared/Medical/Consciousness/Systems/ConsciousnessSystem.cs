@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
+using Content.Shared.Body.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Consciousness.Components;
 using Content.Shared.Medical.Consciousness.Events;
@@ -18,22 +19,13 @@ public sealed class ConsciousnessSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<ConsciousnessComponent,UpdateMobStateEvent>(OnMobstateChanged);
-        SubscribeLocalEvent<ConsciousnessComponent,MapInitEvent>(ConsciousnessInit);
-        SubscribeLocalEvent<ConsciousnessComponent, BodyInitializedEvent>(OnBodyInit);
+        SubscribeLocalEvent<ConsciousnessComponent,MapInitEvent>(ConsciousnessInit, after: [typeof(SharedBodySystem)]);
         //Prevent providers from being added twice (once on client/server). Eventually replace with proper overrides
         if (!_netManager.IsClient)
         { // TODO: this might be causing the spawn dead problem
             SubscribeLocalEvent<ConsciousnessProviderComponent, OrganRemovedFromBodyEvent>(OnProviderRemoved);
             SubscribeLocalEvent<ConsciousnessProviderComponent, OrganAddedToBodyEvent>(OnProviderAdded);
         }
-    }
-
-    private void OnBodyInit(EntityUid uid, ConsciousnessComponent consciousness, ref BodyInitializedEvent args)
-    {
-        //run a consciousness update after body has fully initialized to properly update consciousness debuffs from
-        //missing providers
-        UpdateConsciousnessState(
-            new Entity<ConsciousnessComponent?, MobStateComponent?>(uid, consciousness, null));
     }
 
     private void OnProviderAdded(EntityUid providerUid, ConsciousnessProviderComponent provider, ref OrganAddedToBodyEvent args)
@@ -58,9 +50,6 @@ public sealed class ConsciousnessSystem : EntitySystem
 
     private void ConsciousnessInit(EntityUid uid, ConsciousnessComponent consciousness, MapInitEvent args)
     {
-        //Differ the initial consciousness state update until after body is fully initialized.
-        if (HasComp<BodyComponent>(uid))
-            return;
         UpdateConsciousnessState(
             new Entity<ConsciousnessComponent?, MobStateComponent?>(uid, consciousness, null));
     }

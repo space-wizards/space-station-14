@@ -46,6 +46,10 @@ public sealed partial class BleedPoolComponent : Component
     [DataField, AutoNetworkedField]
     public string BloodReagent = string.Empty;
 
+    public const string BloodSolutionId = "bloodstream";
+
+    public const string SpillSolutionId = "bloodSpill";
+
     /// <summary>
     /// The bloodstream solution
     /// </summary>

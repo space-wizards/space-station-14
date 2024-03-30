@@ -55,7 +55,7 @@
     spawned:
     - id: FoodMeatXeno
       amount: 1
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 50
   - type: CombatMode

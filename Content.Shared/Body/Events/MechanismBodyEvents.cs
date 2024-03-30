@@ -29,10 +29,4 @@ namespace Content.Shared.Body.Events
     /// </summary>
     [ByRefEvent]
     public readonly record struct OrganRemovedFromBodyEvent(Entity<BodyComponent> OldBody, Entity<BodyPartComponent> OldPart);
-
-    /// <summary>
-    ///     Raised on a body when it's initialization is finished
-    /// </summary>
-    [ByRefEvent]
-    public readonly record struct BodyInitializedEvent(Entity<BodyComponent> Body);
 }

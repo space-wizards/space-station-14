@@ -100,7 +100,7 @@
       - TemporaryBlindness
       - Pacified
       - StaminaModifier
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 150
   - type: MobPrice

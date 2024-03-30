@@ -121,12 +121,9 @@ public partial class SharedBodySystem
 
         // Setup the rest of the body entities.
         MapInitParts(rootPartUid, prototype);
-
-        body.Comp.BodyInitialized = true;
-        var ev = new BodyInitializedEvent();
-        RaiseLocalEvent(body, ref ev);
-        Dirty(body);
         SetupOrgans((rootPartUid, rootPart), protoRoot.Organs);
+        body.Comp.BodyInitialized = true;
+        Dirty(body);
     }
 
     private void OnBodyCanDrag(Entity<BodyComponent> ent, ref CanDragEvent args)

@@ -1,0 +1,13 @@
+﻿# There are a fuck-ton more antigens than these but we only really care about ABO + RH factor
+# other blood-types are generally to rare to bother caring about.
+
+- type: bloodAntigen
+  id: HumanA
+
+- type: bloodAntigen
+  id: HumanB
+
+# I know RH factor technically isn't an antigen, it's a protein but there is no reason to implement a
+# separate system just for RH factor
+- type: bloodAntigen
+  id: HumanD

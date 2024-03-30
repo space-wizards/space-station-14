@@ -732,7 +732,7 @@
       amount: 1
   - type: Damageable
     damageModifierSet: SlimePet
-  - type: Bloodstream
+  - type: BleedPool
     #TODO Bloodstream: re-implement this
 #    bloodlossHealDamage:
 #      types:

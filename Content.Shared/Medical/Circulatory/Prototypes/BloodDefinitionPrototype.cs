@@ -19,7 +19,7 @@ public sealed partial class BloodDefinitionPrototype : IPrototype
     /// This is the reagent used as blood in bloodstream.
     /// </summary>
     [DataField(required:true)]
-    public ProtoId<ReagentPrototype> CombinedBloodReagent;
+    public ProtoId<ReagentPrototype> WholeBloodReagent;
 
     /// <summary>
     /// The reagent used for blood cells in this blood definition, this may hold any number of antibodies.
@@ -40,7 +40,7 @@ public sealed partial class BloodDefinitionPrototype : IPrototype
     /// selected when initially creating a bloodstream
     /// </summary>
     [DataField(required:true)]
-    public Dictionary<FixedPoint2, ProtoId<BloodTypePrototype>> BloodTypeChances = new();
+    public Dictionary<FixedPoint2, ProtoId<BloodTypePrototype>> BloodTypeDistribution = new();
 
-    public ICollection<ProtoId<BloodTypePrototype>> BloodTypes => BloodTypeChances.Values;
+    public ICollection<ProtoId<BloodTypePrototype>> BloodTypes => BloodTypeDistribution.Values;
 }
