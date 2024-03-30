@@ -11,6 +11,18 @@
     Dylovene: 3
 
 - type: reaction
+  id: Tilenol
+  reactants:
+    Mercury:
+      amount: 1
+    Sulfur:
+      amount: 1
+    Fluorine:
+      amount: 1
+  products:
+    Tilenol: 3
+
+- type: reaction
   id: Ethylredoxrazine
   reactants:
     Oxygen:

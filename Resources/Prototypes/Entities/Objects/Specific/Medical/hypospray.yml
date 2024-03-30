@@ -345,6 +345,27 @@
     tags: []
 
 - type: entity
+  name: tilenol injector
+  id: Tilenol
+  parent: Stimpack
+  description: Contains a fast acting drug that alleviates headaches and motion-sickness for senior citizens.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: tilenol
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 30
+        reagents:
+        - ReagentId: Tilenol
+          Quantity: 30 # * 5 = 150s (2.5 min)
+  - type: SolutionContainerVisuals
+    emptySpriteName: tilenol_empty
+
+- type: entity
   name: stimulant microinjector
   parent: ChemicalMedipen
   id: StimpackMini

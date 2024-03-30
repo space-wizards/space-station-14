@@ -1165,6 +1165,22 @@
               Poison: -2
 
 - type: reagent
+  id: Tilenol
+  group: Medicine
+  name: reagent-name-tilenol
+  desc: reagent-desc-tilenol
+  slippery: true
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: medicine
+  color: "#3045d5" # from the byond logo
+  boilingPoint: 100
+  meltingPoint: 0
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:Byondify
+
+- type: reagent
   id : Aloxadone
   name: reagent-name-aloxadone
   group: Medicine

@@ -261,7 +261,7 @@ public sealed class TilenolSystem : EntitySystem
         tilenol.LastSlideEnd = null;
         Dirty(uid, tilenol);
 
-        if (!CanSlideInThatDirectionFuckYouIDontNeedGoodMethodNamesItsAprilFools(uid, curPos, offset))
+        if (!CanSlideInThatDirection(uid, curPos, offset))
         {
             TryDoorBump(uid, curPos, offset);
             return;
@@ -292,7 +292,7 @@ public sealed class TilenolSystem : EntitySystem
         }
     }
 
-    private bool CanSlideInThatDirectionFuckYouIDontNeedGoodMethodNamesItsAprilFools(EntityUid uid, EntityCoordinates curPos, Vector2i offset)
+    private bool CanSlideInThatDirection(EntityUid uid, EntityCoordinates curPos, Vector2i offset)
     {
         var newPos = new EntityCoordinates(curPos.EntityId, curPos.Position + offset);
         var mask = (CollisionGroup) _physics.GetHardCollision(uid).Mask;

@@ -32,6 +32,16 @@
   id: Drunk
 
 - type: statusEffect
+  id: Latency
+  alert: Latency
+  alwaysAllowed: true
+
+- type: statusEffect
+  id: Tilenol
+  alert: Tilenol
+  alwaysAllowed: true
+
+- type: statusEffect
   id: SlurredSpeech
 
 - type: statusEffect
