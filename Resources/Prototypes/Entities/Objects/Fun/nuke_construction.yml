@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseStructure
+  parent: BaseStructureDynamic
   id: ImprovisedNuclearBombCart
   name: cart
   description: A cute little trolly... made to carry a nuclear fission device.
@@ -12,10 +12,10 @@
     graph: ImprovisedNukeCraft
     node: cart
     defaultTarget: painted
-  - type: Physics
-    bodyType: Dynamic
-  - type: Pullable
   - type: Fixtures
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
     fixtures:
       fix1:
         shape:
