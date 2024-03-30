@@ -6,6 +6,7 @@ using Content.Shared.Audio;
 using Content.Shared.Database;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -19,9 +20,11 @@ namespace Content.Server.Atmos.EntitySystems
         [ViewVariables(VVAccess.ReadWrite)]
         public string? HotspotSound { get; private set; } = "/Audio/Effects/fire.ogg";
 
-        private void ProcessHotspot(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile,
-            GasTileOverlayComponent visuals)
+        private void ProcessHotspot(
+            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            TileAtmosphere tile)
         {
+            var gridAtmosphere = ent.Comp1;
             if (!tile.Hotspot.Valid)
             {
                 gridAtmosphere.HotspotTiles.Remove(tile);
@@ -43,7 +46,7 @@ namespace Content.Server.Atmos.EntitySystems
                 || tile.Air == null || tile.Air.GetMoles(Gas.Oxygen) < 0.5f || (tile.Air.GetMoles(Gas.Plasma) < 0.5f && tile.Air.GetMoles(Gas.Tritium) < 0.5f))
             {
                 tile.Hotspot = new Hotspot();
-                InvalidateVisuals(tile.GridIndex, tile.GridIndices, visuals);
+                InvalidateVisuals(ent, tile);
                 return;
             }
 

@@ -4,6 +4,7 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
@@ -21,7 +22,7 @@ public partial class AtmosphereSystem
 
     public GasMixture? GetContainingMixture(
         Entity<TransformComponent?> ent,
-        Entity<GridAtmosphereComponent?>? grid,
+        Entity<GridAtmosphereComponent?, GasTileOverlayComponent?>? grid,
         Entity<MapAtmosphereComponent?>? map,
         bool ignoreExposed = false,
         bool excite = false)
@@ -82,21 +83,28 @@ public partial class AtmosphereSystem
             entity.Comp.InvalidatedCoords.Add(tile);
     }
 
-    public GasMixture?[]? GetTileMixtures(Entity<GridAtmosphereComponent?>? grid, Entity<MapAtmosphereComponent?>? map, List<Vector2i> tiles, bool excite = false)
+    public GasMixture?[]? GetTileMixtures(
+        Entity<GridAtmosphereComponent?, GasTileOverlayComponent?>? grid,
+        Entity<MapAtmosphereComponent?>? map,
+        List<Vector2i> tiles,
+        bool excite = false)
     {
         GasMixture?[]? mixtures = null;
         var handled = false;
 
         // If we've been passed a grid, try to let it handle it.
-        if (grid is {} gridEnt && Resolve(gridEnt, ref gridEnt.Comp))
+        if (grid is {} gridEnt && Resolve(gridEnt, ref gridEnt.Comp1))
         {
+            if (excite)
+                Resolve(gridEnt, ref gridEnt.Comp2);
+
             handled = true;
             mixtures = new GasMixture?[tiles.Count];
 
             for (var i = 0; i < tiles.Count; i++)
             {
                 var tile = tiles[i];
-                if (!gridEnt.Comp.Tiles.TryGetValue(tile, out var atmosTile))
+                if (!gridEnt.Comp1.Tiles.TryGetValue(tile, out var atmosTile))
                 {
                     // need to get map atmosphere
                     handled = false;
@@ -106,7 +114,10 @@ public partial class AtmosphereSystem
                 mixtures[i] = atmosTile.Air;
 
                 if (excite)
-                    gridEnt.Comp.InvalidatedCoords.Add(tile);
+                {
+                    AddActiveTile(gridEnt.Comp1, atmosTile);
+                    InvalidateVisuals((gridEnt.Owner, gridEnt.Comp2), tile);
+                }
             }
         }
 
@@ -145,18 +156,21 @@ public partial class AtmosphereSystem
     }
 
     public GasMixture? GetTileMixture(
-        Entity<GridAtmosphereComponent?>? grid,
+        Entity<GridAtmosphereComponent?, GasTileOverlayComponent?>? grid,
         Entity<MapAtmosphereComponent?>? map,
         Vector2i gridTile,
         bool excite = false)
     {
         // If we've been passed a grid, try to let it handle it.
         if (grid is {} gridEnt
-            && Resolve(gridEnt, ref gridEnt.Comp, false)
-            && gridEnt.Comp.Tiles.TryGetValue(gridTile, out var tile))
+            && Resolve(gridEnt, ref gridEnt.Comp1, false)
+            && gridEnt.Comp1.Tiles.TryGetValue(gridTile, out var tile))
         {
             if (excite)
-                gridEnt.Comp.InvalidatedCoords.Add(gridTile);
+            {
+                AddActiveTile(gridEnt.Comp1, tile);
+                InvalidateVisuals((grid.Value.Owner, grid.Value.Comp2), gridTile);
+            }
 
             return tile.Air;
         }

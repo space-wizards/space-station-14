@@ -159,7 +159,7 @@ public sealed partial class AtmosphereSystem
     }
 
     /// <summary>
-    /// Update array of adjacent tiles and the adjacency flags. Optionally activates all tiles with modified adjacencies.
+    /// Update array of adjacent tiles and the adjacency flags.
     /// </summary>
     private void UpdateAdjacentTiles(
         Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
