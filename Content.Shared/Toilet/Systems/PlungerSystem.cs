@@ -42,7 +42,7 @@ public sealed class PlungerSystem : EntitySystem
         if (!TryComp<PlungerUseComponent>(args.Target, out var plunger))
             return;
 
-        if (plunger == null || plunger.NeedsPlunger)
+        if (plunger.NeedsPlunger)
             return;
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.PlungeDuration, new PlungerDoAfterEvent(), uid, target, uid)

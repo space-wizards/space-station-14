@@ -30,8 +30,6 @@ namespace Content.Shared.Toilet.Systems
 
         private void OnMapInit(EntityUid uid, ToiletComponent component, MapInitEvent args)
         {
-            EnsureComp<SecretStashComponent>(uid);
-
             if (_random.Prob(0.5f))
                 component.ToggleSeat = true;
 

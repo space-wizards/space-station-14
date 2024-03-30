@@ -222,7 +222,7 @@ public abstract partial class SharedBuckleSystem
 
         // Does it pass the Whitelist
         if (strapComp.Whitelist != null &&
-            !strapComp.Whitelist.IsValid(buckleUid, EntityManager))
+            !strapComp.Whitelist.IsValid(buckleUid, EntityManager) || strapComp.Blacklist?.IsValid(buckleUid, EntityManager) == true)
         {
             if (_netManager.IsServer)
                 _popup.PopupEntity(Loc.GetString("buckle-component-cannot-fit-message"), userUid, buckleUid, PopupType.Medium);

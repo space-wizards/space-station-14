@@ -75,19 +75,13 @@ public abstract partial class SharedDisposalUnitComponent : Component
     public TimeSpan FlushDelay = TimeSpan.FromSeconds(3);
 
     /// <summary>
-    /// Checks if entity is mob and if mobs can enter (needed so that dead mobs can enter when alive mobs cannot).
-    /// </summary>
-    [DataField]
-    public bool MobsCanEnter = true;
-
-    /// <summary>
     /// Removes the pressure requirement for flushing.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool DisablePressure;
 
     /// <summary>
-    ///     Last time that an entity tried to exit this disposal unit.
+    /// Last time that an entity tried to exit this disposal unit.
     /// </summary>
     [ViewVariables]
     public TimeSpan LastExitAttempt;
@@ -100,20 +94,20 @@ public abstract partial class SharedDisposalUnitComponent : Component
     public TimeSpan AutomaticEngageTime = TimeSpan.FromSeconds(30);
 
     /// <summary>
-    ///     Delay from trying to enter disposals ourselves.
+    /// Delay from trying to enter disposals ourselves.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public float EntryDelay = 0.5f;
 
     /// <summary>
-    ///     Delay from trying to shove someone else into disposals.
+    /// Delay from trying to shove someone else into disposals.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public float DraggedEntryDelay = 2.0f;
 
     /// <summary>
-    ///     Container of entities inside this disposal unit.
+    /// Container of entities inside this disposal unit.
     /// </summary>
     [ViewVariables] public Container Container = default!;
 

@@ -135,8 +135,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         // This is not an interaction, activation, or alternative verb type because unfortunately most users are
         // unwilling to accept that this is where they belong and don't want to accidentally climb inside.
-        if (!component.MobsCanEnter ||
-            !args.CanAccess ||
+        if (!args.CanAccess ||
             !args.CanInteract ||
             component.Container.ContainedEntities.Contains(args.User) ||
             !_actionBlockerSystem.CanMove(args.User))
