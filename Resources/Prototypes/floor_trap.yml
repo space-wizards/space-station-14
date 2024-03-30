@@ -34,31 +34,6 @@
       state: floortrapspawn
 
 - type: entity
-  id: MobSpawnFloorTrap
-  name: mobspawner floor trap
-  abstract: true
-  components:
-    - type: Transform
-      anchored: True
-    - type: InteractionOutline
-    - type: Physics
-      bodyType: Static
-    - type: Sprite
-      sprite: /Textures/Effects/teleport.rsi
-      state: teleport
-    - type: Fixtures
-      fixtures:
-        portalFixture:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.25,-0.48,0.25,0.48"
-          mask:
-          - FullTileMask
-          layer:
-          - WallLayer
-          hard: false
-
-- type: entity
   parent: CollideFloorTrap
   id: FloorTrapExplosion
   name: explosion floor trap
@@ -88,109 +63,54 @@
 - type: entity
   parent: CollideFloorTrapSpawn
   id: SpawnFloorTrapCarp
-  name: spawn floor trap
   suffix: Carp
   components:
     - type: TriggerOnCollide
       fixtureID: floortrap
     - type: SpawnOnTrigger
-      proto: MobSpawnFloorTrapCarp
+      proto: MobCarp
     - type: DeleteOnTrigger
-
-- type: entity
-  parent: MobSpawnFloorTrap
-  id: MobSpawnFloorTrapCarp
-  suffix: Carp
-  components:
-    - type: TimedDespawn
-      lifetime: 1
-    - type: SpawnOnDespawn
-      prototype: MobCarp
 
 - type: entity
   parent: CollideFloorTrapSpawn
   id: SpawnFloorTrapBear
-  name: spawn floor trap
   suffix: Bear
   components:
     - type: TriggerOnCollide
       fixtureID: floortrap
     - type: SpawnOnTrigger
-      proto: MobSpawnFloorTrapBear
+      proto: MobBearSpace
     - type: DeleteOnTrigger
-
-- type: entity
-  parent: MobSpawnFloorTrap
-  id: MobSpawnFloorTrapBear
-  suffix: Bear
-  components:
-    - type: TimedDespawn
-      lifetime: 1
-    - type: SpawnOnDespawn
-      prototype: MobBearSpace
 
 - type: entity
   parent: CollideFloorTrapSpawn
   id: SpawnFloorTrapKangaroo
-  name: spawn floor trap
   suffix: Kangaroo
   components:
     - type: TriggerOnCollide
       fixtureID: floortrap
     - type: SpawnOnTrigger
-      proto: MobSpawnFloorTrapKangaroo
+      proto: MobKangarooSpace
     - type: DeleteOnTrigger
-
-- type: entity
-  parent: MobSpawnFloorTrap
-  id: MobSpawnFloorTrapKangaroo
-  suffix: Kangaroo
-  components:
-    - type: TimedDespawn
-      lifetime: 1
-    - type: SpawnOnDespawn
-      prototype: MobKangarooSpace
 
 - type: entity
   parent: CollideFloorTrapSpawn
   id: SpawnFloorTrapXenoDrone
-  name: spawn floor trap
   suffix: Xeno. Drone
   components:
     - type: TriggerOnCollide
       fixtureID: floortrap
     - type: SpawnOnTrigger
-      proto: MobSpawnFloorTrapXenoDrone
+      proto: MobXenoDrone
     - type: DeleteOnTrigger
-
-- type: entity
-  parent: MobSpawnFloorTrap
-  id: MobSpawnFloorTrapXenoDrone
-  suffix: Xeno. Drone
-  components:
-    - type: TimedDespawn
-      lifetime: 1
-    - type: SpawnOnDespawn
-      prototype: MobXenoDrone
 
 - type: entity
   parent: CollideFloorTrapSpawn
   id: SpawnFloorTrapXenoBurrower
-  name: spawn floor trap
   suffix: Xeno. Burrower
   components:
     - type: TriggerOnCollide
       fixtureID: floortrap
     - type: SpawnOnTrigger
-      proto: MobSpawnFloorTrapXenoBurrower
+      proto: MobXeno
     - type: DeleteOnTrigger
-
-- type: entity
-  parent: MobSpawnFloorTrap
-  id: MobSpawnFloorTrapXenoBurrower
-  suffix: Xeno. Burrower
-  components:
-    - type: TimedDespawn
-      lifetime: 1
-    - type: SpawnOnDespawn
-      prototype: MobXeno
