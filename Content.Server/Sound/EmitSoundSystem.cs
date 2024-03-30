@@ -59,8 +59,8 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
 
     private void HandleEmitSoundOnInteractUsing(EntityUid uid, EmitSoundOnInteractUsingComponent component, InteractUsingEvent args)
     {
-        var curUsedItemID = Prototype(args.Used)?.ID;
-        if (component.UsedItemID == curUsedItemID)
+        var curUsedItemProto = Prototype(args.Used);
+        if (component.UsedItemProto.Equals(curUsedItemProto))
         {
             TryEmitSound(uid, component, args.User, false);
         }

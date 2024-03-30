@@ -1,4 +1,5 @@
 using Content.Shared.Sound.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Sound.Components;
 
@@ -8,6 +9,6 @@ namespace Content.Server.Sound.Components;
 [RegisterComponent]
 public sealed partial class EmitSoundOnInteractUsingComponent : BaseEmitSoundComponent
 {
-    [DataField("UsedItemID")]
-    public string UsedItemID = "";
+    [DataField("UsedItemProto", false, 1, true)]
+    public ProtoId<EntityPrototype> UsedItemProto = new();
 }
