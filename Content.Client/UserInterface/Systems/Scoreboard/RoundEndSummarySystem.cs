@@ -2,6 +2,7 @@ using Content.Client.RoundEnd;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Player;
 
 namespace Content.Client.UserInterface.Systems.Scoreboard;
 
@@ -11,12 +12,7 @@ public sealed class RoundEndSummarySystem : EntitySystem
 
     public override void Initialize()
     {
-        CommandBinds.Builder.Bind(ContentKeyFunctions.OpenScoreboardWindow,
-            InputCmdHandler.FromDelegate(_ =>
-            {
-                if (_window != null)
-                    OpenScoreboardWindow(_window);
-            }))
+        CommandBinds.Builder.Bind(ContentKeyFunctions.OpenScoreboardWindow, InputCmdHandler.FromDelegate(OpenScoreboardWindow))
             .Register<RoundEndSummarySystem>();
     }
 
@@ -26,10 +22,13 @@ public sealed class RoundEndSummarySystem : EntitySystem
         CommandBinds.Unregister<RoundEndSummarySystem>();
     }
 
-    private void OpenScoreboardWindow(RoundEndSummaryWindow window)
+    private void OpenScoreboardWindow(ICommonSession? session = null)
     {
-        window.OpenCenteredRight();
-        window.MoveToFront();
+        if (_window == null)
+            return;
+
+        _window.OpenCenteredRight();
+        _window.MoveToFront();
     }
 
     public void OpenRoundEndSummaryWindow(RoundEndMessageEvent message)
