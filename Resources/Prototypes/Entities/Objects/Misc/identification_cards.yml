@@ -695,6 +695,13 @@
   - type: Sprite
     layers:
     - state: syndie
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 5
+    totalIntensity: 5
+    intensitySlope: 5
+    canCreateVacuum: false
+    deleteAfterExplosion: true
   - type: Access
     tags:
     - NuclearOperative
