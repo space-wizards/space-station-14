@@ -154,9 +154,7 @@ namespace Content.Server.Doors.Systems
             // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
             var overrideAccess = (args.User != null) && _accessReaderSystem.IsAllowed(args.User.Value, uid);
             if (!overrideAccess && IsHoldingPressureOrFire(uid, component))
-            {
                 args.Cancel();
-            }
         }
 
         private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, ref GetPryTimeModifierEvent args)
