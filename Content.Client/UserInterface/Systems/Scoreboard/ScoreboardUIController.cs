@@ -1,10 +1,9 @@
 using Content.Client.Gameplay;
-using Content.Client.GameTicking.Managers;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
+using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using Robust.Client.Input;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input.Binding;
 
@@ -12,9 +11,9 @@ namespace Content.Client.UserInterface.Systems.Scoreboard;
 
 public sealed class ScoreboardUIController : UIController, IOnStateEntered<LobbyState>, IOnStateEntered<GameplayState>, IOnStateExited<LobbyState>, IOnStateExited<GameplayState>
 {
-
     [Dependency] private readonly IInputManager _input = default!;
-    [UISystemDependency] private readonly ClientGameTicker _gameTicker = default!;
+
+    private RoundEndSummaryWindow? _window;
 
     public void OnStateEntered(LobbyState state)
     {
@@ -41,8 +40,8 @@ public sealed class ScoreboardUIController : UIController, IOnStateEntered<Lobby
         _input.SetInputCommand(ContentKeyFunctions.OpenScoreboardWindow,
             InputCmdHandler.FromDelegate(_ =>
             {
-                if (_gameTicker.Window != null)
-                    OpenScoreboardWindow(_gameTicker.Window);
+                if (_window != null)
+                    OpenScoreboardWindow(_window);
             }));
     }
 
@@ -55,5 +54,15 @@ public sealed class ScoreboardUIController : UIController, IOnStateEntered<Lobby
     {
         window.OpenCenteredRight();
         window.MoveToFront();
+    }
+
+    public void OpenRoundEndSummaryWindow(RoundEndMessageEvent message)
+    {
+        // Don't open duplicate windows (mainly for replays).
+        if (_window?.RoundId == message.RoundId)
+            return;
+
+        _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText,
+            message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, EntityManager);
     }
 }

@@ -1,6 +1,6 @@
 using Content.Client.Gameplay;
 using Content.Client.Lobby;
-using Content.Client.RoundEnd;
+using Content.Client.UserInterface.Systems.Scoreboard;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using JetBrains.Annotations;
@@ -14,16 +14,11 @@ namespace Content.Client.GameTicking.Managers
     public sealed class ClientGameTicker : SharedGameTicker
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly ScoreboardUIController _scoreboardSystem = default!;
 
         [ViewVariables] private bool _initialized;
         private Dictionary<NetEntity, Dictionary<string, uint?>>  _jobsAvailable = new();
         private Dictionary<NetEntity, string> _stationNames = new();
-
-        /// <summary>
-        /// The current round-end window. Could be used to support re-opening the window after closing it.
-        /// </summary>
-        public RoundEndSummaryWindow? Window;
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
@@ -61,8 +56,6 @@ namespace Content.Client.GameTicking.Managers
             SubscribeNetworkEvent<TickerJobsAvailableEvent>(UpdateJobsAvailable);
 
             _initialized = true;
-
-            Window = new RoundEndSummaryWindow(_entityManager);
         }
 
         private void LateJoinStatus(TickerLateJoinStatusEvent message)
@@ -134,12 +127,7 @@ namespace Content.Client.GameTicking.Managers
             // Force an update in the event of this song being the same as the last.
             RestartSound = message.RestartSound;
 
-            // Don't open duplicate windows (mainly for replays).
-            if (Window?.RoundId == message.RoundId)
-                return;
-
-            //This is not ideal at all, but I don't see an immediately better fit anywhere else.
-            Window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, _entityManager);
+            _scoreboardSystem.OpenRoundEndSummaryWindow(message);
         }
     }
 }
