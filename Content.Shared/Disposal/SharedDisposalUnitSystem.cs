@@ -116,8 +116,8 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         if (TryComp<PhysicsComponent>(entity, out var physics) && (physics.CanCollide))
             return true;
-
-        return true;
+        else
+            return false;
     }
 
     public abstract void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null);
