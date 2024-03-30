@@ -337,7 +337,7 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
-        private bool ProcessExcitedGroups(GridAtmosphereComponent gridAtmosphere)
+        private bool ProcessExcitedGroups(GridAtmosphereComponent gridAtmosphere, GasTileOverlayComponent visuals)
         {
             if (!gridAtmosphere.ProcessingPaused)
             {
@@ -356,7 +356,7 @@ namespace Content.Server.Atmos.EntitySystems
                 excitedGroup.DismantleCooldown++;
 
                 if (excitedGroup.BreakdownCooldown > Atmospherics.ExcitedGroupBreakdownCycles)
-                    ExcitedGroupSelfBreakdown(gridAtmosphere, excitedGroup);
+                    ExcitedGroupSelfBreakdown(gridAtmosphere, excitedGroup, visuals);
                 else if (excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
                     DeactivateGroupTiles(gridAtmosphere, excitedGroup);
                 // TODO ATMOS. What is the point of this? why is this only de-exciting the group? Shouldn't it also dismantle it?
@@ -411,7 +411,7 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
-        private bool ProcessHotspots(GridAtmosphereComponent atmosphere)
+        private bool ProcessHotspots(GridAtmosphereComponent atmosphere, GasTileOverlayComponent visuals)
         {
             if(!atmosphere.ProcessingPaused)
                 QueueRunTiles(atmosphere.CurrentRunTiles, atmosphere.HotspotTiles);
@@ -419,7 +419,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunTiles.TryDequeue(out var hotspot))
             {
-                ProcessHotspot(atmosphere, hotspot);
+                ProcessHotspot(atmosphere, hotspot, visuals);
 
                 if (number++ < LagCheckIterations)
                     continue;
@@ -627,7 +627,7 @@ namespace Content.Server.Atmos.EntitySystems
                         atmosphere.State = ExcitedGroups ? AtmosphereProcessingState.ExcitedGroups : AtmosphereProcessingState.HighPressureDelta;
                         continue;
                     case AtmosphereProcessingState.ExcitedGroups:
-                        if (!ProcessExcitedGroups(atmosphere))
+                        if (!ProcessExcitedGroups(atmosphere, visuals))
                         {
                             atmosphere.ProcessingPaused = true;
                             return;
@@ -647,7 +647,7 @@ namespace Content.Server.Atmos.EntitySystems
                         atmosphere.State = AtmosphereProcessingState.Hotspots;
                         continue;
                     case AtmosphereProcessingState.Hotspots:
-                        if (!ProcessHotspots(atmosphere))
+                        if (!ProcessHotspots(atmosphere, visuals))
                         {
                             atmosphere.ProcessingPaused = true;
                             return;

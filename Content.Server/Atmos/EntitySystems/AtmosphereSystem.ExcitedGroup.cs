@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -64,7 +65,8 @@ namespace Content.Server.Atmos.EntitySystems
             excitedGroup.DismantleCooldown = 0;
         }
 
-        private void ExcitedGroupSelfBreakdown(GridAtmosphereComponent gridAtmosphere, ExcitedGroup excitedGroup)
+        private void ExcitedGroupSelfBreakdown(GridAtmosphereComponent gridAtmosphere, ExcitedGroup excitedGroup,
+            GasTileOverlayComponent visuals)
         {
             DebugTools.Assert(!excitedGroup.Disposed, "Excited group is disposed!");
             DebugTools.Assert(gridAtmosphere.ExcitedGroups.Contains(excitedGroup), "Grid Atmosphere does not contain Excited Group!");
@@ -103,7 +105,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
 
                 tile.Air.CopyFromMutable(combined);
-                InvalidateVisuals(tile.GridIndex, tile.GridIndices);
+                InvalidateVisuals(tile.GridIndex, tile.GridIndices, visuals);
             }
 
             excitedGroup.BreakdownCooldown = 0;

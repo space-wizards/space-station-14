@@ -144,7 +144,11 @@ public partial class AtmosphereSystem
         return GetTileMixture(entity.Comp.GridUid, entity.Comp.MapUid, indices, excite);
     }
 
-    public GasMixture? GetTileMixture(Entity<GridAtmosphereComponent?>? grid, Entity<MapAtmosphereComponent?>? map, Vector2i gridTile, bool excite = false)
+    public GasMixture? GetTileMixture(
+        Entity<GridAtmosphereComponent?>? grid,
+        Entity<MapAtmosphereComponent?>? map,
+        Vector2i gridTile,
+        bool excite = false)
     {
         // If we've been passed a grid, try to let it handle it.
         if (grid is {} gridEnt
