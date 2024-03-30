@@ -256,7 +256,7 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnGuardianDamaged(EntityUid uid, GuardianComponent component, DamageChangedEvent args)
         {
-            if (args.DamageDelta == null || component.Host == null || component.DamageShare > 0)
+            if (args.DamageDelta == null || component.Host == null || component.DamageShare == 0)
                 return;
 
             _damageSystem.TryChangeDamage(
