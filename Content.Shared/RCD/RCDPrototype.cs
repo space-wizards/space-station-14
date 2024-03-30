@@ -108,6 +108,7 @@ public sealed class RCDPrototype : IPrototype
     /// <summary>
     /// The polygon shape associated with the prototype CollisionBounds (if set) 
     /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
     public PolygonShape? CollisionPolygon { get; private set; } = null;
 
     /// <summary>

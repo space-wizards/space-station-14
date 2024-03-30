@@ -67,5 +67,6 @@ public sealed partial class RCDComponent : Component
     /// <remarks>
     /// Contains no position data
     /// </remarks>
+    [ViewVariables(VVAccess.ReadOnly)]
     public Transform ConstructionTransform { get; private set; } = default!;
 }

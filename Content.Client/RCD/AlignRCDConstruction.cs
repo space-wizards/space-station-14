@@ -23,6 +23,7 @@ public sealed class AlignRCDConstruction : PlacementMode
     [Dependency] private readonly IStateManager _stateManager = default!;
 
     private const float SearchBoxSize = 2f;
+    private const float PlaceColorBaseAlpha = 0.5f;
 
     private EntityCoordinates _unalignedMouseCoords = default;
 
@@ -40,6 +41,8 @@ public sealed class AlignRCDConstruction : PlacementMode
         _mapSystem = _entityManager.System<SharedMapSystem>();
         _rcdSystem = _entityManager.System<RCDSystem>();
         _transformSystem = _entityManager.System<SharedTransformSystem>();
+
+        ValidPlaceColor = ValidPlaceColor.WithAlpha(PlaceColorBaseAlpha);
     }
 
     public override void AlignPlacementMode(ScreenCoordinates mouseScreen)
@@ -86,7 +89,7 @@ public sealed class AlignRCDConstruction : PlacementMode
         // Otherwise restore the alpha value
         else
         {
-            InvalidPlaceColor = InvalidPlaceColor.WithAlpha(127);
+            InvalidPlaceColor = InvalidPlaceColor.WithAlpha(PlaceColorBaseAlpha);
         }
 
         // Determine if player is carrying an RCD in their active hand

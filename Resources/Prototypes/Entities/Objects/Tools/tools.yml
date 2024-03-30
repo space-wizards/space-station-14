@@ -423,7 +423,7 @@
     maxCharges: 20
     charges: 20
   - type: AutoRecharge
-    rechargeDuration: 3
+    rechargeDuration: 10
 
 - type: entity
   id: RCDExperimental
