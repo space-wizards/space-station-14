@@ -5,7 +5,6 @@ using Content.Shared.Sound;
 using Content.Shared.Sound.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Network;
-using Content.Shared.Interaction;
 
 namespace Content.Server.Sound;
 
@@ -41,7 +40,6 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
 
         SubscribeLocalEvent<EmitSoundOnTriggerComponent, TriggerEvent>(HandleEmitSoundOnTrigger);
         SubscribeLocalEvent<EmitSoundOnUIOpenComponent, AfterActivatableUIOpenEvent>(HandleEmitSoundOnUIOpen);
-        SubscribeLocalEvent<EmitSoundOnInteractUsingComponent, InteractUsingEvent>(HandleEmitSoundOnInteractUsing);
 
         SubscribeLocalEvent<SpamEmitSoundComponent, MapInitEvent>(HandleSpamEmitSoundMapInit);
     }
@@ -55,15 +53,6 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
     {
         TryEmitSound(uid, component, args.User, false);
         args.Handled = true;
-    }
-
-    private void HandleEmitSoundOnInteractUsing(EntityUid uid, EmitSoundOnInteractUsingComponent component, InteractUsingEvent args)
-    {
-        var curUsedItemProto = Prototype(args.Used);
-        if (component.UsedItemProto.Equals(curUsedItemProto))
-        {
-            TryEmitSound(uid, component, args.User, false);
-        }
     }
 
     private void HandleSpamEmitSoundMapInit(Entity<SpamEmitSoundComponent> entity, ref MapInitEvent args)
