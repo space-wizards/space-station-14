@@ -41,7 +41,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>(OnEmitSoundOnActivateInWorld);
         SubscribeLocalEvent<EmitSoundOnPickupComponent, GotEquippedHandEvent>(OnEmitSoundOnPickup);
         SubscribeLocalEvent<EmitSoundOnDropComponent, DroppedEvent>(OnEmitSoundOnDrop);
-        SubscribeLocalEvent<EmitSoundOnInteractUsingComponent, InteractUsingEvent>(HandleEmitSoundOnInteractUsing);
+        SubscribeLocalEvent<EmitSoundOnInteractUsingComponent, InteractUsingEvent>(OnEmitSoundOnInteractUsing);
 
         SubscribeLocalEvent<EmitSoundOnCollideComponent, StartCollideEvent>(OnEmitSoundOnCollide);
     }
@@ -103,7 +103,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         TryEmitSound(uid, component, args.User);
     }
 
-    private void HandleEmitSoundOnInteractUsing(EntityUid uid, EmitSoundOnInteractUsingComponent component, InteractUsingEvent args)
+    private void OnEmitSoundOnInteractUsing(EntityUid uid, EmitSoundOnInteractUsingComponent component, InteractUsingEvent args)
     {
         var curUsedItemProto = Prototype(args.Used);
         if (component.UsedItemProto.Equals(curUsedItemProto))
