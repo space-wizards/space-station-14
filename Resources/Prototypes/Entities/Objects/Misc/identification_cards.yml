@@ -590,7 +590,6 @@
   components:
   - type: PresetIdCard
     job: Passenger
-  - type: Metal
   - type: Access
     tags:
     - Maintenance
@@ -654,6 +653,7 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+    - Metal
   - type: ChameleonClothing
     slot: [idcard]
     default: PassengerIDCard
