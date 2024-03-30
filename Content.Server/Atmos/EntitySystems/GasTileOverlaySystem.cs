@@ -60,6 +60,7 @@ namespace Content.Server.Atmos.EntitySystems
         private float _updateInterval;
 
         private int _thresholds;
+        private EntityQuery<GasTileOverlayComponent> _query;
 
         public override void Initialize()
         {
@@ -84,6 +85,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GasTileOverlayComponent, ComponentStartup>(OnStartup);
+            _query = GetEntityQuery<GasTileOverlayComponent>();
         }
 
         private void OnStartup(EntityUid uid, GasTileOverlayComponent component, ComponentStartup args)
@@ -132,10 +134,10 @@ namespace Content.Server.Atmos.EntitySystems
         private void UpdateThresholds(int value) => _thresholds = value;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Invalidate(EntityUid grid, Vector2i index, GasTileOverlayComponent? comp = null)
+        public void Invalidate(Entity<GasTileOverlayComponent?> grid, Vector2i index)
         {
-            if (Resolve(grid, ref comp))
-                comp.InvalidTiles.Add(index);
+            if (_query.Resolve(grid.Owner, ref grid.Comp))
+                grid.Comp.InvalidTiles.Add(index);
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
