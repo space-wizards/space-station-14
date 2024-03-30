@@ -500,6 +500,34 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> PiratesPlayersPerOp =
             CVarDef.Create("pirates.players_per_pirate", 5);
 
+
+        #region Obsessed Antag
+
+        public static readonly CVarDef<int> ObsessedRatioOfPlayersToObsessed =
+            CVarDef.Create("obsessed.players_per_obsessed", 1); //normally, this would be 1 obsessed for 80 players, but for debug, we're making it 1;
+
+        public static readonly CVarDef<int> ObsessedMinRequiredPlayersForAntag =
+            CVarDef.Create("obsessed.min_players", 1); //min number of players needed for us to have an Obsessed (needs to be at least 15 players. I think 15 is balanced enough with other antags present)
+
+        public static readonly CVarDef<int> ObsessedMinNumberOfAntagsPossibleInRound =
+            CVarDef.Create("obsessed.min_obsessed", 1);
+
+        public static readonly CVarDef<int> ObsessedMaxNumberOfAntagsPossibleInRound =
+            CVarDef.Create("obsessed.max_obsessed", 2);
+
+        public static readonly CVarDef<float> ObsessedStartDelay =
+            CVarDef.Create("obsessed.start_delay", 1f * 1f); //4f * 60f
+
+        public static readonly CVarDef<float> ObsessedStartDelayVariance =
+            CVarDef.Create("obsessed.start_delay_variance", 1f * 1f); //3f * 60f
+
+        public static readonly CVarDef<int> ObsessedObjectivesOverallMaxDifficulty =
+            CVarDef.Create("obsessed.max_difficulty", 8); //this number is arb and can be changed to anything
+
+        public static readonly CVarDef<int> ObsessedNumberOfObjectivesMaxPicks =
+            CVarDef.Create("obsessed.max_picks", 2); //only want them to have 2 objectives for now, until we build the other Obsessed objectives
+        #endregion Obsessed Antag
+
         /*
          * Nukeops
          */

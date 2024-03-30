@@ -1,0 +1,79 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseObsessedObjective
+  components:
+  - type: Objective
+    issuer: Obsessed
+  - type: RoleRequirement
+    roles:
+      components:
+      - ObsessedRole
+
+- type: entity
+  abstract: true
+  parent: [BaseObsessedObjective, BaseSocialObjective]
+  id: BaseObsessedSocialObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Specific/ObsessedAntag/obsessed_icons.rsi
+      state: obsessed-love
+
+#---------------------
+# nonlethal objectives
+#---------------------
+
+# take a photo of your target
+- type: entity
+  noSpawn: true
+  parent: [BaseObsessedObjective, BaseLivingObjective]
+  id: ObsessedStalkTargetObjective
+  name: Stalk your target.
+  components:
+  - type: Objective
+    difficulty: 3.0 # this one is quite difficult, because you'll immediately be outed. People might also mistake the flash for Revs - which calls for searches. Sec/command might also metagame and perma you for having a camera/flash because it means you're an antag (WHICH DOES HAPPEN - let's not pretend it doesnt)
+  - type: TargetObjective
+    title: objective-obsessed-stalk-title
+#  - type: BaseSocialObjective # this is gonna require a bit of a complex change - and addition of a camera to the game
+
+#----------------
+# kill objectives
+#----------------
+
+# kill the target of your obsession
+- type: entity
+  noSpawn: true
+  parent: [BaseObsessedObjective, BaseKillObjective]
+  id: KillAffectionTargetObjective
+  # unsure if the title should be my locale string, or the description? cyberfinn to test this
+  description: If I can't have you, no one can!
+  components:
+  - type: Objective
+    difficulty: 4.0 # 1.75 (for killing normal person) seems low, since you interact with the target lots, and they will likely report their suspicions after a while. this is harder than killing Command/Sec as a syndie, because YOU DONT HAVE ANY GUNS/WEAPONS, nor any uplink
+    unique: true
+  - type: TargetObjective
+    title: objective-obsessed-final-kill-affection-title
+  - type: ObsessedPickRandomPerson
+  - type: KillPersonCondition
+    ## the target 100% has to be dead, they can't just be marooned when evac comes, you're obsessed with them and have to kill them.
+    requireDead: true
+
+
+# kill the person that's gotten too friendly with your obsession (This is just a random person for now)
+- type: entity
+  noSpawn: true
+  parent: [BaseObsessedObjective, BaseKillObjective]
+  id: KillLoveRivalObjective
+  description: Crossed the line!
+  # unsure if the title or description should be my locale string? cyberfinn to test this
+  components:
+  - type: Objective
+    difficulty: 4.0 #for non-sec/command targets, you're killing a normal unarmed person, BUT, again, you wont have any weapons or uplink. if the chosen target is a head or sec, you're facing impossible odds here.
+    unique: true
+  - type: TargetObjective
+    title: objective-obsessed-kill-title
+  - type: ObsessedPickRandomRival
+  - type: ObsessedKillPersonCondition
+  ## the target 100% has to be dead, they can't just be marooned when evac comes, you're jealous and have to kill them.
+    requireDead: true

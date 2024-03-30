@@ -530,7 +530,39 @@ public abstract class SharedMindSystem : EntitySystem
 
         return allHumans;
     }
+    /// <summary>
+    /// Returns a list of every living humanoid player's minds. Allows for multiple minds to be excluded/skipped in the check
+    /// </summary>
+    /// <param name="exclusionList">The list of minds/players you want to exclude from this check</param>
+    /// <note>
+    ///     I wanted to keep this as close to the original as possible, didnt want to change the logic or underlying methods too much for my application in the Obsessed Antag.
+    ///     This method is absolutely critical to the Obsessed antag.
+    ///         We cant be jealous of the person we're obsessed with for spending time with the person we're obsessed with (it makes no sense!)
+    ///             This method helps us combat this logic flaw and gives depth to the Obsessed antag.
+    /// </note>
+    /// <returns></returns>
+    public List<EntityUid> GetAliveHumansExcept(List<EntityUid> exclusionList)
+    {
+        var allHumans = new List<EntityUid>();
+
+        // HumanoidAppearanceComponent is used to prevent mice, pAIs, etc from being chosen
+        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, HumanoidAppearanceComponent>();
+        while (query.MoveNext(out var uid, out var mc, out var mobState, out _))
+        {
+            // the player needs to have a mind and not be on the exclusion list
+            if (mc.Mind == null || exclusionList.Contains((EntityUid) mc.Mind))
+                continue;
+
+            // the player has to be alive
+            if (_mobState.IsAlive(uid, mobState))
+                allHumans.Add(mc.Mind.Value);
+        }
+        return allHumans;
+    }
 }
+
+
+
 
 /// <summary>
 /// Raised on an entity to determine whether or not they are "dead" in IC-logic.

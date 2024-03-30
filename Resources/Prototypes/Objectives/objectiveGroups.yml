@@ -1,4 +1,6 @@
-# Traitor
+#--------------------------
+# Traitor Objective Groups
+#--------------------------
 - type: weightedRandom
   id: TraitorObjectiveGroups
   weights:
@@ -42,7 +44,53 @@
     RandomTraitorAliveObjective: 1
     RandomTraitorProgressObjective: 1
 
-#Thief groups
+#----------------------------------
+# End of Traitor Objective Groups
+#----------------------------------
+
+
+#--------------------------
+# Obsessed Objective Groups
+#--------------------------
+- type: weightedRandom
+  id: ObsessedObjectiveGroups
+  weights:
+    ObsessedObjectiveGroupKillTarget: 1
+    ObsessedObjectiveGroupKillRival: 1
+    #Commenting out for now, until I get social objectives down
+    #ObsessedObjectiveGroupSocial: 3 #Involves any social objectives you need to perform, like hugging or taking photos of your target. 
+
+- type: weightedRandom
+  id: ObsessedObjectiveGroupKillTarget
+  weights:
+    KillAffectionTargetObjective: 1
+
+- type: weightedRandom
+  id: ObsessedObjectiveGroupKillRival
+  weights:
+    KillLoveRivalObjective: 1
+
+- type: weightedRandom
+  id: ObsessedObjectiveGroupSocial
+  weights:
+    ObsessedStalkTargetObjective: 1
+    HugTargetConditionObjective: 1
+    TimeWithAffectionTargetObjective: 1
+
+
+- type: weightedRandom
+  id: ObsessedObjectiveGroupDebug
+  weights:
+    DieObjectivePeePeePooPoo: 1
+
+#----------------------------------
+# End of Obsessed Objective Groups
+#----------------------------------
+
+
+#--------------------------
+# Thief Objective Groups
+#--------------------------
 - type: weightedRandom
   id: ThiefObjectiveGroups
   weights:
@@ -124,4 +172,9 @@
   id: ThiefObjectiveGroupEscape
   weights:
     EscapeThiefShuttleObjective: 1
-#Changeling, crew, wizard, when you code it...
+
+#----------------------------------
+# End of Thief Objective Groups
+#----------------------------------
+
+# Todo: add Changeling, crew, wizard, etc. when you code it...

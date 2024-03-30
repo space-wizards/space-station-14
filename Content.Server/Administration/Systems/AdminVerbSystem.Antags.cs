@@ -18,6 +18,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
     [Dependency] private readonly RevolutionaryRuleSystem _revolutionaryRule = default!;
+    [Dependency] private readonly ObsessedRuleSystem _obsessedRule = default!;
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
@@ -62,6 +63,20 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-verb-make-zombie"),
         };
         args.Verbs.Add(zombie);
+
+        Verb obsessed = new()
+        {
+            Text = Loc.GetString("admin-verb-text-make-obsessed"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Objects/Antags/Obsessed/obsessed_icons.rsi/obsessed-love.png")),
+            Act = () =>
+            {
+                _obsessedRule.MakeObsessedAdmin(args.Target);
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-obsessed"),
+        };
+        args.Verbs.Add(obsessed);
 
 
         Verb nukeOp = new()

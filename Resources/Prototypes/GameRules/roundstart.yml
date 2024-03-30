@@ -88,6 +88,13 @@
   - type: TraitorRule
 
 - type: entity
+  id: Obsessed
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: ObsessedRule
+
+- type: entity
   id: Revolutionary
   parent: BaseGameRule
   noSpawn: true

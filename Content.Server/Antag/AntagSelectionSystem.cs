@@ -28,6 +28,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
 
+    // this is why I love Rainfey - look how good everything in this code file is!
     #region Eligible Player Selection
     /// <summary>
     /// Get all players that are eligible for an antag role
@@ -87,7 +88,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="includeAllJobs">Should jobs that prohibit antag roles (ie Heads, Sec, Interns) be included</param>
     /// <param name="acceptableAntags">Should players already selected as antags be eligible</param>
     /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
-    /// <param name="customExcludeCondition">A function, accepting an EntityUid and returning bool. Each player is tested against this, returning truw will exclude the player from eligibility</param>
+    /// <param name="customExcludeCondition">A function, accepting an EntityUid and returning bool. Each player is tested against this, returning true will exclude the player from eligibility</param>
     /// <returns>True if the player session matches the requirements, false otherwise</returns>
     public bool IsPlayerEligible(ICommonSession session,
         ProtoId<AntagPrototype> antagPrototype,
