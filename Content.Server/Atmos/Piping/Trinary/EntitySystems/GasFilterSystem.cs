@@ -53,7 +53,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         private void OnFilterUpdated(EntityUid uid, GasFilterComponent filter, ref AtmosDeviceUpdateEvent args)
         {
             if (!filter.Enabled
-                || !_nodeContainer.TryGetNodes(uid, filter.InletName, filter.OutletName, filter.FilterName, out PipeNode? inletNode, out PipeNode? filterNode, out PipeNode? outletNode)
+                || !_nodeContainer.TryGetNodes(uid, filter.InletName, filter.FilterName, filter.OutletName, out PipeNode? inletNode, out PipeNode? filterNode, out PipeNode? outletNode)
                 || outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure) // No need to transfer if target is full.
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
