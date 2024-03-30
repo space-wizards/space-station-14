@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nimfar11
-  changes:
-  - message: Adds snake kebab and its recipe.
-    type: Add
-  id: 5758
-  time: '2024-01-20T23:38:11.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24341
 - author: Alekshhh
   changes:
   - message: Cerberus now has a wideswing that works similarly to spears.
@@ -3792,3 +3785,11 @@
   id: 6257
   time: '2024-03-30T03:59:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25544
+- author: EdenTheLiznerd
+  changes:
+  - message: Amanita toxin now kills you slightly slower, providing you time to seek
+      charcoal before it's too late
+    type: Tweak
+  id: 6258
+  time: '2024-03-30T04:00:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25830
