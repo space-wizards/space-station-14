@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: Lobby restart sound effects no longer cut-off.
-    type: Fix
-  id: 5753
-  time: '2024-01-20T03:40:01.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24044
 - author: casperr04
   changes:
   - message: Fixed players being able to re-anchor items after fultoning them.
@@ -3794,3 +3787,11 @@
   id: 6252
   time: '2024-03-30T00:01:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26539
+- author: arimah
+  changes:
+  - message: Holoparasites, holoclowns and other guardians correctly transfer damage
+      to their hosts again.
+    type: Fix
+  id: 6253
+  time: '2024-03-30T01:25:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26541
