@@ -14,6 +14,7 @@
   - BorgModuleHarvesting
   - SeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
+  - ReagentGrinderIndustrialMachineCircuitboard
 
 - type: technology
   id: CritterMechs
