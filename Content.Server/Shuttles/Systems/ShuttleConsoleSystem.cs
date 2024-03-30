@@ -13,6 +13,7 @@ using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.UI.MapObjects;
+using Content.Shared.Timing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
@@ -257,7 +258,11 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         else
         {
             navState = new NavInterfaceState(0f, null, null, new Dictionary<NetEntity, List<DockingPortState>>());
-            mapState = new ShuttleMapInterfaceState(FTLState.Invalid, 0f, new List<ShuttleBeaconObject>(), new List<ShuttleExclusionObject>());
+            mapState = new ShuttleMapInterfaceState(
+                FTLState.Invalid,
+                default,
+                new List<ShuttleBeaconObject>(),
+                new List<ShuttleExclusionObject>());
         }
 
         if (_ui.TryGetUi(consoleUid, ShuttleConsoleUiKey.Key, out var bui))
@@ -408,12 +413,12 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     public ShuttleMapInterfaceState GetMapState(Entity<FTLComponent?> shuttle)
     {
         FTLState ftlState = FTLState.Available;
-        float stateDuration = 0f;
+        StartEndTime stateDuration = default;
 
         if (Resolve(shuttle, ref shuttle.Comp, false) && shuttle.Comp.LifeStage < ComponentLifeStage.Stopped)
         {
             ftlState = shuttle.Comp.State;
-            stateDuration = _shuttle.GetStateDuration(shuttle.Comp);
+            stateDuration = _shuttle.GetStateTime(shuttle.Comp);
         }
 
         List<ShuttleBeaconObject>? beacons = null;
@@ -422,7 +427,8 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         GetExclusions(ref exclusions);
 
         return new ShuttleMapInterfaceState(
-            ftlState, stateDuration,
+            ftlState,
+            stateDuration,
             beacons ?? new List<ShuttleBeaconObject>(),
             exclusions ?? new List<ShuttleExclusionObject>());
     }
