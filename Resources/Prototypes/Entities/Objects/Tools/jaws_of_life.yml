@@ -43,9 +43,12 @@
         useSound: /Audio/Items/jaws_cut.ogg
         changeSound: /Audio/Items/change_jaws.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: 90
     damage:
       types:
         Blunt: 10
+    soundHit:
+      collection: MetalThud
 
 - type: entity
   name: syndicate jaws of life

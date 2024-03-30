@@ -1,12 +1,13 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        private void ProcessCell(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int fireCount, GasTileOverlayComponent? visuals)
+        private void ProcessCell(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int fireCount, GasTileOverlayComponent visuals)
         {
             // Can't process a tile without air
             if (tile.Air == null)
@@ -116,15 +117,9 @@ namespace Content.Server.Atmos.EntitySystems
         private void Archive(TileAtmosphere tile, int fireCount)
         {
             if (tile.Air != null)
-            {
                 tile.Air.Moles.AsSpan().CopyTo(tile.MolesArchived.AsSpan());
-                tile.TemperatureArchived = tile.Air.Temperature;
-            }
-            else
-            {
-                tile.TemperatureArchived = tile.Temperature;
-            }
 
+            tile.TemperatureArchived = tile.Temperature;
             tile.ArchivedCycle = fireCount;
         }
 
@@ -166,6 +161,12 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="disposeExcitedGroup">Whether to dispose of the tile's <see cref="ExcitedGroup"/></param>
         private void RemoveActiveTile(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, bool disposeExcitedGroup = true)
         {
+            DebugTools.Assert(tile.Excited == gridAtmosphere.ActiveTiles.Contains(tile));
+            DebugTools.Assert(tile.Excited || tile.ExcitedGroup == null);
+
+            if (!tile.Excited)
+                return;
+
             tile.Excited = false;
             gridAtmosphere.ActiveTiles.Remove(tile);
 
@@ -186,7 +187,6 @@ namespace Content.Server.Atmos.EntitySystems
             if (tile.Air == null)
                 return tile.HeatCapacity;
 
-            // Moles archived is not null if air is not null.
             return GetHeatCapacityCalculation(tile.MolesArchived!, tile.Space);
         }
 

@@ -41,7 +41,7 @@ public sealed partial class EmpReactionEffect : ReagentEffect
         var range = MathF.Min((float) (args.Quantity*EmpRangePerUnit), EmpMaxRange);
 
         args.EntityManager.System<EmpSystem>().EmpPulse(
-            args.EntityManager.System<SharedTransformSystem>().GetMapCoordinates((args.SolutionEntity, transform)),
+            transform.MapPosition,
             range,
             EnergyConsumption,
             DisableDuration);

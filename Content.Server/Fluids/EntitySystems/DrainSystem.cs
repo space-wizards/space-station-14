@@ -33,7 +33,6 @@ public sealed class DrainSystem : SharedDrainSystem
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public override void Initialize()
     {
@@ -156,7 +155,7 @@ public sealed class DrainSystem : SharedDrainSystem
 
             puddles.Clear();
 
-            foreach (var entity in _lookup.GetEntitiesInRange(_xformSystem.GetMapCoordinates((uid, xform)), drain.Range))
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, drain.Range))
             {
                 // No InRangeUnobstructed because there's no collision group that fits right now
                 // and these are placed by mappers and not buildable/movable so shouldnt really be a problem...
@@ -240,9 +239,8 @@ public sealed class DrainSystem : SharedDrainSystem
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, entity.Comp.UnclogDuration, new DrainDoAfterEvent(), entity, args.Target, args.Used)
         {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
             BreakOnDamage = true,
+            BreakOnMove = true,
             BreakOnHandChange = true
         };
 

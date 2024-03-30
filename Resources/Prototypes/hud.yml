@@ -35,13 +35,7 @@
   order: 1
 
 - type: hudTheme
-  id: SS14ErisTheme
-  name: ui-options-hud-theme-eris
-  path: Eris
-  order: 5
-
-- type: hudTheme
   id: SS14AshenTheme
   name: ui-options-hud-theme-ashen
   path: Ashen
-  order: 7
+  order: 5

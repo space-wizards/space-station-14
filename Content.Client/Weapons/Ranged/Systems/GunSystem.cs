@@ -99,7 +99,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
             var ent = Spawn(HitscanProto, coords);
             var sprite = Comp<SpriteComponent>(ent);
-            TransformSystem.SetLocalRotation(ent, a.angle);
+            var xform = Transform(ent);
+            xform.LocalRotation = a.angle;
             sprite[EffectLayers.Unshaded].AutoAnimated = false;
             sprite.LayerSetSprite(EffectLayers.Unshaded, rsi);
             sprite.LayerSetState(EffectLayers.Unshaded, rsi.RsiState);
@@ -277,11 +278,9 @@ public sealed partial class GunSystem : SharedGunSystem
         var ent = Spawn(message.Prototype, coordinates);
 
         var effectXform = Transform(ent);
-        TransformSystem.SetLocalPositionRotation(ent,
+        TransformSystem.SetLocalPositionRotation(effectXform,
             effectXform.LocalPosition + new Vector2(0f, -0.5f),
-            effectXform.LocalRotation - MathF.PI / 2,
-            effectXform
-        );
+            effectXform.LocalRotation - MathF.PI / 2);
 
         var lifetime = 0.4f;
 

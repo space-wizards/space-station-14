@@ -3,6 +3,7 @@ using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics.Components;
 using Content.Server.Popups;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.Interaction;
@@ -27,6 +28,7 @@ namespace Content.Server.Forensics
 
             SubscribeLocalEvent<DnaComponent, BeingGibbedEvent>(OnBeingGibbed);
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
             SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(AbsorbentSystem) });
             SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
             SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
@@ -71,6 +73,34 @@ namespace Content.Server.Forensics
             }
         }
 
+        private void OnRehydrated(Entity<ForensicsComponent> ent, ref GotRehydratedEvent args)
+        {
+            CopyForensicsFrom(ent.Comp, args.Target);
+        }
+
+        /// <summary>
+        /// Copy forensic information from a source entity to a destination.
+        /// Existing forensic information on the target is still kept.
+        /// </summary>
+        public void CopyForensicsFrom(ForensicsComponent src, EntityUid target)
+        {
+            var dest = EnsureComp<ForensicsComponent>(target);
+            foreach (var dna in src.DNAs)
+            {
+                dest.DNAs.Add(dna);
+            }
+
+            foreach (var fiber in src.Fibers)
+            {
+                dest.Fibers.Add(fiber);
+            }
+
+            foreach (var print in src.Fingerprints)
+            {
+                dest.Fingerprints.Add(print);
+            }
+        }
+
         private void OnAfterInteract(EntityUid uid, CleansForensicsComponent component, AfterInteractEvent args)
         {
             if (args.Handled)
@@ -86,7 +116,7 @@ namespace Content.Server.Forensics
                     BreakOnHandChange = true,
                     NeedHand = true,
                     BreakOnDamage = true,
-                    BreakOnTargetMove = true,
+                    BreakOnMove = true,
                     MovementThreshold = 0.01f,
                     DistanceThreshold = forensicsComp.CleanDistance,
                 };

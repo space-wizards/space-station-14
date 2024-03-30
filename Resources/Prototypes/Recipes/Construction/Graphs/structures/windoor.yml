@@ -21,6 +21,15 @@
         amount: 4
         doAfter: 2
 
+    - to: assemblyClockwork
+      completed:
+      - !type:SetAnchor
+        value: false
+      steps:
+      - material: Brass
+        amount: 4
+        doAfter: 2
+
   - node: assembly
     entity: WindoorAssembly
     actions:
@@ -413,6 +422,105 @@
       - tool: Anchoring
         doAfter: 4
 
+  - node: assemblyClockwork
+    entity: WindoorAssemblyClockwork
+    actions:
+    - !type:SnapToGrid { }
+    - !type:SetAnchor { }
+    edges:
+    - to: glassClockwork
+      conditions:
+      - !type:EntityAnchored { }
+      steps:
+      - material: ClockworkGlass
+        amount: 5
+        doAfter: 1
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetBrass1
+        amount: 4
+      - !type:DeleteEntity { }
+      steps:
+      - tool: Welding
+        doAfter: 10
+
+  - node: glassClockwork
+    entity: WindoorAssemblyClockwork
+    edges:
+    - to: wiredClockwork
+      conditions:
+      - !type:EntityAnchored { }
+      steps:
+      - material: Cable
+        amount: 5
+        doAfter: 1
+    - to: assemblyClockwork
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetClockworkGlass1
+        amount: 5
+      steps:
+      - tool: Screwing
+        doAfter: 4
+
+  - node: wiredClockwork
+    entity: WindoorAssemblyClockwork
+    edges:
+    - to: electronicsClockwork
+      conditions:
+      - !type:EntityAnchored { }
+      steps:
+      - tag: DoorElectronics
+        store: board
+        name: "door electronics circuit board"
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "door_electronics"
+        doAfter: 1
+    - to: glassClockwork
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 5
+      steps:
+      - tool: Cutting
+        doAfter: 3
+
+  - node: electronicsClockwork
+    entity: WindoorAssemblyClockwork
+    edges:
+    - to: windoorClockwork
+      conditions:
+      - !type:EntityAnchored { }
+      steps:
+      - tool: Screwing
+        doAfter: 4
+
+  - node: windoorClockwork
+    entity: WindoorClockwork
+    edges:
+    - to: wiredClockwork
+      conditions:
+      - !type:EntityAnchored {}
+      - !type:DoorBolted
+        value: false
+      - !type:WirePanel {}
+      - !type:AllWiresCut
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Anchoring
+        doAfter: 4
+
   #secure plasma node
   - node: pglassSecure
     entity: WindoorAssemblySecurePlasma
@@ -424,6 +532,7 @@
       - material: Cable
         amount: 5
         doAfter: 1
+
     - to: assemblySecure
       conditions:
       - !type:EntityAnchored
@@ -435,7 +544,6 @@
       steps:
       - tool: Screwing
         doAfter: 4
-
 
   - node: pwiredSecure
     entity: WindoorAssemblySecurePlasma

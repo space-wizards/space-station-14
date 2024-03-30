@@ -28,11 +28,11 @@ public sealed partial class NPCSteeringComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float Radius = 0.35f;
 
-    [ViewVariables]
-    public readonly float[] Interest = new float[SharedNPCSteeringSystem.InterestDirections];
+    [ViewVariables, DataField]
+    public float[] Interest = new float[SharedNPCSteeringSystem.InterestDirections];
 
-    [ViewVariables]
-    public readonly float[] Danger = new float[SharedNPCSteeringSystem.InterestDirections];
+    [ViewVariables, DataField]
+    public float[] Danger = new float[SharedNPCSteeringSystem.InterestDirections];
 
     // TODO: Update radius, also danger points debug only
     public readonly List<Vector2> DangerPoints = new();
@@ -45,20 +45,8 @@ public sealed partial class NPCSteeringComponent : Component
     [DataField("forceMove")]
     public bool ForceMove = false;
 
-    /// <summary>
-    /// Next time we can change our steering direction.
-    /// </summary>
-    [DataField("nextSteer", customTypeSerializer:typeof(TimeOffsetSerializer))]
-    [AutoPausedField]
-    public TimeSpan NextSteer = TimeSpan.Zero;
-
-    [DataField("lastSteerIndex")]
-    public int LastSteerIndex = -1;
-
     [DataField("lastSteerDirection")]
     public Vector2 LastSteerDirection = Vector2.Zero;
-
-    public const int SteeringFrequency = 5;
 
     /// <summary>
     /// Last position we considered for being stuck.

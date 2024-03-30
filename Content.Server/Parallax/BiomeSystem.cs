@@ -797,7 +797,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 // At least for now unless we do lookups or smth, only work with anchoring.
                 if (_xformQuery.TryGetComponent(ent, out var xform) && !xform.Anchored)
                 {
-                    _transform.AnchorEntity((ent, xform), (gridUid, grid), indices);
+                    _transform.AnchorEntity(ent, xform, gridUid, grid, indices);
                 }
 
                 loadedEntities.Add(ent, indices);
@@ -1001,20 +1001,13 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         light.AmbientLightColor = Color.FromHex("#D8B059");
         Dirty(mapUid, light, metadata);
 
-        // Atmos
-        var atmos = EnsureComp<MapAtmosphereComponent>(mapUid);
-
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int) Gas.Oxygen] = 21.824779f;
         moles[(int) Gas.Nitrogen] = 82.10312f;
 
-        var mixture = new GasMixture(2500)
-        {
-            Temperature = 293.15f,
-            Moles = moles,
-        };
+        var mixture = new GasMixture(moles, Atmospherics.T20C);
 
-        _atmos.SetMapAtmosphere(mapUid, false, mixture, atmos);
+        _atmos.SetMapAtmosphere(mapUid, false, mixture);
     }
 
     /// <summary>

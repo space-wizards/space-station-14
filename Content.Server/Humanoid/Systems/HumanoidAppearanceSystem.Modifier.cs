@@ -29,7 +29,7 @@ public sealed partial class HumanoidAppearanceSystem
         {
             Text = "Modify markings",
             Category = VerbCategory.Tricks,
-            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Customization/reptilian_parts.rsi"), "tail_smooth"),
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Customization/reptilian_parts.rsi"), "tail_smooth"),
             Act = () =>
             {
                 _uiSystem.TryOpen(uid, HumanoidMarkingModifierKey.Key, actor.PlayerSession);
@@ -63,7 +63,7 @@ public sealed partial class HumanoidAppearanceSystem
             component.CustomBaseLayers[message.Layer] = message.Info.Value;
         }
 
-        Dirty(component);
+        Dirty(uid, component);
 
         if (message.ResendState)
         {
@@ -88,7 +88,7 @@ public sealed partial class HumanoidAppearanceSystem
         }
 
         component.MarkingSet = message.MarkingSet;
-        Dirty(component);
+        Dirty(uid, component);
 
         if (message.ResendState)
         {

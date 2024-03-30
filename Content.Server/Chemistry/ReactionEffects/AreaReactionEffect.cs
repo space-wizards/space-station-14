@@ -57,18 +57,16 @@ namespace Content.Server.Chemistry.ReactionEffects
             var spreadAmount = (int) Math.Max(0, Math.Ceiling((args.Quantity / OverflowThreshold).Float()));
             var splitSolution = args.Source.SplitSolution(args.Source.Volume);
             var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);
-            var xformSystem = args.EntityManager.System<SharedTransformSystem>();
             var mapManager = IoCManager.Resolve<IMapManager>();
 
-            var mapCoordinates = xformSystem.GetMapCoordinates((args.SolutionEntity, transform));
-            if (!mapManager.TryFindGridAt(mapCoordinates, out _, out var grid) ||
+            if (!mapManager.TryFindGridAt(transform.MapPosition, out _, out var grid) ||
                 !grid.TryGetTileRef(transform.Coordinates, out var tileRef) ||
                 tileRef.Tile.IsSpace())
             {
                 return;
             }
 
-            var coords = grid.MapToGrid(mapCoordinates);
+            var coords = grid.MapToGrid(transform.MapPosition);
             var ent = args.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
 
             var smoke = args.EntityManager.System<SmokeSystem>();

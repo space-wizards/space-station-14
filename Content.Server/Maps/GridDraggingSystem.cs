@@ -12,7 +12,6 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 {
     [Dependency] private readonly IConGroupController _admin = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     private readonly HashSet<ICommonSession> _draggers = new();
 
@@ -79,6 +78,6 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 
         var gridXform = Transform(grid);
 
-        _xformSystem.SetWorldPosition(gridXform, msg.WorldPosition);
+        gridXform.WorldPosition = msg.WorldPosition;
     }
 }

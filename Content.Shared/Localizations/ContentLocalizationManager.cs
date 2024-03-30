@@ -119,6 +119,14 @@ namespace Content.Shared.Localizations
             };
         }
 
+        /// <summary>
+        /// Formats a direction struct as a human-readable string.
+        /// </summary>
+        public static string FormatDirection(Direction dir)
+        {
+            return Loc.GetString($"zzzz-fmt-direction-{dir.ToString()}");
+        }
+
         private static ILocValue FormatLoc(LocArgs args)
         {
             var id = ((LocValueString) args.Args[0]).Value;

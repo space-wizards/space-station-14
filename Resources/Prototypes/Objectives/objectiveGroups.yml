@@ -117,10 +117,7 @@
     WalterStealObjective: 1
     MortyStealObjective: 1
     RenaultStealObjective: 1
-    HamletStealObjective: 1
     ShivaStealObjective: 1
-    SmileStealObjective: 1
-    PunPunStealObjective: 1
     TropicoStealObjective: 1
 
 - type: weightedRandom

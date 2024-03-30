@@ -1,0 +1,8 @@
+- type: messagePack
+  id: DonutGoodbyes
+  messages:
+  - vending-machine-thanks
+  - thankyou-donut-1
+  - thankyou-donut-2
+  - thankyou-donut-3
+  - thankyou-donut-4
