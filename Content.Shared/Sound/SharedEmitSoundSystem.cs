@@ -103,12 +103,11 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         TryEmitSound(uid, component, args.User);
     }
 
-    private void OnEmitSoundOnInteractUsing(EntityUid uid, EmitSoundOnInteractUsingComponent component, InteractUsingEvent args)
+    private void OnEmitSoundOnInteractUsing(Entity<EmitSoundOnInteractUsingComponent> ent, ref InteractUsingEvent args)
     {
-        var curUsedItemProto = Prototype(args.Used);
-        if (component.UsedItemProto.Equals(curUsedItemProto))
+        if (ent.Comp.Whitelist.IsValid(args.Used, EntityManager))
         {
-            TryEmitSound(uid, component, args.User, true);
+            TryEmitSound(ent, ent.Comp, args.User);
         }
     }
     protected void TryEmitSound(EntityUid uid, BaseEmitSoundComponent component, EntityUid? user=null, bool predict=true)

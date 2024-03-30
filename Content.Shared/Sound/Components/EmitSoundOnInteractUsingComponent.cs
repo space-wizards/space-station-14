@@ -1,13 +1,14 @@
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Sound.Components;
 
 /// <summary>
-/// Whenever this item is used upon by a specific entity prototype in the hand of a user, play a sound
+/// Whenever this item is used upon by an entity, with a tag or component within a whitelist, in the hand of a user, play a sound
 /// </summary>
 [RegisterComponent]
 public sealed partial class EmitSoundOnInteractUsingComponent : BaseEmitSoundComponent
 {
-    [DataField("UsedItemProto", false, 1, true)]
-    public ProtoId<EntityPrototype> UsedItemProto = new();
+    [DataField(required: true)]
+    public EntityWhitelist Whitelist = new();
 }
