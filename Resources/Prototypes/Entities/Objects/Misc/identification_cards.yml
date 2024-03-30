@@ -590,8 +590,7 @@
   components:
   - type: PresetIdCard
     job: Passenger
-  - type: Tag
-    - Metal
+  - type: Metal
   - type: Access
     tags:
     - Maintenance
