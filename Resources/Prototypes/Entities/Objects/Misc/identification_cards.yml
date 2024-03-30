@@ -591,7 +591,6 @@
   - type: PresetIdCard
     job: Passenger
   - type: Tag
-    tags:
     - Metal
   - type: Access
     tags:
