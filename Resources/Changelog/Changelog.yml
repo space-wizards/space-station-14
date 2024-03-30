@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: tday
-  changes:
-  - message: Added admin log messages for adding and ending game rules, and for the
-      commands to do so.
-    type: Add
-  - message: Added admin log messages for secret mode rule selection.
-    type: Add
-  id: 5757
-  time: '2024-01-20T18:02:13.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24092
 - author: Nimfar11
   changes:
   - message: Adds snake kebab and its recipe.
@@ -3794,3 +3784,11 @@
   id: 6256
   time: '2024-03-30T03:35:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26504
+- author: Plykiya
+  changes:
+  - message: Hyposprays can now be toggled to draw from solution containers like jugs
+      and beakers.
+    type: Tweak
+  id: 6257
+  time: '2024-03-30T03:59:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25544
