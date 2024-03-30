@@ -8,10 +8,10 @@
   cost:
     WizCoin: 2
   categories:
-    - SpellbookOffensive
+  - SpellbookOffensive
   conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+  - !type:ListingLimitedStockCondition
+    stock: 1
 
 # Defensive
 - type: listing
@@ -22,7 +22,7 @@
   cost:
     WizCoin: 3
   categories:
-    - SpellbookDefensive
+  - SpellbookDefensive
 
 # Utility
 - type: listing
@@ -47,6 +47,9 @@
     WizCoin: 1
   categories:
   - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
 
 # Equipment
 - type: listing
@@ -76,7 +79,7 @@
     stock: 1
 
 # Upgrades
-# Need to delist when no more upgrades are available, probably with a condition?
+# TODO: Delist automatically with a condition, have it check for the remaining upgrades or something
 - type: listing
   id: SpellbookFireballUpgrade
   productUpgradeID: SpellbookFireballUpgrade
@@ -88,8 +91,10 @@
   cost:
     WizCoin: 2
   categories:
-    - SpellbookOffensive
+  - SpellbookOffensive
   conditions:
-    - !type:BuyBeforeCondition
-      whitelist:
-        - SpellbookFireball
+  - !type:BuyBeforeCondition
+    whitelist:
+      - SpellbookFireball
+  - !type:ListingLimitedStockCondition
+    stock: 2 #manual delist for now

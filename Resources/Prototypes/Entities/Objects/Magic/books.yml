@@ -13,9 +13,12 @@
       tags:
       - Spellbook
 
+# For the Wizard Antag
+# Do not add discounts or price inflation
 - type: entity
-  id: MasterSpellbook
-  name: master spellbook
+  id: WizardsGrimoire
+  name: wizards grimoire
+  suffix: Wizard
   parent: BaseItem
   components:
     - type: Sprite
@@ -29,10 +32,10 @@
     - type: ActivatableUI
       key: enum.StoreUiKey.Key
     - type: Store
-      allowRefund: true
+      refundAllowed: true
       preset: StorePresetSpellbook
       balance:
-        WizCoin: 10
+        WizCoin: 10 # prices are balanced around this 10 point maximum and how strong the spells are
 
 - type: entity
   id: SpawnSpellbook
