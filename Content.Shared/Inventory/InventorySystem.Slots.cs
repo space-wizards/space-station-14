@@ -68,6 +68,9 @@ public partial class InventorySystem : EntitySystem
     public bool HasSlot(EntityUid uid, string slot, InventoryComponent? component = null) =>
         TryGetSlot(uid, slot, out _, component);
 
+    /// <summary>
+    ///     Whether the entity has the specified slot. Use <see cref="TryGetSlotEntity"/> for the equipped item.
+    /// </summary>
     public bool TryGetSlot(EntityUid uid, string slot, [NotNullWhen(true)] out SlotDefinition? slotDefinition, InventoryComponent? inventory = null)
     {
         slotDefinition = null;

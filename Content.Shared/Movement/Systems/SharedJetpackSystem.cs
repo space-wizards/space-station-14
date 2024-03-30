@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
@@ -13,12 +14,12 @@ namespace Content.Shared.Movement.Systems;
 
 public abstract class SharedJetpackSystem : EntitySystem
 {
-    [Dependency] private   readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-    [Dependency] protected  readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
-    [Dependency] private   readonly SharedMoverController _mover = default!;
-    [Dependency] private   readonly SharedPopupSystem _popup = default!;
-    [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedMoverController _mover = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
@@ -58,16 +59,14 @@ public abstract class SharedJetpackSystem : EntitySystem
             if (transform.GridUid == gridUid && ev.HasGravity &&
                 jetpackQuery.TryGetComponent(user.Jetpack, out var jetpack))
             {
-                _popup.PopupClient(Loc.GetString("jetpack-to-grid"), uid, uid);
-
-                SetEnabled(user.Jetpack, jetpack, false, uid);
+                DisableJetpack(user.Jetpack, jetpack, uid);
             }
         }
     }
 
     private void OnJetpackDropped(EntityUid uid, JetpackComponent component, DroppedEvent args)
     {
-        SetEnabled(uid, component, false, args.User);
+        DisableJetpack(uid, component, args.User);
     }
 
     private void OnJetpackUserCanWeightless(EntityUid uid, JetpackUserComponent component, ref CanWeightlessMoveEvent args)
@@ -80,9 +79,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         if (TryComp<JetpackComponent>(component.Jetpack, out var jetpack) &&
             !CanEnableOnGrid(args.Transform.GridUid))
         {
-            SetEnabled(component.Jetpack, jetpack, false, uid);
-
-            _popup.PopupClient(Loc.GetString("jetpack-to-grid"), uid, uid);
+            DisableJetpack(component.Jetpack, jetpack, uid);
         }
     }
 
@@ -116,17 +113,18 @@ public abstract class SharedJetpackSystem : EntitySystem
         if (TryComp<TransformComponent>(uid, out var xform) && !CanEnableOnGrid(xform.GridUid))
         {
             _popup.PopupClient(Loc.GetString("jetpack-no-station"), uid, args.Performer);
-
             return;
         }
 
-        SetEnabled(uid, component, !IsEnabled(uid));
+        if (IsEnabled(uid))
+            DisableJetpack(uid, component);
+        else
+            EnableJetpack(uid, component);
     }
 
     private bool CanEnableOnGrid(EntityUid? gridUid)
     {
-        return gridUid == null ||
-               (!HasComp<GravityComponent>(gridUid));
+        return gridUid == null || !HasComp<GravityComponent>(gridUid);
     }
 
     private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)
@@ -139,48 +137,44 @@ public abstract class SharedJetpackSystem : EntitySystem
         return HasComp<ActiveJetpackComponent>(uid);
     }
 
-    public void SetEnabled(EntityUid uid, JetpackComponent component, bool enabled, EntityUid? user = null)
+    private EntityUid? TryGetJetpackOwner(EntityUid uid)
     {
-        if (IsEnabled(uid) == enabled ||
-            enabled && !CanEnable(uid, component))
-        {
-            return;
-        }
+        Container.TryGetContainingContainer(uid, out var container);
+        return container?.Owner;
+    }
 
-        if (enabled)
+    protected void EnableJetpack(EntityUid uid, JetpackComponent component, EntityUid? user = null)
+    {
+        user ??= TryGetJetpackOwner(uid);
+
+        if (user != null && !IsEnabled(uid) && CanEnable(uid, user.Value, component))
         {
             EnsureComp<ActiveJetpackComponent>(uid);
+            SetupUser(user.Value, uid);
+            _movementSpeedModifier.RefreshMovementSpeedModifiers(user.Value);
+            Appearance.SetData(uid, JetpackVisuals.Enabled, true);
+            Dirty(uid, component);
         }
-        else
-        {
-            RemComp<ActiveJetpackComponent>(uid);
-        }
+    }
 
-        if (user == null)
-        {
-            Container.TryGetContainingContainer(uid, out var container);
-            user = container?.Owner;
-        }
-
-        // Can't activate if no one's using.
-        if (user == null && enabled)
+    protected void DisableJetpack(EntityUid uid, JetpackComponent component, EntityUid? user = null)
+    {
+        if (!IsEnabled(uid))
             return;
+
+        RemComp<ActiveJetpackComponent>(uid);
+
+        user ??= TryGetJetpackOwner(uid);
 
         if (user != null)
         {
-            if (enabled)
-            {
-                SetupUser(user.Value, uid);
-            }
-            else
-            {
-                RemoveUser(user.Value);
-            }
+            _popup.PopupClient(Loc.GetString("jetpack-disabled"), uid, user.Value);
 
+            RemoveUser(user.Value);
             _movementSpeedModifier.RefreshMovementSpeedModifiers(user.Value);
         }
 
-        Appearance.SetData(uid, JetpackVisuals.Enabled, enabled);
+        Appearance.SetData(uid, JetpackVisuals.Enabled, false);
         Dirty(uid, component);
     }
 
@@ -189,7 +183,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         return HasComp<JetpackUserComponent>(uid);
     }
 
-    protected virtual bool CanEnable(EntityUid uid, JetpackComponent component)
+    protected virtual bool CanEnable(EntityUid uid, EntityUid user, JetpackComponent component)
     {
         return true;
     }

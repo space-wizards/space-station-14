@@ -44,7 +44,7 @@ public abstract partial class InventorySystem
 
     private void OnEntRemoved(EntityUid uid, InventoryComponent component, EntRemovedFromContainerMessage args)
     {
-        if(!TryGetSlot(uid, args.Container.ID, out var slotDef, inventory: component))
+        if (!TryGetSlot(uid, args.Container.ID, out var slotDef, inventory: component))
             return;
 
         var unequippedEvent = new DidUnequipEvent(uid, args.Entity, slotDef);
@@ -56,8 +56,8 @@ public abstract partial class InventorySystem
 
     private void OnEntInserted(EntityUid uid, InventoryComponent component, EntInsertedIntoContainerMessage args)
     {
-        if(!TryGetSlot(uid, args.Container.ID, out var slotDef, inventory: component))
-           return;
+        if (!TryGetSlot(uid, args.Container.ID, out var slotDef, inventory: component))
+            return;
 
         var equippedEvent = new DidEquipEvent(uid, args.Entity, slotDef);
         RaiseLocalEvent(uid, equippedEvent, true);
@@ -116,7 +116,7 @@ public abstract partial class InventorySystem
 
         RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor), false);
 
-        TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true, checkDoafter:true);
+        TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true, checkDoafter: true);
     }
 
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
@@ -128,7 +128,7 @@ public abstract partial class InventorySystem
     {
         if (!Resolve(target, ref inventory, false))
         {
-            if(!silent && _gameTiming.IsFirstTimePredicted)
+            if (!silent && _gameTiming.IsFirstTimePredicted)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"));
             return false;
         }
@@ -139,14 +139,14 @@ public abstract partial class InventorySystem
 
         if (!TryGetSlotContainer(target, slot, out var slotContainer, out var slotDefinition, inventory))
         {
-            if(!silent && _gameTiming.IsFirstTimePredicted)
+            if (!silent && _gameTiming.IsFirstTimePredicted)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"));
             return false;
         }
 
         if (!force && !CanEquip(actor, target, itemUid, slot, out var reason, slotDefinition, inventory, clothing))
         {
-            if(!silent && _gameTiming.IsFirstTimePredicted)
+            if (!silent && _gameTiming.IsFirstTimePredicted)
                 _popup.PopupCursor(Loc.GetString(reason));
             return false;
         }
@@ -180,7 +180,7 @@ public abstract partial class InventorySystem
 
         if (!_containerSystem.Insert(itemUid, slotContainer))
         {
-            if(!silent && _gameTiming.IsFirstTimePredicted)
+            if (!silent && _gameTiming.IsFirstTimePredicted)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
             return false;
         }
@@ -369,14 +369,14 @@ public abstract partial class InventorySystem
 
         if (!Resolve(target, ref inventory, false))
         {
-            if(!silent && _gameTiming.IsFirstTimePredicted)
+            if (!silent && _gameTiming.IsFirstTimePredicted)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
             return false;
         }
 
         if (!TryGetSlotContainer(target, slot, out var slotContainer, out var slotDefinition, inventory))
         {
-            if(!silent && _gameTiming.IsFirstTimePredicted)
+            if (!silent && _gameTiming.IsFirstTimePredicted)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
             return false;
         }
@@ -388,7 +388,7 @@ public abstract partial class InventorySystem
 
         if (!force && !CanUnequip(actor, target, slot, out var reason, slotContainer, slotDefinition, inventory))
         {
-            if(!silent && _gameTiming.IsFirstTimePredicted)
+            if (!silent && _gameTiming.IsFirstTimePredicted)
                 _popup.PopupCursor(Loc.GetString(reason));
             return false;
         }
@@ -457,7 +457,8 @@ public abstract partial class InventorySystem
         InventoryComponent? inventory = null) =>
         CanUnequip(uid, uid, slot, out reason, containerSlot, slotDefinition, inventory);
 
-    public bool CanUnequip(EntityUid actor, EntityUid target, string slot, [NotNullWhen(false)] out string? reason, ContainerSlot? containerSlot = null, SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null)
+    public bool CanUnequip(EntityUid actor, EntityUid target, string slot, [NotNullWhen(false)] out string? reason,
+        ContainerSlot? containerSlot = null, SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null)
     {
         reason = "inventory-component-can-unequip-cannot";
         if (!Resolve(target, ref inventory, false))
@@ -466,7 +467,7 @@ public abstract partial class InventorySystem
         if ((containerSlot == null || slotDefinition == null) && !TryGetSlotContainer(target, slot, out containerSlot, out slotDefinition, inventory))
             return false;
 
-        if (containerSlot.ContainedEntity is not {} itemUid)
+        if (containerSlot.ContainedEntity is not { } itemUid)
             return false;
 
         if (!_containerSystem.CanRemove(itemUid, containerSlot))
@@ -510,7 +511,12 @@ public abstract partial class InventorySystem
         return true;
     }
 
-    public bool TryGetSlotEntity(EntityUid uid, string slot, [NotNullWhen(true)] out EntityUid? entityUid, InventoryComponent? inventoryComponent = null, ContainerManagerComponent? containerManagerComponent = null)
+    /// <summary>
+    ///     Whether the entity is equipped in slot.
+    /// </summary>
+    /// <param name="entityUid">Exported contents of <paramref name="slot"/>.</param>
+    public bool TryGetSlotEntity(EntityUid uid, string slot, [NotNullWhen(true)] out EntityUid? entityUid,
+        InventoryComponent? inventoryComponent = null, ContainerManagerComponent? containerManagerComponent = null)
     {
         entityUid = null;
         if (!Resolve(uid, ref inventoryComponent, ref containerManagerComponent, false)
