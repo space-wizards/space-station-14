@@ -25,6 +25,8 @@
       - id: Wirecutter
       - id: Welder
       - id: Multitool
+  - type: ReplaceOnSpawn
+    prototype: ClothingBeltChiefEngineerFilled
 
 - type: entity
   id: ClothingBeltChiefEngineerFilled

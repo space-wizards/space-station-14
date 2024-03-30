@@ -36,6 +36,8 @@
     layers:
     - state: default
     - state: idpassenger
+  - type: ReplaceOnSpawn
+    prototype: AgentIDCard
   - type: PresetIdCard
     job: Passenger
 

@@ -41,6 +41,8 @@
     footstepSoundCollection:
       collection: FootstepClown
   # for H.O.N.K. construction
+  - type: ReplaceOnSpawn
+    prototype: ClothingShoesBling
   - type: Tag
     tags:
     - ClownShoes

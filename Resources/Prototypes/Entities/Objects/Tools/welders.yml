@@ -98,6 +98,8 @@
     price: 40
   - type: IgnitionSource
     temperature: 700
+  - type: ReplaceOnSpawn
+    prototype: Cowelder
 
 - type: entity
   name: industrial welding tool

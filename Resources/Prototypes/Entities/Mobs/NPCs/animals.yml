@@ -1910,6 +1910,8 @@
   - type: NpcFactionMember
     factions:
     - Passive
+  - type: ReplaceOnSpawn
+    prototype: MobGrenadePenguin
   - type: Temperature
     heatDamageThreshold: 335
     coldDamageThreshold: 230
@@ -2719,6 +2721,8 @@
       path: /Audio/Animals/cat_meow.ogg
   - type: Respirator #It just works?
     minSaturation: 5.0
+  - type: ReplaceOnSpawn
+    prototype: MobCatSyndy
 
 - type: entity
   name: caracal cat

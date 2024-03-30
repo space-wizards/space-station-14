@@ -255,6 +255,9 @@
       reagents:
       - ReagentId: JuiceBanana
         Quantity: 10
+  - type: ReplaceOnSpawn
+    prototype: ClusterBananaPeel
+    chance: 0.001
   - type: Tag
     tags:
     - Fruit
@@ -345,6 +348,8 @@
   - type: Extractable
     grindableSolutionName: food
   - type: SpaceGarbage
+  - type: ReplaceOnSpawn
+    prototype: TrashBananaPeelExplosive
 
 - type: entity
   name: baked banana peel
@@ -655,6 +660,9 @@
       reagents:
       - ReagentId: JuicePotato
         Quantity: 10
+  - type: ReplaceOnSpawn
+    prototype: HotPotato
+    chance: 0.001
   - type: Tag
     tags:
     - Potato

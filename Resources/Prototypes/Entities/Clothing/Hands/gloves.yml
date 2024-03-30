@@ -28,6 +28,8 @@
     tags:
     - Kangaroo
     - WhitelistChameleon
+  - type: ReplaceOnSpawn
+    prototype: ClothingHandsGlovesBoxingRigged
 
 - type: entity
   parent: ClothingHandsGlovesBoxingRed

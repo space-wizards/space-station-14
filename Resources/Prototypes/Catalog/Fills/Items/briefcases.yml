@@ -8,6 +8,8 @@
     contents:
       - id: Paper
         amount: 3
+  - type: ReplaceOnSpawn
+    prototype: BriefcaseSyndieLobbyingBundleFilled
 
 - type: entity
   id: BriefcaseSyndieSniperBundleFilled

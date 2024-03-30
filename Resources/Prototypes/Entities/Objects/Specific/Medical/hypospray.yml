@@ -156,6 +156,8 @@
           Quantity: 3
   - type: Tag
     tags: []
+  - type: ReplaceOnSpawn
+    prototype: CombatMedipen
 
 - type: entity
   name: poison auto-injector

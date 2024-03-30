@@ -272,6 +272,8 @@
     sprite: Objects/Misc/bureaucracy.rsi
     heldPrefix: pen
     size: Tiny
+  - type: ReplaceOnSpawn
+    prototype: PenExploding
   - type: PhysicalComposition
     materialComposition:
       Steel: 25

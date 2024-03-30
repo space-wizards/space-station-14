@@ -199,6 +199,8 @@
   name: oxygen canister
   description: A canister that can contain any type of gas. This one is supposed to contain oxygen. It can be attached to connector ports using a wrench.
   components:
+  - type: ReplaceOnSpawn
+    prototype: FrezonCanister
   - type: Sprite
     layers:
       - state: blue
@@ -253,6 +255,8 @@
   name: nitrogen canister
   description: A canister that can contain any type of gas. This one is supposed to contain nitrogen. It can be attached to connector ports using a wrench.
   components:
+    - type: ReplaceOnSpawn
+      prototype: PlasmaCanister
     - type: Sprite
       layers:
         - state: red

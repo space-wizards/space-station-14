@@ -45,6 +45,8 @@
     stealGroup: FireAxe
   - type: IgniteOnMeleeHit
     fireStacks: -4
+  - type: ReplaceOnSpawn
+    prototype: FireAxeFlaming
 
 - type: entity
   id: FireAxeFlaming

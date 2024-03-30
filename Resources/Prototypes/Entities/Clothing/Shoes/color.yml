@@ -8,6 +8,8 @@
     sprite: Clothing/Shoes/Color/black.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Color/black.rsi
+  - type: ReplaceOnSpawn
+    prototype: ClothingShoesChameleonNoSlips
 
 - type: entity
   parent: ClothingShoesBaseButcherable
