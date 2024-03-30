@@ -590,6 +590,9 @@
   components:
   - type: PresetIdCard
     job: Passenger
+  - type: Tag
+    tags:
+    - Metal
   - type: Access
     tags:
     - Maintenance
@@ -669,6 +672,9 @@
   id: NukieAgentIDCard
   suffix: Nukie
   components:
+  - type: Tag
+    tags:
+    - Metal
   - type: Access
     tags:
     - Maintenance
@@ -695,13 +701,9 @@
   - type: Sprite
     layers:
     - state: syndie
-  - type: Explosive
-    explosionType: Default
-    maxIntensity: 5
-    totalIntensity: 5
-    intensitySlope: 5
-    canCreateVacuum: false
-    deleteAfterExplosion: true
+  - type: Tag
+    tags:
+    - Metal
   - type: Access
     tags:
     - NuclearOperative
@@ -715,6 +717,9 @@
   - type: Sprite
     layers:
     - state: pirate
+  - type: Tag
+    tags:
+    - Metal
   - type: Access
     tags:
     - NuclearOperative
