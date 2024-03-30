@@ -12,9 +12,40 @@
     graph: ImprovisedNukeCraft
     node: cart
     defaultTarget: painted
+  - type: Physics
+    bodyType: Dynamic
+  - type: Pullable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.30
+        density: 10
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 10
+            max: 15
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
 
 - type: entity
-  parent: BaseStructure
+  parent: ImprovisedNuclearBombCart
   id: ImprovisedNuclearBombInsides
   name: nuclear fission explosive
   description: A partially constructed nuke.
@@ -27,9 +58,28 @@
     graph: ImprovisedNukeCraft
     node: insides
     defaultTarget: painted
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 10
+            max: 15
+          PartRodMetal:
+            min: 4
+            max: 8
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
-  parent: BaseStructure
+  parent: ImprovisedNuclearBombCart
   id: ImprovisedNuclearBombInsidesPipe
   name: nuclear fission explosive
   description: A partially constructed nuke.
@@ -42,9 +92,20 @@
     graph: ImprovisedNukeCraft
     node: pipe
     defaultTarget: painted
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 40
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
 
 - type: entity
-  parent: BaseStructure
+  parent: ImprovisedNuclearBombInsidesPipe
   id: ImprovisedNuclearBombInsidesGun
   name: nuclear fission explosive
   description: A partially constructed nuke.
@@ -58,8 +119,9 @@
     node: gun
     defaultTarget: painted
 
+
 - type: entity
-  parent: BaseStructure
+  parent: ImprovisedNuclearBombInsidesPipe
   id: ImprovisedNuclearBombInsidesBullet
   name: nuclear fission explosive
   description: A partially constructed nuke.
@@ -75,7 +137,7 @@
 
 
 - type: entity
-  parent: BaseStructure
+  parent: ImprovisedNuclearBombInsidesPipe
   id: ImprovisedNuclearBombInsidesUranium
   name: nuclear fission explosive
   description: A partially constructed nuke. Looks like it contains radioactive material.
@@ -90,9 +152,55 @@
     graph: ImprovisedNukeCraft
     node: uranium
     defaultTarget: painted
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 60
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 10
+            max: 15
+          PartRodMetal:
+            min: 4
+            max: 8
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:SpillBehavior
+        solution: tank
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Uranium-235
+          Quantity: 55
+        - ReagentId: Uranium-234
+          Quantity: 10
+        - ReagentId: Uranium-238
+          Quantity: 35
 
 - type: entity
-  parent: BaseStructure
+  parent: ImprovisedNuclearBombInsidesPipe
   id: ImprovisedNuclearBomb
   name: nuclear fission explosive
   description: A nuclear fission device!
@@ -107,9 +215,58 @@
     graph: ImprovisedNukeCraft
     node: finished
     defaultTarget: painted
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 100
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 10
+            max: 15
+          PartRodMetal:
+            min: 4
+            max: 8
+          SheetSteel1:
+            min: 18
+            max: 30
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpillBehavior
+        solution: tank
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Uranium-235
+          Quantity: 55
+        - ReagentId: Uranium-234
+          Quantity: 10
+        - ReagentId: Uranium-238
+          Quantity: 35
 
 - type: entity
-  parent: BaseStructure
+  parent: ImprovisedNuclearBomb
   id: ImprovisedNuclearBombSign
   name: nuclear fission explosive
   description: A nuclear fission device!
