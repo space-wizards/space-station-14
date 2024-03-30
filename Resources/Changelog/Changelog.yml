@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: Agoichi
-  changes:
-  - message: Rebalanced Lobbying Bundle
-    type: Tweak
-  id: 5751
-  time: '2024-01-20T02:35:44.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24303
-- author: Dygon
-  changes:
-  - message: Storage objects can't be opened anymore while stored in a container.
-    type: Fix
-  id: 5752
-  time: '2024-01-20T02:50:14.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24253
-- author: FairlySadPanda
-  changes:
-  - message: Lobby restart sound effects no longer cut-off.
-    type: Fix
-  id: 5753
-  time: '2024-01-20T03:40:01.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24044
 - author: casperr04
   changes:
   - message: Fixed players being able to re-anchor items after fultoning them.
@@ -3793,3 +3772,26 @@
   id: 6250
   time: '2024-03-29T06:30:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26290
+- author: deltanedas
+  changes:
+  - message: Multiple bombs exploding at once on a tile now combine to have a larger
+      explosion rather than stacking the same small explosion.
+    type: Tweak
+  id: 6251
+  time: '2024-03-29T23:46:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25664
+- author: Mephisto72
+  changes:
+  - message: Ion Storms are now more likely to alter a Borg's laws.
+    type: Tweak
+  id: 6252
+  time: '2024-03-30T00:01:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26539
+- author: arimah
+  changes:
+  - message: Holoparasites, holoclowns and other guardians correctly transfer damage
+      to their hosts again.
+    type: Fix
+  id: 6253
+  time: '2024-03-30T01:25:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26541
