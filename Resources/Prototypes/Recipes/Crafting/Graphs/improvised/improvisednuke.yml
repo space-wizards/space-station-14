@@ -89,7 +89,8 @@
         name: uranium shotgun shell
         icon:
           sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgunshell.rsi
-          state: depleted-uranium
+          layers:
+            - state: depleted-uranium
         doAfter: 1
   - node: bullet
     entity: ImprovisedNuclearBombInsidesBullet
