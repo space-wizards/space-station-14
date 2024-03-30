@@ -26,6 +26,7 @@
   - type: Construction
     graph: ImprovisedNukeCraft
     node: insides
+    defaultTarget: pipe
 
 - type: entity
   parent: BaseStructure
@@ -37,6 +38,9 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_3
     noRot: true
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: pipe
 
 - type: entity
   parent: BaseStructure

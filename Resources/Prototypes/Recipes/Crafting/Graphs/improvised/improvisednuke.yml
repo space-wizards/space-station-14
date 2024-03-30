@@ -45,3 +45,22 @@
       steps:
       - tool: Cutting
         doAfter: 3
+    - to: pipe
+      steps:
+      - tag: Pipe
+        name: metal pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+        doAfter: 4
+  - node: pipe
+    entity: ImprovisedNuclearBombInsidesPipe
+    edges:
+    - to: insides
+      completed:
+      - !type:SpawnPrototype
+        prototype: GasPipeStraight
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 3
