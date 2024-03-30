@@ -228,6 +228,8 @@
   parent: [ MobAdultSlimes, MobCombat ]
   description: It consists of a liquid, and it wants to dissolve you in itself.
   components:
+  - type: GhostRole
+    description: ghost-role-information-angry-slimes-description
   - type: NpcFactionMember
     factions:
     - SimpleHostile

@@ -191,6 +191,30 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorBrassFilled
+  name: tiles-brass-floor-filled
+  sprite: /Textures/Tiles/Misc/clockwork/clockwork_floor_filled.png
+  baseTurf: PlatingBrass
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemBrassFilled
+  heatCapacity: 10000
+  
+- type: tile
+  id: FloorBrassReebe
+  name: tiles-brass-floor-reebe
+  sprite: /Textures/Tiles/Misc/clockwork/reebe.png
+  baseTurf: PlatingBrass
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemBrassReebe
+  heatCapacity: 10000
+
+- type: tile
   id: FloorPlastic
   name: tiles-plastic-floor
   sprite: /Textures/Tiles/plastic.png
@@ -1842,11 +1866,29 @@
     West: /Textures/Tiles/Planet/Grass/double_edge.png
   baseTurf: Plating
   isSubfloor: false
-  deconstructTools: [ Prying ]
+  deconstructTools: [ Cutting ]
   footstepSounds:
     collection: FootstepGrass
   itemDrop: FloorTileItemAstroGrass
   heatCapacity: 10000
+
+- type: tile
+  id: FloorMowedAstroGrass
+  name: tiles-mowed-astro-grass
+  parent: FloorGrass
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Cutting ]
+  itemDrop: FloorTileItemMowedAstroGrass
+
+- type: tile
+  id: FloorJungleAstroGrass
+  name: tiles-jungle-astro-grass
+  parent: FloorGrassJungle
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Cutting ]
+  itemDrop: FloorTileItemJungleAstroGrass
 
 # Ice
 - type: tile
@@ -1862,3 +1904,32 @@
   mobFrictionNoInput: 0.05
   mobAcceleration: 2
   itemDrop: FloorTileItemAstroIce
+
+- type: tile
+  id: FloorAstroSnow
+  name: tiles-astro-snow
+  parent: FloorSnow
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroSnow
+
+- type: tile
+  id: FloorWoodLarge
+  name: tiles-wood-large
+  sprite: /Textures/Tiles/wood_large.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: FloorTileItemWoodLarge
+  heatCapacity: 10000

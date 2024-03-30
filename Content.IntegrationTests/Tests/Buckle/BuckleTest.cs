@@ -101,7 +101,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                     Assert.That(buckle.Buckled);
 
                     Assert.That(actionBlocker.CanMove(human), Is.False);
-                    Assert.That(actionBlocker.CanChangeDirection(human), Is.False);
+                    Assert.That(actionBlocker.CanChangeDirection(human));
                     Assert.That(standingState.Down(human), Is.False);
                     Assert.That(
                         (xformSystem.GetWorldPosition(human) - xformSystem.GetWorldPosition(chair)).LengthSquared,

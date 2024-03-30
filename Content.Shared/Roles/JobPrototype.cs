@@ -1,5 +1,6 @@
 using Content.Shared.Access;
 using Content.Shared.Players.PlayTimeTracking;
+using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -71,6 +72,16 @@ namespace Content.Shared.Roles
         public int Weight { get; private set; }
 
         /// <summary>
+        /// How to sort this job relative to other jobs in the UI.
+        /// Jobs with a higher value with sort before jobs with a lower value.
+        /// If not set, <see cref="Weight"/> is used as a fallback.
+        /// </summary>
+        [DataField]
+        public int? DisplayWeight { get; private set; }
+
+        public int RealDisplayWeight => DisplayWeight ?? Weight;
+
+        /// <summary>
         ///     A numerical score for how much easier this job is for antagonists.
         ///     For traitors, reduces starting TC by this amount. Other gamemodes can use it for whatever they find fitting.
         /// </summary>
@@ -105,5 +116,29 @@ namespace Content.Shared.Roles
 
         [DataField("extendedAccessGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessGroupPrototype>))]
         public IReadOnlyCollection<string> ExtendedAccessGroups { get; private set; } = Array.Empty<string>();
+    }
+
+    /// <summary>
+    /// Sorts <see cref="JobPrototype"/>s appropriately for display in the UI,
+    /// respecting their <see cref="JobPrototype.Weight"/>.
+    /// </summary>
+    public sealed class JobUIComparer : IComparer<JobPrototype>
+    {
+        public static readonly JobUIComparer Instance = new();
+
+        public int Compare(JobPrototype? x, JobPrototype? y)
+        {
+            if (ReferenceEquals(x, y))
+                return 0;
+            if (ReferenceEquals(null, y))
+                return 1;
+            if (ReferenceEquals(null, x))
+                return -1;
+
+            var cmp = -x.RealDisplayWeight.CompareTo(y.RealDisplayWeight);
+            if (cmp != 0)
+                return cmp;
+            return string.Compare(x.ID, y.ID, StringComparison.Ordinal);
+        }
     }
 }

@@ -1,8 +1,11 @@
-- type: advertisementsPack
+- type: messagePack
   id: LawDrobeAds
-  advertisements:
+  messages:
     - advertisement-lawdrobe-1
     - advertisement-lawdrobe-2
     - advertisement-lawdrobe-3
-  thankyous:
-    - vending-machine-thanks
+    - advertisement-lawdrobe-4
+    - advertisement-lawdrobe-5
+    - advertisement-lawdrobe-6
+    - advertisement-lawdrobe-7
+    - advertisement-lawdrobe-8

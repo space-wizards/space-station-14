@@ -72,7 +72,7 @@ namespace Content.Server.Administration.Systems
             Subs.CVar(_config, CVars.GameHostName, OnServerNameChanged, true);
             Subs.CVar(_config, CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
-            _maxAdditionalChars = GenerateAHelpMessage("", "", true, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, false).Length;
+            _maxAdditionalChars = GenerateAHelpMessage("", "", true, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, playedSound: false).Length;
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
@@ -411,7 +411,8 @@ namespace Content.Server.Administration.Systems
 
             bwoinkText = $"{(message.PlaySound ? "" : "(S) ")}{bwoinkText}: {escapedText}";
 
-            var playSound = senderAHelpAdmin && message.PlaySound;
+            // If it's not an admin / admin chooses to keep the sound then play it.
+            var playSound = !senderAHelpAdmin || message.PlaySound;
             var msg = new BwoinkTextMessage(message.UserId, senderSession.UserId, bwoinkText, playSound: playSound);
 
             LogBwoink(msg);
@@ -470,7 +471,7 @@ namespace Content.Server.Administration.Systems
                     str = str[..(DescriptionMax - _maxAdditionalChars - unameLength)];
                 }
                 var nonAfkAdmins = GetNonAfkAdmins();
-                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, playSound, nonAfkAdmins.Count == 0));
+                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, playedSound: playSound, noReceivers: nonAfkAdmins.Count == 0));
             }
 
             if (admins.Count != 0 || sendsWebhook)

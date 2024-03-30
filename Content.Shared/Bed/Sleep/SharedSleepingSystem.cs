@@ -26,14 +26,8 @@ namespace Content.Server.Bed.Sleep
             SubscribeLocalEvent<SleepingComponent, SpeakAttemptEvent>(OnSpeakAttempt);
             SubscribeLocalEvent<SleepingComponent, CanSeeAttemptEvent>(OnSeeAttempt);
             SubscribeLocalEvent<SleepingComponent, PointAttemptEvent>(OnPointAttempt);
-            SubscribeLocalEvent<SleepingComponent, EntityUnpausedEvent>(OnSleepUnpaused);
         }
 
-        private void OnSleepUnpaused(EntityUid uid, SleepingComponent component, ref EntityUnpausedEvent args)
-        {
-            component.CoolDownEnd += args.PausedTime;
-            Dirty(uid, component);
-        }
 
         private void OnMapInit(EntityUid uid, SleepingComponent component, MapInitEvent args)
         {

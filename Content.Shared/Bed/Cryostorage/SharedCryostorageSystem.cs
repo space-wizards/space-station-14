@@ -37,7 +37,6 @@ public abstract class SharedCryostorageSystem : EntitySystem
         SubscribeLocalEvent<CryostorageComponent, CanDropTargetEvent>(OnCanDropTarget);
 
         SubscribeLocalEvent<CryostorageContainedComponent, EntGotRemovedFromContainerMessage>(OnRemovedContained);
-        SubscribeLocalEvent<CryostorageContainedComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<CryostorageContainedComponent, ComponentShutdown>(OnShutdownContained);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
@@ -128,13 +127,6 @@ public abstract class SharedCryostorageSystem : EntitySystem
         var (uid, comp) = ent;
         if (!IsInPausedMap(uid))
             RemCompDeferred(ent, comp);
-    }
-
-    private void OnUnpaused(Entity<CryostorageContainedComponent> ent, ref EntityUnpausedEvent args)
-    {
-        var comp = ent.Comp;
-        if (comp.GracePeriodEndTime != null)
-            comp.GracePeriodEndTime = comp.GracePeriodEndTime.Value + args.PausedTime;
     }
 
     private void OnShutdownContained(Entity<CryostorageContainedComponent> ent, ref ComponentShutdown args)

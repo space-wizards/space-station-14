@@ -83,6 +83,20 @@
   itemSize: 5
 
 - type: stack
+  id: FloorTileBrassFilled
+  name: filled brass plate
+  spawn: FloorTileItemBrassFilled
+  maxCount: 30
+  itemSize: 5
+  
+- type: stack
+  id: FloorTileBrassReebe
+  name: smooth brass plate
+  spawn: FloorTileItemBrassReebe
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
   id: FloorTileLino
   name: linoleum floor
   spawn: FloorTileItemLino
@@ -240,6 +254,20 @@
   id: FloorCarpetPink
   name: pink carpet tile
   spawn: FloorCarpetItemPink
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorCarpetCyan
+  name: cyan carpet tile
+  spawn: FloorCarpetItemCyan
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorCarpetWhite
+  name: white carpet tile
+  spawn: FloorCarpetItemWhite
   maxCount: 30
   itemSize: 5
 
@@ -448,8 +476,35 @@
   itemSize: 5
 
 - type: stack
+  id: FloorTileMowedAstroGrass
+  name: mowed astro-grass floor
+  spawn: FloorTileItemMowedAstroGrass
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileJungleAstroGrass
+  name: jungle astro-grass floor
+  spawn: FloorTileItemJungleAstroGrass
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
   id: FloorTileAstroIce
   name: astro-ice floor
   spawn: FloorTileItemAstroIce
   maxCount: 30
   itemSize: 5
+
+- type: stack
+  id: FloorTileAstroSnow
+  name: astro-snow floor
+  spawn: FloorTileItemAstroSnow
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileWoodLarge
+  name: large wood floor
+  spawn: FloorTileItemWoodLarge
+  maxCount: 30

@@ -30,6 +30,7 @@ using Content.Shared.Medical.Cryogenics;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
@@ -71,6 +72,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         SubscribeLocalEvent<CryoPodComponent, GasAnalyzerScanEvent>(OnGasAnalyzed);
         SubscribeLocalEvent<CryoPodComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
         SubscribeLocalEvent<CryoPodComponent, AfterActivatableUIOpenEvent>(OnActivateUI);
+        SubscribeLocalEvent<CryoPodComponent, EntRemovedFromContainerMessage>(OnEjected);
     }
 
     public override void Update(float frameTime)
@@ -140,8 +142,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, entity.Comp.EntryDelay, new CryoPodDragFinished(), entity, target: args.Dragged, used: entity)
         {
             BreakOnDamage = true,
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
+            BreakOnMove = true,
             NeedHand = false,
         };
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
@@ -187,6 +188,11 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         TryComp<TemperatureComponent>(entity.Comp.BodyContainer.ContainedEntity, out var temp);
         TryComp<BloodstreamComponent>(entity.Comp.BodyContainer.ContainedEntity, out var bloodstream);
 
+        if (TryComp<HealthAnalyzerComponent>(entity, out var healthAnalyzer))
+        {
+            healthAnalyzer.ScannedEntity = entity.Comp.BodyContainer.ContainedEntity;
+        }
+
         _userInterfaceSystem.TrySendUiMessage(
             entity.Owner,
             HealthAnalyzerUiKey.Key,
@@ -196,6 +202,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
                 bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
                 ? bloodSolution.FillFraction
                 : 0,
+            null,
             null
         ));
     }
@@ -280,6 +287,17 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
                 gasMixDict.Add(entity.Comp.PortName, port.Air);
         }
         args.GasMixtures = gasMixDict;
+    }
+
+    private void OnEjected(Entity<CryoPodComponent> cryoPod, ref EntRemovedFromContainerMessage args)
+    {
+        if (TryComp<HealthAnalyzerComponent>(cryoPod.Owner, out var healthAnalyzer))
+        {
+            healthAnalyzer.ScannedEntity = null;
+        }
+
+        // if body is ejected - no need to display health-analyzer
+        _uiSystem.TryCloseAll(cryoPod.Owner, HealthAnalyzerUiKey.Key);
     }
 
     #endregion

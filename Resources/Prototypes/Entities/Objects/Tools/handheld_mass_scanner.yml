@@ -1,0 +1,72 @@
+- type: entity
+  name: handheld mass scanner
+  parent: [ BaseItem, PowerCellSlotSmallItem]
+  id: HandHeldMassScanner
+  description: A hand-held mass scanner.
+  components:
+  - type: Item
+  - type: Sprite
+    sprite: Objects/Tools/handheld_mass_scanner.rsi
+    state: icon
+    layers:
+      - state: icon
+      - state: scanner
+        shader: unshaded
+        visible: true
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: RadarConsole
+    maxRange: 64
+    followEntity: true
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerCellSlotVisuals.Enabled:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: PowerCellDraw
+    drawRate: 3
+    useRate: 100
+  - type: ActivatableUIRequiresPowerCell
+  - type: ActivatableUI
+    key: enum.RadarConsoleUiKey.Key
+    inHandsOnly: true
+    singleUser: true
+  - type: UserInterface
+    interfaces:
+      - key: enum.RadarConsoleUiKey.Key
+        type: RadarConsoleBoundUserInterface
+  - type: StaticPrice
+    price: 150
+
+- type: entity
+  id: HandHeldMassScannerEmpty
+  parent: HandHeldMassScanner
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+  - type: Sprite
+    sprite: Objects/Tools/handheld_mass_scanner.rsi
+    state: icon
+    layers:
+      - state: icon
+      - state: scanner
+        shader: unshaded
+        visible: false
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+
+- type: entity
+  id: HandHeldMassScannerBorg
+  parent: HandHeldMassScanner
+  suffix: Borg
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
+        disableEject: true
+        swap: false
