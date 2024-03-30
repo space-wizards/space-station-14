@@ -38,8 +38,15 @@ public sealed partial class ExplosionSystem
     ///     Queue for delayed processing of explosions. If there is an explosion that covers more than <see
     ///     cref="TilesPerTick"/> tiles, other explosions will actually be delayed slightly. Unless it's a station
     ///     nuke, this delay should never really be noticeable.
+    ///     This is also used to combine explosion intensities of the same kind.
     /// </summary>
-    private Queue<Func<Explosion?>> _explosionQueue = new();
+    private Queue<QueuedExplosion> _explosionQueue = new();
+
+    /// <summary>
+    /// All queued explosions that will be processed in <see cref="_explosionQueue"/>.
+    /// These always have the same contents.
+    /// </summary>
+    private HashSet<QueuedExplosion> _queuedExplosions = new();
 
     /// <summary>
     ///     The explosion currently being processed.
@@ -93,10 +100,11 @@ public sealed partial class ExplosionSystem
                 if (MathF.Max(MaxProcessingTime - 1, 0.1f) < Stopwatch.Elapsed.TotalMilliseconds)
                     break;
 
-                if (!_explosionQueue.TryDequeue(out var spawnNextExplosion))
+                if (!_explosionQueue.TryDequeue(out var queued))
                     break;
 
-                _activeExplosion = spawnNextExplosion();
+                _queuedExplosions.Remove(queued);
+                _activeExplosion = SpawnExplosion(queued);
 
                 // explosion spawning can be null if something somewhere went wrong. (e.g., negative explosion
                 // intensity).
@@ -866,4 +874,16 @@ sealed class Explosion
         }
         _tileUpdateDict.Clear();
     }
+}
+
+/// <summary>
+/// Data needed to spawn an explosion with <see cref="ExplosionSystem.SpawnExplosion"/>.
+/// </summary>
+public sealed class QueuedExplosion
+{
+    public MapCoordinates Epicenter;
+    public ExplosionPrototype Proto = new();
+    public float TotalIntensity, Slope, MaxTileIntensity, TileBreakScale;
+    public int MaxTileBreak;
+    public bool CanCreateVacuum;
 }

@@ -18,7 +18,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
-    onlyMobs: false
+    onlyAffectsMobs: false
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice
@@ -49,7 +49,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
-    onlyMobs: false
+    onlyAffectsMobs: false
   - type: UseDelay
     delay: 0.5
 
@@ -73,6 +73,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    onlyAffectsMobs: false
   - type: UseDelay
     delay: 0.5
 
@@ -113,6 +114,7 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 15
+    onlyAffectsMobs: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1
@@ -202,6 +204,7 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 20
+    onlyAffectsMobs: false
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -232,6 +235,7 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 20
+    onlyAffectsMobs: false
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -262,6 +266,7 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 20
+    onlyAffectsMobs: false
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -293,6 +298,7 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 30
+    onlyAffectsMobs: false
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -330,6 +336,7 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 30
+    onlyAffectsMobs: false
   - type: StaticPrice
     price: 500
   - type: Tag
@@ -389,6 +396,7 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 30
+    onlyAffectsMobs: false
   - type: StaticPrice
     price: 500
   - type: Tag
@@ -410,7 +418,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
-    onlyMobs: false
+    onlyAffectsMobs: false
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta
