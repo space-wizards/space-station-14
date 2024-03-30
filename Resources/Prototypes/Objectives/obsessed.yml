@@ -47,7 +47,7 @@
   parent: [BaseObsessedObjective, BaseKillObjective]
   id: KillAffectionTargetObjective
   # unsure if the title should be my locale string, or the description? cyberfinn to test this
-  description: If I can't have you, no one can!
+  #description: If I can't have you, no one can!
   components:
   - type: Objective
     difficulty: 4.0 # 1.75 (for killing normal person) seems low, since you interact with the target lots, and they will likely report their suspicions after a while. this is harder than killing Command/Sec as a syndie, because YOU DONT HAVE ANY GUNS/WEAPONS, nor any uplink
@@ -65,7 +65,7 @@
   noSpawn: true
   parent: [BaseObsessedObjective, BaseKillObjective]
   id: KillLoveRivalObjective
-  description: Crossed the line!
+  #description: Crossed the line!
   # unsure if the title or description should be my locale string? cyberfinn to test this
   components:
   - type: Objective
