@@ -40,7 +40,7 @@ public sealed partial class BloodDefinitionPrototype : IPrototype
     /// selected when initially creating a bloodstream
     /// </summary>
     [DataField(required:true)]
-    public Dictionary<FixedPoint2, ProtoId<BloodTypePrototype>> BloodTypeDistribution = new();
+    public Dictionary<ProtoId<BloodTypePrototype>, FixedPoint2> BloodTypeDistribution = new();
 
-    public ICollection<ProtoId<BloodTypePrototype>> BloodTypes => BloodTypeDistribution.Values;
+    public ICollection<ProtoId<BloodTypePrototype>> BloodTypes => BloodTypeDistribution.Keys;
 }

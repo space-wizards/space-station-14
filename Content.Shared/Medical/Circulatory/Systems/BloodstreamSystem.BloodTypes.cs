@@ -132,7 +132,7 @@ public sealed partial class BloodstreamSystem
     {
         var total = 0f;
         List<ProtoId<BloodTypePrototype>> items = new();
-        foreach (var (chance, bloodTypeId) in bloodDefProto.BloodTypeDistribution)
+        foreach (var (bloodTypeId, chance) in bloodDefProto.BloodTypeDistribution)
         {
             total += chance.Float();
             items.Add(bloodTypeId);

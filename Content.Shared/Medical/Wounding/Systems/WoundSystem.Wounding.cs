@@ -299,7 +299,8 @@ public sealed partial class WoundSystem
             RaiseLocalEvent(woundable.Body.Value ,ref ev2);
             RaiseLocalEvent(woundEnt ,ref ev2);
         }
-        QueueDel(woundEnt); //Wounds should never exist outside of a container
+        if (!_netManager.IsClient)
+            QueueDel(woundEnt); //Wounds should never exist outside of a container
     }
     #endregion
 }

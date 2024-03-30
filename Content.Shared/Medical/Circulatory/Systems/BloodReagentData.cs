@@ -1,9 +1,11 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Medical.Circulatory.Prototypes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Medical.Circulatory.Systems;
 
+[Serializable, NetSerializable]
 public sealed partial class BloodReagentData : ReagentData
 {
     [DataField(required: true)]

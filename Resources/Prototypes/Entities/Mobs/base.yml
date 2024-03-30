@@ -240,6 +240,7 @@
   - type: InjectableSolution
     solution: bloodstream
   - type: Bloodstream
+    bloodDefinition: HumanBlood
     #TODO Bloodstream: re-implement this
 #    bloodlossDamage:
 #      types:

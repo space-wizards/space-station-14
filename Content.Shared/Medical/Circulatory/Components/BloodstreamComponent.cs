@@ -16,13 +16,13 @@ public sealed partial class BloodstreamComponent : Component
     /// The healthy volume for this bloodstream.
     /// </summary>
     [DataField, AutoNetworkedField] //TODO: Required
-    public FixedPoint2 HealthyVolume = 500;
+    public FixedPoint2 HealthyVolume = 250;
 
     /// <summary>
     /// The maximum volume for this bloodstream (this may be exceeded with heavy negative effects)
     /// </summary>
     [DataField, AutoNetworkedField] //TODO: Required
-    public FixedPoint2 MaxVolume = 200;
+    public FixedPoint2 MaxVolume = 300;
 
     /// <summary>
     /// How much blood is currently being lost by bleed, this number must be positive
@@ -70,7 +70,7 @@ public sealed partial class BloodstreamComponent : Component
     /// the linked defined bloodtypes. It also provides the list of possible bloodtypes and the likelihood of
     /// spawning with a particular one.
     /// </summary>
-    [DataField, AutoNetworkedField] //TODO: Required
+    [DataField(), AutoNetworkedField] //TODO: Required
     public string BloodDefinition = string.Empty; //TODO: convert back to protoID
 
     /// <summary>
