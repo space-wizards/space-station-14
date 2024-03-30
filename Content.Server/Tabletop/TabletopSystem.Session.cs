@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server.Shuttles.Components;
 using Content.Server.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using Robust.Shared.Player;
@@ -30,6 +31,12 @@ namespace Content.Server.Tabletop
 
             // Since this is the first time opening this session, set up the game
             tabletop.Setup.SetupTabletop(session, EntityManager);
+
+            var randomEntity = session.Entities.FirstOrNull();
+            if (randomEntity != null)
+            {
+                AddComp<FTLBeaconComponent>(randomEntity.Value);
+            }
 
             Logger.Info($"Created tabletop session number {tabletop} at position {session.Position}.");
 

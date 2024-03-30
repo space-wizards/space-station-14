@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.GameTicking;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
@@ -53,6 +54,8 @@ namespace Content.Server.Tabletop
             var mapUid = _mapManager.GetMapEntityId(TabletopMap);
 
             var mapComp = EntityManager.GetComponent<MapComponent>(mapUid);
+            _metaData.SetEntityName(mapUid, Loc.GetString("tabletop-chess-dimension"));
+            AddComp<FTLDestinationComponent>(mapUid);
 
             // Lighting is always disabled in tabletop world.
             mapComp.LightingEnabled = false;

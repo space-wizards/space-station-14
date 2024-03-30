@@ -20,3 +20,6 @@ tabletop-checkers-board-name = Checkers
 
 ## Battlemap
 tabletop-battlemap-board-name = Battlemap
+
+## The Chess Dimension
+tabletop-chess-dimension = The Chess Dimension
