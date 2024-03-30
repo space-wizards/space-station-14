@@ -2,7 +2,7 @@
   name: Rat King
   id: MobRatKing
   parent: [ SimpleMobBase, MobCombat ]
-  description: He's da rat. He make da roolz.
+  description: He's da rat king. He make da roolz.
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
@@ -42,6 +42,19 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
+  - type: Hands
+  - type: Inventory
+    speciesId: rat
+    templateId: ratKing
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+  - type: Puller
+    needsHands: false
+  - type: IdExaminable
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -194,7 +207,6 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
       state: eyes
       shader: unshaded
-
   - type: SpriteMovement
     movementLayers:
       movement:

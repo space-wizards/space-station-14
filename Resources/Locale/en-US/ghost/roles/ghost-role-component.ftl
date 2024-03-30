@@ -52,7 +52,7 @@ ghost-role-information-kobold-description = Be the little gremlin you are, yell 
 
 ghost-role-information-rat-king-name = Rat King
 ghost-role-information-rat-king-description = You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
-ghost-role-information-rat-king-rules = You are an antagonist, scavenge, attack, and grow your hoard!
+ghost-role-information-rat-king-rules = You are da Rat King, you make da roolz.  You have no aligience, scavenge, attack, and grow your hoard or learn to live in peace with the crew!
 
 ghost-role-information-rat-servant-name = Rat Servant
 ghost-role-information-rat-servant-description = You are a Rat Servant. You must follow your king's orders.
