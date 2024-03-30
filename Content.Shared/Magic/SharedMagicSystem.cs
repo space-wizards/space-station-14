@@ -53,7 +53,6 @@ public abstract class SharedMagicSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<MagicComponent, BeforeCastSpellEvent>(OnBeforeCastSpell);
 
-        // TODO: More spells
         SubscribeLocalEvent<InstantSpawnSpellEvent>(OnInstantSpawn);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
         SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
@@ -62,6 +61,9 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<SmiteSpellEvent>(OnSmiteSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
 
+        // Spell wishlist
+        //  A wishlish of spells that I'd like to implement or planning on implementing in a future PR
+
         // TODO: InstantDoAfterSpell and WorldDoafterSpell
         //  Both would be an action that take in an event, that passes an event to trigger once the doafter is done
         //  This would be three events:
@@ -69,45 +71,66 @@ public abstract class SharedMagicSystem : EntitySystem
         //    2 - The doafter event itself, which passes the event with it
         //    3 - The event to trigger once the do-after finishes
 
-        // TODO: Polymorph Spell (Self)
-        // Poly self to fish, or two other forms.
-        // Can only swap to that form if chosen
-        // if health goes below a certain threshhold, user transforms back (with that much health lost)
-        // which includes any damage done to that form
+        // TODO: Eventually make a polymorph spell that first allows you to make
 
-        // TODO: Polymorph Spell (Others, rng, projectile)
-
-        // TODO: Inanimate objects to life
-        // Needs its own ECS
+        // TODO: Inanimate objects to life ECS
+        //  AI sentience
 
         // TODO: Flesh2Stone
-        // Entity Target spell
+        //   Entity Target spell
+        //   Synergy with Inanimate object to life (detects player and allows player to move around)
 
         // TODO: Lightning Spell
         // Should just fire lightning, try to prevent arc back to caster
 
-        // TODO: Magic Missile
-        // Instant action, target any player on screen
-        // Would need a homing projectile ECS
+        // TODO: Magic Missile (homing projectile ecs)
+        //   Instant action, target any player (except self) on screen
+
+        // TODO: Random projectile ECS for magic-carp, wand of magic
+
+        // TODO: Charge Spell
+        //  recharge wand in active hand
+
+        // TODO: Recall Spell
+        //  mark any item in hand to recall
+        //  if no free hands, summon at feet
+        //  if item deleted, clear stored item
 
         // TODO: Jaunt (should be its own ECS)
         // Instant action
-        //   When clicked, disappear/reappear
+        //   When clicked, disappear/reappear (goes to paused map)
         //   option to restrict to tiles
         //   option for requiring entry/exit (blood jaunt)
+        //   speed option
 
-        // TODO: Touch spell
-        //   Wouldn't this just be a touch action ECS?
+        // TODO: Summon Events
+        //  List of wizard events to add into the event pool that frequently activate
+        //  floor is lava
+        //  change places
+
+        // TODO: Summon Guns
+        //  Summon a random gun at peoples feet
+        //  Rare chance of giving gun collector status to people
+
+        // TODO: Summon Magic
+        //  Summon a random magic wand at peoples feet
+        //  Rare chance of giving magic collector status to people
+
+        // TODO: Bottle of Blood
+        //  Summons Slaughter Demon
+        //  TODO: Slaughter Demon
+        //    Also see Jaunt
+
+        // TODO: Field Spells
+        //  Should be able to specify a grid of tiles (3x3 for example) that it effects
+        //  Timed despawn - so it doesn't last forever
+        //  Ignore caster - for spells that shouldn't effect the caster (ie if timestop should effect the caster)
+
+        // TODO: Touch toggle spell
         //  1 - When toggled on, show in hand
         //  2 - Block hand when toggled on
         //      - Require free hand
-        //  Toggle Event
-        //   Inherit?
-        //  When toggled on, show hand sprite
-        //  Pass event to raise
-        // May just need to make a component, like toggle spell component
-        // Then on toggled, allow clicking
-        //  Like combat mode?
+        //  3 - use spell event when toggled & click
     }
 
     private void OnBeforeCastSpell(Entity<MagicComponent> ent, ref BeforeCastSpellEvent args)
