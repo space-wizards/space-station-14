@@ -6,6 +6,9 @@ analysis-console-print-button = Print
 analysis-console-print-tooltip-info = Print out the current information about the artifact.
 analysis-console-extract-button = Extract
 analysis-console-extract-button-info = Extract points from an artifact based on the newly explored nodes.
+analysis-console-bias-up = Bias: Up
+analysis-console-bias-down = Bias: Down
+analysis-console-bias-button-info = Toggles the bias an artifact has in moving between its nodes. Up heads toward zero depth, and down toward ever-higher depths.
 
 analysis-console-info-no-scanner = No analyzer connected! Please connect one using a multitool.
 analysis-console-info-no-artifact = No artifact present! Place one on the pad then scan for information.

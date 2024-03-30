@@ -17,8 +17,6 @@ public sealed class TraversalDistorterSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<TraversalDistorterComponent, MapInitEvent>(OnInit);
-
-        SubscribeLocalEvent<TraversalDistorterComponent, ActivateInWorldEvent>(OnInteract);
         SubscribeLocalEvent<TraversalDistorterComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<TraversalDistorterComponent, ItemPlacedEvent>(OnItemPlaced);
@@ -30,30 +28,27 @@ public sealed class TraversalDistorterSystem : EntitySystem
         component.NextActivation = _timing.CurTime;
     }
 
-    private void OnInteract(EntityUid uid, TraversalDistorterComponent component, ActivateInWorldEvent args)
+    /// <summary>
+    /// Toggles the state of the traversal distorter between up and down.
+    /// </summary>
+    /// <param name="uid">The distorter's entity</param>
+    /// <param name="component">The component on the entity</param>
+    /// <returns>If the distorter changed state</returns>
+    public bool ToggleState(EntityUid uid, TraversalDistorterComponent component)
     {
-        if (args.Handled || !this.IsPowered(uid, EntityManager))
-            return;
+        if ( !this.IsPowered(uid, EntityManager))
+            return false;
+
         if (_timing.CurTime < component.NextActivation)
-            return;
-        args.Handled = true;
+            return false;
+
         component.NextActivation = _timing.CurTime + component.ActivationDelay;
 
         component.BiasDirection = component.BiasDirection == BiasDirection.Up
             ? BiasDirection.Down
             : BiasDirection.Up;
 
-        var toPopup = string.Empty;
-        switch (component.BiasDirection)
-        {
-            case BiasDirection.Up:
-                toPopup = Loc.GetString("traversal-distorter-set-up");
-                break;
-            case BiasDirection.Down:
-                toPopup = Loc.GetString("traversal-distorter-set-down");
-                break;
-        }
-        _popup.PopupEntity(toPopup, uid);
+        return true;
     }
 
     private void OnExamine(EntityUid uid, TraversalDistorterComponent component, ExaminedEvent args)

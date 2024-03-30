@@ -19,6 +19,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     public event Action? OnScanButtonPressed;
     public event Action? OnPrintButtonPressed;
     public event Action? OnExtractButtonPressed;
+    public event Action? OnBiasButtonPressed;
 
     // For rendering the progress bar, updated from BUI state
     private TimeSpan? _startTime;
@@ -36,6 +37,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         ScanButton.OnPressed += _ => OnScanButtonPressed?.Invoke();
         PrintButton.OnPressed += _ => OnPrintButtonPressed?.Invoke();
         ExtractButton.OnPressed += _ => OnExtractButtonPressed?.Invoke();
+        BiasButton.OnPressed += _ => OnBiasButtonPressed?.Invoke();
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -60,7 +62,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         ProgressBar.Value = Math.Clamp(1.0f - (float) remaining.Divide(total), 0.0f, 1.0f);
     }
 
-    public void SetButtonsDisabled(AnalysisConsoleScanUpdateState state)
+    public void SetButtonsDisabled(AnalysisConsoleUpdateState state)
     {
         ScanButton.Disabled = !state.CanScan;
         PrintButton.Disabled = !state.CanPrint;
@@ -79,6 +81,22 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         }
     }
 
+    public void UpdateBiasDirection(AnalysisConsoleUpdateState state)
+    {
+        if (state.IsTraversalDown)
+        {
+            BiasButton.Text = Loc.GetString("analysis-console-bias-down");
+            BiasButton.RemoveStyleClass("ButtonColorGreen");
+            BiasButton.AddStyleClass("ButtonColorRed");
+        }
+        else
+        {
+            BiasButton.Text = Loc.GetString("analysis-console-bias-up");
+            BiasButton.RemoveStyleClass("ButtonColorRed");
+            BiasButton.AddStyleClass("ButtonColorGreen");
+        }
+    }
+
     private void UpdateArtifactIcon(EntityUid? uid)
     {
         if (uid == null)
@@ -91,7 +109,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         ArtifactDisplay.SetEntity(uid);
     }
 
-    public void UpdateInformationDisplay(AnalysisConsoleScanUpdateState state)
+    public void UpdateInformationDisplay(AnalysisConsoleUpdateState state)
     {
         var message = new FormattedMessage();
 
@@ -129,7 +147,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         Information.SetMessage(message);
     }
 
-    public void UpdateProgressBar(AnalysisConsoleScanUpdateState state)
+    public void UpdateProgressBar(AnalysisConsoleUpdateState state)
     {
         ProgressBar.Visible = state.Scanning;
         ProgressLabel.Visible = state.Scanning;
