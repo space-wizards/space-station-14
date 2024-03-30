@@ -14,7 +14,7 @@ namespace Content.Client.GameTicking.Managers
     public sealed class ClientGameTicker : SharedGameTicker
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly ScoreboardUIController _scoreboardSystem = default!;
+        [Dependency] private readonly RoundEndSummarySystem _scoreboardSystem = default!;
 
         [ViewVariables] private bool _initialized;
         private Dictionary<NetEntity, Dictionary<string, uint?>>  _jobsAvailable = new();
