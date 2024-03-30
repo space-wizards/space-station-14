@@ -282,7 +282,3 @@
         Piercing: 15
   - type: Item
     sprite: Objects/Weapons/Melee/throwing_knife.rsi
-  - type: StaminaDamageOnCollide
-    damage: 30
-  - type: StaminaDamageOnEmbed
-    damage: 10
