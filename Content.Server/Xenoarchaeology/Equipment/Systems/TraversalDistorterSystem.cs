@@ -39,18 +39,18 @@ public sealed class TraversalDistorterSystem : EntitySystem
         args.Handled = true;
         component.NextActivation = _timing.CurTime + component.ActivationDelay;
 
-        component.BiasDirection = component.BiasDirection == BiasDirection.In
-            ? BiasDirection.Out
-            : BiasDirection.In;
+        component.BiasDirection = component.BiasDirection == BiasDirection.Up
+            ? BiasDirection.Down
+            : BiasDirection.Up;
 
         var toPopup = string.Empty;
         switch (component.BiasDirection)
         {
-            case BiasDirection.In:
-                toPopup = Loc.GetString("traversal-distorter-set-in");
+            case BiasDirection.Up:
+                toPopup = Loc.GetString("traversal-distorter-set-up");
                 break;
-            case BiasDirection.Out:
-                toPopup = Loc.GetString("traversal-distorter-set-out");
+            case BiasDirection.Down:
+                toPopup = Loc.GetString("traversal-distorter-set-down");
                 break;
         }
         _popup.PopupEntity(toPopup, uid);
@@ -61,11 +61,11 @@ public sealed class TraversalDistorterSystem : EntitySystem
         string examine = string.Empty;
         switch (component.BiasDirection)
         {
-            case BiasDirection.In:
-                examine = Loc.GetString("traversal-distorter-desc-in");
+            case BiasDirection.Up:
+                examine = Loc.GetString("traversal-distorter-desc-up");
                 break;
-            case BiasDirection.Out:
-                examine = Loc.GetString("traversal-distorter-desc-out");
+            case BiasDirection.Down:
+                examine = Loc.GetString("traversal-distorter-desc-down");
                 break;
         }
 
