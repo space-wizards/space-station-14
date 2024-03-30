@@ -217,3 +217,13 @@
   cost: 10000
   category: cargoproduct-category-name-fun
   group: market
+
+- type: cargoProduct
+  id: FunCosmeticsLootbox
+  icon:
+    sprite: Clothing/Hands/Gloves/powerglove.rsi
+    state: icon
+  product: CrateCosmeticsLootbox
+  cost: 1000
+  category: cargoproduct-category-name-fun
+  group: market

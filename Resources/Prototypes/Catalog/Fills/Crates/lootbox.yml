@@ -1,0 +1,487 @@
+
+- type: entity
+  id: CrateCosmeticsLootbox
+  parent: CrateGenericSteel
+  name: random wearables crate
+  description: A crate of randomly selected wearables. Guaranteed one rare drop.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingNeckTransPin
+        orGroup: Neck
+      - id: ClothingNeckPansexualPin
+        orGroup: Neck
+      - id: ClothingNeckNonBinaryPin
+        orGroup: Neck
+      - id: ClothingNeckLesbianPin
+        orGroup: Neck
+      - id: ClothingNeckIntersexPin
+        orGroup: Neck
+      - id: ClothingNeckBisexualPin
+        orGroup: Neck
+      - id: ClothingNeckAsexualPin
+        orGroup: Neck
+      - id: ClothingNeckAromanticPin
+        orGroup: Neck
+      - id: ClothingNeckLGBTPin
+        orGroup: Neck
+      - id: ClothingNeckCloakPan
+        orGroup: Cloak
+      - id: ClothingNeckCloakHerald
+        orGroup: Cloak
+      - id: ClothingNeckCloakMiner
+        orGroup: Cloak
+      - id: ClothingNeckCloakTrans
+        orGroup: Cloak
+      - id: ClothingNeckCloakGoliathCloak
+        orGroup: Cloak
+      - id: ClothingNeckCloakPirateCap
+        orGroup: Cloak
+      - id: ClothingNeckCloakMoth
+        orGroup: Cloak
+      - id: ClothingNeckCloakVoid
+        orGroup: Cloak
+      - id: ClothingNeckCloakAce
+        orGroup: Cloak
+      - id: ClothingNeckCloakAro
+        orGroup: Cloak
+      - id: ClothingNeckCloakBi
+        orGroup: Cloak
+      - id: ClothingNeckCloakIntersex
+        orGroup: Cloak
+      - id: ClothingNeckCloakLesbian
+        orGroup: Cloak
+      - id: ClothingNeckCloakGay
+        orGroup: Cloak
+      - id: ClothingNeckCloakEnby
+        orGroup: Cloak
+      - id: ClothingBackpackSatchelLeather
+        orGroup: Bag
+      - id: ClothingBackpackSatchelClown
+        orGroup: Bag
+      - id: ClothingBackpackSatchelMime
+        orGroup: Bag
+      - id: ClothingBackpackDuffelClown
+        orGroup: Bag
+      - id: ClothingBackpackDuffelMime
+        orGroup: Bag
+      - id: ClothingBackpackClown
+        orGroup: Bag
+      - id: ClothingBackpackIan
+        orGroup: Bag
+      - id: ClothingBackpackMime
+        orGroup: Bag
+      - id: ClothingBackpackMerc
+        orGroup: Bag
+      - id: ClothingBackpackERTClown
+        orGroup: Bag
+      - id: ClothingEyesEyepatch
+        orGroup: Eyewear
+      - id: ClothingEyesBlindfold
+        orGroup: Eyewear
+      - id: ClothingEyesGlassesCheapSunglasses
+        orGroup: Eyewear
+      - id: ClothingEyesGlassesOutlawGlasses
+        orGroup: Eyewear
+      - id: ClothingEyesGlassesJamjar
+        orGroup: Eyewear
+      - id: ClothingEyesGlassesJensen
+        orGroup: Eyewear
+      - id: ClothingEyesGlasses
+        orGroup: Eyewear
+      - id: ClothingEyesGlassesGarGiga
+        orGroup: Eyewear
+      - id: ClothingEyesGlassesGarOrange
+        orGroup: Eyewear
+      - id: ClothingEyesGlassesGar
+        orGroup: Eyewear
+      - id: ClothingHeadHatAnimalCat
+        orGroup: Hat
+      - id: ClothingHeadHatAnimalCatBrown
+        orGroup: Hat
+      - id: ClothingHeadHatAnimalCatBlack
+        orGroup: Hat
+      - id: ClothingHeadHatAnimalHeadslime
+        orGroup: Hat
+      - id: ClothingHeadHatAnimalMonkey
+        orGroup: Hat
+      - id: ClothingHeadBandMerc
+        orGroup: Hat
+      - id: ClothingHeadHatBeaverHat
+        orGroup: Hat
+      - id: ClothingHeadHatBeretFrench
+        orGroup: Hat
+      - id: ClothingHeadHatBeretMerc
+        orGroup: Hat
+      - id: ClothingHeadHatBowlerHat
+        orGroup: Hat
+      - id: ClothingHeadHatCardborg
+        orGroup: Hat
+      - id: ClothingHeadHatFedoraBrown
+        orGroup: Hat
+      - id: ClothingHeadHatFedoraGrey
+        orGroup: Hat
+      - id: ClothingHeadHatFez
+        orGroup: Hat
+      - id: ClothingHeadHatOutlawHat
+        orGroup: Hat
+      - id: ClothingHeadHatWitch1
+        orGroup: Hat
+      - id: ClothingHeadHatPaper
+        orGroup: Hat
+      - id: ClothingHeadHatPirate
+        orGroup: Hat
+      - id: ClothingHeadHatPlaguedoctor
+        orGroup: Hat
+      - id: ClothingHeadHatRedwizard
+        orGroup: Hat
+      - id: ClothingHeadHatSantahat
+        orGroup: Hat
+      - id: ClothingHeadHatTophat
+        orGroup: Hat
+      - id: ClothingHeadHatUshanka
+        orGroup: Hat
+      - id: ClothingHeadHatWitch
+        orGroup: Hat
+      - id: ClothingHeadHatWizardFake
+        orGroup: Hat
+      - id: ClothingHeadHatXmasCrown
+        orGroup: Hat
+      - id: ClothingHeadHatTrucker
+        orGroup: Hat
+      - id: ClothingHeadPyjamaSyndicatePink
+        orGroup: Hat
+      - id: ClothingHeadPaperSack
+        orGroup: Hat
+      - id: ClothingHeadPaperSackSmile
+        orGroup: Hat
+      - id: ClothingHeadFishCap
+        orGroup: Hat
+      - id: ClothingHeadRastaHat
+        orGroup: Hat
+      - id: ClothingHeadHatJester
+        orGroup: Hat
+      - id: ClothingHeadHatJesterAlt
+        orGroup: Hat
+      - id: ClothingHeadHatPirateTricord
+        orGroup: Hat
+      - id: ClothingHeadHatWatermelon
+        orGroup: Hat
+      - id: ClothingHeadHatTacticalMaidHeadband
+        orGroup: Hat
+      - id: ClothingHeadHatHetmanHat
+        orGroup: Hat
+      - id: ClothingHeadHatGladiator
+        orGroup: Hat
+      - id: ClothingHeadHatPartyRed
+        orGroup: Hat
+      - id: ClothingHeadHatPartyYellow
+        orGroup: Hat
+      - id: ClothingHeadHatPartyGreen
+        orGroup: Hat
+      - id: ClothingHeadHatPartyBlue
+        orGroup: Hat
+      - id: ClothingHeadHatPartyWaterCup
+        orGroup: Hat
+      - id: ClothingHeadHatCowboyBountyHunter
+        orGroup: Hat
+      - id: ClothingHeadHatStrawHat
+        orGroup: Hat
+      - id: ClothingHeadHelmetCult
+        orGroup: Hat
+      - id: ClothingHeadHelmetTemplar
+        orGroup: Hat
+      - id: ClothingHeadHelmetThunderdome
+        orGroup: Hat
+      - id: ClothingHeadHelmetWizardHelm
+        orGroup: Hat
+      - id: ClothingHeadHelmetBone
+        orGroup: Hat
+      - id: ClothingHeadHelmetPodWars
+        orGroup: Hat
+      - id: ClothingHeadHatBunny
+        orGroup: Hat
+      - id: ClothingHeadHatCake
+        orGroup: Hat
+      - id: ClothingHeadHatChickenhead
+        orGroup: Hat
+      - id: ClothingHeadHatPumpkin
+        orGroup: Hat
+      - id: ClothingHeadHatPwig
+        orGroup: Hat
+      - id: ClothingHeadHatRichard
+        orGroup: Hat
+      - id: ClothingHeadHatShrineMaidenWig
+        orGroup: Hat
+      - id: ClothingHeadHatCone
+        orGroup: Hat
+      - id: ClothingHeadHatFancyCrown
+        orGroup: Hat
+      - id: ClothingHeadHatCatEars
+        orGroup: Hat
+      - id: ClothingHeadHatDogEars
+        orGroup: Hat
+      - id: ClothingHeadHatSquid
+        orGroup: Hat
+      - id: ClothingHeadHatRedRacoon
+        orGroup: Hat
+      - id: ClothingHeadHatBizarreSoft
+        orGroup: Hat
+      - id: ClothingMaskClownBanana
+        orGroup: Mask
+      - id: ClothingMaskMuzzle
+        orGroup: Mask
+      - id: ClothingMaskPlague
+        orGroup: Mask
+      - id: ClothingMaskRat
+        orGroup: Mask
+      - id: ClothingMaskFox
+        orGroup: Mask
+      - id: ClothingMaskBee
+        orGroup: Mask
+      - id: ClothingMaskBear
+        orGroup: Mask
+      - id: ClothingMaskRaven
+        orGroup: Mask
+      - id: ClothingMaskJackal
+        orGroup: Mask
+      - id: ClothingMaskBat
+        orGroup: Mask
+      - id: ClothingMaskNeckGaiter
+        orGroup: Mask
+      - id: ClothingMaskSexyClown
+        orGroup: Mask
+      - id: ClothingMaskSexyMime
+        orGroup: Mask
+      - id: ClothingMaskSadMime
+        orGroup: Mask
+      - id: ClothingMaskItalianMoustache
+        orGroup: Mask
+      - id: ClothingOuterWinterSyndieCap
+        orGroup: Outer
+      - id: ClothingOuterWinterMime
+        orGroup: Outer
+      - id: ClothingOuterWinterClown
+        orGroup: Outer
+      - id: ClothingOuterVestHazard
+        orGroup: Outer
+      - id: ClothingOuterSuitCarp
+        orGroup: Outer
+      - id: ClothingOuterSuitIan
+        orGroup: Outer
+      - id: ClothingOuterSuitMonkey
+        orGroup: Outer
+      - id: ClothingOuterSuitShrineMaiden
+        orGroup: Outer
+      - id: ClothingOuterSuitChicken
+        orGroup: Outer
+      - id: ClothingOuterRedRacoon
+        orGroup: Outer
+      - id: ClothingOuterFlannelRed
+        orGroup: Outer
+      - id: ClothingOuterHospitalGown
+        orGroup: Outer
+      - id: ClothingOuterGhostSheet
+        orGroup: Outer
+      - id: ClothingOuterPlagueSuit
+        orGroup: Outer
+      - id: ClothingOuterSanta
+        orGroup: Outer
+      - id: ClothingOuterRobesJudge
+        orGroup: Outer
+      - id: ClothingOuterRobesCult
+        orGroup: Outer
+      - id: ClothingOuterPonchoClassic
+        orGroup: Outer
+      - id: ClothingOuterCardborg
+        orGroup: Outer
+      - id: ClothingOuterCoatExpensive
+        orGroup: Outer
+      - id: ClothingOuterCoatSpaceAsshole
+        orGroup: Outer
+      - id: ClothingOuterClownPriest
+        orGroup: Outer
+      - id: ClothingOuterDameDane
+        orGroup: Outer
+      - id: ClothingOuterCoatPirate
+        orGroup: Outer
+      - id: ClothingOuterCoatLabGene
+        orGroup: Outer
+      - id: ClothingOuterCoatLab
+        orGroup: Outer
+      - id: ClothingOuterCoatTrench
+        orGroup: Outer
+      - id: ClothingOuterCoatJensen
+        orGroup: Outer
+      - id: ClothingOuterCoatGentle
+        orGroup: Outer
+      - id: ClothingOuterCoatBomber
+        orGroup: Outer
+      - id: ClothingOuterWinterWeb
+        orGroup: Outer
+      - id: ClothingShoesClownLarge
+        orGroup: Boots
+      - id: ClothingShoesCult
+        orGroup: Boots
+      - id: ClothingShoesBling
+        orGroup: Boots
+      - id: ClothingShoesClownBanana
+        orGroup: Boots
+      - id: ClothingShoesSnakeskinBoots
+        orGroup: Boots
+      - id: ClothingShoesDameDane
+        orGroup: Boots
+      - id: ClothingShoesTourist
+        orGroup: Boots
+      - id: ClothingShoeSlippersDuck
+        orGroup: Boots
+      - id: ClothingShoesSlippers
+        orGroup: Boots
+      - id: ClothingShoesLeather
+        orGroup: Boots
+      - id: ClothingShoesFlippers
+        orGroup: Boots
+      - id: ClothingShoesBootsCowboyFancy
+        orGroup: Boots
+      - id: ClothingShoesBootsWinterWeb
+        orGroup: Boots
+      - id: ClothingShoesBootsWinterSyndicate
+        orGroup: Boots
+      - id: ClothingShoesBootsLaceup
+        orGroup: Boots
+      - id: ClothingShoesBootsMerc
+        orGroup: Boots
+      - id: ClothingShoesHighheelBoots
+        orGroup: Boots
+      - id: ClothingUnderSocksCoder
+        orGroup: Boots
+      - id: ClothingUnderSocksBee
+        orGroup: Boots
+      - id: ClothingUniformJumpskirtWeb
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitFamilyGuy
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitGladiator
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitWeb
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitFlannel
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitSyndieFormal
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitHawaiRed
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitCossack
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitPirate
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitDameDane
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitMercenary
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitOperative
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitTacticool
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitPyjamaSyndicatePink
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitCurator
+        orGroup: Uniform
+      - id: ClothingUniformOveralls
+        orGroup: Uniform
+      - id: ClothingUniformColorRainbow
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitColorPink
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitColorOrange
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitSecBlue
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitPrisoner
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitKimono
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitEngineeringHazard
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitClownBanana
+        orGroup: Uniform
+      - id: ClothingUniformJumpsuitAncient
+        orGroup: Uniform
+      - id: ClothingUniformJumpskirtOfLife
+        orGroup: Uniform
+      - id: ClothingUniformJumpskirtTacticalMaid
+        orGroup: Uniform
+      - id: ClothingUniformJumpskirtSyndieFormalDress
+        orGroup: Uniform
+      - id: ClothingUniformJumpskirtJanimaidmini
+        orGroup: Uniform
+      - id: ClothingUniformJumpskirtJanimaid
+        orGroup: Uniform
+      - id: ClothingUniformJumpskirtTacticool
+        orGroup: Uniform
+      - id: ClothingUniformJumpskirtOperative
+        orGroup: Uniform
+      - id: ClothingUniformJumpskirtPerformer
+        orGroup: Uniform
+      - id: ClothingUniformJumpskirtCurator
+        orGroup: Uniform
+      - id: ClothingUniformJumpskirtColorPink
+        orGroup: Uniform
+      - id: ClothingUniformJumpskirtPrisoner
+        orGroup: Uniform
+      - id: ClothingNeckCloakVoid
+        orGroup: RareDrop
+      - id: ClothingNeckCloakGoliathCloak
+        orGroup: RareDrop
+      - id: ClothingNeckBling
+        orGroup: RareDrop
+      - id: ClothingBackpackSatchelLeather
+        orGroup: RareDrop
+      - id: ClothingHandsGlovesRobohands
+        orGroup: RareDrop
+      - id: ClothingHandsGlovesPowerglove
+        orGroup: RareDrop
+      - id: ClothingHeadHatBizarreSoft
+        orGroup: RareDrop
+      - id: ClothingHeadHatCatEars
+        orGroup: RareDrop
+      - id: ClothingHeadHatDogEars
+        orGroup: RareDrop
+      - id: ClothingHeadHelmetCult
+        orGroup: RareDrop
+      - id: ClothingHeadHatUshanka
+        orGroup: RareDrop
+      - id: ClothingMaskSexyClown
+        orGroup: RareDrop
+      - id: ClothingMaskSexyMime
+        orGroup: RareDrop
+      - id: ClothingOuterSuitShrineMaiden
+        orGroup: RareDrop
+      - id: ClothingOuterCoatExpensive
+        orGroup: RareDrop
+      - id: ClothingOuterCoatSpaceAsshole
+        orGroup: RareDrop
+      - id: ClothingOuterDameDane
+        orGroup: RareDrop
+      - id: ClothingShoesBling
+        orGroup: RareDrop
+      - id: ClothingUnderSocksBee
+        orGroup: RareDrop
+      - id: ClothingUnderSocksCoder
+        orGroup: RareDrop
+      - id: ClothingUniformJumpskirtSyndieFormalDress
+        orGroup: RareDrop
+      - id: ClothingUniformJumpskirtOfLife
+        orGroup: RareDrop
+      - id: ClothingUniformJumpsuitAncient
+        orGroup: RareDrop
+      - id: ClothingUniformJumpskirtTacticalMaid
+        orGroup: RareDrop
+      - id: ClothingUniformJumpsuitCossack
+        orGroup: RareDrop
+      - id: ClothingUniformJumpsuitSyndieFormal
+        orGroup: RareDrop
+      - id: ClothingUniformJumpsuitFlannel
+        orGroup: RareDrop
+      - id: ClothingUniformJumpsuitFamilyGuy
+        orGroup: RareDrop
