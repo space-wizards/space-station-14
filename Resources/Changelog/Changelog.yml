@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: casperr04
-  changes:
-  - message: Fixed players being able to re-anchor items after fultoning them.
-    type: Fix
-  - message: Changed which objects can be fultoned.
-    type: Tweak
-  id: 5754
-  time: '2024-01-20T04:57:05.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/20628
 - author: Blackern5000
   changes:
   - message: Crushers can no longer be researched.
@@ -3795,3 +3786,11 @@
   id: 6253
   time: '2024-03-30T01:25:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26541
+- author: Boaz1111
+  changes:
+  - message: Added an industrial reagent grinder to the basic hydroponics research.
+      It grinds things into reagents like a recycler.
+    type: Add
+  id: 6254
+  time: '2024-03-30T02:46:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25020
