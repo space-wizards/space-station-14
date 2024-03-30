@@ -23,7 +23,7 @@ public sealed class ReplaceOnSpawn : EntitySystem
         {
             if (!_random.Prob(comp.Chance))
             {
-                RemComp<ReplaceOnSpawnComponent>(uid);
+                RemCompDeferred<ReplaceOnSpawnComponent>(uid);
                 continue;
             }
             toReplace.Add((uid, comp));
