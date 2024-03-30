@@ -13,4 +13,10 @@ spellbook-polymorph-spider-desc = Transforms you into a spider, man!
 
 # Equipment
 
+spellbook-wand-polymorph-door-name = Wand of Entrance
+spellbook-wand-polymorph-door-description = For when you need a get-away route.
+
+spellbook-wand-polymorph-carp-name = Wand of Carp Polymorph
+spellbook-wand-polymorph-carp-description = For when you need a carp filet quick and the clown is looking juicy.
+
 # Events

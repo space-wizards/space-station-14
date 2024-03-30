@@ -1,4 +1,5 @@
-﻿- type: listing
+﻿# Offensive
+- type: listing
   id: SpellbookFireball
   name: spellbook-fireball-name
   description: spellbook-fireball-desc
@@ -12,16 +13,7 @@
     - !type:ListingLimitedStockCondition
       stock: 1
 
-- type: listing
-  id: SpellbookBlink
-  name: spellbook-blink-name
-  description: spellbook-blink-desc
-  productAction: ActionBlink
-  cost:
-    WizCoin: 1
-  categories:
-    - SpellbookUtility
-
+# Defensive
 - type: listing
   id: SpellbookForceWall
   name: spellbook-force-wall-name
@@ -32,6 +24,7 @@
   categories:
     - SpellbookDefensive
 
+# Utility
 - type: listing
   id: SpellbookPolymorphSpider
   name: spellbook-polymoprh-spider-name
@@ -45,6 +38,44 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookBlink
+  name: spellbook-blink-name
+  description: spellbook-blink-desc
+  productAction: ActionBlink
+  cost:
+    WizCoin: 1
+  categories:
+  - SpellbookUtility
+
+# Equipment
+- type: listing
+  id: SpellbookWandDoor
+  name: spellbook-wand-polymorph-door-name
+  description: spellbook-wand-polymorph-door-description
+  productEntity: WeaponWandPolymorphDoor
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookWandPolymorphCarp
+  name: spellbook-wand-polymorph-carp-name
+  description: spellbook-wand-polymorph-carp-description
+  productEntity: WeaponWandPolymorphCarp
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+# Upgrades
 # Need to delist when no more upgrades are available, probably with a condition?
 - type: listing
   id: SpellbookFireballUpgrade
