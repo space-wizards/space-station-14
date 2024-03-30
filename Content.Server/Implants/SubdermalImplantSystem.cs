@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Server.Cuffs;
+﻿using Content.Server.Cuffs;
 using Content.Server.Forensics;
 using Content.Server.Humanoid;
 using Content.Server.Implants.Components;
@@ -42,6 +41,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
+    private HashSet<Entity<MapGridComponent>> _targetGrids = [];
 
     public override void Initialize()
     {
@@ -124,32 +124,38 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     private EntityCoordinates? SelectRandomTileInRange(TransformComponent userXform, float radius)
     {
         var userCoords = userXform.Coordinates.ToMap(EntityManager, _xform);
-        var grids = _lookupSystem.GetEntitiesInRange<MapGridComponent>(userCoords, radius).ToList();
-        _random.Shuffle(grids);
+        _targetGrids.Clear();
+        _lookupSystem.GetEntitiesInRange(userCoords, radius, _targetGrids);
+        Entity<MapGridComponent>? targetGrid = null;
+
+        if (_targetGrids.Count == 0)
+            return null;
 
         // Give preference to the grid the entity is currently on.
-        var idx = grids.FindIndex(grid => grid.Owner == userXform.GridUid);
-        if (idx != -1)
+        // This does not guarantee that if the probability fails that the owner's grid won't be picked.
+        // In reality the probability is higher and depends on the number of grids.
+        if (userXform.GridUid != null && TryComp<MapGridComponent>(userXform.GridUid, out var gridComp))
         {
-            if (_random.Prob(0.66f))
+            var userGrid = new Entity<MapGridComponent>(userXform.GridUid.Value, gridComp);
+            if (_random.Prob(0.5f))
             {
-                (grids[0], grids[idx]) = (grids[idx], grids[0]);
-            }
-            else
-            {
-                (grids[^1], grids[idx]) = (grids[idx], grids[^1]);
+                _targetGrids.Remove(userGrid);
+                targetGrid = userGrid;
             }
         }
 
+        if (targetGrid == null)
+            targetGrid = _random.GetRandom().PickAndTake(_targetGrids);
+
         EntityCoordinates? targetCoords = null;
 
-        foreach (var grid in grids)
+        do
         {
             var valid = false;
 
             var range = (float) Math.Sqrt(radius);
             var box = Box2.CenteredAround(userCoords.Position, new Vector2(range, range));
-            var tilesInRange = _mapSystem.GetTilesEnumerator(grid.Owner, grid.Comp, box, false);
+            var tilesInRange = _mapSystem.GetTilesEnumerator(targetGrid.Value.Owner, targetGrid.Value.Comp, box, false);
             var tileList = new ValueList<Vector2i>();
 
             while (tilesInRange.MoveNext(out var tile))
@@ -161,7 +167,8 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             {
                 var tile = tileList.RemoveSwap(_random.Next(tileList.Count));
                 valid = true;
-                foreach (var entity in _mapSystem.GetAnchoredEntities(grid.Owner, grid.Comp, tile))
+                foreach (var entity in _mapSystem.GetAnchoredEntities(targetGrid.Value.Owner, targetGrid.Value.Comp,
+                             tile))
                 {
                     if (!_physicsQuery.TryGetComponent(entity, out var body))
                         continue;
@@ -177,14 +184,17 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
                 if (valid)
                 {
-                    targetCoords = new EntityCoordinates(grid.Owner, _mapSystem.TileCenterToVector(grid, tile));
+                    targetCoords = new EntityCoordinates(targetGrid.Value.Owner,
+                        _mapSystem.TileCenterToVector(targetGrid.Value, tile));
                     break;
                 }
             }
 
-            if (valid)
+            if (valid || _targetGrids.Count == 0) // if we don't do the check here then PickAndTake will blow up on an empty set.
                 break;
-        }
+
+            targetGrid = _random.GetRandom().PickAndTake(_targetGrids);
+        } while (true);
 
         return targetCoords;
     }
