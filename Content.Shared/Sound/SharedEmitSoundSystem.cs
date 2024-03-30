@@ -1,4 +1,3 @@
-using Content.Server.Sound.Components;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;

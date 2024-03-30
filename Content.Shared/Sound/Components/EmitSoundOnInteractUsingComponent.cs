@@ -1,7 +1,6 @@
-using Content.Shared.Sound.Components;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Sound.Components;
+namespace Content.Shared.Sound.Components;
 
 /// <summary>
 /// Whenever this item is used upon by a specific entity prototype in the hand of a user, play a sound
