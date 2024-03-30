@@ -10,6 +10,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Tag;
+using Content.Shared.Tilenol;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -46,6 +47,7 @@ namespace Content.Shared.Movement.Systems
         [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
         [Dependency] private   readonly SharedTransformSystem _transform = default!;
         [Dependency] private   readonly TagSystem _tags = default!;
+        [Dependency] private   readonly TilenolSystem _tile = default!;
 
         protected EntityQuery<InputMoverComponent> MoverQuery;
         protected EntityQuery<MobMoverComponent> MobMoverQuery;
@@ -61,14 +63,14 @@ namespace Content.Shared.Movement.Systems
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
 
-        private const float FootstepVariation = 0f;
+        public const float FootstepVariation = 0f;
 
         /// <summary>
         /// <see cref="CCVars.StopSpeed"/>
         /// </summary>
         private float _stopSpeed;
 
-        private bool _relativeMovement;
+        public bool _relativeMovement;
 
         /// <summary>
         /// Cache the mob movement calculation to re-use elsewhere.
@@ -191,6 +193,12 @@ namespace Content.Shared.Movement.Systems
                 && !(weightless || physicsComponent.BodyStatus == BodyStatus.InAir))
             {
                 tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
+            }
+
+            if (!weightless && physicsComponent.BodyStatus == BodyStatus.OnGround)
+            {
+                if (_tile.HandleTilenol(uid, physicsUid, physicsComponent, xform, mover, tileDef, relayTarget))
+                    return;
             }
 
             // Regular movement.
@@ -389,7 +397,7 @@ namespace Content.Shared.Movement.Systems
 
         protected abstract bool CanSound();
 
-        private bool TryGetSound(
+        public bool TryGetSound(
             bool weightless,
             EntityUid uid,
             InputMoverComponent mover,
