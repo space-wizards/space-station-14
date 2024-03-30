@@ -1,79 +1,4 @@
 ﻿Entries:
-- author: Agoichi
-  changes:
-  - message: Rebalanced Lobbying Bundle
-    type: Tweak
-  id: 5751
-  time: '2024-01-20T02:35:44.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24303
-- author: Dygon
-  changes:
-  - message: Storage objects can't be opened anymore while stored in a container.
-    type: Fix
-  id: 5752
-  time: '2024-01-20T02:50:14.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24253
-- author: FairlySadPanda
-  changes:
-  - message: Lobby restart sound effects no longer cut-off.
-    type: Fix
-  id: 5753
-  time: '2024-01-20T03:40:01.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24044
-- author: casperr04
-  changes:
-  - message: Fixed players being able to re-anchor items after fultoning them.
-    type: Fix
-  - message: Changed which objects can be fultoned.
-    type: Tweak
-  id: 5754
-  time: '2024-01-20T04:57:05.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/20628
-- author: Blackern5000
-  changes:
-  - message: Crushers can no longer be researched.
-    type: Remove
-  id: 5755
-  time: '2024-01-20T05:11:02.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24319
-- author: metalgearsloth
-  changes:
-  - message: Fix buckle sound playing twice in some instances.
-    type: Fix
-  id: 5756
-  time: '2024-01-20T06:22:19.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24321
-- author: tday
-  changes:
-  - message: Added admin log messages for adding and ending game rules, and for the
-      commands to do so.
-    type: Add
-  - message: Added admin log messages for secret mode rule selection.
-    type: Add
-  id: 5757
-  time: '2024-01-20T18:02:13.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24092
-- author: Nimfar11
-  changes:
-  - message: Adds snake kebab and its recipe.
-    type: Add
-  id: 5758
-  time: '2024-01-20T23:38:11.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24341
-- author: Alekshhh
-  changes:
-  - message: Cerberus now has a wideswing that works similarly to spears.
-    type: Tweak
-  id: 5759
-  time: '2024-01-20T23:38:27.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24328
-- author: TheShuEd
-  changes:
-  - message: Added new Floral anomaly!
-    type: Add
-  id: 5760
-  time: '2024-01-21T01:31:12.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24351
 - author: Menshin
   changes:
   - message: The PA control box should now properly detect the PA parts in all situations
@@ -3793,3 +3718,79 @@
   id: 6250
   time: '2024-03-29T06:30:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26290
+- author: deltanedas
+  changes:
+  - message: Multiple bombs exploding at once on a tile now combine to have a larger
+      explosion rather than stacking the same small explosion.
+    type: Tweak
+  id: 6251
+  time: '2024-03-29T23:46:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25664
+- author: Mephisto72
+  changes:
+  - message: Ion Storms are now more likely to alter a Borg's laws.
+    type: Tweak
+  id: 6252
+  time: '2024-03-30T00:01:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26539
+- author: arimah
+  changes:
+  - message: Holoparasites, holoclowns and other guardians correctly transfer damage
+      to their hosts again.
+    type: Fix
+  id: 6253
+  time: '2024-03-30T01:25:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26541
+- author: Boaz1111
+  changes:
+  - message: Added an industrial reagent grinder to the basic hydroponics research.
+      It grinds things into reagents like a recycler.
+    type: Add
+  id: 6254
+  time: '2024-03-30T02:46:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25020
+- author: SonicHDC
+  changes:
+  - message: Added unzipping for lab coats!
+    type: Add
+  id: 6255
+  time: '2024-03-30T03:31:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26494
+- author: Zealith-Gamer
+  changes:
+  - message: Items being pulled no longer spin when being thrown.
+    type: Fix
+  id: 6256
+  time: '2024-03-30T03:35:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26504
+- author: Plykiya
+  changes:
+  - message: Hyposprays can now be toggled to draw from solution containers like jugs
+      and beakers.
+    type: Tweak
+  id: 6257
+  time: '2024-03-30T03:59:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25544
+- author: EdenTheLiznerd
+  changes:
+  - message: Amanita toxin now kills you slightly slower, providing you time to seek
+      charcoal before it's too late
+    type: Tweak
+  id: 6258
+  time: '2024-03-30T04:00:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25830
+- author: liltenhead
+  changes:
+  - message: Changed the syndicate hardbomb to have less of a chance to completely
+      destroy tiles.
+    type: Tweak
+  id: 6259
+  time: '2024-03-30T04:36:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26548
+- author: takemysoult
+  changes:
+  - message: stimulants removes chloral hydrate from body
+    type: Tweak
+  id: 6260
+  time: '2024-03-30T06:52:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25886

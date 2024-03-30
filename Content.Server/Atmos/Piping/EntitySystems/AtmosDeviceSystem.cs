@@ -129,9 +129,10 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             _timer -= _atmosphereSystem.AtmosTime;
 
             var time = _gameTiming.CurTime;
-            var ev = new AtmosDeviceUpdateEvent(_atmosphereSystem.AtmosTime);
+            var ev = new AtmosDeviceUpdateEvent(_atmosphereSystem.AtmosTime, null, null);
             foreach (var device in _joinedDevices)
             {
+                DebugTools.Assert(!HasComp<GridAtmosphereComponent>(Transform(device).GridUid));
                 RaiseLocalEvent(device, ref ev);
                 device.Comp.LastProcess = time;
             }
