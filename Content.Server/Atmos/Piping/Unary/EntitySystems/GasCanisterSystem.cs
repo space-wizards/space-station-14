@@ -60,7 +60,7 @@ public sealed class GasCanisterSystem : EntitySystem
         if (!Resolve(uid, ref canister, ref transform))
             return;
 
-        var environment = _atmos.GetContainingMixture(uid, false, true);
+        var environment = _atmos.GetContainingMixture((uid, transform), false, true);
 
         if (environment is not null)
             _atmos.Merge(environment, canister.Air);
@@ -168,7 +168,7 @@ public sealed class GasCanisterSystem : EntitySystem
             }
             else
             {
-                var environment = _atmos.GetContainingMixture(uid, false, true);
+                var environment = _atmos.GetContainingMixture(uid, args.Grid, args.Map, false, true);
                 _atmos.ReleaseGasTo(canister.Air, environment, canister.ReleasePressure);
             }
         }
