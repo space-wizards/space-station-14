@@ -5,6 +5,7 @@ using Content.Shared.Construction;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -12,7 +13,6 @@ using Content.Shared.Popups;
 using Content.Shared.RCD.Components;
 using Content.Shared.Tiles;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -24,7 +24,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Numerics;
 
 namespace Content.Shared.RCD.Systems;
 
@@ -50,6 +49,8 @@ public class RCDSystem : EntitySystem
     private readonly EntProtoId _instantConstructionFx = "EffectRCDConstruct0";
     private readonly ProtoId<RCDPrototype> _deconstructTileProto = "DeconstructTile";
     private readonly ProtoId<RCDPrototype> _deconstructLatticeProto = "DeconstructLattice";
+
+    private HashSet<EntityUid> _intersectingEntities = new();
 
     public override void Initialize()
     {
@@ -173,7 +174,7 @@ public class RCDSystem : EntitySystem
                 else
                 {
                     var deconstructedTile = _mapSystem.GetTileRef(mapGridData.Value.GridUid, mapGridData.Value.Component, mapGridData.Value.Location);
-                    var protoName = deconstructedTile.GetContentTileDefinition().IsLattice ? _deconstructTileProto : _deconstructLatticeProto;
+                    var protoName = deconstructedTile.IsSpace() ? _deconstructTileProto : _deconstructLatticeProto;
 
                     if (_protoManager.TryIndex(protoName, out var deconProto))
                     {
@@ -267,13 +268,22 @@ public class RCDSystem : EntitySystem
         _charges.UseCharges(uid, args.Cost);
     }
 
-    private void OnRCDconstructionGhostRotationEvent(RCDConstructionGhostRotationEvent ev)
+    private void OnRCDconstructionGhostRotationEvent(RCDConstructionGhostRotationEvent ev, EntitySessionEventArgs session)
     {
         var uid = GetEntity(ev.NetEntity);
+
+        // Determine if player that send the message is carrying the specified RCD in their active hand
+        if (session.SenderSession.AttachedEntity == null)
+            return;
+
+        if (!TryComp<HandsComponent>(session.SenderSession.AttachedEntity, out var hands) ||
+            uid != hands.ActiveHand?.HeldEntity)
+            return;
 
         if (!TryComp<RCDComponent>(uid, out var rcd))
             return;
 
+        // Update the construction direction
         rcd.ConstructionDirection = ev.Direction;
         Dirty(uid, rcd);
     }
@@ -380,28 +390,29 @@ public class RCDSystem : EntitySystem
             return true;
         }
 
-        // Object specific rules
+        // Entity specific rules
 
         // Check rule: The tile is unoccupied
         var isWindow = component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.IsWindow);
-        var constructionAngle = (component.CachedPrototype.Rotation == RcdRotation.User) ? component.ConstructionDirection.ToAngle() : Direction.South.ToAngle();
 
-        foreach (var ent in _lookup.GetLocalEntitiesIntersecting(mapGridData.Tile, -0.05f, LookupFlags.Uncontained))
+        _lookup.GetLocalEntitiesIntersecting(mapGridData.GridUid, mapGridData.Position, _intersectingEntities, -0.05f, LookupFlags.Uncontained);
+
+        foreach (var ent in _intersectingEntities)
         {
             if (isWindow && HasComp<SharedCanBuildWindowOnTopComponent>(ent))
                 continue;
 
             if (component.CachedPrototype.CollisionMask != CollisionGroup.None && TryComp<FixturesComponent>(ent, out var fixtures))
             {
-                foreach ((var _, var fixture) in fixtures.Fixtures)
+                foreach (var fixture in fixtures.Fixtures.Values)
                 {
                     // Continue if no collision is possible
-                    if ((fixture.CollisionLayer <= 0 || (fixture.CollisionLayer & (int) component.CachedPrototype.CollisionMask) == 0))
+                    if (fixture.CollisionLayer <= 0 || (fixture.CollisionLayer & (int) component.CachedPrototype.CollisionMask) == 0)
                         continue;
 
                     // Continue if our custom collision bounds are not intersected
-                    if (component.CachedPrototype.CollisionBounds != null &&
-                        !DoesCustomBoundsIntersectWithFixture(component.CachedPrototype.CollisionBounds.Value, constructionAngle, ent, fixture))
+                    if (component.CachedPrototype.CollisionPolygon != null &&
+                        !DoesCustomBoundsIntersectWithFixture(component.CachedPrototype.CollisionPolygon, component.ConstructionTransform, ent, fixture))
                         continue;
 
                     // Collision was detected
@@ -553,24 +564,12 @@ public class RCDSystem : EntitySystem
         return true;
     }
 
-    public bool DoesCustomBoundsIntersectWithFixture(Box2 boundingBox, Angle boundingBoxAngle, EntityUid fixtureOwner, Fixture fixture)
+    private bool DoesCustomBoundsIntersectWithFixture(PolygonShape boundingPolygon, Transform boundingTransform, EntityUid fixtureOwner, Fixture fixture)
     {
         var entXformComp = Transform(fixtureOwner);
         var entXform = new Transform(entXformComp.LocalPosition, entXformComp.LocalRotation);
 
-        var verts = new ValueList<Vector2>()
-        {
-            boundingBox.BottomLeft,
-            boundingBox.BottomRight,
-            boundingBox.TopRight,
-            boundingBox.TopLeft
-        };
-
-        var poly = new PolygonShape();
-        poly.Set(verts.Span, 4);
-
-        var polyXform = new Transform(entXformComp.LocalPosition, (float) boundingBoxAngle);
-        return poly.ComputeAABB(polyXform, 0).Intersects(fixture.Shape.ComputeAABB(entXform, 0));
+        return boundingPolygon.ComputeAABB(boundingTransform, 0).Intersects(fixture.Shape.ComputeAABB(entXform, 0));
     }
 
     public void UpdateCachedPrototype(EntityUid uid, RCDComponent component)

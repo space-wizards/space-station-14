@@ -1,6 +1,7 @@
 using Content.Shared.RCD.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.RCD.Components;
@@ -18,19 +19,19 @@ public sealed partial class RCDComponent : Component
     /// List of RCD prototypes that the device comes loaded with
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<ProtoId<RCDPrototype>> AvailablePrototypes = new();
+    public HashSet<ProtoId<RCDPrototype>> AvailablePrototypes { get; set; } = new();
 
     /// <summary>
     /// Sound that plays when a RCD operation successfully completes
     /// </summary>
     [DataField]
-    public SoundSpecifier SuccessSound = new SoundPathSpecifier("/Audio/Items/deconstruct.ogg");
+    public SoundSpecifier SuccessSound { get; set; } = new SoundPathSpecifier("/Audio/Items/deconstruct.ogg");
 
     /// <summary>
     /// The ProtoId of the currently selected RCD prototype
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<RCDPrototype> ProtoId = "Invalid";
+    public ProtoId<RCDPrototype> ProtoId { get; set; } = "Invalid";
 
     /// <summary>
     /// A cached copy of currently selected RCD prototype
@@ -39,11 +40,32 @@ public sealed partial class RCDComponent : Component
     /// If the ProtoId is changed, make sure to update the CachedPrototype as well
     /// </remarks>
     [ViewVariables(VVAccess.ReadOnly)]
-    public RCDPrototype CachedPrototype = default!;
+    public RCDPrototype CachedPrototype { get; set; } = default!;
 
     /// <summary>
     /// The direction constructed entities will face upon spawning
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Direction ConstructionDirection = Direction.South;
+    public Direction ConstructionDirection
+    {
+        get
+        {
+            return _constructionDirection;
+        }
+        set
+        {
+            _constructionDirection = value;
+            ConstructionTransform = new Transform(new(), _constructionDirection.ToAngle());
+        }
+    }
+
+    private Direction _constructionDirection = Direction.South;
+
+    /// <summary>
+    /// Returns a rotated transform based on the specified ConstructionDirection
+    /// </summary>
+    /// <remarks>
+    /// Contains no position data
+    /// </remarks>
+    public Transform ConstructionTransform { get; private set; } = default!;
 }

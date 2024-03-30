@@ -1,4 +1,5 @@
 using Content.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -81,7 +82,33 @@ public sealed class RCDPrototype : IPrototype
     /// Make sure that Rotation is set to RcdRotation.User if the entity is to be rotated by the user
     /// </remarks>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public Box2? CollisionBounds { get; private set; } = null;
+    public Box2? CollisionBounds
+    {
+        get
+        {
+            return _collisionBounds;
+        }
+
+        private set
+        {
+            _collisionBounds = value;
+
+            if (_collisionBounds != null)
+            {
+                var poly = new PolygonShape();
+                poly.SetAsBox(_collisionBounds.Value);
+
+                CollisionPolygon = poly;
+            }
+        }
+    }
+
+    private Box2? _collisionBounds = null;
+
+    /// <summary>
+    /// The polygon shape associated with the prototype CollisionBounds (if set) 
+    /// </summary>
+    public PolygonShape? CollisionPolygon { get; private set; } = null;
 
     /// <summary>
     /// Governs how the local rotation of the constructed entity will be set

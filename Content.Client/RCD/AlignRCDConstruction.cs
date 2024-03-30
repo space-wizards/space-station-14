@@ -31,10 +31,11 @@ public sealed class AlignRCDConstruction : PlacementMode
     /// </summary>
     public AlignRCDConstruction(PlacementManager pMan) : base(pMan)
     {
-        _entityManager = IoCManager.Resolve<IEntityManager>();
-        _mapManager = IoCManager.Resolve<IMapManager>();
-        _playerManager = IoCManager.Resolve<IPlayerManager>();
-        _stateManager = IoCManager.Resolve<IStateManager>();
+        var dependencies = IoCManager.Instance!;
+        _entityManager = dependencies.Resolve<IEntityManager>();
+        _mapManager = dependencies.Resolve<IMapManager>();
+        _playerManager = dependencies.Resolve<IPlayerManager>();
+        _stateManager = dependencies.Resolve<IStateManager>();
 
         _mapSystem = _entityManager.System<SharedMapSystem>();
         _rcdSystem = _entityManager.System<RCDSystem>();
@@ -85,7 +86,7 @@ public sealed class AlignRCDConstruction : PlacementMode
         // Otherwise restore the alpha value
         else
         {
-            InvalidPlaceColor = InvalidPlaceColor.WithAlpha(255);
+            InvalidPlaceColor = InvalidPlaceColor.WithAlpha(127);
         }
 
         // Determine if player is carrying an RCD in their active hand

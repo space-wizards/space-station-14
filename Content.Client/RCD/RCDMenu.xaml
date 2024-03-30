@@ -2,7 +2,7 @@
                 xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
                 xmlns:rcd="clr-namespace:Content.Client.RCD"
                 BackButtonStyleClass="RadialMenuBackButton"
-                CloseButtonStyleClass="RadialMenuCloseButton"                
+                CloseButtonStyleClass="RadialMenuCloseButton"
                 VerticalExpand="True"
                 HorizontalExpand="True"
                 MinSize="450 450">
@@ -15,7 +15,7 @@
         <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-walls-and-flooring'}" TargetLayer="WallsAndFlooring" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/walls_and_flooring.png"/>
         </ui:RadialMenuTextureButton>
-		<ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-windows-and-grilles'}" TargetLayer="WindowsAndGrilles" Visible="False">
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-windows-and-grilles'}" TargetLayer="WindowsAndGrilles" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/windows_and_grilles.png"/>
         </ui:RadialMenuTextureButton>
         <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-airlocks'}" TargetLayer="Airlocks" Visible="False">
@@ -33,7 +33,7 @@
     <ui:RadialContainer Name="WallsAndFlooring"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
 
     <!-- Windows and grilles -->
-	<ui:RadialContainer Name="WindowsAndGrilles"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+    <ui:RadialContainer Name="WindowsAndGrilles"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
 
     <!-- Airlocks -->
     <ui:RadialContainer Name="Airlocks"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>

@@ -86,11 +86,9 @@ public class RadialContainer : LayoutContainer
         sepAngle *= (RadialAlignment == RAlignment.AntiClockwise) ? -1f : 1f;
 
         // Adjust the positions of all the child elements
-        for (int i = 0; i < childCount; i++)
+        foreach (var (i, child) in children.Select((x, i) => (i, x)))
         {
-            var child = children.ElementAt(i);
             var position = new Vector2(Radius * MathF.Sin(AngularRange.X + sepAngle * i) + Width / 2f - child.Width / 2f, -Radius * MathF.Cos(AngularRange.X + sepAngle * i) + Height / 2f - child.Height / 2f);
-
             SetPosition(child, position);
         }
     }

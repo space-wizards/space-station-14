@@ -96,7 +96,7 @@ public class RadialMenu : BaseWindow
     {
         var children = Children.Where(x => x != ContextualButton);
 
-        if (children.Count() == 0)
+        if (!children.Any())
             return null;
 
         return children.First(x => x.Visible);
@@ -153,7 +153,7 @@ public class RadialMenu : BaseWindow
             return;
         }
 
-        var lastChild = _path.Last();
+        var lastChild = _path[^1];
 
         // Hide all children except the contextual button
         foreach (var child in Children)
