@@ -5,38 +5,38 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Created by TheShuEd (Github) for CrystallPunk14",
+  "copyright": "Created by KREKS (Discord) for CrystallPunk14",
   "states": [
     {
-      "name": "brick0",
+      "name": "wood0",
       "directions": 4
     },
     {
-      "name": "brick1",
+      "name": "wood1",
       "directions": 4
     },
     {
-      "name": "brick2",
+      "name": "wood2",
       "directions": 4
     },
     {
-      "name": "brick3",
+      "name": "wood3",
       "directions": 4
     },
     {
-      "name": "brick4",
+      "name": "wood4",
       "directions": 4
     },
     {
-      "name": "brick5",
+      "name": "wood5",
       "directions": 4
     },
     {
-      "name": "brick6",
+      "name": "wood6",
       "directions": 4
     },
     {
-      "name": "brick7",
+      "name": "wood7",
       "directions": 4
     },
     {

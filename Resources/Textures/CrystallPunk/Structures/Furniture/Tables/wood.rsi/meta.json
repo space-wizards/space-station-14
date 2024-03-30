@@ -1,46 +1,46 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by TheShuEd (Github) for CrystallPunk14",
   "size": {
     "x": 32,
     "y": 32
   },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Created by TheShuEd (Github) for CrystallPunk14",
   "states": [
     {
-      "name": "brick0",
-      "directions": 4
-    },
-    {
-      "name": "brick1",
-      "directions": 4
-    },
-    {
-      "name": "brick2",
-      "directions": 4
-    },
-    {
-      "name": "brick3",
-      "directions": 4
-    },
-    {
-      "name": "brick4",
-      "directions": 4
-    },
-    {
-      "name": "brick5",
-      "directions": 4
-    },
-    {
-      "name": "brick6",
-      "directions": 4
-    },
-    {
-      "name": "brick7",
-      "directions": 4
-    },
-    {
       "name": "full"
+    },
+    {
+      "name": "state0",
+      "directions": 4
+    },
+    {
+      "name": "state1",
+      "directions": 4
+    },
+    {
+      "name": "state2",
+      "directions": 4
+    },
+    {
+      "name": "state3",
+      "directions": 4
+    },
+    {
+      "name": "state4",
+      "directions": 4
+    },
+    {
+      "name": "state5",
+      "directions": 4
+    },
+    {
+      "name": "state6",
+      "directions": 4
+    },
+    {
+      "name": "state7",
+      "directions": 4
     }
   ]
 }

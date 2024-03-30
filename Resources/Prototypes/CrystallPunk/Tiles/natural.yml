@@ -1,6 +1,6 @@
 - type: tile
   id: FloorPlanetGrassCP
-  name: tiles-cp-grass-floor
+  name: травяной покров
   sprite: /Textures/CrystallPunk/Tiles/Grass/grass.png
   variants: 8
   placementVariants:

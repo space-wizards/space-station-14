@@ -3,7 +3,7 @@
   parent: BaseWall
   id: CPBaseWall
   name: стена
-  description: достаточно прочная, чтобы прикрыть вас от угроз или холодного ветра.
+  description: Достаточно прочная, чтобы прикрыть вас от угроз или холодного ветра.
   placement:
     mode: SnapgridCenter
     snap:
@@ -12,7 +12,7 @@
 - type: entity
   id: StoneRuinWall
   name: каменная стена руин
-  parent: BaseWall
+  parent: CPBaseWall
   description: Эти стены повидали многое, и осталось им недолго.
   components:
   - type: Sprite
@@ -20,19 +20,35 @@
   - type: Icon
     sprite: CrystallPunk/Structures/Walls/ruin_stone.rsi
   - type: IconSmooth
-    key: CPwalls
+    key: CPwallsbrick
     base: brick 
+
+- type: entity
+  id: WoodFullWall
+  name: деревянная стена
+  parent: CPBaseWall
+  description: Доска к доске, и вместе образуют они защиту и уют.
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Structures/Walls/wood_full.rsi
+  - type: Icon
+    sprite: CrystallPunk/Structures/Walls/wood_full.rsi
+  - type: IconSmooth
+    key: CPwallswood
+    base: wood 
 
 - type: entity
   id: StoneRuinFragment
   parent: BaseRock
-  name: обломки каменных руин
+  name: обломки каменных стен
   description: Это все, что осталось от былого величия. 
   placement:
     mode: SnapgridCenter
     snap:
     - Wall
   components:
+  - type: PlacementReplacement
+    key: walls
   - type: Sprite
     sprite: CrystallPunk/Structures/Walls/ruin_stone.rsi
     snapCardinals: true
