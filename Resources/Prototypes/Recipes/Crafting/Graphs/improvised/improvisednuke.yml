@@ -25,3 +25,23 @@
       steps:
       - tool: Prying
         doAfter: 4
+    - to: insides
+      steps:
+      - material: MetalRod
+        amount: 8
+        name: metal rods
+        icon:
+          sprite: Objects/Materials/parts.rsi
+          state: rods_2
+        doAfter: 3
+  - node: insides
+    entity: ImprovisedNuclearBombInsides
+    edges:
+    - to: cart
+      completed:
+      - !type:SpawnPrototype
+        prototype: PartRodMetal1
+        amount: 8
+      steps:
+      - tool: Cutting
+        doAfter: 3

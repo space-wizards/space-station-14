@@ -23,6 +23,9 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_2
     noRot: true
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: insides
 
 - type: entity
   parent: BaseStructure
