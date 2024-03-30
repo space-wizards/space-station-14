@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Alekshhh
-  changes:
-  - message: Cerberus now has a wideswing that works similarly to spears.
-    type: Tweak
-  id: 5759
-  time: '2024-01-20T23:38:27.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24328
 - author: TheShuEd
   changes:
   - message: Added new Floral anomaly!
@@ -3793,3 +3786,11 @@
   id: 6258
   time: '2024-03-30T04:00:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25830
+- author: liltenhead
+  changes:
+  - message: Changed the syndicate hardbomb to have less of a chance to completely
+      destroy tiles.
+    type: Tweak
+  id: 6259
+  time: '2024-03-30T04:36:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26548
