@@ -11,7 +11,7 @@
   - type: Construction
     graph: ImprovisedNukeCraft
     node: cart
-    defaultTarget: gun
+    defaultTarget: bullet
 
 - type: entity
   parent: BaseStructure
@@ -26,7 +26,7 @@
   - type: Construction
     graph: ImprovisedNukeCraft
     node: insides
-    defaultTarget: gun
+    defaultTarget: bullet
 
 - type: entity
   parent: BaseStructure
@@ -41,7 +41,7 @@
   - type: Construction
     graph: ImprovisedNukeCraft
     node: pipe
-    defaultTarget: gun
+    defaultTarget: bullet
 
 - type: entity
   parent: BaseStructure
@@ -56,7 +56,7 @@
   - type: Construction
     graph: ImprovisedNukeCraft
     node: gun
-    defaultTarget: gun
+    defaultTarget: bullet
 
 - type: entity
   parent: BaseStructure
@@ -68,6 +68,9 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_3
     noRot: true
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: bullet
 
 - type: entity
   parent: BaseStructure
