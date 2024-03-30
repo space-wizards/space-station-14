@@ -41,6 +41,7 @@
   - type: Construction
     graph: ImprovisedNukeCraft
     node: pipe
+    defaultTarget: bullet
 
 - type: entity
   parent: BaseStructure
@@ -52,6 +53,10 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_3
     noRot: true
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: gun
+    defaultTarget: bullet
 
 - type: entity
   parent: BaseStructure
@@ -63,6 +68,9 @@
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_3
     noRot: true
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: bullet
 
 - type: entity
   parent: BaseStructure
