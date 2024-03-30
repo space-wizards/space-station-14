@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Added new Floral anomaly!
-    type: Add
-  id: 5760
-  time: '2024-01-21T01:31:12.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24351
 - author: Menshin
   changes:
   - message: The PA control box should now properly detect the PA parts in all situations
@@ -3794,3 +3787,10 @@
   id: 6259
   time: '2024-03-30T04:36:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26548
+- author: takemysoult
+  changes:
+  - message: stimulants removes chloral hydrate from body
+    type: Tweak
+  id: 6260
+  time: '2024-03-30T06:52:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25886
