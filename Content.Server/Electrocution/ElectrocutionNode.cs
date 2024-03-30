@@ -9,9 +9,9 @@ namespace Content.Server.Electrocution
     public sealed partial class ElectrocutionNode : Node
     {
         [DataField("cable")]
-        public EntityUid CableEntity;
+        public EntityUid? CableEntity;
         [DataField("node")]
-        public string NodeName = default!;
+        public string? NodeName;
 
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
@@ -19,8 +19,11 @@ namespace Content.Server.Electrocution
             MapGridComponent? grid,
             IEntityManager entMan)
         {
+            if (CableEntity == null || NodeName == null)
+                yield break;
+
             var _nodeContainer = entMan.System<NodeContainerSystem>();
-            if (_nodeContainer.TryGetNode(CableEntity, NodeName, out Node? node))
+            if (_nodeContainer.TryGetNode(CableEntity.Value, NodeName, out Node? node))
                 yield return node;
         }
     }
