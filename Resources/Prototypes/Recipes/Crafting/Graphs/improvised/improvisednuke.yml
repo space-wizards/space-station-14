@@ -126,7 +126,7 @@
         doAfter: 5
     - to: finished
       steps:
-      - material: SheetSteel
+      - material: Steel
         amount: 30
         name: steel
         icon:
