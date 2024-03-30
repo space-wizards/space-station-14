@@ -139,7 +139,7 @@
     - to: uranium
       completed:
       - !type:SpawnPrototype
-        prototype: SheetSteel
+        prototype: SheetSteel1
         amount: 30
       steps:
       - tool: Prying
