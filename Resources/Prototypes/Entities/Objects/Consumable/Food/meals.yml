@@ -684,3 +684,28 @@
           Quantity: 5
   - type: Sprite
     state: haggis-slice
+
+- type: entity
+  name: liver and onions
+  parent: FoodMealBase
+  id: FoodMealLiverAndOnions
+  description: Butter-fried slices of liver, with a bed of carmelized onions atop it. Perfect for celebrating.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - onion
+  - type: Sprite
+    state: liverandonions
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 10
+  - type: Tag
+    tags:
+    - Meat

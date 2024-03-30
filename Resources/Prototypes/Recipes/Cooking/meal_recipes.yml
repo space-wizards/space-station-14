@@ -1245,7 +1245,6 @@
   solids:
     FoodKidneys: 1
     FoodChili: 1
-    FoodButter: 1
 
 - type: microwaveMealRecipe
   id: RecipeHaggis
@@ -1261,6 +1260,16 @@
     FoodLiver: 1
     FoodLungs: 1
     FoodOnion: 2
+
+- type: microwaveMealRecipe
+  id: RecipeLiverAndOnions
+  name: liver and onions recipe
+  result: FoodMealLiverAndOnions
+  time: 15
+  solids:
+    FoodLiver: 1
+    FoodButter: 1
+    FoodOnion: 1
 
 
 - type: microwaveMealRecipe
