@@ -39,14 +39,13 @@
   name: flower wreath
   description: A wreath of colourful flowers. Can be worn both on head and neck.
   components:
-  - type: Clothing
-    slots:
-    - HEAD
-    - neck
   - type: Sprite
     sprite: Clothing/Head/Misc/flower-wreath.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/flower-wreath.rsi
+    slots:
+    - HEAD
+    - neck
   - type: Construction
     graph: flowerwreath
     node: flowerwreath
