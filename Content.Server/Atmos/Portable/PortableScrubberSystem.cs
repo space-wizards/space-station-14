@@ -47,17 +47,13 @@ namespace Content.Server.Atmos.Portable
 
         private void OnDeviceUpdated(EntityUid uid, PortableScrubberComponent component, ref AtmosDeviceUpdateEvent args)
         {
-            if (!TryComp(uid, out AtmosDeviceComponent? device))
-                return;
-
             var timeDelta = args.dt;
 
             if (!component.Enabled)
                 return;
 
             // If we are on top of a connector port, empty into it.
-            if (TryComp<NodeContainerComponent>(uid, out var nodeContainer)
-                && _nodeContainer.TryGetNode(nodeContainer, component.PortName, out PortablePipeNode? portableNode)
+            if (_nodeContainer.TryGetNode(uid, component.PortName, out PortablePipeNode? portableNode)
                 && portableNode.ConnectionsEnabled)
             {
                 _atmosphereSystem.React(component.Air, portableNode);
@@ -71,13 +67,11 @@ namespace Content.Server.Atmos.Portable
                 return;
             }
 
-            var xform = Transform(uid);
-
-            if (xform.GridUid == null)
+            if (args.Grid is not {} grid)
                 return;
 
-            var position = _transformSystem.GetGridTilePositionOrDefault((uid,xform));
-            var environment = _atmosphereSystem.GetTileMixture(xform.GridUid, xform.MapUid, position, true);
+            var position = _transformSystem.GetGridTilePositionOrDefault(uid);
+            var environment = _atmosphereSystem.GetTileMixture(grid, args.Map, position, true);
 
             var running = Scrub(timeDelta, component, environment);
 
@@ -85,8 +79,10 @@ namespace Content.Server.Atmos.Portable
             // We scrub once to see if we can and set the animation
             if (!running)
                 return;
+
             // widenet
-            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true))
+            var enumerator = _atmosphereSystem.GetAdjacentTileMixtures(grid, position, false, true);
+            while (enumerator.MoveNext(out var adjacent))
             {
                 Scrub(timeDelta, component, adjacent);
             }
@@ -97,10 +93,7 @@ namespace Content.Server.Atmos.Portable
         /// </summary>
         private void OnAnchorChanged(EntityUid uid, PortableScrubberComponent component, ref AnchorStateChangedEvent args)
         {
-            if (!TryComp(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!_nodeContainer.TryGetNode(nodeContainer, component.PortName, out PipeNode? portableNode))
+            if (!_nodeContainer.TryGetNode(uid, component.PortName, out PipeNode? portableNode))
                 return;
 
             portableNode.ConnectionsEnabled = (args.Anchored && _gasPortableSystem.FindGasPortIn(Transform(uid).GridUid, Transform(uid).Coordinates, out _));
@@ -158,14 +151,10 @@ namespace Content.Server.Atmos.Portable
         /// </summary>
         private void OnScrubberAnalyzed(EntityUid uid, PortableScrubberComponent component, GasAnalyzerScanEvent args)
         {
-            var gasMixDict = new Dictionary<string, GasMixture?> { { Name(uid), component.Air } };
+            args.GasMixtures ??= new Dictionary<string, GasMixture?> { { Name(uid), component.Air } };
             // If it's connected to a port, include the port side
-            if (TryComp(uid, out NodeContainerComponent? nodeContainer))
-            {
-                if (_nodeContainer.TryGetNode(nodeContainer, component.PortName, out PipeNode? port))
-                    gasMixDict.Add(component.PortName, port.Air);
-            }
-            args.GasMixtures = gasMixDict;
+            if (_nodeContainer.TryGetNode(uid, component.PortName, out PipeNode? port))
+                args.GasMixtures.Add(component.PortName, port.Air);
         }
     }
 }

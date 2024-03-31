@@ -367,6 +367,15 @@
     accent-cowboy-words-98: accent-cowboy-replacement-98
     accent-cowboy-words-99: accent-cowboy-replacement-99
 
+- type: accent
+  id: southern
+  wordReplacements:
+    accent-southern-words-1: accent-southern-words-replace-1
+    accent-southern-words-2: accent-southern-words-replace-2
+    accent-southern-words-3: accent-southern-words-replace-3
+    accent-southern-words-4: accent-southern-words-replace-4
+    accent-southern-words-5: accent-southern-words-replace-5
+    accent-southern-words-6: accent-southern-words-replace-6
 
 # For the chat sanitization system
 - type: accent

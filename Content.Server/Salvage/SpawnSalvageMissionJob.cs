@@ -125,11 +125,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             air.Gases.CopyTo(moles, 0);
             var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
             _entManager.System<AtmosphereSystem>().SetMapSpace(mapUid, air.Space, atmos);
-            _entManager.System<AtmosphereSystem>().SetMapGasMixture(mapUid, new GasMixture(2500)
-            {
-                Temperature = mission.Temperature,
-                Moles = moles,
-            }, atmos);
+            _entManager.System<AtmosphereSystem>().SetMapGasMixture(mapUid, new GasMixture(moles, mission.Temperature), atmos);
 
             if (mission.Color != null)
             {
