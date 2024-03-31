@@ -311,7 +311,7 @@
   description: uplink-exploding-syndicate-bomb-desc
   productEntity: SyndicateBomb
   cost:
-    Telecrystal: 11
+    Telecrystal: 5 # the world is doomed
   categories:
     - UplinkExplosives
   restockTime: 30
@@ -327,7 +327,7 @@
   description: uplink-exploding-syndicate-bomb-desc
   productEntity: SyndicateBomb
   cost:
-    Telecrystal: 11
+    Telecrystal: 5 # :doomer:
   categories:
     - UplinkExplosives
   conditions:
@@ -508,7 +508,7 @@
   icon: { sprite: /Textures/Structures/Wallmounts/signs.rsi, state: bio }
   productEntity: ClothingBackpackDuffelZombieBundle
   cost:
-    Telecrystal: 40
+    Telecrystal: 20 # "ROMEROL" "NUKIES" "2 ROMEROL NUKIES"
   categories:
   - UplinkChemicals
   conditions:
@@ -527,7 +527,7 @@
   description: uplink-nocturine-chemistry-bottle-desc
   productEntity: NocturineChemistryBottle
   cost:
-    Telecrystal: 6
+    Telecrystal: 2 # put your local captain to sleep today
   categories:
   - UplinkChemicals
 
@@ -547,7 +547,7 @@
   description: uplink-combat-medipen-desc
   productEntity: CombatMedipen
   cost:
-    Telecrystal: 4
+    Telecrystal: 2 #spam them
   categories:
   - UplinkChemicals
 
@@ -557,7 +557,7 @@
   description: uplink-stimpack-desc
   productEntity: Stimpack
   cost:
-    Telecrystal: 4
+    Telecrystal: 1 # RIP stuns
   categories:
   - UplinkChemicals
 
@@ -567,7 +567,7 @@
   description: uplink-stimkit-desc
   productEntity: StimkitFilled
   cost:
-    Telecrystal: 12
+    Telecrystal: 2 # Stuns are dead and gibbed
   categories:
   - UplinkChemicals
   
@@ -650,7 +650,7 @@
   description: uplink-cyberpen-desc
   productEntity: CyberPen
   cost:
-    Telecrystal: 1
+    Telecrystal: 20 # too robust
   categories:
   - UplinkDeception
 
@@ -711,7 +711,7 @@
   description: uplink-exploding-syndicate-bomb-fake-desc
   productEntity: SyndicateBombFake
   cost:
-    Telecrystal: 4
+    Telecrystal: 1
   categories:
   - UplinkDeception
 
@@ -723,7 +723,7 @@
   description: uplink-emag-desc
   productEntity: Emag
   cost:
-    Telecrystal: 8
+    Telecrystal: 2 # emag gets MORE use (impossible)
   categories:
   - UplinkDisruption
   
