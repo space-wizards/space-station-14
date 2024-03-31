@@ -24,7 +24,7 @@
     jumpsuit: ClothingUniformJumpsuitSec
     back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsCombatFilled
-    eyes: ClothingEyesGlassesSecurity # Grey Station - Replaced Regular Sunglasses
+    eyes: ClothingEyesGlassesSecurity
     head: ClothingHeadHelmetBasic
     outerClothing: ClothingOuterArmorPlateCarrier # Grey Station - ClothingOuterArmorPlateCarrier
     id: SecurityPDA

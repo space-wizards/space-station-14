@@ -1,5 +1,6 @@
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
+using Content.Shared.Timing;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -17,13 +18,13 @@ public sealed partial class FTLComponent : Component
     public FTLState State = FTLState.Available;
 
     [ViewVariables(VVAccess.ReadWrite)]
+    public StartEndTime StateTime;
+
+    [ViewVariables(VVAccess.ReadWrite)]
     public float StartupTime = 0f;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float TravelTime = 0f;
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float Accumulator = 0f;
 
     /// <summary>
     /// Coordinates to arrive it: May be relative to another grid (for docking) or map coordinates.

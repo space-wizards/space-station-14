@@ -78,9 +78,6 @@
     malus: 0
   - type: Reflect
     enabled: false
-  - type: Tag
-    tags:
-      - NoPaint
   - type: IgnitionSource
     temperature: 700
 
@@ -159,7 +156,6 @@
   - type: Tag
     tags:
     - Write
-    - NoPaint
   - type: DisarmMalus
     malus: 0
 
