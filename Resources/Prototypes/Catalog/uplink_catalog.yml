@@ -17,7 +17,7 @@
   description: uplink-revolver-python-desc
   productEntity: WeaponRevolverPythonAP
   cost:
-    Telecrystal: 8 # Originally was 13 TC but was not used due to high cost
+    Telecrystal: 6 # Originally was 13 TC but was not used due to high cost
   categories:
   - UplinkWeaponry
 
@@ -72,7 +72,7 @@
   icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: throwing_knives }
   productEntity: ThrowingKnivesKit
   cost:
-    Telecrystal: 6
+    Telecrystal: 8
   categories:
     - UplinkWeaponry
 
