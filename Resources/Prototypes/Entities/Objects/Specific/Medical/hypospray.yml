@@ -417,6 +417,7 @@
     solution: hypospray
   - type: ExaminableSolution
     solution: hypospray
+    heldOnly: true # Allow examination only when held in hand.
   - type: Hypospray
     onlyAffectsMobs: false
   - type: UseDelay
