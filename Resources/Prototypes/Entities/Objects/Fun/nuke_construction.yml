@@ -13,7 +13,6 @@
     node: cart
     defaultTarget: painted
   - type: Pullable
-  - type: Fixtures
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood
