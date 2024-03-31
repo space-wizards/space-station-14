@@ -1,10 +1,9 @@
-using Content.Client.RoundEnd;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 
-namespace Content.Client.UserInterface.Systems.Scoreboard;
+namespace Content.Client.RoundEnd;
 
 public sealed class RoundEndSummarySystem : EntitySystem
 {

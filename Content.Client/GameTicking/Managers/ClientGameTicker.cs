@@ -1,6 +1,6 @@
 using Content.Client.Gameplay;
 using Content.Client.Lobby;
-using Content.Client.UserInterface.Systems.Scoreboard;
+using Content.Client.RoundEnd;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using JetBrains.Annotations;
