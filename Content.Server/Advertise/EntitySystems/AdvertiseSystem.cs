@@ -110,6 +110,8 @@ public sealed class AdvertiseSystem : EntitySystem
         if (_nextCheckTime > curTime)
             return;
 
+        // Note that as _nextCheckTime currently starts at TimeSpan.MinValue, so this has to SET the value, not just
+        // increment it.
         _nextCheckTime = curTime + _maximumNextCheckDuration;
 
         var query = EntityQueryEnumerator<AdvertiseComponent>();
