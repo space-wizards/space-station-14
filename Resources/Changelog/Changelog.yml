@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix thrusters.
-    type: Fix
-  id: 5772
-  time: '2024-01-23T12:49:19.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24446
 - author: '0x6273'
   changes:
   - message: Hotplates now work again
@@ -3801,3 +3794,11 @@
   id: 6271
   time: '2024-03-31T05:33:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25475
+- author: EmoGarbage404
+  changes:
+  - message: Borgs, Emitters, and APEs can no longer have their panels opened while
+      locked. APEs and Emitters additionally cannot be unanchored either.
+    type: Add
+  id: 6272
+  time: '2024-03-31T06:34:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26600
