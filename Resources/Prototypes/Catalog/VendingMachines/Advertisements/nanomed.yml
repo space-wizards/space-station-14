@@ -1,6 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: NanoMedAds
-  advertisements:
+  messages:
     - advertisement-nanomed-1
     - advertisement-nanomed-2
     - advertisement-nanomed-3
@@ -10,5 +10,3 @@
     - advertisement-nanomed-7
     - advertisement-nanomed-8
     - advertisement-nanomed-9
-  thankyous:
-    - vending-machine-thanks

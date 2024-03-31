@@ -52,12 +52,15 @@ namespace Content.Server.Atmos.EntitySystems
             new DefaultObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>>(
                 new DefaultPooledObjectPolicy<Dictionary<NetEntity, HashSet<Vector2i>>>(), 64);
 
+        private bool _doSessionUpdate;
+
         /// <summary>
         ///     Overlay update interval, in seconds.
         /// </summary>
         private float _updateInterval;
 
         private int _thresholds;
+        private EntityQuery<GasTileOverlayComponent> _query;
 
         public override void Initialize()
         {
@@ -82,6 +85,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GasTileOverlayComponent, ComponentStartup>(OnStartup);
+            _query = GetEntityQuery<GasTileOverlayComponent>();
         }
 
         private void OnStartup(EntityUid uid, GasTileOverlayComponent component, ComponentStartup args)
@@ -130,10 +134,10 @@ namespace Content.Server.Atmos.EntitySystems
         private void UpdateThresholds(int value) => _thresholds = value;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Invalidate(EntityUid grid, Vector2i index, GasTileOverlayComponent? comp = null)
+        public void Invalidate(Entity<GasTileOverlayComponent?> grid, Vector2i index)
         {
-            if (Resolve(grid, ref comp))
-                comp.InvalidTiles.Add(index);
+            if (_query.Resolve(grid.Owner, ref grid.Comp))
+                grid.Comp.InvalidTiles.Add(index);
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -192,7 +196,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     Updates the visuals for a tile on some grid chunk. Returns true if the visuals have changed.
         /// </summary>
-        private bool UpdateChunkTile(GridAtmosphereComponent gridAtmosphere, GasOverlayChunk chunk, Vector2i index, GameTick curTick)
+        private bool UpdateChunkTile(GridAtmosphereComponent gridAtmosphere, GasOverlayChunk chunk, Vector2i index)
         {
             ref var oldData = ref chunk.TileData[chunk.GetDataIndex(index)];
             if (!gridAtmosphere.Tiles.TryGetValue(index, out var tile))
@@ -200,7 +204,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (oldData.Equals(default))
                     return false;
 
-                chunk.LastUpdate = curTick;
+                chunk.LastUpdate = _gameTiming.CurTick;
                 oldData = default;
                 return true;
             }
@@ -258,11 +262,11 @@ namespace Content.Server.Atmos.EntitySystems
             if (!changed)
                 return false;
 
-            chunk.LastUpdate = curTick;
+            chunk.LastUpdate = _gameTiming.CurTick;
             return true;
         }
 
-        private void UpdateOverlayData(GameTick curTick)
+        private void UpdateOverlayData()
         {
             // TODO parallelize?
             var query = EntityQueryEnumerator<GasTileOverlayComponent, GridAtmosphereComponent, MetaDataComponent>();
@@ -276,7 +280,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if (!overlay.Chunks.TryGetValue(chunkIndex, out var chunk))
                         overlay.Chunks[chunkIndex] = chunk = new GasOverlayChunk(chunkIndex);
 
-                    changed |= UpdateChunkTile(gam, chunk, index, curTick);
+                    changed |= UpdateChunkTile(gam, chunk, index);
                 }
 
                 if (changed)
@@ -291,13 +295,28 @@ namespace Content.Server.Atmos.EntitySystems
             base.Update(frameTime);
             AccumulatedFrameTime += frameTime;
 
-            if (AccumulatedFrameTime < _updateInterval) return;
+            if (_doSessionUpdate)
+            {
+                UpdateSessions();
+                return;
+            }
+
+            if (AccumulatedFrameTime < _updateInterval)
+                return;
+
             AccumulatedFrameTime -= _updateInterval;
 
-            var curTick = _gameTiming.CurTick;
-
             // First, update per-chunk visual data for any invalidated tiles.
-            UpdateOverlayData(curTick);
+            UpdateOverlayData();
+
+            // Then, next tick we send the data to players.
+            // This is to avoid doing all the work in the same tick.
+            _doSessionUpdate = true;
+        }
+
+        public void UpdateSessions()
+        {
+            _doSessionUpdate = false;
 
             if (!PvsEnabled)
                 return;
@@ -315,11 +334,11 @@ namespace Content.Server.Atmos.EntitySystems
                 _sessions.Add(player);
             }
 
-            if (_sessions.Count > 0)
-            {
-                _updateJob.CurrentTick = curTick;
-                _parMan.ProcessNow(_updateJob, _sessions.Count);
-            }
+            if (_sessions.Count == 0)
+                return;
+
+            _parMan.ProcessNow(_updateJob, _sessions.Count);
+            _updateJob.LastSessionUpdate = _gameTiming.CurTick;
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -352,7 +371,7 @@ namespace Content.Server.Atmos.EntitySystems
             public ObjectPool<HashSet<Vector2i>> ChunkIndexPool;
             public ObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>> ChunkViewerPool;
 
-            public GameTick CurrentTick;
+            public GameTick LastSessionUpdate;
             public Dictionary<ICommonSession, Dictionary<NetEntity, HashSet<Vector2i>>> LastSentChunks;
             public List<ICommonSession> Sessions;
 
@@ -415,7 +434,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                         if (previousChunks != null &&
                             previousChunks.Contains(gIndex) &&
-                            value.LastUpdate != CurrentTick)
+                            value.LastUpdate > LastSessionUpdate)
                         {
                             continue;
                         }

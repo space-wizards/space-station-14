@@ -252,3 +252,8 @@ RPED: null
 
 # 2024-03-25
 ShutDownObjective: null
+
+# 2024-03-30
+# These are technically not equivalent, but it probably makes more sense to replace any existing SCAF stuff with SOME kind of armor, instead of just deleting it outright.
+ClothingHeadHelmetScaf: ClothingHeadHelmetBasic
+ClothingOuterArmorScaf: ClothingOuterArmorBasic

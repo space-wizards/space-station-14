@@ -30,9 +30,8 @@ public sealed class GasCondenserSystem : EntitySystem
 
     private void OnCondenserUpdated(Entity<GasCondenserComponent> entity, ref AtmosDeviceUpdateEvent args)
     {
-        if (!(_power.IsPowered(entity) && TryComp<ApcPowerReceiverComponent>(entity, out var receiver))
-            || !TryComp<NodeContainerComponent>(entity, out var nodeContainer)
-            || !_nodeContainer.TryGetNode(nodeContainer, entity.Comp.Inlet, out PipeNode? inlet)
+        if (!(TryComp<ApcPowerReceiverComponent>(entity, out var receiver) && _power.IsPowered(entity, receiver))
+            || !_nodeContainer.TryGetNode(entity.Owner, entity.Comp.Inlet, out PipeNode? inlet)
             || !_solution.ResolveSolution(entity.Owner, entity.Comp.SolutionId, ref entity.Comp.Solution, out var solution))
         {
             return;

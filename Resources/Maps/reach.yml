@@ -11786,12 +11786,14 @@ entities:
   - uid: 1030
     components:
     - type: Transform
-      pos: 21.5,-3.5
+      pos: 18.5,-3.5
       parent: 407
+- proto: SpawnMobFoxRenault
+  entities:
   - uid: 1826
     components:
     - type: Transform
-      pos: 18.5,-3.5
+      pos: 21.5,-3.5
       parent: 407
 - proto: SpawnPointAtmos
   entities:
