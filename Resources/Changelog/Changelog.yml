@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Added different footstep sounds for blood, soda and juice
-    type: Add
-  id: 5770
-  time: '2024-01-23T04:18:33.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24406
 - author: TheShuEd
   changes:
   - message: 'Flesh and Rock anom reworked: It should be easier to maintain them now
@@ -3798,3 +3791,11 @@
   id: 6269
   time: '2024-03-31T04:40:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24412
+- author: DrTeaspoon
+  changes:
+  - message: Hypopen no longer shows chemical contents when examined, when not held
+      by the examinee.
+    type: Fix
+  id: 6270
+  time: '2024-03-31T04:59:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26453
