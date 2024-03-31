@@ -19,16 +19,47 @@ public sealed partial class BloodstreamComponent : Component
     public FixedPoint2 HealthyVolume = 250;
 
     /// <summary>
-    /// The maximum volume for this bloodstream (this may be exceeded with heavy negative effects)
+    /// What volume is blood regeneration targeting, this is usually just the healthy volume.
+    /// If this volume is -1 in on mapInit it will use the healthy volume
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public FixedPoint2 RegenTargetVolume = -1;
+
+    /// <summary>
+    /// The maximum volume for this bloodstream, this can be exceeded but results in very bad side effects
     /// </summary>
     [DataField, AutoNetworkedField] //TODO: Required
     public FixedPoint2 MaxVolume = 300;
 
     /// <summary>
-    /// How much blood is currently being lost by bleed, this number must be positive
+    /// How much blood is currently being lost by bleed per tick, this number must be positive
     /// </summary>
     [DataField, AutoNetworkedField]
     public FixedPoint2 Bloodloss = 0;
+
+    /// <summary>
+    /// How much blood is regenerated per tick, this number must be positive
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public FixedPoint2 BloodRegen = 0;
+
+    /// <summary>
+    /// Cached bloodstream volume, do not modify directly only read!
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly),AutoNetworkedField]
+    public FixedPoint2 BloodVolume = 0;
+
+    /// <summary>
+    /// Systolic blood pressure (during a pulse/pump)
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly),AutoNetworkedField]
+    public FixedPoint2 SystolicPressure = 0;
+
+    /// <summary>
+    /// Diastolic blood pressure (resting, in-between pumps)
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly),AutoNetworkedField]
+    public FixedPoint2 DiastolicPressure = 0;
 
     #endregion
 

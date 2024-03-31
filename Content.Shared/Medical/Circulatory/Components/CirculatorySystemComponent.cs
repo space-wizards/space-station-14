@@ -2,7 +2,7 @@
 
 
 [RegisterComponent]
-public sealed partial class BloodCirculationComponent : Component
+public sealed partial class CirculatorySystemComponent : Component
 {
 
 }

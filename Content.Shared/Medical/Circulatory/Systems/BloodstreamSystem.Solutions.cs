@@ -1,66 +1,68 @@
 ﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Circulatory.Components;
-using Content.Shared.Medical.Circulatory.Prototypes;
 
 namespace Content.Shared.Medical.Circulatory.Systems;
 
 public sealed partial class BloodstreamSystem
 {
+    public void AddBleed(Entity<BloodstreamComponent?> bloodstream, FixedPoint2 bleedToAdd)
+    {
+        if (bleedToAdd == 0 || !Resolve(bloodstream, ref bloodstream.Comp))
+            return;
+        bloodstream.Comp.Bloodloss += bleedToAdd;
+        if (bloodstream.Comp.Bloodloss < 0)
+            bloodstream.Comp.Bloodloss = 0;
+        Dirty(bloodstream);
+    }
+
+    public void AddRegen(Entity<BloodstreamComponent?> bloodstream, FixedPoint2 regenToAdd)
+    {
+        if (regenToAdd == 0 || !Resolve(bloodstream, ref bloodstream.Comp))
+            return;
+        bloodstream.Comp.BloodRegen += regenToAdd;
+        if (bloodstream.Comp.BloodRegen < 0)
+            bloodstream.Comp.BloodRegen = 0;
+        Dirty(bloodstream);
+    }
+
 
     private void InitSolutions()
     {
-        SubscribeLocalEvent<BloodstreamComponent, MapInitEvent>(OnBloodstreamMapInit,
-            after: [typeof(SharedSolutionContainerSystem)]);
     }
 
-    private void OnBloodstreamMapInit(EntityUid bloodstreamEnt, BloodstreamComponent bloodstream, ref MapInitEvent args)
+    private void UpdateSolutions(Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream)
     {
-        if (!TryComp<SolutionContainerManagerComponent>(bloodstreamEnt, out var solMan))
-        {
-            Log.Error($"{ToPrettyString(bloodstreamEnt)} does not have a solution manager, but is using bloodstream. " +
-                      $"Make sure that SolutionContainerManager is defined as a component in YAML.");
-            return;
-        }
-
-        Entity<SolutionComponent>? bloodSolution = default;
-        if (!_solutionSystem.ResolveSolution((bloodstreamEnt, solMan), BloodstreamComponent.BloodSolutionId,
-                ref bloodSolution))
-        {
-            Log.Error($"{ToPrettyString(bloodstreamEnt)} does not have a solution with ID " +
-                      $"{BloodstreamComponent.BloodSolutionId}. " +
-                     $"Make sure that {BloodstreamComponent.BloodSolutionId} is added to SolutionContainerManager in YAML");
-            return;
-        }
-        Entity<SolutionComponent>? spillSolution = default;
-        if (!_solutionSystem.ResolveSolution((bloodstreamEnt, solMan), BloodstreamComponent.SpillSolutionId,
-                ref spillSolution))
-        {
-            Log.Error($"{ToPrettyString(bloodstreamEnt)} does not have a solution with ID " +
-                      $"{BloodstreamComponent.SpillSolutionId}. " +
-                      $"Make sure that {BloodstreamComponent.SpillSolutionId} is added to SolutionContainerManager in YAML.");
-            return;
-        }
-
-        var bloodDef = _protoManager.Index<BloodDefinitionPrototype>(bloodstream.BloodDefinition);
-        var bloodType = GetInitialBloodType((bloodstreamEnt, bloodstream), bloodDef);
-
-        _solutionSystem.SetCapacity((spillSolution.Value, spillSolution), FixedPoint2.MaxValue);
-        _solutionSystem.SetCapacity((bloodSolution.Value, bloodSolution), bloodstream.MaxVolume);
-        _solutionSystem.AddSolution((bloodSolution.Value, bloodSolution),
-            CreateBloodSolution(bloodType, bloodDef, bloodstream.HealthyVolume));
-        AddAllowedAntigens((bloodstreamEnt, bloodstream),GetAntigensForBloodType(bloodType));
-
-        bloodstream.SpillSolution = spillSolution;
-        bloodstream.BloodSolution = spillSolution;
-        bloodstream.BloodType = bloodType.ID;
-        bloodstream.BloodReagent = bloodDef.WholeBloodReagent;
-        Dirty(bloodstreamEnt, bloodstream);
+        ApplyBleeds(bloodstream);
+        RegenBlood(bloodstream);
     }
 
-    private void TransferBloodToSpill(Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream)
+
+
+    private void RegenBlood(Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream)
+    {
+        //Don't passively regenerate blood if we are over the "healthy" volume
+        if (bloodstream.Comp1.BloodRegen == 0 || bloodstream.Comp1.BloodVolume >= bloodstream.Comp1.HealthyVolume)
+            return;
+        if (!_solutionSystem.TryGetSolution((bloodstream, bloodstream),
+                BloodstreamComponent.BloodSolutionId, out var bloodSolution))
+        {
+            Log.Error($"{ToPrettyString(bloodstream)} Does not have a solution with ID: {BloodstreamComponent.BloodSolutionId}, " +
+                      $"which is required for bloodstream to function!");
+            return;
+        }
+
+        //Update the cached blood volume
+        bloodstream.Comp1.BloodVolume += bloodstream.Comp1.BloodRegen;
+        Dirty(bloodstream);
+
+        bloodSolution.Value.Comp.Solution.Volume += bloodstream.Comp1.BloodRegen;
+        _solutionSystem.UpdateChemicals(bloodSolution.Value);
+    }
+
+
+    private void ApplyBleeds(Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream)
     {
         if (bloodstream.Comp1.Bloodloss == 0)
             return;
@@ -79,6 +81,12 @@ public sealed partial class BloodstreamSystem
                       $"which is required for bloodstream to function!");
             return;
         }
+
+        //Update the cached blood volume
+        bloodstream.Comp1.BloodVolume -= bloodstream.Comp1.Bloodloss;
+        if (bloodstream.Comp1.BloodVolume < 0)
+            bloodstream.Comp1.BloodVolume = 0;
+        Dirty(bloodstream);
 
         var bleedSol = _solutionSystem.SplitSolution(bloodSolution.Value, bloodstream.Comp1.Bloodloss);
         spillSolution.Value.Comp.Solution.AddSolution(bleedSol, _protoManager);
