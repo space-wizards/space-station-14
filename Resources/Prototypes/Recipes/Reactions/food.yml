@@ -334,3 +334,84 @@
 #    Oxygen: 1
 #    Hydrogen: 2
 
+- type: reaction
+  id: AllicinBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    Allicin:
+      amount: 4
+  products:
+    Sulfur: 2
+    Carbon: 1
+    Water: 1
+
+- type: reaction
+  id: NutrimentBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    Nutriment:
+      amount: 5
+  products:
+    Water: 2
+    Carbon: 2
+    Sugar: 1
+
+- type: reaction
+  id: FatBreakdown
+  source: true
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    Fat:
+      amount: 15
+  products:
+    Carbon: 5
+    Hydrogen: 10
+    Oxygen: 1
+
+# Proteins are hydrocarbons
+- type: reaction
+  id: UncookedAnimalProteinBreakdown
+  source: true
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    UncookedAnimalProteins:
+      amount: 10
+  products:
+    Carbon: 2
+    Hydrogen: 4
+    Phosphorus: 3
+    Oxygen: 1
+
+- type: reaction
+  id: ProteinBreakdown
+  source: true
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    Protein:
+      amount: 10
+  products:
+    Carbon: 2
+    Hydrogen: 4
+    Phosphorus: 3
+    Oxygen: 1
+
+# Vitamin = Healthy = Green = Nitrogenous
+- type: reaction
+  id: VitaminBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    Vitamin:
+      amount: 4
+  products:
+    Carbon: 1
+    Water: 1
+    Nitrogen: 2

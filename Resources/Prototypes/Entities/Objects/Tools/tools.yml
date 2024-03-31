@@ -114,6 +114,8 @@
     damage:
       types:
         Blunt: 4.5
+    soundHit:
+      collection: MetalThud
   - type: Tool
     qualities:
       - Anchoring
@@ -151,6 +153,8 @@
     damage:
       types:
         Blunt: 8
+    soundHit:
+      collection: MetalThud
   - type: Tool
     qualities:
       - Prying
@@ -221,7 +225,6 @@
   - type: Tag
     tags:
       - Multitool
-      - DroneUsable
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
@@ -271,9 +274,6 @@
           type: NetworkConfiguratorBoundUserInterface
         - key: enum.NetworkConfiguratorUiKey.Link
           type: NetworkConfiguratorBoundUserInterface
-    - type: Tag
-      tags:
-        - DroneUsable
     - type: StaticPrice
       price: 56
     - type: GuideHelp
@@ -492,10 +492,12 @@
     sprite: Objects/Tools/shovel.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: -135
+    wideAnimationRotation: 45
     damage:
       types:
         Blunt: 14
+    soundHit:
+      collection: MetalThud
   - type: Item
     size: Normal
     sprite: Objects/Tools/shovel.rsi
@@ -529,6 +531,8 @@
     damage:
       types:
         Blunt: 7
+    soundHit:
+      collection: MetalThud
   - type: Tool
     qualities:
     - Rolling

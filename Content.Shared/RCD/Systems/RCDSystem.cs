@@ -25,7 +25,6 @@ namespace Content.Shared.RCD.Systems;
 public sealed class RCDSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
@@ -34,13 +33,12 @@ public sealed class RCDSystem : EntitySystem
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-    private readonly int RcdModeCount = Enum.GetValues(typeof(RcdMode)).Length;
+    private readonly int _rcdModeCount = Enum.GetValues(typeof(RcdMode)).Length;
 
     public override void Initialize()
     {
@@ -105,8 +103,7 @@ public sealed class RCDSystem : EntitySystem
             BreakOnDamage = true,
             NeedHand = true,
             BreakOnHandChange = true,
-            BreakOnUserMove = true,
-            BreakOnTargetMove = args.Target != null,
+            BreakOnMove = true,
             AttemptFrequency = AttemptFrequency.EveryTick
         };
 
@@ -134,7 +131,7 @@ public sealed class RCDSystem : EntitySystem
                 return;
         }
 
-        var mapGrid = _mapMan.GetGrid(gridId.Value);
+        var mapGrid = Comp<MapGridComponent>(gridId.Value);
         var tile = mapGrid.GetTileRef(location);
 
         if (!IsRCDStillValid(uid, comp, args.Event.User, args.Event.Target, mapGrid, tile, args.Event.StartingMode))
@@ -159,7 +156,7 @@ public sealed class RCDSystem : EntitySystem
                 return;
         }
 
-        var mapGrid = _mapMan.GetGrid(gridId.Value);
+        var mapGrid = Comp<MapGridComponent>(gridId.Value);
         var tile = mapGrid.GetTileRef(location);
         var snapPos = mapGrid.TileIndicesFor(location);
 
@@ -312,9 +309,9 @@ public sealed class RCDSystem : EntitySystem
         _audio.PlayPredicted(comp.SwapModeSound, uid, user);
 
         var mode = (int) comp.Mode;
-        mode = ++mode % RcdModeCount;
+        mode = ++mode % _rcdModeCount;
         comp.Mode = (RcdMode) mode;
-        Dirty(comp);
+        Dirty(uid, comp);
 
         var msg = Loc.GetString("rcd-component-change-mode", ("mode", comp.Mode.ToString()));
         _popup.PopupClient(msg, uid, user);

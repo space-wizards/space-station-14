@@ -58,7 +58,10 @@
   color: "#664300"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/cafe_latte.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 1
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: GreenTea
@@ -67,10 +70,13 @@
   desc: reagent-desc-green-tea
   physicalDesc: reagent-physical-desc-aromatic
   flavor: tea
-  color: "#C33F00"
+  color: "#7EB626"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/glass_green.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Grenadine
@@ -82,7 +88,10 @@
   color: "#EA1D26"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/grenadineglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   footstepSound:
     collection: FootstepSticky
     params:
@@ -98,7 +107,10 @@
   color: "#102838"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/icedcoffeeglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: IcedGreenTea
@@ -107,10 +119,13 @@
   desc: reagent-desc-iced-green-tea
   physicalDesc: reagent-physical-desc-aromatic
   flavor: icedtea
-  color: "#CE4200"
+  color: "#5B821B"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/glass_green.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: IcedTea
@@ -119,10 +134,13 @@
   desc: reagent-desc-iced-tea
   physicalDesc: reagent-physical-desc-aromatic
   flavor: icedtea
-  color: "#104038"
+  color: "#6C3916"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/icedteaglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -163,7 +181,10 @@
   color: "#FFFF00"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -240,9 +261,6 @@
   desc: reagent-desc-nothing
   group: Drinks
   physicalDesc: reagent-physical-desc-nothing
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/nothing.rsi
-    state: icon
   metabolisms:
     Drink:
       effects:
@@ -261,7 +279,10 @@
   color: "#100800"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/nuclear_colaglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -293,7 +314,10 @@
   color: "#664300"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/soy_latte.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 1
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Tea
@@ -404,9 +428,6 @@
   physicalDesc: reagent-physical-desc-sour
   flavor: bitter
   color: "#B3B599"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/glass_light_yellow.rsi
-    state: icon
 
 - type: reagent
   id: KiraSpecial
@@ -418,7 +439,10 @@
   color: "#CCCC99"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/kiraspecial.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Rewriter
@@ -429,8 +453,11 @@
   flavor: sweet
   color: "#485000"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/rewriter.rsi
-    state: icon
+    sprite: Objects/Consumable/Drinks/beerstein.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
 
 - type: reagent
   id: Mopwata

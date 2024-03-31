@@ -4,16 +4,16 @@
               Orientation="Vertical">
     <BoxContainer Orientation="Horizontal">
         <Label Name="NumberLabel"
-               Align="Center"
-               SetWidth="60"
+               Align="Right"
+               SetWidth="26"
                ClipText="True"/>
         <Label Name="TimeLabel"
                Align="Center"
-               SetWidth="280"
+               SetWidth="100"
                ClipText="True"/>
         <Label Name="AccessorLabel"
-               Align="Center"
-               SetWidth="110"
+               Align="Left"
+               SetWidth="390"
                ClipText="True"/>
     </BoxContainer>
     <customControls:HSeparator Margin="0 5 0 5"/>

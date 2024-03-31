@@ -3,7 +3,7 @@
   id: HungerIconOverfed
   priority: 5
   icon:
-    sprite: Interface/Misc/food_icons.rsi
+    sprite: /Textures/Interface/Misc/food_icons.rsi
     state: overfed
   locationPreference: Right
 
@@ -11,7 +11,7 @@
   id: HungerIconPeckish
   priority: 5
   icon:
-    sprite: Interface/Misc/food_icons.rsi
+    sprite: /Textures/Interface/Misc/food_icons.rsi
     state: peckish
   locationPreference: Right
 
@@ -19,7 +19,7 @@
   id: HungerIconStarving
   priority: 5
   icon:
-    sprite: Interface/Misc/food_icons.rsi
+    sprite: /Textures/Interface/Misc/food_icons.rsi
     state: starving
   locationPreference: Right
 
@@ -28,7 +28,7 @@
   id: ThirstIconOverhydrated
   priority: 5
   icon:
-    sprite: Interface/Misc/food_icons.rsi
+    sprite: /Textures/Interface/Misc/food_icons.rsi
     state: overhydrated
   locationPreference: Left
 
@@ -36,7 +36,7 @@
   id: ThirstIconThirsty
   priority: 5
   icon:
-    sprite: Interface/Misc/food_icons.rsi
+    sprite: /Textures/Interface/Misc/food_icons.rsi
     state: thirsty
   locationPreference: Left
 
@@ -44,6 +44,6 @@
   id: ThirstIconParched
   priority: 5
   icon:
-    sprite: Interface/Misc/food_icons.rsi
+    sprite: /Textures/Interface/Misc/food_icons.rsi
     state: parched
   locationPreference: Left

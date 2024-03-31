@@ -10,7 +10,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
   - type: WirelessNetworkConnection
-    range: 300
+    range: 100
   - type: DeviceNetworkRequiresPower
   - type: DeviceLinkSource
     ports:
@@ -39,19 +39,15 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
-        density: 190
+        density: 100
         mask:
-        - MachineMask
-        layer:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        hard: False
+        - ItemMask 
+        hard: True
   - type: Transform
     anchored: true
     noRot: false
   - type: ApcPowerReceiver
-    powerLoad: 15000
+    powerLoad: 2500
     needsPower: true
   - type: ItemPlacer
     whitelist:

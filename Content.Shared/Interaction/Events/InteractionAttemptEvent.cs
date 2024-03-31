@@ -16,6 +16,14 @@
     }
 
     /// <summary>
+    /// Raised to determine whether an entity is conscious to perform an action.
+    /// </summary>
+    public sealed class ConsciousAttemptEvent(EntityUid Uid) : CancellableEntityEventArgs
+    {
+        public EntityUid Uid { get; } = Uid;
+    }
+
+    /// <summary>
     ///     Event raised directed at the target entity of an interaction to see if the user is allowed to perform some
     ///     generic interaction.
     /// </summary>

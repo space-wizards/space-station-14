@@ -28,9 +28,6 @@ public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
             .Where(x => !x.Abstract)
             .Select(x => x.ID).ToList();
 
-        // TODO: This is gross, but not much can be done until event refactor, which needs Dynamic.
-        var mod = (float) Math.Sqrt(GetSeverityModifier());
-
         foreach (var (_, transform) in EntityManager.EntityQuery<GasVentPumpComponent, TransformComponent>())
         {
             if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station != chosenStation)
@@ -40,14 +37,14 @@ public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
 
             var solution = new Solution();
 
-            if (!RobustRandom.Prob(Math.Min(0.33f * mod, 1.0f)))
+            if (!RobustRandom.Prob(0.33f))
                 continue;
 
-            var pickAny = RobustRandom.Prob(Math.Min(0.05f * mod, 1.0f));
+            var pickAny = RobustRandom.Prob(0.05f);
             var reagent = RobustRandom.Pick(pickAny ? allReagents : component.SafeishVentChemicals);
 
             var weak = component.WeakReagents.Contains(reagent);
-            var quantity = (weak ? component.WeakReagentQuantity : component.ReagentQuantity) * mod;
+            var quantity = weak ? component.WeakReagentQuantity : component.ReagentQuantity;
             solution.AddReagent(reagent, quantity);
 
             var foamEnt = Spawn("Foam", transform.Coordinates);

@@ -441,7 +441,7 @@
     color: "#fb4747"
   - type: EntitySpawnAnomaly
     entries:
-    - settings:  
+    - settings:
         spawnOnPulse: true
         minAmount: 8
         maxAmount: 15
@@ -559,7 +559,7 @@
         maxRange: 4.5
       spawns:
       - CrystalOrange
-    - settings: 
+    - settings:
         spawnOnSuperCritical: true
         minAmount: 30
         maxAmount: 40
@@ -625,21 +625,21 @@
         minAmount: 2
         maxAmount: 5
         maxRange: 2
-      spawns: 
+      spawns:
       - KudzuFlowerFriendly
     - settings:
         spawnOnSuperCritical: true
         minAmount: 5
         maxAmount: 10
         maxRange: 6
-      spawns: 
+      spawns:
       - KudzuFlowerAngry
 
 - type: entity
   id: AnomalyFloraBulb
   name: strange glowing berry
   parent: BaseStructure
-  description: It's a beautiful strange glowing berry. It seems to have something growing inside it... 
+  description: It's a beautiful strange glowing berry. It seems to have something growing inside it...
   suffix: Flora Anomaly
   components:
   - type: Transform
@@ -779,6 +779,7 @@
     - CogChamp
     - Honk
     - Carpetium
+    - JuiceThatMakesYouWeh
   - type: Drink
     solution: anomaly
   - type: DrainableSolution
@@ -791,3 +792,57 @@
     solution: anomaly
   - type: InjectableSolution
     solution: beaker
+
+- type: entity
+  id: AnomalyShadow
+  parent: BaseAnomaly
+  suffix: Shadow
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/shadow_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 1.5
+    energy: 12.5
+    color: "#793a80"
+  - type: AmbientSound
+    range: 5
+    volume: -5
+    sound:
+      path: /Audio/Ambience/anomaly_scary.ogg
+  - type: Anomaly
+    corePrototype: AnomalyCoreShadow
+    coreInertPrototype: AnomalyCoreShadowInert
+    anomalyContactDamage:
+      types:
+        Cold: 10
+    animationTime: 4
+    offset: "-0.1,0.1"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        spawnOnSuperCritical: true
+        minAmount: 10
+        maxAmount: 20
+        maxRange: 4
+      spawns:
+      - ShadowKudzuWeak
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 40
+        maxRange: 50
+      spawns:
+      - ShadowKudzu
+  - type: Portal
+    arrivalSound: /Audio/Items/hiss.ogg
+    departureSound: /Audio/Items/hiss.ogg
+  - type: Tag
+    tags:
+      - SpookyFog
