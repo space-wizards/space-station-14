@@ -298,6 +298,14 @@
     Weh:
       collection: Weh
 
+- type: emoteSounds
+  id: UnisexSilicon
+  params:
+    variation: 0.125
+  sounds:
+    Beep:
+      path: /Audio/Machines/twobeep.ogg
+
 # body emotes
 - type: emoteSounds
   id: GeneralBodyEmotes
