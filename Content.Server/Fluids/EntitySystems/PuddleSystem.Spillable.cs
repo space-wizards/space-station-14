@@ -29,6 +29,7 @@ public sealed partial class PuddleSystem
         // Openable handles the event if it's closed
         SubscribeLocalEvent<SpillableComponent, MeleeHitEvent>(SplashOnMeleeHit, after: [typeof(OpenableSystem)]);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<SpillableComponent, GotUnequippedEvent>(OnGotUnequipped);
         SubscribeLocalEvent<SpillableComponent, SolutionContainerOverflowEvent>(OnOverflow);
         SubscribeLocalEvent<SpillableComponent, SpillDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<SpillableComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
@@ -114,12 +115,23 @@ public sealed partial class PuddleSystem
         if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var soln, out var solution))
             return;
 
+        // block access to the solution while worn
+        AddComp<BlockSolutionAccessComponent>(entity);
+
         if (solution.Volume == 0)
             return;
 
         // spill all solution on the player
         var drainedSolution = _solutionContainerSystem.Drain(entity.Owner, soln.Value, solution.Volume);
         TrySplashSpillAt(entity.Owner, Transform(args.Equipee).Coordinates, drainedSolution, out _);
+    }
+
+    private void OnGotUnequipped(Entity<SpillableComponent> entity, ref GotUnequippedEvent args)
+    {
+        if (!entity.Comp.SpillWorn)
+            return;
+
+        RemCompDeferred<BlockSolutionAccessComponent>(entity);
     }
 
     private void SpillOnLand(Entity<SpillableComponent> entity, ref LandEvent args)
