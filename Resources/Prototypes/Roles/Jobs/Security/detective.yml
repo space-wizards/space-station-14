@@ -10,7 +10,7 @@
   startingGear: DetectiveGear
   icon: "JobIconDetective"
   supervisors: job-supervisors-hos
-  canBeAntag: true
+  canBeAntag: false
   access:
   - Security
   - Brig
@@ -19,7 +19,7 @@
   - Detective
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, SadTromboneImplant ]
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: DetectiveGear
