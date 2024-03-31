@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "license": "Apache-2.0",
-  "copyright": "Taken from Roboto font, a Unicode Character “℮” Estimated Symbol (U+212E), then resized to 32x32",
+  "license": "Custom",
+  "copyright": "Taken from Roboto font which is licensed under Apache 2.0, a Unicode Character “℮” Estimated Symbol (U+212E), then resized to 32x32",
   "size": {
     "x": 32,
     "y": 32
