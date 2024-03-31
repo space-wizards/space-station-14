@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SonicHDC
-  changes:
-  - message: Added reinforced diagonal!
-    type: Add
-  id: 5767
-  time: '2024-01-22T14:53:19.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24393
 - author: Alekshhh
   changes:
   - message: Hud eyepatches have been added to BarDrobes, MediDrobes and SecTechs.
@@ -3794,3 +3787,14 @@
   id: 6266
   time: '2024-03-31T04:09:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24287
+- author: chromiumboy
+  changes:
+  - message: Additional construction options have been added to the Rapid Construction
+      Device (RCD), along with a radial style UI for fast navigation
+    type: Add
+  - message: The number of charges and the length of time required to build a structure
+      with the RCD now vary depending on the complexity of the constructed fixture
+    type: Tweak
+  id: 6267
+  time: '2024-03-31T04:29:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/22799
