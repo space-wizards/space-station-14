@@ -25,7 +25,7 @@
   id: WebVestChameleon
   name: vest
   description: A thick vest with a rubbery, water-resistant shell.
-  suffix: Armored Chameleon
+  suffix: Armored, Chameleon
   components:
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
