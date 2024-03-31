@@ -199,7 +199,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
             return;
 
         if (anomaly.Comp.CurrentBehavior != null)
-            RemoveBehavior(anomaly);
+            RemoveBehavior(anomaly, anomaly.Comp.CurrentBehavior.Value);
 
         //event broadcast
         var ev = new AnomalyBehaviorChangedEvent(anomaly, anomaly.Comp.CurrentBehavior, behaviorProto);
@@ -208,51 +208,17 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
 
         var behavior = _prototype.Index(behaviorProto);
 
-        foreach (var (name, entry) in behavior.Components)
-        {
-            var reg = _componentFactory.GetRegistration(name);
-
-            if (_entity.HasComponent(anomaly, reg.Type))
-            {
-                _entity.RemoveComponent(anomaly, reg.Type);
-            }
-
-            var comp = (Component) _componentFactory.GetComponent(reg);
-            comp.Owner = anomaly;
-
-            var temp = (object) comp;
-            _serialization.CopyTo(entry.Component, ref temp);
-            _entity.RemoveComponent(anomaly, temp!.GetType());
-            _entity.AddComponent(anomaly, (Component) temp!);
-        }
+        EntityManager.AddComponents(anomaly, behavior.Components);
     }
 
-    private void RemoveBehavior(Entity<AnomalyComponent> anomaly)
+    private void RemoveBehavior(Entity<AnomalyComponent> anomaly, ProtoId<AnomalyBehaviorPrototype> behaviorProto)
     {
         if (anomaly.Comp.CurrentBehavior == null)
             return;
 
         var behavior = _prototype.Index(anomaly.Comp.CurrentBehavior.Value);
 
-        var entityPrototype = MetaData(anomaly).EntityPrototype;
-        var toRemove = behavior.Components.Keys.ToList();
-
-        foreach (var name in toRemove)
-        {
-            // if the entity prototype contained the component originally
-            if (entityPrototype?.Components.TryGetComponent(name, out var entry) ?? false)
-            {
-                var comp = (Component) _componentFactory.GetComponent(name);
-                comp.Owner = anomaly;
-                var temp = (object) comp;
-                _serialization.CopyTo(entry, ref temp);
-                _entity.RemoveComponent(anomaly, temp!.GetType());
-                _entity.AddComponent(anomaly, (Component) temp);
-                continue;
-            }
-
-            _entity.RemoveComponentDeferred(anomaly, _componentFactory.GetRegistration(name).Type);
-        }
+        EntityManager.RemoveComponents(anomaly, behavior.Components);
     }
     #endregion
 }
