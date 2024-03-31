@@ -11,6 +11,7 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.RCD.Components;
+using Content.Shared.Tag;
 using Content.Shared.Tiles;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -44,6 +45,7 @@ public class RCDSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly TagSystem _tags = default!;
 
     private readonly int _instantConstructionDelay = 0;
     private readonly EntProtoId _instantConstructionFx = "EffectRCDConstruct0";
@@ -394,6 +396,7 @@ public class RCDSystem : EntitySystem
 
         // Check rule: The tile is unoccupied
         var isWindow = component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.IsWindow);
+        var isCatwalk = component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.IsCatwalk);
 
         _intersectingEntities.Clear();
         _lookup.GetLocalEntitiesIntersecting(mapGridData.GridUid, mapGridData.Position, _intersectingEntities, -0.05f, LookupFlags.Uncontained);
@@ -402,6 +405,14 @@ public class RCDSystem : EntitySystem
         {
             if (isWindow && HasComp<SharedCanBuildWindowOnTopComponent>(ent))
                 continue;
+
+            if (isCatwalk && _tags.HasTag(ent, "Catwalk"))
+            {
+                if (popMsgs)
+                    _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-on-occupied-tile-message"), uid, user);
+
+                return false;
+            }
 
             if (component.CachedPrototype.CollisionMask != CollisionGroup.None && TryComp<FixturesComponent>(ent, out var fixtures))
             {
