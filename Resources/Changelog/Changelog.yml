@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Alekshhh
-  changes:
-  - message: Hud eyepatches have been added to BarDrobes, MediDrobes and SecTechs.
-      They're just cooler looking huds.
-    type: Add
-  id: 5768
-  time: '2024-01-22T14:59:32.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24132
-- author: CrigCrag
-  changes:
-  - message: Removed the revolutionaries gamemode pending a rework.
-    type: Remove
-  id: 5769
-  time: '2024-01-23T02:11:09.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24420
 - author: themias
   changes:
   - message: Added different footstep sounds for blood, soda and juice
@@ -3798,3 +3783,18 @@
   id: 6267
   time: '2024-03-31T04:29:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/22799
+- author: UBlueberry
+  changes:
+  - message: Nanotransen is now recruitin' personnel that speak with a Southern drawl.
+    type: Add
+  id: 6268
+  time: '2024-03-31T04:39:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26543
+- author: Tayrtahn
+  changes:
+  - message: You can no longer drink out of or put liquids into buckets worn on your
+      head.
+    type: Fix
+  id: 6269
+  time: '2024-03-31T04:40:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24412
