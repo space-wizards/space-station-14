@@ -43,8 +43,8 @@
     damageCoefficient: 0.9
 
 #Chameleon web vest
-﻿- type: entity
-  parent: ClothingOuterBase
+- type: entity
+  parent: ClothingOuterStorageBase
   id: WebVestChameleon
   name: vest
   description: A thick vest with a rubbery, water-resistant shell.
