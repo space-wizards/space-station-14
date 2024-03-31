@@ -28,41 +28,26 @@ public sealed class AdvertiseSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<AdvertiseComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<AdvertiseComponent, PowerChangedEvent>(OnPowerChanged);
 
-        SubscribeLocalEvent<ApcPowerReceiverComponent, AdvertiseEnableChangeAttemptEvent>(OnPowerReceiverEnableChangeAttempt);
-        SubscribeLocalEvent<VendingMachineComponent, AdvertiseEnableChangeAttemptEvent>(OnVendingEnableChangeAttempt);
-
-        // Force it to check on the next update.
         _nextCheckTime = TimeSpan.MinValue;
     }
 
     private void OnMapInit(EntityUid uid, AdvertiseComponent advertise, MapInitEvent args)
     {
         RefreshTimer(uid, advertise);
+        _nextCheckTime = MathHelper.Min(advertise.NextAdvertisementTime, _nextCheckTime);
     }
 
-    private void OnPowerChanged(EntityUid uid, AdvertiseComponent advertise, ref PowerChangedEvent args)
-    {
-        SetEnabled(uid, args.Powered, advertise);
-    }
-
-    public void RefreshTimer(EntityUid uid, AdvertiseComponent? advertise = null)
+    private void RefreshTimer(EntityUid uid, AdvertiseComponent? advertise = null)
     {
         if (!Resolve(uid, ref advertise))
-            return;
-
-        if (!advertise.Enabled)
             return;
 
         var minDuration = Math.Max(1, advertise.MinimumWait);
         var maxDuration = Math.Max(minDuration, advertise.MaximumWait);
         var waitDuration = TimeSpan.FromSeconds(_random.Next(minDuration, maxDuration));
-        var nextTime = _gameTiming.CurTime + waitDuration;
 
-        advertise.NextAdvertisementTime = nextTime;
-
-        _nextCheckTime = MathHelper.Min(nextTime, _nextCheckTime);
+        advertise.NextAdvertisementTime = _gameTiming.CurTime + waitDuration;
     }
 
     public void SayAdvertisement(EntityUid uid, AdvertiseComponent? advertise = null)
@@ -74,66 +59,28 @@ public sealed class AdvertiseSystem : EntitySystem
             _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.Messages)), InGameICChatType.Speak, hideChat: true);
     }
 
-    public void SetEnabled(EntityUid uid, bool enable, AdvertiseComponent? advertise = null)
-    {
-        if (!Resolve(uid, ref advertise))
-            return;
-
-        if (advertise.Enabled == enable)
-            return;
-
-        var attemptEvent = new AdvertiseEnableChangeAttemptEvent(enable);
-        RaiseLocalEvent(uid, attemptEvent);
-
-        if (attemptEvent.Cancelled)
-            return;
-
-        advertise.Enabled = enable;
-        RefreshTimer(uid, advertise);
-    }
-
-    private static void OnPowerReceiverEnableChangeAttempt(EntityUid uid, ApcPowerReceiverComponent component, AdvertiseEnableChangeAttemptEvent args)
-    {
-        if (args.Enabling && !component.Powered)
-            args.Cancel();
-    }
-
-    private static void OnVendingEnableChangeAttempt(EntityUid uid, VendingMachineComponent component, AdvertiseEnableChangeAttemptEvent args)
-    {
-        if (args.Enabling && component.Broken)
-            args.Cancel();
-    }
-
     public override void Update(float frameTime)
     {
         var curTime = _gameTiming.CurTime;
         if (_nextCheckTime > curTime)
             return;
 
-        // Note that as _nextCheckTime currently starts at TimeSpan.MinValue, so this has to SET the value, not just
-        // increment it.
+        // _nextCheckTime starts at TimeSpan.MinValue, so this has to SET the value, not just increment it.
         _nextCheckTime = curTime + _maximumNextCheckDuration;
 
-        var query = EntityQueryEnumerator<AdvertiseComponent>();
-        while (query.MoveNext(out var uid, out var advert))
+        var query = EntityQueryEnumerator<AdvertiseComponent, ApcPowerReceiverComponent>();
+        while (query.MoveNext(out var uid, out var advert, out var apc))
         {
-            if (!advert.Enabled)
-                continue;
-
-            // If this isn't advertising yet
-            if (advert.NextAdvertisementTime > curTime)
+            if (curTime > advert.NextAdvertisementTime)
             {
-                _nextCheckTime = MathHelper.Min(advert.NextAdvertisementTime, _nextCheckTime);
-                continue;
+                if (apc.Powered)
+                {
+                    SayAdvertisement(uid, advert);
+                }
+                // The timer is refreshed when it expires even if it's off, so it doesn't advertise right when the power comes on.
+                RefreshTimer(uid, advert);
             }
-
-            SayAdvertisement(uid, advert);
-            RefreshTimer(uid, advert);
+            _nextCheckTime = MathHelper.Min(advert.NextAdvertisementTime, _nextCheckTime);
         }
     }
-}
-
-public sealed class AdvertiseEnableChangeAttemptEvent(bool enabling) : CancellableEntityEventArgs
-{
-    public bool Enabling { get; } = enabling;
 }
