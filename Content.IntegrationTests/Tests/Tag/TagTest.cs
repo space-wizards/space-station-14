@@ -130,9 +130,9 @@ namespace Content.IntegrationTests.Tests.Tag
                 Assert.Multiple(() =>
                 {
                     // Cannot add the starting tag again
-                    Assert.That(tagSystem.AddTag(sTagComponent, StartingTag), Is.False);
-                    Assert.That(tagSystem.AddTags(sTagComponent, StartingTag, StartingTag), Is.False);
-                    Assert.That(tagSystem.AddTags(sTagComponent, new List<string> { StartingTag, StartingTag }), Is.False);
+                    Assert.That(tagSystem.AddTag(sTagDummy, sTagComponent, StartingTag), Is.False);
+                    Assert.That(tagSystem.AddTags(sTagDummy, sTagComponent, StartingTag, StartingTag), Is.False);
+                    Assert.That(tagSystem.AddTags(sTagDummy, sTagComponent, new List<string> { StartingTag, StartingTag }), Is.False);
 
                     // Has the starting tag
                     Assert.That(tagSystem.HasTag(sTagComponent, StartingTag), Is.True);
@@ -157,22 +157,22 @@ namespace Content.IntegrationTests.Tests.Tag
                     Assert.That(tagSystem.HasAllTags(sTagComponent, new List<string> { StartingTag, AddedTag }), Is.False);
 
                     // Cannot remove a tag that does not exist
-                    Assert.That(tagSystem.RemoveTag(sTagComponent, AddedTag), Is.False);
-                    Assert.That(tagSystem.RemoveTags(sTagComponent, AddedTag, AddedTag), Is.False);
-                    Assert.That(tagSystem.RemoveTags(sTagComponent, new List<string> { AddedTag, AddedTag }), Is.False);
+                    Assert.That(tagSystem.RemoveTag(sTagDummy, sTagComponent, AddedTag), Is.False);
+                    Assert.That(tagSystem.RemoveTags(sTagDummy, sTagComponent, AddedTag, AddedTag), Is.False);
+                    Assert.That(tagSystem.RemoveTags(sTagDummy, sTagComponent, new List<string> { AddedTag, AddedTag }), Is.False);
                 });
 
                 // Can add the new tag
-                Assert.That(tagSystem.AddTag(sTagComponent, AddedTag), Is.True);
+                Assert.That(tagSystem.AddTag(sTagDummy, sTagComponent, AddedTag), Is.True);
 
                 Assert.Multiple(() =>
                 {
                     // Cannot add it twice
-                    Assert.That(tagSystem.AddTag(sTagComponent, AddedTag), Is.False);
+                    Assert.That(tagSystem.AddTag(sTagDummy, sTagComponent, AddedTag), Is.False);
 
                     // Cannot add existing tags
-                    Assert.That(tagSystem.AddTags(sTagComponent, StartingTag, AddedTag), Is.False);
-                    Assert.That(tagSystem.AddTags(sTagComponent, new List<string> { StartingTag, AddedTag }), Is.False);
+                    Assert.That(tagSystem.AddTags(sTagDummy, sTagComponent, StartingTag, AddedTag), Is.False);
+                    Assert.That(tagSystem.AddTags(sTagDummy, sTagComponent, new List<string> { StartingTag, AddedTag }), Is.False);
 
                     // Now has two tags
                     Assert.That(sTagComponent.Tags, Has.Count.EqualTo(2));
@@ -191,16 +191,16 @@ namespace Content.IntegrationTests.Tests.Tag
                 Assert.Multiple(() =>
                 {
                     // Remove the existing starting tag
-                    Assert.That(tagSystem.RemoveTag(sTagComponent, StartingTag), Is.True);
+                    Assert.That(tagSystem.RemoveTag(sTagDummy, sTagComponent, StartingTag), Is.True);
 
                     // Remove the existing added tag
-                    Assert.That(tagSystem.RemoveTags(sTagComponent, AddedTag, AddedTag), Is.True);
+                    Assert.That(tagSystem.RemoveTags(sTagDummy, sTagComponent, AddedTag, AddedTag), Is.True);
                 });
 
                 Assert.Multiple(() =>
                 {
                     // No tags left to remove
-                    Assert.That(tagSystem.RemoveTags(sTagComponent, new List<string> { StartingTag, AddedTag }), Is.False);
+                    Assert.That(tagSystem.RemoveTags(sTagDummy, sTagComponent, new List<string> { StartingTag, AddedTag }), Is.False);
 
                     // No tags left in the component
                     Assert.That(sTagComponent.Tags, Is.Empty);

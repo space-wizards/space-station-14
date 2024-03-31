@@ -338,6 +338,7 @@ namespace Content.Server.GameTicking
             _metaData.SetEntityName(ghost, name);
             _ghost.SetCanReturnToBody(ghost, false);
             _mind.TransferTo(mind.Value, ghost);
+            _adminLogger.Add(LogType.LateJoin, LogImpact.Low, $"{player.Name} late joined the round as an Observer with {ToPrettyString(ghost):entity}.");
         }
 
         #region Mob Spawning Helpers
@@ -385,7 +386,7 @@ namespace Content.Server.GameTicking
                 // Ideally engine would just spawn them on grid directly I guess? Right now grid traversal is handling it during
                 // update which means we need to add a hack somewhere around it.
                 var spawn = _robustRandom.Pick(_possiblePositions);
-                var toMap = spawn.ToMap(EntityManager);
+                var toMap = spawn.ToMap(EntityManager, _transform);
 
                 if (_mapManager.TryFindGridAt(toMap, out var gridUid, out _))
                 {

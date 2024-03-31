@@ -7,6 +7,11 @@
   - type: StasisBed
     baseMultiplier: 10
   - type: AntiRotOnBuckle
+  - type: HealOnBuckle
+    damage:
+      types:
+        Poison: -0.001
+        Blunt: -0.001
   - type: Sprite
     sprite: Structures/Machines/stasis_bed.rsi
     noRot: true

@@ -168,8 +168,7 @@ public abstract partial class InventorySystem
             {
                 BlockDuplicate = true,
                 BreakOnHandChange = true,
-                BreakOnUserMove = true,
-                BreakOnTargetMove = true,
+                BreakOnMove = true,
                 CancelDuplicate = true,
                 RequireCanInteract = true,
                 NeedHand = true
@@ -414,8 +413,7 @@ public abstract partial class InventorySystem
             {
                 BlockDuplicate = true,
                 BreakOnHandChange = true,
-                BreakOnUserMove = true,
-                BreakOnTargetMove = true,
+                BreakOnMove = true,
                 CancelDuplicate = true,
                 RequireCanInteract = true,
                 NeedHand = true

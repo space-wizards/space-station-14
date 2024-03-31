@@ -15,6 +15,26 @@
 
 - type: wireLayout
   parent: Airlock
+  id: AirlockService
+
+- type: wireLayout
+  parent: Airlock
+  id: AirlockCargo
+
+- type: wireLayout
+  parent: Airlock
+  id: AirlockEngineering
+
+- type: wireLayout
+  parent: Airlock
+  id: AirlockMedical
+
+- type: wireLayout
+  parent: Airlock
+  id: AirlockScience
+
+- type: wireLayout
+  parent: HighSec
   id: AirlockCommand
 
 - type: wireLayout
@@ -67,6 +87,7 @@
   id: Arcade
   wires:
   - !type:PowerWireAction
+  - !type:SpeechWireAction
   - !type:ArcadeOverflowWireAction
   - !type:ArcadePlayerInvincibleWireAction
   - !type:ArcadeEnemyInvincibleWireAction
