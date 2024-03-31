@@ -17,6 +17,7 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood
+  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -212,6 +213,9 @@
     graph: ImprovisedNukeCraft
     node: finished
     defaultTarget: painted
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Fixtures
     fixtures:
       fix1:
