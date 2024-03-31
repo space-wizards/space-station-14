@@ -1,7 +1,7 @@
 - type: entity
   id: UraniumWindow
   name: uranium window
-  parent: Window
+  parent: WindowRCDResistant
   components:
   - type: Sprite
     drawdepth: WallTops
