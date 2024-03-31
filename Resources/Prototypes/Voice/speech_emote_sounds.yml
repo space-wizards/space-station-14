@@ -315,8 +315,6 @@
       path: /Audio/Items/bikehorn.ogg
     Ping:
       path: /Audio/Effects/Cargo/ping.ogg
-    SlowClap:
-      path: /Audio/Machines/slowclap.ogg
 
 # body emotes
 - type: emoteSounds
