@@ -14,6 +14,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -54,6 +55,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
     [Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
+    [Dependency] protected readonly SharedHandsSystem Hands = default!;
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
 
     public override void Initialize()
@@ -872,15 +874,21 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         return msg;
     }
 
-    //Check if examinable solution requires you to hold the item in hand.
+    /// <summary>
+    /// Check if examinable solution requires you to hold the item in hand.
+    /// </summary>
     private bool CanSeeHiddenSolution(Entity<ExaminableSolutionComponent> entity, EntityUid examiner)
     {
-        //Is the HeldOnly enabled?
+        // If not held-only then it's always visible.
         if (!entity.Comp.HeldOnly)
             return true;
-        //Iterate over hands, if any, for examinable entity.
-        var hasHands = TryComp<HandsComponent>(examiner, out var hands);
-        return hasHands && hands != null && hands.Hands.Values.Any(hand => hand.HeldEntity == entity);
+
+        if (TryComp(examiner, out HandsComponent? handsComp))
+        {
+            return Hands.IsHolding(examiner, entity, out _, handsComp);
+        }
+
+        return true;
     }
 
     #endregion Event Handlers
