@@ -1,8 +1,7 @@
-using Content.Server.Plants.Systems;
-using Content.Server.Storage.Components;
+using Content.Shared.Storage.Components;
 using Robust.Shared.Audio;
 
-namespace Content.Server.Plants.Components
+namespace Content.Shared.Plants
 {
     /// <summary>
     ///     Interaction wrapper for <see cref="SecretStashComponent"/>.

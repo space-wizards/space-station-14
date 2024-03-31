@@ -2,48 +2,100 @@
   name: toilet
   id: ToiletEmpty
   suffix: Empty
-  parent: SeatBase
+  parent: [ DisposalUnitBase, SeatBase ]
   description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
   components:
-  - type: MeleeSound
-    soundGroups:
-      Brute:
-        path:
-          "/Audio/Weapons/slash.ogg"
-  - type: Anchorable
   - type: Sprite
     sprite: Structures/Furniture/toilet.rsi
-    state: closed_toilet_seat_up
+    layers:
+    - state: condisposal
+      map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
+    - state: disposal
+      map: [ "enum.DisposalUnitVisualLayers.Base" ]
+    - state: disposal-flush
+      map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
+    - state: dispover-charge
+      map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
+    - state: dispover-ready
+      map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
+    - state: dispover-full
+      map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
+    - state: dispover-handle
+      map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+    - map: [ "DoorVisualState.DoorOpen" ]
+    - map: [ "SeatVisualState.SeatUp" ]
+  - type: Rotatable
+  - type: Transform
+    noRot: false
+  - type: Strap
+    whitelist:
+      components:
+      - HumanoidAppearance
+  - type: DisposalUnit
+    autoEngageEnabled: false
+    noUI: true
+    blacklist:
+      components:
+      - HumanoidAppearance
+      - Plunger
+      - SolutionTransfer
+    whitelist:
+      components:
+      - Item
+    soundFlush: /Audio/Effects/Fluids/flush.ogg
+    soundInsert: /Audio/Effects/Fluids/splash.ogg
   - type: Toilet
-  - type: SecretStash
-    secretPartName: secret-stash-part-toilet
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
-  - type: SolutionContainerManager
-    solutions:
-      drainBuffer:
-        maxVol: 500
-      toilet:
-        maxVol: 250
-  - type: Transform
-    anchored: true
+      disposals: !type:Container
   - type: Physics
     bodyType: Static
   - type: Construction
     graph: Toilet
     node: toilet
+  - type: PlungerUse
   - type: Appearance
+  - type: SecretStash
+    secretPartName: secret-stash-part-toilet
+    examineStash: toilet-component-on-examine-found-hidden-item
+    openableStash: true
   - type: Drain
     autoDrain: false
-  - type: DumpableSolution
-    solution: drainBuffer
-  - type: SolutionContainerVisuals
-    maxFillLevels: 1
-    fillBaseName: fill-
-    solutionName: drainBuffer
   - type: StaticPrice
     price: 25
+  - type: UserInterface
+    interfaces:
+    - key: enum.DisposalUnitUiKey.Key
+      type: DisposalUnitBoundUserInterface
+  - type: RatKingRummageable
+  - type: SolutionContainerManager
+    solutions:
+      drainBuffer:
+        maxVol: 100
+      tank:
+        maxVol: 500
+  - type: SolutionRegeneration
+    solution: tank
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 1
+  - type: DrainableSolution
+    solution: tank
+  - type: ReagentTank
+  - type: DumpableSolution
+    solution: drainBuffer
+  - type: GenericVisualizer
+    visuals:
+      enum.ToiletVisuals.SeatVisualState:
+        SeatVisualState.SeatUp:
+          SeatUp: { state: disposal-up }
+          SeatDown: { state: disposal-down }
+      enum.StashVisuals.DoorVisualState:
+        DoorVisualState.DoorOpen:
+          DoorOpen: { state: disposal-open }
+          DoorClosed: { state: disposal-closed }
 
 - type: entity
   id: ToiletDirtyWater

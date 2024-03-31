@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: icekot8
-  changes:
-  - message: Increased the size of flatpacks made by the Flatpacker 1001.
-    type: Tweak
-  id: 5764
-  time: '2024-01-21T17:07:59.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24367
-- author: Nairodian
-  changes:
-  - message: All vent critter events now have a small delay and alert message before
-      they spawn.
-    type: Add
-  id: 5765
-  time: '2024-01-22T01:33:38.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24383
 - author: Flareguy
   changes:
   - message: The Research Director's hardsuit now uses its older sprites.
@@ -3791,3 +3776,20 @@
   id: 6263
   time: '2024-03-31T02:24:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26341
+- author: Flareguy
+  changes:
+  - message: Security glasses have been moved from research to roundstart gear. All
+      officers now start with them instead of sunglasses by default.
+    type: Tweak
+  - message: You can now craft security glasses.
+    type: Add
+  id: 6264
+  time: '2024-03-31T03:00:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26487
+- author: brainfood1183
+  changes:
+  - message: Toilets can now be connected to the disposal system.
+    type: Add
+  id: 6265
+  time: '2024-03-31T03:21:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/22133
