@@ -1157,3 +1157,63 @@
   completetime: 2
   materials:
     Cloth: 200
+
+- type: latheRecipe
+  id: HardsuitSecurity
+  result: ClothingOuterHardsuitSecurity
+  completetime: 2
+  materials:
+    Cloth: 250
+    Steel: 1500
+    Silver: 250
+
+- type: latheRecipe
+  id: EmergencySoftsuit
+  result: ClothingOuterSuitEmergency
+  completetime: 2
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: EmergencySoftsuitPrison
+  result: ClothingOuterHardsuitEVAPrisoner
+  completetime: 2
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: EVA
+  result: ClothingOuterHardsuitEVA
+  completetime: 2
+  materials:
+    Steel: 1200
+
+- type: latheRecipe
+  id: EVAHelmet
+  result: ClothingHeadHelmetEVA
+  completetime: 2
+  materials:
+    Steel: 100
+
+- type: latheRecipe
+  id: EVAHelmetLarge
+  result: ClothingHeadHelmetEVALarge
+  completetime: 2
+  materials:
+    Steel: 100
+
+- type: latheRecipe
+  id: BasicHardsuit
+  result: ClothingOuterHardsuitBasic
+  completetime: 2
+  materials:
+    Steel: 1250
+    Silver: 100
+
+- type: latheRecipe
+  id: EngineeringHardsuit
+  result: ClothingOuterHardsuitEngineering
+  completetime: 2
+  materials:
+    Steel: 1000
+    Silver: 100

@@ -104,6 +104,18 @@
   - RipleyPeripheralsElectronics
   - MechEquipmentGrabber
 
+- type: technology
+  id: EngineeringHardsuit
+  name: research-technology-engineering-hardsuit
+  icon:
+    sprite: Clothing/OuterClothing/Hardsuits/engineering.rsi
+    state: icon
+  discipline: Industrial
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+  - EngineeringHardsuit
+
 # Tier 2
 
 - type: technology
@@ -164,6 +176,18 @@
     - JawsOfLife
     - BorgModuleAdvancedTool
     - BorgModuleRCD
+
+- type: technology
+  id: ExperimentalRCDs
+  name: research-technology-experimental-rcd
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: icon
+  discipline: Industrial
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+    - ExperimentalRCD
 
 # Tier 3
 

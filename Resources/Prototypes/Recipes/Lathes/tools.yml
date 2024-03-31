@@ -134,6 +134,16 @@
     Plastic: 250
 
 - type: latheRecipe
+  id: ExperimentalRCD
+  result: RCDRecharging
+  category: Tools
+  completetime: 4
+  materials:
+    Steel: 1000
+    Plastic: 300
+    Plasma: 500
+
+- type: latheRecipe
   id: HandheldGPSBasic
   result: HandheldGPSBasic
   category: Tools

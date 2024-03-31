@@ -647,4 +647,81 @@
      Steel: 150
      Plastic: 100
      Glass: 20
+
+- type: latheRecipe
+  id: MK58
+  result: WeaponPistolMk58
+  completetime: 3
+  materials:
+     Steel: 750
+     Plastic: 200
      
+- type: latheRecipe
+  id: L6
+  result: WeaponLightMachineGunL6
+  completetime: 10
+  materials:
+     Steel: 3000
+     Plastic: 750
+     Gold: 100
+     Silver: 500
+
+- type: latheRecipe
+  id: L6Ammo
+  result: MagazineLightRifleBox
+  completetime: 10
+  materials:
+     Steel: 400
+
+- type: latheRecipe
+  id: N1984
+  result: WeaponPistolN1984
+  completetime: 3
+  materials:
+     Steel: 1000
+     Plastic: 500
+     Cloth: 200
+
+- type: latheRecipe
+  id: Viper
+  result: WeaponPistolViper
+  completetime: 3
+  materials:
+     Steel: 1250
+     Plastic: 750
+
+- type: latheRecipe
+  id: AKMS
+  result: WeaponRifleAk
+  completetime: 6
+  materials:
+     Steel: 2500
+     Plastic: 200
+     Cloth: 500
+
+- type: latheRecipe
+  id: Lecter
+  result: WeaponRifleLecter
+  completetime: 6
+  materials:
+     Steel: 2500
+     Plastic: 200
+     Cloth: 500
+
+- type: latheRecipe
+  id: Kammerer
+  result: WeaponShotgunKammerer
+  completetime: 6
+  materials:
+     Steel: 2750
+     Plastic: 500
+     Cloth: 500
+
+- type: latheRecipe
+  id: Enforcer
+  result: WeaponShotgunEnforcer
+  completetime: 6
+  materials:
+     Steel: 2500
+     Plastic: 1000
+     Cloth: 600

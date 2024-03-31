@@ -102,6 +102,19 @@
   - HoloprojectorSecurity
   - WeaponDisablerSMG
 
+- type: technology
+  id: BasicFirearms
+  name: research-technology-basic-firearms
+  icon:
+    sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 1
+  cost: 12500
+  recipeUnlocks:
+  - N1984
+  - Viper
+
 # Tier 2
 
 - type: technology
@@ -167,6 +180,44 @@
   technologyPrerequisites:
   - SalvageWeapons
 
+- type: technology
+  id: HardsuitSecurity
+  name: research-technology-security-hardsuit
+  icon: 
+    sprite: Clothing/OuterClothing/Hardsuits/security.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - HardsuitSecurity
+
+- type: technology
+  id: Rifles
+  name: research-technology-rifles
+  icon: 
+    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 17500
+  recipeUnlocks:
+  - AKMS
+  - Lecter
+
+- type: technology
+  id: Shotguns
+  name: research-technology-shotguns
+  icon: 
+    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 17500
+  recipeUnlocks:
+  - Enforcer
+  - Kammerer
+
 # Tier 3
 
 - type: technology
@@ -180,6 +231,19 @@
   cost: 15000
   recipeUnlocks:
   - WeaponAdvancedLaser
+
+- type: technology
+  id: WarMachinery
+  name: research-technology-war-machinery
+  icon:
+    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - L6
+  - L6Ammo
 
 - type: technology
   id: ExperimentalBatteryAmmo
