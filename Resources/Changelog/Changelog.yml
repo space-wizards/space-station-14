@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: '0x6273'
-  changes:
-  - message: Hotplates now work again
-    type: Fix
-  id: 5773
-  time: '2024-01-23T13:06:14.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24450
 - author: Boaz1111
   changes:
   - message: Lizards can now properly eat fruit cakes and banana cream pie slices.
@@ -3802,3 +3795,11 @@
   id: 6272
   time: '2024-03-31T06:34:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26600
+- author: lzk228
+  changes:
+  - message: Flower crown and wreath were combined. Now you can wear wreath both on
+      head and on neck.
+    type: Tweak
+  id: 6273
+  time: '2024-03-31T08:52:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26605

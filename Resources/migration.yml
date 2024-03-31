@@ -259,4 +259,6 @@ ClothingHeadHelmetScaf: ClothingHeadHelmetBasic
 ClothingOuterArmorScaf: ClothingOuterArmorBasic
 
 # 2024-03-31
+ClothingNeckFlowerWreath: ClothingHeadHatFlowerWreath
+ClothingHeadHatFlowerCrown: ClothingHeadHatFlowerWreath
 BriefcaseSyndieBase: null
