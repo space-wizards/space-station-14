@@ -29,9 +29,10 @@
         - type: StationJobs
           overflowJobs:
           - Captain
+          - BlueshieldOfficer
           availableJobs:
             Captain: [ -1, -1 ]
-
+            BlueshieldOfficer: [ -1, -1 ]
 - type: gameMap
   id: TestTeg
   mapName: Test TEG

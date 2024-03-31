@@ -31,7 +31,9 @@
     RLeg: MobHumanRLeg
     LFoot: MobHumanLFoot
     RFoot: MobHumanRFoot
-
+    Tail: MobHumanoidAnyMarking
+    HeadTop: MobHumanoidAnyMarking
+    
 - type: markingPoints
   id: MobHumanMarkingLimits
   points:
@@ -44,11 +46,11 @@
     Snout:
       points: 1
       required: false
-    Tail: # the cat tail joke
-      points: 0
+    Tail:
+      points: 1
       required: false
-    HeadTop: # the cat ear joke
-      points: 0
+    HeadTop:
+      points: 1
       required: false
     Chest:
       points: 1

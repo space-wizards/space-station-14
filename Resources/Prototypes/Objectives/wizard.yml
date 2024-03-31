@@ -1,0 +1,18 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseWizardObjective
+  components:
+  - type: Objective
+    issuer: wizard
+  - type: RoleRequirement
+    roles:
+      components:
+      - WizardRole
+
+
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: WizardOnlyObjective
+  description: This station is so boring, spice it up a little with a little chaos!
