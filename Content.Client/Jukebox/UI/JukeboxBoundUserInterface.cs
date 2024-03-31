@@ -1,6 +1,8 @@
+using Content.Shared.Audio.Jukebox;
 using Content.Shared.Jukebox;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
+using JukeboxComponent = Content.Shared.Audio.Jukebox.JukeboxComponent;
 
 namespace Content.Client.Jukebox.UI;
 
@@ -42,7 +44,7 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
 
         _cachedList = _system.GetList(Owner);
         _menu.SetPlayPauseButton(Jukebox.Playing);
-        _menu.SetSelectedSong(Jukebox.JukeboxMusicCollection.Songs[Jukebox.SelectedSongID]);
+        _menu.SetSelectedSong(Jukebox.JukeboxMusicCollection.Songs[Jukebox.SelectedSongId]);
 
         _menu.Populate(_cachedList);
     }
@@ -87,7 +89,7 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
     {
         if (Jukebox is null || _system is null)
             return;
-        _system.setTime(Jukebox, time);
+        _system.SetTime(Jukebox, time);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

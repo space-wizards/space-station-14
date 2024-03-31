@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Jukebox;
+namespace Content.Shared.Audio.Jukebox;
 
 
 [Serializable, NetSerializable]

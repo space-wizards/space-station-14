@@ -1,8 +1,11 @@
+using Content.Shared.Audio.Jukebox;
 using Content.Shared.Jukebox;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
-namespace Content.Client.Jukebox;
+using JukeboxComponent = Content.Shared.Audio.Jukebox.JukeboxComponent;
+
+namespace Content.Client.Jukebox.UI;
 
 
 public sealed class JukeboxSystem : SharedJukeboxSystem
@@ -10,7 +13,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    
+
     public override void Initialize()
     {
         base.Initialize();
@@ -18,7 +21,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         SubscribeLocalEvent<JukeboxComponent, AnimationCompletedEvent>(OnAnimationCompleted);
     }
 
-    public void setTime(JukeboxComponent component, float time)
+    public void SetTime(JukeboxComponent component, float time)
     {
         component.SongTime = time;
         component.SongStartTime = (float) (_timing.CurTime.TotalSeconds - component.SongTime);

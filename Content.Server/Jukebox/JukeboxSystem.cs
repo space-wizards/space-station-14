@@ -1,9 +1,13 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Audio.Jukebox;
 using Content.Shared.Jukebox;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
+using JukeboxComponent = Content.Shared.Audio.Jukebox.JukeboxComponent;
+
 namespace Content.Server.Jukebox;
 
 
@@ -26,12 +30,22 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         SubscribeLocalEvent<JukeboxComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
+    protected override void OnComponentInit(EntityUid uid, JukeboxComponent component, ComponentInit args)
+    {
+        base.OnComponentInit(uid, component, args);
+
+        if (HasComp<ApcPowerReceiverComponent>(uid))
+        {
+            TryUpdateVisualState(uid, component);
+        }
+    }
+
     private void OnJukeboxPlay(EntityUid uid, JukeboxComponent component, JukeboxPlayingMessage? args)
     {
         component.Playing = !component.Playing;
         if (component.Playing)
         {
-            var song = component.JukeboxMusicCollection.Songs[component.SelectedSongID];
+            var song = component.JukeboxMusicCollection.Songs[component.SelectedSongId];
             var audioparams = AudioParams.Default.WithPlayOffset(component.SongTime);
             component.AudioStream = _audio.PlayPvs(song.Path, uid, audioparams);
             component.SongStartTime = (float) (_timing.CurTime.TotalSeconds - component.SongTime);
@@ -60,6 +74,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
             OnJukeboxPlay(uid, component, null);
         }
+
         Dirty(uid, component);
         DirtyUI(uid, component);
     }
@@ -90,7 +105,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     {
         if (!component.Playing)
         {
-            component.SelectedSongID = args.Songid;
+            component.SelectedSongId = args.SongId;
             component.SongTime = 0.0f;
 
             DirectSetVisualState(uid, JukeboxVisualState.Select);
@@ -147,7 +162,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             return;
 
         _userInterfaceSystem.TrySetUiState(uid, JukeboxUiKey.Key,
-            new JukeboxBoundUserInterfaceState(component.Playing, component.SelectedSongID));
+            new JukeboxBoundUserInterfaceState(component.Playing, component.SelectedSongId));
     }
 
     public void DirectSetVisualState(EntityUid uid, JukeboxVisualState state)
@@ -160,6 +175,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             return;
 
         var finalState = JukeboxVisualState.On;
+
         if (!this.IsPowered(uid, EntityManager))
         {
             finalState = JukeboxVisualState.Off;
@@ -167,15 +183,4 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
         _appearanceSystem.SetData(uid, JukeboxVisuals.VisualState, finalState);
     }
-
-    protected override void OnComponentInit(EntityUid uid, JukeboxComponent component, ComponentInit args)
-    {
-        base.OnComponentInit(uid, component, args);
-
-        if (HasComp<ApcPowerReceiverComponent>(uid))
-        {
-            TryUpdateVisualState(uid, component);
-        }
-    }
-
 }
