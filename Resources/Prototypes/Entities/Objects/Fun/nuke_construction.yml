@@ -159,7 +159,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.35
-        density: 60
+        density: 200
         mask:
         - TabletopMachineMask
         layer:
@@ -221,7 +221,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.40
-        density: 100
+        density: 250
         mask:
         - TabletopMachineMask
         layer:
