@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Lizards can now properly eat fruit cakes and banana cream pie slices.
-    type: Fix
-  id: 5774
-  time: '2024-01-23T18:08:32.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24457
 - author: icekot8
   changes:
   - message: The bounty of briefcases has been removed
@@ -3803,3 +3796,10 @@
   id: 6273
   time: '2024-03-31T08:52:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26605
+- author: Ubaser
+  changes:
+  - message: Throwing knives now additionally do armour piercing damage.
+    type: Tweak
+  id: 6274
+  time: '2024-03-31T11:48:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26380
