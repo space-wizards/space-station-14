@@ -33,15 +33,19 @@
       - id: SyringeStimulants
 
 - type: entity
-  id: Observationskit
   parent: BoxCardboard
-  name: observations kit
-  suffix: Filled
+  id: ThrowingKnivesKit
+  name: throwing knives kit
+  description: A set of 4 syndicate branded throwing knives, perfect for embedding into the body of your victims.
   components:
-    - type: StorageFill
-      contents:
-        - id: ClothingEyesGlassesHiddenSecurity
-          amount: 1
-        - id: SurveillanceCameraMonitorCircuitboard
-          amount: 1
-
+  - type: Storage
+    grid:
+    - 0,0,3,1
+  - type: StorageFill
+    contents:
+      - id: ThrowingKnife
+        amount: 4
+  - type: Sprite
+    layers:
+      - state: box_of_doom
+      - state: throwing_knives

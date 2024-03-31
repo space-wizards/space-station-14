@@ -50,7 +50,7 @@
   gasOverlayState: tritium
   color: 13FF4B
   reagent: Tritium
-  pricePerMole: 5
+  pricePerMole: 2.5
 
 - type: gas
   id: 5
@@ -86,7 +86,7 @@
   molarMass: 44
   color: 2887E8
   reagent: NitrousOxide
-  pricePerMole: 2.5
+  pricePerMole: 1
 
 - type: gas
   id: 8
@@ -99,4 +99,4 @@
   gasMolesVisible: 0.6
   color: 3a758c
   reagent: Frezon
-  pricePerMole: 0.3
+  pricePerMole: 3

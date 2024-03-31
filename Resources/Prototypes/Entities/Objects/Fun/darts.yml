@@ -28,6 +28,7 @@
     sprite: Objects/Fun/Darts/dart_red.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -45
     damage:
       types:
         Piercing: 2

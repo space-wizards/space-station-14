@@ -52,7 +52,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _map = default!;
 
     private EntityQuery<TransformComponent> _transformQuery;
-    private EntityQuery<DamageableComponent> _damageQuery;
+    private EntityQuery<FlammableComponent> _flammableQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<ProjectileComponent> _projectileQuery;
 
@@ -104,7 +104,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         InitVisuals();
 
         _transformQuery = GetEntityQuery<TransformComponent>();
-        _damageQuery = GetEntityQuery<DamageableComponent>();
+        _flammableQuery = GetEntityQuery<FlammableComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _projectileQuery = GetEntityQuery<ProjectileComponent>();
     }
@@ -112,6 +112,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     private void OnReset(RoundRestartCleanupEvent ev)
     {
         _explosionQueue.Clear();
+        _queuedExplosions.Clear();
         if (_activeExplosion != null)
             QueueDel(_activeExplosion.VisualEnt);
         _activeExplosion = null;
@@ -290,15 +291,43 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         if (!_prototypeManager.TryIndex<ExplosionPrototype>(typeId, out var type))
         {
-            Logger.Error($"Attempted to spawn unknown explosion prototype: {type}");
+            Log.Error($"Attempted to spawn unknown explosion prototype: {type}");
             return;
         }
 
         if (addLog) // dont log if already created a separate, more detailed, log.
             _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Explosion ({typeId}) spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
 
-        _explosionQueue.Enqueue(() => SpawnExplosion(epicenter, type, totalIntensity,
-            slope, maxTileIntensity, tileBreakScale, maxTileBreak, canCreateVacuum));
+        // try to combine explosions on the same tile if they are the same type
+        foreach (var queued in _queuedExplosions)
+        {
+            // ignore different types or those on different maps
+            if (queued.Proto.ID != type.ID || queued.Epicenter.MapId != epicenter.MapId)
+                continue;
+
+            var dst2 = queued.Proto.MaxCombineDistance * queued.Proto.MaxCombineDistance;
+            var direction = queued.Epicenter.Position - epicenter.Position;
+            if (direction.LengthSquared() > dst2)
+                continue;
+
+            // they are close enough to combine so just add total intensity and prevent queuing another one
+            queued.TotalIntensity += totalIntensity;
+            return;
+        }
+
+        var boom = new QueuedExplosion()
+        {
+            Epicenter = epicenter,
+            Proto = type,
+            TotalIntensity = totalIntensity,
+            Slope = slope,
+            MaxTileIntensity = maxTileIntensity,
+            TileBreakScale = tileBreakScale,
+            MaxTileBreak = maxTileBreak,
+            CanCreateVacuum = canCreateVacuum
+        };
+        _explosionQueue.Enqueue(boom);
+        _queuedExplosions.Add(boom);
     }
 
     /// <summary>
@@ -306,32 +335,26 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     information about the affected tiles for the explosion system to process. It will also trigger the
     ///     camera shake and sound effect.
     /// </summary>
-    private Explosion? SpawnExplosion(MapCoordinates epicenter,
-        ExplosionPrototype type,
-        float totalIntensity,
-        float slope,
-        float maxTileIntensity,
-        float tileBreakScale,
-        int maxTileBreak,
-        bool canCreateVacuum)
+    private Explosion? SpawnExplosion(QueuedExplosion queued)
     {
-        if (!_mapManager.MapExists(epicenter.MapId))
+        var pos = queued.Epicenter;
+        if (!_mapManager.MapExists(pos.MapId))
             return null;
 
-        var results = GetExplosionTiles(epicenter, type.ID, totalIntensity, slope, maxTileIntensity);
+        var results = GetExplosionTiles(pos, queued.Proto.ID, queued.TotalIntensity, queued.Slope, queued.MaxTileIntensity);
 
         if (results == null)
             return null;
 
         var (area, iterationIntensity, spaceData, gridData, spaceMatrix) = results.Value;
 
-        var visualEnt = CreateExplosionVisualEntity(epicenter, type.ID, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
+        var visualEnt = CreateExplosionVisualEntity(pos, queued.Proto.ID, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
 
         // camera shake
-        CameraShake(iterationIntensity.Count * 4f, epicenter, totalIntensity);
+        CameraShake(iterationIntensity.Count * 4f, pos, queued.TotalIntensity);
 
         //For whatever bloody reason, sound system requires ENTITY coordinates.
-        var mapEntityCoords = EntityCoordinates.FromMap(EntityManager, _mapManager.GetMapEntityId(epicenter.MapId), epicenter);
+        var mapEntityCoords = EntityCoordinates.FromMap(_mapManager.GetMapEntityId(pos.MapId), pos, _transformSystem, EntityManager);
 
         // play sound.
         // for the normal audio, we want everyone in pvs range
@@ -339,34 +362,35 @@ public sealed partial class ExplosionSystem : EntitySystem
         // this is capped to 30 because otherwise really huge bombs
         // will attempt to play regular audio for people who can't hear it anyway because the epicenter is so far away
         var audioRange = Math.Min(iterationIntensity.Count * 2, MaxExplosionAudioRange);
-        var filter = Filter.Pvs(epicenter).AddInRange(epicenter, audioRange);
-        var sound = iterationIntensity.Count < type.SmallSoundIterationThreshold
-            ? type.SmallSound
-            : type.Sound;
+        var filter = Filter.Pvs(pos).AddInRange(pos, audioRange);
+        var sound = iterationIntensity.Count < queued.Proto.SmallSoundIterationThreshold
+            ? queued.Proto.SmallSound
+            : queued.Proto.Sound;
 
         _audio.PlayStatic(sound, filter, mapEntityCoords, true, sound.Params);
 
         // play far sound
         // far sound should play for anyone who wasn't in range of any of the effects of the bomb
         var farAudioRange = iterationIntensity.Count * 5;
-        var farFilter = Filter.Empty().AddInRange(epicenter, farAudioRange).RemoveInRange(epicenter, audioRange);
-        var farSound = iterationIntensity.Count < type.SmallSoundIterationThreshold
-            ? type.SmallSoundFar
-            : type.SoundFar;
+        var farFilter = Filter.Empty().AddInRange(pos, farAudioRange).RemoveInRange(pos, audioRange);
+        var farSound = iterationIntensity.Count < queued.Proto.SmallSoundIterationThreshold
+            ? queued.Proto.SmallSoundFar
+            : queued.Proto.SoundFar;
 
         _audio.PlayGlobal(farSound, farFilter, true, farSound.Params);
 
         return new Explosion(this,
-            type,
+            queued.Proto,
             spaceData,
             gridData.Values.ToList(),
             iterationIntensity,
-            epicenter,
+            pos,
             spaceMatrix,
             area,
-            tileBreakScale,
-            maxTileBreak,
-            canCreateVacuum,
+            // TODO: instead of le copy paste fields refactor so it has QueuedExplosion as a field?
+            queued.TileBreakScale,
+            queued.MaxTileBreak,
+            queued.CanCreateVacuum,
             EntityManager,
             _mapManager,
             visualEnt);

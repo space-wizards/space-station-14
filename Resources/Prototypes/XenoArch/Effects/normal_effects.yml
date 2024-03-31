@@ -215,6 +215,7 @@
     - Mercury
     - VentCrud
     - WeldingFuel
+    - JuiceThatMakesYouWeh
 
 - type: artifactEffect
   id: EffectInstrumentSpawn
@@ -256,7 +257,8 @@
   effectHint: artifact-effect-hint-release
   components:
   - type: RadiationSource
-    intensity: 2
+    intensity: 1
+    slope: 0.3
 
 - type: artifactEffect
   id: EffectKnock
@@ -555,7 +557,8 @@
   effectHint: artifact-effect-hint-release
   components:
   - type: RadiationSource
-    intensity: 6
+    intensity: 2
+    slope: 0.3
 
 - type: artifactEffect
   id: EffectMaterialSpawn

@@ -1,6 +1,5 @@
 using Content.Server.GameTicking.Rules;
 using Content.Server.Traitor.Components;
-using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 
 namespace Content.Server.Traitor.Systems;
@@ -16,13 +15,7 @@ public sealed class AutoTraitorSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AutoTraitorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AutoTraitorComponent, MindAddedMessage>(OnMindAdded);
-    }
-
-    private void OnMapInit(EntityUid uid, AutoTraitorComponent comp, MapInitEvent args)
-    {
-        TryMakeTraitor(uid, comp);
     }
 
     private void OnMindAdded(EntityUid uid, AutoTraitorComponent comp, MindAddedMessage args)
@@ -60,15 +53,9 @@ public sealed class AutoTraitorSystem : EntitySystem
         if (!Resolve(uid, ref comp))
             return false;
 
-        if (!TryComp<MindContainerComponent>(uid, out var mindContainer) || mindContainer.Mind == null)
-            return false;
-
-        var mindId = mindContainer.Mind.Value;
-        if (!TryComp<MindComponent>(mindId, out var mind) || mind.Session == null)
-            return false;
-
-        var session = mind.Session;
-        _traitorRule.MakeTraitor(session, giveUplink: comp.GiveUplink, giveObjectives: comp.GiveObjectives);
+        //Start the rule if it has not already been started
+        var traitorRuleComponent = _traitorRule.StartGameRule();
+        _traitorRule.MakeTraitor(uid, traitorRuleComponent, giveUplink: comp.GiveUplink, giveObjectives: comp.GiveObjectives);
         // prevent spamming anything if it fails
         RemComp<AutoTraitorComponent>(uid);
         return true;
