@@ -16,6 +16,7 @@ public sealed class PaintRemoverSystem : SharedPaintSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
@@ -38,8 +39,9 @@ public sealed class PaintRemoverSystem : SharedPaintSystem
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.CleanDelay, new PaintRemoverDoAfterEvent(), uid, args.Target, uid)
         {
-            BreakOnMove = true,
+            BreakOnUserMove = true,
             BreakOnDamage = true,
+            BreakOnTargetMove = true,
             MovementThreshold = 1.0f,
         });
         args.Handled = true;
@@ -75,13 +77,13 @@ public sealed class PaintRemoverSystem : SharedPaintSystem
 
         var verb = new UtilityVerb()
         {
-            Act = () =>
-            {
+            Act = () => {
 
                 _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.CleanDelay, new PaintRemoverDoAfterEvent(), uid, args.Target, uid)
                 {
-                    BreakOnMove = true,
+                    BreakOnUserMove = true,
                     BreakOnDamage = true,
+                    BreakOnTargetMove = true,
                     MovementThreshold = 1.0f,
                 });
             },
