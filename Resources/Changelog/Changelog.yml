@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: icekot8
-  changes:
-  - message: The bounty of briefcases has been removed
-    type: Remove
-  id: 5775
-  time: '2024-01-23T18:26:28.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24392
-- author: Errant
-  changes:
-  - message: '"Not enough oxygen" hud alerts now indicate the proper gas for nitrogen
-      breathers.'
-    type: Fix
-  id: 5776
-  time: '2024-01-23T20:17:41.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24373
 - author: themias
   changes:
   - message: Cyborgs can no longer spawn with the Wheelchair Bound or Muted trait
@@ -3803,3 +3788,17 @@
   id: 6274
   time: '2024-03-31T11:48:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26380
+- author: graevy
+  changes:
+  - message: clicking the brig timer button will now cancel its countdown
+    type: Tweak
+  id: 6275
+  time: '2024-03-31T20:44:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26557
+- author: lzk228
+  changes:
+  - message: Briefcases was added to CuraDrobe and LawDrobe.
+    type: Tweak
+  id: 6276
+  time: '2024-03-31T20:52:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26527
