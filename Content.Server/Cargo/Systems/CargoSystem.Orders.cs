@@ -205,7 +205,7 @@ namespace Content.Server.Cargo.Systems
             // Try to fulfill from any station where possible, if the pad is not occupied.
             foreach (var trade in _listEnts)
             {
-                var tradePads = GetCargoPallets(trade);
+                var tradePads = GetCargoPallets(trade, BuySellType.Buy);
                 _random.Shuffle(tradePads);
 
                 var freePads = GetFreeCargoPallets(trade, tradePads);

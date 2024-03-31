@@ -130,5 +130,12 @@ reagent-desc-insuzine = Rapidly repairs dead tissue caused by electrocution, but
 reagent-name-necrosol = necrosol
 reagent-desc-necrosol = A necrotic substance that seems to be able to heal frozen corpses. It can treat and rejuvenate plants when applied in small doses.
 
+reagent-name-tilenol = Tilenol
+reagent-desc-tilenol = A common pharmaceutical drug for senior citizens that alleviates headaches and motion-sickness.
+alerts-tilenol-name = Centered
+alerts-tilenol-desc = You feel in touch with your roots. Specifically the roots that keep you centered on tiles.
+alerts-latency-name = Latency
+alerts-latency-desc = All your interactions feel sluggish and delayed.
+
 reagent-name-aloxadone = aloxadone
 reagent-desc-aloxadone = A cryogenics chemical. Used to treat severe third degree burns via regeneration of the burnt tissue. Works regardless of the patient being alive or dead.

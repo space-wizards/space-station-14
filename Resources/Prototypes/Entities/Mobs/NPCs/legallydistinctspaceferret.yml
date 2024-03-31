@@ -208,6 +208,7 @@
 
 - type: speechVerb
   id: Wawa
+  name: chat-speech-verb-name-wawa
   speechVerbStrings:
   - chat-speech-verb-wawa-1
   - chat-speech-verb-wawa-2

@@ -36,6 +36,7 @@ station-event-random-sentience-flavor-legallydistinctspaceferret = legally disti
 chat-speech-verb-wawa-1 = intones
 chat-speech-verb-wawa-2 = states
 chat-speech-verb-wawa-3 = declares
+chat-speech-verb-name-wawa = Ferrety
 
 brainrot-applied = You feel strangeg, andug yourug mikug skug skug skug...
 brainrot-lost = Skug skug skur skind slear from the influence of Brainrot.

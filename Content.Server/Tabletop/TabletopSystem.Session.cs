@@ -38,7 +38,7 @@ namespace Content.Server.Tabletop
                 AddComp<FTLBeaconComponent>(randomEntity.Value);
             }
 
-            Logger.Info($"Created tabletop session number {tabletop} at position {session.Position}.");
+            Log.Info($"Created tabletop session number {tabletop} at position {session.Position}.");
 
             return session;
         }

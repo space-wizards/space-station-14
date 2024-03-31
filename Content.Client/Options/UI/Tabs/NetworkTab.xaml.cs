@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Client.GameStates;
-using Content.Client.Entry;
+using Content.Client.Tilenol;
 
 namespace Content.Client.Options.UI.Tabs
 {
@@ -15,6 +15,7 @@ namespace Content.Client.Options.UI.Tabs
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IClientGameStateManager _stateMan = default!;
+        [Dependency] private readonly IEntitySystemManager _sys = default!;
 
         public NetworkTab()
         {
@@ -69,7 +70,10 @@ namespace Content.Client.Options.UI.Tabs
             _cfg.SetCVar(CVars.NetPVSEntityExitBudget, (int) NetPvsLeaveSlider.Value);
             _cfg.SetCVar(CVars.NetPredict, NetPredictCheckbox.Pressed);
 
-            _cfg.SaveToFile();
+            if (_sys.TryGetEntitySystem(out ByondSystem? byond))
+                byond.SaveCfg();
+            else
+                _cfg.SaveToFile();
             UpdateChanges();
         }
 

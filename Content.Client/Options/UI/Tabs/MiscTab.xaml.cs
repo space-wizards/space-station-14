@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Client.Tilenol;
 using Content.Client.UserInterface.Screens;
 using Content.Shared.CCVar;
 using Content.Shared.HUD;
@@ -18,6 +19,7 @@ namespace Content.Client.Options.UI.Tabs
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntitySystemManager _sys = default!;
 
         private readonly Dictionary<string, int> _hudThemeIdToIndex = new();
 
@@ -136,7 +138,10 @@ namespace Content.Client.Options.UI.Tabs
                 _cfg.SetCVar(CCVars.UILayout, opt);
             }
 
-            _cfg.SaveToFile();
+            if (_sys.TryGetEntitySystem(out ByondSystem? byond))
+                byond.SaveCfg();
+            else
+                _cfg.SaveToFile();
             UpdateApplyButton();
         }
 
