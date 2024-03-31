@@ -45,6 +45,9 @@ namespace Content.Client.Input
             // Not in engine because the engine doesn't understand what a flipped object is
             common.AddFunction(ContentKeyFunctions.EditorFlipObject);
 
+            // Not in engine so that the RCD can rotate objects
+            common.AddFunction(EngineKeyFunctions.EditorRotateObject);
+
             var human = contexts.GetContext("human");
             human.AddFunction(EngineKeyFunctions.MoveUp);
             human.AddFunction(EngineKeyFunctions.MoveDown);
