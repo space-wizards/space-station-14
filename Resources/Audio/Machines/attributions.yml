@@ -167,3 +167,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from TG station."
   source: "https://github.com/tgstation/tgstation/blob/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0/sound/machines/buzz-sigh.ogg"
+
+- files: ["buzz-two.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station."
+  source: "https://github.com/tgstation/tgstation/blob/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0/sound/machines/buzz-two.ogg"

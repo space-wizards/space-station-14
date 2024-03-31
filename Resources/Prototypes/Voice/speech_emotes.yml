@@ -265,6 +265,7 @@
     - chirping.
     - chirping!
 
+# Machine Emotes
 - type: emote
   id: Beep
   category: Vocal
@@ -300,3 +301,39 @@
     - chiming
     - chiming,
     - chiming!
+
+- type: emote
+  id: Buzz-Two
+  catagory: Vocal
+  Chatmessages: [buzzesTwice!]
+  chatTriggers:
+    - buzztwice
+    - buzztwice.
+    - buzztwice!
+    - buzzstwice
+    - buzzstwice.
+    - buzzstwice!
+    - buzzestwice
+    - buzzestwice.
+    - buzzestwice!
+    - buzzingtwice
+    - buzzingtwice.
+    - buzzingtwice!
+    - buzzedtwice
+    - buzzedtwice.
+    - buzzedtwice!
+    - buzz twice
+    - buzz twice.
+    - buzz twice!
+    - buzzs twice
+    - buzzs twice.
+    - buzzs twice!
+    - buzzes twice
+    - buzzes twice.
+    - buzzes twice!
+    - buzzing twice
+    - buzzing twice.
+    - buzzing twice!
+    - buzzed twice
+    - buzzed twice.
+    - buzzed twice!
