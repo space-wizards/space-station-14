@@ -432,14 +432,16 @@ namespace Content.Server.Atmos.EntitySystems
                         if (!overlay.Chunks.TryGetValue(gIndex, out var value))
                             continue;
 
-                        if (previousChunks != null &&
-                            previousChunks.Contains(gIndex) &&
-                            value.LastUpdate > LastSessionUpdate)
+                        // If the chunk was updated since we last sent it, send it again
+                        if (value.LastUpdate > LastSessionUpdate)
                         {
+                            dataToSend.Add(value);
                             continue;
                         }
 
-                        dataToSend.Add(value);
+                        // Always send it if we didn't previously send it
+                        if (previousChunks == null || !previousChunks.Contains(gIndex))
+                            dataToSend.Add(value);
                     }
 
                     previouslySent[netGrid] = gridChunks;
