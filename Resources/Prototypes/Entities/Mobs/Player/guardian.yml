@@ -253,3 +253,4 @@
     event: !type:GuardianToggleActionEvent
     useDelay: 2
     checkCanInteract: false
+    checkConsciousness: false

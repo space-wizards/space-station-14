@@ -22,7 +22,7 @@ public sealed class PopupOverlay : Overlay
     private readonly PopupSystem _popup;
     private readonly PopupUIController _controller;
     private readonly ExamineSystemShared _examine;
-
+    private readonly SharedTransformSystem _transform;
     private readonly ShaderInstance _shader;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
@@ -35,6 +35,7 @@ public sealed class PopupOverlay : Overlay
         IUserInterfaceManager uiManager,
         PopupUIController controller,
         ExamineSystemShared examine,
+        SharedTransformSystem transform,
         PopupSystem popup)
     {
         _configManager = configManager;
@@ -42,6 +43,7 @@ public sealed class PopupOverlay : Overlay
         _playerMgr = playerMgr;
         _uiManager = uiManager;
         _examine = examine;
+        _transform = transform;
         _popup = popup;
         _controller = controller;
 
@@ -76,7 +78,7 @@ public sealed class PopupOverlay : Overlay
 
         foreach (var popup in _popup.WorldLabels)
         {
-            var mapPos = popup.InitialPos.ToMap(_entManager);
+            var mapPos = popup.InitialPos.ToMap(_entManager, _transform);
 
             if (mapPos.MapId != args.MapId)
                 continue;
