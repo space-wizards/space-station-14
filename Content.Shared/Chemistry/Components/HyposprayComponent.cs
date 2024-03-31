@@ -30,4 +30,11 @@ public sealed partial class HyposprayComponent : Component
     [AutoNetworkedField]
     [DataField(required: true)]
     public bool OnlyAffectsMobs = false;
+
+    /// <summary>
+    /// Whether or not the hypospray is able to draw from containers or if it's a single use
+    /// device that can only inject.
+    /// </summary>
+    [DataField]
+    public bool InjectOnly = false;
 }
