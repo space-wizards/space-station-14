@@ -299,7 +299,7 @@
 
 - type: emote
   id: Chime
-  catagory: Vocal
+  category: Vocal
   chatMessages: [chimes.]
   chatTriggers:
     - chime
@@ -317,8 +317,8 @@
 
 - type: emote
   id: Buzz-Two
-  catagory: Vocal
-  ChatMessages: [buzzesTwice.]
+  category: Vocal
+  chatMessages: [buzzesTwice.]
   chatTriggers:
     - buzztwice
     - buzztwice.
@@ -353,8 +353,8 @@
 
 - type: emote
   id: Ping
-  catagory: Vocal
-  ChatMessages: [pings.]
+  category: Vocal
+  chatMessages: [pings.]
   chatTriggers:
     - ping
     - ping.
@@ -371,8 +371,8 @@
 
 - type: emote
   id: SlowClap
-  catagory: Vocal
-  ChatMessages: [slowclap.]
+  category: Vocal
+  chatMessages: [slowclap.]
   chatTriggers:
     - slow clap
     - slow clap.
