@@ -1,5 +1,6 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Construction.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
@@ -9,6 +10,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
+using Content.Shared.Wires;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
@@ -40,6 +42,9 @@ public sealed class LockSystem : EntitySystem
         SubscribeLocalEvent<LockComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<LockComponent, LockDoAfter>(OnDoAfterLock);
         SubscribeLocalEvent<LockComponent, UnlockDoAfter>(OnDoAfterUnlock);
+
+        SubscribeLocalEvent<LockedWiresPanelComponent, AttemptChangePanelEvent>(OnAttemptChangePanel);
+        SubscribeLocalEvent<LockedAnchorableComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
     }
 
     private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
@@ -231,13 +236,13 @@ public sealed class LockSystem : EntitySystem
 
         AlternativeVerb verb = new()
         {
-            Act = component.Locked ?
-                () => TryUnlock(uid, args.User, component) :
-                () => TryLock(uid, args.User, component),
+            Act = component.Locked
+                ? () => TryUnlock(uid, args.User, component)
+                : () => TryLock(uid, args.User, component),
             Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock"),
-            Icon = component.Locked ?
-                new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png")) :
-                new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/lock.svg.192dpi.png")),
+            Icon = !component.Locked
+                ? new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/lock.svg.192dpi.png"))
+                : new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png")),
         };
         args.Verbs.Add(verb);
     }
@@ -274,6 +279,36 @@ public sealed class LockSystem : EntitySystem
             return;
 
         TryUnlock(uid, args.User, skipDoAfter: true);
+    }
+
+    private void OnAttemptChangePanel(Entity<LockedWiresPanelComponent> ent, ref AttemptChangePanelEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (!TryComp<LockComponent>(ent, out var lockComp) || !lockComp.Locked)
+            return;
+
+        _sharedPopupSystem.PopupPredicted(Loc.GetString("lock-comp-generic-fail",
+            ("target", Identity.Entity(ent, EntityManager))),
+            ent,
+            args.User);
+        args.Cancelled = true;
+    }
+
+    private void OnUnanchorAttempt(Entity<LockedAnchorableComponent> ent, ref UnanchorAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (!TryComp<LockComponent>(ent, out var lockComp) || !lockComp.Locked)
+            return;
+
+        _sharedPopupSystem.PopupPredicted(Loc.GetString("lock-comp-generic-fail",
+                ("target", Identity.Entity(ent, EntityManager))),
+            ent,
+            args.User);
+        args.Cancel();
     }
 }
 
