@@ -46,7 +46,7 @@ public sealed class ZombieSystem : EntitySystem
         args.Cancelled = true;
     }
 
-    private void OnCanDisplayStatusIcons(EntityUid uid, InitialInfectedComponent component, CanDisplayStatusIconsEvent args)
+    private void OnCanDisplayStatusIcons(EntityUid uid, InitialInfectedComponent component, ref CanDisplayStatusIconsEvent args)
     {
         if (HasComp<InitialInfectedComponent>(args.User) && !HasComp<ZombieComponent>(args.User))
             return;
