@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: icekot8
-  changes:
-  - message: Increased the size of flatpacks made by the Flatpacker 1001.
-    type: Tweak
-  id: 5764
-  time: '2024-01-21T17:07:59.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24367
 - author: Nairodian
   changes:
   - message: All vent critter events now have a small delay and alert message before
@@ -3791,3 +3784,13 @@
   id: 6263
   time: '2024-03-31T02:24:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26341
+- author: Flareguy
+  changes:
+  - message: Security glasses have been moved from research to roundstart gear. All
+      officers now start with them instead of sunglasses by default.
+    type: Tweak
+  - message: You can now craft security glasses.
+    type: Add
+  id: 6264
+  time: '2024-03-31T03:00:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26487
