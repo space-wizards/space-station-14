@@ -23,16 +23,7 @@ public sealed class SecretDataAnomalySystem : EntitySystem
 
         component.Secret.Clear();
 
-        var variants = new List<AnomalySecretData> {
-            AnomalySecretData.Severity,
-            AnomalySecretData.Stability,
-            AnomalySecretData.OutputPoint,
-            AnomalySecretData.ParticleDanger,
-            AnomalySecretData.ParticleUnstable,
-            AnomalySecretData.ParticleContainment,
-            AnomalySecretData.ParticleTransformation,
-            AnomalySecretData.Behavior,
-        };
+        var variants = Enum.GetValues<AnomalySecretData>();
 
         for (int i = 0; i < count; i++)
         {
