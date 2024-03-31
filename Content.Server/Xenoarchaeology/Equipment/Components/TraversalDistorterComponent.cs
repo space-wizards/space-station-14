@@ -16,6 +16,6 @@ public sealed partial class TraversalDistorterComponent : Component
 
 public enum BiasDirection : byte
 {
-    Up, //down the tree, towards depth 0
-    Down, //up the tree, away from depth 0
+    Up, //Towards depth 0
+    Down, //Away from depth 0
 }
