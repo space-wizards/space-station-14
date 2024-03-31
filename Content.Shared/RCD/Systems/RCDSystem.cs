@@ -342,7 +342,7 @@ public class RCDSystem : EntitySystem
         if (component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.MustBuildOnEmptyTile) && !mapGridData.Tile.Tile.IsEmpty)
         {
             if (popMsgs)
-                _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-on-non-empty-tile-message"), uid, user);
+                _popup.PopupClient(Loc.GetString("rcd-component-must-build-on-empty-tile-message"), uid, user);
 
             return false;
         }
@@ -360,7 +360,7 @@ public class RCDSystem : EntitySystem
         if (component.CachedPrototype.ConstructionRules.Contains(RcdConstructionRule.MustBuildOnSubfloor) && !mapGridData.Tile.Tile.GetContentTileDefinition().IsSubFloor)
         {
             if (popMsgs)
-                _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-subfloor-not-exposed-message"), uid, user);
+                _popup.PopupClient(Loc.GetString("rcd-component-must-build-on-subfloor-message"), uid, user);
 
             return false;
         }
@@ -381,7 +381,7 @@ public class RCDSystem : EntitySystem
             if (mapGridData.Tile.Tile.GetContentTileDefinition().ID == component.CachedPrototype.Prototype)
             {
                 if (popMsgs)
-                    _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-tiles-are-identical"), uid, user);
+                    _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-identical-tile"), uid, user);
 
                 return false;
             }
@@ -418,7 +418,7 @@ public class RCDSystem : EntitySystem
 
                     // Collision was detected
                     if (popMsgs)
-                        _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-as-space-is-occupied-message"), uid, user);
+                        _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-on-occupied-tile-message"), uid, user);
 
                     return false;
                 }

@@ -23,11 +23,12 @@ rcd-component-tile-obstructed-message = You can't deconstruct tiles when there's
 
 # Construction
 rcd-component-no-valid-grid = You're too far into open space to build here!
-rcd-component-cannot-build-on-non-empty-tile-message = A foundation already exists here!
+rcd-component-must-build-on-empty-tile-message = A foundation already exists here!
 rcd-component-cannot-build-on-empty-tile-message = You can't build that without a foundation!
-rcd-component-cannot-build-as-space-is-occupied-message = You can't build here, the space is already occupied!
-rcd-component-cannot-build-as-subfloor-not-exposed-message = You can only build that on exposed subfloor!
-rcd-component-cannot-build-as-tiles-are-identical = That tile already exists there!
+rcd-component-must-build-on-subfloor-message = You can only build that on exposed subfloor!
+rcd-component-cannot-build-on-subfloor-message = You can't build that on exposed subfloor!
+rcd-component-cannot-build-on-occupied-tile-message = You can't build here, the space is already occupied!
+rcd-component-cannot-build-identical-tile = That tile already exists there!
 
 
 ### Category names
