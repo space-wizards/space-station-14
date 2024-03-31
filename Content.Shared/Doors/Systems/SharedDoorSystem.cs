@@ -593,6 +593,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
     /// </summary>
     private void HandleCollide(EntityUid uid, DoorComponent door, ref StartCollideEvent args)
     {
+        if (args.OtherFixtureId.Contains("_ignoreDoors"))
+            return;
+
         if (!door.BumpOpen)
             return;
 

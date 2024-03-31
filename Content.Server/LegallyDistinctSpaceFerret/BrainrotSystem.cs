@@ -42,7 +42,7 @@ public sealed class BrainrotSystem : EntitySystem
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
 
-    public const string BrainrotFixture = "brainrot";
+    public const string BrainrotFixture = "brainrot_ignoreDoors";
     public const string BrainRotApplied = "brainrot-applied";
     public const string BrainRotLost = "brainrot-lost";
     public readonly string[] BrainRotReplacementStrings =
@@ -72,9 +72,15 @@ public sealed class BrainrotSystem : EntitySystem
         if (!TryComp<PhysicsComponent>(uid, out var body))
             return;
 
-        var shape = new PhysShapeCircle(component.Range);
-
-        _fixtures.TryCreateFixture(uid, shape, BrainrotFixture, collisionLayer: (int) CollisionGroup.MobMask, hard: false, body: body);
+        _fixtures.TryCreateFixture(
+            uid,
+            new PhysShapeCircle(component.Range),
+            BrainrotFixture,
+            collisionLayer: (int) CollisionGroup.None,
+            collisionMask: (int) CollisionGroup.MidImpassable,
+            hard: false,
+            body: body
+        );
     }
 
     private void OnShutdown(EntityUid uid, BrainrotAuraComponent component, ComponentShutdown args)

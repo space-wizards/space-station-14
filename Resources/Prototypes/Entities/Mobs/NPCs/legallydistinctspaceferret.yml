@@ -115,6 +115,7 @@
   - type: Inventory
     templateId: legallydistinctspaceferret
   - type: InventorySlots
+  - type: GhostTakeoverAvailable
 
   # Midround antagonist, spawned via random event
 - type: entity

@@ -1,4 +1,4 @@
-legallydistinctspaceferret-round-end-agent-name = ninja
+legallydistinctspaceferret-round-end-agent-name = legally distinct space ferret
 
 objective-issuer-legallydistinctspaceferret = [color=#33cc00]Space Ferret Tribe[/color]
 
