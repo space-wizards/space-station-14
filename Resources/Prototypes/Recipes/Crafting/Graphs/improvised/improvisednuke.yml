@@ -133,6 +133,11 @@
           sprite: Objects/Materials/Sheets/metal.rsi
           state: steel_3
         doAfter: 5
+    - to: evilbomb
+      steps:
+      - tag: Minibomb
+        name: syndicate minibomb
+        doAfter: 20
   - node: finished
     entity: ImprovisedNuclearBomb
     edges:
@@ -155,3 +160,59 @@
         doAfter: 1
   - node: painted
     entity: ImprovisedNuclearBombSign
+  - node: evilbomb
+    entity: ImprovisedNuclearBombInsidesEvil
+    edges:
+    - to: uranium
+      completed:
+      - !type:SpawnPrototype
+        prototype: SyndieMiniBomb
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 5
+    - to: evilbombreciever
+      steps:
+      - tag: ModularReceiver
+        amount: 1
+        name: modular reciever
+        doAfter: 1
+  - node: evilbombreciever
+    entity: ImprovisedNuclearBombInsidesEvilReciever
+    edges:
+    - to: evilbomb
+      completed:
+      - !type:SpawnPrototype
+        prototype: ModularReceiver
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 2
+    - to: evilbombdone
+      steps:
+      - material: Steel
+        amount: 30
+        name: steel
+        doAfter: 5
+  - node: evilbombdone
+    entity: ImprovisedNuclearBombInsidesUranium
+    edges:
+    - to: evilbombreciever
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 30
+      steps:
+      - tool: Prying
+        doAfter: 10
+    - to: evilbombpainted
+      steps:
+      - tag: Crayon
+        amount: 1
+        name: a crayon
+        icon:
+          sprite: Objects/Fun/crayons.rsi
+          state: yellow
+        doAfter: 1
+  - node: evilbombpainted
+    entity: ImprovisedNuclearBombInsidesUranium

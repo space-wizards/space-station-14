@@ -274,3 +274,46 @@
     graph: ImprovisedNukeCraft
     node: painted
     defaultTarget: painted
+
+- type: entity
+  parent: ImprovisedNuclearBombInsidesUranium
+  id: ImprovisedNuclearBombInsidesEvil
+  name: nuclear fission explosive
+  description: A partially constructed nuke. Looks like it contains radioactive material. Deeper inside, you can see a... syndicate minibomb?!?
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: evilbomb
+    defaultTarget: evilbombpainted
+
+- type: entity
+  parent: ImprovisedNuclearBombInsidesUranium
+  id: ImprovisedNuclearBombInsidesEvilReciever
+  name: nuclear fission explosive
+  description: A partially constructed nuke. Looks like it contains radioactive material. Deeper inside, you can see a... syndicate minibomb?!?
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: evilbombreciever
+    defaultTarget: evilbombpainted
+
+- type: entity
+  parent: ImprovisedNuclearBomb
+  id: ImprovisedNuclearBombEvil
+  name: nuclear fission explosive
+  description: A nuclear fission device! Feels heavier than usual.
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: evilbombdone
+    defaultTarget: evilbombpainted
+
+- type: entity
+  parent: ImprovisedNuclearBombEvil
+  id: ImprovisedNuclearBombEvilPainted
+  name: nuclear fission explosive
+  description: A nuclear fission device! Feels heavier than usual.
+  - type: Sprite
+    sprite: Objects/Fun/nukecraft.rsi
+    state: nukecraft_6
+  - type: Construction
+    graph: ImprovisedNukeCraft
+    node: evilbombpainted
+    defaultTarget: evilbombpainted
