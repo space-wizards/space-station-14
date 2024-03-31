@@ -280,6 +280,7 @@
   id: ImprovisedNuclearBombInsidesEvil
   name: nuclear fission explosive
   description: A partially constructed nuke. Looks like it contains radioactive material. Deeper inside, you can see a... syndicate minibomb?!?
+  components:
   - type: Construction
     graph: ImprovisedNukeCraft
     node: evilbomb
@@ -290,6 +291,7 @@
   id: ImprovisedNuclearBombInsidesEvilReciever
   name: nuclear fission explosive
   description: A partially constructed nuke. Looks like it contains radioactive material. Deeper inside, you can see a... syndicate minibomb?!?
+  components:
   - type: Construction
     graph: ImprovisedNukeCraft
     node: evilbombreciever
@@ -300,6 +302,7 @@
   id: ImprovisedNuclearBombEvil
   name: nuclear fission explosive
   description: A nuclear fission device! Feels heavier than usual.
+  components:
   - type: Construction
     graph: ImprovisedNukeCraft
     node: evilbombdone
@@ -310,6 +313,7 @@
   id: ImprovisedNuclearBombEvilPainted
   name: nuclear fission explosive
   description: A nuclear fission device! Feels heavier than usual.
+  components:
   - type: Sprite
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_6
