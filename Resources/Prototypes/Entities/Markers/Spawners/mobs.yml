@@ -16,6 +16,7 @@
       - MobMouse
       - MobMouse1
       - MobMouse2
+      - MobMouseCancer
 
 - type: entity
   name: Cockroach Spawner
