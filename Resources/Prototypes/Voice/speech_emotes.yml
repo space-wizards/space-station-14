@@ -368,3 +368,48 @@
     - pinging
     - pinging.
     - pinging!
+
+- type: emote
+  id: SlowClap
+  catagory: Vocal
+  ChatMessages: [slowclap.]
+  chatTriggers:
+    - slow clap
+    - slow clap.
+    - slow clap!
+    - slow claps
+    - slow claps.
+    - slow claps!
+    - slowely clap
+    - slowely clap.
+    - slowely clap!
+    - slowely claps
+    - slowely claps.
+    - slowely claps!
+    - slow clapped
+    - slow clapped.
+    - slow clapped!
+    - slowely clapping
+    - slowely clapping.
+    - slowely clapping!
+    - slow clapping
+    - slow clapping.
+    - slow clapping!
+    - slowed clap
+    - slowed clap.
+    - slowed clap!
+    - slowed clapping
+    - slowed clapping.
+    - slowed clapping!
+    - claps slowely
+    - claps slowely.
+    - claps slowely!
+    - clapped slowely
+    - clapped slowely.
+    - clapped slowely!
+    - clapping slow
+    - clapping slow.
+    - clapping slow!
+    - clap slow
+    - clap slow.
+    - clap slow!
