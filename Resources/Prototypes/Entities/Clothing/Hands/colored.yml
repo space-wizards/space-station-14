@@ -160,6 +160,10 @@
   - type: Butcherable
     butcheringType: Knife
     spawned:
+    - id: ClothingHandsGlovesFingerlessInsulated
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-yellow
   - type: RandomInsulation
     # Why repeated numbers? So some numbers are more common, of course!
     list:
@@ -176,9 +180,6 @@
       - 3
       - 3.5
       - 4
-  - type: Fiber
-    fiberMaterial: fibers-insulative
-    fiberColor: fibers-yellow
 
 - type: entity
   parent: ClothingHandsGlovesColorYellow
