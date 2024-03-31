@@ -11,6 +11,8 @@
     damage:
       types:
         Blunt: 10
+    soundHit:
+      collection: MetalThud
   - type: Spillable
     solution: absorbed
   - type: Wieldable
@@ -30,7 +32,6 @@
     delay: 1
   - type: Tag
     tags:
-      - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
       - Mop
       - MopBasic
   - type: GuideHelp
@@ -50,6 +51,8 @@
       damage:
         types:
           Blunt: 10
+      soundHit:
+         collection: MetalThud
     - type: Spillable
       solution: absorbed
     - type: Wieldable
@@ -81,7 +84,6 @@
           maxVol: 100
     - type: Tag
       tags:
-        - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
         - Mop
         - MopAdv
 
@@ -172,6 +174,16 @@
   - type: GuideHelp
     guides:
     - Janitorial
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 70
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   name: mop bucket
@@ -222,6 +234,7 @@
   - type: StepTrigger
     intersectRatio: 0.2
     requiredTriggeredSpeed: 0
+    stepOn: true
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -243,6 +256,10 @@
         mask:
         - ItemMask
   - type: LandMine
+    sound:
+      path: /Audio/Effects/beep_landmine.ogg
+      params:
+        maxDistance: 10
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: HardBomb  # normally Default and max 5 total 60
@@ -605,6 +622,15 @@
     damage:
       types:
         Blunt: 3
+  - type: Plunger
+
+- type: weightedRandomEntity
+  id: PlungerLoot
+  weights:
+    RandomSpawner100: 56
+    SpacemenFigureSpawner: 28
+    SpawnMobCockroach: 5
+    MaintenanceToolSpawner: 5
 
 - type: entity
   parent: BaseItem
@@ -639,7 +665,6 @@
       delay: 1.5
     - type: Tag
       tags:
-        - DroneUsable
         - Mop
     - type: CleansForensics
     - type: Fiber

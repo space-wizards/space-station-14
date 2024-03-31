@@ -45,7 +45,7 @@ namespace Content.Server.Engineering.EntitySystems
             {
                 var doAfterArgs = new DoAfterArgs(EntityManager, user, component.DoAfterTime, new AwaitedDoAfterEvent(), null)
                 {
-                    BreakOnUserMove = true,
+                    BreakOnMove = true,
                 };
                 var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
 

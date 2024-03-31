@@ -513,7 +513,7 @@
   id: RecipeMushroomPizza
   name: mushroom pizza recipe
   result: FoodPizzaMushroom
-  time: 25
+  time: 30
   solids:
     FoodDoughFlat: 1
     FoodMushroom: 5
@@ -1379,7 +1379,7 @@
   name: cat cake recipe
   result: MobCatCake
   time: 15
-  reagents: 
+  reagents:
     Milk: 15
     Cognizine: 5
   solids:
@@ -1481,12 +1481,21 @@
     FoodDonkpocketBerry: 1
 
 - type: microwaveMealRecipe
-  id: RecipeDonkpocketGondola
-  name: warm gondola-pocket recipe
-  result: FoodDonkpocketGondolaWarm
+  id: RecipeDonkpocketStonk
+  name: warm stonk-pocket recipe
+  result: FoodDonkpocketStonkWarm
   time: 5
   solids:
-    FoodDonkpocketGondola: 1
+    FoodDonkpocketStonk: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketCarp
+  name: warm carp-pocket recipe
+  result: FoodDonkpocketCarpWarm
+  time: 5
+  solids:
+    FoodDonkpocketCarp: 1
+
 
 - type: microwaveMealRecipe
   id: RecipeHotChili
@@ -1693,40 +1702,6 @@
   time: 10
   solids:
     LeavesCannabis: 1
-
-- type: microwaveMealRecipe
-  id: RecipeAloeCream
-  name: aloe cream recipe
-  result: AloeCream
-  time: 10
-  solids:
-    FoodAloe: 1
-
-- type: microwaveMealRecipe
-  id: RecipeMedicatedSuture
-  name: medicated suture recipe
-  result: MedicatedSuture
-  time: 10
-  solids:
-    FoodPoppy: 1
-    Brutepack: 1
-    MaterialCloth1: 1
-  reagents:
-    TranexamicAcid: 50
-    Cryptobiolin: 50
-
-- type: microwaveMealRecipe
-  id: RecipeRegenerativeMesh
-  name: regenerative mesh recipe
-  result: RegenerativeMesh
-  time: 10
-  solids:
-    FoodAloe: 1
-    Ointment: 1
-    MaterialCloth1: 1
-  reagents:
-    Sigynate: 50
-    Dermaline: 50
 
 - type: microwaveMealRecipe
   id: RecipeTrashBakedBananaPeel

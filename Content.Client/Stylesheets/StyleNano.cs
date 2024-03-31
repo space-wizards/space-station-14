@@ -74,6 +74,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassLabelKeyText = "LabelKeyText";
         public const string StyleClassLabelSecondaryColor = "LabelSecondaryColor";
         public const string StyleClassLabelBig = "LabelBig";
+        public const string StyleClassLabelSmall = "LabelSmall";
         public const string StyleClassButtonBig = "ButtonBig";
 
         public const string StyleClassPopupMessageSmall = "PopupMessageSmall";
@@ -289,7 +290,7 @@ namespace Content.Client.Stylesheets
             var buttonTex = resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var topButtonBase = new StyleBoxTexture
             {
-             Texture = buttonTex,
+                Texture = buttonTex,
             };
             topButtonBase.SetPatchMargin(StyleBox.Margin.All, 10);
             topButtonBase.SetPadding(StyleBox.Margin.All, 0);
@@ -297,19 +298,19 @@ namespace Content.Client.Stylesheets
 
             var topButtonOpenRight = new StyleBoxTexture(topButtonBase)
             {
-             Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions(new Vector2(0, 0), new Vector2(14, 24))),
+                Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions(new Vector2(0, 0), new Vector2(14, 24))),
             };
             topButtonOpenRight.SetPatchMargin(StyleBox.Margin.Right, 0);
 
             var topButtonOpenLeft = new StyleBoxTexture(topButtonBase)
             {
-             Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(14, 24))),
+                Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(14, 24))),
             };
             topButtonOpenLeft.SetPatchMargin(StyleBox.Margin.Left, 0);
 
             var topButtonSquare = new StyleBoxTexture(topButtonBase)
             {
-             Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(3, 24))),
+                Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(3, 24))),
             };
             topButtonSquare.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
 
@@ -328,6 +329,12 @@ namespace Content.Client.Stylesheets
             };
             chatFilterButton.SetPatchMargin(StyleBox.Margin.All, 5);
             chatFilterButton.SetPadding(StyleBox.Margin.All, 2);
+
+            var smallButtonTex = resCache.GetTexture("/Textures/Interface/Nano/button_small.svg.96dpi.png");
+            var smallButtonBase = new StyleBoxTexture
+            {
+                Texture = smallButtonTex,
+            };
 
             var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
 
@@ -361,9 +368,9 @@ namespace Content.Client.Stylesheets
             };
             tabContainerPanel.SetPatchMargin(StyleBox.Margin.All, 2);
 
-            var tabContainerBoxActive = new StyleBoxFlat {BackgroundColor = new Color(64, 64, 64)};
+            var tabContainerBoxActive = new StyleBoxFlat { BackgroundColor = new Color(64, 64, 64) };
             tabContainerBoxActive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
-            var tabContainerBoxInactive = new StyleBoxFlat {BackgroundColor = new Color(32, 32, 32)};
+            var tabContainerBoxInactive = new StyleBoxFlat { BackgroundColor = new Color(32, 32, 32) };
             tabContainerBoxInactive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
             var progressBarBackground = new StyleBoxFlat
@@ -402,21 +409,21 @@ namespace Content.Client.Stylesheets
 
             // Placeholder
             var placeholderTexture = resCache.GetTexture("/Textures/Interface/Nano/placeholder.png");
-            var placeholder = new StyleBoxTexture {Texture = placeholderTexture};
+            var placeholder = new StyleBoxTexture { Texture = placeholderTexture };
             placeholder.SetPatchMargin(StyleBox.Margin.All, 19);
             placeholder.SetExpandMargin(StyleBox.Margin.All, -5);
             placeholder.Mode = StyleBoxTexture.StretchMode.Tile;
 
-            var itemListBackgroundSelected = new StyleBoxFlat {BackgroundColor = new Color(75, 75, 86)};
+            var itemListBackgroundSelected = new StyleBoxFlat { BackgroundColor = new Color(75, 75, 86) };
             itemListBackgroundSelected.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListBackgroundSelected.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
-            var itemListItemBackgroundDisabled = new StyleBoxFlat {BackgroundColor = new Color(10, 10, 12)};
+            var itemListItemBackgroundDisabled = new StyleBoxFlat { BackgroundColor = new Color(10, 10, 12) };
             itemListItemBackgroundDisabled.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListItemBackgroundDisabled.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
-            var itemListItemBackground = new StyleBoxFlat {BackgroundColor = new Color(55, 55, 68)};
+            var itemListItemBackground = new StyleBoxFlat { BackgroundColor = new Color(55, 55, 68) };
             itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
-            var itemListItemBackgroundTransparent = new StyleBoxFlat {BackgroundColor = Color.Transparent};
+            var itemListItemBackgroundTransparent = new StyleBoxFlat { BackgroundColor = Color.Transparent };
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
@@ -482,9 +489,9 @@ namespace Content.Client.Stylesheets
             sliderForeBox.SetPatchMargin(StyleBox.Margin.All, 12);
             sliderGrabBox.SetPatchMargin(StyleBox.Margin.All, 12);
 
-            var sliderFillGreen = new StyleBoxTexture(sliderFillBox) {Modulate = Color.LimeGreen};
-            var sliderFillRed = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Red};
-            var sliderFillBlue = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Blue};
+            var sliderFillGreen = new StyleBoxTexture(sliderFillBox) { Modulate = Color.LimeGreen };
+            var sliderFillRed = new StyleBoxTexture(sliderFillBox) { Modulate = Color.Red };
+            var sliderFillBlue = new StyleBoxTexture(sliderFillBox) { Modulate = Color.Blue };
             var sliderFillWhite = new StyleBoxTexture(sliderFillBox) { Modulate = Color.White };
 
             var boxFont13 = resCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
@@ -644,6 +651,23 @@ namespace Content.Client.Stylesheets
 
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
+
+                // Colors for confirm buttons confirm states.
+                Element<ConfirmButton>()
+                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDefault),
+
+                Element<ConfirmButton>()
+                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionHovered),
+
+                Element<ConfirmButton>()
+                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionPressed),
+
+                Element<ConfirmButton>()
+                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
 
                 new StyleRule(new SelectorChild(
@@ -903,6 +927,14 @@ namespace Content.Client.Stylesheets
                 }),
 
                 new StyleRule(new SelectorChild(
+                    new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "whisperBox"}, null, null),
+                    new SelectorElement(typeof(RichTextLabel), new[] {"bubbleContent"}, null, null)),
+                    new[]
+                {
+                    new StyleProperty("font", notoSansItalic12),
+                }),
+
+                new StyleRule(new SelectorChild(
                     new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "emoteBox"}, null, null),
                     new SelectorElement(typeof(RichTextLabel), null, null, null)),
                     new[]
@@ -992,6 +1024,18 @@ namespace Content.Client.Stylesheets
                         new StyleBoxFlat {BackgroundColor = Color.Transparent}),
                     new StyleProperty(ItemList.StylePropertyItemBackground,
                         itemListItemBackgroundTransparent),
+                    new StyleProperty(ItemList.StylePropertyDisabledItemBackground,
+                        itemListItemBackgroundDisabled),
+                    new StyleProperty(ItemList.StylePropertySelectedItemBackground,
+                        itemListBackgroundSelected)
+                }),
+
+                 new StyleRule(new SelectorElement(typeof(ItemList), new[] {"transparentBackgroundItemList"}, null, null), new[]
+                {
+                    new StyleProperty(ItemList.StylePropertyBackground,
+                        new StyleBoxFlat {BackgroundColor = Color.Transparent}),
+                    new StyleProperty(ItemList.StylePropertyItemBackground,
+                        itemListItemBackground),
                     new StyleProperty(ItemList.StylePropertyDisabledItemBackground,
                         itemListItemBackgroundDisabled),
                     new StyleProperty(ItemList.StylePropertySelectedItemBackground,
@@ -1177,14 +1221,6 @@ namespace Content.Client.Stylesheets
                         new StyleProperty(StripeBack.StylePropertyBackground, stripeBack),
                     }),
 
-                // StyleClassLabelBig
-                new StyleRule(
-                    SelectorElement.Class(StyleClassLabelBig),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSans16),
-                    }),
-
                 // StyleClassItemStatus
                 new StyleRule(SelectorElement.Class(StyleClassItemStatus), new[]
                 {
@@ -1291,10 +1327,29 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BackgroundColor = NanoGold, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2}),
                 }),
 
+                // Labels ---
+                Element<Label>().Class(StyleClassLabelBig)
+                    .Prop(Label.StylePropertyFont, notoSans16),
+
+                Element<Label>().Class(StyleClassLabelSmall)
+                 .Prop(Label.StylePropertyFont, notoSans10),
+                // ---
+
+                // Different Background shapes ---
                 Element<PanelContainer>().Class(ClassAngleRect)
                     .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
 
+                Element<PanelContainer>().Class("BackgroundOpenRight")
+                    .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenRight)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
+
+                Element<PanelContainer>().Class("BackgroundOpenLeft")
+                    .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenLeft)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
+                // ---
+
+                // Dividers
                 Element<PanelContainer>().Class(ClassLowDivider)
                     .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
                     {
@@ -1345,6 +1400,14 @@ namespace Content.Client.Stylesheets
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
                 // ---
 
+                // Profile Editor
+                Element<TextureButton>().Class("SpeciesInfoDefault")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
+
+                Element<TextureButton>().Class("SpeciesInfoWarning")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/info.svg.192dpi.png"))
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#eeee11")),
+
                 // The default look of paper in UIs. Pages can have components which override this
                 Element<PanelContainer>().Class("PaperDefaultBorder")
                     .Prop(PanelContainer.StylePropertyPanel, paperBackground),
@@ -1381,6 +1444,15 @@ namespace Content.Client.Stylesheets
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodHovered),
                 // ---
 
+                // Small Button ---
+                Element<Button>().Class("ButtonSmall")
+                    .Prop(ContainerButton.StylePropertyStyleBox, smallButtonBase),
+
+                Child().Parent(Element<Button>().Class("ButtonSmall"))
+                    .Child(Element<Label>())
+                    .Prop(Label.StylePropertyFont, notoSans8),
+                // ---
+
                 Element<Label>().Class("StatusFieldTitle")
                     .Prop("font-color", NanoGold),
 
@@ -1395,6 +1467,25 @@ namespace Content.Client.Stylesheets
 
                 Element<Label>().Class("Disabled")
                     .Prop("font-color", DisabledFore),
+
+                // Radial menu buttons
+                Element<TextureButton>().Class("RadialMenuButton")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/button_normal.png")),
+                Element<TextureButton>().Class("RadialMenuButton")
+                    .Pseudo(TextureButton.StylePseudoClassHover)
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/button_hover.png")),
+
+                Element<TextureButton>().Class("RadialMenuCloseButton")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/close_normal.png")),
+                Element<TextureButton>().Class("RadialMenuCloseButton")
+                    .Pseudo(TextureButton.StylePseudoClassHover)
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/close_hover.png")),
+
+                Element<TextureButton>().Class("RadialMenuBackButton")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/back_normal.png")),
+                Element<TextureButton>().Class("RadialMenuBackButton")
+                    .Pseudo(TextureButton.StylePseudoClassHover)
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Radial/back_hover.png")),
 
                 //PDA - Backgrounds
                 Element<PanelContainer>().Class("PdaContentBackground")
@@ -1478,7 +1569,6 @@ namespace Content.Client.Stylesheets
                     {
                         BackgroundColor = FancyTreeSelectedRowColor,
                     }),
-
             }).ToList());
         }
     }

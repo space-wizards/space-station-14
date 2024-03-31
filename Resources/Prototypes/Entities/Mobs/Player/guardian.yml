@@ -85,6 +85,7 @@
       altDisarm: false
       animation: WeaponArcFist
       attackRate: 1.8
+      autoAttack: true
       damage:
         types:
           Blunt: 20
@@ -252,3 +253,4 @@
     event: !type:GuardianToggleActionEvent
     useDelay: 2
     checkCanInteract: false
+    checkConsciousness: false

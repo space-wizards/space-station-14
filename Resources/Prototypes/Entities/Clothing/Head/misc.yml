@@ -48,20 +48,6 @@
     node: flowercrown
 
 - type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHatHairflower
-  name: hairflower
-  description: A red flower for beautiful ladies.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Misc/hairflower.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Misc/hairflower.rsi
-  - type: Construction
-    graph: hairflower
-    node: hairflower
-
-- type: entity
   parent: ClothingHeadLightBase
   id: ClothingHeadHatPumpkin
   name: pumpkin hat
@@ -175,15 +161,14 @@
   suffix: DO NOT MAP
   components:
   - type: Tag
-    tags: # ignore "WhitelistChameleon" tag
-      - DroneUsable
+    tags: [] # ignore "WhitelistChameleon" tag
   - type: Sprite
     sprite: Clothing/Head/Hats/catears.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/catears.rsi
   - type: AddAccentClothing
     accent: OwOAccent
-    
+
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatDogEars
@@ -191,9 +176,6 @@
   description: Only for good boys.
   suffix: DO NOT MAP
   components:
-  - type: Tag
-    tags:
-      - DroneUsable
   - type: Sprite
     sprite: Clothing/Head/Hats/dogears.rsi
   - type: Clothing

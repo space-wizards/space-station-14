@@ -32,6 +32,8 @@
       path: /Audio/Effects/spray2.ogg
   - type: TrashOnSolutionEmpty
     solution: spray
+  - type: ExaminableSolution
+    solution: spray
 
 - type: entity
   name: mega spray bottle
@@ -89,8 +91,6 @@
   - type: Tag
     tags:
       - Spray
-      - DroneUsable #They don't have any other chem stuff on their whitelist so they can't refill it
-
 # Vapor
 
 - type: entity

@@ -19,7 +19,6 @@ using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
@@ -38,7 +37,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -121,14 +119,19 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnIonStormLaws(EntityUid uid, SiliconLawProviderComponent component, ref IonStormLawsEvent args)
     {
-        component.Lawset = args.Lawset;
+        // Emagged borgs are immune to ion storm
+        if (!HasComp<EmaggedComponent>(uid))
+        {
+            component.Lawset = args.Lawset;
 
-        // gotta tell player to check their laws
-        NotifyLawsChanged(uid);
+            // gotta tell player to check their laws
+            NotifyLawsChanged(uid);
 
-        // new laws may allow antagonist behaviour so make it clear for admins
-        if (TryComp<EmagSiliconLawComponent>(uid, out var emag))
-            EnsureEmaggedRole(uid, emag);
+            // new laws may allow antagonist behaviour so make it clear for admins
+            if (TryComp<EmagSiliconLawComponent>(uid, out var emag))
+                EnsureEmaggedRole(uid, emag);
+
+        }
     }
 
     private void OnEmagLawsAdded(EntityUid uid, SiliconLawProviderComponent component, ref GotEmaggedEvent args)
@@ -148,7 +151,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         component.Lawset?.Laws.Add(new SiliconLaw
         {
             LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(component.Lawset.ObeysTo))),
-            Order = component.Lawset.Laws.Count
+            Order = component.Lawset.Laws.Max(law => law.Order) + 1
         });
     }
 

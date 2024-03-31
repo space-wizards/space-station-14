@@ -1,29 +1,39 @@
-- files: ["supermatter.png", "robotics.png"]
+- files: ["supermatter.webp", "robotics.webp"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Veritius#2351 (257233913951289344) on discord / @Veritius on GitHub"
   source: "https://github.com/Veritius"
 
-- files: ["warden.png", "pharmacy.png"]
+- files: ["warden.webp", "pharmacy.webp"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Solbusaur#4343 (220208697429852160) on discord"
   source: "https://github.com/space-wizards/space-station-14"
 
-- files: ["ssxiv.png"]
+- files: ["ssxiv.webp"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Abyssal#4842 on discord / @aby_doodles on Twitter"
   source: "https://twitter.com/aby_doodles"
 
-- files: ["susstation.png"]
+- files: ["susstation.webp"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Alekshhh github"
   source: "https://github.com/space-wizards/space-station-14"
 
-- files: ["skellyvstherev.png"]
+- files: ["skellyvstherev.webp"]
   license: "CC-BY-SA-4.0"
   copyright: "Hannah 'FairlySadPanda' Dawson 2024"
   source: "https://github.com/FairlySadPanda"
 
-- files: ["doomed.png"]
+- files: ["doomed.webp"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "brainfood1183 github"
   source: "https://github.com/space-wizards/space-station-14"
+
+- files: ["blueprint.webp"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "data_redacted on discord"
+  source: "https://github.com/space-wizards/space-station-14"
+
+- files: ["behonker.webp"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "InCrah on twitter / @in_crah"
+  source: "https://twitter.com/in_crah"

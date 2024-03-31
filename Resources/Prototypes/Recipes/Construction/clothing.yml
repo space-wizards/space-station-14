@@ -85,3 +85,25 @@
   description: Two huds joined by arms
   icon: { sprite: Clothing/Eyes/Hud/medsec.rsi, state: icon }
   objectType: Item
+
+- type: construction
+  name: ducky slippers
+  id: ClothingShoeSlippersDuck
+  graph: ClothingShoeSlippersDuck
+  startNode: start
+  targetNode: shoes
+  category: construction-category-clothing
+  description: Comfy, yet haunted by the ghosts of ducks you fed bread to as a child.
+  icon: { sprite: Clothing/Shoes/Misc/duck-slippers.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: security glasses
+  id: ClothingEyesGlassesSecurity
+  graph: GlassesSecHUD
+  startNode: start
+  targetNode: glassesSec
+  category: construction-category-clothing
+  description: A pair of sunglasses, modified to have a built-in security HUD.
+  icon: { sprite: Clothing/Eyes/Glasses/secglasses.rsi, state: icon }
+  objectType: Item

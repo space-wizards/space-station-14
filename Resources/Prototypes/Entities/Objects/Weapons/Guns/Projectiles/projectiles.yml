@@ -788,7 +788,7 @@
   - type: PointLight
     radius: 3.5
     color: blue
-    energy: 0.5 
+    energy: 0.5
 
 - type: entity
   id: BulletCap
@@ -860,8 +860,6 @@
         mask:
         - Impassable
         - BulletImpassable
-  - type: CanPenetrate
-    penetrationLayer: MobLayer
   - type: Vapor
     active: true
   - type: Appearance

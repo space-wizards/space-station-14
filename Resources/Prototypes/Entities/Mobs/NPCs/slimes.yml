@@ -64,7 +64,7 @@
     bloodlossDamage:
       types:
         Bloodloss:
-          1
+          0.5
     bloodlossHealDamage:
       types:
         Bloodloss:

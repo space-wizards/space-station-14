@@ -29,7 +29,6 @@ public sealed class StationSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
@@ -57,9 +56,9 @@ public sealed class StationSystem : EntitySystem
         SubscribeLocalEvent<StationMemberComponent, ComponentShutdown>(OnStationGridDeleted);
         SubscribeLocalEvent<StationMemberComponent, PostGridSplitEvent>(OnStationSplitEvent);
 
-        _configurationManager.OnValueChanged(CCVars.StationOffset, x => _randomStationOffset = x, true);
-        _configurationManager.OnValueChanged(CCVars.MaxStationOffset, x => _maxRandomStationOffset = x, true);
-        _configurationManager.OnValueChanged(CCVars.StationRotation, x => _randomStationRotation = x, true);
+        Subs.CVar(_configurationManager, CCVars.StationOffset, x => _randomStationOffset = x, true);
+        Subs.CVar(_configurationManager, CCVars.MaxStationOffset, x => _maxRandomStationOffset = x, true);
+        Subs.CVar(_configurationManager, CCVars.StationRotation, x => _randomStationRotation = x, true);
 
         _player.PlayerStatusChanged += OnPlayerStatusChanged;
     }
@@ -456,7 +455,7 @@ public sealed class StationSystem : EntitySystem
 
         if (xform.GridUid == EntityUid.Invalid)
         {
-            Log.Debug("A");
+            Log.Debug("Unable to get owning station - GridUid invalid.");
             return null;
         }
 

@@ -1,7 +1,7 @@
 using Content.Server.Administration.Logs;
-using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Chat.Systems;
 using Content.Server.Popups;
+using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
@@ -9,6 +9,7 @@ using Content.Shared.NukeOps;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using Robust.Shared.Timing;
 
 namespace Content.Server.NukeOps;
 
@@ -17,101 +18,74 @@ namespace Content.Server.NukeOps;
 /// </summary>
 public sealed class WarDeclaratorSystem : EntitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly NukeopsRuleSystem _nukeopsRuleSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
 
     public override void Initialize()
     {
-        base.Initialize();
-        SubscribeLocalEvent<WarDeclaratorComponent, WarDeclaratorActivateMessage>(OnActivated);
+        SubscribeLocalEvent<WarDeclaratorComponent, MapInitEvent>(OnMapInit);
+
         SubscribeLocalEvent<WarDeclaratorComponent, ActivatableUIOpenAttemptEvent>(OnAttemptOpenUI);
+        SubscribeLocalEvent<WarDeclaratorComponent, WarDeclaratorActivateMessage>(OnActivated);
     }
 
-    private void OnAttemptOpenUI(EntityUid uid, WarDeclaratorComponent component, ActivatableUIOpenAttemptEvent args)
+    private void OnMapInit(Entity<WarDeclaratorComponent> ent, ref MapInitEvent args)
     {
-        if (!_nukeopsRuleSystem.TryGetRuleFromOperative(args.User, out var comps))
+        ent.Comp.Message = Loc.GetString("war-declarator-default-message");
+        ent.Comp.DisableAt = _gameTiming.CurTime + TimeSpan.FromMinutes(ent.Comp.WarDeclarationDelay);
+    }
+
+    private void OnAttemptOpenUI(Entity<WarDeclaratorComponent> ent, ref ActivatableUIOpenAttemptEvent args)
+    {
+        if (!_accessReaderSystem.IsAllowed(args.User, ent))
         {
-            var msg = Loc.GetString("war-declarator-not-nukeops");
-            _popupSystem.PopupEntity(msg, uid);
+            var msg = Loc.GetString("war-declarator-not-working");
+            _popupSystem.PopupEntity(msg, ent);
             args.Cancel();
             return;
         }
 
-        UpdateUI(uid, comps.Value.Item1, comps.Value.Item2);
+        UpdateUI(ent, ent.Comp.CurrentStatus);
     }
 
-    private void OnActivated(EntityUid uid, WarDeclaratorComponent component, WarDeclaratorActivateMessage args)
+    private void OnActivated(Entity<WarDeclaratorComponent> ent, ref WarDeclaratorActivateMessage args)
     {
-        if (!args.Session.AttachedEntity.HasValue ||
-            !_nukeopsRuleSystem.TryGetRuleFromOperative(args.Session.AttachedEntity.Value, out var comps))
+        if (args.Session.AttachedEntity is not {} playerEntity)
             return;
 
-        var condition = _nukeopsRuleSystem.GetWarCondition(comps.Value.Item1, comps.Value.Item2);
-        if (condition != WarConditionStatus.YES_WAR)
-        {
-            UpdateUI(uid, comps.Value.Item1, comps.Value.Item2);
-            return;
-        }
+        var ev = new WarDeclaredEvent(ent.Comp.CurrentStatus, ent);
+        RaiseLocalEvent(ref ev);
+
+        if (ent.Comp.DisableAt < _gameTiming.CurTime)
+            ev.Status = WarConditionStatus.NoWarTimeout;
+
+        ent.Comp.CurrentStatus = ev.Status;
 
         var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
         var message = SharedChatSystem.SanitizeAnnouncement(args.Message, maxLength);
-        if (component.AllowEditingMessage && message != string.Empty)
-        {
-            component.Message = message;
-        }
-        else
-        {
-            message = Loc.GetString("war-declarator-default-message");
-        }
-        var title = Loc.GetString(component.Title);
+        if (ent.Comp.AllowEditingMessage && message != string.Empty)
+            ent.Comp.Message = message;
 
-        _nukeopsRuleSystem.DeclareWar(args.Session.AttachedEntity.Value, message, title, component.Sound, component.Color);
+        if (ev.Status == WarConditionStatus.WarReady)
+        {
+            var title = Loc.GetString(ent.Comp.SenderTitle);
+            _chat.DispatchGlobalAnnouncement(ent.Comp.Message, title, true, ent.Comp.Sound, ent.Comp.Color);
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(playerEntity):player} has declared war with this text: {ent.Comp.Message}");
+        }
 
-        if (args.Session.AttachedEntity != null)
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(args.Session.AttachedEntity.Value):player} has declared war with this text: {message}");
+        UpdateUI(ent, ev.Status);
     }
 
-    public void RefreshAllUI(NukeopsRuleComponent nukeops, GameRuleComponent gameRule)
+    private void UpdateUI(Entity<WarDeclaratorComponent> ent, WarConditionStatus? status = null)
     {
-        var enumerator = EntityQueryEnumerator<WarDeclaratorComponent>();
-        while (enumerator.MoveNext(out var uid, out _))
-        {
-            UpdateUI(uid, nukeops, gameRule);
-        }
-    }
-
-    private void UpdateUI(EntityUid declaratorUid, NukeopsRuleComponent nukeops, GameRuleComponent gameRule)
-    {
-        var condition = _nukeopsRuleSystem.GetWarCondition(nukeops, gameRule);
-
-        TimeSpan startTime;
-        TimeSpan delayTime;
-        switch(condition)
-        {
-            case WarConditionStatus.YES_WAR:
-                startTime = gameRule.ActivatedAt;
-                delayTime = nukeops.WarDeclarationDelay;
-                break;
-            case WarConditionStatus.WAR_DELAY:
-                startTime = nukeops.WarDeclaredTime!.Value;
-                delayTime = nukeops.WarNukieArriveDelay!.Value;
-                break;
-            default:
-                startTime = TimeSpan.Zero;
-                delayTime = TimeSpan.Zero;
-                break;
-        }
-
         _userInterfaceSystem.TrySetUiState(
-            declaratorUid,
+            ent,
             WarDeclaratorUiKey.Key,
-            new WarDeclaratorBoundUserInterfaceState(
-                condition,
-                nukeops.WarDeclarationMinOps,
-                delayTime,
-                startTime));
+            new WarDeclaratorBoundUserInterfaceState(status, ent.Comp.DisableAt, ent.Comp.ShuttleDisabledTime));
     }
 }

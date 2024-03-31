@@ -495,6 +495,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitQMFormal
+  name: quartermasters's formal suit
+  description: Inspired by the quartermasters of military's past, the perfect outfit for supplying a formal occasion.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/qmformal.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/qmformal.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitResearchDirector
   name: research director's turtleneck
   description: It's a turtleneck worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
