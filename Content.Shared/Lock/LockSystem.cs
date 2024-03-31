@@ -291,7 +291,7 @@ public sealed class LockSystem : EntitySystem
 
         if (!args.Silent)
         {
-            _sharedPopupSystem.PopupPredicted(Loc.GetString("construction-step-condition-wire-panel-open"),
+            _sharedPopupSystem.PopupPredicted(Loc.GetString("construction-step-condition-wire-panel-close"),
                 ent,
                 args.User);
         }
