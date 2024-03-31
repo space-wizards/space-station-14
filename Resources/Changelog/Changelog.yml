@@ -1,41 +1,4 @@
 ﻿Entries:
-- author: Alekshhh
-  changes:
-  - message: Hud eyepatches have been added to BarDrobes, MediDrobes and SecTechs.
-      They're just cooler looking huds.
-    type: Add
-  id: 5768
-  time: '2024-01-22T14:59:32.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24132
-- author: CrigCrag
-  changes:
-  - message: Removed the revolutionaries gamemode pending a rework.
-    type: Remove
-  id: 5769
-  time: '2024-01-23T02:11:09.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24420
-- author: themias
-  changes:
-  - message: Added different footstep sounds for blood, soda and juice
-    type: Add
-  id: 5770
-  time: '2024-01-23T04:18:33.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24406
-- author: TheShuEd
-  changes:
-  - message: 'Flesh and Rock anom reworked: It should be easier to maintain them now
-      (I guess)'
-    type: Tweak
-  id: 5771
-  time: '2024-01-23T12:32:05.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24381
-- author: metalgearsloth
-  changes:
-  - message: Fix thrusters.
-    type: Fix
-  id: 5772
-  time: '2024-01-23T12:49:19.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24446
 - author: '0x6273'
   changes:
   - message: Hotplates now work again
@@ -3798,3 +3761,44 @@
   id: 6267
   time: '2024-03-31T04:29:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/22799
+- author: UBlueberry
+  changes:
+  - message: Nanotransen is now recruitin' personnel that speak with a Southern drawl.
+    type: Add
+  id: 6268
+  time: '2024-03-31T04:39:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26543
+- author: Tayrtahn
+  changes:
+  - message: You can no longer drink out of or put liquids into buckets worn on your
+      head.
+    type: Fix
+  id: 6269
+  time: '2024-03-31T04:40:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24412
+- author: DrTeaspoon
+  changes:
+  - message: Hypopen no longer shows chemical contents when examined, when not held
+      by the examinee.
+    type: Fix
+  id: 6270
+  time: '2024-03-31T04:59:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26453
+- author: lzk228
+  changes:
+  - message: Hairflower was removed.
+    type: Remove
+  - message: Now you can wear poppy (and other flowers) on your head instead of crafting
+      hairflower with it.
+    type: Tweak
+  id: 6271
+  time: '2024-03-31T05:33:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25475
+- author: EmoGarbage404
+  changes:
+  - message: Borgs, Emitters, and APEs can no longer have their panels opened while
+      locked. APEs and Emitters additionally cannot be unanchored either.
+    type: Add
+  id: 6272
+  time: '2024-03-31T06:34:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26600

@@ -27,7 +27,7 @@ public abstract class SharedHypospraySystem : EntitySystem
     // </summary>
     private void AddToggleModeVerb(Entity<HyposprayComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || entity.Comp.InjectOnly)
             return;
 
         var (_, component) = entity;

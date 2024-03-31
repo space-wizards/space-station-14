@@ -237,7 +237,7 @@ AirlockExternalGlassEasyPryLocked: AirlockExternalGlassLocked
 AirlockGlassShuttleEasyPryLocked: AirlockExternalGlassShuttleLocked
 AirlockShuttleEasyPryLocked: AirlockExternalShuttleLocked
 
-#2024-03-10
+# 2024-03-10
 ClothingBackpackFilledDetective: ClothingBackpackSecurityFilledDetective
 ClothingBackpackDuffelFilledDetective: ClothingBackpackDuffelSecurityFilledDetective
 ClothingBackpackSatchelFilledDetective: ClothingBackpackSatchelSecurityFilledDetective
@@ -246,6 +246,9 @@ ClothingBackpackSatchelFilledDetective: ClothingBackpackSatchelSecurityFilledDet
 ImprovisedExplosive: FireBomb
 ImprovisedExplosiveEmpty: FireBombEmpty
 ImprovisedExplosiveFuel: FireBombFuel
+
+# 2024-03-16
+ClothingHeadHatHairflower: FoodPoppy
 
 # 2024-03-21
 RPED: null

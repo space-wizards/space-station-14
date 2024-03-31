@@ -912,9 +912,6 @@
   id: NoBlockAnchoring
 
 - type: Tag
-  id: NoPaint
-
-- type: Tag
   id: NozzleBackTank
 
 - type: Tag
