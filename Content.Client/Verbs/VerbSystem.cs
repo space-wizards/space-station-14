@@ -20,7 +20,7 @@ namespace Content.Client.Verbs
     public sealed class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly ExamineSystem _examineSystem = default!;
+        [Dependency] private readonly ExamineSystem _examine = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
@@ -77,7 +77,7 @@ namespace Content.Client.Verbs
                 bool Predicate(EntityUid e) => e == player || entitiesUnderMouse.Contains(e);
 
                 // first check the general location.
-                if (!_examineSystem.CanExamine(player.Value, targetPos, Predicate))
+                if (!_examine.CanExamine(player.Value, targetPos, Predicate))
                     return false;
 
                 TryComp(player.Value, out ExaminerComponent? examiner);
@@ -86,7 +86,7 @@ namespace Content.Client.Verbs
                 entities = new();
                 foreach (var ent in _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize))
                 {
-                    if (_examineSystem.CanExamine(player.Value, targetPos, Predicate, ent, examiner))
+                    if (_examine.CanExamine(player.Value, targetPos, Predicate, ent, examiner))
                         entities.Add(ent);
                 }
             }
@@ -147,7 +147,7 @@ namespace Content.Client.Verbs
                 {
                     var entity = entities[i];
 
-                    if (!ExamineSystemShared.InRangeUnOccluded(
+                    if (!_examine.InRangeUnOccluded(
                         playerPos,
                         xformQuery.GetComponent(entity).MapPosition,
                         ExamineSystemShared.ExamineRange,

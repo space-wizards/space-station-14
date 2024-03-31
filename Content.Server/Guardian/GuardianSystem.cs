@@ -34,6 +34,7 @@ namespace Content.Server.Guardian
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -193,11 +194,7 @@ namespace Content.Server.Guardian
                 return;
             }
 
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.InjectionDelay, new GuardianCreatorDoAfterEvent(), injector, target: target, used: injector)
-            {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true
-            });
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.InjectionDelay, new GuardianCreatorDoAfterEvent(), injector, target: target, used: injector){BreakOnMove = true});
         }
 
         private void OnDoAfter(EntityUid uid, GuardianCreatorComponent component, DoAfterEvent args)
@@ -259,7 +256,7 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnGuardianDamaged(EntityUid uid, GuardianComponent component, DamageChangedEvent args)
         {
-            if (args.DamageDelta == null || component.Host == null || component.DamageShare > 0)
+            if (args.DamageDelta == null || component.Host == null || component.DamageShare == 0)
                 return;
 
             _damageSystem.TryChangeDamage(
@@ -328,7 +325,7 @@ namespace Content.Server.Guardian
             if (!guardianComponent.GuardianLoose)
                 return;
 
-            if (!guardianXform.Coordinates.InRange(EntityManager, hostXform.Coordinates, guardianComponent.DistanceAllowed))
+            if (!guardianXform.Coordinates.InRange(EntityManager, _transform, hostXform.Coordinates, guardianComponent.DistanceAllowed))
                 RetractGuardian(hostUid, hostComponent, guardianUid, guardianComponent);
         }
 

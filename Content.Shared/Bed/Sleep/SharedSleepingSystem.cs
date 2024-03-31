@@ -26,14 +26,8 @@ namespace Content.Server.Bed.Sleep
             SubscribeLocalEvent<SleepingComponent, SpeakAttemptEvent>(OnSpeakAttempt);
             SubscribeLocalEvent<SleepingComponent, CanSeeAttemptEvent>(OnSeeAttempt);
             SubscribeLocalEvent<SleepingComponent, PointAttemptEvent>(OnPointAttempt);
-            SubscribeLocalEvent<SleepingComponent, EntityUnpausedEvent>(OnSleepUnpaused);
         }
 
-        private void OnSleepUnpaused(EntityUid uid, SleepingComponent component, ref EntityUnpausedEvent args)
-        {
-            component.CoolDownEnd += args.PausedTime;
-            Dirty(uid, component);
-        }
 
         private void OnMapInit(EntityUid uid, SleepingComponent component, MapInitEvent args)
         {
@@ -43,7 +37,7 @@ namespace Content.Server.Bed.Sleep
             _actionsSystem.AddAction(uid, ref component.WakeAction, WakeActionId, uid);
 
             // TODO remove hardcoded time.
-            _actionsSystem.SetCooldown(component.WakeAction, _gameTiming.CurTime, _gameTiming.CurTime + TimeSpan.FromSeconds(15));
+            _actionsSystem.SetCooldown(component.WakeAction, _gameTiming.CurTime, _gameTiming.CurTime + TimeSpan.FromSeconds(2f));
         }
 
         private void OnShutdown(EntityUid uid, SleepingComponent component, ComponentShutdown args)

@@ -23,6 +23,7 @@ using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -33,16 +34,17 @@ namespace Content.Server.Weapons.Melee;
 
 public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly LagCompensationSystem _lag = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutions = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly SharedAudioSystem            _audio         = default!;
+    [Dependency] private readonly IRobustRandom                _random        = default!;
+    [Dependency] private readonly BloodstreamSystem            _bloodstream   = default!;
+    [Dependency] private readonly ChatSystem                   _chat          = default!;
+    [Dependency] private readonly DamageExamineSystem          _damageExamine = default!;
+    [Dependency] private readonly InventorySystem              _inventory     = default!;
+    [Dependency] private readonly LagCompensationSystem        _lag           = default!;
+    [Dependency] private readonly MobStateSystem               _mobState      = default!;
+    [Dependency] private readonly SharedColorFlashEffectSystem _color         = default!;
+    [Dependency] private readonly SolutionContainerSystem      _solutions     = default!;
+    [Dependency] private readonly TagSystem                    _tag           = default!;
 
     public override void Initialize()
     {
@@ -158,7 +160,8 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return false;
         }
 
-        Audio.PlayPvs(combatMode.DisarmSuccessSound, user, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
+        _audio.PlayPvs(combatMode.DisarmSuccessSound, user, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
+        AdminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(user):user} used disarm on {ToPrettyString(target):target}");
 
         var targetEnt = Identity.Entity(target, EntityManager);
         var userEnt = Identity.Entity(user, EntityManager);
@@ -174,7 +177,6 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         PopupSystem.PopupEntity(msgOther, user, filterOther, true);
         PopupSystem.PopupEntity(msgUser, target, user);
-
 
         if (eventArgs.IsStunned)
         {

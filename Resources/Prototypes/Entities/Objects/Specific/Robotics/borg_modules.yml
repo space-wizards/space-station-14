@@ -145,6 +145,7 @@
   - type: ItemBorgModule
     items:
     - HandheldGPSBasic
+    - HandHeldMassScannerBorg
     - HandheldStationMapUnpowered
 
 - type: entity
@@ -176,7 +177,7 @@
     - Screwdriver
     - Wirecutter
     - Multitool
-    - Welder
+    - WelderIndustrial
 
 # cargo modules
 - type: entity

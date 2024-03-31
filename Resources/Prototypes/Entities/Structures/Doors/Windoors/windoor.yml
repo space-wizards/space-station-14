@@ -1,14 +1,44 @@
-﻿- type: entity
+- type: entity
   id: Windoor
   parent: BaseWindoor
-  name: windoor
+  name: Windoor
   description: It's a window and a sliding door. Wow!
 
 - type: entity
   id: WindoorSecure
   parent: BaseSecureWindoor
-  name: secure windoor
+  name: Secure Windoor
   description: It's a sturdy window and a sliding door. Wow!
+
+- type: entity
+  id: WindoorClockwork
+  parent: BaseClockworkWindoor
+  name: clockwork windoor
+  description: It's a sturdy window and a sliding door. Wow!
+
+- type: entity
+  id: WindoorPlasma
+  parent: BasePlasmaWindoor
+  name: Plasma Windoor
+  description: It's a pink window *and* a sliding door. Amazing!
+
+- type: entity
+  id: WindoorSecurePlasma
+  parent: BaseSecurePlasmaWindoor
+  name: Secure Plasma Windoor
+  description: It's a sturdy purple window *and* a sliding door. Spectacular!
+
+- type: entity
+  id: WindoorUranium
+  parent: BaseUraniumWindoor
+  name: Uranium Windoor
+  description: It's a window and a sliding door. Huh? Oh, and it's green!
+
+- type: entity
+  id: WindoorSecureUranium
+  parent: BaseSecureUraniumWindoor
+  name: Secure Uranium Windoor
+  description: It's a sturdy window and a sliding door. It's so neon green, it might even taste like limes!
 
 # TODO remove these with parameterized prototypes/whatever we end up doing
 # Windoors (alphabetical)
@@ -57,6 +87,14 @@
   parent: Windoor
   id: WindoorJanitorLocked
   suffix: Janitor, Locked
+  components:
+  - type: AccessReader
+    access: [["Janitor"]]
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorJanitorLocked
+  suffix: Janitor, Locked, Plasma
   components:
   - type: AccessReader
     access: [["Janitor"]]
@@ -152,9 +190,33 @@
     access: [["Chemistry"]]
 
 - type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureChemistryLocked
+  suffix: Chemistry, Locked, Plasma
+  components:
+  - type: AccessReader
+    access: [["Chemistry"]]
+
+- type: entity
   parent: WindoorSecure
   id: WindoorSecureCentralCommandLocked
   suffix: Central Command, Locked
+  components:
+  - type: AccessReader
+    access: [["CentralCommand"]]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureCentralCommandLocked
+  suffix: Central Command, Locked, Plasma
+  components:
+  - type: AccessReader
+    access: [["CentralCommand"]]
+
+- type: entity
+  parent: WindoorSecureUranium
+  id: UraniumWindoorSecureCentralCommandLocked
+  suffix: Central Command, Locked, Uranium
   components:
   - type: AccessReader
     access: [["CentralCommand"]]
@@ -184,6 +246,22 @@
     access: [["Engineering"]]
 
 - type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureEngineeringLocked
+  suffix: Engineering, Locked, Plasma
+  components:
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  parent: WindoorSecureUranium
+  id: UraniumWindoorSecureEngineeringLocked
+  suffix: Engineering, Locked, Uranium
+  components:
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
   parent: WindoorSecure
   id: WindoorSecureExternalLocked
   suffix: External, Locked
@@ -195,6 +273,14 @@
   parent: WindoorSecure
   id: WindoorSecureJanitorLocked
   suffix: Janitor, Locked
+  components:
+  - type: AccessReader
+    access: [["Janitor"]]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureJanitorLocked
+  suffix: Janitor, Locked, Plasma
   components:
   - type: AccessReader
     access: [["Janitor"]]
@@ -243,6 +329,14 @@
   parent: WindoorSecure
   id: WindoorSecureScienceLocked
   suffix: Science, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureScienceLocked
+  suffix: Science, Locked, Plasma
   components:
   - type: AccessReader
     access: [["Research"]]

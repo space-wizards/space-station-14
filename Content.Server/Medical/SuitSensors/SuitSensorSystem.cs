@@ -9,7 +9,6 @@ using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Damage;
 using Content.Shared.DeviceNetwork;
-using Content.Shared.Emp;
 using Content.Shared.Examine;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Medical.SuitSensor;
@@ -27,20 +26,19 @@ public sealed class SuitSensorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly CrewMonitoringServerSystem _monitoringServerSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly IdCardSystem _idCardSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly SingletonDeviceNetServerSystem _singletonServerSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
         SubscribeLocalEvent<SuitSensorComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<SuitSensorComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<SuitSensorComponent, GotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<SuitSensorComponent, GotUnequippedEvent>(OnUnequipped);
         SubscribeLocalEvent<SuitSensorComponent, ExaminedEvent>(OnExamine);
@@ -49,11 +47,6 @@ public sealed class SuitSensorSystem : EntitySystem
         SubscribeLocalEvent<SuitSensorComponent, EntGotRemovedFromContainerMessage>(OnRemove);
         SubscribeLocalEvent<SuitSensorComponent, EmpPulseEvent>(OnEmpPulse);
         SubscribeLocalEvent<SuitSensorComponent, EmpDisabledRemoved>(OnEmpFinished);
-    }
-
-    private void OnUnpaused(EntityUid uid, SuitSensorComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextUpdate += args.PausedTime;
     }
 
     public override void Update(float frameTime)
@@ -86,7 +79,7 @@ public sealed class SuitSensorSystem : EntitySystem
             //Retrieve active server address if the sensor isn't connected to a server
             if (sensor.ConnectedServer == null)
             {
-                if (!_monitoringServerSystem.TryGetActiveServerAddress(sensor.StationId!.Value, out var address))
+                if (!_singletonServerSystem.TryGetActiveServerAddress<CrewMonitoringServerComponent>(sensor.StationId!.Value, out var address))
                     continue;
 
                 sensor.ConnectedServer = address;

@@ -1,305 +1,347 @@
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Roles.Jobs;
-using Content.Server.Preferences.Managers;
-using Content.Shared.Humanoid;
-using Content.Shared.Preferences;
-using Robust.Server.Player;
-using System.Linq;
 using Content.Server.Mind;
-using Robust.Shared.Random;
-using Robust.Shared.Map;
-using System.Numerics;
-using Content.Shared.Inventory;
-using Content.Server.Storage.EntitySystems;
-using Robust.Shared.Audio;
-using Robust.Server.GameObjects;
-using Content.Server.Chat.Managers;
-using Content.Server.GameTicking;
-using Robust.Shared.Containers;
-using Content.Shared.Mobs.Components;
-using Content.Server.Station.Systems;
-using Content.Server.Shuttles.Systems;
-using Content.Shared.Mobs;
+using Content.Server.Preferences.Managers;
+using Content.Server.Roles.Jobs;
+using Content.Server.Shuttles.Components;
+using Content.Shared.Antag;
+using Content.Shared.Humanoid;
+using Content.Shared.Players;
+using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Server.Audio;
-using Robust.Server.Containers;
+using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Content.Server.Shuttles.Components;
+using Robust.Shared.Random;
+using System.Linq;
+using Content.Shared.Chat;
+using Robust.Shared.Enums;
 
 namespace Content.Server.Antag;
 
 public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
 {
-    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
-    [Dependency] private readonly IPlayerManager _playerSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
-    [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly StorageSystem _storageSystem = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
 
+    #region Eligible Player Selection
     /// <summary>
-    /// Attempts to start the game rule by checking if there are enough players in lobby and readied.
+    /// Get all players that are eligible for an antag role
     /// </summary>
-    /// <param name="ev">The roundstart attempt event</param>
-    /// <param name="uid">The entity the gamerule you are using is on</param>
-    /// <param name="minPlayers">The minimum amount of players needed for you gamerule to start.</param>
-    /// <param name="gameRule">The gamerule component.</param>
-
-    public void AttemptStartGameRule(RoundStartAttemptEvent ev, EntityUid uid, int minPlayers, GameRuleComponent gameRule)
+    /// <param name="playerSessions">All sessions from which to select eligible players</param>
+    /// <param name="antagPrototype">The prototype to get eligible players for</param>
+    /// <param name="includeAllJobs">Should jobs that prohibit antag roles (ie Heads, Sec, Interns) be included</param>
+    /// <param name="acceptableAntags">Should players already selected as antags be eligible</param>
+    /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
+    /// <param name="customExcludeCondition">A custom condition that each player is tested against, if it returns true the player is excluded from eligibility</param>
+    /// <returns>List of all player entities that match the requirements</returns>
+    public List<EntityUid> GetEligiblePlayers(IEnumerable<ICommonSession> playerSessions,
+        ProtoId<AntagPrototype> antagPrototype,
+        bool includeAllJobs = false,
+        AntagAcceptability acceptableAntags = AntagAcceptability.NotExclusive,
+        bool ignorePreferences = false,
+        bool allowNonHumanoids = false,
+        Func<EntityUid?, bool>? customExcludeCondition = null)
     {
-        if (GameTicker.IsGameRuleAdded(uid, gameRule))
+        var eligiblePlayers = new List<EntityUid>();
+
+        foreach (var player in playerSessions)
         {
-            if (!ev.Forced && ev.Players.Length < minPlayers)
-            {
-                _chatManager.SendAdminAnnouncement(Loc.GetString("rev-not-enough-ready-players",
-                    ("readyPlayersCount", ev.Players.Length),
-                    ("minimumPlayers", minPlayers)));
-                ev.Cancel();
-            }
-            else if (ev.Players.Length == 0)
-            {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("rev-no-one-ready"));
-                ev.Cancel();
-            }
+            if (IsPlayerEligible(player, antagPrototype, includeAllJobs, acceptableAntags, ignorePreferences, allowNonHumanoids, customExcludeCondition))
+                eligiblePlayers.Add(player.AttachedEntity!.Value);
         }
+
+        return eligiblePlayers;
     }
 
     /// <summary>
-    /// Will check which players are eligible to be chosen for antagonist and give them the given antag.
+    /// Get all sessions that are eligible for an antag role, can be run prior to sessions being attached to an entity
+    /// This does not exclude sessions that have already been chosen as antags - that must be handled manually
     /// </summary>
-    /// <param name="antagPrototype">The antag prototype from your rule component.</param>
-    /// <param name="maxAntags">How many antags can be present in any given round.</param>
-    /// <param name="antagsPerPlayer">How many players you need to spawn an additional antag.</param>
-    /// <param name="antagSound">The intro sound that plays when the antag is chosen.</param>
-    /// <param name="antagGreeting">The antag message you want shown when the antag is chosen.</param>
-    /// <param name="greetingColor">The color of the message for the antag greeting in hex.</param>
-    /// <param name="chosen">A list of all the antags chosen in case you need to add stuff after.</param>
-    /// <param name="includeHeads">Whether or not heads can be chosen as antags for this gamemode.</param>
-    public void EligiblePlayers(string antagPrototype,
-        int maxAntags,
-        int antagsPerPlayer,
-        SoundSpecifier? antagSound,
-        string antagGreeting,
-        string greetingColor,
-        out List<EntityUid> chosen,
-        bool includeHeads = false)
+    /// <param name="playerSessions">All sessions from which to select eligible players</param>
+    /// <param name="antagPrototype">The prototype to get eligible players for</param>
+    /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
+    /// <returns>List of all player sessions that match the requirements</returns>
+    public List<ICommonSession> GetEligibleSessions(IEnumerable<ICommonSession> playerSessions, ProtoId<AntagPrototype> antagPrototype, bool ignorePreferences = false)
     {
-        var allPlayers = _playerSystem.Sessions.ToList();
-        var playerList = new List<ICommonSession>();
-        var prefList = new List<ICommonSession>();
-        chosen = new List<EntityUid>();
-        foreach (var player in allPlayers)
+        var eligibleSessions = new List<ICommonSession>();
+
+        foreach (var session in playerSessions)
         {
-            if (includeHeads == false)
-            {
-                if (!_jobs.CanBeAntag(player))
-                    continue;
-            }
-
-            if (player.AttachedEntity == null || HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
-                playerList.Add(player);
-            else
-                continue;
-
-            var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(player.UserId).SelectedCharacter;
-            if (pref.AntagPreferences.Contains(antagPrototype))
-                prefList.Add(player);
+            if (IsSessionEligible(session, antagPrototype, ignorePreferences))
+                eligibleSessions.Add(session);
         }
 
-        if (playerList.Count == 0)
-            return;
+        return eligibleSessions;
+    }
 
-        var antags = Math.Clamp(allPlayers.Count / antagsPerPlayer, 1, maxAntags);
-        for (var antag = 0; antag < antags; antag++)
+    /// <summary>
+    /// Test eligibility of the player for a specific antag role
+    /// </summary>
+    /// <param name="session">The player session to test</param>
+    /// <param name="antagPrototype">The prototype to get eligible players for</param>
+    /// <param name="includeAllJobs">Should jobs that prohibit antag roles (ie Heads, Sec, Interns) be included</param>
+    /// <param name="acceptableAntags">Should players already selected as antags be eligible</param>
+    /// <param name="ignorePreferences">Should we ignore if the player has enabled this specific role</param>
+    /// <param name="customExcludeCondition">A function, accepting an EntityUid and returning bool. Each player is tested against this, returning truw will exclude the player from eligibility</param>
+    /// <returns>True if the player session matches the requirements, false otherwise</returns>
+    public bool IsPlayerEligible(ICommonSession session,
+        ProtoId<AntagPrototype> antagPrototype,
+        bool includeAllJobs = false,
+        AntagAcceptability acceptableAntags = AntagAcceptability.NotExclusive,
+        bool ignorePreferences = false,
+        bool allowNonHumanoids = false,
+        Func<EntityUid?, bool>? customExcludeCondition = null)
+    {
+        if (!IsSessionEligible(session, antagPrototype, ignorePreferences))
+            return false;
+
+        //Ensure the player has a mind
+        if (session.GetMind() is not { } playerMind)
+            return false;
+
+        //Ensure the player has an attached entity
+        if (session.AttachedEntity is not { } playerEntity)
+            return false;
+
+        //Ignore latejoined players, ie those on the arrivals station
+        if (HasComp<PendingClockInComponent>(playerEntity))
+            return false;
+
+        //Exclude jobs that cannot be antag, unless explicitly allowed
+        if (!includeAllJobs && !_jobs.CanBeAntag(session))
+            return false;
+
+        //Check if the entity is already an antag
+        switch (acceptableAntags)
         {
-            ICommonSession? chosenPlayer = null;
-            if (prefList.Count == 0)
-            {
-                if (playerList.Count == 0)
+            //If we dont want to select any antag roles
+            case AntagAcceptability.None:
                 {
+                    if (_roleSystem.MindIsAntagonist(playerMind))
+                        return false;
                     break;
                 }
-            }
-            else
+            //If we dont want to select exclusive antag roles
+            case AntagAcceptability.NotExclusive:
+                {
+                    if (_roleSystem.MindIsExclusiveAntagonist(playerMind))
+                        return false;
+                    break;
+                }
+        }
+
+        //Unless explictly allowed, ignore non humanoids (eg pets)
+        if (!allowNonHumanoids && !HasComp<HumanoidAppearanceComponent>(playerEntity))
+            return false;
+
+        //If a custom condition was provided, test it and exclude the player if it returns true
+        if (customExcludeCondition != null && customExcludeCondition(playerEntity))
+            return false;
+
+
+        return true;
+    }
+
+    /// <summary>
+    /// Check if the session is eligible for a role, can be run prior to the session being attached to an entity
+    /// </summary>
+    /// <param name="session">Player session to check</param>
+    /// <param name="antagPrototype">Which antag prototype to check for</param>
+    /// <param name="ignorePreferences">Ignore if the player has enabled this antag</param>
+    /// <returns>True if the session matches the requirements, false otherwise</returns>
+    public bool IsSessionEligible(ICommonSession session, ProtoId<AntagPrototype> antagPrototype, bool ignorePreferences = false)
+    {
+        //Exclude disconnected or zombie sessions
+        //No point giving antag roles to them
+        if (session.Status == SessionStatus.Disconnected ||
+            session.Status == SessionStatus.Zombie)
+            return false;
+
+        //Check the player has this antag preference selected
+        //Unless we are ignoring preferences, in which case add them anyway
+        var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(session.UserId).SelectedCharacter;
+        if (!pref.AntagPreferences.Contains(antagPrototype.Id) && !ignorePreferences)
+            return false;
+
+        return true;
+    }
+    #endregion
+
+    /// <summary>
+    /// Helper method to calculate the number of antags to select based upon the number of players
+    /// </summary>
+    /// <param name="playerCount">How many players there are on the server</param>
+    /// <param name="playersPerAntag">How many players should there be for an additional antag</param>
+    /// <param name="maxAntags">Maximum number of antags allowed</param>
+    /// <returns>The number of antags that should be chosen</returns>
+    public int CalculateAntagCount(int playerCount, int playersPerAntag, int maxAntags)
+    {
+        return Math.Clamp(playerCount / playersPerAntag, 1, maxAntags);
+    }
+
+    #region Antag Selection
+    /// <summary>
+    /// Selects a set number of entities from several lists, prioritising the first list till its empty, then second list etc
+    /// </summary>
+    /// <param name="eligiblePlayerLists">Array of lists, which are chosen from in order until the correct number of items are selected</param>
+    /// <param name="count">How many items to select</param>
+    /// <returns>Up to the specified count of elements from all provided lists</returns>
+    public List<EntityUid> ChooseAntags(int count, params List<EntityUid>[] eligiblePlayerLists)
+    {
+        var chosenPlayers = new List<EntityUid>();
+        foreach (var playerList in eligiblePlayerLists)
+        {
+            //Remove all chosen players from this list, to prevent duplicates
+            foreach (var chosenPlayer in chosenPlayers)
             {
-                chosenPlayer = _random.PickAndTake(prefList);
                 playerList.Remove(chosenPlayer);
             }
 
-            if (!_mindSystem.TryGetMind(chosenPlayer, out _, out var mind) ||
-               mind.OwnedEntity is not { } ownedEntity)
-            {
-                continue;
-            }
-
-            chosen.Add(ownedEntity);
-            _audioSystem.PlayGlobal(antagSound, ownedEntity);
-            if (mind.Session != null)
-            {
-                var message = Loc.GetString(antagGreeting);
-                var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-                _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.Channel, Color.FromHex(greetingColor));
-            }
-        }
-    }
-
-    /// <summary>
-    /// The function walks through all players, checking their role and preferences to generate a list of players who can become antagonists.
-    /// </summary>
-    /// <param name="candidates">a list of players to check out</param>
-    /// <param name="antagPreferenceId">antagonist's code id</param>
-    /// <returns></returns>
-    public List<ICommonSession> FindPotentialAntags(in Dictionary<ICommonSession, HumanoidCharacterProfile> candidates, string antagPreferenceId)
-    {
-        var list = new List<ICommonSession>();
-        var pendingQuery = GetEntityQuery<PendingClockInComponent>();
-
-        foreach (var player in candidates.Keys)
-        {
-            // Role prevents antag.
-            if (!_jobs.CanBeAntag(player))
+            //If we have reached the desired number of players, skip
+            if (chosenPlayers.Count >= count)
                 continue;
 
-            // Latejoin
-            if (player.AttachedEntity != null && pendingQuery.HasComponent(player.AttachedEntity.Value))
+            //Pick and choose a random number of players from this list
+            chosenPlayers.AddRange(ChooseAntags(count - chosenPlayers.Count, playerList));
+        }
+        return chosenPlayers;
+    }
+    /// <summary>
+    /// Helper method to choose antags from a list
+    /// </summary>
+    /// <param name="eligiblePlayers">List of eligible players</param>
+    /// <param name="count">How many to choose</param>
+    /// <returns>Up to the specified count of elements from the provided list</returns>
+    public List<EntityUid> ChooseAntags(int count, List<EntityUid> eligiblePlayers)
+    {
+        var chosenPlayers = new List<EntityUid>();
+
+        for (var i = 0; i < count; i++)
+        {
+            if (eligiblePlayers.Count == 0)
+                break;
+
+            chosenPlayers.Add(RobustRandom.PickAndTake(eligiblePlayers));
+        }
+
+        return chosenPlayers;
+    }
+
+    /// <summary>
+    /// Selects a set number of sessions from several lists, prioritising the first list till its empty, then second list etc
+    /// </summary>
+    /// <param name="eligiblePlayerLists">Array of lists, which are chosen from in order until the correct number of items are selected</param>
+    /// <param name="count">How many items to select</param>
+    /// <returns>Up to the specified count of elements from all provided lists</returns>
+    public List<ICommonSession> ChooseAntags(int count, params List<ICommonSession>[] eligiblePlayerLists)
+    {
+        var chosenPlayers = new List<ICommonSession>();
+        foreach (var playerList in eligiblePlayerLists)
+        {
+            //Remove all chosen players from this list, to prevent duplicates
+            foreach (var chosenPlayer in chosenPlayers)
+            {
+                playerList.Remove(chosenPlayer);
+            }
+
+            //If we have reached the desired number of players, skip
+            if (chosenPlayers.Count >= count)
                 continue;
 
-            list.Add(player);
+            //Pick and choose a random number of players from this list
+            chosenPlayers.AddRange(ChooseAntags(count - chosenPlayers.Count, playerList));
         }
-
-        var prefList = new List<ICommonSession>();
-
-        foreach (var player in list)
-        {
-            //player preferences to play as this antag
-            var profile = candidates[player];
-            if (profile.AntagPreferences.Contains(antagPreferenceId))
-            {
-                prefList.Add(player);
-            }
-        }
-        if (prefList.Count == 0)
-        {
-            Log.Info($"Insufficient preferred antag:{antagPreferenceId}, picking at random.");
-            prefList = list;
-        }
-        return prefList;
+        return chosenPlayers;
     }
-
     /// <summary>
-    /// selects the specified number of players from the list
+    /// Helper method to choose sessions from a list
     /// </summary>
-    /// <param name="antagCount">how many players to take</param>
-    /// <param name="prefList">a list of players from which to draw</param>
-    /// <returns></returns>
-    public List<ICommonSession> PickAntag(int antagCount, List<ICommonSession> prefList)
+    /// <param name="eligiblePlayers">List of eligible sessions</param>
+    /// <param name="count">How many to choose</param>
+    /// <returns>Up to the specified count of elements from the provided list</returns>
+    public List<ICommonSession> ChooseAntags(int count, List<ICommonSession> eligiblePlayers)
     {
-        var results = new List<ICommonSession>(antagCount);
-        if (prefList.Count == 0)
+        var chosenPlayers = new List<ICommonSession>();
+
+        for (int i = 0; i < count; i++)
         {
-            Log.Info("Insufficient ready players to fill up with antags, stopping the selection.");
-            return results;
+            if (eligiblePlayers.Count == 0)
+                break;
+
+            chosenPlayers.Add(RobustRandom.PickAndTake(eligiblePlayers));
         }
 
-        for (var i = 0; i < antagCount; i++)
-        {
-            results.Add(_random.PickAndTake(prefList));
-            Log.Info("Selected a preferred antag.");
-        }
-        return results;
+        return chosenPlayers;
     }
+    #endregion
 
+    #region Briefings
     /// <summary>
-    /// Will take a group of entities and check if they are all alive or dead
+    /// Helper method to send the briefing text and sound to a list of entities
     /// </summary>
-    /// <param name="list">The list of the entities</param>
-    /// <param name="checkOffStation">Bool for if you want to check if someone is in space and consider them dead. (Won't check when emergency shuttle arrives just in case)</param>
-    /// <returns></returns>
-    public bool IsGroupDead(List<EntityUid> list, bool checkOffStation)
+    /// <param name="entities">The players chosen to be antags</param>
+    /// <param name="briefing">The briefing text to send</param>
+    /// <param name="briefingColor">The color the briefing should be, null for default</param>
+    /// <param name="briefingSound">The sound to briefing/greeting sound to play</param>
+    public void SendBriefing(List<EntityUid> entities, string briefing, Color? briefingColor, SoundSpecifier? briefingSound)
     {
-        var dead = 0;
-        foreach (var entity in list)
+        foreach (var entity in entities)
         {
-            if (TryComp<MobStateComponent>(entity, out var state))
-            {
-                if (state.CurrentState == MobState.Dead || state.CurrentState == MobState.Invalid)
-                {
-                    dead++;
-                }
-                else if (checkOffStation && _stationSystem.GetOwningStation(entity) == null && !_emergencyShuttle.EmergencyShuttleArrived)
-                {
-                    dead++;
-                }
-            }
-            //If they don't have the MobStateComponent they might as well be dead.
-            else
-            {
-                dead++;
-            }
-        }
-
-        return dead == list.Count || list.Count == 0;
-    }
-
-    /// <summary>
-    /// Will attempt to spawn an item inside of a persons bag and then pockets.
-    /// </summary>
-    /// <param name="antag">The entity that you want to spawn an item on</param>
-    /// <param name="items">A list of prototype IDs that you want to spawn in the bag.</param>
-    public void GiveAntagBagGear(EntityUid antag, List<EntProtoId> items)
-    {
-        foreach (var item in items)
-        {
-            GiveAntagBagGear(antag, item);
+            SendBriefing(entity, briefing, briefingColor, briefingSound);
         }
     }
 
     /// <summary>
-    /// Will attempt to spawn an item inside of a persons bag and then pockets.
+    /// Helper method to send the briefing text and sound to a player entity
     /// </summary>
-    /// <param name="antag">The entity that you want to spawn an item on</param>
-    /// <param name="item">The prototype ID that you want to spawn in the bag.</param>
-    public void GiveAntagBagGear(EntityUid antag, string item)
+    /// <param name="entity">The entity chosen to be antag</param>
+    /// <param name="briefing">The briefing text to send</param>
+    /// <param name="briefingColor">The color the briefing should be, null for default</param>
+    /// <param name="briefingSound">The sound to briefing/greeting sound to play</param>
+    public void SendBriefing(EntityUid entity, string briefing, Color? briefingColor, SoundSpecifier? briefingSound)
     {
-        var itemToSpawn = Spawn(item, new EntityCoordinates(antag, Vector2.Zero));
-        if (!_inventory.TryGetSlotContainer(antag, "back", out var backSlot, out _))
+        if (!_mindSystem.TryGetMind(entity, out _, out var mindComponent))
             return;
 
-        var bag = backSlot.ContainedEntity;
-        if (bag != null && HasComp<ContainerManagerComponent>(bag) && _storageSystem.CanInsert(bag.Value, itemToSpawn, out _))
+        if (mindComponent.Session == null)
+            return;
+
+        SendBriefing(mindComponent.Session, briefing, briefingColor, briefingSound);
+    }
+
+    /// <summary>
+    /// Helper method to send the briefing text and sound to a list of sessions
+    /// </summary>
+    /// <param name="sessions"></param>
+    /// <param name="briefing"></param>
+    /// <param name="briefingColor"></param>
+    /// <param name="briefingSound"></param>
+
+    public void SendBriefing(List<ICommonSession> sessions, string briefing, Color? briefingColor, SoundSpecifier? briefingSound)
+    {
+        foreach (var session in sessions)
         {
-            _storageSystem.Insert(bag.Value, itemToSpawn, out _);
-        }
-        else if (_inventory.TryGetSlotContainer(antag, "jumpsuit", out var jumpsuit, out _) && jumpsuit.ContainedEntity != null)
-        {
-            if (_inventory.TryGetSlotContainer(antag, "pocket1", out var pocket1Slot, out _))
-            {
-                if (pocket1Slot.ContainedEntity == null)
-                {
-                    if (_containerSystem.CanInsert(itemToSpawn, pocket1Slot))
-                    {
-                        _containerSystem.Insert(itemToSpawn, pocket1Slot);
-                    }
-                }
-                else if (_inventory.TryGetSlotContainer(antag, "pocket2", out var pocket2Slot, out _))
-                {
-                    if (pocket2Slot.ContainedEntity == null)
-                    {
-                        if (_containerSystem.CanInsert(itemToSpawn, pocket2Slot))
-                        {
-                            _containerSystem.Insert(itemToSpawn, pocket2Slot);
-                        }
-                    }
-                }
-            }
+            SendBriefing(session, briefing, briefingColor, briefingSound);
         }
     }
-}
+    /// <summary>
+    /// Helper method to send the briefing text and sound to a session
+    /// </summary>
+    /// <param name="session">The player chosen to be an antag</param>
+    /// <param name="briefing">The briefing text to send</param>
+    /// <param name="briefingColor">The color the briefing should be, null for default</param>
+    /// <param name="briefingSound">The sound to briefing/greeting sound to play</param>
 
+    public void SendBriefing(ICommonSession session, string briefing, Color? briefingColor, SoundSpecifier? briefingSound)
+    {
+        _audioSystem.PlayGlobal(briefingSound, session);
+        var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", briefing));
+        ChatManager.ChatMessageToOne(ChatChannel.Server, briefing, wrappedMessage, default, false, session.Channel, briefingColor);
+    }
+    #endregion
+}
