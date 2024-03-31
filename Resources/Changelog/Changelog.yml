@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: The Research Director's hardsuit now uses its older sprites.
-    type: Tweak
-  id: 5766
-  time: '2024-01-22T01:52:32.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24377
 - author: SonicHDC
   changes:
   - message: Added reinforced diagonal!
@@ -3793,3 +3786,11 @@
   id: 6265
   time: '2024-03-31T03:21:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/22133
+- author: DrMelon
+  changes:
+  - message: Syndicate Uplinks now have a searchbar to help those dirty, rotten antagonists
+      find appropriate equipment more easily!
+    type: Tweak
+  id: 6266
+  time: '2024-03-31T04:09:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24287
