@@ -65,6 +65,8 @@
     - cig5
     - cig6
   - type: Appearance
+  - type: ReplaceOnSpawn
+    prototype: CigPackSyndicate
 
 - type: entity
   id: CigPackMixedBase

@@ -22,7 +22,7 @@
   requireAdminNotify: true
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
-  canBeAntag: false
+  canBeAntag: true
   accessGroups:
   - AllAccess
   special:

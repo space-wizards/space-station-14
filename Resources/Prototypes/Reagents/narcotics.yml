@@ -116,6 +116,13 @@
         damage:
           types:
             Poison: 1
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ChloralHydrate
+          min: 1
+        reagent: ChloralHydrate
+        amount: -10
       - !type:GenericStatusEffect
         key: Stun
         time: 3
@@ -129,6 +136,10 @@
         component: StaminaModifier
         time: 3
         type: Add
+      - !type:GenericStatusEffect
+        key: ForcedSleep
+        time: 3
+        type: Remove
     Medicine:
       metabolismRate: 1.0
       effects:
@@ -200,7 +211,21 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   plantMetabolism:
   - !type:PlantAdjustHealth
-    amount: -5
+    amount: -5000000
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        probability: 0.02
+        damage:
+          types:
+            Cellular: 50 #smoking gives you stage 7 lung cancer.
+      - !type:PopupMessage
+        visualType: LargeCaution
+        probability: 0.02
+        type: Local
+        messages:
+        - generic-reagent-effect-tumors
 
 # TODO: Replace these nonstandardized effects with generic brain damage
 - type: reagent

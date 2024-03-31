@@ -7,7 +7,7 @@
   license: "CC-BY-3.0"
   copyright: "Modified from 'Meow 4.wav' by freesound user 'TRNGLE. The original audio was trimmed, split to mono, and converted from WAV to OGG format"
   source: "https://freesound.org/people/TRNGLE/sounds/368006/"
-  
+
 - files: ["cat_meow2.ogg"]
   license: "CC-BY-3.0"
   copyright: "Created by freesound user 'TRNGLE. The original audio split to mono, and converted from WAV to OGG format"
@@ -117,24 +117,28 @@
   license: "CC-BY-4.0"
   copyright: "Audio is recorded/created by Pfranzen 'FreeSound.org'. The original audio was trimmed and renamed"
   source: "https://freesound.org/people/pfranzen/sounds/322744/"
-  
+
 - files: ["dog_bark1.ogg"]
   license: "CC0-1.0"
   copyright: "Audio is recorded/created by KFerentchak 'FreeSound.org'. The original audio was trimmed and renamed"
-  source: "https://freesound.org/people/KFerentchak/sounds/235912/"  
-  
+  source: "https://freesound.org/people/KFerentchak/sounds/235912/"
+
 - files: ["dog_bark2.ogg"]
   license: "CC0-1.0"
   copyright: "Audio is recorded/created by KFerentchak 'FreeSound.org'. The original audio was trimmed and renamed"
-  source: "https://freesound.org/people/KFerentchak/sounds/235912/"  
-  
+  source: "https://freesound.org/people/KFerentchak/sounds/235912/"
+
 - files: ["dog_bark3.ogg"]
   license: "CC0-1.0"
   copyright: "Audio is recorded/created by KFerentchak 'FreeSound.org'. The original audio was trimmed and renamed"
   source: "https://freesound.org/people/KFerentchak/sounds/235912/"
-  
+
 - files: ["nymph_chirp.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from ParadiseSS13"
   source: "https://github.com/ParadiseSS13/Paradise/commit/a34f1054cef5a44a67fdac3b67b811137c6071dd"
-  
+
+- files: ["wawa_intro.ogg", "wawa_outro.ogg", "wawa_chatter.ogg", "wawa_chillin.ogg", "wawa_exclaim.ogg", "wawa_question.ogg", "wawa_statement.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Hannah 'FairlySadPanda' Dawson, 2024. Industrial audio sample taken from GDC 2015 bundle - amb_JD_drone_gates_ofmydian"
+  source: "https://sonniss.com/gameaudiogdc"

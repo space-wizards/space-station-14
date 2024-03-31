@@ -237,8 +237,8 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitCap
-  name: captain's hardsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
+  name: head of station's hardsuit helmet
+  description: Special hardsuit helmet, made for the head of station.
   components:
   - type: BreathMask
   - type: Sprite
@@ -253,8 +253,8 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitEngineeringWhite
-  name: chief engineer's hardsuit helmet
-  description: Special hardsuit helmet, made for the chief engineer of the station.
+  name: head of singularity's hardsuit helmet
+  description: Special hardsuit helmet, made for the head of singularity of the station.
   components:
   - type: BreathMask
   - type: Sprite
@@ -271,7 +271,7 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitMedical
-  name: chief medical officer's hardsuit helmet
+  name: head of still just a week away's hardsuit helmet
   description: Lightweight medical hardsuit helmet that doesn't restrict your head movements.
   components:
   - type: BreathMask

@@ -1,8 +1,8 @@
 - type: entity
-  name: captain's sabre
+  name: head of station's sabre
   parent: BaseItem
   id: CaptainSabre
-  description: A ceremonial weapon belonging to the captain of the station.
+  description: A ceremonial weapon belonging to the head of station.
   components:
   - type: Sharp
   - type: Sprite
@@ -175,7 +175,7 @@
       attackRate: 10
       damage:
         types:
-          Structure: 150
+          Structural: 150
           Slash: 20 #Horror
           Blunt: 20
           Heat: 20

@@ -13,7 +13,7 @@
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltCargo
-  name: quartermaster's over-ear headset
+  name: head of supply's over-ear headset
   components:
   - type: ContainerFill
     containers:
@@ -68,7 +68,7 @@
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltEngineering
-  name: chief engineer's over-ear headset
+  name: head of singularity's over-ear headset
   components:
   - type: ContainerFill
     containers:
@@ -84,7 +84,7 @@
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltMedical
-  name: chief medical officer's over-ear headset
+  name: head of still just a week away's over-ear headset
   components:
   - type: ContainerFill
     containers:
@@ -118,7 +118,7 @@
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltScience
-  name: research director's over-ear headset
+  name: head of science's over-ear headset
   components:
   - type: ContainerFill
     containers:

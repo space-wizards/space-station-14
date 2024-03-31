@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/68357f0b64a296d122ff1bdb2f13e9b0cb04a003/icons/obj/singularity.dmi",
+  "license": "CC-BY-SA-3.0",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    }
+  ]
+}

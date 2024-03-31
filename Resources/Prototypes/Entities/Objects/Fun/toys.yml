@@ -519,12 +519,46 @@
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Effects/bite.ogg
+  - type: ReplaceOnSpawn
+    prototype: MobCarpRainbow
   - type: MeleeWeapon
     wideAnimationRotation: -90
     soundHit:
       path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite # Rrrr!
+
+- type: entity
+  parent: PlushieCarp
+  id: PlushieMagicarp
+  name: magicarp plushie
+  description: An adorable stuffed toy resembling the exceedingly rare magicarp.
+  components:
+  - type: Sprite
+    state: magicplush
+
+- type: entity
+  parent: PlushieCarp
+  id: PlushieRainbowCarp
+  name: rainbow carp plushie
+  description: An adorable stuffed toy resembling the legendary rainbow carp.
+  components:
+  - type: Sprite
+    state: rainbowcarpplush
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+  - type: RgbLightController
+    layers: [ 0 ]
+
+- type: entity
+  parent: PlushieCarp
+  id: PlushieHolocarp
+  name: holocarp plushie
+  description: A holographic stuffed toy resembling science's nemesis - the holocarp.
+  components:
+  - type: Sprite
+    state: holoplush
 
 - type: entity
   parent: BasePlushie
@@ -613,6 +647,9 @@
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: Tag
+    tags:
+    - ToyRubberDuck
 
 - type: entity
   parent: BasePlushie
@@ -923,6 +960,8 @@
   - type: ContainerContainer
     containers:
       revolver-ammo: !type:Container
+  - type: ReplaceOnSpawn
+    prototype: RevolverCapGunFake
 
 - type: entity
   parent: RevolverCapGun
@@ -1196,6 +1235,8 @@
       damage:
         types:
           Blunt: 0
+    - type: ReplaceOnSpawn
+      prototype: EnergySword
     - type: ItemToggleMeleeWeapon
       activatedSoundOnHit:
         path: /Audio/Weapons/eblade1.ogg
@@ -1213,7 +1254,7 @@
 - type: entity
   parent: BasePlushie
   id: ToyAmongPequeno
-  name: among pequeno
+  name: among pequeño
   description: sus!
   components:
   - type: Sprite
@@ -1395,6 +1436,9 @@
         reagents:
         - ReagentId: Nothing
           Quantity: 100
+  - type: Tag
+    tags:
+    - Banana
 
 - type: entity
   parent: DrinkBase
@@ -1431,6 +1475,9 @@
           Quantity: 100
   - type: TrashOnSolutionEmpty
     solution: drink
+  - type: Tag
+    tags:
+      - DrinkSpaceGlue
 
 - type: entity
   parent: BaseItem

@@ -28,6 +28,8 @@
     tags:
     - Kangaroo
     - WhitelistChameleon
+  - type: ReplaceOnSpawn
+    prototype: ClothingHandsGlovesBoxingRigged
 
 - type: entity
   parent: ClothingHandsGlovesBoxingRed
@@ -94,7 +96,7 @@
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesCaptain
-  name: captain gloves
+  name: head of station's gloves
   description: Regal blue gloves, with a nice gold trim. Swanky.
   components:
   - type: Sprite

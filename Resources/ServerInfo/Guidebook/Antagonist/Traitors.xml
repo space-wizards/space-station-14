@@ -42,27 +42,27 @@
   - Escape on the evacuation shuttle alive and uncuffed.
   - Help a randomly selected traitor finish 2/3 of their objectives.
   - Die a glorious death.
-  - Steal the Captain's [color=#a4885c]ID Card[/color].
+  - Steal the Head of Station's [color=#a4885c]ID Card[/color].
   <Box>
     <GuideEntityEmbed Entity="CaptainIDCard" Caption="Captain's ID Card"/>
   </Box>
-  - Steal the Captain's [color=#a4885c]Antique Laser Pistol[/color].
+  - Steal the Head of Station's [color=#a4885c]Antique Laser Pistol[/color].
   <Box>
     <GuideEntityEmbed Entity="WeaponAntiqueLaser" Caption="Captain's Antique Laser Pistol"/>
   </Box>
-  - Steal the Captain's [color=#a4885c]Jetpack[/color].
+  - Steal the Head of Station's [color=#a4885c]Jetpack[/color].
   <Box>
     <GuideEntityEmbed Entity="JetpackCaptainFilled" Caption="Captain's Jetpack"/>
   </Box>
-  - Steal the Chief Medical Officer's [color=#a4885c]Hypospray[/color].
+  - Steal the Head of Still Just a Week Away's [color=#a4885c]Hypospray[/color].
   <Box>
     <GuideEntityEmbed Entity="Hypospray" Caption="CMO's Hypospray"/>
   </Box>
-  - Steal the Research Director's [color=#a4885c]Hardsuit[/color].
+  - Steal the Head of Science's [color=#a4885c]Hardsuit[/color].
   <Box>
     <GuideEntityEmbed Entity="ClothingOuterHardsuitRd" Caption="RD's Hardsuit"/>
   </Box>
-  - Steal the Research Director's [color=#a4885c]Hand Teleporter[/color].
+  - Steal the Head of Science's [color=#a4885c]Hand Teleporter[/color].
   <Box>
     <GuideEntityEmbed Entity="HandTeleporter" Caption="Hand Teleporter"/>
   </Box>
@@ -70,7 +70,7 @@
   <Box>
     <GuideEntityEmbed Entity="BookSecretDocuments" Caption="Secret Documents"/>
   </Box>
-  - Steal the Chief Engineer's [color=#a4885c]Advanced Magboots[/color].
+  - Steal the Head of Singularity's [color=#a4885c]Advanced Magboots[/color].
   <Box>
     <GuideEntityEmbed Entity="ClothingShoesBootsMagAdv" Caption="Advanced Magboots"/>
   </Box>

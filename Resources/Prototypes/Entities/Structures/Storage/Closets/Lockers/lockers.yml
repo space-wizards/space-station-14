@@ -18,11 +18,23 @@
     openSound:
       path: /Audio/Effects/woodenclosetopen.ogg
 
+# Basic
+- type: entity
+  id: LockerSteel
+  parent: LockerBaseSecure
+  name: secure closet
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: secure
+    stateDoorOpen: secure_open
+    stateDoorClosed: secure_door
+
 # Cargo
 - type: entity
   id: LockerQuarterMaster
   parent: LockerBaseSecure
-  name: quartermaster's locker
+  name: head of supply's locker
   components:
   - type: Appearance
   - type: EntityStorageVisuals
@@ -50,7 +62,7 @@
 - type: entity
   id: LockerCaptain
   parent: LockerBaseSecure
-  name: captain's locker
+  name: head of station's locker
   components:
   - type: Appearance
   - type: EntityStorageVisuals
@@ -63,7 +75,7 @@
 - type: entity
   id: LockerHeadOfPersonnel
   parent: LockerBaseSecure
-  name: head of personnel's locker
+  name: head of service's locker
   components:
   - type: Appearance
   - type: EntityStorageVisuals
@@ -77,7 +89,7 @@
 - type: entity
   id: LockerChiefEngineer
   parent: LockerBaseSecure
-  name: chief engineer's locker
+  name: head of singularity's locker
   components:
   - type: Appearance
   - type: EntityStorageVisuals
@@ -244,7 +256,7 @@
 - type: entity
   id: LockerChiefMedicalOfficer
   parent: LockerBaseSecure
-  name: chief medical officer's locker
+  name: head of still just a week away's locker
   components:
   - type: Appearance
   - type: EntityStorageVisuals
@@ -258,7 +270,7 @@
 - type: entity
   id: LockerResearchDirector
   parent: LockerBase
-  name: research director's locker
+  name: head of science's locker
   components:
   - type: Appearance
   - type: EntityStorageVisuals

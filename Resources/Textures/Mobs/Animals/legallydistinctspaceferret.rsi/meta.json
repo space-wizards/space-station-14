@@ -1,0 +1,24 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Yogstation at https://github.com/yogstation13/Yogstation/blob/b5a72f35980b15404d3c507d2ad0af06010f6056/icons/mob/pets.dmi, some modifications by Hannah 'FairlySadPanda' Dawson.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "legallydistinctspaceferret",
+            "directions": 4
+        },
+        {
+            "name": "legallydistinctspaceferret_eepy"
+        },
+        {
+            "name": "legallydistinctspaceferret_rip"
+        },
+        {
+            "name": "legallydistinctspaceferret_oof"
+        }
+    ]
+}

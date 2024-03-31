@@ -1069,6 +1069,179 @@
   conditions:
   - !type:TileNotBlocked
 
+#Wooden fence high
+- type: construction
+  name: wooden high fence
+  id: FenceWood
+  graph: FenceWood
+  startNode: start
+  targetNode: straight
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: straight
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden high fence end
+  id: FenceWoodEnd
+  graph: FenceWood
+  startNode: start
+  targetNode: end
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: end
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden high fence corner
+  id: FenceWoodCorner
+  graph: FenceWood
+  startNode: start
+  targetNode: corner
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: corner
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden high fence t-junction
+  id: FenceWoodTJunction
+  graph: FenceWood
+  startNode: start
+  targetNode: tjunction
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: tjunction
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden high fence gate
+  id: FenceWoodGate
+  graph: FenceWood
+  startNode: start
+  targetNode: gate
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: door_closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+#Wooden fence small
+- type: construction
+  name: wooden small fence
+  id: FenceWoodSmall
+  graph: FenceWood
+  startNode: start
+  targetNode: straight_small
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: straight_small
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden small fence end
+  id: FenceWoodEndSmall
+  graph: FenceWood
+  startNode: start
+  targetNode: end_small
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: end_small
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden small fence corner
+  id: FenceWoodCornerSmall
+  graph: FenceWood
+  startNode: start
+  targetNode: corner_small
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: corner_small
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden small fence t-junction
+  id: FenceWoodTJunctionSmall
+  graph: FenceWood
+  startNode: start
+  targetNode: tjunction_small
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: tjunction_small
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden small fence gate
+  id: FenceWoodGateSmall
+  graph: FenceWood
+  startNode: start
+  targetNode: gate_small
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: door_closed_small
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+#Airlocks
 - type: construction
   name: airlock
   id: Airlock

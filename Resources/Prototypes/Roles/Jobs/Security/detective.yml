@@ -10,7 +10,7 @@
   startingGear: DetectiveGear
   icon: "JobIconDetective"
   supervisors: job-supervisors-hos
-  canBeAntag: false
+  canBeAntag: true
   access:
   - Security
   - Brig

@@ -76,7 +76,7 @@
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterCap
-  name: captain's winter coat
+  name: head of station's winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatcap.rsi
@@ -100,7 +100,7 @@
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterCE
-  name: chief engineer's winter coat
+  name: head of singularity's winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatce.rsi
@@ -154,7 +154,7 @@
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterCMO
-  name: chief medical officer's winter coat
+  name: head of still just a week away's winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
@@ -214,7 +214,7 @@
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterHoP
-  name: head of personnel's winter coat
+  name: head of service's winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coathop.rsi
@@ -331,7 +331,7 @@
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterQM
-  name: quartermaster's winter coat
+  name: head of supply's winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatqm.rsi

@@ -99,7 +99,7 @@
 - type: entity
   parent: FaxMachineBase
   id: FaxMachineCaptain
-  name: captain long range fax machine
+  name: head of station long range fax machine
   suffix: NukeCodes
   components:
     - type: FaxMachine

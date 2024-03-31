@@ -103,7 +103,7 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackCaptain
-  name: captain's backpack
+  name: head of station's backpack
   description: It's a special backpack made exclusively for Nanotrasen officers.
   components:
   - type: Sprite
@@ -247,6 +247,18 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertclown.rsi
+
+#Syndicate
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackSyndicate
+  name: syndicate backpack
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/syndicate.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.1         
 
 #Special
 - type: entity

@@ -43,6 +43,8 @@
       Steel: 100
   - type: StaticPrice
     price: 30
+  - type: ReplaceOnSpawn
+    prototype: Haycutters
 
 - type: entity
   name: screwdriver
@@ -87,6 +89,8 @@
       Steel: 100
   - type: StaticPrice
     price: 30
+  - type: ReplaceOnSpawn
+    prototype: Moodriver
 
 - type: entity
   name: wrench
@@ -114,6 +118,8 @@
     damage:
       types:
         Blunt: 4.5
+    soundHit:
+      collection: MetalThud
   - type: Tool
     qualities:
       - Anchoring
@@ -124,6 +130,8 @@
       Steel: 100
   - type: StaticPrice
     price: 22
+  - type: ReplaceOnSpawn
+    prototype: Wronch
 
 - type: entity
   name: crowbar
@@ -151,6 +159,8 @@
     damage:
       types:
         Blunt: 8
+    soundHit:
+      collection: MetalThud
   - type: Tool
     qualities:
       - Prying
@@ -163,6 +173,8 @@
   - type: StaticPrice
     price: 22
   - type: Prying
+  - type: ReplaceOnSpawn
+    prototype: Cowbar
 
 - type: entity
   parent: Crowbar
@@ -227,6 +239,8 @@
       Plastic: 100
   - type: StaticPrice
     price: 56
+  - type: ReplaceOnSpawn
+    prototype: Mooltitool
 
 - type: entity
   name: network configurator
@@ -492,6 +506,8 @@
     damage:
       types:
         Blunt: 14
+    soundHit:
+      collection: MetalThud
   - type: Item
     size: Normal
     sprite: Objects/Tools/shovel.rsi
@@ -525,6 +541,8 @@
     damage:
       types:
         Blunt: 7
+    soundHit:
+      collection: MetalThud
   - type: Tool
     qualities:
     - Rolling

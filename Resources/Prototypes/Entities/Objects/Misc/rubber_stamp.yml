@@ -38,7 +38,7 @@
         maxDistance: 5
 
 - type: entity
-  name: captain's rubber stamp
+  name: head of station's rubber stamp
   parent: RubberStampBase
   id: RubberStampCaptain
   suffix: DO NOT MAP
@@ -77,6 +77,19 @@
     state: stamp-chaplain
 
 - type: entity
+  name: lawyer's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampLawyer
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-lawyer
+    stampedColor: "#233D57"
+    stampState: "paper_stamp-lawyer"
+  - type: Sprite
+    state: stamp-lawyer
+
+- type: entity
   name: clown's rubber stamp
   parent: RubberStampBase
   id: RubberStampClown
@@ -93,7 +106,7 @@
       - ClownRubberStamp
 
 - type: entity
-  name: chief engineer's rubber stamp
+  name: head of singularity's rubber stamp
   parent: RubberStampBase
   id: RubberStampCE
   suffix: DO NOT MAP
@@ -106,7 +119,7 @@
     state: stamp-ce
 
 - type: entity
-  name: chief medical officer's rubber stamp
+  name: head of still just a week away's rubber stamp
   parent: RubberStampBase
   id: RubberStampCMO
   suffix: DO NOT MAP
@@ -119,7 +132,7 @@
     state: stamp-cmo
 
 - type: entity
-  name: head of personnel's rubber stamp
+  name: head of service's rubber stamp
   parent: RubberStampBase
   id: RubberStampHop
   suffix: DO NOT MAP
@@ -159,7 +172,7 @@
     state: stamp-mime
 
 - type: entity
-  name: quartermaster's rubber stamp
+  name: head of supply's rubber stamp
   parent: RubberStampBase
   id: RubberStampQm
   suffix: DO NOT MAP
@@ -172,7 +185,7 @@
     state: stamp-qm
 
 - type: entity
-  name: research director's rubber stamp
+  name: head of science's rubber stamp
   parent: RubberStampBase
   id: RubberStampRd
   suffix: DO NOT MAP

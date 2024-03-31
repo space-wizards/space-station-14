@@ -20,6 +20,9 @@
     - neck
   - type: StaticPrice
     price: 100
+  - type: Tag
+    tags:
+    - Bedsheet
 
 - type: entity
   id: BedsheetBlack
@@ -54,7 +57,7 @@
 - type: entity
   id: BedsheetCaptain
   parent: BedsheetBase
-  name: captain's bedsheet
+  name: head of station's bedsheet
   description: It has a Nanotrasen symbol on it, and was woven with a revolutionary new kind of thread guaranteed to have 0.01% permeability for most non-chemical substances, popular among most modern captains.
   components:
   - type: Sprite

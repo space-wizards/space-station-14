@@ -21,6 +21,8 @@
         Blunt: 5
         Slash: 10
         Structural: 10
+    soundHit:
+      collection: MetalThud
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
@@ -45,6 +47,8 @@
     stealGroup: FireAxe
   - type: IgniteOnMeleeHit
     fireStacks: -4
+  - type: ReplaceOnSpawn
+    prototype: FireAxeFlaming
 
 - type: entity
   id: FireAxeFlaming

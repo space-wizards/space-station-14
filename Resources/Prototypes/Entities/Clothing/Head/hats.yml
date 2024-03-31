@@ -104,7 +104,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretQM
-  name: quartermaster's beret
+  name: head of supply's beret
   description: A beret with the cargo's insignia emblazoned on it. For quartermasters that are more inclined towards style.
   components:
   - type: Sprite
@@ -191,13 +191,15 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatCaptain
-  name: captain's hardhat
+  name: head of station's hardhat
   description: It's good being the king.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/captain.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/captain.rsi
+  - type: ReplaceOnSpawn
+    prototype: ClothingHeadHatCatEars
   - type: Tag
     tags:
     - ClothMade
@@ -297,7 +299,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHopcap
-  name: head of personnel's cap
+  name: head of service's cap
   description: A grand, stylish head of personnel's cap.
   components:
   - type: Sprite
@@ -476,17 +478,30 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseFoldable]
   id: ClothingHeadHatUshanka
   name: ushanka
   description: "Perfect for winter in Siberia, da?"
   components:
-  - type: Sprite
-    sprite: Clothing/Head/Hats/ushanka.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/ushanka.rsi
+  - type: Appearance
   - type: AddAccentClothing
     accent: RussianAccent
+  - type: Foldable
+    canFoldInsideContainer: true
+  - type: FoldableClothing
+    foldedEquippedPrefix: up
+    foldedHeldPrefix: up
+  - type: Sprite
+    sprite: Clothing/Head/Hats/ushanka.rsi
+    layers:
+    - state: icon
+      map: [ "unfoldedLayer" ]
+    - state: icon-up
+      map: ["foldedLayer"]
+      visible: false
+
 
 - type: entity
   parent: ClothingHeadBase
@@ -706,7 +721,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretCmo
-  name: chief medical officer's beret
+  name: head of still just a week away's beret
   description: Turquoise beret with a cross on the front. The sight of it calms you down and makes it clear that you will be cured.
   components:
   - type: Sprite
@@ -792,8 +807,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatMagician
-  name: magician's top hat.
-  description: "A magician's top hat."
+  name: magician's tophat
+  description: "A magician's tophat."
   components:
   - type: Icon
     sprite: Clothing/Head/Hats/magician.rsi
@@ -810,6 +825,7 @@
   - type: Item
     size: Small
     sprite: Clothing/Head/Hats/magician.rsi
+    storedRotation: 0
   - type: Storage
     grid:
     - 0,0,0,0
@@ -826,7 +842,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatCapcap
   name: cap cap
-  description: A grand, stylish captain cap.
+  description: A grand, stylish head of station's cap.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/capcap.rsi

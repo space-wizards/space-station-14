@@ -3,7 +3,7 @@
   name: job-name-visitor
   description: job-description-visitor
   playTimeTracker: JobVisitor
-  canBeAntag: false
+  canBeAntag: true
   icon: JobIconVisitor
   setPreference: false
   overrideConsoleVisibility: true

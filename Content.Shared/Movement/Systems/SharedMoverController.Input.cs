@@ -470,7 +470,7 @@ namespace Content.Shared.Movement.Systems
         /// <summary>
         ///     Retrieves the normalized direction vector for a specified combination of movement keys.
         /// </summary>
-        private Vector2 DirVecForButtons(MoveButtons buttons)
+        public Vector2 DirVecForButtons(MoveButtons buttons)
         {
             // key directions are in screen coordinates
             // _moveDir is in world coordinates

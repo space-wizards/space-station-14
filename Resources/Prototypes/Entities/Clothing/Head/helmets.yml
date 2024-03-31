@@ -22,6 +22,8 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+  - type: ReplaceOnSpawn
+    prototype: ClothingHeadHelmetSwat
 
 #Mercenary Helmet
 - type: entity

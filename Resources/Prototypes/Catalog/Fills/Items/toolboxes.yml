@@ -31,6 +31,8 @@
   suffix: Filled
   parent: ToolboxElectrical
   components:
+  - type: ReplaceOnSpawn
+    prototype: ToolboxElectricalTurretFilled
   - type: StorageFill
     contents:
       - id: Screwdriver
@@ -94,6 +96,8 @@
   suffix: Filled
   parent: ToolboxMechanical
   components:
+  - type: ReplaceOnSpawn
+    prototype: ToolboxSyndicateFilled
   - type: StorageFill
     contents:
       - id: Crowbar

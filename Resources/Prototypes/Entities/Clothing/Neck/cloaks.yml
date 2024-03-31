@@ -8,11 +8,11 @@
     sprite: Clothing/Neck/Cloaks/centcomcloakformal.rsi
   - type: StealTarget
     stealGroup: HeadCloak # leaving this here because I suppose it might be interesting?
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakCap
-  name: captain's cloak
+  name: head of station's cloak
   description: A pompous and comfy blue cloak with a nice gold trim, while not particularly valuable as your other possessions, it sure is fancy.
   components:
   - type: Sprite
@@ -34,7 +34,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakCe
-  name: chief engineer's cloak
+  name: head of singularity's cloak
   description: A dark green cloak with light blue ornaments, given to those who proved themselves to master the precise art of engineering.
   components:
   - type: Sprite
@@ -45,7 +45,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingCloakCmo
-  name: chief medical officer's cloak
+  name: head of still just a week away's cloak
   description: A sterile blue cloak with a green cross, radiating with a sense of duty and willingness to help others.
   components:
   - type: Sprite
@@ -56,7 +56,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakRd
-  name: research director's cloak
+  name: head of science's cloak
   description: A white cloak with violet stripes, showing your status as the arbiter of cutting-edge technology.
   components:
   - type: Sprite
@@ -67,7 +67,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakQm
-  name: quartermaster's cloak
+  name: head of supply's cloak
   description: A strong brown cloak with a reflective stripe, while not as fancy as others, it does show your managing skills.
   components:
   - type: Sprite
@@ -78,7 +78,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakHop
-  name: head of personnel's cloak
+  name: head of service's cloak
   description: A blue cloak with red shoulders and gold buttons, proving you are the gatekeeper to any airlock on the station.
   components:
   - type: Sprite
@@ -107,7 +107,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakCapFormal
-  name: captain's formal cloak
+  name: head of station's formal cloak
   description: A lavish and decorated cloak for special occasions.
   components:
   - type: Sprite

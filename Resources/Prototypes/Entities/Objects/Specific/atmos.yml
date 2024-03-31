@@ -32,3 +32,5 @@
     materialComposition:
       Steel: 400
       Glass: 100
+  - type: ReplaceOnSpawn
+    prototype: Milkalyzer
