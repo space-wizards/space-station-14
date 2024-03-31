@@ -35,69 +35,66 @@ public sealed class AdvertiseSystem : EntitySystem
         _nextCheckTime = TimeSpan.MinValue;
     }
 
-    private void OnMapInit(EntityUid uid, AdvertiseComponent advertise, MapInitEvent args)
+    private void OnMapInit(EntityUid uid, AdvertiseComponent advert, MapInitEvent args)
     {
-        RefreshTimer(uid, advertise);
-        _nextCheckTime = MathHelper.Min(advertise.NextAdvertisementTime, _nextCheckTime);
+        RandomizeNextAdvertTime(advert);
+        _nextCheckTime = MathHelper.Min(advert.NextAdvertisementTime, _nextCheckTime);
     }
 
-    private void RefreshTimer(EntityUid uid, AdvertiseComponent? advertise = null)
+    private void RandomizeNextAdvertTime(AdvertiseComponent advert)
     {
-        if (!Resolve(uid, ref advertise))
-            return;
-
-        var minDuration = Math.Max(1, advertise.MinimumWait);
-        var maxDuration = Math.Max(minDuration, advertise.MaximumWait);
+        var minDuration = Math.Max(1, advert.MinimumWait);
+        var maxDuration = Math.Max(minDuration, advert.MaximumWait);
         var waitDuration = TimeSpan.FromSeconds(_random.Next(minDuration, maxDuration));
 
-        advertise.NextAdvertisementTime = _gameTiming.CurTime + waitDuration;
+        advert.NextAdvertisementTime = _gameTiming.CurTime + waitDuration;
     }
 
-    public void SayAdvertisement(EntityUid uid, AdvertiseComponent? advertise = null)
+    public void SayAdvertisement(EntityUid uid, AdvertiseComponent? advert = null)
     {
-        if (!Resolve(uid, ref advertise))
+        if (!Resolve(uid, ref advert))
             return;
 
-        if (_prototypeManager.TryIndex(advertise.Pack, out var advertisements))
+        var attemptEvent = new AttemptAdvertiseEvent(uid);
+        RaiseLocalEvent(uid, ref attemptEvent);
+        if (attemptEvent.Cancelled)
+            return;
+
+        if (_prototypeManager.TryIndex(advert.Pack, out var advertisements))
             _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.Messages)), InGameICChatType.Speak, hideChat: true);
     }
 
     public override void Update(float frameTime)
     {
-        var curTime = _gameTiming.CurTime;
-        if (_nextCheckTime > curTime)
+        var currentGameTime = _gameTiming.CurTime;
+        if (_nextCheckTime > currentGameTime)
             return;
 
         // _nextCheckTime starts at TimeSpan.MinValue, so this has to SET the value, not just increment it.
-        _nextCheckTime = curTime + _maximumNextCheckDuration;
+        _nextCheckTime = currentGameTime + _maximumNextCheckDuration;
 
         var query = EntityQueryEnumerator<AdvertiseComponent>();
         while (query.MoveNext(out var uid, out var advert))
         {
-            if (curTime > advert.NextAdvertisementTime)
+            if (currentGameTime > advert.NextAdvertisementTime)
             {
-                var attemptEvent = new AttemptAdvertiseEvent(uid);
-                RaiseLocalEvent(uid, ref attemptEvent);
-                if (!attemptEvent.Cancelled)
-                {
-                    SayAdvertisement(uid, advert);
-                }
+                SayAdvertisement(uid, advert);
                 // The timer is always refreshed when it expires, to prevent mass advertising (ex: all the vending machines have no power, and get it back at the same time).
-                RefreshTimer(uid, advert);
+                RandomizeNextAdvertTime(advert);
             }
             _nextCheckTime = MathHelper.Min(advert.NextAdvertisementTime, _nextCheckTime);
         }
     }
 
 
-    private static void OnPowerReceiverAttemptAdvertiseEvent(EntityUid uid, ApcPowerReceiverComponent component, ref AttemptAdvertiseEvent args)
+    private static void OnPowerReceiverAttemptAdvertiseEvent(EntityUid uid, ApcPowerReceiverComponent powerReceiver, ref AttemptAdvertiseEvent args)
     {
-        args.Cancelled |= !component.Powered;
+        args.Cancelled |= !powerReceiver.Powered;
     }
 
-    private static void OnVendingAttemptAdvertiseEvent(EntityUid uid, VendingMachineComponent component, ref AttemptAdvertiseEvent args)
+    private static void OnVendingAttemptAdvertiseEvent(EntityUid uid, VendingMachineComponent machine, ref AttemptAdvertiseEvent args)
     {
-        args.Cancelled |= component.Broken;
+        args.Cancelled |= machine.Broken;
     }
 }
 
