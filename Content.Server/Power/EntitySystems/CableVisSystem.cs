@@ -23,10 +23,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void UpdateAppearance(EntityUid uid, CableVisComponent cableVis, ref NodeGroupsRebuilt args)
         {
-            if (!TryComp(uid, out NodeContainerComponent? nodeContainer) || !TryComp(uid, out AppearanceComponent? appearance))
-                return;
-
-            if (!_nodeContainer.TryGetNode<CableNode>(nodeContainer, cableVis.Node, out var node))
+            if (!_nodeContainer.TryGetNode(uid, cableVis.Node, out CableNode? node))
                 return;
 
             var transform = Transform(uid);
@@ -55,7 +52,7 @@ namespace Content.Server.Power.EntitySystems
                 };
             }
 
-            _appearance.SetData(uid, WireVisVisuals.ConnectedMask, mask, appearance);
+            _appearance.SetData(uid, WireVisVisuals.ConnectedMask, mask);
         }
     }
 }
