@@ -71,7 +71,7 @@ public sealed class SpaceHeaterSystem : EntitySystem
         // If in automatic temperature mode, check if we need to adjust the heat exchange direction
         if (spaceHeater.Mode == SpaceHeaterMode.Auto)
         {
-            var environment = _atmosphereSystem.GetContainingMixture(uid);
+            var environment = _atmosphereSystem.GetContainingMixture(uid, args.Grid, args.Map);
             if (environment == null)
                 return;
 
