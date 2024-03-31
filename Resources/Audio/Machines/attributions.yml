@@ -175,5 +175,5 @@
 
 - files: ["slowclap.ogg"]
   license: "CC-BY-SA-3.0"
-  copyright: "Taken from TG station."
+  copyright: "Taken from TG station, convert to ogg mono by Keer-Sar"
   source: "https://github.com/tgstation/tgstation/blob/b69718be87b85be7198e56f38531ff1312d686b2/sound/machines/slowclap.ogg"
