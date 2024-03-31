@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: 'Flesh and Rock anom reworked: It should be easier to maintain them now
-      (I guess)'
-    type: Tweak
-  id: 5771
-  time: '2024-01-23T12:32:05.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24381
 - author: metalgearsloth
   changes:
   - message: Fix thrusters.
@@ -3799,3 +3791,13 @@
   id: 6270
   time: '2024-03-31T04:59:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26453
+- author: lzk228
+  changes:
+  - message: Hairflower was removed.
+    type: Remove
+  - message: Now you can wear poppy (and other flowers) on your head instead of crafting
+      hairflower with it.
+    type: Tweak
+  id: 6271
+  time: '2024-03-31T05:33:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25475
