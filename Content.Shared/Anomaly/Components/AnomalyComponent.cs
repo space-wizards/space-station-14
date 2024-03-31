@@ -239,9 +239,15 @@ public sealed partial class AnomalyComponent : Component
     [DataField]
     public float Continuity = 0f;
 
+    /// <summary>
+    /// Minimum contituty probability chance, that can be selected by anomaly on MapInit
+    /// </summary>
     [DataField]
     public float MinContituty = 0.1f;
 
+    /// <summary>
+    /// Maximum contituty probability chance, that can be selected by anomaly on MapInit
+    /// </summary>
     [DataField]
     public float MaxContituty = 1.0f;
 
