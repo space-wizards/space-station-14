@@ -307,7 +307,7 @@ public sealed class LockSystem : EntitySystem
         if (!TryComp<LockComponent>(ent, out var lockComp) || !lockComp.Locked)
             return;
 
-        _sharedPopupSystem.PopupPredicted(Loc.GetString("lock-comp-generic-fail",
+        _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-generic-fail",
             ("target", Identity.Entity(ent, EntityManager))),
             ent,
             args.User);
