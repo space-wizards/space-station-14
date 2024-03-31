@@ -160,7 +160,6 @@
   - type: Butcherable
     butcheringType: Knife
     spawned:
-  - id: ClothingHandsGlovesFingerlessInsulated
   - type: RandomInsulation
     # Why repeated numbers? So some numbers are more common, of course!
     list:
