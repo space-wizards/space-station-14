@@ -88,7 +88,6 @@ public partial class BaseShuttleControl : MapGridControl
         var cornerDistance = MathF.Sqrt(WorldRange * WorldRange + WorldRange * WorldRange);
 
         var origin = ScalePosition(-new Vector2(Offset.X, -Offset.Y));
-        var distOffset = -24f;
 
         for (var radius = minDistance; radius <= maxDistance; radius *= EquatorialMultiplier)
         {
