@@ -65,7 +65,10 @@ public abstract partial class SharedPuddleSystem
                 TrySpillAt(Transform(target).Coordinates, puddleSolution, out _);
 
                 if (TryComp<InjectorComponent>(entity, out var injectorComp))
+                {
                     injectorComp.ToggleState = InjectorToggleMode.Draw;
+                    Dirty(entity, injectorComp);
+                }   
             };
         }
         else
