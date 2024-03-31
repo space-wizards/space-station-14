@@ -285,9 +285,20 @@
     graph: ImprovisedNukeCraft
     node: evilbomb
     defaultTarget: evilbombpainted
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 400
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
 
 - type: entity
-  parent: ImprovisedNuclearBombInsidesUranium
+  parent: ImprovisedNuclearBombInsidesEvil
   id: ImprovisedNuclearBombInsidesEvilReciever
   name: nuclear fission explosive
   description: A partially constructed nuke. Looks like it contains radioactive material. Deeper inside, you can see a... syndicate minibomb?!?
@@ -307,6 +318,17 @@
     graph: ImprovisedNukeCraft
     node: evilbombdone
     defaultTarget: evilbombpainted
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 450
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
 
 - type: entity
   parent: ImprovisedNuclearBombEvil
