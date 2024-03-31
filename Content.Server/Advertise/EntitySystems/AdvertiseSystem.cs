@@ -23,7 +23,7 @@ public sealed class AdvertiseSystem : EntitySystem
     /// <summary>
     /// The next time the game will check if advertisements should be displayed
     /// </summary>
-    private TimeSpan _nextCheckTime = TimeSpan.MaxValue;
+    private TimeSpan _nextCheckTime = TimeSpan.MinValue;
 
     public override void Initialize()
     {
@@ -33,8 +33,8 @@ public sealed class AdvertiseSystem : EntitySystem
         SubscribeLocalEvent<ApcPowerReceiverComponent, AdvertiseEnableChangeAttemptEvent>(OnPowerReceiverEnableChangeAttempt);
         SubscribeLocalEvent<VendingMachineComponent, AdvertiseEnableChangeAttemptEvent>(OnVendingEnableChangeAttempt);
 
-        // The component inits will lower this.
-        _nextCheckTime = TimeSpan.MaxValue;
+        // Force it to check on the next update.
+        _nextCheckTime = TimeSpan.MinValue;
     }
 
     private void OnMapInit(EntityUid uid, AdvertiseComponent advertise, MapInitEvent args)
@@ -110,6 +110,8 @@ public sealed class AdvertiseSystem : EntitySystem
         if (_nextCheckTime > curTime)
             return;
 
+        // Note that as _nextCheckTime currently starts at TimeSpan.MinValue, so this has to SET the value, not just
+        // increment it.
         _nextCheckTime = curTime + _maximumNextCheckDuration;
 
         var query = EntityQueryEnumerator<AdvertiseComponent>();
