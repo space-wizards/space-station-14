@@ -307,6 +307,8 @@
       path: /Audio/Machines/twobeep.ogg
     Chime:
       path: /Audio/Machines/chime.ogg
+    Buzz:
+      path: /Audio/Machines/buzz-sigh.ogg
 
 # body emotes
 - type: emoteSounds
