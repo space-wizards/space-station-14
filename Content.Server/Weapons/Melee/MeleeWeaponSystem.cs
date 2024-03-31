@@ -38,7 +38,6 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly IRobustRandom                _random        = default!;
     [Dependency] private readonly BloodstreamSystem            _bloodstream   = default!;
     [Dependency] private readonly ChatSystem                   _chat          = default!;
-    [Dependency] private readonly ContestsSystem               _contests      = default!;
     [Dependency] private readonly DamageExamineSystem          _damageExamine = default!;
     [Dependency] private readonly InventorySystem              _inventory     = default!;
     [Dependency] private readonly LagCompensationSystem        _lag           = default!;
