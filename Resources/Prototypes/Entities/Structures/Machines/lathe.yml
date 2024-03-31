@@ -256,6 +256,9 @@
     - Dropper
     - ClothingEyesGlassesChemical
     dynamicRecipes:
+      - EmergencySoftsuit
+      - EmergencySoftsuitPrison
+      - EVA
       - PowerDrill
       - MiningDrill
       - AnomalyScanner
@@ -528,6 +531,8 @@
     - HeadBorgService
     - TorsoBorgService
     dynamicRecipes:
+    - ExperimentalRCD
+    - EngineeringHardsuit
     - ProximitySensor
     - BorgModuleLightReplacer
     - BorgModuleAdvancedCleaning
@@ -642,6 +647,7 @@
     idleState: icon
     runningState: icon
     staticRecipes:
+      - MK58
       - ClothingEyesHudSecurity
       - Flash
       - Handcuffs
@@ -675,6 +681,15 @@
       - WeaponLaserCarbinePractice
       - WeaponDisablerPractice
     dynamicRecipes:
+      - Enforcer
+      - Kammerer
+      - Lecter
+      - AKMS
+      - Viper
+      - N1984
+      - L6
+      - L6Ammo
+      - HardsuitSecurity
       - CartridgeLightRifleIncendiary
       - CartridgeMagnumIncendiary
       - CartridgePistolIncendiary
