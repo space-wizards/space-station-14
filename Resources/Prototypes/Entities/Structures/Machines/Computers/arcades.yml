@@ -148,6 +148,8 @@
     pack: SpaceVillainAds
     minWait: 60 # Arcades are noisy
     maxWait: 240
+  - type: SpeakOnUIClosed
+    pack: SpaceVillainGoodbyes
 
 - type: entity
   id: SpaceVillainArcadeFilled
@@ -190,3 +192,5 @@
     pack: BlockGameAds
     minWait: 60 # Arcades are noisy
     maxWait: 240
+  - type: SpeakOnUIClosed
+    pack: BlockGameGoodbyes
