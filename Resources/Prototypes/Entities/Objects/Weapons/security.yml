@@ -97,11 +97,13 @@
     damage:
       types:
         Blunt: 20
+    soundHit:
+      collection: MetalThud
     bluntStaminaDamageFactor: 1.5
   - type: Item
     size: Normal
   - type: Clothing
-    sprite: Objects\Weapons\Melee\truncheon.rsi
+    sprite: Objects/Weapons/Melee/truncheon.rsi
     quickEquip: false
     slots:
     - Belt

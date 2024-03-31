@@ -11,7 +11,7 @@
           - type: MeleeWeapon
             damage:
               types:
-                Brute: 0
+                Blunt: 0
           invert: true
       tasks:
         - !type:HTNCompoundTask
@@ -34,7 +34,7 @@
             - type: MeleeWeapon
               damage:
                 types:
-                  Brute: 0
+                  Blunt: 0
           invert: true
       tasks:
         - !type:HTNCompoundTask

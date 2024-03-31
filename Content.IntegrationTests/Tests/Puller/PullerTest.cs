@@ -1,6 +1,6 @@
 using Content.Shared.Hands.Components;
+using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Prototypes;
-using Content.Shared.Pulling.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -29,7 +29,7 @@ public sealed class PullerTest
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!proto.TryGetComponent(out SharedPullerComponent? puller))
+                    if (!proto.TryGetComponent(out PullerComponent? puller))
                         continue;
 
                     if (!puller.NeedsHands)

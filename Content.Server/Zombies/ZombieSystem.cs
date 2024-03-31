@@ -2,9 +2,7 @@ using System.Linq;
 using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
-using Content.Server.Cloning;
 using Content.Server.Emoting.Systems;
-using Content.Server.Inventory;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Cloning;
@@ -31,7 +29,6 @@ namespace Content.Server.Zombies
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly ServerInventorySystem _inv = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
         [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
@@ -55,7 +52,7 @@ namespace Content.Server.Zombies
 
             SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<ZombieComponent, EmoteEvent>(OnEmote, before:
-                new []{typeof(VocalSystem), typeof(BodyEmotesSystem)});
+                new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });
 
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
@@ -70,6 +67,12 @@ namespace Content.Server.Zombies
 
         private void OnPendingMapInit(EntityUid uid, PendingZombieComponent component, MapInitEvent args)
         {
+            if (_mobState.IsDead(uid))
+            {
+                ZombifyEntity(uid);
+                return;
+            }
+
             component.NextTick = _timing.CurTime + TimeSpan.FromSeconds(1f);
         }
 
@@ -196,7 +199,7 @@ namespace Content.Server.Zombies
 
             var min = component.MinZombieInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
-            var chance = (max-min) * ((total - items)/total) + min;
+            var chance = (max - min) * ((total - items) / total) + min;
             return chance;
         }
 
@@ -261,7 +264,7 @@ namespace Content.Server.Zombies
                 _humanoidAppearance.SetBaseLayerColor(target, layer, info.Color);
                 _humanoidAppearance.SetBaseLayerId(target, layer, info.Id);
             }
-            if(TryComp<HumanoidAppearanceComponent>(target, out var appcomp))
+            if (TryComp<HumanoidAppearanceComponent>(target, out var appcomp))
             {
                 appcomp.EyeColor = zombiecomp.BeforeZombifiedEyeColor;
             }
