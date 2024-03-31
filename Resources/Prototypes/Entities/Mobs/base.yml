@@ -265,4 +265,4 @@
         maxVol: 250
   - type: InjectableSolution
     solution: bloodstream
-  - type: BleedPool
+  - type: Bloodstream

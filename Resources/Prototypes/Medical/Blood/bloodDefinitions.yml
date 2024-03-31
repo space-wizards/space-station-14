@@ -1,8 +1,5 @@
 ﻿- type: bloodDefinition
   id: HumanBlood
-  wholeBloodReagent: Blood
-  bloodCellsReagent: Blood #TODO Bloodstream: bloodcells
-  bloodPlasmaReagent: Water #TODO Bloodstream: bloodPlasma
   bloodTypeDistribution:
     HumanOPos: 37.4
     HumanONeg: 6.6

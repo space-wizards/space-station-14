@@ -255,7 +255,7 @@
   - type: SlowOnDamage
     speedModifierThresholds:
       50: 0.4
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodReagent: Water
 #    chemicalMaxVolume: 100
@@ -326,7 +326,7 @@
   parent: ReagentSlime
   suffix: Beer
   components:
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodReagent: Beer
   - type: PointLight
@@ -344,7 +344,7 @@
   parent: ReagentSlime
   suffix: Pax
   components:
-  - type: BleedPool
+  - type: Bloodstream
     bloodReagent: Pax
   - type: PointLight
     color: "#AAAAAA"
@@ -364,7 +364,7 @@
   parent: ReagentSlime
   suffix: Nocturine
   components:
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodReagent: Nocturine
   - type: PointLight
@@ -385,7 +385,7 @@
   parent: ReagentSlime
   suffix: THC
   components:
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodReagent: THC
   - type: PointLight
@@ -403,7 +403,7 @@
   parent: ReagentSlime
   suffix: Bicaridine
   components:
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodReagent: Bicaridine
   - type: PointLight
@@ -421,7 +421,7 @@
   parent: ReagentSlime
   suffix: Toxin
   components:
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodReagent: Toxin
   - type: PointLight
@@ -439,7 +439,7 @@
   parent: ReagentSlime
   suffix: Napalm
   components:
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodReagent: Napalm
   - type: PointLight
@@ -457,7 +457,7 @@
   parent: ReagentSlime
   suffix: Omnizine
   components:
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodReagent: Omnizine
   - type: PointLight
@@ -475,7 +475,7 @@
   parent: ReagentSlime
   suffix: Mute Toxin
   components:
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodReagent: MuteToxin
   - type: PointLight
@@ -493,7 +493,7 @@
   parent: ReagentSlime
   suffix: Norepinephric Acid
   components:
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodReagent: NorepinephricAcid
   - type: PointLight
@@ -511,7 +511,7 @@
   parent: ReagentSlime
   suffix: Ephedrine
   components:
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodReagent: Ephedrine
   - type: PointLight
@@ -529,7 +529,7 @@
   parent: ReagentSlime
   suffix: Robust Harvest
   components:
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodReagent: RobustHarvest
   - type: PointLight

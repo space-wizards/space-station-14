@@ -3,8 +3,20 @@
 # any antigens that are not present on the bloodcells are found in the blood plasma
 # EXCEPT for the D antigen, this is only ever on bloodcells if it is present at all (This simulates RH factor).
 
+
+
+- type: bloodType
+  id: HumanBloodType
+  abstract: true
+  wholeBloodReagent: Blood
+  bloodCellsReagent: Blood #TODO Bloodstream: bloodcells
+  bloodPlasmaReagent: Water #TODO Bloodstream: bloodPlasma
+
+
+
 - type: bloodType
   id: HumanAPos
+  parent: HumanBloodType
   bloodCellAntigens:
   - HumanA
   - HumanD
@@ -13,6 +25,7 @@
 
 - type: bloodType
   id: HumanANeg
+  parent: HumanBloodType
   bloodCellAntigens:
   - HumanA
   plasmaAntigens:
@@ -20,6 +33,7 @@
 
 - type: bloodType
   id: HumanBPos
+  parent: HumanBloodType
   bloodCellAntigens:
   - HumanB
   - HumanD
@@ -28,6 +42,7 @@
 
 - type: bloodType
   id: HumanBNeg
+  parent: HumanBloodType
   bloodCellAntigens:
   - HumanB
   plasmaAntigens:
@@ -35,6 +50,7 @@
 
 - type: bloodType
   id: HumanABPos
+  parent: HumanBloodType
   bloodCellAntigens:
   - HumanB
   - HumanA
@@ -43,6 +59,7 @@
 
 - type: bloodType
   id: HumanABNeg
+  parent: HumanBloodType
   bloodCellAntigens:
   - HumanB
   - HumanA
@@ -50,6 +67,7 @@
 
 - type: bloodType
   id: HumanOPos
+  parent: HumanBloodType
   bloodCellAntigens:
   - HumanD
   plasmaAntigens:
@@ -58,6 +76,7 @@
 
 - type: bloodType
   id: HumanONeg
+  parent: HumanBloodType
   bloodCellAntigens: []
   plasmaAntigens:
   - HumanB

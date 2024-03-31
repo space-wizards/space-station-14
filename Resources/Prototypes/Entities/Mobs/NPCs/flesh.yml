@@ -41,7 +41,7 @@
     spawned:
     - id: FoodMeat
       amount: 1
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 100
   - type: CombatMode
@@ -240,7 +240,7 @@
     spawned:
     - id: FoodMeat
       amount: 1
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 100
   - type: CombatMode

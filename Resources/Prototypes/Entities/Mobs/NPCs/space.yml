@@ -38,7 +38,7 @@
   - type: Stamina
     critThreshold: 150
   - type: MovementAlwaysTouching
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 300
 #    bloodReagent: Cryoxadone
@@ -217,7 +217,7 @@
     - id: EggSpider
       amount: 1
       prob: 0.5
-  - type: BleedPool
+  - type: Bloodstream
     #TODO Bloodstream: re-implement this
     #bloodMaxVolume: 250
     #bloodReagent: Cryoxadone
@@ -320,7 +320,7 @@
         - id: ClothingShoesSnakeskinBoots
           amount: 1
           prob: 0.3
-    - type: BleedPool
+    - type: Bloodstream
       #TODO Bloodstream: re-implement this
 #      bloodMaxVolume: 200
 #      bloodReagent: Cryoxadone
