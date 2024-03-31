@@ -32,8 +32,8 @@ public sealed partial class StoreListingControl : Control
         _hasBalance = hasBalance;
         _price = price;
 
-        StoreItemName.Text = _data.GetName(_prototype);
-        StoreItemDescription.SetMessage(data.GetDescription(_prototype));
+        StoreItemName.Text = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(_data, _prototype);
+        StoreItemDescription.SetMessage(ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(_data, _prototype));
 
         UpdateBuyButtonText();
         StoreItemBuyButton.Disabled = !CanBuy();
@@ -69,7 +69,7 @@ public sealed partial class StoreListingControl : Control
 
     private void UpdateName()
     {
-        var name = _data.GetName(_prototype);
+        var name = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(_data, _prototype);
 
         var stationTime = _timing.CurTime.Subtract(_ticker.RoundStartTimeSpan);
         if (_data.RestockTime > stationTime)

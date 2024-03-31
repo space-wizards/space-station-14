@@ -2,10 +2,6 @@ using System.Linq;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Store;
@@ -172,40 +168,12 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             RestockTime = RestockTime,
         };
     }
-
-    public string GetName(IPrototypeManager prototypeManager)
-    {
-        var name = string.Empty;
-
-        if (Name != null)
-            name = Loc.GetString(Name);
-        else if (ProductEntity != null)
-            name = prototypeManager.Index(ProductEntity.Value).Name;
-
-        return name;
-    }
-
-    public string GetDescription(IPrototypeManager prototypeManager)
-    {
-        var desc = string.Empty;
-
-        if (Description != null)
-            desc = Loc.GetString(Description);
-        else if (ProductEntity != null)
-            desc = prototypeManager.Index(ProductEntity.Value).Description;
-
-        return desc;
-    }
 }
 
-//<inheritdoc>
 /// <summary>
 ///     Defines a set item listing that is available in a store
 /// </summary>
 [Prototype("listing")]
 [Serializable, NetSerializable]
 [DataDefinition]
-public sealed partial class ListingPrototype : ListingData, IPrototype
-{
-
-}
+public sealed partial class ListingPrototype : ListingData, IPrototype;

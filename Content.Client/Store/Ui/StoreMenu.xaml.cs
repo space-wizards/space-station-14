@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Client.Actions;
-using Content.Client.GameTicking.Managers;
 using Content.Client.Message;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
@@ -72,11 +71,14 @@ public sealed partial class StoreMenu : DefaultWindow
         WithdrawButton.Disabled = disabled;
     }
 
-    public void UpdateListing(List<ListingData>? listings = null)
+    public void UpdateListing(List<ListingData> listings)
     {
-        if (listings != null)
-            _cachedListings = listings;
+        _cachedListings = listings;
+        UpdateListing();
+    }
 
+    public void UpdateListing()
+    {
         var sorted = _cachedListings.OrderBy(l => l.Priority).ThenBy(l => l.Cost.Values.Sum());
 
         // should probably chunk these out instead. to-do if this clogs the internet tubes.
@@ -120,8 +122,6 @@ public sealed partial class StoreMenu : DefaultWindow
         if (!listing.Categories.Contains(CurrentCategory))
             return;
 
-        var listingName = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _prototypeManager);
-        var listingDesc = ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listing, _prototypeManager);
         var listingPrice = listing.Cost;
         var hasBalance = HasListingPrice(Balance, listingPrice);
 

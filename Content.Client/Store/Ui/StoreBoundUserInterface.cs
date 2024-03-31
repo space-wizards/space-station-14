@@ -17,7 +17,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     private string _windowName = Loc.GetString("store-ui-default-title");
 
     [ViewVariables]
-    private string _search = "";
+    private string _search = string.Empty;
 
     [ViewVariables]
     private HashSet<ListingData> _listings = new();
