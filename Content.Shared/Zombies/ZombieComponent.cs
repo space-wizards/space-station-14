@@ -110,7 +110,9 @@ public sealed partial class ZombieComponent : Component, IAntagStatusIconCompone
         {
             { "Blunt", -0.4 },
             { "Slash", -0.2 },
-            { "Piercing", -0.2 }
+            { "Piercing", -0.2 },
+            { "Heat", -0.02 },
+            { "Shock", -0.02 }
         }
     };
 

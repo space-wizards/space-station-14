@@ -8,6 +8,8 @@
   components:
   - type: Sprite
     state: icon
+  - type: Item
+    size: Normal
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -73,6 +75,19 @@
   - type: SpaceGarbage
 
 - type: entity
+  name: base empty bottle
+  id: DrinkBottleBaseSmallEmpty
+  parent: DrinkBottleBaseEmpty
+  abstract: true
+  components:
+  - type: Item
+    size: Small
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+
+- type: entity
   name: base empty carton
   id: DrinkCartonBaseEmpty
   parent: BaseItem
@@ -122,6 +137,19 @@
       Cardboard: 20
   - type: SpaceGarbage
 
+- type: entity
+  name: base empty bottle
+  id: DrinkCartonBaseLargeEmpty
+  parent: DrinkCartonBaseEmpty
+  abstract: true
+  components:
+  - type: Item
+    size: Normal
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+
 # Containers
 - type: entity
   name: Jailbreaker Verte bottle
@@ -143,28 +171,20 @@
 
 - type: entity
   name: ale bottle
-  parent: DrinkBottleBaseEmpty
+  parent: DrinkBottleBaseSmallEmpty
   id: DrinkBottleAle
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/alebottle_empty.rsi
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
 
 
 - type: entity
   name: beer bottle
-  parent: DrinkBottleBaseEmpty
+  parent: DrinkBottleBaseSmallEmpty
   id: DrinkBottleBeer
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/beer_empty.rsi
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
 
 
 - type: entity
@@ -322,37 +342,24 @@
 
 - type: entity
   name: milk carton
-  parent: DrinkCartonBaseEmpty
+  parent: DrinkCartonBaseLargeEmpty
   id: DrinkCartonMilk
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/milk.rsi
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
-
 
 - type: entity
   name: soy milk carton
-  parent: DrinkCartonBaseEmpty
+  parent: DrinkCartonBaseLargeEmpty
   id: DrinkCartonSoyMilk
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/soymilk.rsi
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
 
 - type: entity
   name: oat milk carton
-  parent: DrinkCartonBaseEmpty
+  parent: DrinkCartonBaseLargeEmpty
   id: DrinkCartonOatMilk
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/oatmilk.rsi
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100

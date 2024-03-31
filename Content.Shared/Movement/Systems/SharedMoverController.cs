@@ -9,8 +9,8 @@ using Content.Shared.Maps;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using Content.Shared.Pulling.Components;
 using Content.Shared.Tag;
+using Content.Shared.Tilenol;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -23,6 +23,7 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
 
 namespace Content.Shared.Movement.Systems
 {
@@ -46,6 +47,7 @@ namespace Content.Shared.Movement.Systems
         [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
         [Dependency] private   readonly SharedTransformSystem _transform = default!;
         [Dependency] private   readonly TagSystem _tags = default!;
+        [Dependency] private   readonly TilenolSystem _tile = default!;
 
         protected EntityQuery<InputMoverComponent> MoverQuery;
         protected EntityQuery<MobMoverComponent> MobMoverQuery;
@@ -53,7 +55,7 @@ namespace Content.Shared.Movement.Systems
         protected EntityQuery<MovementSpeedModifierComponent> ModifierQuery;
         protected EntityQuery<PhysicsComponent> PhysicsQuery;
         protected EntityQuery<RelayInputMoverComponent> RelayQuery;
-        protected EntityQuery<SharedPullableComponent> PullableQuery;
+        protected EntityQuery<PullableComponent> PullableQuery;
         protected EntityQuery<TransformComponent> XformQuery;
         protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
         protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
@@ -61,14 +63,14 @@ namespace Content.Shared.Movement.Systems
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
 
-        private const float FootstepVariation = 0f;
+        public const float FootstepVariation = 0f;
 
         /// <summary>
         /// <see cref="CCVars.StopSpeed"/>
         /// </summary>
         private float _stopSpeed;
 
-        private bool _relativeMovement;
+        public bool _relativeMovement;
 
         /// <summary>
         /// Cache the mob movement calculation to re-use elsewhere.
@@ -85,7 +87,7 @@ namespace Content.Shared.Movement.Systems
             RelayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
             PhysicsQuery = GetEntityQuery<PhysicsComponent>();
             RelayQuery = GetEntityQuery<RelayInputMoverComponent>();
-            PullableQuery = GetEntityQuery<SharedPullableComponent>();
+            PullableQuery = GetEntityQuery<PullableComponent>();
             XformQuery = GetEntityQuery<TransformComponent>();
             NoRotateQuery = GetEntityQuery<NoRotateOnMoveComponent>();
             CanMoveInAirQuery = GetEntityQuery<CanMoveInAirComponent>();
@@ -191,6 +193,12 @@ namespace Content.Shared.Movement.Systems
                 && !(weightless || physicsComponent.BodyStatus == BodyStatus.InAir))
             {
                 tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
+            }
+
+            if (!weightless && physicsComponent.BodyStatus == BodyStatus.OnGround)
+            {
+                if (_tile.HandleTilenol(uid, physicsUid, physicsComponent, xform, mover, tileDef, relayTarget))
+                    return;
             }
 
             // Regular movement.
@@ -376,7 +384,7 @@ namespace Content.Shared.Movement.Systems
                     !otherCollider.CanCollide ||
                     ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
                     (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
-                    (TryComp(otherCollider.Owner, out SharedPullableComponent? pullable) && pullable.BeingPulled))
+                    (TryComp(otherCollider.Owner, out PullableComponent? pullable) && pullable.BeingPulled))
                 {
                     continue;
                 }
@@ -389,7 +397,7 @@ namespace Content.Shared.Movement.Systems
 
         protected abstract bool CanSound();
 
-        private bool TryGetSound(
+        public bool TryGetSound(
             bool weightless,
             EntityUid uid,
             InputMoverComponent mover,
@@ -459,7 +467,7 @@ namespace Content.Shared.Movement.Systems
             sound = null;
 
             // Fallback to the map?
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
             {
                 if (TryComp<FootstepModifierComponent>(xform.MapUid, out var modifier))
                 {

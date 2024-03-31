@@ -18,7 +18,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
-    onlyMobs: false
+    onlyAffectsMobs: false
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice
@@ -49,7 +49,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
-    onlyMobs: false
+    onlyAffectsMobs: false
   - type: UseDelay
     delay: 0.5
 
@@ -73,6 +73,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    onlyAffectsMobs: false
   - type: UseDelay
     delay: 0.5
 
@@ -113,6 +114,7 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 15
+    onlyAffectsMobs: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1
@@ -204,6 +206,7 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 20
+    onlyAffectsMobs: false
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -234,6 +237,7 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 20
+    onlyAffectsMobs: false
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -264,6 +268,7 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 20
+    onlyAffectsMobs: false
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -295,6 +300,7 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 30
+    onlyAffectsMobs: false
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -332,10 +338,32 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 30
+    onlyAffectsMobs: false
   - type: StaticPrice
     price: 500
   - type: Tag
     tags: []
+
+- type: entity
+  name: tilenol injector
+  id: Tilenol
+  parent: Stimpack
+  description: Contains a fast acting drug that alleviates headaches and motion-sickness for senior citizens.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: tilenol
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 30
+        reagents:
+        - ReagentId: Tilenol
+          Quantity: 30 # * 5 = 150s (2.5 min)
+  - type: SolutionContainerVisuals
+    emptySpriteName: tilenol_empty
 
 - type: entity
   name: stimulant microinjector
@@ -391,6 +419,7 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 30
+    onlyAffectsMobs: false
   - type: StaticPrice
     price: 500
   - type: Tag
@@ -412,7 +441,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
-    onlyMobs: false
+    onlyAffectsMobs: false
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta

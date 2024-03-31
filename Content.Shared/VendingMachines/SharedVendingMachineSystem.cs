@@ -4,10 +4,8 @@ using System.Linq;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
-using Robust.Shared.Random;
 
 namespace Content.Shared.VendingMachines;
 
@@ -18,8 +16,6 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {

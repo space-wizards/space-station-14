@@ -1,0 +1,11 @@
+- type: alert
+  id: Tilenol
+  icons: [ /Textures/Tiles/showroom.png ]
+  name: alerts-tilenol-name
+  description: alerts-tilenol-desc
+
+- type: alert
+  id: Latency
+  icons: [ /Textures/Alerts/member_content.rsi/blag.png ]
+  name: alerts-latency-name
+  description: alerts-latency-desc

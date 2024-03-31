@@ -1,0 +1,22 @@
+- type: constructionGraph
+  id: ClothingShoeSlippersDuck
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shoes
+          steps:
+            - tag: ToyRubberDuck
+              name: a rubber ducky
+              icon:
+                sprite: Objects/Fun/ducky.rsi
+                state: icon
+              doAfter: 1
+            - tag: ToyRubberDuck
+              name: a rubber ducky
+              icon:
+                sprite: Objects/Fun/ducky.rsi
+                state: icon
+              doAfter: 1
+    - node: shoes
+      entity: ClothingShoeSlippersDuck
