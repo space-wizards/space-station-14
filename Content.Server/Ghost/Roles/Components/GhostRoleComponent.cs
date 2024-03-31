@@ -87,5 +87,37 @@ namespace Content.Server.Ghost.Roles.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("reregister")]
         public bool ReregisterOnGhost { get; set; } = true;
+
+        /// <summary>
+        /// If true, ghost role is raffled, otherwise it is "first come first served".
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("raffle")]
+        public bool Raffle { get; set; }
+
+        /// <summary>
+        /// The initial duration of a raffle in seconds. This is the countdown timer's value when the raffle starts.
+        /// Not used if <see cref="Raffle"/> is false.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("raffleInitialDuration")]
+        public uint RaffleInitialDuration { get; set; } = 30;
+
+        /// <summary>
+        /// When the raffle is joined by a player, the countdown timer is extended by this value in seconds.
+        /// Not used if <see cref="Raffle"/> is false.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("raffleJoinExtendsDurationBy")]
+        public uint RaffleJoinExtendsDurationBy { get; set; } = 10;
+
+        /// <summary>
+        /// The maximum duration in seconds for the ghost role raffle. A raffle cannot run for longer than this
+        /// duration, even if extended by joiners. Must be greater than or equal to <see cref="RaffleInitialDuration"/>.
+        /// Not used if <see cref="Raffle"/> is false.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("raffleMaxDuration")]
+        public uint RaffleMaxDuration { get; set; } = 120;
     }
 }

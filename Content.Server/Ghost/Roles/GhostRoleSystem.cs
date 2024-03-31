@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles.Components;
@@ -22,6 +23,7 @@ using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Ghost.Roles
@@ -37,10 +39,14 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly TransformSystem _transform = default!;
         [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
+
         private readonly Dictionary<uint, Entity<GhostRoleComponent>> _ghostRoles = new();
+        private readonly Dictionary<uint, Entity<GhostRoleRaffleComponent>> _ghostRoleRaffles = new();
+
         private readonly Dictionary<ICommonSession, GhostRolesEui> _openUis = new();
         private readonly Dictionary<ICommonSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
 
@@ -57,10 +63,11 @@ namespace Content.Server.Ghost.Roles
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindRemovedMessage>(OnMindRemoved);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<GhostRoleComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<GhostRoleComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<GhostRoleComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<GhostRoleComponent, ComponentShutdown>(OnRoleShutdown);
             SubscribeLocalEvent<GhostRoleComponent, EntityPausedEvent>(OnPaused);
             SubscribeLocalEvent<GhostRoleComponent, EntityUnpausedEvent>(OnUnpaused);
+            SubscribeLocalEvent<GhostRoleRaffleComponent, ComponentInit>(OnRaffleInit);
+            SubscribeLocalEvent<GhostRoleRaffleComponent, ComponentShutdown>(OnRaffleShutdown);
             SubscribeLocalEvent<GhostRoleMobSpawnerComponent, TakeGhostRoleEvent>(OnSpawnerTakeRole);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, TakeGhostRoleEvent>(OnTakeoverTakeRole);
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
@@ -158,15 +165,79 @@ namespace Content.Server.Ghost.Roles
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            if (_needsUpdateGhostRoleCount)
+
+            UpdateGhostRoleCount();
+            UpdateRaffles(frameTime);
+        }
+
+        private void UpdateGhostRoleCount()
+        {
+            if (!_needsUpdateGhostRoleCount)
+                return;
+
+            _needsUpdateGhostRoleCount = false;
+            // TODO: this used to be cheap but now it's more expensive...
+            var response = new GhostUpdateGhostRoleCountEvent(GetGhostRolesInfo(null).Length);
+            foreach (var player in _playerManager.Sessions)
             {
-                _needsUpdateGhostRoleCount = false;
-                var response = new GhostUpdateGhostRoleCountEvent(GetGhostRolesInfo().Length);
-                foreach (var player in _playerManager.Sessions)
-                {
-                    RaiseNetworkEvent(response, player.Channel);
-                }
+                RaiseNetworkEvent(response, player.Channel);
             }
+        }
+
+        private void UpdateRaffles(float frameTime)
+        {
+            var query = EntityQueryEnumerator<GhostRoleRaffleComponent, MetaDataComponent>();
+            while (query.MoveNext(out var entityUid, out var raffle, out var meta))
+            {
+                if (meta.EntityPaused)
+                    continue;
+
+                // if all participants leave/were removed from the raffle, the raffle is canceled.
+                if (raffle.CurrentMembers.Count == 0)
+                {
+                    RemoveRaffleAndUpdateEui(entityUid, raffle);
+                    continue;
+                }
+
+                raffle.Countdown -= frameTime;
+                if (raffle.Countdown > 0)
+                    continue;
+
+                // the raffle is over! find someone to take over the ghost role
+                var candidates = raffle.CurrentMembers.ToList();
+                _random.Shuffle(candidates); // shuffle the list so we can pick a lucky winner!
+
+                // try to find someone who can take the role
+                foreach (var candidate in candidates)
+                {
+                    // TODO: the following two checks are kind of redundant since they should already be removed
+                    //           from the raffle
+                    // can't win if you are disconnected (although you shouldn't be a candidate anyway)
+                    if (candidate.Status != SessionStatus.InGame)
+                        continue;
+
+                    // can't win if you are no longer a ghost (e.g. if you returned to your body)
+                    if (candidate.AttachedEntity == null || !HasComp<GhostComponent>(candidate.AttachedEntity))
+                        continue;
+
+                    if (Takeover(candidate, raffle.Identifier))
+                    {
+                        // takeover successful, we have a winner! remove the winner from other raffles they might be in
+                        LeaveAllRaffles(candidate);
+                        break;
+                    }
+                }
+
+                // raffle over, either because someone won, or everyone unregistered from the raffle
+                RemoveRaffleAndUpdateEui(entityUid, raffle);
+            }
+        }
+
+        private void RemoveRaffleAndUpdateEui(EntityUid entityUid, GhostRoleRaffleComponent raffle)
+        {
+            _ghostRoleRaffles.Remove(raffle.Identifier);
+            RemComp(entityUid, raffle);
+            UpdateAllEui();
         }
 
         private void PlayerStatusChanged(object? blah, SessionStatusEventArgs args)
@@ -175,6 +246,11 @@ namespace Content.Server.Ghost.Roles
             {
                 var response = new GhostUpdateGhostRoleCountEvent(_ghostRoles.Count);
                 RaiseNetworkEvent(response, args.Session.Channel);
+            }
+            else
+            {
+                // people who disconnect are removed from ghost role raffles
+                LeaveAllRaffles(args.Session);
             }
         }
 
@@ -194,24 +270,135 @@ namespace Content.Server.Ghost.Roles
                 return;
 
             _ghostRoles.Remove(comp.Identifier);
+            _ghostRoleRaffles.Remove(comp.Identifier); // remove raffle too if one is running
             UpdateAllEui();
         }
 
-        public void Takeover(ICommonSession player, uint identifier)
+        // probably fine to be init because it's never added during entity initialization, but much later
+        private void OnRaffleInit(Entity<GhostRoleRaffleComponent> ent, ref ComponentInit args)
+        {
+            if (!TryComp(ent, out GhostRoleComponent? ghostRole))
+            {
+                // can't have a raffle for a ghost role that doesn't exist
+                RemComp<GhostRoleRaffleComponent>(ent);
+                return;
+            }
+
+            var raffle = ent.Comp;
+            raffle.Identifier = ghostRole.Identifier;
+            raffle.Countdown = ghostRole.RaffleInitialDuration;
+            raffle.CumulativeTime = ghostRole.RaffleInitialDuration;
+        }
+
+        private void OnRaffleShutdown(Entity<GhostRoleRaffleComponent> ent, ref ComponentShutdown args)
+        {
+            _ghostRoleRaffles.Remove(ent.Comp.Identifier);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="identifier"></param>
+        public void JoinRaffle(ICommonSession player, uint identifier)
+        {
+            if (!_ghostRoles.TryGetValue(identifier, out var roleEnt))
+                return;
+
+            var role = roleEnt.Comp;
+            // get raffle or create a new one if it doesn't exist
+            var raffle = _ghostRoleRaffles.TryGetValue(identifier, out var raffleEnt)
+                ? raffleEnt.Comp
+                : EnsureComp<GhostRoleRaffleComponent>(roleEnt.Owner);
+
+            _ghostRoleRaffles.TryAdd(identifier, (roleEnt.Owner, raffle));
+
+            if (!raffle.CurrentMembers.Add(player))
+            {
+                Log.Warning($"{player.Name} tried to join raffle for ghost role {identifier} but they are already in the raffle");
+                return;
+            }
+
+            // if this is the first time the player joins this raffle, and the player wasn't the starter of the raffle:
+            // extend the countdown, but only if doing so will not make the raffle take longer than the maximum
+            // duration
+            if (raffle.AllMembers.Add(player) && raffle.AllMembers.Count > 1
+                && raffle.CumulativeTime + role.RaffleJoinExtendsDurationBy <= role.RaffleMaxDuration)
+            {
+                    raffle.Countdown += role.RaffleJoinExtendsDurationBy;
+                    raffle.CumulativeTime += role.RaffleJoinExtendsDurationBy;
+            }
+
+            UpdateAllEui();
+        }
+
+        public void LeaveRaffle(ICommonSession player, uint identifier)
+        {
+            if (!_ghostRoleRaffles.TryGetValue(identifier, out var raffleEnt))
+                return;
+
+            if (raffleEnt.Comp.CurrentMembers.Remove(player))
+            {
+                UpdateAllEui();
+            }
+            else
+            {
+                Log.Warning($"{player.Name} tried to leave raffle for ghost role {identifier} but they are not in the raffle");
+            }
+
+            // (raffle ending because all players left is handled in update())
+        }
+
+        public void LeaveAllRaffles(ICommonSession player)
+        {
+            var shouldUpdateEui = false;
+
+            foreach (var raffleEnt in _ghostRoleRaffles.Values)
+            {
+                shouldUpdateEui |= raffleEnt.Comp.CurrentMembers.Remove(player);
+            }
+
+            if (shouldUpdateEui)
+                UpdateAllEui();
+        }
+
+        /// <summary>
+        /// Request a ghost role. If it's a raffled role starts or joins a raffle, otherwise the player immediately
+        /// takes over the ghost role if possible.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        /// <param name="identifier">ID of the ghost role.</param>
+        public void Request(ICommonSession player, uint identifier)
+        {
+            if (!_ghostRoles.TryGetValue(identifier, out var roleEnt))
+                return;
+
+            if (roleEnt.Comp.Raffle)
+            {
+                JoinRaffle(player, identifier);
+            }
+            else
+            {
+                Takeover(player, identifier);
+            }
+        }
+
+        public bool Takeover(ICommonSession player, uint identifier)
         {
             if (!_ghostRoles.TryGetValue(identifier, out var role))
-                return;
+                return false;
 
             var ev = new TakeGhostRoleEvent(player);
             RaiseLocalEvent(role, ref ev);
 
             if (!ev.TookRole)
-                return;
+                return false;
 
             if (player.AttachedEntity != null)
                 _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.Comp.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
 
             CloseEui(player);
+            return true;
         }
 
         public void Follow(ICommonSession player, uint identifier)
@@ -240,7 +427,7 @@ namespace Content.Server.Ghost.Roles
             _mindSystem.TransferTo(newMind, mob);
         }
 
-        public GhostRoleInfo[] GetGhostRolesInfo()
+        public GhostRoleInfo[] GetGhostRolesInfo(ICommonSession? player)
         {
             var roles = new List<GhostRoleInfo>();
             var metaQuery = GetEntityQuery<MetaDataComponent>();
@@ -250,7 +437,41 @@ namespace Content.Server.Ghost.Roles
                 if (metaQuery.GetComponent(uid).EntityPaused)
                     continue;
 
-                roles.Add(new GhostRoleInfo {Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules, Requirements = role.Requirements});
+
+                var kind = GhostRoleKind.FirstComeFirstServe;
+                GhostRoleRaffleComponent? raffle = null;
+
+                if (role.Raffle)
+                {
+                    kind = GhostRoleKind.RaffleReady;
+
+                    if (_ghostRoleRaffles.TryGetValue(id, out var raffleEnt))
+                    {
+                        kind = GhostRoleKind.RaffleInProgress;
+                        raffle = raffleEnt.Comp;
+
+                        if (player is not null && raffle.CurrentMembers.Contains(player))
+                            kind = GhostRoleKind.RaffleJoined;
+                    }
+                }
+
+                var rafflePlayerCount = (uint?) raffle?.CurrentMembers.Count ?? 0;
+                var raffleEndTime = raffle is not null
+                    ? _timing.CurTime.Add(TimeSpan.FromSeconds(raffle.Countdown))
+                    : TimeSpan.MinValue;
+
+
+                roles.Add(new GhostRoleInfo
+                {
+                    Identifier = id,
+                    Name = role.RoleName,
+                    Description = role.RoleDescription,
+                    Rules = role.RoleRules,
+                    Requirements = role.Requirements,
+                    Kind = kind,
+                    RafflePlayerCount = rafflePlayerCount,
+                    RaffleEndTime = raffleEndTime
+                });
             }
 
             return roles.ToArray();
@@ -265,6 +486,10 @@ namespace Content.Server.Ghost.Roles
             if (HasComp<GhostComponent>(message.Entity))
                 return;
 
+            // The player is not a ghost (anymore), so they should not be in any raffles. Remove them.
+            // This ensures player doesn't win a raffle after returning to their (revived) body and getting forced into
+            // a ghost role.
+            LeaveAllRaffles(message.Player);
             CloseEui(message.Player);
         }
 
@@ -299,6 +524,7 @@ namespace Content.Server.Ghost.Roles
 
             _openUis.Clear();
             _ghostRoles.Clear();
+            _ghostRoleRaffles.Clear();
             _nextRoleIdentifier = 0;
         }
 
@@ -329,7 +555,7 @@ namespace Content.Server.Ghost.Roles
             RegisterGhostRole(ent);
         }
 
-        private void OnShutdown(Entity<GhostRoleComponent> role, ref ComponentShutdown args)
+        private void OnRoleShutdown(Entity<GhostRoleComponent> role, ref ComponentShutdown args)
         {
             UnregisterGhostRole(role);
         }
