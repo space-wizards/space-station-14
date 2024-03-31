@@ -330,18 +330,27 @@
         - TabletopMachineMask
         layer:
         - TabletopMachineLayer
+  - type: ExplodeOnTrigger
   - type: OnUseTimerTrigger
     delay: 10
     delayOptions: [10, 300]
     initialBeepDelay: 0
     beepSound: /Audio/Machines/Nuke/general_beep.ogg
-  - type: ExplodeOnTrigger
   - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
     explosionType: DemolitionCharge
     totalIntensity: 480
     intensitySlope: 5
     maxIntensity: 960
     canCreateVacuum: false
+  - type: UserInterface
+    interfaces:
+      - key: enum.WiresUiKey.Key
+        type: WiresBoundUserInterface
+  - type: Wires
+    layoutId: Defusable
+    alwaysRandomize: true
+  - type: Defusable
+  - type: WiresPanel
 
 - type: entity
   parent: ImprovisedNuclearBombEvil
