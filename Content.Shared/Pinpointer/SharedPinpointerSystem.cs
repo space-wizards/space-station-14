@@ -73,18 +73,20 @@ public abstract class SharedPinpointerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Manually set distance from pinpointer to target
+    ///     Manually set distance from pinpointer to target.
     /// </summary>
-    public void SetDistance(EntityUid uid, Distance distance, PinpointerComponent? pinpointer = null)
+    public bool TrySetDistance(EntityUid uid, Distance distance, PinpointerComponent? pinpointer = null)
     {
         if (!Resolve(uid, ref pinpointer))
-            return;
+            return false;
 
         if (distance == pinpointer.DistanceToTarget)
-            return;
+            return false;
 
         pinpointer.DistanceToTarget = distance;
         Dirty(uid, pinpointer);
+
+        return true;
     }
 
     /// <summary>

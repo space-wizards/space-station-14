@@ -10,6 +10,7 @@ using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Maps;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -28,11 +29,9 @@ namespace Content.Server.Polymorph.Systems;
 public sealed partial class PolymorphSystem : EntitySystem
 {
     [Dependency] private readonly IComponentFactory _compFact = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly SharedBuckleSystem _buckle = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
@@ -42,6 +41,7 @@ public sealed partial class PolymorphSystem : EntitySystem
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly ServerInventorySystem _inventory = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedPausedMapStorageSystem PausedMapStorage = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
@@ -62,7 +62,6 @@ public sealed partial class PolymorphSystem : EntitySystem
         SubscribeLocalEvent<PolymorphedEntityComponent, DestructionEventArgs>(OnDestruction);
 
         InitializeCollide();
-        InitializeMap();
     }
 
     public override void Update(float frameTime)
@@ -256,9 +255,11 @@ public sealed partial class PolymorphSystem : EntitySystem
             _mindSystem.TransferTo(mindId, child, mind: mind);
 
         //Ensures a map to banish the entity to
-        EnsurePausedMap();
-        if (PausedMap != null)
-            _transform.SetParent(uid, targetTransformComp, PausedMap.Value);
+        if (PausedMapStorage.EnsurePausedMap())
+        {
+            PausedMapStorage.BeforeEnter(uid, child);
+            _transform.SetParent(uid, targetTransformComp, PausedMapStorage.PausedMap.Value);
+        }
 
         return child;
     }
@@ -334,6 +335,8 @@ public sealed partial class PolymorphSystem : EntitySystem
                 ("child", Identity.Entity(parent, EntityManager))),
             parent);
         QueueDel(uid);
+
+        PausedMapStorage.AfterExit(parent, uid);
 
         return parent;
     }

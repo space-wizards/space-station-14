@@ -1,11 +1,10 @@
 using Content.Shared.Interaction;
+using Content.Shared.Maps;
+using Content.Shared.Maps.Components;
 using Content.Shared.Pinpointer;
-using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
-using Robust.Shared.Map;
 using Robust.Shared.Utility;
-using Content.Server.Bed.Cryostorage;
 using Content.Server.Respawn;
 using Content.Server.Shuttles.Events;
 
@@ -15,6 +14,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedPausedMapStorageSystem _pausedMapStorage = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -25,8 +25,8 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         SubscribeLocalEvent<PinpointerComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<FTLCompletedEvent>(OnLocateTarget);
-        SubscribeLocalEvent<BeforeEnterCryostorageEvent>(OnBeforeEnterCryostorage);
-        SubscribeLocalEvent<AfterExitCryostorageEvent>(OnAfterExitCryostorage);
+        SubscribeLocalEvent<BeforeEnterPausedMapEvent>(OnBeforeEnterPausedMap);
+        SubscribeLocalEvent<AfterExitPausedMapEvent>(OnAfterExitPausedMap);
         SubscribeLocalEvent<SpecialRespawnEvent>(OnSpecialRespawn);
     }
 
@@ -47,6 +47,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             return;
         _appearance.SetData(uid, PinpointerVisuals.IsActive, pinpointer.IsActive, appearance);
         _appearance.SetData(uid, PinpointerVisuals.TargetDistance, pinpointer.DistanceToTarget, appearance);
+        Dirty(uid, pinpointer);
     }
 
     private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
@@ -74,22 +75,22 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         }
     }
 
-    private void OnBeforeEnterCryostorage(ref BeforeEnterCryostorageEvent args)
+    private void OnBeforeEnterPausedMap(ref BeforeEnterPausedMapEvent args)
     {
         var query = EntityQueryEnumerator<PinpointerComponent>();
 
         while (query.MoveNext(out var uid, out var pinpointer))
             if (pinpointer.Target == args.Entity)
-                SetTarget(uid, args.Cryostorage.Owner, pinpointer);
+                SetTarget(uid, args.Proxy, pinpointer);
     }
 
-    private void OnAfterExitCryostorage(ref AfterExitCryostorageEvent args)
+    private void OnAfterExitPausedMap(ref AfterExitPausedMapEvent args)
     {
         var query = EntityQueryEnumerator<PinpointerComponent>();
 
         while (query.MoveNext(out var uid, out var pinpointer))
         {
-            if (pinpointer == null || pinpointer.Target != args.Cryostorage.Owner)
+            if (pinpointer == null || pinpointer.Target != args.Proxy)
                 continue;
 
             if (string.IsNullOrEmpty(pinpointer!.Component) || !EntityManager.ComponentFactory.TryGetRegistration(pinpointer!.Component, out var reg))
@@ -171,17 +172,16 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
             if (otherXform.MapID != mapId)
             {
-                // check for edge cases, such as cryogenic storage units
-                var ev = new GetPinpointerProxyEvent(result, (uid, transform));
-                RaiseLocalEvent(ref ev);
-
-                if (ev.Proxy == null)
+                if (!TryComp<SharedPausedMapStorageComponent>(otherUid, out var otherStorage))
                     continue;
 
-                if (ev.Proxy.Value.Comp.MapID != mapId)
+                if (!_pausedMapStorage.IsInPausedMap(otherUid))
                     continue;
 
-                result = ev.Proxy.Value;
+                if (Deleted(otherStorage.Proxy))
+                    continue;
+
+                result = (otherStorage.Proxy, Transform(otherStorage.Proxy));
             }
 
             var dist = (_transform.GetWorldPosition(result.Comp) - worldPos).LengthSquared();
@@ -206,27 +206,25 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         var target = pinpointer.Target;
         if (target == null || !EntityManager.EntityExists(target.Value))
         {
-            SetDistance(uid, Distance.Unknown, pinpointer);
+            if (TrySetArrowAngle(uid, Angle.Zero, pinpointer) || TrySetDistance(uid, Distance.Unknown, pinpointer))
+                UpdateAppearance(uid, pinpointer);
+
             return;
         }
 
         var dirVec = CalculateDirection(uid, target.Value);
-        var oldDist = pinpointer.DistanceToTarget;
+        if (dirVec == null)
+        {
+            if (TrySetArrowAngle(uid, Angle.Zero, pinpointer) || TrySetDistance(uid, Distance.Unknown, pinpointer))
+                UpdateAppearance(uid, pinpointer);
 
-        if (dirVec != null)
-        {
-            var angle = dirVec.Value.ToWorldAngle();
-            TrySetArrowAngle(uid, angle, pinpointer);
-            var dist = CalculateDistance(dirVec.Value, pinpointer);
-            SetDistance(uid, dist, pinpointer);
-        }
-        else
-        {
-            TrySetArrowAngle(uid, Angle.Zero, pinpointer);
-            SetDistance(uid, Distance.Unknown, pinpointer);
+            return;
         }
 
-        if (oldDist != pinpointer.DistanceToTarget)
+        var angle = dirVec.Value.ToWorldAngle();
+        var dist = CalculateDistance(dirVec.Value, pinpointer);
+
+        if (TrySetArrowAngle(uid, angle, pinpointer) || TrySetDistance(uid, dist, pinpointer))
             UpdateAppearance(uid, pinpointer);
     }
 
@@ -266,27 +264,3 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             return Distance.Far;
     }
 }
-
-
-/// <summary>
-/// Raised by <see cref="PinpointerSystem"/> to check for an off-map 'proxy' of the target entity.
-/// This event should be responded to by systems that send entities to other maps with the intention of brining them back later.
-/// The event is considered handled once a proxy has been assigned.
-/// <summary/>
-/// <param name="Entity">The off-map target.<param/>
-/// <param name="Pinpointer">The pinpointer.<param/>
-/// <param name="MapId">The map id of the pinpointer.<param/>
-/// <param name="Proxy">An entity on the same map as the pinpointer.<param/>
-[ByRefEvent]
-public struct GetPinpointerProxyEvent
-{
-    public readonly Entity<TransformComponent> Entity;
-    public readonly Entity<TransformComponent> Pinpointer;
-    public Entity<TransformComponent>? Proxy = null;
-
-    public GetPinpointerProxyEvent(Entity<TransformComponent> entity, Entity<TransformComponent> pinpointer)
-    {
-        Entity = entity;
-        Pinpointer = pinpointer;
-    }
-};
