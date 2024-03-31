@@ -130,7 +130,6 @@
   - type: Appearance
   - type: WiresVisuals
   - type: Airtight
-    fixVacuum: true
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
       - South

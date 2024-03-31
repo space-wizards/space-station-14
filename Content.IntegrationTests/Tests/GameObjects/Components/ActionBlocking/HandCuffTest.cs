@@ -58,7 +58,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
 
                 var cuffableSys = entityManager.System<CuffableSystem>();
                 var xformSys = entityManager.System<SharedTransformSystem>();
-                var xformQuery = entityManager.GetEntityQuery<TransformComponent>();
 
                 // Spawn the entities
                 human = entityManager.SpawnEntity("HumanHandcuffDummy", coordinates);
@@ -66,8 +65,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 cuffs = entityManager.SpawnEntity("HandcuffsDummy", coordinates);
                 secondCuffs = entityManager.SpawnEntity("HandcuffsDummy", coordinates);
 
-                var coords = xformSys.GetWorldPosition(otherHuman, xformQuery);
-                xformSys.SetWorldPosition(human, coords, xformQuery);
+                var coords = xformSys.GetWorldPosition(otherHuman);
+                xformSys.SetWorldPosition(human, coords);
 
                 // Test for components existing
                 Assert.Multiple(() =>

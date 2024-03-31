@@ -283,9 +283,8 @@ public sealed class DrinkSystem : EntitySystem
             target: target,
             used: item)
         {
-            BreakOnUserMove = forceDrink,
+            BreakOnMove = forceDrink,
             BreakOnDamage = true,
-            BreakOnTargetMove = forceDrink,
             MovementThreshold = 0.01f,
             DistanceThreshold = 1.0f,
             // Mice and the like can eat without hands.

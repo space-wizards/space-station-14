@@ -19,6 +19,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -30,6 +31,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly BiomeSystem _biomes = default!;
     [Dependency] private readonly BodySystem _bobby = default!;
     [Dependency] private readonly DockingSystem _dockSystem = default!;
@@ -68,7 +70,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        UpdateHyperspace(frameTime);
+        UpdateHyperspace();
     }
 
     private void OnGridFixtureChange(EntityUid uid, FixturesComponent manager, GridFixtureChangeEvent args)
@@ -129,10 +131,10 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
             return;
 
         _physics.SetBodyType(uid, BodyType.Dynamic, manager: manager, body: component);
-        _physics.SetBodyStatus(component, BodyStatus.InAir);
+        _physics.SetBodyStatus(uid, component, BodyStatus.InAir);
         _physics.SetFixedRotation(uid, false, manager: manager, body: component);
-        _physics.SetLinearDamping(component, shuttle.LinearDamping);
-        _physics.SetAngularDamping(component, shuttle.AngularDamping);
+        _physics.SetLinearDamping(uid, component, shuttle.LinearDamping);
+        _physics.SetAngularDamping(uid, component, shuttle.AngularDamping);
     }
 
     public void Disable(EntityUid uid, FixturesComponent? manager = null, PhysicsComponent? component = null)
@@ -141,7 +143,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
             return;
 
         _physics.SetBodyType(uid, BodyType.Static, manager: manager, body: component);
-        _physics.SetBodyStatus(component, BodyStatus.OnGround);
+        _physics.SetBodyStatus(uid, component, BodyStatus.OnGround);
         _physics.SetFixedRotation(uid, true, manager: manager, body: component);
     }
 

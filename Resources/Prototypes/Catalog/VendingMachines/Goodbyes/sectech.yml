@@ -1,0 +1,7 @@
+- type: messagePack
+  id: SecTechGoodbyes
+  messages:
+  - vending-machine-thanks
+  - thankyou-sectech-1
+  - thankyou-sectech-2
+  - thankyou-sectech-3

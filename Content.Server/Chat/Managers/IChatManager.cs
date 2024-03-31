@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -21,7 +22,7 @@ namespace Content.Server.Chat.Managers
         void TrySendOOCMessage(ICommonSession player, string message, OOCChatType type);
 
         void SendHookOOC(string sender, string message);
-        void SendAdminAnnouncement(string message);
+        void SendAdminAnnouncement(string message, AdminFlags? flagBlacklist = null, AdminFlags? flagWhitelist = null);
         void SendAdminAlert(string message);
         void SendAdminAlert(EntityUid player, string message);
 
