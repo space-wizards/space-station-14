@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -108,16 +109,21 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!Transform(uid).Anchored)
             return false;
 
+        var storable = HasComp<ItemComponent>(entity);
+        if (!storable && !HasComp<BodyComponent>(entity))
+            return false;
+
         if (component.Blacklist?.IsValid(entity, EntityManager) == true)
             return false;
 
         if (component.Whitelist != null && component.Whitelist?.IsValid(entity, EntityManager) != true)
             return false;
 
-        if (TryComp<PhysicsComponent>(entity, out var physics) && (physics.CanCollide))
+        if (TryComp<PhysicsComponent>(entity, out var physics) && (physics.CanCollide) || storable)
             return true;
         else
             return false;
+
     }
 
     public abstract void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null);

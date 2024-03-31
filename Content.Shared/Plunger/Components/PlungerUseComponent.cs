@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 using Content.Shared.Random;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Toilet.Components
+namespace Content.Shared.Plunger.Components
 {
     /// <summary>
     /// Entity can interact with plungers.

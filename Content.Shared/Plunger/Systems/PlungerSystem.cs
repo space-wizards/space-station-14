@@ -1,7 +1,7 @@
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Toilet.Components;
+using Content.Shared.Plunger.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 using Content.Shared.Random.Helpers;
@@ -10,19 +10,17 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Random;
 
-namespace Content.Shared.Toilet.Systems;
+namespace Content.Shared.Plunger.Systems;
 
 /// <summary>
 /// Plungers can be used to unblock entities with PlungerUseComponent.
 /// </summary>
 public sealed class PlungerSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly IPrototypeManager _proto = default!;
     [Dependency] protected readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()

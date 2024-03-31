@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Toilet.Components
+namespace Content.Shared.Plunger.Components
 {
     /// <summary>
     /// Allows entity to unblock target entity with PlungerUseComponent.
