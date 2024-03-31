@@ -28,7 +28,7 @@
             !type:PhysShapeAabb
             bounds: "-0.40,-0.40,0.40,0.40"
           # Despite the heavy weight, it has wheels, so it's still fairly portable.
-          density: 185
+          density: 155
           mask:
             - MachineMask
           layer:
