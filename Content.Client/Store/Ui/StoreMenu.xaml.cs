@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading;
 using Content.Client.Actions;
 using Content.Client.GameTicking.Managers;
 using Content.Client.Message;
@@ -29,6 +28,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
     private StoreWithdrawWindow? _withdrawWindow;
 
+    public event EventHandler<string>? SearchTextUpdated;
     public event Action<BaseButton.ButtonEventArgs, ListingData>? OnListingButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string>? OnCategoryButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string, int>? OnWithdrawAttempt;
@@ -48,6 +48,7 @@ public sealed partial class StoreMenu : DefaultWindow
         WithdrawButton.OnButtonDown += OnWithdrawButtonDown;
         RefreshButton.OnButtonDown += OnRefreshButtonDown;
         RefundButton.OnButtonDown += OnRefundButtonDown;
+        SearchBar.OnTextChanged += _ => SearchTextUpdated?.Invoke(this, SearchBar.Text);
 
         if (Window != null)
             Window.Title = name;
@@ -61,7 +62,7 @@ public sealed partial class StoreMenu : DefaultWindow
             (type.Key, type.Value), type => _prototypeManager.Index<CurrencyPrototype>(type.Key));
 
         var balanceStr = string.Empty;
-        foreach (var ((type, amount), proto) in currency)
+        foreach (var ((_, amount), proto) in currency)
         {
             balanceStr += Loc.GetString("store-ui-balance-display", ("amount", amount),
                 ("currency", Loc.GetString(proto.DisplayName, ("amount", 1))));
@@ -82,7 +83,6 @@ public sealed partial class StoreMenu : DefaultWindow
     public void UpdateListing(List<ListingData> listings, List<StoreDiscountData> discounts)
     {
         var sorted = listings.OrderBy(l => l.Priority).ThenBy(l => l.Cost.Values.Sum());
-
 
         // should probably chunk these out instead. to-do if this clogs the internet tubes.
         // maybe read clients prototypes instead?
@@ -139,8 +139,8 @@ public sealed partial class StoreMenu : DefaultWindow
         if (!listing.Categories.Contains(CurrentCategory))
             return;
 
-        var listingName = Loc.GetString(listing.Name);
-        var listingDesc = Loc.GetString(listing.Description);
+        var listingName = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _prototypeManager);
+        var listingDesc = ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listing, _prototypeManager);
         var listingPrice = listing.Cost;
         var canBuy = CanBuyListing(Balance, listingPrice, discountData);
 
@@ -154,12 +154,6 @@ public sealed partial class StoreMenu : DefaultWindow
         {
             if (texture == null)
                 texture = spriteSys.GetPrototypeIcon(listing.ProductEntity).Default;
-
-            var proto = _prototypeManager.Index<EntityPrototype>(listing.ProductEntity);
-            if (listingName == string.Empty)
-                listingName = proto.Name;
-            if (listingDesc == string.Empty)
-                listingDesc = proto.Description;
         }
         else if (listing.ProductAction != null)
         {
@@ -292,13 +286,16 @@ public sealed partial class StoreMenu : DefaultWindow
 
         allCategories = allCategories.OrderBy(c => c.Priority).ToList();
 
+        // This will reset the Current Category selection if nothing matches the search.
+        if (allCategories.All(category => category.ID != CurrentCategory))
+            CurrentCategory = string.Empty;
+
         if (CurrentCategory == string.Empty && allCategories.Count > 0)
             CurrentCategory = allCategories.First().ID;
 
-        if (allCategories.Count <= 1)
-            return;
-
         CategoryListContainer.Children.Clear();
+        if (allCategories.Count < 1)
+            return;
 
         foreach (var proto in allCategories)
         {

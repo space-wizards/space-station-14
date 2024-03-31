@@ -140,6 +140,7 @@
   - type: Lock
     locked: true
   - type: ActivatableUIRequiresLock
+  - type: LockedWiresPanel
   - type: Flashable
   - type: Damageable
     damageContainer: Silicon
