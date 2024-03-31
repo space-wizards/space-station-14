@@ -1,21 +1,6 @@
 # Tier 1
 
 - type: technology
-  id: EmergencyGear
-  name: research-technology-emergency-gear
-  icon:
-    sprite: Clothing/OuterClothing/Suits/eva_emergency.rsi
-    state: icon
-  discipline: CivilianServices
-  tier: 1
-  cost: 1000
-  recipeUnlocks:
-  - EmergencySoftsuit
-  - EmergencySoftsuitPrison
-  - EVAHelmet
-  - EVAHelmetLarge
-
-- type: technology
   id: Hydroponics
   name: research-technology-basic-hydroponics
   icon:
@@ -70,20 +55,6 @@
   - TelecomServerCircuitboard
 
 - type: technology
-  id: SpaceGear
-  name: research-technology-space-gear
-  icon:
-    sprite: Clothing/OuterClothing/Suits/eva.rsi
-    state: icon
-  discipline: CivilianServices
-  tier: 1
-  cost: 1000
-  recipeUnlocks:
-  - EVA
-  - EVAHelmetLarge
-  - EVAHelmetLarge
-
-- type: technology
   id: AdvancedEntertainment
   name: research-technology-advanced-entertainment
   icon:
@@ -127,19 +98,7 @@
   - BiofabricatorMachineCircuitboard
   - BiomassReclaimerMachineCircuitboard
 
-- type: technology
-  id: AdvancedSpaceGear
-  name: research-technology-advanced-space-gear
-  icon:
-    sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-    state: icon
-  discipline: CivilianServices
-  tier: 2
-  cost: 10000
-  recipeUnlocks:
-  - BasicHardsuit
-
-# Tier 2 
+# Tier 2
 
 - type: technology
   id: FauxAstroTiles
