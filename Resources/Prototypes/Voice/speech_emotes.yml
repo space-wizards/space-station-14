@@ -282,3 +282,21 @@
     - beeping
     - beeping.
     - beeping!
+
+- type: emote
+  id: Chime
+  catagory: Vocal
+  chatMessages: [chimes!]
+  chatTriggers:
+    - chime
+    - chime.
+    - chime!
+    - chimes
+    - chimes.
+    - chimes!
+    - chimed
+    - chimed.
+    - chimed!
+    - chiming
+    - chiming,
+    - chiming!
