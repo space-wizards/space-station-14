@@ -6,6 +6,7 @@ namespace Content.Server.Speech.EntitySystems;
 public sealed class SouthernAccentSystem : EntitySystem
 {
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
+    
     public override void Initialize()
     {
         base.Initialize();
