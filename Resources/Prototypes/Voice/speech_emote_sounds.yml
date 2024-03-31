@@ -311,6 +311,8 @@
       path: /Audio/Machines/buzz-sigh.ogg
     Buzz-Two:
       path: /Audio/Machines/buzz-two.ogg
+    Honk:
+      path: /Audio/Items/bikehorn.ogg
 
 # body emotes
 - type: emoteSounds

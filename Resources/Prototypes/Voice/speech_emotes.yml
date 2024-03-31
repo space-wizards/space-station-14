@@ -66,6 +66,19 @@
   id: Honk
   category: Vocal
   chatMessages: [honks]
+  chatTriggers:
+    - honk
+    - honk.
+    - honk!
+    - honks
+    - honks.
+    - honks!
+    - honked
+    - honked.
+    - honked!
+    - honking
+    - honking.
+    - honking!
 
 - type: emote
   id: Sigh
@@ -269,7 +282,7 @@
 - type: emote
   id: Beep
   category: Vocal
-  chatMessages: [beeps!]
+  chatMessages: [beeps.]
   chatTriggers:
     - beep
     - beep!
@@ -287,7 +300,7 @@
 - type: emote
   id: Chime
   catagory: Vocal
-  chatMessages: [chimes!]
+  chatMessages: [chimes.]
   chatTriggers:
     - chime
     - chime.
@@ -305,7 +318,7 @@
 - type: emote
   id: Buzz-Two
   catagory: Vocal
-  Chatmessages: [buzzesTwice!]
+  ChatMessages: [buzzesTwice.]
   chatTriggers:
     - buzztwice
     - buzztwice.
