@@ -20,6 +20,7 @@ public sealed partial class AntagSelectionComponent : Component
     [DataField]
     public List<(EntityUid, string)> SelectedMinds = new();
 
+    [DataField]
     public AntagSelectionTime SelectionTime = AntagSelectionTime.PostPlayerSpawn;
 
     public HashSet<ICommonSession> SelectedSessions = new();
@@ -73,14 +74,17 @@ public partial struct AntagSelectionDefinition()
     [DataField]
     public EntityWhitelist? Blacklist;
 
-    [DataField(serverOnly: true)]
+    [DataField]
     public ComponentRegistry Components = new();
 
-    [DataField(serverOnly: true)]
+    [DataField]
     public ComponentRegistry MindComponents = new();
 
     [DataField]
     public List<EntProtoId> Equipment = new();
+
+    [DataField]
+    public ProtoId<StartingGearPrototype>? StartingGear;
 
     [DataField]
     public BriefingData? Briefing;

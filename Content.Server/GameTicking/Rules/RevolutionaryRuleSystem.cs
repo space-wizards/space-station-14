@@ -65,7 +65,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         SubscribeLocalEvent<RevolutionaryRuleComponent, AfterAntagEntitySelectedEvent>(AfterHeadRevSelected);
         SubscribeLocalEvent<CommandStaffComponent, MobStateChangedEvent>(OnCommandMobStateChanged);
         SubscribeLocalEvent<HeadRevolutionaryComponent, MobStateChangedEvent>(OnHeadRevMobStateChanged);
-        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<RevolutionaryRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<HeadRevolutionaryComponent, AfterFlashedEvent>(OnPostFlash);
     }
@@ -91,30 +90,29 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
     }
 
-    private void OnRoundEndText(RoundEndTextAppendEvent ev)
+    protected override void AppendRoundEndText(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule,
+        ref RoundEndTextAppendEvent args)
     {
+        base.AppendRoundEndText(uid, component, gameRule, ref args);
+
         var revsLost = CheckRevsLose();
         var commandLost = CheckCommandLose();
-        var query = AllEntityQuery<RevolutionaryRuleComponent>();
-        while (query.MoveNext(out var uid, out var headrev))
-        {
-            // This is (revsLost, commandsLost) concatted together
-            // (moony wrote this comment idk what it means)
-            var index = (commandLost ? 1 : 0) | (revsLost ? 2 : 0);
-            ev.AddLine(Loc.GetString(Outcomes[index]));
+        // This is (revsLost, commandsLost) concatted together
+        // (moony wrote this comment idk what it means)
+        var index = (commandLost ? 1 : 0) | (revsLost ? 2 : 0);
+        args.AddLine(Loc.GetString(Outcomes[index]));
 
-            var sessionData = _antag.GetAntagSessionData(uid);
-            ev.AddLine(Loc.GetString("rev-headrev-count", ("initialCount", sessionData.Count)));
-            foreach (var (mind, data, name) in sessionData)
-            {
-                var count = CompOrNull<RevolutionaryRoleComponent>(mind)?.ConvertedCount ?? 0;
-                ev.AddLine(Loc.GetString("rev-headrev-name-user",
+        var sessionData = _antag.GetAntagNameData(uid);
+        args.AddLine(Loc.GetString("rev-headrev-count", ("initialCount", sessionData.Count)));
+        foreach (var (mind, data, name) in sessionData)
+        {
+            var count = CompOrNull<RevolutionaryRoleComponent>(mind)?.ConvertedCount ?? 0;
+            args.AddLine(Loc.GetString("rev-headrev-name-user",
                 ("name", name),
                 ("username", data.UserName),
                 ("count", count)));
 
-                // TODO: someone suggested listing all alive? revs maybe implement at some point
-            }
+            // TODO: someone suggested listing all alive? revs maybe implement at some point
         }
     }
 

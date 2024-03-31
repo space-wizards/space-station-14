@@ -16,6 +16,7 @@ namespace Content.Server.Preferences.Managers
 
         bool TryGetCachedPreferences(NetUserId userId, [NotNullWhen(true)] out PlayerPreferences? playerPreferences);
         PlayerPreferences GetPreferences(NetUserId userId);
+        PlayerPreferences? GetPreferencesOrNull(NetUserId? userId);
         IEnumerable<KeyValuePair<NetUserId, ICharacterProfile>> GetSelectedProfilesForPlayers(List<NetUserId> userIds);
         bool HavePreferencesLoaded(ICommonSession session);
     }

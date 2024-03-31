@@ -3,11 +3,13 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Station;
 
 public abstract class SharedStationSpawningSystem : EntitySystem
 {
+    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly InventorySystem InventorySystem = default!;
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
 
@@ -17,8 +19,23 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     /// <param name="entity">Entity to load out.</param>
     /// <param name="startingGear">Starting gear to use.</param>
     /// <param name="profile">Character profile to use, if any.</param>
-    public void EquipStartingGear(EntityUid entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
+    public void EquipStartingGear(EntityUid entity, ProtoId<StartingGearPrototype>? startingGear, HumanoidCharacterProfile? profile)
     {
+        var gearProto = startingGear != null ? PrototypeManager.Index(startingGear.Value) : null;
+        EquipStartingGear(entity, gearProto, profile);
+    }
+
+    /// <summary>
+    /// Equips starting gear onto the given entity.
+    /// </summary>
+    /// <param name="entity">Entity to load out.</param>
+    /// <param name="startingGear">Starting gear to use.</param>
+    /// <param name="profile">Character profile to use, if any.</param>
+    public void EquipStartingGear(EntityUid entity, StartingGearPrototype? startingGear, HumanoidCharacterProfile? profile)
+    {
+        if (startingGear == null)
+            return;
+
         if (InventorySystem.TryGetSlots(entity, out var slotDefinitions))
         {
             foreach (var slot in slotDefinitions)

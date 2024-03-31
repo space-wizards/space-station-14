@@ -433,13 +433,6 @@ namespace Content.Shared.CCVar
             CVarDef.Create("pirates.players_per_pirate", 5);
 
         /*
-         * Nukeops
-         */
-
-        public static readonly CVarDef<bool> NukeopsSpawnGhostRoles =
-            CVarDef.Create("nukeops.spawn_ghost_roles", false);
-
-        /*
          * Tips
          */
 

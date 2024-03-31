@@ -1,22 +1,27 @@
 using System.Linq;
+using Content.Server.Administration.Managers;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Inventory;
 using Content.Server.Mind;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.Antag;
+using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
@@ -25,8 +30,10 @@ namespace Content.Server.Antag;
 
 public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionComponent>
 {
+    [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly IServerPreferencesManager _pref = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
@@ -34,8 +41,12 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly RoleSystem _role = default!;
+    [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
 
-    public const float LatejoinRandomChance = 0.5f;
+    public const float LateJoinRandomChance = 0.5f;
+
+    private bool _deadminOnJoin;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -45,6 +56,11 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayerSpawning);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnJobsAssigned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnSpawnComplete);
+
+        Subs.CVar(_config, CCVars.AdminDeadminOnJoin, v =>
+        {
+            _deadminOnJoin = v;
+        }, true);
     }
 
     private void OnPlayerSpawning(RulePlayerSpawningEvent args)
@@ -60,8 +76,14 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
             if (comp.SelectionsComplete)
                 return;
 
-            ChooseAntags((uid, comp), ref pool);
+            ChooseAntags((uid, comp), pool);
             comp.SelectionsComplete = true;
+
+            foreach (var session in comp.SelectedSessions)
+            {
+                args.PlayerPool.Remove(session);
+                GameTicker.PlayerJoinGame(session);
+            }
         }
     }
 
@@ -111,7 +133,7 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
                 if (antag.SelectedMinds.Count >= def.Max)
                     continue;
 
-                if (!RobustRandom.Prob(LatejoinRandomChance))
+                if (!RobustRandom.Prob(LateJoinRandomChance))
                     continue;
 
                 MakeAntag((uid, antag), args.Player, def);
@@ -129,12 +151,12 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
 
             if (def.MinRange != null)
             {
-                def.Min = def.MinRange.Value.Next(_random);
+                def.Min = def.MinRange.Value.Next(RobustRandom);
             }
 
             if (def.MaxRange != null)
             {
-                def.Max = def.MaxRange.Value.Next(_random);
+                def.Max = def.MaxRange.Value.Next(RobustRandom);
             }
         }
     }
@@ -156,27 +178,30 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
     public void ChooseAntags(Entity<AntagSelectionComponent> ent)
     {
         var sessions = _playerManager.Sessions.ToList();
-        ChooseAntags(ent, ref sessions);
+        ChooseAntags(ent, sessions);
     }
 
-    public void ChooseAntags(Entity<AntagSelectionComponent> ent, ref List<ICommonSession> pool)
+    public void ChooseAntags(Entity<AntagSelectionComponent> ent, List<ICommonSession> pool)
     {
         foreach (var def in ent.Comp.Definitions)
         {
-            ChooseAntags(ent, ref pool, def);
+            ChooseAntags(ent, pool, def);
         }
     }
 
-    public void ChooseAntags(Entity<AntagSelectionComponent> ent, ref List<ICommonSession> pool, AntagSelectionDefinition def)
+    public void ChooseAntags(Entity<AntagSelectionComponent> ent, List<ICommonSession> pool, AntagSelectionDefinition def)
     {
         //TODO: add in an option for having player-less antags.
         // even better, make it a config so you can specify half player, half ghost role.
         var playerPool = GetPlayerPool(ent, pool, def);
         var count = GetTargetAntagCount(ent, playerPool, def);
-        for (var i = 0; i < count; i++)
+        while (ent.Comp.SelectedMinds.Count < count)
         {
-            if (!playerPool.TryPickAndTake(_random, out var session))
+            if (!playerPool.TryPickAndTake(RobustRandom, out var session))
                 break;
+
+            if (ent.Comp.SelectedSessions.Contains(session))
+                continue;
 
             MakeAntag(ent, session, def);
         }
@@ -194,6 +219,7 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
 
         if (!antagEnt.HasValue)
         {
+            Log.Debug("ok we should be ehre");
             var getEntEv = new AntagSelectEntityEvent(session, ent);
             RaiseLocalEvent(ent, ref getEntEv, true);
 
@@ -208,6 +234,19 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
         if (antagEnt is not { } player)
             return;
 
+        var getPosEv = new AntagSelectLocationEvent(session, ent);
+        RaiseLocalEvent(ent, ref getPosEv, true);
+        if (getPosEv.Handled)
+        {
+            Log.Debug("we have posssss");
+            var antagXForm = Transform(player);
+            var pos = RobustRandom.Pick(getPosEv.Coordinates);
+            var mapEnt = _mapManager.GetMapEntityId(pos.MapId);
+            _transform.SetParent(player, antagXForm, mapEnt);
+            _transform.SetWorldPosition(antagXForm, pos.Position);
+            _transform.AttachToGridOrMap(player, antagXForm);
+        }
+
         //todo replace this shit down here with sloth's balling methods
         foreach (var (_, entry) in def.Components)
         {
@@ -217,28 +256,44 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
             EntityManager.AddComponent(player, comp);
         }
 
-        if (session?.GetMind() is { } mind)
+        var pref = _pref.GetPreferencesOrNull(session?.UserId)?.SelectedCharacter as HumanoidCharacterProfile;
+        _stationSpawning.EquipStartingGear(player, def.StartingGear, pref);
+        _inventory.SpawnItemsOnEntity(player, def.Equipment);
+
+        if (session != null)
         {
+            Log.Debug("mind magic");
+            var curMind = session.GetMind();
+            if (curMind == null)
+            {
+                curMind = _mind.CreateMind(session.UserId, Name(antagEnt.Value));
+                _mind.SetUserId(curMind.Value, session.UserId);
+            }
+
+            // Automatically de-admin players who are being made nukeops
+            if (_deadminOnJoin && _adminManager.IsAdmin(session))
+                _adminManager.DeAdmin(session);
+
+            if (TryComp<MindComponent>(curMind, out var mindComp) && mindComp.CurrentEntity != antagEnt)
+                _mind.TransferTo(curMind.Value, antagEnt);
+
             foreach (var (_, entry) in def.MindComponents)
             {
                 var comp = (Component) _serialization.CreateCopy(entry.Component, notNullableOverride: true);
-                comp.Owner = mind; // look im sorry ok this .owner has to live until engine api exists
-                EntityManager.RemoveComponent(mind, comp.GetType());
-                EntityManager.AddComponent(mind, comp);
+                comp.Owner = curMind.Value; // look im sorry ok this .owner has to live until engine api exists
+                EntityManager.RemoveComponent(curMind.Value, comp.GetType());
+                EntityManager.AddComponent(curMind.Value, comp);
             }
-
-            ent.Comp.SelectedMinds.Add((mind, Name(player)));
+            ent.Comp.SelectedMinds.Add((curMind.Value, Name(player)));
         }
-
-        _inventory.SpawnItemsOnEntity(player, def.Equipment);
-
-        var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent);
-        RaiseLocalEvent(ent, ref afterEv, true);
 
         if (def.Briefing is { } briefing)
         {
             _antagSelection.SendBriefing(session, Loc.GetString(briefing.Text), briefing.Color, briefing.Sound);
         }
+
+        var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent);
+        RaiseLocalEvent(ent, ref afterEv, true);
     }
 
     public AntagSelectionPlayerPool GetPlayerPool(Entity<AntagSelectionComponent> ent, List<ICommonSession> sessions, AntagSelectionDefinition def)
@@ -336,7 +391,7 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
         return true;
     }
 
-    public bool IsEntityValid(EntityUid? entity, AntagSelectionDefinition def)
+    private bool IsEntityValid(EntityUid? entity, AntagSelectionDefinition def)
     {
         if (entity == null)
             return false;
@@ -362,7 +417,7 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
         return true;
     }
 
-    public List<(EntityUid, SessionData, string)> GetAntagSessionData(Entity<AntagSelectionComponent?> ent)
+    public List<(EntityUid, SessionData, string)> GetAntagNameData(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return new List<(EntityUid, SessionData, string)>();
@@ -404,6 +459,46 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
 
         return ent.Comp.SelectedMinds.Select(p => p.Item1).ToList();
     }
+
+    public IEnumerable<EntityUid> GetAliveAntags(Entity<AntagSelectionComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            yield break;
+
+        var minds = GetAntagMinds(ent);
+        foreach (var mind in minds)
+        {
+            if (_mind.IsCharacterDeadIc(mind))
+                continue;
+
+            if (mind.Comp.OriginalOwnedEntity != null)
+                yield return GetEntity(mind.Comp.OriginalOwnedEntity.Value);
+        }
+    }
+
+    public int GetAliveAntagCount(Entity<AntagSelectionComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return 0;
+
+        return GetAliveAntags(ent).Count();
+    }
+
+    public bool AnyAliveAntags(Entity<AntagSelectionComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        return GetAliveAntags(ent).Any();
+    }
+
+    public bool AllAntagsAlive(Entity<AntagSelectionComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        return GetAliveAntagCount(ent) == ent.Comp.SelectedMinds.Count;
+    }
 }
 
 /// <summary>
@@ -417,6 +512,19 @@ public record struct AntagSelectEntityEvent(ICommonSession? Session, Entity<Anta
     public bool Handled => Entity != null;
 
     public EntityUid? Entity;
+}
+
+/// <summary>
+/// Event raised on an entity
+/// </summary>
+[ByRefEvent]
+public record struct AntagSelectLocationEvent(ICommonSession? Session, Entity<AntagSelectionComponent> GameRule)
+{
+    public readonly ICommonSession? Session = Session;
+
+    public bool Handled => Coordinates.Any();
+
+    public List<MapCoordinates> Coordinates = new();
 }
 
 /// <summary>

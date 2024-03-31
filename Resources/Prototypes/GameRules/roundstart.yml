@@ -69,21 +69,70 @@
   noSpawn: true
   components:
   - type: GameRule
-    minPlayers: 20
+    #minPlayers: 35
+  - type: RandomMetadata #this generates the random operation name cuz it's cool.
+    nameSegments:
+    - operationPrefix
+    - operationSuffix
   - type: NukeopsRule
     faction: Syndicate
-#  - type: GenericAntagRule
-#    definitions:
-#    - prefRoles: [ NukeopsCommander ]
-#      fallbackRoles: [ Nukeops, NukeopsMedic ]
-#      max: 1
-#    - prefRoles: [ NukeopsMedic ]
-#      fallbackRoles: [ Nukeops, NukeopsCommander ]
-#      max: 1
-#    - prefRoles: [ Nukeops ]
-#      fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
-#      min: 0
-#      max: 3
+  - type: LoadMapRule
+    gameMap: NukieOutpost
+  - type: AntagSelection
+    selectionTime: PrePlayerSpawn
+    definitions:
+    - prefRoles: [ NukeopsCommander ]
+      fallbackRoles: [ Nukeops, NukeopsMedic ]
+      max: 1
+      playerRatio: 10
+      startingGear: SyndicateCommanderGearFull
+      components:
+      - type: NukeOperative
+      - type: RandomMetadata
+        nameSegments:
+        - nukeops-role-commander
+        - SyndicateNamesElite
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      mindComponents:
+      - type: NukeopsRole
+        prototype: NukeopsCommander
+    - prefRoles: [ NukeopsMedic ]
+      fallbackRoles: [ Nukeops, NukeopsCommander ]
+      max: 1
+      playerRatio: 10
+      startingGear: SyndicateOperativeMedicFull
+      components:
+      - type: NukeOperative
+      - type: RandomMetadata
+        nameSegments:
+        - nukeops-role-agent
+        - SyndicateNamesNormal
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      mindComponents:
+      - type: NukeopsRole
+        prototype: NukeopsMedic
+    - prefRoles: [ Nukeops ]
+      fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
+      min: 0
+      max: 3
+      playerRatio: 10
+      startingGear: SyndicateOperativeGearFull
+      components:
+      - type: NukeOperative
+      - type: RandomMetadata
+        nameSegments:
+        - nukeops-role-operator
+        - SyndicateNamesNormal
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      mindComponents:
+      - type: NukeopsRole
+        prototype: Nukeops
 
 - type: entity
   id: Pirates

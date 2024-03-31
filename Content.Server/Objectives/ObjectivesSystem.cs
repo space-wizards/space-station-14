@@ -1,5 +1,4 @@
 using Content.Server.GameTicking;
-using Content.Server.Mind;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Mind;
@@ -12,6 +11,7 @@ using Robust.Shared.Random;
 using System.Linq;
 using Content.Server.GameTicking.Components;
 using System.Text;
+using Robust.Server.Player;
 
 namespace Content.Server.Objectives;
 
@@ -19,8 +19,8 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 {
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
 
     public override void Initialize()
@@ -178,7 +178,9 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                                        .ThenByDescending(x => x.completedObjectives);
 
         foreach (var (summary, _, _) in sortedAgents)
+        {
             result.AppendLine(summary);
+        }
     }
 
     public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
@@ -243,8 +245,14 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             return null;
 
         var name = mind.CharacterName;
-        _mind.TryGetSession(mindId, out var session);
-        var username = session?.Name;
+        var username = (string?) null;
+
+        if (mind.OriginalOwnerUserId != null &&
+            _player.TryGetPlayerData(mind.OriginalOwnerUserId.Value, out var sessionData))
+        {
+            username = sessionData.UserName;
+        }
+
 
         if (username != null)
         {

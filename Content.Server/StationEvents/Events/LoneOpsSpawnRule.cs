@@ -33,7 +33,6 @@ public sealed class LoneOpsSpawnRule : StationEventSystem<LoneOpsSpawnRuleCompon
         var nukeopsEntity = GameTicker.AddGameRule(component.GameRuleProto);
         component.AdditionalRule = nukeopsEntity;
         var nukeopsComp = Comp<NukeopsRuleComponent>(nukeopsEntity);
-        nukeopsComp.SpawnOutpost = false;
         nukeopsComp.RoundEndBehavior = RoundEndBehavior.Nothing;
         GameTicker.StartGameRule(nukeopsEntity);
     }
