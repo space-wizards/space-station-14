@@ -43,10 +43,10 @@ public sealed class LockSystem : EntitySystem
         SubscribeLocalEvent<LockComponent, LockDoAfter>(OnDoAfterLock);
         SubscribeLocalEvent<LockComponent, UnlockDoAfter>(OnDoAfterUnlock);
 
+        SubscribeLocalEvent<LockedWiresPanelComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
         SubscribeLocalEvent<LockedWiresPanelComponent, AttemptChangePanelEvent>(OnAttemptChangePanel);
         SubscribeLocalEvent<LockedAnchorableComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
     }
-
     private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
     {
         _appearanceSystem.SetData(uid, LockVisuals.Locked, lockComp.Locked);
@@ -280,6 +280,24 @@ public sealed class LockSystem : EntitySystem
 
         TryUnlock(uid, args.User, skipDoAfter: true);
     }
+
+    private void OnLockToggleAttempt(Entity<LockedWiresPanelComponent> ent, ref LockToggleAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (!TryComp<WiresPanelComponent>(ent, out var panel) || !panel.Open)
+            return;
+
+        if (!args.Silent)
+        {
+            _sharedPopupSystem.PopupPredicted(Loc.GetString("construction-step-condition-wire-panel-open"),
+                ent,
+                args.User);
+        }
+        args.Cancelled = true;
+    }
+
 
     private void OnAttemptChangePanel(Entity<LockedWiresPanelComponent> ent, ref AttemptChangePanelEvent args)
     {
