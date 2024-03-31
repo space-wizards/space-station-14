@@ -68,7 +68,7 @@ public abstract partial class SharedPuddleSystem
                 {
                     injectorComp.ToggleState = InjectorToggleMode.Draw;
                     Dirty(entity, injectorComp);
-                }   
+                }
             };
         }
         else
