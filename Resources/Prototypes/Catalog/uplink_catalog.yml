@@ -1515,7 +1515,7 @@
   id: uplinkSpellbookKnock
   name: uplink-spellbook-knock-name
   description: uplink-spellbook-knock-desc
-  productEntity: SpellbookKnock
+  productEntity: BookKnock
   cost:
     Telecrystal: 10
   categories:
