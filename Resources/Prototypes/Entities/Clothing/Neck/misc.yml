@@ -73,7 +73,9 @@
   noSpawn: true
   components:
   - type: EntityTargetAction
-    icon: Clothing/Neck/Misc/stethoscope.rsi/icon.png
+    icon:
+      sprite: Clothing/Neck/Misc/stethoscope.rsi
+      state: icon
     event: !type:StethoscopeActionEvent
     checkCanInteract: false
     priority: -1
