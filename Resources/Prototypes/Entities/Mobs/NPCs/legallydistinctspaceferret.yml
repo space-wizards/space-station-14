@@ -179,7 +179,7 @@
       sprite: Mobs/Animals/legallydistinctspaceferret.rsi
       state: legallydistinctspaceferret_eepy
   - type: ConsumeNutrientsCondition
-    nutrientsRequired: 10.0
+    nutrientsRequired: 300.0
 
 - type: entity
   parent: BaseLegallyDistinctSpaceFerretObjective
