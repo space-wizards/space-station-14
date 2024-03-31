@@ -12,7 +12,8 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition;
 using System.Threading;
-using Content.Shared.Medical.Circulatory.Components;
+using Content.Shared.Medical.Blood.Components;
+using BloodstreamComponent = Content.Shared.Medical.Blood.Components.BloodstreamComponent;
 
 /// <summary>
 /// System for vapes

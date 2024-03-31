@@ -2,9 +2,11 @@
 using Content.Server.Body.Systems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Content.Shared.Medical.Circulatory.Components;
-using Content.Shared.Medical.Circulatory.Systems;
+using Content.Shared.Medical.Blood.Systems;
+using Content.Shared.Medical.Blood.Components;
+using Content.Shared.Medical.Blood.Systems;
 using Robust.Shared.Prototypes;
+using BloodstreamComponent = Content.Shared.Medical.Blood.Components.BloodstreamComponent;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 

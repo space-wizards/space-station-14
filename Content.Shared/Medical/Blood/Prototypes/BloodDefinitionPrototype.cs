@@ -1,8 +1,8 @@
-﻿using Content.Shared.Chemistry.Reagent;
+﻿
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Medical.Circulatory.Prototypes;
+namespace Content.Shared.Medical.Blood.Prototypes;
 
 /// <summary>
 /// This is a prototype for defining blood in a circulatory system.

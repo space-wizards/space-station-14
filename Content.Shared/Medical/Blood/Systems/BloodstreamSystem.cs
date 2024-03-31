@@ -4,12 +4,11 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Content.Shared.Medical.Circulatory.Components;
+using Content.Shared.Medical.Blood.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Medical.Circulatory.Systems;
+namespace Content.Shared.Medical.Blood.Systems;
 
 public sealed class BloodstreamSystem : EntitySystem
 {

@@ -12,8 +12,6 @@
   bloodCellsReagent: Blood #TODO Bloodstream: bloodcells
   bloodPlasmaReagent: Water #TODO Bloodstream: bloodPlasma
 
-
-
 - type: bloodType
   id: HumanAPos
   parent: HumanBloodType

@@ -1,6 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Medical.Circulatory.Systems;
+using Content.Shared.Medical.Blood.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 

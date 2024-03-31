@@ -1,9 +1,9 @@
 ﻿using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Medical.Circulatory.Prototypes;
+using Content.Shared.Medical.Blood.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Medical.Circulatory.Systems;
+namespace Content.Shared.Medical.Blood.Systems;
 
 [Serializable, NetSerializable]
 public sealed partial class BloodReagentData : ReagentData

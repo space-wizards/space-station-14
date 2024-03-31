@@ -2,11 +2,11 @@
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Content.Shared.Medical.Circulatory.Components;
-using Content.Shared.Medical.Circulatory.Prototypes;
+using Content.Shared.Medical.Blood.Components;
+using Content.Shared.Medical.Blood.Prototypes;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Medical.Circulatory.Systems;
+namespace Content.Shared.Medical.Blood.Systems;
 
 public sealed partial class BloodCirculationSystem : EntitySystem
 {

@@ -18,7 +18,7 @@ using Content.Shared.Jittering;
 using Content.Shared.Medical;
 using Content.Shared.Mind;
 using Content.Shared.Materials;
-using Content.Shared.Medical.Circulatory.Components;
+using Content.Shared.Medical.Blood.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
@@ -30,6 +30,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using BloodstreamComponent = Content.Shared.Medical.Blood.Components.BloodstreamComponent;
 
 namespace Content.Server.Medical.BiomassReclaimer
 {

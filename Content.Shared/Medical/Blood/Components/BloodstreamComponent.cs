@@ -1,9 +1,8 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Content.Shared.Medical.Circulatory.Systems;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Medical.Circulatory.Components;
+namespace Content.Shared.Medical.Blood.Components;
 
 
 

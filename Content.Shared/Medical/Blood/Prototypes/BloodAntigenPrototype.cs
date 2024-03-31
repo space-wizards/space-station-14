@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Medical.Circulatory.Prototypes;
+namespace Content.Shared.Medical.Blood.Prototypes;
 
 /// <summary>
 /// This is a prototype for blood antigens, this effectively acts as an enum for bloodtypes to use.

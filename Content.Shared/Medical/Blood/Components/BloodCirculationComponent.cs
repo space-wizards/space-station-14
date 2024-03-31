@@ -1,9 +1,9 @@
 ﻿using Content.Shared.FixedPoint;
-using Content.Shared.Medical.Circulatory.Prototypes;
+using Content.Shared.Medical.Blood.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Medical.Circulatory.Components;
+namespace Content.Shared.Medical.Blood.Components;
 
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]

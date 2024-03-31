@@ -7,7 +7,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using System.Numerics;
-using Content.Shared.Medical.Circulatory.Systems;
+using Content.Shared.Medical.Blood.Systems;
+using Content.Shared.Medical.Blood.Systems;
 
 namespace Content.Server.Chemistry.Containers.EntitySystems;
 

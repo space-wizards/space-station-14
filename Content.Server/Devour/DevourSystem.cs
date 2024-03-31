@@ -3,7 +3,8 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Devour;
 using Content.Shared.Devour.Components;
 using Content.Shared.Humanoid;
-using Content.Shared.Medical.Circulatory.Systems;
+using Content.Shared.Medical.Blood.Systems;
+using Content.Shared.Medical.Blood.Systems;
 
 namespace Content.Server.Devour;
 
