@@ -124,6 +124,19 @@
     - BasicRoundstartVariation
 
 - type: gamePreset
+  id: Wizard
+  alias:
+    - wizard
+  name: wizard-title
+  description: wizard-description
+  showInVote: false
+  rules:
+    - Wizard
+    - SubGamemodesRule
+    - BasicStationEventScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
   id: Revolutionary
   alias:
     - rev

@@ -15,10 +15,10 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Content.Shared.Pulling;
-using Content.Shared.Pulling.Components;
 using Content.Shared.Tag;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
@@ -60,7 +60,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
-        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
+        [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -185,10 +185,10 @@ namespace Content.Shared.Interaction
             if (!InRangeUnobstructed(userEntity.Value, uid, popup: true))
                 return false;
 
-            if (!TryComp(uid, out SharedPullableComponent? pull))
+            if (!TryComp(uid, out PullableComponent? pull))
                 return false;
 
-            _pullSystem.TogglePull(userEntity.Value, pull);
+            _pullSystem.TogglePull(uid, userEntity.Value, pull);
             return false;
         }
 
@@ -459,7 +459,7 @@ namespace Content.Shared.Interaction
                 return false;
 
             if (!HasComp<NoRotateOnInteractComponent>(user))
-                _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager));
+                _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager, _transform));
 
             return true;
         }
@@ -612,7 +612,7 @@ namespace Content.Shared.Interaction
             Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
             var inRange = true;
             MapCoordinates originPos = default;
-            var targetPos = otherCoordinates.ToMap(EntityManager);
+            var targetPos = otherCoordinates.ToMap(EntityManager, _transform);
             Angle targetRot = default;
 
             // So essentially:
@@ -785,7 +785,7 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null,
             bool popup = false)
         {
-            return InRangeUnobstructed(origin, other.ToMap(EntityManager), range, collisionMask, predicate, popup);
+            return InRangeUnobstructed(origin, other.ToMap(EntityManager, _transform), range, collisionMask, predicate, popup);
         }
 
         /// <summary>

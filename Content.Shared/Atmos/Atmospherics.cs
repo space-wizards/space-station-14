@@ -8,11 +8,6 @@ namespace Content.Shared.Atmos
     /// </summary>
     public static class Atmospherics
     {
-        static Atmospherics()
-        {
-            AdjustedNumberOfGases = MathHelper.NextMultipleOf(TotalNumberOfGases, 4);
-        }
-
         #region ATMOS
         /// <summary>
         ///     The universal gas constant, in kPa*L/(K*mol)
@@ -183,7 +178,7 @@ namespace Content.Shared.Atmos
         ///     This is the actual length of the gases arrays in mixtures.
         ///     Set to the closest multiple of 4 relative to <see cref="TotalNumberOfGases"/> for SIMD reasons.
         /// </summary>
-        public static readonly int AdjustedNumberOfGases;
+        public const int AdjustedNumberOfGases = ((TotalNumberOfGases + 3) / 4) * 4;
 
         /// <summary>
         ///     Amount of heat released per mole of burnt hydrogen or tritium (hydrogen isotope)
@@ -276,7 +271,7 @@ namespace Content.Shared.Atmos
         public const float HazardLowPressure = 20f;
 
         /// <summary>
-        ///    The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT,
+        ///    The amount of pressure damage someone takes is equal to ((pressure / HAZARD_HIGH_PRESSURE) - 1)*PRESSURE_DAMAGE_COEFFICIENT,
         ///     with the maximum of MaxHighPressureDamage.
         /// </summary>
         public const float PressureDamageCoefficient = 4;

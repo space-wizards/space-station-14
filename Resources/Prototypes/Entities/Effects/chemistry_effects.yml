@@ -128,9 +128,10 @@
     snap:
     - Wall
   components:
-  - type: Tag
-    tags:
-    - RCDDeconstructWhitelist
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2  
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite

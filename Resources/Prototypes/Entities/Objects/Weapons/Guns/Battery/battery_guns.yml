@@ -84,6 +84,7 @@
     quickEquip: false
     slots:
     - Belt
+    - suitStorage
 
 - type: entity
   id: BaseWeaponPowerCellSmall
@@ -578,6 +579,7 @@
     tags:
     - HighRiskItem
     - Sidearm
+    - WeaponAntiqueLaser
   - type: StaticPrice
     price: 750
   - type: StealTarget

@@ -187,6 +187,21 @@
       entity: EnrichedUranium
 
 - type: reaction
+  id: CreateCrystals
+  quantized: true
+  minTemp: 374
+  reactants:
+    Sugar:
+      amount: 15
+    Water:
+      amount: 15
+    Ethanol:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: ShardCrystalRandom
+
+- type: reaction
   id: Gunpowder
   impact: Low
   quantized: true
@@ -201,3 +216,15 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
+
+- type: reaction
+  id: lingium # Failing checks in the hot sun, i fought the code and the code won
+  reactants:
+    UnstableMutagen:
+      amount: 2
+    Plasma: # Consumed in reaction: steady supply of plasma required for a jug of it
+      amount: 2 
+    UnstableMutagen:
+      amount: 1
+  products:
+    lingium: 3

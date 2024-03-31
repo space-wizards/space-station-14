@@ -425,11 +425,12 @@
   color: "#D6CE7B"
   metabolisms:
     Poison:
+      metabolismRate: 0.2
       effects:
       - !type:HealthChange
         damage:
           types:
-            Poison: 6
+            Poison: 3
 
 - type: reagent
   id: VentCrud
@@ -455,6 +456,7 @@
   physicalDesc: reagent-physical-desc-necrotic
   flavor: bitter
   color: "#7e916e"
+  worksOnTheDead: true
   metabolisms:
     Medicine:
       effects:
@@ -636,25 +638,25 @@
       effects:
       - !type:Electrocute
         probability: 0.8
-# ADMIN ONLY CHEM DONT SEND ME TO THE CODE GUILLOTINE
+
 - type: reagent
   id: lingium
   name: reagent-name-lingium
   group: Toxins
   desc: reagent-desc-lingium
-  flavor: deoxyribonucleic pain
+  flavor: bitter
   color: "#437298"
   physicalDesc: reagent-physical-desc-exotic-smelling
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
   - !type:PlantAdjustHealth
-    amount: -500
+    amount: -1
   metabolisms:
     Poison:
       effects:
       - !type:HealthChange
         damage:
           types:
-            Cellular: 20
+            Cellular: 1.5
 

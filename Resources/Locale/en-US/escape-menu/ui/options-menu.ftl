@@ -73,6 +73,7 @@ ui-options-hud-theme-clockwork = Clockwork
 ui-options-hud-theme-retro = Retro
 ui-options-hud-theme-minimalist = Minimalist
 ui-options-hud-theme-ashen = Ashen
+ui-options-hud-theme-glass = Glass
 ui-options-vp-stretch = Stretch viewport to fit game window
 ui-options-vp-scale = Fixed viewport scale: x{ $scale }
 ui-options-vp-integer-scaling = Prefer integer scaling (might cause black bars/clipping)
@@ -135,6 +136,7 @@ ui-options-function-examine-entity = Examine
 ui-options-function-swap-hands = Swap hands
 ui-options-function-move-stored-item = Move stored item
 ui-options-function-rotate-stored-item = Rotate stored item
+ui-options-function-save-item-location = Save item location
 ui-options-static-storage-ui = Lock storage window to hotbar
 
 ui-options-function-smart-equip-backpack = Smart-equip to backpack

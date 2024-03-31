@@ -59,6 +59,7 @@ This is the "short" form of the rules, which has all the information any regular
 [color=#a4885c]16.[/color] Don't immediately ghost or suicide from your role if you do not get antagonist (referred to as "Antag-rolling") or from head roles without notifying your chain of command or administrators.
     - This is not fair to other players actually waiting patiently for an antagonist round. Alternatively, if you do not want to play an antagonist or do not want to cause conflict, do not opt-in for antagonist roles.
     - Head of Staff roles help drive rounds. If you need to leave, please admin-help your role and that you are leaving. There is no need to wait for a reply when admin-helping that you need to disconnect as a head role.
+    -Don't pick antagonist roles, only to be friendly and avoid doing what you're supposed to do. It wastes the role for others and will get you banned from antagonist roles.
 
 [color=#a4885c]17.[/color] Don't rush for or prepare equipment unrelated to your job for no purpose other then to have it "just in case" (referred to as "Powergaming").
     - A medical doctor does not need insulated gloves, and the Head of Personnel does not need to give themselves armory access so they can go grab a gun. Have an actual reason for needing these things.
@@ -112,10 +113,6 @@ These rules also apply to any individual who is a silicon, including cyborgs and
     - When receiving orders or directives from crewmembers and with a law that instructs you must obey, conflicting orders typically defer the choice to the silicon player of which directive you choose to obey if they conflict (taking into account the priorities of your other laws).
     - Orders to silicons that are clearly unreasonable or obnoxious are a violation of the "Don't be a dick" rule. They can be ignored and can be ahelped.
 
-
-[color=#00ff00]SANDBOX SPECIFIC RULES[/color]
-1. You are free to do as you wish, however, causing massive damage to both the station, the arrivals system, and other player’s builds is strictly prohibited. It is also strictly prohibited to spawn large amounts of entities, as too much entities can cause severe lag.
-    - Orders to silicons that are clearly unreasonable or obnoxious are a violation of the "Don't be a dick" rule. They can be ignored and can be ahelped.
 [color=#0066ff]Blueshield Officer Rules[/color]
     - You are to protect the Station Heads and Central Command VIPs from danger. You are not a Security Officer with all-access, so do not abandon your duties. If you are dismissed and no longer needed, you are able to instead help with security work until further notice.
     - You are hard up to a higher standard of play as command and the Nanotrasen Representative is. Take your job seriously, and do it right.

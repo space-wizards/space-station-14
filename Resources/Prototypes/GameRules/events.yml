@@ -454,6 +454,31 @@
     earliestStart: 45
     minimumPlayers: 20
   - type: ImmovableRodRule
+    rodPrototypes:
+    - id: ImmovableRodKeepTilesStill
+      prob: 0.95
+      orGroup: rodProto
+    - id: ImmovableRodMop
+      prob: 0.0072
+      orGroup: rodProto
+    - id: ImmovableRodShark
+      prob: 0.0072
+      orGroup: rodProto
+    - id: ImmovableRodClown
+      prob: 0.0072
+      orGroup: rodProto
+    - id: ImmovableRodBanana
+      prob: 0.0072
+      orGroup: rodProto
+    - id: ImmovableRodHammer
+      prob: 0.0072
+      orGroup: rodProto
+    - id: ImmovableRodThrongler
+      prob: 0.0072
+      orGroup: rodProto
+    - id: ImmovableRodGibstick
+      prob: 0.0072
+      orGroup: rodProto
 
 - type: entity
   noSpawn: true

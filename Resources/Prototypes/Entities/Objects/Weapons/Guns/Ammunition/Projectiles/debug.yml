@@ -1,7 +1,7 @@
 - type: entity
   noSpawn: true
   parent: BaseBullet
-  id: BulletDebug
+  id: BulletMortis
   name: bullet (faithful)
   components:
   - type: Projectile
