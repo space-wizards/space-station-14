@@ -111,7 +111,7 @@
 - files: ["drill_hit.ogg"]
   licence: "CC-BY-4.0"
   copyright: "Created by vanilla with sounds from MinecraftGamerLR and stomachache on freesound.org"
-  source: "insert pr here"
+  source: "https://github.com/space-wizards/space-station-14/pull/26622"
 
 - files: ["drill_use.ogg"]
   licence: "CC0-1.0"
