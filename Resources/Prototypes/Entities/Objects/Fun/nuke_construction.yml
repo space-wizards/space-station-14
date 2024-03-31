@@ -329,6 +329,7 @@
         - TabletopMachineMask
         layer:
         - TabletopMachineLayer
+  - type: InteractionOutline
   - type: ExplodeOnTrigger
   - type: OnUseTimerTrigger
     delay: 10
