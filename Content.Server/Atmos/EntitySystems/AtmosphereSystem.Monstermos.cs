@@ -84,6 +84,7 @@ namespace Content.Server.Atmos.EntitySystems
                     var adj = exploring.AdjacentTiles[j];
                     if (adj?.Air == null) continue;
                     if(adj.MonstermosInfo.LastQueueCycle == queueCycle) continue;
+                    if (adj.TransferRatio != 1.0f) continue;
                     adj.MonstermosInfo = new MonstermosInfo {LastQueueCycle = queueCycle};
 
                     if(tileCount < Atmospherics.MonstermosHardTileLimit)
@@ -173,9 +174,10 @@ namespace Content.Server.Atmos.EntitySystems
                         var direction = (AtmosDirection) (1 << j);
                         if (!eligibleDirections.IsFlagSet(direction)) continue;
 
-                        AdjustEqMovement(otherTile, direction, molesToMove);
-                        otherTile.MonstermosInfo.MoleDelta -= molesToMove;
-                        otherTile.AdjacentTiles[j]!.MonstermosInfo.MoleDelta += molesToMove;
+                        var directionTransferRatio = GetTilesTransferRatio(otherTile, otherTile.AdjacentTiles[j]!);
+                        AdjustEqMovement(otherTile, direction, molesToMove * directionTransferRatio);
+                        otherTile.MonstermosInfo.MoleDelta -= molesToMove * directionTransferRatio;
+                        otherTile.AdjacentTiles[j]!.MonstermosInfo.MoleDelta += molesToMove * directionTransferRatio;
                     }
                 }
 
@@ -234,20 +236,22 @@ namespace Content.Server.Atmos.EntitySystems
                             otherTile2.MonstermosInfo.CurrentTransferAmount = 0;
                             if (otherTile2.MonstermosInfo.MoleDelta < 0)
                             {
+                                var transferRatio = GetTilesTransferRatio(otherTile2, giver);
+
                                 // This tile needs gas. Let's give it to 'em.
-                                if (-otherTile2.MonstermosInfo.MoleDelta > giver.MonstermosInfo.MoleDelta)
+                                if (-otherTile2.MonstermosInfo.MoleDelta > giver.MonstermosInfo.MoleDelta * transferRatio)
                                 {
                                     // We don't have enough gas!
-                                    otherTile2.MonstermosInfo.CurrentTransferAmount -= giver.MonstermosInfo.MoleDelta;
-                                    otherTile2.MonstermosInfo.MoleDelta += giver.MonstermosInfo.MoleDelta;
-                                    giver.MonstermosInfo.MoleDelta = 0;
+                                    otherTile2.MonstermosInfo.CurrentTransferAmount -= giver.MonstermosInfo.MoleDelta * transferRatio;
+                                    otherTile2.MonstermosInfo.MoleDelta += giver.MonstermosInfo.MoleDelta * transferRatio;
+                                    giver.MonstermosInfo.MoleDelta -= giver.MonstermosInfo.MoleDelta * transferRatio;
                                 }
                                 else
                                 {
                                     // We have enough gas.
-                                    otherTile2.MonstermosInfo.CurrentTransferAmount += otherTile2.MonstermosInfo.MoleDelta;
-                                    giver.MonstermosInfo.MoleDelta += otherTile2.MonstermosInfo.MoleDelta;
-                                    otherTile2.MonstermosInfo.MoleDelta = 0;
+                                    otherTile2.MonstermosInfo.CurrentTransferAmount += otherTile2.MonstermosInfo.MoleDelta * transferRatio;
+                                    giver.MonstermosInfo.MoleDelta += otherTile2.MonstermosInfo.MoleDelta * transferRatio;
+                                    otherTile2.MonstermosInfo.MoleDelta -= otherTile2.MonstermosInfo.MoleDelta * transferRatio;
                                 }
                             }
                         }
@@ -301,20 +305,22 @@ namespace Content.Server.Atmos.EntitySystems
 
                             if (otherTile2.MonstermosInfo.MoleDelta > 0)
                             {
+                                var transferRatio = GetTilesTransferRatio(otherTile2, taker);
+
                                 // This tile has gas we can suck, so let's
-                                if (otherTile2.MonstermosInfo.MoleDelta > -taker.MonstermosInfo.MoleDelta)
+                                if (otherTile2.MonstermosInfo.MoleDelta > -taker.MonstermosInfo.MoleDelta * transferRatio)
                                 {
                                     // They have enough gas
-                                    otherTile2.MonstermosInfo.CurrentTransferAmount -= taker.MonstermosInfo.MoleDelta;
-                                    otherTile2.MonstermosInfo.MoleDelta += taker.MonstermosInfo.MoleDelta;
-                                    taker.MonstermosInfo.MoleDelta = 0;
+                                    otherTile2.MonstermosInfo.CurrentTransferAmount -= taker.MonstermosInfo.MoleDelta * transferRatio;
+                                    otherTile2.MonstermosInfo.MoleDelta += taker.MonstermosInfo.MoleDelta * transferRatio;
+                                    taker.MonstermosInfo.MoleDelta -= taker.MonstermosInfo.MoleDelta * transferRatio;
                                 }
                                 else
                                 {
                                     // They don't have enough gas!
-                                    otherTile2.MonstermosInfo.CurrentTransferAmount += otherTile2.MonstermosInfo.MoleDelta;
-                                    taker.MonstermosInfo.MoleDelta += otherTile2.MonstermosInfo.MoleDelta;
-                                    otherTile2.MonstermosInfo.MoleDelta = 0;
+                                    otherTile2.MonstermosInfo.CurrentTransferAmount += otherTile2.MonstermosInfo.MoleDelta * transferRatio;
+                                    taker.MonstermosInfo.MoleDelta += otherTile2.MonstermosInfo.MoleDelta * transferRatio;
+                                    otherTile2.MonstermosInfo.MoleDelta -= otherTile2.MonstermosInfo.MoleDelta * transferRatio;
                                 }
                             }
                         }
@@ -621,9 +627,9 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var direction = (AtmosDirection) (1 << i);
                 if (!tile.AdjacentBits.IsFlagSet(direction)) continue;
-                var amount = transferDirections[i];
                 var otherTile = tile.AdjacentTiles[i];
                 if (otherTile?.Air == null) continue;
+                var amount = transferDirections[i] * GetTilesTransferRatio(tile, otherTile!);
                 DebugTools.Assert(otherTile.AdjacentBits.IsFlagSet(direction.GetOpposite()));
                 if (amount <= 0) continue;
 
@@ -685,6 +691,11 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (sum > 20 && _robustRandom.Prob(chance))
                 PryTile(mapGrid, tile.GridIndices);
+        }
+
+        public float GetTilesTransferRatio(TileAtmosphere tile1, TileAtmosphere tile2)
+        {
+            return MathF.Min(tile1.TransferRatio, tile2.TransferRatio);
         }
 
         private sealed class TileAtmosphereComparer : IComparer<TileAtmosphere?>

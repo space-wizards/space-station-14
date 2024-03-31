@@ -199,6 +199,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, tile);
+            UpdateAirLeakageData(ent.Owner, ent.Comp3, tile);
 
             if (mapAtmosphere)
             {

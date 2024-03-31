@@ -91,6 +91,12 @@ public partial class AtmosphereSystem
             entity.Comp.InvalidatedCoords.Add(tile);
     }
 
+    public void SetLeakageRatio(GridAtmosphereComponent entity, Vector2i tile, float ratio)
+    {
+        if (entity.Tiles.TryGetValue(tile, out var atmosTile))
+            atmosTile.TransferRatio = ratio;
+    }
+
     public GasMixture?[]? GetTileMixtures(EntityUid? gridUid, EntityUid? mapUid, List<Vector2i> tiles, bool excite = false)
     {
         var ev = new GetTileMixturesMethodEvent(gridUid, mapUid, tiles, excite);

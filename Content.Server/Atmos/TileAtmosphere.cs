@@ -134,6 +134,13 @@ namespace Content.Server.Atmos
         /// </summary>
         public AtmosphereSystem.AirtightData AirtightData;
 
+        /// <summary>
+        /// Ratio of how fast atmos is processed through the tile. Should not be set to 0, use null Air for blocking atmos.
+        /// If set < 1.0, prevents tile from being Excited, to prevent batch atmos equalizíng.
+        /// </summary>
+        [ViewVariables]
+        public float TransferRatio = 1.0f;
+
         public TileAtmosphere(EntityUid gridIndex, Vector2i gridIndices, GasMixture? mixture = null, bool immutable = false, bool space = false)
         {
             GridIndex = gridIndex;

@@ -25,3 +25,30 @@
   - type: Tag
     tags:
       - SpreaderIgnore
+
+- type: entity
+  id: AtmosDeviceFanDiffuser
+  name: diffuser fan
+  description: A tiny fan, slowing down gas transfer across it.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/diffuserfan.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+  - type: AirLeakage
+    airLeakageRatio: 0.5
+  - type: Clickable
+  - type: Tag
+    tags:
+      - SpreaderIgnore

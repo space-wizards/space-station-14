@@ -93,6 +93,31 @@ public partial class AtmosphereSystem
         return new AirtightData(blockedDirs, noAirWhenBlocked, fixVacuum);
     }
 
+    private void UpdateAirLeakageData(EntityUid uid, MapGridComponent grid, TileAtmosphere tile)
+    {
+        tile.TransferRatio = tile.NoGridTile
+            ? default
+            : GetAirLeakageRatio(uid, grid, tile.GridIndices);
+    }
+
+    private float GetAirLeakageRatio(EntityUid uid, MapGridComponent grid, Vector2i tile)
+    {
+        var airTransferRatio = 1.0f;
+
+        foreach (var ent in _map.GetAnchoredEntities(uid, grid, tile))
+        {
+            if (!_airLeakageQuery.TryGetComponent(ent, out var airLeakage))
+                continue;
+
+            if (airLeakage.AirLeakageRatio <= 0 || airLeakage.AirLeakageRatio >= 1)
+                continue;
+
+            airTransferRatio = MathF.Min(airTransferRatio, airLeakage.AirLeakageRatio);
+        }
+
+        return airTransferRatio;
+    }
+
     /// <summary>
     ///     Pries a tile in a grid.
     /// </summary>

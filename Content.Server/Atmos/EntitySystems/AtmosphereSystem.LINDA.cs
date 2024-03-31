@@ -57,7 +57,7 @@ namespace Content.Server.Atmos.EntitySystems
                         AddActiveTile(gridAtmosphere, enemyTile);
                     }
 
-                    if (ExcitedGroups)
+                    if (ExcitedGroups && tile.TransferRatio == 1.0 && enemyTile.TransferRatio == 1.0)
                     {
                         var excitedGroup = tile.ExcitedGroup;
                         excitedGroup ??= enemyTile.ExcitedGroup;
@@ -110,7 +110,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (ConsiderSuperconductivity(gridAtmosphere, tile, true))
                     remove = false;
 
-            if(ExcitedGroups && tile.ExcitedGroup == null && remove)
+            if(ExcitedGroups && tile.ExcitedGroup == null && remove && tile.TransferRatio == 1.0)
                 RemoveActiveTile(gridAtmosphere, tile);
         }
 
@@ -218,7 +218,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var thisValue = receiver.Moles[i];
                 var sharerValue = sharer.Moles[i];
-                var delta = (thisValue - sharerValue) / (atmosAdjacentTurfs + 1);
+                var delta = ((thisValue - sharerValue) / (atmosAdjacentTurfs + 1)) * GetTilesTransferRatio(tileReceiver, tileSharer);
                 if (!(MathF.Abs(delta) >= Atmospherics.GasMinMoles)) continue;
                 if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
                 {
