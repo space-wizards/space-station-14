@@ -459,7 +459,7 @@ namespace Content.Shared.Movement.Systems
             sound = null;
 
             // Fallback to the map?
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
             {
                 if (TryComp<FootstepModifierComponent>(xform.MapUid, out var modifier))
                 {

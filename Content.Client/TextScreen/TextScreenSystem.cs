@@ -62,6 +62,8 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
 
         SubscribeLocalEvent<TextScreenVisualsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<TextScreenTimerComponent, ComponentInit>(OnTimerInit);
+
+        UpdatesOutsidePrediction = true;
     }
 
     private void OnInit(EntityUid uid, TextScreenVisualsComponent component, ComponentInit args)
