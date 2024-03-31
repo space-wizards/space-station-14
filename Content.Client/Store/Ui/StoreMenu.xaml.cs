@@ -22,6 +22,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
     private StoreWithdrawWindow? _withdrawWindow;
 
+    public event EventHandler<string>? SearchTextUpdated;
     public event Action<BaseButton.ButtonEventArgs, ListingData>? OnListingButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string>? OnCategoryButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string, int>? OnWithdrawAttempt;
@@ -39,6 +40,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
         WithdrawButton.OnButtonDown += OnWithdrawButtonDown;
         RefundButton.OnButtonDown += OnRefundButtonDown;
+        SearchBar.OnTextChanged += _ => SearchTextUpdated?.Invoke(this, SearchBar.Text);
 
         if (Window != null)
             Window.Title = name;
@@ -52,7 +54,7 @@ public sealed partial class StoreMenu : DefaultWindow
             (type.Key, type.Value), type => _prototypeManager.Index(type.Key));
 
         var balanceStr = string.Empty;
-        foreach (var ((_, amount),proto) in currency)
+        foreach (var ((_, amount), proto) in currency)
         {
             balanceStr += Loc.GetString("store-ui-balance-display", ("amount", amount),
                 ("currency", Loc.GetString(proto.DisplayName, ("amount", 1))));
@@ -118,6 +120,8 @@ public sealed partial class StoreMenu : DefaultWindow
         if (!listing.Categories.Contains(CurrentCategory))
             return;
 
+        var listingName = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _prototypeManager);
+        var listingDesc = ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listing, _prototypeManager);
         var listingPrice = listing.Cost;
         var hasBalance = HasListingPrice(Balance, listingPrice);
 
@@ -200,13 +204,16 @@ public sealed partial class StoreMenu : DefaultWindow
 
         allCategories = allCategories.OrderBy(c => c.Priority).ToList();
 
+        // This will reset the Current Category selection if nothing matches the search.
+        if (allCategories.All(category => category.ID != CurrentCategory))
+            CurrentCategory = string.Empty;
+
         if (CurrentCategory == string.Empty && allCategories.Count > 0)
             CurrentCategory = allCategories.First().ID;
 
-        if (allCategories.Count <= 1)
-            return;
-
         CategoryListContainer.Children.Clear();
+        if (allCategories.Count < 1)
+            return;
 
         var group = new ButtonGroup();
         foreach (var proto in allCategories)
