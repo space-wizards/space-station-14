@@ -195,7 +195,7 @@
         name: steel
         doAfter: 5
   - node: evilbombdone
-    entity: ImprovisedNuclearBombInsidesUranium
+    entity: ImprovisedNuclearBombEvil
     edges:
     - to: evilbombreciever
       completed:
@@ -215,4 +215,4 @@
           state: yellow
         doAfter: 1
   - node: evilbombpainted
-    entity: ImprovisedNuclearBombInsidesUranium
+    entity: ImprovisedNuclearBombEvilPainted
