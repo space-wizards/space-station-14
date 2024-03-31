@@ -21,7 +21,7 @@ public sealed partial class BloodCirculationSystem : EntitySystem
                 out var bloodSolution))
             return;
         var solution = bloodSolution.Value.Comp.Solution;
-        var oldReagent = solution.GetReagent(bloodCirc.Comp1.BloodReagent);
+        var oldReagent = solution.GetReagent(bloodCirc.Comp1.BloodReagentId);
 
         solution.RemoveReagent(oldReagent);
         oldReagent = new ReagentQuantity(newBloodType.WholeBloodReagent, oldReagent.Quantity, new BloodReagentData(newBloodType));

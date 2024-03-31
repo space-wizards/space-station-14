@@ -63,13 +63,13 @@ public sealed partial class BloodstreamComponent : Component
     /// The reagent prototypeId that this entity uses for blood
     /// </summary>
     [DataField, AutoNetworkedField] //TODO: required
-    public string BloodReagentProtoId = string.Empty;
+    public string? BloodReagent = string.Empty;
 
     /// <summary>
     /// This is the primary blood reagent in this bloodstream
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
-    public ReagentId BloodReagent = default;
+    public ReagentId BloodReagentId = default;
 
     /// <summary>
     /// The bloodstream solution

@@ -7,7 +7,6 @@ using Content.Shared.Medical.Circulatory.Components;
 using Content.Shared.Medical.Circulatory.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Medical.Circulatory.Systems;
 
@@ -31,10 +30,10 @@ public sealed partial class BloodCirculationSystem : EntitySystem
 
         bloodCircComp.BloodType = bloodType.ID;
         bloodstreamComp.Volume = initialVolume;
-        bloodstreamComp.BloodReagent = new ReagentId(bloodstreamComp.BloodReagentProtoId, new BloodReagentData(bloodType));
+        bloodstreamComp.BloodReagentId = new ReagentId(bloodstreamComp.BloodReagent!, new BloodReagentData(bloodType));
 
         _solutionSystem.AddSolution((bloodSolution, bloodSolution),
-            new Solution(new []{new ReagentQuantity(bloodstreamComp.BloodReagent, initialVolume)}));
+            new Solution(new []{new ReagentQuantity(bloodstreamComp.BloodReagentId, initialVolume)}));
         UpdateAllowedAntigens((uid, bloodCircComp), GetAntigensForBloodType(bloodType));
 
         Dirty(uid, bloodCircComp);

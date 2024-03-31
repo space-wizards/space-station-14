@@ -89,8 +89,8 @@ public sealed class BloodstreamSystem : EntitySystem
         }
         else
         {
-            _solutionSystem.AddSolution((bloodSolution.Value, bloodSolution), new Solution(bloodstream.BloodReagentProtoId, volume));
-            bloodstream.BloodReagent = new ReagentId(bloodstream.BloodReagentProtoId, null);
+            _solutionSystem.AddSolution((bloodSolution.Value, bloodSolution), new Solution(bloodstream.BloodReagent!, volume));
+            bloodstream.BloodReagentId = new ReagentId(bloodstream.BloodReagent!, null);
             bloodstream.Volume = volume;
         }
         Dirty(bloodstreamEnt, bloodstream);
