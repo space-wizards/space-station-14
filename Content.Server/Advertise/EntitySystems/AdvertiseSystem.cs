@@ -29,6 +29,9 @@ public sealed class AdvertiseSystem : EntitySystem
     {
         SubscribeLocalEvent<AdvertiseComponent, MapInitEvent>(OnMapInit);
 
+        SubscribeLocalEvent<ApcPowerReceiverComponent, AttemptAdvertiseEvent>(OnPowerReceiverAttemptAdvertiseEvent);
+        SubscribeLocalEvent<VendingMachineComponent, AttemptAdvertiseEvent>(OnVendingAttemptAdvertiseEvent);
+
         _nextCheckTime = TimeSpan.MinValue;
     }
 
@@ -68,19 +71,38 @@ public sealed class AdvertiseSystem : EntitySystem
         // _nextCheckTime starts at TimeSpan.MinValue, so this has to SET the value, not just increment it.
         _nextCheckTime = curTime + _maximumNextCheckDuration;
 
-        var query = EntityQueryEnumerator<AdvertiseComponent, ApcPowerReceiverComponent>();
-        while (query.MoveNext(out var uid, out var advert, out var apc))
+        var query = EntityQueryEnumerator<AdvertiseComponent>();
+        while (query.MoveNext(out var uid, out var advert))
         {
             if (curTime > advert.NextAdvertisementTime)
             {
-                if (apc.Powered)
+                var attemptEvent = new AttemptAdvertiseEvent(uid);
+                RaiseLocalEvent(uid, ref attemptEvent);
+                if (!attemptEvent.Cancelled)
                 {
                     SayAdvertisement(uid, advert);
                 }
-                // The timer is refreshed when it expires even if it's off, so it doesn't advertise right when the power comes on.
+                // The timer is always refreshed when it expires, to prevent mass advertising (ex: all the vending machines have no power, and get it back at the same time).
                 RefreshTimer(uid, advert);
             }
             _nextCheckTime = MathHelper.Min(advert.NextAdvertisementTime, _nextCheckTime);
         }
     }
+
+
+    private static void OnPowerReceiverAttemptAdvertiseEvent(EntityUid uid, ApcPowerReceiverComponent component, ref AttemptAdvertiseEvent args)
+    {
+        args.Cancelled |= !component.Powered;
+    }
+
+    private static void OnVendingAttemptAdvertiseEvent(EntityUid uid, VendingMachineComponent component, ref AttemptAdvertiseEvent args)
+    {
+        args.Cancelled |= component.Broken;
+    }
+}
+
+[ByRefEvent]
+public record struct AttemptAdvertiseEvent(EntityUid? Advertiser)
+{
+    public bool Cancelled = false;
 }
