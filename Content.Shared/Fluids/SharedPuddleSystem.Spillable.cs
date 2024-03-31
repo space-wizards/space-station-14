@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -62,6 +63,12 @@ public abstract partial class SharedPuddleSystem
             {
                 var puddleSolution = _solutionContainerSystem.SplitSolution(soln.Value, solution.Volume);
                 TrySpillAt(Transform(target).Coordinates, puddleSolution, out _);
+
+                if (TryComp<InjectorComponent>(entity, out var injectorComp))
+                {
+                    injectorComp.ToggleState = InjectorToggleMode.Draw;
+                    Dirty(entity, injectorComp);
+                }
             };
         }
         else
