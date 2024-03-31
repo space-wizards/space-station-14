@@ -30,8 +30,34 @@
           task: IdleCompound
 
 - type: htnCompound
+  id: GlockroachCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: InnateRangedCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: FoodCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
+
+- type: htnCompound
   id: RuminantCompound
   branches:
+  - tasks:
+    - !type:HTNCompoundTask
+      task: FoodCompound
+  - tasks:
+    - !type:HTNCompoundTask
+      task: IdleCompound
+
+- type: htnCompound
+  id: RuminantHostileCompound
+  branches:
+  - tasks:
+    - !type:HTNCompoundTask
+      task: MeleeCombatCompound
   - tasks:
     - !type:HTNCompoundTask
       task: FoodCompound

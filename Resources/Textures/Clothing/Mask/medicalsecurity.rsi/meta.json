@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprited by LinkUyx#6557",
+  "copyright": "Sprited by LinkUyx#6557. Reptilian edit by Nairod(Github)",
   "size": {
     "x": 32,
     "y": 32
@@ -52,6 +52,10 @@
     },
     {
       "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-reptilian",
       "directions": 4
     }
   ]

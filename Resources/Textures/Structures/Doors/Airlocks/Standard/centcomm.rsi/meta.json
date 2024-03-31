@@ -1,0 +1,195 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/58e5354cdbc304847c9ef20963320d21f418b58e and edited by Nairod(github) for SS14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "assembly"
+    },
+    {
+      "name": "bolted_unlit"
+    },
+    {
+      "name": "closed"
+    },
+    {
+      "name": "closed_unlit"
+    },
+    {
+      "name": "closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "closing_unlit",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "deny_unlit",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "open",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "opening_unlit",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "panel_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "panel_open",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "panel_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "sparks",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "sparks_broken",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "sparks_damaged",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          1.7
+        ]
+      ]
+    },
+    {
+      "name": "sparks_open",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "welded"
+    },
+    {
+      "name": "emergency_unlit",
+      "delays": [
+        [
+          0.4,
+          0.4
+        ]
+      ]
+    }
+  ]
+}

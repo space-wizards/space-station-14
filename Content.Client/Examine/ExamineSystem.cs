@@ -33,7 +33,6 @@ namespace Content.Client.Examine
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly VerbSystem _verbSystem = default!;
-        [Dependency] private readonly IBaseClient _client = default!;
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
@@ -66,12 +65,10 @@ namespace Content.Client.Examine
         {
             if (!args.User.Valid)
                 return;
-            if (_playerManager.LocalPlayer == null)
-                return;
             if (_examineTooltipOpen == null)
                 return;
 
-            if (item == _examinedEntity && args.User == _playerManager.LocalPlayer.ControlledEntity)
+            if (item == _examinedEntity && args.User == _playerManager.LocalEntity)
                 CloseTooltip();
         }
 
@@ -118,7 +115,7 @@ namespace Content.Client.Examine
                 return false;
             }
 
-            _playerEntity = _playerManager.LocalPlayer?.ControlledEntity ?? default;
+            _playerEntity = _playerManager.LocalEntity ?? default;
 
             if (_playerEntity == default || !CanExamine(_playerEntity, entity))
             {
@@ -149,7 +146,7 @@ namespace Content.Client.Examine
 
         private void OnExamineInfoResponse(ExamineSystemMessages.ExamineInfoResponseMessage ev)
         {
-            var player = _playerManager.LocalPlayer?.ControlledEntity;
+            var player = _playerManager.LocalEntity;
             if (player == null)
                 return;
 
@@ -356,7 +353,7 @@ namespace Content.Client.Examine
 
         public void DoExamine(EntityUid entity, bool centeredOnCursor = true, EntityUid? userOverride = null)
         {
-            var playerEnt = userOverride ?? _playerManager.LocalPlayer?.ControlledEntity;
+            var playerEnt = userOverride ?? _playerManager.LocalEntity;
             if (playerEnt == null)
                 return;
 
@@ -366,13 +363,14 @@ namespace Content.Client.Examine
             var canSeeClearly = !HasComp<BlurryVisionComponent>(playerEnt);
 
             OpenTooltip(playerEnt.Value, entity, centeredOnCursor, false, knowTarget: canSeeClearly);
-            if (IsClientSide(entity)
-                || _client.RunLevel == ClientRunLevel.SinglePlayerGame) // i.e. a replay
-            {
-                message = GetExamineText(entity, playerEnt);
-                UpdateTooltipInfo(playerEnt.Value, entity, message);
-            }
-            else
+
+            // Always update tooltip info from client first.
+            // If we get it wrong, server will correct us later anyway.
+            // This will usually be correct (barring server-only components, which generally only adds, not replaces text)
+            message = GetExamineText(entity, playerEnt);
+            UpdateTooltipInfo(playerEnt.Value, entity, message);
+
+            if (!IsClientSide(entity))
             {
                 // Ask server for extra examine info.
                 if (entity != _lastExaminedEntity)
@@ -383,7 +381,6 @@ namespace Content.Client.Examine
             }
 
             RaiseLocalEvent(entity, new ClientExaminedEvent(entity, playerEnt.Value));
-
             _lastExaminedEntity = entity;
         }
 

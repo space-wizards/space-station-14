@@ -21,6 +21,14 @@
     Plastic: 50
 
 - type: latheRecipe
+  id: SyringeCryostasis
+  result: SyringeCryostasis
+  completetime: 2
+  materials:
+    Steel: 200
+    Plastic: 50
+
+- type: latheRecipe
   id: Dropper
   result: Dropper
   completetime: 2

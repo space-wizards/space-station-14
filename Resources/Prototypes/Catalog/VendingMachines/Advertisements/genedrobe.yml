@@ -1,4 +1,5 @@
-- type: advertisementsPack
+- type: messagePack
   id: GeneDrobeAds
-  advertisements:
+  messages:
     - advertisement-genedrobe-1
+    - advertisement-genedrobe-2

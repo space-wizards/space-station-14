@@ -1,17 +1,13 @@
 using System.Numerics;
 using Content.Server.Administration;
-using Content.Server.Tools.Components;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Interaction
 {
-    /// <summary>
-    /// <see cref="TilePryingComponent.TryPryTile"/>
-    /// </summary>
     [AdminCommand(AdminFlags.Debug)]
     sealed class TilePryCommand : IConsoleCommand
     {
@@ -23,7 +19,7 @@ namespace Content.Server.Interaction
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
             if (player?.AttachedEntity is not {} attached)
             {
                 return;
@@ -51,7 +47,7 @@ namespace Content.Server.Interaction
             var xform = _entities.GetComponent<TransformComponent>(attached);
             var playerGrid = xform.GridUid;
 
-            if (!mapManager.TryGetGrid(playerGrid, out var mapGrid))
+            if (!_entities.TryGetComponent<MapGridComponent>(playerGrid, out var mapGrid))
                 return;
 
             var playerPosition = xform.Coordinates;

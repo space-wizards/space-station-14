@@ -1,35 +1,18 @@
 using System.Numerics;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
-namespace Content.Shared.Placeable
+namespace Content.Shared.Placeable;
+
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(PlaceableSurfaceSystem))]
+public sealed partial class PlaceableSurfaceComponent : Component
 {
-    [RegisterComponent, NetworkedComponent]
-    [Access(typeof(PlaceableSurfaceSystem))]
-    public sealed partial class PlaceableSurfaceComponent : Component
-    {
-        [DataField("isPlaceable")]
-        public bool IsPlaceable { get; set; } = true;
+    [DataField, AutoNetworkedField]
+    public bool IsPlaceable { get; set; } = true;
 
-        [DataField("placeCentered")]
-        public bool PlaceCentered { get; set; }
+    [DataField, AutoNetworkedField]
+    public bool PlaceCentered { get; set; }
 
-        [DataField("positionOffset")]
-        public Vector2 PositionOffset { get; set; }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class PlaceableSurfaceComponentState : ComponentState
-    {
-        public readonly bool IsPlaceable;
-        public readonly bool PlaceCentered;
-        public readonly Vector2 PositionOffset;
-
-        public PlaceableSurfaceComponentState(bool placeable, bool centered, Vector2 offset)
-        {
-            IsPlaceable = placeable;
-            PlaceCentered = centered;
-            PositionOffset = offset;
-        }
-    }
+    [DataField, AutoNetworkedField]
+    public Vector2 PositionOffset { get; set; }
 }

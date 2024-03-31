@@ -1,0 +1,203 @@
+# stuff common to flesh and endoskeleton
+- type: entity
+  abstract: true
+  id: MobTerminatorBase
+  components:
+  - type: ZombieImmune # yeah no
+  - type: FlashImmunity # no brain to brainwash, eyes are robotic
+
+- type: entity
+  parent: [MobHuman, MobTerminatorBase]
+  id: MobHumanTerminator
+  # uses random name generator dont worry
+  name: exterminator
+  components:
+  - type: Terminator
+  - type: GenericAntag
+    rule: Exterminator
+  # reduced barotrauma damage
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.1
+  # 4x stamina, faster recovery
+  - type: Stamina
+    decay: 6
+    cooldown: 1
+    critThreshold: 400
+  # immune to space drugs, pax, temporary blindness
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
+    - Drunk
+    - SlurredSpeech
+    - RatvarianLanguage
+    - PressureImmunity
+    - Muted
+    - ForcedSleep
+    - StaminaModifier
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  # endoskeleton need it
+  - type: TransferMindOnGib
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      # used for health display its not possible to actually fall into crit
+      200: Dead
+  # fire!!!!
+  - type: Flammable
+    damage:
+      types:
+        Heat: 6.0
+  # slightly wider thresholds
+  - type: Temperature
+    heatDamageThreshold: 390
+    coldDamageThreshold: 240
+  # take terminator flesh damage
+  - type: Damageable
+    damageModifierSet: CyberneticFlesh
+  # only organ is an endoskeleton, which is transferred when flesh dies
+  - type: Body
+    prototype: TerminatorFlesh
+  # endoskeleton transformation when either you would get burned to crit or killed by any damage
+  # you will become an endoskeleton as your last chance to kill the target
+  - type: Destructible
+    thresholds:
+    # the burn trigger is first incase of a bombing or nuking, it might well do over 200 damage but 100 heat is more important
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 100
+      behaviors:
+      - !type:PopupBehavior
+        popup: terminator-endoskeleton-burn-popup
+        popupType: LargeCaution
+      - !type:GibBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PopupBehavior
+        popup: terminator-endoskeleton-gib-popup
+        popupType: LargeCaution
+      - !type:GibBehavior
+  # faster than humans when damaged
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      70: 0.8
+      90: 0.6
+  # arnold is very strong
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+        Structural: 10
+  - type: RandomHumanoidAppearance
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - Unimplantable # no brain to mindshield, no organic body to implant into
+
+- type: entity
+  parent:
+  - BaseMob
+  - MobCombat
+  - MobDamageable
+  - MobSiliconBase
+  - MobTerminatorBase
+  id: MobTerminatorEndoskeleton
+  # you are now valid
+  name: nt-800 "exterminator" endoskeleton
+  description: The inner powerhouse of Susnet's infiltrator androids. Ridiculously hard alloy on the inside, unassuming flesh on the outside.
+  components:
+  - type: HumanoidAppearance
+    species: Terminator
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.5
+    baseSprintSpeed: 3.0
+  - type: Sprite
+    sprite: Mobs/Species/Terminator/parts.rsi
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        # he heavy
+        density: 500
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      # gibbed at 200 so cant go crit
+      200: Dead
+  # incase some weird stuff happens and the crew adopts a terminator
+  - type: Repairable
+    doAfterDelay: 15
+    allowSelfRepair: false
+  - type: Body
+    prototype: TerminatorEndoskeleton
+  # lets it sit in the terminator flesh's brain slot
+  - type: Organ
+  - type: Brain
+  - type: TypingIndicator
+    proto: robot # beep boop borp
+  - type: Speech
+    speechSounds: Pai
+  - type: Damageable
+    damageModifierSet: Cybernetic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        # endoSKELETON
+        sound: /Audio/Effects/bone_rattle.ogg
+      # a keepsake or a gift for cargo
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          HeadTerminator:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  # for fire spreading around, the endoskeleton cannot burn
+  - type: Flammable
+    fireSpread: true
+    canResistFire: true
+    damage:
+      types:
+        Heat: 0
+  # now his only weapon, but it is stronger
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 15
+        Structural: 5
+  - type: Puller
+    needsHands: false
+  - type: Prying
+    pryPowered: true
+    force: true
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - ShoesRequiredStepTriggerImmune
+    # let mind transfer on gib work
+    - MindTransferTarget
+    # its just metal so no implants
+    - Unimplantable

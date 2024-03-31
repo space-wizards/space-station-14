@@ -26,6 +26,10 @@
         {
             "name": "unshaded",
             "directions": 4
+        },
+        {
+            "name": "panel",
+            "directions": 4
         }
     ]
 }

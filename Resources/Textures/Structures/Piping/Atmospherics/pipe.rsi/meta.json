@@ -8,6 +8,10 @@
    "copyright":"pipeTrinaryConnectors made by Menshin for SS14 based on pipeTJunction, the rest is taken from https://github.com/tgstation/tgstation at commit 57cd1d59ca019dd0e7811ac451f295f818e573da",
    "states":[
       {
+         "name":"pipeBroken",
+         "directions":1
+      },
+      {
          "name":"pipeTJunction",
          "directions":4
       },

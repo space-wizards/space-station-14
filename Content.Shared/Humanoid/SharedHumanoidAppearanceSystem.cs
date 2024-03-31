@@ -1,11 +1,11 @@
+using System.Linq;
+using Content.Shared.Decals;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
-using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
-using System.Linq;
 using Content.Shared.Preferences;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Humanoid;
 
@@ -31,7 +31,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentGetState>(OnGetState);
     }
 
     private void OnInit(EntityUid uid, HumanoidAppearanceComponent humanoid, ComponentInit args)
@@ -57,20 +56,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         LoadProfile(uid, startingSet.Profile, humanoid);
     }
 
-    private void OnGetState(EntityUid uid, HumanoidAppearanceComponent component, ref ComponentGetState args)
-    {
-        args.State = new HumanoidAppearanceState(component.MarkingSet,
-            component.PermanentlyHidden,
-            component.HiddenLayers,
-            component.CustomBaseLayers,
-            component.Sex,
-            component.Gender,
-            component.Age,
-            component.Species,
-            component.SkinColor,
-            component.EyeColor);
-    }
-
     /// <summary>
     ///     Toggles a humanoid's sprite layer visibility.
     /// </summary>
@@ -83,13 +68,13 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         bool permanent = false,
         HumanoidAppearanceComponent? humanoid = null)
     {
-        if (!Resolve(uid, ref humanoid))
+        if (!Resolve(uid, ref humanoid, false))
             return;
 
         var dirty = false;
         SetLayerVisibility(uid, humanoid, layer, visible, permanent, ref dirty);
         if (dirty)
-            Dirty(humanoid);
+            Dirty(uid, humanoid);
     }
 
     /// <summary>
@@ -114,7 +99,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         }
 
         if (dirty)
-            Dirty(humanoid);
+            Dirty(uid, humanoid);
     }
 
     protected virtual void SetLayerVisibility(
@@ -162,7 +147,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.MarkingSet = new(oldMarkings, prototype.MarkingPoints, _markingManager, _prototypeManager);
 
         if (sync)
-            Dirty(humanoid);
+            Dirty(uid, humanoid);
     }
 
     /// <summary>
@@ -192,7 +177,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.SkinColor = skinColor;
 
         if (sync)
-            Dirty(humanoid);
+            Dirty(uid, humanoid);
     }
 
     /// <summary>
@@ -211,12 +196,12 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             return;
 
         if (humanoid.CustomBaseLayers.TryGetValue(layer, out var info))
-            humanoid.CustomBaseLayers[layer] = info with { ID = id };
+            humanoid.CustomBaseLayers[layer] = info with { Id = id };
         else
             humanoid.CustomBaseLayers[layer] = new(id);
 
         if (sync)
-            Dirty(humanoid);
+            Dirty(uid, humanoid);
     }
 
     /// <summary>
@@ -237,7 +222,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             humanoid.CustomBaseLayers[layer] = new(null, color);
 
         if (sync)
-            Dirty(humanoid);
+            Dirty(uid, humanoid);
     }
 
     /// <summary>
@@ -259,7 +244,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         if (sync)
         {
-            Dirty(humanoid);
+            Dirty(uid, humanoid);
         }
     }
 
@@ -344,7 +329,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         humanoid.Age = profile.Age;
 
-        Dirty(humanoid);
+        Dirty(uid, humanoid);
     }
 
     /// <summary>
@@ -377,7 +362,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.MarkingSet.AddBack(prototype.MarkingCategory, markingObject);
 
         if (sync)
-            Dirty(humanoid);
+            Dirty(uid, humanoid);
     }
 
     private void EnsureDefaultMarkings(EntityUid uid, HumanoidAppearanceComponent? humanoid)
@@ -411,6 +396,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.MarkingSet.AddBack(prototype.MarkingCategory, markingObject);
 
         if (sync)
-            Dirty(humanoid);
+            Dirty(uid, humanoid);
     }
 }

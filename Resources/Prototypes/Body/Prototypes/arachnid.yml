@@ -19,10 +19,10 @@
         liver: OrganArachnidLiver
         kidneys: OrganArachnidKidneys
       connections:
-      - left arm
       - right arm
-      - left leg
+      - left arm
       - right leg
+      - left leg
     right arm:
       part: RightArmArachnid
       connections:

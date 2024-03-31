@@ -8,7 +8,7 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     {
-        public const float MaxExplosionRange = 80f;
+        public const float MaxExplosionRange = 26f;
         private const float DefaultLowPressure = 0f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
@@ -30,8 +30,8 @@ namespace Content.Server.Atmos.Components
 
         // Cancel toggles sounds if we re-toggle again.
 
-        public IPlayingAudioStream? ConnectStream;
-        public IPlayingAudioStream? DisconnectStream;
+        public EntityUid? ConnectStream;
+        public EntityUid? DisconnectStream;
 
         [DataField("air"), ViewVariables(VVAccess.ReadWrite)]
         public GasMixture Air { get; set; } = new();

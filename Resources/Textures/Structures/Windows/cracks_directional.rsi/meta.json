@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Adapted from https://github.com/space-wizards/space-station-14/ at commit f57e8ec6b9b4b72ef56c8146be0bc159ed2691ee, originally added by Zumorica, and modified for directional use by Darkie",
+  "states": [
+    {
+      "name": "DamageOverlay_4",
+      "directions": 4
+    },
+    {
+      "name": "DamageOverlay_8",
+      "directions": 4
+    },
+    {
+      "name": "DamageOverlay_12",
+      "directions": 4
+    }
+  ]
+}

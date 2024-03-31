@@ -5,8 +5,10 @@ using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Maps;
 
@@ -16,6 +18,7 @@ public sealed class GameMapManager : IGameMapManager
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IResourceManager _resMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     [ViewVariables(VVAccess.ReadOnly)]
@@ -40,18 +43,34 @@ public sealed class GameMapManager : IGameMapManager
             if (TryLookupMap(value, out GameMapPrototype? map))
             {
                 _configSelectedMap = map;
+                return;
             }
-            else
+
+            if (string.IsNullOrEmpty(value))
             {
-                if (string.IsNullOrEmpty(value))
-                {
-                    _configSelectedMap = default!;
-                }
-                else
-                {
-                    _log.Error($"Unknown map prototype {value} was selected!");
-                }
+                _configSelectedMap = default!;
+                return;
             }
+
+            if (_configurationManager.GetCVar<bool>(CCVars.UsePersistence))
+            {
+                var startMap = _configurationManager.GetCVar<string>(CCVars.PersistenceMap);
+                _configSelectedMap = _prototypeManager.Index<GameMapPrototype>(startMap);
+
+                var mapPath = new ResPath(value);
+                if (_resMan.UserData.Exists(mapPath))
+                {
+                    _configSelectedMap = _configSelectedMap.Persistence(mapPath);
+                    _log.Info($"Using persistence map from {value}");
+                    return;
+                }
+
+                // persistence save path doesn't exist so we just use the start map
+                _log.Warning($"Using persistence start map {startMap} as {value} doesn't exist");
+                return;
+            }
+
+            _log.Error($"Unknown map prototype {value} was selected!");
         }, true);
         _configurationManager.OnValueChanged(CCVars.GameMapRotation, value => _mapRotationEnabled = value, true);
         _configurationManager.OnValueChanged(CCVars.GameMapMemoryDepth, value =>

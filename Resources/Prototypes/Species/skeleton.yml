@@ -1,6 +1,6 @@
 - type: species
   id: Skeleton
-  name: Skeleton
+  name: species-name-skeleton
   roundStart: false
   prototype: MobSkeletonPerson
   sprites: MobSkeletonSprites

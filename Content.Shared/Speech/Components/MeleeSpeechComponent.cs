@@ -27,8 +27,7 @@ public sealed partial class MeleeSpeechComponent : Component
     [AutoNetworkedField]
     public int MaxBattlecryLength = 12;
 
-    [DataField("configureAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? ConfigureAction = "ActionConfigureMeleeSpeech";
+    [DataField] public EntProtoId  ConfigureAction = "ActionConfigureMeleeSpeech";
 
     /// <summary>
     /// The action to open the battlecry UI

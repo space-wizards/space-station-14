@@ -10,9 +10,6 @@
       Brute:
         path:
           "/Audio/Weapons/grille_hit.ogg"
-  - type: Tag
-    tags:
-    - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/fence.rsi
     drawdepth: WallTops
@@ -37,7 +34,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           PartRodMetal1:
@@ -78,6 +75,10 @@
           True: { visible: True }
           False: { visible: False }
   - type: AnimationPlayer
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2
 
 - type: entity
   parent: BaseFenceMetal
@@ -125,7 +126,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           PartRodMetal1:
@@ -163,7 +164,8 @@
         mask:
         - FullTileMask
         layer:
-        - TableLayer
+        - MidImpassable
+        - LowImpassable
   - type: InteractionPopup
     interactSuccessString: fence-rattle-success
     messagePerceivedByOthers: fence-rattle-success
@@ -230,7 +232,8 @@
         mask:
         - TableMask
         layer:
-        - TableLayer
+        - MidImpassable
+        - LowImpassable
   - type: InteractionPopup
     interactSuccessString: fence-rattle-success
     messagePerceivedByOthers: fence-rattle-success
@@ -266,7 +269,8 @@
         mask:
         - TableMask
         layer:
-        - TableLayer
+        - MidImpassable
+        - LowImpassable
   - type: InteractionPopup
     interactSuccessString: fence-rattle-success
     messagePerceivedByOthers: fence-rattle-success
@@ -301,7 +305,8 @@
         mask:
         - TableMask
         layer:
-        - TableLayer
+        - MidImpassable
+        - LowImpassable
   - type: InteractionOutline
   - type: Door
     openSpriteState: door_opened

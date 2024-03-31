@@ -6,7 +6,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Radio.Components;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.Chat;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -172,8 +172,13 @@ public sealed class RadioDeviceSystem : EntitySystem
             return;
 
         var proto = _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel);
-        args.PushMarkup(Loc.GetString("handheld-radio-component-on-examine", ("frequency", proto.Frequency)));
-        args.PushMarkup(Loc.GetString("handheld-radio-component-chennel-examine", ("channel", proto.LocalizedName)));
+
+        using (args.PushGroup(nameof(RadioMicrophoneComponent)))
+        {
+            args.PushMarkup(Loc.GetString("handheld-radio-component-on-examine", ("frequency", proto.Frequency)));
+            args.PushMarkup(Loc.GetString("handheld-radio-component-chennel-examine",
+                ("channel", proto.LocalizedName)));
+        }
     }
 
     private void OnListen(EntityUid uid, RadioMicrophoneComponent component, ListenEvent args)

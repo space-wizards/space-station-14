@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Do over of clipboard.rsi sprites done by joshepvodka",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "clipboard"
+    },
+    {
+      "name": "clipboard_over"
+    },
+    {
+      "name": "clipboard_paper"
+    },
+    {
+      "name": "clipboard_pen"
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

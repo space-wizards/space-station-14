@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Drawn by Ubaser",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "scar_eye_left",
+      "directions": 4
+    },
+    {
+        "name": "scar_eye_right",
+        "directions": 4
+    },
+    {
+        "name": "scar_top_surgery_short",
+        "directions": 4
+    },
+    {
+        "name": "scar_top_surgery_long",
+        "directions": 4
+    },
+    {
+        "name": "scar_chest",
+        "directions": 4
+    }
+  ]
+}

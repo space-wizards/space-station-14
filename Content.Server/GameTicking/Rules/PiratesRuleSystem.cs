@@ -10,15 +10,21 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mind;
+using Content.Shared.NPC.Prototypes;
+using Content.Shared.NPC.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -40,9 +46,31 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly NamingSystem _namingSystem = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string GameRuleId = "Pirates";
+
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string MobId = "MobHuman";
+
+    [ValidatePrototypeId<SpeciesPrototype>]
+    private const string SpeciesId = "Human";
+
+    [ValidatePrototypeId<NpcFactionPrototype>]
+    private const string PirateFactionId = "Syndicate";
+
+    [ValidatePrototypeId<NpcFactionPrototype>]
+    private const string EnemyFactionId = "NanoTrasen";
+
+    [ValidatePrototypeId<StartingGearPrototype>]
+    private const string GearId = "PirateGear";
+
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string SpawnPointId = "SpawnPointPirates";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -141,7 +169,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
                 (int) Math.Min(
                     Math.Floor((double) ev.PlayerPool.Count / _cfg.GetCVar(CCVars.PiratesPlayersPerOp)),
                     _cfg.GetCVar(CCVars.PiratesMaxOps)));
-            var ops = new IPlayerSession[numOps];
+            var ops = new ICommonSession[numOps];
             for (var i = 0; i < numOps; i++)
             {
                 ops[i] = _random.PickAndTake(ev.PlayerPool);
@@ -168,11 +196,12 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
             var gridId = _map.LoadGrid(GameTicker.DefaultMap, map, new MapLoadOptions
             {
                 Offset = aabb.Center + new Vector2(a, a),
+                LoadMap = false,
             });
 
             if (!gridId.HasValue)
             {
-                Logger.ErrorS("pirates", $"Gridid was null when loading \"{map}\", aborting.");
+                Log.Error($"Gridid was null when loading \"{map}\", aborting.");
                 foreach (var session in ops)
                 {
                     ev.PlayerPool.Add(session);
@@ -184,7 +213,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
             pirates.PirateShip = gridId.Value;
 
             // TODO: Loot table or something
-            var pirateGear = _prototypeManager.Index<StartingGearPrototype>("PirateGear"); // YARRR
+            var pirateGear = _prototypeManager.Index<StartingGearPrototype>(GearId); // YARRR
 
             var spawns = new List<EntityCoordinates>();
 
@@ -192,7 +221,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
             foreach (var (_, meta, xform) in
                      EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
             {
-                if (meta.EntityPrototype?.ID != "SpawnPointPirates" || xform.ParentUid != pirates.PirateShip)
+                if (meta.EntityPrototype?.ID != SpawnPointId || xform.ParentUid != pirates.PirateShip)
                     continue;
 
                 spawns.Add(xform.Coordinates);
@@ -201,7 +230,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
             if (spawns.Count == 0)
             {
                 spawns.Add(Transform(pirates.PirateShip).Coordinates);
-                Logger.WarningS("pirates", $"Fell back to default spawn for pirates!");
+                Log.Warning($"Fell back to default spawn for pirates!");
             }
 
             for (var i = 0; i < ops.Length; i++)
@@ -209,18 +238,21 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
                 var sex = _random.Prob(0.5f) ? Sex.Male : Sex.Female;
                 var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
 
-                var name = _namingSystem.GetName("Human", gender);
+                var name = _namingSystem.GetName(SpeciesId, gender);
 
                 var session = ops[i];
                 var newMind = _mindSystem.CreateMind(session.UserId, name);
                 _mindSystem.SetUserId(newMind, session.UserId);
 
-                var mob = Spawn("MobHuman", _random.Pick(spawns));
+                var mob = Spawn(MobId, _random.Pick(spawns));
                 _metaData.SetEntityName(mob, name);
 
                 _mindSystem.TransferTo(newMind, mob);
                 var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
                 _stationSpawningSystem.EquipStartingGear(mob, pirateGear, profile);
+
+                _npcFaction.RemoveFaction(mob, EnemyFactionId, false);
+                _npcFaction.AddFaction(mob, PirateFactionId);
 
                 pirates.Pirates.Add(newMind);
 
@@ -239,17 +271,18 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     }
 
     //Forcing one player to be a pirate.
-    public void MakePirate(EntityUid mindId, MindComponent mind)
+    public void MakePirate(EntityUid entity)
     {
-        if (!mind.OwnedEntity.HasValue)
+        if (!_mindSystem.TryGetMind(entity, out var mindId, out var mind))
             return;
-        SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "PirateGear", EntityManager);
+
+        SetOutfitCommand.SetOutfit(entity, GearId, EntityManager);
 
         var pirateRule = EntityQuery<PiratesRuleComponent>().FirstOrDefault();
         if (pirateRule == null)
         {
             //todo fuck me this shit is awful
-            GameTicker.StartGameRule("Pirates", out var ruleEntity);
+            GameTicker.StartGameRule(GameRuleId, out var ruleEntity);
             pirateRule = Comp<PiratesRuleComponent>(ruleEntity);
         }
 

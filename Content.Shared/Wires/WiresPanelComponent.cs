@@ -1,5 +1,7 @@
+using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Wires;
 
@@ -29,13 +31,37 @@ public sealed partial class WiresPanelComponent : Component
     public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
 
     /// <summary>
-    ///     This prototype describes the current security features of the wire panel
+    /// Amount of times in seconds it takes to open
     /// </summary>
-    [DataField("securityLevel")]
-    [ValidatePrototypeId<WiresPanelSecurityLevelPrototype>]
-    [AutoNetworkedField]
-    public string CurrentSecurityLevelID = "Level0";
+    [DataField]
+    public TimeSpan OpenDelay = TimeSpan.FromSeconds(1);
+
+    /// <summary>
+    /// The tool quality needed to open this panel.
+    /// </summary>
+    [DataField]
+    public ProtoId<ToolQualityPrototype> OpeningTool = "Screwing";
+
+    /// <summary>
+    /// Text showed on examine when the panel is closed.
+    /// </summary>
+    /// <returns></returns>
+    [DataField]
+    public LocId? ExamineTextClosed = "wires-panel-component-on-examine-closed";
+
+    /// <summary>
+    /// Text showed on examine when the panel is open.
+    /// </summary>
+    /// <returns></returns>
+    [DataField]
+    public LocId? ExamineTextOpen = "wires-panel-component-on-examine-open";
 }
+
+/// <summary>
+/// Event raised on a <see cref="WiresPanelComponent"/> before its open state is about to be changed.
+/// </summary>
+[ByRefEvent]
+public record struct AttemptChangePanelEvent(bool Open, EntityUid? User, bool Cancelled = false);
 
 /// <summary>
 /// Event raised when a panel is opened or closed.

@@ -20,7 +20,22 @@
       - material: Cable
         amount: 2
         doAfter: 1
+    - to: power_sensor
+      steps:
+      - material: Steel
+        amount: 3
+        doAfter: 1
+      - material: Cable
+        amount: 2
+        doAfter: 1
+      - tag: Multitool
+        icon:
+          sprite: Objects/Tools/multitool.rsi
+          state: icon
+        name: a multitool
   - node: logic_gate
     entity: LogicGate
   - node: edge_detector
     entity: EdgeDetector
+  - node: power_sensor
+    entity: PowerSensor

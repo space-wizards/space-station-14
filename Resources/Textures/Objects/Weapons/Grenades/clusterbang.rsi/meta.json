@@ -22,6 +22,19 @@
     {
       "name": "base-3",
       "directions": 1
+    },
+    {
+      "name": "icon",
+      "directions": 1
+    },
+    {
+      "name": "primed",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
     }
   ]
 }

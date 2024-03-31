@@ -41,7 +41,7 @@ public sealed partial class GunSystem
         if (!TryComp<BatteryComponent>(uid, out var battery))
             return;
 
-        UpdateShots(uid, component, battery.Charge, battery.MaxCharge);
+        UpdateShots(uid, component, battery.CurrentCharge, battery.MaxCharge);
     }
 
     private void UpdateShots(EntityUid uid, BatteryAmmoProviderComponent component, float charge, float maxCharge)
@@ -51,7 +51,7 @@ public sealed partial class GunSystem
 
         if (component.Shots != shots || component.Capacity != maxShots)
         {
-            Dirty(component);
+            Dirty(uid, component);
         }
 
         component.Shots = shots;
@@ -85,7 +85,7 @@ public sealed partial class GunSystem
             {
                 var p = (ProjectileComponent) projectile.Component;
 
-                if (p.Damage.Total > FixedPoint2.Zero)
+                if (!p.Damage.Empty)
                 {
                     return p.Damage;
                 }

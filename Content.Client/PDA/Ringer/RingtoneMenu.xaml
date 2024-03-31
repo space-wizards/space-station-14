@@ -79,12 +79,14 @@
                             Access="Public"
                             Text="{Loc 'comp-ringer-ui-test-ringtone-button'}"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center"
+                            StyleClasses="OpenRight" />
                     <Button Name = "SetRingerButton"
                             Access="Public"
                             Text="{Loc 'comp-ringer-ui-set-ringtone-button'}"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center"
+                            StyleClasses="OpenLeft" />
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>

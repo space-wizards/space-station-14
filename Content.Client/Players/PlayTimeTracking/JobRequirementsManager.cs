@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
 using Content.Shared.CCVar;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
@@ -90,13 +88,7 @@ public sealed class JobRequirementsManager
             return false;
         }
 
-        if (job.Requirements == null ||
-            !_cfg.GetCVar(CCVars.GameRoleTimers))
-        {
-            return true;
-        }
-
-        var player = _playerManager.LocalPlayer?.Session;
+        var player = _playerManager.LocalSession;
         if (player == null)
             return true;
 
@@ -107,7 +99,7 @@ public sealed class JobRequirementsManager
     {
         reason = null;
 
-        if (requirements == null)
+        if (requirements == null || !_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
 
         var reasons = new List<string>();
@@ -122,4 +114,24 @@ public sealed class JobRequirementsManager
         reason = reasons.Count == 0 ? null : FormattedMessage.FromMarkup(string.Join('\n', reasons));
         return reason == null;
     }
+
+    public TimeSpan FetchOverallPlaytime()
+    {
+        return _roles.TryGetValue("Overall", out var overallPlaytime) ? overallPlaytime : TimeSpan.Zero;
+    }
+
+    public IEnumerable<KeyValuePair<string, TimeSpan>> FetchPlaytimeByRoles()
+    {
+        var jobsToMap = _prototypes.EnumeratePrototypes<JobPrototype>();
+
+        foreach (var job in jobsToMap)
+        {
+            if (_roles.TryGetValue(job.PlayTimeTracker, out var locJobName))
+            {
+                yield return new KeyValuePair<string, TimeSpan>(job.Name, locJobName);
+            }
+        }
+    }
+
+
 }

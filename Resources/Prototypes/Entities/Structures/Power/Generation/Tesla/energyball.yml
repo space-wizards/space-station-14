@@ -1,0 +1,142 @@
+- type: entity
+  id: BaseEnergyBall
+  abstract: true
+  components:
+  - type: Clickable
+  - type: Physics
+    bodyType: KinematicController
+    bodyStatus: InAir
+    sleepingAllowed: false
+  - type: CanMoveInAir
+  - type: ChasingWalk
+    minSpeed: 1
+    maxSpeed: 3
+    chasingComponent:
+    - type: LightningTarget
+  - type: AmbientSound
+    volume: 3
+    range: 15
+    sound:
+      path: /Audio/Effects/tesla.ogg
+  - type: PointLight
+    enabled: true
+    radius: 5
+    color: "#4080FF"
+  - type: Appearance
+  - type: LightningArcShooter
+    arcDepth: 2
+    maxLightningArc: 1
+    shootMinInterval: 4
+    shootMaxInterval: 10
+    shootRange: 3
+    lightningPrototype: Lightning
+
+- type: entity
+  id: TeslaEnergyBall
+  parent: BaseEnergyBall
+  name: ball lightning
+  description: A giant ball of pure energy. The space around it is humming and melting.
+  components:
+  - type: Fixtures
+    fixtures:
+      EventHorizonCollider:
+        shape:
+          !type:PhysShapeCircle
+            radius: 0.55
+        hard: true
+        restitution: 0.8
+        density: 99999
+        mask:
+        - Opaque
+        layer:
+        - GlassLayer
+      EventHorizonConsumer:
+        shape:
+          !type:PhysShapeCircle
+            radius: 0.65
+        hard: false
+        mask:
+        - Opaque
+        layer:
+        - GlassLayer
+  - type: EventHorizon
+    radius: 0.5
+    canBreachContainment: false
+    colliderFixtureId: EventHorizonCollider
+    consumerFixtureId: EventHorizonConsumer
+    consumeTiles: false
+    consumeEntities: false
+  - type: TeslaEnergyBall
+    spawnProto: TeslaMiniEnergyBall
+    soundCollapse:
+      path: /Audio/Effects/tesla_collapse.ogg
+      params:
+        variation: 0.3
+  - type: LightningArcShooter
+    arcDepth: 3
+    maxLightningArc: 4
+    shootMinInterval: 3
+    shootMaxInterval: 5
+    shootRange: 7
+    lightningPrototype: Lightning #To do: change to HyperchargedLightning, after fix beam system
+  - type: ChasingWalk
+    minSpeed: 1
+    maxSpeed: 3
+  - type: ChaoticJump
+    jumpMinInterval: 8
+    jumpMaxInterval: 15
+    offset: 1
+  - type: WarpPoint
+    follow: true
+    location: tesla ball
+  - type: Sprite
+    drawdepth: Effects
+    sprite: Structures/Power/Generation/Tesla/energy_ball.rsi
+    shader: unshaded
+    layers:
+    - state: energy_ball
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/Effects/tesla_collapse.ogg
+      params:
+        variation: 0.3
+  - type: InteractionPopup # for the brave
+    successChance: 0.2
+    interactSuccessString: petting-success-tesla
+    interactFailureString: petting-failure-tesla
+    interactSuccessSpawn: EffectHearts
+
+- type: entity
+  id: TeslaMiniEnergyBall
+  parent: BaseEnergyBall
+  name: mini ball lightning
+  description: The cub of a destructive energy cage. Not as dangerous, but still not worth touching with bare hands.
+  components:
+  - type: ChasingWalk
+    minSpeed: 2
+    maxSpeed: 3
+    chasingComponent:
+    - type: TeslaEnergyBall
+  - type: Fixtures
+    fixtures:
+      TeslaCollider:
+        shape:
+          !type:PhysShapeCircle
+            radius: 0.35
+        hard: true
+        restitution: 0.8
+        density: 10
+        mask:
+        - None
+        layer:
+        - None
+  - type: TimedDespawn
+    lifetime: 120
+  - type: Sprite
+    drawdepth: Effects
+    sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
+    shader: unshaded
+    layers:
+    - state: tesla_projectile
+  - type: Electrified
+    requirePower: false

@@ -29,6 +29,6 @@
     eyes: ClothingEyesGlassesMeson
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
-  innerclothingskirt: ClothingUniformJumpskirtEngineering
+  innerClothingSkirt: ClothingUniformJumpskirtEngineering
   satchel: ClothingBackpackSatchelEngineeringFilled
   duffelbag: ClothingBackpackDuffelEngineeringFilled

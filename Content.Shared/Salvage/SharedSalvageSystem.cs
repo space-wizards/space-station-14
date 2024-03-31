@@ -15,7 +15,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Salvage;
 
-public abstract class SharedSalvageSystem : EntitySystem
+public abstract partial class SharedSalvageSystem : EntitySystem
 {
     [Dependency] protected readonly IConfigurationManager CfgManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -48,6 +48,7 @@ public abstract class SharedSalvageSystem : EntitySystem
         var air = GetBiomeMod<SalvageAirMod>(biome.ID, rand, ref modifierBudget);
         var dungeon = GetBiomeMod<SalvageDungeonModPrototype>(biome.ID, rand, ref modifierBudget);
         var factionProtos = _proto.EnumeratePrototypes<SalvageFactionPrototype>().ToList();
+        factionProtos.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
         var faction = factionProtos[rand.Next(factionProtos.Count)];
 
         var mods = new List<string>();

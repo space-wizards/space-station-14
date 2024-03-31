@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Inventory;
 
 [Prototype("inventoryTemplate")]
-public sealed class InventoryTemplatePrototype : IPrototype
+public sealed partial class InventoryTemplatePrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = string.Empty;
 
@@ -20,7 +20,7 @@ public sealed partial class SlotDefinition
     [DataField("slotFlags")] public SlotFlags SlotFlags { get; private set; } = SlotFlags.PREVENTEQUIP;
     [DataField("showInWindow")] public bool ShowInWindow { get; private set; } = true;
     [DataField("slotGroup")] public string SlotGroup { get; private set; } = "Default";
-    [DataField("stripTime")] public float StripTime { get; private set; } = 4f;
+    [DataField("stripTime")] public TimeSpan StripTime { get; private set; } = TimeSpan.FromSeconds(4f);
 
     [DataField("uiWindowPos", required: true)]
     public Vector2i UIWindowPosition { get; private set; }

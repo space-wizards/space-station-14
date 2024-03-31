@@ -1,6 +1,8 @@
 using Content.Shared.Damage;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
@@ -18,7 +20,6 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<DamageMarkerOnCollideComponent, StartCollideEvent>(OnMarkerCollide);
-        SubscribeLocalEvent<DamageMarkerComponent, EntityUnpausedEvent>(OnMarkerUnpaused);
         SubscribeLocalEvent<DamageMarkerComponent, AttackedEvent>(OnMarkerAttacked);
     }
 
@@ -52,11 +53,6 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
         }
     }
 
-    private void OnMarkerUnpaused(EntityUid uid, DamageMarkerComponent component, ref EntityUnpausedEvent args)
-    {
-        component.EndTime += args.PausedTime;
-    }
-
     private void OnMarkerCollide(EntityUid uid, DamageMarkerOnCollideComponent component, ref StartCollideEvent args)
     {
         if (!args.OtherFixture.Hard ||
@@ -75,7 +71,7 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
         marker.Marker = projectile.Weapon.Value;
         marker.EndTime = _timing.CurTime + component.Duration;
         component.Amount--;
-        Dirty(marker);
+        Dirty(args.OtherEntity, marker);
 
         if (_netManager.IsServer)
         {
@@ -85,7 +81,7 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
             }
             else
             {
-                Dirty(component);
+                Dirty(uid, component);
             }
         }
     }

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d5cb4288ec5f7cb9fb5b6f6e798f4c64cd82cd09",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d5cb4288ec5f7cb9fb5b6f6e798f4c64cd82cd09, Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/9d7ff729b6b89eee0b3d750327f9fbaff4aeb045",
   "size": {
     "x": 32,
     "y": 32
@@ -18,6 +18,9 @@
     },
     {
       "name": "mattress"
+    },
+    {
+      "name": "psychbed"
     },
     {
       "name": "rack"

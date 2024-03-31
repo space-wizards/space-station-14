@@ -27,7 +27,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                 if (!string.IsNullOrEmpty(equipmentStr))
                 {
                     var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
-                    InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, true);
+                    InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, true, force:true);
                 }
             }
         }
@@ -37,10 +37,14 @@ public abstract class SharedStationSpawningSystem : EntitySystem
 
         var inhand = startingGear.Inhand;
         var coords = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
-        foreach (var (hand, prototype) in inhand)
+        foreach (var prototype in inhand)
         {
             var inhandEntity = EntityManager.SpawnEntity(prototype, coords);
-            _handsSystem.TryPickup(entity, inhandEntity, hand, checkActionBlocker: false, handsComp: handsComponent);
+
+            if (_handsSystem.TryGetEmptyHand(entity, out var emptyHand, handsComponent))
+            {
+                _handsSystem.TryPickup(entity, inhandEntity, emptyHand, checkActionBlocker: false, handsComp: handsComponent);
+            }
         }
     }
 }

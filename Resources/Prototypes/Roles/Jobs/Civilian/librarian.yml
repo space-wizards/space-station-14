@@ -19,10 +19,7 @@
     id: LibrarianPDA
     ears: ClothingHeadsetService
     pocket1: d10Dice
-    belt: BooksBag
     pocket2: HandLabeler # for making named bestsellers
-  inhand:
-    right hand: BriefcaseBrownFilled
-  innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
+  innerClothingSkirt: ClothingUniformJumpskirtLibrarian
   satchel: ClothingBackpackSatchelLibrarianFilled
   duffelbag: ClothingBackpackDuffelLibrarianFilled

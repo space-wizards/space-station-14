@@ -1,11 +1,11 @@
+using System.Linq;
 using Content.Server.Storage.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
-using System.Linq;
-using Content.Shared.Storage;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -55,7 +55,7 @@ public sealed class PickRandomSystem : EntitySystem
 
         var picked = _random.Pick(entities);
         // if it fails to go into a hand of the user, will be on the storage
-        _container.AttachParentToContainerOrGrid(Transform(picked));
+        _container.AttachParentToContainerOrGrid((picked, Transform(picked)));
 
         // TODO: try to put in hands, failing that put it on the storage
         _hands.TryPickupAnyHand(user, picked);

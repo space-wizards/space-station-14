@@ -3,7 +3,10 @@ using Content.Server.Popups;
 using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -14,7 +17,6 @@ namespace Content.Server.ImmovableRod;
 public sealed class ImmovableRodSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IMapManager _map = default!;
 
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -31,7 +33,7 @@ public sealed class ImmovableRodSystem : EntitySystem
             if (!rod.DestroyTiles)
                 continue;
 
-            if (!_map.TryGetGrid(trans.GridUid, out var grid))
+            if (!TryComp<MapGridComponent>(trans.GridUid, out var grid))
                 continue;
 
             grid.SetTile(trans.Coordinates, Tile.Empty);
@@ -51,9 +53,9 @@ public sealed class ImmovableRodSystem : EntitySystem
     {
         if (EntityManager.TryGetComponent(uid, out PhysicsComponent? phys))
         {
-            _physics.SetLinearDamping(phys, 0f);
-            _physics.SetFriction(phys, 0f);
-            _physics.SetBodyStatus(phys, BodyStatus.InAir);
+            _physics.SetLinearDamping(uid, phys, 0f);
+            _physics.SetFriction(uid, phys, 0f);
+            _physics.SetBodyStatus(uid, phys, BodyStatus.InAir);
 
             if (!component.RandomizeVelocity)
                 return;
@@ -99,6 +101,7 @@ public sealed class ImmovableRodSystem : EntitySystem
 
             _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid, PopupType.LargeCaution);
             _bodySystem.GibBody(ent, body: body);
+            return;
         }
 
         QueueDel(ent);

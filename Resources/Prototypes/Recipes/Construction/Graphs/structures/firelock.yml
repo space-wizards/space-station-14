@@ -80,7 +80,9 @@
               doAfter: 0.25
         - to: frame2
           completed:
-            - !type:EmptyAllContainers {}
+            - !type:EmptyAllContainers
+              pickup: true
+              emptyAtUser: true
           conditions:
             - !type:EntityAnchored
               anchored: true

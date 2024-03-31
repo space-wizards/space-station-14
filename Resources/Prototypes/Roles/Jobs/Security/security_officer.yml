@@ -17,6 +17,10 @@
   - Maintenance
   - Service
   - External
+  - Cryogenics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: SecurityOfficerGear
@@ -30,7 +34,7 @@
     id: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
-    pocket1: WeaponPistolMk58Nonlethal
-  innerclothingskirt: ClothingUniformJumpskirtSec
+    pocket1: WeaponPistolMk58
+  innerClothingSkirt: ClothingUniformJumpskirtSec
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled

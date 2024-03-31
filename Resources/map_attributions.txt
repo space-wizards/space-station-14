@@ -25,6 +25,9 @@
 - files: ["kettle.yml"]
   authors: Checkraze
 
+- files: ["gemini.yml"]
+  authors: Checkraze, TsjipTsjip, Luckyshotpictures
+
 - files: ["marathon.yml"]
   authors: Emisse
 

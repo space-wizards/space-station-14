@@ -1,0 +1,24 @@
+- type: entity
+  name: Random Folder Spawner
+  id: FolderSpawner
+  parent: MarkerBase
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Transform
+    anchored: false
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+      - state: folder-base
+      - state: folder-colormap
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - BoxFolderRed
+      - BoxFolderBlue
+      - BoxFolderYellow
+      - BoxFolderWhite
+      - BoxFolderGrey
+      - BoxFolderBlack
+      - BoxFolderGreen

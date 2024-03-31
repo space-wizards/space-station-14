@@ -6,16 +6,15 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     public sealed partial class FlammableComponent : Component
     {
-        [ViewVariables]
-        public bool Resisting = false;
-
-        [ViewVariables]
-        public readonly List<EntityUid> Collided = new();
+        [DataField]
+        public bool Resisting;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public bool OnFire { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float FireStacks { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -56,5 +55,11 @@ namespace Content.Server.Atmos.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("firestacksOnIgnite")]
         public float FirestacksOnIgnite = 2.0f;
+
+        /// <summary>
+        /// Determines how quickly the object will fade out. With positive values, the object will flare up instead of going out.
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public float FirestackFade = -0.1f;
     }
 }

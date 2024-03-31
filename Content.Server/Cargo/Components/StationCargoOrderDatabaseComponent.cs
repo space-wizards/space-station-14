@@ -1,5 +1,6 @@
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Cargo.Components;
@@ -30,4 +31,10 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     /// </summary>
     [DataField("shuttle")]
     public EntityUid? Shuttle;
+
+    /// <summary>
+    ///     The paper-type prototype to spawn with the order information.
+    /// </summary>
+    [DataField]
+    public EntProtoId PrinterOutput = "PaperCargoInvoice";
 }

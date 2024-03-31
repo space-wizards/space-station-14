@@ -9,13 +9,10 @@ namespace Content.Shared.Actions;
 public sealed partial class ActionsComponent : Component
 {
     /// <summary>
-    ///     Handled on the client to track added and removed actions.
+    /// List of actions currently granted to this entity.
+    /// On the client, this may contain a mixture of client-side and networked entities.
     /// </summary>
-    [ViewVariables] public readonly Dictionary<EntityUid, ActionMetaData> OldClientActions = new();
-
-    [ViewVariables] public readonly HashSet<EntityUid> Actions = new();
-
-    public override bool SendOnlyToOwner => true;
+    [DataField] public HashSet<EntityUid> Actions = new();
 }
 
 [Serializable, NetSerializable]
@@ -28,8 +25,6 @@ public sealed class ActionsComponentState : ComponentState
         Actions = actions;
     }
 }
-
-public readonly record struct ActionMetaData(bool ClientExclusive, bool AutoRemove);
 
 /// <summary>
 ///     Determines how the action icon appears in the hotbar for item actions.

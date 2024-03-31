@@ -37,7 +37,7 @@ namespace Content.Client.RoundEnd
 
             Contents.AddChild(roundEndTabs);
 
-            OpenCentered();
+            OpenCenteredRight();
             MoveToFront();
         }
 
@@ -125,19 +125,15 @@ namespace Content.Client.RoundEnd
                     VerticalExpand = true,
                 };
 
-                var playerUid = _entityManager.GetEntity(playerInfo.PlayerNetEntity);
-
-                if (_entityManager.HasComponent<SpriteComponent>(playerUid))
+                if (playerInfo.PlayerNetEntity != null)
                 {
-                    var spriteView = new SpriteView
-                    {
-                        OverrideDirection = Direction.South,
-                        VerticalAlignment = VAlignment.Center,
-                        SetSize = new Vector2(32, 32),
-                        VerticalExpand = true,
-                    };
-                    spriteView.SetEntity(playerUid);
-                    hBox.AddChild(spriteView);
+                    hBox.AddChild(new SpriteView(playerInfo.PlayerNetEntity.Value, _entityManager)
+                        {
+                            OverrideDirection = Direction.South,
+                            VerticalAlignment = VAlignment.Center,
+                            SetSize = new Vector2(32, 32),
+                            VerticalExpand = true,
+                        });
                 }
 
                 if (playerInfo.PlayerICName != null)

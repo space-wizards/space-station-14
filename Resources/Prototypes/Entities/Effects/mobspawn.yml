@@ -1,0 +1,112 @@
+﻿- type: entity
+  id: MobSpawnCrabQuartz
+  name: mobspawner quartzcrab
+  components:
+  - type: Transform
+    anchored: True
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: /Textures/Effects/mobspawn.rsi
+    state: crab_quartz
+  - type: Fixtures
+    fixtures:
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
+  - type: TimedDespawn
+    lifetime: 2.1
+  - type: SpawnOnDespawn
+    prototype: MobQuartzCrab
+
+- type: entity
+  id: MobSpawnCrabIron
+  parent: MobSpawnCrabQuartz
+  name: mobspawner ironcrab
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/mobspawn.rsi
+    state: crab_iron
+  - type: SpawnOnDespawn
+    prototype: MobIronCrab
+
+- type: entity
+  id: MobSpawnCrabSilver
+  parent: MobSpawnCrabQuartz
+  name: mobspawner silvercrab
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/mobspawn.rsi
+    state: crab_silver
+  - type: SpawnOnDespawn
+    prototype: MobSilverCrab
+
+- type: entity
+  id: MobSpawnCrabUranium
+  parent: MobSpawnCrabQuartz
+  name: mobspawner uraniumcrab
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/mobspawn.rsi
+    state: crab_uranium
+  - type: SpawnOnDespawn
+    prototype: MobUraniumCrab
+
+- type: entity
+  id: EffectAnomalyFloraBulb
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.4
+  - type: Sprite
+    drawdepth: Effects
+    noRot: true
+    layers:
+      - shader: unshaded
+        map: ["enum.EffectLayers.Unshaded"]
+        sprite: Effects/emp.rsi
+        state: emp_disable
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: AnimationPlayer
+  - type: RandomSpawner
+    deleteSpawnerAfterSpawn: false
+    rareChance: 0.1
+    offset: 0.3
+    chance: 1
+    prototypes:
+    - FoodAmbrosiaVulgaris
+    - FoodAloe
+    - FoodCabbage
+    - FoodCarrot
+    - FoodGalaxythistle
+    - FoodLemon
+    - FoodLime
+    - FoodPeaPod
+    - FoodPineapple
+    - FoodOnionRed
+    - FoodWatermelon
+    - FoodAmbrosiaVulgaris
+    - FoodAloe
+    - FoodCabbage
+    - FoodCarrot
+    - FoodGalaxythistle
+    - FoodLemon
+    - FoodLime
+    - FoodPeaPod
+    - FoodPineapple
+    - FoodOnionRed
+    - FoodWatermelon
+    - FoodGatfruit
+    rarePrototypes:
+    - MobLuminousEntity
+    - MobLuminousObject

@@ -25,6 +25,12 @@
   canBeAntag: false
   accessGroups:
   - AllAccess
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: CaptainGear
@@ -38,6 +44,6 @@
     outerClothing: ClothingOuterArmorCaptainCarapace
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand
-  innerclothingskirt: ClothingUniformJumpskirtCaptain
+  innerClothingSkirt: ClothingUniformJumpskirtCaptain
   satchel: ClothingBackpackSatchelCaptainFilled
   duffelbag: ClothingBackpackDuffelCaptainFilled

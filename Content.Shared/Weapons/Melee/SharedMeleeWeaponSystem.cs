@@ -12,6 +12,8 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Components;
@@ -19,35 +21,34 @@ using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
-using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Toolshed.Syntax;
+using ItemToggleMeleeWeaponComponent = Content.Shared.Item.ItemToggle.Components.ItemToggleMeleeWeaponComponent;
 
 namespace Content.Shared.Weapons.Melee;
 
 public abstract class SharedMeleeWeaponSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] protected readonly IMapManager MapManager = default!;
-    [Dependency] private   readonly IPrototypeManager _protoManager = default!;
-    [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
-    [Dependency] protected readonly ActionBlockerSystem Blocker = default!;
-    [Dependency] protected readonly DamageableSystem Damageable = default!;
-    [Dependency] private   readonly InventorySystem _inventory = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] protected readonly SharedCombatModeSystem CombatMode = default!;
-    [Dependency] protected readonly SharedInteractionSystem Interaction = default!;
-    [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
-    [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
-    [Dependency] private   readonly StaminaSystem _stamina = default!;
+    [Dependency] protected readonly ISharedAdminLogManager   AdminLogger     = default!;
+    [Dependency] protected readonly ActionBlockerSystem      Blocker         = default!;
+    [Dependency] protected readonly SharedCombatModeSystem   CombatMode      = default!;
+    [Dependency] protected readonly DamageableSystem         Damageable      = default!;
+    [Dependency] protected readonly SharedInteractionSystem  Interaction     = default!;
+    [Dependency] protected readonly IMapManager              MapManager      = default!;
+    [Dependency] protected readonly SharedPopupSystem        PopupSystem     = default!;
+    [Dependency] protected readonly IGameTiming              Timing          = default!;
+    [Dependency] protected readonly SharedTransformSystem    TransformSystem = default!;
+    [Dependency] private   readonly InventorySystem         _inventory       = default!;
+    [Dependency] private   readonly MeleeSoundSystem        _meleeSound      = default!;
+    [Dependency] private   readonly SharedPhysicsSystem     _physics         = default!;
+    [Dependency] private   readonly IPrototypeManager       _protoManager    = default!;
+    [Dependency] private   readonly StaminaSystem           _stamina         = default!;
 
-    public const float DamagePitchVariation = 0.05f;
     private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
 
     /// <summary>
@@ -64,9 +65,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MeleeWeaponComponent, EntityUnpausedEvent>(OnMeleeUnpaused);
-        SubscribeLocalEvent<MeleeWeaponComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<MeleeWeaponComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnMeleeSelected);
         SubscribeLocalEvent<MeleeWeaponComponent, ShotAttemptedEvent>(OnMeleeShotAttempted);
         SubscribeLocalEvent<MeleeWeaponComponent, GunShotEvent>(OnMeleeShot);
@@ -74,13 +72,16 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeLocalEvent<BonusMeleeDamageComponent, GetHeavyDamageModifierEvent>(OnGetBonusHeavyDamageModifier);
         SubscribeLocalEvent<BonusMeleeAttackRateComponent, GetMeleeAttackRateEvent>(OnGetBonusMeleeAttackRate);
 
+        SubscribeLocalEvent<ItemToggleMeleeWeaponComponent, ItemToggledEvent>(OnItemToggle);
+
         SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
         SubscribeAllEvent<LightAttackEvent>(OnLightAttack);
         SubscribeAllEvent<DisarmAttackEvent>(OnDisarmAttack);
         SubscribeAllEvent<StopAttackEvent>(OnStopAttack);
 
 #if DEBUG
-        SubscribeLocalEvent<MeleeWeaponComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<MeleeWeaponComponent,
+                            MapInitEvent>                   (OnMapInit);
     }
 
     private void OnMapInit(EntityUid uid, MeleeWeaponComponent component, MapInitEvent args)
@@ -106,11 +107,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             component.NextAttack = gun.NextFire;
             Dirty(uid, component);
         }
-    }
-
-    private void OnMeleeUnpaused(EntityUid uid, MeleeWeaponComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextAttack += args.PausedTime;
     }
 
     private void OnMeleeSelected(EntityUid uid, MeleeWeaponComponent component, HandSelectedEvent args)
@@ -221,25 +217,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         AttemptAttack(args.SenderSession.AttachedEntity.Value, weaponUid, weapon, msg, args.SenderSession);
-    }
-
-    private void OnGetState(EntityUid uid, MeleeWeaponComponent component, ref ComponentGetState args)
-    {
-        args.State = new MeleeWeaponComponentState(component.AttackRate, component.Attacking, component.NextAttack, component.ClickAnimation, component.WideAnimation, component.Range);
-    }
-
-    private void OnHandleState(EntityUid uid, MeleeWeaponComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not MeleeWeaponComponentState state)
-            return;
-
-        component.Attacking = state.Attacking;
-        component.AttackRate = state.AttackRate;
-        component.NextAttack = state.NextAttack;
-
-        component.ClickAnimation = state.ClickAnimation;
-        component.WideAnimation = state.WideAnimation;
-        component.Range = state.Range;
     }
 
     /// <summary>
@@ -368,7 +345,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             case LightAttackEvent light:
                 var lightTarget = GetEntity(light.Target);
 
-                if (!Blocker.CanAttack(user, lightTarget))
+                if (!Blocker.CanAttack(user, lightTarget, (weaponUid, weapon)))
                     return false;
 
                 // Can't self-attack if you're the weapon
@@ -379,11 +356,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             case DisarmAttackEvent disarm:
                 var disarmTarget = GetEntity(disarm.Target);
 
-                if (!Blocker.CanAttack(user, disarmTarget))
+                if (!Blocker.CanAttack(user, disarmTarget, (weaponUid, weapon), true))
                     return false;
                 break;
             default:
-                if (!Blocker.CanAttack(user))
+                if (!Blocker.CanAttack(user, weapon: (weaponUid, weapon)))
                     return false;
                 break;
         }
@@ -427,13 +404,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             {
                 case LightAttackEvent light:
                     DoLightAttack(user, light, weaponUid, weapon, session);
-                    animation = weapon.ClickAnimation;
+                    animation = weapon.Animation;
                     break;
                 case DisarmAttackEvent disarm:
                     if (!DoDisarm(user, disarm, weaponUid, weapon, session))
                         return false;
 
-                    animation = weapon.ClickAnimation;
+                    animation = weapon.Animation;
                     break;
                 case HeavyAttackEvent heavy:
                     if (!DoHeavyAttack(user, heavy, weaponUid, weapon, session))
@@ -445,8 +422,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                     throw new NotImplementedException();
             }
 
-            DoLungeAnimation(user, weapon.Angle, GetCoordinates(attack.Coordinates).ToMap(EntityManager, TransformSystem), weapon.Range, animation);
+            DoLungeAnimation(user, weaponUid, weapon.Angle, GetCoordinates(attack.Coordinates).ToMap(EntityManager, TransformSystem), weapon.Range, animation);
         }
+
+        var attackEv = new MeleeAttackEvent(weaponUid);
+        RaiseLocalEvent(user, ref attackEv);
 
         weapon.Attacking = true;
         return true;
@@ -481,16 +461,16 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 AdminLogger.Add(LogType.MeleeHit, LogImpact.Low,
                     $"{ToPrettyString(user):actor} melee attacked (light) using {ToPrettyString(meleeUid):tool} and missed");
             }
-            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage);
+            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage, null);
             RaiseLocalEvent(meleeUid, missEvent);
-            Audio.PlayPredicted(component.SwingSound, meleeUid, user);
+            _meleeSound.PlaySwingSound(user, meleeUid, component);
             return;
         }
 
         // Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
-        var hitEvent = new MeleeHitEvent(new List<EntityUid> { target.Value }, user, meleeUid, damage);
+        var hitEvent = new MeleeHitEvent(new List<EntityUid> { target.Value }, user, meleeUid, damage, null);
         RaiseLocalEvent(meleeUid, hitEvent);
 
         if (hitEvent.Handled)
@@ -517,7 +497,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
         var damageResult = Damageable.TryChangeDamage(target, modifiedDamage, origin:user);
 
-        if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
+        if (damageResult != null && damageResult.Any())
         {
             // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
             if (damageResult.DamageDict.TryGetValue("Blunt", out var bluntDamage))
@@ -528,33 +508,19 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             if (meleeUid == user)
             {
                 AdminLogger.Add(LogType.MeleeHit, LogImpact.Medium,
-                    $"{ToPrettyString(user):actor} melee attacked (light) {ToPrettyString(target.Value):subject} using their hands and dealt {damageResult.Total:damage} damage");
+                    $"{ToPrettyString(user):actor} melee attacked (light) {ToPrettyString(target.Value):subject} using their hands and dealt {damageResult.GetTotal():damage} damage");
             }
             else
             {
                 AdminLogger.Add(LogType.MeleeHit, LogImpact.Medium,
-                    $"{ToPrettyString(user):actor} melee attacked (light) {ToPrettyString(target.Value):subject} using {ToPrettyString(meleeUid):tool} and dealt {damageResult.Total:damage} damage");
+                    $"{ToPrettyString(user):actor} melee attacked (light) {ToPrettyString(target.Value):subject} using {ToPrettyString(meleeUid):tool} and dealt {damageResult.GetTotal():damage} damage");
             }
 
-            PlayHitSound(target.Value, user, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound);
-        }
-        else
-        {
-            if (hitEvent.HitSoundOverride != null)
-            {
-                Audio.PlayPredicted(hitEvent.HitSoundOverride, meleeUid, user);
-            }
-            else if (GetDamage(meleeUid, user, component).Total.Equals(FixedPoint2.Zero) && component.HitSound != null)
-            {
-                Audio.PlayPredicted(component.HitSound, meleeUid, user);
-            }
-            else
-            {
-                Audio.PlayPredicted(component.NoDamageSound, meleeUid, user);
-            }
         }
 
-        if (damageResult?.Total > FixedPoint2.Zero)
+        _meleeSound.PlayHitSound(target.Value, user, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component);
+
+        if (damageResult?.GetTotal() > FixedPoint2.Zero)
         {
             DoDamageEffect(targets, user, targetXform);
         }
@@ -592,10 +558,12 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 AdminLogger.Add(LogType.MeleeHit, LogImpact.Low,
                     $"{ToPrettyString(user):actor} melee attacked (heavy) using {ToPrettyString(meleeUid):tool} and missed");
             }
-            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage);
+            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage, direction);
             RaiseLocalEvent(meleeUid, missEvent);
 
-            Audio.PlayPredicted(component.SwingSound, meleeUid, user);
+            // immediate audio feedback
+            _meleeSound.PlaySwingSound(user, meleeUid, component);
+
             return true;
         }
 
@@ -633,7 +601,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         // Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
-        var hitEvent = new MeleeHitEvent(targets, user, meleeUid, damage);
+        var hitEvent = new MeleeHitEvent(targets, user, meleeUid, damage, direction);
         RaiseLocalEvent(meleeUid, hitEvent);
 
         if (hitEvent.Handled)
@@ -657,50 +625,43 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         foreach (var entity in targets)
         {
+            // We raise an attack attempt here as well,
+            // primarily because this was an untargeted wideswing: if a subscriber to that event cared about
+            // the potential target (such as for pacifism), they need to be made aware of the target here.
+            // In that case, just continue.
+            if (!Blocker.CanAttack(user, entity, (weapon, component)))
+                continue;
+
             var attackedEvent = new AttackedEvent(meleeUid, user, GetCoordinates(ev.Coordinates));
             RaiseLocalEvent(entity, attackedEvent);
             var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
 
             var damageResult = Damageable.TryChangeDamage(entity, modifiedDamage, origin:user);
 
-            if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
+            if (damageResult != null && damageResult.GetTotal() > FixedPoint2.Zero)
             {
                 appliedDamage += damageResult;
 
                 if (meleeUid == user)
                 {
                     AdminLogger.Add(LogType.MeleeHit, LogImpact.Medium,
-                        $"{ToPrettyString(user):actor} melee attacked (heavy) {ToPrettyString(entity):subject} using their hands and dealt {damageResult.Total:damage} damage");
+                        $"{ToPrettyString(user):actor} melee attacked (heavy) {ToPrettyString(entity):subject} using their hands and dealt {damageResult.GetTotal():damage} damage");
                 }
                 else
                 {
                     AdminLogger.Add(LogType.MeleeHit, LogImpact.Medium,
-                        $"{ToPrettyString(user):actor} melee attacked (heavy) {ToPrettyString(entity):subject} using {ToPrettyString(meleeUid):tool} and dealt {damageResult.Total:damage} damage");
+                        $"{ToPrettyString(user):actor} melee attacked (heavy) {ToPrettyString(entity):subject} using {ToPrettyString(meleeUid):tool} and dealt {damageResult.GetTotal():damage} damage");
                 }
             }
         }
 
         if (entities.Count != 0)
         {
-            if (appliedDamage.Total > FixedPoint2.Zero)
-            {
-                var target = entities.First();
-                PlayHitSound(target, user, GetHighestDamageSound(appliedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound);
-            }
-            else
-            {
-                if (hitEvent.HitSoundOverride != null)
-                {
-                    Audio.PlayPredicted(hitEvent.HitSoundOverride, meleeUid, user);
-                }
-                else
-                {
-                    Audio.PlayPredicted(component.NoDamageSound, meleeUid, user);
-                }
-            }
+            var target = entities.First();
+            _meleeSound.PlayHitSound(target, user, GetHighestDamageSound(appliedDamage, _protoManager), hitEvent.HitSoundOverride, component);
         }
 
-        if (appliedDamage.Total > FixedPoint2.Zero)
+        if (appliedDamage.GetTotal() > FixedPoint2.Zero)
         {
             DoDamageEffect(targets, user, Transform(targets[0]));
         }
@@ -741,67 +702,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         return true;
     }
 
-    private void PlayHitSound(EntityUid target, EntityUid? user, string? type, SoundSpecifier? hitSoundOverride, SoundSpecifier? hitSound)
-    {
-        var playedSound = false;
-
-        // Play sound based off of highest damage type.
-        if (TryComp<MeleeSoundComponent>(target, out var damageSoundComp))
-        {
-            if (type == null && damageSoundComp.NoDamageSound != null)
-            {
-                Audio.PlayPredicted(damageSoundComp.NoDamageSound, target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                playedSound = true;
-            }
-            else if (type != null && damageSoundComp.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
-            {
-                Audio.PlayPredicted(damageSoundType, target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                playedSound = true;
-            }
-            else if (type != null && damageSoundComp.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
-            {
-                Audio.PlayPredicted(damageSoundGroup, target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                playedSound = true;
-            }
-        }
-
-        // Use weapon sounds if the thing being hit doesn't specify its own sounds.
-        if (!playedSound)
-        {
-            if (hitSoundOverride != null)
-            {
-                Audio.PlayPredicted(hitSoundOverride, target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                playedSound = true;
-            }
-            else if (hitSound != null)
-            {
-                Audio.PlayPredicted(hitSound, target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                playedSound = true;
-            }
-        }
-
-        // Fallback to generic sounds.
-        if (!playedSound)
-        {
-            switch (type)
-            {
-                // Unfortunately heat returns caustic group so can't just use the damagegroup in that instance.
-                case "Burn":
-                case "Heat":
-                case "Radiation":
-                case "Cold":
-                    Audio.PlayPredicted(new SoundPathSpecifier("/Audio/Items/welder.ogg"), target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                    break;
-                // No damage, fallback to tappies
-                case null:
-                    Audio.PlayPredicted(new SoundPathSpecifier("/Audio/Weapons/tap.ogg"), target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                    break;
-                case "Brute":
-                    Audio.PlayPredicted(new SoundPathSpecifier("/Audio/Weapons/smash.ogg"), target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                    break;
-            }
-        }
-    }
 
     public static string? GetHighestDamageSound(DamageSpecifier modifiedDamage, IPrototypeManager protoManager)
     {
@@ -838,11 +738,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         // Play a sound to give instant feedback; same with playing the animations
-        Audio.PlayPredicted(component.SwingSound, meleeUid, user);
+        _meleeSound.PlaySwingSound(user, meleeUid, component);
         return true;
     }
 
-    private void DoLungeAnimation(EntityUid user, Angle angle, MapCoordinates coordinates, float length, string? animation)
+    private void DoLungeAnimation(EntityUid user, EntityUid weapon, Angle angle, MapCoordinates coordinates, float length, string? animation)
     {
         // TODO: Assert that offset eyes are still okay.
         if (!TryComp<TransformComponent>(user, out var userXform))
@@ -863,8 +763,64 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (localPos.Length() > visualLength)
             localPos = localPos.Normalized() * visualLength;
 
-        DoLunge(user, angle, localPos, animation);
+        DoLunge(user, weapon, angle, localPos, animation);
     }
 
-    public abstract void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation, bool predicted = true);
+    public abstract void DoLunge(EntityUid user, EntityUid weapon, Angle angle, Vector2 localPos, string? animation, bool predicted = true);
+
+    /// <summary>
+    /// Used to update the MeleeWeapon component on item toggle.
+    /// </summary>
+    private void OnItemToggle(EntityUid uid, ItemToggleMeleeWeaponComponent itemToggleMelee, ItemToggledEvent args)
+    {
+        if (!TryComp(uid, out MeleeWeaponComponent? meleeWeapon))
+            return;
+
+        if (args.Activated)
+        {
+            if (itemToggleMelee.ActivatedDamage != null)
+            {
+                //Setting deactivated damage to the weapon's regular value before changing it.
+                itemToggleMelee.DeactivatedDamage ??= meleeWeapon.Damage;
+                meleeWeapon.Damage = itemToggleMelee.ActivatedDamage;
+            }
+
+            meleeWeapon.HitSound = itemToggleMelee.ActivatedSoundOnHit;
+
+            if (itemToggleMelee.ActivatedSoundOnHitNoDamage != null)
+            {
+                //Setting the deactivated sound on no damage hit to the weapon's regular value before changing it.
+                itemToggleMelee.DeactivatedSoundOnHitNoDamage ??= meleeWeapon.NoDamageSound;
+                meleeWeapon.NoDamageSound = itemToggleMelee.ActivatedSoundOnHitNoDamage;
+            }
+
+            if (itemToggleMelee.ActivatedSoundOnSwing != null)
+            {
+                //Setting the deactivated sound on no damage hit to the weapon's regular value before changing it.
+                itemToggleMelee.DeactivatedSoundOnSwing ??= meleeWeapon.SwingSound;
+                meleeWeapon.SwingSound = itemToggleMelee.ActivatedSoundOnSwing;
+            }
+
+            if (itemToggleMelee.DeactivatedSecret)
+                meleeWeapon.Hidden = false;
+        }
+        else
+        {
+            if (itemToggleMelee.DeactivatedDamage != null)
+                meleeWeapon.Damage = itemToggleMelee.DeactivatedDamage;
+
+            meleeWeapon.HitSound = itemToggleMelee.DeactivatedSoundOnHit;
+
+            if (itemToggleMelee.DeactivatedSoundOnHitNoDamage != null)
+                meleeWeapon.NoDamageSound = itemToggleMelee.DeactivatedSoundOnHitNoDamage;
+
+            if (itemToggleMelee.DeactivatedSoundOnSwing != null)
+                meleeWeapon.SwingSound = itemToggleMelee.DeactivatedSoundOnSwing;
+
+            if (itemToggleMelee.DeactivatedSecret)
+                meleeWeapon.Hidden = true;
+        }
+
+        Dirty(uid, meleeWeapon);
+    }
 }

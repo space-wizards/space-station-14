@@ -8,9 +8,6 @@
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger
-    starvationDamage:
-      types:
-        Bloodloss: 0.5
     baseDecayRate: 0.0083
   - type: Thirst
     baseDecayRate: 0.0083
@@ -87,9 +84,6 @@
           - MobLayer
   - type: Inventory
     templateId: diona
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 1.5
-    baseSprintSpeed : 3.5
   - type: Speech
     speechVerb: Plant
   - type: Vocal
@@ -100,6 +94,13 @@
   - type: BodyEmotes
     soundsId: DionaBodyEmotes
   - type: IgnoreKudzu
+  - type: IgniteOnHeatDamage
+    fireStacks: 1
+    threshold: 12
+  - type: GibAction
+    actionPrototype: DionaGibAction
+    allowedStates:
+    - Dead
 
 - type: entity
   parent: BaseSpeciesDummy

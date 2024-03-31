@@ -17,7 +17,7 @@ public sealed partial class GasThermomachineWindow : DefaultWindow
         RobustXamlLoader.Load(this);
 
         SpinboxHBox.AddChild(
-            TemperatureSpinbox = new FloatSpinBox(.1f, 2) { MaxWidth = 150, HorizontalExpand = true }
+            TemperatureSpinbox = new FloatSpinBox(.1f, 2) { MinWidth = 150, HorizontalExpand = true }
             );
     }
 

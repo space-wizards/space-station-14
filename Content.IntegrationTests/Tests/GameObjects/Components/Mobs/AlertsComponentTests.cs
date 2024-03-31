@@ -24,7 +24,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             var server = pair.Server;
             var client = pair.Client;
 
-            var clientPlayerMgr = client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
             var clientUIMgr = client.ResolveDependency<IUserInterfaceManager>();
             var clientEntManager = client.ResolveDependency<IEntityManager>();
 
@@ -57,9 +56,9 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             AlertsUI clientAlertsUI = default;
             await client.WaitAssertion(() =>
             {
-                var local = clientPlayerMgr.LocalPlayer;
+                var local = client.Session;
                 Assert.That(local, Is.Not.Null);
-                var controlled = local.ControlledEntity;
+                var controlled = local.AttachedEntity;
 #pragma warning disable NUnit2045 // Interdependent assertions.
                 Assert.That(controlled, Is.Not.Null);
                 // Making sure it exists

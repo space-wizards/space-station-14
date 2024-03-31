@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/ff8df99906ab1909674680b9973bd3c909080360",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+	{
+      "name": "equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "equipped-SUITSTORAGE-dog",
+      "directions": 4,
+      "delays": [[1],[1],[1],[1]]
+    },
+    {
+      "name": "equipped-SUITSTORAGE-puppy",
+      "directions": 4,
+      "delays": [[1],[1],[1],[1]]
+    },
+    {
+      "name": "equipped-SUITSTORAGE-fox",
+      "directions": 4,
+      "delays": [[1],[1],[1],[1]]
+    },
+    {
+      "name": "equipped-SUITSTORAGE-cat",
+      "directions": 4,
+      "delays": [[1],[1],[1],[1]]
+    },
+    {
+      "name": "equipped-SUITSTORAGE-sloth",
+      "directions": 4,
+      "delays": [[1],[1],[1],[1]]
+    },
+    {
+      "name": "equipped-SUITSTORAGE-hamster",
+      "directions": 4,
+      "delays": [[1],[1],[1],[1]]
+    },
+    {
+      "name": "equipped-SUITSTORAGE-kangaroo",
+      "directions": 4,
+      "delays": [[1],[1],[1],[1]]
+    },
+    {
+      "name": "equipped-SUITSTORAGE-possum",
+      "directions": 4,
+      "delays": [[1],[1],[1],[1]]
+    },
+    {
+      "name": "equipped-SUITSTORAGE-pig",
+      "directions": 4,
+      "delays": [[1],[1],[1],[1]]
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

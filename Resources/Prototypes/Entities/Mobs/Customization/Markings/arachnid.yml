@@ -106,6 +106,17 @@
   - sprite: Mobs/Customization/Arachnid/appendages.rsi
     state: short_secondary
 
+- type: marking
+  id: ArachnidAppendagesFreaky
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: freaky_primary
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: freaky_secondary
+
 # Chest
 - type: marking
   id: ArachnidTorsoStripes

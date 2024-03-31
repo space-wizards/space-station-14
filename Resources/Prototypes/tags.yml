@@ -1,8 +1,13 @@
+# PUT YOUR TAGS IN ALPHABETICAL ORDER
+
 - type: Tag
   id: AirAlarm
 
 - type: Tag
   id: AirAlarmElectronics
+
+- type: Tag
+  id: Airlock
 
 - type: Tag
   id: AirSensor
@@ -14,10 +19,10 @@
   id: AppraisalTool
 
 - type: Tag
-  id: ArtifactFragment
+  id: Arrow
 
 - type: Tag
-  id: Arrow
+  id: ArtifactFragment
 
 - type: Tag
   id: ATVKeys
@@ -29,13 +34,28 @@
   id: Balloon
 
 - type: Tag
+  id: Banana
+
+- type: Tag
+  id: BananaPeel
+
+- type: Tag
+  id: Bandana
+
+- type: Tag
   id: BaseballBat
 
 - type: Tag
   id: BBQsauce
 
 - type: Tag
+  id: Bedsheet
+
+- type: Tag
   id: Bee
+
+- type: Tag
+  id: Beer
 
 - type: Tag
   id: BikeHorn
@@ -161,6 +181,12 @@
   id: BorgModuleService
 
 - type: Tag
+  id: BorgModuleSyndicate
+
+- type: Tag
+  id: BorgModuleSyndicateAssault
+
+- type: Tag
   id: BorgServiceHead
 
 - type: Tag
@@ -191,6 +217,9 @@
   id: Bottle
 
 - type: Tag
+  id: BoxCardboard
+
+- type: Tag
   id: BoxHug
 
 - type: Tag
@@ -203,6 +232,12 @@
   id: Briefcase
 
 - type: Tag
+  id: BrimFlatcapBrown
+
+- type: Tag
+  id: BrimFlatcapGrey
+
+- type: Tag
   id: Brutepack
 
 - type: Tag
@@ -212,31 +247,73 @@
   id: BulletFoam
 
 - type: Tag
+  id: Burnt
+
+- type: Tag
+  id: BypassDropChecks
+
+- type: Tag
   id: BypassInteractionRangeChecks
 
 - type: Tag
   id: CableCoil
 
 - type: Tag
+  id: CannonBall
+
+- type: Tag
+  id: CannonRestrict
+
+- type: Tag
+  id: CannotSuicide
+
+- type: Tag
+  id: CanPilot
+
+- type: Tag
   id: CapacitorStockPart
+
+- type: Tag
+  id: CaptainSabre
+
+- type: Tag
+  id: Carpet
+
+- type: Tag
+  id: CarpetBlack
+
+- type: Tag
+  id: CarpetBlue
+
+- type: Tag
+  id: CarpetCyan
+
+- type: Tag
+  id: CarpetGreen
+
+- type: Tag
+  id: CarpetOrange
+
+- type: Tag
+  id: CarpetPink
+
+- type: Tag
+  id: CarpetPurple
+
+- type: Tag
+  id: CarpetRed
+
+- type: Tag
+  id: CarpetSBlue
+
+- type: Tag
+  id: CarpetWhite
 
 - type: Tag
   id: Carrot
 
 - type: Tag
   id: CarrotFries
-
-- type: Tag
-  id: Carpet
-
-- type: Tag
-  id: CanPilot
-
-- type: Tag
-  id: CannotSuicide
-
-- type: Tag
-  id: CaptainSabre
 
 - type: Tag
   id: Carp
@@ -279,7 +356,16 @@
   id: Catwalk
 
 - type: Tag
+  id: CentrifugeCompatible
+
+- type: Tag
   id: Chicken
+
+- type: Tag
+  id: ChemDispensable # container that can go into the chem dispenser
+
+- type: Tag
+  id: ChiliBowl
 
 - type: Tag
   id: Cigarette
@@ -289,6 +375,12 @@
 
 - type: Tag
   id: CigPack
+
+- type: Tag
+  id: Cleaver
+
+- type: Tag
+  id: ClockworkGlassShard
 
 - type: Tag
   id: ClothMade
@@ -306,13 +398,31 @@
   id: ClownShoes
 
 - type: Tag
+  id: ClownSuit
+
+- type: Tag
   id: CluwneHorn
+
+- type: Tag
+  id: Cola
+
+- type: Tag
+  id: Coldsauce
+
+- type: Tag
+  id: CombatKnife
+
+- type: Tag
+  id: ComputerTelevisionCircuitboard
+
+- type: Tag
+  id: ConveyorAssembly
 
 - type: Tag #Ohioans die happy
   id: Corn
 
 - type: Tag
-  id: Coldsauce
+  id: CottonBoll
 
 - type: Tag
   id: Cow
@@ -354,19 +464,28 @@
   id: Cryobeaker
 
 - type: Tag
-  id: ConveyorAssembly
+  id: CrystalBlue
 
 - type: Tag
-  id: Cola
+  id: CrystalCyan
 
 - type: Tag
-  id: CombatKnife
+  id: CrystalGreen
 
 - type: Tag
-  id: ComputerTelevisionCircuitboard
+  id: CrystalOrange
+
+- type: Tag
+  id: CrystalPink
+
+- type: Tag
+  id: CrystalRed
 
 - type: Tag
   id: CubanCarp
+
+- type: Tag
+  id: DeathAcidifier
 
 - type: Tag
   id: Debug
@@ -390,22 +509,25 @@
   id: Document
 
 - type: Tag
-  id: DoorBumpOpener
-
-- type: Tag
-  id: DoorElectronics
-
-- type: Tag
   id: DonkPocket
 
 - type: Tag
   id: Donut
 
 - type: Tag
-  id: DrinkSpaceGlue
+  id: DoorBumpOpener
 
 - type: Tag
-  id: DroneUsable
+  id: DoorElectronics
+
+- type: Tag
+  id: DrinkBottle
+
+- type: Tag
+  id: DrinkCan
+
+- type: Tag
+  id: DrinkSpaceGlue
 
 - type: Tag
   id: Duck
@@ -423,6 +545,9 @@
   id: EmitterBolt
 
 - type: Tag
+  id: Enzyme
+
+- type: Tag
   id: ExplosivePassable
 
 - type: Tag
@@ -438,12 +563,6 @@
   id: FireAxe
 
 - type: Tag
-  id: Flesh
-
-- type: Tag
-  id: WhitelistChameleon
-
-- type: Tag
   id: FirelockElectronics
 
 - type: Tag
@@ -451,6 +570,9 @@
 
 - type: Tag
   id: Flashlight
+
+- type: Tag
+  id: Flesh
 
 - type: Tag
   id: Flower
@@ -474,6 +596,9 @@
   id: ForceNoFixRotations # fixrotations command WON'T target this
 
 - type: Tag
+  id: Fruit
+
+- type: Tag
   id: Galaxythistle
 
 - type: Tag
@@ -489,6 +614,9 @@
   id: GeigerCounter
 
 - type: Tag
+  id: GlassAirlock
+
+- type: Tag
   id: GlassBeaker
 
 - type: Tag
@@ -498,11 +626,19 @@
   id: Goat
 
 - type: Tag
+  id: GPS
+
+- type: Tag
   id: Grenade
 
 - type: Tag
-  id: GuideEmbeded
+  id: HudMedical
 
+- type: Tag
+  id: HudSecurity
+
+- type: Tag
+  id: GuideEmbeded
 
 - type: Tag
   id: Hamster
@@ -523,10 +659,10 @@
   id: HamtrLLeg
 
 - type: Tag
-  id: HamtrRLeg
+  id: HamtrRArm
 
 - type: Tag
-  id: HamtrRArm
+  id: HamtrRLeg
 
 - type: Tag
   id: Handcuffs
@@ -536,6 +672,9 @@
 
 - type: Tag
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
+
+- type: Tag
+  id: Haunted
 
 - type: Tag
   id: Head
@@ -553,7 +692,16 @@
   id: HidesHair # for headwear.
 
 - type: Tag
+  id: HidesNose # for non-standard noses.
+
+- type: Tag
   id: HighRiskItem
+
+- type: Tag
+  id: HighSecDoor
+
+- type: Tag
+  id: HiViz
 
 - type: Tag
   id: Hoe
@@ -580,13 +728,19 @@
   id: HonkerLLeg
 
 - type: Tag
-  id: HonkerRLeg
-
-- type: Tag
   id: HonkerRArm
 
 - type: Tag
+  id: HonkerRLeg
+
+- type: Tag
   id: Hotsauce
+
+- type: Tag
+  id: Ice
+
+- type: Tag
+  id: Igniter
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
@@ -601,22 +755,22 @@
   id: IntercomElectronics
 
 - type: Tag
-  id: JanicartKeys
-
-- type: Tag
   id: JawsOfLife
 
 - type: Tag
-  id: Katana
+  id: Kangaroo
 
 - type: Tag
-  id: Kangaroo
+  id: Katana
 
 - type: Tag
   id: Ketchup
 
 - type: Tag
   id: KeyedInstrument
+
+- type: Tag
+  id: KitchenKnife
 
 - type: Tag
   id: Knife
@@ -635,15 +789,6 @@
 
 - type: Tag
   id: MacroBomb
-
-- type: Tag
-  id: MicroBomb
-
-- type: Tag
-  id: MimeBelt
-
-- type: Tag
-  id: MimeHappyHonk
 
 # Magazines ordered by slot then caliber
 
@@ -696,10 +841,21 @@
   id: MagazinePistolSubMachineGun
 
 - type: Tag
+  id: MagazineGrenade
+
+# Magazines end
+
+- type: Tag
   id: MailingUnitElectronics
 
 - type: Tag
   id: Matchstick
+
+- type: Tag
+  id: Mayo
+
+- type: Tag
+  id: Meat
 
 - type: Tag
   id: Medkit
@@ -708,16 +864,34 @@
   id: Metal
 
 - type: Tag
-  id: MicrowaveMachineUnsafe
+  id: MicroBomb
 
 - type: Tag
-  id: MicrowaveSelfUnsafe
+  id: MicrowaveMachineBoard
+
+- type: Tag
+  id: MimeBelt
+
+- type: Tag
+  id: MimeHappyHonk
+
+- type: Tag
+  id: MindShield
 
 - type: Tag
   id: MindTransferTarget
 
 - type: Tag
+  id: Mineshaft
+
+- type: Tag
+  id: ModularReceiver
+
+- type: Tag
   id: MonkeyCube
+
+- type: Tag
+  id: MonkeyWearable
 
 - type: Tag
   id: Mop
@@ -733,7 +907,6 @@
 
 - type: Tag
   id: Multitool
-
 
 - type: Tag
   id: NoBlockAnchoring
@@ -751,13 +924,22 @@
   id: Ore
 
 - type: Tag
-  id: Payload # for grenade/bomb crafting
+  id: Packet
 
 - type: Tag
-  id: PaintableAirlock
+  id: Paper
 
 - type: Tag
   id: Pancake
+
+- type: Tag
+  id: Payload # for grenade/bomb crafting
+
+- type: Tag
+  id: Pen
+
+- type: Tag
+  id: PepperShaker
 
 - type: Tag
   id: PercussionInstrument
@@ -773,6 +955,9 @@
 
 - type: Tag
   id: Pig
+
+- type: Tag
+  id: Pill
 
 - type: Tag
   id: PillCanister
@@ -808,10 +993,22 @@
   id: PlushieSharkBlue
 
 - type: Tag
+  id: PlushieSharkGrey
+
+- type: Tag
   id: PlushieSharkPink
 
 - type: Tag
-  id: PlushieSharkGrey
+  id: Potato
+
+- type: Tag
+  id: PotatoBattery
+
+- type: Tag
+  id: PowerCage
+
+- type: Tag
+  id: PowerCell
 
 - type: Tag
   id: PowerCellSmall
@@ -826,13 +1023,13 @@
   id: ProximitySensor
 
 - type: Tag
+  id: QuantumSpinInverter
+
+- type: Tag
   id: Radio
 
 - type: Tag
   id: RawMaterial
-
-- type: Tag
-  id: RCDDeconstructWhitelist
 
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
@@ -840,6 +1037,12 @@
 
 - type: Tag
   id: ReinforcedGlassShard
+
+- type: Tag
+  id: ReptilianFood
+
+- type: Tag
+  id: RifleStock
 
 - type: Tag
   id: RipleyCentralControlModule
@@ -854,16 +1057,22 @@
   id: RipleyLLeg
 
 - type: Tag
-  id: RipleyRLeg
+  id: RipleyRArm
 
 - type: Tag
-  id: RipleyRArm
+  id: RipleyRLeg
 
 - type: Tag
   id: RodMetal1
 
 - type: Tag
   id: RollingPaper
+
+- type: Tag
+  id: RollingPin
+
+- type: Tag
+  id: SaltShaker
 
 - type: Tag
   id: SalvageExperiment
@@ -893,7 +1102,16 @@
   id: Shovel
 
 - type: Tag
+  id: Sidearm
+
+- type: Tag
   id: SkeletonMotorcycleKeys
+
+- type: Tag
+  id: Skewer
+
+- type: Tag
+  id: SmallAIChip
 
 - type: Tag
   id: SmallMech
@@ -902,20 +1120,19 @@
   id: Smokable
 
 - type: Tag
-  id: Soap
+  id: SnapPop
 
 - type: Tag
-  id: SolarAssemblyPart
+  id: SnowyLabs
+
+- type: Tag
+  id: Soap
 
 - type: Tag
   id: SolarTrackerElectronics
 
 - type: Tag
   id: Soup
-
-- type: Tag
-  id: Spray
-
 - type: Tag
   id: Spear
 
@@ -932,19 +1149,37 @@
   id: SpeedLoaderRifle
 
 - type: Tag
+  id: SpiderCraft
+
+- type: Tag
+  id: SpookyFog
+
+- type: Tag
+  id: Spray
+
+- type: Tag
   id: SpreaderIgnore
 
 - type: Tag
-  id: StringInstrument
+  id: StationMapElectronics
 
 - type: Tag
-  id: StationMapElectronics
+  id: Steak
+
+- type: Tag
+  id: StringInstrument
 
 - type: Tag
   id: SubdermalImplant
 
 - type: Tag
   id: SuitEVA
+  
+- type: Tag
+  id: Sunglasses
+
+- type: Tag
+  id: SurgeryTool
 
 - type: Tag
   id: SurveillanceCameraMonitorCircuitboard
@@ -962,13 +1197,13 @@
   id: Spellbook
 
 - type: Tag
-  id: Taser
-
-- type: Tag
   id: TabletopBoard
 
 - type: Tag
   id: TabletopPiece
+
+- type: Tag
+  id: Taser
 
 - type: Tag
   id: TimerBrigElectronics
@@ -983,10 +1218,22 @@
   id: Toolbox
 
 - type: Tag
+  id: Torch
+
+- type: Tag
+  id: ToyRubberDuck
+
+- type: Tag
+  id: ToySidearm
+
+- type: Tag
   id: Trash
 
 - type: Tag
   id: TrashBag
+
+- type: Tag
+  id: Unimplantable
 
 - type: Tag
   id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile
@@ -995,7 +1242,7 @@
   id: UraniumGlassShard
 
 - type: Tag
-  id: VehicleKey
+  id: Vegetable
 
 - type: Tag
   id: VimPilot
@@ -1007,9 +1254,6 @@
   id: Wall
 
 - type: Tag
-  id: WetFloorSign
-
-- type: Tag
   id: WallmountGeneratorAPUElectronics
 
 - type: Tag
@@ -1019,19 +1263,37 @@
   id: WallmountSubstationElectronics
 
 - type: Tag
+  id: WeaponAntiqueLaser
+
+- type: Tag
   id: WeaponPistolCHIMPUpgradeKit
+
+- type: Tag
+  id: WeaponShotgunKammerer
+
+- type: Tag
+  id: WetFloorSign
+
+- type: Tag
+  id: Wheat
+
+- type: Tag
+  id: WhitelistChameleon
 
 - type: Tag
   id: Window
 
 - type: Tag
-  id: WizardWand # that evil vvizard vvand
+  id: Wine
+
+- type: Tag
+  id: Wirecutter
 
 - type: Tag
   id: WizardStaff
 
 - type: Tag
-  id: Wirecutter
+  id: WizardWand # that evil vvizard vvand
 
 - type: Tag
   id: Wooden # just like our atmos
@@ -1049,8 +1311,4 @@
   id: Write
 
 - type: Tag
-  id: RifleStock
-
-- type: Tag
-  id: ModularReceiver
-
+  id: WriteIgnoreStamps

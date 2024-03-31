@@ -1,7 +1,10 @@
-﻿- type: advertisementsPack
+- type: messagePack
   id: VendomatAds
-  advertisements:
+  messages:
   - advertisement-vendomat-1
   - advertisement-vendomat-2
   - advertisement-vendomat-3
   - advertisement-vendomat-4
+  - advertisement-vendomat-5
+  - advertisement-vendomat-6
+  - advertisement-vendomat-7

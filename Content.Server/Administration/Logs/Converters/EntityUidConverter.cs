@@ -1,5 +1,5 @@
 using System.Text.Json;
-using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Logs.Converters;
 

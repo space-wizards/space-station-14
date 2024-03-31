@@ -5,7 +5,8 @@ using Content.Server.Chat.Managers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
-using Robust.Shared.Map;
+using Robust.Server.GameObjects;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Ame;
@@ -18,7 +19,6 @@ public sealed class AmeNodeGroup : BaseNodeGroup
 {
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <summary>
@@ -46,6 +46,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
 
         var ameControllerSystem = _entMan.System<AmeControllerSystem>();
         var ameShieldingSystem = _entMan.System<AmeShieldingSystem>();
+        var mapSystem = _entMan.System<MapSystem>();
 
         var shieldQuery = _entMan.GetEntityQuery<AmeShieldComponent>();
         var controllerQuery = _entMan.GetEntityQuery<AmeControllerComponent>();
@@ -57,7 +58,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
                 continue;
             if (!xformQuery.TryGetComponent(nodeOwner, out var xform))
                 continue;
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (!_entMan.TryGetComponent(xform.GridUid, out MapGridComponent? grid))
                 continue;
 
             if (gridEnt == null)
@@ -65,7 +66,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
             else if (gridEnt != xform.GridUid)
                 continue;
 
-            var nodeNeighbors = grid.GetCellsInSquareArea(xform.Coordinates, 1)
+            var nodeNeighbors = mapSystem.GetCellsInSquareArea(xform.GridUid.Value, grid, xform.Coordinates, 1)
                 .Where(entity => entity != nodeOwner && shieldQuery.HasComponent(entity));
 
             if (nodeNeighbors.Count() >= 8)
@@ -126,11 +127,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
 
         var safeFuelLimit = CoreCount * 2;
 
-        // Note the float conversions. The maths will completely fail if not done using floats.
-        // Oh, and don't ever stuff the result of this in an int. Seriously.
-        var floatFuel = (float) fuel;
-        var floatCores = (float) CoreCount;
-        var powerOutput = 20000f * floatFuel * floatFuel / floatCores;
+        var powerOutput = CalculatePower(fuel, CoreCount);
         if (fuel <= safeFuelLimit)
             return powerOutput;
 
@@ -145,10 +142,10 @@ public sealed class AmeNodeGroup : BaseNodeGroup
             instability = 1;
         // overloadVsSizeResult > 5:
         if (overloadVsSizeResult > 5)
-            instability = 5;
-        // overloadVsSizeResult > 10: This will explode in at most 5 injections.
+            instability = 3;
+        // overloadVsSizeResult > 10: This will explode in at most 20 injections.
         if (overloadVsSizeResult > 10)
-            instability = 20;
+            instability = 5;
 
         // Apply calculated instability
         if (instability == 0)
@@ -175,6 +172,17 @@ public sealed class AmeNodeGroup : BaseNodeGroup
             _chat.SendAdminAlert($"AME overloading: {_entMan.ToPrettyString(_masterController.Value)}");
 
         return powerOutput;
+    }
+
+    /// <summary>
+    /// Calculates the amount of power the AME can produce with the given settings
+    /// </summary>
+    public float CalculatePower(int fuel, int cores)
+    {
+        // Fuel is squared so more fuel vastly increases power and efficiency
+        // We divide by the number of cores so a larger AME is less efficient at the same fuel settings
+        // this results in all AMEs having the same efficiency at the same fuel-per-core setting
+        return 2000000f * fuel * fuel / cores;
     }
 
     public int GetTotalStability()

@@ -1,6 +1,6 @@
-﻿- type: advertisementsPack
+- type: messagePack
   id: CigaretteMachineAds
-  advertisements:
+  messages:
   - advertisement-cigs-1
   - advertisement-cigs-2
   - advertisement-cigs-3
@@ -12,3 +12,4 @@
   - advertisement-cigs-9
   - advertisement-cigs-10
   - advertisement-cigs-11
+  - advertisement-cigs-12

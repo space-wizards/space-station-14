@@ -1,30 +1,34 @@
 - type: entity
   parent: BaseItem
   id: SprayPainter
-  name: Spray painter
+  name: spray painter
   description: A spray painter for painting airlocks and pipes.
   components:
-    - type: Sprite
-      sprite: Objects/Tools/spray_painter.rsi
-      state: spray_painter
-    - type: Item
-      sprite: Objects/Tools/spray_painter.rsi
-    - type: UserInterface
-      interfaces:
-        - key: enum.SprayPainterUiKey.Key
-          type: SprayPainterBoundUserInterface
-    - type: SprayPainter
-      whitelist:
-        tags:
-          - PaintableAirlock
-      colorPalette:
-        red: '#FF1212FF'
-        yellow: '#B3A234FF'
-        brown: '#947507FF'
-        green: '#3AB334FF'
-        cyan: '#03FCD3FF'
-        blue: '#0335FCFF'
-        white: '#FFFFFFFF'
-        black: '#333333FF'
-    - type: StaticPrice
-      price: 40
+  - type: Sprite
+    sprite: Objects/Tools/spray_painter.rsi
+    state: spray_painter
+  - type: Item
+    sprite: Objects/Tools/spray_painter.rsi
+  - type: ActivatableUI
+    key: enum.SprayPainterUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.SprayPainterUiKey.Key
+      type: SprayPainterBoundUserInterface
+  - type: SprayPainter
+    colorPalette:
+      red: '#FF1212FF'
+      yellow: '#B3A234FF'
+      brown: '#947507FF'
+      green: '#3AB334FF'
+      cyan: '#03FCD3FF'
+      blue: '#0335FCFF'
+      white: '#FFFFFFFF'
+      black: '#333333FF'
+      # standard atmos pipes
+      waste: '#990000'
+      distro: '#0055cc'
+      air: '#03fcd3'
+      mix: '#947507'
+  - type: StaticPrice
+    price: 40

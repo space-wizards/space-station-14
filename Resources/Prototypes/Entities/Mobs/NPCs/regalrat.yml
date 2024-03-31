@@ -1,7 +1,7 @@
 - type: entity
   name: Rat King
   id: MobRatKing
-  parent: SimpleMobBase
+  parent: [ SimpleMobBase, MobCombat ]
   description: He's da rat. He make da roolz.
   components:
   - type: CombatMode
@@ -26,6 +26,9 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: regalrat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: eyes
+      shader: unshaded
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -45,7 +48,6 @@
       0: Alive
       200: Dead
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     angle: 0
@@ -78,6 +80,7 @@
     states:
       Alive:
         Base: regalrat
+        BaseUnshaded: eyes
       Critical:
         Base: critical
       Dead:
@@ -112,6 +115,9 @@
   - type: GuideHelp
     guides:
     - MinorAntagonists
+  - type: Grammar
+    attributes:
+      gender: male
 
 - type: entity
   id: MobRatKingBuff
@@ -124,13 +130,15 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: regalrat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
+      state: eyes
+      shader: unshaded
   - type: MobState
   - type: MobThresholds
     thresholds:
       0: Alive
       350: Dead
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
     angle: 0
@@ -150,7 +158,7 @@
 - type: entity
   name: Rat Servant
   id: MobRatServant
-  parent: SimpleMobBase
+  parent: [ SimpleMobBase, MobCombat ]
   description: He's da mini rat. He don't make da roolz.
   noSpawn: true #Must be configured to a King or the AI breaks.
   components:
@@ -179,10 +187,21 @@
     - SimpleHostile
   - type: Sprite
     drawdepth: SmallMobs
-    sprite: Mobs/Animals/mouse.rsi
+    sprite: Mobs/Animals/rat.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: mouse-3
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: rat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
+      state: eyes
+      shader: unshaded
+
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: rat-moving
+    noMovementLayers:
+      movement:
+        state: rat
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -205,7 +224,6 @@
   - type: Stamina
     critThreshold: 60
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
     angle: 0
@@ -236,11 +254,12 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: mouse-3
+        Base: rat
+        BaseUnshaded: eyes
       Critical:
-        Base: dead-3
+        Base: dead
       Dead:
-        Base: splat-3
+        Base: splat
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
@@ -289,7 +308,7 @@
 - type: entity
   id: ActionRatKingDomain
   name: Rat King's Domain
-  description: Spend some hunger to release a cloud of miasma into the air.
+  description: Spend some hunger to release a cloud of ammonia into the air.
   noSpawn: true
   components:
   - type: InstantAction

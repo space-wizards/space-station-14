@@ -6,6 +6,7 @@ using Content.Shared.Emag.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Tag;
 
 namespace Content.Shared.Emag.Systems;
@@ -79,6 +80,13 @@ public sealed class EmagSystem : EntitySystem
         if (HasComp<EmaggedComponent>(target))
             return false;
 
+        var onAttemptEmagEvent = new OnAttemptEmagEvent(user);
+        RaiseLocalEvent(target, ref onAttemptEmagEvent);
+
+        // prevent emagging if attempt fails
+        if (onAttemptEmagEvent.Handled)
+            return false;
+
         var emaggedEvent = new GotEmaggedEvent(user);
         RaiseLocalEvent(target, ref emaggedEvent);
 
@@ -90,3 +98,6 @@ public sealed class EmagSystem : EntitySystem
 
 [ByRefEvent]
 public record struct GotEmaggedEvent(EntityUid UserUid, bool Handled = false, bool Repeatable = false);
+
+[ByRefEvent]
+public record struct OnAttemptEmagEvent(EntityUid UserUid, bool Handled = false);

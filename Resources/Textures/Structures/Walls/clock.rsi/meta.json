@@ -1,1 +1,49 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "license": "CC-BY-SA-3.0", "copyright": "https://github.com/vgstation-coders/vgstation13/raw/99cc2ab62d65a3a7b554dc7b21ff5f57c835f973/icons/turf/walls.dmi", "states": [{"name": "clock0", "directions": 4}, {"name": "clock1", "directions": 4}, {"name": "clock2", "directions": 4}, {"name": "clock3", "directions": 4}, {"name": "clock4", "directions": 4}, {"name": "clock5", "directions": 4}, {"name": "clock6", "directions": 4}, {"name": "clock7", "directions": 4}, {"name": "full"}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/b8fc9b367ebb26def792a68bcb25294e518698d8/icons/turf/walls/clockwork_wall.dmi and https://github.com/tgstation/tgstation/blob/f64e687250f028359d811b2c7e9d4974b2e7ffeb/icons/effects/clockwork.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+	  "name": "wall_gear"
+	},
+    {
+      "name": "clock0",
+	  "directions": 4
+    },
+    {
+      "name": "clock1",
+	  "directions": 4
+    },
+    {
+      "name": "clock2",
+	  "directions": 4
+    },
+    {
+      "name": "clock3",
+	  "directions": 4
+    },
+    {
+      "name": "clock4",
+	  "directions": 4
+    },
+    {
+      "name": "clock5",
+	  "directions": 4
+    },
+    {
+      "name": "clock6",
+	  "directions": 4
+    },
+    {
+      "name": "clock7",
+	  "directions": 4
+    },
+	{
+	  "name": "full"
+	}
+  ]
+}

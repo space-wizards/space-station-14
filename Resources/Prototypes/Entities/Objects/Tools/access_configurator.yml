@@ -11,7 +11,7 @@
       sprite: Objects/Tools/access_configurator.rsi
       state: icon
     - type: Item
-      size: 5
+      size: Small
     - type: Clothing
       sprite: Objects/Tools/access_configurator.rsi
       quickEquip: false
@@ -38,6 +38,7 @@
       - Hydroponics
       - Janitor
       - Kitchen
+      - Lawyer
       - Maintenance
       - Medical
       - Quartermaster
@@ -62,12 +63,12 @@
     - type: UserInterface
       interfaces:
         - key: enum.AccessOverriderUiKey.Key
-          type: AccessOverriderBoundUserInterface        
-    - type: ActivatableUI  
+          type: AccessOverriderBoundUserInterface
+    - type: ActivatableUI
       key: enum.AccessOverriderUiKey.Key
-      requireHands: true      
-      closeOnHandDeselect: false  
-      singleUser: true      
+      requireHands: true
+      closeOnHandDeselect: false
+      singleUser: true
     - type: ItemSlots
     - type: ContainerContainer
       containers:

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "By Jackal298 (github), based off of tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e and paradise at commit https://github.com/ParadiseSS13/Paradise/commit/33f7c1ef477fa67db5dda48078b469ab59aa7997",
+  "copyright": "Taken from paradise at commit https://github.com/ParadiseSS13/Paradise/commit/33f7c1ef477fa67db5dda48078b469ab59aa7997",
   "size": {
     "x": 32,
     "y": 32

@@ -13,6 +13,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Strip.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -29,10 +30,9 @@ namespace Content.Client.Inventory
     [UsedImplicitly]
     public sealed class StrippableBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
-        private readonly ExamineSystem _examine = default!;
-        private readonly InventorySystem _inv = default!;
+        private readonly ExamineSystem _examine;
+        private readonly InventorySystem _inv;
         private readonly SharedCuffableSystem _cuffable;
 
         [ViewVariables]
@@ -90,11 +90,11 @@ namespace Content.Client.Inventory
 
             _strippingMenu.ClearButtons();
 
-            if (EntMan.TryGetComponent<InventoryComponent>(Owner, out var inv) && _protoMan.TryIndex<InventoryTemplatePrototype>(inv.TemplateId, out var template))
+            if (EntMan.TryGetComponent<InventoryComponent>(Owner, out var inv))
             {
-                foreach (var slot in template.Slots)
+                foreach (var slot in inv.Slots)
                 {
-                    AddInventoryButton(Owner, slot.Name, template, inv);
+                    AddInventoryButton(Owner, slot.Name, inv);
                 }
             }
 
@@ -159,7 +159,7 @@ namespace Content.Client.Inventory
 
             button.Pressed += SlotPressed;
 
-            if (EntMan.TryGetComponent<HandVirtualItemComponent>(hand.HeldEntity, out var virt))
+            if (EntMan.TryGetComponent<VirtualItemComponent>(hand.HeldEntity, out var virt))
             {
                 button.Blocked = true;
                 if (EntMan.TryGetComponent<CuffableComponent>(Owner, out var cuff) && _cuffable.GetAllCuffs(cuff).Contains(virt.BlockingEntity))
@@ -190,7 +190,7 @@ namespace Content.Client.Inventory
                 _ui.GetUIController<VerbMenuUIController>().OpenVerbMenu(slot.Entity.Value);
         }
 
-        private void AddInventoryButton(EntityUid invUid, string slotId, InventoryTemplatePrototype _, InventoryComponent inv)
+        private void AddInventoryButton(EntityUid invUid, string slotId, InventoryComponent inv)
         {
             if (!_inv.TryGetSlotContainer(invUid, slotId, out var container, out var slotDef, inv))
                 return;
@@ -224,7 +224,7 @@ namespace Content.Client.Inventory
             }
 
             EntityUid? viewEnt;
-            if (EntMan.TryGetComponent<HandVirtualItemComponent>(entity, out var virt))
+            if (EntMan.TryGetComponent<VirtualItemComponent>(entity, out var virt))
                 viewEnt = EntMan.HasComponent<SpriteComponent>(virt.BlockingEntity) ? virt.BlockingEntity : null;
             else if (EntMan.HasComponent<SpriteComponent>(entity))
                 viewEnt = entity;

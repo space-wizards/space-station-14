@@ -1,6 +1,6 @@
-﻿- type: advertisementsPack
+- type: messagePack
   id: HappyHonkAds
-  advertisements:
+  messages:
   - advertisement-happyhonk-1
   - advertisement-happyhonk-2
   - advertisement-happyhonk-3
@@ -10,3 +10,4 @@
   - advertisement-happyhonk-7
   - advertisement-happyhonk-8
   - advertisement-happyhonk-9
+  - advertisement-happyhonk-10

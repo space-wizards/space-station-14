@@ -11,20 +11,21 @@
   supervisors: job-supervisors-hop
   access:
   - Service
+  - Lawyer
   - Brig
   - Maintenance
 
 - type: startingGear
   id: LawyerGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitLawyerBlack  # TODO change jumpsuit to randomiser of the 4 variants
-    back: ClothingBackpackFilled
+    jumpsuit: ClothingUniformJumpsuitLawyerBlack  # TODO change jumpsuit to randomiser of the 4 variants # ignoring this since loadouts are gonna be out soon
+    back: ClothingBackpackLawyerFilled 
     shoes: ClothingShoesBootsLaceup
     id: LawyerPDA
     ears: ClothingHeadsetSecurity
     # TODO add copy of space law
   inhand:
-    right hand: BriefcaseBrownFilled
-  innerclothingskirt: ClothingUniformJumpskirtLawyerBlack
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+    - BriefcaseBrownFilled
+  innerClothingSkirt: ClothingUniformJumpskirtLawyerBlack
+  satchel: ClothingBackpackSatchelLawyerFilled
+  duffelbag: ClothingBackpackDuffelLawyerFilled

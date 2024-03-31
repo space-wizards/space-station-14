@@ -1,9 +1,9 @@
 using System.Numerics;
-using Content.Server.Fluids.Components;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
-using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -13,11 +13,13 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
-    private readonly HashSet<IPlayerSession> _playerObservers = new();
+    private readonly HashSet<ICommonSession> _playerObservers = [];
+    private List<Entity<MapGridComponent>> _grids = [];
 
-
-    public bool ToggleObserver(IPlayerSession observer)
+    public bool ToggleObserver(ICommonSession observer)
     {
         NextTick ??= _timing.CurTime + Cooldown;
 
@@ -31,7 +33,7 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
         return true;
     }
 
-    private void RemoveObserver(IPlayerSession observer)
+    private void RemoveObserver(ICommonSession observer)
     {
         if (!_playerObservers.Remove(observer))
         {
@@ -39,7 +41,7 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
         }
 
         var message = new PuddleOverlayDisableMessage();
-        RaiseNetworkEvent(message, observer.ConnectedClient);
+        RaiseNetworkEvent(message, observer.Channel);
     }
 
     public override void Update(float frameTime)
@@ -55,11 +57,14 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
 
             var transform = EntityManager.GetComponent<TransformComponent>(entity);
 
-            var worldBounds = Box2.CenteredAround(transform.WorldPosition,
+
+            var worldBounds = Box2.CenteredAround(_transform.GetWorldPosition(transform),
                 new Vector2(LocalViewRange, LocalViewRange));
 
+            _grids.Clear();
+            _mapManager.FindGridsIntersecting(transform.MapID, worldBounds, ref _grids);
 
-            foreach (var grid in _mapManager.FindGridsIntersecting(transform.MapID, worldBounds))
+            foreach (var grid in _grids)
             {
                 var data = new List<PuddleDebugOverlayData>();
                 var gridUid = grid.Owner;
@@ -67,14 +72,14 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
                 if (!Exists(gridUid))
                     continue;
 
-                foreach (var uid in grid.GetAnchoredEntities(worldBounds))
+                foreach (var uid in _map.GetAnchoredEntities(gridUid, grid, worldBounds))
                 {
                     PuddleComponent? puddle = null;
                     TransformComponent? xform = null;
                     if (!Resolve(uid, ref puddle, ref xform, false))
                         continue;
 
-                    var pos = xform.Coordinates.ToVector2i(EntityManager, _mapManager);
+                    var pos = xform.Coordinates.ToVector2i(EntityManager, _mapManager, _transform);
                     var vol = _puddle.CurrentVolume(uid, puddle);
                     data.Add(new PuddleDebugOverlayData(pos, vol));
                 }

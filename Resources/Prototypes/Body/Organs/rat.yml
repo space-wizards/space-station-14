@@ -18,7 +18,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Sprite
     state: stomach

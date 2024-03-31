@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by brainfood1183 (github) for ss14",
+  "states": [
+    {
+      "name": "dead"
+    },
+    {
+      "name": "alive",
+      "directions": 4
+    }
+  ]
+}

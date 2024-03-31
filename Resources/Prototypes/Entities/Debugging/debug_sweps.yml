@@ -101,7 +101,7 @@
       types:
         Blunt: 20000
   - type: Item
-    size: 1
+    size: Tiny
     sprite: Objects/Weapons/Melee/debug.rsi
 
 - type: entity

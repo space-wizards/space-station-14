@@ -10,3 +10,42 @@
           amount: 3
         - id: EmpImplanter
           amount: 1
+
+- type: entity
+  parent: BoxVial
+  id: ChemicalSynthesisKit
+  name: chemical synthesis kit
+  description: A starter kit for the aspiring chemist, includes toxin and vestine for all your criminal needs!
+  components:
+  - type: Storage
+    grid:
+    - 0,0,3,2
+  - type: StorageFill
+    contents:
+      - id: Beaker
+        amount: 2
+      - id: Dropper
+      # It would be cool to have special "syndicate" chemical analysis goggles
+      - id: ClothingEyesGlassesChemical
+      - id: VestineChemistryVial
+        amount: 2
+      - id: BaseChemistryEmptyVial
+      - id: SyringeStimulants
+
+- type: entity
+  parent: BoxCardboard
+  id: ThrowingKnivesKit
+  name: throwing knives kit
+  description: A set of 4 syndicate branded throwing knives, perfect for embedding into the body of your victims.
+  components:
+  - type: Storage
+    grid:
+    - 0,0,3,1
+  - type: StorageFill
+    contents:
+      - id: ThrowingKnife
+        amount: 4
+  - type: Sprite
+    layers:
+      - state: box_of_doom
+      - state: throwing_knives

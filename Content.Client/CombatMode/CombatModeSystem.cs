@@ -1,7 +1,7 @@
 using Content.Client.Hands.Systems;
+using Content.Client.NPC.HTN;
 using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
-using Content.Shared.Targeting;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -28,7 +28,7 @@ public sealed class CombatModeSystem : SharedCombatModeSystem
 
         SubscribeLocalEvent<CombatModeComponent, AfterAutoHandleStateEvent>(OnHandleState);
 
-        _cfg.OnValueChanged(CCVars.CombatModeIndicatorsPointShow, OnShowCombatIndicatorsChanged, true);
+        Subs.CVar(_cfg, CCVars.CombatModeIndicatorsPointShow, OnShowCombatIndicatorsChanged, true);
     }
 
     private void OnHandleState(EntityUid uid, CombatModeComponent component, ref AfterAutoHandleStateEvent args)
@@ -38,20 +38,14 @@ public sealed class CombatModeSystem : SharedCombatModeSystem
 
     public override void Shutdown()
     {
-        _cfg.UnsubValueChanged(CCVars.CombatModeIndicatorsPointShow, OnShowCombatIndicatorsChanged);
         _overlayManager.RemoveOverlay<CombatModeIndicatorsOverlay>();
 
         base.Shutdown();
     }
 
-    private void OnTargetingZoneChanged(TargetingZone obj)
-    {
-        EntityManager.RaisePredictiveEvent(new CombatModeSystemMessages.SetTargetZoneMessage(obj));
-    }
-
     public bool IsInCombatMode()
     {
-        var entity = _playerManager.LocalPlayer?.ControlledEntity;
+        var entity = _playerManager.LocalEntity;
 
         if (entity == null)
             return false;
@@ -65,15 +59,14 @@ public sealed class CombatModeSystem : SharedCombatModeSystem
         UpdateHud(entity);
     }
 
-    public override void SetActiveZone(EntityUid entity, TargetingZone zone, CombatModeComponent? component = null)
+    protected override bool IsNpc(EntityUid uid)
     {
-        base.SetActiveZone(entity, zone, component);
-        UpdateHud(entity);
+        return HasComp<HTNComponent>(uid);
     }
 
     private void UpdateHud(EntityUid entity)
     {
-        if (entity != _playerManager.LocalPlayer?.ControlledEntity || !Timing.IsFirstTimePredicted)
+        if (entity != _playerManager.LocalEntity || !Timing.IsFirstTimePredicted)
         {
             return;
         }

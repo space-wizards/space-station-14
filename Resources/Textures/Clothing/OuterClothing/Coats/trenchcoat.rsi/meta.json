@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from paradise at commit https://github.com/ParadiseSS13/Paradise/pull/19491/commits/e9a900022ca1cf0fed0e320c7a0cce500287ab99",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon-open"
+    },
+    {
+      "name": "equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "open-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "open-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "open-inhand-right",
+      "directions": 4
+    }
+  ]
+}

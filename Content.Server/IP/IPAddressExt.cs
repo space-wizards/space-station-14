@@ -1,11 +1,34 @@
 ﻿using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
+using NpgsqlTypes;
 
 namespace Content.Server.IP
 {
     public static class IPAddressExt
     {
+        // Npgsql used to map inet types as a tuple like this.
+        // I'm upgrading the dependencies and I don't wanna rewrite a bunch of DB code, so a few helpers it shall be.
+        [return: NotNullIfNotNull(nameof(tuple))]
+        public static NpgsqlInet? ToNpgsqlInet(this (IPAddress, int)? tuple)
+        {
+            if (tuple == null)
+                return null;
+
+            return new NpgsqlInet(tuple.Value.Item1, (byte) tuple.Value.Item2);
+        }
+
+        [return: NotNullIfNotNull(nameof(inet))]
+        public static (IPAddress, int)? ToTuple(this NpgsqlInet? inet)
+        {
+            if (inet == null)
+                return null;
+
+            return (inet.Value.Address, inet.Value.Netmask);
+        }
+
         // Taken from https://stackoverflow.com/a/56461160/4678631
         public static bool IsInSubnet(this System.Net.IPAddress address, string subnetMask)
         {

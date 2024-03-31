@@ -17,7 +17,8 @@ public sealed class GatewayBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _window = new GatewayWindow();
+        _window = new GatewayWindow(EntMan.GetNetEntity(Owner));
+
         _window.OpenPortal += destination =>
         {
             SendMessage(new GatewayOpenPortalMessage(destination));

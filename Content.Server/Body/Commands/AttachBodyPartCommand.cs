@@ -1,10 +1,8 @@
-using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Body.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Body.Commands
@@ -20,7 +18,7 @@ namespace Content.Server.Body.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
 
             EntityUid bodyId;
             EntityUid? partUid;
@@ -105,11 +103,11 @@ namespace Content.Server.Body.Commands
             // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             if (body.RootContainer.ContainedEntity != null)
             {
-                bodySystem.AttachPartToRoot(bodyId,partUid.Value, body ,part);
+                bodySystem.AttachPartToRoot(bodyId, partUid.Value, body, part);
             }
             else
             {
-                var (rootPartId,rootPart) = bodySystem.GetRootPartOrNull(bodyId, body)!.Value;
+                var (rootPartId, rootPart) = bodySystem.GetRootPartOrNull(bodyId, body)!.Value;
                 if (!bodySystem.TryCreatePartSlotAndAttach(rootPartId, slotId, partUid.Value, part.PartType, rootPart, part))
                 {
                     shell.WriteError($"Could not create slot {slotId} on entity {_entManager.ToPrettyString(bodyId)}");

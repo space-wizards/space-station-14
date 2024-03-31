@@ -1,4 +1,4 @@
-﻿- type: job
+- type: job
   id: SecurityCadet
   name: job-name-cadet
   description: job-description-cadet
@@ -18,6 +18,12 @@
   - Security
   - Brig
   - Maintenance
+  - Service
+  - External
+  - Cryogenics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: SecurityCadetGear
@@ -28,7 +34,9 @@
     outerClothing: ClothingOuterArmorBasic
     id: SecurityCadetPDA
     ears: ClothingHeadsetSecurity
-    pocket1: WeaponPistolMk58Nonlethal
-  innerclothingskirt: ClothingUniformJumpskirtColorRed
+    belt: ClothingBeltSecurityFilled
+    pocket1: WeaponPistolMk58
+    pocket2: BookSecurity
+  innerClothingSkirt: ClothingUniformJumpskirtColorRed
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled

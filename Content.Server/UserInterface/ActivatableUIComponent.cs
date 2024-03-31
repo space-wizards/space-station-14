@@ -1,35 +1,27 @@
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.Reflection;
-using Robust.Shared.Serialization;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Server.UserInterface
 {
     [RegisterComponent]
-    public sealed partial class ActivatableUIComponent : Component,
-            ISerializationHooks
+    public sealed partial class ActivatableUIComponent : Component
     {
-        [ViewVariables]
+        [DataField(required: true, customTypeSerializer:typeof(EnumSerializer))]
         public Enum? Key { get; set; }
 
-        [ViewVariables] public PlayerBoundUserInterface? UserInterface => (Key != null) ? Owner.GetUIOrNull(Key) : null;
-
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("inHandsOnly")]
+        [DataField]
         public bool InHandsOnly { get; set; } = false;
 
-        [DataField("singleUser")]
+        [DataField]
         public bool SingleUser { get; set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("adminOnly")]
+        [DataField]
         public bool AdminOnly { get; set; } = false;
 
-        [DataField("key", required: true)]
-        private string _keyRaw = default!;
-
-        [DataField("verbText")]
-        public string VerbText = "ui-verb-toggle-open";
+        [DataField]
+        public LocId VerbText = "ui-verb-toggle-open";
 
         /// <summary>
         ///     Whether you need a hand to operate this UI. The hand does not need to be free, you just need to have one.
@@ -39,28 +31,28 @@ namespace Content.Server.UserInterface
         ///     more generic interaction / configuration that might not require hands.
         /// </remarks>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("requireHands")]
+        [DataField]
         public bool RequireHands = true;
 
         /// <summary>
         ///     Whether you can activate this ui with activateinhand or not
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("rightClickOnly")]
+        [DataField]
         public bool rightClickOnly = false;
 
         /// <summary>
         ///     Whether spectators (non-admin ghosts) should be allowed to view this UI.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("allowSpectator")]
+        [DataField]
         public bool AllowSpectator = true;
 
         /// <summary>
         ///     Whether the UI should close when the item is deselected due to a hand swap or drop
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("closeOnHandDeselect")]
+        [DataField]
         public bool CloseOnHandDeselect = true;
 
         /// <summary>
@@ -68,14 +60,7 @@ namespace Content.Server.UserInterface
         ///     NOTE: DO NOT DIRECTLY SET, USE ActivatableUISystem.SetCurrentSingleUser
         /// </summary>
         [ViewVariables]
-        public IPlayerSession? CurrentSingleUser;
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            var reflectionManager = IoCManager.Resolve<IReflectionManager>();
-            if (reflectionManager.TryParseEnumReference(_keyRaw, out var key))
-                Key = key;
-        }
+        public ICommonSession? CurrentSingleUser;
     }
 }
 

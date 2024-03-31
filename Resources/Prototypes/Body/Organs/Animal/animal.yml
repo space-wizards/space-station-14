@@ -1,5 +1,5 @@
 ﻿- type: entity
-  id: BaseAnimalOrgan
+  id: BaseAnimalOrganUnGibbable
   parent: BaseItem
   abstract: true
   components:
@@ -14,12 +14,21 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: FlavorProfile
     flavors:
       - chicken # everything kinda tastes like chicken
+  - type: Tag
+    tags:
+      - Meat
 
+- type: entity
+  id: BaseAnimalOrgan
+  parent: BaseAnimalOrganUnGibbable
+  abstract: true
+  components:
+  - type: Gibbable
 
 - type: entity
   id: OrganAnimalLungs
@@ -49,7 +58,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
 
 - type: entity
@@ -68,7 +77,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Stomach
   - type: Metabolizer
@@ -77,6 +86,17 @@
     groups:
     - id: Food
     - id: Drink
+
+- type: entity
+  id: OrganMouseStomach
+  parent: OrganAnimalStomach
+  name: stomach
+  noSpawn: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 30
 
 - type: entity
   id: OrganAnimalLiver

@@ -3,10 +3,10 @@ using Content.Client.Hands.Systems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
-using Content.Shared.Cooldown;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
-using Robust.Client.GameObjects;
+using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Timing;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -118,7 +118,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         {
             var handButton = AddHand(name, hand.Location);
 
-            if (_entities.TryGetComponent(hand.HeldEntity, out HandVirtualItemComponent? virt))
+            if (_entities.TryGetComponent(hand.HeldEntity, out VirtualItemComponent? virt))
             {
                 handButton.SpriteView.SetEntity(virt.BlockingEntity);
                 handButton.Blocked = true;
@@ -169,7 +169,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         if (hand == null)
             return;
 
-        if (_entities.TryGetComponent(entity, out HandVirtualItemComponent? virt))
+        if (_entities.TryGetComponent(entity, out VirtualItemComponent? virt))
         {
             hand.SpriteView.SetEntity(virt.BlockingEntity);
             hand.Blocked = true;
@@ -247,7 +247,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
         if (HandsGui != null &&
             _playerHandsComponent != null &&
-            _player.LocalPlayer?.ControlledEntity is { } playerEntity &&
+            _player.LocalSession?.AttachedEntity is { } playerEntity &&
             _handsSystem.TryGetHand(playerEntity, handName, out var hand, _playerHandsComponent))
         {
             HandsGui.UpdatePanelEntity(hand.HeldEntity);
@@ -329,7 +329,6 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
     private bool RemoveHand(string handName, out HandButton? handButton)
     {
-        handButton = null;
         if (!_handLookup.TryGetValue(handName, out handButton))
             return false;
         if (handButton.Parent is HandsContainer handContainer)
@@ -395,11 +394,12 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         {
             foreach (var hand in container.GetButtons())
             {
-                if (!_entities.TryGetComponent(hand.Entity, out ItemCooldownComponent? cooldown) ||
-                    cooldown is not { CooldownStart: { } start, CooldownEnd: { } end})
+
+                if (!_entities.TryGetComponent(hand.Entity, out UseDelayComponent? useDelay) ||
+                    useDelay is not { DelayStartTime: var start, DelayEndTime: var end })
                 {
                     hand.CooldownDisplay.Visible = false;
-                    return;
+                    continue;
                 }
 
                 hand.CooldownDisplay.Visible = true;

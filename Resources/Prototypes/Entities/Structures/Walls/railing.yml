@@ -43,7 +43,9 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           PartRodMetal1:
@@ -55,6 +57,10 @@
   - type: Construction
     graph: Railing
     node: railing
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2  
 
 - type: entity
   parent: BaseStructure
@@ -110,7 +116,9 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           PartRodMetal1:
@@ -122,6 +130,10 @@
   - type: Construction
     graph: Railing
     node: railingCorner
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2  
 
 - type: entity
   parent: BaseStructure
@@ -168,7 +180,9 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           PartRodMetal1:
@@ -180,7 +194,11 @@
   - type: Construction
     graph: Railing
     node: railingCornerSmall
-
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2  
+    
 - type: entity
   parent: BaseStructure
   id: RailingRound
@@ -241,7 +259,9 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           PartRodMetal1:
@@ -253,3 +273,7 @@
   - type: Construction
     graph: Railing
     node: railingRound
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2  

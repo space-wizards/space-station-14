@@ -1,5 +1,6 @@
 using Content.Server.PowerCell;
 using Content.Shared.PowerCell;
+using Content.Shared.UserInterface;
 using Robust.Shared.Containers;
 
 namespace Content.Server.UserInterface;
@@ -31,12 +32,24 @@ public sealed partial class ActivatableUISystem
 
     private void OnBatteryOpened(EntityUid uid, ActivatableUIRequiresPowerCellComponent component, BoundUIOpenedEvent args)
     {
+        var activatable = Comp<ActivatableUIComponent>(uid);
+
+        if (!args.UiKey.Equals(activatable.Key))
+            return;
+
         _cell.SetPowerCellDrawEnabled(uid, true);
     }
 
     private void OnBatteryClosed(EntityUid uid, ActivatableUIRequiresPowerCellComponent component, BoundUIClosedEvent args)
     {
-        _cell.SetPowerCellDrawEnabled(uid, false);
+        var activatable = Comp<ActivatableUIComponent>(uid);
+
+        if (!args.UiKey.Equals(activatable.Key))
+            return;
+
+        // Stop drawing power if this was the last person with the UI open.
+        if (!_uiSystem.IsUiOpen(uid, activatable.Key))
+            _cell.SetPowerCellDrawEnabled(uid, false);
     }
 
     /// <summary>

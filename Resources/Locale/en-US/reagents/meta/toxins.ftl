@@ -13,6 +13,9 @@ reagent-desc-polytrinic-acid = An extremely corrosive chemical substance. Severe
 reagent-name-chloral-hydrate = chloral hydrate
 reagent-desc-chloral-hydrate = A sedative and hypnotic chemical. Commonly used to put other people to sleep, whether they want to or not.
 
+reagent-name-gastrotoxin = gastrotoxin
+reagent-desc-gastrotoxin = A moderately toxic byproduct of decomposition. Most commonly found in spoiled food.
+
 reagent-name-ferrochromic-acid = ferrochromic acid
 reagent-desc-ferrochromic-acid = A mildy corrosive solution, unable of causing severe danger unless ingested.
 
@@ -26,10 +29,10 @@ reagent-name-unstable-mutagen = unstable mutagen
 reagent-desc-unstable-mutagen = Causes mutations when injected into living people or plants. High doses may be lethal, especially in humans.
 
 reagent-name-heartbreaker-toxin = heartbreaker toxin
-reagent-desc-heartbreaker-toxin = A hallucinogenic compound derived from mindbreaker toxin. it blocks neurological signals to the respiratory system, causing asphyxiation.
+reagent-desc-heartbreaker-toxin = A hallucinogenic compound derived from mindbreaker toxin. it blocks neurological signals to the respiratory system, causing asphyxiation. Dexalin plus and epinephrine will filter it out, however.
 
 reagent-name-lexorin = lexorin
-reagent-desc-lexorin = A fast-acting chemical used to asphyxiate people rapidly. Dexalin, dexalin plus and epinephrine will filter it out, however.
+reagent-desc-lexorin = A fast-acting chemical used to asphyxiate people rapidly.
 
 reagent-name-mindbreaker-toxin = mindbreaker toxin
 reagent-desc-mindbreaker-toxin = A potent hallucinogenic compound that is formerly known as LSD.
@@ -66,3 +69,9 @@ reagent-desc-lead = A slow-acting but incredibly lethal toxin found in steel, al
 
 reagent-name-bungotoxin = bungotoxin
 reagent-desc-bungotoxin = A moderately slow-acting poison found within the pit of the bungo fruit.
+
+reagent-name-vestine = vestine
+reagent-desc-vestine = Has an adverse reaction within the body causing major jittering. While not particularly useful on it's own, it can be used to produce a small variety of chemicals.
+
+reagent-name-tazinide = tazinide
+reagent-desc-tazinide = A highly dangerous metallic mixture which can interfere with most movement through an electrifying current.

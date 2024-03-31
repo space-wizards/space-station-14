@@ -3,6 +3,8 @@ using Content.Shared.DoAfter;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -37,12 +39,12 @@ public abstract class SharedRatKingSystem : EntitySystem
         if (!TryComp(uid, out ActionsComponent? comp))
             return;
 
-        _action.AddAction(uid, ref component.ActionRaiseArmyEntity, component.ActionRaiseArmy, holderComp: comp);
-        _action.AddAction(uid, ref component.ActionDomainEntity, component.ActionDomain, holderComp: comp);
-        _action.AddAction(uid, ref component.ActionOrderStayEntity, component.ActionOrderStay, holderComp: comp);
-        _action.AddAction(uid, ref component.ActionOrderFollowEntity, component.ActionOrderFollow, holderComp: comp);
-        _action.AddAction(uid, ref component.ActionOrderCheeseEmEntity, component.ActionOrderCheeseEm, holderComp: comp);
-        _action.AddAction(uid, ref component.ActionOrderLooseEntity, component.ActionOrderLoose, holderComp: comp);
+        _action.AddAction(uid, ref component.ActionRaiseArmyEntity, component.ActionRaiseArmy, component: comp);
+        _action.AddAction(uid, ref component.ActionDomainEntity, component.ActionDomain, component: comp);
+        _action.AddAction(uid, ref component.ActionOrderStayEntity, component.ActionOrderStay, component: comp);
+        _action.AddAction(uid, ref component.ActionOrderFollowEntity, component.ActionOrderFollow, component: comp);
+        _action.AddAction(uid, ref component.ActionOrderCheeseEmEntity, component.ActionOrderCheeseEm, component: comp);
+        _action.AddAction(uid, ref component.ActionOrderLooseEntity, component.ActionOrderLoose, component: comp);
 
         UpdateActions(uid, component);
     }
@@ -117,7 +119,8 @@ public abstract class SharedRatKingSystem : EntitySystem
                 {
                     BlockDuplicate = true,
                     BreakOnDamage = true,
-                    BreakOnUserMove = true
+                    BreakOnMove = true,
+                    DistanceThreshold = 2f
                 });
             }
         });
@@ -130,7 +133,7 @@ public abstract class SharedRatKingSystem : EntitySystem
 
         component.Looted = true;
         Dirty(uid, component);
-        _audio.PlayPvs(component.Sound, uid);
+        _audio.PlayPredicted(component.Sound, uid, args.User);
 
         var spawn = PrototypeManager.Index<WeightedRandomEntityPrototype>(component.RummageLoot).Pick(Random);
         if (_net.IsServer)

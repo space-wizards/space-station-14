@@ -1,7 +1,6 @@
 using Content.Client.Cargo.UI;
 using Content.Shared.Cargo.Components;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 
 namespace Content.Client.Cargo.BUI;
 

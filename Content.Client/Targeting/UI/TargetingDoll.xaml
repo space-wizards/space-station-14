@@ -1,8 +1,0 @@
-﻿<targeting:TargetingDoll xmlns="https://spacestation14.io"
-              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-              xmlns:targeting="clr-namespace:Content.Client.Targeting.UI"
-              Orientation="Vertical">
-    <TextureButton Name = "ButtonHigh" TexturePath="/Textures/Interface/target-doll-high.svg.96dpi.png" HorizontalAlignment="Center" StyleIdentifier="target-doll-zone"/>
-    <TextureButton Name = "ButtonMedium" TexturePath="/Textures/Interface/target-doll-middle.svg.96dpi.png" HorizontalAlignment="Center" StyleIdentifier="target-doll-zone"/>
-    <TextureButton Name = "ButtonLow" TexturePath="/Textures/Interface/target-doll-low.svg.96dpi.png" HorizontalAlignment="Center" StyleIdentifier="target-doll-zone"/>
-</targeting:TargetingDoll>

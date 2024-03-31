@@ -1,7 +1,7 @@
+using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
-using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Access.Components.AccessOverriderComponent;
 
@@ -23,7 +23,7 @@ namespace Content.Client.Access.UI
         {
             base.Open();
 
-            List<string> accessLevels;
+            List<ProtoId<AccessLevelPrototype>> accessLevels;
 
             if (EntMan.TryGetComponent<AccessOverriderComponent>(Owner, out var accessOverrider))
             {
@@ -33,7 +33,7 @@ namespace Content.Client.Access.UI
 
             else
             {
-                accessLevels = new List<string>();
+                accessLevels = new List<ProtoId<AccessLevelPrototype>>();
                 _accessOverriderSystem.Log.Error($"No AccessOverrider component found for {EntMan.ToPrettyString(Owner)}!");
             }
 

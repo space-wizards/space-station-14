@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   name: flashlight
   parent: BaseItem
   id: FlashlightLantern
@@ -7,7 +7,6 @@
   - type: Tag
     tags:
     - Flashlight
-    - DroneUsable
   - type: HandheldLight
     addPrefix: false
     blinkingBehaviourId: blinking
@@ -57,6 +56,7 @@
         map: [ "light" ]
   - type: Item
     sprite: Objects/Tools/flashlight.rsi
+    storedRotation: -90
   - type: PointLight
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
@@ -66,6 +66,13 @@
   - type: Appearance
   - type: StaticPrice
     price: 40
+  - type: StealTarget
+    stealGroup: LAMP
+  - type: Clothing
+    sprite: Objects/Tools/flashlight.rsi
+    quickEquip: false
+    slots:
+      - Belt
 
 - type: entity
   name: seclite
@@ -100,14 +107,22 @@
         visible: false
         map: [ "light" ]
   - type: MeleeWeapon
+    wideAnimationRotation: 90
     damage:
       types:
         Blunt: 10
+    soundHit:
+      collection: MetalThud
   - type: Item
     sprite: Objects/Tools/seclite.rsi
   - type: PointLight
     enabled: false
     radius: 8
+  - type: Clothing
+    sprite: Objects/Tools/seclite.rsi
+    quickEquip: false
+    slots:
+      - Belt
 
 - type: entity
   parent: FlashlightLantern

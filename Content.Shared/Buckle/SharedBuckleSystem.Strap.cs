@@ -1,40 +1,41 @@
 ﻿using System.Linq;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Construction;
 using Content.Shared.Destructible;
 using Content.Shared.DragDrop;
 using Content.Shared.Foldable;
 using Content.Shared.Interaction;
+using Content.Shared.Rotation;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 
 namespace Content.Shared.Buckle;
 
 public abstract partial class SharedBuckleSystem
 {
+    [Dependency] private readonly SharedRotationVisualsSystem _rotationVisuals = default!;
+
     private void InitializeStrap()
     {
         SubscribeLocalEvent<StrapComponent, ComponentStartup>(OnStrapStartup);
         SubscribeLocalEvent<StrapComponent, ComponentShutdown>(OnStrapShutdown);
-        SubscribeLocalEvent<StrapComponent, ComponentRemove>((_, c, _) => StrapRemoveAll(c));
-
-        SubscribeLocalEvent<StrapComponent, ComponentGetState>(OnStrapGetState);
-        SubscribeLocalEvent<StrapComponent, ComponentHandleState>(OnStrapHandleState);
+        SubscribeLocalEvent<StrapComponent, ComponentRemove>((e, c, _) => StrapRemoveAll(e, c));
 
         SubscribeLocalEvent<StrapComponent, EntInsertedIntoContainerMessage>(OnStrapEntModifiedFromContainer);
         SubscribeLocalEvent<StrapComponent, EntRemovedFromContainerMessage>(OnStrapEntModifiedFromContainer);
         SubscribeLocalEvent<StrapComponent, GetVerbsEvent<InteractionVerb>>(AddStrapVerbs);
         SubscribeLocalEvent<StrapComponent, ContainerGettingInsertedAttemptEvent>(OnStrapContainerGettingInsertedAttempt);
         SubscribeLocalEvent<StrapComponent, InteractHandEvent>(OnStrapInteractHand);
-        SubscribeLocalEvent<StrapComponent, DestructionEventArgs>((_,c,_) => StrapRemoveAll(c));
-        SubscribeLocalEvent<StrapComponent, BreakageEventArgs>((_, c, _) => StrapRemoveAll(c));
+        SubscribeLocalEvent<StrapComponent, DestructionEventArgs>((e, c, _) => StrapRemoveAll(e, c));
+        SubscribeLocalEvent<StrapComponent, BreakageEventArgs>((e, c, _) => StrapRemoveAll(e, c));
 
         SubscribeLocalEvent<StrapComponent, DragDropTargetEvent>(OnStrapDragDropTarget);
         SubscribeLocalEvent<StrapComponent, CanDropTargetEvent>(OnCanDropTarget);
         SubscribeLocalEvent<StrapComponent, FoldAttemptEvent>(OnAttemptFold);
 
         SubscribeLocalEvent<StrapComponent, MoveEvent>(OnStrapMoveEvent);
+        SubscribeLocalEvent<StrapComponent, MachineDeconstructedEvent>((e, c, _) => StrapRemoveAll(e, c));
     }
 
     private void OnStrapStartup(EntityUid uid, StrapComponent component, ComponentStartup args)
@@ -47,25 +48,7 @@ public abstract partial class SharedBuckleSystem
         if (LifeStage(uid) > EntityLifeStage.MapInitialized)
             return;
 
-        StrapRemoveAll(component);
-    }
-
-    private void OnStrapGetState(EntityUid uid, StrapComponent component, ref ComponentGetState args)
-    {
-        args.State = new StrapComponentState(component.Position, component.BuckleOffset, GetNetEntitySet(component.BuckledEntities), component.MaxBuckleDistance, component.OccupiedSize);
-    }
-
-    private void OnStrapHandleState(EntityUid uid, StrapComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not StrapComponentState state)
-            return;
-
-        component.Position = state.Position;
-        component.BuckleOffsetUnclamped = state.BuckleOffsetClamped;
-        component.BuckledEntities.Clear();
-        component.BuckledEntities.UnionWith(EnsureEntitySet<StrapComponent>(state.BuckledEntities, uid));
-        component.MaxBuckleDistance = state.MaxBuckleDistance;
-        component.OccupiedSize = state.OccupiedSize;
+        StrapRemoveAll(uid, component);
     }
 
     private void OnStrapEntModifiedFromContainer(EntityUid uid, StrapComponent component, ContainerModifiedMessage message)
@@ -170,7 +153,7 @@ public abstract partial class SharedBuckleSystem
         }
 
         // If the user is currently holding/pulling an entity that can be buckled, add a verb for that.
-        if (args.Using is {Valid: true} @using &&
+        if (args.Using is { Valid: true } @using &&
             TryComp<BuckleComponent>(@using, out var usingBuckle) &&
             StrapHasSpace(uid, usingBuckle, component) &&
             _interaction.InRangeUnobstructed(@using, args.Target, range: usingBuckle.Range))
@@ -249,7 +232,7 @@ public abstract partial class SharedBuckleSystem
             }
 
             ReAttach(buckledEntity, uid, buckled, component);
-            Dirty(buckled);
+            Dirty(buckledEntity, buckled);
         }
     }
 
@@ -275,7 +258,7 @@ public abstract partial class SharedBuckleSystem
     /// <summary>
     /// Remove everything attached to the strap
     /// </summary>
-    private void StrapRemoveAll(StrapComponent strapComp)
+    private void StrapRemoveAll(EntityUid uid, StrapComponent strapComp)
     {
         foreach (var entity in strapComp.BuckledEntities.ToArray())
         {
@@ -284,7 +267,7 @@ public abstract partial class SharedBuckleSystem
 
         strapComp.BuckledEntities.Clear();
         strapComp.OccupiedSize = 0;
-        Dirty(strapComp);
+        Dirty(uid, strapComp);
     }
 
     private bool StrapHasSpace(EntityUid strapUid, BuckleComponent buckleComp, StrapComponent? strapComp = null)
@@ -312,8 +295,6 @@ public abstract partial class SharedBuckleSystem
 
         strapComp.OccupiedSize += buckleComp.Size;
 
-        Appearance.SetData(buckleUid, StrapVisuals.RotationAngle, strapComp.Rotation);
-
         Appearance.SetData(strapUid, StrapVisuals.State, true);
 
         Dirty(strapUid, strapComp);
@@ -332,6 +313,6 @@ public abstract partial class SharedBuckleSystem
         strapComp.Enabled = enabled;
 
         if (!enabled)
-            StrapRemoveAll(strapComp);
+            StrapRemoveAll(strapUid, strapComp);
     }
 }

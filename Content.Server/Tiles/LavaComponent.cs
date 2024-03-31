@@ -19,5 +19,5 @@ public sealed partial class LavaComponent : Component
     /// How many fire stacks are applied per second.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("fireStacks")]
-    public float FireStacks = 2f;
+    public float FireStacks = 1.25f;
 }

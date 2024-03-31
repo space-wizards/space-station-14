@@ -16,11 +16,10 @@ using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage.Systems;
@@ -29,12 +28,10 @@ public sealed partial class StaminaSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -49,49 +46,22 @@ public sealed partial class StaminaSystem : EntitySystem
 
         InitializeModifier();
 
-        SubscribeLocalEvent<StaminaComponent, EntityUnpausedEvent>(OnStamUnpaused);
         SubscribeLocalEvent<StaminaComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StaminaComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<StaminaComponent, ComponentGetState>(OnStamGetState);
-        SubscribeLocalEvent<StaminaComponent, ComponentHandleState>(OnStamHandleState);
+        SubscribeLocalEvent<StaminaComponent, AfterAutoHandleStateEvent>(OnStamHandleState);
         SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
         SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
 
+        SubscribeLocalEvent<StaminaDamageOnEmbedComponent, EmbedEvent>(OnProjectileEmbed);
+
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ProjectileHitEvent>(OnProjectileHit);
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ThrowDoHitEvent>(OnThrowHit);
+
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
     }
 
-    private void OnStamUnpaused(EntityUid uid, StaminaComponent component, ref EntityUnpausedEvent args)
+    private void OnStamHandleState(EntityUid uid, StaminaComponent component, ref AfterAutoHandleStateEvent args)
     {
-        component.NextUpdate += args.PausedTime;
-    }
-
-    private void OnStamGetState(EntityUid uid, StaminaComponent component, ref ComponentGetState args)
-    {
-        args.State = new StaminaComponentState()
-        {
-            Critical = component.Critical,
-            Decay = component.Decay,
-            CritThreshold = component.CritThreshold,
-            DecayCooldown = component.DecayCooldown,
-            LastUpdate = component.NextUpdate,
-            StaminaDamage = component.StaminaDamage,
-        };
-    }
-
-    private void OnStamHandleState(EntityUid uid, StaminaComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not StaminaComponentState state)
-            return;
-
-        component.Critical = state.Critical;
-        component.Decay = state.Decay;
-        component.CritThreshold = state.CritThreshold;
-        component.DecayCooldown = state.DecayCooldown;
-        component.NextUpdate = state.LastUpdate;
-        component.StaminaDamage = state.StaminaDamage;
-
         if (component.Critical)
             EnterStamCrit(uid, component);
         else
@@ -139,12 +109,12 @@ public sealed partial class StaminaSystem : EntitySystem
         component.StaminaDamage = 0;
         RemComp<ActiveStaminaComponent>(uid);
         SetStaminaAlert(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnDisarmed(EntityUid uid, StaminaComponent component, DisarmedEvent args)
     {
-        if (args.Handled || !_random.Prob(args.PushProbability))
+        if (args.Handled)
             return;
 
         if (component.Critical)
@@ -153,17 +123,8 @@ public sealed partial class StaminaSystem : EntitySystem
         var damage = args.PushProbability * component.CritThreshold;
         TakeStaminaDamage(uid, damage, component, source: args.Source);
 
-        // We need a better method of getting if the entity is going to resist stam damage, both this and the lines in the foreach at the end of OnHit() are awful
-        if (!component.Critical)
-            return;
-
-        var targetEnt = Identity.Entity(args.Target, EntityManager);
-        var sourceEnt = Identity.Entity(args.Source, EntityManager);
-
-        _popup.PopupEntity(Loc.GetString("stunned-component-disarm-success-others", ("source", sourceEnt), ("target", targetEnt)), targetEnt, Filter.PvsExcept(args.Source), true, PopupType.LargeCaution);
-        _popup.PopupCursor(Loc.GetString("stunned-component-disarm-success", ("target", targetEnt)), args.Source, PopupType.Large);
-
-        _adminLogger.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{ToPrettyString(args.Source):user} knocked down {ToPrettyString(args.Target):target}");
+        args.PopupPrefix = "disarm-action-shove-";
+        args.IsStunned = component.Critical;
 
         args.Handled = true;
     }
@@ -215,6 +176,14 @@ public sealed partial class StaminaSystem : EntitySystem
     private void OnProjectileHit(EntityUid uid, StaminaDamageOnCollideComponent component, ref ProjectileHitEvent args)
     {
         OnCollide(uid, component, args.Target);
+    }
+
+    private void OnProjectileEmbed(EntityUid uid, StaminaDamageOnEmbedComponent component, ref EmbedEvent args)
+    {
+        if (!TryComp<StaminaComponent>(args.Embedded, out var stamina))
+            return;
+
+        TakeStaminaDamage(args.Embedded, component.Damage, stamina, source: uid);
     }
 
     private void OnThrowHit(EntityUid uid, StaminaDamageOnCollideComponent component, ThrowDoHitEvent args)
@@ -283,7 +252,7 @@ public sealed partial class StaminaSystem : EntitySystem
         // Reset the decay cooldown upon taking damage.
         if (oldDamage < component.StaminaDamage)
         {
-            var nextUpdate = _timing.CurTime + TimeSpan.FromSeconds(component.DecayCooldown);
+            var nextUpdate = _timing.CurTime + TimeSpan.FromSeconds(component.Cooldown);
 
             if (component.NextUpdate < nextUpdate)
                 component.NextUpdate = nextUpdate;
@@ -316,7 +285,7 @@ public sealed partial class StaminaSystem : EntitySystem
         }
 
         EnsureComp<ActiveStaminaComponent>(uid);
-        Dirty(component);
+        Dirty(uid, component);
 
         if (value <= 0)
             return;
@@ -376,7 +345,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
             comp.NextUpdate += TimeSpan.FromSeconds(1f);
             TakeStaminaDamage(uid, -comp.Decay, comp);
-            Dirty(comp);
+            Dirty(uid, comp);
         }
     }
 
@@ -399,7 +368,7 @@ public sealed partial class StaminaSystem : EntitySystem
         // Give them buffer before being able to be re-stunned
         component.NextUpdate = _timing.CurTime + component.StunTime + StamCritBufferTime;
         EnsureComp<ActiveStaminaComponent>(uid);
-        Dirty(component);
+        Dirty(uid, component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} entered stamina crit");
     }
 
@@ -416,21 +385,9 @@ public sealed partial class StaminaSystem : EntitySystem
         component.NextUpdate = _timing.CurTime;
         SetStaminaAlert(uid, component);
         RemComp<ActiveStaminaComponent>(uid);
-        Dirty(component);
+        Dirty(uid, component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Low, $"{ToPrettyString(uid):user} recovered from stamina crit");
     }
-
-    [Serializable, NetSerializable]
-    private sealed class StaminaComponentState : ComponentState
-    {
-        public bool Critical;
-        public float Decay;
-        public float DecayCooldown;
-        public float StaminaDamage;
-        public float CritThreshold;
-        public TimeSpan LastUpdate;
-    }
-
 }
 
 /// <summary>

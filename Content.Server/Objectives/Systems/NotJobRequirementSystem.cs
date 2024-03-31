@@ -1,4 +1,3 @@
-using Content.Server.Objectives.Components;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Roles.Jobs;
 
@@ -25,7 +24,7 @@ public sealed class NotJobRequirementSystem : EntitySystem
         if (!TryComp<JobComponent>(args.MindId, out var job))
             return;
 
-        if (job.PrototypeId == comp.Job)
+        if (job.Prototype == comp.Job)
             args.Cancelled = true;
     }
 }

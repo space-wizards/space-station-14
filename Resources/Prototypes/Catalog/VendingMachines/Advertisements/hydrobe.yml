@@ -1,5 +1,7 @@
-- type: advertisementsPack
+- type: messagePack
   id: HyDrobeAds
-  advertisements:
+  messages:
     - advertisement-hydrobe-1
     - advertisement-hydrobe-2
+    - advertisement-hydrobe-3
+    - advertisement-hydrobe-4

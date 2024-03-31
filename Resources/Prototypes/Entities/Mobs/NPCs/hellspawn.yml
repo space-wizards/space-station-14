@@ -1,0 +1,99 @@
+- type: entity
+  name: hellspawn
+  parent:
+  - BaseSimpleMob
+  - MobCombat
+  - MobBloodstream
+  id: MobHellspawn
+  description: An unstoppable force of carnage.
+  components:
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-hellspawn-name
+    description: ghost-role-information-hellspawn-description
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 90
+  - type: GhostTakeoverAvailable
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NpcFactionMember
+    factions:
+      - SimpleHostile
+  - type: Body
+    prototype: Animal
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: HellSpawn
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
+  - type: Sprite
+    sprite: Mobs/Demons/hellspawn.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+  - type: Firestarter
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.7
+      80: 0.5
+  - type: MobPrice
+    price: 1000 # Living critters are valuable in space.
+  - type: Perishable
+  - type: Reflect
+    reflectProb: 0.7
+    reflects:
+      - Energy
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.9
+        density: 300
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobState
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      450: Dead
+  - type: Butcherable
+    spawned:
+      - id: ArtifactFragment
+        amount: 4
+  - type: MeleeWeapon
+    attackRate: 0.6
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    damage:
+      types:
+        Blunt: 150
+        Structural: 70
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepThud
+  - type: PointLight
+    radius: 2
+    energy: 4.5
+    color: "#ff4242"
+    castShadows: false

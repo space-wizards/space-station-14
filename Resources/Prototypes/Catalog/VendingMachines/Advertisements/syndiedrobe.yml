@@ -1,6 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: SyndieDrobeAds
-  advertisements:
+  messages:
     - advertisement-syndiedrobe-1
     - advertisement-syndiedrobe-2
     - advertisement-syndiedrobe-3

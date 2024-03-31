@@ -23,6 +23,7 @@
   - type: Tag
     tags:
       - Trash
+  - type: Gibbable
   - type: Extractable
     juiceSolution:
       reagents:

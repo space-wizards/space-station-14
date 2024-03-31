@@ -17,6 +17,9 @@
   - Maintenance
   - Service
   - Detective
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: DetectiveGear
@@ -24,12 +27,12 @@
     jumpsuit: ClothingUniformJumpsuitDetective
     back: ClothingBackpackSecurityFilledDetective
     shoes: ClothingShoesBootsCombatFilled
-    eyes: ClothingEyesGlassesSunglasses
+    eyes: ClothingEyesGlassesSecurity
     head: ClothingHeadHatFedoraBrown
     outerClothing: ClothingOuterVestDetective
     id: DetectivePDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltHolsterFilled
-  innerclothingskirt: ClothingUniformJumpskirtDetective
+  innerClothingSkirt: ClothingUniformJumpskirtDetective
   satchel: ClothingBackpackSatchelSecurityFilledDetective
   duffelbag: ClothingBackpackDuffelSecurityFilledDetective

@@ -113,7 +113,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           MachineFrameDestroyed:
@@ -121,8 +121,8 @@
             max: 1
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-minigravitygenerator
-    LayoutId: MiniGravityGenerator
+    boardName: wires-board-name-minigravitygenerator
+    layoutId: MiniGravityGenerator
   - type: Machine
     board: MiniGravityGeneratorCircuitboard
   - type: ApcPowerReceiver

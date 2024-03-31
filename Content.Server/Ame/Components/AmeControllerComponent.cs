@@ -1,7 +1,8 @@
 using Content.Server.Ame.EntitySystems;
-using Content.Shared.Ame;
+using Content.Shared.Ame.Components;
+using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Ame.Components;
 
@@ -14,15 +15,11 @@ namespace Content.Server.Ame.Components;
 public sealed partial class AmeControllerComponent : SharedAmeControllerComponent
 {
     /// <summary>
-    /// The id of the container used to store the current fuel container for the AME.
+    /// Antimatter fuel slot.
     /// </summary>
-    public const string FuelContainerId = "AmeFuel";
-
-    /// <summary>
-    /// The container for the fuel canisters used by the AME.
-    /// </summary>
-    [ViewVariables]
-    public ContainerSlot JarSlot = default!;
+    [DataField("fuelSlot")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public ItemSlot FuelSlot = new();
 
     /// <summary>
     /// Whether or not the AME controller is currently injecting animatter into the reactor.
@@ -58,7 +55,7 @@ public sealed partial class AmeControllerComponent : SharedAmeControllerComponen
     /// </summary>
     [DataField("injectSound")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier InjectSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
+    public SoundSpecifier InjectSound = new SoundCollectionSpecifier("MetalThud");
 
     /// <summary>
     /// The last time this could have injected fuel into the AME.
@@ -73,9 +70,32 @@ public sealed partial class AmeControllerComponent : SharedAmeControllerComponen
     public TimeSpan NextUpdate = default!;
 
     /// <summary>
+    /// The next time this will try to update the controller UI.
+    /// </summary>
+    public TimeSpan NextUIUpdate = default!;
+
+    /// <summary>
     /// The the amount of time that passes between injection attempts.
     /// </summary>
     [DataField("updatePeriod")]
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan UpdatePeriod = TimeSpan.FromSeconds(10.0);
+
+    /// <summary>
+    /// The maximum amount of time that passes between UI updates.
+    /// </summary>
+    [ViewVariables]
+    public TimeSpan UpdateUIPeriod = TimeSpan.FromSeconds(3.0);
+
+    /// <summary>
+    /// Time at which the admin alarm sound effect can next be played.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan EffectCooldown;
+
+    /// <summary>
+    /// Time between admin alarm sound effects. Prevents spam
+    /// </summary>
+    [DataField]
+    public TimeSpan CooldownDuration = TimeSpan.FromSeconds(10f);
 }

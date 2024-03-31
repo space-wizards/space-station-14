@@ -1,7 +1,6 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Fluids;
@@ -15,7 +14,7 @@ public sealed class ShowFluidsCommand : IConsoleCommand
     public string Help => $"Usage: {Command}";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = shell.Player as IPlayerSession;
+        var player = shell.Player;
         if (player == null)
         {
             shell.WriteLine("You must be a player to use this command.");

@@ -1,6 +1,6 @@
 #Misc outfit startingGear definitions.
 
-#Skeleton Biker
+#Skeleton Biker - Just a skeleton now
 - type: startingGear
   id: SkeletonBiker
   equipment:
@@ -13,9 +13,7 @@
     shoes: ClothingShoesBootsJack
     id: PassengerPDA
     ears: ClothingHeadsetGrey
-    pocket1: VehicleSkeletonMotorcycle
-    pocket2: VehicleKeySkeletonMotorcycle
-  innerclothingskirt: ClothingUniformJumpskirtColorBlack
+  innerClothingSkirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
 
@@ -37,29 +35,28 @@
     pocket1: SpiderCharge
     pocket2: PinpointerStation
     belt: EnergyKatana
-    suitstorage: YellowOxygenTankFilled
+    suitstorage: OxygenTankFilled
   inhand:
-    left hand: JetpackBlackFilled
+    - JetpackBlackFilled
 
 #Deathsquad Outfit
 - type: startingGear
   id: DeathSquadGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitDeathSquad
-    back: ClothingBackpackDuffelSyndicateAmmo
+    back: ClothingBackpackDeathSquadFilled
     mask: ClothingMaskGasDeathSquad
-    eyes: ClothingEyesGlassesSecurity
+    eyes: ClothingEyesHudSecurity
     ears: ClothingHeadsetAltCentCom
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitDeathsquad
-    suitstorage: OxygenTankFilled
+    suitstorage: AirTankFilled
     shoes: ClothingShoesBootsMagAdv
     id: DeathsquadPDA
     pocket1: EnergySword
-    belt: ClothingBeltChiefEngineerFilled
-  innerclothingskirt: ClothingUniformJumpskirtColorBlack
-  satchel: ClothingBackpackDuffelSyndicateAmmo
-  duffelbag: ClothingBackpackDuffelSyndicateAmmo
+    pocket2: EnergyShield
+    belt: ClothingBeltMilitaryWebbingMedFilled
+  innerClothingSkirt: ClothingUniformJumpskirtColorBlack
 
 # Syndicate Operative Outfit - Monkey
 - type: startingGear
@@ -68,7 +65,7 @@
     head: ClothingHeadHatOutlawHat
     jumpsuit: ClothingUniformJumpsuitOperative
     mask: CigaretteSyndicate
-  innerclothingskirt: ClothingUniformJumpsuitOperative
+  innerClothingSkirt: ClothingUniformJumpsuitOperative
 
 # Syndicate Operative Outfit - Barratry
 - type: startingGear
@@ -78,7 +75,7 @@
     back: ClothingBackpackDuffelSyndicateOperative
     shoes: ClothingShoesBootsCombatFilled
     gloves: ClothingHandsGlovesColorBlack
-  innerclothingskirt: ClothingUniformJumpsuitOperative
+  innerClothingSkirt: ClothingUniformJumpsuitOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
 
@@ -92,8 +89,8 @@
     gloves: ClothingHandsGlovesCombat
     shoes: ClothingShoesBootsCombatFilled
     pocket1: BaseUplinkRadio40TC
-    id: AgentIDCard
-  innerclothingskirt: ClothingUniformJumpsuitOperative
+    id: SyndiPDA
+  innerClothingSkirt: ClothingUniformJumpsuitOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
 
@@ -104,17 +101,16 @@
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackDuffelSyndicateOperative
     mask: ClothingMaskGasSyndicate
-  # eyes: Night Vision Goggles whenever they're made
-    eyes: ClothingEyesGlassesMeson
+    eyes: ClothingEyesHudSyndicate
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndie
     shoes: ClothingShoesBootsCombatFilled
-    id: NukieAgentIDCard
+    id: SyndiPDA
     pocket1: DoubleEmergencyOxygenTankFilled
     pocket2: BaseUplinkRadio40TC
     belt: ClothingBeltMilitaryWebbing
-  innerclothingskirt: ClothingUniformJumpskirtOperative
+  innerClothingSkirt: ClothingUniformJumpskirtOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
 
@@ -125,9 +121,9 @@
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackDuffelSyndicateOperative
     mask: ClothingMaskGasSyndicate
-  # eyes: Night Vision Goggles whenever they're made
-    eyes: ClothingEyesGlassesMeson
+    eyes: ClothingEyesHudSyndicate
     ears: ClothingHeadsetAltSyndicate
+    neck: SyndicateWhistle
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndieCommander
     shoes: ClothingShoesBootsCombatFilled
@@ -136,8 +132,8 @@
     pocket2: BaseUplinkRadio40TC
     belt: ClothingBeltMilitaryWebbing
   inhand:
-    right hand: NukeOpsDeclarationOfWar
-  innerclothingskirt: ClothingUniformJumpskirtOperative
+    - NukeOpsDeclarationOfWar
+  innerClothingSkirt: ClothingUniformJumpskirtOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
 
@@ -148,92 +144,73 @@
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackDuffelSyndicateOperativeMedic
     mask: ClothingMaskGasSyndicate
-    eyes: ClothingEyesHudMedical
+    eyes: ClothingEyesHudSyndicate
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitSyndieElite
+    outerClothing: ClothingOuterHardsuitSyndieMedic
     shoes: ClothingShoesBootsMagSyndie
-    id: SyndiPDA
+    id: SyndiAgentPDA
     pocket1: DoubleEmergencyOxygenTankFilled
     pocket2: BaseUplinkRadio40TC
     belt: ClothingBeltMilitaryWebbingMedFilled
-  innerclothingskirt: ClothingUniformJumpskirtOperative
+  innerClothingSkirt: ClothingUniformJumpskirtOperative
   satchel: ClothingBackpackDuffelSyndicateOperativeMedic
   duffelbag: ClothingBackpackDuffelSyndicateOperativeMedic
 
-# Syndicate Footsoldier Gear - Unarmed
+#Syndicate Lone Operative Outfit - Full Kit
+- type: startingGear
+  id: SyndicateLoneOperativeGearFull
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicateOperative
+    mask: ClothingMaskGasSyndicate
+    eyes: ClothingEyesHudSyndicate
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndie
+    shoes: ClothingShoesBootsCombatFilled
+    id: SyndiPDA
+    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: BaseUplinkRadio60TC
+    belt: ClothingBeltMilitaryWebbing
+  innerClothingSkirt: ClothingUniformJumpskirtOperative
+  satchel: ClothingBackpackDuffelSyndicateOperative
+  duffelbag: ClothingBackpackDuffelSyndicateOperative
+
+# Syndicate Footsoldier Gear
 - type: startingGear
   id: SyndicateFootsoldierGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
     head: ClothingHeadHelmetSwatSyndicate
     mask: ClothingMaskGas
-    outerClothing: ClothingOuterArmorBasicSlim
+    outerClothing: ClothingOuterArmorBasic
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     back: ClothingBackpackFilled
     shoes: ClothingShoesBootsCombat
-    id: SyndiPDA #a subtype of this for footsoldiers would probably be good to have
-  innerclothingskirt: ClothingUniformJumpsuitOperative
-  satchel: ClothingBackpackDuffelSyndicateOperative
+    id: SyndiPDA
+  innerClothingSkirt: ClothingUniformJumpsuitOperative
+  satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelSyndicateOperative
 
-# Syndicate Footsoldier Gear - Knife
+# Syndicate Footsoldier Gear - No Headset
 - type: startingGear
-  id: SyndicateFootsoldierGearKnife
+  id: SyndicateFootsoldierGearRuin
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
     head: ClothingHeadHelmetSwatSyndicate
     mask: ClothingMaskGas
-    outerClothing: ClothingOuterArmorBasicSlim
-    ears: ClothingHeadsetAltSyndicate
+    outerClothing: ClothingOuterArmorBasic
     gloves: ClothingHandsGlovesCombat
     back: ClothingBackpackFilled
     shoes: ClothingShoesBootsCombat
-    pocket1: CombatKnife
     id: SyndiPDA
-  innerclothingskirt: ClothingUniformJumpsuitOperative
-  satchel: ClothingBackpackDuffelSyndicateOperative
+  innerClothingSkirt: ClothingUniformJumpsuitOperative
+  satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelSyndicateOperative
 
-# Syndicate Footsoldier Gear - Energy Sword
-- type: startingGear
-  id: SyndicateFootsoldierGearESword
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    head: ClothingHeadHelmetSwatSyndicate
-    mask: ClothingMaskGas
-    outerClothing: ClothingOuterArmorBasicSlim
-    ears: ClothingHeadsetAltSyndicate
-    gloves: ClothingHandsGlovesCombat
-    back: ClothingBackpackFilled
-    shoes: ClothingShoesBootsCombatFilled
-    pocket1: EnergySword
-    pocket2: EnergyShield
-    id: SyndiPDA
-  innerclothingskirt: ClothingUniformJumpsuitOperative
-  satchel: ClothingBackpackDuffelSyndicateOperative
-  duffelbag: ClothingBackpackDuffelSyndicateOperative
-
-# Syndicate Footsoldier Gear - Viper
-- type: startingGear
-  id: SyndicateFootsoldierGearPistol
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    head: ClothingHeadHelmetSwatSyndicate
-    mask: ClothingMaskGas
-    outerClothing: ClothingOuterArmorBasicSlim
-    ears: ClothingHeadsetAltSyndicate
-    gloves: ClothingHandsGlovesCombat
-    back: ClothingBackpackFilled
-    shoes: ClothingShoesBootsCombat
-    pocket1: WeaponPistolViper
-    id: SyndiPDA
-  innerclothingskirt: ClothingUniformJumpsuitOperative
-  satchel: ClothingBackpackDuffelSyndicateOperative
-  duffelbag: ClothingBackpackDuffelSyndicateOperative
-
-# Nanotrasen Paramilitary Unit Gear - pistol
+# Nanotrasen Paramilitary Unit Gear
 - type: startingGear
   id: NanotrasenParamilitaryGear
   equipment:
@@ -246,7 +223,7 @@
     outerClothing: ClothingOuterArmorBasicSlim
     ears: ClothingHeadsetSecurity
     gloves: ClothingHandsGlovesCombat
-  innerclothingskirt: ClothingUniformJumpskirtSec
+  innerClothingSkirt: ClothingUniformJumpskirtSec
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled
 
@@ -255,8 +232,8 @@
   id: CBURNGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBrown
-    back: ClothingBackpackDuffelCBURN
-    mask: ClothingMaskGasExplorer
+    back: ClothingBackpackDuffelCBURNFilled
+    mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetAltCentCom
     gloves: ClothingHandsGlovesCombat
@@ -265,11 +242,11 @@
     id: CBURNPDA
     pocket1: RadioHandheld
     pocket2: WeaponLaserGun
-    suitstorage: YellowOxygenTankFilled
+    suitstorage: OxygenTankFilled
     belt: ClothingBeltBandolier
-  innerclothingskirt: ClothingUniformJumpsuitColorBrown
-  satchel: ClothingBackpackDuffelCBURN
-  duffelbag: ClothingBackpackDuffelCBURN
+  innerClothingSkirt: ClothingUniformJumpsuitColorBrown
+  satchel: ClothingBackpackDuffelCBURNFilled
+  duffelbag: ClothingBackpackDuffelCBURNFilled
 
 - type: startingGear
   id: BoxingKangarooGear
@@ -282,7 +259,7 @@
     head: ClothingHeadHatTophat
     ears: ClothingHeadsetService
     jumpsuit: ClothingUniformJumpsuitJacketMonkey
-    id: BartenderIDCard
+    id: PunPunIDCard
 
 # Passenger but without the ID, bag, or headset
 
@@ -291,7 +268,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorGrey
     shoes: ClothingShoesColorBlack
-  innerclothingskirt: ClothingUniformJumpskirtColorGrey
+  innerClothingSkirt: ClothingUniformJumpskirtColorGrey
 
 # DeathMatch Gear
 
@@ -302,9 +279,9 @@
     shoes: ClothingShoesBootsJack
     ears: ClothingHeadsetGrey
     gloves: ClothingHandsGlovesFingerless
-  innerclothingskirt: ClothingUniformJumpskirtColorWhite
+  innerClothingSkirt: ClothingUniformJumpskirtColorWhite
   inhand:
-    left hand: WeaponMeleeToolboxRobust
+    - WeaponMeleeToolboxRobust
 
 #Brigmedic
 
@@ -322,6 +299,46 @@
     ears: ClothingHeadsetBrigmedic
     mask: ClothingMaskBreathMedicalSecurity
     belt: ClothingBeltMedicalFilled
-  innerclothingskirt: ClothingUniformJumpskirtBrigmedic
+  innerClothingSkirt: ClothingUniformJumpskirtBrigmedic
   satchel: ClothingBackpackSatchelBrigmedicFilled
   duffelbag: ClothingBackpackDuffelBrigmedicFilled
+
+# Aghost
+- type: startingGear
+  id: MobAghostGear
+  equipment:
+    back: ClothingBackpackSatchelHoldingAdmin
+    id: AdminPDA
+
+#Head Rev Gear
+- type: startingGear
+  id: HeadRevGear
+  equipment:
+    pocket2: Flash
+
+#Gladiator with spear
+- type: startingGear
+  id: GladiatorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitGladiator
+    back: SpearBone
+    head: ClothingHeadHatGladiator
+    shoes: ClothingShoesCult
+
+#Ash Walker
+- type: startingGear
+  id: AshWalker
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitGladiator
+    outerClothing: ClothingOuterArmorBone
+    back: SpearBone
+    head: ClothingHeadHelmetBone
+    shoes: ClothingShoesCult
+
+#Banana Clown
+- type: startingGear
+  id: BananaClown
+  equipment:
+    shoes: ClothingShoesClownBanana
+    jumpsuit: ClothingUniformJumpsuitClownBanana
+    mask: ClothingMaskClownBanana

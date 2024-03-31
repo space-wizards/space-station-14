@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: FirelockFrame
   parent: BaseStructureDynamic
-  name: Firelock Frame
+  name: firelock frame
   description: That is a firelock frame.
   components:
   - type: Sprite
@@ -25,6 +25,10 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: RCDDeconstructable
+    cost: 4
+    delay: 6
+    fx: EffectRCDDeconstruct6    
   - type: Destructible
     thresholds:
     - trigger:

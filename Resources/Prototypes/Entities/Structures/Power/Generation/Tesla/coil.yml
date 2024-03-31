@@ -1,0 +1,189 @@
+- type: entity
+  id: TeslaCoil
+  name: tesla coil
+  description: A machine that converts lightning strikes into an electric current.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Sprite
+    sprite: Structures/Power/Generation/Tesla/coil.rsi
+    snapCardinals: true
+    noRot: true
+    layers:
+      - state: coil
+        map: ["enabled"]
+      - state: coilhit
+        visible: false
+        map: ["hit"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TeslaCoilVisuals.Enabled:
+        enabled:
+          True: { state: coil_open }
+          False: { state: coil }
+      enum.TeslaCoilVisuals.Lightning:
+        hit:
+          True: { visible: true }
+          False: { visible: false }
+  - type: LightningSparking
+  - type: AnimationPlayer
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: PowerMonitoringDevice
+    group: Generator
+    loadNode: input
+    collectionName: teslaCoil
+    sprite: Structures/Power/Generation/Tesla/coil.rsi
+    state: coil
+  - type: Battery
+    maxCharge: 1000000
+    startingCharge: 0
+  - type: BatteryDischarger
+    activeSupplyRate: 15000
+  - type: TeslaCoil
+    chargeFromLightning: 500000
+  - type: LightningTarget
+    priority: 4
+    hitProbability: 0.5
+    lightningResistance: 10
+    lightningExplode: false
+  - type: PowerNetworkBattery
+    maxSupply: 1000000
+    supplyRampTolerance: 1000000
+  - type: Anchorable
+  - type: Rotatable
+  - type: Pullable
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: Repairable
+  - type: DamageVisuals
+    thresholds: [8, 16, 25]
+    damageDivisor: 3.333
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Power/Generation/Tesla/coil_cracks.rsi
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 225
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 2
+                max: 4
+  #- type: GuideHelp #   To Do - add Tesla Guide
+
+- type: entity
+  id: TeslaGroundingRod
+  name: grounding rod
+  description: A machine that keeps lightning from striking too far away.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 110
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Sprite
+    sprite: Structures/Power/Generation/Tesla/coil.rsi
+    noRot: true
+    snapCardinals: true
+    layers:
+      - state: grounding_rod
+        map: ["power"]
+      - state: grounding_rodhit
+        visible: false
+        map: ["hit"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TeslaCoilVisuals.Lightning:
+        hit:
+          True: { visible: true }
+          False: { visible: false }
+      enum.TeslaCoilVisuals.Enabled:
+        power:
+          True: { state: grounding_rod }
+          False: { state: grounding_rod_open }
+  - type: LightningSparking
+  - type: LightningTarget
+    priority: 3
+    lightningResistance: 10
+    lightningExplode: false
+    damageFromLightning: 0
+  - type: Anchorable
+  - type: Rotatable
+  - type: Pullable
+  - type: Clickable
+  - type: InteractionOutline
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: Repairable
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: DamageVisuals
+    thresholds: [8, 16, 25]
+    damageDivisor: 3.333
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Power/Generation/Tesla/groundingrod_cracks.rsi
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 2
+                max: 4
+  #- type: GuideHelp #   To Do - add Tesla Guide
+

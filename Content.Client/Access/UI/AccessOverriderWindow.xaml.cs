@@ -21,7 +21,7 @@ namespace Content.Client.Access.UI
         private readonly Dictionary<string, Button> _accessButtons = new();
 
         public AccessOverriderWindow(AccessOverriderBoundUserInterface owner, IPrototypeManager prototypeManager,
-            List<string> accessLevels)
+            List<ProtoId<AccessLevelPrototype>> accessLevels)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
@@ -31,7 +31,7 @@ namespace Content.Client.Access.UI
 
             foreach (var access in accessLevels)
             {
-                if (!prototypeManager.TryIndex<AccessLevelPrototype>(access, out var accessLevel))
+                if (!prototypeManager.TryIndex(access, out var accessLevel))
                 {
                     _logMill.Error($"Unable to find accesslevel for {access}");
                     continue;

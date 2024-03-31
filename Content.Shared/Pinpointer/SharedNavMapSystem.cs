@@ -37,8 +37,13 @@ public abstract class SharedNavMapSystem : EntitySystem
         public Dictionary<Vector2i, int> TileData = new();
 
         public List<NavMapBeacon> Beacons = new();
+
+        public List<NavMapAirlock> Airlocks = new();
     }
 
     [Serializable, NetSerializable]
     public readonly record struct NavMapBeacon(Color Color, string Text, Vector2 Position);
+
+    [Serializable, NetSerializable]
+    public readonly record struct NavMapAirlock(Vector2 Position);
 }

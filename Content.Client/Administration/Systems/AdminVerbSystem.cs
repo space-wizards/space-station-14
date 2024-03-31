@@ -24,10 +24,9 @@ namespace Content.Client.Administration.Systems
             // View variables verbs
             if (_clientConGroupController.CanViewVar())
             {
-                Verb verb = new()
+                var verb = new VvVerb()
                 {
-                    Category = VerbCategory.Debug,
-                    Text = "View Variables",
+                    Text = Loc.GetString("view-variables"),
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/vv.svg.192dpi.png")),
                     Act = () => _clientConsoleHost.ExecuteCommand($"vv {GetNetEntity(args.Target)}"),
                     ClientExclusive = true // opening VV window is client-side. Don't ask server to run this verb.

@@ -1,6 +1,6 @@
-﻿- type: advertisementsPack
+- type: messagePack
   id: GetmoreChocolateCorpAds
-  advertisements:
+  messages:
   - advertisement-snack-1
   - advertisement-snack-2
   - advertisement-snack-3
@@ -13,3 +13,6 @@
   - advertisement-snack-10
   - advertisement-snack-11
   - advertisement-snack-12
+  - advertisement-snack-13
+  - advertisement-snack-14
+  - advertisement-snack-15
