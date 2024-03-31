@@ -48,20 +48,6 @@
     node: flowercrown
 
 - type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHatHairflower
-  name: hairflower
-  description: A red flower for beautiful ladies.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Misc/hairflower.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Misc/hairflower.rsi
-  - type: Construction
-    graph: hairflower
-    node: hairflower
-
-- type: entity
   parent: ClothingHeadLightBase
   id: ClothingHeadHatPumpkin
   name: pumpkin hat
