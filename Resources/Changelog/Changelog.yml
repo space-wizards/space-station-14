@@ -1,28 +1,4 @@
 ﻿Entries:
-- author: Menshin
-  changes:
-  - message: The PA control box should now properly detect the PA parts in all situations
-      (notably on Origin)
-    type: Fix
-  - message: The PA control box now automatically face the control box on part scanning
-    type: Tweak
-  id: 5761
-  time: '2024-01-21T09:17:17.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24356
-- author: metalgearsloth
-  changes:
-  - message: Fix revolver prediction.
-    type: Fix
-  id: 5762
-  time: '2024-01-21T11:16:46.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/19649
-- author: metalgearsloth
-  changes:
-  - message: Fix shuttle docking highlights being inaccurate.
-    type: Fix
-  id: 5763
-  time: '2024-01-21T12:14:47.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24369
 - author: icekot8
   changes:
   - message: Increased the size of flatpacks made by the Flatpacker 1001.
@@ -3794,3 +3770,24 @@
   id: 6260
   time: '2024-03-30T06:52:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25886
+- author: Flareguy
+  changes:
+  - message: Removed SCAF armor.
+    type: Remove
+  id: 6261
+  time: '2024-03-31T02:01:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26566
+- author: lzk228
+  changes:
+  - message: Syndicate duffelbag storage increased from 8x5 to 9x5.
+    type: Tweak
+  id: 6262
+  time: '2024-03-31T02:21:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26565
+- author: Velcroboy
+  changes:
+  - message: Changed plastic flaps to be completely constructable/deconstructable
+    type: Tweak
+  id: 6263
+  time: '2024-03-31T02:24:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26341
