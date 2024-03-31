@@ -350,3 +350,21 @@
     - buzzed twice
     - buzzed twice.
     - buzzed twice!
+
+- type: emote
+  id: Ping
+  catagory: Vocal
+  ChatMessages: [pings.]
+  chatTriggers:
+    - ping
+    - ping.
+    - ping!
+    - pings
+    - pings.
+    - pings!
+    - pinged
+    - pinged.
+    - pinged!
+    - pinging
+    - pinging.
+    - pinging!

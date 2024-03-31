@@ -313,6 +313,8 @@
       path: /Audio/Machines/buzz-two.ogg
     Honk:
       path: /Audio/Items/bikehorn.ogg
+    Ping:
+      path: /Audio/Effects/Cargo/ping.ogg
 
 # body emotes
 - type: emoteSounds
