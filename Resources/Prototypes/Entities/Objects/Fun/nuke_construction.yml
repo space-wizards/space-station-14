@@ -346,11 +346,6 @@
     interfaces:
       - key: enum.WiresUiKey.Key
         type: WiresBoundUserInterface
-  - type: Wires
-    layoutId: Defusable
-    alwaysRandomize: true
-  - type: Defusable
-  - type: WiresPanel
 
 - type: entity
   parent: ImprovisedNuclearBombEvil
