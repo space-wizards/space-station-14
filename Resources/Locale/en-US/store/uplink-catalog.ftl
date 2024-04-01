@@ -292,7 +292,7 @@ uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
 
 uplink-chameleon-armored-name = Armored Chameleon Kit
-uplink-chameleon-armored-desc = A backpack full of more robust Chameleon Items
+uplink-chameleon-armored-desc = A backpack full of more robust Chameleon Items, featuring a stronger vest, mask, and insulated gloves.
 
 uplink-clothing-no-slips-shoes-name = No-slip Shoes
 uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slips.
