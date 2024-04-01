@@ -42,7 +42,7 @@ public sealed class BrainrotSystem : EntitySystem
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
 
-    public const string BrainrotFixture = "brainrot_ignoreDoors";
+    public const string BrainrotFixture = "brainrot";
     public const string BrainRotApplied = "brainrot-applied";
     public const string BrainRotLost = "brainrot-lost";
     public readonly string[] BrainRotReplacementStrings =

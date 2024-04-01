@@ -593,7 +593,8 @@ public abstract partial class SharedDoorSystem : EntitySystem
     /// </summary>
     private void HandleCollide(EntityUid uid, DoorComponent door, ref StartCollideEvent args)
     {
-        if (args.OtherFixtureId.Contains("_ignoreDoors"))
+        // Non-hard fixtures are used as trigger volumes so we can safely ignore them for bumps etc.
+        if (!args.OtherFixture.Hard)
             return;
 
         if (!door.BumpOpen)
