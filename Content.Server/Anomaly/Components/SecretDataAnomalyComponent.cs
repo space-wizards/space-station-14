@@ -9,13 +9,13 @@ namespace Content.Server.Anomaly.Components;
 public sealed partial class SecretDataAnomalyComponent : Component
 {
     /// <summary>
-    /// Minimum hided data elements on MapInit
+    /// Minimum hidden data elements on MapInit
     /// </summary>
     [DataField]
     public int RandomStartSecretMin = 0;
 
     /// <summary>
-    /// Maximum hided data elements on MapInit
+    /// Maximum hidden data elements on MapInit
     /// </summary>
     [DataField]
     public int RandomStartSecretMax = 0;

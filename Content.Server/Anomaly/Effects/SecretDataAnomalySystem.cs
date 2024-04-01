@@ -26,6 +26,7 @@ public sealed class SecretDataAnomalySystem : EntitySystem
 
         component.Secret.Clear();
 
+        // I also considered just adding all the enum values and pruning but that seems more wasteful.
         _deita.Clear();
         _deita.AddRange(Enum.GetValues<AnomalySecretData>());
         var actualCount = Math.Min(count, _deita.Count);
