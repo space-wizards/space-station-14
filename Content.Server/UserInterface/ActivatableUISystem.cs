@@ -26,6 +26,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
         SubscribeLocalEvent<ActivatableUIComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<ActivatableUIComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<ActivatableUIComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<ActivatableUIComponent, HandDeselectedEvent>(OnHandDeselected);
         SubscribeLocalEvent<ActivatableUIComponent, GotUnequippedHandEvent>((uid, aui, _) => CloseAll(uid, aui));
         // *THIS IS A BLATANT WORKAROUND!* RATIONALE: Microwaves need it
@@ -100,9 +101,17 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (component.rightClickOnly)
+        if (component.RightClickOnly)
             return;
 
+        args.Handled = InteractUI(args.User, uid, component);
+    }
+
+    private void OnInteractUsing(EntityUid uid, ActivatableUIComponent component, InteractUsingEvent args)
+    {
+        if (args.Handled) return;
+        if (component.AllowedItems == null) return;
+        if (!component.AllowedItems.IsValid(args.Used, EntityManager)) return;
         args.Handled = InteractUI(args.User, uid, component);
     }
 

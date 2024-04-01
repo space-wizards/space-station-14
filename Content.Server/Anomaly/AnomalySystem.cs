@@ -8,13 +8,18 @@ using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Anomaly.Prototypes;
 using Content.Shared.DoAfter;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
+using System.Linq;
 
 namespace Content.Server.Anomaly;
 
@@ -33,12 +38,19 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly RadiationSystem _radiation = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
+    [Dependency] private readonly IEntityManager _entity = default!;
 
     public const float MinParticleVariation = 0.8f;
     public const float MaxParticleVariation = 1.2f;
+
+    [ValidatePrototypeId<WeightedRandomPrototype>]
+    const string WeightListProto = "AnomalyBehaviorList";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -54,25 +66,34 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         InitializeCommands();
     }
 
-    private void OnMapInit(EntityUid uid, AnomalyComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<AnomalyComponent> anomaly, ref MapInitEvent args)
     {
-        component.NextPulseTime = Timing.CurTime + GetPulseLength(component) * 3; // longer the first time
-        ChangeAnomalyStability(uid, Random.NextFloat(component.InitialStabilityRange.Item1 , component.InitialStabilityRange.Item2), component);
-        ChangeAnomalySeverity(uid, Random.NextFloat(component.InitialSeverityRange.Item1, component.InitialSeverityRange.Item2), component);
+        anomaly.Comp.NextPulseTime = Timing.CurTime + GetPulseLength(anomaly.Comp) * 3; // longer the first time
+        ChangeAnomalyStability(anomaly, Random.NextFloat(anomaly.Comp.InitialStabilityRange.Item1 , anomaly.Comp.InitialStabilityRange.Item2), anomaly.Comp);
+        ChangeAnomalySeverity(anomaly, Random.NextFloat(anomaly.Comp.InitialSeverityRange.Item1, anomaly.Comp.InitialSeverityRange.Item2), anomaly.Comp);
 
+        ShuffleParticlesEffect(anomaly.Comp);
+        anomaly.Comp.Continuity = _random.NextFloat(anomaly.Comp.MinContituty, anomaly.Comp.MaxContituty);
+        SetBehavior(anomaly, GetRandomBehavior());
+    }
+
+    public void ShuffleParticlesEffect(AnomalyComponent anomaly)
+    {
         var particles = new List<AnomalousParticleType>
-            { AnomalousParticleType.Delta, AnomalousParticleType.Epsilon, AnomalousParticleType.Zeta };
-        component.SeverityParticleType = Random.PickAndTake(particles);
-        component.DestabilizingParticleType = Random.PickAndTake(particles);
-        component.WeakeningParticleType = Random.PickAndTake(particles);
+            { AnomalousParticleType.Delta, AnomalousParticleType.Epsilon, AnomalousParticleType.Zeta, AnomalousParticleType.Sigma };
+
+        anomaly.SeverityParticleType = Random.PickAndTake(particles);
+        anomaly.DestabilizingParticleType = Random.PickAndTake(particles);
+        anomaly.WeakeningParticleType = Random.PickAndTake(particles);
+        anomaly.TransformationParticleType = Random.PickAndTake(particles);
     }
 
-    private void OnShutdown(EntityUid uid, AnomalyComponent component, ComponentShutdown args)
+    private void OnShutdown(Entity<AnomalyComponent> anomaly, ref ComponentShutdown args)
     {
-        EndAnomaly(uid, component);
+        EndAnomaly(anomaly);
     }
 
-    private void OnStartCollide(EntityUid uid, AnomalyComponent component, ref StartCollideEvent args)
+    private void OnStartCollide(Entity<AnomalyComponent> anomaly, ref StartCollideEvent args)
     {
         if (!TryComp<AnomalousParticleComponent>(args.OtherEntity, out var particle))
             return;
@@ -80,21 +101,33 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         if (args.OtherFixtureId != particle.FixtureId)
             return;
 
+        var behaviorMod = 1f;
+        if (anomaly.Comp.CurrentBehavior != null)
+        {
+            var b = _prototype.Index(anomaly.Comp.CurrentBehavior.Value);
+            behaviorMod = b.ParticleSensivity;
+        }
         // small function to randomize because it's easier to read like this
-        float VaryValue(float v) => v * Random.NextFloat(MinParticleVariation, MaxParticleVariation);
+        float VaryValue(float v) => v * behaviorMod * Random.NextFloat(MinParticleVariation, MaxParticleVariation);
 
-        if (particle.ParticleType == component.DestabilizingParticleType || particle.DestabilzingOverride)
+        if (particle.ParticleType == anomaly.Comp.DestabilizingParticleType || particle.DestabilzingOverride)
         {
-            ChangeAnomalyStability(uid, VaryValue(particle.StabilityPerDestabilizingHit), component);
+            ChangeAnomalyStability(anomaly, VaryValue(particle.StabilityPerDestabilizingHit), anomaly.Comp);
         }
-        if (particle.ParticleType == component.SeverityParticleType || particle.SeverityOverride)
+        if (particle.ParticleType == anomaly.Comp.SeverityParticleType || particle.SeverityOverride)
         {
-            ChangeAnomalySeverity(uid, VaryValue(particle.SeverityPerSeverityHit), component);
+            ChangeAnomalySeverity(anomaly, VaryValue(particle.SeverityPerSeverityHit), anomaly.Comp);
         }
-        if (particle.ParticleType == component.WeakeningParticleType || particle.WeakeningOverride)
+        if (particle.ParticleType == anomaly.Comp.WeakeningParticleType || particle.WeakeningOverride)
         {
-            ChangeAnomalyHealth(uid, VaryValue(particle.HealthPerWeakeningeHit), component);
-            ChangeAnomalyStability(uid, VaryValue(particle.StabilityPerWeakeningeHit), component);
+            ChangeAnomalyHealth(anomaly, VaryValue(particle.HealthPerWeakeningeHit), anomaly.Comp);
+            ChangeAnomalyStability(anomaly, VaryValue(particle.StabilityPerWeakeningeHit), anomaly.Comp);
+        }
+        if (particle.ParticleType == anomaly.Comp.TransformationParticleType || particle.TransmutationOverride)
+        {
+            ChangeAnomalySeverity(anomaly, VaryValue(particle.SeverityPerSeverityHit), anomaly.Comp);
+            if (_random.Prob(anomaly.Comp.Continuity))
+                SetBehavior(anomaly, GetRandomBehavior());
         }
     }
 
@@ -116,6 +149,13 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         //penalty of up to 50% based on health
         multiplier *= MathF.Pow(1.5f, component.Health) - 0.5f;
 
+        //Apply behavior modifier
+        if (component.CurrentBehavior != null)
+        {
+            var behavior = _prototype.Index(component.CurrentBehavior.Value);
+            multiplier *= behavior.EarnPointModifier;
+        }
+
         var severityValue = 1 / (1 + MathF.Pow(MathF.E, -7 * (component.Severity - 0.5f)));
 
         return (int) ((component.MaxPointsPerSecond - component.MinPointsPerSecond) * severityValue * multiplier) + component.MinPointsPerSecond;
@@ -133,6 +173,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
             AnomalousParticleType.Delta => Loc.GetString("anomaly-particles-delta"),
             AnomalousParticleType.Epsilon => Loc.GetString("anomaly-particles-epsilon"),
             AnomalousParticleType.Zeta => Loc.GetString("anomaly-particles-zeta"),
+            AnomalousParticleType.Sigma => Loc.GetString("anomaly-particles-sigma"),
             _ => throw new ArgumentOutOfRangeException()
         };
     }
@@ -144,4 +185,40 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         UpdateGenerator();
         UpdateVessels();
     }
+
+    #region Behavior
+    private string GetRandomBehavior()
+    {
+        var weightList = _prototype.Index<WeightedRandomPrototype>(WeightListProto);
+        return weightList.Pick(_random);
+    }
+
+    private void SetBehavior(Entity<AnomalyComponent> anomaly, ProtoId<AnomalyBehaviorPrototype> behaviorProto)
+    {
+        if (anomaly.Comp.CurrentBehavior == behaviorProto)
+            return;
+
+        if (anomaly.Comp.CurrentBehavior != null)
+            RemoveBehavior(anomaly, anomaly.Comp.CurrentBehavior.Value);
+
+        //event broadcast
+        var ev = new AnomalyBehaviorChangedEvent(anomaly, anomaly.Comp.CurrentBehavior, behaviorProto);
+        anomaly.Comp.CurrentBehavior = behaviorProto;
+        RaiseLocalEvent(anomaly, ref ev, true);
+
+        var behavior = _prototype.Index(behaviorProto);
+
+        EntityManager.AddComponents(anomaly, behavior.Components);
+    }
+
+    private void RemoveBehavior(Entity<AnomalyComponent> anomaly, ProtoId<AnomalyBehaviorPrototype> behaviorProto)
+    {
+        if (anomaly.Comp.CurrentBehavior == null)
+            return;
+
+        var behavior = _prototype.Index(anomaly.Comp.CurrentBehavior.Value);
+
+        EntityManager.RemoveComponents(anomaly, behavior.Components);
+    }
+    #endregion
 }

@@ -12,7 +12,6 @@
   - type: Tag
     tags:
       - RawMaterial
-      - NoPaint
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

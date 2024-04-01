@@ -24,7 +24,7 @@ namespace Content.Shared.Sound;
 [UsedImplicitly]
 public abstract class SharedEmitSoundSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
@@ -41,6 +41,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>(OnEmitSoundOnActivateInWorld);
         SubscribeLocalEvent<EmitSoundOnPickupComponent, GotEquippedHandEvent>(OnEmitSoundOnPickup);
         SubscribeLocalEvent<EmitSoundOnDropComponent, DroppedEvent>(OnEmitSoundOnDrop);
+        SubscribeLocalEvent<EmitSoundOnInteractUsingComponent, InteractUsingEvent>(OnEmitSoundOnInteractUsing);
 
         SubscribeLocalEvent<EmitSoundOnCollideComponent, StartCollideEvent>(OnEmitSoundOnCollide);
     }
@@ -102,6 +103,13 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         TryEmitSound(uid, component, args.User);
     }
 
+    private void OnEmitSoundOnInteractUsing(Entity<EmitSoundOnInteractUsingComponent> ent, ref InteractUsingEvent args)
+    {
+        if (ent.Comp.Whitelist.IsValid(args.Used, EntityManager))
+        {
+            TryEmitSound(ent, ent.Comp, args.User);
+        }
+    }
     protected void TryEmitSound(EntityUid uid, BaseEmitSoundComponent component, EntityUid? user=null, bool predict=true)
     {
         if (component.Sound == null)
@@ -124,7 +132,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
             !args.OtherFixture.Hard ||
             !TryComp<PhysicsComponent>(uid, out var physics) ||
             physics.LinearVelocity.Length() < component.MinimumVelocity ||
-            _timing.CurTime < component.NextSound ||
+            Timing.CurTime < component.NextSound ||
             MetaData(uid).EntityPaused)
         {
             return;
@@ -136,12 +144,16 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
         var fraction = MathF.Min(1f, (physics.LinearVelocity.Length() - component.MinimumVelocity) / MaxVolumeVelocity);
         var volume = MinVolume + (MaxVolume - MinVolume) * fraction;
-        component.NextSound = _timing.CurTime + EmitSoundOnCollideComponent.CollideCooldown;
+        component.NextSound = Timing.CurTime + EmitSoundOnCollideComponent.CollideCooldown;
         var sound = component.Sound;
 
         if (_netMan.IsServer && sound != null)
         {
             _audioSystem.PlayPvs(_audioSystem.GetSound(sound), uid, AudioParams.Default.WithVolume(volume));
         }
+    }
+
+    public virtual void SetEnabled(Entity<SpamEmitSoundComponent?> entity, bool enabled)
+    {
     }
 }
