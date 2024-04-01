@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Smoking now causes mild lung cancer in the form of cellular damage.
-    type: Tweak
-  id: 5787
-  time: '2024-01-25T09:51:26.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24546
 - author: metalgearsloth
   changes:
   - message: Add title2.ogg to space ambience tracks.
@@ -3806,3 +3799,14 @@
   id: 6286
   time: '2024-04-01T07:20:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25831
+- author: TheShuEd
+  changes:
+  - message: Added new transformation particles types for APE and CHIMP
+    type: Add
+  - message: Added new anomaly behaviour mechanic. Different behaviors can change
+      the gameplay of an anomaly. Players can get random behaviors by bombarding the
+      anomaly with new particles
+    type: Add
+  id: 6287
+  time: '2024-04-01T08:29:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24683
