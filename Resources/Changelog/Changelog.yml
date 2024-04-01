@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Tin-Man-Tim
-  changes:
-  - message: Attempting to microwave metal now can cause the microwave to spark and
-      explode.
-    type: Tweak
-  id: 5779
-  time: '2024-01-23T22:59:10.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23887
 - author: DrMelon
   changes:
   - message: The Microwave works as intended after power outages again.
@@ -3802,3 +3794,13 @@
   id: 6278
   time: '2024-04-01T02:13:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26632
+- author: Flareguy
+  changes:
+  - message: All wheeled objects now have lower friction. Portable items, like fuel
+      canisters & portable scrubbers, should now be easier to carry around.
+    type: Tweak
+  - message: High-capacity reagent tanks are now much heavier.
+    type: Tweak
+  id: 6279
+  time: '2024-04-01T03:23:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26601
