@@ -45,5 +45,13 @@ public interface IAdminNotesManager
     /// <param name="player">Desired player's <see cref="Guid"/></param>
     /// <returns>All unread messages</returns>
     Task<List<AdminMessageRecord>> GetNewMessages(Guid player);
-    Task MarkMessageAsSeen(int id);
+
+    /// <summary>
+    /// Mark an admin message as being seen by the target player.
+    /// </summary>
+    /// <param name="id">The database ID of the admin message.</param>
+    /// <param name="dismissedToo">
+    /// If true, the message is "permanently dismissed" and will not be shown to the player again when they join.
+    /// </param>
+    Task MarkMessageAsSeen(int id, bool dismissedToo);
 }

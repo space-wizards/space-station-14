@@ -88,7 +88,7 @@ namespace Content.Server.Popups
                 RaiseNetworkEvent(new PopupEntityEvent(message, type, GetNetEntity(uid)), actor.PlayerSession);
         }
 
-        public override void PopupClient(string? message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
+        public override void PopupClient(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
         {
             // do nothing duh its for client only
         }

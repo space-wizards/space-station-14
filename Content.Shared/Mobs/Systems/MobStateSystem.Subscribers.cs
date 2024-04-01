@@ -28,7 +28,7 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, ChangeDirectionAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, UseAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, AttackAttemptEvent>(CheckAct);
-        SubscribeLocalEvent<MobStateComponent, InteractionAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, ConsciousAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, SpeakAttemptEvent>(OnSpeakAttempt);
         SubscribeLocalEvent<MobStateComponent, IsEquippingAttemptEvent>(OnEquipAttempt);

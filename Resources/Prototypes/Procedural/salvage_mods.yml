@@ -242,3 +242,9 @@
   proto: SnowyLabs
   biomes:
     - Snow
+    
+- type: salvageDungeonMod
+  id: Haunted
+  proto: Haunted
+  biomes:
+    - Caves
