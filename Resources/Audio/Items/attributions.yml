@@ -114,6 +114,6 @@
   source: "https://github.com/space-wizards/space-station-14/pull/26622"
 
 - files: ["drill_use.ogg"]
-  licence: "CC0-1.0"
+  license: "CC0-1.0"
   copyright: "Original sound by stomachache on freesound.org, processed by vanilla"
   source: "https://freesound.org/s/262213/"
