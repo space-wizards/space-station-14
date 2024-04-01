@@ -22,12 +22,12 @@ public sealed class PirateAccentSystem : EntitySystem
     {
         var msg = message;
 
+        var notAllCaps = msg.Any(char.IsLower);
+
         msg = _replacement.ApplyReplacements(msg, "pirate");
 
         if (!_random.Prob(component.YarrChance))
             return msg;
-
-        var notAllCaps = msg.Any(char.IsLower);
 
         var pick = _random.Pick(component.PirateWords);
         // Reverse sanitize capital

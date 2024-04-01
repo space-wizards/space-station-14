@@ -42,24 +42,24 @@ public sealed class MobsterAccentSystem : EntitySystem
     public string Accentuate(string message, MobsterAccentComponent component)
     {
         // Order:
+        // Check caps
         // Do text manipulations first
         // Then prefix/suffix funnyies
 
+        var msg = message;
+
+        var notAllCaps = msg.Any(char.IsLower);
+
         // direct word replacements
-        var msg = _replacement.ApplyReplacements(message, "mobster");
+        msg = _replacement.ApplyReplacements(message, "mobster");
 
         // thinking -> thinkin'
         // king -> king
-        msg = Regex.Replace(msg, @"(?<=\w\w)ing(?!\w)", "in'");
-        msg = Regex.Replace(msg, @"(?<=\w\w)ING(?!\w)", "IN'");
+        msg = Regex.Replace(msg, @"(?<=\w\w)ing(?!\w)", "in'", RegexOptions.IgnoreCase);
 
         // or -> uh and ar -> ah in the middle of words (fuhget, tahget)
-        msg = Regex.Replace(msg, @"(?<=\w)or(?=\w)", "uh");
-        msg = Regex.Replace(msg, @"(?<=\w)OR(?=\w)", "UH");
-        msg = Regex.Replace(msg, @"(?<=\w)ar(?=\w)", "ah");
-        msg = Regex.Replace(msg, @"(?<=\w)AR(?=\w)", "AH");
-
-        var notAllCaps = msg.Any(char.IsLower);
+        msg = Regex.Replace(msg, @"(?<=\w)or(?=\w)", "uh", RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, @"(?<=\w)ar(?=\w)", "ah", RegexOptions.IgnoreCase);
 
         // Prefix
         if (_random.Prob(0.15f))
