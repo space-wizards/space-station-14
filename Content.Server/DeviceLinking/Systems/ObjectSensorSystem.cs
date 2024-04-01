@@ -49,6 +49,9 @@ public sealed class ObjectSensorSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    ///     Updates the component's mode when interacted with using a screwdriver
+    /// </summary>
     private void OnInteractUsing(Entity<ObjectSensorComponent> uid, ref InteractUsingEvent args)
     {
         if (args.Handled || !_tool.HasQuality(args.Used, uid.Comp.CycleQuality))
@@ -82,22 +85,25 @@ public sealed class ObjectSensorSystem : EntitySystem
         _deviceLink.EnsureSourcePorts(uid, uid.Comp.OutputPort1, uid.Comp.OutputPort2, uid.Comp.OutputPort3, uid.Comp.OutputPort4OrMore);
     }
 
+    /// <summary>
+    ///     Sends the signal to the associated signal source.
+    /// </summary>
+    /// <param name="uid">The sensor</param>
+    /// <param name="port">The index of the signal source</param>
+    /// <param name="signal">The signal to be sent</param>
     private void SetOut(Entity<ObjectSensorComponent> uid, int port, bool signal)
     {
-        var component = uid.Comp;
-
-        List<ProtoId<SourcePortPrototype>> PortList = new()
-        {
-            component.OutputPort1, component.OutputPort2,
-            component.OutputPort3, component.OutputPort4OrMore
-        };
-
+        var ports = uid.Comp.PortList;
         if (port <= 0)
             return;
 
-        _deviceLink.SendSignal(uid, PortList[Math.Min(port, 4)], signal);
+        _deviceLink.SendSignal(uid, ports[Math.Min(port, ports.Count) - 1], signal);
     }
 
+    /// <summary>
+    ///     Updates all of the object sensors
+    /// </summary>
+    /// <param name="uid"></param>
     private void UpdateOutput(Entity<ObjectSensorComponent> uid)
     {
         var component = uid.Comp;

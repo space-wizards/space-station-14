@@ -27,6 +27,14 @@ public sealed partial class ObjectSensorComponent : Component
     [DataField]
     public ProtoId<SourcePortPrototype> OutputPort4OrMore = "ObjectSensor4OrMoreObjects";
 
+    public List<ProtoId<SourcePortPrototype>> PortList => new()
+    {
+        OutputPort1,
+        OutputPort2,
+        OutputPort3,
+        OutputPort4OrMore
+    };
+
     /// <summary>
     ///    How the mode is switched
     /// </summary>
