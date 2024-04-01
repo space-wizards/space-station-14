@@ -342,9 +342,8 @@
     intensitySlope: 5
     maxIntensity: 500
     canCreateVacuum: false
-    - type: Defusable
-    - type: WiresPanel
-
+  - type: Defusable
+  
 - type: entity
   parent: ImprovisedNuclearBombEvil
   id: ImprovisedNuclearBombEvilPainted
