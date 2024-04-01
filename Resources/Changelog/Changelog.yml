@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DrMelon
-  changes:
-  - message: The Microwave works as intended after power outages again.
-    type: Fix
-  id: 5780
-  time: '2024-01-24T01:14:55.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23997
 - author: Krunk
   changes:
   - message: To prevent accidental spills, buckets can no longer be quick-equipped.
@@ -3804,3 +3797,12 @@
   id: 6279
   time: '2024-04-01T03:23:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26601
+- author: Tayrtahn
+  changes:
+  - message: spears, darts, and hypodarts can inject targets again.
+    type: Fix
+  - message: arrows can no longer inject targets they don't actually hit.
+    type: Fix
+  id: 6280
+  time: '2024-04-01T03:39:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26268
