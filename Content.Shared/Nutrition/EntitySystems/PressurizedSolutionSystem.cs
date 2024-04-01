@@ -1,31 +1,28 @@
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Throwing;
-using Content.Shared.Popups;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Effects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Network;
+using Content.Shared.Fluids;
+using Content.Shared.Popups;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
-public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
+public sealed partial class PressurizedSolutionSystem : EntitySystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
-    [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedColorFlashEffectSystem _colorFlash = default!;
+    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -142,17 +139,6 @@ public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
         Dirty(entity, entity.Comp);
     }
 
-    // TODO: When more of PuddleSystem is in Shared, move the rest of this method from Server to Shared
-    // This is separated
-    protected virtual void DoSpraySplash(Entity<PressurizedSolutionComponent> entity, Solution sol, EntityUid? user = null)
-    {
-        if (user != null)
-        {
-            var targets = new List<EntityUid>() { user.Value };
-            _colorFlash.RaiseEffect(sol.GetColor(_prototypeManager), targets, Filter.Pvs(user.Value, entityManager: EntityManager));
-        }
-    }
-
     #region Public API
 
     /// <summary>
@@ -187,15 +173,14 @@ public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
         // Get the spray solution from the container
         var solution = _solutionContainer.SplitSolution(soln.Value, interactions.Volume);
 
-        // TODO: When PuddleSystem is in Shared, move DoSpraySplash into this method.
-        DoSpraySplash((entity, entity.Comp), solution, target);
+        // Spray the solution onto the ground and anyone nearby
+        if (TryComp<TransformComponent>(entity, out var transform))
+            _puddle.TrySplashSpillAt(entity, transform.Coordinates, solution, out _, sound: false);
 
         var drinkName = Identity.Entity(entity, EntityManager);
 
         if (target != null)
         {
-            _reactive.DoEntityReaction(target.Value, solution, ReactionMethod.Touch);
-
             var victimName = Identity.Entity(target.Value, EntityManager);
 
             // Show a popup to everyone but the target

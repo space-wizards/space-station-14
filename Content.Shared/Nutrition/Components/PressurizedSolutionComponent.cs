@@ -11,7 +11,7 @@ namespace Content.Shared.Nutrition.Components;
 /// and spraying the solution out when opening or throwing the entity.
 /// </summary>
 [NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-[RegisterComponent, Access(typeof(SharedPressurizedSolutionSystem))]
+[RegisterComponent, Access(typeof(PressurizedSolutionSystem))]
 public sealed partial class PressurizedSolutionComponent : Component
 {
     /// <summary>
