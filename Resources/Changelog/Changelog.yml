@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Krunk
-  changes:
-  - message: Paper cups can now be worn as party hats!
-    type: Add
-  id: 5784
-  time: '2024-01-25T01:02:33.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24334
 - author: Blackern5000
   changes:
   - message: Botany's hatchet, spade, and hoe have received a damage decrease to 10,
@@ -3807,3 +3800,11 @@
   id: 6283
   time: '2024-04-01T04:50:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/23240
+- author: kseandi
+  changes:
+  - message: NT has declassified the documentation for door electronics, now anyone
+      can configure its access using network configurator or multitool.
+    type: Add
+  id: 6284
+  time: '2024-04-01T06:06:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/17778
