@@ -7,6 +7,7 @@ using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Collections;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
