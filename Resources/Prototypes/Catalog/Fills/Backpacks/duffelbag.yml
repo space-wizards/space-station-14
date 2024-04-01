@@ -250,6 +250,24 @@
         - id: BarberScissors
 
 - type: entity
+  parent: ClothingBackpackChameleon
+  id: ClothingBackpackChameleonArmoredFill
+  suffix: Fill, Chameleon, Armored
+  components:
+    - type: StorageFill
+      contents:
+        - id: ClothingUniformJumpsuitChameleon
+        - id: WebVestChameleon
+        - id: ClothingNeckChameleon
+        - id: ClothingMaskGasChameleonArmored
+        - id: ClothingHeadHatChameleonArmored
+        - id: ClothingHandsChameleonArmored
+        - id: ClothingEyesChameleon
+        - id: ClothingHeadsetChameleon
+        - id: ClothingShoesChameleon
+        - id: BarberScissors
+
+- type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateEVABundle
   name: syndicate EVA bundle
