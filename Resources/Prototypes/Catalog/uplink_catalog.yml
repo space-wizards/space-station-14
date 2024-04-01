@@ -1240,6 +1240,16 @@
   - UplinkWearables
 
 - type: listing
+  id: UplinkClothingOuterWebVestChameleon
+  name: uplink-clothing-outer-vest-web-chameleon-name
+  description: uplink-clothing-outer-vest-web-chameleon-desc
+  productEntity: WebVestChameleon
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkWearables
+
+- type: listing
   id: UplinkClothingShoesBootsMagSyndie
   name: uplink-clothing-shoes-boots-mag-syndie-name
   description: uplink-clothing-shoes-boots-mag-syndie-desc
