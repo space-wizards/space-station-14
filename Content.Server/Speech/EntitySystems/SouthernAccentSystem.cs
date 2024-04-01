@@ -21,8 +21,14 @@ public sealed class SouthernAccentSystem : EntitySystem
 
         //They shoulda started runnin' an' hidin' from me!
         message = Regex.Replace(message, @"ing\b", "in'");
+        message = Regex.Replace(message, @"ING\b", "IN'");
+
         message = Regex.Replace(message, @"\band\b", "an'");
+        message = Regex.Replace(message, @"\bAND\b", "AN'");
+
         message = Regex.Replace(message, "d've", "da");
+        message = Regex.Replace(message, "D'VE", "DA");
+
         args.Message = message;
     }
 };
