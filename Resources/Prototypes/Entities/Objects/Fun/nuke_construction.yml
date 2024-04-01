@@ -294,7 +294,7 @@
     beepSound: /Audio/Machines/Nuke/general_beep.ogg
   - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
     explosionType: Default
-    totalIntensity: 2000
+    totalIntensity: 1500
     intensitySlope: 1
     maxIntensity: 10
     canCreateVacuum: false
