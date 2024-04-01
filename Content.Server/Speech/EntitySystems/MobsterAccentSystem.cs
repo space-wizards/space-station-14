@@ -50,11 +50,14 @@ public sealed class MobsterAccentSystem : EntitySystem
 
         // thinking -> thinkin'
         // king -> king
-        msg = Regex.Replace(msg, @"(?<=\w\w)ing(?!\w)", "in'", RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, @"(?<=\w\w)i[Nn][Gg](?!\w)", "in'");
+        msg = Regex.Replace(msg, @"(?<=\w\w)I[Nn][Gg](?!\w)", "IN'");
 
         // or -> uh and ar -> ah in the middle of words (fuhget, tahget)
-        msg = Regex.Replace(msg, @"(?<=\w)or(?=\w)", "uh", RegexOptions.IgnoreCase);
-        msg = Regex.Replace(msg, @"(?<=\w)ar(?=\w)", "ah", RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, @"(?<=\w)o[Rr](?=\w)", "uh");
+        msg = Regex.Replace(msg, @"(?<=\w)O[Rr](?=\w)", "UH");
+        msg = Regex.Replace(msg, @"(?<=\w)a[Rr](?=\w)", "ah");
+        msg = Regex.Replace(msg, @"(?<=\w)A[Rr](?=\w)", "AH");
 
         // Prefix
         if (_random.Prob(0.15f))
