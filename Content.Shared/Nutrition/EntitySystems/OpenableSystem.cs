@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -13,7 +14,7 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// <summary>
 /// Provides API for openable food and drinks, handles opening on use and preventing transfer when closed.
 /// </summary>
-public abstract partial class SharedOpenableSystem : EntitySystem
+public sealed partial class OpenableSystem : EntitySystem
 {
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
@@ -29,6 +30,7 @@ public abstract partial class SharedOpenableSystem : EntitySystem
         SubscribeLocalEvent<OpenableComponent, MeleeHitEvent>(HandleIfClosed);
         SubscribeLocalEvent<OpenableComponent, AfterInteractEvent>(HandleIfClosed);
         SubscribeLocalEvent<OpenableComponent, GetVerbsEvent<Verb>>(AddOpenCloseVerbs);
+        SubscribeLocalEvent<OpenableComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
     }
 
     private void OnInit(EntityUid uid, OpenableComponent comp, ComponentInit args)
@@ -87,6 +89,15 @@ public abstract partial class SharedOpenableSystem : EntitySystem
             };
         }
         args.Verbs.Add(verb);
+    }
+
+    private void OnTransferAttempt(Entity<OpenableComponent> ent, ref SolutionTransferAttemptEvent args)
+    {
+        if (!ent.Comp.Opened)
+        {
+            // message says its just for drinks, shouldn't matter since you typically dont have a food that is openable and can be poured out
+            args.Cancel(Loc.GetString("drink-component-try-use-drink-not-open", ("owner", ent.Owner)));
+        }
     }
 
     /// <summary>

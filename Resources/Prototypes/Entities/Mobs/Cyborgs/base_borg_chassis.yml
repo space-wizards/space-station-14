@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseMob
   id: BaseBorgChassis
   name: cyborg
@@ -131,6 +131,9 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Pai
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
   - type: UnblockableSpeech
   - type: Construction
     graph: Cyborg

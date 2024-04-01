@@ -54,14 +54,10 @@ public sealed class JammerSystem : EntitySystem
         if (activated)
         {
             EnsureComp<ActiveRadioJammerComponent>(uid);
-            var stationId = _stationSystem.GetOwningStation(uid);
-            if (stationId != null && _singletonServerSystem.TryGetActiveServerAddress<CrewMonitoringServerComponent>(stationId.Value, out var netId))
-            {
-                EnsureComp<DeviceNetworkJammerComponent>(uid, out var jammingComp);
-                jammingComp.Range = comp.Range;
-                jammingComp.JammableNetworks.Add(netId);
-                Dirty(uid, jammingComp);
-            }
+            EnsureComp<DeviceNetworkJammerComponent>(uid, out var jammingComp);
+            jammingComp.Range = comp.Range;
+            jammingComp.JammableNetworks.Add(DeviceNetworkComponent.DeviceNetIdDefaults.Wireless.ToString());
+            Dirty(uid, jammingComp);
         }
         else
         {
