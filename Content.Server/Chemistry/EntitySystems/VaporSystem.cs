@@ -64,8 +64,8 @@ namespace Content.Server.Chemistry.EntitySystems
             // Set Move
             if (EntityManager.TryGetComponent(vapor, out PhysicsComponent? physics))
             {
-                _physics.SetLinearDamping(physics, 0f);
-                _physics.SetAngularDamping(physics, 0f);
+                _physics.SetLinearDamping(vapor, physics, 0f);
+                _physics.SetAngularDamping(vapor, physics, 0f);
 
                 _throwing.TryThrow(vapor, dir, speed, user: user);
 

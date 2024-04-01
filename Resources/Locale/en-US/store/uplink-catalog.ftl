@@ -109,6 +109,9 @@ uplink-holoclown-kit-desc = A joint venture between Cybersun and Honk.co. Contai
 uplink-holster-name = Shoulder Holster
 uplink-holster-desc = A deep shoulder holster capable of holding many types of ballistics.
 
+uplink-chest-rig-name = Chest Rig
+uplink-chest-rig-desc = Explosion-resistant tactical webbing used for holding traitor goods.
+
 uplink-emag-name = Emag
 uplink-emag-desc = The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
 

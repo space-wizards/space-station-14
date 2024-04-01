@@ -120,9 +120,16 @@ public partial class NavMapControl : MapGridControl
             VerticalExpand = false,
             Children =
             {
-                _zoom,
-                _beacons,
-                _recenter,
+                new BoxContainer()
+                {
+                    Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                    Children =
+                    {
+                        _zoom,
+                        _beacons,
+                        _recenter
+                    }
+                }
             }
         };
 
