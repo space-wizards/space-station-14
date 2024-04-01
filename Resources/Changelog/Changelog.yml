@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Minty642
-  changes:
-  - message: Fixed Reinforced Glass Recipe in Ore Processor!
-    type: Fix
-  - message: Added Premium Material that can only be processed by Industrial Ore Processor!
-    type: Add
-  id: 5786
-  time: '2024-01-25T08:33:56.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24345
 - author: Blackern5000
   changes:
   - message: Smoking now causes mild lung cancer in the form of cellular damage.
@@ -3807,3 +3798,11 @@
   id: 6285
   time: '2024-04-01T06:41:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25367
+- author: f0x-n3rd
+  changes:
+  - message: Added pages for each categories from the chemical page in the guidebook,
+      no more infinite scrolling when looking up certain chemicals.
+    type: Add
+  id: 6286
+  time: '2024-04-01T07:20:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25831
