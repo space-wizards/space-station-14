@@ -263,6 +263,7 @@
     tags:
     - CombatKnife
     - Knife
+    - CannonRestrict
   - type: Sprite
     sprite: Objects/Weapons/Melee/throwing_knife.rsi
     state: icon
@@ -275,6 +276,7 @@
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/star_hit.ogg
   - type: DamageOtherOnHit
+    ignoreResistances: true
     damage:
       types:
         Slash: 10
