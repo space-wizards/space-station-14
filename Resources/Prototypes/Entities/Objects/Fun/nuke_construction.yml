@@ -108,38 +108,6 @@
 
 - type: entity
   parent: ImprovisedNuclearBombInsidesPipe
-  id: ImprovisedNuclearBombInsidesGun
-  name: nuclear fission explosive
-  description: A partially constructed nuke.
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/nukecraft.rsi
-    state: nukecraft_3
-    noRot: true
-  - type: Construction
-    graph: ImprovisedNukeCraft
-    node: gun
-    defaultTarget: painted
-
-
-- type: entity
-  parent: ImprovisedNuclearBombInsidesPipe
-  id: ImprovisedNuclearBombInsidesBullet
-  name: nuclear fission explosive
-  description: A partially constructed nuke.
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/nukecraft.rsi
-    state: nukecraft_3
-    noRot: true
-  - type: Construction
-    graph: ImprovisedNukeCraft
-    node: bullet
-    defaultTarget: painted
-
-
-- type: entity
-  parent: ImprovisedNuclearBombInsidesPipe
   id: ImprovisedNuclearBombInsidesUranium
   name: nuclear fission explosive
   description: A partially constructed nuke. Looks like it contains radioactive material.
@@ -274,7 +242,6 @@
   - type: Construction
     graph: ImprovisedNukeCraft
     node: painted
-    defaultTarget: painted
 
 - type: entity
   parent: ImprovisedNuclearBombInsidesUranium
@@ -297,17 +264,6 @@
         - TabletopMachineMask
         layer:
         - TabletopMachineLayer
-
-- type: entity
-  parent: ImprovisedNuclearBombInsidesEvil
-  id: ImprovisedNuclearBombInsidesEvilReciever
-  name: nuclear fission explosive
-  description: A partially constructed nuke. Inside you can see a minibomb.
-  components:
-  - type: Construction
-    graph: ImprovisedNukeCraft
-    node: evilbombreciever
-    defaultTarget: evilbombpainted
 
 - type: entity
   parent: ImprovisedNuclearBomb
@@ -365,4 +321,3 @@
   - type: Construction
     graph: ImprovisedNukeCraft
     node: evilbombpainted
-    defaultTarget: evilbombpainted
