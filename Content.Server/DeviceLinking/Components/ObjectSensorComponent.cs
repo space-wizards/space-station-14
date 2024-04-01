@@ -37,7 +37,7 @@ public sealed partial class ObjectSensorComponent : Component
     public SoundSpecifier CycleSound = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
 }
 
-public enum ObjectSensorMode
+public enum ObjectSensorMode : byte
 {
     Living,
     Items,
