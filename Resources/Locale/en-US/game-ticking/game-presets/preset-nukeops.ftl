@@ -11,17 +11,17 @@ nukeops-neutral = [color=yellow]Neutral outcome![/color]
 nukeops-crewminor = [color=green]Crew minor victory![/color]
 nukeops-crewmajor = [color=green]Crew major victory![/color]
 
-nukeops-cond-nukeexplodedoncorrectstation = The nuclear operatives managed to blow up the station.
-nukeops-cond-nukeexplodedonnukieoutpost = The nuclear operative outpost was destroyed by a nuclear blast.
-nukeops-cond-nukeexplodedonincorrectlocation = The nuclear bomb was detonated off-station.
-nukeops-cond-nukeactiveinstation = The nuclear bomb was left armed on-station.
-nukeops-cond-nukeactiveatcentcom = The nuclear bomb was delivered to Central Command!
-nukeops-cond-nukediskoncentcom = The crew escaped with the nuclear authentication disk.
-nukeops-cond-nukedisknotoncentcom = The crew left the nuclear authentication disk behind.
-nukeops-cond-nukiesabandoned = The nuclear operatives were abandoned.
-nukeops-cond-allnukiesdead = All nuclear operatives have died.
-nukeops-cond-somenukiesalive = Some nuclear operatives died.
-nukeops-cond-allnukiesalive = No nuclear operatives died.
+nukeops-cond-nukeexplodedoncorrectstation = The nuclear operatives blew up the station.
+nukeops-cond-nukeexplodedonnukieoutpost = HOLY SHIT, all of the nukies let the crew blow up their outpost.
+nukeops-cond-nukeexplodedonincorrectlocation = The nuclear bomb blew up somewhere else.
+nukeops-cond-nukeactiveinstation = The nuclear operatives ALMOST won that.
+nukeops-cond-nukeactiveatcentcom = The nukies hijacked evac and blew up Central Command!
+nukeops-cond-nukediskoncentcom = The crew escaped with that fukken disk!
+nukeops-cond-nukedisknotoncentcom = The crew left the nuclear authentication disk with the nukies.
+nukeops-cond-nukiesabandoned = The nuclear operatives got left behind to die.
+nukeops-cond-allnukiesdead = All the nukies were unrobust and died.
+nukeops-cond-somenukiesalive = Some nukies died because they were unrobust.
+nukeops-cond-allnukiesalive = ALL of the operatives were fabulously robust!
 
 nukeops-list-start = The operatives were:
 nukeops-list-name = - [color=White]{$name}[/color]
