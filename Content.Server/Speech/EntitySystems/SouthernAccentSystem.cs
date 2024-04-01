@@ -24,6 +24,7 @@ public sealed class SouthernAccentSystem : EntitySystem
         message = Regex.Replace(message, @"ING\b", "IN'");
 
         message = Regex.Replace(message, @"\band\b", "an'");
+        message = Regex.Replace(message, @"\bAnd\b", "An'");
         message = Regex.Replace(message, @"\bAND\b", "AN'");
 
         message = Regex.Replace(message, "d've", "da");
