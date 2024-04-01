@@ -7,10 +7,12 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.StepTrigger.Components;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 
@@ -113,7 +115,10 @@ public sealed class ObjectSensorSystem : EntitySystem
         if (!Transform(uid).Anchored)
             return;
 
-        var contacting = _physics.GetContactingEntities(uid);
+        if (!TryComp(uid, out StepTriggerComponent? stepTrigger))
+            return;
+
+        var contacting = stepTrigger.Colliding;
         var total = 0;
 
         foreach (var ent in contacting)
@@ -146,16 +151,12 @@ public sealed class ObjectSensorSystem : EntitySystem
         if (component.Contacting > oldTotal)
         {
             for (var i = oldTotal + 1; i <= (component.Contacting > 4 ? 4 : component.Contacting); i++)
-            {
                 SetOut(uid, i, true);
-            }
         }
         else
         {
             for (var i = oldTotal; i > component.Contacting; i--)
-            {
                 SetOut(uid, i, false);
-            }
         }
     }
 }

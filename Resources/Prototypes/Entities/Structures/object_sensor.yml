@@ -39,6 +39,8 @@
         - HighImpassable
         hard: false
   - type: ObjectSensor
+  - type: StepTrigger
+    ignoreWeightless: true
   - type: DeviceLinkSource
     ports:
     - ObjectSensor1Object

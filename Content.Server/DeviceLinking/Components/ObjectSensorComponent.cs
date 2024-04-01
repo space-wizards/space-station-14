@@ -35,6 +35,8 @@ public sealed partial class ObjectSensorComponent : Component
         OutputPort4OrMore
     };
 
+    public List<EntityUid> CollidingEntities = new();
+
     /// <summary>
     ///    How the mode is switched
     /// </summary>
