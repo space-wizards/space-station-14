@@ -203,8 +203,8 @@ namespace Content.Server.Ghost.Roles
                     continue;
                 }
 
-                raffle.Countdown -= frameTime;
-                if (raffle.Countdown > 0)
+                raffle.Countdown = raffle.Countdown.Subtract(TimeSpan.FromSeconds(frameTime));
+                if (raffle.Countdown.Ticks > 0)
                     continue;
 
                 // the raffle is over! find someone to take over the ghost role
@@ -344,11 +344,11 @@ namespace Content.Server.Ghost.Roles
 
             var raffle = ent.Comp;
             raffle.Identifier = ghostRole.Identifier;
-            raffle.Countdown = settings.InitialDuration;
-            raffle.CumulativeTime = settings.InitialDuration;
+            raffle.Countdown = TimeSpan.FromSeconds(settings.InitialDuration);
+            raffle.CumulativeTime = TimeSpan.FromSeconds(settings.InitialDuration);
             // we copy these settings into the component because they would be cumbersome to access otherwise
-            raffle.JoinExtendsDurationBy = settings.JoinExtendsDurationBy;
-            raffle.MaxDuration = settings.MaxDuration;
+            raffle.JoinExtendsDurationBy = TimeSpan.FromSeconds(settings.JoinExtendsDurationBy);
+            raffle.MaxDuration = TimeSpan.FromSeconds(settings.MaxDuration);
         }
 
         private void OnRaffleShutdown(Entity<GhostRoleRaffleComponent> ent, ref ComponentShutdown args)
@@ -383,7 +383,7 @@ namespace Content.Server.Ghost.Roles
             // extend the countdown, but only if doing so will not make the raffle take longer than the maximum
             // duration
             if (raffle.AllMembers.Add(player) && raffle.AllMembers.Count > 1
-                && raffle.CumulativeTime + raffle.JoinExtendsDurationBy <= raffle.MaxDuration)
+                && raffle.CumulativeTime.Add(raffle.JoinExtendsDurationBy) <= raffle.MaxDuration)
             {
                     raffle.Countdown += raffle.JoinExtendsDurationBy;
                     raffle.CumulativeTime += raffle.JoinExtendsDurationBy;
@@ -517,9 +517,8 @@ namespace Content.Server.Ghost.Roles
 
                 var rafflePlayerCount = (uint?) raffle?.CurrentMembers.Count ?? 0;
                 var raffleEndTime = raffle is not null
-                    ? _timing.CurTime.Add(TimeSpan.FromSeconds(raffle.Countdown))
+                    ? _timing.CurTime.Add(raffle.Countdown)
                     : TimeSpan.MinValue;
-
 
                 roles.Add(new GhostRoleInfo
                 {

@@ -15,25 +15,29 @@ public sealed partial class GhostRoleRaffleComponent : Component
     /// Identifier of the <see cref="GhostRoleComponent">Ghost Role</see> this raffle is for.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public uint Identifier { get; set; }
 
     /// <summary>
     /// List of sessions that are currently in the raffle.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public readonly HashSet<ICommonSession> CurrentMembers = [];
+    [DataField("currentMembers")]
+    public HashSet<ICommonSession> CurrentMembers = [];
 
     /// <summary>
     /// List of sessions that are currently or were previously in the raffle.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public readonly HashSet<ICommonSession> AllMembers = [];
+    [DataField("allMembers")]
+    public HashSet<ICommonSession> AllMembers = [];
 
     /// <summary>
     /// Time left in the raffle in seconds. This must be initialized to a positive value.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public float Countdown = float.NaN;
+    [DataField]
+    public TimeSpan Countdown = TimeSpan.MaxValue;
 
     /// <summary>
     /// The cumulative time, i.e. how much time the raffle will take in total. Added to when the time is extended
@@ -41,13 +45,16 @@ public sealed partial class GhostRoleRaffleComponent : Component
     /// Must be set to the same value as <see cref="Countdown"/> on initialization.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public float CumulativeTime = float.NaN;
+    [DataField("cumulativeTime")]
+    public TimeSpan CumulativeTime = TimeSpan.MaxValue;
 
     /// <inheritdoc cref="GhostRoleRaffleSettings.JoinExtendsDurationBy"/>
     [ViewVariables(VVAccess.ReadOnly)]
-    public uint JoinExtendsDurationBy { get; set; }
+    [DataField("joinExtendsDurationBy")]
+    public TimeSpan JoinExtendsDurationBy { get; set; }
 
     /// <inheritdoc cref="GhostRoleRaffleSettings.MaxDuration"/>
     [ViewVariables(VVAccess.ReadOnly)]
-    public uint MaxDuration { get; set; }
+    [DataField("maxDuration")]
+    public TimeSpan MaxDuration { get; set; }
 }

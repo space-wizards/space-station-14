@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -7,6 +8,7 @@ namespace Content.Server.Ghost.Roles.Raffles;
 /// <summary>
 /// Chooses the winner of a ghost role raffle entirely randomly, without any weighting.
 /// </summary>
+[UsedImplicitly]
 public sealed partial class RngGhostRoleRaffleDecider : IGhostRoleRaffleDecider
 {
     public void PickWinner(IEnumerable<ICommonSession> candidates, Func<ICommonSession, bool> tryTakeover)

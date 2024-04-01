@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Ghost.Roles.Raffles;
 
@@ -17,10 +18,8 @@ public sealed partial class GhostRoleRaffleConfig
     /// Specifies the raffle settings to use.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField("settings",
-        required: true,
-        customTypeSerializer: typeof(PrototypeIdSerializer<GhostRoleRaffleSettingsPrototype>))]
-    public string Settings { get; set; } = "default";
+    [DataField("settings", required: true)]
+    public ProtoId<GhostRoleRaffleSettingsPrototype> Settings { get; set; } = "default";
 
     /// <summary>
     /// If not null, the settings from <see cref="Settings"/> are ignored and these settings are used instead.
@@ -33,7 +32,6 @@ public sealed partial class GhostRoleRaffleConfig
     /// Sets which <see cref="IGhostRoleRaffleDecider"/> is used.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField("decider",
-        customTypeSerializer: typeof(PrototypeIdSerializer<GhostRoleRaffleDeciderPrototype>))]
-    public string Decider { get; set; } = "default";
+    [DataField("decider")]
+    public ProtoId<GhostRoleRaffleDeciderPrototype> Decider { get; set; } = "default";
 }
