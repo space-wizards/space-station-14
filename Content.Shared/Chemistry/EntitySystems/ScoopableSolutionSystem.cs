@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -9,6 +10,7 @@ namespace Content.Shared.Chemistry.EntitySystems;
 /// </summary>
 public sealed class ScoopableSolutionSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly SolutionTransferSystem _solutionTransfer = default!;
@@ -40,8 +42,10 @@ public sealed class ScoopableSolutionSystem : EntitySystem
         if (srcSolution.Volume == 0 && ent.Comp.Delete)
         {
             // deletion isnt predicted so do this to prevent spam clicking to see "the ash is empty!"
-            RemComp<ScoopableSolutionComponent>(ent);
-            QueueDel(ent);
+            RemCompDeferred<ScoopableSolutionComponent>(ent);
+
+            if (!_netManager.IsClient)
+                QueueDel(ent);
         }
 
         return true;
