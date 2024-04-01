@@ -280,7 +280,7 @@
   parent: ImprovisedNuclearBombInsidesUranium
   id: ImprovisedNuclearBombInsidesEvil
   name: nuclear fission explosive
-  description: A partially constructed nuke. Looks like it contains radioactive material. Deeper inside, you can see a... syndicate minibomb?!?
+  description: A partially constructed nuke. Inside you can see a minibomb.
   components:
   - type: Construction
     graph: ImprovisedNukeCraft
@@ -302,7 +302,7 @@
   parent: ImprovisedNuclearBombInsidesEvil
   id: ImprovisedNuclearBombInsidesEvilReciever
   name: nuclear fission explosive
-  description: A partially constructed nuke. Looks like it contains radioactive material. Deeper inside, you can see a... syndicate minibomb?!?
+  description: A partially constructed nuke. Inside you can see a minibomb.
   components:
   - type: Construction
     graph: ImprovisedNukeCraft

@@ -73,7 +73,7 @@
           state: icon
         doAfter: 2
   - node: gun
-    entity: ImprovisedNuclearBombInsidesGun
+    entity: ImprovisedNuclearBombInsidesPipe
     edges:
     - to: pipe
       completed:
@@ -92,7 +92,7 @@
           state: depleted-uranium
         doAfter: 1
   - node: bullet
-    entity: ImprovisedNuclearBombInsidesBullet
+    entity: ImprovisedNuclearBombInsidesPipe
     edges:
     - to: pipe
       completed:
@@ -178,7 +178,7 @@
         name: modular reciever
         doAfter: 1
   - node: evilbombreciever
-    entity: ImprovisedNuclearBombInsidesEvilReciever
+    entity: ImprovisedNuclearBombInsidesEvil
     edges:
     - to: evilbomb
       completed:
