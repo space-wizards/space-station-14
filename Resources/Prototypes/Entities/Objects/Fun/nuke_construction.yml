@@ -342,10 +342,12 @@
     intensitySlope: 5
     maxIntensity: 500
     canCreateVacuum: false
-  - type: UserInterface
-    interfaces:
-      - key: enum.WiresUiKey.Key
-        type: WiresBoundUserInterface
+    - type: Defusable
+    - type: WiresPanel
+    - type: UserInterface
+      interfaces:
+        - key: enum.WiresUiKey.Key
+          type: WiresBoundUserInterface
 
 - type: entity
   parent: ImprovisedNuclearBombEvil
