@@ -6,7 +6,7 @@
 - type: entity
   abstract: true
   id: PortableGeneratorBase
-  parent: [ BaseMachine, ConstructibleMachine ]
+  parent: [ BaseMachine, ConstructibleMachine, StructureWheeled]
   components:
     # Basic properties
     - type: Transform
@@ -27,8 +27,8 @@
           shape:
             !type:PhysShapeAabb
             bounds: "-0.40,-0.40,0.40,0.40"
-          # It has wheels
-          density: 45
+          # Despite the heavy weight, it has wheels, so it's still fairly portable.
+          density: 155
           mask:
             - MachineMask
           layer:
@@ -259,8 +259,7 @@
           shape:
             !type:PhysShapeAabb
             bounds: "-0.30,-0.30,0.30,0.30"
-          # It has wheels
-          density: 30
+          density: 80
           mask:
             - MachineMask
           layer:
