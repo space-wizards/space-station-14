@@ -152,3 +152,12 @@
   license: "CC0-1.0"
   copyright: "dakamakat on freesound.org"
   source: "https://freesound.org/people/Dakamakat/sounds/717370/"
+
+- files:
+  - twobeep.ogg
+  - chime.ogg
+  - buzz-sigh.ogg
+  - buzztwo.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station."
+  source: "https://github.com/tgstation/tgstation/tree/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0"
