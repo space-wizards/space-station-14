@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Player;
 
-namespace Content.Server.Ghost.Roles;
+namespace Content.Server.Ghost.Roles.Raffles;
 
 /// <summary>
 /// Chooses a winner of a ghost role raffle.

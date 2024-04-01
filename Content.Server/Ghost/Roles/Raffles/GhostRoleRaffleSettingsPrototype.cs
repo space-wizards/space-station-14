@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Prototypes;
 
-namespace Content.Server.Ghost.Roles;
+namespace Content.Server.Ghost.Roles.Raffles;
 
 /// <summary>
 /// Allows specifying the settings for a ghost role raffle as a prototype.

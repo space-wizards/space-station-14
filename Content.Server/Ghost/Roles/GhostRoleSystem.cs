@@ -3,6 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
+using Content.Server.Ghost.Roles.Raffles;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Mind.Commands;
 using Content.Shared.Administration;

@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Ghost.Roles;
+namespace Content.Server.Ghost.Roles.Raffles;
 
 /// <summary>
 /// Raffle configuration.

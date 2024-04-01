@@ -1,6 +1,6 @@
-﻿using Content.Server.Mind.Commands;
+﻿using Content.Server.Ghost.Roles.Raffles;
+using Content.Server.Mind.Commands;
 using Content.Shared.Roles;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Ghost.Roles.Components
 {

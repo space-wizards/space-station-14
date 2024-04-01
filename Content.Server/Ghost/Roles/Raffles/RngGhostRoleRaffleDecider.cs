@@ -2,7 +2,7 @@
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-namespace Content.Server.Ghost.Roles;
+namespace Content.Server.Ghost.Roles.Raffles;
 
 /// <summary>
 /// Chooses the winner of a ghost role raffle entirely randomly, without any weighting.
