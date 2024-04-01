@@ -14,6 +14,7 @@
     DrinkBlueCuracaoBottleFull: 2
     DrinkCognacBottleFull: 4
     DrinkColaBottleFull: 4
+    DrinkMilkCarton: 2
     DrinkCreamCarton: 5
     DrinkGinBottleFull: 3
     DrinkGildlagerBottleFull: 2 #if champagne gets less because its premium, then gildlager should match this and have two

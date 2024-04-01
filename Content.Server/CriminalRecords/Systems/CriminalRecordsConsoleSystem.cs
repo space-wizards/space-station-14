@@ -12,6 +12,8 @@ using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Security.Components;
 
 namespace Content.Server.CriminalRecords.Systems;
 
@@ -71,7 +73,8 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     private void OnChangeStatus(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus msg)
     {
         // prevent malf client violating wanted/reason nullability
-        if ((msg.Status == SecurityStatus.Wanted) != (msg.Reason != null))
+        if (msg.Status == SecurityStatus.Wanted != (msg.Reason != null) &&
+            msg.Status == SecurityStatus.Suspected != (msg.Reason != null))
             return;
 
         if (!CheckSelected(ent, msg.Session, out var mob, out var key))
@@ -105,7 +108,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
 
         var name = RecordName(key.Value);
         var officer = Loc.GetString("criminal-records-console-unknown-officer");
-        if (_idCard.TryFindIdCard(mob.Value, out var id) && id.Comp.FullName is {} fullName)
+        if (_idCard.TryFindIdCard(mob.Value, out var id) && id.Comp.FullName is { } fullName)
             officer = fullName;
 
         (string, object)[] args;
@@ -117,20 +120,32 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         // figure out which radio message to send depending on transition
         var statusString = (oldStatus, msg.Status) switch
         {
-            // going from wanted or detained on the spot
+            // person has been detained
             (_, SecurityStatus.Detained) => "detained",
+            // person did something sus
+            (_, SecurityStatus.Suspected) => "suspected",
+            // released on parole
+            (_, SecurityStatus.Paroled) => "paroled",
             // prisoner did their time
-            (SecurityStatus.Detained, SecurityStatus.None) => "released",
-            // going from wanted to none, must have been a mistake
-            (_, SecurityStatus.None) => "not-wanted",
-            // going from none or detained, AOS or prisonbreak / lazy secoff never set them to released and they reoffended
+            (_, SecurityStatus.Discharged) => "released",
+            // going from any other state to wanted, AOS or prisonbreak / lazy secoff never set them to released and they reoffended
             (_, SecurityStatus.Wanted) => "wanted",
+            // person is no longer sus
+            (SecurityStatus.Suspected, SecurityStatus.None) => "not-suspected",
+            // going from wanted to none, must have been a mistake
+            (SecurityStatus.Wanted, SecurityStatus.None) => "not-wanted",
+            // criminal status removed
+            (SecurityStatus.Detained, SecurityStatus.None) => "released",
+            // criminal is no longer on parole
+            (SecurityStatus.Paroled, SecurityStatus.None) => "not-parole",
             // this is impossible
             _ => "not-wanted"
         };
-        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args), ent.Comp.SecurityChannel, ent);
+        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args),
+            ent.Comp.SecurityChannel, ent);
 
         UpdateUserInterface(ent);
+        UpdateCriminalIdentity(name, msg.Status);
     }
 
     private void OnAddHistory(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordAddHistory msg)
@@ -177,7 +192,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         var listing = _stationRecords.BuildListing((owningStation.Value, stationRecords), console.Filter);
 
         var state = new CriminalRecordsConsoleState(listing, console.Filter);
-        if (console.ActiveKey is {} id)
+        if (console.ActiveKey is { } id)
         {
             // get records to display when a crewmember is selected
             var key = new StationRecordKey(id, owningStation.Value);
@@ -198,7 +213,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     {
         key = null;
         mob = null;
-        if (session.AttachedEntity is not {} user)
+        if (session.AttachedEntity is not { } user)
             return false;
 
         if (!_access.IsAllowed(user, ent))
@@ -207,11 +222,11 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             return false;
         }
 
-        if (ent.Comp.ActiveKey is not {} id)
+        if (ent.Comp.ActiveKey is not { } id)
             return false;
 
         // checking the console's station since the user might be off-grid using on-grid console
-        if (_station.GetOwningStation(ent) is not {} station)
+        if (_station.GetOwningStation(ent) is not { } station)
             return false;
 
         key = new StationRecordKey(id, station);
@@ -228,5 +243,30 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             return "";
 
         return record.Name;
+    }
+
+    /// <summary>
+    /// Checks if the new identity's name has a criminal record attached to it, and gives the entity the icon that
+    /// belongs to the status if it does.
+    /// </summary>
+    public void CheckNewIdentity(EntityUid uid)
+    {
+        var name = Identity.Name(uid, EntityManager);
+        var xform = Transform(uid);
+        var station = _station.GetStationInMap(xform.MapID);
+
+        if (station != null && _stationRecords.GetRecordByName(station.Value, name) is { } id)
+        {
+            if (_stationRecords.TryGetRecord<CriminalRecord>(new StationRecordKey(id, station.Value),
+                    out var record))
+            {
+                if (record.Status != SecurityStatus.None)
+                {
+                    SetCriminalIcon(name, record.Status, uid);
+                    return;
+                }
+            }
+        }
+        RemComp<CriminalRecordComponent>(uid);
     }
 }

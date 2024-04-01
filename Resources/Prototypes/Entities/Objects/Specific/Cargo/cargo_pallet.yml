@@ -21,6 +21,7 @@
         mask:
           - MachineMask
   - type: CargoPallet
+    palletType: All
   - type: StaticPrice
     price: 100
   - type: Sprite
@@ -53,3 +54,33 @@
   - type: GuideHelp
     guides:
     - Cargo
+
+- type: entity
+  id: CargoPalletSell
+  name: cargo selling pallet
+  description: Designates valid items to sell with a selling computer, or to CentCom when a shuttle is recalled.
+  parent: CargoPallet
+  components:
+  - type: CargoPallet
+    palletType: sell
+  - type: Sprite
+    drawdepth: FloorTiles
+    layers:
+    - sprite: Structures/cargo_pallets.rsi
+      state: cargo_pallet_sell
+
+
+- type: entity
+  id: CargoPalletBuy
+  name: cargo buying pallet
+  description: Designates where orders will appear when purchased.
+  parent: CargoPallet
+  components:
+  - type: CargoPallet
+    palletType: buy
+  - type: Sprite
+    drawdepth: FloorTiles
+    layers:
+    - sprite: Structures/cargo_pallets.rsi
+      state: cargo_pallet_buy
+

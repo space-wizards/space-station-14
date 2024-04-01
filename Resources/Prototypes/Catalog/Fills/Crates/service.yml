@@ -19,7 +19,8 @@
         amount: 2
       - id: Plunger
         amount: 2
-
+      - id: BoxCleanerGrenades
+      
 - type: entity
   id: CrateServiceReplacementLights
   parent: CrateGenericSteel

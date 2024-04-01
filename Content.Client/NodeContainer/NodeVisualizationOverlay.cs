@@ -80,7 +80,7 @@ namespace Content.Client.NodeContainer
 
 
             var xform = _entityManager.GetComponent<TransformComponent>(_entityManager.GetEntity(node.Entity));
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (!_entityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid))
                 return;
             var gridTile = grid.TileIndicesFor(xform.Coordinates);
 
@@ -145,7 +145,7 @@ namespace Content.Client.NodeContainer
 
             foreach (var (gridId, gridDict) in _gridIndex)
             {
-                var grid = _mapManager.GetGrid(gridId);
+                var grid = _entityManager.GetComponent<MapGridComponent>(gridId);
                 var (_, _, worldMatrix, invMatrix) = _entityManager.GetComponent<TransformComponent>(gridId).GetWorldPositionRotationMatrixWithInv();
 
                 var lCursorBox = invMatrix.TransformBox(cursorBox);
