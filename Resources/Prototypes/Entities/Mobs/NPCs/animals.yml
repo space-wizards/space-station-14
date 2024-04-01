@@ -1458,7 +1458,8 @@
     allowMovement: true
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
-    raffle: true
+    raffle:
+      settings: default
   - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak

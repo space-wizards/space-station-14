@@ -90,39 +90,10 @@ namespace Content.Server.Ghost.Roles.Components
         public bool ReregisterOnGhost { get; set; } = true;
 
         /// <summary>
-        /// If true, ghost role is raffled, otherwise it is "first come first served".
+        /// If set, ghost role is raffled, otherwise it is first-come-first-serve.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("raffle")]
-        public bool Raffle { get; set; }
-
         [ViewVariables(VVAccess.ReadOnly)]
-        [DataField("raffleDecider", customTypeSerializer: typeof(PrototypeIdSerializer<GhostRoleRaffleDeciderPrototype>))]
-        public string RaffleDecider { get; set; } = "default";
-
-        /// <summary>
-        /// The initial duration of a raffle in seconds. This is the countdown timer's value when the raffle starts.
-        /// Not used if <see cref="Raffle"/> is false.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("raffleInitialDuration")]
-        public uint RaffleInitialDuration { get; set; } = 30;
-
-        /// <summary>
-        /// When the raffle is joined by a player, the countdown timer is extended by this value in seconds.
-        /// Not used if <see cref="Raffle"/> is false.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("raffleJoinExtendsDurationBy")]
-        public uint RaffleJoinExtendsDurationBy { get; set; } = 10;
-
-        /// <summary>
-        /// The maximum duration in seconds for the ghost role raffle. A raffle cannot run for longer than this
-        /// duration, even if extended by joiners. Must be greater than or equal to <see cref="RaffleInitialDuration"/>.
-        /// Not used if <see cref="Raffle"/> is false.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("raffleMaxDuration")]
-        public uint RaffleMaxDuration { get; set; } = 120;
+        [DataField("raffle")]
+        public GhostRoleRaffleConfig? RaffleConfig { get; set; }
     }
 }

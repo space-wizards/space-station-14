@@ -41,4 +41,12 @@ public sealed partial class GhostRoleRaffleComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public float CumulativeTime = float.NaN;
+
+    /// <inheritdoc cref="GhostRoleRaffleSettings.JoinExtendsDurationBy"/>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public uint JoinExtendsDurationBy { get; set; }
+
+    /// <inheritdoc cref="GhostRoleRaffleSettings.MaxDuration"/>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public uint MaxDuration { get; set; }
 }

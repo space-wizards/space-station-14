@@ -214,8 +214,15 @@ namespace Content.Server.Ghost.Roles
                     continue;
                 }
 
+                if (ghostRole.RaffleConfig is null) {
+                    Log.Warning($"Ghost role raffle finished on {entityUid} but RaffleConfig became null");
+                    RemoveRaffleAndUpdateEui(entityUid, raffle);
+                    continue;
+                }
+
                 var foundWinner = false;
-                var deciderPrototype = _prototypeManager.Index<GhostRoleRaffleDeciderPrototype>(ghostRole.RaffleDecider);
+                var deciderPrototype = _prototypeManager
+                    .Index<GhostRoleRaffleDeciderPrototype>(ghostRole.RaffleConfig!.Decider);
 
                 // use the ghost role's chosen winner picker to find a winner
                 deciderPrototype.Decider.PickWinner(
@@ -231,7 +238,7 @@ namespace Content.Server.Ghost.Roles
                 if (!foundWinner)
                 {
                     Log.Warning($"Ghost role raffle for {entityUid} ({ghostRole.RoleName}) finished without " +
-                                $"{ghostRole.RaffleDecider} finding a winner");
+                                $"{ghostRole.RaffleConfig?.Decider} finding a winner");
                 }
 
                 // raffle over
@@ -319,10 +326,28 @@ namespace Content.Server.Ghost.Roles
                 return;
             }
 
+            var config = ghostRole.RaffleConfig;
+            if (config is null)
+                return; // should, realistically, never be reached but you never know
+
+            var settings = config.SettingsOverride
+                           ?? _prototypeManager.Index<GhostRoleRaffleSettingsPrototype>(config.Settings).Settings;
+
+            if (settings.MaxDuration < settings.InitialDuration)
+            {
+                Log.Error($"Ghost role on {ent} has invalid raffle settings (max duration shorter than initial)");
+                ghostRole.RaffleConfig = null; // make it a non-raffle role so stuff isn't entirely broken
+                RemComp<GhostRoleRaffleComponent>(ent);
+                return;
+            }
+
             var raffle = ent.Comp;
             raffle.Identifier = ghostRole.Identifier;
-            raffle.Countdown = ghostRole.RaffleInitialDuration;
-            raffle.CumulativeTime = ghostRole.RaffleInitialDuration;
+            raffle.Countdown = settings.InitialDuration;
+            raffle.CumulativeTime = settings.InitialDuration;
+            // we copy these settings into the component because they would be cumbersome to access otherwise
+            raffle.JoinExtendsDurationBy = settings.JoinExtendsDurationBy;
+            raffle.MaxDuration = settings.MaxDuration;
         }
 
         private void OnRaffleShutdown(Entity<GhostRoleRaffleComponent> ent, ref ComponentShutdown args)
@@ -340,7 +365,6 @@ namespace Content.Server.Ghost.Roles
             if (!_ghostRoles.TryGetValue(identifier, out var roleEnt))
                 return;
 
-            var role = roleEnt.Comp;
             // get raffle or create a new one if it doesn't exist
             var raffle = _ghostRoleRaffles.TryGetValue(identifier, out var raffleEnt)
                 ? raffleEnt.Comp
@@ -358,10 +382,10 @@ namespace Content.Server.Ghost.Roles
             // extend the countdown, but only if doing so will not make the raffle take longer than the maximum
             // duration
             if (raffle.AllMembers.Add(player) && raffle.AllMembers.Count > 1
-                && raffle.CumulativeTime + role.RaffleJoinExtendsDurationBy <= role.RaffleMaxDuration)
+                && raffle.CumulativeTime + raffle.JoinExtendsDurationBy <= raffle.MaxDuration)
             {
-                    raffle.Countdown += role.RaffleJoinExtendsDurationBy;
-                    raffle.CumulativeTime += role.RaffleJoinExtendsDurationBy;
+                    raffle.Countdown += raffle.JoinExtendsDurationBy;
+                    raffle.CumulativeTime += raffle.JoinExtendsDurationBy;
             }
 
             UpdateAllEui();
@@ -408,7 +432,7 @@ namespace Content.Server.Ghost.Roles
             if (!_ghostRoles.TryGetValue(identifier, out var roleEnt))
                 return;
 
-            if (roleEnt.Comp.Raffle)
+            if (roleEnt.Comp.RaffleConfig is not null)
             {
                 JoinRaffle(player, identifier);
             }
@@ -476,7 +500,7 @@ namespace Content.Server.Ghost.Roles
                 var kind = GhostRoleKind.FirstComeFirstServe;
                 GhostRoleRaffleComponent? raffle = null;
 
-                if (role.Raffle)
+                if (role.RaffleConfig is not null)
                 {
                     kind = GhostRoleKind.RaffleReady;
 
