@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/3793e6187a25aa3edd925f2c8984fd3bc5fa3581/icons/obj/smooth_structures/brass_table.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full",
+	  "delays": [
+	    [
+		  1
+		]
+	  ]
+    },
+    {
+      "name": "state_0",
+	  "directions": 4,
+	  "delays": [
+	    [
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		]
+	  ]
+    },
+    {
+      "name": "state_1",
+	  "directions": 4,
+	  "delays": [
+	    [
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		]
+	  ]
+    },
+    {
+      "name": "state_2",
+	  "directions": 4,
+	  "delays": [
+	    [
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		]
+	  ]
+    },
+    {
+      "name": "state_3",
+	  "directions": 4,
+	  "delays": [
+	    [
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		]
+	  ]
+    },
+    {
+      "name": "state_4",
+	  "directions": 4,
+	  "delays": [
+	    [
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		]
+	  ]
+    },
+    {
+      "name": "state_5",
+	  "directions": 4,
+	  "delays": [
+	    [
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		]
+	  ]
+    },
+    {
+      "name": "state_6",
+	  "directions": 4,
+	  "delays": [
+	    [
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		]
+	  ]
+    },
+    {
+      "name": "state_7",
+	  "directions": 4,
+	  "delays": [
+	    [
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		],
+		[
+		  1.0
+		]
+	  ]
+    }
+  ]
+}

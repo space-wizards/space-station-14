@@ -5,7 +5,7 @@
     state: cleaner
   product: CrateServiceJanitorialSupplies
   cost: 560
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -15,7 +15,7 @@
     state: normal
   product: CrateServiceReplacementLights
   cost: 600
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -25,7 +25,7 @@
     state: mousetrap
   product: CrateMousetrapBoxes
   cost: 500
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -35,7 +35,7 @@
     state: icon
   product: CrateServiceTheatre
   cost: 1800
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -45,7 +45,7 @@
     state: closed
   product: CrateServiceSmokeables
   cost: 1500
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -55,7 +55,7 @@
     state: closed
   product: CrateServiceCustomSmokable
   cost: 1000
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -65,7 +65,7 @@
     state: pen
   product: CrateServiceBureaucracy
   cost: 1000
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -75,7 +75,7 @@
     state: default
   product: CrateServicePersonnel
   cost: 1000
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -85,7 +85,7 @@
     state: book0
   product: CrateServiceBooks
   cost: 1000
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -95,7 +95,7 @@
     state: book_engineering2
   product: CrateServiceGuidebooks
   cost: 1300
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -105,7 +105,7 @@
     state: icon
   product: CrateServiceSodaDispenser
   cost: 850
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -115,7 +115,7 @@
     state: icon
   product: CrateServiceBoozeDispenser
   cost: 750
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -125,7 +125,7 @@
     state: box
   product: CrateServiceBox
   cost: 400
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -135,7 +135,7 @@
     state: icon
   product: CrateJanitorBiosuit
   cost: 800
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -145,7 +145,7 @@
     state: icon-hot
   product: FoodCartHot
   cost: 2000
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -155,7 +155,7 @@
     state: icon-cold
   product: FoodCartCold
   cost: 2000
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -165,7 +165,7 @@
     state: icon
   product: PetCarrier
   cost: 500
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -175,7 +175,7 @@
     state: icon
   product: CrateJanitorExplosive
   cost: 1000
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
@@ -185,6 +185,6 @@
     state: icon-cart
   product: JanitorialTrolley
   cost: 300
-  category: Service
+  category: cargoproduct-category-name-service
   group: market
 

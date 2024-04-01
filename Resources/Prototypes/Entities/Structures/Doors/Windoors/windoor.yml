@@ -11,6 +11,12 @@
   description: It's a sturdy window and a sliding door. Wow!
 
 - type: entity
+  id: WindoorClockwork
+  parent: BaseClockworkWindoor
+  name: clockwork windoor
+  description: It's a sturdy window and a sliding door. Wow!
+
+- type: entity
   id: WindoorPlasma
   parent: BasePlasmaWindoor
   name: Plasma Windoor

@@ -43,7 +43,7 @@ public sealed partial class StoreSystem
     {
         if (!_proto.TryIndex<ListingPrototype>(listingId, out var proto))
         {
-            Logger.Error("Attempted to add invalid listing.");
+            Log.Error("Attempted to add invalid listing.");
             return false;
         }
         return TryAddListing(component, proto);

@@ -18,7 +18,7 @@ namespace Content.Server.Popups
             // No local user.
         }
 
-        public override void PopupCursor(string? message, ICommonSession recipient, PopupType type=PopupType.Small)
+        public override void PopupCursor(string? message, ICommonSession recipient, PopupType type = PopupType.Small)
         {
             if (message == null)
                 return;
@@ -75,11 +75,11 @@ namespace Content.Server.Popups
             if (message == null)
                 return;
 
-            var filter = Filter.Empty().AddPlayersByPvs(uid, entityManager:EntityManager, playerMan: _player, cfgMan: _cfg);
+            var filter = Filter.Empty().AddPlayersByPvs(uid, entityManager: EntityManager, playerMan: _player, cfgMan: _cfg);
             RaiseNetworkEvent(new PopupEntityEvent(message, type, GetNetEntity(uid)), filter);
         }
 
-        public override void PopupEntity(string? message, EntityUid uid, EntityUid recipient, PopupType type=PopupType.Small)
+        public override void PopupEntity(string? message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
         {
             if (message == null)
                 return;
@@ -88,7 +88,7 @@ namespace Content.Server.Popups
                 RaiseNetworkEvent(new PopupEntityEvent(message, type, GetNetEntity(uid)), actor.PlayerSession);
         }
 
-        public override void PopupClient(string? message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
+        public override void PopupClient(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
         {
             // do nothing duh its for client only
         }
@@ -107,6 +107,24 @@ namespace Content.Server.Popups
                 return;
 
             RaiseNetworkEvent(new PopupEntityEvent(message, type, GetNetEntity(uid)), filter, recordReplay);
+        }
+
+        public override void PopupPredicted(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (message == null)
+                return;
+
+            if (recipient != null)
+            {
+                // Don't send to recipient, since they predicted it locally
+                var filter = Filter.PvsExcept(recipient.Value, entityManager: EntityManager);
+                RaiseNetworkEvent(new PopupEntityEvent(message, type, GetNetEntity(uid)), filter);
+            }
+            else
+            {
+                // With no recipient, send to everyone (in PVS range)
+                RaiseNetworkEvent(new PopupEntityEvent(message, type, GetNetEntity(uid)));
+            }
         }
     }
 }

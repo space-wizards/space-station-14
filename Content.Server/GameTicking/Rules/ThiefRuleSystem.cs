@@ -37,19 +37,19 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
     private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
     {
         var query = QueryActiveRules();
-        while (query.MoveNext(out _, out var comp, out _))
+        while (query.MoveNext(out var uid, out _, out var comp, out var gameRule))
         {
-            //Chance to not launch the game rule
-            if (!_random.Prob(comp.RuleChance))
-                continue;
-
             //Get all players eligible for this role, allow selecting existing antags
             //TO DO: When voxes specifies are added, increase their chance of becoming a thief by 4 times >:)
             var eligiblePlayers = _antagSelection.GetEligiblePlayers(ev.Players, comp.ThiefPrototypeId, acceptableAntags: AntagAcceptability.All, allowNonHumanoids: true);
 
             //Abort if there are none
             if (eligiblePlayers.Count == 0)
+            {
+                Log.Warning($"No eligible thieves found, ending game rule {ToPrettyString(uid):rule}");
+                GameTicker.EndGameRule(uid, gameRule);
                 continue;
+            }
 
             //Calculate number of thieves to choose
             var thiefCount = _random.Next(1, comp.MaxAllowThief + 1);
