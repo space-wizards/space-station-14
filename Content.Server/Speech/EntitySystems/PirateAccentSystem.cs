@@ -22,7 +22,7 @@ public sealed class PirateAccentSystem : EntitySystem
     {
         var msg = message;
 
-        bool firstWordAllCaps = !Regex.Match(msg, @"^([\w\-]+)").Value.Any(char.IsLower);
+        var firstWordAllCaps = !Regex.Match(msg, @"^(\S+)").Value.Any(char.IsLower);
 
         msg = _replacement.ApplyReplacements(msg, "pirate");
 
