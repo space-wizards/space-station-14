@@ -1,12 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Item;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Components;
@@ -26,7 +24,6 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly MetaDataSystem Metadata = default!;
-    [Dependency] private   readonly MobStateSystem _mobState = default!;
     [Dependency] protected readonly SharedJointSystem Joints = default!;
 
     protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
@@ -112,24 +109,23 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!Transform(uid).Anchored)
             return false;
 
-        // TODO: Probably just need a disposable tag.
         var storable = HasComp<ItemComponent>(entity);
         if (!storable && !HasComp<BodyComponent>(entity))
             return false;
 
-        //Check if the entity is a mob and if mobs can be inserted
-        if (TryComp<MobStateComponent>(entity, out var damageState) && !component.MobsCanEnter)
+        if (component.Blacklist?.IsValid(entity, EntityManager) == true)
             return false;
 
-        if (TryComp<PhysicsComponent>(entity, out var physics) && (physics.CanCollide || storable))
-            return true;
+        if (component.Whitelist != null && component.Whitelist?.IsValid(entity, EntityManager) != true)
+            return false;
 
-        return damageState != null && (!component.MobsCanEnter || _mobState.IsDead(entity, damageState));
+        if (TryComp<PhysicsComponent>(entity, out var physics) && (physics.CanCollide) || storable)
+            return true;
+        else
+            return false;
+
     }
 
-    /// <summary>
-    /// TODO: Proper prediction
-    /// </summary>
     public abstract void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null);
 
     [Serializable, NetSerializable]

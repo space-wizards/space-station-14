@@ -50,19 +50,10 @@ public sealed class DefibrillatorSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<DefibrillatorComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<DefibrillatorComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<DefibrillatorComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
         SubscribeLocalEvent<DefibrillatorComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<DefibrillatorComponent, DefibrillatorZapDoAfterEvent>(OnDoAfter);
-    }
-
-    private void OnUnpaused(EntityUid uid, DefibrillatorComponent component, ref EntityUnpausedEvent args)
-    {
-        if (component.NextZapTime == null)
-            return;
-
-        component.NextZapTime = component.NextZapTime.Value + args.PausedTime;
     }
 
     private void OnUseInHand(EntityUid uid, DefibrillatorComponent component, UseInHandEvent args)
@@ -187,8 +178,6 @@ public sealed class DefibrillatorSystem : EntitySystem
             uid, target, uid)
             {
                 BlockDuplicate = true,
-                BreakOnUserMove = true,
-                BreakOnTargetMove = true,
                 BreakOnHandChange = true,
                 NeedHand = true
             });

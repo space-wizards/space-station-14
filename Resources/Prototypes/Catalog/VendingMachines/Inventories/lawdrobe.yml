@@ -14,5 +14,12 @@
     ClothingShoesBootsLaceup: 2
     ClothingHeadsetService: 2
     ClothingNeckLawyerbadge: 2
+    BriefcaseBrown: 2
+    LuxuryPen: 2
+  contrabandInventory:
+    ClothingOuterRobesJudge: 1
+    ClothingHeadHatPwig: 1
+    # "Legally" obtained currency
+    SpaceCash100: 2
   emaggedInventory:
     CyberPen: 1

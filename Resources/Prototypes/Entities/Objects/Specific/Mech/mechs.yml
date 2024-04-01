@@ -48,6 +48,8 @@
       types:
         Blunt: 25 #thwack
         Structural: 20
+    soundHit:
+      collection: MetalThud
   - type: Puller
     needsHands: false
   - type: InputMover

@@ -20,7 +20,7 @@ namespace Content.Shared.Nutrition.EntitySystems;
 public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedOpenableSystem _openable = default!;
+    [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
@@ -43,7 +43,7 @@ public abstract partial class SharedPressurizedSolutionSystem : EntitySystem
 
     /// <summary>
     /// Helper method for checking if the solution's fizziness is high enough to spray.
-    /// chanceMod is added to the actual fizziness for the comparison.
+    /// <paramref name="chanceMod"/> is added to the actual fizziness for the comparison.
     /// </summary>
     private bool SprayCheck(Entity<PressurizedSolutionComponent> entity, float chanceMod = 0)
     {

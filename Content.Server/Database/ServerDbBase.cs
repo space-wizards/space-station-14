@@ -1143,7 +1143,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 entity.Deleted,
                 MakePlayerRecord(entity.DeletedBy),
                 NormalizeDatabaseTime(entity.DeletedAt),
-                entity.Seen);
+                entity.Seen,
+                entity.Dismissed);
         }
 
         public async Task<ServerBanNoteRecord?> GetServerBanAsNoteAsync(int id)
@@ -1368,6 +1369,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     .Include(note => note.Player)
                     .ToListAsync()).Select(MakeAdminNoteRecord));
             notesCol.AddRange(await GetMessagesImpl(db, player));
+            notesCol.AddRange(await GetServerBansAsNotesForUser(db, player));
+            notesCol.AddRange(await GetGroupedServerRoleBansAsNotesForUser(db, player));
             return notesCol;
         }
 
@@ -1420,11 +1423,13 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             return entities.Select(MakeAdminMessageRecord).ToList();
         }
 
-        public async Task MarkMessageAsSeen(int id)
+        public async Task MarkMessageAsSeen(int id, bool dismissedToo)
         {
             await using var db = await GetDb();
             var message = await db.DbContext.AdminMessages.SingleAsync(m => m.Id == id);
             message.Seen = true;
+            if (dismissedToo)
+                message.Dismissed = true;
             await db.DbContext.SaveChangesAsync();
         }
 
@@ -1532,6 +1537,12 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         protected DateTime? NormalizeDatabaseTime(DateTime? time)
         {
             return time != null ? NormalizeDatabaseTime(time.Value) : time;
+        }
+
+        public async Task<bool> HasPendingModelChanges()
+        {
+            await using var db = await GetDb();
+            return db.DbContext.Database.HasPendingModelChanges();
         }
 
         protected abstract Task<DbGuard> GetDb([CallerMemberName] string? name = null);

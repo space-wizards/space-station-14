@@ -114,7 +114,7 @@
           Quantity: 20
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLab
   name: lab coat
   description: A suit that protects against minor chemical spills.
@@ -129,7 +129,12 @@
         Caustic: 0.75
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLab]
+  id: ClothingOuterCoatLabOpened
+  name: lab coat
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLabChem
   name: chemist lab coat
   description: A suit that protects against minor chemical spills. Has an orange stripe on the shoulder.
@@ -144,7 +149,12 @@
         Caustic: 0.75
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabChem]
+  id: ClothingOuterCoatLabChemOpened
+  name: chemist lab coat
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLabViro
   name: virologist lab coat
   description: A suit that protects against bacteria and viruses. Has an green stripe on the shoulder.
@@ -158,9 +168,13 @@
       coefficients:
         Caustic: 0.75
 
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabViro]
+  id: ClothingOuterCoatLabViroOpened
+  name: virologist lab coat
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLabGene
   name: geneticist lab coat
   description: A suit that protects against minor chemical spills. Has an blue stripe on the shoulder.
@@ -174,9 +188,13 @@
       coefficients:
         Caustic: 0.75
 
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabGene]
+  id: ClothingOuterCoatLabGeneOpened
+  name: geneticist lab coat
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLabCmo
   name: chief medical officer's lab coat
   description: Bluer than the standard model.
@@ -191,22 +209,32 @@
         Caustic: 0.75
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabCmo]
+  id: ClothingOuterCoatLabCmoOpened
+  name: chief medical officer's lab coat
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatRnd
   name: scientist lab coat
   description: A suit that protects against minor chemical spills. Has a purple stripe on the shoulder.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/rndcoat.rsi
+    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/rndcoat.rsi
+    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
   - type: Armor
     modifiers:
       coefficients:
         Caustic: 0.75
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatRnd]
+  id: ClothingOuterCoatRndOpened
+  name: scientist lab coat
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatRobo
   name: roboticist lab coat
   description: More like an eccentric coat than a labcoat. Helps pass off bloodstains as part of the aesthetic. Comes with red shoulder pads.
@@ -221,20 +249,30 @@
         Caustic: 0.75
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatRobo]
+  id: ClothingOuterCoatRoboOpened
+  name: roboticist lab coat
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatRD
   name: research director lab coat
   description: Woven with top of the line technology, this labcoat helps protect against radiation in similar way to the experimental hardsuit.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/rd_coat.rsi
+    sprite: Clothing/OuterClothing/Coats/labcoat_rd.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/rd_coat.rsi
+    sprite: Clothing/OuterClothing/Coats/labcoat_rd.rsi
   - type: Armor
     modifiers:
       coefficients:
         Caustic: 0.75
         Radiation: 0.9
+
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatRD]
+  id: ClothingOuterCoatRDOpened
+  name: research director lab coat
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -398,3 +436,14 @@
     sprite: Clothing/OuterClothing/Coats/space_asshole.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/space_asshole.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatExpensive
+  name: expensive coat
+  description: Very fluffy pink coat, made out of very expensive fur (clearly).
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi

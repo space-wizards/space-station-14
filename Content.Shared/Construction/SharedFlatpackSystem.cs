@@ -40,7 +40,6 @@ public abstract class SharedFlatpackSystem : EntitySystem
         SubscribeLocalEvent<FlatpackComponent, ExaminedEvent>(OnFlatpackExamined);
 
         SubscribeLocalEvent<FlatpackCreatorComponent, ContainerIsRemovingAttemptEvent>(OnCreatorRemovingAttempt);
-        SubscribeLocalEvent<FlatpackCreatorComponent, EntityUnpausedEvent>(OnCreatorUnpaused);
     }
 
     private void OnFlatpackInteractUsing(Entity<FlatpackComponent> ent, ref InteractUsingEvent args)
@@ -110,18 +109,12 @@ public abstract class SharedFlatpackSystem : EntitySystem
             args.Cancel();
     }
 
-    private void OnCreatorUnpaused(Entity<FlatpackCreatorComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.PackEndTime += args.PausedTime;
-    }
-
     public void SetupFlatpack(Entity<FlatpackComponent?> ent, EntityUid? board)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        EntProtoId machinePrototypeId;
-        string? entityPrototype;
+        var machinePrototypeId = new EntProtoId();
         if (TryComp<MachineBoardComponent>(board, out var machineBoard) && machineBoard.Prototype is not null)
             machinePrototypeId = machineBoard.Prototype;
         else if (TryComp<ComputerBoardComponent>(board, out var computerBoard) && computerBoard.Prototype is not null)

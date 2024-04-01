@@ -14,11 +14,14 @@ using Content.Shared.Popups;
 using Content.Shared.Preferences;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using System.Numerics;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
+using Robust.Shared.Collections;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Implants;
 
@@ -26,7 +29,6 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 {
     [Dependency] private readonly CuffableSystem _cuffable = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly StoreSystem _store = default!;
@@ -34,8 +36,12 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
+    [Dependency] private readonly PullingSystem _pullingSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
+    private HashSet<Entity<MapGridComponent>> _targetGrids = [];
 
     public override void Initialize()
     {
@@ -98,43 +104,98 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         if (!TryComp<ScramImplantComponent>(uid, out var implant))
             return;
 
+        // We need stop the user from being pulled so they don't just get "attached" with whoever is pulling them.
+        // This can for example happen when the user is cuffed and being pulled.
+        if (TryComp<PullableComponent>(ent, out var pull) && _pullingSystem.IsPulled(ent, pull))
+            _pullingSystem.TryStopPull(ent, pull);
+
         var xform = Transform(ent);
-        var entityCoords = xform.Coordinates.ToMap(EntityManager);
+        var targetCoords = SelectRandomTileInRange(xform, implant.TeleportRadius);
 
-        // try to find a valid position to teleport to, teleport to whatever works if we can't
-        var targetCoords = new MapCoordinates();
-        for (var i = 0; i < implant.TeleportAttempts; i++)
+        if (targetCoords != null)
         {
-            var distance = implant.TeleportRadius * MathF.Sqrt(_random.NextFloat()); // to get an uniform distribution
-            targetCoords = entityCoords.Offset(_random.NextAngle().ToVec() * distance);
-
-            // prefer teleporting to grids
-            if (!_mapManager.TryFindGridAt(targetCoords, out var gridUid, out var grid))
-                continue;
-
-            // the implant user probably does not want to be in your walls
-            var valid = true;
-            foreach (var entity in grid.GetAnchoredEntities(targetCoords))
-            {
-                if (!_physicsQuery.TryGetComponent(entity, out var body))
-                    continue;
-
-                if (body.BodyType != BodyType.Static ||
-                    !body.Hard ||
-                    (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
-                    continue;
-
-                valid = false;
-                break;
-            }
-            if (valid)
-                break;
+            _xform.SetCoordinates(ent, targetCoords.Value);
+            _audio.PlayPvs(implant.TeleportSound, ent);
+            args.Handled = true;
         }
-        _xform.SetWorldPosition(ent, targetCoords.Position);
-        _xform.AttachToGridOrMap(ent, xform);
-        _audio.PlayPvs(implant.TeleportSound, ent);
+    }
 
-        args.Handled = true;
+    private EntityCoordinates? SelectRandomTileInRange(TransformComponent userXform, float radius)
+    {
+        var userCoords = userXform.Coordinates.ToMap(EntityManager, _xform);
+        _targetGrids.Clear();
+        _lookupSystem.GetEntitiesInRange(userCoords, radius, _targetGrids);
+        Entity<MapGridComponent>? targetGrid = null;
+
+        if (_targetGrids.Count == 0)
+            return null;
+
+        // Give preference to the grid the entity is currently on.
+        // This does not guarantee that if the probability fails that the owner's grid won't be picked.
+        // In reality the probability is higher and depends on the number of grids.
+        if (userXform.GridUid != null && TryComp<MapGridComponent>(userXform.GridUid, out var gridComp))
+        {
+            var userGrid = new Entity<MapGridComponent>(userXform.GridUid.Value, gridComp);
+            if (_random.Prob(0.5f))
+            {
+                _targetGrids.Remove(userGrid);
+                targetGrid = userGrid;
+            }
+        }
+
+        if (targetGrid == null)
+            targetGrid = _random.GetRandom().PickAndTake(_targetGrids);
+
+        EntityCoordinates? targetCoords = null;
+
+        do
+        {
+            var valid = false;
+
+            var range = (float) Math.Sqrt(radius);
+            var box = Box2.CenteredAround(userCoords.Position, new Vector2(range, range));
+            var tilesInRange = _mapSystem.GetTilesEnumerator(targetGrid.Value.Owner, targetGrid.Value.Comp, box, false);
+            var tileList = new ValueList<Vector2i>();
+
+            while (tilesInRange.MoveNext(out var tile))
+            {
+                tileList.Add(tile.GridIndices);
+            }
+
+            while (tileList.Count != 0)
+            {
+                var tile = tileList.RemoveSwap(_random.Next(tileList.Count));
+                valid = true;
+                foreach (var entity in _mapSystem.GetAnchoredEntities(targetGrid.Value.Owner, targetGrid.Value.Comp,
+                             tile))
+                {
+                    if (!_physicsQuery.TryGetComponent(entity, out var body))
+                        continue;
+
+                    if (body.BodyType != BodyType.Static ||
+                        !body.Hard ||
+                        (body.CollisionLayer & (int) CollisionGroup.MobMask) == 0)
+                        continue;
+
+                    valid = false;
+                    break;
+                }
+
+                if (valid)
+                {
+                    targetCoords = new EntityCoordinates(targetGrid.Value.Owner,
+                        _mapSystem.TileCenterToVector(targetGrid.Value, tile));
+                    break;
+                }
+            }
+
+            if (valid || _targetGrids.Count == 0) // if we don't do the check here then PickAndTake will blow up on an empty set.
+                break;
+
+            targetGrid = _random.GetRandom().PickAndTake(_targetGrids);
+        } while (true);
+
+        return targetCoords;
     }
 
     private void OnDnaScramblerImplant(EntityUid uid, SubdermalImplantComponent component, UseDnaScramblerImplantEvent args)

@@ -5,7 +5,7 @@
     state: icon
   product: CrateSecurityArmor
   cost: 700
-  category: Security
+  category: cargoproduct-category-name-security
   group: market
 
 - type: cargoProduct
@@ -15,7 +15,7 @@
     state: icon
   product: CrateSecurityHelmet
   cost: 550
-  category: Security
+  category: cargoproduct-category-name-security
   group: market
 
 - type: cargoProduct
@@ -25,7 +25,7 @@
     state: base
   product: CrateSecurityNonlethal
   cost: 4000
-  category: Security
+  category: cargoproduct-category-name-security
   group: market
 
 - type: cargoProduct
@@ -35,7 +35,7 @@
     state: icon
   product: CrateSecurityRiot
   cost: 5500
-  category: Security
+  category: cargoproduct-category-name-security
   group: market
 
 - type: cargoProduct
@@ -45,7 +45,7 @@
     state: box_security
   product: CrateSecuritySupplies
   cost: 500
-  category: Security
+  category: cargoproduct-category-name-security
   group: market
 
 - type: cargoProduct
@@ -55,7 +55,7 @@
     state: handcuff
   product: CrateRestraints
   cost: 1000
-  category: Security
+  category: cargoproduct-category-name-security
   group: market
 
 - type: cargoProduct
@@ -65,7 +65,7 @@
     state: icon
   product: CrateSecurityBiosuit
   cost: 800
-  category: Security
+  category: cargoproduct-category-name-security
   group: market
 
 - type: cargoProduct
@@ -75,5 +75,5 @@
     state: idle
   product: DeployableBarrier
   cost: 1000
-  category: Security
+  category: cargoproduct-category-name-security
   group: market

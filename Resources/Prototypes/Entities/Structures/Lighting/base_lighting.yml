@@ -40,6 +40,10 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: RCDDeconstructable
+    cost: 4
+    delay: 2
+    fx: EffectRCDDeconstruct2  
   - type: Destructible
     thresholds:
     - trigger:
@@ -70,7 +74,7 @@
     mode: SnapgridCenter
     snap:
     - Wallmount
-
+    
 - type: entity
   name: light
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
@@ -147,7 +151,7 @@
     hasLampOnSpawn: LedLightTube
     damage:
       types:
-        Heat: 5
+        Heat: 2.5
   - type: PointLight
     radius: 15
     energy: 1
@@ -308,6 +312,25 @@
       - On
       - Off
       - Toggle
+
+- type: entity
+  id: PoweredLEDSmallLight
+  suffix: LED
+  parent: PoweredSmallLightEmpty
+  components:
+  - type: Sprite
+    state: base
+  - type: PointLight
+    enabled: true
+    radius: 8
+    energy: 1
+    softness: 1
+    color: "#EEEEFF"
+  - type: PoweredLight
+    hasLampOnSpawn: LedLightBulb
+    damage:
+      types:
+        Heat: 2.5
 
 - type: entity
   id: PoweredSmallLight

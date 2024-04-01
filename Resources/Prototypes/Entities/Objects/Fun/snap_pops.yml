@@ -1,0 +1,61 @@
+- type: entity
+  parent: BaseItem
+  id: SnapPop
+  name: snap pop
+  description: Throw it at the floor and listen to it POP!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: snappop
+  - type: Item
+    size: Tiny
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/snap.ogg
+      - !type:ExplodeBehavior
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 3
+  - type: Explosive
+    explosionType: Default
+    # Cosmetic explosion :tf:
+    maxIntensity: 0.01
+    intensitySlope: 1
+    totalIntensity: 0.01
+  - type: Tag
+    tags:
+      - SnapPop
+
+- type: entity
+  parent: BaseStorageItem
+  id: SnapPopBox
+  name: snap pop box
+  description: Contains twenty snap pops for a few minutes of popping fun!
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: spbox
+  - type: Storage
+    grid:
+    - 0,0,4,3
+    areaInsert: true
+    maxItemSize: Tiny
+  - type: StorageFill
+    contents:
+      - id: SnapPop
+        amount: 20
+  - type: Dumpable
+

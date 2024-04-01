@@ -21,8 +21,6 @@ using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
@@ -36,22 +34,21 @@ namespace Content.Shared.Weapons.Melee;
 
 public abstract class SharedMeleeWeaponSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] protected readonly IMapManager MapManager = default!;
-    [Dependency] private   readonly IPrototypeManager _protoManager = default!;
-    [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
-    [Dependency] protected readonly ActionBlockerSystem Blocker = default!;
-    [Dependency] protected readonly DamageableSystem Damageable = default!;
-    [Dependency] private   readonly InventorySystem _inventory = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] protected readonly SharedCombatModeSystem CombatMode = default!;
-    [Dependency] protected readonly SharedInteractionSystem Interaction = default!;
-    [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
-    [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
-    [Dependency] private   readonly StaminaSystem _stamina = default!;
+    [Dependency] protected readonly ISharedAdminLogManager   AdminLogger     = default!;
+    [Dependency] protected readonly ActionBlockerSystem      Blocker         = default!;
+    [Dependency] protected readonly SharedCombatModeSystem   CombatMode      = default!;
+    [Dependency] protected readonly DamageableSystem         Damageable      = default!;
+    [Dependency] protected readonly SharedInteractionSystem  Interaction     = default!;
+    [Dependency] protected readonly IMapManager              MapManager      = default!;
+    [Dependency] protected readonly SharedPopupSystem        PopupSystem     = default!;
+    [Dependency] protected readonly IGameTiming              Timing          = default!;
+    [Dependency] protected readonly SharedTransformSystem    TransformSystem = default!;
+    [Dependency] private   readonly InventorySystem         _inventory       = default!;
+    [Dependency] private   readonly MeleeSoundSystem        _meleeSound      = default!;
+    [Dependency] private   readonly SharedPhysicsSystem     _physics         = default!;
+    [Dependency] private   readonly IPrototypeManager       _protoManager    = default!;
+    [Dependency] private   readonly StaminaSystem           _stamina         = default!;
 
-    public const float DamagePitchVariation = 0.05f;
     private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
 
     /// <summary>
@@ -68,7 +65,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MeleeWeaponComponent, EntityUnpausedEvent>(OnMeleeUnpaused);
         SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnMeleeSelected);
         SubscribeLocalEvent<MeleeWeaponComponent, ShotAttemptedEvent>(OnMeleeShotAttempted);
         SubscribeLocalEvent<MeleeWeaponComponent, GunShotEvent>(OnMeleeShot);
@@ -84,7 +80,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeAllEvent<StopAttackEvent>(OnStopAttack);
 
 #if DEBUG
-        SubscribeLocalEvent<MeleeWeaponComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<MeleeWeaponComponent,
+                            MapInitEvent>                   (OnMapInit);
     }
 
     private void OnMapInit(EntityUid uid, MeleeWeaponComponent component, MapInitEvent args)
@@ -110,11 +107,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             component.NextAttack = gun.NextFire;
             Dirty(uid, component);
         }
-    }
-
-    private void OnMeleeUnpaused(EntityUid uid, MeleeWeaponComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextAttack += args.PausedTime;
     }
 
     private void OnMeleeSelected(EntityUid uid, MeleeWeaponComponent component, HandSelectedEvent args)
@@ -471,7 +463,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             }
             var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage, null);
             RaiseLocalEvent(meleeUid, missEvent);
-            Audio.PlayPredicted(component.SwingSound, meleeUid, user);
+            _meleeSound.PlaySwingSound(user, meleeUid, component);
             return;
         }
 
@@ -526,7 +518,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         }
 
-        PlayHitSound(target.Value, user, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound, component.NoDamageSound);
+        _meleeSound.PlayHitSound(target.Value, user, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component);
 
         if (damageResult?.GetTotal() > FixedPoint2.Zero)
         {
@@ -569,7 +561,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage, direction);
             RaiseLocalEvent(meleeUid, missEvent);
 
-            Audio.PlayPredicted(component.SwingSound, meleeUid, user);
+            // immediate audio feedback
+            _meleeSound.PlaySwingSound(user, meleeUid, component);
+
             return true;
         }
 
@@ -664,7 +658,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (entities.Count != 0)
         {
             var target = entities.First();
-            PlayHitSound(target, user, GetHighestDamageSound(appliedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound, component.NoDamageSound);
+            _meleeSound.PlayHitSound(target, user, GetHighestDamageSound(appliedDamage, _protoManager), hitEvent.HitSoundOverride, component);
         }
 
         if (appliedDamage.GetTotal() > FixedPoint2.Zero)
@@ -708,77 +702,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         return true;
     }
 
-    public void PlayHitSound(EntityUid target, EntityUid? user, string? type, SoundSpecifier? hitSoundOverride, SoundSpecifier? hitSound, SoundSpecifier? noDamageSound)
-    {
-        var playedSound = false;
-
-        if (Deleted(target))
-            return;
-
-        // hitting can obv destroy an entity so we play at coords and not following them
-        var coords = Transform(target).Coordinates;
-        // Play sound based off of highest damage type.
-        if (TryComp<MeleeSoundComponent>(target, out var damageSoundComp))
-        {
-            if (type == null && damageSoundComp.NoDamageSound != null)
-            {
-                Audio.PlayPredicted(damageSoundComp.NoDamageSound, coords, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                playedSound = true;
-            }
-            else if (type != null && damageSoundComp.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
-            {
-                Audio.PlayPredicted(damageSoundType, coords, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                playedSound = true;
-            }
-            else if (type != null && damageSoundComp.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
-            {
-                Audio.PlayPredicted(damageSoundGroup, coords, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                playedSound = true;
-            }
-        }
-
-        // Use weapon sounds if the thing being hit doesn't specify its own sounds.
-        if (!playedSound)
-        {
-            if (hitSoundOverride != null)
-            {
-                Audio.PlayPredicted(hitSoundOverride, coords, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                playedSound = true;
-            }
-            else if (hitSound != null)
-            {
-                Audio.PlayPredicted(hitSound, coords, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                playedSound = true;
-            }
-            else if (noDamageSound != null)
-            {
-                Audio.PlayPredicted(noDamageSound, coords, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                playedSound = true;
-            }
-        }
-
-        // Fallback to generic sounds.
-        if (!playedSound)
-        {
-            switch (type)
-            {
-                // Unfortunately heat returns caustic group so can't just use the damagegroup in that instance.
-                case "Burn":
-                case "Heat":
-                case "Radiation":
-                case "Cold":
-                    Audio.PlayPredicted(new SoundPathSpecifier("/Audio/Items/welder.ogg"), target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                    break;
-                // No damage, fallback to tappies
-                case null:
-                    Audio.PlayPredicted(new SoundCollectionSpecifier("WeakHit"), target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                    break;
-                case "Brute":
-                    Audio.PlayPredicted(new SoundCollectionSpecifier("MetalThud"), target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
-                    break;
-            }
-        }
-    }
 
     public static string? GetHighestDamageSound(DamageSpecifier modifiedDamage, IPrototypeManager protoManager)
     {
@@ -815,7 +738,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         // Play a sound to give instant feedback; same with playing the animations
-        Audio.PlayPredicted(component.SwingSound, meleeUid, user);
+        _meleeSound.PlaySwingSound(user, meleeUid, component);
         return true;
     }
 

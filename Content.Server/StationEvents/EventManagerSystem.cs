@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.StationEvents.Components;
 using Content.Shared.CCVar;
@@ -17,8 +17,6 @@ public sealed class EventManagerSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] public readonly GameTicker GameTicker = default!;
 
-    private ISawmill _sawmill = default!;
-
     public bool EventsEnabled { get; private set; }
     private void SetEnabled(bool value) => EventsEnabled = value;
 
@@ -26,18 +24,7 @@ public sealed class EventManagerSystem : EntitySystem
     {
         base.Initialize();
 
-        _sawmill = Logger.GetSawmill("events");
-
         Subs.CVar(_configurationManager, CCVars.EventsEnabled, SetEnabled, true);
-
-        SubscribeLocalEvent<StationEventComponent, EntityUnpausedEvent>(OnUnpaused);
-    }
-
-    private void OnUnpaused(EntityUid uid, StationEventComponent component, ref EntityUnpausedEvent args)
-    {
-        component.StartTime += args.PausedTime;
-        if (component.EndTime != null)
-            component.EndTime = component.EndTime.Value + args.PausedTime;
     }
 
     /// <summary>
@@ -50,13 +37,13 @@ public sealed class EventManagerSystem : EntitySystem
         if (randomEvent == null)
         {
             var errStr = Loc.GetString("station-event-system-run-random-event-no-valid-events");
-            _sawmill.Error(errStr);
+            Log.Error(errStr);
             return errStr;
         }
 
         var ent = GameTicker.AddGameRule(randomEvent);
         var str = Loc.GetString("station-event-system-run-event",("eventName", ToPrettyString(ent)));
-        _sawmill.Info(str);
+        Log.Info(str);
         return str;
     }
 
@@ -66,7 +53,7 @@ public sealed class EventManagerSystem : EntitySystem
     public string? PickRandomEvent()
     {
         var availableEvents = AvailableEvents();
-        _sawmill.Info($"Picking from {availableEvents.Count} total available events");
+        Log.Info($"Picking from {availableEvents.Count} total available events");
         return FindEvent(availableEvents);
     }
 
@@ -78,7 +65,7 @@ public sealed class EventManagerSystem : EntitySystem
     {
         if (availableEvents.Count == 0)
         {
-            _sawmill.Warning("No events were available to run!");
+            Log.Warning("No events were available to run!");
             return null;
         }
 
@@ -101,7 +88,7 @@ public sealed class EventManagerSystem : EntitySystem
             }
         }
 
-        _sawmill.Error("Event was not found after weighted pick process!");
+        Log.Error("Event was not found after weighted pick process!");
         return null;
     }
 
@@ -125,7 +112,7 @@ public sealed class EventManagerSystem : EntitySystem
         {
             if (CanRun(proto, stationEvent, playerCount, currentTime))
             {
-                _sawmill.Debug($"Adding event {proto.ID} to possibilities");
+                Log.Debug($"Adding event {proto.ID} to possibilities");
                 result.Add(proto, stationEvent);
             }
         }
