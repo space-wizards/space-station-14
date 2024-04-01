@@ -295,8 +295,8 @@
   - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
     explosionType: Default
     totalIntensity: 3800
-    intensitySlope: 10
-    maxIntensity: 100
+    intensitySlope: 1
+    maxIntensity: 10
     canCreateVacuum: false
   - type: Defusable
   - type: Destructible
