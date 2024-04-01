@@ -22,14 +22,12 @@ public sealed partial class GhostRoleRaffleComponent : Component
     /// List of sessions that are currently in the raffle.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField("currentMembers")]
     public HashSet<ICommonSession> CurrentMembers = [];
 
     /// <summary>
     /// List of sessions that are currently or were previously in the raffle.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField("allMembers")]
     public HashSet<ICommonSession> AllMembers = [];
 
     /// <summary>
