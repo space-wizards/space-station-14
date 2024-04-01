@@ -21,12 +21,6 @@
   filterEnabled: True
 
 - type: guideEntry
-  id: ChemicalsMedicine
-  name: guide-entry-chemicalsmedicine
-  text: "/ServerInfo/Guidebook/ChemicalTabs/Medicine.xml"
-  filterEnabled: True
-
-- type: guideEntry
   id: Narcotics
   name: guide-entry-narcotics
   text: "/ServerInfo/Guidebook/ChemicalTabs/Narcotics.xml"

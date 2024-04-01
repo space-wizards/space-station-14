@@ -25,7 +25,6 @@ guide-entry-chemicals = Chemicals
 guide-entry-elements = Elements
 guide-entry-narcotics = Narcotics
 guide-entry-pyrotechnics = Pyrotechnic
-guide-entry-chemicalsmedicine = Medicine
 guide-entry-toxins = Toxins
 guide-entry-foods = Foods
 guide-entry-biological = Biological
