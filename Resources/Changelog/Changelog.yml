@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Krunk
   changes:
-  - message: Players will once again spawn at arrivals instead of cryostorage.
-    type: Fix
-  id: 5783
-  time: '2024-01-25T00:48:58.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24476
-- author: Krunk
-  changes:
   - message: Paper cups can now be worn as party hats!
     type: Add
   id: 5784
@@ -3806,3 +3799,11 @@
   id: 6282
   time: '2024-04-01T04:35:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26594
+- author: SlamBamActionman
+  changes:
+  - message: Added Coordinates Disks to the Salvage expeditions console, which are
+      now a requirement for expedition FTL.
+    type: Add
+  id: 6283
+  time: '2024-04-01T04:50:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/23240
