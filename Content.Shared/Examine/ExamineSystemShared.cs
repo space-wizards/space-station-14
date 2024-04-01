@@ -18,6 +18,7 @@ namespace Content.Shared.Examine
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] protected readonly MobStateSystem MobStateSystem = default!;
+        [Dependency] private readonly OccluderSystem _occluder = default!;
 
         public const float MaxRaycastRange = 100;
 
@@ -181,11 +182,10 @@ namespace Content.Shared.Examine
                 length = MaxRaycastRange;
             }
 
-            var occluderSystem = IoCManager.Resolve<OccluderSystem>();
             IoCManager.Resolve(ref entMan);
 
             var ray = new Ray(origin.Position, dir.Normalized());
-            var rayResults = occluderSystem
+            var rayResults = _occluder
                 .IntersectRayWithPredicate(origin.MapId, ray, length, state, predicate, false).ToList();
 
             if (rayResults.Count == 0)
