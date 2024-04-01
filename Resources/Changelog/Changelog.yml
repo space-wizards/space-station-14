@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Cyborgs can no longer spawn with the Wheelchair Bound or Muted trait
-    type: Fix
-  id: 5777
-  time: '2024-01-23T20:18:01.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24459
 - author: Nimfar11
   changes:
   - message: Adds solo comfy benches in different colors.
@@ -3802,3 +3795,10 @@
   id: 6276
   time: '2024-03-31T20:52:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26527
+- author: RiceMar
+  changes:
+  - message: Added milk cartons to the BoozeOMat vendor. Got milk?
+    type: Add
+  id: 6277
+  time: '2024-04-01T00:07:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26635
