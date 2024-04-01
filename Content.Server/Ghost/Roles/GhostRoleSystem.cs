@@ -180,8 +180,7 @@ namespace Content.Server.Ghost.Roles
                 return;
 
             _needsUpdateGhostRoleCount = false;
-            // TODO: this used to be cheap but now it's more expensive...
-            var response = new GhostUpdateGhostRoleCountEvent(GetGhostRolesInfo(null).Length);
+            var response = new GhostUpdateGhostRoleCountEvent(GetGhostRoleCount());
             foreach (var player in _playerManager.Sessions)
             {
                 RaiseNetworkEvent(response, player.Channel);
@@ -215,15 +214,15 @@ namespace Content.Server.Ghost.Roles
                     continue;
                 }
 
-                if (ghostRole.RaffleConfig is null) {
+                if (ghostRole.RaffleConfig is null)
+                {
                     Log.Warning($"Ghost role raffle finished on {entityUid} but RaffleConfig became null");
                     RemoveRaffleAndUpdateEui(entityUid, raffle);
                     continue;
                 }
 
                 var foundWinner = false;
-                var deciderPrototype = _prototypeManager
-                    .Index<GhostRoleRaffleDeciderPrototype>(ghostRole.RaffleConfig!.Decider);
+                var deciderPrototype = _prototypeManager.Index(ghostRole.RaffleConfig.Decider);
 
                 // use the ghost role's chosen winner picker to find a winner
                 deciderPrototype.Decider.PickWinner(
@@ -487,6 +486,21 @@ namespace Content.Server.Ghost.Roles
             _mindSystem.TransferTo(newMind, mob);
         }
 
+        /// <summary>
+        /// Returns the number of available ghost roles.
+        /// </summary>
+        public int GetGhostRoleCount()
+        {
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
+            return _ghostRoles.Count(pair => metaQuery.GetComponent(pair.Value.Owner).EntityPaused == false);
+        }
+
+        /// <summary>
+        /// Returns information about all available ghost roles.
+        /// </summary>
+        /// <param name="player">
+        /// If not null, the <see cref="GhostRoleInfo"/>s will show if the given player is in a raffle.
+        /// </param>
         public GhostRoleInfo[] GetGhostRolesInfo(ICommonSession? player)
         {
             var roles = new List<GhostRoleInfo>();
@@ -546,8 +560,8 @@ namespace Content.Server.Ghost.Roles
                 return;
 
             // The player is not a ghost (anymore), so they should not be in any raffles. Remove them.
-            // This ensures player doesn't win a raffle after returning to their (revived) body and getting forced into
-            // a ghost role.
+            // This ensures player doesn't win a raffle after returning to their (revived) body and ends up being
+            // forced into a ghost role.
             LeaveAllRaffles(message.Player);
             CloseEui(message.Player);
         }
