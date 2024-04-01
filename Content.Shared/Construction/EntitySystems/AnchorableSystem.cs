@@ -9,7 +9,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -24,12 +23,13 @@ namespace Content.Shared.Construction.EntitySystems;
 public sealed partial class AnchorableSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private   readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TagComponent> _tagQuery;
@@ -69,7 +69,8 @@ public sealed partial class AnchorableSystem : EntitySystem
             return;
 
         // Log unanchor attempt (server only)
-        _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to unanchor {ToPrettyString(uid):entity} from {transform.Coordinates:targetlocation}");
+        _adminLogger.Add(LogType.Anchor, LogImpact.Low,
+            $"{ToPrettyString(userUid):user} is trying to unanchor {ToPrettyString(uid):entity} from {transform.Coordinates:targetlocation}");
 
         _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryUnanchorCompletedEvent());
     }
@@ -195,10 +196,10 @@ public sealed partial class AnchorableSystem : EntitySystem
     /// </summary>
     /// <returns>true if anchored, false otherwise</returns>
     private void TryAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
-            AnchorableComponent? anchorable = null,
-            TransformComponent? transform = null,
-            PullableComponent? pullable = null,
-            ToolComponent? usingTool = null)
+        AnchorableComponent? anchorable = null,
+        TransformComponent? transform = null,
+        PullableComponent? pullable = null,
+        ToolComponent? usingTool = null)
     {
         if (!Resolve(uid, ref anchorable, ref transform))
             return;
@@ -213,7 +214,8 @@ public sealed partial class AnchorableSystem : EntitySystem
             return;
 
         // Log anchor attempt (server only)
-        _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to anchor {ToPrettyString(uid):entity} to {transform.Coordinates:targetlocation}");
+        _adminLogger.Add(LogType.Anchor, LogImpact.Low,
+            $"{ToPrettyString(userUid):user} is trying to anchor {ToPrettyString(uid):entity} to {transform.Coordinates:targetlocation}");
 
         if (TryComp<PhysicsComponent>(uid, out var anchorBody) &&
             !TileFree(transform.Coordinates, anchorBody))
@@ -269,21 +271,26 @@ public sealed partial class AnchorableSystem : EntitySystem
     {
         // Probably ignore CanCollide on the anchoring body?
         var gridUid = coordinates.GetGridUid(EntityManager);
-
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
             return false;
-
-        var tileIndices = grid.TileIndicesFor(coordinates);
-        return TileFree(grid, tileIndices, anchorBody.CollisionLayer, anchorBody.CollisionMask);
+        var tileIndices =
+            _mapSystem.TileIndicesFor(gridUid.Value, grid,
+                coordinates); // We cannot get a component from an entity with an ID equal to null
+        return TileFree(gridUid.Value, grid, tileIndices, anchorBody.CollisionLayer, anchorBody.CollisionMask);
     }
 
     /// <summary>
     /// Returns true if no hard anchored entities match the collision layer or mask specified.
     /// </summary>
+    /// <param name="gridUid"></param>
     /// <param name="grid"></param>
-    public bool TileFree(MapGridComponent grid, Vector2i gridIndices, int collisionLayer = 0, int collisionMask = 0)
+    /// <param name="gridIndices"></param>
+    /// <param name="collisionLayer"></param>
+    /// <param name="collisionMask"></param>
+    public bool TileFree(EntityUid gridUid, MapGridComponent grid, Vector2i gridIndices, int collisionLayer = 0,
+        int collisionMask = 0)
     {
-        var enumerator = grid.GetAnchoredEntitiesEnumerator(gridIndices);
+        var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, gridIndices);
 
         while (enumerator.MoveNext(out var ent))
         {
@@ -321,8 +328,8 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
             return false;
-
-        var enumerator = grid.GetAnchoredEntitiesEnumerator(grid.LocalToTile(location));
+        var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid.Value, grid,
+            _mapSystem.LocalToTile(gridUid.Value, grid, location));
 
         while (enumerator.MoveNext(out var entity))
         {
@@ -337,12 +344,8 @@ public sealed partial class AnchorableSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    private sealed partial class TryUnanchorCompletedEvent : SimpleDoAfterEvent
-    {
-    }
+    private sealed partial class TryUnanchorCompletedEvent : SimpleDoAfterEvent;
 
     [Serializable, NetSerializable]
-    private sealed partial class TryAnchorCompletedEvent : SimpleDoAfterEvent
-    {
-    }
+    private sealed partial class TryAnchorCompletedEvent : SimpleDoAfterEvent;
 }
