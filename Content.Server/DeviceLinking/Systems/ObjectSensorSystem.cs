@@ -1,4 +1,5 @@
 using Content.Server.DeviceLinking.Components;
+using Content.Shared.DeviceLinking;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -11,6 +12,7 @@ using Content.Shared.Toggleable;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.DeviceLinking.Systems;
 
@@ -26,6 +28,8 @@ public sealed class ObjectSensorSystem : EntitySystem
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     private readonly int ModeCount = Enum.GetValues(typeof(ObjectSensorMode)).Length;
+
+    private readonly List<ProtoId<SourcePortPrototype>> Ports = new ();
 
     public override void Initialize()
     {
@@ -82,25 +86,16 @@ public sealed class ObjectSensorSystem : EntitySystem
     {
         var component = uid.Comp;
 
-        Logger.Debug($"{uid}, {port}, {signal}");
-
-        switch (port)
+        List<ProtoId<SourcePortPrototype>> PortList = new()
         {
-            case 0:
-                break;
-            case 1:
-                _deviceLink.SendSignal(uid, component.OutputPort1, signal);
-                break;
-            case 2:
-                _deviceLink.SendSignal(uid, component.OutputPort2, signal);
-                break;
-            case 3:
-                _deviceLink.SendSignal(uid, component.OutputPort3, signal);
-                break;
-            default:
-                _deviceLink.SendSignal(uid, component.OutputPort4OrMore, signal);
-                break;
-        }
+            component.OutputPort1, component.OutputPort2,
+            component.OutputPort3, component.OutputPort4OrMore
+        };
+
+        if (port <= 0)
+            return;
+
+        _deviceLink.SendSignal(uid, PortList[Math.Min(port, 4)], signal);
     }
 
     private void UpdateOutput(Entity<ObjectSensorComponent> uid)
