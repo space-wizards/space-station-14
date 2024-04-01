@@ -427,6 +427,3 @@ uplink-backpack-syndicate-desc = Lightweight explosion-proof а backpack for hol
 
 uplink-warhorn-name = Syndicate Warhorn
 uplink-warhorn-desc = A tool that releases an intimidating sound, great for letting the station know you're nearby.
-
-uplink-spellbook-knock-name = Greytide Spellbook
-uplink-spellbook-knock-desc = A spellbook sold by a great wizard to the Syndicate. Use it to open doors! 
