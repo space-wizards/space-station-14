@@ -61,12 +61,12 @@ public sealed class MobsterAccentSystem : EntitySystem
         // Prefix
         if (_random.Prob(0.15f))
         {
-            bool firstWordCapitalized = !Regex.Match(msg, @"^([\w\-]+)").Value.Any(char.IsLower);
+            bool firstWordAllCaps = !Regex.Match(msg, @"^([\w\-]+)").Value.Any(char.IsLower);
             var pick = _random.Next(1, 2);
 
             // Reverse sanitize capital
             var prefix = Loc.GetString($"accent-mobster-prefix-{pick}");
-            if (!firstWordCapitalized)
+            if (!firstWordAllCaps)
                 msg = msg[0].ToString().ToLower() + msg.Remove(0, 1);
             else
                 prefix = prefix.ToUpper();
@@ -79,7 +79,7 @@ public sealed class MobsterAccentSystem : EntitySystem
         // Suffixes
         if (_random.Prob(0.4f))
         {
-            bool lastWordCapitalized = !Regex.Match(msg, @"(\S+)$").Value.Any(char.IsLower);
+            bool lastWordAllCaps = !Regex.Match(msg, @"(\S+)$").Value.Any(char.IsLower);
             var suffix = "";
             if (component.IsBoss)
             {
@@ -91,7 +91,7 @@ public sealed class MobsterAccentSystem : EntitySystem
                 var pick = _random.Next(1, 3);
                 suffix = Loc.GetString($"accent-mobster-suffix-minion-{pick}");                
             }
-            if (lastWordCapitalized)
+            if (lastWordAllCaps)
                 suffix = suffix.ToUpper();
             msg += suffix;
         }

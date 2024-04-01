@@ -22,7 +22,7 @@ public sealed class PirateAccentSystem : EntitySystem
     {
         var msg = message;
 
-        bool firstWordCapitalized = !Regex.Match(msg, @"^([\w\-]+)").Value.Any(char.IsLower);
+        bool firstWordAllCaps = !Regex.Match(msg, @"^([\w\-]+)").Value.Any(char.IsLower);
 
         msg = _replacement.ApplyReplacements(msg, "pirate");
 
@@ -32,7 +32,7 @@ public sealed class PirateAccentSystem : EntitySystem
         var pick = _random.Pick(component.PirateWords);
         var pirateWord = Loc.GetString(pick);
         // Reverse sanitize capital
-        if (!firstWordCapitalized)
+        if (!firstWordAllCaps)
             msg = msg[0].ToString().ToLower() + msg.Remove(0, 1);
         else
             pirateWord = pirateWord.ToUpper();
