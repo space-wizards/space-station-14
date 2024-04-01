@@ -193,3 +193,21 @@
         bluespaceEffectOnTeleportSource: true
         destroyAfterUses: 2
         destroyType: DeleteComponent
+
+# Wooden closet
+- type: entity
+  id: CabinetCloset
+  parent: ClosetSteelBase
+  name: wardrobe
+  description: That's a fine wood.
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: cabinet
+    stateDoorOpen: cabinet_open
+    stateDoorClosed: cabinet_door  
+  - type: EntityStorage
+    closeSound:
+      path: /Audio/Effects/woodenclosetclose.ogg
+    openSound:
+      path: /Audio/Effects/woodenclosetopen.ogg
