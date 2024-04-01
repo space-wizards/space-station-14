@@ -1,0 +1,26 @@
+- type: entity
+  name: Random Solid Wall Extra Spawner
+  id: SolidWallExtraSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Structures/Walls/randomsolidextra.rsi
+          state: randomsolidextra
+    - type: RandomSpawner
+      prototypes:
+        - SheetSteel1
+        - Barricade
+        - BaseSecretDoorAssembly
+        - Girder
+        - InflatableWall
+      chance: 1.0
+      rarePrototypes:
+        - InflatableDoor
+        - WallSolid
+        - WallSolidRust 
+        - AirlockAssemblyMaintenance
+      rareChance: 0.5
+  placement:
+    mode: AlignTileAny
