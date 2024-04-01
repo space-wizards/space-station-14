@@ -79,7 +79,7 @@ public sealed class MobsterAccentSystem : EntitySystem
         // Suffixes
         if (_random.Prob(0.4f))
         {
-            bool lastWordCapitalized = !Regex.Match(msg, @"([\w\-]+)$").Value.Any(char.IsLower);
+            bool lastWordCapitalized = !Regex.Match(msg, @"(\S+)$").Value.Any(char.IsLower);
             var suffix = "";
             if (component.IsBoss)
             {
