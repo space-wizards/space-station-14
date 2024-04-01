@@ -5,9 +5,11 @@ using Robust.Shared.GameStates;
 /// Enables a shuttle to travel to a destination with an item inserted into its console
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class SharedShuttleDestinationCoordinatesComponent : Component
+public sealed partial class ShuttleDestinationCoordinatesComponent : Component
 {
-    // Uid for entity containing the FTLDestination component
+    /// <summary>
+    /// Uid for entity containing the FTLDestination component
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public EntityUid? Destination;
 }

@@ -111,7 +111,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         // Saving the mission mapUid to a CD is made optional, in case one is somehow made in a process without a CD entity
         if (CoordinatesDisk.HasValue)
         {
-            var cd = _entManager.EnsureComponent<SharedShuttleDestinationCoordinatesComponent>(CoordinatesDisk.Value);
+            var cd = _entManager.EnsureComponent<ShuttleDestinationCoordinatesComponent>(CoordinatesDisk.Value);
             cd.Destination = mapUid;
             _entManager.Dirty(CoordinatesDisk.Value, cd);
         }

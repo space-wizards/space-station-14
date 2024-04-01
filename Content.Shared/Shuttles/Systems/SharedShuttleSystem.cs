@@ -44,7 +44,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         if (shuttleMap == targetMap)
             return true;
 
-        if (!TryComp<FTLDestinationComponent>(mapUid, out var destination))
+        if (!TryComp<FTLDestinationComponent>(mapUid, out var destination) || !destination.Enabled)
             return false;
 
         if (destination.RequireCoordinateDisk)
@@ -53,19 +53,21 @@ public abstract partial class SharedShuttleSystem : EntitySystem
             {
                 return false;
             }
-            else if (!_itemSlots.TryGetSlot(consoleUid, SharedShuttleConsoleComponent.DiskSlotName, out ItemSlot? itemSlot) || !itemSlot.HasItem)
+
+            if (!_itemSlots.TryGetSlot(consoleUid, SharedShuttleConsoleComponent.DiskSlotName, out var itemSlot, component: slot) || !itemSlot.HasItem)
             {
                 return false;
             }
-            else if (itemSlot.Item is { Valid: true } disk)
+
+            if (itemSlot.Item is { Valid: true } disk)
             {
-                SharedShuttleDestinationCoordinatesComponent? diskCoordinates = null;
+                ShuttleDestinationCoordinatesComponent? diskCoordinates = null;
                 if (!Resolve(disk, ref diskCoordinates))
                 {
                     return false;
                 }
 
-                EntityUid? diskCoords = diskCoordinates.Destination;
+                var diskCoords = diskCoordinates.Destination;
 
                 if (diskCoords == null || !TryComp<FTLDestinationComponent>(diskCoords.Value, out var diskDestination) || diskDestination != destination)
                 {
@@ -77,9 +79,6 @@ public abstract partial class SharedShuttleSystem : EntitySystem
                 return false;
             }
         }
-
-        if (!destination.Enabled)
-            return false;
 
         if (HasComp<FTLMapComponent>(mapUid))
             return false;
