@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseStructure
+  parent: [BaseStructure, StructureWheeled]
   id: NuclearBomb
   name: nuclear fission explosive
   description: You probably shouldn't stick around to see if this is armed.
@@ -49,7 +49,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.45
-        density: 80 #It has wheels and bluespace tech to make it lighter.
+        density: 255 # Has "bluespace technology" to make it lighter, whatever that means. Don't mind the fact that this is lighter then a high capacity fuel tank.
         mask:
         - MachineMask
         layer:
