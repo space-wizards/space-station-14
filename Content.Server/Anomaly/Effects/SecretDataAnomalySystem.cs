@@ -6,6 +6,9 @@ namespace Content.Server.Anomaly.Effects;
 public sealed class SecretDataAnomalySystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+
+    private readonly List<AnomalySecretData> _deita = new();
+
     public override void Initialize()
     {
         SubscribeLocalEvent<SecretDataAnomalyComponent, MapInitEvent>(OnMapInit);
@@ -23,11 +26,13 @@ public sealed class SecretDataAnomalySystem : EntitySystem
 
         component.Secret.Clear();
 
-        var variants = Enum.GetValues<AnomalySecretData>();
+        _deita.Clear();
+        _deita.AddRange(Enum.GetValues<AnomalySecretData>());
+        var actualCount = Math.Min(count, _deita.Count);
 
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < actualCount; i++)
         {
-            component.Secret.Add(_random.PickAndTake(variants));
+            component.Secret.Add(_random.PickAndTake(_deita));
         }
     }
 }
