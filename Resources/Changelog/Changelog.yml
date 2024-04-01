@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Botany's hatchet, spade, and hoe have received a damage decrease to 10,
-      10, and 6 damage respectively.
-    type: Tweak
-  id: 5785
-  time: '2024-01-25T01:37:11.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24481
 - author: Minty642
   changes:
   - message: Fixed Reinforced Glass Recipe in Ore Processor!
@@ -3808,3 +3800,10 @@
   id: 6284
   time: '2024-04-01T06:06:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/17778
+- author: musicmanvr
+  changes:
+  - message: Added Sol Dry, 8 new cocktails and coconut water.
+    type: Add
+  id: 6285
+  time: '2024-04-01T06:41:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25367
