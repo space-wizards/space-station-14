@@ -5,6 +5,7 @@ using Content.Shared.Shuttles.UI.MapObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Client.Shuttles.Systems;
@@ -39,6 +40,12 @@ public sealed partial class ShuttleSystem
                 return GetCoordinates(exclusion.Coordinates).ToMap(EntityManager, XformSystem);
             case GridMapObject grid:
                 var gridXform = Transform(grid.Entity);
+
+                if (HasComp<MapComponent>(grid.Entity))
+                {
+                    return new MapCoordinates(gridXform.LocalPosition, gridXform.MapID);
+                }
+
                 Entity<PhysicsComponent?, TransformComponent?> gridEnt = (grid.Entity, null, gridXform);
                 return new MapCoordinates(Maps.GetGridPosition(gridEnt), gridXform.MapID);
             default:

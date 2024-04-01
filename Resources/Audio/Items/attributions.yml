@@ -102,3 +102,18 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from tgstation, modified by themias (github) for ss14"
   source: "https://github.com/tgstation/tgstation/tree/85a0925051bb00e7a950ee66cb7f87982cd22439/sound/effects/shovel_dig.ogg"
+
+- files: ["smoke_grenade_prime.ogg", "smoke_grenade_smoke.ogg"]
+  license: "CC0-1.0"
+  copyright: "Bhijn and Myr (github username deathride58)"
+  source: "https://github.com/space-wizards/space-station-14/pull/23476"
+
+- files: ["drill_hit.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Created by vanilla with sounds from MinecraftGamerLR and stomachache on freesound.org"
+  source: "https://github.com/space-wizards/space-station-14/pull/26622"
+
+- files: ["drill_use.ogg"]
+  license: "CC0-1.0"
+  copyright: "Original sound by stomachache on freesound.org, processed by vanilla"
+  source: "https://freesound.org/s/262213/"

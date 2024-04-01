@@ -670,6 +670,7 @@
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     damage:
       types:
         Blunt: 10
