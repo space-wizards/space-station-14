@@ -77,7 +77,7 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
             return false;
 
         // Build a list of bloodstreams to inject into
-        var targetBloodstreams = new List<Entity<BloodstreamComponent>>();
+        var targetBloodstreams = new ValueList<Entity<BloodstreamComponent>>();
         foreach (var target in targets)
         {
             if (Deleted(target))
