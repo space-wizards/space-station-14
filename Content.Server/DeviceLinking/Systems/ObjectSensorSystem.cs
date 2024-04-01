@@ -31,8 +31,6 @@ public sealed class ObjectSensorSystem : EntitySystem
 
     private readonly int ModeCount = Enum.GetValues(typeof(ObjectSensorMode)).Length;
 
-    private readonly List<ProtoId<SourcePortPrototype>> Ports = new ();
-
     public override void Initialize()
     {
         base.Initialize();
@@ -52,7 +50,7 @@ public sealed class ObjectSensorSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Updates the component's mode when interacted with using a screwdriver
+    ///     Updates the component's mode when interacted with using the right tool
     /// </summary>
     private void OnInteractUsing(Entity<ObjectSensorComponent> uid, ref InteractUsingEvent args)
     {
@@ -88,7 +86,7 @@ public sealed class ObjectSensorSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Sends the signal to the associated signal source.
+    ///     Sends the given signal to the associated signal source.
     /// </summary>
     /// <param name="uid">The sensor</param>
     /// <param name="port">The index of the signal source</param>
@@ -105,7 +103,6 @@ public sealed class ObjectSensorSystem : EntitySystem
     /// <summary>
     ///     Updates all of the object sensors
     /// </summary>
-    /// <param name="uid"></param>
     private void UpdateOutput(Entity<ObjectSensorComponent> uid)
     {
         var component = uid.Comp;
