@@ -1,6 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Shared.UserInterface;
 using Content.Server.Advertise;
+using Content.Server.Advertise.Components;
 using static Content.Shared.Arcade.SharedSpaceVillainArcadeComponent;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -14,7 +15,7 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly AdvertiseSystem _advertise = default!;
+    [Dependency] private readonly SpeakOnUIClosedSystem _speakOnUIClosed = default!;
 
     public override void Initialize()
     {
@@ -24,7 +25,6 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
         SubscribeLocalEvent<SpaceVillainArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpenSV);
         SubscribeLocalEvent<SpaceVillainArcadeComponent, SpaceVillainArcadePlayerActionMessage>(OnSVPlayerAction);
         SubscribeLocalEvent<SpaceVillainArcadeComponent, PowerChangedEvent>(OnSVillainPower);
-        SubscribeLocalEvent<SpaceVillainArcadeComponent, BoundUIClosedEvent>(OnBoundUIClosed);
     }
 
     /// <summary>
@@ -82,7 +82,9 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
             case PlayerAction.Heal:
             case PlayerAction.Recharge:
                 component.Game.ExecutePlayerAction(uid, msg.PlayerAction, component);
-                component.ShouldSayThankYou = true; // Any sort of gameplay action counts
+                // Any sort of gameplay action counts
+                if (TryComp<SpeakOnUIClosedComponent>(uid, out var speakComponent))
+                    _speakOnUIClosed.TrySetFlag((uid, speakComponent));
                 break;
             case PlayerAction.NewGame:
                 _audioSystem.PlayPvs(component.NewGameSound, uid, AudioParams.Default.WithVolume(-4f));
@@ -110,19 +112,5 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
 
         if (_uiSystem.TryGetUi(uid, SpaceVillainArcadeUiKey.Key, out var bui))
             _uiSystem.CloseAll(bui);
-
-        component.ShouldSayThankYou = false;
-    }
-
-    private void OnBoundUIClosed(Entity<SpaceVillainArcadeComponent> ent, ref BoundUIClosedEvent args)
-    {
-        if (args.UiKey is not SpaceVillainArcadeUiKey || (SpaceVillainArcadeUiKey) args.UiKey != SpaceVillainArcadeUiKey.Key)
-            return;
-
-        if (ent.Comp.ShouldSayThankYou && TryComp<AdvertiseComponent>(ent.Owner, out var advertise))
-        {
-            _advertise.SayThankYou(ent.Owner, advertise);
-            ent.Comp.ShouldSayThankYou = false;
-        }
     }
 }
