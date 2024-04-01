@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Speech.Components;
 using Robust.Shared.Random;
 using System.Text.RegularExpressions;
@@ -26,11 +27,14 @@ public sealed class PirateAccentSystem : EntitySystem
         if (!_random.Prob(component.YarrChance))
             return msg;
 
+        var notAllCaps = msg.Any(char.IsLower);
+
         var pick = _random.Pick(component.PirateWords);
         // Reverse sanitize capital
         msg = msg[0].ToString().ToLower() + msg.Remove(0, 1);
         msg = Loc.GetString(pick) + " " + msg;
-
+        if (!notAllCaps)
+            msg = msg.ToUpper();
         return msg;
     }
 

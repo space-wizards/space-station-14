@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
 using Robust.Shared.Random;
@@ -49,11 +50,16 @@ public sealed class MobsterAccentSystem : EntitySystem
 
         // thinking -> thinkin'
         // king -> king
-        msg = Regex.Replace(msg, @"(?<=\w\w)ing(?!\w)", "in'", RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, @"(?<=\w\w)ing(?!\w)", "in'");
+        msg = Regex.Replace(msg, @"(?<=\w\w)ING(?!\w)", "IN'");
 
         // or -> uh and ar -> ah in the middle of words (fuhget, tahget)
-        msg = Regex.Replace(msg, @"(?<=\w)or(?=\w)", "uh", RegexOptions.IgnoreCase);
-        msg = Regex.Replace(msg, @"(?<=\w)ar(?=\w)", "ah", RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, @"(?<=\w)or(?=\w)", "uh");
+        msg = Regex.Replace(msg, @"(?<=\w)OR(?=\w)", "UH");
+        msg = Regex.Replace(msg, @"(?<=\w)ar(?=\w)", "ah");
+        msg = Regex.Replace(msg, @"(?<=\w)AR(?=\w)", "AH");
+
+        var notAllCaps = msg.Any(char.IsLower);
 
         // Prefix
         if (_random.Prob(0.15f))
@@ -82,6 +88,9 @@ public sealed class MobsterAccentSystem : EntitySystem
                 msg += Loc.GetString($"accent-mobster-suffix-minion-{pick}");
             }
         }
+
+        if (!notAllCaps)
+            msg = msg.ToUpper();
 
         return msg;
     }
