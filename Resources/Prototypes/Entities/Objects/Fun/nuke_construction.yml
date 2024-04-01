@@ -343,6 +343,15 @@
     maxIntensity: 1000
     canCreateVacuum: false
   - type: Defusable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 190
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:ExplodeBehavior
 
 - type: entity
   parent: ImprovisedNuclearBombEvil
