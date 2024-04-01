@@ -308,6 +308,14 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
       - !type:ExplodeBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpillBehavior
+        solution: tank
 
 - type: entity
   parent: ImprovisedNuclearBombEvil
