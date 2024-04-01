@@ -22,6 +22,11 @@
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
+      - type: PointLight
+        enabled: true
+        radius: 1.5
+        energy: 2
+        color: "#32CD32"
 
 - type: startingGear
   id: NanotrasenRepresentativeGear
@@ -30,7 +35,7 @@
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatCentcomcap
-    eyes: ClothingEyesGlasses  
+    eyes: ClothingEyesGlasses
     id: CentcomPDA
     ears: ClothingHeadsetCentCom
     belt: BoxFolderCentComClipboard
