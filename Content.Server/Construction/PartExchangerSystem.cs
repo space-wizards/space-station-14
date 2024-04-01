@@ -174,7 +174,7 @@ public sealed class PartExchangerSystem : EntitySystem
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.ExchangeDuration, new ExchangerDoAfterEvent(), uid, target: args.Target, used: uid)
         {
             BreakOnDamage = true,
-            BreakOnUserMove = true
+            BreakOnMove = true
         });
     }
 }

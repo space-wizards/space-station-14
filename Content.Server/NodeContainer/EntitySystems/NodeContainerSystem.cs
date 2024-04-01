@@ -14,6 +14,7 @@ namespace Content.Server.NodeContainer.EntitySystems
     public sealed class NodeContainerSystem : EntitySystem
     {
         [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
+        private EntityQuery<NodeContainerComponent> _query;
 
         public override void Initialize()
         {
@@ -26,6 +27,8 @@ namespace Content.Server.NodeContainer.EntitySystems
             SubscribeLocalEvent<NodeContainerComponent, ReAnchorEvent>(OnReAnchor);
             SubscribeLocalEvent<NodeContainerComponent, MoveEvent>(OnMoveEvent);
             SubscribeLocalEvent<NodeContainerComponent, ExaminedEvent>(OnExamine);
+
+            _query = GetEntityQuery<NodeContainerComponent>();
         }
 
         public bool TryGetNode<T>(NodeContainerComponent component, string? identifier, [NotNullWhen(true)] out T? node) where T : Node
@@ -43,6 +46,77 @@ namespace Content.Server.NodeContainer.EntitySystems
             }
 
             node = null;
+            return false;
+        }
+
+        public bool TryGetNode<T>(Entity<NodeContainerComponent?> ent, string identifier, [NotNullWhen(true)] out T? node) where T : Node
+        {
+            if (_query.Resolve(ent, ref ent.Comp, false)
+                && ent.Comp.Nodes.TryGetValue(identifier, out var n)
+                && n is T t)
+            {
+                node = t;
+                return true;
+            }
+
+            node = null;
+            return false;
+        }
+
+        public bool TryGetNodes<T1, T2>(
+            Entity<NodeContainerComponent?> ent,
+            string id1,
+            string id2,
+            [NotNullWhen(true)] out T1? node1,
+            [NotNullWhen(true)] out T2? node2)
+            where T1 : Node
+            where T2 : Node
+        {
+            if (_query.Resolve(ent, ref ent.Comp, false)
+                && ent.Comp.Nodes.TryGetValue(id1, out var n1)
+                && n1 is T1 t1
+                && ent.Comp.Nodes.TryGetValue(id2, out var n2)
+                && n2 is T2 t2)
+            {
+                node1 = t1;
+                node2 = t2;
+                return true;
+            }
+
+            node1 = null;
+            node2 = null;
+            return false;
+        }
+
+        public bool TryGetNodes<T1, T2, T3>(
+            Entity<NodeContainerComponent?> ent,
+            string id1,
+            string id2,
+            string id3,
+            [NotNullWhen(true)] out T1? node1,
+            [NotNullWhen(true)] out T2? node2,
+            [NotNullWhen(true)] out T3? node3)
+            where T1 : Node
+            where T2 : Node
+            where T3 : Node
+        {
+            if (_query.Resolve(ent, ref ent.Comp, false)
+                && ent.Comp.Nodes.TryGetValue(id1, out var n1)
+                && n1 is T1 t1
+                && ent.Comp.Nodes.TryGetValue(id2, out var n2)
+                && n2 is T2 t2
+                && ent.Comp.Nodes.TryGetValue(id3, out var n3)
+                && n3 is T3 t3)
+            {
+                node1 = t1;
+                node2 = t2;
+                node3 = t3;
+                return true;
+            }
+
+            node1 = null;
+            node2 = null;
+            node3 = null;
             return false;
         }
 

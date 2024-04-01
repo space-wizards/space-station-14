@@ -613,7 +613,7 @@ public sealed class ChatUIController : UIController
 
             var otherPos = EntityManager.GetComponent<TransformComponent>(ent).MapPosition;
 
-            if (occluded && !ExamineSystemShared.InRangeUnOccluded(
+            if (occluded && !_examine.InRangeUnOccluded(
                     playerPos,
                     otherPos, 0f,
                     (ent, player), predicate))
