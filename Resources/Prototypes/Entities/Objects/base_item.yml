@@ -42,6 +42,9 @@
     noRot: false
   - type: Pullable
   - type: DamageExaminable
+  - type: EmbeddableProjectile
+  - type: StaminaDamageOnEmbed
+    damage: 5
 
 - type: entity
   name: "storage item"
