@@ -209,7 +209,7 @@
       amount: 2
     Plasma: # Consumed in reaction: steady supply of plasma required for a jug of it
       amount: 2 
-    Phenol:
+    UnstableMutagen:
       amount: 1
   products:
     lingium: 3

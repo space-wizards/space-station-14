@@ -311,7 +311,7 @@
   description: uplink-exploding-syndicate-bomb-desc
   productEntity: SyndicateBomb
   cost:
-    Telecrystal: 5 # the world is doomed
+    Telecrystal: 11
   categories:
     - UplinkExplosives
   restockTime: 30
@@ -327,7 +327,7 @@
   description: uplink-exploding-syndicate-bomb-desc
   productEntity: SyndicateBomb
   cost:
-    Telecrystal: 5 # :doomer:
+    Telecrystal: 11
   categories:
     - UplinkExplosives
   conditions:
@@ -508,7 +508,7 @@
   icon: { sprite: /Textures/Structures/Wallmounts/signs.rsi, state: bio }
   productEntity: ClothingBackpackDuffelZombieBundle
   cost:
-    Telecrystal: 20 # "ROMEROL" "NUKIES" "2 ROMEROL NUKIES"
+    Telecrystal: 40
   categories:
   - UplinkChemicals
   conditions:
@@ -527,7 +527,7 @@
   description: uplink-nocturine-chemistry-bottle-desc
   productEntity: NocturineChemistryBottle
   cost:
-    Telecrystal: 2 # put your local captain to sleep today
+    Telecrystal: 6
   categories:
   - UplinkChemicals
 
@@ -547,7 +547,7 @@
   description: uplink-combat-medipen-desc
   productEntity: CombatMedipen
   cost:
-    Telecrystal: 2 # spam them
+    Telecrystal: 4
   categories:
   - UplinkChemicals
 
@@ -557,7 +557,7 @@
   description: uplink-stimpack-desc
   productEntity: Stimpack
   cost:
-    Telecrystal: 1 # RIP stuns
+    Telecrystal: 4
   categories:
   - UplinkChemicals
 
@@ -567,7 +567,7 @@
   description: uplink-stimkit-desc
   productEntity: StimkitFilled
   cost:
-    Telecrystal: 2 # Stuns are dead and gibbed
+    Telecrystal: 12
   categories:
   - UplinkChemicals
   
@@ -650,7 +650,7 @@
   description: uplink-cyberpen-desc
   productEntity: CyberPen
   cost:
-    Telecrystal: 20 # too robust
+    Telecrystal: 1
   categories:
   - UplinkDeception
 
@@ -711,7 +711,7 @@
   description: uplink-exploding-syndicate-bomb-fake-desc
   productEntity: SyndicateBombFake
   cost:
-    Telecrystal: 1
+    Telecrystal: 4
   categories:
   - UplinkDeception
 
@@ -723,7 +723,7 @@
   description: uplink-emag-desc
   productEntity: Emag
   cost:
-    Telecrystal: 2 # emag gets MORE use (impossible)
+    Telecrystal: 8
   categories:
   - UplinkDisruption
   
@@ -964,10 +964,14 @@
   description: uplink-carp-dehydrated-desc
   productEntity: DehydratedSpaceCarp
   cost:
-    Telecrystal: 1
+    Telecrystal: 2
   categories:
   - UplinkAllies
-    # fish ops is back in season
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkMobCatMicrobomb
@@ -1504,20 +1508,6 @@
   productEntity: ClothingHandsGlovesBoxingRigged
   cost:
     Telecrystal: 6
-  categories:
-    - UplinkJob
-  conditions:
-    - !type:BuyerJobCondition
-      whitelist:
-        - Passenger
-
-- type: listing
-  id: uplinkSpellbookKnock
-  name: uplink-spellbook-knock-name
-  description: uplink-spellbook-knock-desc
-  productEntity: BookKnock
-  cost:
-    Telecrystal: 10
   categories:
     - UplinkJob
   conditions:

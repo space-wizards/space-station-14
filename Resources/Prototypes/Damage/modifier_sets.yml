@@ -187,17 +187,8 @@
 - type: damageModifierSet
   id: Moth # Slightly worse at everything but cold
   coefficients:
-    Cold: 0
-    Heat: 0
-    Shock: 0
-    Poison: 0
-    Radiation: 0
-    Bloodloss: 0
-    Cellular: 0
-    Blunt: 0
-    Slash: 0
-    Pierce: 0
-    Asphyxiation: 0
+    Cold: 0.7
+    Heat: 1.3
 
 - type: damageModifierSet
   id: Vox
