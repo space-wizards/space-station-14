@@ -20,7 +20,7 @@ public sealed class PirateAccentSystem : EntitySystem
     // converts left word when typed into the right word. For example typing you becomes ye.
     public string Accentuate(string message, PirateAccentComponent component)
     {
-        var msg = _replacement.ApplyReplacements(message, "pirate");        
+        var msg = _replacement.ApplyReplacements(message, "pirate");
 
         if (!_random.Prob(component.YarrChance))
             return msg;
