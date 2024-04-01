@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nimfar11
-  changes:
-  - message: Adds solo comfy benches in different colors.
-    type: Add
-  id: 5778
-  time: '2024-01-23T22:15:48.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24203
 - author: Tin-Man-Tim
   changes:
   - message: Attempting to microwave metal now can cause the microwave to spark and
@@ -3802,3 +3795,10 @@
   id: 6277
   time: '2024-04-01T00:07:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26635
+- author: nikthechampiongr
+  changes:
+  - message: Radio jammers now actually block suit sensors.
+    type: Fix
+  id: 6278
+  time: '2024-04-01T02:13:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26632
