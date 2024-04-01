@@ -49,7 +49,7 @@ namespace Content.Server.UserInterface
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
-        public bool rightClickOnly = false;
+        public bool RightClickOnly;
 
         /// <summary>
         ///     Whether spectators (non-admin ghosts) should be allowed to view this UI.

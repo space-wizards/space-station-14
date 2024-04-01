@@ -19,19 +19,11 @@ public sealed partial class AccessLevelControl : GridContainer
         RobustXamlLoader.Load(this);
     }
 
-    private static string GetAccessLevelName(AccessLevelPrototype prototype)
-    {
-        if (prototype.Name is { } name)
-            return Loc.GetString(name);
-
-        return prototype.ID;
-    }
-
     public void Populate(List<ProtoId<AccessLevelPrototype>> accessLevels, IPrototypeManager prototypeManager)
     {
         foreach (var access in accessLevels)
         {
-            if (!prototypeManager.TryIndex<AccessLevelPrototype>(access, out var accessLevel))
+            if (!prototypeManager.TryIndex(access, out var accessLevel))
             {
                 Logger.Error($"Unable to find accesslevel for {access}");
                 continue;
@@ -39,7 +31,7 @@ public sealed partial class AccessLevelControl : GridContainer
 
             var newButton = new Button
             {
-                Text = GetAccessLevelName(accessLevel),
+                Text = accessLevel.GetAccessLevelName(),
                 ToggleMode = true,
             };
             AddChild(newButton);

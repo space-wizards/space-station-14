@@ -48,7 +48,7 @@ public sealed class DoorElectronicsSystem : EntitySystem
         DoorElectronicsUpdateConfigurationMessage args)
     {
         var accessReader = EnsureComp<AccessReaderComponent>(uid);
-        _accessReader.SetAccesses(uid, accessReader, args.accessList);
+        _accessReader.SetAccesses(uid, accessReader, args.AccessList);
     }
 
     private void OnAccessReaderChanged(

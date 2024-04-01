@@ -101,7 +101,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (component.rightClickOnly)
+        if (component.RightClickOnly)
             return;
 
         args.Handled = InteractUI(args.User, uid, component);

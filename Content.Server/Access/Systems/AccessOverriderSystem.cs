@@ -111,9 +111,9 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         var targetLabel = Loc.GetString("access-overrider-window-no-target");
         var targetLabelColor = Color.Red;
 
-        List<ProtoId<AccessLevelPrototype>>? possibleAccess = null;
-        List<ProtoId<AccessLevelPrototype>>? currentAccess = null;
-        List<ProtoId<AccessLevelPrototype>>? missingAccess = null;
+        ProtoId<AccessLevelPrototype>[]? possibleAccess = null;
+        ProtoId<AccessLevelPrototype>[]? currentAccess = null;
+        ProtoId<AccessLevelPrototype>[]? missingAccess = null;
 
         if (component.TargetAccessReaderId is { Valid: true } accessReader)
         {
@@ -123,8 +123,8 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             if (!_accessReader.GetMainAccessReader(accessReader, out var accessReaderComponent))
                 return;
 
-            List<HashSet<ProtoId<AccessLevelPrototype>>> currentAccessHashsets = accessReaderComponent.AccessLists;
-            currentAccess = ConvertAccessHashSetsToList(currentAccessHashsets)?.ToList();
+            var currentAccessHashsets = accessReaderComponent.AccessLists;
+            currentAccess = ConvertAccessHashSetsToList(currentAccessHashsets).ToArray();
         }
 
         if (component.PrivilegedIdSlot.Item is { Valid: true } idCard)
@@ -133,12 +133,12 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
 
             if (component.TargetAccessReaderId is { Valid: true })
             {
-                possibleAccess = _accessReader.FindAccessTags(idCard).ToList();
+                possibleAccess = _accessReader.FindAccessTags(idCard).ToArray();
             }
 
             if (currentAccess != null && possibleAccess != null)
             {
-                missingAccess = currentAccess.Except(possibleAccess).ToList();
+                missingAccess = currentAccess.Except(possibleAccess).ToArray();
             }
         }
 

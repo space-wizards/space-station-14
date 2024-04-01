@@ -48,15 +48,15 @@ public sealed partial class AccessOverriderComponent : Component
         public readonly string PrivilegedIdName;
         public readonly bool IsPrivilegedIdPresent;
         public readonly bool IsPrivilegedIdAuthorized;
-        public readonly List<ProtoId<AccessLevelPrototype>>? TargetAccessReaderIdAccessList;
-        public readonly List<ProtoId<AccessLevelPrototype>>? AllowedModifyAccessList;
-        public readonly List<ProtoId<AccessLevelPrototype>>? MissingPrivilegesList;
+        public readonly ProtoId<AccessLevelPrototype>[]? TargetAccessReaderIdAccessList;
+        public readonly ProtoId<AccessLevelPrototype>[]? AllowedModifyAccessList;
+        public readonly ProtoId<AccessLevelPrototype>[]? MissingPrivilegesList;
 
         public AccessOverriderBoundUserInterfaceState(bool isPrivilegedIdPresent,
             bool isPrivilegedIdAuthorized,
-            List<ProtoId<AccessLevelPrototype>>? targetAccessReaderIdAccessList,
-            List<ProtoId<AccessLevelPrototype>>? allowedModifyAccessList,
-            List<ProtoId<AccessLevelPrototype>>? missingPrivilegesList,
+            ProtoId<AccessLevelPrototype>[]? targetAccessReaderIdAccessList,
+            ProtoId<AccessLevelPrototype>[]? allowedModifyAccessList,
+            ProtoId<AccessLevelPrototype>[]? missingPrivilegesList,
             string privilegedIdName,
             string targetLabel,
             Color targetLabelColor)

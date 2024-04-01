@@ -845,7 +845,7 @@ public sealed partial class AdminVerbSystem
     {
         var allAccess = _prototypeManager
             .EnumeratePrototypes<AccessLevelPrototype>()
-            .Select(p => new ProtoId<AccessLevelPrototype>(p.ID)).ToList();
+            .Select(p => new ProtoId<AccessLevelPrototype>(p.ID)).ToArray();
 
         _accessSystem.TrySetTags(entity, allAccess);
     }
