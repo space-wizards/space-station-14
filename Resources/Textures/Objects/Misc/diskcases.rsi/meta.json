@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by SlamBamActionman",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon_base"
+    },
+    {
+      "name": "icon_cc"
+    },
+    {
+      "name": "icon_cargo"
+    }
+  ]
+}
