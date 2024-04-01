@@ -22,6 +22,7 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -40,6 +41,7 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
@@ -205,33 +207,58 @@ namespace Content.Server.Ghost.Roles
                     continue;
 
                 // the raffle is over! find someone to take over the ghost role
-                var candidates = raffle.CurrentMembers.ToList();
-                _random.Shuffle(candidates); // shuffle the list so we can pick a lucky winner!
-
-                // try to find someone who can take the role
-                foreach (var candidate in candidates)
+                if (!TryComp(entityUid, out GhostRoleComponent? ghostRole))
                 {
-                    // TODO: the following two checks are kind of redundant since they should already be removed
-                    //           from the raffle
-                    // can't win if you are disconnected (although you shouldn't be a candidate anyway)
-                    if (candidate.Status != SessionStatus.InGame)
-                        continue;
-
-                    // can't win if you are no longer a ghost (e.g. if you returned to your body)
-                    if (candidate.AttachedEntity == null || !HasComp<GhostComponent>(candidate.AttachedEntity))
-                        continue;
-
-                    if (Takeover(candidate, raffle.Identifier))
-                    {
-                        // takeover successful, we have a winner! remove the winner from other raffles they might be in
-                        LeaveAllRaffles(candidate);
-                        break;
-                    }
+                    Log.Warning($"Ghost role raffle finished on {entityUid} but {nameof(GhostRoleComponent)} is missing");
+                    RemoveRaffleAndUpdateEui(entityUid, raffle);
+                    continue;
                 }
 
-                // raffle over, either because someone won, or everyone unregistered from the raffle
+                var foundWinner = false;
+                var deciderPrototype = _prototypeManager.Index<GhostRoleRaffleDeciderPrototype>(ghostRole.RaffleDecider);
+
+                // use the ghost role's chosen winner picker to find a winner
+                deciderPrototype.Decider.PickWinner(
+                    raffle.CurrentMembers.AsEnumerable(),
+                    session =>
+                    {
+                        var success = TryTakeover(session, raffle.Identifier);
+                        foundWinner |= success;
+                        return success;
+                    }
+                );
+
+                if (!foundWinner)
+                {
+                    Log.Warning($"Ghost role raffle for {entityUid} ({ghostRole.RoleName}) finished without " +
+                                $"{ghostRole.RaffleDecider} finding a winner");
+                }
+
+                // raffle over
                 RemoveRaffleAndUpdateEui(entityUid, raffle);
             }
+        }
+
+        private bool TryTakeover(ICommonSession player, uint identifier)
+        {
+            // TODO: the following two checks are kind of redundant since they should already be removed
+            //           from the raffle
+            // can't win if you are disconnected (although you shouldn't be a candidate anyway)
+            if (player.Status != SessionStatus.InGame)
+                return false;
+
+            // can't win if you are no longer a ghost (e.g. if you returned to your body)
+            if (player.AttachedEntity == null || !HasComp<GhostComponent>(player.AttachedEntity))
+                return false;
+
+            if (Takeover(player, identifier))
+            {
+                // takeover successful, we have a winner! remove the winner from other raffles they might be in
+                LeaveAllRaffles(player);
+                return true;
+            }
+
+            return false;
         }
 
         private void RemoveRaffleAndUpdateEui(EntityUid entityUid, GhostRoleRaffleComponent raffle)
@@ -271,8 +298,15 @@ namespace Content.Server.Ghost.Roles
                 return;
 
             _ghostRoles.Remove(comp.Identifier);
-            _ghostRoleRaffles.Remove(comp.Identifier); // remove raffle too if one is running
-            UpdateAllEui();
+            if (TryComp(role.Owner, out GhostRoleRaffleComponent? raffle))
+            {
+                // if a raffle is still running, get rid of it
+                RemoveRaffleAndUpdateEui(role.Owner, raffle);
+            }
+            else
+            {
+                UpdateAllEui();
+            }
         }
 
         // probably fine to be init because it's never added during entity initialization, but much later

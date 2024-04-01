@@ -1,5 +1,6 @@
 ﻿using Content.Server.Mind.Commands;
 using Content.Shared.Roles;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Ghost.Roles.Components
 {
@@ -94,6 +95,10 @@ namespace Content.Server.Ghost.Roles.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("raffle")]
         public bool Raffle { get; set; }
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        [DataField("raffleDecider", customTypeSerializer: typeof(PrototypeIdSerializer<GhostRoleRaffleDeciderPrototype>))]
+        public string RaffleDecider { get; set; } = "default";
 
         /// <summary>
         /// The initial duration of a raffle in seconds. This is the countdown timer's value when the raffle starts.

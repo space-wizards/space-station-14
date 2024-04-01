@@ -122,6 +122,7 @@
     name: ghost-role-information-space-ninja-name
     description: ghost-role-information-space-ninja-description
     rules: ghost-role-information-space-ninja-rules
+    raffle: true
   - type: GhostRoleMobSpawner
     prototype: MobHumanSpaceNinja
   - type: Sprite
