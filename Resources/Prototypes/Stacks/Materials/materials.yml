@@ -85,3 +85,11 @@
   spawn: MaterialBones1
   maxCount: 30
   itemSize: 1
+
+- type: stack
+  id: Gunpowder
+  name: gunpowder
+  icon: { sprite: /Textures/Objects/Misc/reagent_fillings.rsi, state: powderpile }
+  spawn: MaterialGunpowder
+  maxCount: 60
+  itemSize: 1

@@ -11,6 +11,8 @@
     damage:
       types:
         Blunt: 10
+    soundHit:
+      collection: MetalThud
   - type: Spillable
     solution: absorbed
   - type: Wieldable
@@ -49,6 +51,8 @@
       damage:
         types:
           Blunt: 10
+      soundHit:
+         collection: MetalThud
     - type: Spillable
       solution: absorbed
     - type: Wieldable
@@ -84,123 +88,6 @@
         - MopAdv
 
 - type: entity
-  name: mop bucket
-  id: MopBucket
-  description: Holds water and the tears of the janitor.
-  components:
-  - type: Clickable
-  - type: Sprite
-    sprite: Objects/Specific/Janitorial/janitorial.rsi
-    noRot: true
-    layers:
-    - state: mopbucket
-    - state: mopbucket_water-1
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
-    drawdepth: Objects
-  - type: InteractionOutline
-  - type: SolutionContainerManager
-    solutions:
-      bucket:
-        maxVol: 600
-  - type: Spillable
-    solution: bucket
-    spillDelay: 3.0
-  - type: DrainableSolution
-    solution: bucket
-  - type: RefillableSolution
-    solution: bucket
-  - type: ExaminableSolution
-    solution: bucket
-  - type: Tag
-    tags:
-      - Wringer
-  - type: ItemMapper
-    mapLayers:
-      mopbucket_shark_blue:
-        whitelist:
-          tags:
-            - PlushieSharkBlue
-      mopbucket_shark_pink:
-        whitelist:
-          tags:
-            - PlushieSharkPink
-      mopbucket_shark_grey:
-        whitelist:
-          tags:
-            - PlushieSharkGrey
-    sprite: Objects/Fun/sharkplush.rsi
-  - type: Physics
-    bodyType: Dynamic
-  - type: Transform
-    noRot: true
-  - type: ItemSlots
-    slots:
-      shark_slot:
-        name: mop-bucket-slot-component-slot-name-shark
-        whitelist:
-          tags:
-            - PlushieSharkBlue
-            - PlushieSharkPink
-            - PlushieSharkGrey
-        priority: 3 # Higher than drinking priority
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.25,-0.40,0.25,0.25"
-        density: 60
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  - type: Pullable
-  - type: Drink
-    solution: bucket
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 3
-    fillBaseName: mopbucket_water-
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
-      shark_slot: !type:ContainerSlot {}
-  - type: GuideHelp
-    guides:
-    - Janitorial
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 70
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-
-- type: entity
-  name: mop bucket
-  id: MopBucketFull
-  parent: MopBucket
-  suffix: full
-  components:
-    - type: Sprite
-      layers:
-        - state: mopbucket
-        - state: mopbucket_water-3
-          map: [ "enum.SolutionContainerLayers.Fill" ]
-    - type: SolutionContainerManager
-      solutions:
-        bucket:
-          maxVol: 600
-          reagents:
-            - ReagentId: Water
-              Quantity: 600
-
-- type: entity
   name: wet floor sign
   id: WetFloorSign
   parent: ClothingOuterBase
@@ -230,6 +117,7 @@
   - type: StepTrigger
     intersectRatio: 0.2
     requiredTriggeredSpeed: 0
+    stepOn: true
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -251,6 +139,10 @@
         mask:
         - ItemMask
   - type: LandMine
+    sound:
+      path: /Audio/Effects/beep_landmine.ogg
+      params:
+        maxDistance: 10
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: HardBomb  # normally Default and max 5 total 60
@@ -269,291 +161,6 @@
   - type: Tag
     tags: # ignore "WhitelistChameleon" tag
       - WetFloorSign
-
-- type: entity
-  name: janitorial trolley
-  id: JanitorialTrolley
-  parent: BaseStructureDynamic
-  description: This is the alpha and omega of sanitation.
-  components:
-    - type: Sprite
-      noRot: true
-      sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
-      layers:
-        - state: cart
-        - state: cart_water-1
-          map: ["enum.SolutionContainerLayers.Fill"]
-          visible: false
-    - type: Rotatable
-    - type: InteractionOutline
-    # Removing storage until OnInteractUsing logic resolved
-    #- type: Storage
-    #  popup: false
-    #  capacity: 80
-    #  blacklist: # there is exclusive item slots for that
-    #    tags:
-    #      - Mop
-    #      - TrashBag
-    #      - Bucket
-    - type: ItemSlots
-      slots:
-        mop_slot:
-          name: janitorial-trolley-slot-component-slot-name-mop
-          whitelist:
-            tags:
-              - Mop
-          insertOnInteract: false # or it conflicts with bucket logic
-          priority: 9 # Higher than bucket slot
-        plunger_slot:
-          name: janitorial-trolley-slot-component-slot-name-plunger
-          whitelist:
-            tags:
-              - Plunger
-          priority: 8
-        wetfloorsign_slot4:
-          name: janitorial-trolley-slot-component-slot-name-sign
-          whitelist:
-            tags:
-              - WetFloorSign
-          priority: 7
-        wetfloorsign_slot3:
-          name: janitorial-trolley-slot-component-slot-name-sign
-          whitelist:
-            tags:
-              - WetFloorSign
-          priority: 7
-        wetfloorsign_slot2:
-          name: janitorial-trolley-slot-component-slot-name-sign
-          whitelist:
-            tags:
-              - WetFloorSign
-          priority: 7
-        wetfloorsign_slot1:
-          name: janitorial-trolley-slot-component-slot-name-sign
-          whitelist:
-            tags:
-              - WetFloorSign
-          priority: 7
-        lightreplacer_slot:
-          name: janitorial-trolley-slot-component-slot-name-lightreplacer
-          whitelist:
-            components:
-              - LightReplacer
-          priority: 6
-        spraybottle_slot:
-          name: janitorial-trolley-slot-component-slot-name-spray
-          whitelist:
-            tags:
-              - Spray
-          insertOnInteract: false # or it conflicts with bucket logic
-          priority: 5 # Higher than bucket slot
-        bucket_slot:
-          name: janitorial-trolley-slot-component-slot-name-bucket
-          whitelist:
-            tags:
-              - Bucket
-          insertOnInteract: false # or it also conflicts with bucket logic
-          priority: 4 # Higher than trash bag slot
-        trashbag_slot:
-          name: janitorial-trolley-slot-component-slot-name-trashbag
-          whitelist:
-            tags:
-              - TrashBag
-          priority: 3 # Higher than drinking priority
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeCircle
-            radius: 0.3
-          density: 250
-          layer:
-          - MobLayer
-          mask:
-          - MobMask
-    - type: Spillable
-      solution: bucket
-      spillDelay: 3.0
-    - type: SolutionContainerManager
-      solutions:
-        bucket:
-          maxVol: 800
-          reagents:
-            - ReagentId: Water
-              Quantity: 600 # 3 quarters full at roundstart to make it more appealing
-    - type: DrainableSolution
-      solution: bucket
-    - type: RefillableSolution
-      solution: bucket
-    - type: ExaminableSolution
-      solution: bucket
-    - type: Tag
-      tags:
-        - Wringer
-    - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: Metallic
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 400
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 200
-          behaviors:
-            - !type:EmptyAllContainersBehaviour
-            - !type:DoActsBehavior
-              acts: ["Destruction"]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: MetalBreak
-    - type: ItemMapper
-      mapLayers:
-        cart_plunger:
-          whitelist:
-            tags:
-              - Plunger
-        cart_mop:
-          whitelist:
-            tags:
-              - MopBasic
-        cart_advmop:
-          whitelist:
-            tags:
-              - MopAdv
-        cart_garbage:
-          whitelist:
-            tags:
-              - TrashBag
-        cart_replacer:
-          whitelist:
-            components:
-              - LightReplacer
-        cart_spray:
-          whitelist:
-            tags:
-              - Spray
-        cart_sign1: # this is like stack of floor signs
-          minCount: 1
-          whitelist:
-            tags:
-              - WetFloorSign
-        cart_sign2:
-          minCount: 2
-          whitelist:
-            tags:
-              - WetFloorSign
-        cart_sign3:
-          minCount: 3
-          whitelist:
-            tags:
-              - WetFloorSign
-        cart_sign4:
-          minCount: 4
-          whitelist:
-            tags:
-              - WetFloorSign
-        cart_bucket:
-          whitelist:
-            tags:
-              - Bucket
-      sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
-    - type: Appearance
-    - type: SolutionContainerVisuals
-      maxFillLevels: 3
-      fillBaseName: cart_water-
-    - type: UserInterface
-      interfaces:
-      - key: enum.StorageUiKey.Key
-        type: StorageBoundUserInterface
-    - type: Drink
-      solution: bucket
-    - type: ContainerContainer
-      containers:
-        storagebase: !type:Container
-          ents: []
-        mop_slot: !type:ContainerSlot {}
-        trashbag_slot: !type:ContainerSlot {}
-        bucket_slot: !type:ContainerSlot {}
-        plunger_slot: !type:ContainerSlot {}
-        wetfloorsign_slot4: !type:ContainerSlot {}
-        wetfloorsign_slot3: !type:ContainerSlot {}
-        wetfloorsign_slot2: !type:ContainerSlot {}
-        wetfloorsign_slot1: !type:ContainerSlot {}
-        lightreplacer_slot: !type:ContainerSlot {}
-        spraybottle_slot:  !type:ContainerSlot {}
-    - type: GuideHelp
-      guides:
-      - Janitorial
-    - type: TileFrictionModifier
-      modifier: 0.4 # makes it slide
-
-- type: entity
-  id: FloorDrain
-  name: drain
-  description: Drains puddles around it. Useful for dumping mop buckets or keeping certain rooms clean.
-  placement:
-    mode: SnapgridCenter
-  components:
-    - type: Sprite
-      drawdepth: FloorObjects
-      sprite: Objects/Specific/Janitorial/drain.rsi
-      layers:
-      - state: icon
-      - map: [ "enum.SolutionContainerLayers.Fill" ]
-        state: fill-1
-        visible: false
-    - type: InteractionOutline
-    - type: Clickable
-    - type: Transform
-      anchored: true
-    - type: Physics
-      bodyType: Static
-      canCollide: false
-    - type: AmbientSound
-      enabled: false
-      volume: -8
-      range: 8
-      sound:
-        path: /Audio/Ambience/Objects/drain.ogg
-    - type: Drain
-    - type: DumpableSolution
-      solution: drainBuffer
-    - type: Appearance
-    - type: SolutionContainerVisuals
-      maxFillLevels: 1
-      fillBaseName: fill-
-      solutionName: drainBuffer
-    - type: SolutionContainerManager
-      solutions:
-        drainBuffer:
-          maxVol: 1000
-    - type: DrainableSolution
-      solution: drainBuffer
-    - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: Metallic
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 200
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 100
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: MetalBreak
 
 - type: entity
   name: plunger
@@ -613,6 +220,15 @@
     damage:
       types:
         Blunt: 3
+  - type: Plunger
+
+- type: weightedRandomEntity
+  id: PlungerLoot
+  weights:
+    RandomSpawner100: 56
+    SpacemenFigureSpawner: 28
+    SpawnMobCockroach: 5
+    MaintenanceToolSpawner: 5
 
 - type: entity
   parent: BaseItem

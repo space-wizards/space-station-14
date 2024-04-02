@@ -94,6 +94,7 @@ namespace Content.Client.Actions
             component.Container = EnsureEntity<T>(state.Container, uid);
             component.EntityIcon = EnsureEntity<T>(state.EntityIcon, uid);
             component.CheckCanInteract = state.CheckCanInteract;
+            component.CheckConsciousness = state.CheckConsciousness;
             component.ClientExclusive = state.ClientExclusive;
             component.Priority = state.Priority;
             component.AttachedEntity = EnsureEntity<T>(state.AttachedEntity, uid);

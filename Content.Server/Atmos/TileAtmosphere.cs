@@ -1,3 +1,4 @@
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
@@ -27,6 +28,9 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public TileAtmosphere? PressureSpecificTarget { get; set; }
 
+        /// <summary>
+        /// This is either the pressure difference, or the quantity of moles transferred if monstermos is enabled.
+        /// </summary>
         [ViewVariables]
         public float PressureDifference { get; set; }
 
@@ -51,6 +55,10 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public readonly TileAtmosphere?[] AdjacentTiles = new TileAtmosphere[Atmospherics.Directions];
 
+        /// <summary>
+        /// Neighbouring tiles to which air can flow. This is a combination of this tile's unblocked direction, and the
+        /// unblocked directions on adjacent tiles.
+        /// </summary>
         [ViewVariables]
         public AtmosDirection AdjacentBits = AtmosDirection.Invalid;
 
@@ -72,10 +80,7 @@ namespace Content.Server.Atmos
         public EntityUid GridIndex { get; set; }
 
         [ViewVariables]
-        public TileRef? Tile => GridIndices.GetTileRef(GridIndex);
-
-        [ViewVariables]
-        public Vector2i GridIndices { get; }
+        public Vector2i GridIndices;
 
         [ViewVariables]
         public ExcitedGroup? ExcitedGroup { get; set; }
@@ -92,7 +97,7 @@ namespace Content.Server.Atmos
         public float LastShare;
 
         [ViewVariables]
-        public float[]? MolesArchived;
+        public readonly float[] MolesArchived = new float[Atmospherics.AdjustedNumberOfGases];
 
         GasMixture IGasMixtureHolder.Air
         {
@@ -103,8 +108,31 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public float MaxFireTemperatureSustained { get; set; }
 
+        /// <summary>
+        /// If true, then this tile is directly exposed to the map's atmosphere, either because the grid has no tile at
+        /// this position, or because the tile type is not airtight.
+        /// </summary>
         [ViewVariables]
-        public AtmosDirection BlockedAirflow { get; set; } = AtmosDirection.Invalid;
+        public bool MapAtmosphere;
+
+        /// <summary>
+        /// If true, this tile does not actually exist on the grid, it only exists to represent the map's atmosphere for
+        /// adjacent grid tiles.
+        /// </summary>
+        [ViewVariables]
+        public bool NoGridTile;
+
+        /// <summary>
+        /// If true, this tile is queued for processing in <see cref="GridAtmosphereComponent.PossiblyDisconnectedTiles"/>
+        /// </summary>
+        [ViewVariables]
+        public bool TrimQueued;
+
+        /// <summary>
+        /// Cached information about airtight entities on this tile. This gets updated anytime a tile gets invalidated
+        /// (i.e., gets added to <see cref="GridAtmosphereComponent.InvalidatedCoords"/>).
+        /// </summary>
+        public AtmosphereSystem.AirtightData AirtightData;
 
         public TileAtmosphere(EntityUid gridIndex, Vector2i gridIndices, GasMixture? mixture = null, bool immutable = false, bool space = false)
         {
@@ -112,10 +140,24 @@ namespace Content.Server.Atmos
             GridIndices = gridIndices;
             Air = mixture;
             Space = space;
-            MolesArchived = Air != null ? new float[Atmospherics.AdjustedNumberOfGases] : null;
 
             if(immutable)
                 Air?.MarkImmutable();
+        }
+
+        public TileAtmosphere(TileAtmosphere other)
+        {
+            GridIndex = other.GridIndex;
+            GridIndices = other.GridIndices;
+            Space = other.Space;
+            NoGridTile = other.NoGridTile;
+            MapAtmosphere = other.MapAtmosphere;
+            Air = other.Air?.Clone();
+            Array.Copy(other.MolesArchived, MolesArchived, MolesArchived.Length);
+        }
+
+        public TileAtmosphere()
+        {
         }
     }
 }
