@@ -356,19 +356,20 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                 continue;
 
             // Get the device power stats
-            var powerValue = GetPrimaryPowerValues(ent, device, out var powerSupplied, out var powerUsage, out var batteryUsage);
+            var powerStats = GetPowerStats(ent, device);
+            //, out var powerSupplied, out var powerUsage, out var batteryUsage);
 
             // Update all running totals
-            totalSources += powerSupplied;
-            totalLoads += powerUsage;
-            totalBatteryUsage += batteryUsage;
+            totalSources += powerStats.PowerSupplied;
+            totalLoads += powerStats.PowerUsage;
+            totalBatteryUsage += powerStats.BatteryUsage;
 
             // Continue on if the device is not in the current focus group
             if (device.Group != component.FocusGroup)
                 continue;
 
             // Generate a new console entry with which to populate the UI
-            var entry = new PowerMonitoringConsoleEntry(EntityManager.GetNetEntity(ent), device.Group, powerValue);
+            var entry = new PowerMonitoringConsoleEntry(EntityManager.GetNetEntity(ent), device.Group, powerStats.PowerValue);
             allEntries.Add(entry);
         }
 
@@ -432,28 +433,25 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             session);
     }
 
-    private double GetPrimaryPowerValues(EntityUid uid, PowerMonitoringDeviceComponent device, out double powerSupplied, out double powerUsage, out double batteryUsage)
+    private PowerStats GetPowerStats(EntityUid uid, PowerMonitoringDeviceComponent device)
     {
-        var powerValue = 0d;
-        powerSupplied = 0d;
-        powerUsage = 0d;
-        batteryUsage = 0d;
+        var stats = new PowerStats();
 
         if (device.Group == PowerMonitoringConsoleGroup.Generator)
         {
             // This covers most power sources
             if (TryComp<PowerSupplierComponent>(uid, out var supplier))
             {
-                powerValue = supplier.CurrentSupply;
-                powerSupplied += powerValue;
+                stats.PowerValue = supplier.CurrentSupply;
+                stats.PowerSupplied += stats.PowerValue;
             }
 
             // Edge case: radiation collectors
             else if (TryComp<BatteryDischargerComponent>(uid, out var _) &&
                 TryComp<PowerNetworkBatteryComponent>(uid, out var battery))
             {
-                powerValue = battery.NetworkBattery.CurrentSupply;
-                powerSupplied += powerValue;
+                stats.PowerValue = battery.NetworkBattery.CurrentSupply;
+                stats.PowerSupplied += stats.PowerValue;
             }
         }
 
@@ -464,18 +462,18 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
             if (TryComp<PowerNetworkBatteryComponent>(uid, out var battery))
             {
-                powerValue = battery.CurrentSupply;
+                stats.PowerValue = battery.CurrentSupply;
 
                 // Load due to network battery recharging
-                powerUsage += Math.Max(battery.CurrentReceiving - battery.CurrentSupply, 0d);
+                stats.PowerUsage += Math.Max(battery.CurrentReceiving - battery.CurrentSupply, 0d);
 
                 // Track battery usage
-                batteryUsage += Math.Max(battery.CurrentSupply - battery.CurrentReceiving, 0d);
+                stats.BatteryUsage += Math.Max(battery.CurrentSupply - battery.CurrentReceiving, 0d);
 
                 // Records loads attached to APCs
                 if (device.Group == PowerMonitoringConsoleGroup.APC && battery.Enabled)
                 {
-                    powerUsage += battery.NetworkBattery.LoadingNetworkDemand;
+                    stats.PowerUsage += battery.NetworkBattery.LoadingNetworkDemand;
                 }
             }
         }
@@ -492,16 +490,16 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                 if (childDevice.IsCollectionMaster && childDevice.ChildDevices.ContainsKey(uid))
                     continue;
 
-                var childPowerValue = GetPrimaryPowerValues(child, childDevice, out var childPowerSupplied, out var childPowerUsage, out var childBatteryUsage);
+                var childResult = GetPowerStats(child, childDevice);
 
-                powerValue += childPowerValue;
-                powerSupplied += childPowerSupplied;
-                powerUsage += childPowerUsage;
-                batteryUsage += childBatteryUsage;
+                stats.PowerValue += childResult.PowerValue;
+                stats.PowerSupplied += childResult.PowerSupplied;
+                stats.PowerUsage += childResult.PowerUsage;
+                stats.BatteryUsage += childResult.BatteryUsage;
             }
         }
 
-        return powerValue;
+        return stats;
     }
 
     private void GetSourcesForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> sources)
@@ -995,5 +993,13 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         component.FocusChunks.Clear();
 
         Dirty(uid, component);
+    }
+
+    private sealed class PowerStats
+    {
+        public double PowerValue { get; set; }
+        public double PowerSupplied { get; set; }
+        public double PowerUsage { get; set; }
+        public double BatteryUsage { get; set; }
     }
 }
