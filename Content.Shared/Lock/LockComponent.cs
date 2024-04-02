@@ -18,7 +18,7 @@ public sealed partial class LockComponent : Component
     /// </summary>
     [DataField("locked"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public bool Locked  = true;
+    public bool Locked = true;
 
     /// <summary>
     /// Whether or not the lock is toggled by simply clicking.
@@ -71,6 +71,12 @@ public sealed partial class LockComponent : Component
     [DataField]
     [AutoNetworkedField]
     public TimeSpan UnlockTime;
+
+    /// <summary>
+    /// CrystallPunk LockSystem Adapt: we need LockEntity in object, in slotId.
+    /// </summary>
+    [DataField]
+    public string? LockSlotId = string.Empty;
 }
 
 /// <summary>

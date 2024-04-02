@@ -1,0 +1,22 @@
+- type: entity
+  parent: BaseItem
+  abstract: true
+  id: BaseLock
+  name: стальной замок
+  description: Он запирает вещи. И вам потребуется ключ, чтобы открыть их обратно.
+  components:
+  - type: CPLock
+    lockPickDamageChance: 0.2
+    autoGenerateShape: Debug
+  - type: Sprite
+    sprite: CrystallPunk/Objects/keys.rsi
+    layers:
+    - state: lock
+    
+- type: entity
+  parent: BaseLock
+  id: LockTavern
+  name: замок от таверны
+  components:
+  - type: CPLock
+    autoGenerateShape: Tavern

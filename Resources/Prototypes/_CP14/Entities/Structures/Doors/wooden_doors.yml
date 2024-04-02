@@ -1,0 +1,67 @@
+- type: entity
+  parent: BaseMaterialDoorNavMap
+  id: CPBaseWoodDoor
+  name: деревянная дверь
+  description: Не самая прочная конструкция, но это лучше чем ничего.
+  suffix: Без замка
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/MineralDoors/wood_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Door
+    bumpOpen: false
+    clickOpen: true
+    closeTimeOne: 0.2
+    closeTimeTwo: 0.6
+    openTimeOne: 0.6
+    openTimeTwo: 0.2
+    openSound:
+      path: /Audio/Effects/door_open.ogg
+    closeSound:
+      path: /Audio/Effects/door_close.ogg
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Lock
+    locked: true
+    lockSlotId: lock_slot
+  - type: ItemSlots
+    slots: 
+      lock_slot:
+        name: cp-lock-slot-component-slot-name-default
+        disableEject: true
+        insertOnInteract: false
+        ejectOnBreak: true
+        whitelist:
+          components:
+          - CPLock
+  - type: ContainerContainer
+    containers:
+      lock_slot: !type:ContainerSlot
+
+- type: entity
+  parent: CPBaseWoodDoor
+  id: CPWoodDoorTavern
+  suffix: Таверна
+  components:
+  - type: ItemSlots
+    slots: 
+      lock_slot:
+        name: cp-lock-slot-component-slot-name-default
+        startingItem: LockTavern
+        disableEject: true
+        insertOnInteract: false
+        ejectOnBreak: true
+        whitelist:
+          components:
+          - CPLock

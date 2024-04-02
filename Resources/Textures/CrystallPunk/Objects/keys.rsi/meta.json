@@ -8,7 +8,79 @@
   "copyright": "Created by TheShuEd (Github) for CrystallPunk14",
   "states": [
     {
-      "name": "base"
+      "name": "key1"
+    },
+    {
+      "name": "key2"
+    },
+    {
+      "name": "key3"
+    },
+    {
+      "name": "key4"
+    },
+    {
+      "name": "key5"
+    },
+    {
+      "name": "key6"
+    },
+    {
+      "name": "key7"
+    },
+    {
+      "name": "key8"
+    },
+    {
+      "name": "key9"
+    },
+    {
+      "name": "key10"
+    },
+    {
+      "name": "key11"
+    },
+    {
+      "name": "key12"
+    },
+    {
+      "name": "key13"
+    },
+    {
+      "name": "key14"
+    },
+    {
+      "name": "key15"
+    },
+    {
+      "name": "key16"
+    },
+    {
+      "name": "key17"
+    },
+    {
+      "name": "key18"
+    },
+    {
+      "name": "lock"
+    },
+    {
+      "name": "lockpick"
+    },
+    {
+      "name": "keyring"
+    },
+    {
+      "name": "ring-0"
+    },
+    {
+      "name": "ring-1"
+    },
+    {
+      "name": "ring-2"
+    },
+    {
+      "name": "ring-3"
     }
   ]
 }

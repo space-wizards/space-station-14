@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by KREKS (Discord) for CrystallPunk14",
+  "states": [
+    {
+      "name": "stone0",
+      "directions": 4
+    },
+    {
+      "name": "stone1",
+      "directions": 4
+    },
+    {
+      "name": "stone2",
+      "directions": 4
+    },
+    {
+      "name": "stone3",
+      "directions": 4
+    },
+    {
+      "name": "stone4",
+      "directions": 4
+    },
+    {
+      "name": "stone5",
+      "directions": 4
+    },
+    {
+      "name": "stone6",
+      "directions": 4
+    },
+    {
+      "name": "stone7",
+      "directions": 4
+    },
+    {
+      "name": "full"
+    }
+  ]
+}

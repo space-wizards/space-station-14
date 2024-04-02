@@ -38,6 +38,20 @@
     base: wood 
 
 - type: entity
+  id: CaveStoneWall
+  name: каменная порода
+  parent: CPBaseWall
+  description: Прочная каменная природная стена. От нее веет пещерным холодом.
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Structures/Walls/cave_stone.rsi
+  - type: Icon
+    sprite: CrystallPunk/Structures/Walls/cave_stone.rsi
+  - type: IconSmooth
+    key: CPwallsbrick
+    base: stone 
+
+- type: entity
   id: StoneRuinFragment
   parent: BaseRock
   name: обломки каменных стен

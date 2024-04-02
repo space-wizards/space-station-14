@@ -1,0 +1,14 @@
+- files: ["key_drop.ogg"]
+  license: "CC0-1.0"
+  copyright: 'Kyanite_ of Freesound.org. Mixed from stereo to mono.'
+  source: "https://freesound.org/people/Kyanite_/sounds/432913/"
+  
+- files: ["lockpick_use.ogg"]
+  license: "CC0-1.0"
+  copyright: 'by Fugeni of Freesound.org. Mixed from stereo to mono.'
+  source: "https://freesound.org/people/Fugeni/sounds/416286/"
+  
+- files: ["lockpick_fail.ogg"]
+  license: "CC0-1.0"
+  copyright: 'by SinusPi of Freesound.org. Cropped and mixed from stereo to mono.'
+  source: "https://freesound.org/people/SinusPi/sounds/545044/"
