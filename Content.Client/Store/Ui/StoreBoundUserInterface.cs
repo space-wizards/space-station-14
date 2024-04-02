@@ -82,7 +82,6 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
                 _discounts = msg.Discounts;
 
                 _menu.UpdateBalance(msg.Balance);
-                _menu.PopulateStoreCategoryButtons(msg.Listings, msg.Discounts);
 
                 UpdateListingsWithSearchFilter();
                 _menu.SetFooterVisibility(msg.ShowFooter);

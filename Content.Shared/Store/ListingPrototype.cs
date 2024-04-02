@@ -204,22 +204,22 @@ public enum DiscountCategory : byte
     /// <summary>
     /// Items should not be discounted in any way share or form for the love of humanity.
     /// </summary>
-    NoGoCategory,
+    NoDiscounts,
 
     /// <summary>
     /// Dirty-cheap items that are rarely used and can be discounted to 0-ish cost to encourage usage.
     /// </summary>
-    Category0,
+    RareDiscounts,
 
     /// <summary>
     /// Cheap items that are used not very often.
     /// </summary>
-    Category1,
+    UsualDiscounts,
 
     /// <summary>
     /// Casually used items that are widely used but can be (rarely) discounted for epic lulz.
     /// </summary>
-    Category2
+    VeryRareDiscounts
 }
 
 [Serializable, NetSerializable, DataDefinition]

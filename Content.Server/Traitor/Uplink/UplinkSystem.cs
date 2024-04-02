@@ -86,9 +86,9 @@ namespace Content.Server.Traitor.Uplink
                                                            );
             var chosenDiscounts = new Dictionary<DiscountCategory, int>
             {
-                [DiscountCategory.Category0] = 0,
-                [DiscountCategory.Category1] = 0,
-                [DiscountCategory.Category2] = 0,
+                [DiscountCategory.RareDiscounts] = 0,
+                [DiscountCategory.UsualDiscounts] = 0,
+                [DiscountCategory.VeryRareDiscounts] = 0,
             };
             var category2DiscountCount = 0;
             var category0DiscountCount = 0;
@@ -99,10 +99,10 @@ namespace Content.Server.Traitor.Uplink
                 switch (roll)
                 {
                     case <= 2:
-                        chosenDiscounts[DiscountCategory.Category2]++;
+                        chosenDiscounts[DiscountCategory.VeryRareDiscounts]++;
                         if (category2DiscountCount >= settings.MaxCategory2Discounts)
                         {
-                            chosenDiscounts[DiscountCategory.Category1]++;
+                            chosenDiscounts[DiscountCategory.UsualDiscounts]++;
                         }
                         else
                         {
@@ -113,17 +113,17 @@ namespace Content.Server.Traitor.Uplink
                     case <= 20:
                         if (category0DiscountCount <= settings.MaxCategory0Discounts)
                         {
-                            chosenDiscounts[DiscountCategory.Category0]++;
+                            chosenDiscounts[DiscountCategory.RareDiscounts]++;
                             category0DiscountCount++;
                         }
                         else
                         {
-                            chosenDiscounts[DiscountCategory.Category1]++;
+                            chosenDiscounts[DiscountCategory.UsualDiscounts]++;
                         }
 
                         break;
                     default:
-                        chosenDiscounts[DiscountCategory.Category1]++;
+                        chosenDiscounts[DiscountCategory.UsualDiscounts]++;
                         break;
                 }
             }
