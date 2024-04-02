@@ -135,7 +135,7 @@ public abstract partial class SharedHandsSystem
         }
 
         var (itemPos, itemRot) = TransformSystem.GetWorldPositionRotation(entity);
-        var origin = new MapCoordinates(itemPos, itemXform.MapId);
+        var origin = new MapCoordinates(itemPos, itemXform.MapID);
         var target = targetDropLocation.Value.ToMap(EntityManager, TransformSystem);
         TransformSystem.SetWorldPositionRotation(entity, GetFinalDropCoordinates(uid, origin, target), itemRot);
         return true;
