@@ -83,6 +83,7 @@
     templateId: borg
   - type: Hands
     showInHands: false
+    disableExplosionRecursion: true
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:

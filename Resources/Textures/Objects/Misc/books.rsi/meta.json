@@ -1,71 +1,74 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/commit/37fb6bc6dd20005775dde8d886f48f7722606b77",
+  "copyright": "Base sprite taken at: https://github.com/tgstation/tgstation/commit/37fb6bc6dd20005775dde8d886f48f7722606b77 , splitted on layers by TheShuEd (github)",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "book0"
+      "name": "book_icon"
     },
     {
-      "name": "book1"
+      "name": "cover_base"
     },
     {
-      "name": "book2"
+      "name": "cover_old"
     },
     {
-      "name": "book3"
+      "name": "cover_strong"
     },
     {
-      "name": "book4"
+      "name": "decor_wingette"
     },
     {
-      "name": "book5"
+      "name": "decor_wingette_flat"
     },
     {
-      "name": "book6"
+      "name": "decor_wingette_circle"
     },
     {
-      "name": "book7"
+      "name": "decor_bottom"
     },
     {
-      "name": "book8"
+      "name": "decor_diagonal"
     },
     {
-      "name": "book_infections"
+      "name": "decor_middle"
     },
     {
-      "name": "book_cooking"
+      "name": "decor_spine"
     },
     {
-      "name": "book_engineering"
+      "name": "decor_vertical_middle"
     },
     {
-      "name": "book_engineering2"
+      "name": "detail_bookmark"
     },
     {
-      "name": "book_hacking"
+      "name": "detail_rivets"
     },
     {
-      "name": "book_detective"
+      "name": "icon_apple"
     },
     {
-      "name": "book_nuclear"
+      "name": "icon_atmos"
     },
     {
-      "name": "book_particle_accelerator"
+      "name": "icon_aurora"
     },
     {
-      "name": "book_cloning"
+      "name": "icon_banana"
     },
     {
-      "name": "book_hydroponics_pod_people"
+      "name": "icon_bar"
     },
     {
-      "name": "book_borg",
+      "name": "icon_biohazard"
+    },
+    {
+      "name": "icon_borg",
       "delays": [
         [
           6,
@@ -74,19 +77,61 @@
       ]
     },
     {
-      "name": "book_chemistry"
+      "name": "icon_briefcase"
     },
     {
-      "name": "book_bar"
+      "name": "icon_bucket"
     },
     {
-      "name": "book_space_law"
+      "name": "icon_cabbage"
     },
     {
-      "name": "book_demonomicon",
+      "name": "icon_chemical"
+    },
+    {
+      "name": "icon_corner"
+    },
+    {
+      "name": "icon_diamond"
+    },
+    {
+      "name": "icon_dna"
+    },
+    {
+      "name": "icon_eye"
+    },
+    {
+      "name": "icon_fish"
+    },
+    {
+      "name": "icon_glow"
+    },
+    {
+      "name": "icon_hacking"
+    },
+    {
+      "name": "icon_ian"
+    },
+    {
+      "name": "icon_law"
+    },
+    {
+      "name": "icon_letter_N"
+    },
+    {
+      "name": "icon_letter_P"
+    },
+    {
+      "name": "icon_lightning"
+    },
+    {
+      "name": "icon_magic"
+    },
+    {
+      "name": "icon_magic_fireball",
       "delays": [
         [
-          0.5,
+          0.1,
           0.1,
           0.1,
           0.1
@@ -94,22 +139,115 @@
       ]
     },
     {
-      "name": "book_origami"
+      "name": "icon_magic_forcewall",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
     },
     {
-      "name": "book_boneworking"
+      "name": "icon_magic_knock",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     },
     {
-      "name": "book_fish"
+      "name": "icon_magnifier"
     },
     {
-      "name": "book_science"
+      "name": "icon_medical"
     },
     {
-      "name": "book_medical"
+      "name": "icon_medical_cross"
     },
     {
-      "name": "book_security"
+      "name": "icon_mount"
+    },
+    {
+      "name": "icon_nuclear"
+    },
+    {
+      "name": "icon_origami"
+    },
+    {
+      "name": "icon_pentagramm"
+    },
+    {
+      "name": "icon_planet"
+    },
+    {
+      "name": "icon_possum"
+    },
+    {
+      "name": "icon_question"
+    },
+    {
+      "name": "icon_scmmd"
+    },
+    {
+      "name": "icon_skull"
+    },
+    {
+      "name": "icon_stars"
+    },
+    {
+      "name": "icon_stars2"
+    },
+    {
+      "name": "icon_stunbaton"
+    },
+    {
+      "name": "icon_temple"
+    },
+    {
+      "name": "icon_text"
+    },
+    {
+      "name": "icon_text2"
+    },
+    {
+      "name": "icon_text3"
+    },
+    {
+      "name": "icon_time"
+    },
+    {
+      "name": "icon_tree"
+    },
+    {
+      "name": "icon_wrench"
+    },
+    {
+      "name": "overlay_blood"
+    },
+    {
+      "name": "overlay_dirt"
+    },
+    {
+      "name": "overlay_null"
+    },
+    {
+      "name": "paper"
+    },
+    {
+      "name": "paper_blood",
+      "delays": [
+        [
+          5,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     }
   ]
 }
