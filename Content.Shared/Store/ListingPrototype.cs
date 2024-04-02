@@ -40,7 +40,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// Options for discount - % of how much item costs can be cut by discount.
     /// </summary>
     [DataField("discountOptions")]
-    public List<float> DiscountOptions = default!;
+    public List<float>? DiscountOptions;
 
     /// <summary>
     /// The description of the listing. If empty, uses the entity's description (if present)
