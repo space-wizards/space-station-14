@@ -14,7 +14,6 @@ using Content.Shared.Verbs;
 using Content.Shared.RadioJammer;
 
 namespace Content.Server.Radio.EntitySystems;
-
 public sealed class JammerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
