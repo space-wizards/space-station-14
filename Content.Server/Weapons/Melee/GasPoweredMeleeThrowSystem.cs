@@ -51,7 +51,7 @@ public sealed class GasPoweredMeleeThrowSystem : SharedGasPoweredMeleeThrowSyste
         if (gas == null)
             return;
 
-        var environment = _atmos.GetContainingMixture(ent, false, true);
+        var environment = _atmos.GetContainingMixture(ent.Owner, false, true);
         var removed = _gasTank.RemoveAir(gas.Value, ent.Comp.GasUsage);
         if (environment != null && removed != null)
         {
