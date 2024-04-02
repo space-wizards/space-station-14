@@ -7,7 +7,7 @@
   - type: Item
     size: Huge
   - type: Sprite
-    sprite: Objects\Power\portable_recharger.rsi
+    sprite: Objects/Power/portable_recharger.rsi
     state: charging
   - type: Clothing
     equippedPrefix: charging
