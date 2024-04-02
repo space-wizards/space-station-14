@@ -16,7 +16,7 @@ public sealed class PoweredLightVariationPassSystem : VariationPassSystem<Powere
         var query = AllEntityQuery<PoweredLightComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var comp, out var xform))
         {
-            if (!IsMemberOfStation((uid, xform), ref args))
+            if (!IsMemberOfLargestStationGrid((uid, xform), ref args))
                 continue;
 
             if (Random.Prob(ent.Comp.LightBreakChance))

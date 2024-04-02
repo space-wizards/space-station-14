@@ -44,7 +44,7 @@ public abstract class BaseEntityReplaceVariationPassSystem<TEntComp, TGameRuleCo
         var enumerator = AllEntityQuery<TEntComp, TransformComponent>();
         while (enumerator.MoveNext(out var uid, out _, out var xform))
         {
-            if (!IsMemberOfStation((uid, xform), ref args))
+            if (!IsMemberOfLargestStationGrid((uid, xform), ref args))
                 continue;
 
             if (RobustRandom.Prob(prob))
