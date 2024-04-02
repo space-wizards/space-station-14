@@ -45,8 +45,7 @@ namespace Content.Shared.Examine
         /// <summary>
         ///     Creates a new examine tooltip with arbitrary info.
         /// </summary>
-        public abstract void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message,
-            bool getVerbs, bool centerAtCursor);
+        public abstract void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor);
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
@@ -82,8 +81,11 @@ namespace Content.Shared.Examine
         }
 
         [Pure]
-        public virtual bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null,
-            EntityUid? examined = null, ExaminerComponent? examinerComp = null)
+        public virtual bool CanExamine(EntityUid examiner,
+            MapCoordinates target,
+            Ignored? predicate = null,
+            EntityUid? examined = null,
+            ExaminerComponent? examinerComp = null)
         {
             // TODO occluded container checks
             // also requires checking if the examiner has either a storage or stripping UI open, as the item may be accessible via that UI

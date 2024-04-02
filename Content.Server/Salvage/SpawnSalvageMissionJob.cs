@@ -246,7 +246,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             if (entry == null)
                 break;
 
-            await SpawnRandomEntry(mapUid, grid, entry, dungeon, random);
+            await SpawnRandomEntry(new Entity<MapGridComponent>(mapUid, grid), entry, dungeon, random);
         }
 
         var allLoot = _prototypeManager.Index<SalvageLootPrototype>(SharedSalvageSystem.ExpeditionsLootProto);
@@ -273,7 +273,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                             break;
 
                         _sawmill.Debug($"Spawning dungeon loot {entry.Proto}");
-                        await SpawnRandomEntry(mapUid, grid, entry, dungeon, random);
+                        await SpawnRandomEntry(new Entity<MapGridComponent>(mapUid, grid), entry, dungeon, random);
                     }
 
                     break;
@@ -285,7 +285,9 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         return true;
     }
 
-    private async Task SpawnRandomEntry(EntityUid gridUid, MapGridComponent grid, IBudgetEntry entry, Dungeon dungeon,
+    private async Task SpawnRandomEntry(Entity<MapGridComponent> grid,
+        IBudgetEntry entry,
+        Dungeon dungeon,
         Random random)
 
     {
@@ -305,13 +307,13 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             {
                 var tile = availableTiles.RemoveSwap(random.Next(availableTiles.Count));
 
-                if (!_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, grid), tile, (int) CollisionGroup.MachineLayer,
+                if (!_anchorable.TileFree(new Entity<MapGridComponent>(grid, grid), tile, (int) CollisionGroup.MachineLayer,
                         (int) CollisionGroup.MachineLayer))
                 {
                     continue;
                 }
 
-                var uid = _entManager.SpawnAtPosition(entry.Proto, grid.GridTileToLocal(tile));
+                var uid = _entManager.SpawnAtPosition(entry.Proto, grid.Comp.GridTileToLocal(tile));
                 _entManager.RemoveComponent<GhostRoleComponent>(uid);
                 _entManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
                 return;
