@@ -143,7 +143,7 @@ namespace Content.Server.Traitor.Uplink
 
                 var chosen = _random.GetItems(itemsForDiscount, itemsCount, allowDuplicates: false);
                 var discountData = from listingData in chosen
-                    let discount = _random.Pick(listingData.DiscountOptions)
+                    let discount = _random.Pick(listingData.DiscountOptions!)
                     select new StoreDiscountData
                     {
                         ListingId = listingData.ID,
