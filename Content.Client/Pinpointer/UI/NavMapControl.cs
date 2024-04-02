@@ -57,7 +57,8 @@ public partial class NavMapControl : MapGridControl
     protected static float MaxDisplayedRange = 128f;
     protected static float DefaultDisplayedRange = 48f;
     protected float MinmapScaleModifier = 0.075f;
-    protected float ThinWallThickness = 0.2f;
+    protected float ThinWallThickness = 0.165f;
+    protected float ThinDoorThickness = 0.3333f;
 
     // Local variables
     private float _updateTimer = 0.25f;
@@ -267,7 +268,7 @@ public partial class NavMapControl : MapGridControl
         // Map re-centering
         _recenter.Disabled = DrawRecenter();
 
-        _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(DefaultDisplayedRange / WorldRange ):0.0}"));
+        _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(DefaultDisplayedRange / WorldRange):0.0}"));
 
         if (_navMap == null || _xform == null)
             return;
@@ -361,8 +362,15 @@ public partial class NavMapControl : MapGridControl
                     continue;
 
                 // Alright now we'll work out our edges
-                var relativeTile = SharedNavMapSystem.GetTile(mask);
-                var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relativeTile) * _grid.TileSize;
+                var relative = SharedNavMapSystem.GetTile(mask);
+                var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relative) * _grid.TileSize;
+
+                if (!_navMapSystem.AllTileEdgesAreOccupied(chunk.TileData, relative))
+                {
+                    AddThinAirlock(chunk.TileData, tile);
+                    continue;
+                }
+
                 var position = new Vector2(tile.X + 0.5f, tile.Y + 0.5f) - offset;
 
                 position = ScalePosition(position with { Y = -position.Y });
@@ -630,6 +638,55 @@ public partial class NavMapControl : MapGridControl
                     break;
                 case AtmosDirection.West:
                     TileBlocks.Add((new Vector2(tile.X, -tile.Y), new Vector2(tile.X + ThinWallThickness, -tile.Y - 1f)));
+                    break;
+            }
+        }
+    }
+
+    private void AddThinAirlock(Dictionary<AtmosDirection, ushort> tileData, Vector2i tile)
+    {
+        if (_grid == null)
+            return;
+
+        if (_navMapSystem == null)
+            return;
+
+        var shrinkage = 0.165f;
+        var shrinkage2 = 0.05f;
+
+        foreach (var (direction, mask) in tileData)
+        {
+            var relative = SharedMapSystem.GetChunkRelative(tile, SharedNavMapSystem.ChunkSize);
+            var flag = (ushort) SharedNavMapSystem.GetFlag(relative);
+
+            if ((mask & flag) == 0)
+                continue;
+
+            switch (direction)
+            {
+                case AtmosDirection.North:
+                    TileBlocks.Add((new Vector2(tile.X + shrinkage, -tile.Y - 1 + ThinDoorThickness - shrinkage2),
+                        new Vector2(tile.X + 1f - shrinkage, -tile.Y - 1f + shrinkage2)));
+                    TileLines.Add(new NavMapLine(new Vector2(tile.X + 0.5f, -tile.Y - 1 + ThinDoorThickness - shrinkage2),
+                        new Vector2(tile.X + 0.5f, -tile.Y - 1f + shrinkage2)));
+                    break;
+                case AtmosDirection.East:
+                    TileBlocks.Add((new Vector2(tile.X + shrinkage2 + 1 - ThinDoorThickness, -tile.Y - shrinkage),
+                        new Vector2(tile.X + 1f - shrinkage2, -tile.Y - 1f + shrinkage)));
+                    TileLines.Add(new NavMapLine(new Vector2(tile.X + shrinkage2 + 1 - ThinDoorThickness, -tile.Y - 0.5f),
+                        new Vector2(tile.X + 1f - shrinkage2, -tile.Y - 0.5f)));
+                    break;
+                case AtmosDirection.South:
+                    TileBlocks.Add((new Vector2(tile.X + shrinkage, -tile.Y - shrinkage2),
+                        new Vector2(tile.X + 1f - shrinkage, -tile.Y - ThinDoorThickness + shrinkage2)));
+                    TileLines.Add(new NavMapLine(new Vector2(tile.X + 0.5f, -tile.Y - shrinkage2),
+                        new Vector2(tile.X + 0.5f, -tile.Y - ThinDoorThickness + shrinkage2)));
+                    break;
+                case AtmosDirection.West:
+                    TileBlocks.Add((new Vector2(tile.X + shrinkage2, -tile.Y - shrinkage),
+                        new Vector2(tile.X - shrinkage2 + ThinDoorThickness, -tile.Y - 1f + shrinkage)));
+                    TileLines.Add(new NavMapLine(new Vector2(tile.X + shrinkage2, -tile.Y - 0.5f),
+                        new Vector2(tile.X - shrinkage2 + ThinDoorThickness, -tile.Y - 0.5f)));
                     break;
             }
         }
