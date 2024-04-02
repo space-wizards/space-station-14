@@ -296,7 +296,7 @@
     explosionType: Default
     totalIntensity: 1800
     intensitySlope: 0.5
-    maxIntensity: 30
+    maxIntensity: 90
     canCreateVacuum: false
   - type: Defusable
     bolted: false
