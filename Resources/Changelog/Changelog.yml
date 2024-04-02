@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Agoichi
-  changes:
-  - message: Bio hoods hiding your face now
-    type: Tweak
-  - message: Bio hoods now can be used as a breath mask
-    type: Tweak
-  - message: You can not eat while you wearing bio hood
-    type: Tweak
-  id: 5792
-  time: '2024-01-26T00:13:42.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24570
 - author: yathxyz
   changes:
   - message: Updated nixpkgs input
@@ -3813,3 +3802,11 @@
   id: 6291
   time: '2024-04-02T05:17:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26654
+- author: Simyon
+  changes:
+  - message: The hands of cyborgs are now explosion proof. Your beakers wont ever
+      break again!
+    type: Fix
+  id: 6292
+  time: '2024-04-02T05:18:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26515
