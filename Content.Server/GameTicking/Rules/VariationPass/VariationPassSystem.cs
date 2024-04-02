@@ -17,7 +17,7 @@ public abstract class VariationPassSystem<T> : GameRuleSystem<T>
     [Dependency] protected readonly StationSystem Stations = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] protected readonly MapSystem Map = default!;
-    protected  EntityQuery<MapGridComponent> _mapgridQuery;
+    private EntityQuery<MapGridComponent> _mapgridQuery;
     public override void Initialize()
     {
         base.Initialize();
