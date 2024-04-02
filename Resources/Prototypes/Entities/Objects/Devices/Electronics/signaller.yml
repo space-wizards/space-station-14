@@ -4,7 +4,7 @@
   parent: BaseItem
   id: RemoteSignaller
   name: remote signaller
-  description: A handheld device used for remotely sending signals to objects.
+  description: A handheld device used for remotely sending signals to objects within a small radius of about 15 meters.
   components:
   - type: Sprite
     sprite: Objects/Devices/signaller.rsi
@@ -19,3 +19,21 @@
   - type: Tag
     tags:
     - Payload
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 15
+
+- type: entity
+  parent: RemoteSignaller
+  id: RemoteSignallerAdvanced
+  name: advanced remote signaller
+  description: A handheld device used for remotely sending signals to objects within a small radius of about 50 meters.
+  components:
+  - type: Sprite
+    state: signaller2
+  - type: WirelessNetworkConnection
+    range: 50
+  - type: StaticPrice
+    price: 30

@@ -91,8 +91,6 @@
   - type: Tag
     tags:
       - Spray
-      - DroneUsable #They don't have any other chem stuff on their whitelist so they can't refill it
-
 # Vapor
 
 - type: entity

@@ -23,16 +23,10 @@ public sealed class HungerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HungerComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<HungerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<HungerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<HungerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         SubscribeLocalEvent<HungerComponent, RejuvenateEvent>(OnRejuvenate);
-    }
-
-    private void OnUnpaused(EntityUid uid, HungerComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextUpdateTime += args.PausedTime;
     }
 
     private void OnMapInit(EntityUid uid, HungerComponent component, MapInitEvent args)
@@ -91,7 +85,7 @@ public sealed class HungerSystem : EntitySystem
             component.Thresholds[HungerThreshold.Dead],
             component.Thresholds[HungerThreshold.Overfed]);
         UpdateCurrentThreshold(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void UpdateCurrentThreshold(EntityUid uid, HungerComponent? component = null)
@@ -104,7 +98,7 @@ public sealed class HungerSystem : EntitySystem
             return;
         component.CurrentThreshold = calculatedHungerThreshold;
         DoHungerThresholdEffects(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void DoHungerThresholdEffects(EntityUid uid, HungerComponent? component = null, bool force = false)

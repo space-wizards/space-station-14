@@ -11,6 +11,9 @@
       "name": "nuclearbomb_deployed"
     },
     {
+      "name": "nuclearbomb_deployed_unlit"
+    },
+    {
       "name": "nukefestive",
       "delays": [
         [

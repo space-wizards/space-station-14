@@ -37,7 +37,7 @@ public sealed class ActionContainerSystem : EntitySystem
 
     private void OnMindAdded(EntityUid uid, ActionsContainerComponent component, MindAddedMessage args)
     {
-        if(!_mind.TryGetMind(uid, out var mindId, out _))
+        if (!_mind.TryGetMind(uid, out var mindId, out _))
             return;
         if (!TryComp<ActionsContainerComponent>(mindId, out var mindActionContainerComp))
             return;
@@ -143,20 +143,15 @@ public sealed class ActionContainerSystem : EntitySystem
             return;
 
         DebugTools.AssertEqual(action.Container, newContainer);
-        DebugTools.AssertNull(action.AttachedEntity);
-
-        if (attached != null)
-            _actions.AddActionDirect(attached.Value, actionId, action: action);
-
         DebugTools.AssertEqual(action.AttachedEntity, attached);
     }
 
     /// <summary>
     /// Transfers all actions from one container to another, while keeping the attached entity the same.
     /// </summary>
-    /// &lt;remarks&gt;
+    /// <remarks>
     /// While the attached entity should be the same at the end, this will actually remove and then re-grant the action.
-    /// &lt;/remarks&gt;
+    /// </remarks>
     public void TransferAllActions(
         EntityUid from,
         EntityUid to,
@@ -305,11 +300,11 @@ public sealed class ActionContainerSystem : EntitySystem
         if (!_actions.TryGetActionData(args.Entity, out var data))
             return;
 
-        DebugTools.Assert(data.AttachedEntity == null || data.Container != EntityUid.Invalid);
-        DebugTools.Assert(data.Container == null || data.Container == uid);
-
-        data.Container = uid;
-        Dirty(uid, component);
+        if (data.Container != uid)
+        {
+            data.Container = uid;
+            Dirty(args.Entity, data);
+        }
 
         var ev = new ActionAddedEvent(args.Entity, data);
         RaiseLocalEvent(uid, ref ev);
@@ -320,21 +315,17 @@ public sealed class ActionContainerSystem : EntitySystem
         if (args.Container.ID != ActionsContainerComponent.ContainerId)
             return;
 
-        // Actions should only be getting removed while terminating or moving outside of PVS range.
-        DebugTools.Assert(Terminating(args.Entity)
-                          || _netMan.IsServer // I love gibbing code
-                          || _timing.ApplyingState);
-
         if (!_actions.TryGetActionData(args.Entity, out var data, false))
             return;
 
-        // No event - the only entity that should care about this is the entity that the action was provided to.
-        if (data.AttachedEntity != null)
-            _actions.RemoveAction(data.AttachedEntity.Value, args.Entity, null, data);
-
         var ev = new ActionRemovedEvent(args.Entity, data);
         RaiseLocalEvent(uid, ref ev);
+
+        if (data.Container == null)
+            return;
+
         data.Container = null;
+        Dirty(args.Entity, data);
     }
 
     private void OnActionAdded(EntityUid uid, ActionsContainerComponent component, ActionAddedEvent args)

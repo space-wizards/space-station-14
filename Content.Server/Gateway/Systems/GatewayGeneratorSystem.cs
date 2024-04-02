@@ -1,23 +1,16 @@
 using System.Linq;
-using System.Numerics;
 using Content.Server.Gateway.Components;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
-using Content.Server.Salvage;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Maps;
-using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
-using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics.Collision.Shapes;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -40,7 +33,6 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     [Dependency] private readonly DungeonSystem _dungeon = default!;
     [Dependency] private readonly GatewaySystem _gateway = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
-    [Dependency] private readonly RestrictedRangeSystem _restricted = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly TileSystem _tile = default!;
 
@@ -67,7 +59,6 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GatewayGeneratorComponent, EntityUnpausedEvent>(OnGeneratorUnpaused);
         SubscribeLocalEvent<GatewayGeneratorComponent, MapInitEvent>(OnGeneratorMapInit);
         SubscribeLocalEvent<GatewayGeneratorComponent, ComponentShutdown>(OnGeneratorShutdown);
         SubscribeLocalEvent<GatewayGeneratorDestinationComponent, AttemptGatewayOpenEvent>(OnGeneratorAttemptOpen);
@@ -83,11 +74,6 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 
             QueueDel(genUid);
         }
-    }
-
-    private void OnGeneratorUnpaused(Entity<GatewayGeneratorComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.NextUnlock += args.PausedTime;
     }
 
     private void OnGeneratorMapInit(EntityUid uid, GatewayGeneratorComponent generator, MapInitEvent args)

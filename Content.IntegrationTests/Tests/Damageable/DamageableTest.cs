@@ -170,19 +170,19 @@ namespace Content.IntegrationTests.Tests.Damageable
 
                 // Check that damage works properly if it is NOT perfectly divisible among group members
                 types = group3.DamageTypes;
-                damageToDeal = FixedPoint2.New(types.Count * 5 - 1);
-                damage = new DamageSpecifier(group3, damageToDeal);
+
+                Assert.That(types, Has.Count.EqualTo(3));
+
+                damage = new DamageSpecifier(group3, 14);
                 sDamageableSystem.TryChangeDamage(uid, damage, true);
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
-                    Assert.That(sDamageableComponent.DamagePerGroup[group3.ID], Is.EqualTo(damageToDeal));
-                    Assert.That(sDamageableComponent.Damage.DamageDict[type3a.ID], Is.EqualTo(damageToDeal / types.Count));
-                    Assert.That(sDamageableComponent.Damage.DamageDict[type3b.ID], Is.EqualTo(damageToDeal / types.Count));
-
-                    // last one will get 0.01 less, since its not perfectly divisble by 3
-                    Assert.That(sDamageableComponent.Damage.DamageDict[type3c.ID], Is.EqualTo(damageToDeal / types.Count - 0.01));
+                    Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.New(14)));
+                    Assert.That(sDamageableComponent.DamagePerGroup[group3.ID], Is.EqualTo(FixedPoint2.New(14)));
+                    Assert.That(sDamageableComponent.Damage.DamageDict[type3a.ID], Is.EqualTo(FixedPoint2.New(4.66f)));
+                    Assert.That(sDamageableComponent.Damage.DamageDict[type3b.ID], Is.EqualTo(FixedPoint2.New(4.67f)));
+                    Assert.That(sDamageableComponent.Damage.DamageDict[type3c.ID], Is.EqualTo(FixedPoint2.New(4.67f)));
                 });
 
                 // Heal
@@ -224,7 +224,7 @@ namespace Content.IntegrationTests.Tests.Damageable
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(sDamageableComponent.Damage.DamageDict[type3a.ID], Is.EqualTo(FixedPoint2.New(1.33)));
+                    Assert.That(sDamageableComponent.Damage.DamageDict[type3a.ID], Is.EqualTo(FixedPoint2.New(1.34)));
                     Assert.That(sDamageableComponent.Damage.DamageDict[type3b.ID], Is.EqualTo(FixedPoint2.New(3.33)));
                     Assert.That(sDamageableComponent.Damage.DamageDict[type3c.ID], Is.EqualTo(FixedPoint2.New(0)));
                 });

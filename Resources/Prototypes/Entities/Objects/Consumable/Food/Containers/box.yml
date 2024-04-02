@@ -214,6 +214,8 @@
   - type: Item
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     heldPrefix: box
+    shape:
+    - 0,0,1,1
   - type: Appearance
   - type: EntityStorageVisuals
     stateDoorOpen: box-open
@@ -474,6 +476,7 @@
     sprite: Objects/Storage/Happyhonk/clown.rsi
     heldPrefix: box
   - type: Storage
+    maxItemSize: Normal
     grid:
     - 0,0,3,3
   - type: Tag

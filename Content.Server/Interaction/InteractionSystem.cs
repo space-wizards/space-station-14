@@ -1,4 +1,3 @@
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
@@ -14,7 +13,6 @@ namespace Content.Server.Interaction
     [UsedImplicitly]
     public sealed partial class InteractionSystem : SharedInteractionSystem
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 

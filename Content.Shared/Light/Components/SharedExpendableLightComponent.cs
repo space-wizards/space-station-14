@@ -7,7 +7,7 @@ namespace Content.Shared.Light.Components;
 [NetworkedComponent]
 public abstract partial class SharedExpendableLightComponent : Component
 {
-    public static readonly AudioParams LoopedSoundParams = new(0, 1, "Master", 62.5f, 1, 1, true, 0.3f);
+    public static readonly AudioParams LoopedSoundParams = new(0, 1, 62.5f, 1, 1, true, 0.3f);
 
     [ViewVariables(VVAccess.ReadOnly)]
     public ExpendableLightState CurrentState { get; set; }

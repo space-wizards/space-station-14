@@ -9,8 +9,26 @@
   - type: Clothing
     sprite: Clothing/Shoes/Specific/chef.rsi
 
+# stuff common to all clown & jester shoes
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  abstract: true
+  parent: [ClothingShoesBaseButcherable, ClothingSlotBase]
+  id: ClothingShoesClownBase
+  components:
+  - type: ItemSlots
+    slots:
+      item:
+        name: clothing-boots-sidearm
+        whitelist:
+          tags:
+          - Knife
+          - ToySidearm
+        blacklist:
+          components:
+          - Sharp
+
+- type: entity
+  parent: ClothingShoesClownBase
   id: ClothingShoesClown
   name: clown shoes
   description: "The prankster's standard-issue clowning shoes. Damn they're huge!"
@@ -49,7 +67,7 @@
     acceleration: 5
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesClownBase
   id: ClothingShoesBling
   name: bling clown shoes
   description: Made of refined bananium and shined with the pulp of a fresh banana peel. These make a flashy statement.

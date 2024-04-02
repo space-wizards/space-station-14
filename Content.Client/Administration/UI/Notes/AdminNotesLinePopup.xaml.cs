@@ -36,12 +36,12 @@ public sealed partial class AdminNotesLinePopup : Popup
             ? Loc.GetString("admin-notes-round-id-unknown")
             : Loc.GetString("admin-notes-round-id", ("id", note.Round));
         CreatedByLabel.Text = Loc.GetString("admin-notes-created-by", ("author", note.CreatedByName));
-        CreatedAtLabel.Text = Loc.GetString("admin-notes-created-at", ("date", note.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")));
+        CreatedAtLabel.Text = Loc.GetString("admin-notes-created-at", ("date", note.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")));
         EditedByLabel.Text = Loc.GetString("admin-notes-last-edited-by", ("author", note.EditedByName));
-        EditedAtLabel.Text = Loc.GetString("admin-notes-last-edited-at", ("date", note.LastEditedAt?.ToString("yyyy-MM-dd HH:mm:ss") ?? Loc.GetString("admin-notes-edited-never")));
+        EditedAtLabel.Text = Loc.GetString("admin-notes-last-edited-at", ("date", note.LastEditedAt?.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss") ?? Loc.GetString("admin-notes-edited-never")));
         ExpiryTimeLabel.Text = note.ExpiryTime == null
             ? Loc.GetString("admin-notes-expires-never")
-            : Loc.GetString("admin-notes-expires", ("expires", note.ExpiryTime.Value.ToString("yyyy-MM-dd HH:mm:ss")));
+            : Loc.GetString("admin-notes-expires", ("expires", note.ExpiryTime.Value.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")));
         NoteTextEdit.InsertAtCursor(note.Message);
 
         if (note.NoteType is NoteType.ServerBan or NoteType.RoleBan)

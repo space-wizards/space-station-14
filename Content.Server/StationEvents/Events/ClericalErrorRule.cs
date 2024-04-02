@@ -29,15 +29,16 @@ public sealed class ClericalErrorRule : StationEventSystem<ClericalErrorRuleComp
         var min = (int) Math.Max(1, Math.Round(component.MinToRemove * recordCount));
         var max = (int) Math.Max(min, Math.Round(component.MaxToRemove * recordCount));
         var toRemove = RobustRandom.Next(min, max);
-        var keys = new List<StationRecordKey>();
+        var keys = new List<uint>();
         for (var i = 0; i < toRemove; i++)
         {
             keys.Add(RobustRandom.Pick(stationRecords.Records.Keys));
         }
 
-        foreach (var key in keys)
+        foreach (var id in keys)
         {
-            _stationRecords.RemoveRecord(chosenStation.Value, key, stationRecords);
+            var key = new StationRecordKey(id, chosenStation.Value);
+            _stationRecords.RemoveRecord(key, stationRecords);
         }
     }
 }

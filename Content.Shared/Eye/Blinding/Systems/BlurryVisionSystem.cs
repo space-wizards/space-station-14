@@ -6,8 +6,6 @@ namespace Content.Shared.Eye.Blinding.Systems;
 
 public sealed class BlurryVisionSystem : EntitySystem
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-
     public override void Initialize()
     {
         base.Initialize();

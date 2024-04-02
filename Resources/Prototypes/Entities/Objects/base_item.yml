@@ -23,8 +23,6 @@
     soundHit:
       collection: MetalThud
   - type: CollisionWake
-  - type: TileFrictionModifier
-    modifier: 0.5
   - type: Physics
     bodyType: Dynamic
     fixedRotation: false
