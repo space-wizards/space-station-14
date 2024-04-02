@@ -159,13 +159,18 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(origin, other, range, predicate, wrapped, ignoreInsideBlocker, entMan);
         }
 
-        public bool InRangeUnOccluded<TState>(MapCoordinates origin, MapCoordinates other, float range,
-            TState state, Func<EntityUid, TState, bool> predicate, bool ignoreInsideBlocker = true,
+        public bool InRangeUnOccluded<TState>(
+            MapCoordinates origin,
+            MapCoordinates other,
+            float range,
+            TState state,
+            Func<EntityUid, TState, bool> predicate,
+            bool ignoreInsideBlocker = true,
             IEntityManager? entMan = null)
         {
             if (other.MapId != origin.MapId ||
-                other.MapId == MapId.Nullspace)
-                return false;
+                // ReSharper disable once MissingLinebreak
+                other.MapId == MapId.Nullspace) return false;
 
             var dir = other.Position - origin.Position;
             var length = dir.Length();
@@ -189,12 +194,10 @@ namespace Content.Shared.Examine
             var ray = new Ray(origin.Position, dir.Normalized());
             var rayResults = _occluder
                 .IntersectRayWithPredicate(origin.MapId, ray, length, state, predicate, false).ToList();
-
-            if (rayResults.Count == 0)
-                return true;
-
-            if (!ignoreInsideBlocker)
-                return false;
+            // ReSharper disable once MissingLinebreak
+            if (rayResults.Count == 0) return true;
+            // ReSharper disable once MissingLinebreak
+            if (!ignoreInsideBlocker) return false;
 
             foreach (var result in rayResults)
             {
