@@ -299,6 +299,14 @@
     maxIntensity: 10
     canCreateVacuum: false
   - type: Defusable
+    bolted: false
+  - type: WiresPanel
+  - type: Anchorable
+    delay: 1
+  - type: UserInterface
+    interfaces:
+      - key: enum.WiresUiKey.Key
+        type: WiresBoundUserInterface
   - type: Destructible
     thresholds:
     - trigger:
