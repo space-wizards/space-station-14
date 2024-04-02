@@ -194,7 +194,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (!SearchForBattery(container.ContainedEntities[0], out _, out var heldBattery))
             return CellChargerStatus.Off;
 
-        if (Math.Abs(heldBattery.MaxCharge - heldBattery.CurrentCharge) < 0.01f)
+        if (Math.Abs(heldBattery.MaxCharge - heldBattery.CurrentCharge) < 0.01)
             return CellChargerStatus.Charged;
 
         return CellChargerStatus.Charging;

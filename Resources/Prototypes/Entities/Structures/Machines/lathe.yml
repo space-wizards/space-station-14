@@ -732,6 +732,7 @@
       - ShuttleGunPerforatorCircuitboard
       - ShuttleGunFriendshipCircuitboard
       - ShuttleGunDusterCircuitboard
+      - PortableRecharger
   - type: MaterialStorage
     whitelist:
       tags:
