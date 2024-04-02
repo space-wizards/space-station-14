@@ -1,7 +1,7 @@
 - type: species
   id: Moth
   name: species-name-moth
-  roundStart: true
+  roundStart: false
   prototype: MobMoth
   sprites: MobMothSprites
   defaultSkinTone: "#ffda93"
