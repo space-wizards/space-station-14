@@ -1,44 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Add title2.ogg to space ambience tracks.
-    type: Tweak
-  id: 5788
-  time: '2024-01-25T13:59:49.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24501
-- author: Tayrtahn
-  changes:
-  - message: Glued mobs can no longer struggle free from their captor's hands.
-    type: Tweak
-  id: 5789
-  time: '2024-01-25T14:01:13.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24488
-- author: mirrorcult
-  changes:
-  - message: Atomic Amnesia MMX, Vibe Ace, Monument and Marhaba have been removed
-      as lobby music tracks
-    type: Remove
-  id: 5790
-  time: '2024-01-25T14:08:29.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24480
-- author: Dutch-VanDerLinde
-  changes:
-  - message: To prevent accidental spills, paper cups can no longer be quick-equipped.
-    type: Fix
-  id: 5791
-  time: '2024-01-25T22:04:31.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24560
-- author: Agoichi
-  changes:
-  - message: Bio hoods hiding your face now
-    type: Tweak
-  - message: Bio hoods now can be used as a breath mask
-    type: Tweak
-  - message: You can not eat while you wearing bio hood
-    type: Tweak
-  id: 5792
-  time: '2024-01-26T00:13:42.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24570
 - author: yathxyz
   changes:
   - message: Updated nixpkgs input
@@ -3810,3 +3770,43 @@
   id: 6287
   time: '2024-04-01T08:29:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24683
+- author: Sk1tch
+  changes:
+  - message: Added chat window opacity slider to options.
+    type: Add
+  id: 6288
+  time: '2024-04-01T20:48:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24990
+- author: TheShuEd
+  changes:
+  - message: added procedurally generating books to library.
+    type: Add
+  - message: full books resprite
+    type: Add
+  id: 6289
+  time: '2024-04-01T21:00:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25840
+- author: osjarw
+  changes:
+  - message: Ambuzol plus pills now have different sprites from ambuzol pills. Now
+      CBURN agents and Nukies who bought the syndicate zombie bundle might realize
+      that they also have some ambuzol plus.
+    type: Tweak
+  id: 6290
+  time: '2024-04-02T00:50:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26651
+- author: osjarw
+  changes:
+  - message: Air injectors finally have working indicator lights while enabled.
+    type: Fix
+  id: 6291
+  time: '2024-04-02T05:17:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26654
+- author: Simyon
+  changes:
+  - message: The hands of cyborgs are now explosion proof. Your beakers wont ever
+      break again!
+    type: Fix
+  id: 6292
+  time: '2024-04-02T05:18:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26515
