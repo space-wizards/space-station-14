@@ -134,8 +134,10 @@ public abstract partial class SharedHandsSystem
             return true;
         }
 
+        var origin = TransformSystem.GetMapCoordinates(entity);
         var target = targetDropLocation.Value.ToMap(EntityManager, TransformSystem);
-        TransformSystem.SetWorldPosition(itemXform, GetFinalDropCoordinates(uid, userXform.MapPosition, target));
+        var itemRot = TransformSystem.GetWorldRotation(entity); // based on camera orientation... 
+        TransformSystem.SetWorldPositionRotation(entity, GetFinalDropCoordinates(uid, origin, target), itemRot);
         return true;
     }
 

@@ -160,10 +160,11 @@ public sealed class DumpableSystem : EntitySystem
             dumped = true;
 
             var targetPos = _transformSystem.GetWorldPosition(args.Args.Target.Value);
+            var targetRot = _transformSystem.GetWorldRotation(args.Args.Target.Value);
 
             foreach (var entity in dumpQueue)
             {
-                _transformSystem.SetWorldPosition(entity, targetPos + _random.NextVector2Box() / 4);
+                _transformSystem.SetWorldPositionRotation(entity, targetPos + _random.NextVector2Box() / 4, targetRot);
             }
         }
         else
