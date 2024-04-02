@@ -1,36 +1,31 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
+using Content.Server.Atmos.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Warps;
+using Content.Shared.Atmos;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Localizations;
+using Content.Shared.Maps;
 using Content.Shared.Pinpointer;
-using Content.Shared.Tag;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Pinpointer;
 
 /// <summary>
 /// Handles data to be used for in-grid map displays.
 /// </summary>
-public sealed class NavMapSystem : SharedNavMapSystem
+public sealed partial class NavMapSystem : SharedNavMapSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly TagSystem _tags = default!;
-    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-
-    private EntityQuery<PhysicsComponent> _physicsQuery;
-    private EntityQuery<TagComponent> _tagQuery;
 
     public const float CloseDistance = 15f;
     public const float FarDistance = 30f;
@@ -39,33 +34,115 @@ public sealed class NavMapSystem : SharedNavMapSystem
     {
         base.Initialize();
 
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
-        _tagQuery = GetEntityQuery<TagComponent>();
-
-        SubscribeLocalEvent<AnchorStateChangedEvent>(OnAnchorChange);
-        SubscribeLocalEvent<ReAnchorEvent>(OnReAnchor);
+        // Initialization events
         SubscribeLocalEvent<StationGridAddedEvent>(OnStationInit);
-        SubscribeLocalEvent<NavMapComponent, ComponentStartup>(OnNavMapStartup);
-        SubscribeLocalEvent<NavMapComponent, ComponentGetState>(OnGetState);
+
+        // Grid change events
         SubscribeLocalEvent<GridSplitEvent>(OnNavMapSplit);
+        SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
+        SubscribeLocalEvent<AnchorStateChangedEvent>(OnAnchorStateChanged);
 
+        // Beacon events
         SubscribeLocalEvent<NavMapBeaconComponent, MapInitEvent>(OnNavMapBeaconMapInit);
-        SubscribeLocalEvent<NavMapBeaconComponent, ComponentStartup>(OnNavMapBeaconStartup);
         SubscribeLocalEvent<NavMapBeaconComponent, AnchorStateChangedEvent>(OnNavMapBeaconAnchor);
-
-        SubscribeLocalEvent<NavMapDoorComponent, ComponentStartup>(OnNavMapDoorStartup);
-        SubscribeLocalEvent<NavMapDoorComponent, AnchorStateChangedEvent>(OnNavMapDoorAnchor);
-
         SubscribeLocalEvent<ConfigurableNavMapBeaconComponent, NavMapBeaconConfigureBuiMessage>(OnConfigureMessage);
         SubscribeLocalEvent<ConfigurableNavMapBeaconComponent, MapInitEvent>(OnConfigurableMapInit);
         SubscribeLocalEvent<ConfigurableNavMapBeaconComponent, ExaminedEvent>(OnConfigurableExamined);
+
+        // Data handling events
+        SubscribeLocalEvent<NavMapComponent, ComponentGetState>(OnGetState);
     }
 
+    #region: Initialization event handling
     private void OnStationInit(StationGridAddedEvent ev)
     {
         var comp = EnsureComp<NavMapComponent>(ev.GridId);
         RefreshGrid(ev.GridId, comp, Comp<MapGridComponent>(ev.GridId));
     }
+
+    #endregion
+
+    #region: Grid change event handling
+
+    private void OnNavMapSplit(ref GridSplitEvent args)
+    {
+        if (!TryComp(args.Grid, out NavMapComponent? comp))
+            return;
+
+        var gridQuery = GetEntityQuery<MapGridComponent>();
+
+        foreach (var grid in args.NewGrids)
+        {
+            var newComp = EnsureComp<NavMapComponent>(grid);
+            RefreshGrid(grid, newComp, gridQuery.GetComponent(grid));
+        }
+
+        RefreshGrid(args.Grid, comp, gridQuery.GetComponent(args.Grid));
+    }
+
+    private void OnTileChanged(ref TileChangedEvent ev)
+    {
+        if (!TryComp<NavMapComponent>(ev.NewTile.GridUid, out var navMapRegions))
+            return;
+
+        var tile = ev.NewTile.GridIndices;
+        var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
+
+        if (!navMapRegions.Chunks.TryGetValue((NavMapChunkType.Floor, chunkOrigin), out var chunk))
+            chunk = new(chunkOrigin);
+
+        // This could be easily replaced in the future to accommodate diagonal tiles
+        if (ev.NewTile.IsSpace())
+            chunk = UnsetAllEdgesForChunkTile(chunk, tile);
+
+        else
+            chunk = SetAllEdgesForChunkTile(chunk, tile);
+
+        // Update the component on the server side
+        navMapRegions.Chunks[(NavMapChunkType.Floor, chunkOrigin)] = chunk;
+
+        // Update the component on the client side
+        RaiseNetworkEvent(new NavMapChunkChangedEvent(GetNetEntity(ev.NewTile.GridUid), NavMapChunkType.Floor, chunkOrigin, chunk.TileData));
+    }
+
+    private void OnAnchorStateChanged(ref AnchorStateChangedEvent ev)
+    {
+        var gridUid = ev.Transform.GridUid;
+
+        if (gridUid == null)
+            return;
+
+        if (!TryComp<NavMapComponent>(gridUid, out var navMap) ||
+            !TryComp<MapGridComponent>(gridUid, out var mapGrid))
+            return;
+
+        // We are only concerned with airtight entities (walls, doors, etc) changing their anchor state
+        if (!HasComp<AirtightComponent>(ev.Entity))
+            return;
+
+        // Refresh the affected tile
+        var tile = _mapSystem.CoordinatesToTile(gridUid.Value, mapGrid, _transformSystem.GetMapCoordinates(ev.Entity, ev.Transform));
+        var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
+
+        RefreshTile(gridUid.Value, navMap, mapGrid, chunkOrigin, tile);
+
+        // Update potentially affected chunks
+        foreach (var category in EntityChunkTypes)
+        {
+            if (!navMap.Chunks.TryGetValue((category, chunkOrigin), out var chunk))
+                continue;
+
+            // Update the component on the server side
+            navMap.Chunks[(category, chunkOrigin)] = chunk;
+
+            // Update the component on the client side
+            RaiseNetworkEvent(new NavMapChunkChangedEvent(GetNetEntity(gridUid.Value), category, chunkOrigin, chunk.TileData));
+        }
+    }
+
+    #endregion
+
+    #region: Beacon event handling
 
     private void OnNavMapBeaconMapInit(EntityUid uid, NavMapBeaconComponent component, MapInitEvent args)
     {
@@ -74,28 +151,14 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
         component.Text = Loc.GetString(component.DefaultText);
         Dirty(uid, component);
-        RefreshNavGrid(uid);
-    }
 
-    private void OnNavMapBeaconStartup(EntityUid uid, NavMapBeaconComponent component, ComponentStartup args)
-    {
-        RefreshNavGrid(uid);
+        UpdateNavMapBeaconData(uid, component);
     }
 
     private void OnNavMapBeaconAnchor(EntityUid uid, NavMapBeaconComponent component, ref AnchorStateChangedEvent args)
     {
         UpdateBeaconEnabledVisuals((uid, component));
-        RefreshNavGrid(uid);
-    }
-
-    private void OnNavMapDoorStartup(Entity<NavMapDoorComponent> ent, ref ComponentStartup args)
-    {
-        RefreshNavGrid(ent);
-    }
-
-    private void OnNavMapDoorAnchor(Entity<NavMapDoorComponent> ent, ref AnchorStateChangedEvent args)
-    {
-        RefreshNavGrid(ent);
+        UpdateNavMapBeaconData(uid, component);
     }
 
     private void OnConfigureMessage(Entity<ConfigurableNavMapBeaconComponent> ent, ref NavMapBeaconConfigureBuiMessage args)
@@ -103,12 +166,12 @@ public sealed class NavMapSystem : SharedNavMapSystem
         if (args.Session.AttachedEntity is not { } user)
             return;
 
-        if (!TryComp<NavMapBeaconComponent>(ent, out var navMap))
+        if (!TryComp<NavMapBeaconComponent>(ent, out var beacon))
             return;
 
-        if (navMap.Text == args.Text &&
-            navMap.Color == args.Color &&
-            navMap.Enabled == args.Enabled)
+        if (beacon.Text == args.Text &&
+            beacon.Color == args.Color &&
+            beacon.Enabled == args.Enabled)
             return;
 
         _adminLog.Add(LogType.Action, LogImpact.Medium,
@@ -119,12 +182,12 @@ public sealed class NavMapSystem : SharedNavMapSystem
             warpPoint.Location = args.Text;
         }
 
-        navMap.Text = args.Text;
-        navMap.Color = args.Color;
-        navMap.Enabled = args.Enabled;
-        UpdateBeaconEnabledVisuals((ent, navMap));
-        Dirty(ent, navMap);
-        RefreshNavGrid(ent);
+        beacon.Text = args.Text;
+        beacon.Color = args.Color;
+        beacon.Enabled = args.Enabled;
+
+        UpdateBeaconEnabledVisuals((ent, beacon));
+        UpdateNavMapBeaconData(ent, beacon);
     }
 
     private void OnConfigurableMapInit(Entity<ConfigurableNavMapBeaconComponent> ent, ref MapInitEvent args)
@@ -152,231 +215,172 @@ public sealed class NavMapSystem : SharedNavMapSystem
             ("label", navMap.Text ?? string.Empty)));
     }
 
-    private void UpdateBeaconEnabledVisuals(Entity<NavMapBeaconComponent> ent)
-    {
-        _appearance.SetData(ent, NavMapBeaconVisuals.Enabled, ent.Comp.Enabled && Transform(ent).Anchored);
-    }
+    #endregion
 
-    /// <summary>
-    /// Refreshes the grid for the corresponding beacon.
-    /// </summary>
-    /// <param name="uid"></param>
-    private void RefreshNavGrid(EntityUid uid)
-    {
-        var xform = Transform(uid);
-
-        if (!TryComp<NavMapComponent>(xform.GridUid, out var navMap))
-            return;
-
-        Dirty(xform.GridUid.Value, navMap);
-    }
-
-    private bool CanBeacon(EntityUid uid, TransformComponent? xform = null)
-    {
-        if (!Resolve(uid, ref xform))
-            return false;
-
-        return xform.GridUid != null && xform.Anchored;
-    }
-
-    private void OnNavMapStartup(EntityUid uid, NavMapComponent component, ComponentStartup args)
-    {
-        if (!TryComp<MapGridComponent>(uid, out var grid))
-            return;
-
-        RefreshGrid(uid, component, grid);
-    }
-
-    private void OnNavMapSplit(ref GridSplitEvent args)
-    {
-        if (!TryComp(args.Grid, out NavMapComponent? comp))
-            return;
-
-        var gridQuery = GetEntityQuery<MapGridComponent>();
-
-        foreach (var grid in args.NewGrids)
-        {
-            var newComp = EnsureComp<NavMapComponent>(grid);
-            RefreshGrid(grid, newComp, gridQuery.GetComponent(grid));
-        }
-
-        RefreshGrid(args.Grid, comp, gridQuery.GetComponent(args.Grid));
-    }
-
-    private void RefreshGrid(EntityUid uid, NavMapComponent component, MapGridComponent grid)
-    {
-        component.Chunks.Clear();
-
-        var tiles = grid.GetAllTilesEnumerator();
-
-        while (tiles.MoveNext(out var tile))
-        {
-            var chunkOrigin = SharedMapSystem.GetChunkIndices(tile.Value.GridIndices, ChunkSize);
-
-            if (!component.Chunks.TryGetValue(chunkOrigin, out var chunk))
-            {
-                chunk = new NavMapChunk(chunkOrigin);
-                component.Chunks[chunkOrigin] = chunk;
-            }
-
-            RefreshTile(uid, grid, component, chunk, tile.Value.GridIndices);
-        }
-    }
+    #region: State event handling
 
     private void OnGetState(EntityUid uid, NavMapComponent component, ref ComponentGetState args)
     {
-        if (!TryComp<MapGridComponent>(uid, out var mapGrid))
-            return;
+        // Get the chunk data
+        var chunkData = new Dictionary<(NavMapChunkType, Vector2i), Dictionary<AtmosDirection, ushort>>(component.Chunks.Count);
 
-        var data = new Dictionary<Vector2i, int>(component.Chunks.Count);
-        foreach (var (index, chunk) in component.Chunks)
+        foreach (var ((category, origin), chunk) in component.Chunks)
         {
-            data.Add(index, chunk.TileData);
+            var chunkDatum = new Dictionary<AtmosDirection, ushort>(chunk.TileData.Count);
+
+            foreach (var (direction, tileData) in chunk.TileData)
+                chunkDatum[direction] = tileData;
+
+            chunkData.Add((category, origin), chunkDatum);
         }
 
-        var beaconQuery = AllEntityQuery<NavMapBeaconComponent, TransformComponent>();
+        // Get the station beacons
         var beacons = new List<NavMapBeacon>();
+        var beaconQuery = AllEntityQuery<NavMapBeaconComponent, TransformComponent>();
 
         while (beaconQuery.MoveNext(out var beaconUid, out var beacon, out var xform))
         {
-            if (!beacon.Enabled || xform.GridUid != uid || !CanBeacon(beaconUid, xform))
+            if (xform.GridUid != uid)
                 continue;
 
-            // TODO: Make warp points use metadata name instead.
-            string? name = beacon.Text;
+            if (!TryGetNavMapBeaconData(beaconUid, beacon, xform, out var beaconData))
+                continue;
 
-            if (string.IsNullOrEmpty(name))
-            {
-                if (TryComp<WarpPointComponent>(beaconUid, out var warpPoint) && warpPoint.Location != null)
-                {
-                    name = warpPoint.Location;
-                }
-                else
-                {
-                    name = MetaData(beaconUid).EntityName;
-                }
-            }
-
-            beacons.Add(new NavMapBeacon(beacon.Color, name, xform.LocalPosition));
+            beacons.Add(beaconData.Value);
         }
 
-        var airlockQuery = EntityQueryEnumerator<NavMapDoorComponent, TransformComponent>();
-        var airlocks = new List<NavMapAirlock>();
-        while (airlockQuery.MoveNext(out _, out _, out var xform))
-        {
-            if (xform.GridUid != uid || !xform.Anchored)
-                continue;
-
-            var pos = _map.TileIndicesFor(uid, mapGrid, xform.Coordinates);
-            var enumerator = _map.GetAnchoredEntitiesEnumerator(uid, mapGrid, pos);
-
-            var wallPresent = false;
-            while (enumerator.MoveNext(out var ent))
-            {
-                if (!_physicsQuery.TryGetComponent(ent, out var body) ||
-                    !body.CanCollide ||
-                    !body.Hard ||
-                    body.BodyType != BodyType.Static ||
-                    !_tags.HasTag(ent.Value, "Wall", _tagQuery) &&
-                    !_tags.HasTag(ent.Value, "Window", _tagQuery))
-                {
-                    continue;
-                }
-
-                wallPresent = true;
-                break;
-            }
-
-            if (wallPresent)
-                continue;
-
-            airlocks.Add(new NavMapAirlock(xform.LocalPosition));
-        }
-
-        // TODO: Diffs
+        // Set the state
         args.State = new NavMapComponentState()
         {
-            TileData = data,
+            ChunkData = chunkData,
             Beacons = beacons,
-            Airlocks = airlocks
         };
     }
 
-    private void OnReAnchor(ref ReAnchorEvent ev)
-    {
-        if (TryComp<MapGridComponent>(ev.OldGrid, out var oldGrid) &&
-            TryComp<NavMapComponent>(ev.OldGrid, out var navMap))
-        {
-            var chunkOrigin = SharedMapSystem.GetChunkIndices(ev.TilePos, ChunkSize);
+    #endregion
 
-            if (navMap.Chunks.TryGetValue(chunkOrigin, out var chunk))
-            {
-                RefreshTile(ev.OldGrid, oldGrid, navMap, chunk, ev.TilePos);
-            }
+    #region: Grid functions
+
+    private void RefreshGrid(EntityUid uid, NavMapComponent component, MapGridComponent mapGrid)
+    {
+        var tileRefs = _mapSystem.GetAllTiles(uid, mapGrid);
+
+        foreach (var tileRef in tileRefs)
+        {
+            var tile = tileRef.GridIndices;
+            var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
+
+            if (!component.Chunks.TryGetValue((NavMapChunkType.Floor, chunkOrigin), out var chunk))
+                chunk = new(chunkOrigin);
+
+            component.Chunks[(NavMapChunkType.Floor, chunkOrigin)] = SetAllEdgesForChunkTile(chunk, tile);
+
+            // Refresh the contents of the tile
+            RefreshTile(uid, component, mapGrid, chunkOrigin, tile);
         }
 
-        HandleAnchor(ev.Xform);
+        Dirty(uid, component);
     }
 
-    private void OnAnchorChange(ref AnchorStateChangedEvent ev)
-    {
-        HandleAnchor(ev.Transform);
-    }
-
-    private void HandleAnchor(TransformComponent xform)
-    {
-        if (!TryComp<NavMapComponent>(xform.GridUid, out var navMap) ||
-            !TryComp<MapGridComponent>(xform.GridUid, out var grid))
-            return;
-
-        var tile = grid.LocalToTile(xform.Coordinates);
-        var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
-
-        if (!navMap.Chunks.TryGetValue(chunkOrigin, out var chunk))
-        {
-            chunk = new NavMapChunk(chunkOrigin);
-            navMap.Chunks[chunkOrigin] = chunk;
-        }
-
-        RefreshTile(xform.GridUid.Value, grid, navMap, chunk, tile);
-    }
-
-    private void RefreshTile(EntityUid uid, MapGridComponent grid, NavMapComponent component, NavMapChunk chunk, Vector2i tile)
+    private void RefreshTile(EntityUid uid, NavMapComponent component, MapGridComponent mapGrid, Vector2i chunkOrigin, Vector2i tile)
     {
         var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
-        var existing = chunk.TileData;
-        var flag = GetFlag(relative);
+        var flag = (ushort) GetFlag(relative);
+        var invFlag = (ushort) ~flag;
 
-        chunk.TileData &= ~flag;
+        // Clear stale data from the tile across all entity associated chunks
+        foreach (var category in EntityChunkTypes)
+        {
+            if (!component.Chunks.TryGetValue((category, chunkOrigin), out var chunk))
+                chunk = new(chunkOrigin);
 
-        var enumerator = grid.GetAnchoredEntitiesEnumerator(tile);
-        // TODO: Use something to get convex poly.
+            foreach (var (direction, _) in chunk.TileData)
+                chunk.TileData[direction] &= invFlag;
+
+            component.Chunks[(category, chunkOrigin)] = chunk;
+        }
+
+        // Update the tile data based on what entities are still anchored to the tile
+        var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(uid, mapGrid, tile);
 
         while (enumerator.MoveNext(out var ent))
         {
-            if (!_physicsQuery.TryGetComponent(ent, out var body) ||
-                !body.CanCollide ||
-                !body.Hard ||
-                body.BodyType != BodyType.Static ||
-                !_tags.HasTag(ent.Value, "Wall", _tagQuery) &&
-                !_tags.HasTag(ent.Value, "Window", _tagQuery))
-            {
+            if (!TryComp<AirtightComponent>(ent, out var entAirtight))
                 continue;
+
+            var category = GetAssociatedEntityChunkType(ent.Value);
+
+            if (!component.Chunks.TryGetValue((category, chunkOrigin), out var chunk))
+                continue;
+
+            foreach (var (direction, _) in chunk.TileData)
+            {
+                if ((direction & entAirtight.AirBlockedDirection) > 0)
+                    chunk.TileData[direction] |= flag;
             }
 
-            chunk.TileData |= flag;
-            break;
+            component.Chunks[(category, chunkOrigin)] = chunk;
         }
 
-        if (chunk.TileData == 0)
+        // Remove walls that intersect with doors (unless they can both physically fit on the same tile)
+        if (component.Chunks.TryGetValue((NavMapChunkType.Wall, chunkOrigin), out var wallChunk) &&
+            component.Chunks.TryGetValue((NavMapChunkType.Airlock, chunkOrigin), out var airlockChunk))
         {
-            component.Chunks.Remove(chunk.Origin);
+            foreach (var (direction, _) in wallChunk.TileData)
+            {
+                var airlockInvFlag = (ushort) ~airlockChunk.TileData[direction];
+                wallChunk.TileData[direction] &= airlockInvFlag;
+            }
+
+            component.Chunks[(NavMapChunkType.Wall, chunkOrigin)] = wallChunk;
+        }
+    }
+
+    #endregion
+
+    #region: Beacon functions
+
+    private bool TryGetNavMapBeaconData(EntityUid uid, NavMapBeaconComponent component, TransformComponent xform, [NotNullWhen(true)] out NavMapBeacon? beaconData)
+    {
+        beaconData = null;
+
+        if (!component.Enabled || xform.GridUid == null || !xform.Anchored)
+            return false;
+
+        // TODO: Make warp points use metadata name instead.
+        string? name = component.Text;
+
+        if (string.IsNullOrEmpty(name))
+        {
+            if (TryComp<WarpPointComponent>(uid, out var warpPoint) && warpPoint.Location != null)
+                name = warpPoint.Location;
+
+            else
+                name = MetaData(uid).EntityName;
         }
 
-        if (existing == chunk.TileData)
+        beaconData = new NavMapBeacon(GetNetEntity(uid), component.Color, name, xform.LocalPosition);
+
+        return true;
+    }
+
+    private void UpdateNavMapBeaconData(EntityUid uid, NavMapBeaconComponent component, TransformComponent? xform = null)
+    {
+        if (!Resolve(uid, ref xform))
             return;
 
-        Dirty(uid, component);
+        if (xform.GridUid == null)
+            return;
+
+        if (!TryGetNavMapBeaconData(uid, component, xform, out var beaconData))
+            return;
+
+        RaiseNetworkEvent(new NavMapBeaconChangedEvent(GetNetEntity(xform.GridUid.Value), beaconData.Value));
+    }
+
+    private void UpdateBeaconEnabledVisuals(Entity<NavMapBeaconComponent> ent)
+    {
+        _appearance.SetData(ent, NavMapBeaconVisuals.Enabled, ent.Comp.Enabled && Transform(ent).Anchored);
     }
 
     /// <summary>
@@ -389,9 +393,6 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
         comp.Enabled = enabled;
         UpdateBeaconEnabledVisuals((uid, comp));
-        Dirty(uid, comp);
-
-        RefreshNavGrid(uid);
     }
 
     /// <summary>
@@ -419,7 +420,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        return TryGetNearestBeacon(_transform.GetMapCoordinates(ent, ent.Comp), out beacon, out beaconCoords);
+        return TryGetNearestBeacon(_transformSystem.GetMapCoordinates(ent, ent.Comp), out beacon, out beaconCoords);
     }
 
     /// <summary>
@@ -446,7 +447,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
             if (coordinates.MapId != xform.MapID)
                 continue;
 
-            var coords = _transform.GetWorldPosition(xform);
+            var coords = _transformSystem.GetWorldPosition(xform);
             var distanceSquared = (coordinates.Position - coords).LengthSquared();
             if (!float.IsInfinity(minDistance) && distanceSquared >= minDistance)
                 continue;
@@ -465,7 +466,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
         if (!Resolve(ent, ref ent.Comp))
             return Loc.GetString("nav-beacon-pos-no-beacons");
 
-        return GetNearestBeaconString(_transform.GetMapCoordinates(ent, ent.Comp));
+        return GetNearestBeaconString(_transformSystem.GetMapCoordinates(ent, ent.Comp));
     }
 
     public string GetNearestBeaconString(MapCoordinates coordinates)
@@ -494,11 +495,13 @@ public sealed class NavMapSystem : SharedNavMapSystem
             ? Loc.GetString("nav-beacon-pos-format-direction-mod-far")
             : string.Empty;
 
-        // we can null suppress the text being null because TRyGetNearestVisibleStationBeacon always gives us a beacon with not-null text.
+        // we can null suppress the text being null because TryGetNearestVisibleStationBeacon always gives us a beacon with not-null text.
         return Loc.GetString("nav-beacon-pos-format-direction",
             ("modifier", modifier),
             ("direction", ContentLocalizationManager.FormatDirection(adjustedDir).ToLowerInvariant()),
             ("color", beacon.Value.Comp.Color),
             ("marker", beacon.Value.Comp.Text!));
     }
+
+    #endregion
 }
