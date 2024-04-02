@@ -21,7 +21,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: grid
+      name: NT Evac Meta
     - type: Transform
       pos: -2.4375,0.859375
       parent: invalid

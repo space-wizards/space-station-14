@@ -28,7 +28,8 @@
                     HorizontalAlignment="Right"
                     Text="Refund" />
             </BoxContainer>
-            <PanelContainer VerticalExpand="True">
+            <LineEdit Name="SearchBar" Margin="4" PlaceHolder="Search" HorizontalExpand="True"/>
+                <PanelContainer VerticalExpand="True">
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
                 </PanelContainer.PanelOverride>
