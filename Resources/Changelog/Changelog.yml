@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Atomic Amnesia MMX, Vibe Ace, Monument and Marhaba have been removed
-      as lobby music tracks
-    type: Remove
-  id: 5790
-  time: '2024-01-25T14:08:29.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24480
 - author: Dutch-VanDerLinde
   changes:
   - message: To prevent accidental spills, paper cups can no longer be quick-equipped.
@@ -3812,3 +3804,12 @@
   id: 6289
   time: '2024-04-01T21:00:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25840
+- author: osjarw
+  changes:
+  - message: Ambuzol plus pills now have different sprites from ambuzol pills. Now
+      CBURN agents and Nukies who bought the syndicate zombie bundle might realize
+      that they also have some ambuzol plus.
+    type: Tweak
+  id: 6290
+  time: '2024-04-02T00:50:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26651
