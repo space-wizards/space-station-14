@@ -1,6 +1,7 @@
+
 using Content.Shared.Whitelist;
 
-namespace Content.Server.Labels.Components
+namespace Content.Shared.Labels.Components
 {
     [RegisterComponent]
     public sealed partial class HandLabelerComponent : Component
