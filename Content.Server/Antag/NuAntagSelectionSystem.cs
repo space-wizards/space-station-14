@@ -30,8 +30,6 @@ namespace Content.Server.Antag;
 
 public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionComponent>
 {
-    [Dependency] private readonly IAdminManager _adminManager = default!;
-    [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
@@ -46,8 +44,6 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
 
     public const float LateJoinRandomChance = 0.5f;
 
-    private bool _deadminOnJoin;
-
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -56,11 +52,6 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayerSpawning);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnJobsAssigned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnSpawnComplete);
-
-        Subs.CVar(_config, CCVars.AdminDeadminOnJoin, v =>
-        {
-            _deadminOnJoin = v;
-        }, true);
     }
 
     private void OnPlayerSpawning(RulePlayerSpawningEvent args)
@@ -269,10 +260,6 @@ public sealed class NuAntagSelectionSystem : GameRuleSystem<AntagSelectionCompon
                 curMind = _mind.CreateMind(session.UserId, Name(antagEnt.Value));
                 _mind.SetUserId(curMind.Value, session.UserId);
             }
-
-            // Automatically de-admin players who are being made nukeops
-            if (_deadminOnJoin && _adminManager.IsAdmin(session))
-                _adminManager.DeAdmin(session);
 
             if (TryComp<MindComponent>(curMind, out var mindComp) && mindComp.CurrentEntity != antagEnt)
                 _mind.TransferTo(curMind.Value, antagEnt);
