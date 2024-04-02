@@ -1,0 +1,19 @@
+- type: entity
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobTiefling
+  name: Mr. Tiefling
+  abstract: true
+  components:
+    - type: Hunger
+    - type: Icon
+      sprite: Mobs/Species/Tiefling/parts.rsi
+      state: full
+    - type: Thirst
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobTieflingDummy
+  noSpawn: true
+  components:
+    - type: HumanoidAppearance
+      species: Tiefling
