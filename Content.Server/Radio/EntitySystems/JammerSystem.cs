@@ -169,9 +169,11 @@ public sealed class JammerSystem : EntitySystem
                 Act = () =>
                 {
                     entity.Comp.SelectedPowerLevel = currIndex;
-                    var jammerComp = Comp<DeviceNetworkJammerComponent>(entity.Owner);
-                    jammerComp.Range = GetCurrentRange(entity.Comp);
-                    jammerComp.Dirty();
+                    if (TryComp<DeviceNetworkJammerComponent>(entity.Owner, out var jammerComp))
+                    {
+                        jammerComp.Range = GetCurrentRange(entity.Comp);
+                        Dirty(entity.Owner, jammerComp);
+                    }
                     _popup.PopupEntity(Loc.GetString(setting.Message), user, user);
                 },
                 Text = Loc.GetString(setting.Name),
