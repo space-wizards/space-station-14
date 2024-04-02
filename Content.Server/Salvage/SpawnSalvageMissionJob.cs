@@ -305,7 +305,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             {
                 var tile = availableTiles.RemoveSwap(random.Next(availableTiles.Count));
 
-                if (!_anchorable.TileFree(gridUid, grid, tile, (int) CollisionGroup.MachineLayer,
+                if (!_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, grid), tile, (int) CollisionGroup.MachineLayer,
                         (int) CollisionGroup.MachineLayer))
                 {
                     continue;

@@ -276,21 +276,27 @@ public sealed partial class AnchorableSystem : EntitySystem
         var tileIndices =
             _mapSystem.TileIndicesFor(gridUid.Value, grid,
                 coordinates); // We cannot get a component from an entity with an ID equal to null
-        return TileFree(gridUid.Value, grid, tileIndices, anchorBody.CollisionLayer, anchorBody.CollisionMask);
+        return TileFree(new Entity<MapGridComponent>(gridUid.Value, grid),
+            tileIndices,
+            anchorBody.CollisionLayer,
+            anchorBody.CollisionMask
+            );
     }
 
     /// <summary>
     /// Returns true if no hard anchored entities match the collision layer or mask specified.
     /// </summary>
-    /// <param name="gridUid"></param>
     /// <param name="grid"></param>
     /// <param name="gridIndices"></param>
     /// <param name="collisionLayer"></param>
     /// <param name="collisionMask"></param>
-    public bool TileFree(EntityUid gridUid, MapGridComponent grid, Vector2i gridIndices, int collisionLayer = 0,
+    public bool TileFree(
+        Entity<MapGridComponent> grid,
+        Vector2i gridIndices,
+        int collisionLayer = 0,
         int collisionMask = 0)
     {
-        var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, gridIndices);
+        var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(grid, grid, gridIndices);
 
         while (enumerator.MoveNext(out var ent))
         {

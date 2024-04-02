@@ -192,7 +192,7 @@ public sealed partial class DungeonJob
             if (dungeon.Entrances.Contains(neighbor))
                 continue;
 
-            if (!_anchorable.TileFree(gridUid, grid, neighbor, DungeonSystem.CollisionLayer,
+            if (!_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, grid), neighbor, DungeonSystem.CollisionLayer,
                     DungeonSystem.CollisionMask))
                 continue;
 
@@ -204,7 +204,7 @@ public sealed partial class DungeonJob
             if (dungeon.RoomTiles.Contains(index))
                 continue;
 
-            if (!_anchorable.TileFree(gridUid, grid, index, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
+            if (!_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, grid), index, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                 continue;
 
             tiles.Add((index, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
@@ -216,7 +216,7 @@ public sealed partial class DungeonJob
         for (var i = 0; i < tiles.Count; i++)
         {
             var index = tiles[i];
-            if (!_anchorable.TileFree(gridUid, grid, index.Index, DungeonSystem.CollisionLayer,
+            if (!_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, grid), index.Index, DungeonSystem.CollisionLayer,
                     DungeonSystem.CollisionMask))
                 continue;
 
@@ -470,14 +470,14 @@ public sealed partial class DungeonJob
                     }
 
                     // Check if exterior spot free.
-                    if (!_anchorable.TileFree(gridUid, _grid, tile, DungeonSystem.CollisionLayer,
+                    if (!_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, _grid), tile, DungeonSystem.CollisionLayer,
                             DungeonSystem.CollisionMask))
                     {
                         continue;
                     }
 
                     // Check if interior spot free (no guarantees on exterior but ClearDoor should handle it)
-                    if (!_anchorable.TileFree(gridUid, _grid, dirVec, DungeonSystem.CollisionLayer,
+                    if (!_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, _grid), dirVec, DungeonSystem.CollisionLayer,
                             DungeonSystem.CollisionMask))
                     {
                         continue;
@@ -547,7 +547,7 @@ public sealed partial class DungeonJob
                 break;
 
             // Room tile / already used.
-            if (!_anchorable.TileFree(gridUid, _grid, tile, DungeonSystem.CollisionLayer,
+            if (!_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, _grid), tile, DungeonSystem.CollisionLayer,
                     DungeonSystem.CollisionMask) ||
                 takenTiles.Contains(tile))
             {
@@ -568,7 +568,7 @@ public sealed partial class DungeonJob
 
                     if (!allExterior.Contains(neighbor) ||
                         takenTiles.Contains(neighbor) ||
-                        !_anchorable.TileFree(gridUid, grid, neighbor, DungeonSystem.CollisionLayer,
+                        !_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, _grid), neighbor, DungeonSystem.CollisionLayer,
                             DungeonSystem.CollisionMask))
                     {
                         isValid = false;
@@ -584,7 +584,7 @@ public sealed partial class DungeonJob
 
                         if (allExterior.Contains(perpTile) ||
                             takenTiles.Contains(neighbor) ||
-                            !_anchorable.TileFree(gridUid, _grid, perpTile, DungeonSystem.CollisionLayer,
+                            !_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, _grid), perpTile, DungeonSystem.CollisionLayer,
                                 DungeonSystem.CollisionMask))
                         {
                             isValid = false;
@@ -692,7 +692,7 @@ public sealed partial class DungeonJob
 
                     var windowTile = tile + dirVec;
 
-                    if (!_anchorable.TileFree(gridUid, grid, windowTile, DungeonSystem.CollisionLayer,
+                    if (!_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, grid), windowTile, DungeonSystem.CollisionLayer,
                             DungeonSystem.CollisionMask))
                         continue;
 
@@ -959,7 +959,7 @@ public sealed partial class DungeonJob
         // N-wide junctions
         foreach (var tile in dungeon.CorridorTiles)
         {
-            if (!_anchorable.TileFree(gridUid, _grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
+            if (!_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, _grid), tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                 continue;
 
             // Check each direction:
@@ -996,7 +996,7 @@ public sealed partial class DungeonJob
                     }
 
                     // If we're not at the end tile then check it + perpendicular are free.
-                    if (!_anchorable.TileFree(gridUid, _grid, neighbor, DungeonSystem.CollisionLayer,
+                    if (!_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, _grid), neighbor, DungeonSystem.CollisionLayer,
                             DungeonSystem.CollisionMask))
                     {
                         isValid = false;
@@ -1006,14 +1006,14 @@ public sealed partial class DungeonJob
                     var perp1 = tile + neighborVec * j + ((Direction) ((i * 2 + 2) % 8)).ToIntVec();
                     var perp2 = tile + neighborVec * j + ((Direction) ((i * 2 + 6) % 8)).ToIntVec();
 
-                    if (!_anchorable.TileFree(gridUid, _grid, perp1, DungeonSystem.CollisionLayer,
+                    if (!_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, _grid), perp1, DungeonSystem.CollisionLayer,
                             DungeonSystem.CollisionMask))
                     {
                         isValid = false;
                         break;
                     }
 
-                    if (!_anchorable.TileFree(gridUid, _grid, perp2, DungeonSystem.CollisionLayer,
+                    if (!_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, _grid), perp2, DungeonSystem.CollisionLayer,
                             DungeonSystem.CollisionMask))
                     {
                         isValid = false;
@@ -1036,7 +1036,7 @@ public sealed partial class DungeonJob
                         var cornerVec = cornerDir.ToIntVec();
                         var cornerNeighbor = tile + neighborVec * j + cornerVec;
 
-                        if (_anchorable.TileFree(gridUid, _grid, cornerNeighbor, DungeonSystem.CollisionLayer,
+                        if (_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, _grid), cornerNeighbor, DungeonSystem.CollisionLayer,
                                 DungeonSystem.CollisionMask))
                         {
                             freeCount++;
@@ -1105,7 +1105,7 @@ public sealed partial class DungeonJob
                         if (dungeon.RoomTiles.Contains(neighbor))
                             continue;
 
-                        if (!_anchorable.TileFree(gridUid, grid, neighbor, DungeonSystem.CollisionLayer,
+                        if (!_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, grid), neighbor, DungeonSystem.CollisionLayer,
                                 DungeonSystem.CollisionMask))
                             continue;
 
@@ -1168,7 +1168,7 @@ public sealed partial class DungeonJob
                 {
                     var node = nodeDistances[i].Node;
                     var gridPos = grid.GridTileToLocal(node);
-                    if (!_anchorable.TileFree(gridUid, grid, node, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
+                    if (!_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, grid), node, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                         continue;
 
                     width--;
@@ -1253,7 +1253,7 @@ public sealed partial class DungeonJob
         foreach (var neighbor in allExterior)
         {
             // Occupado
-            if (dungeon.RoomTiles.Contains(neighbor) || checkedTiles.Contains(neighbor) || !_anchorable.TileFree(gridUid, grid,
+            if (dungeon.RoomTiles.Contains(neighbor) || checkedTiles.Contains(neighbor) || !_anchorable.TileFree(new Entity<MapGridComponent>(gridUid, grid),
                     neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                 continue;
 
