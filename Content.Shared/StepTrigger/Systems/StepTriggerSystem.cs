@@ -152,10 +152,7 @@ public sealed class StepTriggerSystem : EntitySystem
         var otherUid = args.OtherEntity;
 
         if (!args.OtherFixture.Hard)
-        {
-            Log.Debug("AOHAOAOAAOAOHA");
             return;
-        }
 
         if (!CanTrigger(uid, otherUid, component))
             return;

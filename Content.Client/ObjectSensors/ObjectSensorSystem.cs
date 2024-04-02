@@ -50,6 +50,8 @@ public sealed class ObjectSensorSystem : SharedObjectSensorSystem
         var oldTotal = component.Contacting;
         var total = GetTotalEntitites(uid);
 
+        Log.Debug($"my life be like {total}");
+
         if (total == oldTotal)
             return;
 

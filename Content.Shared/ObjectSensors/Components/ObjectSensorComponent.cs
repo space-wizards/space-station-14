@@ -10,7 +10,7 @@ namespace Content.Shared.ObjectSensors.Components;
 /// <summary>
 /// An anchored object that detects entities that touch it.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedObjectSensorSystem))]
+[RegisterComponent, AutoGenerateComponentState, NetworkedComponent, Access(typeof(SharedObjectSensorSystem))]
 public sealed partial class ObjectSensorComponent : Component
 {
     /// <summary>
@@ -48,13 +48,13 @@ public sealed partial class ObjectSensorComponent : Component
     /// <summary>
     ///    How many entities are contacting it
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public int Contacting;
 
     /// <summary>
     ///    What type of entities will be detected
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public ObjectSensorMode Mode = ObjectSensorMode.Living;
 
     [DataField]
