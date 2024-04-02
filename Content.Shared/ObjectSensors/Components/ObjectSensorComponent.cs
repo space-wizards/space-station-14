@@ -1,15 +1,16 @@
-using Content.Server.DeviceLinking.Systems;
+using Content.Shared.ObjectSensors.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.DeviceLinking.Components;
+namespace Content.Shared.ObjectSensors.Components;
 
 /// <summary>
 /// An anchored object that detects entities that touch it.
 /// </summary>
-[RegisterComponent, Access(typeof(ObjectSensorSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedObjectSensorSystem))]
 public sealed partial class ObjectSensorComponent : Component
 {
     /// <summary>
@@ -28,7 +29,7 @@ public sealed partial class ObjectSensorComponent : Component
     public ProtoId<SourcePortPrototype> OutputPort4OrMore = "ObjectSensor4OrMoreObjects";
 
     /// <summary>
-    ///     Every port.
+    ///     Every port
     /// </summary>
     public List<ProtoId<SourcePortPrototype>> PortList => new()
     {

@@ -1,36 +1,27 @@
-using Content.Server.DeviceLinking.Components;
-using Content.Shared.DeviceLinking;
+using Content.Server.DeviceLinking.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.ObjectSensors.Components;
+using Content.Shared.ObjectSensors.Systems;
 using Content.Shared.Popups;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Physics.Events;
-using Robust.Shared.Physics.Systems;
-using Robust.Shared.Prototypes;
 
-namespace Content.Server.DeviceLinking.Systems;
+namespace Content.Server.ObjectSensors;
 
-public sealed class ObjectSensorSystem : EntitySystem
+public sealed partial class ObjectSensorSystem : SharedObjectSensorSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
+    [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
-
-    private readonly int ModeCount = Enum.GetValues(typeof(ObjectSensorMode)).Length;
-
+    [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -47,29 +38,6 @@ public sealed class ObjectSensorSystem : EntitySystem
         {
             UpdateOutput((uid, component));
         }
-    }
-
-    /// <summary>
-    ///     Updates the component's mode when interacted with using the right tool
-    /// </summary>
-    private void OnInteractUsing(Entity<ObjectSensorComponent> uid, ref InteractUsingEvent args)
-    {
-        if (args.Handled || !_tool.HasQuality(args.Used, uid.Comp.CycleQuality))
-            return;
-
-        if (TryComp<UseDelayComponent>(uid, out var delay)
-            && !_useDelay.TryResetDelay((uid, delay), true))
-            return;
-
-        var mode = (int) uid.Comp.Mode;
-        mode = ++mode % ModeCount;
-        uid.Comp.Mode = (ObjectSensorMode) mode;
-
-        UpdateOutput(uid);
-
-        _audio.PlayPvs(uid.Comp.CycleSound, uid);
-        var msg = Loc.GetString("object-sensor-cycle", ("mode", uid.Comp.Mode.ToString()));
-        _popup.PopupEntity(msg, uid, args.User);
     }
 
     private void OnExamined(Entity<ObjectSensorComponent> uid, ref ExaminedEvent args)
@@ -101,6 +69,27 @@ public sealed class ObjectSensorSystem : EntitySystem
     }
 
     /// <summary>
+    ///     Updates the component's mode when interacted with using the right tool
+    /// </summary>
+    private void OnInteractUsing(Entity<ObjectSensorComponent> uid, ref InteractUsingEvent args)
+    {
+        if (args.Handled || !_tool.HasQuality(args.Used, uid.Comp.CycleQuality))
+            return;
+
+        if (TryComp<UseDelayComponent>(uid, out var delay)
+            && !_useDelay.TryResetDelay((uid, delay), true))
+            return;
+
+        var mode = (int) uid.Comp.Mode;
+        mode = ++mode % ModeCount;
+        uid.Comp.Mode = (ObjectSensorMode) mode;
+
+        UpdateOutput(uid);
+
+        _audio.PlayPvs(uid.Comp.CycleSound, uid);
+    }
+
+    /// <summary>
     ///     Updates all of the object sensors
     /// </summary>
     private void UpdateOutput(Entity<ObjectSensorComponent> uid)
@@ -112,31 +101,7 @@ public sealed class ObjectSensorSystem : EntitySystem
         if (!Transform(uid).Anchored)
             return;
 
-        if (!TryComp(uid, out StepTriggerComponent? stepTrigger))
-            return;
-
-        var contacting = stepTrigger.Colliding;
-        var total = 0;
-
-        foreach (var ent in contacting)
-        {
-            switch (component.Mode)
-            {
-                case ObjectSensorMode.Living:
-                    if (_mobState.IsAlive(ent))
-                        total++;
-                    break;
-                case ObjectSensorMode.Items:
-                    if (HasComp<ItemComponent>(ent))
-                        total++;
-                    break;
-                case ObjectSensorMode.All:
-                    total++;
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-        }
+        var total = GetTotalEntitites(uid);
 
         if (total == oldTotal)
             return;
