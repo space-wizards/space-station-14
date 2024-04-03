@@ -11,6 +11,8 @@
     normalState: normal-unshaded
   - type: Advertise
     pack: PrideDrobeAds
+  - type: SpeakOnUIClosed
+    pack: PrideDrobeGoodbyes
   - type: Speech
   - type: Sprite
     sprite: DeltaV/Structures/Machines/VendingMachines/pride.rsi

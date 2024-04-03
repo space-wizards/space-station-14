@@ -13,22 +13,6 @@
     Lean: 4
 
 - type: reaction
-  id: BahamaMama
-  reactants:
-    Rum:
-      amount: 1
-    Grenadine:
-      amount: 1
-    JuiceOrange:
-      amount: 1
-    JuicePineapple:
-      amount: 1
-    Ice:
-      amount: 1
-  products:
-      BahamaMama: 5
-
-- type: reaction
   id: OrangeCreamice
   reactants:
     JuiceOrange:

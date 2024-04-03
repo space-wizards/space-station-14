@@ -11,6 +11,10 @@
   - type: Construction
     graph: Girder
     node: paperWall
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
     - trigger:
@@ -50,6 +54,10 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
     - trigger:
@@ -73,4 +81,3 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
