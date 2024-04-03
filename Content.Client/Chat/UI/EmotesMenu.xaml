@@ -8,13 +8,13 @@
 
     <!-- Main -->
     <ui:RadialContainer Name="Main" VerticalExpand="True" HorizontalExpand="True" Radius="64" ReserveSpaceForHiddenChildren="False">
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="General" TargetLayer="General" Visible="False">
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'emote-menu-category-general'}" TargetLayer="General" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Actions/scream.png"/>
         </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Vocal" TargetLayer="Vocal" Visible="False">
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'emote-menu-category-general'}" TargetLayer="Vocal" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Actions/scream.png"/>
         </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="Hands" TargetLayer="Hands" Visible="False">
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'emote-menu-category-hands'}" TargetLayer="Hands" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Actions/scream.png"/>
         </ui:RadialMenuTextureButton>
     </ui:RadialContainer>
