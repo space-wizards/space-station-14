@@ -39,7 +39,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      1: Dead
+      1: Critical
+      200: Dead
   - type: ChameleonDisguise
 
 # actions
