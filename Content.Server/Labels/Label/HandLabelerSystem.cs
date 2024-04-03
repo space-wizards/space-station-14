@@ -5,6 +5,7 @@ using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Labels;
 using Content.Shared.Labels.Components;
+using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -16,7 +17,7 @@ namespace Content.Server.Labels
     /// A hand labeler system that lets an object apply labels to objects with the <see cref="LabelComponent"/> .
     /// </summary>
     [UsedImplicitly]
-    public sealed class HandLabelerSystem : EntitySystem
+    public sealed class HandLabelerSystem : SharedHandLabelerSystem
     {
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
