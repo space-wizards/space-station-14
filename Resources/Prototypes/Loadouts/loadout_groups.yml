@@ -6,13 +6,14 @@
   loadouts:
   - PlushieLizard
 
-# Engineer
+# Engineering
 - type: loadoutGroup
   id: ChiefEngineerHead
   name: loadout-group-chief-engineer-head
+  minLimit: 0
   loadouts:
   - ChiefEngineerHead
-  - SeniorEngineerBeret
+  - ChiefEngineerBeret
 
 - type: loadoutGroup
   id: ChiefEngineerJumpsuit
@@ -22,6 +23,22 @@
   - ChiefEngineerJumpskirt
   - ChiefEngineerTurtleneck
   - ChiefEngineerTurtleneckSkirt
+
+- type: loadoutGroup
+  id: ChiefEngineerBackpack
+  name: loadout-group-chief-engineer-backpack
+  loadouts:
+  - ChiefEngineerBackpack
+  - ChiefEngineerSatchel
+  - ChiefEngineerDuffel
+
+- type: loadoutGroup
+  id: ChiefEngineerNeck
+  name: loadout-group-chief-engineer-neck
+  minLimit: 0
+  loadouts:
+  - ChiefEngineerCloak
+  - ChiefEngineerMantle
 
 - type: loadoutGroup
   id: StationEngineerHead

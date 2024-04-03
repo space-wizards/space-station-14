@@ -4,7 +4,8 @@
   groups:
   - ChiefEngineerHead
   - ChiefEngineerJumpsuit
-  - StationEngineerBackpack
+  - ChiefEngineerBackpack
+  - ChiefEngineerNeck
   - Trinkets
 
 - type: roleLoadout

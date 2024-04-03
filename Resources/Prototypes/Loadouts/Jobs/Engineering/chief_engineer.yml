@@ -1,21 +1,21 @@
 # Jumpsuit
 - type: loadout
-  id: AtmosphericTechnicianJumpsuit
-  equipment: AtmosphericTechnicianJumpsuit
+  id: ChiefEngineerJumpsuit
+  equipment: ChiefEngineerJumpsuit
 
 - type: startingGear
-  id: AtmosphericTechnicianJumpsuit
+  id: ChiefEngineerJumpsuit
   equipment:
-    jumpsuit: ClothingUniformJumpsuitAtmos
+    jumpsuit: ClothingUniformJumpsuitChiefEngineer
 
 - type: loadout
-  id: AtmosphericTechnicianJumpskirt
-  equipment: AtmosphericTechnicianJumpskirt
+  id: ChiefEngineerJumpskirt
+  equipment: ChiefEngineerJumpskirt
 
 - type: startingGear
-  id: AtmosphericTechnicianJumpskirt
+  id: ChiefEngineerJumpskirt
   equipment:
-    jumpsuit: ClothingUniformJumpskirtAtmos
+    jumpsuit: ClothingUniformJumpskirtChiefEngineer
 
 - type: loadout
   id: ChiefEngineerTurtleneck
@@ -35,30 +35,63 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtChiefEngineerTurtle
 
+# Head
+- type: loadout
+  id: ChiefEngineerHead
+  equipment: ChiefEngineerHead
+
+- type: startingGear
+  id: ChiefEngineerHead
+  equipment:
+    head: ClothingHeadHatHardhatWhite
+
+- type: loadout
+  id: ChiefEngineerBeret
+  equipment: EngineeringBeret
+
+# Neck
+- type: loadout
+  id: ChiefEngineerCloak
+  equipment: ChiefEngineerCloak
+
+- type: startingGear
+  id: ChiefEngineerCloak
+  equipment:
+    neck: ClothingNeckCloakCe
+
+- type: loadout
+  id: ChiefEngineerMantle
+  equipment: ChiefEngineerMantle
+
+- type: startingGear
+  id: ChiefEngineerMantle
+  equipment:
+    neck: ClothingNeckMantleCE
+
 # Back
 - type: loadout
-  id: AtmosphericTechnicianBackpack
-  equipment: AtmosphericTechnicianBackpack
+  id: ChiefEngineerBackpack
+  equipment: ChiefEngineerBackpack
 
 - type: startingGear
-  id: AtmosphericTechnicianBackpack
+  id: ChiefEngineerBackpack
   equipment:
-    back: ClothingBackpackAtmosphericsFilled
+    back: ClothingBackpackChiefEngineerFilled
 
 - type: loadout
-  id: AtmosphericTechnicianSatchel
-  equipment: AtmosphericTechnicianSatchel
+  id: ChiefEngineerSatchel
+  equipment: ChiefEngineerSatchel
 
 - type: startingGear
-  id: AtmosphericTechnicianSatchel
+  id: ChiefEngineerSatchel
   equipment:
-    back: ClothingBackpackSatchelEngineeringFilled
+    back: ClothingBackpackSatchelChiefEngineerFilled
 
 - type: loadout
-  id: AtmosphericTechnicianDuffel
-  equipment: AtmosphericTechnicianDuffel
+  id: ChiefEngineerDuffel
+  equipment: ChiefEngineerDuffel
 
 - type: startingGear
-  id: AtmosphericTechnicianDuffel
+  id: ChiefEngineerDuffel
   equipment:
-    back: ClothingBackpackDuffelAtmosphericsFilled
+    back: ClothingBackpackDuffelChiefEngineerFilled
