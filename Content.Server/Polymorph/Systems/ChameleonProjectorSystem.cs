@@ -55,8 +55,14 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
         // health is proportional to mass, and capped to not be insane
         if (TryComp<MobThresholdsComponent>(disguise, out var thresholds))
         {
+            // if the player is of flesh and blood, cap max health to theirs
+            // so that when reverting damage scales 1:1 and not round removing
+            var playerMax = _mobThreshold.GetThresholdForState(user, MobState.Dead).Float();
+            var max = playerMax == 0f ? proj.MaxHealth : Math.Max(proj.MaxHealth, playerMax);
+
             var health = Math.Clamp(mass, proj.MinHealth, proj.MaxHealth);
-            _mobThreshold.SetMobStateThreshold(disguise, health, MobState.Dead, thresholds);
+            _mobThreshold.SetMobStateThreshold(disguise, health, MobState.Critical, thresholds);
+            _mobThreshold.SetMobStateThreshold(disguise, max, MobState.Dead, thresholds);
         }
 
         // add actions for controlling transform aspects
