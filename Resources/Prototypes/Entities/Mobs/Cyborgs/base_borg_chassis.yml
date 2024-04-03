@@ -83,6 +83,7 @@
     templateId: borg
   - type: Hands
     showInHands: false
+    disableExplosionRecursion: true
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
@@ -101,8 +102,6 @@
   - type: BorgChassis
   - type: WiresPanel
   - type: ActivatableUIRequiresPanel
-  - type: Wires
-    layoutId: Borg
   - type: NameIdentifier
     group: Silicon
   - type: ContainerContainer
