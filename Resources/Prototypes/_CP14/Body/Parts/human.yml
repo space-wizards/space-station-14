@@ -1,0 +1,70 @@
+
+- type: entity
+  id: CPTorsoHuman
+  parent: TorsoHuman
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+
+- type: entity
+  id: CPHeadHuman
+  parent: HeadHuman
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+
+- type: entity
+  id: CPLeftArmHuman
+  parent: LeftArmHuman
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+
+- type: entity
+  id: CPRightArmHuman
+  parent: RightArmHuman
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+
+- type: entity
+  id: CPLeftHandHuman
+  parent: LeftHandHuman
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+
+- type: entity
+  id: CPRightHandHuman
+  parent: RightHandHuman
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+
+- type: entity
+  id: CPLeftLegHuman
+  parent: LeftLegHuman
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+
+- type: entity
+  id: CPRightLegHuman
+  parent: RightLegHuman
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+
+- type: entity
+  id: CPLeftFootHuman
+  parent: LeftFootHuman
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+
+- type: entity
+  id: CPRightFootHuman
+  parent: RightFootHuman
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi

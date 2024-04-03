@@ -1,0 +1,126 @@
+- type: species
+  id: CPHuman
+  name: species-name-human
+  roundStart: true
+  prototype: CPMobHuman
+  sprites: CPMobHumanSprites
+  markingLimits: MobHumanMarkingLimits
+  dollPrototype: MobHumanDummy
+  skinColoration: HumanToned
+
+- type: speciesBaseSprites
+  id: CPMobHumanSprites
+  sprites:
+    Head: CPMobHumanHead
+    Hair: MobHumanoidAnyMarking
+    FacialHair: MobHumanoidAnyMarking
+    Snout: MobHumanoidAnyMarking
+    Chest: CPMobHumanTorso
+    Eyes: CPMobHumanoidEyes
+    LArm: CPMobHumanLArm
+    RArm: CPMobHumanRArm
+    LHand: CPMobHumanLHand
+    RHand: CPMobHumanRHand
+    LLeg: CPMobHumanLLeg
+    RLeg: CPMobHumanRLeg
+    LFoot: CPMobHumanLFoot
+    RFoot: CPMobHumanRFoot
+
+
+
+- type: humanoidBaseSprite
+  id: CPMobHumanoidEyes
+  baseSprite:
+    sprite: CrystallPunk/Mobs/Customization/eyes.rsi
+    state: eyes
+
+- type: humanoidBaseSprite
+  id: CPMobHumanoidAnyMarking
+
+- type: humanoidBaseSprite
+  id: CPMobHumanoidMarkingMatchSkin
+  markingsMatchSkin: true
+
+- type: humanoidBaseSprite
+  id: CPMobHumanHead
+  baseSprite:
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: CPMobHumanHeadMale
+  baseSprite:
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: CPMobHumanHeadFemale
+  baseSprite:
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: CPMobHumanTorso
+  baseSprite:
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: CPMobHumanTorsoMale
+  baseSprite:
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: CPMobHumanTorsoFemale
+  baseSprite:
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: CPMobHumanLLeg
+  baseSprite:
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: CPMobHumanLArm
+  baseSprite:
+    sprite:  CrystallPunk/Mobs/Species/Human/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: CPMobHumanLHand
+  baseSprite:
+    sprite:  CrystallPunk/Mobs/Species/Human/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: CPMobHumanLFoot
+  baseSprite:
+    sprite:  CrystallPunk/Mobs/Species/Human/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: CPMobHumanRLeg
+  baseSprite:
+    sprite:  CrystallPunk/Mobs/Species/Human/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: CPMobHumanRArm
+  baseSprite:
+    sprite:  CrystallPunk/Mobs/Species/Human/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: CPMobHumanRHand
+  baseSprite:
+    sprite:  CrystallPunk/Mobs/Species/Human/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: CPMobHumanRFoot
+  baseSprite:
+    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+    state: r_foot

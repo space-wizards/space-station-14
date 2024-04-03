@@ -1,7 +1,7 @@
 - type: species
   id: Human
   name: species-name-human
-  roundStart: true
+  roundStart: false
   prototype: MobHuman
   sprites: MobHumanSprites
   markingLimits: MobHumanMarkingLimits
