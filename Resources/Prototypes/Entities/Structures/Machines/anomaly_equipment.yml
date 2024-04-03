@@ -37,9 +37,6 @@
     color: "#fca3c0"
   - type: Appearance
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-vessel
-    layoutId: Vessel
   - type: AmbientSound
     enabled: false
     range: 3
@@ -198,9 +195,6 @@
   - type: Appearance
   - type: WiresPanel
   - type: WiresVisuals
-  - type: Wires
-    boardName: wires-board-name-ape
-    layoutId: Ape
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
@@ -290,9 +284,6 @@
     fuelCost: 10
     doAfterDelay: 5
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-anomalygenerator
-    layoutId: AnomalyGenerator
   - type: Destructible
     thresholds:
     - trigger:
