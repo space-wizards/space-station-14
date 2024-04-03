@@ -28,7 +28,6 @@ chat-emote-name-monkeyscreeches = Monkey Screeches
 chat-emote-name-robotbeep = Robot
 chat-emote-name-yawn = Yawn
 chat-emote-name-snore = Snore
-chat-emote-name-wagtail = Wag Tail
 
 # Message
 chat-emote-msg-scream = screams!
