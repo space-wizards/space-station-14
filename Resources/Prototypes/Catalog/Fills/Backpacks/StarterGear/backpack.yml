@@ -215,7 +215,6 @@
       - id: BoxSurvival
       - id: RubberStampLawyer
 
-
 - type: entity
   noSpawn: true
   parent: ClothingBackpack

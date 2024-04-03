@@ -8,8 +8,8 @@
     contents:
       - id: ClothingMaskBreath
       - id: EmergencyOxygenTankFilled
-      - id: SpaceMedipen
       - id: EmergencyMedipen
+      - id: SpaceMedipen
       - id: FoodSnackNutribrick
       - id: DrinkWaterBottleFull
   - type: Sprite

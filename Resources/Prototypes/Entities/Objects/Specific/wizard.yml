@@ -6,11 +6,25 @@
   suffix: Empty
   components:
   - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
+    sprite: Objects/Misc/books.rsi
     layers:
-    - state: spellbook
+     - state: paper_blood
+     - state: cover_strong
+       color: "#645a5a" 
+     - state: decor_wingette_flat
+       color: "#4d0303"
+     - state: icon_pentagramm
+       color: "#f7e19f"
   - type: Item
-    sprite: Objects/Magic/spellbooks.rsi
+    sprite: Objects/Misc/books.rsi
+    layers:
+     - state: paper_blood
+     - state: cover_strong
+       color: "#645a5a" 
+     - state: decor_wingette_flat
+       color: "#4d0303"
+     - state: icon_pentagramm
+       color: "#f7e19f"
     heldPrefix: spellbook
   - type: UserInterface
     interfaces:
