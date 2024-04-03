@@ -385,10 +385,10 @@
     price: 100
   - type: UserInterface
     interfaces:
-    - key: enum.EmotesUiKey.Key
-      type: EmotesMenuBoundUserInterface
+    - key: enum.RcdUiKey.Key
+      type: RCDMenuBoundUserInterface
   - type: ActivatableUI
-    key: enum.EmotesUiKey.Key
+    key: enum.RcdUiKey.Key
 
 - type: entity
   id: RCDEmpty

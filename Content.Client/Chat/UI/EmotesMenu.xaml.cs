@@ -22,7 +22,7 @@ public sealed partial class EmotesMenu : RadialMenu
 
     public event Action<ProtoId<EmotePrototype>>? OnPlayEmote;
 
-    public EmotesMenu(EntityUid owner, EmotesMenuBoundUserInterface bui)
+    public EmotesMenu()
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
