@@ -1,11 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: PrideDrobeAds
-  advertisements:
+  messages:
   - advertisement-pride-1
   - advertisement-pride-2
   - advertisement-pride-3
-  thankyous:
-    - vending-machine-thanks
-    - thankyou-pride-1
-    - thankyou-pride-2
-    - thankyou-pride-3

@@ -12,6 +12,8 @@
     denyState: deny-unshaded
   - type: Advertise
     pack: SpookyDrobeAds
+  - type: SpeakOnUIClosed
+    pack: GenericVendGoodbyes
   - type: Speech
   - type: Sprite
     sprite: GreyStation/Structures/Machines/VendingMachines/spookydrobe.rsi

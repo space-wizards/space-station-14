@@ -374,3 +374,24 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Visitor
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconGladiator
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: nyanoGladiator
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconPrisonGuard
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: nyanoPrisonGuard
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconMartialArtist
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: nyanoMartialArtist

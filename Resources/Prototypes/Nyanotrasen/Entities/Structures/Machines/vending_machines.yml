@@ -29,6 +29,8 @@
     pack: RepDrobeInventory
   - type: Advertise
     pack: DetDrobeAds
+  - type: SpeakOnUIClosed
+    pack: GenericVendGoodbyes
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/detdrobe.rsi
     layers:
