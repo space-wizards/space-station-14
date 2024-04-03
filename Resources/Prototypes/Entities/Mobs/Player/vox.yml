@@ -3,3 +3,12 @@
   name: Vox
   parent: BaseMobVox
   id: MobVox
+
+#With breathing gear equipped
+- type: entity
+  parent: MobVox
+  id: MobVoxMasked
+  suffix: Breathing Gear
+  components:
+    - type: Loadout
+      prototypes: [VoxBreathingGear]
