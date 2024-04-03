@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ERORR404V1
-  changes:
-  - message: Added mime hardsuit
-    type: Add
-  id: 5796
-  time: '2024-01-26T14:43:50.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24198
 - author: icekot8
   changes:
   - message: Correct display of syndicate jaws of life in hand
@@ -3810,3 +3803,10 @@
   id: 6295
   time: '2024-04-03T05:31:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26662
+- author: deltanedas
+  changes:
+  - message: Disabled scooping foam due to a reagent duplication bug.
+    type: Fix
+  id: 6296
+  time: '2024-04-03T13:41:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26686
