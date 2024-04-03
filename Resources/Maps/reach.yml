@@ -529,12 +529,14 @@ entities:
             7: 4,-14
             259: 0,11
         - node:
+            cleanable: True
             color: '#FFFFFFFF'
             id: DirtHeavy
           decals:
             222: -18,-4
             275: 1,13
         - node:
+            cleanable: True
             color: '#FFFFFFFF'
             id: DirtLight
           decals:
@@ -574,6 +576,7 @@ entities:
             283: 0,8
             284: 1,7
         - node:
+            cleanable: True
             color: '#FFFFFFFF'
             id: DirtMedium
           decals:
@@ -11786,12 +11789,14 @@ entities:
   - uid: 1030
     components:
     - type: Transform
-      pos: 21.5,-3.5
+      pos: 18.5,-3.5
       parent: 407
+- proto: SpawnMobFoxRenault
+  entities:
   - uid: 1826
     components:
     - type: Transform
-      pos: 18.5,-3.5
+      pos: 21.5,-3.5
       parent: 407
 - proto: SpawnPointAtmos
   entities:

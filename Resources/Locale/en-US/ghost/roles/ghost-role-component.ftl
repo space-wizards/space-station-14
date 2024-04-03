@@ -164,6 +164,9 @@ ghost-role-information-cerberus-rules = You are an intelligent, demonic dog. Try
 ghost-role-information-ert-leader-name = ERT Leader
 ghost-role-information-ert-leader-description = Lead a team of specialists to resolve the station's issues.
 
+ghost-role-information-ert-chaplain-name = ERT Chaplain
+ghost-role-information-ert-chaplain-description = Assist with mourning to resolve the station's crew moral issues.
+
 ghost-role-information-ert-janitor-name = ERT Janitor
 ghost-role-information-ert-janitor-description = Assist with custodial efforts to resolve the station's issues.
 

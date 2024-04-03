@@ -12,3 +12,13 @@
   license: "CC0-1.0"
   copyright: "Created by brittmosel"
   source: "https://freesound.org/people/brittmosel/sounds/529300/"
+
+- files: ["splash.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by deadrobotmusic"
+  source: "https://freesound.org/people/deadrobotmusic/sounds/609953/"
+
+- files: ["flush.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by the_toilet_guy"
+  source: "https://freesound.org/people/the_toilet_guy/sounds/98770/"

@@ -120,6 +120,8 @@
   - type: SolutionSpiker
     sourceSolution: food
     ignoreEmpty: true
+  - type: ScoopableSolution
+    solution: food
   - type: Extractable
     grindableSolutionName: food
 

@@ -418,7 +418,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
 
         var mapId = _mapManager.CreateMap();
-        var grid = _map.LoadGrid(mapId, component.Map.ToString(),  new MapLoadOptions()
+        var grid = _map.LoadGrid(mapId, component.Map.ToString(), new MapLoadOptions()
         {
             LoadMap = false,
         });
