@@ -1,5 +1,13 @@
 # Engineering
 - type: roleLoadout
+  id: JobChiefEngineer
+  groups:
+  - ChiefEngineerHead
+  - ChiefEngineerJumpsuit
+  - StationEngineerBackpack
+  - Trinkets
+
+- type: roleLoadout
   id: JobStationEngineer
   groups:
   - StationEngineerHead
@@ -7,6 +15,13 @@
   - StationEngineerBackpack
   - StationEngineerOuterClothing
   - StationEngineerID
+  - Trinkets
+
+- type: roleLoadout
+  id: JobAtmosphericTechnician
+  groups:
+  - AtmosphericTechnicianJumpsuit
+  - AtmosphericTechnicianBackpack
   - Trinkets
 
 # Science

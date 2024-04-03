@@ -30,13 +30,13 @@
 
 - type: loadout
   id: SeniorEngineerBeret
-  equipment: SeniorEngineerBeret
+  equipment: EngineeringBeret
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorEngineering
 
 - type: startingGear
-  id: SeniorEngineerBeret
+  id: EngineeringBeret
   equipment:
     head: ClothingHeadHatBeretEngineering
 

@@ -1,0 +1,64 @@
+# Jumpsuit
+- type: loadout
+  id: AtmosphericTechnicianJumpsuit
+  equipment: AtmosphericTechnicianJumpsuit
+
+- type: startingGear
+  id: AtmosphericTechnicianJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAtmos
+
+- type: loadout
+  id: AtmosphericTechnicianJumpskirt
+  equipment: AtmosphericTechnicianJumpskirt
+
+- type: startingGear
+  id: AtmosphericTechnicianJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtAtmos
+
+- type: loadout
+  id: ChiefEngineerTurtleneck
+  equipment: ChiefEngineerTurtleneck
+
+- type: startingGear
+  id: ChiefEngineerTurtleneck
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChiefEngineerTurtle
+
+- type: loadout
+  id: ChiefEngineerTurtleneckSkirt
+  equipment: ChiefEngineerTurtleneckSkirt
+
+- type: startingGear
+  id: ChiefEngineerTurtleneckSkirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtChiefEngineerTurtle
+
+# Back
+- type: loadout
+  id: AtmosphericTechnicianBackpack
+  equipment: AtmosphericTechnicianBackpack
+
+- type: startingGear
+  id: AtmosphericTechnicianBackpack
+  equipment:
+    back: ClothingBackpackAtmosphericsFilled
+
+- type: loadout
+  id: AtmosphericTechnicianSatchel
+  equipment: AtmosphericTechnicianSatchel
+
+- type: startingGear
+  id: AtmosphericTechnicianSatchel
+  equipment:
+    back: ClothingBackpackSatchelEngineeringFilled
+
+- type: loadout
+  id: AtmosphericTechnicianDuffel
+  equipment: AtmosphericTechnicianDuffel
+
+- type: startingGear
+  id: AtmosphericTechnicianDuffel
+  equipment:
+    back: ClothingBackpackDuffelAtmosphericsFilled

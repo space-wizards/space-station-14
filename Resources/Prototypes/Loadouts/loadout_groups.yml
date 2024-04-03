@@ -8,6 +8,22 @@
 
 # Engineer
 - type: loadoutGroup
+  id: ChiefEngineerHead
+  name: loadout-group-chief-engineer-head
+  loadouts:
+  - ChiefEngineerHead
+  - SeniorEngineerBeret
+
+- type: loadoutGroup
+  id: ChiefEngineerJumpsuit
+  name: loadout-group-chief-engineer-jumpsuit
+  loadouts:
+  - ChiefEngineerJumpsuit
+  - ChiefEngineerJumpskirt
+  - ChiefEngineerTurtleneck
+  - ChiefEngineerTurtleneckSkirt
+
+- type: loadoutGroup
   id: StationEngineerHead
   name: loadout-group-station-engineer-head
   loadouts:
@@ -47,6 +63,22 @@
   loadouts:
   - StationEngineerPDA
   - SeniorEngineerPDA
+
+- type: loadoutGroup
+  id: AtmosphericTechnicianJumpsuit
+  name: loadout-group-atmospheric-technician-jumpsuit
+  loadouts:
+  - AtmosphericTechnicianJumpsuit
+  - AtmosphericTechnicianJumpskirt
+  - AtmosphericTechnicianJumpsuitCasual
+
+- type: loadoutGroup
+  id: AtmosphericTechnicianBackpack
+  name: loadout-group-atmospheric-technician-backpack
+  loadouts:
+  - AtmosphericTechnicianBackpack
+  - AtmosphericTechnicianSatchel
+  - AtmosphericTechnicianDuffel
 
 # Science
 
