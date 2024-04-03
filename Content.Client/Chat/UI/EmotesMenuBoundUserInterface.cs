@@ -1,9 +1,9 @@
-﻿using Content.Shared.Corvax.EmotesMenu;
+﻿using Content.Shared.Chat;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 
-namespace Content.Client.Corvax.EmotesMenu;
+namespace Content.Client.Chat.UI;
 
 [UsedImplicitly]
 public sealed class EmotesMenuBoundUserInterface : BoundUserInterface

@@ -2,7 +2,7 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Corvax.EmotesMenu;
+namespace Content.Shared.Chat;
 
 [Serializable, NetSerializable]
 public enum EmotesUiKey : byte

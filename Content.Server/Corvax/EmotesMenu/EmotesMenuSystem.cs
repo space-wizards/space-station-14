@@ -1,5 +1,5 @@
 ﻿using Content.Server.Chat.Systems;
-using Content.Shared.Corvax.EmotesMenu;
+using Content.Shared.Chat;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Corvax.EmotesMenu;

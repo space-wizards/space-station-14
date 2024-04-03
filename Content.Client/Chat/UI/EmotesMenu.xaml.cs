@@ -9,8 +9,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Corvax.EmotesMenu;
-
+namespace Content.Client.Chat.UI;
 
 [GenerateTypedNameReferences]
 public sealed partial class EmotesMenu : RadialMenu
