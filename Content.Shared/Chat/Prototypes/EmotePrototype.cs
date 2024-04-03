@@ -1,5 +1,7 @@
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.Prototypes;
 
@@ -17,14 +19,26 @@ public sealed partial class EmotePrototype : IPrototype
     ///     Different emote categories may be handled by different systems.
     ///     Also may be used for filtering.
     /// </summary>
-    [DataField("category")]
+    [DataField]
     public EmoteCategory Category = EmoteCategory.General;
+
+    /// <summary>
+    /// An icon used to visually represent the emote in radial UI.
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier Icon = SpriteSpecifier.Invalid;
+
+    [DataField]
+    public bool Available = true;
+
+    [DataField]
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     ///     Collection of words that will be sent to chat if emote activates.
     ///     Will be picked randomly from list.
     /// </summary>
-    [DataField("chatMessages")]
+    [DataField]
     public List<string> ChatMessages = new();
 
     /// <summary>
@@ -32,7 +46,7 @@ public sealed partial class EmotePrototype : IPrototype
     ///     When typed into players chat they will activate emote event.
     ///     All words should be unique across all emote prototypes.
     /// </summary>
-    [DataField("chatTriggers")]
+    [DataField]
     public HashSet<string> ChatTriggers = new();
 }
 

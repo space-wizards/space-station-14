@@ -2,11 +2,15 @@
   id: Sneeze
   category: Vocal
   chatMessages: [sneezes]
-    
+
 - type: emote
   id: Cough
   category: Vocal
-  chatMessages: [coughs]
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Vocal
+  chatMessages: [ coughs ]
   chatTriggers:
     - cough
     - coughs
@@ -34,6 +38,10 @@
 - type: emote
   id: Yawn
   category: Vocal
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Vocal
   chatMessages: [yawns]
   chatTriggers:
     - yawn

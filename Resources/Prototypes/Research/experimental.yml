@@ -16,9 +16,7 @@
 - type: technology
   id: BasicAnomalousResearch
   name: research-technology-basic-anomalous-research
-  icon:
-    sprite: Objects/Specific/Research/anomalyscanner.rsi
-    state: icon
+  icon: Interface/Actions/scream.png
   discipline: Experimental
   tier: 1
   cost: 5000

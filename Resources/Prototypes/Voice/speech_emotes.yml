@@ -2,6 +2,10 @@
 - type: emote
   id: Scream
   category: Vocal
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Vocal
   chatMessages: [screams!]
   chatTriggers:
     - scream
@@ -32,6 +36,10 @@
 - type: emote
   id: Laugh
   category: Vocal
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Vocal
   chatMessages: [laughs]
   chatTriggers:
     - laugh
@@ -65,6 +73,12 @@
 - type: emote
   id: Honk
   category: Vocal
+  icon: Interface/Actions/scream.png
+  whitelist:
+    requireAll: true
+    components:
+    - Vocal
+    - BorgChassis
   chatMessages: [honks]
   chatTriggers:
     - honk
@@ -83,6 +97,10 @@
 - type: emote
   id: Sigh
   category: Vocal
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Vocal
   chatMessages: [sighs]
   chatTriggers:
     - sigh
@@ -95,6 +113,10 @@
 - type: emote
   id: Whistle
   category: Vocal
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Vocal
   chatMessages: [whistle]
   chatTriggers:
     - whistle
@@ -110,6 +132,10 @@
 - type: emote
   id: Crying
   category: Vocal
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Vocal
   chatMessages: [crying]
   chatTriggers:
     - cry
@@ -133,6 +159,11 @@
 - type: emote
   id: Squish
   category: Vocal
+  available: false
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Vocal
   chatMessages: [squishing]
   chatTriggers:
     - squish
@@ -148,6 +179,11 @@
 - type: emote
   id: Chitter
   category: Vocal
+  available: false
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Vocal
   chatMessages: [chitters.]
   chatTriggers:
    - chitter
@@ -163,6 +199,11 @@
 - type: emote
   id: Squeak
   category: Vocal
+  available: false
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+      - Vocal
   chatMessages: [squeaks.]
   chatTriggers:
    - squeak
@@ -178,6 +219,11 @@
 - type: emote
   id: Click
   category: Vocal
+  available: false
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Vocal
   chatMessages: [click.]
   chatTriggers:
    - click
@@ -191,6 +237,10 @@
 - type: emote
   id: Clap
   category: Hands
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Hands
   chatMessages: [claps!]
   chatTriggers:
     - clap
@@ -203,6 +253,10 @@
 - type: emote
   id: Snap
   category: Hands
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Hands
   chatMessages: [snaps fingers] # snaps <{THEIR($ent)}> fingers?
   chatTriggers:
     - snap
@@ -222,6 +276,10 @@
 - type: emote
   id: Salute
   category: Hands
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Hands
   chatMessages: [Salute]
   chatTriggers:
     - salute
@@ -233,6 +291,10 @@
 
 - type: emote
   id: DefaultDeathgasp
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - MobState
   chatMessages: ["emote-deathgasp"]
   chatTriggers:
   - deathgasp
@@ -240,6 +302,12 @@
 - type: emote
   id: Buzz
   category: Vocal
+  icon: Interface/Actions/scream.png
+  whitelist:
+    requireAll: true
+    components:
+    - BorgChassis
+    - Vocal
   chatMessages: [buzz!]
   chatTriggers:
     - buzzing
@@ -263,6 +331,11 @@
 - type: emote
   id: Chirp
   category: Vocal
+  icon: Interface/Actions/scream.png
+  whitelist:
+    requireAll: true
+    components:
+    - Nymph
   chatMessages: [chirps!]
   chatTriggers:
     - chirp
@@ -282,6 +355,12 @@
 - type: emote
   id: Beep
   category: Vocal
+  icon: Interface/Actions/scream.png
+  whitelist:
+    requireAll: true
+    components:
+    - BorgChassis
+    - Vocal
   chatMessages: [beeps.]
   chatTriggers:
     - beep
@@ -300,6 +379,12 @@
 - type: emote
   id: Chime
   category: Vocal
+  icon: Interface/Actions/scream.png
+  whitelist:
+    requireAll: true
+    components:
+    - BorgChassis
+    - Vocal
   chatMessages: [chimes.]
   chatTriggers:
     - chime
@@ -318,6 +403,12 @@
 - type: emote
   id: Buzz-Two
   category: Vocal
+  icon: Interface/Actions/scream.png
+  whitelist:
+    requireAll: true
+    components:
+    - BorgChassis
+    - Vocal
   chatMessages: [buzzesTwice.]
   chatTriggers:
     - buzztwice
@@ -354,6 +445,12 @@
 - type: emote
   id: Ping
   category: Vocal
+  icon: Interface/Actions/scream.png
+  whitelist:
+    requireAll: true
+    components:
+    - BorgChassis
+    - Vocal
   chatMessages: [pings.]
   chatTriggers:
     - ping

@@ -343,13 +343,13 @@
   description: The rapid construction device can be used to quickly place and remove various station structures and fixtures. Requires compressed matter to function.
   components:
   - type: RCD
-    availablePrototypes:   
+    availablePrototypes:
     - WallSolid
     - FloorSteel
     - Plating
     - Catwalk
     - Grille
-    - Window    
+    - Window
     - WindowDirectional
     - WindowReinforcedDirectional
     - ReinforcedWindow
@@ -385,10 +385,10 @@
     price: 100
   - type: UserInterface
     interfaces:
-    - key: enum.RcdUiKey.Key
-      type: RCDMenuBoundUserInterface
+    - key: enum.EmotesUiKey.Key
+      type: EmotesMenuBoundUserInterface
   - type: ActivatableUI
-    key: enum.RcdUiKey.Key
+    key: enum.EmotesUiKey.Key
 
 - type: entity
   id: RCDEmpty
@@ -398,7 +398,7 @@
   - type: LimitedCharges
     charges: 0
   - type: RCD
-    availablePrototypes:   
+    availablePrototypes:
     - WallSolid
     - FloorSteel
     - Plating

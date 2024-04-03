@@ -1,5 +1,9 @@
 - type: emote
   id: WagTail
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Wagging
   chatMessages: [wags tail]
   chatTriggers:
     - wag
