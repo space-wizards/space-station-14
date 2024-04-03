@@ -277,8 +277,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
             return false;
         var tileIndices =
-            _mapSystem.TileIndicesFor(gridUid.Value, grid,
-                coordinates); // We cannot get a component from an entity with an ID equal to null
+            _mapSystem.TileIndicesFor(gridUid.Value, grid, coordinates); // We cannot get a component from an entity with an ID equal to null
         return TileFree((gridUid.Value, grid),
             tileIndices,
             anchorBody.CollisionLayer,
