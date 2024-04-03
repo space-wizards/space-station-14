@@ -1,4 +1,5 @@
-﻿using Content.Server.Station.Systems;
+using Content.Server.Station.Systems;
+using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules.VariationPass;
@@ -12,6 +13,7 @@ public abstract class VariationPassSystem<T> : GameRuleSystem<T>
 {
     [Dependency] protected readonly StationSystem Stations = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
+    [Dependency] protected readonly MapSystem Map = default!;
 
     public override void Initialize()
     {

@@ -1,6 +1,8 @@
-﻿using Content.Server.GameTicking.Rules.VariationPass.Components;
+using Content.Server.GameTicking.Rules.VariationPass.Components;
 using Content.Shared.Storage;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.GameTicking.Rules.VariationPass;
 
@@ -13,11 +15,16 @@ public sealed class EntitySpawnVariationPassSystem : VariationPassSystem<EntityS
 
         var dirtyMod = Random.NextGaussian(ent.Comp.TilesPerEntityAverage, ent.Comp.TilesPerEntityStdDev);
         var trashTiles = Math.Max((int) (totalTiles * (1 / dirtyMod)), 0);
+        var randomTiles = FindRandomTilesOnStation(args.Station, trashTiles).ToList();
 
         for (var i = 0; i < trashTiles; i++)
         {
-            if (!TryFindRandomTileOnStation(args.Station, out _, out _, out var coords))
+            var curRandomTile = randomTiles.ElementAt(i);
+            if (!TryComp<MapGridComponent>(curRandomTile.GridUid, out var curGridComp))
+            {
                 continue;
+            }
+            var coords = Map.GridTileToLocal(curRandomTile.GridUid, curGridComp, curRandomTile.GridIndices);
 
             var ents = EntitySpawnCollection.GetSpawns(ent.Comp.Entities, Random);
             foreach (var spawn in ents)

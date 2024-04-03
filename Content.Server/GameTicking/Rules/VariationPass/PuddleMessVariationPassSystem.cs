@@ -1,9 +1,11 @@
-﻿using Content.Server.Fluids.EntitySystems;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.GameTicking.Rules.VariationPass.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Random.Helpers;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.GameTicking.Rules.VariationPass;
 
@@ -22,11 +24,16 @@ public sealed class PuddleMessVariationPassSystem : VariationPassSystem<PuddleMe
 
         var puddleMod = Random.NextGaussian(ent.Comp.TilesPerSpillAverage, ent.Comp.TilesPerSpillStdDev);
         var puddleTiles = Math.Max((int) (totalTiles * (1 / puddleMod)), 0);
+        var randomTiles = FindRandomTilesOnStation(args.Station, puddleTiles).ToList();
 
         for (var i = 0; i < puddleTiles; i++)
         {
-            if (!TryFindRandomTileOnStation(args.Station, out _, out _, out var coords))
+            var curRandomTile = randomTiles.ElementAt(i);
+            if (!TryComp<MapGridComponent>(curRandomTile.GridUid, out var curGridComp))
+            {
                 continue;
+            }
+            var coords = Map.GridTileToLocal(curRandomTile.GridUid, curGridComp, curRandomTile.GridIndices);
 
             var sol = proto.Pick(Random);
             _puddle.TrySpillAt(coords, new Solution(sol.reagent, sol.quantity), out _, sound: false);
