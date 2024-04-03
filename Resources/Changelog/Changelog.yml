@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: yathxyz
-  changes:
-  - message: Updated nixpkgs input
-    type: Tweak
-  id: 5793
-  time: '2024-01-26T01:40:52.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24572
 - author: mirrorcult
   changes:
   - message: We lied Atomic Amnesia MMX is back
@@ -3810,3 +3803,10 @@
   id: 6292
   time: '2024-04-02T05:18:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26515
+- author: lzk228
+  changes:
+  - message: Typing indicator now can be shaded by shadows.
+    type: Tweak
+  id: 6293
+  time: '2024-04-03T02:12:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26678
