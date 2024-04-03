@@ -63,13 +63,15 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     private void CalcTrackers(ICommonSession player, HashSet<string> trackers)
     {
+        if (_afk.IsAfk(player))
+            return;
+
         if (_adminManager.IsAdmin(player))
         {
             trackers.Add(PlayTimeTrackingShared.TrackerAdmin);
-        }
-
-        if (_afk.IsAfk(player))
+            trackers.Add(PlayTimeTrackingShared.TrackerOverall);
             return;
+        }
 
         if (!IsPlayerAlive(player))
             return;
