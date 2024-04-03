@@ -42,9 +42,6 @@
 
     # Construction, interaction
     - type: WiresPanel
-    - type: Wires
-      boardName: wires-board-name-generator
-      layoutId: Generator
     - type: UserInterface
       interfaces:
         - key: enum.GeneratorComponentUiKey.Key

@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: yathxyz
-  changes:
-  - message: Updated nixpkgs input
-    type: Tweak
-  id: 5793
-  time: '2024-01-26T01:40:52.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24572
-- author: mirrorcult
-  changes:
-  - message: We lied Atomic Amnesia MMX is back
-    type: Add
-  id: 5794
-  time: '2024-01-26T05:48:29.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24575
-- author: EmoGarbage404
-  changes:
-  - message: Cigarettes no longer deal cellular damage when smoked.
-    type: Remove
-  id: 5795
-  time: '2024-01-26T09:50:03.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24568
-- author: ERORR404V1
-  changes:
-  - message: Added mime hardsuit
-    type: Add
-  id: 5796
-  time: '2024-01-26T14:43:50.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24198
 - author: icekot8
   changes:
   - message: Correct display of syndicate jaws of life in hand
@@ -3810,3 +3782,31 @@
   id: 6292
   time: '2024-04-02T05:18:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26515
+- author: lzk228
+  changes:
+  - message: Typing indicator now can be shaded by shadows.
+    type: Tweak
+  id: 6293
+  time: '2024-04-03T02:12:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26678
+- author: EmoGarbage404
+  changes:
+  - message: Increased time between pulses for various anomalies.
+    type: Tweak
+  id: 6294
+  time: '2024-04-03T03:15:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26677
+- author: Plykiya
+  changes:
+  - message: Dropped items are no longer rotated to world north.
+    type: Fix
+  id: 6295
+  time: '2024-04-03T05:31:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26662
+- author: deltanedas
+  changes:
+  - message: Disabled scooping foam due to a reagent duplication bug.
+    type: Fix
+  id: 6296
+  time: '2024-04-03T13:41:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26686
