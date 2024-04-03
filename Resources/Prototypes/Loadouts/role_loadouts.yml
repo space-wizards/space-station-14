@@ -9,6 +9,13 @@
   - Trinkets
 
 - type: roleLoadout
+  id: JobTechnicalAssistant
+  groups:
+  - TechnicalAssistantJumpsuit
+  - StationEngineerBackpack
+  - Trinkets
+
+- type: roleLoadout
   id: JobStationEngineer
   groups:
   - StationEngineerHead

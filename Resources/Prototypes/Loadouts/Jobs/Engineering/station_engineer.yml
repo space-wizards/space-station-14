@@ -60,6 +60,15 @@
     jumpsuit: ClothingUniformJumpskirtEngineering
 
 - type: loadout
+  id: StationEngineerHazardsuit
+  equipment: StationEngineerHazardsuit
+
+- type: startingGear
+  id: StationEngineerHazardsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitEngineeringHazard
+
+- type: loadout
   id: SeniorEngineerJumpsuit
   equipment: SeniorEngineerJumpsuit
   effects:
