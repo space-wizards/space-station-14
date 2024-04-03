@@ -83,6 +83,8 @@ public partial class ChatSystem
     {
         if (!(emote.Whitelist?.IsValid(source, EntityManager) ?? true))
             return;
+        if (emote.Blacklist?.IsValid(source, EntityManager) ?? false)
+            return;
 
         if (!emote.Available &&
             TryComp<SpeechComponent>(source, out var speech) &&

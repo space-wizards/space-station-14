@@ -49,6 +49,12 @@ public sealed partial class EmotePrototype : IPrototype
     public EntityWhitelist? Whitelist;
 
     /// <summary>
+    ///     Determines conditions to this emote be unavailable to use
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist;
+
+    /// <summary>
     ///     Collection of words that will be sent to chat if emote activates.
     ///     Will be picked randomly from list.
     /// </summary>

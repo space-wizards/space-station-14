@@ -12,6 +12,9 @@
   whitelist:
     components:
     - Vocal
+  blacklist:
+    components:
+    - BorgChassis
   chatMessages: ["chat-emote-msg-cough"]
   chatTriggers:
     - cough
@@ -49,6 +52,9 @@
   whitelist:
     components:
     - Vocal
+  blacklist:
+    components:
+    - BorgChassis
   chatMessages: ["chat-emote-msg-yawn"]
   chatTriggers:
     - yawn
