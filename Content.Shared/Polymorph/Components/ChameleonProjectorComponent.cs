@@ -1,0 +1,43 @@
+using Content.Shared.Polymorph;
+using Content.Shared.Polymorph.Systems;
+using Content.Shared.Whitelist;
+
+namespace Content.Shared.Polymorph.Components;
+
+/// <summary>
+/// A chameleon projector polymorphs you into a clicked entity, then polymorphs back when clicked on or destroyed.
+/// This creates a new dummy polymorph entity and copies the appearance over.
+/// </summary>
+[RegisterComponent, Access(typeof(SharedChameleonProjectorSystem))]
+public sealed partial class ChameleonProjectorComponent : Component
+{
+    /// <summary>
+    /// If non-null, whitelist for valid entities to disguise as.
+    /// </summary>
+    [DataField(required: true)]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// If non-null, blacklist that prevents entities from being used even if they are in the whitelist.
+    /// </summary>
+    [DataField(required: true)]
+    public EntityWhitelist? Blacklist;
+
+    /// <summary>
+    /// Polymorph configuration for the disguise entity.
+    /// </summary>
+    [DataField(required: true)]
+    public PolymorphConfiguration Polymorph = new();
+
+    /// <summary>
+    /// Popup shown to the user when they try to disguise as an invalid entity.
+    /// </summary>
+    [DataField]
+    public LocId InvalidPopup = "chameleon-projector-invalid";
+
+    /// <summary>
+    /// Popup shown to the user when they disguise as a valid entity.
+    /// </summary>
+    [DataField]
+    public LocId SuccessPopup = "chameleon-projector-success";
+}
