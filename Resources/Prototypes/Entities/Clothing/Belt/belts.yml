@@ -42,6 +42,9 @@
         - TrayScanner
         - GasAnalyzer
         - HandLabeler
+        - Whistle
+        - NodeScanner
+        - AnomalyScanner
   - type: ItemMapper
     mapLayers:
       drill:
@@ -478,6 +481,7 @@
         - SmokeOnTrigger
         - Flash
         - Handcuff
+        - Whistle
   - type: ItemMapper
     mapLayers:
       flashbang:
