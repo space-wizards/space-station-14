@@ -9,6 +9,9 @@
     sprite: CrystallPunk/Structures/Decoration/bonfire.rsi
     layers:
       - state: bonfire
+  - type: Construction
+    graph: CPBonfire
+    node: CPBonfire
   - type: Fixtures
     fixtures:
       fix1:

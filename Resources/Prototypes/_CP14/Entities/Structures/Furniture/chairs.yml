@@ -1,12 +1,15 @@
 - type: entity
   name: деревянный стул
   description: Сколочен из самых обычных досок. Просто и эффективно!    
-  id: ChairCPWooden
+  id: CPChairWooden
   parent: UnanchoredChairBase
   components:
   - type: Sprite
     sprite: CrystallPunk/Structures/Furniture/chairs.rsi
     state: wooden
+  - type: Construction
+    graph: CPSeat
+    node: CPChairWooden
   - type: Damageable
     damageModifierSet: Wood
   - type: Destructible

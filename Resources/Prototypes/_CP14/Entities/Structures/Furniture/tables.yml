@@ -1,6 +1,6 @@
 - type: entity
   parent: TableBase
-  id: TableWooden
+  id: CPTableWooden
   name: деревянный стол
   description: Простой стол, сколоченный из досок.
   components:
@@ -8,6 +8,9 @@
     sprite: CrystallPunk/Structures/Furniture/Tables/wood.rsi
   - type: Icon
     sprite: CrystallPunk/Structures/Furniture/Tables/wood.rsi
+  - type: Construction
+    graph: CPTable
+    node: CPTableWooden
   - type: Damageable
     damageModifierSet: Wood
   - type: Destructible

@@ -155,6 +155,9 @@ namespace Content.Client.Construction.UI
                 if (recipe.Hide)
                     continue;
 
+                if (!recipe.CrystallPunkAllowed) //CrystallPunk clearing recipes
+                    continue;
+
                 if (_playerManager.LocalSession == null
                 || _playerManager.LocalEntity == null
                 || (recipe.EntityWhitelist != null && !recipe.EntityWhitelist.IsValid(_playerManager.LocalEntity.Value)))

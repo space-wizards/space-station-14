@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: CPBonfire
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: CPBonfire
+          steps:
+            - material: WoodPlank
+              amount: 5
+              doAfter: 3
+              
+    - node: CPBonfire
+      entity: CPBonfire
