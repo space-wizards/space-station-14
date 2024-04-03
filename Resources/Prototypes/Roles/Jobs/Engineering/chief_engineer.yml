@@ -40,7 +40,6 @@
 - type: startingGear
   id: ChiefEngineerGear
   equipment:
-    head: ClothingHeadHatHardhatWhite
     shoes: ClothingShoesColorBrown
     id: CEPDA
     eyes: ClothingEyesGlassesMeson
