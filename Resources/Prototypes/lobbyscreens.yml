@@ -18,6 +18,27 @@
   id: gugel
   background: /Textures/LobbyScreens/gugel.webp
   
-  - type: lobbyBackground
-  id: aineias
-  background: /Textures/LobbyScreens/aineias.webp
+- type: lobbyBackground
+  id: gigaclown
+  background: /Textures/LobbyScreens/gigaclown.webp
+
+- type: lobbyBackground
+  id: rdsyndi
+  background: /Textures/LobbyScreens/rdsyndi.webp
+
+- type: lobbyBackground
+  id: reporting_a_crime
+  background: /Textures/LobbyScreens/reporting_a_crime.webp
+
+- type: lobbyBackground
+  id: secsquad
+  background: /Textures/LobbyScreens/secsquad.webp
+
+- type: lobbyBackground
+  id: THRONGLER
+  background: /Textures/LobbyScreens/THRONGLER.webp
+
+- type: lobbyBackground
+  id: THRONGLER
+  background: /Textures/LobbyScreens/mime.webp
+

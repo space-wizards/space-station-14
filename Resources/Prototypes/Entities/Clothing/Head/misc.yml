@@ -35,31 +35,20 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatFlowerCrown
-  name: flower crown
-  description: A coronet of fresh and fragrant flowers.
+  id: ClothingHeadHatFlowerWreath
+  name: flower wreath
+  description: A wreath of colourful flowers. Can be worn both on head and neck.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Misc/flower-crown.rsi
+    sprite: Clothing/Head/Misc/flower-wreath.rsi
   - type: Clothing
-    sprite: Clothing/Head/Misc/flower-crown.rsi
+    sprite: Clothing/Head/Misc/flower-wreath.rsi
+    slots:
+    - HEAD
+    - neck
   - type: Construction
-    graph: flowercrown
-    node: flowercrown
-
-- type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHatHairflower
-  name: hairflower
-  description: A red flower for beautiful ladies.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Misc/hairflower.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Misc/hairflower.rsi
-  - type: Construction
-    graph: hairflower
-    node: hairflower
+    graph: flowerwreath
+    node: flowerwreath
 
 - type: entity
   parent: ClothingHeadLightBase

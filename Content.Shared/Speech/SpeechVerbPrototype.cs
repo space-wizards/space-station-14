@@ -43,4 +43,10 @@ public sealed partial class SpeechVerbPrototype : IPrototype
     /// </summary>
     [DataField("priority")]
     public int Priority = 0;
+
+    /// <summary>
+    /// Name shown in the voicemask UI for this verb.
+    /// </summary>
+    [DataField(required: true)]
+    public LocId Name = string.Empty;
 }

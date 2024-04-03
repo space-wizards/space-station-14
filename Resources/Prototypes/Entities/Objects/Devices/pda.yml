@@ -108,6 +108,7 @@
 - type: entity
   parent: BasePDA
   id: BaseMedicalPDA
+  abstract: true
   components:
   - type: HealthAnalyzer
     scanDelay: 1

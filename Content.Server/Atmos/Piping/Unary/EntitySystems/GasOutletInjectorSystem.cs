@@ -50,16 +50,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!injector.Enabled)
                 return;
 
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            if (!_nodeContainer.TryGetNode(uid, injector.InletName, out PipeNode? inlet))
                 return;
 
-            if (!TryComp(uid, out AtmosDeviceComponent? device))
-                return;
-
-            if (!_nodeContainer.TryGetNode(nodeContainer, injector.InletName, out PipeNode? inlet))
-                return;
-
-            var environment = _atmosphereSystem.GetContainingMixture(uid, true, true);
+            var environment = _atmosphereSystem.GetContainingMixture(uid, args.Grid, args.Map, true, true);
 
             if (environment == null)
                 return;

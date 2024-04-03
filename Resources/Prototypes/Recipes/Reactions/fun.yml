@@ -173,7 +173,7 @@
 
 - type: reaction
   id: CreateEnrichedUranium
-  impact: Low
+  impact: High
   quantized: true
   reactants:
     Uranium-235:
@@ -187,7 +187,22 @@
       entity: EnrichedUranium
 
 - type: reaction
-  id: Gunpowder # Own a musket for home defense, cause that's what the founding fathers intended!
+  id: CreateCrystals
+  quantized: true
+  minTemp: 374
+  reactants:
+    Sugar:
+      amount: 15
+    Water:
+      amount: 15
+    Ethanol:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: ShardCrystalRandom
+
+- type: reaction
+  id: Gunpowder
   impact: Low
   quantized: true
   minTemp: 374
@@ -206,10 +221,8 @@
   id: lingium # Failing checks in the hot sun, i fought the code and the code won
   reactants:
     UnstableMutagen:
-      amount: 2
+      amount: 3
     Plasma: # Consumed in reaction: steady supply of plasma required for a jug of it
       amount: 2 
-    UnstableMutagen:
-      amount: 1
   products:
     lingium: 3
