@@ -14,8 +14,6 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
     private void OnHandleState(Entity<ChameleonDisguiseComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         CopyComp<SpriteComponent>(ent);
-        // support well written things' appearances but not older code that has their own visualizer components
-        if (CopyComp<AppearanceComponent>(ent))
-            CopyComp<GenericVisualizerComponent>(ent);
+        CopyComp<GenericVisualizerComponent>(ent);
     }
 }

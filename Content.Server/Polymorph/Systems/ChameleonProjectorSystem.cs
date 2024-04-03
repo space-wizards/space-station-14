@@ -17,6 +17,7 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly PolymorphSystem _polymorph = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     public override void Initialize()
@@ -48,6 +49,8 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
         comp.SourceEntity = entity;
         comp.SourceProto = Prototype(entity)?.ID;
         Dirty(disguise, comp);
+
+        _appearance.CopyData(entity, disguise);
 
         var mass = CompOrNull<PhysicsComponent>(entity)?.Mass ?? 0f;
 
