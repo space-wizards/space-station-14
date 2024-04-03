@@ -92,9 +92,6 @@
     intensitySlope: 2
     totalIntensity: 200
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-substation
-    layoutId: Substation
   - type: Machine
     board: SubstationMachineCircuitboard
   - type: StationInfiniteBatteryTarget

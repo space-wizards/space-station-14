@@ -124,8 +124,8 @@ public abstract partial class SharedToolSystem : EntitySystem
         var doAfterArgs = new DoAfterArgs(EntityManager, user, delay / toolComponent.SpeedModifier, toolEvent, tool, target: target, used: tool)
         {
             BreakOnDamage = true,
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
+            BreakOnMove = true,
+            BreakOnWeightlessMove = false,
             NeedHand = tool != user,
             AttemptFrequency = IsWelder(tool) ? AttemptFrequency.EveryTick : AttemptFrequency.Never
         };

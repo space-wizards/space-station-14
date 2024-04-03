@@ -45,7 +45,7 @@ public sealed class CommsHackerSystem : SharedCommsHackerSystem
         var doAfterArgs = new DoAfterArgs(EntityManager, uid, comp.Delay, new TerrorDoAfterEvent(), target: target, used: uid, eventTarget: uid)
         {
             BreakOnDamage = true,
-            BreakOnUserMove = true,
+            BreakOnMove = true,
             MovementThreshold = 0.5f,
             CancelDuplicate = false
         };

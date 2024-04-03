@@ -86,7 +86,7 @@ namespace Content.Shared.Popups
         /// Variant of <see cref="PopupEntity(string, EntityUid, EntityUid, PopupType)"/> that only runs on the client, outside of prediction.
         /// Useful for shared code that is always ran by both sides to avoid duplicate popups.
         /// </summary>
-        public abstract void PopupClient(string? message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small);
+        public abstract void PopupClient(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small);
 
         /// <summary>
         /// Variant of <see cref="PopupEntity(string, EntityUid, EntityUid, PopupType)"/> for use with prediction. The local client will show

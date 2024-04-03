@@ -7,7 +7,6 @@ using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameStates;
@@ -32,8 +31,8 @@ namespace Content.Server.Tools
             SubscribeLocalEvent<WelderComponent, DoAfterAttemptEvent<ToolDoAfterEvent>>(OnWelderToolUseAttempt);
             SubscribeLocalEvent<WelderComponent, ComponentShutdown>(OnWelderShutdown);
             SubscribeLocalEvent<WelderComponent, ComponentGetState>(OnWelderGetState);
-            SubscribeLocalEvent<WelderComponent, ItemToggleActivateAttemptEvent>(TryTurnOn);
-            SubscribeLocalEvent<WelderComponent, ItemToggleDeactivateAttemptEvent>(TurnOff);
+            SubscribeLocalEvent<WelderComponent, ItemToggledEvent>(OnToggle);
+            SubscribeLocalEvent<WelderComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
         }
 
         public (FixedPoint2 fuel, FixedPoint2 capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionContainerManagerComponent? solutionContainer = null)
@@ -45,55 +44,54 @@ namespace Content.Server.Tools
             return (fuelSolution.GetTotalPrototypeQuantity(welder.FuelReagent), fuelSolution.MaxVolume);
         }
 
-        public void TryTurnOn(Entity<WelderComponent> entity, ref ItemToggleActivateAttemptEvent args)
+        private void OnToggle(Entity<WelderComponent> entity, ref ItemToggledEvent args)
         {
-            if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp.FuelSolutionName, ref entity.Comp.FuelSolution, out var solution) ||
-                !TryComp<TransformComponent>(entity, out var transform))
+            if (args.Activated)
+                TurnOn(entity, args.User);
+            else
+                TurnOff(entity, args.User);
+        }
+
+        private void OnActivateAttempt(Entity<WelderComponent> entity, ref ItemToggleActivateAttemptEvent args)
+        {
+            if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp.FuelSolutionName, ref entity.Comp.FuelSolution, out var solution))
             {
                 args.Cancelled = true;
+                args.Popup = Loc.GetString("welder-component-no-fuel-message");
                 return;
             }
 
             var fuel = solution.GetTotalPrototypeQuantity(entity.Comp.FuelReagent);
-
-            // Not enough fuel to lit welder.
             if (fuel == FixedPoint2.Zero || fuel < entity.Comp.FuelLitCost)
             {
-                if (args.User != null)
-                {
-                    _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), entity, (EntityUid) args.User);
-                }
+                args.Popup = Loc.GetString("welder-component-no-fuel-message");
                 args.Cancelled = true;
-                return;
             }
+        }
+
+        public void TurnOn(Entity<WelderComponent> entity, EntityUid? user)
+        {
+            if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp.FuelSolutionName, ref entity.Comp.FuelSolution))
+                return;
 
             _solutionContainer.RemoveReagent(entity.Comp.FuelSolution.Value, entity.Comp.FuelReagent, entity.Comp.FuelLitCost);
+            AdminLogger.Add(LogType.InteractActivate, LogImpact.Low,
+                $"{ToPrettyString(user):user} toggled {ToPrettyString(entity.Owner):welder} on");
 
-            // Logging
-            AdminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(entity.Owner):welder} on");
-
-            _ignitionSource.SetIgnited(entity.Owner);
-
-            if (transform.GridUid is { } gridUid)
+            var xform = Transform(entity);
+            if (xform.GridUid is { } gridUid)
             {
-                var position = _transformSystem.GetGridOrMapTilePosition(entity.Owner, transform);
+                var position = _transformSystem.GetGridOrMapTilePosition(entity.Owner, xform);
                 _atmosphereSystem.HotspotExpose(gridUid, position, 700, 50, entity.Owner, true);
             }
-
-            Dirty(entity);
 
             _activeWelders.Add(entity);
         }
 
-        public void TurnOff(Entity<WelderComponent> entity, ref ItemToggleDeactivateAttemptEvent args)
+        public void TurnOff(Entity<WelderComponent> entity, EntityUid? user)
         {
-            // Logging
-            AdminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(args.User):user} toggled {ToPrettyString(entity.Owner):welder} off");
-
-            _ignitionSource.SetIgnited(entity.Owner, false);
-
-            Dirty(entity);
-
+            AdminLogger.Add(LogType.InteractActivate, LogImpact.Low,
+                $"{ToPrettyString(user):user} toggled {ToPrettyString(entity.Owner):welder} off");
             _activeWelders.Remove(entity);
         }
 
@@ -152,9 +150,9 @@ namespace Content.Server.Tools
                 {
                     _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-in-tank", ("owner", args.Target)), entity, args.User);
                 }
-            }
 
-            args.Handled = true;
+                args.Handled = true;
+            }
         }
 
         private void OnWelderToolUseAttempt(Entity<WelderComponent> entity, ref DoAfterAttemptEvent<ToolDoAfterEvent> args)
@@ -186,7 +184,9 @@ namespace Content.Server.Tools
             if (_welderTimer < WelderUpdateTimer)
                 return;
 
-            // TODO Use an "active welder" component instead, EntityQuery over that.
+            // TODO Serialization. _activeWelders is not serialized.
+            // Need to use some "active" component, and EntityQuery over that.
+            // Probably best to generalize it to a "ToggleableFuelDrain" component.
             foreach (var tool in _activeWelders.ToArray())
             {
                 if (!TryComp(tool, out WelderComponent? welder)

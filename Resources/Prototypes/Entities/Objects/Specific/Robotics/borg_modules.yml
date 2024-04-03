@@ -177,7 +177,7 @@
     - Screwdriver
     - Wirecutter
     - Multitool
-    - Welder
+    - WelderIndustrial
 
 # cargo modules
 - type: entity
@@ -517,13 +517,13 @@
   components:
     - type: Sprite
       layers:
-        - state: syndicate
-        - state: icon-tools
+      - state: syndicate
+      - state: icon-syndicate
     - type: ItemBorgModule
       items:
-        - Crowbar
-        - Emag
-        - PinpointerSyndicateNuclear
+      - Crowbar
+      - Emag
+      - PinpointerSyndicateNuclear
 
 - type: entity
   id: BorgModuleEsword
@@ -533,12 +533,12 @@
   components:
     - type: Sprite
       layers:
-        - state: syndicate
-        - state: icon-tools
+      - state: syndicate
+      - state: icon-syndicate
     - type: ItemBorgModule
       items:
-        - EnergySwordDouble
-        - PinpointerSyndicateNuclear
+      - EnergySwordDouble
+      - PinpointerSyndicateNuclear
 
 - type: entity
   id: BorgModuleL6C
@@ -548,9 +548,9 @@
   components:
     - type: Sprite
       layers:
-        - state: syndicate
-        - state: icon-tools
+      - state: syndicate
+      - state: icon-syndicate
     - type: ItemBorgModule
       items:
-        - WeaponLightMachineGunL6C
-        - PinpointerSyndicateNuclear
+      - WeaponLightMachineGunL6C
+      - PinpointerSyndicateNuclear
