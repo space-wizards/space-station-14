@@ -36,11 +36,11 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
 
         if (IsInvalid(ent.Comp, target))
         {
-            _popup.PopupEntity(Loc.GetString(ent.Comp.InvalidPopup), target, user);
+            _popup.PopupClient(Loc.GetString(ent.Comp.InvalidPopup), target, user);
             return;
         }
 
-        _popup.PopupEntity(Loc.GetString(ent.Comp.SuccessPopup), target, user);
+        _popup.PopupClient(Loc.GetString(ent.Comp.SuccessPopup), target, user);
         Disguise(ent.Comp, user, target);
     }
 
