@@ -174,13 +174,15 @@ public sealed partial class PowerMonitoringConsoleNavMapControl : NavMapControl
 
     public List<PowerMonitoringConsoleLine> GetDecodedPowerCableChunks(Dictionary<Vector2i, PowerCableChunk>? chunks)
     {
+        var decodedOutput = new List<PowerMonitoringConsoleLine>();
+
         if (!_entManager.TryGetComponent(MapUid, out _grid))
-            return new();
+            return decodedOutput;
 
         if (chunks == null)
-            return new();
+            return decodedOutput;
 
-        var decodedOutput = new List<PowerMonitoringConsoleLine>();
+        // We'll use the following dictionaries to combine collinear power cable lines
         HorizLinesLookup.Clear();
         HorizLinesLookupReversed.Clear();
         VertLinesLookup.Clear();
