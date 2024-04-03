@@ -206,7 +206,7 @@
       visuals:
        # toggle color of the unshaded light:
        enum.OutletInjectorVisuals.Enabled:
-         unshaded:
+         enum.LightLayers.Unshaded:
            True: { color: "#5eff5e" }
            False: { color: "#990000" }
     - type: Appearance
