@@ -102,8 +102,6 @@
   - type: BorgChassis
   - type: WiresPanel
   - type: ActivatableUIRequiresPanel
-  - type: Wires
-    layoutId: Borg
   - type: NameIdentifier
     group: Silicon
   - type: ContainerContainer
