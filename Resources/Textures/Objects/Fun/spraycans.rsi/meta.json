@@ -59,6 +59,9 @@
       "name": "spray"
     },
     {
+      "name": "spray_cap"
+    },
+    {
       "name": "spray_cap_colors"
     },
     {
@@ -66,22 +69,6 @@
     },
     {
       "name": "equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "clown-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "clown-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "spray-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "spray-inhand-left",
       "directions": 4
     }
   ]

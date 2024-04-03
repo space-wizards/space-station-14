@@ -1,7 +1,6 @@
 using Content.Server.Advertise.EntitySystems;
 using Content.Shared.Advertise;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Advertise.Components;
 
@@ -37,9 +36,4 @@ public sealed partial class AdvertiseComponent : Component
     [DataField]
     public TimeSpan NextAdvertisementTime { get; set; } = TimeSpan.Zero;
 
-    /// <summary>
-    /// Whether the entity will say advertisements or not.
-    /// </summary>
-    [DataField]
-    public bool Enabled { get; set; } = true;
 }

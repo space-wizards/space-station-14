@@ -145,10 +145,6 @@
           prob: 0.25
         - id: StrangePill
           prob: 0.20
-        - id: DeathPaint
-          prob: 0.05
-        - id: DeathPaintTwo
-          prob: 0.05
         - id: DrinkMopwataBottleRandom
           prob: 0.20
         - id: ModularReceiver
@@ -159,6 +155,8 @@
           prob: 0.20
         - id: BarberScissors
           prob: 0.05
+        - id: BookRandomStory
+          prob: 0.1
         # Syndicate loot
         - id: null
           prob: 0.95
