@@ -2,7 +2,7 @@
 using Content.Shared.Chat;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Corvax.EmotesMenu;
+namespace Content.Server.Speech;
 
 public sealed partial class EmotesMenuSystem : EntitySystem
 {
