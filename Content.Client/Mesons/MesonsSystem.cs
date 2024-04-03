@@ -4,7 +4,7 @@ using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.GameTicking;
 using Robust.Shared.Player;
 
-namespace Content.Client.Mesons.Blinding;
+namespace Content.Client.Mesons;
 
 public sealed class MesonsSystem : EntitySystem
 {

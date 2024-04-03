@@ -1,7 +1,6 @@
-uniform lowp vec4 OVERLAY_COLOR;
-// uniform sampler2D MASK;
+uniform highp vec4 OVERLAY_COLOR;
+uniform sampler2D MASK_TEXTURE;
 
 void fragment() {
-    // lowp float center = texture(MASK, FRAGCOORD.xy).x;
-    COLOR = vec4(vec3(1), 1) * OVERLAY_COLOR;
+    COLOR = texture(MASK_TEXTURE, FRAGCOORD.xy) * OVERLAY_COLOR;
 }
