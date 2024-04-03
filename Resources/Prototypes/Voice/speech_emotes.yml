@@ -7,7 +7,7 @@
   whitelist:
     components:
     - Vocal
-  chatMessages: [screams!]
+  chatMessages: ["chat-emote-msg-scream"]
   chatTriggers:
     - scream
     - screams
@@ -42,7 +42,7 @@
   whitelist:
     components:
     - Vocal
-  chatMessages: [laughs]
+  chatMessages: ["chat-emote-msg-laugh"]
   chatTriggers:
     - laugh
     - laughs
@@ -82,7 +82,7 @@
     components:
     - Vocal
     - BorgChassis
-  chatMessages: [honks]
+  chatMessages: ["chat-emote-msg-honk"]
   chatTriggers:
     - honk
     - honk.
@@ -105,7 +105,7 @@
   whitelist:
     components:
     - Vocal
-  chatMessages: [sighs]
+  chatMessages: ["chat-emote-msg-sigh"]
   chatTriggers:
     - sigh
     - sighs
@@ -122,7 +122,7 @@
   whitelist:
     components:
     - Vocal
-  chatMessages: [whistle]
+  chatMessages: ["chat-emote-msg-whistle"]
   chatTriggers:
     - whistle
     - whistle.
@@ -142,7 +142,7 @@
   whitelist:
     components:
     - Vocal
-  chatMessages: [crying]
+  chatMessages: ["chat-emote-msg-crying"]
   chatTriggers:
     - cry
     - cry.
@@ -171,7 +171,7 @@
   whitelist:
     components:
     - Vocal
-  chatMessages: [squishing]
+  chatMessages: ["chat-emote-msg-squish"]
   chatTriggers:
     - squish
     - squish.
@@ -192,7 +192,7 @@
   whitelist:
     components:
     - Vocal
-  chatMessages: [chitters.]
+  chatMessages: ["chat-emote-msg-chitter"]
   chatTriggers:
    - chitter
    - chitter.
@@ -213,7 +213,7 @@
   whitelist:
     components:
       - Vocal
-  chatMessages: [squeaks.]
+  chatMessages: ["chat-emote-msg-squeak"]
   chatTriggers:
    - squeak
    - squeak.
@@ -234,7 +234,7 @@
   whitelist:
     components:
     - Vocal
-  chatMessages: [click.]
+  chatMessages: ["chat-emote-msg-click"]
   chatTriggers:
    - click
    - click.
@@ -252,7 +252,7 @@
   whitelist:
     components:
     - Hands
-  chatMessages: [claps!]
+  chatMessages: ["chat-emote-msg-clap"]
   chatTriggers:
     - clap
     - claps
@@ -269,7 +269,7 @@
   whitelist:
     components:
     - Hands
-  chatMessages: [snaps fingers] # snaps <{THEIR($ent)}> fingers?
+  chatMessages: ["chat-emote-msg-snap"] # snaps <{THEIR($ent)}> fingers?
   chatTriggers:
     - snap
     - snaps
@@ -293,7 +293,7 @@
   whitelist:
     components:
     - Hands
-  chatMessages: [Salute]
+  chatMessages: ["chat-emote-msg-salute"]
   chatTriggers:
     - salute
     - salute.
@@ -309,7 +309,7 @@
   whitelist:
     components:
     - MobState
-  chatMessages: ["emote-deathgasp"]
+  chatMessages: ["chat-emote-msg-deathgasp"]
   chatTriggers:
   - deathgasp
 
@@ -323,7 +323,7 @@
     components:
     - BorgChassis
     - Vocal
-  chatMessages: [buzz!]
+  chatMessages: ["chat-emote-msg-buzz"]
   chatTriggers:
     - buzzing
     - buzzing!
@@ -353,7 +353,7 @@
     requireAll: true
     components:
     - Nymph
-  chatMessages: [chirps!]
+  chatMessages: ["chat-emote-msg-chirp"]
   chatTriggers:
     - chirp
     - chirp!
@@ -379,7 +379,7 @@
     components:
     - BorgChassis
     - Vocal
-  chatMessages: [beeps.]
+  chatMessages: ["chat-emote-msg-beep"]
   chatTriggers:
     - beep
     - beep!
@@ -404,7 +404,7 @@
     components:
     - BorgChassis
     - Vocal
-  chatMessages: [chimes.]
+  chatMessages: ["chat-emote-msg-chime"]
   chatTriggers:
     - chime
     - chime.
@@ -429,7 +429,7 @@
     components:
     - BorgChassis
     - Vocal
-  chatMessages: [buzzesTwice.]
+  chatMessages: ["chat-emote-msg-buzzestwo"]
   chatTriggers:
     - buzztwice
     - buzztwice.
@@ -472,7 +472,7 @@
     components:
     - BorgChassis
     - Vocal
-  chatMessages: [pings.]
+  chatMessages: ["chat-emote-msg-ping"]
   chatTriggers:
     - ping
     - ping.
