@@ -290,7 +290,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         IBudgetEntry entry,
         Dungeon dungeon,
         Random random)
-
     {
         await SuspendIfOutOfTime();
 

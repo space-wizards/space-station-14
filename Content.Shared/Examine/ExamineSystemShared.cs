@@ -45,7 +45,12 @@ namespace Content.Shared.Examine
         /// <summary>
         ///     Creates a new examine tooltip with arbitrary info.
         /// </summary>
-        public abstract void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor);
+        public abstract void SendExamineTooltip(
+            EntityUid player,
+            EntityUid target,
+            FormattedMessage message,
+            bool getVerbs,
+            bool centerAtCursor);
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
@@ -81,7 +86,8 @@ namespace Content.Shared.Examine
         }
 
         [Pure]
-        public virtual bool CanExamine(EntityUid examiner,
+        public virtual bool CanExamine(
+            EntityUid examiner,
             MapCoordinates target,
             Ignored? predicate = null,
             EntityUid? examined = null,
@@ -148,8 +154,13 @@ namespace Content.Shared.Examine
             return TryComp<EyeComponent>(uid, out var eye) && eye.DrawFov;
         }
 
-        public bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate,
-            bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
+        public bool InRangeUnOccluded(
+            MapCoordinates origin,
+            MapCoordinates other,
+            float range,
+            Ignored? predicate,
+            bool ignoreInsideBlocker = true,
+            IEntityManager? entMan = null)
         {
             // No, rider. This is better.
             // ReSharper disable once ConvertToLocalFunction
@@ -220,8 +231,12 @@ namespace Content.Shared.Examine
             return true;
         }
 
-        public bool InRangeUnOccluded(EntityUid origin, EntityUid other, float range = ExamineRange,
-            Ignored? predicate = null, bool ignoreInsideBlocker = true)
+        public bool InRangeUnOccluded(
+            EntityUid origin,
+            EntityUid other,
+            float range = ExamineRange,
+            Ignored? predicate = null,
+            bool ignoreInsideBlocker = true)
         {
             var originPos = _transform.GetMapCoordinates(origin);
             var otherPos = _transform.GetMapCoordinates(other);
@@ -229,8 +244,12 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public bool InRangeUnOccluded(EntityUid origin, EntityCoordinates other, float range = ExamineRange,
-            Ignored? predicate = null, bool ignoreInsideBlocker = true)
+        public bool InRangeUnOccluded(
+            EntityUid origin,
+            EntityCoordinates other,
+            float range = ExamineRange,
+            Ignored? predicate = null,
+            bool ignoreInsideBlocker = true)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
             var originPos = _transform.GetMapCoordinates(origin);
@@ -239,8 +258,12 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public bool InRangeUnOccluded(EntityUid origin, MapCoordinates other, float range = ExamineRange,
-            Ignored? predicate = null, bool ignoreInsideBlocker = true)
+        public bool InRangeUnOccluded(
+            EntityUid origin,
+            MapCoordinates other,
+            float range = ExamineRange,
+            Ignored? predicate = null,
+            bool ignoreInsideBlocker = true)
         {
             var originPos = _transform.GetMapCoordinates(origin);
 

@@ -522,7 +522,6 @@ public sealed partial class DungeonJob
 
                         grid.Comp.SetTile(nearTile.GridIndices,
                             _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
-                        ;
                     }
 
                     break;

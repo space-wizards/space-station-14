@@ -87,7 +87,12 @@ namespace Content.Client.Examine
             base.Shutdown();
         }
 
-        public override bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null, EntityUid? examined = null, ExaminerComponent? examinerComp = null)
+        public override bool CanExamine(
+            EntityUid examiner,
+            MapCoordinates target,
+            Ignored? predicate = null,
+            EntityUid? examined = null,
+            ExaminerComponent? examinerComp = null)
         {
             if (!Resolve(examiner, ref examinerComp, false))
                 return false;
@@ -163,7 +168,12 @@ namespace Content.Client.Examine
             UpdateTooltipInfo(player.Value, entity, ev.Message, ev.Verbs);
         }
 
-        public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor)
+        public override void SendExamineTooltip(
+            EntityUid player,
+            EntityUid target,
+            FormattedMessage message,
+            bool getVerbs,
+            bool centerAtCursor)
         {
             OpenTooltip(player, target, centerAtCursor, false);
             UpdateTooltipInfo(player, target, message);
@@ -174,7 +184,12 @@ namespace Content.Client.Examine
         ///     not fill it with information. This is done when the server sends examine info/verbs,
         ///     or immediately if it's entirely clientside.
         /// </summary>
-        public void OpenTooltip(EntityUid player, EntityUid target, bool centeredOnCursor=true, bool openAtOldTooltip=true, bool knowTarget = true)
+        public void OpenTooltip(
+            EntityUid player,
+            EntityUid target,
+            bool centeredOnCursor=true,
+            bool openAtOldTooltip=true,
+            bool knowTarget = true)
         {
             // Close any examine tooltip that might already be opened
             // Before we do that, save its position. We'll prioritize opening any new popups there if
@@ -261,7 +276,11 @@ namespace Content.Client.Examine
         /// <summary>
         ///     Fills the examine tooltip with a message and buttons if applicable.
         /// </summary>
-        public void UpdateTooltipInfo(EntityUid player, EntityUid target, FormattedMessage message, List<Verb>? verbs=null)
+        public void UpdateTooltipInfo(
+            EntityUid player,
+            EntityUid target,
+            FormattedMessage message,
+            List<Verb>? verbs=null)
         {
             var vBox = _examineTooltipOpen?.GetChild(0).GetChild(0);
             if (vBox == null)

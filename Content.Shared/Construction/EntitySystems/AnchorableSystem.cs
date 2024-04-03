@@ -282,8 +282,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         return TileFree((gridUid.Value, grid),
             tileIndices,
             anchorBody.CollisionLayer,
-            anchorBody.CollisionMask
-            );
+            anchorBody.CollisionMask);
     }
 
     /// <summary>
