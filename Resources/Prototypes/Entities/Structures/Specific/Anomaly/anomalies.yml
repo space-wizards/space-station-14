@@ -123,11 +123,11 @@
     castShadows: false
   - type: GravityAnomaly
   - type: GravityWell
-  - type: RadiationSource  
+  - type: RadiationSource
   - type: Physics
     bodyType: Dynamic
     bodyStatus: InAir
-  - type: CanMoveInAir  
+  - type: CanMoveInAir
   - type: RandomWalk
   - type: SingularityDistortion
     intensity: 1000
@@ -164,6 +164,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreFlesh
     coreInertPrototype: AnomalyCoreFleshInert
+    minPulseLength: 180
+    maxPulseLength: 300
   - type: Sprite
     layers:
     - state: anom5
@@ -355,6 +357,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreRock
     coreInertPrototype: AnomalyCoreRockInert
+    minPulseLength: 180
+    maxPulseLength: 300
   - type: Sprite
     layers:
     - state: anom6
@@ -605,6 +609,8 @@
     offset: 0, 0
     corePrototype: AnomalyCoreFlora
     coreInertPrototype: AnomalyCoreFloraInert
+    minPulseLength: 60
+    maxPulseLength: 120
     anomalyContactDamage:
       types:
         Slash: 0
@@ -709,6 +715,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreLiquid
     coreInertPrototype: AnomalyCoreLiquidInert
+    minPulseLength: 60
+    maxPulseLength: 120
     anomalyContactDamage:
       types:
         Slash: 1
@@ -822,6 +830,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreShadow
     coreInertPrototype: AnomalyCoreShadowInert
+    minPulseLength: 60
+    maxPulseLength: 120
     anomalyContactDamage:
       types:
         Cold: 10
