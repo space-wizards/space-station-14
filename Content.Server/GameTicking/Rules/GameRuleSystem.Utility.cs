@@ -90,7 +90,9 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
 
         return false;
     }
-
+    /// <summary>
+    ///     Get a random station tile that are neither space tiles nor air-blocked tiles
+    /// </summary>
     protected bool TryFindRandomTileOnStation(Entity<StationDataComponent> targetStation, out Vector2i tile, out EntityUid targetGrid, out EntityCoordinates targetCoords)
     {
         tile = default;
@@ -115,6 +117,9 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
 
         return true;
     }
+    /// <summary>
+    ///     Get [numberOfTiles] random station tiles, with replacement, that are neither space tiles nor air-blocked tiles
+    /// </summary>
     protected IEnumerable<TileRef> FindRandomTilesOnStation(Entity<StationDataComponent> station, int numberOfTiles)
     {
         var allValidStationTiles = GetAllVaildStationTiles(station).ToList();
