@@ -44,8 +44,8 @@
         - SmallMobLayer
   - type: Hands
   - type: Inventory
-    speciesId: rat
-    templateId: ratKing
+    speciesId: ratking
+    templateId: ratking
   - type: InventorySlots
   - type: Strippable
   - type: UserInterface

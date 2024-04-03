@@ -1,5 +1,5 @@
 - type: inventoryTemplate
-  id: ratKing
+  id: ratking
   slots:
   - name: ears
     slotTexture: ears

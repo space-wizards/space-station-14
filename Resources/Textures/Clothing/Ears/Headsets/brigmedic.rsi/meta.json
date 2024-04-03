@@ -13,6 +13,10 @@
     {
       "name": "equipped-EARS",
       "directions": 4
+    },
+    {
+        "name": "equipped-EARS-ratking",
+        "directions": 4
     }
   ]
 }
