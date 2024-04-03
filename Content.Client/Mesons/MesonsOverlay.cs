@@ -61,7 +61,9 @@ public sealed class MesonsOverlay : Overlay
 
         var query = _entityManager.EntityQueryEnumerator<MesonsViewableComponent>();
 
-        DrawingHandleWorld _outlineHandle;
+        IRenderHandle _outlineRenderHandle = new();
+
+        DrawingHandleWorld _outlineHandle = _outlineRenderHandle.DrawingHandleWorld;
 
         _outlineHandle.DrawTexture(ScreenTexture, Vector2.Zero);
 
