@@ -12,7 +12,8 @@ namespace Content.Client.Preferences.UI;
 [GenerateTypedNameReferences]
 public sealed partial class LoadoutWindow : FancyWindow
 {
-    public event Action<ProtoId<LoadoutGroupPrototype>, ProtoId<LoadoutPrototype>?>? OnLoadoutPressed;
+    public event Action<ProtoId<LoadoutGroupPrototype>, ProtoId<LoadoutPrototype>>? OnLoadoutPressed;
+    public event Action<ProtoId<LoadoutGroupPrototype>, ProtoId<LoadoutPrototype>>? OnLoadoutUnpressed;
 
     private List<LoadoutGroupContainer> _groups = new();
 
@@ -30,6 +31,11 @@ public sealed partial class LoadoutWindow : FancyWindow
             container.OnLoadoutPressed += args =>
             {
                 OnLoadoutPressed?.Invoke(group, args);
+            };
+
+            container.OnLoadoutUnpressed += args =>
+            {
+                OnLoadoutUnpressed?.Invoke(group, args);
             };
         }
     }

@@ -189,19 +189,26 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         // Run loadouts after so stuff like storage loadouts can get
         var jobLoadout = LoadoutSystem.GetJobPrototype(prototype?.ID);
 
-        if (profile?.Loadouts.TryGetValue(jobLoadout, out var loadout) == true)
+        if (_prototypeManager.TryIndex(jobLoadout, out RoleLoadoutPrototype? loadoutProto))
         {
-            if (_prototypeManager.TryIndex(jobLoadout, out RoleLoadoutPrototype? loadoutProto))
+            RoleLoadout? loadout = null;
+            profile?.Loadouts.TryGetValue(jobLoadout, out loadout);
+
+            // Set to default if not present
+            if (loadout == null)
             {
-                // Order loadout selections by the order they appear on the prototype.
-                foreach (var group in loadout.SelectedLoadouts.OrderBy(x => loadoutProto.Groups.FindIndex(e => e == x.Key)))
+                loadout = new RoleLoadout(jobLoadout);
+                loadout.SetDefault(EntityManager, _prototypeManager);
+            }
+
+            // Order loadout selections by the order they appear on the prototype.
+            foreach (var group in loadout.SelectedLoadouts.OrderBy(x => loadoutProto.Groups.FindIndex(e => e == x.Key)))
+            {
+                foreach (var items in group.Value)
                 {
-                    foreach (var items in group.Value)
-                    {
-                        // Handle any extra data here.
-                        var startingGear = _prototypeManager.Index<StartingGearPrototype>(items.Prototype);
-                        EquipStartingGear(entity.Value, startingGear);
-                    }
+                    // Handle any extra data here.
+                    var startingGear = _prototypeManager.Index<StartingGearPrototype>(items.Prototype);
+                    EquipStartingGear(entity.Value, startingGear);
                 }
             }
         }

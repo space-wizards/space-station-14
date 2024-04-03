@@ -16,22 +16,16 @@ public sealed partial class LoadoutContainer : BoxContainer
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
-    public event Action<ProtoId<LoadoutPrototype>?>? OnLoadoutPressed;
+    private readonly EntityUid? _entity;
 
-    private EntityUid? _entity;
+    public Button Select => SelectButton;
 
-    public LoadoutContainer(ProtoId<LoadoutPrototype>? proto, ButtonGroup group, bool disabled, FormattedMessage? reason)
+    public LoadoutContainer(ProtoId<LoadoutPrototype> proto, bool disabled, FormattedMessage? reason)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
         SelectButton.Disabled = disabled;
-        SelectButton.Group = group;
-
-        SelectButton.OnPressed += args =>
-        {
-            OnLoadoutPressed?.Invoke(proto);
-        };
 
         if (disabled && reason != null)
         {
@@ -40,7 +34,7 @@ public sealed partial class LoadoutContainer : BoxContainer
             SelectButton.TooltipSupplier = _ => tooltip;
         }
 
-        if (proto != null && _protoManager.TryIndex(proto, out var loadProto))
+        if (_protoManager.TryIndex(proto, out var loadProto))
         {
             var ent = _entManager.System<LoadoutSystem>().GetFirstOrNull(loadProto);
 

@@ -37,8 +37,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                     profile_loadout_group_id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     profile_role_loadout_id = table.Column<int>(type: "INTEGER", nullable: false),
-                    group_name = table.Column<string>(type: "TEXT", nullable: false),
-                    loadout_name = table.Column<string>(type: "TEXT", nullable: true)
+                    group_name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,6 +49,31 @@ namespace Content.Server.Database.Migrations.Sqlite
                         principalColumn: "profile_role_loadout_id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "profile_loadout",
+                columns: table => new
+                {
+                    profile_loadout_id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    profile_loadout_group_id = table.Column<int>(type: "INTEGER", nullable: false),
+                    loadout_name = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_profile_loadout", x => x.profile_loadout_id);
+                    table.ForeignKey(
+                        name: "FK_profile_loadout_profile_loadout_group_profile_loadout_group_id",
+                        column: x => x.profile_loadout_group_id,
+                        principalTable: "profile_loadout_group",
+                        principalColumn: "profile_loadout_group_id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_profile_loadout_profile_loadout_group_id",
+                table: "profile_loadout",
+                column: "profile_loadout_group_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_profile_loadout_group_profile_role_loadout_id",
@@ -65,6 +89,9 @@ namespace Content.Server.Database.Migrations.Sqlite
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "profile_loadout");
+
             migrationBuilder.DropTable(
                 name: "profile_loadout_group");
 

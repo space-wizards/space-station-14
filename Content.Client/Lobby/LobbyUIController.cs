@@ -131,17 +131,20 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         return _prototypeManager.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
     }
 
-    public void GiveDummyLoadout(EntityUid uid, RoleLoadout? loadout)
+    public void GiveDummyLoadout(EntityUid uid, RoleLoadout? roleLoadout)
     {
-        if (loadout == null)
+        if (roleLoadout == null)
             return;
 
-        foreach (var group in loadout.SelectedLoadouts.Values)
+        foreach (var group in roleLoadout.SelectedLoadouts.Values)
         {
-            if (group == null || !_prototypeManager.TryIndex<LoadoutPrototype>(group.Value, out var loadoutProto))
-                continue;
+            foreach (var loadout in group)
+            {
+                if (!_prototypeManager.TryIndex(loadout.Prototype, out var loadoutProto))
+                    continue;
 
-            _spawn.EquipStartingGear(uid, _prototypeManager.Index(loadoutProto.Equipment));
+                _spawn.EquipStartingGear(uid, _prototypeManager.Index(loadoutProto.Equipment));
+            }
         }
     }
 
@@ -156,27 +159,30 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         // Apply loadout
         if (profile.Loadouts.TryGetValue(job.ID, out var jobLoadout))
         {
-            foreach (var loadoutId in jobLoadout.SelectedLoadouts.Values)
+            foreach (var loadouts in jobLoadout.SelectedLoadouts.Values)
             {
-                if (loadoutId == null || !_prototypeManager.TryIndex(loadoutId.Value, out var loadoutProto))
-                    continue;
-
-                // TODO: Need some way to apply starting gear to an entity coz holy fucking shit dude.
-                var loadoutGear = _prototypeManager.Index(loadoutProto.Equipment);
-
-                foreach (var slot in slots)
+                foreach (var loadout in loadouts)
                 {
-                    var itemType = loadoutGear.GetGear(slot.Name);
+                    if (!_prototypeManager.TryIndex(loadout.Prototype, out var loadoutProto))
+                        continue;
 
-                    if (_inventory.TryUnequip(dummy, slot.Name, out var unequippedItem, silent: true, force: true, reparent: false))
-                    {
-                        EntityManager.DeleteEntity(unequippedItem.Value);
-                    }
+                    // TODO: Need some way to apply starting gear to an entity coz holy fucking shit dude.
+                    var loadoutGear = _prototypeManager.Index(loadoutProto.Equipment);
 
-                    if (itemType != string.Empty)
+                    foreach (var slot in slots)
                     {
-                        var item = EntityManager.SpawnEntity(itemType, MapCoordinates.Nullspace);
-                        _inventory.TryEquip(dummy, item, slot.Name, true, true);
+                        var itemType = loadoutGear.GetGear(slot.Name);
+
+                        if (_inventory.TryUnequip(dummy, slot.Name, out var unequippedItem, silent: true, force: true, reparent: false))
+                        {
+                            EntityManager.DeleteEntity(unequippedItem.Value);
+                        }
+
+                        if (itemType != string.Empty)
+                        {
+                            var item = EntityManager.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                            _inventory.TryEquip(dummy, item, slot.Name, true, true);
+                        }
                     }
                 }
             }

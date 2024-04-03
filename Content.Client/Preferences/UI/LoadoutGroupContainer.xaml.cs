@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Clothing;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Preferences.Loadouts.Effects;
@@ -7,6 +8,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Preferences.UI;
 
@@ -15,7 +17,8 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
 {
     private readonly LoadoutGroupPrototype _groupProto;
 
-    public event Action<ProtoId<LoadoutPrototype>?>? OnLoadoutPressed;
+    public event Action<ProtoId<LoadoutPrototype>>? OnLoadoutPressed;
+    public event Action<ProtoId<LoadoutPrototype>>? OnLoadoutUnpressed;
 
     public LoadoutGroupContainer(RoleLoadout loadout, LoadoutGroupPrototype groupProto, ICommonSession session, IDependencyCollection collection)
     {
@@ -31,50 +34,33 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
     public void RefreshLoadouts(RoleLoadout loadout, ICommonSession session, IDependencyCollection collection)
     {
         LoadoutsContainer.DisposeAllChildren();
-        var btnGroup = new ButtonGroup(false);
         // Didn't use options because this is more robust in future.
         var protoMan = collection.Resolve<IPrototypeManager>();
         var loadoutSystem = collection.Resolve<IEntityManager>().System<LoadoutSystem>();
 
         var selected = loadout.SelectedLoadouts[_groupProto.ID];
 
-        if (_groupProto.Optional)
+        foreach (var loadoutProto in _groupProto.Loadouts)
         {
-            var loadoutContainer = new LoadoutContainer(null, btnGroup, false, null);
-            loadoutContainer.Text = Loc.GetString("loadout-none");
-
-            if (selected == null)
-            {
-                loadoutContainer.Pressed = true;
-            }
-
-            loadoutContainer.OnLoadoutPressed += args =>
-            {
-                OnLoadoutPressed?.Invoke(null);
-            };
-            LoadoutsContainer.AddChild(loadoutContainer);
-        }
-
-        foreach (var role in _groupProto.Loadouts)
-        {
-            if (!protoMan.TryIndex(role, out var loadProto))
+            if (!protoMan.TryIndex(loadoutProto, out var loadProto))
                 continue;
 
-            var enabled = loadout.IsValid(session, role, collection, out var reason);
-            var loadoutContainer = new LoadoutContainer(role, btnGroup, !enabled, reason);
+            var matchingLoadout = selected.FirstOrDefault(e => e.Prototype == loadoutProto);
+            var pressed = matchingLoadout != null;
 
-            // If there's no selection in the loadout or
-            if (selected?.Id == role.Id)
-            {
-                loadoutContainer.Pressed = true;
-            }
-
+            var enabled = loadout.IsValid(session, loadoutProto, collection, out var reason);
+            var loadoutContainer = new LoadoutContainer(loadoutProto, !enabled, reason);
+            loadoutContainer.Select.Pressed = pressed;
             loadoutContainer.Text = loadoutSystem.GetName(loadProto);
 
-            loadoutContainer.OnLoadoutPressed += args =>
+            loadoutContainer.Select.OnPressed += args =>
             {
-                OnLoadoutPressed?.Invoke(args);
+                if (args.Button.Pressed)
+                    OnLoadoutPressed?.Invoke(loadoutProto);
+                else
+                    OnLoadoutUnpressed?.Invoke(loadoutProto);
             };
+
             LoadoutsContainer.AddChild(loadoutContainer);
         }
     }

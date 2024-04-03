@@ -143,9 +143,24 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                         controller.SetDummyJob(jobProto, _loadout);
                     }
 
+                    _loadoutWindow.OnLoadoutUnpressed += (selectedGroup, selectedLoadout) =>
+                    {
+                        if (!_loadout.RemoveLoadout(selectedGroup, selectedLoadout, protoManager))
+                            return;
+
+                        _loadout.EnsureValid(session, collection);
+                        _loadoutWindow.RefreshLoadouts(_loadout, session, collection);
+                        var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
+                        controller.UpdateCharacterUI();
+                        LoadoutUpdated?.Invoke(_loadout);
+                    };
+
                     _loadoutWindow.OnLoadoutPressed += (selectedGroup, selectedLoadout) =>
                     {
-                        _loadout.AddLoadout(selectedGroup, selectedLoadout, entManager);
+                        if (!_loadout.AddLoadout(selectedGroup, selectedLoadout, protoManager))
+                            return;
+
+                        _loadout.EnsureValid(session, collection);
                         _loadoutWindow.RefreshLoadouts(_loadout, session, collection);
                         var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
                         controller.UpdateCharacterUI();

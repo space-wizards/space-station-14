@@ -775,6 +775,30 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("profile", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.ProfileLoadout", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("profile_loadout_id");
+
+                    b.Property<string>("LoadoutName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("loadout_name");
+
+                    b.Property<int>("ProfileLoadoutGroupId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("profile_loadout_group_id");
+
+                    b.HasKey("Id")
+                        .HasName("PK_profile_loadout");
+
+                    b.HasIndex("ProfileLoadoutGroupId");
+
+                    b.ToTable("profile_loadout", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.ProfileLoadoutGroup", b =>
                 {
                     b.Property<int>("Id")
@@ -786,10 +810,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("group_name");
-
-                    b.Property<string>("LoadoutName")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("loadout_name");
 
                     b.Property<int>("ProfileRoleLoadoutId")
                         .HasColumnType("INTEGER")
@@ -1494,6 +1514,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Preference");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.ProfileLoadout", b =>
+                {
+                    b.HasOne("Content.Server.Database.ProfileLoadoutGroup", "ProfileLoadoutGroup")
+                        .WithMany("Loadouts")
+                        .HasForeignKey("ProfileLoadoutGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_profile_loadout_profile_loadout_group_profile_loadout_group_id");
+
+                    b.Navigation("ProfileLoadoutGroup");
+                });
+
             modelBuilder.Entity("Content.Server.Database.ProfileLoadoutGroup", b =>
                 {
                     b.HasOne("Content.Server.Database.ProfileRoleLoadout", "ProfileRoleLoadout")
@@ -1733,6 +1765,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Loadouts");
 
                     b.Navigation("Traits");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.ProfileLoadoutGroup", b =>
+                {
+                    b.Navigation("Loadouts");
                 });
 
             modelBuilder.Entity("Content.Server.Database.ProfileRoleLoadout", b =>
