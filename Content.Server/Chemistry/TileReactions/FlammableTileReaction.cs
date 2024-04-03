@@ -13,7 +13,7 @@ namespace Content.Server.Chemistry.TileReactions
     {
         [DataField("temperatureMultiplier")] private float _temperatureMultiplier = 1.15f;
 
-        public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
+        public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume, List<ReagentData>? data)
         {
             if (reactVolume <= FixedPoint2.Zero || tile.Tile.IsEmpty)
                 return FixedPoint2.Zero;

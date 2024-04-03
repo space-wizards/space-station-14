@@ -31,7 +31,7 @@ public sealed partial class CleanTileReaction : ITileReaction
     [DataField("reagent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
     public string ReplacementReagent = "Water";
 
-    FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
+    FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume, List<ReagentData>? data)
     {
         var entMan = IoCManager.Resolve<IEntityManager>();
         var entities = entMan.System<EntityLookupSystem>().GetLocalEntitiesIntersecting(tile, 0f).ToArray();

@@ -13,6 +13,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
 // todo: remove this stinky LINQy
 
 namespace Content.Server.Forensics
@@ -27,6 +30,7 @@ namespace Content.Server.Forensics
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         public override void Initialize()
         {
@@ -46,7 +50,8 @@ namespace Content.Server.Forensics
             var state = new ForensicScannerBoundUserInterfaceState(
                 component.Fingerprints,
                 component.Fibers,
-                component.DNAs,
+                component.TouchDNAs,
+                component.SolutionDNAs,
                 component.Residues,
                 component.LastScannedName,
                 component.PrintCooldown,
@@ -70,16 +75,34 @@ namespace Content.Server.Forensics
                 {
                     scanner.Fingerprints = new();
                     scanner.Fibers = new();
-                    scanner.DNAs = new();
+                    scanner.TouchDNAs = new();
                     scanner.Residues = new();
                 }
-
                 else
                 {
                     scanner.Fingerprints = forensics.Fingerprints.ToList();
                     scanner.Fibers = forensics.Fibers.ToList();
-                    scanner.DNAs = forensics.DNAs.ToList();
+                    scanner.TouchDNAs = forensics.DNAs.ToList();
                     scanner.Residues = forensics.Residues.ToList();
+                    scanner.SolutionDNAs = new();
+                }
+
+                scanner.SolutionDNAs = new();
+                if (TryComp<SolutionContainerManagerComponent>(args.Args.Target, out var comp))
+                {
+                    foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((args.Args.Target.Value, comp)))
+                    {
+                        foreach (var reagent in soln.Comp.Solution.Contents)
+                        {
+                            foreach (var data in reagent.Reagent.Data)
+                            {
+                                if (data is DNAData)
+                                {
+                                    scanner.SolutionDNAs.Add(((DNAData) data).DNA);
+                                }
+                            }
+                        }
+                    }
                 }
 
                 scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
@@ -216,8 +239,15 @@ namespace Content.Server.Forensics
             }
             text.AppendLine();
             text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
-            foreach (var dna in component.DNAs)
+            foreach (var dna in component.TouchDNAs)
             {
+                text.AppendLine(dna);
+            }
+            foreach (var dna in component.SolutionDNAs)
+            {
+                Log.Debug(dna);
+                if (component.TouchDNAs.Contains(dna))
+                    continue;
                 text.AppendLine(dna);
             }
             text.AppendLine();
@@ -245,7 +275,8 @@ namespace Content.Server.Forensics
 
             component.Fingerprints = new();
             component.Fibers = new();
-            component.DNAs = new();
+            component.TouchDNAs = new();
+            component.SolutionDNAs = new();
             component.LastScannedName = string.Empty;
 
             UpdateUserInterface(uid, component);

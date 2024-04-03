@@ -4356,8 +4356,7 @@ entities:
           maxVol: 50
           name: null
           reagents:
-          - data: null
-            ReagentId: Water
+          - ReagentId: Water
             Quantity: 25
 - proto: Multitool
   entities:

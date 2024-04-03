@@ -35,7 +35,7 @@ public sealed partial class CreateEntityTileReaction : ITileReaction
     [DataField]
     public float RandomOffsetMax = 0.0f;
 
-    public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
+    public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume, List<ReagentData>? data)
     {
         if (reactVolume >= Usage)
         {

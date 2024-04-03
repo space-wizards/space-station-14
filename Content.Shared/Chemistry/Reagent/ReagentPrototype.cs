@@ -1,4 +1,4 @@
-﻿using System.Collections.Frozen;
+using System.Collections.Frozen;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
@@ -135,7 +135,7 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
 
-        public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume)
+        public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, List<ReagentData>? data)
         {
             var removed = FixedPoint2.Zero;
 
@@ -144,7 +144,7 @@ namespace Content.Shared.Chemistry.Reagent
 
             foreach (var reaction in TileReactions)
             {
-                removed += reaction.TileReact(tile, this, reactVolume - removed);
+                removed += reaction.TileReact(tile, this, reactVolume - removed, data);
 
                 if (removed > reactVolume)
                     throw new Exception("Removed more than we have!");

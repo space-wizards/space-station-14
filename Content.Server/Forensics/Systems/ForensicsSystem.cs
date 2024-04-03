@@ -46,7 +46,13 @@ namespace Content.Server.Forensics
 
         private void OnDNAInit(EntityUid uid, DnaComponent component, MapInitEvent args)
         {
-            component.DNA = GenerateDNA();
+            if (component.DNA == String.Empty)
+            {
+                component.DNA = GenerateDNA();
+
+                var ev = new GenerateDnaEvent { Owner = uid, DNA = component.DNA };
+                RaiseLocalEvent(uid, ref ev);
+            }
         }
 
         private void OnBeingGibbed(EntityUid uid, DnaComponent component, BeingGibbedEvent args)
