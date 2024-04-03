@@ -22,7 +22,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseItem
+  parent: BaseMob
   id: ChameleonDisguise
   name: Urist McKleiner
   components:
@@ -30,6 +30,37 @@
   - type: Sprite
     sprite: /Textures/Mobs/Species/Human/parts.rsi
     state: full
-  - type: Input
-    context: human
+  # so people can attempt to pick it up
+  - type: Item
+  # so it can take damage
+  # projector system sets health to be proportional to mass
+  - type: Damageable
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      1: Dead
   - type: ChameleonDisguise
+
+# actions
+- type: entity
+  noSpawn: true
+  id: ActionDisguiseNoRot
+  name: Toggle Rotation
+  description: Use this to prevent your disguise from rotating, making it easier to hide in some scenarios.
+  components:
+  - type: InstantAction
+    icon: Interface/VerbIcons/refresh.svg.192dpi.png
+    event: !type:DisguiseToggleNoRotEvent
+
+- type: entity
+  noSpawn: true
+  id: ActionDisguiseAnchor
+  name: Toggle Anchored
+  description: For many objects you will want to be anchored to not be completely obvious.
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Objects/Tools/wrench.rsi
+      state: icon
+    event: !type:DisguiseToggleAnchoredEvent

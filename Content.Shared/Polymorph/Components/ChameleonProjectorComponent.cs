@@ -1,6 +1,7 @@
 using Content.Shared.Polymorph;
 using Content.Shared.Polymorph.Systems;
 using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Polymorph.Components;
 
@@ -28,6 +29,30 @@ public sealed partial class ChameleonProjectorComponent : Component
     /// </summary>
     [DataField(required: true)]
     public PolymorphConfiguration Polymorph = new();
+
+    /// <summary>
+    /// Action for disabling your disguise's rotation.
+    /// </summary>
+    [DataField]
+    public EntProtoId NoRotAction = "ActionDisguiseNoRot";
+
+    /// <summary>
+    /// Action for anchoring your disguise in place.
+    /// </summary>
+    [DataField]
+    public EntProtoId AnchorAction = "ActionDisguiseAnchor";
+
+    /// <summary>
+    /// Minimum health to give the disguise.
+    /// </summary>
+    [DataField]
+    public float MinHealth = 1f;
+
+    /// <summary>
+    /// Maximum health to give the disguise, health scales with mass.
+    /// </summary>
+    [DataField]
+    public float MaxHealth = 100f;
 
     /// <summary>
     /// Popup shown to the user when they try to disguise as an invalid entity.

@@ -1,7 +1,11 @@
+using Content.Shared.Actions;
 using Content.Shared.Interaction;
 using Content.Shared.Polymorph;
 using Content.Shared.Polymorph.Components;
 using Content.Shared.Popups;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Prototypes;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Polymorph.Systems;
 
@@ -11,6 +15,8 @@ namespace Content.Shared.Polymorph.Systems;
 /// </summary>
 public abstract class SharedChameleonProjectorSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly ISerializationManager _serMan = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
@@ -22,7 +28,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
 
     private void OnInteract(Entity<ChameleonProjectorComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Target is not {} target)
+        if (!args.CanReach || args.Target is not {} target)
             return;
 
         var user = args.User;
@@ -30,12 +36,12 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
 
         if (IsInvalid(ent.Comp, target))
         {
-            _popup.PopupPredicted(Loc.GetString(ent.Comp.InvalidPopup), target, user);
+            _popup.PopupEntity(Loc.GetString(ent.Comp.InvalidPopup), target, user);
             return;
         }
 
-        _popup.PopupPredicted(Loc.GetString(ent.Comp.SuccessPopup), target, user);
-        Disguise(ent.Comp.Polymorph, user, target);
+        _popup.PopupEntity(Loc.GetString(ent.Comp.SuccessPopup), target, user);
+        Disguise(ent.Comp, user, target);
     }
 
     /// <summary>
@@ -50,7 +56,55 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     /// <summary>
     /// On server, polymorphs the user into an entity and sets up the disguise.
     /// </summary>
-    public virtual void Disguise(PolymorphConfiguration config, EntityUid user, EntityUid entity)
+    public virtual void Disguise(ChameleonProjectorComponent comp, EntityUid user, EntityUid entity)
     {
     }
+
+    /// <summary>
+    /// Copy a component from the source entity/prototype to the disguise entity.
+    /// </summary>
+    /// <remarks>
+    /// This would probably be a good thing to add to engine in the future.
+    /// </remarks>
+    protected bool CopyComp<T>(Entity<ChameleonDisguiseComponent> ent) where T: Component, new()
+    {
+        if (!GetSrcComp<T>(ent.Comp, out var src))
+            return true;
+
+        // remove then re-add to prevent a funny
+        RemComp<T>(ent);
+        var dest = AddComp<T>(ent);
+        _serMan.CopyTo(src, ref dest, notNullableOverride: true);
+        Dirty(ent, dest);
+        return false;
+    }
+
+    /// <summary>
+    /// Try to get a single component from the source entity/prototype.
+    /// </summary>
+    private bool GetSrcComp<T>(ChameleonDisguiseComponent comp, [NotNullWhen(true)] out T? src) where T: Component
+    {
+        src = null;
+        if (TryComp(comp.SourceEntity, out src))
+            return true;
+
+        if (!_proto.TryIndex<EntityPrototype>(comp.SourceProto, out var proto))
+            return false;
+
+        return proto.TryGetComponent(out src);
+    }
+}
+
+/// <summary>
+/// Action event for toggling transform NoRot on a disguise.
+/// </summary>
+public sealed partial class DisguiseToggleNoRotEvent : InstantActionEvent
+{
+}
+
+/// <summary>
+/// Action event for toggling transform Anchored on a disguise.
+/// </summary>
+public sealed partial class DisguiseToggleAnchoredEvent : InstantActionEvent
+{
 }
