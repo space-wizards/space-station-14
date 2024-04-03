@@ -45,7 +45,7 @@ public sealed partial class EmotesMenu : RadialMenu
                 !speech.AllowedEmotes.Contains(emote.ID))
                 continue;
 
-            var parent = FindControl<RadialContainer>(emote.Name);
+            var parent = FindControl<RadialContainer>(emote.Category.ToString());
 
             var button = new EmoteMenuButton
             {
