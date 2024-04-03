@@ -13,18 +13,18 @@ public sealed partial class EmotesMenuSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PlayEmoteMessage>(OnPlayEmote);
+        SubscribeAllEvent<PlayEmoteMessage>(OnPlayEmote);
     }
 
-    private void OnPlayEmote(PlayEmoteMessage ev)
+    private void OnPlayEmote(PlayEmoteMessage msg, EntitySessionEventArgs args)
     {
-        var player = ev.Session.AttachedEntity;
+        var player = args.SenderSession.AttachedEntity;
         if (!player.HasValue)
             return;
 
-        if (!_prototypeManager.TryIndex(ev.ProtoId, out var proto) || proto.ChatTriggers.Count == 0)
+        if (!_prototypeManager.TryIndex(msg.ProtoId, out var proto) || proto.ChatTriggers.Count == 0)
             return;
 
-        _chat.TryEmoteWithChat(player.Value, ev.ProtoId);
+        _chat.TryEmoteWithChat(player.Value, msg.ProtoId);
     }
 }

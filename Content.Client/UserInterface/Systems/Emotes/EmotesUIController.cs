@@ -1,6 +1,8 @@
 ﻿using Content.Client.Chat.UI;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Chat;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
@@ -8,12 +10,14 @@ using Robust.Client.Input;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface.Systems.Emotes;
 
 [UsedImplicitly]
 public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayState>
 {
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IClyde _displayManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
 
@@ -41,7 +45,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
             _menu = UIManager.CreateWindow<EmotesMenu>();
             _menu.OnClose += OnWindowClosed;
             _menu.OnOpen += OnWindowOpen;
-            // _menu.OnPlayEmote += protoId => { UIM (new PlayEmoteMessage(protoId)); };
+            _menu.OnPlayEmote += OnPlayEmote;
 
             if (EmotesButton != null)
                 EmotesButton.SetClickPressed(true);
@@ -61,6 +65,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         {
             _menu.OnClose -= OnWindowClosed;
             _menu.OnOpen -= OnWindowOpen;
+            _menu.OnPlayEmote -= OnPlayEmote;
 
             if (EmotesButton != null)
                 EmotesButton.SetClickPressed(false);
@@ -111,5 +116,10 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
 
         _menu.Dispose();
         _menu = null;
+    }
+
+    private void OnPlayEmote(ProtoId<EmotePrototype> protoId)
+    {
+        _entityManager.RaisePredictiveEvent(new PlayEmoteMessage(protoId));
     }
 }

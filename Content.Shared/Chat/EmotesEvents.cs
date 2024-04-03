@@ -5,13 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Chat;
 
 [Serializable, NetSerializable]
-public enum EmotesUiKey : byte
-{
-    Key
-}
-
-[Serializable, NetSerializable]
-public sealed class PlayEmoteMessage(ProtoId<EmotePrototype> protoId) : BoundUserInterfaceMessage
+public sealed class PlayEmoteMessage(ProtoId<EmotePrototype> protoId) : EntityEventArgs
 {
     public readonly ProtoId<EmotePrototype> ProtoId = protoId;
 }
