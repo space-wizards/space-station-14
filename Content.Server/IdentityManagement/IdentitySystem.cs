@@ -12,7 +12,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects.Components.Localization;
 
 namespace Content.Server.IdentityManagement;
 
@@ -21,6 +20,7 @@ namespace Content.Server.IdentityManagement;
 /// </summary>
 public class IdentitySystem : SharedIdentitySystem
 {
+    [Dependency] private readonly GrammarSystem _grammar = default!;
     [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -90,17 +90,12 @@ public class IdentitySystem : SharedIdentitySystem
         // Clone the old entity's grammar to the identity entity, for loc purposes.
         if (TryComp<GrammarComponent>(uid, out var grammar))
         {
-            var identityGrammar = EnsureComp<GrammarComponent>(ident);
-            identityGrammar.Attributes.Clear();
-
-            foreach (var (k, v) in grammar.Attributes)
-            {
-                identityGrammar.Attributes.Add(k, v);
-            }
+            var identGrammar = (ident, EnsureComp<GrammarComponent>(ident));
+            _grammar.CopyAttributes(source: (uid, grammar), dest: identGrammar);
 
             // If presumed name is null and we're using that, we set proper noun to be false ("the old woman")
             if (name != representation.TrueName && representation.PresumedName == null)
-                identityGrammar.ProperNoun = false;
+                _grammar.MakeCommonNoun(identGrammar);
         }
 
         if (name == Name(ident))
