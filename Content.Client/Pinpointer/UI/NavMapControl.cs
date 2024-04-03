@@ -63,7 +63,7 @@ public partial class NavMapControl : MapGridControl
     protected float ThinDoorThickness = 0.3333f;
 
     // Local variables
-    private float _updateTimer = 0.25f;
+    private float _updateTimer = 1.0f;
     private Dictionary<Color, Color> _sRGBLookUp = new();
     protected Color BackgroundColor;
     protected float BackgroundOpacity = 0.9f;
@@ -173,6 +173,9 @@ public partial class NavMapControl : MapGridControl
     {
         EntManager.TryGetComponent(MapUid, out _navMap);
         EntManager.TryGetComponent(MapUid, out _grid);
+        EntManager.TryGetComponent(MapUid, out _xform);
+        EntManager.TryGetComponent(MapUid, out _physics);
+        EntManager.TryGetComponent(MapUid, out _fixtures);
 
         UpdateNavMap();
     }

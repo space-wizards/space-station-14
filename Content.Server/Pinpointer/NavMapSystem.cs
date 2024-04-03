@@ -124,7 +124,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         var tile = _mapSystem.CoordinatesToTile(gridUid.Value, mapGrid, _transformSystem.GetMapCoordinates(ev.Entity, ev.Transform));
         var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
 
-        RefreshTile(gridUid.Value, navMap, mapGrid, chunkOrigin, tile);
+        RefreshTileEntityContents(gridUid.Value, navMap, mapGrid, chunkOrigin, tile);
 
         // Update potentially affected chunks
         foreach (var category in EntityChunkTypes)
@@ -197,9 +197,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
 
         // We set this on mapinit just in case the text was edited via VV or something.
         if (TryComp<WarpPointComponent>(ent, out var warpPoint))
-        {
             warpPoint.Location = navMap.Text;
-        }
 
         UpdateBeaconEnabledVisuals((ent, navMap));
     }
@@ -263,6 +261,11 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
 
     private void RefreshGrid(EntityUid uid, NavMapComponent component, MapGridComponent mapGrid)
     {
+        // Clear stale data
+        component.Chunks.Clear();
+        component.Beacons.Clear();
+
+        // Loop over all tiles
         var tileRefs = _mapSystem.GetAllTiles(uid, mapGrid);
 
         foreach (var tileRef in tileRefs)
@@ -273,16 +276,17 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             if (!component.Chunks.TryGetValue((NavMapChunkType.Floor, chunkOrigin), out var chunk))
                 chunk = new(chunkOrigin);
 
+            // Refresh the floor tile
             component.Chunks[(NavMapChunkType.Floor, chunkOrigin)] = SetAllEdgesForChunkTile(chunk, tile);
 
             // Refresh the contents of the tile
-            RefreshTile(uid, component, mapGrid, chunkOrigin, tile);
+            RefreshTileEntityContents(uid, component, mapGrid, chunkOrigin, tile);
         }
 
         Dirty(uid, component);
     }
 
-    private void RefreshTile(EntityUid uid, NavMapComponent component, MapGridComponent mapGrid, Vector2i chunkOrigin, Vector2i tile)
+    private void RefreshTileEntityContents(EntityUid uid, NavMapComponent component, MapGridComponent mapGrid, Vector2i chunkOrigin, Vector2i tile)
     {
         var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
         var flag = (ushort) GetFlag(relative);
