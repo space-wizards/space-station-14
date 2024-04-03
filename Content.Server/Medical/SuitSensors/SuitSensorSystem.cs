@@ -446,6 +446,7 @@ public sealed class SuitSensorSystem : EntitySystem
         {
             IsAlive = isAlive.Value,
             TotalDamage = totalDamage,
+            TotalDamageThreshold = totalDamageThreshold,
             Coordinates = coords,
         };
         return status;
