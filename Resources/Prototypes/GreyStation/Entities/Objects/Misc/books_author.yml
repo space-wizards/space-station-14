@@ -1,0 +1,33 @@
+- type: entity
+  parent: BookBase
+  id: BookSexSingularity
+  name: Sex and the Singularity
+  description: A disgusting book.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+      - state: paper
+      - state: cover_old
+        color: "#402e2f"
+      - state: overlay_dirt
+    - type: Paper
+      content: book-text-sex-and-the-singularity
+
+- type: entity
+  parent: BookBase
+  id: BookFishops
+  name: Fishops Advanced User Manual, first edition
+  description: Legends say the second edition was lost to time.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+      - state: paper
+      - state: cover_old
+        color: "#556948"
+      - state: icon_fish
+      - state: overlay_dirt
+      - state: overlay_blood
+    - type: Paper
+      content: book-text-fishops
