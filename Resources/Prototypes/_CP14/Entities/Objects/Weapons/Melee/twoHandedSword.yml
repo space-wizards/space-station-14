@@ -1,0 +1,17 @@
+
+- type: entity
+  name: цвайхендер
+  parent: CPBaseTwoHandedSword
+  id: CPZweichender
+  components:
+  - type: MeleeWeapon
+    wideAnimationRotation: 225
+  - type: Sprite
+    sprite: CrystallPunk/Objects/Weapons/Melee/zweichhender.rsi
+    state: icon
+  - type: Clothing
+    sprite: CrystallPunk/Objects/Weapons/Melee/zweichhender.rsi
+    quickEquip: false
+    slots:
+    - back
+    #TODO двуручный хват требует перчаток чтобы не получать урона самому

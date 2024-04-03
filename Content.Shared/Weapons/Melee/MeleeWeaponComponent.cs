@@ -113,6 +113,11 @@ public sealed partial class MeleeWeaponComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public bool SwingLeft;
 
+    /// <summary>
+    /// CrystallPunk Melee improvment. Allows each attack to take turns being either left or right
+    /// </summary>
+    [DataField]
+    public bool CPSwingBeverage = true;
 
     // Sounds
 
