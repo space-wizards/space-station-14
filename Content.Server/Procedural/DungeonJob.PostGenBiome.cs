@@ -17,14 +17,18 @@ public sealed partial class DungeonJob
      * Handles PostGen code for marker layers + biomes.
      */
 
-    private async Task PostGen(BiomePostGen postGen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
+    private async Task PostGen(
+        BiomePostGen postGen,
+        Dungeon dungeon,
+        Entity<MapGridComponent> grid,
+        Random random)
     {
-        if (_entManager.TryGetComponent(gridUid, out BiomeComponent? biomeComp))
+        if (_entManager.TryGetComponent(grid, out BiomeComponent? biomeComp))
             return;
 
-        biomeComp = _entManager.AddComponent<BiomeComponent>(gridUid);
+        biomeComp = _entManager.AddComponent<BiomeComponent>(grid);
         var biomeSystem = _entManager.System<BiomeSystem>();
-        biomeSystem.SetTemplate(gridUid, biomeComp, _prototype.Index(postGen.BiomeTemplate));
+        biomeSystem.SetTemplate(grid, biomeComp, _prototype.Index(postGen.BiomeTemplate));
         var seed = random.Next();
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
@@ -33,20 +37,22 @@ public sealed partial class DungeonJob
             // Need to set per-tile to override data.
             if (biomeSystem.TryGetTile(node, biomeComp.Layers, seed, grid, out var tile))
             {
-                _maps.SetTile(gridUid, grid, node, tile.Value);
+                _maps.SetTile(grid, grid, node, tile.Value);
             }
 
             if (biomeSystem.TryGetDecals(node, biomeComp.Layers, seed, grid, out var decals))
             {
                 foreach (var decal in decals)
                 {
-                    _decals.TryAddDecal(decal.ID, new EntityCoordinates(gridUid, decal.Position), out _);
+                    _decals.TryAddDecal(decal.ID, new EntityCoordinates(grid, decal.Position), out _);
                 }
             }
 
             if (biomeSystem.TryGetEntity(node, biomeComp, grid, out var entityProto))
             {
-                var ent = _entManager.SpawnEntity(entityProto, new EntityCoordinates(gridUid, node + grid.TileSizeHalfVector));
+                var ent = _entManager.SpawnEntity(
+                    entityProto,
+                    new EntityCoordinates(grid, node + grid.Comp.TileSizeHalfVector));
                 var xform = xformQuery.Get(ent);
 
                 if (!xform.Comp.Anchored)
@@ -65,9 +71,13 @@ public sealed partial class DungeonJob
         biomeComp.Enabled = false;
     }
 
-    private async Task PostGen(BiomeMarkerLayerPostGen postGen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
+    private async Task PostGen(
+        BiomeMarkerLayerPostGen postGen,
+        Dungeon dungeon,
+        Entity<MapGridComponent> grid,
+        Random random)
     {
-        if (!_entManager.TryGetComponent(gridUid, out BiomeComponent? biomeComp))
+        if (!_entManager.TryGetComponent(grid, out BiomeComponent? biomeComp))
             return;
 
         var biomeSystem = _entManager.System<BiomeSystem>();
@@ -97,7 +107,7 @@ public sealed partial class DungeonJob
             await SuspendIfOutOfTime();
             ValidateResume();
 
-            biomeSystem.GetMarkerNodes(gridUid, biomeComp, grid, markerTemplate, true, bounds, count,
+            biomeSystem.GetMarkerNodes(grid, biomeComp, grid, markerTemplate, true, bounds, count,
                 random, out var spawnSet, out var existing, false);
 
             await SuspendIfOutOfTime();
@@ -124,7 +134,7 @@ public sealed partial class DungeonJob
                     proto = markerTemplate.Prototype;
                 }
 
-                var ent = _entManager.SpawnAtPosition(proto, new EntityCoordinates(gridUid, node + grid.TileSizeHalfVector));
+                var ent = _entManager.SpawnAtPosition(proto, new EntityCoordinates(grid, node + grid.Comp.TileSizeHalfVector));
                 var xform = xformQuery.Get(ent);
 
                 if (!xform.Comp.Anchored)

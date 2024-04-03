@@ -172,7 +172,10 @@ public sealed partial class AnchorableSystem : EntitySystem
     ///     override is used due to popup and adminlog being server side systems in this case.
     /// </summary>
     /// <returns>true if toggled, false otherwise</returns>
-    public void TryToggleAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
+    public void TryToggleAnchor(
+        EntityUid uid,
+        EntityUid userUid,
+        EntityUid usingUid,
         AnchorableComponent? anchorable = null,
         TransformComponent? transform = null,
         PullableComponent? pullable = null,
@@ -276,7 +279,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         var tileIndices =
             _mapSystem.TileIndicesFor(gridUid.Value, grid,
                 coordinates); // We cannot get a component from an entity with an ID equal to null
-        return TileFree(new Entity<MapGridComponent>(gridUid.Value, grid),
+        return TileFree((gridUid.Value, grid),
             tileIndices,
             anchorBody.CollisionLayer,
             anchorBody.CollisionMask

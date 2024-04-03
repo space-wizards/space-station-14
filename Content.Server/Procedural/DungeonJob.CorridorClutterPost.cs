@@ -10,7 +10,10 @@ namespace Content.Server.Procedural;
 
 public sealed partial class DungeonJob
 {
-    private async Task PostGen(CorridorClutterPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid,
+    private async Task PostGen(
+        CorridorClutterPostGen gen,
+        Dungeon dungeon,
+        Entity<MapGridComponent> grid,
         Random random)
     {
         var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();

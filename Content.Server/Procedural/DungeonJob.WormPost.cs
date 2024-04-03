@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Numerics;
 using System.Threading.Tasks;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
@@ -16,7 +15,11 @@ public sealed partial class DungeonJob
     /// <summary>
     /// Tries to connect rooms via worm-like corridors.
     /// </summary>
-    private async Task PostGen(WormCorridorPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
+    private async Task PostGen(
+        WormCorridorPostGen gen,
+        Dungeon dungeon,
+        Entity<MapGridComponent> grid,
+        Random random)
     {
         var networks = new List<(Vector2i Start, HashSet<Vector2i> Network)>();
 
@@ -32,7 +35,7 @@ public sealed partial class DungeonJob
                 networks.Add((entrance, network));
 
                 // Point away from the room to start with.
-                startAngles.Add(entrance, (entrance + grid.TileSizeHalfVector - room.Center).ToAngle());
+                startAngles.Add(entrance, (entrance + grid.Comp.TileSizeHalfVector - room.Center).ToAngle());
             }
         }
 
@@ -46,7 +49,7 @@ public sealed partial class DungeonJob
             // Find a random network to worm from.
             var startIndex = (i % networks.Count);
             var startPos = networks[startIndex].Start;
-            var position = startPos + grid.TileSizeHalfVector;
+            var position = startPos + grid.Comp.TileSizeHalfVector;
 
             var remainingLength = gen.Length;
             worm.Clear();

@@ -273,7 +273,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                             break;
 
                         _sawmill.Debug($"Spawning dungeon loot {entry.Proto}");
-                        await SpawnRandomEntry(new Entity<MapGridComponent>(mapUid, grid), entry, dungeon, random);
+                        await SpawnRandomEntry((mapUid, grid), entry, dungeon, random);
                     }
 
                     break;
@@ -285,7 +285,8 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         return true;
     }
 
-    private async Task SpawnRandomEntry(Entity<MapGridComponent> grid,
+    private async Task SpawnRandomEntry(
+        Entity<MapGridComponent> grid,
         IBudgetEntry entry,
         Dungeon dungeon,
         Random random)

@@ -115,55 +115,55 @@ public sealed partial class DungeonJob : Job<Dungeon>
             switch (post)
             {
                 case AutoCablingPostGen cabling:
-                    await PostGen(cabling, dungeon, _gridUid, _grid, random);
+                    await PostGen(cabling, dungeon, (_gridUid, _grid), random);
                     break;
                 case BiomePostGen biome:
-                    await PostGen(biome, dungeon, _gridUid, _grid, random);
+                    await PostGen(biome, dungeon, (_gridUid, _grid), random);
                     break;
                 case BoundaryWallPostGen boundary:
-                    await PostGen(boundary, dungeon, _gridUid, _grid, random);
+                    await PostGen(boundary, dungeon,(_gridUid, _grid), random);
                     break;
                 case CornerClutterPostGen clutter:
-                    await PostGen(clutter, dungeon, _gridUid, _grid, random);
+                    await PostGen(clutter, dungeon, (_gridUid, _grid), random);
                     break;
                 case CorridorClutterPostGen corClutter:
-                    await PostGen(corClutter, dungeon, _gridUid, _grid, random);
+                    await PostGen(corClutter, dungeon, (_gridUid, _grid), random);
                     break;
                 case CorridorPostGen cordor:
-                    await PostGen(cordor, dungeon, _gridUid, _grid, random);
+                    await PostGen(cordor, dungeon, (_gridUid, _grid), random);
                     break;
                 case CorridorDecalSkirtingPostGen decks:
-                    await PostGen(decks, dungeon, _gridUid, _grid, random);
+                    await PostGen(decks, dungeon, (_gridUid, _grid), random);
                     break;
                 case EntranceFlankPostGen flank:
-                    await PostGen(flank, dungeon, _gridUid, _grid, random);
+                    await PostGen(flank, dungeon, (_gridUid, _grid), random);
                     break;
                 case JunctionPostGen junc:
-                    await PostGen(junc, dungeon, _gridUid, _grid, random);
+                    await PostGen(junc, dungeon, (_gridUid, _grid), random);
                     break;
                 case MiddleConnectionPostGen dordor:
-                    await PostGen(dordor, dungeon, _gridUid, _grid, random);
+                    await PostGen(dordor, dungeon, (_gridUid, _grid), random);
                     break;
                 case DungeonEntrancePostGen entrance:
-                    await PostGen(entrance, dungeon, _gridUid, _grid, random);
+                    await PostGen(entrance, dungeon, (_gridUid, _grid), random);
                     break;
                 case ExternalWindowPostGen externalWindow:
-                    await PostGen(externalWindow, dungeon, _gridUid, _grid, random);
+                    await PostGen(externalWindow, dungeon, (_gridUid, _grid), random);
                     break;
                 case InternalWindowPostGen internalWindow:
-                    await PostGen(internalWindow, dungeon, _gridUid, _grid, random);
+                    await PostGen(internalWindow, dungeon, (_gridUid, _grid), random);
                     break;
                 case BiomeMarkerLayerPostGen markerPost:
-                    await PostGen(markerPost, dungeon, _gridUid, _grid, random);
+                    await PostGen(markerPost, dungeon, (_gridUid, _grid), random);
                     break;
                 case RoomEntrancePostGen rEntrance:
-                    await PostGen(rEntrance, dungeon, _gridUid, _grid, random);
+                    await PostGen(rEntrance, dungeon, (_gridUid, _grid), random);
                     break;
                 case WallMountPostGen wall:
-                    await PostGen(wall, dungeon, _gridUid, _grid, random);
+                    await PostGen(wall, dungeon, (_gridUid, _grid), random);
                     break;
                 case WormCorridorPostGen worm:
-                    await PostGen(worm, dungeon, _gridUid, _grid, random);
+                    await PostGen(worm, dungeon, (_gridUid, _grid), random);
                     break;
                 default:
                     throw new NotImplementedException();
