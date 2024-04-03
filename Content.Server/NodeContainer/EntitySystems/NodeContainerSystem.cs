@@ -106,7 +106,7 @@ namespace Content.Server.NodeContainer.EntitySystems
                 && ent.Comp.Nodes.TryGetValue(id2, out var n2)
                 && n2 is T2 t2
                 && ent.Comp.Nodes.TryGetValue(id3, out var n3)
-                && n2 is T3 t3)
+                && n3 is T3 t3)
             {
                 node1 = t1;
                 node2 = t2;

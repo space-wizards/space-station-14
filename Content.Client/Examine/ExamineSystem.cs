@@ -212,14 +212,16 @@ namespace Content.Client.Examine
             var vBox = new BoxContainer
             {
                 Name = "ExaminePopupVbox",
-                Orientation = LayoutOrientation.Vertical
+                Orientation = LayoutOrientation.Vertical,
+                MaxWidth = _examineTooltipOpen.MaxWidth
             };
             panel.AddChild(vBox);
 
             var hBox = new BoxContainer
             {
                 Orientation = LayoutOrientation.Horizontal,
-                SeparationOverride = 5
+                SeparationOverride = 5,
+                Margin = new Thickness(6, 0, 6, 0)
             };
 
             vBox.AddChild(hBox);
@@ -229,8 +231,7 @@ namespace Content.Client.Examine
                 var spriteView = new SpriteView
                 {
                     OverrideDirection = Direction.South,
-                    SetSize = new Vector2(32, 32),
-                    Margin = new Thickness(2, 0, 2, 0),
+                    SetSize = new Vector2(32, 32)
                 };
                 spriteView.SetEntity(target);
                 hBox.AddChild(spriteView);
@@ -238,19 +239,17 @@ namespace Content.Client.Examine
 
             if (knowTarget)
             {
-                hBox.AddChild(new Label
-                {
-                    Text = Identity.Name(target, EntityManager, player),
-                    HorizontalExpand = true,
-                });
+                var itemName = FormattedMessage.RemoveMarkup(Identity.Name(target, EntityManager, player));
+                var labelMessage = FormattedMessage.FromMarkup($"[bold]{itemName}[/bold]");
+                var label = new RichTextLabel();
+                label.SetMessage(labelMessage);
+                hBox.AddChild(label);
             }
             else
             {
-                hBox.AddChild(new Label
-                {
-                    Text = "???",
-                    HorizontalExpand = true,
-                });
+                var label = new RichTextLabel();
+                label.SetMessage(FormattedMessage.FromMarkup("[bold]???[/bold]"));
+                hBox.AddChild(label);
             }
 
             panel.Measure(Vector2Helpers.Infinity);
