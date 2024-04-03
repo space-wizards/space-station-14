@@ -24,6 +24,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
@@ -408,6 +409,10 @@ public sealed class DrinkSystem : EntitySystem
             !ev.CanAccess ||
             !TryComp<BodyComponent>(ev.User, out var body) ||
             !_body.TryGetBodyOrganComponents<StomachComponent>(ev.User, out var stomachs, body))
+            return;
+
+        // Make sure the solution exists
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solution))
             return;
 
         // no drinking from living drinks, have to kill them first.

@@ -26,9 +26,8 @@
   id: SecurityOfficerGear
   equipment:
     shoes: ClothingShoesBootsCombatFilled
-    eyes: ClothingEyesGlassesSunglasses
+    eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterArmorBasic
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
-    pocket1: WeaponPistolMk58Nonlethal
-
+    pocket1: WeaponPistolMk58

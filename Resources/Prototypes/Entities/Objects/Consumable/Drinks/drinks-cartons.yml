@@ -113,6 +113,24 @@
     sprite: Objects/Consumable/Drinks/tomatojuice.rsi
 
 - type: entity
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkCoconutWaterCarton
+  name: coconut water
+  description: It's the inside of the coconut that counts.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: CoconutWater
+          Quantity: 50
+  - type: Drink
+  - type: Label
+    currentLabel: coconut water
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/coconutwater.rsi
+
+- type: entity
   parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
   id: DrinkCreamCarton
   name: milk cream
