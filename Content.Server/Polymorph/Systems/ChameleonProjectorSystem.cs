@@ -7,6 +7,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Polymorph;
 using Content.Shared.Polymorph.Components;
 using Content.Shared.Polymorph.Systems;
+using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Polymorph.Systems;
@@ -49,6 +50,9 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
         comp.SourceEntity = entity;
         comp.SourceProto = Prototype(entity)?.ID;
         Dirty(disguise, comp);
+
+        // no sechud trolling
+        RemComp<StatusIconComponent>(disguise);
 
         _appearance.CopyData(entity, disguise);
 
