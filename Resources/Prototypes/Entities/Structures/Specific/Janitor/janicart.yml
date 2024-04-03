@@ -23,6 +23,7 @@
   - type: Spillable
     solution: bucket
     spillDelay: 3.0
+    spillWhenThrown: false
   - type: DrainableSolution
     solution: bucket
   - type: RefillableSolution
@@ -82,6 +83,15 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
 
 - type: entity
   name: mop bucket
@@ -207,6 +217,7 @@
     - type: Spillable
       solution: bucket
       spillDelay: 3.0
+      spillWhenThrown: false
     - type: SolutionContainerManager
       solutions:
         bucket:
