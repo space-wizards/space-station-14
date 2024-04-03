@@ -7,13 +7,27 @@ namespace Content.Shared.Chat.Prototypes;
 
 /// <summary>
 ///     IC emotes (scream, smile, clapping, etc).
-///     Entities can activate emotes by chat input or code.
+///     Entities can activate emotes by chat input, radial or code.
 /// </summary>
 [Prototype("emote")]
 public sealed partial class EmotePrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
+
+    /// <summary>
+    ///     Localization string for the emote name. Displayed in the radial UI.
+    /// </summary>
+    [DataField(required: true)]
+    public string Name = default!;
+
+    /// <summary>
+    ///     Determines if emote available to all by default
+    ///     <see cref="Whitelist"/> check comes after this setting
+    ///     <see cref="Content.Shared.Speech.SpeechComponent.AllowedEmotes"/> can ignore this setting
+    /// </summary>
+    [DataField]
+    public bool Available = true;
 
     /// <summary>
     ///     Different emote categories may be handled by different systems.
@@ -23,14 +37,14 @@ public sealed partial class EmotePrototype : IPrototype
     public EmoteCategory Category = EmoteCategory.General;
 
     /// <summary>
-    /// An icon used to visually represent the emote in radial UI.
+    ///     An icon used to visually represent the emote in radial UI.
     /// </summary>
     [DataField]
     public SpriteSpecifier Icon = SpriteSpecifier.Invalid;
 
-    [DataField]
-    public bool Available = true;
-
+    /// <summary>
+    ///     Determines conditions to this emote be available to use
+    /// </summary>
     [DataField]
     public EntityWhitelist? Whitelist;
 

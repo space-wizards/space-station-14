@@ -1,10 +1,12 @@
 - type: emote
   id: Sneeze
+  name: chat-emote-name-sneeze
   category: Vocal
   chatMessages: [sneezes]
 
 - type: emote
   id: Cough
+  name: chat-emote-name-cough
   category: Vocal
   icon: Interface/Actions/scream.png
   whitelist:
@@ -17,26 +19,31 @@
 
 - type: emote
   id: CatMeow
+  name: chat-emote-name-catmeow
   category: Vocal
   chatMessages: [meows]
 
 - type: emote
   id: CatHisses
+  name: chat-emote-name-cathisses
   category: Vocal
   chatMessages: [hisses]
 
 - type: emote
   id: MonkeyScreeches
+  name: chat-emote-name-monkeyscreeches
   category: Vocal
   chatMessages: [screeches]
 
 - type: emote
   id: RobotBeep
+  name: chat-emote-name-robotbeep
   category: Vocal
   chatMessages: [beeps]
 
 - type: emote
   id: Yawn
+  name: chat-emote-name-yawn
   category: Vocal
   icon: Interface/Actions/scream.png
   whitelist:
@@ -49,5 +56,6 @@
 
 - type: emote
   id: Snore
+  name: chat-emote-name-snore
   category: Vocal
   chatMessages: [snores]

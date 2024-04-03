@@ -1,5 +1,6 @@
 - type: emote
   id: WagTail
+  name: chat-emote-name-wagtail
   icon: Interface/Actions/scream.png
   whitelist:
     components:

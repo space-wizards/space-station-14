@@ -1,6 +1,7 @@
 # vocal emotes
 - type: emote
   id: Scream
+  name: chat-emote-name-scream
   category: Vocal
   icon: Interface/Actions/scream.png
   whitelist:
@@ -35,6 +36,7 @@
 
 - type: emote
   id: Laugh
+  name: chat-emote-name-laugh
   category: Vocal
   icon: Interface/Actions/scream.png
   whitelist:
@@ -72,6 +74,7 @@
 
 - type: emote
   id: Honk
+  name: chat-emote-name-honk
   category: Vocal
   icon: Interface/Actions/scream.png
   whitelist:
@@ -96,6 +99,7 @@
 
 - type: emote
   id: Sigh
+  name: chat-emote-name-sigh
   category: Vocal
   icon: Interface/Actions/scream.png
   whitelist:
@@ -112,6 +116,7 @@
 
 - type: emote
   id: Whistle
+  name: chat-emote-name-whistle
   category: Vocal
   icon: Interface/Actions/scream.png
   whitelist:
@@ -131,6 +136,7 @@
 
 - type: emote
   id: Crying
+  name: chat-emote-name-crying
   category: Vocal
   icon: Interface/Actions/scream.png
   whitelist:
@@ -158,6 +164,7 @@
 
 - type: emote
   id: Squish
+  name: chat-emote-name-squish
   category: Vocal
   available: false
   icon: Interface/Actions/scream.png
@@ -178,6 +185,7 @@
 
 - type: emote
   id: Chitter
+  name: chat-emote-name-chitter
   category: Vocal
   available: false
   icon: Interface/Actions/scream.png
@@ -198,6 +206,7 @@
 
 - type: emote
   id: Squeak
+  name: chat-emote-name-squeak
   category: Vocal
   available: false
   icon: Interface/Actions/scream.png
@@ -218,6 +227,7 @@
 
 - type: emote
   id: Click
+  name: chat-emote-name-click
   category: Vocal
   available: false
   icon: Interface/Actions/scream.png
@@ -236,6 +246,7 @@
 # hand emotes
 - type: emote
   id: Clap
+  name: chat-emote-name-clap
   category: Hands
   icon: Interface/Actions/scream.png
   whitelist:
@@ -252,6 +263,7 @@
 
 - type: emote
   id: Snap
+  name: chat-emote-name-snap
   category: Hands
   icon: Interface/Actions/scream.png
   whitelist:
@@ -275,6 +287,7 @@
 
 - type: emote
   id: Salute
+  name: chat-emote-name-salute
   category: Hands
   icon: Interface/Actions/scream.png
   whitelist:
@@ -291,6 +304,7 @@
 
 - type: emote
   id: DefaultDeathgasp
+  name: chat-emote-name-deathgasp
   icon: Interface/Actions/scream.png
   whitelist:
     components:
@@ -301,6 +315,7 @@
 
 - type: emote
   id: Buzz
+  name: chat-emote-name-buzz
   category: Vocal
   icon: Interface/Actions/scream.png
   whitelist:
@@ -325,11 +340,13 @@
 
 - type: emote
   id: Weh
+  name: chat-emote-name-weh
   category: Vocal
   chatMessages: [Wehs!]
 
 - type: emote
   id: Chirp
+  name: chat-emote-name-chirp
   category: Vocal
   icon: Interface/Actions/scream.png
   whitelist:
@@ -354,6 +371,7 @@
 # Machine Emotes
 - type: emote
   id: Beep
+  name: chat-emote-name-beep
   category: Vocal
   icon: Interface/Actions/scream.png
   whitelist:
@@ -378,6 +396,7 @@
 
 - type: emote
   id: Chime
+  name: chat-emote-name-chime
   category: Vocal
   icon: Interface/Actions/scream.png
   whitelist:
@@ -402,6 +421,7 @@
 
 - type: emote
   id: Buzz-Two
+  name: chat-emote-name-buzztwo
   category: Vocal
   icon: Interface/Actions/scream.png
   whitelist:
@@ -444,6 +464,7 @@
 
 - type: emote
   id: Ping
+  name: chat-emote-name-ping
   category: Vocal
   icon: Interface/Actions/scream.png
   whitelist:
