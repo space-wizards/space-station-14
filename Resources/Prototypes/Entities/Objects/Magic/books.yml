@@ -7,7 +7,13 @@
     - type: Sprite
       sprite: Objects/Misc/books.rsi
       layers:
-        - state: book_demonomicon
+      - state: paper_blood
+      - state: cover_strong
+        color: "#645a5a" 
+      - state: decor_wingette_flat
+        color: "#4d0303"
+      - state: icon_pentagramm
+        color: "#f7e19f"
     - type: Spellbook
     - type: Tag
       tags:
@@ -28,12 +34,22 @@
   parent: BaseSpellbook
   components:
     - type: Sprite
-      sprite: Objects/Magic/spellbooks.rsi
+      sprite: Objects/Misc/books.rsi
       layers:
-        - state: bookforcewall
+      - state: paper
+      - state: cover_strong
+        color: "#366ed6"
+      - state: decor_vertical_middle
+        color: "#95ffff"
+      - state: decor_wingette_circle
+        color: "#95ffff"
+      - state: icon_magic_forcewall
+        shader: unshaded
+      - state: detail_rivets
+        color: gold
     - type: Spellbook
       spells:
-        ActionForceWall: -1
+       ActionForceWall: -1
 
 - type: entity
   id: BlinkBook
@@ -41,25 +57,43 @@
   parent: BaseSpellbook
   components:
     - type: Sprite
-      sprite: Objects/Magic/spellbooks.rsi
+      sprite: Objects/Misc/books.rsi
       layers:
-        - state: spellbook
+      - state: paper
+      - state: cover_old
+        color: "#657e9c"
+      - state: icon_text3
+      - state: decor_wingette_circle
+        color: gold
+      - state: icon_magic
+      - state: detail_rivets
+        color: gold
     - type: Spellbook
       spells:
-        ActionBlink: -1
+       ActionBlink: -1
 
 - type: entity
   id: SmiteBook
   name: smite spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: spellbook
-  - type: Spellbook
-    spells:
-      ActionSmite: -1
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+      - state: paper
+      - state: cover_old
+        color: "#c42b40"
+      - state: decor_wingette_circle
+        color: gold
+      - state: icon_magic
+      - state: detail_rivets
+        color: gold
+      - state: detail_bookmark
+        color: red
+      - state: overlay_blood
+    - type: Spellbook
+      spells:
+       ActionSmite: -1
 
 - type: entity
   id: KnockSpellbook
@@ -67,194 +101,331 @@
   parent: BaseSpellbook
   components:
     - type: Sprite
-      sprite: Objects/Magic/spellbooks.rsi
+      sprite: Objects/Misc/books.rsi
       layers:
-        - state: bookknock
+      - state: paper
+      - state: cover_strong
+        color: "#117045"
+      - state: decor_wingette_circle
+        color: gold
+      - state: icon_magic_knock
+      - state: detail_rivets
+        color: gold
+      - state: detail_bookmark
+        color: "#98c495"
     - type: Spellbook
       spells:
-        ActionKnock: -1
+       ActionKnock: -1
 
 - type: entity
   id: FireballSpellbook
   name: fireball spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: bookfireball
-  - type: Spellbook
-    spells:
-      ActionFireball: -1
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+      - state: paper
+      - state: cover_old
+        color: "#ba5a14"
+      - state: decor_wingette_circle
+        color: gold
+      - state: detail_rivets
+        color: gold
+      - state: detail_bookmark
+        color: "#e89b3c"
+      - state: overlay_blood
+      - state: icon_magic_fireball
+        shader: unshaded
+    - type: Spellbook
+      spells:
+       ActionFireball: -1
 
 - type: entity
   id: MagicMissileSpellbook
   name: magic missile spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: bookmagicmissile
-  - type: Spellbook
-    spells:
-      ActionMagicMissile: -1
+     - type: Sprite
+       sprite: Objects/Misc/books.rsi
+       layers:
+       - state: paper
+       - state: cover_strong
+         color: "#313d7f"
+       - state: decor_wingette_circle
+         color: gold
+       - state: icon_magic_magicmissile
+       - state: detail_rivets
+         color: gold
+       - state: detail_bookmark
+         color: "#be0000"
+     - type: Spellbook
+       spells:
+        ActionMagicMissile: -1
 
 - type: entity
   id: TeslaBallSpellbook
   name: tesla ball spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: bookteslaball
-  - type: Spellbook
-    spells:
-      ActionTeslaBall: -1
+     - type: Sprite
+       sprite: Objects/Misc/books.rsi
+       layers:
+       - state: paper
+       - state: cover_strong
+         color: "#313d7f"
+       - state: decor_wingette_circle
+         color: gold
+       - state: icon_magic_teslaball
+       - state: detail_rivets
+         color: gold
+       - state: detail_bookmark
+         color: "#be0000"
+     - type: Spellbook
+       spells:
+        ActionTeslaBall: -1
 
 - type: entity
   id: EmpSpellbook
   name: disable technology spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: bookemp
-  - type: Spellbook
-    spells:
-      ActionSpellEMP: -1
+     - type: Sprite
+       sprite: Objects/Misc/books.rsi
+       layers:
+       - state: paper
+       - state: cover_strong
+         color: "#21551c"
+       - state: decor_wingette_circle
+         color: gold
+       - state: icon_magic_emp
+       - state: detail_rivets
+         color: gold
+       - state: detail_bookmark
+         color: "#be0000"
+     - type: Spellbook
+       spells:
+        ActionSpellEMP: -1
 
 - type: entity
   id: AnimateDeadSpellbook
   name: animate dead spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: bookanimatedead
-  - type: Spellbook
-    spells:
-      ActionAnimateDead: -1
+     - type: Sprite
+       sprite: Objects/Misc/books.rsi
+       layers:
+       - state: paper
+       - state: cover_strong
+         color: "#f44040"
+       - state: decor_wingette_circle
+         color: gold
+       - state: icon_magic_animatedead
+       - state: detail_rivets
+         color: gold
+       - state: detail_bookmark
+         color: "#be0000"
+     - type: Spellbook
+       spells:
+        ActionAnimateDead: -1
 
 - type: entity
   id: IceBurstSpellbook
   name: ice burst spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: bookiceburst
-  - type: Spellbook
-    spells:
-      ActionIceBurst: -1
+     - type: Sprite
+       sprite: Objects/Misc/books.rsi
+       layers:
+       - state: paper
+       - state: cover_strong
+         color: "#313d7f"
+       - state: decor_wingette_circle
+         color: gold
+       - state: icon_magic_iceburst
+       - state: detail_rivets
+         color: gold
+       - state: detail_bookmark
+         color: "#be0000"
+     - type: Spellbook
+       spells:
+        ActionIceBurst: -1
 
 - type: entity
   id: BlindSpellbook
   name: blind spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: bookblind
-  - type: Spellbook
-    spells:
-      ActionBlind: -1
+     - type: Sprite
+       sprite: Objects/Misc/books.rsi
+       layers:
+       - state: paper
+       - state: cover_strong
+         color: "#313d7f"
+       - state: decor_wingette_circle
+         color: gold
+       - state: icon_magic_blind
+       - state: detail_rivets
+         color: gold
+       - state: detail_bookmark
+         color: "#be0000"
+     - type: Spellbook
+       spells:
+        ActionBlind: -1
 
 - type: entity
   id: SmokeSpellbook
   name: smoke spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: booksmoke
-  - type: Spellbook
-    spells:
-      ActionSmokeSpell: -1
+     - type: Sprite
+       sprite: Objects/Misc/books.rsi
+       layers:
+       - state: paper
+       - state: cover_strong
+         color: "#5f0000"
+       - state: decor_wingette_circle
+         color: gold
+       - state: icon_magic_smoke
+       - state: detail_rivets
+         color: gold
+       - state: detail_bookmark
+         color: "#be0000"
+     - type: Spellbook
+       spells:
+        ActionSmokeSpell: -1
 
 - type: entity
   id: MindswapSpellbook
   name: mindswap spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: bookfireball
-  - type: Spellbook
-    spells:
-      ActionMindswap: -1
+     - type: Sprite
+       sprite: Objects/Misc/books.rsi
+       layers:
+       - state: paper
+       - state: cover_strong
+         color: "#313d7f"
+       - state: decor_wingette_circle
+         color: gold
+       - state: icon_magic_magicmissile
+       - state: detail_rivets
+         color: gold
+       - state: detail_bookmark
+         color: "be0000"
+     - type: Spellbook
+       spells:
+        ActionMindswap: -1
 
 - type: entity
   id: SwapSpellbook
   name: swap spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: bookswap
-  - type: Spellbook
-    spells:
-      ActionSwapSpell: -1
+     - type: Sprite
+       sprite: Objects/Misc/books.rsi
+       layers:
+       - state: paper
+       - state: cover_strong
+         color: "#313d7f"
+       - state: decor_wingette_circle
+         color: gold
+       - state: icon_magic_swap
+       - state: detail_rivets
+         color: gold
+       - state: detail_bookmark
+         color: "#be0000"
+     - type: Spellbook
+       spells:
+        ActionSwapSpell: -1
 
 - type: entity
   id: LesserGunSpellbook
   name: summon lesser gun spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: booklessergun
-  - type: Spellbook
-    spells:
-      ActionLesserGun: -1
+     - type: Sprite
+       sprite: Objects/Misc/books.rsi
+       layers:
+       - state: paper
+       - state: cover_strong
+         color: "#35007e"
+       - state: decor_wingette_circle
+         color: gold
+       - state: icon_magic_lessergun
+       - state: detail_rivets
+         color: gold
+       - state: detail_bookmark
+         color: "#be0000"
+     - type: Spellbook
+       spells:
+        ActionLesserGun: -1
 
 - type: entity
   id: ClownifySpellbook
   name: clown's revenge spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: bookclownify
-  - type: Spellbook
-    spells:
-      ActionClownify: -1
+     - type: Sprite
+       sprite: Objects/Misc/books.rsi
+       layers:
+       - state: paper
+       - state: cover_strong
+         color: "#bb3dc2"
+       - state: decor_wingette_circle
+         color: gold
+       - state: icon_magic_clownify
+       - state: detail_rivets
+         color: gold
+       - state: detail_bookmark
+         color: "#be0000"
+     - type: Spellbook
+       spells:
+        ActionClownify: -1
 
 - type: entity
   id: DevolveSpellbook
   name: devolve spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: bookdevolve
-  - type: Spellbook
-    spells:
-      ActionDevolve: -1
+     - type: Sprite
+       sprite: Objects/Misc/books.rsi
+       layers:
+       - state: paper
+       - state: cover_strong
+         color: "#313d7f"
+       - state: decor_wingette_circle
+         color: gold
+       - state: icon_magic_devolve
+       - state: detail_rivets
+         color: gold
+       - state: detail_bookmark
+         color: "#be0000"
+     - type: Spellbook
+       spells:
+        ActionDevolve: -1
 
 - type: entity
   id: HealSpellbook
   name: heal spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: bookheal
-  - type: Spellbook
-    spells:
-      ActionHealSpell: -1
+     - type: Sprite
+       sprite: Objects/Misc/books.rsi
+       layers:
+       - state: paper
+       - state: cover_strong
+         color: "#099100"
+       - state: decor_wingette_circle
+         color: gold
+       - state: icon_magic_heal
+       - state: detail_rivets
+         color: gold
+       - state: detail_bookmark
+         color: "#be0000"
+     - type: Spellbook
+       spells:
+        ActionHealSpell: -1
 
 - type: entity
   id: ScrollRunes

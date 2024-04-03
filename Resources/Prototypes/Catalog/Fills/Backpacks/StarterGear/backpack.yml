@@ -17,7 +17,6 @@
       - id: BoxHug
       - id: RubberStampClown
       - id: CrayonRainbow
-      - id: ClownCuffs
 
 - type: entity
   noSpawn: true
@@ -203,7 +202,6 @@
       - id: BoxSurvival
       - id: Bible
       - id: RubberStampChaplain
-      - id: WeaponGodGun
   
 - type: entity
   noSpawn: true
@@ -214,7 +212,6 @@
     contents:
       - id: BoxSurvival
       - id: RubberStampLawyer
-
 
 - type: entity
   noSpawn: true
@@ -330,6 +327,27 @@
         - id: Soap
         - id: CrowbarRed
         - id: AdvMopItem
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackERTChaplain
+  id: ClothingBackpackERTChaplainFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvivalEngineering
+        - id: BoxCandle
+        - id: BoxBodyBag
+        - id: DrinkWaterMelonJuiceJug
+        - id: Lantern
+        - id: Lantern
+        - id: Bible
+        - id: CrowbarRed
+        - id: FoodBakedBunHotX
+        - id: FoodBakedBunHotX
+        - id: FoodBakedBunHotX
+        - id: FoodBakedBunHotX
+        - id: Lighter
 
 # Death Squad
 
