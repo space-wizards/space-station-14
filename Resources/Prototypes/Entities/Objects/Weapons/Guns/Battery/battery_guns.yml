@@ -488,7 +488,7 @@
   name: practice disabler
   parent: WeaponDisabler
   id: WeaponDisablerPractice
-  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse. This one has been undertuned for cadets.
+  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse. This one has been undertuned for cadets making it mostly harmless.
   components:
     - type: Sprite
       sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
