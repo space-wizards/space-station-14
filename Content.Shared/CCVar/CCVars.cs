@@ -1697,6 +1697,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
+        /// Regis for name validation if enabled RestrictedNames
+        /// </summary>
+        public static readonly CVarDef<string> RestrictedNameRegex =
+            CVarDef.Create("ic.restricted_name_regex", @"[^А-Я,а-я,A-Z,a-z,0-9, -]", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
         /// Allows flavor text (character descriptions)
         /// </summary>
         public static readonly CVarDef<bool> FlavorText =
