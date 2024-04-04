@@ -1,11 +1,8 @@
 using System.Linq;
-using Content.Server.Actions;
 using Content.Server.Damage.Components;
-using Content.Server.Interaction.Components;
 using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 
 namespace Content.Server.Damage.Systems;
 
