@@ -4,18 +4,18 @@ using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Shared.UserInterface;
 using Content.Shared.DoAfter;
+using Content.Shared.Fluids.Components;
 using Content.Shared.Forensics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
+using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 // todo: remove this stinky LINQy
 
 namespace Content.Server.Forensics
@@ -32,6 +32,7 @@ namespace Content.Server.Forensics
         [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly TagSystem _tag = default!;
 
         public override void Initialize()
         {
@@ -87,7 +88,13 @@ namespace Content.Server.Forensics
                     scanner.Residues = forensics.Residues.ToList();
                 }
 
-                scanner.SolutionDNAs = _forensicsSystem.GetSolutionsDNA(args.Args.Target.Value);
+                if (_tag.HasTag(args.Args.Target.Value, "DNASolutionScannable"))
+                {
+                    scanner.SolutionDNAs = _forensicsSystem.GetSolutionsDNA(args.Args.Target.Value);
+                } else
+                {
+                    scanner.SolutionDNAs = new();
+                }
 
                 scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
             }

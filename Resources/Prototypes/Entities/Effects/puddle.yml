@@ -160,3 +160,6 @@
     solution: puddle
   - type: BadDrink
   - type: IgnoresFingerprints
+  - type: Tag
+    tags:
+    - DNASolutionScannable

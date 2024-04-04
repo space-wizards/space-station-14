@@ -275,6 +275,16 @@ public sealed class BloodstreamSystem : EntitySystem
     private void OnBeingGibbed(Entity<BloodstreamComponent> ent, ref BeingGibbedEvent args)
     {
         SpillAllSolutions(ent, ent);
+
+        if (HasComp<ForensicsComponent>(ent))
+        {
+            foreach (EntityUid part in args.GibbedParts)
+            {
+                var partComp = EnsureComp<ForensicsComponent>(part);
+                partComp.DNAs.Add(Loc.GetString("forensics-dna-unknown"));
+                partComp.CanDnaBeCleaned = false;
+            }
+        }
     }
 
     private void OnApplyMetabolicMultiplier(
@@ -380,7 +390,7 @@ public sealed class BloodstreamSystem : EntitySystem
                 tempSolution.AddSolution(temp, _prototypeManager);
             }
 
-            _puddleSystem.TrySpillAt(uid, tempSolution, out var puddleUid, sound: false))
+            _puddleSystem.TrySpillAt(uid, tempSolution, out var puddleUid, sound: false);
 
             tempSolution.RemoveAllSolution();
         }
@@ -443,7 +453,7 @@ public sealed class BloodstreamSystem : EntitySystem
             _solutionContainerSystem.RemoveAllSolution(component.TemporarySolution.Value);
         }
 
-        _puddleSystem.TrySpillAt(uid, tempSol, out var puddleUid)
+        _puddleSystem.TrySpillAt(uid, tempSol, out var puddleUid);
     }
 
     /// <summary>

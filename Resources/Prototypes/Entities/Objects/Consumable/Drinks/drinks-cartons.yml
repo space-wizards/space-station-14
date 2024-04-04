@@ -38,6 +38,7 @@
         #In future maybe add generic plastic scrap trash/debris
   - type: TrashOnSolutionEmpty
     solution: drink
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: DrinkCartonBaseFull
