@@ -23,6 +23,8 @@ public sealed class SuitSensorStatus
     public List<string> JobDepartments;
     public bool IsAlive;
     public int? TotalDamage;
+    public int? TotalDamageThreshold;
+    public float? DamagePercentage => TotalDamageThreshold == null || TotalDamage == null ? null : TotalDamage / TotalDamageThreshold;
     public NetCoordinates? Coordinates;
 }
 
@@ -58,6 +60,7 @@ public static class SuitSensorConstants
     public const string NET_JOB_DEPARTMENTS = "jobDepartments";
     public const string NET_IS_ALIVE = "alive";
     public const string NET_TOTAL_DAMAGE = "vitals";
+    public const string NET_TOTAL_DAMAGE_THRESHOLD = "vitalsThreshold";
     public const string NET_COORDINATES = "coords";
     public const string NET_SUIT_SENSOR_UID = "uid";
 
