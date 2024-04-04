@@ -67,11 +67,13 @@
       map: [ "light" ]
   - type: Clothing
     equippedPrefix: off
-    heldPrefix: off
     sprite: GreyStation/Clothing/Mask/jinroh_mask.rsi
     clothingVisuals:
       mask:
       - state: off-equipped-MASK
+  - type: Item
+    sprite: GreyStation/Clothing/Mask/jinroh_mask.rsi
+    heldPrefix: off
   - type: ToggleableLightVisuals # Eventually make it so the helmet has built-in night vision that's always on.
     spriteLayer: light
     clothingVisuals:
