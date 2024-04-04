@@ -1,6 +1,7 @@
 using Content.Shared.Atmos;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Pinpointer;
 
@@ -24,12 +25,15 @@ public sealed partial class NavMapComponent : Component
     /// List of station beacons.
     /// </summary>
     [ViewVariables]
-    public List<SharedNavMapSystem.NavMapBeacon> Beacons = new();
+    public HashSet<SharedNavMapSystem.NavMapBeacon> Beacons = new();
 }
 
 [Serializable, NetSerializable]
 public sealed class NavMapChunk
 {
+    /// <summary>
+    /// The chunk origin
+    /// </summary>
     public readonly Vector2i Origin;
 
     /// <summary>
@@ -37,6 +41,12 @@ public sealed class NavMapChunk
     /// representing each edge of the tile, in case the entities inside it do not entirely fill it
     /// </summary>
     public Dictionary<AtmosDirection, ushort> TileData;
+
+    /// <summary>
+    /// The last game tick that the chunk was updated
+    /// </summary>
+    [NonSerialized]
+    public GameTick LastUpdate;
 
     public NavMapChunk(Vector2i origin)
     {

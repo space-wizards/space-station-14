@@ -1,6 +1,5 @@
 using Content.Shared.Pinpointer;
 using Robust.Shared.GameStates;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Pinpointer;
 
@@ -11,9 +10,6 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         base.Initialize();
 
         SubscribeLocalEvent<NavMapComponent, ComponentHandleState>(OnHandleState);
-
-        SubscribeNetworkEvent<NavMapChunkChangedEvent>(OnChunkChanged);
-        SubscribeNetworkEvent<NavMapBeaconChangedEvent>(OnBeaconChanged);
     }
 
     private void OnHandleState(EntityUid uid, NavMapComponent component, ref ComponentHandleState args)
@@ -21,9 +17,37 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         if (args.Current is not NavMapComponentState state)
             return;
 
-        component.Chunks.Clear();
+        if (!state.FullState)
+        {
+            foreach (var index in component.Chunks.Keys)
+            {
+                if (!state.AllChunks!.Contains(index))
+                    component.Chunks.Remove(index);
+            }
 
-        foreach (var ((category, origin), chunk) in state.ChunkData)
+            foreach (var beacon in component.Beacons)
+            {
+                if (!state.AllBeacons!.Contains(beacon))
+                    component.Beacons.Remove(beacon);
+            }
+        }
+
+        else
+        {
+            foreach (var index in component.Chunks.Keys)
+            {
+                if (!state.Chunks.ContainsKey(index))
+                    component.Chunks.Remove(index);
+            }
+
+            foreach (var beacon in component.Beacons)
+            {
+                if (!state.Beacons.Contains(beacon))
+                    component.Beacons.Remove(beacon);
+            }
+        }
+
+        foreach (var ((category, origin), chunk) in state.Chunks)
         {
             var newChunk = new NavMapChunk(origin);
 
@@ -33,37 +57,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             component.Chunks[(category, origin)] = newChunk;
         }
 
-        component.Beacons.Clear();
-        component.Beacons.AddRange(state.Beacons);
-    }
-
-    private void OnChunkChanged(NavMapChunkChangedEvent ev)
-    {
-        var gridUid = GetEntity(ev.Grid);
-
-        if (!TryComp<NavMapComponent>(gridUid, out var component))
-            return;
-
-        var newChunk = new NavMapChunk(ev.ChunkOrigin);
-
-        foreach (var (atmosDirection, value) in ev.TileData)
-            newChunk.TileData[atmosDirection] = value;
-
-        component.Chunks[(ev.Category, ev.ChunkOrigin)] = newChunk;
-    }
-
-    private void OnBeaconChanged(NavMapBeaconChangedEvent ev)
-    {
-        var gridUid = GetEntity(ev.Grid);
-
-        if (!TryComp<NavMapComponent>(gridUid, out var component))
-            return;
-
-        var existing = component.Beacons.FirstOrNull(x => x.NetEnt == ev.Beacon.NetEnt);
-
-        if (existing != null)
-            component.Beacons.Remove(existing.Value);
-
-        component.Beacons.Add(ev.Beacon);
+        foreach (var beacon in state.Beacons)
+            component.Beacons.Add(beacon);
     }
 }
