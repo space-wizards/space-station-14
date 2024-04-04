@@ -17,7 +17,7 @@
   - type: Sprite
     state: icon
   - type: Item
-    size: Normal
+    size: Small
   - type: MeleeWeapon
     soundNoDamage:
       path: "/Audio/Effects/Fluids/splat.ogg"
@@ -38,6 +38,18 @@
         #In future maybe add generic plastic scrap trash/debris
   - type: TrashOnSolutionEmpty
     solution: drink
+
+- type: entity
+  parent: DrinkCartonBaseFull
+  id: DrinkCartonBaseLargeFull
+  abstract: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+  - type: Item
+    size: Normal
 
 - type: entity
   id: DrinkCartonVisualsOpenable
@@ -101,6 +113,24 @@
     sprite: Objects/Consumable/Drinks/tomatojuice.rsi
 
 - type: entity
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkCoconutWaterCarton
+  name: coconut water
+  description: It's the inside of the coconut that counts.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: CoconutWater
+          Quantity: 50
+  - type: Drink
+  - type: Label
+    currentLabel: coconut water
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/coconutwater.rsi
+
+- type: entity
   parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
   id: DrinkCreamCarton
   name: milk cream
@@ -116,7 +146,7 @@
     sprite: Objects/Consumable/Drinks/cream.rsi
 
 - type: entity
-  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
+  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseLargeFull]
   id: DrinkMilkCarton
   name: milk
   description: An opaque white liquid produced by the mammary glands of mammals.
@@ -124,7 +154,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 100
         reagents:
         - ReagentId: Milk
           Quantity: 100
@@ -132,7 +161,7 @@
     sprite: Objects/Consumable/Drinks/milk.rsi
 
 - type: entity
-  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
+  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseLargeFull]
   id: DrinkSoyMilkCarton
   name: soy milk
   description: White and nutritious soy goodness!
@@ -140,7 +169,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 100
         reagents:
         - ReagentId: MilkSoy
           Quantity: 100
@@ -148,7 +176,7 @@
     sprite: Objects/Consumable/Drinks/soymilk.rsi
 
 - type: entity
-  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
+  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseLargeFull]
   id: DrinkOatMilkCarton
   name: oat milk
   description: It's oat milk. Tan and nutritious goodness!
@@ -156,7 +184,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 100
         reagents:
         - ReagentId: MilkOat
           Quantity: 100

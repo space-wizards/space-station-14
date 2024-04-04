@@ -1,6 +1,6 @@
 - type: entity
   id: PortableScrubber
-  parent: [BaseMachinePowered, ConstructibleMachine]
+  parent: [BaseMachinePowered, ConstructibleMachine, StructureWheeled]
   name: portable scrubber
   description: It scrubs, portably!
   components:

@@ -3,6 +3,8 @@ using Content.Client.Gameplay;
 using Content.Client.UserInterface.Systems.Alerts.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Shared.Alert;
+using Robust.Client.GameObjects;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 
@@ -10,6 +12,8 @@ namespace Content.Client.UserInterface.Systems.Alerts;
 
 public sealed class AlertsUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<ClientAlertsSystem>
 {
+    [Dependency] private readonly IPlayerManager _player = default!;
+
     [UISystemDependency] private readonly ClientAlertsSystem? _alertsSystem = default;
 
     private AlertsUI? UI => UIManager.GetActiveUIWidgetOrNull<AlertsUI>();
@@ -83,5 +87,17 @@ public sealed class AlertsUIController : UIController, IOnStateEntered<GameplayS
         {
             SystemOnSyncAlerts(_alertsSystem, alerts);
         }
+    }
+
+    public void UpdateAlertSpriteEntity(EntityUid spriteViewEnt, AlertPrototype alert)
+    {
+        if (_player.LocalEntity is not { } player)
+            return;
+
+        if (!EntityManager.TryGetComponent<SpriteComponent>(spriteViewEnt, out var sprite))
+            return;
+
+        var ev = new UpdateAlertSpriteEvent((spriteViewEnt, sprite), alert);
+        EntityManager.EventBus.RaiseLocalEvent(player, ref ev);
     }
 }

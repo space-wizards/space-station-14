@@ -110,8 +110,21 @@
           prob: 0.10
         - id: Soap
           prob: 0.44
+        - id: null
+          prob: 0.67
+          orGroup: carp
         - id: PlushieCarp
           prob: 0.2
+          orGroup: carp
+        - id: PlushieHolocarp
+          prob: 0.05
+          orGroup: carp
+        - id: PlushieMagicarp
+          prob: 0.05
+          orGroup: carp
+        - id: PlushieRainbowCarp
+          prob: 0.03
+          orGroup: carp
         - id: PlushieSlime
           prob: 0.2
         - id: PlushieSnake
@@ -142,6 +155,8 @@
           prob: 0.20
         - id: BarberScissors
           prob: 0.05
+        - id: BookRandomStory
+          prob: 0.1
         # Syndicate loot
         - id: null
           prob: 0.95
@@ -203,8 +218,21 @@
           prob: 0.10
         - id: Soap
           prob: 0.44
+        - id: null
+          prob: 0.67
+          orGroup: carp
         - id: PlushieCarp
           prob: 0.2
+          orGroup: carp
+        - id: PlushieHolocarp
+          prob: 0.05
+          orGroup: carp
+        - id: PlushieMagicarp
+          prob: 0.05
+          orGroup: carp
+        - id: PlushieRainbowCarp
+          prob: 0.03
+          orGroup: carp
         - id: PlushieSlime
           prob: 0.2
         - id: PlushieSnake

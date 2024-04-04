@@ -66,7 +66,11 @@
     damageContainer: Inorganic
     damageModifierSet: Glass
   - type: ExaminableDamage
-    messages: WindowMessages
+    messages: WindowMessages   
+  - type: RCDDeconstructable
+    cost: 8
+    delay: 8
+    fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
     - trigger:
@@ -130,7 +134,6 @@
   - type: Appearance
   - type: WiresVisuals
   - type: Airtight
-    fixVacuum: true
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
       - South

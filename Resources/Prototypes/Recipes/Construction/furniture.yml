@@ -221,6 +221,23 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: wooden bench
+  id: ChairWoodBench
+  graph: Seat
+  startNode: start
+  targetNode: chairWoodBench
+  category: construction-category-furniture
+  description: Did you get a splinter? Well, at least it’s eco friendly.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: wooden-bench
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: comfortable red bench
   id: RedComfBench
   graph: Seat
@@ -589,7 +606,7 @@
   description: A human excrement flushing apparatus.
   icon:
     sprite: Structures/Furniture/toilet.rsi
-    state: closed_toilet_seat_up
+    state: disposal
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -714,9 +731,7 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+  canBuildInImpassable: true
     
 - type: construction
   id: CurtainsBlack
@@ -731,9 +746,7 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked  
+  canBuildInImpassable: true
 
 - type: construction
   id: CurtainsBlue
@@ -748,9 +761,7 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked  
+  canBuildInImpassable: true
     
 - type: construction
   id: CurtainsCyan
@@ -765,9 +776,7 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+  canBuildInImpassable: true
     
 - type: construction
   id: CurtainsGreen
@@ -782,9 +791,7 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+  canBuildInImpassable: true
     
 - type: construction
   id: CurtainsOrange
@@ -799,9 +806,7 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+  canBuildInImpassable: true
     
 - type: construction
   id: CurtainsPink
@@ -816,9 +821,7 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+  canBuildInImpassable: true
     
 - type: construction
   id: CurtainsPurple
@@ -833,9 +836,7 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+  canBuildInImpassable: true
     
 - type: construction
   id: CurtainsRed
@@ -850,9 +851,7 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked    
+  canBuildInImpassable: true
 
 - type: construction
   id: CurtainsWhite
@@ -867,9 +866,7 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+  canBuildInImpassable: true
 
 - type: construction
   id: Bookshelf

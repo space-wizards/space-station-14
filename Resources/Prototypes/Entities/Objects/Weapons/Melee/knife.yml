@@ -252,3 +252,34 @@
     sprite: Objects/Weapons/Melee/uranium_shiv.rsi
   - type: Sprite
     sprite: Objects/Weapons/Melee/uranium_shiv.rsi
+
+- type: entity
+  name: throwing knife
+  parent: BaseKnife
+  id: ThrowingKnife
+  description: This bloodred knife is very aerodynamic and easy to throw, but good luck trying to fight someone hand-to-hand.
+  components:
+  - type: Tag
+    tags:
+    - CombatKnife
+    - Knife
+    - CannonRestrict
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/throwing_knife.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 2
+    damage:
+      types:
+        Slash: 5
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: DamageOtherOnHit
+    ignoreResistances: true
+    damage:
+      types:
+        Slash: 10
+        Piercing: 15
+  - type: Item
+    sprite: Objects/Weapons/Melee/throwing_knife.rsi

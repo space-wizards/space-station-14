@@ -59,7 +59,6 @@
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
   - type: Airtight
-    fixVacuum: true
   - type: RadiationBlocker
     resistance: 2
   - type: Damageable
@@ -97,6 +96,7 @@
     messagePerceivedByOthers: comp-window-knock
     interactSuccessSound:
       path: /Audio/Effects/glass_knock.ogg
+  - type: BlockWeather
 
 - type: entity
   id: ShuttersNormal

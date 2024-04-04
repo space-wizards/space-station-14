@@ -55,6 +55,16 @@
     Antifreeze: 4
 
 - type: reaction
+  id: ArnoldPalmer
+  reactants:
+    IcedTea:
+      amount: 1
+    Lemonade:
+      amount: 1
+  products:
+    ArnoldPalmer: 2
+
+- type: reaction
   id: AtomicBomb
   reactants:
     B52:
@@ -77,6 +87,20 @@
     B52: 3
 
 - type: reaction
+  id: BlueHawaiian
+  reactants:
+    CoconutRum:
+      amount: 2
+    JuicePineapple:
+      amount: 1
+    JuiceLemon:
+      amount: 1
+    BlueCuracao:
+      amount: 1
+  products:
+    BlueHawaiian: 5
+
+- type: reaction
   id: CogChamp
   reactants:
     Cognac:
@@ -89,6 +113,24 @@
     CogChamp: 3
   sound:
     path: /Audio/Magic/Cults/ClockCult/steam_whoosh.ogg
+
+- type: reaction
+  id: BahamaMama
+  reactants:
+    Ice:
+      amount: 1
+    JuiceOrange:
+      amount: 1
+    JuicePineapple:
+      amount: 1
+    Rum:
+      amount: 1
+    CoconutRum:
+      amount: 1
+    Grenadine:
+      amount: 1
+  products:
+    BahamaMama: 6
 
 - type: reaction
   id: Barefoot
@@ -181,6 +223,40 @@
       amount: 1
   products:
     CafeLatte: 2
+
+- type: reaction
+  id: CoconutRum
+  reactants:
+    Rum:
+      amount: 2
+    CoconutWater:
+      amount: 1
+  products:
+    CoconutRum: 3
+
+- type: reaction
+  id: Cosmopolitan
+  reactants:
+    Vodka:
+      amount: 1
+    JuiceBerry:
+      amount: 1
+    JuiceLime:
+      amount: 1
+  products:
+    Cosmopolitan: 3
+
+- type: reaction
+  id: CreamOfCoconut
+  reactants:
+    CoconutWater:
+      amount: 1
+    Sugar:
+      amount: 1
+    Milk:
+      amount: 1
+  products:
+    CreamOfCoconut: 3
 
 - type: reaction
   id: CubaLibre
@@ -454,11 +530,11 @@
   id: IrishCoffee
   reactants:
     Coffee:
-      amount: 2
+      amount: 1
     IrishCream:
-      amount: 2
+      amount: 1
   products:
-    IrishCoffee: 4
+    IrishCoffee: 2
 
 - type: reaction
   id: IrishCream
@@ -639,6 +715,34 @@
     Patron: 10
 
 - type: reaction
+  id: Painkiller
+  reactants:
+    JuicePineapple:
+      amount: 3
+    CoconutRum:
+      amount: 1
+    JuiceOrange:
+      amount: 1
+    CreamOfCoconut:
+      amount: 1
+  products:
+    Painkiller: 6
+
+- type: reaction
+  id: PinaColada
+  reactants:
+    JuicePineapple:
+      amount: 3
+    JuiceLime:
+      amount: 1
+    Rum:
+      amount: 1
+    CreamOfCoconut:
+      amount: 1
+  products:
+    PinaColada: 6
+
+- type: reaction
   id: Posca
   reactants:
     TableSalt:
@@ -681,6 +785,16 @@
     RootBeerFloat: 3
 
 - type: reaction
+  id: RoyRogers
+  reactants:
+    Cola:
+      amount: 2
+    Grenadine:
+      amount: 1
+  products:
+    RoyRogers: 3
+
+- type: reaction
   id: Sbiten
   reactants:
     Vodka:
@@ -699,6 +813,16 @@
       amount: 1
   products:
     ScrewdriverCocktail: 3
+
+- type: reaction
+  id: ShirleyTemple
+  reactants:
+    SolDry:
+      amount: 2
+    Grenadine:
+      amount: 1
+  products:
+    ShirleyTemple: 3
 
 - type: reaction
   id: Silencer
