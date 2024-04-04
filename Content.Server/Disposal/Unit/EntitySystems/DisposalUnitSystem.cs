@@ -299,7 +299,8 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         var canInsert = CanInsert(uid, component, args.Thrown);
         var randDouble = _robustRandom.NextDouble();
 
-        if (!canInsert) {
+        if (!canInsert)
+        {
             return;
         }
 
