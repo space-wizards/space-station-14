@@ -380,10 +380,7 @@ public sealed class BloodstreamSystem : EntitySystem
                 tempSolution.AddSolution(temp, _prototypeManager);
             }
 
-            if (_puddleSystem.TrySpillAt(uid, tempSolution, out var puddleUid, sound: false))
-            {
-                _forensicsSystem.TransferDna(puddleUid, uid, canDnaBeCleaned: false);
-            }
+            _puddleSystem.TrySpillAt(uid, tempSolution, out var puddleUid, sound: false))
 
             tempSolution.RemoveAllSolution();
         }
@@ -446,10 +443,7 @@ public sealed class BloodstreamSystem : EntitySystem
             _solutionContainerSystem.RemoveAllSolution(component.TemporarySolution.Value);
         }
 
-        if (_puddleSystem.TrySpillAt(uid, tempSol, out var puddleUid))
-        {
-            _forensicsSystem.TransferDna(puddleUid, uid, canDnaBeCleaned: false);
-        }
+        _puddleSystem.TrySpillAt(uid, tempSol, out var puddleUid)
     }
 
     /// <summary>

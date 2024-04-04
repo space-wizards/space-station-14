@@ -6,6 +6,7 @@ using Content.Server.Forensics;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -28,6 +29,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly ThirstSystem _thirst = default!;
         [Dependency] private readonly ForensicsSystem _forensics = default!;
+        [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
 
         /// <summary>
         /// Make an entity vomit, if they have a stomach.
@@ -83,7 +85,7 @@ namespace Content.Server.Medical
                 }
 
                 // Makes a vomit solution the size of 90% of the chemicals removed from the chemstream
-                solution.AddReagent("Vomit", vomitAmount); // TODO: Dehardcode vomit prototype
+                solution.AddReagent(new ReagentId("Vomit", _bloodstream.GetEntityBloodData(uid)), vomitAmount); // TODO: Dehardcode vomit prototype
             }
 
             if (_puddle.TrySpillAt(uid, solution, out var puddle, false))

@@ -30,6 +30,7 @@ namespace Content.Server.Forensics
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         public override void Initialize()
@@ -84,26 +85,9 @@ namespace Content.Server.Forensics
                     scanner.Fibers = forensics.Fibers.ToList();
                     scanner.TouchDNAs = forensics.DNAs.ToList();
                     scanner.Residues = forensics.Residues.ToList();
-                    scanner.SolutionDNAs = new();
                 }
 
-                scanner.SolutionDNAs = new();
-                if (TryComp<SolutionContainerManagerComponent>(args.Args.Target, out var comp))
-                {
-                    foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((args.Args.Target.Value, comp)))
-                    {
-                        foreach (var reagent in soln.Comp.Solution.Contents)
-                        {
-                            foreach (var data in reagent.Reagent.Data)
-                            {
-                                if (data is DNAData)
-                                {
-                                    scanner.SolutionDNAs.Add(((DNAData) data).DNA);
-                                }
-                            }
-                        }
-                    }
-                }
+                scanner.SolutionDNAs = _forensicsSystem.GetSolutionsDNA(args.Args.Target.Value);
 
                 scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
             }

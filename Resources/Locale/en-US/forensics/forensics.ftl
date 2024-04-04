@@ -27,4 +27,4 @@ forensic-pad-gloves-name = fibers from {$entity}
 
 forensics-cleaning = You begin cleaning the evidence off of {THE($target)}...
 
-forensics-dna-unknown = Unknown DNA
+forensics-dna-unknown = unknown DNA
