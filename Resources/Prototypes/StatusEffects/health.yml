@@ -4,7 +4,7 @@
   icon:
     sprite: /Textures/Interface/Misc/health_icons.rsi
     state: Fine
-  locationPreference: Right
+  locationPreference: Left
 
 - type: statusIcon
   id: HealthIconCritical
@@ -12,7 +12,7 @@
   icon:
     sprite: /Textures/Interface/Misc/health_icons.rsi
     state: Critical
-  locationPreference: Right
+  locationPreference: Left
 
 - type: statusIcon
   id: HealthIconDead
@@ -20,7 +20,7 @@
   icon:
     sprite: /Textures/Interface/Misc/health_icons.rsi
     state: Dead
-  locationPreference: Right
+  locationPreference: Left
 
 - type: statusIcon
   id: HealthIconRotting
@@ -28,5 +28,5 @@
   icon:
     sprite: /Textures/Interface/Misc/health_icons.rsi
     state: Rotting
-  locationPreference: Right
+  locationPreference: Left
 

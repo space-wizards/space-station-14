@@ -3,7 +3,7 @@
   abstract: true
   priority: 2
   offset: 1
-  locationPreference: Left
+  locationPreference: Right
 
 - type: statusIcon
   parent: SecurityIcon
