@@ -15,7 +15,10 @@ public sealed class EntitySpawnVariationPassSystem : VariationPassSystem<EntityS
 
         var dirtyMod = Random.NextGaussian(ent.Comp.TilesPerEntityAverage, ent.Comp.TilesPerEntityStdDev);
         var trashTiles = Math.Max((int) (totalTiles * (1 / dirtyMod)), 0);
-        var randomTiles = FindRandomTilesOnStation(args.Station, trashTiles).ToList();
+        if(!TryFindRandomTilesOnStation(args.Station, trashTiles, out var randomTiles))
+        {
+            return;
+        }
 
         for (var i = 0; i < trashTiles; i++)
         {

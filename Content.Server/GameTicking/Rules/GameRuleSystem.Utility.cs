@@ -99,8 +99,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         targetGrid = EntityUid.Invalid;
         targetCoords = EntityCoordinates.Invalid;
 
-        var randomTiles = FindRandomTilesOnStation(targetStation, numberOfTiles: 1);
-        if (!randomTiles.Any())
+        if (!TryFindRandomTilesOnStation(targetStation, numberOfTiles: 1, out var randomTiles) || randomTiles.Count() == 0)
         {
             return false;
         }
@@ -120,22 +119,31 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
     /// <summary>
     ///     Get [numberOfTiles] random station tiles, with replacement, that are neither space tiles nor air-blocked tiles
     /// </summary>
-    protected IEnumerable<TileRef> FindRandomTilesOnStation(Entity<StationDataComponent> station, int numberOfTiles)
+    protected bool TryFindRandomTilesOnStation(Entity<StationDataComponent> station, int numberOfTiles, out List<TileRef> randomStationTiles)
     {
-        var allValidStationTiles = GetAllVaildStationTiles(station).ToList();
+        TryGetAllVaildStationTiles(station, out var allValidStationTiles);
         var allValidStationTilesCount = allValidStationTiles.Count();
+        randomStationTiles = new();
+
+        if (allValidStationTilesCount == 0)
+        {
+            return false;
+        }
         for (var i = 0; i < numberOfTiles; i++)
         {
             var randomIndex = RobustRandom.Next(allValidStationTilesCount);
-            yield return allValidStationTiles.ElementAt(randomIndex);
+            var curElement = allValidStationTiles.ElementAt(randomIndex);
+            randomStationTiles.Add(curElement);
         }
+        return true;
     }
     /// <summary>
     ///     Get all station tiles that are neither space tiles nor air-blocked tiles
     /// </summary>
-    protected IEnumerable<TileRef> GetAllVaildStationTiles(Entity<StationDataComponent> station)
+    protected bool TryGetAllVaildStationTiles(Entity<StationDataComponent> station, out List<TileRef> allValidStationTiles)
     {
         var stationGrids = station.Comp.Grids;
+        allValidStationTiles = new();
         foreach (var grid in stationGrids)
         {
             if (!TryComp<MapGridComponent>(grid, out var gridComp))
@@ -148,8 +156,9 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
                 {
                     continue;
                 }
-                yield return tile;
+                allValidStationTiles.Add(tile);
             }
         }
+        return true;
     }
 }
