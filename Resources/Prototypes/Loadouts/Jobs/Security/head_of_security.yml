@@ -6,7 +6,7 @@
 - type: startingGear
   id: HeadofSecurityJumpsuit
   equipment:
-    jumpsuit: ClothingUniformJumpsuitChiefEngineer
+    jumpsuit: ClothingUniformJumpsuitHoS
 
 - type: loadout
   id: HeadofSecurityJumpskirt
@@ -15,7 +15,7 @@
 - type: startingGear
   id: HeadofSecurityJumpskirt
   equipment:
-    jumpsuit: ClothingUniformJumpskirtChiefEngineer
+    jumpsuit: ClothingUniformJumpskirtHoS
 
 - type: loadout
   id: HeadofSecurityTurtleneck

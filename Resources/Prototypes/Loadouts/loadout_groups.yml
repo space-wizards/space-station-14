@@ -6,6 +6,71 @@
   loadouts:
   - PlushieLizard
 
+# Cargo
+- type: loadoutGroup
+  id: QuartermasterHead
+  name: loadout-group-quartermaster-head
+  minLimit: 0
+  loadouts:
+  - QuartermasterHead
+  - QuartermasterBeret
+
+- type: loadoutGroup
+  id: QuartermasterJumpsuit
+  name: loadout-group-quartermaster-jumpsuit
+  loadouts:
+  - QuartermasterJumpsuit
+  - QuartermasterJumpskirt
+  - QuartermasterTurtleneck
+  - QuartermasterTurtleneckSkirt
+  - QuartermasterFormalSuit
+
+- type: loadoutGroup
+  id: QuartermasterBackpack
+  name: loadout-group-quartermaster-backpack
+  loadouts:
+  - QuartermasterBackpack
+  - QuartermasterSatchel
+  - QuartermasterDuffel
+
+- type: loadoutGroup
+  id: QuartermasterNeck
+  name: loadout-group-quartermaster-neck
+  minLimit: 0
+  loadouts:
+  - QuartermasterCloak
+  - QuartermasterMantle
+
+- type: loadoutGroup
+  id: CargoTechnicianHead
+  name: loadout-group-cargo-technician-head
+  minLimit: 0
+  loadouts:
+  - CargoTechnicianHead
+
+- type: loadoutGroup
+  id: CargoTechnicianJumpsuit
+  name: loadout-group-cargo-technician-jumpsuit
+  loadouts:
+  - CargoTechnicianJumpsuit
+  - CargoTechnicianJumpskirt
+
+- type: loadoutGroup
+  id: CargoTechnicianBackpack
+  name: loadout-group-cargo-technician-backpack
+  loadouts:
+  - CargoTechnicianBackpack
+  - CargoTechnicianSatchel
+  - CargoTechnicianDuffel
+
+- type: loadoutGroup
+  id: SalvageSpecialistBackpack
+  name: loadout-group-salvage-specalist-backpack
+  loadouts:
+  - SalvageSpecialistBackpack
+  - SalvageSpecialistSatchel
+  - SalvageSpecialistDuffel
+
 # Engineering
 - type: loadoutGroup
   id: ChiefEngineerHead
