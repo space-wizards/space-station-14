@@ -17,6 +17,7 @@ using Content.Server.Chemistry.Containers.EntitySystems;
 using Robust.Shared.GameStates;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Medical.Blood.Components;
 using Robust.Server.Audio;
 
 namespace Content.Server.Chemistry.EntitySystems;
