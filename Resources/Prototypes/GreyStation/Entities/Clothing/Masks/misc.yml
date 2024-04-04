@@ -67,6 +67,7 @@
       map: [ "light" ]
   - type: Clothing
     equippedPrefix: off
+    heldPrefix: off
     sprite: GreyStation/Clothing/Mask/jinroh_mask.rsi
     clothingVisuals:
       mask:
