@@ -96,9 +96,6 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     base: crwindow
-  - type: Construction
-    graph: Window
-    node: clockworkRWindow
   - type: Appearance
   - type: DamageVisuals
     thresholds: [4, 8, 12]
