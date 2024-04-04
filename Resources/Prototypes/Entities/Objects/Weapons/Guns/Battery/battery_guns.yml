@@ -228,7 +228,7 @@
   name: practice laser rifle
   parent: WeaponLaserCarbine
   id: WeaponLaserCarbinePractice
-  description: This modified laser rifle fires harmless beams in the 40-watt range, for target practice.
+  description: This modified laser rifle fires nearly harmless beams in the 40-watt range, for target practice.
   components:
   - type: HitscanBatteryAmmoProvider
     proto: RedLaserPractice
