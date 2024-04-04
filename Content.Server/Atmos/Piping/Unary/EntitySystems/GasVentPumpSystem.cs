@@ -83,7 +83,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
-            var timeDelta =  args.dt;
+            var timeDelta = args.dt;
             var pressureDelta = timeDelta * vent.TargetPressureChange;
 
             if (vent.PumpDirection == VentPumpDirection.Releasing && pipe.Air.Pressure > 0)
@@ -115,7 +115,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 {
                     // Leak only a small amount of gas as a proportion of supply pipe pressure.
                     var pipeDelta = pipe.Air.Pressure - environment.Pressure;
-                    transferMoles = (float)timeDelta * pipeDelta * vent.UnderPressureLockoutLeaking;
+                    transferMoles = (float) timeDelta * pipeDelta * vent.UnderPressureLockoutLeaking;
                     if (transferMoles < 0.0)
                         return;
                 }
@@ -307,8 +307,14 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 VentPumpDirection.Siphoning => component.Outlet,
                 _ => throw new ArgumentOutOfRangeException()
             };
-            if (_nodeContainer.TryGetNode(nodeContainer, nodeName, out PipeNode? pipe))
-                gasMixDict.Add(nodeName, pipe.Air);
+            // multiply by volume fraction to make sure to send only the gas inside the analyzed pipe element, not the whole pipe system
+            if (_nodeContainer.TryGetNode(nodeContainer, nodeName, out PipeNode? pipe) && pipe.Air.Volume != 0f)
+            {
+                var pipeAirLocal = pipe.Air.Clone();
+                pipeAirLocal.Multiply(pipe.Volume / pipe.Air.Volume);
+                pipeAirLocal.Volume = pipe.Volume;
+                gasMixDict.Add(nodeName, pipeAirLocal);
+            }
 
             args.GasMixtures = gasMixDict;
         }
