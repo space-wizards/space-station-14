@@ -1,8 +1,8 @@
 - type: marking
-  id: TieflingTail
+  id: CPTieflingTail
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Tiefling]
+  speciesRestriction: [CPTiefling]
   sprites:
     - sprite: Mobs/Customization/cat_parts.rsi
       state: tail_cat

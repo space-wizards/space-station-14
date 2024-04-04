@@ -1,0 +1,49 @@
+- type: body
+  id: CPTiefling
+  name: tiefling
+  root: torso
+  slots:
+    head:
+      part: CPHeadHuman
+      connections:
+        - torso
+      organs:
+        brain: OrganHumanBrain
+        eyes: OrganHumanEyes
+    torso:
+      part: TorsoHuman
+      connections:
+        - right_arm
+        - left_arm
+        - right_leg
+        - left_leg
+      organs:
+        heart: OrganHumanHeart
+        lungs: OrganHumanLungs
+        stomach: OrganHumanStomach
+        liver: OrganHumanLiver
+        kidneys: OrganHumanKidneys
+    right_arm:
+      part: CPRightArmHuman
+      connections:
+        - right_hand
+    left_arm:
+      part: CPLeftArmHuman
+      connections:
+        - left_hand
+    right_hand:
+      part: CPRightHandHuman
+    left_hand:
+      part: CPLeftHandHuman
+    right_leg:
+      part: CPRightLegHuman
+      connections:
+        - right_foot
+    left_leg:
+      part: CPLeftLegHuman
+      connections:
+        - left_foot
+    right_foot:
+      part: CPRightFootHuman
+    left_foot:
+      part: CPLeftFootHuman

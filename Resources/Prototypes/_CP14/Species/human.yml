@@ -26,8 +26,6 @@
     LFoot: CPMobHumanLFoot
     RFoot: CPMobHumanRFoot
 
-
-
 - type: humanoidBaseSprite
   id: CPMobHumanoidEyes
   baseSprite:

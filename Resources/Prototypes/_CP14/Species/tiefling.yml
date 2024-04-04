@@ -1,11 +1,11 @@
 - type: species
-  id: Tiefling
+  id: CPTiefling
   name: species-name-tiefling
   roundStart: true
-  prototype: MobTiefling
-  sprites: MobTieflingSprites
-  markingLimits: MobTieflingMarkingLimits
-  dollPrototype: MobTieflingDummy
+  prototype: CPMobTiefling
+  sprites: CPMobTieflingSprites
+  markingLimits: CPMobTieflingMarkingLimits
+  dollPrototype: CPMobTieflingDummy
   skinColoration: Hues
 
 # The lack of a layer means that
@@ -15,7 +15,7 @@
 # in either the mob's starting marking prototype,
 # or it has to be added in C#.
 - type: speciesBaseSprites
-  id: MobTieflingSprites
+  id: CPMobTieflingSprites
   sprites:
     Head: MobTieflingHead
     Hair: MobTieflingAnyMarking
@@ -33,7 +33,8 @@
     RFoot: MobTieflingRFoot
 
 - type: markingPoints
-  id: MobTieflingMarkingLimits
+  id: CPMobTieflingMarkingLimits
+  onlyWhitelisted: true
   points:
     Hair:
       points: 1
@@ -47,9 +48,9 @@
     Tail:
       points: 1
       required: true
-      defaultMarkings: [TieflingTail]
+      defaultMarkings: [ CPTieflingTail ]
     HeadTop:
-      points: 0
+      points: 1
       required: false
     Chest:
       points: 1
@@ -77,83 +78,83 @@
 - type: humanoidBaseSprite
   id: MobTieflingHead
   baseSprite:
-    sprite: Mobs/Species/Tiefling/parts.rsi
+    sprite: CrystallPunk/Mobs/Species/Tiefling/parts.rsi
     state: head_m
 
 - type: humanoidBaseSprite
   id: MobTieflingHeadMale
   baseSprite:
-    sprite: Mobs/Species/Tiefling/parts.rsi
+    sprite: CrystallPunk/Mobs/Species/Tiefling/parts.rsi
     state: head_m
 
 - type: humanoidBaseSprite
   id: MobTieflingHeadFemale
   baseSprite:
-    sprite: Mobs/Species/Tiefling/parts.rsi
+    sprite: CrystallPunk/Mobs/Species/Tiefling/parts.rsi
     state: head_f
 
 - type: humanoidBaseSprite
   id: MobTieflingTorso
   baseSprite:
-    sprite: Mobs/Species/Tiefling/parts.rsi
+    sprite: CrystallPunk/Mobs/Species/Tiefling/parts.rsi
     state: torso_m
 
 - type: humanoidBaseSprite
   id: MobTieflingTorsoMale
   baseSprite:
-    sprite: Mobs/Species/Tiefling/parts.rsi
+    sprite: CrystallPunk/Mobs/Species/Tiefling/parts.rsi
     state: torso_m
 
 - type: humanoidBaseSprite
   id: MobTieflingTorsoFemale
   baseSprite:
-    sprite: Mobs/Species/Tiefling/parts.rsi
+    sprite: CrystallPunk/Mobs/Species/Tiefling/parts.rsi
     state: torso_f
 
 - type: humanoidBaseSprite
   id: MobTieflingLLeg
   baseSprite:
-    sprite: Mobs/Species/Tiefling/parts.rsi
+    sprite: CrystallPunk/Mobs/Species/Tiefling/parts.rsi
     state: l_leg
 
 - type: humanoidBaseSprite
   id: MobTieflingLArm
   baseSprite:
-    sprite: Mobs/Species/Tiefling/parts.rsi
+    sprite: CrystallPunk/Mobs/Species/Tiefling/parts.rsi
     state: l_arm
 
 - type: humanoidBaseSprite
   id: MobTieflingLHand
   baseSprite:
-    sprite: Mobs/Species/Tiefling/parts.rsi
+    sprite: CrystallPunk/Mobs/Species/Tiefling/parts.rsi
     state: l_hand
 
 - type: humanoidBaseSprite
   id: MobTieflingLFoot
   baseSprite:
-    sprite: Mobs/Species/Tiefling/parts.rsi
+    sprite: CrystallPunk/Mobs/Species/Tiefling/parts.rsi
     state: l_foot
 
 - type: humanoidBaseSprite
   id: MobTieflingRLeg
   baseSprite:
-    sprite: Mobs/Species/Tiefling/parts.rsi
+    sprite: CrystallPunk/Mobs/Species/Tiefling/parts.rsi
     state: r_leg
 
 - type: humanoidBaseSprite
   id: MobTieflingRArm
   baseSprite:
-    sprite: Mobs/Species/Tiefling/parts.rsi
+    sprite: CrystallPunk/Mobs/Species/Tiefling/parts.rsi
     state: r_arm
 
 - type: humanoidBaseSprite
   id: MobTieflingRHand
   baseSprite:
-    sprite: Mobs/Species/Tiefling/parts.rsi
+    sprite: CrystallPunk/Mobs/Species/Tiefling/parts.rsi
     state: r_hand
 
 - type: humanoidBaseSprite
   id: MobTieflingRFoot
   baseSprite:
-    sprite: Mobs/Species/Tiefling/parts.rsi
+    sprite: CrystallPunk/Mobs/Species/Tiefling/parts.rsi
     state: r_foot
