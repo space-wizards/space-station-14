@@ -263,9 +263,10 @@ public sealed partial class MapScreen : BoxContainer
 
         while (mapComps.MoveNext(out var mapComp, out var mapXform, out var mapMetadata))
         {
-            if (!_shuttles.CanFTLTo(_shuttleEntity.Value, mapComp.MapId))
-               continue;
-
+            if (_console != null && !_shuttles.CanFTLTo(_shuttleEntity.Value, mapComp.MapId, _console.Value))
+            {
+                continue;
+            }
             var mapName = mapMetadata.EntityName;
 
             if (string.IsNullOrEmpty(mapName))
@@ -310,7 +311,6 @@ public sealed partial class MapScreen : BoxContainer
             };
 
             _mapHeadings.Add(mapComp.MapId, gridContents);
-
             foreach (var grid in _mapManager.GetAllMapGrids(mapComp.MapId))
             {
                 _entManager.TryGetComponent(grid.Owner, out IFFComponent? iffComp);
@@ -327,8 +327,8 @@ public sealed partial class MapScreen : BoxContainer
                 {
                     AddMapObject(mapComp.MapId, gridObj);
                 }
-                else if (iffComp == null ||
-                         (iffComp.Flags & IFFFlags.Hide) == 0x0)
+                else if (!_shuttles.IsBeaconMap(_mapManager.GetMapEntityId(mapComp.MapId)) && (iffComp == null ||
+                         (iffComp.Flags & IFFFlags.Hide) == 0x0))
                 {
                     _pendingMapObjects.Add((mapComp.MapId, gridObj));
                 }

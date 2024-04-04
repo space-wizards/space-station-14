@@ -75,6 +75,9 @@ namespace Content.Server.Hands.Systems
 
         private void OnExploded(Entity<HandsComponent> ent, ref BeforeExplodeEvent args)
         {
+            if (ent.Comp.DisableExplosionRecursion)
+                return;
+
             foreach (var hand in ent.Comp.Hands.Values)
             {
                 if (hand.HeldEntity is { } uid)
