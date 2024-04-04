@@ -126,7 +126,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         var allValidStationTilesCount = allValidStationTiles.Count();
         for (var i = 0; i < numberOfTiles; i++)
         {
-            var randomIndex = RobustRandom.Next(allValidStationTilesCount-1);
+            var randomIndex = RobustRandom.Next(allValidStationTilesCount);
             yield return allValidStationTiles.ElementAt(randomIndex);
         }
     }
