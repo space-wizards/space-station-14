@@ -193,3 +193,150 @@
   loadouts:
   - SecurityPDA
   - SeniorOfficerPDA
+
+# Medical
+- type: loadoutGroup
+  id: ChiefMedicalOfficerHead
+  name: loadout-chief-medical-officer-head
+  minLimit: 0
+  loadouts:
+  - ChiefMedicalOfficerBeret
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerJumpsuit
+  name: loadout-chief-medical-officer-jumpsuit
+  loadouts:
+  - ChiefMedicalOfficerJumpsuit
+  - ChiefMedicalOfficerJumpskirt
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerOuterClothing
+  name: loadout-group-chief-medical-officer-outerclothing
+  minLimit: 0
+  loadouts:
+  - RegularLabCoat
+  - ChiefMedicalOfficerLabCoat
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerBackpack
+  name: loadout-group-chief-medical-officer-backpack
+  loadouts:
+  - ChiefMedicalOfficerBackpack
+  - ChiefMedicalOfficerSatchel
+  - ChiefMedicalOfficerDuffel
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerNeck
+  name: loadout-group-chief-medical-officer-neck
+  minLimit: 0
+  loadouts:
+  - ChiefMedicalOfficerCloak
+  - ChiefMedicalOfficerMantle
+
+- type: loadoutGroup
+  id: MedicalDoctorHead
+  name: loadout-group-medical-doctor-head
+  minLimit: 0
+  loadouts:
+  - MedicalBeret
+  - SeniorPhysicianBeret
+  - BlueSurgeryCap
+  - GreenSurgeryCap
+  - PurpleSurgeryCap
+
+- type: loadoutGroup
+  id: MedicalDoctorJumpsuit
+  name: loadout-group-medical-doctor-jumpsuit
+  loadouts:
+  - MedicalDoctorJumpsuit
+  - MedicalDoctorJumpskirt
+  - SeniorPhysicianJumpsuit
+  - SeniorPhysicianJumpskirt
+  - MedicalBlueScrubs
+  - MedicalGreenScrubs
+  - MedicalPurpleScrubs
+
+- type: loadoutGroup
+  id: MedicalDoctorOuterClothing
+  name: loadout-group-medical-doctor-outerclothing
+  minLimit: 0
+  loadouts:
+  - RegularLabCoat
+  - SeniorPhysicianLabCoat
+
+- type: loadoutGroup
+  id: MedicalBackpack
+  name: loadout-group-medical-backpack
+  loadouts:
+  - MedicalDoctorBackpack
+  - MedicalDoctorSatchel
+  - MedicalDoctorDuffel
+  - SeniorPhysicianBackpack
+  - SeniorPhysicianSatchel
+  - SeniorPhysicianDuffel
+
+- type: loadoutGroup
+  id: MedicalDoctorPDA
+  name: loadout-group-medical-doctor-id
+  loadouts:
+  - MedicalDoctorPDA
+  - SeniorPhysicianPDA
+
+- type: loadoutGroup
+  id: MedicalInternJumpsuit
+  name: loadout-group-medical-intern-jumpsuit
+  loadouts:
+  - WhiteJumpsuit
+  - WhiteJumpskirt
+
+- type: loadoutGroup
+  id: ChemistJumpsuit
+  name: loadout-group-chemist-jumpsuit
+  loadouts:
+  - MedicalDoctorJumpsuit
+  - MedicalDoctorJumpskirt
+
+- type: loadoutGroup
+  id: ChemistOuterClothing
+  name: loadout-group-chemist-outerclothing
+  minLimit: 0
+  loadouts:
+  - RegularLabCoat
+  - ChemistLabCoat
+
+- type: loadoutGroup
+  id: ChemistBackpack
+  name: loadout-group-chemist-backpack
+  loadouts:
+  - ChemistBackpack
+  - ChemistSatchel
+  - ChemistDuffel
+
+- type: loadoutGroup
+  id: ParamedicHead
+  name: loadout-group-paramedic-head
+  minLimit: 0
+  loadouts:
+  - ParamedicHead
+
+- type: loadoutGroup
+  id: ParamedicJumpsuit
+  name: loadout-group-paramedic-jumpsuit
+  loadouts:
+  - ParamedicJumpsuit
+  - ParamedicJumpskirt
+
+- type: loadoutGroup
+  id: ParamedicOuterClothing
+  name: loadout-group-paramedic-outerclothing
+  minLimit: 0
+  loadouts:
+  - ParamedicWindbreaker
+
+- type: loadoutGroup
+  id: ParamedicBackpack
+  name: loadout-group-paramedic-backpack
+  loadouts:
+  - ParamedicBackpack
+  - ParamedicSatchel
+  - ParamedicDuffel

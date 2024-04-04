@@ -53,3 +53,48 @@
   - SecurityBackpack
   - SecurityPDA
   - Trinkets
+
+# Medical
+- type: roleLoadout
+  id: JobChiefMedicalOfficer
+  groups:
+  - ChiefMedicalOfficerHead
+  - ChiefMedicalOfficerJumpsuit
+  - ChiefMedicalOfficerOuterClothing
+  - ChiefMedicalOfficerBackpack
+  - ChiefMedicalOfficerNeck
+  - Trinkets
+
+- type: roleLoadout
+  id: JobMedicalDoctor
+  groups:
+  - MedicalDoctorHead
+  - MedicalDoctorJumpsuit
+  - MedicalBackpack
+  - MedicalDoctorOuterClothing
+  - MedicalDoctorPDA
+  - Trinkets
+
+- type: roleLoadout
+  id: JobMedicalIntern
+  groups:
+  - MedicalInternJumpsuit
+  - MedicalBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobChemist
+  groups:
+  - ChemistJumpsuit
+  - ChemistOuterClothing
+  - ChemistBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobParamedic
+  groups:
+  - ParamedicHead
+  - ParamedicJumpsuit
+  - ParamedicOuterClothing
+  - ParamedicBackpack
+  - Trinkets
