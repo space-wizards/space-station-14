@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Shotgun slugs can now be printed in the security techfab.
-    type: Add
-  - message: Shotgun slugs now fire a single strong projectile when fired.
-    type: Tweak
-  id: 5801
-  time: '2024-01-27T02:56:57.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24196
 - author: I-JustUser-I
   changes:
   - message: Zombie Outbreak event now has a minimum limit of 15 players.
@@ -3805,3 +3796,10 @@
   id: 6300
   time: '2024-04-04T06:28:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26690
+- author: Aexxie
+  changes:
+  - message: Added the option to disable your OOC Patron name color.
+    type: Add
+  id: 6301
+  time: '2024-04-04T07:20:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26653
