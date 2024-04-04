@@ -66,6 +66,7 @@
       shader: unshaded
       map: [ "light" ]
   - type: Clothing
+    equippedPrefix: off
     sprite: GreyStation/Clothing/Mask/jinroh_mask.rsi
     clothingVisuals:
       mask:
