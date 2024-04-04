@@ -87,6 +87,7 @@ public partial class NavMapControl : MapGridControl
     private readonly Label _zoom = new()
     {
         VerticalAlignment = VAlignment.Top,
+        HorizontalExpand = true,
         Margin = new Thickness(8f, 8f),
     };
 
@@ -95,6 +96,7 @@ public partial class NavMapControl : MapGridControl
         Text = Loc.GetString("navmap-recenter"),
         VerticalAlignment = VAlignment.Top,
         HorizontalAlignment = HAlignment.Right,
+        HorizontalExpand = true,
         Margin = new Thickness(8f, 4f),
         Disabled = true,
     };
@@ -104,6 +106,7 @@ public partial class NavMapControl : MapGridControl
         Text = Loc.GetString("navmap-toggle-beacons"),
         VerticalAlignment = VAlignment.Center,
         HorizontalAlignment = HAlignment.Center,
+        HorizontalExpand = true,
         Margin = new Thickness(4f, 0f),
         Pressed = true,
     };
@@ -129,6 +132,8 @@ public partial class NavMapControl : MapGridControl
                 BorderColor = StyleNano.PanelDark
             },
             VerticalExpand = false,
+            HorizontalExpand = true,
+            SetWidth = 650f,
             Children =
             {
                 new BoxContainer()
