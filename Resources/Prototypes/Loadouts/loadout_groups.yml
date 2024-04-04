@@ -202,6 +202,64 @@
 
 # Security
 - type: loadoutGroup
+  id: HeadofSecurityHead
+  name: loadout-group-head-of-security-head
+  minLimit: 0
+  loadouts:
+  - HeadofSecurityHead
+  - HeadofSecurityBeret
+
+- type: loadoutGroup
+  id: HeadofSecurityJumpsuit
+  name: loadout-group-head-of-security-jumpsuit
+  loadouts:
+  - HeadofSecurityJumpsuit
+  - HeadofSecurityJumpskirt
+  - HeadofSecurityTurtleneck
+  - HeadofSecurityTurtleneckSkirt
+  - HeadofSecurityFormalSuit
+  - HeadofSecurityFormalSkirt
+
+- type: loadoutGroup
+  id: HeadofSecurityNeck
+  name: loadout-group-head-of-security-neck
+  minLimit: 0
+  loadouts:
+  - HeadofSecurityCloak
+  - HeadofSecurityMantle
+
+- type: loadoutGroup
+  id: HeadofSecurityOuterClothing
+  name: loadout-group-head-of-security-outerclothing
+  minLimit: 0
+  loadouts:
+  - HeadofSecurityCoat
+  - HeadofSecurityWinterCoat
+
+- type: loadoutGroup
+  id: WardenHead
+  name: loadout-group-warden-head
+  minLimit: 0
+  loadouts:
+  - WardenHead
+  - WardenBeret
+
+- type: loadoutGroup
+  id: WardenJumpsuit
+  name: loadout-group-warden-jumpsuit
+  loadouts:
+  - WardenJumpsuit
+  - WardenJumpskirt
+
+- type: loadoutGroup
+  id: DetectiveOuterClothing
+  name: loadout-group-warden-outerclothing
+  minLimit: 0
+  loadouts:
+  - WardenCoat
+  - WardenArmoredWinterCoat
+
+- type: loadoutGroup
   id: SecurityHead
   name: loadout-group-security-head
   minLimit: 0
@@ -237,10 +295,57 @@
   - SecurityPDA
   - SeniorOfficerPDA
 
+- type: loadoutGroup
+  id: DetectiveHead
+  name: loadout-group-detective-head
+  minLimit: 0
+  loadouts:
+  - DetectiveFedora
+  - DetectiveFedoraGrey
+
+- type: loadoutGroup
+  id: DetectiveNeck
+  name: loadout-group-detective-neck
+  minLimit: 0
+  loadouts:
+  - DetectiveTie
+
+- type: loadoutGroup
+  id: DetectiveJumpsuit
+  name: loadout-group-detective-jumpsuit
+  loadouts:
+  - DetectiveJumpsuit
+  - DetectiveJumpskirt
+  - NoirJumpsuit
+  - NoirJumpskirt
+
+- type: loadoutGroup
+  id: DetectiveBackpack
+  name: loadout-group-detective-backpack
+  loadouts:
+  - DetectiveBackpack
+  - DetectiveSatchel
+  - DetectiveDuffel
+
+- type: loadoutGroup
+  id: DetectiveOuterClothing
+  name: loadout-group-detective-outerclothing
+  minLimit: 0
+  loadouts:
+  - DetectiveArmorVest
+  - DetectiveCoat
+
+- type: loadoutGroup
+  id: SecurityCadetJumpsuit
+  name: loadout-group-security-cadet-jumpsuit
+  loadouts:
+  - RedJumpsuit
+  - RedJumpskirt
+
 # Medical
 - type: loadoutGroup
   id: ChiefMedicalOfficerHead
-  name: loadout-chief-medical-officer-head
+  name: loadout-group-chief-medical-officer-head
   minLimit: 0
   loadouts:
   - ChiefMedicalOfficerBeret

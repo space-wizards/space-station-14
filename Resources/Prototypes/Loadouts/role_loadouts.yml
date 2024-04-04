@@ -63,12 +63,48 @@
 
 # Security
 - type: roleLoadout
+  id: JobHeadOfSecurity
+  groups:
+  - HeadofSecurityHead
+  - HeadofSecurityNeck
+  - HeadofSecurityJumpsuit
+  - SecurityBackpack
+  - HeadofSecurityOuterClothing
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarden
+  groups:
+  - WardenHead
+  - WardenJumpsuit
+  - SecurityBackpack
+  - WardenOuterClothing
+  - Trinkets
+
+- type: roleLoadout
   id: JobSecurityOfficer
   groups:
   - SecurityHead
   - SecurityJumpsuit
   - SecurityBackpack
   - SecurityPDA
+  - Trinkets
+
+- type: roleLoadout
+  id: JobDetective
+  groups:
+  - DetectiveHead
+  - DetectiveNeck
+  - DetectiveJumpsuit
+  - DetectiveBackpack
+  - DetectiveOuterClothing
+  - Trinkets
+
+- type: roleLoadout
+  id: JobMedicalIntern
+  groups:
+  - SecurityCadetJumpsuit
+  - SecurityBackpack
   - Trinkets
 
 # Medical
