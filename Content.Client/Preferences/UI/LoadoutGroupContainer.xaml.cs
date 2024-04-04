@@ -33,6 +33,26 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
     /// </summary>
     public void RefreshLoadouts(RoleLoadout loadout, ICommonSession session, IDependencyCollection collection)
     {
+        RestrictionsContainer.DisposeAllChildren();
+
+        if (_groupProto.MinLimit > 0)
+        {
+            RestrictionsContainer.AddChild(new Label()
+            {
+                Text = Loc.GetString("loadouts-min-limit", ("count", _groupProto.MinLimit)),
+                Margin = new Thickness(5, 0, 5, 5),
+            });
+        }
+
+        if (_groupProto.MaxLimit > 0)
+        {
+            RestrictionsContainer.AddChild(new Label()
+            {
+                Text = Loc.GetString("loadouts-max-limit", ("count", _groupProto.MaxLimit)),
+                Margin = new Thickness(5, 0, 5, 5),
+            });
+        }
+
         LoadoutsContainer.DisposeAllChildren();
         // Didn't use options because this is more robust in future.
         var protoMan = collection.Resolve<IPrototypeManager>();
