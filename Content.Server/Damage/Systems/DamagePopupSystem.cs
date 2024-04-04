@@ -38,16 +38,17 @@ public sealed class DamagePopupSystem : EntitySystem
 
     private void OnInteractHand(EntityUid uid, DamagePopupComponent component, InteractHandEvent args)
     {
-
-        if (component.Type == Enum.GetValues(typeof(DamagePopupType)).Cast<DamagePopupType>().Last())
+        if (component.AllowTypeChange)
         {
-            component.Type = DamagePopupType.Combined;
+            if (component.Type == Enum.GetValues(typeof(DamagePopupType)).Cast<DamagePopupType>().Last())
+            {
+                component.Type = Enum.GetValues(typeof(DamagePopupType)).Cast<DamagePopupType>().First();
+            }
+            else
+            {
+                component.Type = (DamagePopupType) (int) component.Type + 1;
+            }
+            _popupSystem.PopupEntity("Target set to type: " + component.Type.ToString(), uid);
         }
-        else
-        {
-            component.Type = (DamagePopupType) (int) component.Type + 1;
-        }
-
-        _popupSystem.PopupEntity("Target set to type: " + component.Type.ToString(), uid);
     }
 }
