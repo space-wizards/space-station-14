@@ -563,7 +563,7 @@
     sprite: Structures/Storage/Crates/syndicate.rsi
 
 - type: entity
-  parent: CrateBaseWeldable
+  parent: [StructureWheeled, CrateBaseWeldable]
   id: CrateTrashCart
   name: trash cart
   components:

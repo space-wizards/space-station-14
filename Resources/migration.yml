@@ -227,7 +227,20 @@ Observationskit: null
 # 2024-02-26
 CrateBaseWeldable: CrateGenericSteel
 
-# 2024-03-7
+# 2024-03-05
+BookBotanicalTextbook: BookRandomStory
+BookEscalation: BookRandomStory
+BookEscalationSecurity: BookRandomStory
+BookDemonomiconRandom: BookRandomStory
+BookDemonomicon1: BookRandomStory
+BookDemonomicon2: BookRandomStory
+BookDemonomicon3: BookRandomStory
+BookChemistryInsane: BookRandomStory
+BookGnominomicon: BookRandomStory
+BookFishing: BookRandomStory
+BookDetective: BookRandomStory
+
+# 2024-03-07
 AirlockExternalEasyPry: AirlockExternal
 AirlockExternalGlassEasyPry: AirlockExternalGlass
 AirlockGlassShuttleEasyPry: AirlockGlassShuttle
@@ -237,7 +250,7 @@ AirlockExternalGlassEasyPryLocked: AirlockExternalGlassLocked
 AirlockGlassShuttleEasyPryLocked: AirlockExternalGlassShuttleLocked
 AirlockShuttleEasyPryLocked: AirlockExternalShuttleLocked
 
-#2024-03-10
+# 2024-03-10
 ClothingBackpackFilledDetective: ClothingBackpackSecurityFilledDetective
 ClothingBackpackDuffelFilledDetective: ClothingBackpackDuffelSecurityFilledDetective
 ClothingBackpackSatchelFilledDetective: ClothingBackpackSatchelSecurityFilledDetective
@@ -247,5 +260,18 @@ ImprovisedExplosive: FireBomb
 ImprovisedExplosiveEmpty: FireBombEmpty
 ImprovisedExplosiveFuel: FireBombFuel
 
+# 2024-03-16
+ClothingHeadHatHairflower: FoodPoppy
+
 # 2024-03-21
 RPED: null
+
+# 2024-03-30
+# These are technically not equivalent, but it probably makes more sense to replace any existing SCAF stuff with SOME kind of armor, instead of just deleting it outright.
+ClothingHeadHelmetScaf: ClothingHeadHelmetBasic
+ClothingOuterArmorScaf: ClothingOuterArmorBasic
+
+# 2024-03-31
+ClothingNeckFlowerWreath: ClothingHeadHatFlowerWreath
+ClothingHeadHatFlowerCrown: ClothingHeadHatFlowerWreath
+BriefcaseSyndieBase: null
