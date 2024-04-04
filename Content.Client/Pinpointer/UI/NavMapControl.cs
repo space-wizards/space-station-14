@@ -43,9 +43,10 @@ public partial class NavMapControl : MapGridControl
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
     public Dictionary<NetEntity, NavMapBlip> TrackedEntities = new();
+
     public List<(Vector2, Vector2)> TileLines = new();
     public List<(Vector2, Vector2)> TileRects = new();
-    public List<(Vector2i[], Color)> TilePolygons = new();
+    public List<(Vector2[], Color)> TilePolygons = new();
 
     // Default colors
     public Color WallColor = new(102, 217, 102);
@@ -59,8 +60,9 @@ public partial class NavMapControl : MapGridControl
     protected static float MaxDisplayedRange = 128f;
     protected static float DefaultDisplayedRange = 48f;
     protected float MinmapScaleModifier = 0.075f;
+    protected float FullWallInstep = 0.165f;
     protected float ThinWallThickness = 0.165f;
-    protected float ThinDoorThickness = 0.3333f;
+    protected float ThinDoorThickness = 0.30f;
 
     // Local variables
     private float _updateTimer = 1.0f;
@@ -445,12 +447,34 @@ public partial class NavMapControl : MapGridControl
         TileLines.Clear();
         TileRects.Clear();
 
-        UpdateNavmapFloorTiles();
-        UpdateNavmapWallLines();
+        UpdateNavMapFloorTiles();
+        UpdateNavMapWallLines();
         UpdateNavMapAirlocks();
     }
 
-    public void UpdateNavmapWallLines()
+    private void UpdateNavMapFloorTiles()
+    {
+        if (_fixtures == null)
+            return;
+
+        var verts = new Vector2[8];
+
+        foreach (var fixture in _fixtures.Fixtures.Values)
+        {
+            if (fixture.Shape is not PolygonShape poly)
+                continue;
+
+            for (var i = 0; i < poly.VertexCount; i++)
+            {
+                var vert = poly.Vertices[i];
+                verts[i] = new Vector2(MathF.Round(vert.X), MathF.Round(vert.Y));
+            }
+
+            TilePolygons.Add((verts[..poly.VertexCount], TileColor));
+        }
+    }
+
+    private void UpdateNavMapWallLines()
     {
         if (_navMap == null || _grid == null)
             return;
@@ -479,7 +503,7 @@ public partial class NavMapControl : MapGridControl
 
                 if (!_navMapSystem.AllTileEdgesAreOccupied(chunk.TileData, relativeTile))
                 {
-                    AddThinWall(chunk.TileData, tile);
+                    AddRectForThinWall(chunk.TileData, tile);
                     continue;
                 }
 
@@ -565,95 +589,10 @@ public partial class NavMapControl : MapGridControl
             TileLines.Add((origin.Item2, terminal.Item2));
     }
 
-    private void AddThinWall(Dictionary<AtmosDirection, ushort> tileData, Vector2i tile)
-    {
-        if (_grid == null)
-            return;
-
-        if (_navMapSystem == null)
-            return;
-
-        foreach (var (direction, mask) in tileData)
-        {
-            var relative = SharedMapSystem.GetChunkRelative(tile, SharedNavMapSystem.ChunkSize);
-            var flag = (ushort) SharedNavMapSystem.GetFlag(relative);
-
-            if ((mask & flag) == 0)
-                continue;
-
-            switch (direction)
-            {
-                case AtmosDirection.North:
-                    TileRects.Add((new Vector2(tile.X, -tile.Y - 1 + ThinWallThickness), new Vector2(tile.X + 1f, -tile.Y - 1f)));
-                    break;
-                case AtmosDirection.East:
-                    TileRects.Add((new Vector2(tile.X + 1 - ThinWallThickness, -tile.Y), new Vector2(tile.X + 1f, -tile.Y - 1f)));
-                    break;
-                case AtmosDirection.South:
-                    TileRects.Add((new Vector2(tile.X, -tile.Y), new Vector2(tile.X + 1f, -tile.Y - ThinWallThickness)));
-                    break;
-                case AtmosDirection.West:
-                    TileRects.Add((new Vector2(tile.X, -tile.Y), new Vector2(tile.X + ThinWallThickness, -tile.Y - 1f)));
-                    break;
-            }
-        }
-    }
-
-    private void AddThinAirlock(Dictionary<AtmosDirection, ushort> tileData, Vector2i tile)
-    {
-        if (_grid == null)
-            return;
-
-        if (_navMapSystem == null)
-            return;
-
-        var shrinkage = 0.165f;
-        var shrinkage2 = 0.05f;
-
-        foreach (var (direction, mask) in tileData)
-        {
-            var relative = SharedMapSystem.GetChunkRelative(tile, SharedNavMapSystem.ChunkSize);
-            var flag = (ushort) SharedNavMapSystem.GetFlag(relative);
-
-            if ((mask & flag) == 0)
-                continue;
-
-            switch (direction)
-            {
-                case AtmosDirection.North:
-                    TileRects.Add((new Vector2(tile.X + shrinkage, -tile.Y - 1 + ThinDoorThickness - shrinkage2),
-                        new Vector2(tile.X + 1f - shrinkage, -tile.Y - 1f + shrinkage2)));
-                    TileLines.Add((new Vector2(tile.X + 0.5f, -tile.Y - 1 + ThinDoorThickness - shrinkage2),
-                        new Vector2(tile.X + 0.5f, -tile.Y - 1f + shrinkage2)));
-                    break;
-                case AtmosDirection.East:
-                    TileRects.Add((new Vector2(tile.X + shrinkage2 + 1 - ThinDoorThickness, -tile.Y - shrinkage),
-                        new Vector2(tile.X + 1f - shrinkage2, -tile.Y - 1f + shrinkage)));
-                    TileLines.Add((new Vector2(tile.X + shrinkage2 + 1 - ThinDoorThickness, -tile.Y - 0.5f),
-                        new Vector2(tile.X + 1f - shrinkage2, -tile.Y - 0.5f)));
-                    break;
-                case AtmosDirection.South:
-                    TileRects.Add((new Vector2(tile.X + shrinkage, -tile.Y - shrinkage2),
-                        new Vector2(tile.X + 1f - shrinkage, -tile.Y - ThinDoorThickness + shrinkage2)));
-                    TileLines.Add((new Vector2(tile.X + 0.5f, -tile.Y - shrinkage2),
-                        new Vector2(tile.X + 0.5f, -tile.Y - ThinDoorThickness + shrinkage2)));
-                    break;
-                case AtmosDirection.West:
-                    TileRects.Add((new Vector2(tile.X + shrinkage2, -tile.Y - shrinkage),
-                        new Vector2(tile.X - shrinkage2 + ThinDoorThickness, -tile.Y - 1f + shrinkage)));
-                    TileLines.Add((new Vector2(tile.X + shrinkage2, -tile.Y - 0.5f),
-                        new Vector2(tile.X - shrinkage2 + ThinDoorThickness, -tile.Y - 0.5f)));
-                    break;
-            }
-        }
-    }
-
     private void UpdateNavMapAirlocks()
     {
         if (_navMap == null || _grid == null)
             return;
-
-        var instep = 0.165f;
 
         foreach (var ((category, _), chunk) in _navMap.Chunks)
         {
@@ -674,42 +613,82 @@ public partial class NavMapControl : MapGridControl
                 // If the edges of an airlock tile are not all occupied, draw a thin airlock for each edge
                 if (!_navMapSystem.AllTileEdgesAreOccupied(chunk.TileData, relative))
                 {
-                    AddThinAirlock(chunk.TileData, tile);
+                    AddRectForThinAirlock(chunk.TileData, tile);
                     continue;
                 }
 
                 // Otherwise add a single full tile airlock
-                TileRects.Add((new Vector2(tile.X + instep, -tile.Y - instep), new Vector2(tile.X - instep + 1f, -tile.Y + instep - 1)));
-                TileLines.Add((new Vector2(tile.X + 0.5f, -tile.Y - instep), new Vector2(tile.X + 0.5f, -tile.Y + instep - 1)));
+                TileRects.Add((new Vector2(tile.X + FullWallInstep, -tile.Y - FullWallInstep),
+                    new Vector2(tile.X - FullWallInstep + 1f, -tile.Y + FullWallInstep - 1)));
+
+                TileLines.Add((new Vector2(tile.X + 0.5f, -tile.Y - FullWallInstep),
+                    new Vector2(tile.X + 0.5f, -tile.Y + FullWallInstep - 1)));
             }
         }
     }
 
-    // Update tiles
-    private void UpdateNavmapFloorTiles()
+    private void AddRectForThinWall(Dictionary<AtmosDirection, ushort> tileData, Vector2i tile)
     {
-        if (_fixtures == null)
+        if (_navMapSystem == null || _grid == null)
             return;
 
-        TilePolygons.Clear();
+        var leftTop = new Vector2(-0.5f, -0.5f + ThinWallThickness);
+        var rightBottom = new Vector2(0.5f, -0.5f);
 
-        var verts = new Vector2i[8];
-
-        foreach (var fixture in _fixtures.Fixtures.Values)
+        foreach (var (direction, mask) in tileData)
         {
-            if (fixture.Shape is not PolygonShape poly)
+            var relative = SharedMapSystem.GetChunkRelative(tile, SharedNavMapSystem.ChunkSize);
+            var flag = (ushort) SharedNavMapSystem.GetFlag(relative);
+
+            if ((mask & flag) == 0)
                 continue;
 
-            for (var i = 0; i < poly.VertexCount; i++)
+            var tilePosition = new Vector2(tile.X + 0.5f, -tile.Y - 0.5f);
+            var angle = new Angle(0);
+
+            switch (direction)
             {
-                var vert = poly.Vertices[i];
-                verts[i] = new Vector2i((int) MathF.Round(vert.X), (int) MathF.Round(vert.Y));
+                case AtmosDirection.East: angle = new Angle(MathF.PI * 0.5f); break;
+                case AtmosDirection.South: angle = new Angle(MathF.PI); break;
+                case AtmosDirection.West: angle = new Angle(MathF.PI * -0.5f); break;
             }
 
-            TilePolygons.Add((verts[..poly.VertexCount], TileColor));
+            TileRects.Add((angle.RotateVec(leftTop) + tilePosition, angle.RotateVec(rightBottom) + tilePosition));
         }
     }
 
+    private void AddRectForThinAirlock(Dictionary<AtmosDirection, ushort> tileData, Vector2i tile)
+    {
+        if (_navMapSystem == null || _grid == null)
+            return;
+
+        var leftTop = new Vector2(-0.5f + FullWallInstep, -0.5f + FullWallInstep + ThinDoorThickness);
+        var rightBottom = new Vector2(0.5f - FullWallInstep, -0.5f + FullWallInstep);
+        var centreTop = new Vector2(0f, -0.5f + FullWallInstep + ThinDoorThickness);
+        var centreBottom = new Vector2(0f, -0.5f + FullWallInstep);
+
+        foreach (var (direction, mask) in tileData)
+        {
+            var relative = SharedMapSystem.GetChunkRelative(tile, SharedNavMapSystem.ChunkSize);
+            var flag = (ushort) SharedNavMapSystem.GetFlag(relative);
+
+            if ((mask & flag) == 0)
+                continue;
+
+            var tilePosition = new Vector2(tile.X + 0.5f, -tile.Y - 0.5f);
+            var angle = new Angle(0);
+
+            switch (direction)
+            {
+                case AtmosDirection.East: angle = new Angle(MathF.PI * 0.5f);break;
+                case AtmosDirection.South: angle = new Angle(MathF.PI); break;
+                case AtmosDirection.West: angle = new Angle(MathF.PI * -0.5f); break;
+            }
+
+            TileRects.Add((angle.RotateVec(leftTop) + tilePosition, angle.RotateVec(rightBottom) + tilePosition));
+            TileLines.Add((angle.RotateVec(centreTop) + tilePosition, angle.RotateVec(centreBottom) + tilePosition));
+        }
+    }
 
     protected void AddOrUpdateNavMapLine
         (Vector2i origin,
@@ -773,17 +752,5 @@ public struct NavMapBlip
         Color = color;
         Blinks = blinks;
         Selectable = selectable;
-    }
-}
-
-public struct NavMapLine
-{
-    public readonly Vector2 Origin;
-    public readonly Vector2 Terminus;
-
-    public NavMapLine(Vector2 origin, Vector2 terminus)
-    {
-        Origin = origin;
-        Terminus = terminus;
     }
 }
