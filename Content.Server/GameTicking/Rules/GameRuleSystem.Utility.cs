@@ -100,11 +100,11 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         targetCoords = EntityCoordinates.Invalid;
 
         var randomTiles = FindRandomTilesOnStation(targetStation, numberOfTiles: 1);
-        if (randomTiles.Count() == 0)
+        if (!randomTiles.Any())
         {
             return false;
         }
-        var randomTile = randomTiles.ElementAt(1);
+        var randomTile = randomTiles.First();
 
         if (!TryComp<MapGridComponent>(randomTile.GridUid, out var gridComp))
         {
@@ -126,7 +126,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         var allValidStationTilesCount = allValidStationTiles.Count();
         for (var i = 0; i < numberOfTiles; i++)
         {
-            var randomIndex = RobustRandom.Next(allValidStationTilesCount);
+            var randomIndex = RobustRandom.Next(allValidStationTilesCount-1);
             yield return allValidStationTiles.ElementAt(randomIndex);
         }
     }
