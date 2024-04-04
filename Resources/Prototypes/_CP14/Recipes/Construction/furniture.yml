@@ -1,0 +1,53 @@
+- type: construction
+  crystallPunkAllowed: true
+  name: Деревянный стул
+  description: Сколочен из самых обычных досок. Просто и эффективно!    
+  id: CPChairWooden
+  graph: CPSeat
+  startNode: start
+  targetNode: CPChairWooden
+  category: construction-category-furniture
+  icon:
+    sprite: CrystallPunk/Structures/Furniture/chairs.rsi
+    state: wooden
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  crystallPunkAllowed: true
+  name: Деревянный стол
+  description: Простой стол, сколоченный из досок.
+  id: CPTableWooden
+  graph: CPTable
+  startNode: start
+  targetNode: CPTableWooden
+  category: construction-category-furniture
+  icon:
+    sprite: CrystallPunk/Structures/Furniture/Tables/wood.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  crystallPunkAllowed: true
+  name: Костёр
+  description: Груда бревен, сложенных вместе, и готовых вспыхнуть от малейшей искры.
+  id: CPBonfire
+  graph: CPBonfire
+  startNode: start
+  targetNode: CPBonfire
+  category: construction-category-furniture
+  icon:
+    sprite: CrystallPunk/Structures/Decoration/bonfire.rsi
+    state: bonfire
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

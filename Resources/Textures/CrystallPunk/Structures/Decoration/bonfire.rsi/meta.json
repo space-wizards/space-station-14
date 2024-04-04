@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from /tg/station at commit 28b476ab6d17014e6f9e18a748d7c96be28de9a1, recolor and edited by TheShuEd for CrystallPunk14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bonfire"
+    },
+    {
+      "name": "bonfire_extinguished"
+    },
+    {
+      "name": "burning",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    }
+  ]
+}

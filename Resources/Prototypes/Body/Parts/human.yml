@@ -15,6 +15,7 @@
         Quantity: 10
 
 - type: entity
+  noSpawn: true
   id: TorsoHuman
   name: "human torso"
   parent: [PartHuman, BaseTorso]
@@ -31,6 +32,7 @@
         Quantity: 20
 
 - type: entity
+  noSpawn: true
   id: HeadHuman
   name: "human head"
   parent: [PartHuman, BaseHead]
@@ -47,6 +49,7 @@
         Quantity: 10
 
 - type: entity
+  noSpawn: true
   id: LeftArmHuman
   name: "left human arm"
   parent: [PartHuman, BaseLeftArm]
@@ -56,6 +59,7 @@
     state: "l_arm"
 
 - type: entity
+  noSpawn: true
   id: RightArmHuman
   name: "right human arm"
   parent: [PartHuman, BaseRightArm]
@@ -65,6 +69,7 @@
     state: "r_arm"
 
 - type: entity
+  noSpawn: true
   id: LeftHandHuman
   name: "left human hand"
   parent: [PartHuman, BaseLeftHand]
@@ -74,6 +79,7 @@
     state: "l_hand"
 
 - type: entity
+  noSpawn: true
   id: RightHandHuman
   name: "right human hand"
   parent: [PartHuman, BaseRightHand]
@@ -83,6 +89,7 @@
     state: "r_hand"
 
 - type: entity
+  noSpawn: true
   id: LeftLegHuman
   name: "left human leg"
   parent: [PartHuman, BaseLeftLeg]
@@ -92,6 +99,7 @@
     state: "l_leg"
 
 - type: entity
+  noSpawn: true
   id: RightLegHuman
   name: "right human leg"
   parent: [PartHuman, BaseRightLeg]
@@ -101,6 +109,7 @@
     state: "r_leg"
 
 - type: entity
+  noSpawn: true
   id: LeftFootHuman
   name: "left human foot"
   parent: [PartHuman, BaseLeftFoot]
@@ -110,6 +119,7 @@
     state: "l_foot"
 
 - type: entity
+  noSpawn: true
   id: RightFootHuman
   name: "right human foot"
   parent: [PartHuman, BaseRightFoot]

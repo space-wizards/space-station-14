@@ -1,0 +1,57 @@
+# Simple melee weapons
+
+# Battle Staff
+# Mace
+# Stick
+# Dagger
+# Spear
+# Light Hammer
+# Throwing spear
+# Hand axe
+# Sickle
+
+# Military melee weapons
+
+# Halberd
+# Battle pick
+# Warhammer
+# Battle axe
+# Glaive
+
+- type: entity
+  name: двуручный меч
+  abstract: true
+  parent: BaseItem
+  id: CPBaseTwoHandedSword
+  description: Мощное оружие, требующее огромной силы и умения для эффективного использования.
+  components:
+  - type: Sharp
+  - type: MeleeWeapon
+    attackRate: 0.75
+    damage:
+      types:
+        Slash: 10
+        Structural: 5
+    soundHit:
+      collection: MetalThud
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Slash: 30
+        Structural: 5
+  - type: Item
+    size: Ginormous
+
+# Long spear
+# Long sword
+# Whip
+# Short sword
+# Hammer
+# Morgenstern
+# Pika
+# Rapier
+# Axe
+# Scimitar
+# Trident
+# Chain

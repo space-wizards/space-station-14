@@ -1,0 +1,33 @@
+- type: entity
+  name: деревянный стул
+  description: Сколочен из самых обычных досок. Просто и эффективно!    
+  id: CPChairWooden
+  parent: UnanchoredChairBase
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Structures/Furniture/chairs.rsi
+    state: wooden
+  - type: Construction
+    graph: CPSeat
+    node: CPChairWooden
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 1
+  - type: Tag
+    tags:
+    - Wooden

@@ -1,0 +1,7 @@
+- type: CPLockCategory
+  id: Debug
+  complexity: 10
+
+- type: CPLockCategory
+  id: Tavern
+  complexity: 3

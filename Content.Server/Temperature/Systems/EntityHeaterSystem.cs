@@ -1,3 +1,5 @@
+using Content.Server.Atmos.Components;
+using Content.Server.CrystallPunk.Temperature;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Examine;
@@ -45,6 +47,21 @@ public sealed class EntityHeaterSystem : EntitySystem
                 _temperature.ChangeHeat(ent, energy);
             }
         }
+
+        //CrystallPunk bonfire
+        var flammbaleQuery = EntityQueryEnumerator<CPFlammableEntityHeaterComponent, ItemPlacerComponent, FlammableComponent>();
+        while (flammbaleQuery.MoveNext(out var uid, out _, out var placer, out var flammable))
+        {
+            if (!flammable.OnFire)
+                return;
+
+            var energy = flammable.FireStacks * deltaTime * 300;
+            foreach (var ent in placer.PlacedEntities)
+            {
+                _temperature.ChangeHeat(ent, energy);
+            }
+        }
+        //CrystallPunk bonfire end
     }
 
     private void OnExamined(EntityUid uid, EntityHeaterComponent comp, ExaminedEvent args)

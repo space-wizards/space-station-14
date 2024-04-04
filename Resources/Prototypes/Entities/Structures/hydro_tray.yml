@@ -81,9 +81,6 @@
   - type: Machine
     board: HydroponicsTrayMachineCircuitboard
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-hydroponicstray
-    layoutId: HydroponicsTray
   - type: AmbientSound
     volume: -9
     range: 5
@@ -92,9 +89,6 @@
   - type: GuideHelp
     guides:
     - Botany
-  - type: Tag
-    tags:
-      - NoPaint
 
 - type: entity
   parent: hydroponicsTray

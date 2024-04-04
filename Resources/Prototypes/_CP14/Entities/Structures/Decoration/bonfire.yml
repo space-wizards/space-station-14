@@ -1,0 +1,78 @@
+- type: entity
+  id: CPBonfire
+  parent: BaseStructure
+  name: костёр
+  description: Груда бревен, сложенных вместе, и готовых вспыхнуть от малейшей искры.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: CrystallPunk/Structures/Decoration/bonfire.rsi
+    layers:
+      - state: bonfire
+  - type: Construction
+    graph: CPBonfire
+    node: CPBonfire
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.08,-0.35,0.15,0.25"
+        mask:
+        - TabletopMachineMask
+        layer:
+        - Impassable
+        - MidImpassable
+        - LowImpassable
+        hard: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 80
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTypeTrigger
+          damageType: Heat
+          damage: 50
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+  - type: CPFlammableAmbientSound
+  - type: AmbientSound
+    enabled: false
+    volume: -5
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/fireplace.ogg
+  - type: Appearance
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+  - type: Flammable
+    fireSpread: false
+    canResistFire: false
+    alwaysCombustible: true
+    canExtinguish: true
+    firestacksOnIgnite: 0.5
+    firestackFade: 0.3
+    firestackFadeOnIgnite: 0.3
+    firestackFadeFade: -0.2
+    damage:
+      types:
+        Heat: 0.01
+  - type: FireVisuals
+    sprite: CrystallPunk/Structures/Decoration/bonfire.rsi
+    normalState: burning
+  - type: ItemPlacer
+    maxEntities: 4
+    whitelist:
+      components:
+      - Temperature
+  - type: CPFlammableEntityHeater

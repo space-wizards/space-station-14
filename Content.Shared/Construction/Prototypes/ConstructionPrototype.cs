@@ -1,4 +1,4 @@
-﻿using Content.Shared.Construction.Conditions;
+using Content.Shared.Construction.Conditions;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -97,6 +97,12 @@ public sealed partial class ConstructionPrototype : IPrototype
 
     public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
     public IReadOnlyList<SpriteSpecifier> Layers => _layers ?? new List<SpriteSpecifier> { Icon };
+
+    /// <summary>
+    /// allows you to display to players only the recipes needed for the project
+    /// </summary>
+    [DataField]
+    public bool CrystallPunkAllowed = false;
 }
 
 public enum ConstructionType

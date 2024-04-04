@@ -136,5 +136,13 @@ Entries:
   id: 18
   time: '2024-03-29T05:03:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26500
+- author: Simyon
+  changes:
+  - message: The aghost command now accepts a optional username argument to aghost
+      other people.
+    type: Tweak
+  id: 19
+  time: '2024-03-31T02:05:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26546
 Name: Admin
 Order: 1

@@ -1,0 +1,42 @@
+- type: entity
+  parent: BaseItem
+  id: BaseKey
+  abstract: true
+  name: ключ
+  description: Небольшая заковыристая железяка, открывающая определенные замки. Не отдавайте кому попало!
+  components: 
+  - type: Tag
+    tags:
+    - CPKey
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: CrystallPunk/Objects/keys.rsi
+  - type: CPKey
+    autoGenerateShape: Debug
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_CP14/Items/key_drop.ogg
+      params:
+        variation: 0.05
+
+- type: entity
+  parent: BaseItem
+  id: BaseLockpick
+  name: отмычка
+  description: Воровской инструмент, при должном умении и сноровке позволяющий взламывать любые замки.
+  components:
+  - type: Sprite
+    sprite: CrystallPunk/Objects/keys.rsi
+    state: lockpick
+  - type: CPLockpick
+
+- type: entity
+  parent: BaseKey
+  id: KeyTavern
+  name: ключ от таверны
+  components:
+  - type: Sprite
+    state: key1
+  - type: CPKey
+    autoGenerateShape: Tavern

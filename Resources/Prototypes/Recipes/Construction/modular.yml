@@ -10,16 +10,16 @@
     sprite: Objects/Weapons/Grenades/modular.rsi
     state: complete
   objectType: Item
-#
-#- type: construction
-#  name: modular mine
-#  id: ModularMineRecipe
-#  graph: ModularMineGraph
-#  startNode: start
-#  targetNode: mine
-#  category: construction-category-weapons
-#  description: Construct a landmine using a payload.
-#  icon:
-#    sprite: Objects/Misc/landmine.rsi
-#    state: landmine
-#  objectType: Item
+
+- type: construction
+  name: modular mine
+  id: ModularMineRecipe
+  graph: ModularMineGraph
+  startNode: start
+  targetNode: mine
+  category: construction-category-weapons
+  description: Construct a landmine using a payload.
+  icon:
+    sprite: Objects/Misc/landmine.rsi
+    state: landmine
+  objectType: Item

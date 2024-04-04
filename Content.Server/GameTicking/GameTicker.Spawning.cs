@@ -154,10 +154,6 @@ namespace Content.Server.GameTicking
                 return;
             }
 
-            // Automatically de-admin players who are joining.
-            if (_cfg.GetCVar(CCVars.AdminDeadminOnJoin) && _adminManager.IsAdmin(player))
-                _adminManager.DeAdmin(player);
-
             // We raise this event to allow other systems to handle spawning this player themselves. (e.g. late-join wizard, etc)
             var bev = new PlayerBeforeSpawnEvent(player, character, jobId, lateJoin, station);
             RaiseLocalEvent(bev);

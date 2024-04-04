@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: CPTable
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: CPTableWooden
+          steps:
+            - material: WoodPlank
+              amount: 3
+              doAfter: 2
+              
+    - node: CPTableWooden
+      entity: CPTableWooden

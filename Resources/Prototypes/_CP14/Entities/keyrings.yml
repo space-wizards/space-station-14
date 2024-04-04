@@ -1,0 +1,41 @@
+- type: entity
+  parent: BaseItem
+  id: BaseKeyRing
+  suffix: Пустое
+  name: кольцо для ключей
+  description: Позволяет комфортно хранить большое количество ключей в одном месте.
+  components:
+  - type: CPKeyRing
+  - type: Sprite
+    sprite: CrystallPunk/Objects/keys.rsi
+    layers:
+    - state: keyring
+    - state: ring-0
+      map: ["enum.StorageFillLayers.Fill"]
+  - type: Appearance
+  - type: StorageFillVisualizer
+    maxFillLevels: 4
+    fillBaseName: ring
+  - type: Storage
+    grid:
+    - 0,0,5,0
+    maxItemSize: Small
+    whitelist:
+      tags:
+        - CPKey
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+
+- type: entity
+  parent: BaseKeyRing
+  id: KeyRingInnkeeper
+  suffix: Трактирщик
+  components:
+  - type: StorageFill
+    contents:
+    - id: KeyTavern
