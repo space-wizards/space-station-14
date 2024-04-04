@@ -4,7 +4,5 @@
   markingCategory: Tail
   speciesRestriction: [ CPTiefling ]
   sprites:
-    - sprite: Mobs/Customization/reptilian_parts.rsi
-      state: tail_smooth_primary
-    - sprite: Mobs/Customization/reptilian_parts.rsi
-      state: tail_smooth_secondary
+    - sprite: Mobs/Customization/cat_parts.rsi
+      state: tail_cat
