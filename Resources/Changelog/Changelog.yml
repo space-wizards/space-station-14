@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Agoichi
-  changes:
-  - message: Detective cabinet now have security holoprojector in interests of investigation
-    type: Tweak
-  - message: Security lockers have chance to spawn security holoprojector (0.5)
-    type: Tweak
-  id: 5798
-  time: '2024-01-27T02:29:40.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24582
 - author: TheShuEd
   changes:
   - message: Flesh and Rock anomalies have been reworked to place entities more dynamically
@@ -3810,3 +3801,11 @@
   id: 6297
   time: '2024-04-04T05:28:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26505
+- author: Beck Thompson
+  changes:
+  - message: Items thrown at disposals now have to be insertable to display the miss
+      message.
+    type: Fix
+  id: 6298
+  time: '2024-04-04T06:25:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26716
