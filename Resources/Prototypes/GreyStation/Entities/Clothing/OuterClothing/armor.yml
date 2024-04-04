@@ -31,3 +31,42 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ClothingOuterArmorJinRoh
+  name: panzer armored suit
+  description: A suit of semi-flexible polycarbonate body armor with heavy padding to protect against melee attacks. Perfect for fighting delinquents around the station.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/OuterClothing/Armor/jinroh.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/OuterClothing/Armor/jinroh.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.35
+        Slash: 0.35
+        Piercing: 0.65
+        Heat: 0.85
+        Caustic: 0.85
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: GroupExamine
+  - type: ClothingSpeedModifier
+    walkModifier: 0.6
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
+
+- type: entity
+  parent: ClothingOuterArmorJinRoh
+  id: ClothingOuterArmorJinRohSuper
+  name: panzer armored suit
+  suffix: "reflective"
+  description: A suit of semi-flexible polycarbonate body armor with heavy padding to protect against melee attacks. Perfect for fighting delinquents around the station.
+  components:
+  - type: Reflect
+    reflectProb: 1
+  - type: ClothingSpeedModifier
+    walkModifier: 0.2
+    sprintModifier: 0.3
