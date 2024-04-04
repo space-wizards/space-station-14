@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Vending machines can now be repaired with a welder.
-    type: Tweak
-  id: 5804
-  time: '2024-01-27T12:12:53.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24603
 - author: graevy
   changes:
   - message: Added hallway screen prototypes and comms console text broadcasts.
@@ -3806,3 +3799,11 @@
   id: 6303
   time: '2024-04-04T08:39:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26706
+- author: ZeroDayDaemon
+  changes:
+  - message: Lowered the number of ducks in the duck crate and reduced the price of
+      it.
+    type: Tweak
+  id: 6304
+  time: '2024-04-04T19:30:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26729
