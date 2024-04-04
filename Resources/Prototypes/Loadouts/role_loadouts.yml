@@ -34,6 +34,16 @@
 
 # Science
 - type: roleLoadout
+  id: JobResearchDirector
+  groups:
+  - ResearchDirectorHead
+  - ResearchDirectorNeck
+  - ResearchDirectorJumpsuit
+  - ResearchDirectorBackpack
+  - ResearchDirectorOuterClothing
+  - Trinkets
+
+- type: roleLoadout
   id: JobScientist
   groups:
   - ScientistHead
@@ -42,6 +52,13 @@
   - ScientistBackpack
   - ScientistOuterClothing
   - ScientistPDA
+  - Trinkets
+
+- type: roleLoadout
+  id: JobResearchAssistant
+  groups:
+  - ResearchAssistantJumpsuit
+  - ScientistBackpack
   - Trinkets
 
 # Security

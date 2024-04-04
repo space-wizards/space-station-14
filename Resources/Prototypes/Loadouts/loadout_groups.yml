@@ -106,6 +106,42 @@
   - AtmosphericTechnicianDuffel
 
 # Science
+- type: loadoutGroup
+  id: ResearchDirectorHead
+  name: loadout-group-research-director-head
+  minLimit: 0
+  loadouts:
+  - ResearchDirectorBeret
+
+- type: loadoutGroup
+  id: ResearchDirectorNeck
+  name: loadout-group-research-director-neck
+  minLimit: 0
+  loadouts:
+  - ResearchDirectorMantle
+  - ResearchDirectorCloak
+
+- type: loadoutGroup
+  id: ResearchDirectorJumpsuit
+  name: loadout-group-research-director-jumpsuit
+  loadouts:
+  - ResearchDirectorJumpsuit
+  - ResearchDirectorJumpskirt
+
+- type: loadoutGroup
+  id: ResearchDirectorBackpack
+  name: loadout-group-research-director-backpack
+  loadouts:
+  - ResearchDirectorBackpack
+  - ResearchDirectorSatchel
+  - ResearchDirectorDuffel
+
+- type: loadoutGroup
+  id: ResearchDirectorOuterClothing
+  name: loadout-group-research-director-outerclothing
+  minLimit: 0
+  loadouts:
+  - ResearchDirectorLabCoat
 
 - type: loadoutGroup
   id: ScientistHead
@@ -156,6 +192,13 @@
   loadouts:
   - ScientistPDA
   - SeniorResearcherPDA
+
+- type: loadoutGroup
+  id: ResearchAssistantJumpsuit
+  name: loadout-group-research-assistant-jumpsuit
+  loadouts:
+  - WhiteJumpsuit
+  - WhiteJumpskirt
 
 # Security
 - type: loadoutGroup
