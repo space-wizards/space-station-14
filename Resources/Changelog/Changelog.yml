@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Flesh and Rock anomalies have been reworked to place entities more dynamically
-      when spawning.
-    type: Tweak
-  id: 5799
-  time: '2024-01-27T02:52:07.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24449
-- author: PJB3005
-  changes:
-  - message: PACMAN-type portable generators now show power statistics for the network
-      they're connected to.
-    type: Add
-  - message: JRPACMAN has been buffed from 5 kW to 8 kW.
-    type: Tweak
-  id: 5800
-  time: '2024-01-27T02:53:44.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24604
 - author: Blackern5000
   changes:
   - message: Shotgun slugs can now be printed in the security techfab.
@@ -3809,3 +3791,17 @@
   id: 6298
   time: '2024-04-04T06:25:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26716
+- author: Tayrtahn
+  changes:
+  - message: Some devices may have broken wiring at the start of each round.
+    type: Add
+  id: 6299
+  time: '2024-04-04T06:28:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26695
+- author: lzk228
+  changes:
+  - message: Turning off thrusters and gyroscopes now stop consume power.
+    type: Fix
+  id: 6300
+  time: '2024-04-04T06:28:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26690
