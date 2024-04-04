@@ -70,7 +70,6 @@
     clothingVisuals:
       mask:
       - state: off-equipped-MASK
-      - state: equipped-mask-unshaded
   - type: ToggleableLightVisuals # Eventually make it so the helmet has built-in night vision that's always on.
     spriteLayer: light
     clothingVisuals:
