@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Medical.Blood.Components;
 
@@ -13,8 +14,11 @@ namespace Content.Shared.Medical.Blood.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class BloodstreamComponent : Component
 {
-    [DataField, AutoNetworkedField]
-    public TimeSpan NextUpdate = new TimeSpan();
+    /// <summary>
+    ///     The next time that reagents will be metabolized.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextUpdate;
 
     [DataField, AutoNetworkedField]
     public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1.0f);
