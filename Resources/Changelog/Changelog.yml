@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: icekot8
-  changes:
-  - message: Correct display of syndicate jaws of life in hand
-    type: Add
-  id: 5797
-  time: '2024-01-27T02:27:14.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24583
 - author: Agoichi
   changes:
   - message: Detective cabinet now have security holoprojector in interests of investigation
@@ -3810,3 +3803,10 @@
   id: 6296
   time: '2024-04-03T13:41:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26686
+- author: Aserovich
+  changes:
+  - message: New lobby art!
+    type: Add
+  id: 6297
+  time: '2024-04-04T05:28:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26505
