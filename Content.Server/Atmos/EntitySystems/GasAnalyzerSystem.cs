@@ -93,7 +93,7 @@ namespace Content.Server.Atmos.EntitySystems
             else
                 component.LastPosition = null;
             component.Enabled = true;
-            Dirty(component);
+            Dirty(uid, component);
             UpdateAppearance(uid, component);
             if (!HasComp<ActiveGasAnalyzerComponent>(uid))
                 AddComp<ActiveGasAnalyzerComponent>(uid);
@@ -122,7 +122,7 @@ namespace Content.Server.Atmos.EntitySystems
                 _userInterface.TryClose(uid, GasAnalyzerUiKey.Key, actor.PlayerSession);
 
             component.Enabled = false;
-            Dirty(component);
+            Dirty(uid, component);
             UpdateAppearance(uid, component);
             RemCompDeferred<ActiveGasAnalyzerComponent>(uid);
         }
@@ -269,13 +269,13 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var gas = _atmo.GetGas(i);
 
-                if (mixture?.Moles[i] <= UIMinMoles)
+                if (mixture?[i] <= UIMinMoles)
                     continue;
 
                 if (mixture != null)
                 {
                     var gasName = Loc.GetString(gas.Name);
-                    gases.Add(new GasEntry(gasName, mixture.Moles[i], gas.Color));
+                    gases.Add(new GasEntry(gasName, mixture[i], gas.Color));
                 }
             }
 

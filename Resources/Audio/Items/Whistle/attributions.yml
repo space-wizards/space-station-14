@@ -1,4 +1,4 @@
-- files: 
+- files:
   - "whistle_1.ogg"
   - "whistle_2.ogg"
   - "whistle_3.ogg"
@@ -9,3 +9,11 @@
   license: "CC0-1.0"
   copyright: "User strongbot on freesound.org. Modified by Fahasor on github"
   source: "https://freesound.org/people/strongbot/sounds/568995/"
+
+- files:
+  - "trench_whistle_1.ogg"
+  - "trench_whistle_2.ogg"
+  - "trench_whistle_3.ogg"
+  license: "CC0-1.0"
+  copyright: "Deleted user on freesound.org."
+  source: "https://freesound.org/people/deleted_user_2104797/sounds/324539/"

@@ -7,8 +7,17 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book0
-      map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: paper
+    - state: cover_base
+      color: "#332d27"
+      map: [ "cover" ]
+    - state: decor_wingette
+      color: "#453f3a"
+      map: [ "decor" ]
+    - state: icon_text
+      map: [ "icon" ]
+    - state: overlay_null
+      map: [ "overlay" ]
   - type: Paper
     contentSize: 12000
   - type: ActivatableUI
@@ -35,7 +44,15 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book0 # placeholder(?). if only we have a better sprite that fits this.
+    - state: paper
+    - state: cover_base
+      color: "#0a2a6b"
+    - state: decor_wingette
+      color: "#082561"
+    - state: icon_text 
+      color: gold
+    - state: icon_planet
+      color: "#42b6f5"
   - type: Tag
     tags:
     - Book
@@ -53,7 +70,15 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book7
+    - state: paper
+    - state: cover_base
+      color: black
+    - state: decor_wingette
+      color: "#bbbbbb"
+    - state: icon_glow
+      color: red
+    - state: icon_corner
+      color: red
   - type: Tag
     tags:
     - Book
@@ -71,7 +96,12 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_bar
+    - state: paper
+    - state: cover_base
+      color: "#004848"
+    - state: decor_wingette
+      color: "#006666"
+    - state: icon_bar
   - type: Tag
     tags:
     - Book
@@ -89,7 +119,11 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_cooking
+    - state: paper
+    - state: cover_base
+      color: "#e22541"
+    - state: decor_wingette
+    - state: icon_apple
   - type: Tag
     tags:
     - Book
@@ -107,7 +141,14 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_hydroponics_pod_people
+    - state: paper
+    - state: cover_base
+      color: "#0e5a24"
+    - state: decor_wingette
+      color: "#2fa151"
+    - state: icon_cabbage
+    - state: icon_corner
+      color: gold
   - type: Tag
     tags:
     - Book
@@ -125,7 +166,14 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_engineering
+    - state: paper
+    - state: cover_base
+      color: "#6c4718"
+    - state: decor_wingette
+      color: "#b5913c"
+    - state: icon_wrench
+    - state: icon_corner
+      color: gold
   - type: Tag
     tags:
     - Book
@@ -143,7 +191,12 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_science
+    - state: paper
+    - state: cover_base
+      color: "#542485"
+    - state: decor_wingette_circle
+      color: "#be69f0"
+    - state: icon_dna
   - type: Tag
     tags:
     - Book
@@ -161,7 +214,12 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_security
+    - state: paper
+    - state: cover_base
+      color: "#ab1515"
+    - state: decor_wingette
+      color: "#e05334"
+    - state: icon_stunbaton
   - type: Tag
     tags:
     - Book
@@ -184,7 +242,11 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book0 # no janitorial book sprite so this is a placeholder
+    - state: paper
+    - state: cover_base
+      color: "#550c82"
+    - state: decor_wingette
+    - state: icon_bucket
   - type: Tag
     tags:
     - Book
@@ -202,7 +264,15 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book0 # no salvage book sprite so this is a placeholder
+    - state: paper
+    - state: cover_base
+      color: "#52320b"
+    - state: decor_wingette
+      color: "#e69a3e"
+    - state: icon_glow
+    - state: icon_diamond
+    - state: icon_text
+      color: "#fcdf74"
   - type: Tag
     tags:
     - Book
@@ -220,7 +290,13 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_medical
+    - state: paper
+    - state: cover_base
+      color: "#cccccc"
+    - state: decor_wingette
+      color: "#f7f7f7"
+    - state: icon_medical
+      color: "#58abcc"
   - type: Tag
     tags:
     - Book
@@ -238,7 +314,15 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_engineering
+    - state: paper
+    - state: cover_old
+      color: "#6c4718"
+    - state: decor_wingette
+      color: "#b5913c"
+    - state: icon_glow
+      color: red
+    - state: icon_wrench
+    - state: overlay_blood
   - type: Tag
     tags:
     - Book
@@ -256,7 +340,12 @@
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     layers:
-    - state: book_chemistry
+    - state: paper
+    - state: cover_base
+      color: "#2a7b74"
+    - state: decor_wingette
+      color: "#2a7b74"
+    - state: icon_chemical
   - type: Tag
     tags:
     - Book
@@ -268,67 +357,120 @@
 - type: entity
   parent: BookBase
   id: BookRandom
-  suffix: random
+  suffix: random visual
+  description: Each book is unique! What is hidden in this one?
   components:
+  - type: RandomMetadata
+    nameSegments: 
+    - book_hint_appearance
+    - book_type
   - type: RandomSprite
     available:
-      - enum.DamageStateVisualLayers.Base:
-          book0: ""
-          book1: ""
-          book2: ""
-          book3: ""
-          book4: ""
-          book5: ""
-          book6: ""
-          book7: ""
-          book8: ""
+      - cover:
+          cover_base: Sixteen
+          cover_old: Sixteen
+          cover_strong: Sixteen
+        decor:
+          decor_wingette: Sixteen
+          decor_wingette_circle: Sixteen
+          decor_bottom: Sixteen
+          decor_middle: Sixteen
+          decor_spine: Sixteen
+          decor_diagonal: Sixteen
+          decor_vertical_middle: Sixteen
+          icon_corner: Sixteen
+          icon_mount: ""
+        icon:
+          icon_biohazard: Sixteen
+          icon_borg: ""
+          icon_banana: ""
+          icon_glow: Sixteen
+          icon_hacking: ""
+          icon_law: Sixteen
+          icon_magnifier: ""
+          icon_nuclear: ""
+          icon_time: Sixteen
+          icon_aurora: Sixteen
+          icon_briefcase: ""
+          icon_eye: ""
+          icon_letter_N: ""
+          icon_letter_P: ""
+          icon_lightning: ""
+          icon_planet: ""
+          icon_possum: ""
+          icon_question: Sixteen
+          icon_scmmd: ""
+          icon_stars: Sixteen
+          icon_stars2: Sixteen
+          icon_temple: Sixteen
+          icon_tree: ""
+          icon_pentagramm: Sixteen
+          icon_fish: ""
+          icon_origami: ""
+          icon_skull: ""
+          icon_text: ""
+          icon_text2: ""
+          icon_text3: "" 
+        overlay:
+          overlay_blood: ""
+          overlay_dirt: Sixteen
+          detail_bookmark: Sixteen
+          detail_rivets: Sixteen
+          overlay_null: ""
 
 - type: entity
-  parent: BookBase
-  id: BookEscalation
-  name: Robert's Rules of Escalation
-  description: The book is stained with blood. It seems to have been used more as a weapon than reading material.
+  parent: BookRandom
+  id: BookRandomStory
+  suffix: random visual, random story
   components:
-    - type: Sprite
-      sprite: Objects/Misc/books.rsi
-      layers:
-        - state: book2
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 6
-    - type: Paper
-      content: book-text-escalation
-
-- type: entity
-  parent: BookBase
-  id: BookEscalationSecurity
-  name: "Robert's Rules of Escalation: Security Edition"
-  description: The book is stained with blood. It seems to have been used more as a weapon than reading material.
-  components:
-    - type: Sprite
-      sprite: Objects/Misc/books.rsi
-      layers:
-        - state: book2
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 6
-    - type: Paper
-      content: book-text-escalation-security
-
+  - type: PaperRandomStory
+    storySegments:
+    - "This is a "
+    - book_genre
+    - " about a "
+    - book_character_trait
+    - " "
+    - book_character
+    - " and "
+    - book_character_trait
+    - " "
+    - book_character
+    - ". Due to "
+    - book_event
+    - ", they "
+    - book_action_trait
+    - " "
+    - book_action
+    - " "
+    - book_character
+    - " "
+    - book_location
+    - ". \n\n"
+    - book_story_element
+    - " is "
+    - book_story_element_trait
+    - "."
+    storySeparator: ""
+    
 - type: entity
   parent: BookBase
   id: BookAtmosDistro
   name: "Newton's Guide to Atmos: The Distro"
   description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/books.rsi
-      layers:
-        - state: book5
-    - type: Paper
-      content: book-text-atmos-distro
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#366ed6"
+    - state: decor_wingette
+      color: "#2739b0"
+    - state: icon_atmos
+    - state: icon_corner
+      color: gold
+  - type: Paper
+    content: book-text-atmos-distro
 
 - type: entity
   parent: BookBase
@@ -336,12 +478,19 @@
   name: "Newton's Guide to Atmos: Waste"
   description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/books.rsi
-      layers:
-        - state: book5
-    - type: Paper
-      content: book-text-atmos-waste
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#db233f"
+    - state: decor_wingette
+      color: "#ab0730"
+    - state: icon_atmos
+    - state: icon_corner
+      color: gold
+  - type: Paper
+    content: book-text-atmos-waste
 
 - type: entity
   parent: BookBase
@@ -349,12 +498,19 @@
   name: "Newton's Guide to Atmos: Air Alarms"
   description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/books.rsi
-      layers:
-        - state: book5
-    - type: Paper
-      content: book-text-atmos-alarms
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#bfb328"
+    - state: decor_wingette
+      color: "#9c7c14"
+    - state: icon_atmos
+    - state: icon_corner
+      color: gold
+  - type: Paper
+    content: book-text-atmos-alarms
 
 - type: entity
   parent: BookBase
@@ -362,9 +518,16 @@
   name: "Newton's Guide to Atmos: Vents and More"
   description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/books.rsi
-      layers:
-        - state: book5
-    - type: Paper
-      content: book-text-atmos-vents
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#3ec78e"
+    - state: decor_wingette
+      color: "#28a15a"
+    - state: icon_atmos
+    - state: icon_corner
+      color: gold
+  - type: Paper
+    content: book-text-atmos-vents

@@ -91,6 +91,11 @@
   copyright: "Created by Discord handle derflerp"
   source: "https://discord.com/channels/310555209753690112/536955542913024015/1162982443645665371"
 
+- files: ["unanchored.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Discord handle pigeonpeas, Soundcloud handle pigeonbeans"
+  source: "https://soundcloud.com/pigeonbeans/unanchored"
+
 - files: ["spookyspace1.ogg,
           spookyspace2.ogg"]
   license: "CC0-1.0"

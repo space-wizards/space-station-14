@@ -383,16 +383,19 @@
       - nutribrick
   - type: Item
     size: Small
+  - type: Tag
+    tags:
+      - ReptilianFood
   - type: Sprite
     state: nutribrick-open
   - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 25
+          Quantity: 20
 
 - type: entity
   id: FoodSnackMREBrownie
@@ -608,5 +611,18 @@
   name: MRE wrapper
   description: A general purpose wrapper for a variety of military food goods.
   components:
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 40
+  - type: Tag
+    tags:
+    - ClothMade
+    - Trash
   - type: Sprite
     state: mre-wrapper
