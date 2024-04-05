@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Vending machines can now be repaired with a welder.
-    type: Tweak
-  id: 5804
-  time: '2024-01-27T12:12:53.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24603
-- author: graevy
-  changes:
-  - message: Added hallway screen prototypes and comms console text broadcasts.
-    type: Add
-  id: 5805
-  time: '2024-01-27T13:51:25.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24189
-- author: mirrorcult
-  changes:
-  - message: Lights are now shaded with the same color that they glow.
-    type: Tweak
-  id: 5806
-  time: '2024-01-27T17:43:45.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24612
 - author: Boaz1111
   changes:
   - message: The PKA shuttle gun now breaks rocks in one hit.
@@ -3806,3 +3785,29 @@
   id: 6303
   time: '2024-04-04T08:39:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26706
+- author: ZeroDayDaemon
+  changes:
+  - message: Lowered the number of ducks in the duck crate and reduced the price of
+      it.
+    type: Tweak
+  id: 6304
+  time: '2024-04-04T19:30:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26729
+- author: PrPleGoo
+  changes:
+  - message: The medical HUD's brightness now scales with lighting again.
+    type: Tweak
+  - message: Most HUD icon's brightness now scale with lighting.
+    type: Tweak
+  id: 6305
+  time: '2024-04-04T23:05:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26726
+- author: Daemon
+  changes:
+  - message: Practice projectiles have been given standardized minimal damage.
+    type: Tweak
+  - message: The practice laser gun now works with shooting targets.
+    type: Tweak
+  id: 6306
+  time: '2024-04-05T03:15:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26731

@@ -526,6 +526,10 @@
       behaviors:
       - !type:GibBehavior { }
 
+
+# Note that the mallard duck is actually a male drake mallard, with the brown duck being the female variant of the same species, however ss14 lacks sex specific textures
+# The white duck is more akin to a pekin or call duck.
+
 - type: entity
   name: mallard duck #Quack
   parent: SimpleMobBase
