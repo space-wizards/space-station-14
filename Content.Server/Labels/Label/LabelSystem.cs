@@ -50,7 +50,7 @@ namespace Content.Server.Labels
         /// <param name="text">intended label text (null to remove)</param>
         /// <param name="label">label component for resolve</param>
         /// <param name="metadata">metadata component for resolve</param>
-        public void Label(EntityUid uid, string? text, MetaDataComponent? metadata = null, LabelComponent? label = null)
+        public override void Label(EntityUid uid, string? text, MetaDataComponent? metadata = null, LabelComponent? label = null)
         {
             if (!Resolve(uid, ref metadata))
                 return;

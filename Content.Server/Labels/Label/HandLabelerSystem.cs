@@ -1,15 +1,10 @@
-using Content.Server.UserInterface;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
-using Content.Shared.Interaction;
 using Content.Shared.Labels;
 using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Server.Labels;
 
@@ -29,12 +24,26 @@ public sealed class HandLabelerSystem : SharedHandLabelerSystem
         base.Initialize();
     }
 
-    private void DirtyUI(EntityUid uid,
-        HandLabelerComponent? handLabeler = null)
+    /// <summary>
+    /// Inform the client of the result of label application
+    /// </summary>
+    protected override void messageClient(EntityUid targetItem, EntityUid user, LabelAction action)
+    {
+        RaiseNetworkEvent(
+                new HandLabelerMessage(
+                    GetNetEntity(targetItem),
+                    GetNetEntity(user),
+                    (LabelAction) action
+                ),
+                user);
+    }
+
+    protected override void DirtyUI(EntityUid uid, HandLabelerComponent? handLabeler = null)
     {
         if (!Resolve(uid, ref handLabeler))
             return;
 
+        Dirty(uid,handLabeler);
         _userInterfaceSystem.TrySetUiState(uid, HandLabelerUiKey.Key,
             new HandLabelerBoundUserInterfaceState(handLabeler.AssignedLabel));
     }
