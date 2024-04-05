@@ -37,8 +37,7 @@
 - type: lobbyBackground
   id: THRONGLER
   background: /Textures/LobbyScreens/THRONGLER.webp
-
+  
 - type: lobbyBackground
-  id: THRONGLER
+  id: mime
   background: /Textures/LobbyScreens/mime.webp
-

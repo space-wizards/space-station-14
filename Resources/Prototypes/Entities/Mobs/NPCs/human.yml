@@ -48,7 +48,7 @@
       task: SimpleHumanoidHostileCompound
 
 - type: entity
-  name: syndicate footsoldier 
+  name: syndicate footsoldier
   parent: BaseMobHuman
   id: MobSyndicateFootsoldier
   components:
@@ -75,7 +75,7 @@
   save: false # mobs are currently not saveable.
   id: SalvageHumanCorpse
   name: unidentified corpse
-  description: I think he's dead.
+  description: I think they're dead.
   components:
   - type: RandomHumanoidAppearance
     randomizeName: false
