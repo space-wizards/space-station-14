@@ -75,12 +75,12 @@ public partial struct ReagentId : IEquatable<ReagentId>
 
     public string ToString(FixedPoint2 quantity)
     {
-        return $"{Prototype}:{quantity}:" + Data?.ToString() ?? $"{Prototype}:{quantity}";
+        return $"{Prototype}:{quantity}";
     }
 
     public override string ToString()
     {
-        return $"{Prototype}: " + Data?.ToString() ?? Prototype;
+        return $"{Prototype}";
     }
 
     public static bool operator ==(ReagentId left, ReagentId right)
