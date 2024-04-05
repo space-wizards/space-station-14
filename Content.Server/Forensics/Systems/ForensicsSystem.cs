@@ -44,7 +44,7 @@ namespace Content.Server.Forensics
         private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> ent, ref SolutionContainerChangedEvent ev)
         {
             var soln = GetSolutionsDNA(ev.Solution);
-            if (soln.Count > 0 && HasComp<SpillableComponent>(ent.Owner))
+            if (soln.Count > 0)
             {
                 var comp = EnsureComp<ForensicsComponent>(ent.Owner);
                 foreach (string dna in soln)
