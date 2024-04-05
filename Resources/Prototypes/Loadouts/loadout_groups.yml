@@ -6,6 +6,286 @@
   loadouts:
   - PlushieLizard
 
+# Civilian
+- type: loadoutGroup
+  id: PassengerJumpsuit
+  name: loadout-group-passenger-jumpsuit
+  loadouts:
+  - GreyJumpsuit
+  - GreyJumpskirt
+
+- type: loadoutGroup
+  id: PassengerFace
+  name: loadout-group-passenger-mask
+  minLimit: 0
+  loadouts:
+  - PassengerFace
+
+- type: loadoutGroup
+  id: PassengerGloves
+  name: loadout-group-passenger-gloves
+  minLimit: 0
+  loadouts:
+  - PassengerGloves
+
+- type: loadoutGroup
+  id: CommonBackpack
+  name: loadout-group-passenger-backpack
+  loadouts:
+  - CommonBackpack
+  - CommonSatchel
+  - CommonDuffel
+
+- type: loadoutGroup
+  id: BartenderHead
+  name: loadout-group-bartender-head
+  minLimit: 0
+  loadouts:
+  - BartenderHead
+  - BartenderBowler
+
+- type: loadoutGroup
+  id: BartenderJumpsuit
+  name: loadout-group-bartender-jumpsuit
+  loadouts:
+  - BartenderJumpsuit
+  - BartenderJumpskirt
+  - BartenderJumpsuitPurple
+
+- type: loadoutGroup
+  id: BartenderOuterClothing
+  name: loadout-group-bartender-outerclothing
+  minLimit: 0
+  loadouts:
+  - BartenderVest
+  - BartenderApron
+
+- type: loadoutGroup
+  id: ChefHead
+  name: loadout-group-chef-head
+  minLimit: 0
+  loadouts:
+  - ChefHead
+
+- type: loadoutGroup
+  id: ChefMask
+  name: loadout-group-chef-mask
+  minLimit: 0
+  loadouts:
+  - ChefMask
+
+- type: loadoutGroup
+  id: ChefJumpsuit
+  name: loadout-group-chef-jumpsuit
+  loadouts:
+  - ChefJumpsuit
+  - ChefJumpskirt
+
+- type: loadoutGroup
+  id: ChefOuterClothing
+  name: loadout-group-chef-outerclothing
+  minLimit: 0
+  loadouts:
+  - ChefApron
+  - ChefJacket
+
+- type: loadoutGroup
+  id: LibrarianJumpsuit
+  name: loadout-group-librarian-jumpsuit
+  loadouts:
+  - LibrarianJumpsuit
+  - LibrarianJumpskirt
+  - CuratorJumpsuit
+  - CuratorJumpskirt
+
+- type: loadoutGroup
+  id: LawyerJumpsuit
+  name: loadout-group-lawyer-jumpsuit
+  loadouts:
+  - LawyerJumpsuit
+  - LawyerJumpskirt
+  - LawyerJumpsuitBlue
+  - LawyerJumpskirtBlue
+  - LawyerJumpsuitPurple
+  - LawyerJumpskirtPurple
+  - LawyerJumpsuitRed
+  - LawyerJumpskirtRed
+  - LawyerJumpsuitGood
+  - LawyerJumpskirtGood
+
+- type: loadoutGroup
+  id: LawyerNeck
+  name: loadout-group-lawyer-neck
+  minLimit: 0
+  loadouts:
+  - LawyerNeck
+
+- type: loadoutGroup
+  id: ChaplainHead
+  name: loadout-group-chaplain-head
+  minLimit: 0
+  loadouts:
+  - ChaplainHead
+  - ChaplainPlagueHat
+  - ChaplainWitchHat
+  - ChaplainWitchHatAlt
+
+- type: loadoutGroup
+  id: ChaplainMask
+  name: loadout-group-chaplain-mask
+  minLimit: 0
+  loadouts:
+  - ChaplainMask
+
+- type: loadoutGroup
+  id: ChaplainJumpsuit
+  name: loadout-group-chaplain-jumpsuit
+  loadouts:
+  - ChaplainJumpsuit
+  - ChaplainJumpskirt
+  - ChaplainRobesLight
+  - ChaplainRobesDark
+
+- type: loadoutGroup
+  id: ChaplainBackpack
+  name: loadout-group-chaplain-backpack
+  loadouts:
+  - ChaplainBackpack
+  - ChaplainSatchel
+  - ChaplainDuffel
+
+- type: loadoutGroup
+  id: ChaplainOuterClothing
+  name: loadout-group-chaplain-outerclothing
+  minLimit: 0
+  loadouts:
+  - ChaplainPlagueSuit
+  - ChaplainNunRobe
+  - ChaplainBlackHoodie
+  - ChaplainHoodie
+
+- type: loadoutGroup
+  id: ChaplainNeck
+  name: loadout-group-chaplain-neck
+  minLimit: 0
+  loadouts:
+  - ChaplainNeck
+
+- type: loadoutGroup
+  id: JanitorHead
+  name: loadout-group-janitor-head
+  minLimit: 0
+  loadouts:
+  - JanitorHead
+
+- type: loadoutGroup
+  id: JanitorJumpsuit
+  name: loadout-group-janitor-jumpsuit
+  loadouts:
+  - JanitorJumpsuit
+  - JanitorJumpskirt
+
+- type: loadoutGroup
+  id: BotanistHead
+  name: loadout-group-botanist-head
+  minLimit: 0
+  loadouts:
+  - BotanistHead
+  - BotanistBandana
+
+- type: loadoutGroup
+  id: BotanistJumpsuit
+  name: loadout-group-botanist-jumpsuit
+  loadouts:
+  - BotanistJumpsuit
+  - BotanistJumpskirt
+  - BotanistOveralls
+
+- type: loadoutGroup
+  id: BotanistBackpack
+  name: loadout-group-botanist-backpack
+  loadouts:
+  - BotanistBackpack
+  - BotanistSatchel
+  - BotanistDuffel
+
+- type: loadoutGroup
+  id: BotanistOuterClothing
+  name: loadout-group-botanist-outerclothing
+  minLimit: 0
+  loadouts:
+  - BotanistApron
+
+- type: loadoutGroup
+  id: ClownHead
+  name: loadout-group-clown-head
+  minLimit: 0
+  loadouts:
+  - JesterHat
+
+- type: loadoutGroup
+  id: ClownJumpsuit
+  name: loadout-group-clown-jumpsuit
+  loadouts:
+  - ClownSuit
+  - JesterSuit
+
+- type: loadoutGroup
+  id: ClownBackpack
+  name: loadout-group-clown-backpack
+  loadouts:
+  - ClownBackpack
+  - ClownSatchel
+  - ClownDuffel
+
+- type: loadoutGroup
+  id: ClownShoes
+  name: loadout-group-clown-shoes
+  loadouts:
+  - ClownShoes
+  - JesterShoes
+
+- type: loadoutGroup
+  id: MimeHead
+  name: loadout-group-mime-head
+  minLimit: 0
+  loadouts:
+  - MimeHead
+  - MimeFrenchBeret
+  - MimeCap
+
+- type: loadoutGroup
+  id: MimeMask
+  name: loadout-group-mime-mask
+  minLimit: 0
+  loadouts:
+  - MimeMask
+  - MimeMaskSad
+  - MimeMaskScared
+
+- type: loadoutGroup
+  id: MimeJumpsuit
+  name: loadout-group-mime-jumpsuit
+  loadouts:
+  - MimeJumpsuit
+  - MimeJumpskirt
+
+- type: loadoutGroup
+  id: MimeBackpack
+  name: loadout-group-mime-backpack
+  loadouts:
+  - MimeBackpack
+  - MimeSatchel
+  - MimeDuffel
+
+- type: loadoutGroup
+  id: MusicianBackpack
+  name: loadout-group-musician-backpack
+  loadouts:
+  - MusicianBackpack
+  - MusicianSatchel
+  - MusicianDuffel
+
 # Cargo
 - type: loadoutGroup
   id: QuartermasterHead
