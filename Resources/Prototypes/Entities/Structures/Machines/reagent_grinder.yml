@@ -98,3 +98,7 @@
     containers:
     - machine_parts
     - machine_board
+  - type: DrainableSolution
+    solution: output
+  - type: ExaminableSolution
+    solution: output

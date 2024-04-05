@@ -24,6 +24,12 @@ public sealed partial class SignalTimerComponent : Component
     public string Label = string.Empty;
 
     /// <summary>
+    ///     Default max width of a label (how many letters can this render?)
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public int MaxLength = 5;
+
+    /// <summary>
     ///     The port that gets signaled when the timer triggers.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]

@@ -791,6 +791,23 @@
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
+  id: DrinkCoconutWaterJug
+  name: coconut water jug
+  description: It's on the inside of the coconut that counts.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: CoconutWater
+          Quantity: 300
+  - type: Drink
+  - type: Label
+    currentLabel: coconut water
+
+- type: entity
+  parent: DrinkBottlePlasticBaseFull
   id: DrinkCoffeeJug
   name: coffee jug
   description: wake up juice, of the heated kind.
