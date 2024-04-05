@@ -22,7 +22,7 @@
     - type: RCDDeconstructable
       cost: 4
       delay: 6
-      fx: EffectRCDDeconstruct6  
+      fx: EffectRCDDeconstruct6
     - type: Destructible
       thresholds:
       - trigger:
@@ -87,9 +87,6 @@
     - type: Appearance
     - type: WiresVisuals
     - type: WiresPanel
-    - type: Wires
-      boardName: wires-board-name-firelock
-      layoutId: Firelock
     - type: UserInterface
       interfaces:
         - key: enum.WiresUiKey.Key
