@@ -54,7 +54,7 @@
   - type: SpawnOnTrigger
     proto: DragonsBreathFire
   - type: TimedDespawn
-    delay: 5
+    lifetime: 5
 
 # ExplodeOnTrigger for repeating trigger kinda shitty so spawn entity for each explosion
 - type: entity
