@@ -1,8 +1,20 @@
-namespace Content.Shared.Labels.EntitySystems;
+using Content.Client.Popups;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Labels.Components;
+using Content.Shared.Labels.EntitySystems;
+using Robust.Shared.Timing;
 
-public abstract class SharedHandLabelerSystem : EntitySystem {
+namespace Content.Client.Labels;
 
-    public override void Initialize(){
+public sealed partial class HandLabelerSystem : SharedHandLabelerSystem
+{
+    [Dependency] private readonly LabelSystem _labelSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+
+    public override void Initialize()
+    {
         base.Initialize();
     }
 
@@ -24,4 +36,5 @@ public abstract class SharedHandLabelerSystem : EntitySystem {
         _labelSystem.Label(target, handLabeler.AssignedLabel);
         result = Loc.GetString("hand-labeler-successfully-applied");
     }
+
 }
