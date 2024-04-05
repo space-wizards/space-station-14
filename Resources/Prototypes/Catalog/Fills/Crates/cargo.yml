@@ -192,9 +192,6 @@
     - id: ClothingOuterArmorReflective
       prob: 0.01
       orGroup: Clothes
-    - id: ClothingUniformJumpskirtSyndieFormalDress
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingNeckCloakNanotrasen
       prob: 0.01
       orGroup: Clothes
