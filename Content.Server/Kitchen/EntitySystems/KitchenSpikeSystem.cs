@@ -156,7 +156,7 @@ namespace Content.Server.Kitchen.EntitySystems
             EnsureComp<ForensicsComponent>(uid, out var forensics);
             forensics.DNAs.Add(component.VictimDNA);
 
-            _metaData.SetEntityName(uid, Name(victimUid));
+            _metaData.SetEntityName(uid, Loc.GetString("comp-kitchen-spike-meat-name", ("name", Name(uid)), ("victim", Name(victimUid))));
 
             UpdateAppearance(uid, null, component);
 
