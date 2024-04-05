@@ -41,19 +41,6 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/eva_syndicate.rsi
 
-#Cosmonaut Helmet
-- type: entity
-  parent: ClothingHeadEVAHelmetBase
-  id: ClothingHeadHelmetCosmonaut
-  name: cosmonaut helmet
-  description: Ancient design, but advanced manufacturing. #Description here originally started with " A deceptively well armored space helmet." Potentially had armor values in SS13 that weren't brought over?
-  components:
-  - type: BreathMask
-  - type: Sprite
-    sprite: Clothing/Head/Helmets/cosmonaut.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Helmets/cosmonaut.rsi
-
 #Paramedic Void Helmet
 - type: entity
   parent: ClothingHeadEVAHelmetBase

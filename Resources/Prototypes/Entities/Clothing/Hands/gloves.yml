@@ -176,35 +176,6 @@
 
 - type: entity
   parent: ClothingHandsBase
-  id: ClothingHandsGlovesPowerglove
-  name: power gloves
-  description: Now I'm playin' with power! Wait... they're turned off. #Use "Now I'm playin' with power! BAM!" for when they're turned on
-  components:
-  - type: Sprite
-    sprite: Clothing/Hands/Gloves/powerglove.rsi
-  - type: Clothing
-    sprite: Clothing/Hands/Gloves/powerglove.rsi
-  - type: Fiber
-    fiberMaterial: fibers-nanomachines
-  - type: FingerprintMask
-
-- type: entity
-  parent: ClothingHandsButcherable
-  id: ClothingHandsGlovesRobohands
-  name: robohands gloves
-  description: Beep boop borp!
-  components:
-  - type: Sprite
-    sprite: Clothing/Hands/Gloves/robohands.rsi
-  - type: Clothing
-    sprite: Clothing/Hands/Gloves/robohands.rsi
-  - type: Fiber
-    fiberMaterial: fibers-leather
-    fiberColor: fibers-black
-  - type: FingerprintMask
-
-- type: entity
-  parent: ClothingHandsBase
   id: ClothingHandsGlovesSpaceNinja
   name: space ninja gloves
   description: These black nano-enhanced gloves insulate from electricity and provide fire resistance.

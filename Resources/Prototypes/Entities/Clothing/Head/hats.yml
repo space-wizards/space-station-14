@@ -146,17 +146,6 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatBeretSeniorPhysician
-  name: physician beret
-  description: Donning the colours of medical and chemistry, physicians are the pride of this department!
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hats/beret_physician.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hats/beret_physician.rsi
-
-- type: entity
-  parent: ClothingHeadBase
   id: ClothingHeadHatBeretBrigmedic
   name: brigmedical beret
   description: White beret, looks like a cream pie on the head.
@@ -734,17 +723,6 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatPirateTricord
-  name: pirate hat
-  description: 'Yo ho ho and a bottle of rum!'
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hats/piratetricord.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hats/piratetricord.rsi
-
-- type: entity
-  parent: ClothingHeadBase
   id: ClothingHeadHatWatermelon
   name: watermelon helmet
   description: A carelessly cut half of a watermelon, gutted from the inside, to be worn as a helmet. It can soften the blow to the head.
@@ -768,17 +746,6 @@
     sprite: Clothing/Head/Hats/syndiecap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/syndiecap.rsi
-
-- type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHatSyndieMAA
-  name: master at arms hat
-  description: Master at arms hat, looks intimidating, I doubt that you will like to communicate with its owner...
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hats/syndiecap_maa.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hats/syndiecap_maa.rsi
 
 - type: entity
   parent: ClothingHeadBase

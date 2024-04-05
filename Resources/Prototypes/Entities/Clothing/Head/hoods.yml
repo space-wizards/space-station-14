@@ -457,17 +457,6 @@
 
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
-  id: ClothingHeadHatHoodWinterSyndie
-  noSpawn: true
-  name: syndicate coat hood
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hoods/Coat/hoodsyndicate.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hoods/Coat/hoodsyndicate.rsi
-
-- type: entity
-  parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterWarden
   noSpawn: true
   name: warden's coat hood
