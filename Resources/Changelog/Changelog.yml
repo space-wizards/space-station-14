@@ -1,57 +1,6 @@
 ﻿Entries:
 - author: mirrorcult
   changes:
-  - message: Lights are now shaded with the same color that they glow.
-    type: Tweak
-  id: 5806
-  time: '2024-01-27T17:43:45.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24612
-- author: Boaz1111
-  changes:
-  - message: The PKA shuttle gun now breaks rocks in one hit.
-    type: Tweak
-  id: 5807
-  time: '2024-01-27T17:47:35.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24627
-- author: FungiFellow
-  changes:
-  - message: Ion Storms are twice as likely to occur.
-    type: Tweak
-  id: 5808
-  time: '2024-01-27T23:14:09.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24633
-- author: PJB3005
-  changes:
-  - message: Security barriers need 5 seconds to lock and unlock.
-    type: Tweak
-  id: 5809
-  time: '2024-01-28T00:28:02.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24637
-- author: themias
-  changes:
-  - message: Added cowboy hats and boots to autodrobe, secdrobe, and maints
-    type: Add
-  - message: Added cowboy accent
-    type: Add
-  id: 5810
-  time: '2024-01-28T03:23:16.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24299
-- author: shampunj
-  changes:
-  - message: A new game preset! Can only be selected by admins. All at once.
-    type: Add
-  id: 5811
-  time: '2024-01-28T10:41:36.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23171
-- author: Doctor-Cpu
-  changes:
-  - message: 3kliksphilips name.
-    type: Fix
-  id: 5812
-  time: '2024-01-28T10:46:32.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24657
-- author: mirrorcult
-  changes:
   - message: Speech sounds are now quieter
     type: Tweak
   id: 5813
@@ -3809,3 +3758,60 @@
   id: 6305
   time: '2024-04-04T23:05:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26726
+- author: Daemon
+  changes:
+  - message: Practice projectiles have been given standardized minimal damage.
+    type: Tweak
+  - message: The practice laser gun now works with shooting targets.
+    type: Tweak
+  id: 6306
+  time: '2024-04-05T03:15:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26731
+- author: Daemon
+  changes:
+  - message: Shooting targets can now have their popup type changed with a left click
+      to show total damage, damage of a single hit, both, or just a notice that it
+      was hit.
+    type: Tweak
+  id: 6307
+  time: '2024-04-05T07:19:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26734
+- author: Vermidia
+  changes:
+  - message: Baseball bats now require a knife to craft
+    type: Tweak
+  id: 6308
+  time: '2024-04-05T15:41:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26742
+- author: deltanedas
+  changes:
+  - message: Making fultons now requires cloth and they are faster to make.
+    type: Tweak
+  id: 6309
+  time: '2024-04-05T15:42:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26747
+- author: superjj18
+  changes:
+  - message: Broadcasting works again!
+    type: Fix
+  id: 6310
+  time: '2024-04-05T17:29:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26750
+- author: Golinth
+  changes:
+  - message: Fixed mindshield icons being glow in the dark
+    type: Fix
+  id: 6311
+  time: '2024-04-05T20:35:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26754
+- author: Blackern5000
+  changes:
+  - message: Added sap
+    type: Add
+  - message: Added syrup, it can be made by boiling sap.
+    type: Add
+  - message: Dionae now bleed sap instead of water
+    type: Tweak
+  id: 6312
+  time: '2024-04-05T21:06:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25748
