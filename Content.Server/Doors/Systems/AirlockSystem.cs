@@ -31,7 +31,8 @@ public sealed class AirlockSystem : SharedAirlockSystem
     {
         base.OnBeforeDoorOpened(uid, airlock, args);
 
-        _forensicsSystem.ApplyEvidence(args.User.Value, uid);
+        if (args.User.HasValue)
+            _forensicsSystem.ApplyEvidence(args.User.Value, uid);
     }
 
     private void OnAirlockInit(EntityUid uid, AirlockComponent component, ComponentInit args)

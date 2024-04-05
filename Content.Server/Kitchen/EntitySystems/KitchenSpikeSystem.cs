@@ -216,10 +216,9 @@ namespace Content.Server.Kitchen.EntitySystems
 
             _appearance.SetData(uid, KitchenSpikeVisuals.Status, component.PrototypesToSpawn?.Count > 0 ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty, appearance);
 
-            if (component.PrototypesToSpawn?.Count == 0)
-            {
-                _metaData.SetEntityName(uid, Prototype(uid).Name);
-            }
+            var proto = Prototype(uid);
+            if (component.PrototypesToSpawn?.Count == 0 && proto != null)
+                _metaData.SetEntityName(uid, proto.Name);
         }
 
         private bool Spikeable(EntityUid uid, EntityUid userUid, EntityUid victimUid,
