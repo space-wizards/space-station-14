@@ -108,4 +108,4 @@
 - type: startingGear
   id: HeadofSecurityWinterCoat
   equipment:
-    back: ClothingOuterWinterHoS
+    outerClothing: ClothingOuterWinterHoS

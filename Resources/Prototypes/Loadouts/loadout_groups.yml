@@ -6,6 +6,72 @@
   loadouts:
   - PlushieLizard
 
+# Command
+- type: loadoutGroup
+  id: CaptainHead
+  name: loadout-group-captain-head
+  minLimit: 0
+  loadouts:
+  - CaptainHead
+  - CaptainCap
+
+- type: loadoutGroup
+  id: CaptainJumpsuit
+  name: loadout-group-captain-jumpsuit
+  loadouts:
+  - CaptainJumpsuit
+  - CaptainJumpskirt
+  - CaptainFormalSuit
+  - CaptainFormalSkirt
+
+- type: loadoutGroup
+  id: CaptainNeck
+  name: loadout-group-captain-neck
+  minLimit: 0
+  loadouts:
+  - CaptainCloak
+  - CaptainCloakFormal
+  - CaptainMantle
+
+- type: loadoutGroup
+  id: CaptainBackpack
+  name: loadout-group-captain-backpack
+  loadouts:
+  - CaptainBackpack
+  - CaptainSatchel
+  - CaptainDuffel
+
+- type: loadoutGroup
+  id: HoPHead
+  name: loadout-group-hop-head
+  minLimit: 0
+  loadouts:
+  - HoPHead
+
+- type: loadoutGroup
+  id: HoPJumpsuit
+  name: loadout-group-hop-jumpsuit
+  loadouts:
+  - HoPJumpsuit
+  - HoPJumpskirt
+
+- type: loadoutGroup
+  id: HoPNeck
+  name: loadout-group-hop-neck
+  minLimit: 0
+  loadouts:
+  - HoPCloak
+  - HoPMantle
+
+- type: loadoutGroup
+  id: HoPBackpack
+  name: loadout-group-hop-backpack
+  loadouts:
+  - HoPBackpack
+  - HoPSatchel
+  - HoPDuffel
+  - HoPBackpackIan
+
 # Civilian
 - type: loadoutGroup
   id: PassengerJumpsuit

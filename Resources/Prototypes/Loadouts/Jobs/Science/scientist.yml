@@ -169,7 +169,7 @@
 - type: startingGear
   id: SeniorResearcherLabCoat
   equipment:
-    back: ClothingOuterCoatLabSeniorResearcher
+    outerClothing: ClothingOuterCoatLabSeniorResearcher
 
 # ID
 - type: loadout

@@ -1,3 +1,22 @@
+# Command
+- type: roleLoadout
+  id: JobCaptain
+  groups:
+  - CaptainHead
+  - CaptainNeck
+  - CaptainJumpsuit
+  - CaptainBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobHeadOfPersonnel
+  groups:
+  - HoPHead
+  - HoPNeck
+  - HoPJumpsuit
+  - HoPBackpack
+  - Trinkets
+
 # Civilian
 - type: roleLoadout
   id: JobPassenger
