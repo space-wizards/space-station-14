@@ -49,7 +49,7 @@
   - type: IgnitionSource
     temperature: 1000
     ignited: true
-  - type: TriggerOnRepeat
+  - type: RepeatingTrigger
     delay: 0.5 # line of fire as well as if it hits something
   - type: SpawnOnTrigger
     proto: DragonsBreathFire
