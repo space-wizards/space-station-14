@@ -1,0 +1,27 @@
+# Back
+- type: loadout
+  id: SalvageSpecialistBackpack
+  equipment: SalvageSpecialistBackpack
+
+- type: startingGear
+  id: SalvageSpecialistBackpack
+  equipment:
+    back: ClothingBackpackSalvageFilled
+
+- type: loadout
+  id: SalvageSpecialistSatchel
+  equipment: SalvageSpecialistSatchel
+
+- type: startingGear
+  id: SalvageSpecialistSatchel
+  equipment:
+    back: ClothingBackpackSatchelSalvageFilled
+
+- type: loadout
+  id: SalvageSpecialistDuffel
+  equipment: SalvageSpecialistDuffel
+
+- type: startingGear
+  id: SalvageSpecialistDuffel
+  equipment:
+    back: ClothingBackpackDuffelSalvageFilled

@@ -22,6 +22,7 @@ using Content.Server.Worldgen.Tools;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Kitchen;
+using Content.Shared.Players.PlayTimeTracking;
 
 namespace Content.Server.IoC
 {
@@ -29,35 +30,38 @@ namespace Content.Server.IoC
     {
         public static void Register()
         {
-            IoCManager.Register<IChatManager, ChatManager>();
-            IoCManager.Register<IChatSanitizationManager, ChatSanitizationManager>();
-            IoCManager.Register<IMoMMILink, MoMMILink>();
-            IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
-            IoCManager.Register<IServerDbManager, ServerDbManager>();
-            IoCManager.Register<RecipeManager, RecipeManager>();
-            IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
-            IoCManager.Register<IConnectionManager, ConnectionManager>();
-            IoCManager.Register<ServerUpdateManager>();
-            IoCManager.Register<IAdminManager, AdminManager>();
-            IoCManager.Register<ISharedAdminManager, AdminManager>();
-            IoCManager.Register<EuiManager, EuiManager>();
-            IoCManager.Register<IVoteManager, VoteManager>();
-            IoCManager.Register<IPlayerLocator, PlayerLocator>();
-            IoCManager.Register<IAfkManager, AfkManager>();
-            IoCManager.Register<IGameMapManager, GameMapManager>();
-            IoCManager.Register<RulesManager, RulesManager>();
-            IoCManager.Register<IBanManager, BanManager>();
-            IoCManager.Register<ContentNetworkResourceManager>();
-            IoCManager.Register<IAdminNotesManager, AdminNotesManager>();
-            IoCManager.Register<GhostKickManager>();
-            IoCManager.Register<ISharedAdminLogManager, AdminLogManager>();
-            IoCManager.Register<IAdminLogManager, AdminLogManager>();
-            IoCManager.Register<PlayTimeTrackingManager>();
-            IoCManager.Register<UserDbDataManager>();
-            IoCManager.Register<ServerInfoManager>();
-            IoCManager.Register<PoissonDiskSampler>();
-            IoCManager.Register<DiscordWebhook>();
-            IoCManager.Register<ServerDbEntryManager>();
+            var collection = IoCManager.Instance!;
+
+            collection.Register<IChatManager, ChatManager>();
+            collection.Register<IChatSanitizationManager, ChatSanitizationManager>();
+            collection.Register<IMoMMILink, MoMMILink>();
+            collection.Register<IServerPreferencesManager, ServerPreferencesManager>();
+            collection.Register<IServerDbManager, ServerDbManager>();
+            collection.Register<RecipeManager, RecipeManager>();
+            collection.Register<INodeGroupFactory, NodeGroupFactory>();
+            collection.Register<IConnectionManager, ConnectionManager>();
+            collection.Register<ServerUpdateManager>();
+            collection.Register<IAdminManager, AdminManager>();
+            collection.Register<ISharedAdminManager, AdminManager>();
+            collection.Register<EuiManager, EuiManager>();
+            collection.Register<IVoteManager, VoteManager>();
+            collection.Register<IPlayerLocator, PlayerLocator>();
+            collection.Register<IAfkManager, AfkManager>();
+            collection.Register<IGameMapManager, GameMapManager>();
+            collection.Register<RulesManager, RulesManager>();
+            collection.Register<IBanManager, BanManager>();
+            collection.Register<ContentNetworkResourceManager>();
+            collection.Register<IAdminNotesManager, AdminNotesManager>();
+            collection.Register<GhostKickManager>();
+            collection.Register<ISharedAdminLogManager, AdminLogManager>();
+            collection.Register<IAdminLogManager, AdminLogManager>();
+            collection.Register<PlayTimeTrackingManager>();
+            collection.Register<UserDbDataManager>();
+            collection.Register<ServerInfoManager>();
+            collection.Register<PoissonDiskSampler>();
+            collection.Register<DiscordWebhook>();
+            collection.Register<ServerDbEntryManager>();
+            collection.Register<ISharedPlaytimeManager, PlayTimeTrackingManager>();
         }
     }
 }

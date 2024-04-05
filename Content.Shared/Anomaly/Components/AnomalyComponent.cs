@@ -95,13 +95,13 @@ public sealed partial class AnomalyComponent : Component
     /// The minimum interval between pulses.
     /// </summary>
     [DataField]
-    public TimeSpan MinPulseLength = TimeSpan.FromMinutes(1);
+    public TimeSpan MinPulseLength = TimeSpan.FromMinutes(2);
 
     /// <summary>
     /// The maximum interval between pulses.
     /// </summary>
     [DataField]
-    public TimeSpan MaxPulseLength = TimeSpan.FromMinutes(2);
+    public TimeSpan MaxPulseLength = TimeSpan.FromMinutes(4);
 
     /// <summary>
     /// A percentage by which the length of a pulse might vary.
