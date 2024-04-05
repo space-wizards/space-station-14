@@ -33,7 +33,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitPirate
     back: ClothingBackpackPirateFilled
-    head: ClothingHeadHatPirateTricord
+    head: ClothingHeadHatPirate
     shoes: ClothingShoesBootsLaceup
     id: PiratePDA
     belt: ClothingBeltUtility
