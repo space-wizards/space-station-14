@@ -25,6 +25,29 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Spawners;
+using Content.Server.Emp;
+using System.Diagnostics;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
+using Content.Server.NPC.HTN;
+using Content.Shared.NPC.Systems;
+using Content.Shared.Eye.Blinding.Systems;
+using System.Threading.Tasks;
+using Content.Shared.Eye.Blinding.Components;
+using Content.Shared.Explosion.Components;
+using System.Threading;
+using Content.Server.Explosion.EntitySystems;
+using System.Transactions;
+using Content.Server.Fluids.EntitySystems;
+using Content.Server.Mind;
+using Content.Shared.StatusEffect;
+using Content.Server.Polymorph.Systems;
+using Content.Server.Chemistry.ReagentEffects;
+using SQLitePCL;
+using Content.Server;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Magic;
 
@@ -48,10 +71,28 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly EmpSystem _emp = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFactionSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly BlindableSystem _blindnessSystem = default!;
+    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+    [Dependency] private readonly SmokeSystem _smoke = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly PolymorphSystem _polymorph = default!;
+    [Dependency] private readonly DamageableSystem _damaging = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
+
+
 
     public override void Initialize()
     {
         base.Initialize();
+
+
 
         SubscribeLocalEvent<SpellbookComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<SpellbookComponent, UseInHandEvent>(OnUse);
@@ -64,6 +105,15 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
         SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
         SubscribeLocalEvent<ChangeComponentsSpellEvent>(OnChangeComponentsSpell);
+        SubscribeLocalEvent<EMPSpellEvent>(OnEMPSpell);
+        SubscribeLocalEvent<AnimateDeadSpellEvent>(OnAnimateDead);
+        SubscribeLocalEvent<BlindSpellEvent>(OnBlindSpell);
+        SubscribeLocalEvent<SmokeSpellEvent>(OnSmokeSpell);
+        SubscribeLocalEvent<MindswapSpellEvent>(OnMindswapSpell);
+        SubscribeLocalEvent<SwapSpellEvent>(OnSwapSpell);
+        SubscribeLocalEvent<ClownifySpellEvent>(OnClownifySpell);
+        SubscribeLocalEvent<DevolveSpellEvent>(OnDevolveSpell);
+        SubscribeLocalEvent<HealSpellEvent>(OnHealSpell);
     }
 
     private void OnDoAfter(EntityUid uid, SpellbookComponent component, DoAfterEvent args)
@@ -87,6 +137,10 @@ public sealed class MagicSystem : EntitySystem
         }
 
         component.SpellActions.Clear();
+        if (component.DeleteAfterLearn)
+        {
+            _entityManager.DeleteEntity(uid);
+        }
     }
 
     private void OnInit(EntityUid uid, SpellbookComponent component, MapInitEvent args)
@@ -104,6 +158,7 @@ public sealed class MagicSystem : EntitySystem
             component.Spells.Add(spell.Value);
         }
     }
+
 
     private void OnUse(EntityUid uid, SpellbookComponent component, UseInHandEvent args)
     {
@@ -152,6 +207,24 @@ public sealed class MagicSystem : EntitySystem
 
         Speak(args);
         args.Handled = true;
+    }
+
+    private void OnEMPSpell(EMPSpellEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+        Speak(args);
+
+        //Get the position of the player
+        var transform = Transform(args.Performer);
+        var coords = transform.MapPosition;
+
+        _audio.PlayPvs(args.EmpSound, args.Performer, AudioParams.Default.WithVolume(args.EmpVolume));
+
+        _emp.EmpPulse(coords, 4f, 50000, 10f);
+
     }
 
     private void OnProjectileSpell(ProjectileSpellEvent ev)
@@ -211,54 +284,54 @@ public sealed class MagicSystem : EntitySystem
         switch (data)
         {
             case TargetCasterPos:
-                return new List<EntityCoordinates>(1) {casterXform.Coordinates};
+                return new List<EntityCoordinates>(1) { casterXform.Coordinates };
             case TargetInFront:
-            {
-                // This is shit but you get the idea.
-                var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
-
-                if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
-                    return new List<EntityCoordinates>();
-
-                if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))
-                    return new List<EntityCoordinates>();
-
-                var tileIndex = tileReference.Value.GridIndices;
-                var coords = mapGrid.GridTileToLocal(tileIndex);
-                EntityCoordinates coordsPlus;
-                EntityCoordinates coordsMinus;
-
-                var dir = casterXform.LocalRotation.GetCardinalDir();
-                switch (dir)
                 {
-                    case Direction.North:
-                    case Direction.South:
-                    {
-                        coordsPlus = mapGrid.GridTileToLocal(tileIndex + (1, 0));
-                        coordsMinus = mapGrid.GridTileToLocal(tileIndex + (-1, 0));
-                        return new List<EntityCoordinates>(3)
-                        {
-                            coords,
-                            coordsPlus,
-                            coordsMinus,
-                        };
-                    }
-                    case Direction.East:
-                    case Direction.West:
-                    {
-                        coordsPlus = mapGrid.GridTileToLocal(tileIndex + (0, 1));
-                        coordsMinus = mapGrid.GridTileToLocal(tileIndex + (0, -1));
-                        return new List<EntityCoordinates>(3)
-                        {
-                            coords,
-                            coordsPlus,
-                            coordsMinus,
-                        };
-                    }
-                }
+                    // This is shit but you get the idea.
+                    var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
 
-                return new List<EntityCoordinates>();
-            }
+                    if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
+                        return new List<EntityCoordinates>();
+
+                    if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))
+                        return new List<EntityCoordinates>();
+
+                    var tileIndex = tileReference.Value.GridIndices;
+                    var coords = mapGrid.GridTileToLocal(tileIndex);
+                    EntityCoordinates coordsPlus;
+                    EntityCoordinates coordsMinus;
+
+                    var dir = casterXform.LocalRotation.GetCardinalDir();
+                    switch (dir)
+                    {
+                        case Direction.North:
+                        case Direction.South:
+                            {
+                                coordsPlus = mapGrid.GridTileToLocal(tileIndex + (1, 0));
+                                coordsMinus = mapGrid.GridTileToLocal(tileIndex + (-1, 0));
+                                return new List<EntityCoordinates>(3)
+                        {
+                            coords,
+                            coordsPlus,
+                            coordsMinus,
+                        };
+                            }
+                        case Direction.East:
+                        case Direction.West:
+                            {
+                                coordsPlus = mapGrid.GridTileToLocal(tileIndex + (0, 1));
+                                coordsMinus = mapGrid.GridTileToLocal(tileIndex + (0, -1));
+                                return new List<EntityCoordinates>(3)
+                        {
+                            coords,
+                            coordsPlus,
+                            coordsMinus,
+                        };
+                            }
+                    }
+
+                    return new List<EntityCoordinates>();
+                }
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -392,6 +465,183 @@ public sealed class MagicSystem : EntitySystem
                 comp.Lifetime = lifetime.Value;
             }
         }
+    }
+
+    private void OnAnimateDead(AnimateDeadSpellEvent args)
+    {
+        {
+            if (args.Handled)
+                return;
+
+            args.Handled = true;
+            Speak(args);
+
+            //Get the position of the player
+            var transform = Transform(args.Performer);
+            var coords = transform.Coordinates;
+
+            // _audio.PlayPvs(args.AnimateSound, args.Performer, AudioParams.Default.WithVolume(args.Anima));
+
+            //Look for doors and don't open them if they're already open.
+            _audio.PlayPvs(args.AnimateSound, args.Performer, AudioParams.Default.WithVolume(args.AnimateVolume));
+            foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))
+            {
+                if (!TryComp<MobStateComponent>(entity, out var mobState))
+                    continue;
+                if (_mobStateSystem.IsDead(entity))
+                {
+                    if (!TryComp<BodyComponent>(entity, out var body))
+                        return;
+                    _bodySystem.GibBody(entity, true, body);
+                    var mobtransform = Transform(entity);
+                    var mobcoords = mobtransform.MapPosition;
+                    var mob = Spawn("MobSkeletonAngry", mobcoords);
+                    _metaData.SetEntityName(mob, "angry skeleton");
+                    _metaData.SetEntityDescription(mob, "This skeleton is out for blood");
+                    _npcFactionSystem.AddFaction(mob, "SimpleHostile");
+                    _npcFactionSystem.RemoveFaction(mob, "NanoTrasen", false);
+                    _npcFactionSystem.IgnoreEntity(entity, args.Performer);
+                    var comp = _entityManager.AddComponent<HTNComponent>(mob);
+                    comp.RootTask = new HTNCompoundTask()
+                    {
+                        Task = "SimpleHostileCompound"
+                    };
+                }
+            }
+        }
+    }
+
+    private async void OnBlindSpell(BlindSpellEvent ev)
+    {
+        {
+            if (ev.Handled)
+                return;
+
+            ev.Handled = true;
+            Speak(ev);
+            var comp = Comp<BlindableComponent>(ev.Target);
+            var olddamage = comp.EyeDamage;
+            _blindnessSystem.AdjustEyeDamage(ev.Target, 9);
+            _blindnessSystem.UpdateIsBlind(ev.Target);
+            await Task.Delay(10000);
+            _blindnessSystem.AdjustEyeDamage(ev.Target, -(9 - olddamage));
+            _blindnessSystem.UpdateIsBlind(ev.Target);
+        }
+    }
+
+    private void OnSmokeSpell(SmokeSpellEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+        Speak(args);
+
+        //Get the position of the player
+        var transform = Transform(args.Performer);
+        if (!_mapManager.TryFindGridAt(transform.MapPosition, out _, out var grid))
+            return;
+        // var coords = transform.MapPosition;
+        var coords = grid.MapToGrid(transform.MapPosition);
+
+        _audio.PlayPvs(args.SmokeSound, args.Performer, AudioParams.Default.WithVolume(args.SmokeVolume));
+        var ent = Spawn("Smoke", coords.SnapToGrid());
+        _smoke.StartSmoke(ent, new(), 15, 40);
+    }
+
+    public void OnMindswapSpell(MindswapSpellEvent ev)
+    {
+        if (ev.Handled)
+            return;
+
+        ev.Handled = true;
+        Speak(ev);
+
+
+        _statusEffects.TryAddStatusEffect(ev.Performer, "KnockedDown", TimeSpan.FromSeconds(5), true);
+        _statusEffects.TryAddStatusEffect(ev.Target, "KnockedDown", TimeSpan.FromSeconds(5), true);
+        //Get the position of the player
+        if (!_mind.TryGetMind(ev.Performer, out var selfmindId, out var selfmind))
+            return;
+
+        _mind.ControlMob(ev.Performer, ev.Target);
+
+        if (!_mind.TryGetMind(ev.Target, out var targetmindId, out var targetmind))
+            return;
+
+       _mind.ControlMob(ev.Target, ev.Performer);
+       Console.WriteLine("mindswap lawd");
+
+    }
+
+    public void OnSwapSpell(SwapSpellEvent ev)
+    {
+        if (ev.Handled)
+            return;
+
+        ev.Handled = true;
+        Speak(ev);
+
+        var transform = Transform(ev.Performer);
+        var coords = transform.Coordinates;
+
+        var transformother = Transform(ev.Target);
+        var coordsother = transformother.Coordinates;
+
+        _transformSystem.SetCoordinates(ev.Performer, coordsother);
+        _transformSystem.SetCoordinates(ev.Target, coords);
+    }
+
+    public void OnClownifySpell(ClownifySpellEvent ev)
+    {
+        if (ev.Handled)
+            return;
+
+        ev.Handled = true;
+        Speak(ev);
+
+        _polymorph.PolymorphEntity(ev.Target, "ArtifactCluwne");
+    }
+
+    public void OnDevolveSpell(DevolveSpellEvent ev)
+    {
+        if (ev.Handled)
+            return;
+
+        ev.Handled = true;
+        Speak(ev);
+
+        _polymorph.PolymorphEntity(ev.Target, "ArtifactMonkey");
+    }
+
+    private void OnHealSpell(HealSpellEvent ev)
+    {
+        if (ev.Handled)
+            return;
+
+        ev.Handled = true;
+        Speak(ev);
+        var healBlunt = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Blunt"), -30);
+        var healSlash = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Slash"), -30);
+        var healPierce = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Piercing"), -30);
+        var healHeat = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Heat"), -30);
+        var healCold = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Cold"), -30);
+        var healPoison = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Poison"), -30);
+        var healRadiation = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Radiation"), -30);
+        var healAsphyxiation = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), -30);
+        var healBloodloss = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Bloodloss"), -30);
+        var healCell = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Cellular"), -30);
+        _damaging.TryChangeDamage(ev.Target, healBlunt);
+        _damaging.TryChangeDamage(ev.Target, healSlash);
+        _damaging.TryChangeDamage(ev.Target, healPierce);
+        _damaging.TryChangeDamage(ev.Target, healHeat);
+        _damaging.TryChangeDamage(ev.Target, healCold);
+        _damaging.TryChangeDamage(ev.Target, healPoison);
+        _damaging.TryChangeDamage(ev.Target, healRadiation);
+        _damaging.TryChangeDamage(ev.Target, healBloodloss);
+        _damaging.TryChangeDamage(ev.Target, healAsphyxiation);
+        _damaging.TryChangeDamage(ev.Target, healCell);
+        _bloodstream.TryModifyBleedAmount(ev.Target, -100);
     }
 
     #endregion

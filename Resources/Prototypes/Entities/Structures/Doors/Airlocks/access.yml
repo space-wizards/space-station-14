@@ -1188,6 +1188,26 @@
     containers:
       board: [ DoorElectronicsArmory ]
 
+- type: entity
+  parent: Airlock
+  id: AirlockWizardeLocked
+  suffix: Wizard, Locked
+  components:
+  - type: AccessReader
+    access: [["Wizard"]]
+  - type: Wires
+    layoutId: AirlockService
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockWizardGlassLocked
+  suffix: Wizard, Locked
+  components:
+  - type: AccessReader
+    access: [["Wizard"]]
+  - type: Wires
+    layoutId: AirlockService
+
 #Airtight hatch
 
 - type: entity

@@ -141,3 +141,32 @@
   - type: Construction
     graph: BananiumHorn
     node: bananiumHorn
+
+- type: entity
+  parent: BikeHorn
+  id: SyndieWarhorn
+  name: warhorn
+  description: Declare war in style.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/warhorn.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/warhorn.rsi
+    size: Small
+  - type: Clothing
+    sprite: Objects/Fun/warhorn.rsi
+    slots: [Belt]
+    quickEquip: false
+  - type: UseDelay
+    delay: 15
+  - type: EmitSoundOnUse
+    sound:
+      collection: WarHorn
+      params:
+        variation: 0
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: WarHorn
+      params:
+        variation: 0
