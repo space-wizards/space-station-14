@@ -1,8 +1,10 @@
 using Content.Server.DeviceLinking.Events;
+using Content.Server.Forensics;
 using Content.Server.Power.Components;
 using Content.Server.Wires;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Content.Shared.Wires;
 using Robust.Shared.Player;
@@ -12,6 +14,7 @@ namespace Content.Server.Doors.Systems;
 public sealed class AirlockSystem : SharedAirlockSystem
 {
     [Dependency] private readonly WiresSystem _wiresSystem = default!;
+    [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
 
     public override void Initialize()
     {
@@ -22,6 +25,13 @@ public sealed class AirlockSystem : SharedAirlockSystem
 
         SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new[] { typeof(DoorSystem) });
+    }
+
+    protected override void OnBeforeDoorOpened(EntityUid uid, AirlockComponent airlock, BeforeDoorOpenedEvent args)
+    {
+        base.OnBeforeDoorOpened(uid, airlock, args);
+
+        _forensicsSystem.ApplyEvidence(args.User.Value, uid);
     }
 
     private void OnAirlockInit(EntityUid uid, AirlockComponent component, ComponentInit args)

@@ -170,24 +170,6 @@ namespace Content.Server.Forensics
             return DNA;
         }
 
-        private void ApplyEvidence(EntityUid user, EntityUid target)
-        {
-            if (HasComp<IgnoresFingerprintsComponent>(target))
-                return;
-
-            var component = EnsureComp<ForensicsComponent>(target);
-            if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves))
-            {
-                if (TryComp<FiberComponent>(gloves, out var fiber) && !string.IsNullOrEmpty(fiber.FiberMaterial))
-                    component.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
-
-                if (HasComp<FingerprintMaskComponent>(gloves))
-                    return;
-            }
-            if (TryComp<FingerprintComponent>(user, out var fingerprint))
-                component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
-        }
-
         private void OnTransferDnaEvent(EntityUid uid, DnaComponent component, ref TransferDnaEvent args)
         {
             var recipientComp = EnsureComp<ForensicsComponent>(args.Recipient);
@@ -211,6 +193,29 @@ namespace Content.Server.Forensics
                 recipientComp.DNAs.Add(donorComp.DNA);
                 recipientComp.CanDnaBeCleaned = canDnaBeCleaned;
             }
+        }
+
+        /// <summary>
+        /// Apply evidence from one entity onto another - specifically fingerprints/fibers
+        /// </summary>
+        /// <param name="user">The entity applying the evidence</param>
+        /// <param name="target">The entity having evidence applied to</param>
+        public void ApplyEvidence(EntityUid user, EntityUid target)
+        {
+            if (HasComp<IgnoresFingerprintsComponent>(target))
+                return;
+
+            var component = EnsureComp<ForensicsComponent>(target);
+            if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves))
+            {
+                if (TryComp<FiberComponent>(gloves, out var fiber) && !string.IsNullOrEmpty(fiber.FiberMaterial))
+                    component.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
+
+                if (HasComp<FingerprintMaskComponent>(gloves))
+                    return;
+            }
+            if (TryComp<FingerprintComponent>(user, out var fingerprint))
+                component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
         }
 
         #endregion
