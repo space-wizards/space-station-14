@@ -6,7 +6,112 @@
   loadouts:
   - PlushieLizard
 
-# Engineer
+# Cargo
+- type: loadoutGroup
+  id: QuartermasterHead
+  name: loadout-group-quartermaster-head
+  minLimit: 0
+  loadouts:
+  - QuartermasterHead
+  - QuartermasterBeret
+
+- type: loadoutGroup
+  id: QuartermasterJumpsuit
+  name: loadout-group-quartermaster-jumpsuit
+  loadouts:
+  - QuartermasterJumpsuit
+  - QuartermasterJumpskirt
+  - QuartermasterTurtleneck
+  - QuartermasterTurtleneckSkirt
+  - QuartermasterFormalSuit
+
+- type: loadoutGroup
+  id: QuartermasterBackpack
+  name: loadout-group-quartermaster-backpack
+  loadouts:
+  - QuartermasterBackpack
+  - QuartermasterSatchel
+  - QuartermasterDuffel
+
+- type: loadoutGroup
+  id: QuartermasterNeck
+  name: loadout-group-quartermaster-neck
+  minLimit: 0
+  loadouts:
+  - QuartermasterCloak
+  - QuartermasterMantle
+
+- type: loadoutGroup
+  id: CargoTechnicianHead
+  name: loadout-group-cargo-technician-head
+  minLimit: 0
+  loadouts:
+  - CargoTechnicianHead
+
+- type: loadoutGroup
+  id: CargoTechnicianJumpsuit
+  name: loadout-group-cargo-technician-jumpsuit
+  loadouts:
+  - CargoTechnicianJumpsuit
+  - CargoTechnicianJumpskirt
+
+- type: loadoutGroup
+  id: CargoTechnicianBackpack
+  name: loadout-group-cargo-technician-backpack
+  loadouts:
+  - CargoTechnicianBackpack
+  - CargoTechnicianSatchel
+  - CargoTechnicianDuffel
+
+- type: loadoutGroup
+  id: SalvageSpecialistBackpack
+  name: loadout-group-salvage-specalist-backpack
+  loadouts:
+  - SalvageSpecialistBackpack
+  - SalvageSpecialistSatchel
+  - SalvageSpecialistDuffel
+
+# Engineering
+- type: loadoutGroup
+  id: ChiefEngineerHead
+  name: loadout-group-chief-engineer-head
+  minLimit: 0
+  loadouts:
+  - ChiefEngineerHead
+  - ChiefEngineerBeret
+
+- type: loadoutGroup
+  id: ChiefEngineerJumpsuit
+  name: loadout-group-chief-engineer-jumpsuit
+  loadouts:
+  - ChiefEngineerJumpsuit
+  - ChiefEngineerJumpskirt
+  - ChiefEngineerTurtleneck
+  - ChiefEngineerTurtleneckSkirt
+
+- type: loadoutGroup
+  id: ChiefEngineerBackpack
+  name: loadout-group-chief-engineer-backpack
+  loadouts:
+  - ChiefEngineerBackpack
+  - ChiefEngineerSatchel
+  - ChiefEngineerDuffel
+
+- type: loadoutGroup
+  id: ChiefEngineerNeck
+  name: loadout-group-chief-engineer-neck
+  minLimit: 0
+  loadouts:
+  - ChiefEngineerCloak
+  - ChiefEngineerMantle
+
+- type: loadoutGroup
+  id: TechnicalAssistantJumpsuit
+  name: loadout-group-technical-assistant-jumpsuit
+  loadouts:
+  - YellowJumpsuit
+  - YellowJumpskirt
+
 - type: loadoutGroup
   id: StationEngineerHead
   name: loadout-group-station-engineer-head
@@ -20,6 +125,7 @@
   loadouts:
   - StationEngineerJumpsuit
   - StationEngineerJumpskirt
+  - StationEngineerHazardsuit
   - SeniorEngineerJumpsuit
   - SeniorEngineerJumpskirt
 
@@ -48,7 +154,59 @@
   - StationEngineerPDA
   - SeniorEngineerPDA
 
+- type: loadoutGroup
+  id: AtmosphericTechnicianJumpsuit
+  name: loadout-group-atmospheric-technician-jumpsuit
+  loadouts:
+  - AtmosphericTechnicianJumpsuit
+  - AtmosphericTechnicianJumpskirt
+  - AtmosphericTechnicianJumpsuitCasual
+
+- type: loadoutGroup
+  id: AtmosphericTechnicianBackpack
+  name: loadout-group-atmospheric-technician-backpack
+  loadouts:
+  - AtmosphericTechnicianBackpack
+  - AtmosphericTechnicianSatchel
+  - AtmosphericTechnicianDuffel
+
 # Science
+- type: loadoutGroup
+  id: ResearchDirectorHead
+  name: loadout-group-research-director-head
+  minLimit: 0
+  loadouts:
+  - ResearchDirectorBeret
+
+- type: loadoutGroup
+  id: ResearchDirectorNeck
+  name: loadout-group-research-director-neck
+  minLimit: 0
+  loadouts:
+  - ResearchDirectorMantle
+  - ResearchDirectorCloak
+
+- type: loadoutGroup
+  id: ResearchDirectorJumpsuit
+  name: loadout-group-research-director-jumpsuit
+  loadouts:
+  - ResearchDirectorJumpsuit
+  - ResearchDirectorJumpskirt
+
+- type: loadoutGroup
+  id: ResearchDirectorBackpack
+  name: loadout-group-research-director-backpack
+  loadouts:
+  - ResearchDirectorBackpack
+  - ResearchDirectorSatchel
+  - ResearchDirectorDuffel
+
+- type: loadoutGroup
+  id: ResearchDirectorOuterClothing
+  name: loadout-group-research-director-outerclothing
+  minLimit: 0
+  loadouts:
+  - ResearchDirectorLabCoat
 
 - type: loadoutGroup
   id: ScientistHead
@@ -100,7 +258,72 @@
   - ScientistPDA
   - SeniorResearcherPDA
 
+- type: loadoutGroup
+  id: ResearchAssistantJumpsuit
+  name: loadout-group-research-assistant-jumpsuit
+  loadouts:
+  - WhiteJumpsuit
+  - WhiteJumpskirt
+
 # Security
+- type: loadoutGroup
+  id: HeadofSecurityHead
+  name: loadout-group-head-of-security-head
+  minLimit: 0
+  loadouts:
+  - HeadofSecurityHead
+  - HeadofSecurityBeret
+
+- type: loadoutGroup
+  id: HeadofSecurityJumpsuit
+  name: loadout-group-head-of-security-jumpsuit
+  loadouts:
+  - HeadofSecurityJumpsuit
+  - HeadofSecurityJumpskirt
+  - HeadofSecurityTurtleneck
+  - HeadofSecurityTurtleneckSkirt
+  - HeadofSecurityFormalSuit
+  - HeadofSecurityFormalSkirt
+
+- type: loadoutGroup
+  id: HeadofSecurityNeck
+  name: loadout-group-head-of-security-neck
+  minLimit: 0
+  loadouts:
+  - HeadofSecurityCloak
+  - HeadofSecurityMantle
+
+- type: loadoutGroup
+  id: HeadofSecurityOuterClothing
+  name: loadout-group-head-of-security-outerclothing
+  minLimit: 0
+  loadouts:
+  - HeadofSecurityCoat
+  - HeadofSecurityWinterCoat
+
+- type: loadoutGroup
+  id: WardenHead
+  name: loadout-group-warden-head
+  minLimit: 0
+  loadouts:
+  - WardenHead
+  - WardenBeret
+
+- type: loadoutGroup
+  id: WardenJumpsuit
+  name: loadout-group-warden-jumpsuit
+  loadouts:
+  - WardenJumpsuit
+  - WardenJumpskirt
+
+- type: loadoutGroup
+  id: DetectiveOuterClothing
+  name: loadout-group-warden-outerclothing
+  minLimit: 0
+  loadouts:
+  - WardenCoat
+  - WardenArmoredWinterCoat
+
 - type: loadoutGroup
   id: SecurityHead
   name: loadout-group-security-head
@@ -136,3 +359,197 @@
   loadouts:
   - SecurityPDA
   - SeniorOfficerPDA
+
+- type: loadoutGroup
+  id: DetectiveHead
+  name: loadout-group-detective-head
+  minLimit: 0
+  loadouts:
+  - DetectiveFedora
+  - DetectiveFedoraGrey
+
+- type: loadoutGroup
+  id: DetectiveNeck
+  name: loadout-group-detective-neck
+  minLimit: 0
+  loadouts:
+  - DetectiveTie
+
+- type: loadoutGroup
+  id: DetectiveJumpsuit
+  name: loadout-group-detective-jumpsuit
+  loadouts:
+  - DetectiveJumpsuit
+  - DetectiveJumpskirt
+  - NoirJumpsuit
+  - NoirJumpskirt
+
+- type: loadoutGroup
+  id: DetectiveBackpack
+  name: loadout-group-detective-backpack
+  loadouts:
+  - DetectiveBackpack
+  - DetectiveSatchel
+  - DetectiveDuffel
+
+- type: loadoutGroup
+  id: DetectiveOuterClothing
+  name: loadout-group-detective-outerclothing
+  minLimit: 0
+  loadouts:
+  - DetectiveArmorVest
+  - DetectiveCoat
+
+- type: loadoutGroup
+  id: SecurityCadetJumpsuit
+  name: loadout-group-security-cadet-jumpsuit
+  loadouts:
+  - RedJumpsuit
+  - RedJumpskirt
+
+# Medical
+- type: loadoutGroup
+  id: ChiefMedicalOfficerHead
+  name: loadout-group-chief-medical-officer-head
+  minLimit: 0
+  loadouts:
+  - ChiefMedicalOfficerBeret
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerJumpsuit
+  name: loadout-chief-medical-officer-jumpsuit
+  loadouts:
+  - ChiefMedicalOfficerJumpsuit
+  - ChiefMedicalOfficerJumpskirt
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerOuterClothing
+  name: loadout-group-chief-medical-officer-outerclothing
+  minLimit: 0
+  loadouts:
+  - RegularLabCoat
+  - ChiefMedicalOfficerLabCoat
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerBackpack
+  name: loadout-group-chief-medical-officer-backpack
+  loadouts:
+  - ChiefMedicalOfficerBackpack
+  - ChiefMedicalOfficerSatchel
+  - ChiefMedicalOfficerDuffel
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerNeck
+  name: loadout-group-chief-medical-officer-neck
+  minLimit: 0
+  loadouts:
+  - ChiefMedicalOfficerCloak
+  - ChiefMedicalOfficerMantle
+
+- type: loadoutGroup
+  id: MedicalDoctorHead
+  name: loadout-group-medical-doctor-head
+  minLimit: 0
+  loadouts:
+  - MedicalBeret
+  - SeniorPhysicianBeret
+  - BlueSurgeryCap
+  - GreenSurgeryCap
+  - PurpleSurgeryCap
+
+- type: loadoutGroup
+  id: MedicalDoctorJumpsuit
+  name: loadout-group-medical-doctor-jumpsuit
+  loadouts:
+  - MedicalDoctorJumpsuit
+  - MedicalDoctorJumpskirt
+  - SeniorPhysicianJumpsuit
+  - SeniorPhysicianJumpskirt
+  - MedicalBlueScrubs
+  - MedicalGreenScrubs
+  - MedicalPurpleScrubs
+
+- type: loadoutGroup
+  id: MedicalDoctorOuterClothing
+  name: loadout-group-medical-doctor-outerclothing
+  minLimit: 0
+  loadouts:
+  - RegularLabCoat
+  - SeniorPhysicianLabCoat
+
+- type: loadoutGroup
+  id: MedicalBackpack
+  name: loadout-group-medical-backpack
+  loadouts:
+  - MedicalDoctorBackpack
+  - MedicalDoctorSatchel
+  - MedicalDoctorDuffel
+  - SeniorPhysicianBackpack
+  - SeniorPhysicianSatchel
+  - SeniorPhysicianDuffel
+
+- type: loadoutGroup
+  id: MedicalDoctorPDA
+  name: loadout-group-medical-doctor-id
+  loadouts:
+  - MedicalDoctorPDA
+  - SeniorPhysicianPDA
+
+- type: loadoutGroup
+  id: MedicalInternJumpsuit
+  name: loadout-group-medical-intern-jumpsuit
+  loadouts:
+  - WhiteJumpsuit
+  - WhiteJumpskirt
+
+- type: loadoutGroup
+  id: ChemistJumpsuit
+  name: loadout-group-chemist-jumpsuit
+  loadouts:
+  - MedicalDoctorJumpsuit
+  - MedicalDoctorJumpskirt
+
+- type: loadoutGroup
+  id: ChemistOuterClothing
+  name: loadout-group-chemist-outerclothing
+  minLimit: 0
+  loadouts:
+  - RegularLabCoat
+  - ChemistLabCoat
+
+- type: loadoutGroup
+  id: ChemistBackpack
+  name: loadout-group-chemist-backpack
+  loadouts:
+  - ChemistBackpack
+  - ChemistSatchel
+  - ChemistDuffel
+
+- type: loadoutGroup
+  id: ParamedicHead
+  name: loadout-group-paramedic-head
+  minLimit: 0
+  loadouts:
+  - ParamedicHead
+
+- type: loadoutGroup
+  id: ParamedicJumpsuit
+  name: loadout-group-paramedic-jumpsuit
+  loadouts:
+  - ParamedicJumpsuit
+  - ParamedicJumpskirt
+
+- type: loadoutGroup
+  id: ParamedicOuterClothing
+  name: loadout-group-paramedic-outerclothing
+  minLimit: 0
+  loadouts:
+  - ParamedicWindbreaker
+
+- type: loadoutGroup
+  id: ParamedicBackpack
+  name: loadout-group-paramedic-backpack
+  loadouts:
+  - ParamedicBackpack
+  - ParamedicSatchel
+  - ParamedicDuffel
