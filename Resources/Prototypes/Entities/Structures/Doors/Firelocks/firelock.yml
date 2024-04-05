@@ -151,7 +151,7 @@
 
 - type: entity
   id: FirelockEdge
-  parent: BaseFirelock
+  parent: Firelock
   name: firelock
   components:
     - type: Sprite
@@ -181,3 +181,6 @@
       canCollide: false
     - type: StaticPrice
       price: 100
+    - type: Construction
+      graph: Firelock
+      node: FirelockEdge
