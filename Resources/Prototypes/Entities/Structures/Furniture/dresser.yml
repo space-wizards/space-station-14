@@ -229,9 +229,6 @@
       - id: ClothingOuterWinterCoat
         prob: 0.03
         orGroup: dressersecondloot
-      - id: ClothingMaskFox
-        prob: 0.03
-        orGroup: dressersecondloot
       - id: ClothingEyesGlassesGar
         prob: 0.03
         orGroup: dressersecondloot
@@ -461,15 +458,6 @@
         prob: 0.0001
         orGroup: dresserthirdloot
       - id: ClothingUniformJumpskirtOfLife
-        prob: 0.0001
-        orGroup: dresserthirdloot
-      - id: ClothingUniformJumpsuitSyndieFormal
-        prob: 0.0001
-        orGroup: dresserthirdloot
-      - id: ClothingUniformJumpskirtSyndieFormalDress
-        prob: 0.0001
-        orGroup: dresserthirdloot
-      - id: ClothingOuterWinterSyndie
         prob: 0.0001
         orGroup: dresserthirdloot
       - id: ClothingHeadHatRichard

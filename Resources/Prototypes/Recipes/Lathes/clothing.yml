@@ -561,20 +561,6 @@
     Cloth: 300
 
 - type: latheRecipe
-  id: ClothingUniformJumpsuitSyndieFormal
-  result: ClothingUniformJumpsuitSyndieFormal
-  completetime: 4
-  materials:
-    Cloth: 300
-
-- type: latheRecipe
-  id: ClothingUniformJumpskirtSyndieFormalDress
-  result: ClothingUniformJumpskirtSyndieFormalDress
-  completetime: 4
-  materials:
-    Cloth: 300
-
-- type: latheRecipe
   id: ClothingUniformJumpsuitPyjamaSyndicateBlack
   result: ClothingUniformJumpsuitPyjamaSyndicateBlack
   completetime: 4
@@ -889,21 +875,6 @@
     Cloth: 500
     Durathread: 300
 
-- type: latheRecipe
-  id: ClothingOuterWinterSyndie
-  result: ClothingOuterWinterSyndie
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 300
-
-- type: latheRecipe
-  id: ClothingOuterWinterSyndieCap
-  result: ClothingOuterWinterSyndieCap
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 300
 # Hats
 - type: latheRecipe
   id: ClothingHeadHatCaptain
@@ -1041,13 +1012,6 @@
 - type: latheRecipe
   id: ClothingHeadHatSyndie
   result: ClothingHeadHatSyndie
-  completetime: 2
-  materials:
-    Cloth: 100
-
-- type: latheRecipe
-  id: ClothingHeadHatSyndieMAA
-  result: ClothingHeadHatSyndieMAA
   completetime: 2
   materials:
     Cloth: 100

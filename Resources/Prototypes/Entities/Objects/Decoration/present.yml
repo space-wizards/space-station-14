@@ -216,8 +216,6 @@
         orGroup: GiftPool
       - id: ClothingNeckBling
         orGroup: GiftPool
-      - id: ClothingHeadHelmetCosmonaut
-        orGroup: GiftPool
       - id: ClothingShoeSlippersDuck
         orGroup: GiftPool
       - id: ClothingUnderSocksBee

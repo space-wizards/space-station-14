@@ -307,7 +307,7 @@
   - type: StorageFill
     contents:
     - id: WeaponRevolverDeckard
-    - id: ClothingOuterHardsuitBasic
+    - id: ClothingOuterHardsuitEVA
     - id: JetpackBlue
     - id: SpaceCash1000
     - id: BeachBall
