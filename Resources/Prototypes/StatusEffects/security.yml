@@ -4,6 +4,7 @@
   priority: 2
   offset: 1
   locationPreference: Right
+  isShaded: true
 
 - type: statusIcon
   parent: SecurityIcon
