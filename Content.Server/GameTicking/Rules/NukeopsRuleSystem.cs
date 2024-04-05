@@ -763,10 +763,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 _mind.SetUserId(newMind, nukieSession.Session.UserId);
                 _roles.MindAddRole(newMind, new NukeopsRoleComponent { PrototypeId = nukieSession.Type.AntagRoleProto });
 
-                // Automatically de-admin players who are being made nukeops
-                if (_cfg.GetCVar(CCVars.AdminDeadminOnJoin) && _adminManager.IsAdmin(nukieSession.Session))
-                    _adminManager.DeAdmin(nukieSession.Session);
-
                 _mind.TransferTo(newMind, mob);
             }
             //Otherwise, spawn as a ghost role

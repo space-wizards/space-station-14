@@ -1,6 +1,9 @@
 reagent-name-cola = cola
 reagent-desc-cola = A sweet, carbonated soft drink. Caffeine free.
 
+reagent-name-shirley-temple = shirley temple
+reagent-desc-shirley-temple = A favorite amongst younger members of the crew.
+
 reagent-name-changeling-sting = changeling sting
 reagent-desc-changeling-sting = You take a tiny sip and feel a burning sensation...
 
@@ -27,6 +30,12 @@ reagent-desc-root-beer = A very sweet, carbonated drink reminiscent of sarsparil
 
 reagent-name-root-beer-float = root beer float
 reagent-desc-root-beer-float = Root beer, but now with ice cream on top. It truly is the magnum opus of Canadian summertime drinks.
+
+reagent-name-sol-dry = sol dry
+reagent-desc-sol-dry = Sweet ginger soda from outer space!
+
+reagent-name-roy-rogers = roy rogers
+reagent-desc-roy-rogers = Solid proof that there IS something known as too sweet.
 
 reagent-name-space-mountain-wind = Space Mountain Wind
 reagent-desc-space-mountain-wind = Blows right through you like a space wind.

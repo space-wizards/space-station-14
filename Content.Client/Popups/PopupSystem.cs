@@ -28,6 +28,7 @@ namespace Content.Client.Popups
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
         [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
         [Dependency] private readonly ExamineSystemShared _examine = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public IReadOnlyList<WorldPopupLabel> WorldLabels => _aliveWorldLabels;
         public IReadOnlyList<CursorPopupLabel> CursorLabels => _aliveCursorLabels;
@@ -54,6 +55,7 @@ namespace Content.Client.Popups
                     _uiManager,
                     _uiManager.GetUIController<PopupUIController>(),
                     _examine,
+                    _transform,
                     this));
         }
 
@@ -161,10 +163,13 @@ namespace Content.Client.Popups
             PopupEntity(message, uid, type);
         }
 
-        public override void PopupClient(string? message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
+        public override void PopupClient(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
         {
+            if (recipient == null)
+                return;
+
             if (_timing.IsFirstTimePredicted)
-                PopupEntity(message, uid, recipient, type);
+                PopupEntity(message, uid, recipient.Value, type);
         }
 
         public override void PopupEntity(string? message, EntityUid uid, PopupType type = PopupType.Small)

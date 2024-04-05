@@ -35,6 +35,7 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly VirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
 
@@ -74,6 +75,9 @@ namespace Content.Server.Hands.Systems
 
         private void OnExploded(Entity<HandsComponent> ent, ref BeforeExplodeEvent args)
         {
+            if (ent.Comp.DisableExplosionRecursion)
+                return;
+
             foreach (var hand in ent.Comp.Hands.Values)
             {
                 if (hand.HeldEntity is { } uid)
@@ -100,17 +104,17 @@ namespace Content.Server.Hands.Systems
 
         private void HandleBodyPartAdded(EntityUid uid, HandsComponent component, ref BodyPartAddedEvent args)
         {
-            if (args.Part.PartType != BodyPartType.Hand)
+            if (args.Part.Comp.PartType != BodyPartType.Hand)
                 return;
 
             // If this annoys you, which it should.
             // Ping Smugleaf.
-            var location = args.Part.Symmetry switch
+            var location = args.Part.Comp.Symmetry switch
             {
                 BodyPartSymmetry.None => HandLocation.Middle,
                 BodyPartSymmetry.Left => HandLocation.Left,
                 BodyPartSymmetry.Right => HandLocation.Right,
-                _ => throw new ArgumentOutOfRangeException(nameof(args.Part.Symmetry))
+                _ => throw new ArgumentOutOfRangeException(nameof(args.Part.Comp.Symmetry))
             };
 
             AddHand(uid, args.Slot, location);
@@ -118,7 +122,7 @@ namespace Content.Server.Hands.Systems
 
         private void HandleBodyPartRemoved(EntityUid uid, HandsComponent component, ref BodyPartRemovedEvent args)
         {
-            if (args.Part.PartType != BodyPartType.Hand)
+            if (args.Part.Comp.PartType != BodyPartType.Hand)
                 return;
 
             RemoveHand(uid, args.Slot);
@@ -198,7 +202,7 @@ namespace Content.Server.Hands.Systems
                 throwEnt = splitStack.Value;
             }
 
-            var direction = coordinates.ToMapPos(EntityManager) - Transform(player).WorldPosition;
+            var direction = coordinates.ToMapPos(EntityManager, _transformSystem) - Transform(player).WorldPosition;
             if (direction == Vector2.Zero)
                 return true;
 

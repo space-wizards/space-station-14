@@ -1243,7 +1243,7 @@
 - type: entity
   parent: BasePlushie
   id: ToyAmongPequeno
-  name: among pequeno
+  name: among pequeño
   description: sus!
   components:
   - type: Sprite

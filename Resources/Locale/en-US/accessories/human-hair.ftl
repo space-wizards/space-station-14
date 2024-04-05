@@ -7,6 +7,7 @@ marking-HumanHairBedhead = Bedhead
 marking-HumanHairBedheadv2 = Bedhead 2
 marking-HumanHairBedheadv3 = Bedhead 3
 marking-HumanHairLongBedhead = Long Bedhead
+marking-HumanHairLongBedhead2 = Long Bedhead 2
 marking-HumanHairFloorlengthBedhead = Floorlength Bedhead
 marking-HumanHairBeehive = Beehive
 marking-HumanHairBeehivev2 = Beehive 2

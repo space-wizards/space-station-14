@@ -47,7 +47,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ClimbSystem _climb = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -275,6 +274,8 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         if (clear && value.Equals(Vector2.Zero))
         {
             steering.CurrentPath.Clear();
+            Array.Clear(steering.Interest);
+            Array.Clear(steering.Danger);
         }
 
         component.CurTickSprintMovement = value;

@@ -1143,7 +1143,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 entity.Deleted,
                 MakePlayerRecord(entity.DeletedBy),
                 NormalizeDatabaseTime(entity.DeletedAt),
-                entity.Seen);
+                entity.Seen,
+                entity.Dismissed);
         }
 
         public async Task<ServerBanNoteRecord?> GetServerBanAsNoteAsync(int id)
@@ -1422,11 +1423,13 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             return entities.Select(MakeAdminMessageRecord).ToList();
         }
 
-        public async Task MarkMessageAsSeen(int id)
+        public async Task MarkMessageAsSeen(int id, bool dismissedToo)
         {
             await using var db = await GetDb();
             var message = await db.DbContext.AdminMessages.SingleAsync(m => m.Id == id);
             message.Seen = true;
+            if (dismissedToo)
+                message.Dismissed = true;
             await db.DbContext.SaveChangesAsync();
         }
 

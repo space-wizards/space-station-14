@@ -292,9 +292,9 @@
         orGroup: GiftPool
       - id: ClothingHeadHatBunny
         orGroup: GiftPool
-      - id: ClothingHeadHatFlowerCrown
+      - id: ClothingHeadHatFlowerWreath
         orGroup: GiftPool
-      - id: ClothingHeadHatHairflower
+      - id: FoodPoppy
         orGroup: GiftPool
       - id: ClothingMaskClown
         orGroup: GiftPool
