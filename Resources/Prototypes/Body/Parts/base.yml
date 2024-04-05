@@ -10,6 +10,10 @@
     damageContainer: Biological
   - type: BodyPart
   - type: Gibbable
+    gibPrototypes: 
+     - FoodMeatHuman
+     - MaterialBones
+    gibCount: 1
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
