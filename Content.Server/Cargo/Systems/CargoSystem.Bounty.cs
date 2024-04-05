@@ -5,16 +5,13 @@ using Content.Server.Labels;
 using Content.Server.NameIdentifier;
 using Content.Server.Paper;
 using Content.Shared.Access.Components;
-using Content.Server.Station.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
-using Content.Shared.Doors.Systems;
 using Content.Shared.NameIdentifier;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
-using Robust.Packaging.AssetProcessing;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
@@ -77,20 +74,38 @@ public sealed partial class CargoSystem
     private void OnSkipBountyMessage(EntityUid uid, CargoBountyConsoleComponent component, BountySkipMessage args)
     {
         if (_timing.CurTime < component.NextSkipTime)
-            return;
-
-        if (_station.GetOwningStation(uid) is not { } station)
-            return;
-
-        if (!TryGetBountyFromId(station, args.BountyId, out var bounty))
-            return;
-
-        if (!_accessReaderSystem.IsAllowed(GetEntity(args.Entity), uid))
         {
+            Log.Debug("On cooldown!");
             return;
         }
+
+        if (_station.GetOwningStation(uid) is not { } station)
+        {
+            Log.Debug("Not on owning station!");
+            return;
+        }
+
+        if (!TryGetBountyFromId(station, args.BountyId, out var bounty))
+        {
+            Log.Debug("This bounty does not exist!");
+            return;
+        }
+
+        if (args.Session.AttachedEntity is not { Valid: true } mob)
+            return;
+
+        if (TryComp<AccessReaderComponent>(uid, out var accessReaderComponent) &&
+            !_accessReaderSystem.IsAllowed(mob, uid, accessReaderComponent))
+        {
+            Log.Debug("No access!");
+            Log.Debug(GetEntity(args.Entity).ToString());
+            Log.Debug(uid.ToString());
+            return;
+        }
+
         if (!TryRemoveBounty(station, bounty.Value))
         {
+            Log.Debug("Cannot remove bounty!");
             return;
         }
         FillBountyDatabase(station);
