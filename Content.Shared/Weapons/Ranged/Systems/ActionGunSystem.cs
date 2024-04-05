@@ -18,6 +18,9 @@ public sealed class ActionGunSystem : EntitySystem
 
     private void OnMapInit(Entity<ActionGunComponent> ent, ref MapInitEvent args)
     {
+        if (string.IsNullOrEmpty(ent.Comp.Action))
+            return;
+
         _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action);
         ent.Comp.Gun = Spawn(ent.Comp.GunProto);
     }
