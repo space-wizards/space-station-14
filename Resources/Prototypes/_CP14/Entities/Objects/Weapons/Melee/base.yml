@@ -1,57 +1,62 @@
-# Simple melee weapons
-
-# Battle Staff
-# Mace
-# Stick
-# Dagger
-# Spear
-# Light Hammer
-# Throwing spear
-# Hand axe
-# Sickle
-
-# Military melee weapons
-
-# Halberd
-# Battle pick
-# Warhammer
-# Battle axe
-# Glaive
+- type: entity
+  id: CPBaseWeaponChemical
+  abstract: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 4
+  - type: MeleeChemicalInjector
+    solution: melee
+  - type: RefillableSolution
+    solution: melee
+  - type: InjectableSolution
+    solution: melee
+  - type: SolutionInjectOnEmbed
+    transferAmount: 2
+    solution: melee
+  - type: SolutionTransfer
+    maxTransferAmount: 2
 
 - type: entity
-  name: двуручный меч
+  id: CPBaseWeaponThrowable
   abstract: true
-  parent: BaseItem
-  id: CPBaseTwoHandedSword
-  description: Мощное оружие, требующее огромной силы и умения для эффективного использования.
-  components:
-  - type: Sharp
-  - type: MeleeWeapon
-    attackRate: 0.75
+  components: 
+  - type: DamageOtherOnHit
     damage:
       types:
-        Slash: 10
-        Structural: 5
-    soundHit:
-      collection: MetalThud
-  - type: Wieldable
-  - type: IncreaseDamageOnWield
+        Piercing: 10
+  - type: DamageOnLand
     damage:
       types:
-        Slash: 30
-        Structural: 5
-  - type: Item
-    size: Ginormous
+        Piercing: 10
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.40,-0.30
+            - -0.30,-0.40
+            - 0.40,0.30
+            - 0.30,0.40
+        density: 10
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
 
-# Long spear
-# Long sword
-# Whip
-# Short sword
-# Hammer
-# Morgenstern
-# Pika
-# Rapier
-# Axe
-# Scimitar
-# Trident
-# Chain
+- type: entity
+  id: CPBaseWeaponLight
+  abstract: true
+  components:
+  - type: MeleeWeapon
+    resetOnHandSelected: false
+
+- type: entity
+  id: CPBaseWeaponShort
+  abstract: true
+  components: 
+  - type: MeleeWeapon
+    range: 1.0 # 1.5 standart
+    cPAnimationOffset: -0.75
+

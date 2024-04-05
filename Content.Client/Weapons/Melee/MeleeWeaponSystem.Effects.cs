@@ -14,6 +14,8 @@ public sealed partial class MeleeWeaponSystem
     private const string SlashAnimationKey = "melee-slash";
     private const string ThrustAnimationKey = "melee-thrust";
 
+    private const string CPSlashLightAnimationKey = "cp-melee-slash-light"; //CrystallPunk Melee upgrade
+
     /// <summary>
     /// Does all of the melee effects for a player that are predicted, i.e. character lunge and weapon animation.
     /// </summary>
@@ -42,6 +44,10 @@ public sealed partial class MeleeWeaponSystem
             return;
         }
 
+        var length = 1f; //CrystallPunk Melee upgrade
+        var scale = 1f; //CrystallPunk Melee upgrade
+        var offset = -1f; //CrystallPunk Melee upgrade
+
         var spriteRotation = Angle.Zero;
         if (arcComponent.Animation != WeaponArcAnimation.None
             && TryComp(weapon, out MeleeWeaponComponent? meleeWeaponComponent))
@@ -54,9 +60,14 @@ public sealed partial class MeleeWeaponSystem
 
             if (meleeWeaponComponent.SwingLeft)
                 angle *= -1;
+
+            length = meleeWeaponComponent.CPAnimationLength; //CrystallPunk Melee upgrade
+            scale = meleeWeaponComponent.CPAnimationScale; //CrystallPunk Melee upgrade
+            offset = meleeWeaponComponent.CPAnimationOffset; //CrystallPunk Melee upgrade
         }
         sprite.NoRotation = true;
         sprite.Rotation = localPos.ToWorldAngle();
+        sprite.Scale = new Vector2(scale); //CrystallPunk Melee upgrade
         var distance = Math.Clamp(localPos.Length() / 2f, 0.2f, 1f);
 
         var xform = _xformQuery.GetComponent(animationUid);
@@ -84,6 +95,15 @@ public sealed partial class MeleeWeaponSystem
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0f, 0.15f), FadeAnimationKey);
                 break;
+            //CrystallPunk MeleeUpgrade
+            case WeaponArcAnimation.CPSlashLight:
+                _animation.Play(animationUid, CPGetSlashLightAnimation(sprite, angle, spriteRotation, length, offset), CPSlashLightAnimationKey);
+                TransformSystem.SetParent(animationUid, xform, user, userXform);
+                if (arcComponent.Fadeout)
+                    _animation.Play(animationUid, GetFadeAnimation(sprite, length * 0.5f, length + 0.15f), FadeAnimationKey);
+
+                break;
+            //CrystallPunk MeleeUpgrade end
         }
     }
 
@@ -184,7 +204,7 @@ public sealed partial class MeleeWeaponSystem
     /// </summary>
     private Animation GetLungeAnimation(Vector2 direction)
     {
-        const float length = 0.1f;
+        const float length = 0.2f; // 0.1 original, CrystallPunk update
 
         return new Animation
         {
@@ -198,11 +218,58 @@ public sealed partial class MeleeWeaponSystem
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {
-                        new AnimationTrackProperty.KeyFrame(direction.Normalized() * 0.15f, 0f),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Zero, 0f), //CrystallPunk MeleeUpgrade 
+                        new AnimationTrackProperty.KeyFrame(direction.Normalized() * 0.15f, length/2), //CrystallPunk MeleeUpgrade
                         new AnimationTrackProperty.KeyFrame(Vector2.Zero, length)
                     }
                 }
             }
         };
     }
+
+    //CrystallPunk MeleeUpgrade start
+    private Animation CPGetSlashLightAnimation(SpriteComponent sprite, Angle arc, Angle spriteRotation, float length, float offset = -1f)
+    {
+        var startRotation = sprite.Rotation + (arc * 0.5f);
+        var endRotation = sprite.Rotation - (arc * 0.5f);
+
+        var startRotationOffset = startRotation.RotateVec(new Vector2(0f, offset));
+        var endRotationOffset = endRotation.RotateVec(new Vector2(0f, offset));
+
+        startRotation += spriteRotation;
+        endRotation += spriteRotation;
+        sprite.NoRotation = true;
+
+        return new Animation()
+        {
+            Length = TimeSpan.FromSeconds(length + 0.05f),
+            AnimationTracks =
+            {
+                new AnimationTrackComponentProperty()
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Rotation),
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(Angle.Lerp(startRotation,endRotation,0.0f), length * 0.0f),
+                        new AnimationTrackProperty.KeyFrame(Angle.Lerp(startRotation,endRotation,1.0f), length * 0.6f),
+                        new AnimationTrackProperty.KeyFrame(Angle.Lerp(startRotation,endRotation,0.8f), length * 1.0f),
+                    }
+                },
+                new AnimationTrackComponentProperty()
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Offset),
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startRotationOffset,endRotationOffset,0.0f), length * 0.0f),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startRotationOffset,endRotationOffset,1.0f), length * 0.6f),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startRotationOffset,endRotationOffset,0.8f), length * 1.0f),
+                    }
+                },
+            }
+        };
+    }
+    //CrystallPunk MeleeUpgrade end
+
 }

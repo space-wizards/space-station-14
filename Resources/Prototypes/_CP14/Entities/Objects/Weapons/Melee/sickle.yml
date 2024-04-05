@@ -1,0 +1,27 @@
+- type: entity
+  name: серп
+  parent: 
+  - BaseItem
+  - CPBaseWeaponChemical
+  - CPBaseWeaponLight
+  - CPBaseWeaponShort
+  id: CPBaseSickle
+  description: Изначально разработанное как оружие против травы, серп внезапно показал себя хорош и в более кровавой жатве.
+  components:
+  - type: Item
+    storedRotation: -45 
+  - type: Sprite
+    sprite: CrystallPunk/Objects/Weapons/Melee/Sickle/sickle.rsi
+    layers:
+    - state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    wideAnimationRotation: 225
+    wideAnimation: CPWeaponArcSlashLight
+    cPAnimationLength: 0.18
+    damage:
+      types:
+        Slash: 8
+        Piercing: 4
+    soundHit:
+      collection: MetalThud
