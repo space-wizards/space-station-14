@@ -156,6 +156,8 @@ namespace Content.Server.Kitchen.EntitySystems
             EnsureComp<ForensicsComponent>(uid, out var forensics);
             forensics.DNAs.Add(component.VictimDNA);
 
+            _metaData.SetEntityName(uid, Name(victimUid));
+
             UpdateAppearance(uid, null, component);
 
             _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill", ("user", Identity.Entity(userUid, EntityManager)), ("victim", victimUid)), uid, PopupType.LargeCaution);
@@ -185,6 +187,10 @@ namespace Content.Server.Kitchen.EntitySystems
                 return false;
             }
 
+
+            EnsureComp<ForensicsComponent>(used, out var forensicsKnife);
+            forensicsKnife.DNAs.Add(component.VictimDNA);
+
             var item = _random.PickAndTake(component.PrototypesToSpawn);
 
             var ent = Spawn(item, Transform(uid).Coordinates);
@@ -209,6 +215,11 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
 
             _appearance.SetData(uid, KitchenSpikeVisuals.Status, component.PrototypesToSpawn?.Count > 0 ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty, appearance);
+
+            if (component.PrototypesToSpawn?.Count == 0)
+            {
+                _metaData.SetEntityName(uid, Prototype(uid).Name);
+            }
         }
 
         private bool Spikeable(EntityUid uid, EntityUid userUid, EntityUid victimUid,
