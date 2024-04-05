@@ -102,7 +102,7 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 2
+        Blunt: 1
 
 - type: entity
   id: BaseBulletRubber
@@ -288,7 +288,7 @@
       fly-by: *flybyfixture
   - type: Ammo
   - type: StaminaDamageOnCollide
-    damage: 5
+    damage: 1
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
@@ -641,7 +641,7 @@
         shader: unshaded
   - type: AnomalousParticle
     particleType: Sigma
-    
+
 - type: entity
   parent: AnomalousParticleSigma
   id: AnomalousParticleSigmaStrong
@@ -650,7 +650,7 @@
   components:
   - type: AnomalousParticle
     particleType: Sigma
-    
+
 # Launcher projectiles (grenade / rocket)
 - type: entity
   id: BulletRocket
