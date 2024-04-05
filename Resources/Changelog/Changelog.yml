@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Lights are now shaded with the same color that they glow.
-    type: Tweak
-  id: 5806
-  time: '2024-01-27T17:43:45.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24612
 - author: Boaz1111
   changes:
   - message: The PKA shuttle gun now breaks rocks in one hit.
@@ -3809,3 +3802,12 @@
   id: 6305
   time: '2024-04-04T23:05:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26726
+- author: Daemon
+  changes:
+  - message: Practice projectiles have been given standardized minimal damage.
+    type: Tweak
+  - message: The practice laser gun now works with shooting targets.
+    type: Tweak
+  id: 6306
+  time: '2024-04-05T03:15:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26731
