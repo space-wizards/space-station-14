@@ -3,8 +3,8 @@
          Orientation="Vertical">
     <!-- Buffer space so we have 10 margin between controls but also 10 to the borders -->
     <Label Text="{Loc 'loadout-restrictions'}" Margin="5 0 5 5"/>
-    <BoxContainer Name="RestrictionsContainer" Orientation="Vertical" HorizontalExpand="True" />
     <PanelContainer StyleClasses="AngleRect" HorizontalExpand="True">
         <BoxContainer Name="LoadoutsContainer" Orientation="Vertical"/>
     </PanelContainer>
+    <BoxContainer Name="RestrictionsContainer" Orientation="Vertical" HorizontalExpand="True" />
 </BoxContainer>
