@@ -1,6 +1,5 @@
 using Content.Server.Body.Systems;
 using Content.Server.Polymorph.Components;
-using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
@@ -24,7 +23,6 @@ public sealed class ImmovableRodSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly PolymorphSystem _polyMorph = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -102,9 +100,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         // dont delete/hurt self if polymoprhed into a rod
         if (TryComp<PolymorphedEntityComponent>(uid, out var polymorphed))
         {
-            var polymorphParent = _polyMorph.GetParent(uid, polymorphed);
-
-            if (polymorphParent == ent)
+            if (polymorphed.Parent == ent)
                 return;
         }
 
