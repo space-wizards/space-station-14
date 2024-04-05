@@ -31,7 +31,7 @@
   - !type:CreateGas
     gas: WaterVapor
   products:
-    Syrup: 0.03 #40:1 ratio based on real syrup production
+    Syrup: 0.1 #12:1 sap to syruop
 
 # Holy - TODO: make it so only the chaplain can use the bible to start these reactions, not anyone with a bible
 

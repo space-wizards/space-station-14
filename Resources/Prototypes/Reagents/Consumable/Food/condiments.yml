@@ -175,12 +175,12 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-sticky
   slippery: false
-  viscosity: 0.65
+  viscosity: 0.55 #Start using syrup to attach your remote recievers to your microwaves!
   tileReactions:
     - !type:SpillTileReaction
   metabolisms:
     Food:
-      # 40 diona blood for 1 unit of syrup... this stuff BETTER be worth it.
+      # 12 diona blood for 1 unit of syrup, this stuff better be worthwhile.
       effects:
       - !type:SatiateHunger
         factor: 6.0 #Stronger than cookedramen

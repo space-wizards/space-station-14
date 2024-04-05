@@ -41,4 +41,4 @@ reagent-name-table-salt = table salt
 reagent-desc-table-salt = Commonly known as salt, Sodium Chloride is often used to season food or kill borers instantly.
 
 reagent-name-syrup = syrup
-reagent-desc-syrup = Delicious syrup made from tree sap, extremely sticky and sweet.
+reagent-desc-syrup = Delicious syrup made from tree sap, somehow stickier than glue.

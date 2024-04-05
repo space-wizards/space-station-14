@@ -92,7 +92,7 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-sticky
   slippery: false
-  viscosity: 0.15
+  viscosity: 0.10
   tileReactions:
     - !type:SpillTileReaction
   metabolisms:
@@ -100,7 +100,7 @@
       # Sweet!
       effects:
       - !type:SatiateHunger
-        factor: 2
+        factor: 1
       - !type:SatiateThirst
         factor: 1
   footstepSound:
