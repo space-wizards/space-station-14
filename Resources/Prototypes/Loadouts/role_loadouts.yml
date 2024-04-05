@@ -278,3 +278,31 @@
   - ParamedicOuterClothing
   - ParamedicBackpack
   - Trinkets
+
+# Wildcards
+- type: roleLoadout
+  id: JobZookeeper
+  groups:
+  - CommonBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobReporter
+  groups:
+  - ReporterJumpsuit
+  - CommonBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobPsychologist
+  groups:
+  - MedicalBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobBoxer
+  groups:
+  - BoxerJumpsuit
+  - BoxerGloves
+  - CommonBackpack
+  - Trinkets
