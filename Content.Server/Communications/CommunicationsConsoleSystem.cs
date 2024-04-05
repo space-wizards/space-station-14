@@ -170,6 +170,7 @@ namespace Content.Server.Communications
 
             _uiSystem.SetUiState(ui, new CommunicationsConsoleInterfaceState(
                 CanAnnounce(comp),
+                true,
                 CanCallOrRecall(comp),
                 levels,
                 currentLevel,
