@@ -1682,7 +1682,7 @@
 
 - type: entity
   name: cancer mouse
-  description: It's Cancer Mouse, everybody!
+  description: Toxic. Squeak!
   parent: MobMouse
   id: MobMouseCancer
   components:
@@ -1694,7 +1694,7 @@
     energy: 5
     netsync: false
   - type: RadiationSource
-    intensity: 1
+    intensity: 0.3
   - type: Bloodstream
     bloodReagent: UnstableMutagen
   - type: SolutionContainerManager
