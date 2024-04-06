@@ -37,7 +37,7 @@ public sealed class ShoesRequiredStepTriggerSystem : EntitySystem
         if (_inventory.TryGetSlotEntity(args.Tripper, "outerClothing", out var outerClothing, inventory))
         {
             if (TryComp<TagComponent>(outerClothing, out var outerClothingTag)
-                && (outerClothingTag.Tags.Contains("Hardsuit") || outerClothingTag.Tags.Contains("Softsuit")))
+                && (outerClothingTag.Tags.Contains("Hardsuit") || outerClothingTag.Tags.Contains("SuitEVA")))
             {
                 args.Cancelled = true;
             }

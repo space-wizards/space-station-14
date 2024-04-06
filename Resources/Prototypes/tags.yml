@@ -1132,9 +1132,6 @@
   id: Soap
 
 - type: Tag
-  id: Softsuit
-
-- type: Tag
   id: SolarTrackerElectronics
 
 - type: Tag
