@@ -1,4 +1,4 @@
-﻿using Content.Shared.Examine;
+using Content.Shared.Examine;
 using Content.Shared.Inventory;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.Tag;
@@ -31,6 +31,16 @@ public sealed class ShoesRequiredStepTriggerSystem : EntitySystem
         if (_inventory.TryGetSlotEntity(args.Tripper, "shoes", out _, inventory))
         {
             args.Cancelled = true;
+        }
+
+        // hardsuits and softsuits come with shoes to be space-capable, fulfilling the "shoes" requirement
+        if (_inventory.TryGetSlotEntity(args.Tripper, "outerClothing", out var outerClothing, inventory))
+        {
+            if (TryComp<TagComponent>(outerClothing, out var outerClothingTag)
+                && (outerClothingTag.Tags.Contains("Hardsuit") || outerClothingTag.Tags.Contains("Softsuit")))
+            {
+                args.Cancelled = true;
+            }
         }
     }
 
