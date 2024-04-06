@@ -6,7 +6,7 @@ namespace Content.Shared.Medical.Metabolism.Components;
 /// This is used for...
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class MetabolizerComponent : Component
+public sealed partial class MetabolismComponent : Component
 {
 
 }

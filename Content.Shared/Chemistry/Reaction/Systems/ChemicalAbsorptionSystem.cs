@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
@@ -13,6 +12,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chemistry.Reaction.Systems;
 
@@ -224,7 +224,7 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
 
         var duration =_timing.CurTime.TotalSeconds - absorber.Comp.LastUpdate.TotalSeconds;
         //if any of these are negative something has fucked up
-        Debug.Assert(duration < 0 || absorber.Comp.RateMultiplier < 0 || absorption.Rate < 0);
+        DebugTools.Assert(duration < 0 || absorber.Comp.RateMultiplier < 0 || absorption.Rate < 0);
         var reactionRate = duration / (absorption.Rate * absorber.Comp.RateMultiplier);
         if (reactionRate == 0 || absorption.Quantized && reactionRate < 1)
             return FixedPoint2.Zero;
