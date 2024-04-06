@@ -250,4 +250,4 @@ public record struct OpenableClosedEvent;
 /// Raised before trying to open an Openable.
 /// </summary>
 [ByRefEvent]
-public record struct OpenableOpenAttemptEvent(EntityUid? user, bool Cancelled = false);
+public record struct OpenableOpenAttemptEvent(EntityUid? User, bool Cancelled = false);
