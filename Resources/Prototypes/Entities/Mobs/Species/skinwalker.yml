@@ -29,7 +29,12 @@
   id: MobSkeletonSkinwalker
   components:
   - type: Organ
+  - type: Brain
   - type: RandomHumanoidAppearance
+  - type: Tag
+    tags:
+    # let mind transfer on gib work
+    - MindTransferTarget
 
 - type: entity
   parent: BaseSpeciesDummy
