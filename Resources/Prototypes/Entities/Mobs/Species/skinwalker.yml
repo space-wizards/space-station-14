@@ -9,12 +9,18 @@
   - type: Icon # It will not have an icon in the adminspawn menu without this. Body parts seem fine for whatever reason.
     sprite: Mobs/Species/Human/parts.rsi
     state: full
-  - type: TransferMindOnGib
   - type: Body
     prototype: Skinwalker
     requiredLegs: 2
   - type: GibAction
     actionPrototype: SkinwalkerGibAction
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:GibBehavior { }
 
 - type: entity
   parent: BaseSpeciesDummy
