@@ -1,6 +1,8 @@
-﻿using Content.Shared.Chemistry.Components;
+﻿using Content.Shared.Body.Organ;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction.Components;
 using Content.Shared.Chemistry.Reaction.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.Reaction.Events;
 

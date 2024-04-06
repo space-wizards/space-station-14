@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry.Reagent;
+﻿using Content.Shared.Chemistry.Reaction.Events;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
@@ -15,9 +16,6 @@ public sealed partial class AbsorptionPrototype : IPrototype
 
     [DataField]
     public string Name { get; private set; } = string.Empty;
-
-    //TODO: implement event-based conditions
-
 
     /// <summary>
     /// Minimum amount of reagents required in the solution for the absorption to occur
@@ -50,11 +48,14 @@ public sealed partial class AbsorptionPrototype : IPrototype
     [DataField]
     public float Rate = 1.0f;
 
+    [DataField]
+    public List<BaseSolutionEffect> Effects = new();
+
     /// <summary>
     /// Effects to be triggered when the reagents are absorbed
     /// </summary>
     [DataField]
-    public List<ReagentEffect> Effects = new();
+    public List<ReagentEffect> ReagentEffects = new();
 
     /// <summary>
     /// The Minimum temperature required to absorb the reagent(s)

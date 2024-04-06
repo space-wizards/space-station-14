@@ -145,17 +145,12 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
                 //TODO: this might run into issues with reagentData
                 solution.RemoveReagent(reactantName, amountToRemove);
         }
-
         if (absorption.TransferHeat)
         {
             var thermalEnergy = solution.GetThermalEnergy(_protoManager);
             //TODO: actually apply the thermal energy to the absorber entity. Can't do that from shared...
             // Because for some fucking reason temperatureSystem is server only. Why! Temperature should be predicted!
         }
-        //TODO refactor this when reagentEffects get rewritten to not fucking hardcode organs
-        var args = new ReagentEffectArgs(solutionEntity, null, solutionEntity.Comp.Solution,
-            null,  rate, EntityManager, null, 1f);
-
         if (absorption.Impact != null)
         {
             var posFound = _transformSystem.TryGetMapOrGridCoordinates(solutionEntity, out var gridPos);
@@ -164,8 +159,20 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
                 $"at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found]")}");
         }
 
-        //TODO: Remove this once all ReagentEffects are converted to ReagentEvents
-        foreach (var effect in absorption.Effects)
+        foreach (var solutionEffect in absorption.Effects)
+        {
+            solutionEffect.Target = absorber;
+            solutionEffect.SolutionEntity = solutionEntity;
+            solutionEffect.EntityManager = EntityManager;
+            if (solutionEffect.CheckCondition())
+                solutionEffect.TriggerEffect();
+        }
+
+        //TODO refactor this when reagentEffects get rewritten to not fucking hardcode organs
+        //TODO: Also remove this once all ReagentEffects are converted to ReagentEvents
+        var args = new ReagentEffectArgs(solutionEntity, null, solutionEntity.Comp.Solution,
+            null,  rate, EntityManager, null, 1f);
+        foreach (var effect in absorption.ReagentEffects)
         {
             if (!effect.ShouldApply(args))
                 continue;
