@@ -13,6 +13,8 @@
   - type: Body
     prototype: Skinwalker
     requiredLegs: 2
+  - type: GibAction
+    actionPrototype: SkinwalkerGibAction
 
 - type: entity
   parent: BaseSpeciesDummy
