@@ -99,3 +99,4 @@ marking-GauzeMothLowerLegRight = Insectoid Gauze Shin Wrap (Right)
 
 marking-GauzeMothLowerLegLeft-gauze_moth_lowerleg_l = Insectoid Gauze Shin Wrap (Left)
 marking-GauzeMothLowerLegLeft = Insectoid Gauze Shin Wrap (Left)
+
