@@ -8,7 +8,7 @@
       connections:
       - torso
       organs:
-        brain: MobSkeletonPerson
+        brain: MobSkeletonSkinwalker
         eyes: OrganHumanEyes
     torso:
       part: TorsoHuman
