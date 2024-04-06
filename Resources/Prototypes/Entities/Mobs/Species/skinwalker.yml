@@ -22,6 +22,8 @@
         damage: 300
       behaviors:
       - !type:GibBehavior { }
+  - type: Damageable
+    damageModifierSet: Skinwalker
 
 - type: entity
   name: Bloody Skeleton
