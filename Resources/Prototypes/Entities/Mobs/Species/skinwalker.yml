@@ -12,6 +12,7 @@
   - type: Body
     prototype: Skinwalker
     requiredLegs: 2
+  - type: TransferMindOnGib
   - type: GibAction
     actionPrototype: SkinwalkerGibAction
   - type: Destructible
@@ -21,6 +22,14 @@
         damage: 200
       behaviors:
       - !type:GibBehavior { }
+
+- type: entity
+  name: Bloody Skeleton
+  parent: MobSkeletonPerson
+  id: MobSkeletonSkinwalker
+  components:
+  - type: Organ
+  - type: RandomHumanoidAppearance
 
 - type: entity
   parent: BaseSpeciesDummy
