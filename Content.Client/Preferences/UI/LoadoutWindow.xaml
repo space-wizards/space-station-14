@@ -1,8 +1,8 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-         SetSize="758 800"
-         MinSize="758 64">
+         SetSize="800 800"
+         MinSize="800 64">
         <VerticalTabContainer Name="LoadoutGroupsContainer"
                       VerticalExpand="True"
                       HorizontalExpand="True">

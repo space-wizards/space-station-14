@@ -198,7 +198,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             if (loadout == null)
             {
                 loadout = new RoleLoadout(jobLoadout);
-                loadout.SetDefault(EntityManager, _prototypeManager);
+                loadout.SetDefault(_prototypeManager);
             }
 
             // Order loadout selections by the order they appear on the prototype.

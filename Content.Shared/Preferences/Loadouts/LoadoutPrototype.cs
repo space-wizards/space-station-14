@@ -7,7 +7,7 @@ namespace Content.Shared.Preferences.Loadouts;
 /// <summary>
 /// Individual loadout item to be applied.
 /// </summary>
-[Prototype("loadout")]
+[Prototype]
 public sealed class LoadoutPrototype : IPrototype
 {
     [IdDataField]

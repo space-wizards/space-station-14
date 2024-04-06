@@ -62,6 +62,7 @@
         priority: 3 # Higher than drinking priority
   - type: Drink
     solution: bucket
+  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: mopbucket_water-

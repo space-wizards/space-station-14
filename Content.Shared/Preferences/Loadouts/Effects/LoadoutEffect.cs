@@ -10,5 +10,11 @@ public abstract partial class LoadoutEffect
     /// <summary>
     /// Tries to validate the effect.
     /// </summary>
-    public abstract bool Validate(ICommonSession session, IDependencyCollection collection, [NotNullWhen(false)] out FormattedMessage? reason);
+    public abstract bool Validate(
+        RoleLoadout loadout,
+        ICommonSession session,
+        IDependencyCollection collection,
+        [NotNullWhen(false)] out FormattedMessage? reason);
+
+    public virtual void Apply(RoleLoadout loadout) {}
 }

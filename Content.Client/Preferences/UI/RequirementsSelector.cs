@@ -127,7 +127,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                 {
                     // We only create a loadout when necessary to avoid unnecessary DB entries.
                     _loadout ??= new RoleLoadout(LoadoutSystem.GetJobPrototype(Proto.ID));
-                    _loadout.SetDefault(entManager, protoManager);
+                    _loadout.SetDefault(protoManager);
 
                     _loadoutWindow = new LoadoutWindow(_loadout, protoManager.Index(_loadout.Role), session, collection)
                     {
