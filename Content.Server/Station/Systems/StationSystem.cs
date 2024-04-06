@@ -4,6 +4,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
+using Content.Shared.Fax;
 using Content.Shared.Station;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -313,8 +314,8 @@ public sealed class StationSystem : EntitySystem
 
         if (TryComp<StationRandomTransformComponent>(station, out var random))
         {
-            var rotation = new Angle();
-            var offset = new Vector2();
+            Angle? rotation = null;
+            Vector2? offset = null;
 
             if (random.MaxStationOffset != null)
                 offset = _random.NextVector2(-random.MaxStationOffset.Value, random.MaxStationOffset.Value);
@@ -324,8 +325,25 @@ public sealed class StationSystem : EntitySystem
 
             foreach (var grid in entry)
             {
-                var pos = _transform.GetWorldPosition(grid);
-                _transform.SetWorldPositionRotation(grid, pos + offset, rotation);
+                //planetary maps give an error when trying to change from position or rotation.
+                //This is still the case, but it will be irrelevant after the https://github.com/space-wizards/space-station-14/pull/26510
+                if (rotation != null && offset != null)
+                {
+                    var pos = _transform.GetWorldPosition(grid);
+                    _transform.SetWorldPositionRotation(grid, pos + offset.Value, rotation.Value);
+                    continue;
+                }
+                if (rotation != null)
+                {
+                    _transform.SetWorldRotation(grid, rotation.Value);
+                    continue;
+                }
+                if (offset != null)
+                {
+                    var pos = _transform.GetWorldPosition(grid);
+                    _transform.SetWorldPosition(grid, pos + offset.Value);
+                    continue;
+                }
             }
         }
 
