@@ -23,6 +23,8 @@ public enum CollisionGroup
     BulletImpassable   = 1 << 6, // 64 Can be hit by bullets
     InteractImpassable = 1 << 7, // 128 Blocks interaction/InRangeUnobstructed
     DoorPassable       = 1 << 8, // 256 Allows door to close over top, Like blast doors over conveyors for disposals rooms/cargo.
+    BulletLowImpassable = 1 << 9, //
+    BulletHighImpassable = 1 << 10, //
 
     MapGrid = MapGridHelpers.CollisionGroup, // Map grids, like shuttles. This is the actual grid itself, not the walls or other entities connected to the grid.
 
@@ -31,21 +33,21 @@ public enum CollisionGroup
 
     // Humanoids, etc.
     MobMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
-    MobLayer = Opaque | BulletImpassable,
+    MobLayer = Opaque | BulletLowImpassable| BulletImpassable,
     // Mice, drones
     SmallMobMask = Impassable | LowImpassable,
-    SmallMobLayer = Opaque | BulletImpassable,
+    SmallMobLayer = Opaque | BulletLowImpassable,
     // Birds/other small flyers
     FlyingMobMask = Impassable | HighImpassable,
-    FlyingMobLayer = Opaque | BulletImpassable,
+    FlyingMobLayer = Opaque | BulletHighImpassable,
 
     // Mechs
     LargeMobMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
-    LargeMobLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | BulletImpassable,
+    LargeMobLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | BulletLowImpassable| BulletImpassable| BulletHighImpassable,
 
     // Machines, computers
     MachineMask = Impassable | MidImpassable | LowImpassable,
-    MachineLayer = Opaque | MidImpassable | LowImpassable | BulletImpassable,
+    MachineLayer = Opaque | MidImpassable | LowImpassable | BulletLowImpassable| BulletImpassable,
     ConveyorMask = Impassable | MidImpassable | LowImpassable | DoorPassable,
 
     // Tables that SmallMobs can go under
@@ -58,7 +60,7 @@ public enum CollisionGroup
     TabletopMachineLayer = Opaque | HighImpassable | BulletImpassable,
 
     // Airlocks, windoors, firelocks
-    GlassAirlockLayer = HighImpassable | MidImpassable | BulletImpassable | InteractImpassable,
+    GlassAirlockLayer = HighImpassable | MidImpassable | BulletHighImpassable | BulletImpassable | BulletLowImpassable | InteractImpassable,
     AirlockLayer = Opaque | GlassAirlockLayer,
 
     // Airlock assembly
@@ -68,14 +70,14 @@ public enum CollisionGroup
     SlipLayer = MidImpassable | LowImpassable,
     ItemMask = Impassable | HighImpassable,
     ThrownItem = Impassable | HighImpassable | BulletImpassable,
-    WallLayer = Opaque | Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
-    GlassLayer = Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
+    WallLayer = Opaque | Impassable | HighImpassable | MidImpassable | LowImpassable | BulletHighImpassable | BulletImpassable | BulletLowImpassable | InteractImpassable,
+    GlassLayer = Impassable | HighImpassable | MidImpassable | LowImpassable | BulletHighImpassable | BulletLowImpassable | BulletImpassable | InteractImpassable,
     HalfWallLayer = MidImpassable | LowImpassable,
 
     // Statue, monument, airlock, window
     FullTileMask = Impassable | HighImpassable | MidImpassable | LowImpassable | InteractImpassable,
     // FlyingMob can go past
-    FullTileLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
+    FullTileLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | BulletHighImpassable | BulletLowImpassable | BulletImpassable | InteractImpassable,
 
     SubfloorMask = Impassable | LowImpassable
 }

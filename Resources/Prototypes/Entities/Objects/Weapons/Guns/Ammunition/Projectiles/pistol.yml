@@ -19,6 +19,12 @@
     damage:
       types:
         Blunt: 2
+  - type: Fixtures
+    fixtures:
+      projectile:
+        mask:
+        - Impassable
+        - BulletLowImpassable
 
 - type: entity
   id: BulletPistolRubber
@@ -30,6 +36,16 @@
     damage:
       types:
         Blunt: 3
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        hard: false
+        mask:
+        - Impassable
+        - BulletHighImpassable
 
 - type: entity
   id: BulletPistolIncendiary
