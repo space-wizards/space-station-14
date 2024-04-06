@@ -15,11 +15,12 @@
   - type: TransferMindOnGib
   - type: GibAction
     actionPrototype: SkinwalkerGibAction
+    allowedStates: [Alive, Critical, Dead]
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 220
       behaviors:
       - !type:GibBehavior { }
   - type: Damageable

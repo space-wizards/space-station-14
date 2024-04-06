@@ -208,7 +208,10 @@
 - type: damageModifierSet
   id: Skinwalker
   coefficients:
+    Heat: 1.25
+    Cold: 0.75
     Slash: 1.5
+    Piercing: 1.2
     Shock: 0.5
     Poison: 0.5
     Radiation: 0.5
