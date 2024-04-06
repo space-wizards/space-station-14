@@ -215,6 +215,18 @@ public sealed class LockSystem : EntitySystem
         return !ev.Cancelled;
     }
 
+    /// <summary>
+    /// Returns true if an entity is locked, or false if it is missing <c>LockableComponent</c>.
+    /// </summary>
+    public bool IsLocked(Entity<LockComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        return ent.Comp.Locked;
+    }
+
+    // TODO: this should be a helper on AccessReaderSystem since so many systems copy paste it
     private bool HasUserAccess(EntityUid uid, EntityUid user, AccessReaderComponent? reader = null, bool quiet = true)
     {
         // Not having an AccessComponent means you get free access. woo!
