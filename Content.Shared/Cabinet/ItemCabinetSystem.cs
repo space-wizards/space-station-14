@@ -72,12 +72,9 @@ public sealed class ItemCabinetSystem : EntitySystem
     /// <summary>
     /// Tries to get the cabinet's item slot.
     /// </summary>
-    public bool TryGetSlot(Entity<ItemCabinetComponent?> ent, [NotNullWhen(true)] out ItemSlot? slot)
+    public bool TryGetSlot(Entity<ItemCabinetComponent> ent, [NotNullWhen(true)] out ItemSlot? slot)
     {
         slot = null;
-        if (!Resolve(ent, ref ent.Comp))
-            return false;
-
         if (!TryComp<ItemSlotsComponent>(ent, out var slots))
             return false;
 
@@ -87,7 +84,7 @@ public sealed class ItemCabinetSystem : EntitySystem
     /// <summary>
     /// Returns true if the cabinet contains an item.
     /// </summary>
-    public bool HasItem(Entity<ItemCabinetComponent?> ent)
+    public bool HasItem(Entity<ItemCabinetComponent> ent)
     {
         return TryGetSlot(ent, out var slot) && slot.HasItem;
     }
@@ -95,11 +92,8 @@ public sealed class ItemCabinetSystem : EntitySystem
     /// <summary>
     /// Lock or unlock the underlying item slot.
     /// </summary>
-    public void SetSlotLock(Entity<ItemCabinetComponent?> ent, bool closed)
+    public void SetSlotLock(Entity<ItemCabinetComponent> ent, bool closed)
     {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
-
         if (!TryComp<ItemSlotsComponent>(ent, out var slots))
             return;
 
