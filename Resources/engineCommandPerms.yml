@@ -136,3 +136,8 @@
 - Commands:
   - "|"
   - oldhelp
+
+- Flags: FUN
+  Commands:
+  - clippy
+  - tip
