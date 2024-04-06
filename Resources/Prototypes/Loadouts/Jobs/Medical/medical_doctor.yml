@@ -158,7 +158,7 @@
     back: ClothingBackpackSatchelMedicalFilled
 
 - type: loadout
-  id: MedicalDoctor
+  id: MedicalDoctorDuffel
   equipment: MedicalDoctorDuffel
 
 - type: startingGear

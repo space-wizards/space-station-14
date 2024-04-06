@@ -1,6 +1,65 @@
 # Miscellaneous
 loadout-group-trinkets = Trinkets
 
+# Command
+loadout-group-captain-head = Captain head
+loadout-group-captain-jumpsuit = Captain jumpsuit
+loadout-group-captain-neck = Captain neck
+loadout-group-captain-backpack = Captain backpack
+
+loadout-group-hop-head = Head of Personnel head
+loadout-group-hop-jumpsuit = Head of Personnel jumpsuit
+loadout-group-hop-neck = Head of Personnel neck
+loadout-group-hop-backpack = Head of Personnel backpack
+
+
+# Civilian
+loadout-group-passenger-jumpsuit = Passenger jumpsuit
+loadout-group-passenger-mask = Passenger mask
+loadout-group-passenger-gloves = Passenger gloves
+loadout-group-passenger-backpack = Passenger backpack
+
+loadout-group-bartender-head = Bartender head
+loadout-group-bartender-jumpsuit = Bartender jumpsuit
+loadout-group-bartender-outerclothing = Bartender outer clothing
+
+loadout-group-chef-head = Chef head
+loadout-group-chef-mask = Chef mask
+loadout-group-chef-jumpsuit = Chef jumpsuit
+loadout-group-chef-outerclothing = Chef outer clothing
+
+loadout-group-librarian-jumpsuit = Librarian jumpsuit
+
+loadout-group-lawyer-jumpsuit = Lawyer jumpsuit
+loadout-group-lawyer-neck = Lawyer neck
+
+loadout-group-chaplain-head = Chaplain head
+loadout-group-chaplain-mask = Chaplain mask
+loadout-group-chaplain-jumpsuit = Chaplain jumpsuit
+loadout-group-chaplain-backpack = Chaplain backpack
+loadout-group-chaplain-outerclothing = Chaplain outer clothing
+loadout-group-chaplain-neck = Chaplain neck
+
+loadout-group-janitor-head = Janitor head
+loadout-group-janitor-jumpsuit = Janitor jumpsuit
+
+loadout-group-botanist-head = Botanist head
+loadout-group-botanist-jumpsuit = Botanist jumpsuit
+loadout-group-botanist-backpack = Botanist backpack
+loadout-group-botanist-outerclothing = Botanist outer clothing
+
+loadout-group-clown-head = Clown head
+loadout-group-clown-jumpsuit = Clown jumpsuit
+loadout-group-clown-backpack = Clown backpack
+loadout-group-clown-shoes = Clown shoes
+
+loadout-group-mime-head = Mime head
+loadout-group-mime-mask = Mime mask
+loadout-group-mime-jumpsuit = Mime jumpsuit
+loadout-group-mime-backpack = Mime backpack
+
+loadout-group-musician-backpack = Musician backpack
+
 # Cargo
 loadout-group-quartermaster-head = Quartermaster head
 loadout-group-quartermaster-jumpsuit = Quartermaster jumpsuit
@@ -92,3 +151,9 @@ loadout-group-paramedic-head = Paramedic head
 loadout-group-paramedic-jumpsuit = Paramedic jumpsuit
 loadout-group-paramedic-outerclothing = Paramedic outer clothing
 loadout-group-paramedic-backpack = Paramedic backpack
+
+# Wildcards
+loadout-group-reporter-jumpsuit = Reporter jumpsuit
+
+loadout-group-boxer-jumpsuit = Boxer jumpsuit
+loadout-group-boxer-gloves = Boxer gloves
