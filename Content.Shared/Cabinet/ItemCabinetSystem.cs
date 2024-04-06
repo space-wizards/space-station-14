@@ -3,6 +3,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Containers;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Cabinet;
 
@@ -32,25 +33,7 @@ public sealed class ItemCabinetSystem : EntitySystem
         // update at startup to avoid copy pasting locked: true and locked: false for each closed/open prototype
         SetSlotLock(ent, !_openable.IsOpen(ent));
 
-        UpdateAppearance(ent);
-    }
-
-    /// <summary>
-    /// Lock or unlock the underlying item slot.
-    /// </summary>
-    public void SetSlotLock(Entity<ItemCabinetComponent> ent, bool closed)
-    {
-        if (!TryComp<ItemSlotsComponent>(ent, out var slots))
-            return;
-
-        if (_slots.TryGetSlot(ent, ent.Comp.Slot, out var slot, slots))
-            _slots.SetLock(ent, slot, closed, slots);
-    }
-
-    private void UpdateAppearance(Entity<ItemCabinetComponent> ent)
-    {
-        if (_slots.TryGetSlot(ent, ent.Comp.Slot, out var slot))
-            UpdateAppearance(ent, slot.HasItem);
+        UpdateAppearance(ent, HasItem(ent));
     }
 
     private void UpdateAppearance(EntityUid uid, bool hasItem)
@@ -84,5 +67,43 @@ public sealed class ItemCabinetSystem : EntitySystem
     private void OnClosed(Entity<ItemCabinetComponent> ent, ref OpenableClosedEvent args)
     {
         SetSlotLock(ent, true);
+    }
+
+    /// <summary>
+    /// Tries to get the cabinet's item slot.
+    /// </summary>
+    public bool TryGetSlot(Entity<ItemCabinetComponent?> ent, [NotNullWhen(true)] out ItemSlot? slot)
+    {
+        slot = null;
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        if (!TryComp<ItemSlotsComponent>(ent, out var slots))
+            return false;
+
+        return _slots.TryGetSlot(ent, ent.Comp.Slot, out slot, slots);
+    }
+
+    /// <summary>
+    /// Returns true if the cabinet contains an item.
+    /// </summary>
+    public bool HasItem(Entity<ItemCabinetComponent?> ent)
+    {
+        return TryGetSlot(ent, out var slot) && slot.HasItem;
+    }
+
+    /// <summary>
+    /// Lock or unlock the underlying item slot.
+    /// </summary>
+    public void SetSlotLock(Entity<ItemCabinetComponent?> ent, bool closed)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (!TryComp<ItemSlotsComponent>(ent, out var slots))
+            return;
+
+        if (_slots.TryGetSlot(ent, ent.Comp.Slot, out var slot, slots))
+            _slots.SetLock(ent, slot, closed, slots);
     }
 }
