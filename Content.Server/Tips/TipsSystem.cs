@@ -1,4 +1,4 @@
-﻿using Content.Server.Chat.Managers;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
@@ -32,6 +32,7 @@ public sealed class TipsSystem : EntitySystem
     private float _tipTimeOutOfRound;
     private float _tipTimeInRound;
     private string _tipsDataset = "";
+    private float _tipTippyChance;
 
     [ViewVariables(VVAccess.ReadWrite)]
     private TimeSpan _nextTipTime = TimeSpan.Zero;
@@ -45,10 +46,11 @@ public sealed class TipsSystem : EntitySystem
         Subs.CVar(_cfg, CCVars.TipFrequencyInRound, SetInRound, true);
         Subs.CVar(_cfg, CCVars.TipsEnabled, SetEnabled, true);
         Subs.CVar(_cfg, CCVars.TipsDataset, SetDataset, true);
+        Subs.CVar(_cfg, CCVars.TipsTippyChance, SetTippyChance, true);
 
         RecalculateNextTipTime();
-        _conHost.RegisterCommand("clippy", SendClippy);
-        _conHost.RegisterCommand("tip", SendTip);
+        _conHost.RegisterCommand("clippy", "Broadcast a message as Tippy the clown", "clippy <player Uid | broadcast> <message> [entity prototype] [speak time] [slide time] [waddle]", SendClippy);
+        _conHost.RegisterCommand("tip", "Spawn a random game tip", "tip", SendTip);
     }
 
     private void SendTip(IConsoleShell shell, string argstr, string[] args)
@@ -143,17 +145,29 @@ public sealed class TipsSystem : EntitySystem
         _tipsDataset = value;
     }
 
+    private void SetTippyChance(float value)
+    {
+        _tipTippyChance = value;
+    }
+
     private void AnnounceRandomTip()
     {
         if (!_prototype.TryIndex<DatasetPrototype>(_tipsDataset, out var tips))
             return;
 
         var tip = _random.Pick(tips.Values);
-        var msg = $"Tippy the Clown says:\n\n{tip}";
+        var msg = Loc.GetString("tips-system-chat-message-wrap", ("tip", tip));
 
-        var ev = new ClippyEvent(msg);
-        ev.SpeakTime = 1 + tip.Length * 0.05f;
-        RaiseNetworkEvent(ev);
+        if (_random.Prob(_tipTippyChance))
+        {
+            var ev = new ClippyEvent(msg);
+            ev.SpeakTime = 1 + tip.Length * 0.05f;
+            RaiseNetworkEvent(ev);
+        } else
+        {
+            _chat.ChatMessageToManyFiltered(Filter.Broadcast(), ChatChannel.OOC, tip, msg,
+            EntityUid.Invalid, false, false, Color.MediumPurple);
+        }
     }
 
     private void RecalculateNextTipTime()

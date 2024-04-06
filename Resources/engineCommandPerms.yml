@@ -96,6 +96,8 @@
   - tp
   - tpto
   - respawn
+  - clippy
+  - tip
 
 - Flags: SERVER
   Commands:
@@ -136,8 +138,3 @@
 - Commands:
   - "|"
   - oldhelp
-
-- Flags: FUN
-  Commands:
-  - clippy
-  - tip

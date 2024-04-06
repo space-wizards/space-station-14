@@ -29,6 +29,7 @@ public sealed class ClippyUIController : UIController
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IResourceCache _resCache = default!;
     [UISystemDependency] private readonly AudioSystem _audio = default!;
+    [UISystemDependency] private readonly EntityManager _entSys = default!;
 
     public const float Padding = 50;
     public static Angle WaddleRotation = Angle.FromDegrees(10);
@@ -180,6 +181,14 @@ public sealed class ClippyUIController : UIController
                 }
                 if (!EntityManager.TryGetComponent(_entity, out sprite))
                     return;
+                if (!EntityManager.HasComponent<PaperVisualsComponent>(_entity))
+                {
+                    var paper = EntityManager.AddComponent<PaperVisualsComponent>(_entity); 
+                    paper.BackgroundImagePath = "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png";
+                    paper.BackgroundPatchMargin = new(16f, 16f, 16f, 16f);
+                    paper.BackgroundModulate = new(255, 255, 204);
+                    paper.FontAccentColor = new(0, 0, 0);
+                }
                 clippy.InitLabel(EntityManager.GetComponentOrNull<PaperVisualsComponent>(_entity), _resCache);
 
                 var scale = sprite.Scale;
@@ -189,7 +198,7 @@ public sealed class ClippyUIController : UIController
                 }
                 else
                 {
-                    sprite.Scale = new Vector2(2, 2);
+                    sprite.Scale = new Vector2(3, 3);
                 }
                 clippy.Entity.SetEntity(_entity);
                 clippy.Entity.Scale = scale;
@@ -207,6 +216,7 @@ public sealed class ClippyUIController : UIController
                 }
                 sprite.Rotation = 0;
                 clippy.Label.SetMarkup(_currentMessage.Msg);
+                clippy.Label.Visible = false;
                 clippy.LabelPanel.Visible = false;
                 clippy.Visible = true;
                 sprite.Visible = true;
@@ -225,6 +235,7 @@ public sealed class ClippyUIController : UIController
                     sprite.LayerSetVisible("speaking", true);
                     sprite.LayerSetVisible("hiding", false);
                 }
+                clippy.Label.Visible = true;
                 clippy.LabelPanel.Visible = true;
                 clippy.InvalidateArrange();
                 clippy.InvalidateMeasure();
