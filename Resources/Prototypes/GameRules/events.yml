@@ -335,7 +335,7 @@
     - id: MobMouse2
       prob: 0.02
     - id: MobMouseCancer
-      prob: 0.02
+      prob: 0.005
 
 - type: entity
   id: SlimesSpawn
