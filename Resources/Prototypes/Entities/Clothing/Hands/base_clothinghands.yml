@@ -23,6 +23,7 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+  - type: CanOnlyAttackWhenEquipped
 
 - type: entity
   abstract: true
