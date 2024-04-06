@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.Gibbing.Components;
 using Content.Shared.Gibbing.Events;
@@ -6,7 +6,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Gibbing.Systems;
@@ -223,7 +222,7 @@ public sealed class GibbingSystem : EntitySystem
             FlingDroppedEntity(gibbable, scatterDirection, scatterImpulse, scatterImpulseVariance, scatterCone);
         }
 
-        var gibbedEvent = new EntityGibbedEvent(gibbable, new List<EntityUid> {gibbable});
+        var gibbedEvent = new EntityGibbedEvent(gibbable, new List<EntityUid> { gibbable });
         RaiseLocalEvent(gibbable, ref gibbedEvent);
     }
 
@@ -241,7 +240,7 @@ public sealed class GibbingSystem : EntitySystem
             gibProtoCount = gibbable.Comp.GibPrototypes.Count;
         }
 
-        var gibAttemptEvent = new AttemptEntityGibEvent(gibbable, gibCount, GibType.Drop);
+        var gibAttemptEvent = new AttemptEntityGibEvent(gibbable, gibCount, GibType.Gib);
         RaiseLocalEvent(gibbable, ref gibAttemptEvent);
         switch (gibAttemptEvent.GibType)
         {
