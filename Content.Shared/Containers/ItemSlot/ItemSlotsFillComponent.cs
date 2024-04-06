@@ -13,5 +13,5 @@ public sealed partial class ItemSlotsFillComponent : Component
     /// The item to spawn for each slot.
     /// </summary>
     [DataField(required: true)]
-    public Dictionary<string, EntProtoId> Items;
+    public Dictionary<string, EntProtoId> Items = new();
 }
