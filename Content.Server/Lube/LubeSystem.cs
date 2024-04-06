@@ -62,7 +62,7 @@ public sealed class LubeSystem : EntitySystem
 
         args.Verbs.Add(verb);
     }
-
+    // This was just yoinked almost 1:1 from glue xD
     private bool TryLube(Entity<LubeComponent> entity, EntityUid target, EntityUid actor)
     {
         if (HasComp<LubedComponent>(target) || !HasComp<ItemComponent>(target))
