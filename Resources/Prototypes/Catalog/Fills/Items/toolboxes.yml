@@ -124,6 +124,18 @@
     - id: ClothingMaskGasSyndicate
 
 - type: entity
+  parent: ToolboxSyndicate
+  id: ToolboxSyndicateFilledCoreExtraction
+  suffix: Filled, Core Extraction
+  components:
+  - type: StorageFill
+    contents:
+    - id: Crowbar
+    - id: Welder
+    - id: ThinTippedScrewdriver
+    - id: NukeCoreContainer
+
+- type: entity
   id: ToolboxGoldFilled
   name: golden toolbox
   parent: ToolboxGolden
