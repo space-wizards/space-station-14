@@ -1,7 +1,7 @@
 # Anything human specific (e.g. UI, input) goes under MobHuman
 - type: entity
   parent: BaseMobSpeciesOrganic
-  id: [BaseMobSkinwalker, BaseMob]
+  id: BaseMobSkinwalker
   name: Urist McFlesheater
   abstract: true
   components:
