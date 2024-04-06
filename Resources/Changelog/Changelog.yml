@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Krunk
-  changes:
-  - message: Health analysis interfaces now also display a subject's temperature in
-      Kelvin.
-    type: Add
-  id: 5815
-  time: '2024-01-29T01:32:54.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24643
 - author: Ubaser
   changes:
   - message: Detectives now work as independent agents, separate from security, and
@@ -3815,3 +3807,10 @@
   id: 6314
   time: '2024-04-06T04:41:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26758
+- author: Plykiya
+  changes:
+  - message: You can now carefully walk over glass shards and D4.
+    type: Tweak
+  id: 6315
+  time: '2024-04-06T04:49:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26763
