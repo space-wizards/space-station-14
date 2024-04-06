@@ -570,10 +570,10 @@ namespace Content.Shared.Preferences
             if (!_loadouts.TryGetValue(id, out var loadout))
             {
                 loadout = new RoleLoadout(id);
-                loadout.SetDefault(entManager, protoManager, force: true);
+                loadout.SetDefault(protoManager, force: true);
             }
 
-            loadout.SetDefault(entManager, protoManager);
+            loadout.SetDefault(protoManager);
             return loadout;
         }
     }

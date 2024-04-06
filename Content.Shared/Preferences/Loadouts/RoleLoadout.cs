@@ -18,6 +18,12 @@ public sealed class RoleLoadout
 
     public Dictionary<ProtoId<LoadoutGroupPrototype>, List<Loadout>> SelectedLoadouts = new();
 
+    /*
+     * Loadout-specific data used for validation.
+     */
+
+    public int? Points;
+
     public RoleLoadout(ProtoId<RoleLoadoutPrototype> role)
     {
         Role = role;
@@ -30,6 +36,15 @@ public sealed class RoleLoadout
     {
         var groupRemove = new ValueList<string>();
         var protoManager = collection.Resolve<IPrototypeManager>();
+
+        if (!protoManager.TryIndex(Role, out var roleProto))
+        {
+            SelectedLoadouts.Clear();
+            return;
+        }
+
+        // Reset points to recalculate.
+        Points = roleProto.Points;
 
         foreach (var (group, groupLoadouts) in SelectedLoadouts)
         {
@@ -47,11 +62,20 @@ public sealed class RoleLoadout
             {
                 var loadout = loadouts[i];
 
+                if (!protoManager.TryIndex(loadout.Prototype, out var loadoutProto))
+                {
+                    loadouts.RemoveAt(i);
+                    continue;
+                }
+
                 // Validate the loadout can be applied (e.g. points).
                 if (!IsValid(session, loadout.Prototype, collection, out _))
                 {
                     loadouts.RemoveAt(i);
+                    continue;
                 }
+
+                Apply(loadoutProto);
             }
 
             // Apply defaults if required
@@ -61,15 +85,20 @@ public sealed class RoleLoadout
             {
                 for (var i = 0; i < Math.Min(groupProto.MinLimit, groupProto.Loadouts.Count); i++)
                 {
+                    if (!protoManager.TryIndex(groupProto.Loadouts[i], out var loadoutProto))
+                        continue;
+
                     var defaultLoadout = new Loadout()
                     {
-                        Prototype = groupProto.Loadouts[i],
+                        Prototype = loadoutProto.ID,
                     };
 
                     if (loadouts.Contains(defaultLoadout))
                         continue;
 
-                    SelectedLoadouts[group].Add(defaultLoadout);
+                    // Still need to apply the effects even if validation is ignored.
+                    loadouts.Add(defaultLoadout);
+                    Apply(loadoutProto);
                 }
             }
 
@@ -82,10 +111,18 @@ public sealed class RoleLoadout
         }
     }
 
+    private void Apply(LoadoutPrototype loadoutProto)
+    {
+        foreach (var effect in loadoutProto.Effects)
+        {
+            effect.Apply(this);
+        }
+    }
+
     /// <summary>
     /// Resets the selected loadouts to default if no data is present.
     /// </summary>
-    public void SetDefault(IEntityManager entManager, IPrototypeManager protoManager, bool force = false)
+    public void SetDefault(IPrototypeManager protoManager, bool force = false)
     {
         if (force)
             SelectedLoadouts.Clear();
@@ -131,13 +168,20 @@ public sealed class RoleLoadout
             return false;
         }
 
-        foreach (var effect in loadoutProto.Effects)
+        if (!protoManager.TryIndex(Role, out var roleProto))
         {
-            if (!effect.Validate(session, collection!, out reason))
-                return false;
+            reason = FormattedMessage.FromUnformatted("loadouts-prototype-missing");
+            return false;
         }
 
-        return true;
+        var valid = true;
+
+        foreach (var effect in loadoutProto.Effects)
+        {
+            valid = valid && effect.Validate(this, session, collection, out reason);
+        }
+
+        return valid;
     }
 
     /// <summary>
@@ -184,14 +228,9 @@ public sealed class RoleLoadout
     /// </summary>
     public bool RemoveLoadout(ProtoId<LoadoutGroupPrototype> selectedGroup, ProtoId<LoadoutPrototype> selectedLoadout, IPrototypeManager protoManager)
     {
-        var groupLoadouts = SelectedLoadouts[selectedGroup];
+        // Although this may bring us below minimum we'll let EnsureValid handle it.
 
-        // If removal takes it below minimum then refuse it
-        if (protoManager.TryIndex(selectedGroup, out var groupProto))
-        {
-            if (groupLoadouts.Count <= groupProto.MinLimit)
-                return false;
-        }
+        var groupLoadouts = SelectedLoadouts[selectedGroup];
 
         for (var i = 0; i < groupLoadouts.Count; i++)
         {

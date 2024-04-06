@@ -125,7 +125,7 @@
   - Trinkets
 
 - type: roleLoadout
-  id: JobMedicalIntern
+  id: JobSecurityCadet
   groups:
   - SecurityCadetJumpsuit
   - SecurityBackpack

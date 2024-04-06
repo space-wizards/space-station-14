@@ -33,6 +33,8 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
     /// </summary>
     public void RefreshLoadouts(RoleLoadout loadout, ICommonSession session, IDependencyCollection collection)
     {
+        var protoMan = collection.Resolve<IPrototypeManager>();
+        var loadoutSystem = collection.Resolve<IEntityManager>().System<LoadoutSystem>();
         RestrictionsContainer.DisposeAllChildren();
 
         if (_groupProto.MinLimit > 0)
@@ -53,10 +55,17 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
             });
         }
 
+        if (protoMan.TryIndex(loadout.Role, out var roleProto) && roleProto.Points != null && loadout.Points != null)
+        {
+            RestrictionsContainer.AddChild(new Label()
+            {
+                Text = Loc.GetString("loadouts-points-limit", ("count", loadout.Points.Value), ("max", roleProto.Points.Value)),
+                Margin = new Thickness(5, 0, 5, 5),
+            });
+        }
+
         LoadoutsContainer.DisposeAllChildren();
         // Didn't use options because this is more robust in future.
-        var protoMan = collection.Resolve<IPrototypeManager>();
-        var loadoutSystem = collection.Resolve<IEntityManager>().System<LoadoutSystem>();
 
         var selected = loadout.SelectedLoadouts[_groupProto.ID];
 

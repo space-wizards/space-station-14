@@ -3,8 +3,18 @@
   id: Trinkets
   name: loadout-group-trinkets
   minLimit: 0
+  maxLimit: 3
   loadouts:
   - PlushieLizard
+  - ClothingNeckLGBTPin
+  - ClothingNeckAromanticPin
+  - ClothingNeckAsexualPin
+  - ClothingNeckBisexualPin
+  - ClothingNeckIntersexPin
+  - ClothingNeckLesbianPin
+  - ClothingNeckNonBinaryPin
+  - ClothingNeckPansexualPin
+  - ClothingNeckTransPin
 
 # Cargo
 - type: loadoutGroup
@@ -65,7 +75,7 @@
 
 - type: loadoutGroup
   id: SalvageSpecialistBackpack
-  name: loadout-group-salvage-specalist-backpack
+  name: loadout-group-salvage-specialist-backpack
   loadouts:
   - SalvageSpecialistBackpack
   - SalvageSpecialistSatchel
@@ -317,7 +327,7 @@
   - WardenJumpskirt
 
 - type: loadoutGroup
-  id: DetectiveOuterClothing
+  id: WardenOuterClothing
   name: loadout-group-warden-outerclothing
   minLimit: 0
   loadouts:
@@ -417,7 +427,7 @@
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerJumpsuit
-  name: loadout-chief-medical-officer-jumpsuit
+  name: loadout-group-chief-medical-officer-jumpsuit
   loadouts:
   - ChiefMedicalOfficerJumpsuit
   - ChiefMedicalOfficerJumpskirt
@@ -479,7 +489,7 @@
 
 - type: loadoutGroup
   id: MedicalBackpack
-  name: loadout-group-medical-backpack
+  name: loadout-group-medical-doctor-backpack
   loadouts:
   - MedicalDoctorBackpack
   - MedicalDoctorSatchel
