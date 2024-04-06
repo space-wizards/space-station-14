@@ -152,9 +152,6 @@
   - type: HeldSpeedModifier
   - type: Item
     size: Huge
-  - type: Tag
-    tags:
-    - Softsuit
 
 - type: entity
   parent: ClothingOuterBase
