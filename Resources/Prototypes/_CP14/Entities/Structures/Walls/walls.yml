@@ -16,9 +16,9 @@
   description: Эти стены повидали многое, и осталось им недолго.
   components:
   - type: Sprite
-    sprite: CrystallPunk/Structures/Walls/ruin_stone.rsi
+    sprite: _CP14/Structures/Walls/ruin_stone.rsi
   - type: Icon
-    sprite: CrystallPunk/Structures/Walls/ruin_stone.rsi
+    sprite: _CP14/Structures/Walls/ruin_stone.rsi
   - type: IconSmooth
     key: CPwallsbrick
     base: brick 
@@ -30,9 +30,9 @@
   description: Доска к доске, и вместе образуют они защиту и уют.
   components:
   - type: Sprite
-    sprite: CrystallPunk/Structures/Walls/wood_full.rsi
+    sprite: _CP14/Structures/Walls/wood_full.rsi
   - type: Icon
-    sprite: CrystallPunk/Structures/Walls/wood_full.rsi
+    sprite: _CP14/Structures/Walls/wood_full.rsi
   - type: IconSmooth
     key: CPwallswood
     base: wood 
@@ -44,9 +44,9 @@
   description: Прочная каменная природная стена. От нее веет пещерным холодом.
   components:
   - type: Sprite
-    sprite: CrystallPunk/Structures/Walls/cave_stone.rsi
+    sprite: _CP14/Structures/Walls/cave_stone.rsi
   - type: Icon
-    sprite: CrystallPunk/Structures/Walls/cave_stone.rsi
+    sprite: _CP14/Structures/Walls/cave_stone.rsi
   - type: IconSmooth
     key: CPwallsbrick
     base: stone 
@@ -64,7 +64,7 @@
   - type: PlacementReplacement
     key: walls
   - type: Sprite
-    sprite: CrystallPunk/Structures/Walls/ruin_stone.rsi
+    sprite: _CP14/Structures/Walls/ruin_stone.rsi
     snapCardinals: true
     layers:
     - state: fragment1

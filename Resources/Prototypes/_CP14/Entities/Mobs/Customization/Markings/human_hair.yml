@@ -1,0 +1,87 @@
+- type: marking
+  id: CPHumanHair80s
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _CP14/Mobs/Customization/human_hair.rsi
+      state: 80s
+      
+- type: marking
+  id: CPHumanHairA
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _CP14/Mobs/Customization/human_hair.rsi
+      state: a
+      
+- type: marking
+  id: CPHumanHairAntenna
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _CP14/Mobs/Customization/human_hair.rsi
+      state: antenna
+      
+- type: marking
+  id: CPHumanHairB
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _CP14/Mobs/Customization/human_hair.rsi
+      state: b
+      
+- type: marking
+  id: CPHumanHairBedhead
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _CP14/Mobs/Customization/human_hair.rsi
+      state: bedhead
+      
+- type: marking
+  id: CPHumanHairBedheadV2
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _CP14/Mobs/Customization/human_hair.rsi
+      state: bedheadv2
+      
+- type: marking
+  id: CPHumanHairBeeHive
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _CP14/Mobs/Customization/human_hair.rsi
+      state: beehive
+      
+- type: marking
+  id: CPHumanHairBigPompadour
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _CP14/Mobs/Customization/human_hair.rsi
+      state: bigpompadour
+      
+- type: marking
+  id: CPHumanHairBob
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _CP14/Mobs/Customization/human_hair.rsi
+      state: bob
+      
+- type: marking
+  id: CPHumanHairBigBraid
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _CP14/Mobs/Customization/human_hair.rsi
+      state: braid
+      
+- type: marking
+  id: CPHumanHairBigDoubleBun
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _CP14/Mobs/Customization/human_hair.rsi
+      state: doublebun

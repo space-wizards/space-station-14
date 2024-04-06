@@ -1,17 +1,17 @@
 - type: entity
-  name: серп
+  id: CPBaseSickle
   parent: 
   - BaseItem
   - CPBaseWeaponChemical
   - CPBaseWeaponLight
   - CPBaseWeaponShort
-  id: CPBaseSickle
+  name: серп
   description: Изначально разработанное как оружие против травы, серп внезапно показал себя хорош и в более кровавой жатве.
   components:
   - type: Item
     storedRotation: -45 
   - type: Sprite
-    sprite: CrystallPunk/Objects/Weapons/Melee/Sickle/sickle.rsi
+    sprite: _CP14/Objects/Weapons/Melee/Sickle/sickle.rsi
     layers:
     - state: icon
   - type: MeleeWeapon

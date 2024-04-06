@@ -1,7 +1,7 @@
 - type: gameMap
   id: MeteorArena
   mapName: Meteor Arena
-  mapPath: /Maps/CrystallPunk/meteor-arena.yml
+  mapPath: /Maps/_CP14/meteor-arena.yml
   minPlayers: 0
   stations:
     Arena:

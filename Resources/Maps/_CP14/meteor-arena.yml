@@ -984,7 +984,7 @@ entities:
     - type: Transform
       pos: -0.5,-0.5
       parent: 2
-- proto: SpawnPointAdventurer
+- proto: CPSpawnPointAdventurer
   entities:
   - uid: 99
     components:

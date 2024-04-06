@@ -1,17 +1,17 @@
 - type: entity
-  name: ручной топор
+  id: CPBaseHandheldAxe
   parent: 
   - BaseItem
   - CPBaseWeaponChemical
   - CPBaseWeaponThrowable
   - CPBaseWeaponLight
-  id: CPBaseHandheldAxe
+  name: ручной топор
   description: Небольшой, надежный топорик.
   components:
   - type: Item
     size: Normal
   - type: Sprite
-    sprite: CrystallPunk/Objects/Weapons/Melee/HandheldAxe/handheldAxe.rsi
+    sprite: _CP14/Objects/Weapons/Melee/HandheldAxe/handheldAxe.rsi
     layers:
     - state: icon
   - type: Sharp

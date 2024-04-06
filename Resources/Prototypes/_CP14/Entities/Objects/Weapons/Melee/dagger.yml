@@ -1,18 +1,18 @@
 - type: entity
-  name: кинжал
+  id: CPBaseDagger
   parent: 
   - BaseItem
   - CPBaseWeaponChemical
   - CPBaseWeaponThrowable
   - CPBaseWeaponLight
   - CPBaseWeaponShort
-  id: CPBaseDagger
+  name: кинжал
   description: Небольшое острое лезвие, сгодится и для ближнего боя, и как метательное оружие.
   components:
   - type: Item
     storedRotation: -45 
   - type: Sprite
-    sprite: CrystallPunk/Objects/Weapons/Melee/Dagger/dagger.rsi
+    sprite: _CP14/Objects/Weapons/Melee/Dagger/dagger.rsi
     layers:
     - state: icon
   - type: Sharp

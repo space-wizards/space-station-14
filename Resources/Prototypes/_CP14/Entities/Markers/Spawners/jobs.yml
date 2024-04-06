@@ -1,5 +1,5 @@
 - type: entity
-  id: SpawnPointAdventurer
+  id: CPSpawnPointAdventurer
   parent: SpawnPointJobBase
   name: adventurer
   components:

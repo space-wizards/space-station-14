@@ -1,21 +1,21 @@
 - type: entity
-  name: двуручный меч #ToDo - сделать базовый двуручник
+  id: CPBaseTwoHandedSword
   parent: 
   - BaseItem
   - CPBaseWeaponChemical
-  id: CPBaseTwoHandedSword
+  name: двуручный меч
   description: Мощное оружие, требующее огромной силы и умения для эффективного использования.
   components:
   - type: Sprite
-    sprite: CrystallPunk/Objects/Weapons/Melee/TwoHandedSword/twoHandedSword.rsi
+    sprite: _CP14/Objects/Weapons/Melee/TwoHandedSword/twoHandedSword.rsi
     state: icon
   - type: Clothing
-    sprite: CrystallPunk/Objects/Weapons/Melee/TwoHandedSword/twoHandedSword.rsi
+    sprite: _CP14/Objects/Weapons/Melee/TwoHandedSword/twoHandedSword.rsi
     quickEquip: false
     slots:
     - back
   - type: Icon
-    sprite: CrystallPunk/Objects/Weapons/Melee/TwoHandedSword/twoHandedSword32.rsi
+    sprite: _CP14/Objects/Weapons/Melee/TwoHandedSword/twoHandedSword32.rsi
     state: icon
   - type: Sharp
   - type: MeleeWeapon

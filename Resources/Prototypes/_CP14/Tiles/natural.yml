@@ -1,7 +1,7 @@
 - type: tile
   id: FloorPlanetGrassCP
   name: травяной покров
-  sprite: /Textures/CrystallPunk/Tiles/Grass/grass.png
+  sprite: /Textures/_CP14/Tiles/Grass/grass.png
   variants: 8
   placementVariants:
   - 1.0
@@ -14,14 +14,14 @@
   - 1.0
   edgeSpritePriority: 1
   edgeSprites:
-    SouthEast: /Textures/CrystallPunk/Tiles/Grass/single_edge.png
-    NorthEast: /Textures/CrystallPunk/Tiles/Grass/single_edge.png
-    NorthWest: /Textures/CrystallPunk/Tiles/Grass/single_edge.png
-    SouthWest: /Textures/CrystallPunk/Tiles/Grass/single_edge.png
-    South: /Textures/CrystallPunk/Tiles/Grass/double_edge.png
-    East: /Textures/CrystallPunk/Tiles/Grass/double_edge.png
-    North: /Textures/CrystallPunk/Tiles/Grass/double_edge.png
-    West: /Textures/CrystallPunk/Tiles/Grass/double_edge.png
+    SouthEast: /Textures/_CP14/Tiles/Grass/single_edge.png
+    NorthEast: /Textures/_CP14/Tiles/Grass/single_edge.png
+    NorthWest: /Textures/_CP14/Tiles/Grass/single_edge.png
+    SouthWest: /Textures/_CP14/Tiles/Grass/single_edge.png
+    South: /Textures/_CP14/Tiles/Grass/double_edge.png
+    East: /Textures/_CP14/Tiles/Grass/double_edge.png
+    North: /Textures/_CP14/Tiles/Grass/double_edge.png
+    West: /Textures/_CP14/Tiles/Grass/double_edge.png
   baseTurf: FloorPlanetGrass
   isSubfloor: true
   footstepSounds:

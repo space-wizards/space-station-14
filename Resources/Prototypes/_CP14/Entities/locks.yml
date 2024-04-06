@@ -9,7 +9,7 @@
     lockPickDamageChance: 0.2
     autoGenerateShape: Debug
   - type: Sprite
-    sprite: CrystallPunk/Objects/keys.rsi
+    sprite: _CP14/Objects/keys.rsi
     layers:
     - state: lock
     

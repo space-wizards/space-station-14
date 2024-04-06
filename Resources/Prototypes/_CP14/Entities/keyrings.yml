@@ -7,7 +7,7 @@
   components:
   - type: CPKeyRing
   - type: Sprite
-    sprite: CrystallPunk/Objects/keys.rsi
+    sprite: _CP14/Objects/keys.rsi
     layers:
     - state: keyring
     - state: ring-0

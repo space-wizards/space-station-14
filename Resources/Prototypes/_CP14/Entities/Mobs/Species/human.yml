@@ -9,7 +9,7 @@
     species: CPHuman
   - type: Hunger
   - type: Icon # It will not have an icon in the adminspawn menu without this. Body parts seem fine for whatever reason.
-    sprite: CrystallPunk/Mobs/Species/Human/parts.rsi
+    sprite: _CP14/Mobs/Species/Human/parts.rsi
     state: full
   - type: Thirst
   - type: Butcherable

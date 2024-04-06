@@ -5,7 +5,7 @@
   parent: UnanchoredChairBase
   components:
   - type: Sprite
-    sprite: CrystallPunk/Structures/Furniture/chairs.rsi
+    sprite: _CP14/Structures/Furniture/chairs.rsi
     state: wooden
   - type: Construction
     graph: CPSeat

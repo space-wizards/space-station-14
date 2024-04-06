@@ -5172,7 +5172,7 @@ entities:
     - type: Transform
       pos: 3.5,8.5
       parent: 179
-- proto: SpawnPointAdventurer
+- proto: CPSpawnPointAdventurer
   entities:
   - uid: 954
     components:

@@ -1,18 +1,18 @@
 - type: entity
-  name: легкий молот
+  id: CPBaseLightHammer
   parent: 
   - BaseItem
   - CPBaseWeaponChemical
   - CPBaseWeaponThrowable
   - CPBaseWeaponLight
   - CPBaseWeaponShort
-  id: CPBaseLightHammer
+  name: легкий молот
   description: Небольшое молоток. Хорош как для плотнических работ, так и для проламывания черепов.
   components:
   - type: Item
     storedRotation: -45 
   - type: Sprite
-    sprite: CrystallPunk/Objects/Weapons/Melee/LightHammer/lightHammer.rsi
+    sprite: _CP14/Objects/Weapons/Melee/LightHammer/lightHammer.rsi
     layers:
     - state: icon
   - type: MeleeWeapon
