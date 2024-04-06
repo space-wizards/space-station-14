@@ -1,0 +1,65 @@
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesWindingsBlack
+  name: black windings
+  description: Patches of thick black cloth woven into shoes. The call of the warm sea sand, but in the end only the cold floor....
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Windings/black.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Windings/black.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesWindingsBlue
+  name: blue windings
+  description: Patches of thick blue cloth woven into shoes. The call of the warm sea sand, but in the end only the cold floor....
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Windings/blue.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Windings/blue.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesWindingsGreen
+  name: green windings
+  description: Patches of thick green cloth woven into shoes. The call of the warm sea sand, but in the end only the cold floor....
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Windings/green.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Windings/green.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesWindingsRed
+  name: red windings
+  description: Patches of thick red cloth woven into shoes. The call of the warm sea sand, but in the end only the cold floor....
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Windings/red.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Windings/red.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesWhtie
+  name: white windings
+  description: Patches of thick white cloth woven into shoes. The call of the warm sea sand, but in the end only the cold floor....
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Windings/white.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Windings/white.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesYellow
+  name: yellow windings
+  description: Patches of thick yellow cloth woven into shoes. The call of the warm sea sand, but in the end only the cold floor....
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Windings/yellow.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Windings/yellow.rsi                                    

@@ -70,6 +70,12 @@
     ClothingHeadHatGreensoft: 2
     ClothingHeadHatOrangesoft: 2
     ClothingHeadHatRedsoft: 2
+    ClothingShoesWindingsBlack: 2
+    ClothingShoesWindingsBlue: 2
+    ClothingShoesWindingsGreen: 2
+    ClothingShoesWindingsRed: 2
+    ClothingShoesWhtie: 2
+    yellow windings: 2
     # DO NOT ADD MORE, USE UNIFORM DYING
     ClothingHeadHatBlacksoft: 2
     ClothingHeadHatPurplesoft: 2
@@ -88,6 +94,12 @@
     ClothingHandsGlovesColorOrange: 2
     ClothingHandsGlovesColorPurple: 2
     ClothingEyesGlassesCheapSunglasses: 3
+    ClothingHandsGlovesArmwrapBlack: 2
+    ClothingHandsGlovesArmwrapBlue: 2
+    ClothingHandsGlovesArmwrapGreen: 2
+    ClothingHandsGlovesArmwrapRed: 2
+    ClothingHandsGlovesArmwrapWhite: 2
+    ClothingHandsGlovesArmwrapYellow: 2
     # DO NOT ADD MORE, USE UNIFORM DYING
   contrabandInventory:
     ClothingMaskNeckGaiter: 2

@@ -1,0 +1,79 @@
+- type: entity
+  parent: ClothingHandsGlovesSyntheticBase
+  id: ClothingHandsGlovesArmwrapBlack
+  name: black arm wrap
+  description: Patches of thick black cloth wrapped around the arms. Now you can wipe your blood without getting your hands dirty!
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Armwrap/black.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Armwrap/black.rsi
+  - type: Fiber
+    fiberColor: fibers-black
+
+- type: entity
+  parent: ClothingHandsGlovesSyntheticBase
+  id: ClothingHandsGlovesArmwrapBlue
+  name: blue arm wrap
+  description: Patches of thick blue cloth wrapped around the arms. Now you can wipe your blood without getting your hands dirty!
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Armwrap/blue.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Armwrap/blue.rsi
+  - type: Fiber
+    fiberColor: fibers-blue
+
+- type: entity
+  parent: ClothingHandsGlovesSyntheticBase
+  id: ClothingHandsGlovesArmwrapGreen
+  name: green arm wrap
+  description: Patches of thick green cloth wrapped around the arms. Now you can wipe your blood without getting your hands dirty!
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Armwrap/green.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Armwrap/green.rsi
+  - type: Fiber
+    fiberColor: fibers-green 
+
+
+- type: entity
+  parent: ClothingHandsGlovesSyntheticBase
+  id: ClothingHandsGlovesArmwrapRed
+  name: red arm wrap
+  description: Patches red gloves that do not keep you from frying.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Armwrap/red.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Armwrap/red.rsi
+  - type: Fiber
+    fiberColor: fibers-red
+
+
+- type: entity
+  parent: ClothingHandsGlovesSyntheticBase
+  id: ClothingHandsGlovesArmwrapWhite
+  name: white arm wrap
+  description: Patches of thick white cloth wrapped around the arms. Now you can wipe your blood without getting your hands dirty!
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Armwrap/white.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Armwrap/white.rsi
+  - type: Fiber
+    fiberColor: fibers-white          
+
+- type: entity
+  parent: ClothingHandsGlovesSyntheticBase
+  id: ClothingHandsGlovesArmwrapYellow
+  name: yellow arm wrap
+  description: Patches of thick yellow cloth wrapped around the arms. Now you can wipe your blood without getting your hands dirty!
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Armwrap/yellow.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Armwrap/yellow.rsi
+  - type: Fiber
+    fiberColor: fibers-yellow    
