@@ -101,10 +101,10 @@
     - type: Examiner
     - type: DoAfter
     - type: MobState
-    - type: Organ
-    - type: Brain
       allowedStates:
         - Alive
+    - type: Organ
+    - type: Brain
     - type: Tag
       tags:
         - MindTransferTarget
