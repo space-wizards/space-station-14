@@ -1,12 +1,14 @@
 ﻿using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Medical.Metabolism.Components;
 
 /// <summary>
 /// This is used for...
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MetabolismComponent : Component
 {
-
+    [DataField(required: true)]
+    public string LinkedSolutionName;
 }
