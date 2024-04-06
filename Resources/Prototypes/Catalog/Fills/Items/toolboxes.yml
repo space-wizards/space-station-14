@@ -132,6 +132,7 @@
     contents:
     - id: Crowbar
     - id: Welder
+    - id: Wrench
     - id: ThinTippedScrewdriver
     - id: NukeCoreContainer
 

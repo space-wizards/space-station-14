@@ -21,7 +21,7 @@
 - type: entity
   parent: [BaseItem, BaseItemCabinet]
   id: NukeCoreContainer
-  name: nuke core contianer
+  name: nuke core container
   description: Solid container for radioactive objects.
   components:
   - type: Sprite

@@ -41,8 +41,10 @@
       steps:
       - tool: Welding
         doAfter: 6
+      - tool: Anchoring
+        doAfter: 2
       - tool: Welding
-        doAfter: 4
+        doAfter: 8
     - to: panel_exposed
       steps:
       - material: Plasteel
