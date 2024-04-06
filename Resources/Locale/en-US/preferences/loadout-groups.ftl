@@ -7,17 +7,17 @@ loadout-group-quartermaster-jumpsuit = Quartermaster jumpsuit
 loadout-group-quartermaster-backpack = Quartermaster backpack
 loadout-group-quartermaster-neck = Quartermaster neck
 
-loadout-group-technician-head = Technician head
-loadout-group-technician-jumpsuit = Technician jumpsuit
-loadout-group-technician-backpack = Technician backpack
+loadout-group-cargo-technician-head = Technician head
+loadout-group-cargo-technician-jumpsuit = Technician jumpsuit
+loadout-group-cargo-technician-backpack = Technician backpack
 
 loadout-group-salvage-specialist-backpack = Salvage Specialist backpack
 
 # Engineering
 loadout-group-chief-engineer-head = Chief Engineer head
 loadout-group-chief-engineer-jumpsuit = Chief Engineer jumpsuit
-loadout-group-chief-engineer-chief-engineer = Chief Engineer backpack
-loadout-group-chief-engineer-chief-engineer-neck = Chief Engineer neck
+loadout-group-chief-engineer-backpack = Chief Engineer backpack
+loadout-group-chief-engineer-neck = Chief Engineer neck
 
 loadout-group-technical-assistant-jumpsuit = Technical Assistant jumpsuit
 
@@ -39,10 +39,10 @@ loadout-group-research-director-outerclothing = Research Director outer clothing
 
 loadout-group-scientist-head = Scientist head
 loadout-group-scientist-neck = Scientist neck
-loadout-group-scientist-scientist-jumpsuit = Scientist jumpsuit
+loadout-group-scientist-jumpsuit = Scientist jumpsuit
 loadout-group-scientist-backpack = Scientist backpack
 loadout-group-scientist-outerclothing = Scientist outer clothing
-loadout-group-scientist-scientist-id = Scientist ID
+loadout-group-scientist-id = Scientist ID
 
 loadout-group-research-assistant-jumpsuit = Research Assistant jumpsuit
 

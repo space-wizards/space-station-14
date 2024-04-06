@@ -159,7 +159,7 @@
 
 - type: loadout
   id: MedicalDoctor
-  equipment: MedicalDoctor
+  equipment: MedicalDoctorDuffel
 
 - type: startingGear
   id: MedicalDoctorDuffel
