@@ -53,4 +53,4 @@
 - type: startingGear
   id: ChemistLabCoat
   equipment:
-    back: ClothingOuterCoatLabChem
+    outerClothing: ClothingOuterCoatLabChem

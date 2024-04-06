@@ -214,7 +214,7 @@
 - type: startingGear
   id: SeniorPhysicianLabCoat
   equipment:
-    back: ClothingOuterCoatLabSeniorPhysician
+    outerClothing: ClothingOuterCoatLabSeniorPhysician
 
 # ID
 - type: loadout

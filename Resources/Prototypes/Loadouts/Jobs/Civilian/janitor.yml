@@ -1,0 +1,28 @@
+# Head
+- type: loadout
+  id: JanitorHead
+  equipment: JanitorHead
+
+- type: startingGear
+  id: JanitorHead
+  equipment:
+    head: ClothingHeadHatPurplesoft
+
+# Jumpsuit
+- type: loadout
+  id: JanitorJumpsuit
+  equipment: JanitorJumpsuit
+
+- type: startingGear
+  id: JanitorJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJanitor
+
+- type: loadout
+  id: JanitorJumpskirt
+  equipment: JanitorJumpskirt
+
+- type: startingGear
+  id: JanitorJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtJanitor

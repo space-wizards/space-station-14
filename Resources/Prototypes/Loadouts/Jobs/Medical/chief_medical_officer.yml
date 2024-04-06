@@ -82,4 +82,4 @@
 - type: startingGear
   id: ChiefMedicalOfficerLabCoat
   equipment:
-    back: ClothingOuterCoatLabCmo
+    outerClothing: ClothingOuterCoatLabCmo
