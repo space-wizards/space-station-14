@@ -19,7 +19,7 @@
   - type: MeleeWeapon
     attackRate: 1.8
     wideAnimationRotation: 225
-    wideAnimation: CPWeaponArcSlashLight
+    wideAnimation: CPWeaponArcSlash
     damage:
       types:
         Slash: 5

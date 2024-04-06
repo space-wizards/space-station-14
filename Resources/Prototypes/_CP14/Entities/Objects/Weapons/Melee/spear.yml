@@ -1,0 +1,41 @@
+- type: entity
+  id: CPBaseThrowableSpear
+  parent: 
+  - BaseItem
+  - CPBaseWeaponChemical
+  - CPBaseWeaponThrowable
+  name: метательное копье
+  description: Оружие, исправно выполняющее свой долг еще со времен эпохи драконов.
+  components:
+  - type: Item
+    storedRotation: 0
+    size: Large
+  - type: Sprite
+    sprite: _CP14/Objects/Weapons/Melee/ThrowableSpear/throwableSpear.rsi
+    layers:
+    - state: icon
+  - type: Sharp
+  - type: MeleeWeapon
+    attackRate: 1
+    wideAnimationRotation: -115
+    wideAnimation: CPWeaponArcThrust
+    damage:
+      types:
+        Piercing: 24
+    soundHit:
+      collection: MetalThud
+    cPAnimationLength: 0.25
+    cPAnimationOffset: -1.3
+  - type: EmbeddableProjectile
+    offset: 0.15,0.15
+    removalTime: 1.5
+  - type: ThrowingAngle
+    angle: 245
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 20
+  - type: DamageOnLand
+    damage:
+      types:
+        Piercing: 20

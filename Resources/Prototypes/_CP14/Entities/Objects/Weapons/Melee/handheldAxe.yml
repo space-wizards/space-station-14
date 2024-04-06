@@ -19,7 +19,7 @@
     attackRate: 1.4
     range: 1.2
     wideAnimationRotation: 225
-    wideAnimation: CPWeaponArcSlashLight
+    wideAnimation: CPWeaponArcSlash
     damage:
       types:
         Slash: 10

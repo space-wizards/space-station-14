@@ -19,5 +19,6 @@ public enum WeaponArcAnimation : byte
     Thrust,
     Slash,
     //CrystallPunk Melee upgrade
-    CPSlashLight
+    CPSlash,
+    CPThrust
 }

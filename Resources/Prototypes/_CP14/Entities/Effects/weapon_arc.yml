@@ -1,7 +1,15 @@
 - type: entity
-  id: CPWeaponArcSlashLight
+  id: CPWeaponArcSlash
   parent: WeaponArcStatic
   noSpawn: true
   components:
     - type: WeaponArcVisuals
-      animation: CPSlashLight
+      animation: CPSlash
+
+- type: entity
+  id: CPWeaponArcThrust
+  parent: WeaponArcStatic
+  noSpawn: true
+  components:
+    - type: WeaponArcVisuals
+      animation: CPThrust

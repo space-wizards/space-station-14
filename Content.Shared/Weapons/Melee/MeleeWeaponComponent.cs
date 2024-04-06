@@ -126,12 +126,6 @@ public sealed partial class MeleeWeaponComponent : Component
     public float CPAnimationLength = 0.5f;
 
     /// <summary>
-    /// CrystallPunk Melee upgrade. Scale arc (for small knife ex.)
-    /// </summary>
-    [DataField]
-    public float CPAnimationScale = 1f;
-
-    /// <summary>
     /// CrystallPunk Melee upgrade. how far away from the player the animation should be played.
     /// </summary>
     [DataField]
