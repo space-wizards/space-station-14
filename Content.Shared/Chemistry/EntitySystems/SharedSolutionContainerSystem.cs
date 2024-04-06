@@ -272,13 +272,13 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var (uid, comp) = soln;
         var solution = comp.Solution;
 
-        // Process absorptions, only processed if there is an absorber
-        if (needsAbsorptionProcessing && solution.CanBeAbsorbed)
-            ChemicalAbsorptionSystem.AbsorbChemicals(soln, absorber);
-
         // Process reactions
         if (needsReactionsProcessing && solution.CanReact)
             ChemicalReactionSystem.FullyReactSolution(soln, mixerComponent);
+
+        // Process absorptions, only processed if there is an absorber
+        if (needsAbsorptionProcessing && solution.CanBeAbsorbed)
+            ChemicalAbsorptionSystem.AbsorbChemicals(soln, absorber);
 
         var overflow = solution.Volume - solution.MaxVolume;
         if (overflow > FixedPoint2.Zero)

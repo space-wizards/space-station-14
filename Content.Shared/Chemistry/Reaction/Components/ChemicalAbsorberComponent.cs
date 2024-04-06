@@ -3,6 +3,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Chemistry.Reaction.Components;
 
@@ -12,27 +13,36 @@ namespace Content.Shared.Chemistry.Reaction.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ChemicalAbsorberComponent : Component
 {
+
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    public TimeSpan UpdateRate = new(0,0,0,1);
+
     [DataField]
     public TimeSpan LastUpdate;
+
+    [DataField(required: true), AutoNetworkedField]
+    public List<string> LinkedSolutions = new();
 
     /// <summary>
     /// List of absorption groups, these will be split into single/multi-reagent absorptions and then sorted by priortiy
     /// with multi-reagent absorptions being checked FIRST.
+    /// And their reaction rate multipliers
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<ProtoId<AbsorptionGroupPrototype>> AbsorptionGroups = new();
+    public Dictionary<ProtoId<AbsorptionGroupPrototype>, FixedPoint2> AbsorptionGroups = new();
 
     /// <summary>
     /// A list of individual absorptions to add in addition to the ones contained in the absorption groups
+    /// And their reaction rate multipliers
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<ProtoId<AbsorptionPrototype>>? AdditionalAbsorptions = null;
+    public Dictionary<ProtoId<AbsorptionPrototype>, FixedPoint2>? AdditionalAbsorptions = null;
 
     /// <summary>
     /// Multiplier for the absorption rate of the chosen absorption (if any)
     /// </summary>
     [DataField, AutoNetworkedField]
-    public FixedPoint2 RateMultiplier = 1.0;
+    public FixedPoint2 GlobalRateMultiplier = 1.0;
 
     /// <summary>
     /// List of all the reagent absorption reactions in the order they should be checked
@@ -43,16 +53,16 @@ public sealed partial class ChemicalAbsorberComponent : Component
 [DataDefinition]
 public partial struct CachedAbsorptionData
 {
-    public List<(ProtoId<ReagentPrototype>, FixedPoint2)> RequiredReagents;
-    public List<(ProtoId<ReagentPrototype>, FixedPoint2)>? RequiredCatalysts;
+    public List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)> RequiredReagents;
+    public List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)>? RequiredCatalysts;
     public FixedPoint2 MinTemp;
     public FixedPoint2 MaxTemp;
     public readonly float Rate;
     public bool Quantized;
     public ProtoId<AbsorptionPrototype> ProtoId;
 
-    public CachedAbsorptionData(List<(ProtoId<ReagentPrototype>, FixedPoint2)> requiredReagents,
-        List<(ProtoId<ReagentPrototype>, FixedPoint2)>? requiredCatalysts,
+    public CachedAbsorptionData(List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)> requiredReagents,
+        List<(ProtoId<ReagentPrototype>, FixedPoint2, FixedPoint2)>? requiredCatalysts,
         AbsorptionPrototype absorptionProto)
     {
         RequiredReagents = requiredReagents;

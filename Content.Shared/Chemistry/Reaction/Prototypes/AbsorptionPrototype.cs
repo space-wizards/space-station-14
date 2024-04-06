@@ -48,6 +48,10 @@ public sealed partial class AbsorptionPrototype : IPrototype
     [DataField]
     public float Rate = 1.0f;
 
+
+    /// <summary>
+    /// What effects does absorbing this reagent have
+    /// </summary>
     [DataField]
     public List<BaseSolutionEffect> Effects = new();
 
