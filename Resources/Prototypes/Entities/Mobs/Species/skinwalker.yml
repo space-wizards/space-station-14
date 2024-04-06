@@ -1,7 +1,7 @@
 # Anything human specific (e.g. UI, input) goes under MobHuman
 - type: entity
   parent: BaseMobSpeciesOrganic
-  id: BaseMobSkinwalker
+  id: [BaseMobSkinwalker, BaseMob]
   name: Urist McFlesheater
   abstract: true
   components:
@@ -10,6 +10,9 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: full
   - type: TransferMindOnGib
+  - type: Body
+    prototype: Skinwalker
+    requiredLegs: 2
 
 - type: entity
   parent: BaseSpeciesDummy
