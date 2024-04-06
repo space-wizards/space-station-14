@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: The fire anomaly is now heavier in content.
-    type: Tweak
-  - message: Artifacts no longer block projectiles.
-    type: Tweak
-  id: 5814
-  time: '2024-01-29T01:30:55.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24666
 - author: Krunk
   changes:
   - message: Health analysis interfaces now also display a subject's temperature in
@@ -3815,3 +3806,12 @@
   id: 6313
   time: '2024-04-06T01:55:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26745
+- author: BITTERLYNX
+  changes:
+  - message: Rodents are more visually pleasing to burn
+    type: Fix
+  - message: mothroach and hammy also more visually pleasing to burn
+    type: Fix
+  id: 6314
+  time: '2024-04-06T04:41:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26758
