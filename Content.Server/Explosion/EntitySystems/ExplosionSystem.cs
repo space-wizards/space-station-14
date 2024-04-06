@@ -4,6 +4,8 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Explosion.Components;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Replays;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Armor;
@@ -25,6 +27,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -37,6 +40,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
@@ -50,6 +54,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     private EntityQuery<TransformComponent> _transformQuery;
     private EntityQuery<FlammableComponent> _flammableQuery;
@@ -254,6 +259,40 @@ public sealed partial class ExplosionSystem : EntitySystem
         var posFound = _transformSystem.TryGetMapOrGridCoordinates(uid, out var gridPos, pos);
 
         QueueExplosion(mapPos, typeId, totalIntensity, slope, maxTileIntensity, tileBreakScale, maxTileBreak, canCreateVacuum, addLog: false);
+
+        if (user == null)
+        {
+            _gameTicker.RecordReplayEvent(new ReplayExplosionEvent()
+            {
+                Severity = ReplayEventSeverity.High,
+                Time = _gameTiming.CurTick.Value,
+                EventType = ReplayEventType.Explosion,
+                Intensity = totalIntensity,
+                Slope = slope,
+                MaxTileIntensity = maxTileIntensity,
+                TileBreakScale = tileBreakScale,
+                MaxTileBreak = maxTileBreak,
+                CanCreateVacuum = canCreateVacuum,
+                Type = typeId
+            });
+        }
+        else
+        {
+            _gameTicker.RecordReplayEvent(new ReplayExplosionEvent()
+            {
+                Severity = ReplayEventSeverity.High,
+                Time = _gameTiming.CurTick.Value,
+                EventType = ReplayEventType.Explosion,
+                Source = _gameTicker.GetPlayerInfo(user.Value),
+                Intensity = totalIntensity,
+                Slope = slope,
+                MaxTileIntensity = maxTileIntensity,
+                TileBreakScale = tileBreakScale,
+                MaxTileBreak = maxTileBreak,
+                CanCreateVacuum = canCreateVacuum,
+                Type = typeId
+            });
+        }
 
         if (!addLog)
             return;

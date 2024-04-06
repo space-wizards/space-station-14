@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Cargo.Components;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Replays;
 using Content.Server.Labels.Components;
 using Content.Server.Paper;
 using Content.Server.Station.Components;
@@ -14,12 +16,16 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Cargo.Systems
 {
     public sealed partial class CargoSystem
     {
+        [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         /// <summary>
         /// How much time to wait (in seconds) before increasing bank accounts balance.
         /// </summary>
@@ -496,8 +502,13 @@ namespace Content.Server.Cargo.Systems
                 }
             }
 
+            _gameTicker.RecordReplayEvent(new ReplayEvent()
+            {
+                Severity = ReplayEventSeverity.Medium,
+                Time = _gameTiming.CurTick.Value,
+                EventType = ReplayEventType.CargoOrdered
+            });
             return true;
-
         }
 
         private void DeductFunds(StationBankAccountComponent component, int amount)

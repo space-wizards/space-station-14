@@ -1,4 +1,5 @@
 using Content.Server.Cargo.Components;
+using Content.Server.GameTicking.Replays;
 using Content.Shared.Stacks;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
@@ -335,6 +336,12 @@ public sealed partial class CargoSystem
         var stackPrototype = _protoMan.Index<StackPrototype>(component.CashType);
         _stack.Spawn((int) price, stackPrototype, xform.Coordinates);
         _audio.PlayPvs(ApproveSound, uid);
+        _gameTicker.RecordReplayEvent(new ReplayEvent()
+        {
+            Severity = ReplayEventSeverity.Medium,
+            Time = _gameTiming.CurTick.Value,
+            EventType = ReplayEventType.CargoSold
+        });
         UpdatePalletConsoleInterface(uid);
     }
 

@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration;
+using Content.Server.GameTicking.Replays;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Administration;
 using Content.Shared.Database;
@@ -105,6 +106,13 @@ public sealed partial class GameTicker
         _allPreviousGameRules.Add((RoundDuration(), id));
         _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
         _adminLogger.Add(LogType.EventStarted, $"Started game rule {ToPrettyString(ruleEntity)}");
+        RecordReplayEvent(new GenericObjectEvent()
+        {
+            Severity = ReplayEventSeverity.Medium,
+            Time = _gameTiming.CurTick.Value,
+            EventType = ReplayEventType.GameRuleStarted,
+            Target = Prototype(ruleEntity)?.ID ?? "Unknown"
+        });
 
         EnsureComp<ActiveGameRuleComponent>(ruleEntity);
         ruleData.ActivatedAt = _gameTiming.CurTime;

@@ -1,4 +1,6 @@
 using Content.Server.Administration.Logs;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Replays;
 using Content.Server.Popups;
 using Content.Server.Singularity.Events;
 using Content.Shared.Construction.Components;
@@ -12,6 +14,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -23,6 +26,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     public override void Initialize()
     {
@@ -169,6 +174,12 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         ChangeFieldVisualizer(generator);
         _adminLogger.Add(LogType.FieldGeneration, LogImpact.Medium, $"{ToPrettyString(uid)} lost field connections"); // Ideally LogImpact would depend on if there is a singulo nearby
         _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), uid, PopupType.LargeCaution);
+        _gameTicker.RecordReplayEvent(new ReplayEvent()
+        {
+            EventType = ReplayEventType.ContainmentFieldDepowered,
+            Severity = ReplayEventSeverity.VeryHigh, // round ending event, usually.
+            Time = _gameTiming.CurTick.Value,
+        });
     }
 
     #endregion

@@ -1,6 +1,17 @@
+using System.Linq;
+using Content.Server.GameTicking.Replays;
+using Content.Server.Mind;
+using Content.Server.Nuke;
+using Content.Server.Station.Components;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
+using Content.Shared.Mobs;
+using Content.Shared.Roles;
+using Content.Shared.Slippery;
+using Content.Shared.Stunnable;
 using Robust.Shared;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Player;
 using Robust.Shared.Replays;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
@@ -15,7 +26,7 @@ public sealed partial class GameTicker
     [Dependency] private readonly IReplayRecordingManager _replays = default!;
     [Dependency] private readonly IResourceManager _resourceManager = default!;
     [Dependency] private readonly ISerializationManager _serialman = default!;
-
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     private ISawmill _sawmillReplays = default!;
 
@@ -23,6 +34,15 @@ public sealed partial class GameTicker
     {
         _replays.RecordingFinished += ReplaysOnRecordingFinished;
         _replays.RecordingStopped += ReplaysOnRecordingStopped;
+
+        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+
+        SubscribeLocalEvent<NukeArmedEvent>(OnNukeArmed);
+        SubscribeLocalEvent<NukeDisarmSuccessEvent>(OnNukeDisarmed);
+        SubscribeLocalEvent<NukeExplodedEvent>(OnNukeBoom);
+
+        SubscribeLocalEvent<SlipEvent>(OnSlip);
+        SubscribeLocalEvent<ActorComponent, StunnedEvent>(OnStun);
     }
 
     /// <summary>
@@ -51,6 +71,7 @@ public sealed partial class GameTicker
             // Set the round end player and text back to null to prevent it from writing the previous round's data.
             _replayRoundPlayerInfo = null;
             _replayRoundText = null;
+            _replayEvents = new List<ReplayEvent>();
 
             if (!string.IsNullOrEmpty(tempDir))
             {
@@ -74,6 +95,25 @@ public sealed partial class GameTicker
         {
             Log.Error($"Error while starting an automatic replay recording:\n{e}");
         }
+    }
+
+    public void RecordReplayEvent(ReplayEvent replayEvent)
+    {
+        if (!_replays.IsRecording)
+            return;
+
+        DebugTools.AssertNotNull(replayEvent.EventType);
+        DebugTools.AssertNotNull(replayEvent.Severity);
+        DebugTools.AssertNotNull(replayEvent.Time);
+
+        _sawmillReplays.Debug($"Recording replay event: {replayEvent.EventType}");
+        if (_replayEvents == null)
+        {
+            // If this happens, someone messed up.
+            _sawmillReplays.Error("Tried to record a replay event, but the events list is null. This should never happen.");
+            return;
+        }
+        _replayEvents.Add(replayEvent);
     }
 
     /// <summary>
@@ -130,6 +170,7 @@ public sealed partial class GameTicker
         metadata["server_id"] = new ValueDataNode(_configurationManager.GetCVar(CCVars.ServerId));
         metadata["server_name"] = new ValueDataNode(_configurationManager.GetCVar(CCVars.AdminLogsServerName));
         metadata["roundId"] = new ValueDataNode(RoundId.ToString());
+        metadata["events"] = _serialman.WriteValue(_replayEvents, true, null);
     }
 
     private ResPath GetAutoReplayPath()
@@ -150,4 +191,197 @@ public sealed partial class GameTicker
     }
 
     private sealed record ReplayRecordState(ResPath? MoveToPath);
+
+    /// <summary>
+    /// Gets the player info for a player entity.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if the entity is not a player.
+    /// </exception>
+    public ReplayEventPlayer GetPlayerInfo(EntityUid player)
+    {
+        if (EntityManager.TryGetComponent<ActorComponent>(player, out var actorComponent))
+        {
+            return GetPlayerInfo(actorComponent.PlayerSession);
+        }
+
+        throw new InvalidOperationException("Tried to get player info for an entity that is not a player.");
+    }
+
+    /// <summary>
+    /// Generates a <see cref="ReplayEventPlayer"/> from a session for use in replay events.
+    /// </summary>
+    public ReplayEventPlayer GetPlayerInfo(ICommonSession session)
+    {
+        var hasMind = _mindSystem.TryGetMind(session, out var mindId, out var mindComponent);
+
+        var playerIcName = "Unknown";
+        var antag = false;
+        var roles = new List<RoleInfo>();
+        if (hasMind && mindComponent != null)
+        {
+            antag = _roles.MindIsAntagonist(mindId);
+            if (mindComponent.CharacterName != null)
+            {
+                playerIcName = mindComponent.CharacterName;
+            }
+            else if (mindComponent.CurrentEntity != null && TryName(mindComponent.CurrentEntity.Value, out var name))
+            {
+                playerIcName = name;
+            }
+
+            roles = _roles.MindGetAllRoles(mindId);
+        }
+
+        return new ReplayEventPlayer()
+        {
+            PlayerGuid = session.UserId,
+            PlayerICName = playerIcName,
+            PlayerOOCName = session.Name,
+            Antag = antag,
+            JobPrototypes = roles.Where(role => !role.Antagonist).Select(role => role.Prototype).ToArray(),
+            AntagPrototypes = roles.Where(role => role.Antagonist).Select(role => role.Prototype).ToArray(),
+        };
+    }
+
+    #region EventListeners
+
+    private void OnMobStateChanged(MobStateChangedEvent ev)
+    {
+        ReplayEventPlayer? targetInfo = null;
+        if (EntityManager.TryGetComponent<ActorComponent>(ev.Target, out var actorComponent))
+        {
+            targetInfo = GetPlayerInfo(actorComponent.PlayerSession);
+        }
+
+
+        if (ev.OldMobState is MobState.Dead && ev.NewMobState is MobState.Alive or MobState.Critical)
+        {
+            // Revived
+            if (targetInfo == null)
+            {
+                RecordReplayEvent(new GenericObjectEvent()
+                {
+                    EventType = ReplayEventType.MobRevived,
+                    Severity = ReplayEventSeverity.Medium,
+                    Target = EntityManager.GetComponent<MetaDataComponent>(ev.Target).EntityName,
+                    Time = _gameTiming.CurTick.Value
+                });
+            }
+            else
+            {
+                RecordReplayEvent(new GenericPlayerEvent()
+                {
+                    Target = (ReplayEventPlayer) targetInfo,
+                    Severity = ReplayEventSeverity.Medium,
+                    EventType = ReplayEventType.MobRevived,
+                    Time = _gameTiming.CurTick.Value
+                });
+            }
+            return;
+        }
+
+        if (ev.NewMobState == MobState.Critical)
+        {
+            if (targetInfo == null)
+            {
+                RecordReplayEvent(new GenericObjectEvent()
+                {
+                    EventType = ReplayEventType.MobCrit,
+                    Severity = ReplayEventSeverity.Medium,
+                    Target = EntityManager.GetComponent<MetaDataComponent>(ev.Target).EntityName,
+                    Time = _gameTiming.CurTick.Value
+                });
+            }
+            else
+            {
+                RecordReplayEvent(new GenericPlayerEvent()
+                {
+                    Target = (ReplayEventPlayer) targetInfo,
+                    Severity = ReplayEventSeverity.Medium,
+                    EventType = ReplayEventType.MobCrit,
+                    Time = _gameTiming.CurTick.Value
+                });
+            }
+        }
+
+        if (ev.NewMobState == MobState.Dead)
+        {
+            if (targetInfo == null)
+            {
+                RecordReplayEvent(new GenericObjectEvent()
+                {
+                    EventType = ReplayEventType.MobDied,
+                    Severity = ReplayEventSeverity.Medium,
+                    Target = EntityManager.GetComponent<MetaDataComponent>(ev.Target).EntityName,
+                    Time = _gameTiming.CurTick.Value
+                });
+            }
+            else
+            {
+                RecordReplayEvent(new GenericPlayerEvent()
+                {
+                    Target = (ReplayEventPlayer) targetInfo,
+                    Severity = ReplayEventSeverity.Medium,
+                    EventType = ReplayEventType.MobDied,
+                    Time = _gameTiming.CurTick.Value
+                });
+            }
+        }
+    }
+
+    private void OnNukeArmed(NukeArmedEvent ev)
+    {
+        RecordReplayEvent(new ReplayEvent()
+        {
+            EventType = ReplayEventType.NukeArmed,
+            Severity = ReplayEventSeverity.VeryHigh,
+            Time = _gameTiming.CurTick.Value
+        });
+    }
+
+    private void OnNukeDisarmed(NukeDisarmSuccessEvent ev)
+    {
+        RecordReplayEvent(new ReplayEvent()
+        {
+            EventType = ReplayEventType.NukeDefused,
+            Severity = ReplayEventSeverity.VeryHigh,
+            Time = _gameTiming.CurTick.Value
+        });
+    }
+
+    private void OnNukeBoom(NukeExplodedEvent ev)
+    {
+
+        RecordReplayEvent(new ReplayEvent()
+        {
+            EventType = ReplayEventType.NukeDetonated,
+            Severity = ReplayEventSeverity.VeryHigh,
+            Time = _gameTiming.CurTick.Value
+        });
+    }
+
+    private void OnSlip(ref SlipEvent ev)
+    {
+        RecordReplayEvent(new GenericPlayerEvent()
+        {
+            EventType = ReplayEventType.MobSlipped,
+            Severity = ReplayEventSeverity.Low,
+            Time = _gameTiming.CurTick.Value,
+            Target = GetPlayerInfo(ev.Slipped)
+        });
+    }
+
+    private void OnStun(EntityUid uid, ActorComponent actor, ref StunnedEvent ev)
+    {
+        RecordReplayEvent(new GenericPlayerEvent()
+        {
+            EventType = ReplayEventType.MobStunned,
+            Severity = ReplayEventSeverity.Low,
+            Time = _gameTiming.CurTick.Value,
+            Target = GetPlayerInfo(actor.PlayerSession)
+        });
+    }
+
+    #endregion
 }

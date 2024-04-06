@@ -484,6 +484,12 @@ public sealed class NukeSystem : EntitySystem
             _transform.AnchorEntity(uid, nukeXform);
         }
 
+        var nukeArmedEvent = new NukeArmedEvent()
+        {
+            OwningStation = stationUid
+        };
+        RaiseLocalEvent(nukeArmedEvent);
+
         component.Status = NukeStatus.ARMED;
         UpdateUserInterface(uid, component);
         UpdateAppearance(uid, component);
@@ -649,3 +655,10 @@ public sealed class NukeDisarmSuccessEvent : EntityEventArgs
 
 }
 
+/// <summary>
+/// Raised when the nuke is armed.
+/// </summary>
+public sealed class NukeArmedEvent : EntityEventArgs
+{
+    public EntityUid? OwningStation;
+}
