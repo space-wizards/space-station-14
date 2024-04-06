@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Rotting examine text doesn't have weird grammatical errors now
-    type: Fix
-  id: 5817
-  time: '2024-01-29T07:50:18.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24689
 - author: Eden077
   changes:
   - message: Synaptizine now deals less poison damage.
@@ -3813,3 +3806,11 @@
   id: 6316
   time: '2024-04-06T20:16:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26776
+- author: osjarw
+  changes:
+  - message: Removed broken anom behaviour, which causes APE shots to fly through
+      the anom.
+    type: Remove
+  id: 6317
+  time: '2024-04-06T22:27:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26775
