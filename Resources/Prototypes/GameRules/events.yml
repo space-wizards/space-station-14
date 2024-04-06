@@ -200,7 +200,7 @@
     - id: MobMouse2
       prob: 0.02
     - id: MobMouseCancer
-      prob: 0.02
+      prob: 0.005
     specialEntries:
     - id: SpawnPointGhostRatKing
       prob: 0.005
