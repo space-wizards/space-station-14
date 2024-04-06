@@ -23,9 +23,10 @@ public sealed class ItemSlotsFillSystem : EntitySystem
 
     private void OnMapInit(Entity<ItemSlotsFillComponent> ent, ref MapInitEvent args)
     {
-        if (!_slotsQuery.TryComp(ent, out var slots))
+        // don't care about non-prototype entities since tests use them for single component adding
+        if (!_slotsQuery.TryComp(ent, out var slots) && Prototype(ent) != null)
         {
-            Log.Error("ItemSlotsFill used on entity that has no ItemSlots!");
+            Log.Error($"ItemSlotsFill used on entity {ToPrettyString(ent)} that has no ItemSlots!");
             return;
         }
 
