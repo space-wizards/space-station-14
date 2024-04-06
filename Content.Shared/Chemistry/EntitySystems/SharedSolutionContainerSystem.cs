@@ -13,6 +13,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Content.Shared.Chemistry.Reaction.Components;
+using Content.Shared.Chemistry.Reaction.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
@@ -53,6 +55,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
+    [Dependency] protected readonly ChemicalAbsorptionSystem ChemicalAbsorptionSystem = default!;
     [Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] protected readonly SharedHandsSystem Hands = default!;
@@ -253,13 +256,25 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// </remarks>
     /// <param name="soln"></param>
     /// <param name="needsReactionsProcessing"></param>
+    /// <param name="needsAbsorptionProcessing"></param>
+    /// <param name="absorber"></param>
     /// <param name="mixerComponent"></param>
-    public void UpdateChemicals(Entity<SolutionComponent> soln, bool needsReactionsProcessing = true, ReactionMixerComponent? mixerComponent = null)
+    public void UpdateChemicals(
+        Entity<SolutionComponent> soln,
+        bool needsReactionsProcessing = true,
+        bool needsAbsorptionProcessing = true,
+        ReactionMixerComponent? mixerComponent = null,
+        Entity<ChemicalAbsorberComponent>? absorber = null
+        )
     {
         Dirty(soln);
 
         var (uid, comp) = soln;
         var solution = comp.Solution;
+
+        // Process absorptions, only processed if there is an absorber
+        if (needsAbsorptionProcessing && solution.CanBeAbsorbed)
+            ChemicalAbsorptionSystem.AbsorbChemicals(soln, absorber);
 
         // Process reactions
         if (needsReactionsProcessing && solution.CanReact)

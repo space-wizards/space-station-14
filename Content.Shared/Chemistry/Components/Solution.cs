@@ -49,6 +49,13 @@ namespace Content.Shared.Chemistry.Components
         public bool CanReact { get; set; } = true;
 
         /// <summary>
+        ///     If absorptions will be checked for when adding reagents to the container.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
+        public bool CanBeAbsorbed = true;
+
+        /// <summary>
         ///     If reactions can occur via mixing.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]

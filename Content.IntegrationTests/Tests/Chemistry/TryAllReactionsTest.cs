@@ -66,7 +66,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
                         var dummyEntity = entityManager.SpawnEntity(null, MapCoordinates.Nullspace);
                         var mixerComponent = entityManager.AddComponent<ReactionMixerComponent>(dummyEntity);
                         mixerComponent.ReactionTypes = reactionPrototype.MixingCategories;
-                        solutionContainerSystem.UpdateChemicals(solutionEnt.Value, true, mixerComponent);
+                        solutionContainerSystem.UpdateChemicals(solutionEnt.Value, true, false, mixerComponent);
                     }
                 });
 

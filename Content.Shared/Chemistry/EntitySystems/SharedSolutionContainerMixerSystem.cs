@@ -101,7 +101,7 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
             if (!_solution.TryGetFitsInDispenser(ent, out var soln, out _))
                 continue;
 
-            _solution.UpdateChemicals(soln.Value, true, reactionMixer);
+            _solution.UpdateChemicals(soln.Value, true, true, reactionMixer);
         }
     }
 

@@ -35,7 +35,7 @@ public sealed partial class ReactionMixerSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString(entity.Comp.MixMessage, ("mixed", Identity.Entity(args.Target.Value, EntityManager)), ("mixer", Identity.Entity(entity.Owner, EntityManager))), args.User, args.User);
 
-        _solutionContainers.UpdateChemicals(solution.Value, true, entity.Comp);
+        _solutionContainers.UpdateChemicals(solution.Value, true, true, entity.Comp);
 
         var afterMixingEvent = new AfterMixingEvent(entity, args.Target.Value);
         RaiseLocalEvent(entity, afterMixingEvent);
