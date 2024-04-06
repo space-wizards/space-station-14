@@ -116,6 +116,11 @@
   components:
   - type: Sprite
     color: "#96cdef"
+  - type: MeleeWeapon
+    attackRate: 1
+    damage:
+      types:
+        Slash: 4.5
   - type: WelderRefinable
     refineResult:
     - SheetGlass1
@@ -148,6 +153,11 @@
   components:
   - type: Sprite
     color: "#FF72E7"
+  - type: MeleeWeapon
+    attackRate: 1
+    damage:
+      types:
+        Slash: 5.5
   - type: WelderRefinable
     refineResult:
     - SheetGlass1
@@ -182,6 +192,12 @@
   components:
   - type: Sprite
     color: "#8eff7a"
+  - type: MeleeWeapon
+    attackRate: 1
+    damage:
+      types:
+        Slash: 4.5
+        Radiation: 2
   - type: WelderRefinable
     refineResult:
     - SheetGlass1
