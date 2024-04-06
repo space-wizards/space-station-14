@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Speech sounds are now quieter
-    type: Tweak
-  id: 5813
-  time: '2024-01-28T10:49:55.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24579
 - author: TheShuEd
   changes:
   - message: The fire anomaly is now heavier in content.
@@ -3815,3 +3808,10 @@
   id: 6312
   time: '2024-04-05T21:06:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25748
+- author: osjarw
+  changes:
+  - message: Thin firelocks are now constructable/deconstructable
+    type: Fix
+  id: 6313
+  time: '2024-04-06T01:55:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26745
