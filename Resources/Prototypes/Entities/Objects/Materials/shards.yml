@@ -17,7 +17,7 @@
           shard2: ""
           shard3: ""
   - type: MeleeWeapon
-    attackRate: 1.5
+    attackRate: 1
     damage:
       types:
         Slash: 3.5
