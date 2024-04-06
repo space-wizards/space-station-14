@@ -322,6 +322,30 @@
       - state: green
       - state: hop
 
+ - type: entity
+  id: SpawnPointBlueShieldOfficer
+  parent: SpawnPointJobBase
+  name: blueshieldofficer
+  components:
+  - type: SpawnPoint
+    job_id: BlueshieldOfficer
+  - type: Sprite
+    layers:
+      - state: green
+      - state: bso
+
+  - type: entity
+  id: SpawnPointNanotrasenRepresentative
+  parent: SpawnPointJobBase
+  name: nanotrasenrepresentative
+  components:
+  - type: SpawnPoint
+    job_id: NanotrasenRepresentative
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ntr    
+
 # Engineering
 
 - type: entity
