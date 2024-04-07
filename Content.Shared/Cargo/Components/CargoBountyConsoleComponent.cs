@@ -38,6 +38,12 @@ public sealed partial class CargoBountyConsoleComponent : Component
     /// </summary>
     [DataField("skipSound")]
     public SoundSpecifier SkipSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg");
+
+    /// <summary>
+    /// The sound made when bounty skipping is denied due to lacking access.
+    /// </summary>
+    [DataField("denySound")]
+    public SoundSpecifier DenySound = new SoundPathSpecifier("/Audio/Effects/Cargo/buzz_two.ogg");
 }
 
 [NetSerializable, Serializable]

@@ -88,7 +88,10 @@ public sealed partial class CargoSystem
 
         if (TryComp<AccessReaderComponent>(uid, out var accessReaderComponent) &&
             !_accessReaderSystem.IsAllowed(mob, uid, accessReaderComponent))
+        {
+            _audio.PlayPvs(component.DenySound, uid);
             return;
+        }
 
         if (!TryRemoveBounty(station, bounty.Value))
             return;
