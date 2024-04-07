@@ -52,8 +52,11 @@
     HeadTop:
       points: 1
       required: false
-    Chest:
+    Head:
       points: 1
+      required: false
+    Chest:
+      points: 2
       required: false
     Legs:
       points: 2
