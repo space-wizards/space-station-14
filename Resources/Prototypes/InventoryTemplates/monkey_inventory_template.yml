@@ -27,6 +27,9 @@
     uiWindowPos: 1,0
     strippingWindowPos: 0,2
     displayName: Jumpsuit
+    whitelist:
+      tags:
+        - MonkeyWearable
   - name: id
     slotTexture: id
     slotFlags: IDCARD
@@ -36,22 +39,3 @@
     strippingWindowPos: 2,4
     dependsOn: jumpsuit
     displayName: ID
-  - name: suitstorage
-    slotTexture: suit_storage
-    slotFlags:   SUITSTORAGE
-    slotGroup: MainHotbar
-    stripTime: 3
-    uiWindowPos: 2,0
-    strippingWindowPos: 2,5
-    dependsOn: outerClothing
-    displayName: Suit Storage
-  - name: outerClothing
-    slotTexture: suit
-    slotFlags: OUTERCLOTHING
-    stripTime: 6
-    uiWindowPos: 1,1
-    strippingWindowPos: 1,3
-    displayName: Suit
-    whitelist:
-      tags:
-        - MonkeyWearable
