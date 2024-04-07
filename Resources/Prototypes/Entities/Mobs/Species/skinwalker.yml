@@ -38,6 +38,7 @@
     tags:
     # let mind transfer on gib work
     - MindTransferTarget
+    - DoorBumpOpener
 
 - type: entity
   parent: BaseSpeciesDummy
