@@ -34,18 +34,6 @@ public sealed partial class CargoBountyConsoleComponent : Component
     public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
 
     /// <summary>
-    /// The time at which the console will be able to skip the next bounty.
-    /// </summary>
-    [DataField("nextSkipTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan NextSkipTime = TimeSpan.Zero;
-
-    /// <summary>
-    /// The time between skipping bounties.
-    /// </summary>
-    [DataField("skipDelay")]
-    public TimeSpan SkipDelay = TimeSpan.FromMinutes(15);
-
-    /// <summary>
     /// The sound made when the bounty is skipped.
     /// </summary>
     [DataField("skipSound")]

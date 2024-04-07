@@ -73,15 +73,15 @@ public sealed partial class CargoSystem
 
     private void OnSkipBountyMessage(EntityUid uid, CargoBountyConsoleComponent component, BountySkipMessage args)
     {
-        if (_timing.CurTime < component.NextSkipTime)
+        if (_station.GetOwningStation(uid) is not { } station || !TryComp<StationCargoBountyDatabaseComponent>(station, out var db))
         {
-            Log.Debug("On cooldown!");
+            Log.Debug("Not on owning station!");
             return;
         }
 
-        if (_station.GetOwningStation(uid) is not { } station)
+        if (_timing.CurTime < db.NextSkipTime)
         {
-            Log.Debug("Not on owning station!");
+            Log.Debug("On cooldown!");
             return;
         }
 
@@ -109,7 +109,7 @@ public sealed partial class CargoSystem
             return;
         }
         FillBountyDatabase(station);
-        component.NextSkipTime = _timing.CurTime + component.SkipDelay;
+        db.NextSkipTime = _timing.CurTime + db.SkipDelay;
         _audio.PlayPvs(component.SkipSound, uid);
     }
 
