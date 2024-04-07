@@ -77,7 +77,7 @@ public sealed class LoadoutSystem : EntitySystem
         if (!_protoMan.TryIndex(loadout.Equipment, out var gear))
             return Loc.GetString("loadout-unknown");
 
-        var count = gear.Equipment.Count + gear.Inhand.Count;
+        var count = gear.Equipment.Count + gear.Storage.Values.Sum(o => o.Count) + gear.Inhand.Count;
 
         if (count == 1)
         {
@@ -89,6 +89,19 @@ public sealed class LoadoutSystem : EntitySystem
             if (gear.Inhand.Count == 1 && _protoMan.TryIndex<EntityPrototype>(gear.Inhand[0], out proto))
             {
                 return proto.Name;
+            }
+
+            foreach (var values in gear.Storage.Values)
+            {
+                if (values.Count != 1)
+                    continue;
+
+                if (_protoMan.TryIndex<EntityPrototype>(values[0], out proto))
+                {
+                    return proto.Name;
+                }
+
+                break;
             }
         }
 
