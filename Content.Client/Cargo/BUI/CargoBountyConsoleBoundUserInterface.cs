@@ -42,7 +42,7 @@ public sealed class CargoBountyConsoleBoundUserInterface : BoundUserInterface
         if (message is not CargoBountyConsoleState state)
             return;
 
-        _menu?.UpdateEntries(state.Bounties);
+        _menu?.UpdateEntries(state.Bounties, state.UntilNextSkip);
     }
 
     protected override void Dispose(bool disposing)

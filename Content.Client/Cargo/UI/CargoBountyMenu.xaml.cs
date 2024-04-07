@@ -17,7 +17,7 @@ public sealed partial class CargoBountyMenu : FancyWindow
         RobustXamlLoader.Load(this);
     }
 
-    public void UpdateEntries(List<CargoBountyData> bounties)
+    public void UpdateEntries(List<CargoBountyData> bounties, TimeSpan untilNextSkip)
     {
         BountyEntriesContainer.Children.Clear();
         foreach (var b in bounties)
@@ -25,6 +25,8 @@ public sealed partial class CargoBountyMenu : FancyWindow
             var entry = new BountyEntry(b);
             entry.OnLabelButtonPressed += () => OnLabelButtonPressed?.Invoke(b.Id);
             entry.OnSkipButtonPressed += () => OnSkipButtonPressed?.Invoke(b.Id);
+
+            entry.UpdateSkipButton(untilNextSkip);
 
             BountyEntriesContainer.AddChild(entry);
         }
