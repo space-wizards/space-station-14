@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Eden077
-  changes:
-  - message: Synaptizine now deals less poison damage.
-    type: Tweak
-  id: 5818
-  time: '2024-01-29T07:55:52.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24676
 - author: mirrorcult
   changes:
   - message: Various annoying sounds are now a little quieter
@@ -3814,3 +3807,10 @@
   id: 6317
   time: '2024-04-06T22:27:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26775
+- author: Vermidia
+  changes:
+  - message: Water coolers show how full/what they're full of again.
+    type: Fix
+  id: 6318
+  time: '2024-04-06T23:58:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26784
