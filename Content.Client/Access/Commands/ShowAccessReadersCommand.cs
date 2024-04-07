@@ -8,8 +8,8 @@ public sealed class ShowAccessReadersCommand : IConsoleCommand
 {
     public string Command => "showaccessreaders";
 
-    public string Description => """
-        Toggles showing access reader permissions on the map
+    public string Description => "Toggles showing access reader permissions on the map";
+    public string Help => """
         Overlay Info:
         -Disabled | The access reader is disabled
         +Unrestricted | The access reader has no restrictions
@@ -17,7 +17,6 @@ public sealed class ShowAccessReadersCommand : IConsoleCommand
         +Key [StationUid]: [StationRecordKeyId] | A StationRecordKey that is allowed
         -Tag [Tag Name] | A tag that is not allowed (takes priority over other allows)
         """;
-    public string Help => $"{Command}";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var collection = IoCManager.Instance;

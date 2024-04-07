@@ -44,7 +44,7 @@ public sealed class AccessOverlay : Overlay
             textBuffer.Append(entityName.Nuid.Id);
             textBuffer.AppendLine();
 
-            if (accessReader.Enabled == false)
+            if (!accessReader.Enabled)
             {
                 textBuffer.AppendLine("-Disabled");
                 continue;
