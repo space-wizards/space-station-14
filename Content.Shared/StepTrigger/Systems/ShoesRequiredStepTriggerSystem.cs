@@ -32,6 +32,10 @@ public sealed class ShoesRequiredStepTriggerSystem : EntitySystem
         {
             args.Cancelled = true;
         }
+
+        if (_inventory.TryGetSlotEntity(args.Tripper, "outerClothing", out var outerClothing, inventory))
+            if (_tagSystem.HasTag(outerClothing.Value, "ShoesRequiredStepTriggerImmune"))
+                args.Cancelled = true;
     }
 
     private void OnExamined(EntityUid uid, ShoesRequiredStepTriggerComponent component, ExaminedEvent args)
