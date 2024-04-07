@@ -75,40 +75,24 @@ public sealed partial class CargoSystem
     private void OnSkipBountyMessage(EntityUid uid, CargoBountyConsoleComponent component, BountySkipMessage args)
     {
         if (_station.GetOwningStation(uid) is not { } station || !TryComp<StationCargoBountyDatabaseComponent>(station, out var db))
-        {
-            Log.Debug("Not on owning station!");
             return;
-        }
 
         if (_timing.CurTime < db.NextSkipTime)
-        {
-            Log.Debug("On cooldown!");
             return;
-        }
 
         if (!TryGetBountyFromId(station, args.BountyId, out var bounty))
-        {
-            Log.Debug("This bounty does not exist!");
             return;
-        }
 
         if (args.Session.AttachedEntity is not { Valid: true } mob)
             return;
 
         if (TryComp<AccessReaderComponent>(uid, out var accessReaderComponent) &&
             !_accessReaderSystem.IsAllowed(mob, uid, accessReaderComponent))
-        {
-            Log.Debug("No access!");
-            Log.Debug(GetEntity(args.Entity).ToString());
-            Log.Debug(uid.ToString());
             return;
-        }
 
         if (!TryRemoveBounty(station, bounty.Value))
-        {
-            Log.Debug("Cannot remove bounty!");
             return;
-        }
+
         FillBountyDatabase(station);
         db.NextSkipTime = _timing.CurTime + db.SkipDelay;
         var untilNextSkip = db.NextSkipTime - _timing.CurTime;
