@@ -220,7 +220,7 @@ public sealed partial class OpenableSystem : EntitySystem
     /// <returns>Whether it got closed</returns>
     public bool TryClose(EntityUid uid, OpenableComponent? comp = null, EntityUid? user = null)
     {
-        if (!Resolve(uid, ref comp, false) || !comp.Opened || !comp.Closeable0
+        if (!Resolve(uid, ref comp, false) || !comp.Opened || !comp.Closeable)
             return false;
 
         SetOpen(uid, false, comp);
