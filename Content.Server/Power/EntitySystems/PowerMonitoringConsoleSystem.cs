@@ -369,7 +369,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                 continue;
 
             // Generate a new console entry with which to populate the UI
-            var entry = new PowerMonitoringConsoleEntry(EntityManager.GetNetEntity(ent), device.Group, powerStats.PowerValue);
+            var entry = new PowerMonitoringConsoleEntry(EntityManager.GetNetEntity(ent), device.Group, powerStats.PowerValue, powerStats.BatteryLevel);
             allEntries.Add(entry);
         }
 
@@ -452,6 +452,9 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             {
                 stats.PowerValue = battery.NetworkBattery.CurrentSupply;
                 stats.PowerSupplied += stats.PowerValue;
+
+
+                stats.BatteryLevel = GetBatteryLevel(uid);
             }
         }
 
@@ -462,6 +465,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
             if (TryComp<PowerNetworkBatteryComponent>(uid, out var battery))
             {
+                stats.BatteryLevel = GetBatteryLevel(uid);
+
                 stats.PowerValue = battery.CurrentSupply;
 
                 // Load due to network battery recharging
@@ -500,6 +505,18 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         }
 
         return stats;
+    }
+
+    private float? GetBatteryLevel(EntityUid uid)
+    {
+        if (!TryComp<BatteryComponent>(uid, out var battery))
+            return null;
+
+        var effectiveMax = battery.MaxCharge;
+        if (effectiveMax == 0)
+            effectiveMax = 1;
+
+        return battery.CurrentCharge / effectiveMax;
     }
 
     private void GetSourcesForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> sources)
@@ -1001,5 +1018,6 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         public double PowerSupplied { get; set; }
         public double PowerUsage { get; set; }
         public double BatteryUsage { get; set; }
+        public float? BatteryLevel { get; set; }
     }
 }
