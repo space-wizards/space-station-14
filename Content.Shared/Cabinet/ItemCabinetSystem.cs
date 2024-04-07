@@ -82,7 +82,10 @@ public sealed class ItemCabinetSystem : EntitySystem
     /// </summary>
     public bool HasItem(Entity<ItemCabinetComponent> ent)
     {
-        return TryGetSlot(ent, out var slot) && slot.HasItem;
+        if (!TryComp<ItemSlotsComponent>(ent, out var slots))
+            return false;
+
+        return TryGetSlot(ent, out var slot, slots) && slot.HasItem;
     }
 
     /// <summary>
