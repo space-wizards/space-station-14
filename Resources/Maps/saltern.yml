@@ -3713,7 +3713,8 @@ entities:
       - 4529
       - 4528
       - 4525
-      - 10022
+      - 7041
+      - 7040
   - uid: 10031
     components:
     - type: Transform
@@ -15339,6 +15340,11 @@ entities:
     components:
     - type: Transform
       pos: 60.5,11.5
+      parent: 31
+  - uid: 11445
+    components:
+    - type: Transform
+      pos: -25.5,-3.5
       parent: 31
 - proto: CableApcStack
   entities:
@@ -32827,7 +32833,7 @@ entities:
       pos: 38.5,-5.5
       parent: 31
     - type: Door
-      secondsUntilStateChange: -9786.84
+      secondsUntilStateChange: -9882.14
       state: Closing
   - uid: 4019
     components:
@@ -32943,11 +32949,17 @@ entities:
     - type: Transform
       pos: -18.5,3.5
       parent: 31
+    - type: DeviceNetwork
+      deviceLists:
+      - 10021
   - uid: 7041
     components:
     - type: Transform
       pos: -19.5,3.5
       parent: 31
+    - type: DeviceNetwork
+      deviceLists:
+      - 10021
   - uid: 7042
     components:
     - type: Transform
