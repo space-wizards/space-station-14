@@ -74,7 +74,11 @@ public sealed class ItemCabinetSystem : EntitySystem
     /// </summary>
     public bool TryGetSlot(Entity<ItemCabinetComponent> ent, [NotNullWhen(true)] out ItemSlot? slot)
     {
-        return _slots.TryGetSlot(ent, ent.Comp.Slot, out slot);
+        slot = null;
+        if (!TryComp<ItemSlotsComponent>(ent, out var slots))
+            return false;
+
+        return _slots.TryGetSlot(ent, ent.Comp.Slot, out slot, slots);
     }
 
     /// <summary>
@@ -82,10 +86,7 @@ public sealed class ItemCabinetSystem : EntitySystem
     /// </summary>
     public bool HasItem(Entity<ItemCabinetComponent> ent)
     {
-        if (!TryComp<ItemSlotsComponent>(ent, out var slots))
-            return false;
-
-        return TryGetSlot(ent, out var slot, slots) && slot.HasItem;
+        return TryGetSlot(ent, out var slot) && slot.HasItem;
     }
 
     /// <summary>
