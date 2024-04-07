@@ -288,11 +288,11 @@
         - TabletopMachineLayer
   - type: ExplodeOnTrigger
   - type: OnUseTimerTrigger
-    delay: 10
-    delayOptions: [180, 240, 300]
+    delay: 120
+    delayOptions: [120, 180, 300]
     initialBeepDelay: 0
     beepSound: /Audio/Machines/Nuke/general_beep.ogg
-  - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
+  - type: Explosive # Big boom, breaks down walls, kills people
     explosionType: Default
     totalIntensity: 1800
     intensitySlope: 0.5
@@ -304,19 +304,11 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 190
+        damage: 150
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
       - !type:ExplodeBehavior
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:SpillBehavior
-        solution: tank
 
 - type: entity
   parent: ImprovisedNuclearBombEvil
