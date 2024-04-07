@@ -250,17 +250,6 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: ClothingOuterHospitalGown
-  name: hospital gown
-  description: Made from the wool of slaughtered baby lambs.  The cruelty makes it softer.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/hospitalgown.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/hospitalgown.rsi
-
-- type: entity
-  parent: ClothingOuterBase
   id: ClothingOuterFlannelRed
   name: red flannel jacket
   description: An old fashioned red flannel jacket for space autumn.
