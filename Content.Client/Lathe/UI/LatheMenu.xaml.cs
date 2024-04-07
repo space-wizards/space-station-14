@@ -123,16 +123,11 @@ public sealed partial class LatheMenu : DefaultWindow
     private string GenerateTooltipText(LatheRecipePrototype prototype)
     {
         StringBuilder sb = new();
-        var first = true;
+
         foreach (var (id, amount) in prototype.RequiredMaterials)
         {
             if (!_prototypeManager.TryIndex<MaterialPrototype>(id, out var proto))
                 continue;
-
-            if (first)
-                first = false;
-            else
-                sb.Append('\n');
 
             var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, _entityManager.GetComponent<LatheComponent>(_owner).MaterialUseMultiplier);
             var sheetVolume = _materialStorage.GetSheetVolume(proto);
@@ -156,14 +151,15 @@ public sealed partial class LatheMenu : DefaultWindow
                 amountText = Loc.GetString("lathe-menu-material-amount", ("amount", sheets), ("unit", unit), ("material", name));
             }
 
-            sb.Append(amountText);
+            sb.AppendLine(amountText);
         }
 
         if (!string.IsNullOrWhiteSpace(prototype.Description))
-        {
-            sb.Append('\n');
-            sb.Append(Loc.GetString("lathe-menu-description-display", ("description", prototype.Description)));
-        }
+            sb.AppendLine(Loc.GetString("lathe-menu-description-display", ("description", prototype.Description)));
+
+        // Remove last newline
+        if (sb.Length > 0)
+            sb.Remove(sb.Length - 1, 1);
 
         return sb.ToString();
     }
