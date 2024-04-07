@@ -10,8 +10,24 @@
     - Wall
     
 - type: entity
-  id: StoneRuinWall
+  id: CPDebugWall
+  name: тестовая стена
+  suffix: DEBUG
+  parent: CPBaseWall
+  description: Ужасы
+  components:
+  - type: Sprite
+    sprite: _CP14/Structures/Walls/TEMPLATE.rsi
+  - type: Icon
+    sprite: _CP14/Structures/Walls/TEMPLATE.rsi
+  - type: IconSmooth
+    key: CPwallsbrick
+    base: brick
+
+- type: entity
+  id: CPStoneRuinWall
   name: каменная стена руин
+  suffix: Устаревший формат спрайта!
   parent: CPBaseWall
   description: Эти стены повидали многое, и осталось им недолго.
   components:
@@ -24,7 +40,7 @@
     base: brick 
 
 - type: entity
-  id: WoodFullWall
+  id: CPWoodFullWall
   name: деревянная стена
   parent: CPBaseWall
   description: Доска к доске, и вместе образуют они защиту и уют.
@@ -38,8 +54,9 @@
     base: wood 
 
 - type: entity
-  id: CaveStoneWall
+  id: CPCaveStoneWall
   name: каменная порода
+  suffix: Устаревший формат спрайта!
   parent: CPBaseWall
   description: Прочная каменная природная стена. От нее веет пещерным холодом.
   components:
@@ -52,7 +69,7 @@
     base: stone 
 
 - type: entity
-  id: StoneRuinFragment
+  id: CPStoneRuinFragment
   parent: BaseRock
   name: обломки каменных стен
   description: Это все, что осталось от былого величия. 
