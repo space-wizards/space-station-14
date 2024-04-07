@@ -28,6 +28,9 @@ public sealed class ShoesRequiredStepTriggerSystem : EntitySystem
         if (!TryComp<InventoryComponent>(args.Tripper, out var inventory))
             return;
 
+        if (!_inventory.HasSlot(args.Tripper, "shoes", inventory)) // early exit if no shoe slot at all, dionas suffer
+            return;
+
         if (_inventory.TryGetSlotEntity(args.Tripper, "shoes", out _, inventory))
         {
             args.Cancelled = true;
