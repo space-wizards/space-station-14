@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Content.Server": {
+      "commandName": "Project"
+    }
+  }
+}

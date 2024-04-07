@@ -43004,7 +43004,7 @@ entities:
   - uid: 2500
     components:
     - type: Transform
-      pos: -13.5,-0.5
+      pos: -13.5,-0.5G
       parent: 30
   - uid: 3913
     components:
