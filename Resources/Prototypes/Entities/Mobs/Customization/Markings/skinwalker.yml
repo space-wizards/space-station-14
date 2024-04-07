@@ -7,7 +7,7 @@
     default:
       type:
         !type:SimpleColoring
-          color: "#a5a5a5"
+          color: "#dfdfdf"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
     state: skinwalker_bonecheek_l
@@ -21,7 +21,7 @@
     default:
       type:
         !type:SimpleColoring
-          color: "#a5a5a5"
+          color: "#dfdfdf"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
     state: skinwalker_bonecheek_r
@@ -35,7 +35,7 @@
     default:
       type:
         !type:SimpleColoring
-          color: "#a5a5a5"
+          color: "#dfdfdf"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
     state: skinwalker_shoulderbone_l
@@ -49,7 +49,7 @@
     default:
       type:
         !type:SimpleColoring
-          color: "#a5a5a5"
+          color: "#dfdfdf"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
     state: skinwalker_shoulderbone_r
@@ -83,18 +83,18 @@
     state: skinwalker_scars
 
 - type: marking
-  id: SkinwalkerRibarms
-  bodyPart: LArm
-  markingCategory: Arms
+  id: SkinwalkerSkullhead
+  bodyPart: Head
+  markingCategory: Head
   speciesRestriction: [Skinwalker]
   coloring:
     default:
       type:
         !type:SimpleColoring
-          color: "#FFFFFF"
+          color: "#dfdfdf"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
-    state: skinwalker_ribarms
+    state: skinwalker_totallyhuman
 
 - type: marking
   id: SkinwalkerSkullmask

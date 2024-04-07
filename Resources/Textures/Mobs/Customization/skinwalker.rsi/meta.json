@@ -46,6 +46,10 @@
     {
       "name": "skinwalker_eyebags",
       "directions": 4
+    },
+    {
+      "name": "skinwalker_totallyhuman",
+      "directions": 4
     }
   ]
 }
