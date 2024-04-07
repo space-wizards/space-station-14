@@ -81,6 +81,7 @@
       launchForwardsMultiplier: 2
       requiredSlipSpeed: 1
       superSlippery: true
+  reagentOnItem: SpaceLubeOnItem
 
 - type: reagent
   id: SpaceGlue

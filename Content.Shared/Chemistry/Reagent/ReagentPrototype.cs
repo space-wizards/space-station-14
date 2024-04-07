@@ -16,6 +16,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
+using Content.Shared.ReagentOnItem;
 
 namespace Content.Shared.Chemistry.Reagent
 {
@@ -131,6 +132,9 @@ namespace Content.Shared.Chemistry.Reagent
 
         [DataField]
         public float PricePerUnit;
+
+        [DataField("reagentOnItem")]
+        public IReagentOnItemComponent ReagentOnItem;
 
         [DataField]
         public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
