@@ -169,6 +169,36 @@
   - type: Prying
 
 - type: entity
+  name: airlock wrench
+  parent: BaseItem
+  id: AirlockWrench
+  description: A specialised tool used for prying open locked doors during emergencies.
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/wrench_drop.ogg
+  - type: Sprite
+    sprite: Objects/Tools/airlock_wrench.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/airlock_wrench.rsi
+    size: Tiny
+    storedSprite:
+      sprite: Objects/Tools/airlock_wrench.rsi
+      state: storage
+  - type: Tool
+    qualities:
+      - Prying
+    useSound:
+      path: /Audio/Items/ratchet.ogg
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 30
+  - type: StaticPrice
+    price: 22
+  - type: Prying
+
+- type: entity
   parent: Crowbar
   id: CrowbarRed
   name: emergency crowbar
