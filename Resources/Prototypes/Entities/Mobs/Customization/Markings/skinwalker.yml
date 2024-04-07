@@ -7,7 +7,7 @@
     default:
       type:
         !type:SimpleColoring
-          color: "#FFFFFF"
+          color: "#a5a5a5"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
     state: skinwalker_bonecheek_l
@@ -21,7 +21,7 @@
     default:
       type:
         !type:SimpleColoring
-          color: "#FFFFFF"
+          color: "#a5a5a5"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
     state: skinwalker_bonecheek_r
@@ -35,7 +35,7 @@
     default:
       type:
         !type:SimpleColoring
-          color: "#FFFFFF"
+          color: "#a5a5a5"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
     state: skinwalker_shoulderbone_l
@@ -49,7 +49,7 @@
     default:
       type:
         !type:SimpleColoring
-          color: "#FFFFFF"
+          color: "#a5a5a5"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
     state: skinwalker_shoulderbone_r
