@@ -6,8 +6,8 @@
   coloring:
     default:
       type:
-        !type:TattooColoring
-      fallbackColor: "#fff9e2"
+        !type:SimpleColoring
+          color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
     state: skinwalker_bonecheek_l
@@ -20,8 +20,8 @@
   coloring:
     default:
       type:
-        !type:TattooColoring
-      fallbackColor: "#fff9e2"
+        !type:SimpleColoring
+          color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
     state: skinwalker_bonecheek_r
@@ -34,8 +34,8 @@
   coloring:
     default:
       type:
-        !type:TattooColoring
-      fallbackColor: "#fff9e2"
+        !type:SimpleColoring
+          color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
     state: skinwalker_shoulderbone_l
@@ -48,8 +48,8 @@
   coloring:
     default:
       type:
-        !type:TattooColoring
-      fallbackColor: "#fff9e2"
+        !type:SimpleColoring
+          color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
     state: skinwalker_shoulderbone_r
@@ -90,8 +90,8 @@
   coloring:
     default:
       type:
-        !type:TattooColoring
-      fallbackColor: "#c8c8c8"
+        !type:SimpleColoring
+          color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
     state: skinwalker_ribarms
@@ -104,8 +104,8 @@
   coloring:
     default:
       type:
-        !type:TattooColoring
-      fallbackColor: "#ffffff"
+        !type:SimpleColoring
+          color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
     state: skinwalker_skullmask
@@ -118,8 +118,8 @@
   coloring:
     default:
       type:
-        !type:TattooColoring
-      fallbackColor: "#dbdbdb"
+        !type:SimpleColoring
+          color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/skinwalker.rsi
     state: skinwalker_backskull
