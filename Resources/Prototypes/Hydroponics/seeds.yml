@@ -115,6 +115,8 @@
   packetPrototype: CarrotSeeds
   productPrototypes:
     - FoodCarrot
+  mutationPrototypes:
+    - gnome
   lifespan: 25
   maturation: 10
   production: 3
@@ -1503,4 +1505,22 @@
       Min: 5
       Max: 10
       PotencyDivisor: 20
+
+- type: seed
+  id: gnome
+  name: seeds-gome-name
+  noun: seeds-noun-seeds
+  displayName: seeds-gnome-display-name
+  plantRsi: Objects/Specific/Hydroponics/cotton.rsi
+  packetPrototype: CottonSeeds
+  productPrototypes:
+    - MobGnome
+  lifespan: 25
+  maturation: 8
+  production: 1
+  yield: 1
+  potency: 5
+  idealLight: 8
+  growthStages: 3
+  waterConsumption: 0
 

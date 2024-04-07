@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b",
+  "states": [
+    {
+      "name": "dead-1",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Gnome-0",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+        "name": "Gnome-1",
+        "directions": 4,
+        "delays": [
+            [
+                1
+            ],
+            [
+                1
+            ],
+            [
+                1
+            ],
+            [
+                1
+            ]
+        ]
+    },
+    {
+        "name": "0-equipped-HELMET",
+        "directions": 4  },
+    {
+        "name": "1-equipped-HELMET",
+        "directions": 4 }
+  ]
+}
