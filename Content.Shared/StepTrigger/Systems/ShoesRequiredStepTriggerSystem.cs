@@ -31,6 +31,7 @@ public sealed class ShoesRequiredStepTriggerSystem : EntitySystem
         if (_inventory.TryGetSlotEntity(args.Tripper, "shoes", out _, inventory))
         {
             args.Cancelled = true;
+            return;
         }
 
         if (_inventory.TryGetSlotEntity(args.Tripper, "outerClothing", out var outerClothing, inventory))
