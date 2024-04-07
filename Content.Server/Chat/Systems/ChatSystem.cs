@@ -5,6 +5,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Replays;
 using Content.Server.Speech.Components;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Station.Components;
@@ -31,6 +32,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.Systems;
@@ -57,6 +59,8 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ReplacementAccentSystem _wordreplacement = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
@@ -321,6 +325,14 @@ public sealed partial class ChatSystem : SharedChatSystem
             _audio.PlayGlobal(announcementSound?.GetSound() ?? DefaultAnnouncementSound, Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
         }
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
+        _gameTicker.RecordReplayEvent(new ChatAnnouncementReplayEvent()
+        {
+            Message = message,
+            Sender = sender,
+            EventType = ReplayEventType.Announcement,
+            Severity = ReplayEventSeverity.Medium,
+            Time = _gameTiming.CurTick.Value
+        });
     }
 
     /// <summary>
@@ -360,6 +372,14 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
+        _gameTicker.RecordReplayEvent(new ChatAnnouncementReplayEvent()
+        {
+            Message = message,
+            Sender = sender,
+            EventType = ReplayEventType.Announcement,
+            Severity = ReplayEventSeverity.Medium,
+            Time = _gameTiming.CurTick.Value
+        });
     }
 
     #endregion

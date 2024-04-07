@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Chat.Systems;
+using Content.Server.GameTicking.Replays;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Robust.Shared.Audio;
@@ -202,4 +203,11 @@ public sealed class AlertLevelChangedEvent : EntityEventArgs
         Station = station;
         AlertLevel = alertLevel;
     }
+}
+
+[Serializable, DataDefinition]
+public sealed partial class AlertLevelChangedReplayEvent : ReplayEvent
+{
+    [DataField]
+    public string AlertLevel = string.Empty;
 }

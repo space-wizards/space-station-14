@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.AlertLevel;
 using Content.Server.GameTicking.Replays;
 using Content.Server.Mind;
 using Content.Server.Nuke;
@@ -43,6 +44,7 @@ public sealed partial class GameTicker
 
         SubscribeLocalEvent<SlipEvent>(OnSlip);
         SubscribeLocalEvent<ActorComponent, StunnedEvent>(OnStun);
+        SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertChange);
     }
 
     /// <summary>
@@ -380,6 +382,17 @@ public sealed partial class GameTicker
             Severity = ReplayEventSeverity.Low,
             Time = _gameTiming.CurTick.Value,
             Target = GetPlayerInfo(actor.PlayerSession)
+        });
+    }
+
+    private void OnAlertChange(AlertLevelChangedEvent ev)
+    {
+        RecordReplayEvent(new AlertLevelChangedReplayEvent()
+        {
+            EventType = ReplayEventType.AlertLevelChanged,
+            Severity = ReplayEventSeverity.Medium,
+            Time = _gameTiming.CurTick.Value,
+            AlertLevel = ev.AlertLevel
         });
     }
 

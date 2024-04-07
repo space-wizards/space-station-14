@@ -26,18 +26,31 @@ public enum ReplayEventType
 
     CargoOrdered,
     CargoSold,
+
     MobCrit,
     MobDied,
     MobRevived,
+
     NukeArmed,
     NukeDetonated,
     NukeDefused,
-    PowerEngineSpawned,
+
+    PowerEngineSpawned, // Tesla or Singularity, Also includes future engines using spawned entities like the tesla ball
     ContainmentFieldDepowered,
+
     MobSlipped,
     MobStunned,
     StoreBought,
+
     Explosion,
+
+    Announcement, // Communications console announcements
+
+    TechnologyUnlocked,
+
+    EvacCalled,
+    EvacRecalled,
+    AlertLevelChanged,
 
     #endregion
 }

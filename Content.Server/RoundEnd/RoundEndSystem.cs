@@ -8,6 +8,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Replays;
 using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
@@ -155,10 +156,26 @@ namespace Content.Server.RoundEnd
             if (requester != null)
             {
                 _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {ToPrettyString(requester.Value):user}");
+                _gameTicker.RecordReplayEvent(new ShuttleReplayEvent()
+                {
+                    Source = _gameTicker.GetPlayerInfo(requester.Value),
+                    Countdown = (int)countdownTime.TotalSeconds,
+                    Severity = ReplayEventSeverity.High,
+                    EventType = ReplayEventType.EvacCalled,
+                    Time = _gameTiming.CurTick.Value
+                });
             }
             else
             {
                 _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called");
+                _gameTicker.RecordReplayEvent(new ShuttleReplayEvent()
+                {
+                    Source = null,
+                    Countdown = (int)countdownTime.TotalSeconds,
+                    Severity = ReplayEventSeverity.High,
+                    EventType = ReplayEventType.EvacCalled,
+                    Time = _gameTiming.CurTick.Value
+                });
             }
 
             // I originally had these set up here but somehow time gets passed as 0 to Loc so IDEK.
@@ -221,10 +238,26 @@ namespace Content.Server.RoundEnd
             if (requester != null)
             {
                 _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {ToPrettyString(requester.Value):user}");
+                _gameTicker.RecordReplayEvent(new ShuttleReplayEvent()
+                {
+                    Source = _gameTicker.GetPlayerInfo(requester.Value),
+                    Countdown = 0,
+                    Severity = ReplayEventSeverity.High,
+                    EventType = ReplayEventType.EvacRecalled,
+                    Time = _gameTiming.CurTick.Value
+                });
             }
             else
             {
                 _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled");
+                _gameTicker.RecordReplayEvent(new ShuttleReplayEvent()
+                {
+                    Source = null,
+                    Countdown = 0,
+                    Severity = ReplayEventSeverity.High,
+                    EventType = ReplayEventType.EvacRecalled,
+                    Time = _gameTiming.CurTick.Value
+                });
             }
 
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
@@ -381,5 +414,15 @@ namespace Content.Server.RoundEnd
         /// Do nothing
         /// </summary>
         Nothing
+    }
+
+    [Serializable, DataDefinition]
+    public sealed partial class ShuttleReplayEvent : ReplayEvent
+    {
+        [DataField]
+        public int? Countdown;
+
+        [DataField]
+        public ReplayEventPlayer? Source;
     }
 }

@@ -1,3 +1,4 @@
+using Content.Server.GameTicking.Replays;
 using Content.Shared.Database;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
@@ -86,6 +87,16 @@ public sealed partial class ResearchSystem
 
         _adminLog.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(user):player} unlocked {prototype.ID} (discipline: {prototype.Discipline}, tier: {prototype.Tier}) at {ToPrettyString(client)}, for server {ToPrettyString(serverEnt.Value)}.");
+        _gameTicker.RecordReplayEvent(new TechnologyUnlockedReplayEvent()
+        {
+            Discipline = prototype.Discipline,
+            Name = prototype.ID,
+            Tier = prototype.Tier,
+            Player = _gameTicker.GetPlayerInfo(client),
+            EventType = ReplayEventType.TechnologyUnlocked,
+            Severity = ReplayEventSeverity.Medium,
+            Time = _timing.CurTick.Value
+        });
         return true;
     }
 
