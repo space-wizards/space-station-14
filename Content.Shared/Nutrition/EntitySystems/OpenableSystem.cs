@@ -46,7 +46,7 @@ public sealed partial class OpenableSystem : EntitySystem
 
     private void OnMapInit(Entity<OpenableComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.Opened && _lock.IsLocked(ent))
+        if (ent.Comp.Opened && _lock.IsLocked(ent.Owner))
             Log.Error($"Entity {ent} spawned locked open, this is a prototype mistake.");
     }
 
