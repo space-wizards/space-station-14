@@ -32,16 +32,6 @@ public sealed class ShoesRequiredStepTriggerSystem : EntitySystem
         {
             args.Cancelled = true;
         }
-
-        // hardsuits and softsuits come with shoes to be space-capable, fulfilling the "shoes" requirement
-        if (_inventory.TryGetSlotEntity(args.Tripper, "outerClothing", out var outerClothing, inventory))
-        {
-            if (TryComp<TagComponent>(outerClothing, out var outerClothingTag)
-                && (outerClothingTag.Tags.Contains("Hardsuit") || outerClothingTag.Tags.Contains("SuitEVA")))
-            {
-                args.Cancelled = true;
-            }
-        }
     }
 
     private void OnExamined(EntityUid uid, ShoesRequiredStepTriggerComponent component, ExaminedEvent args)

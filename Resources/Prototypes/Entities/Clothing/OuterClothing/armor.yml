@@ -234,6 +234,9 @@
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: GroupExamine
+  - type: Tag
+    tags:
+    - ShoesRequiredStepTriggerImmune
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -260,6 +263,9 @@
   - type: Construction
     graph: BoneArmor
     node: armor
+  - type: Tag
+    tags:
+    - ShoesRequiredStepTriggerImmune
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -279,3 +285,6 @@
         Piercing: 0.6
         Heat: 0.5
   - type: GroupExamine
+  - type: Tag
+    tags:
+    - ShoesRequiredStepTriggerImmune
