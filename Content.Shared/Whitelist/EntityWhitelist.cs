@@ -1,9 +1,10 @@
+using Content.Shared.Item;
 using Content.Shared.Tag;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
-namespace Content.Shared.Whitelist
-{
+namespace Content.Shared.Whitelist;
+
     /// <summary>
     ///     Used to determine whether an entity fits a certain whitelist.
     ///     Does not whitelist by prototypes, since that is undesirable; you're better off just adding a tag to all
@@ -12,11 +13,14 @@ namespace Content.Shared.Whitelist
     /// <code>
     /// whitelist:
     ///   tags:
-    ///     - Cigarette
-    ///     - FirelockElectronics
+    ///   - Cigarette
+    ///   - FirelockElectronics
     ///   components:
-    ///     - Buckle
-    ///     - AsteroidRock
+    ///   - Buckle
+    ///   - AsteroidRock
+    ///   sizes:
+    ///   - Tiny
+    ///   - Large
     /// </code>
     [DataDefinition]
     [Serializable, NetSerializable]
@@ -25,8 +29,14 @@ namespace Content.Shared.Whitelist
         /// <summary>
         ///     Component names that are allowed in the whitelist.
         /// </summary>
-        [DataField("components")] public string[]? Components = null;
+        [DataField] public string[]? Components = null;
         // TODO yaml validation
+
+        /// <summary>
+        ///     Item sizes that are allowed in the whitelist.
+        /// </summary>
+        [DataField("sizes", customTypeSerializer:typeof(PrototypeIdListSerializer<ItemSizePrototype>))]
+        public List<string>? Sizes = null;
 
         [NonSerialized]
         private List<ComponentRegistration>? _registrations = null;
@@ -40,6 +50,7 @@ namespace Content.Shared.Whitelist
         /// <summary>
         ///     If false, an entity only requires one of these components or tags to pass the whitelist. If true, an
         ///     entity requires to have ALL of these components and tags to pass.
+        ///     A "Size" whitelist will ignores this, since an item can only have one size
         /// </summary>
         [DataField("requireAll")]
         public bool RequireAll = false;
@@ -88,6 +99,12 @@ namespace Content.Shared.Whitelist
                 }
             }
 
+            if (Sizes != null && entityManager.TryGetComponent(uid, out ItemComponent? itemComp))
+            {
+                if (Sizes.Contains(itemComp.Size))
+                    return true;
+            }
+
             if (Tags != null && entityManager.TryGetComponent(uid, out TagComponent? tags))
             {
                 var tagSystem = entityManager.System<TagSystem>();
@@ -97,4 +114,3 @@ namespace Content.Shared.Whitelist
             return false;
         }
     }
-}
