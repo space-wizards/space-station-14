@@ -1,6 +1,6 @@
 namespace Content.Shared.Clothing.Components;
 
 [RegisterComponent]
-public sealed partial class NonAdhesiveSurfaceComponent : Component
+public sealed partial class NonStickSurfaceComponent : Component
 {
 }

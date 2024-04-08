@@ -52,7 +52,7 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
     {
         _inventory.TryGetSlotEntity(args.User, "gloves", out var gloves);
 
-        if (HasComp<NonAdhesiveSurfaceComponent>(gloves))
+        if (HasComp<NonStickSurfaceComponent>(gloves))
         {
             return;
         }

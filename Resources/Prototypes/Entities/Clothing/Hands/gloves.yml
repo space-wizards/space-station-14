@@ -409,4 +409,4 @@
     fiberMaterial: fibers-rubber
     fiberColor: fibers-yellow
   - type: FingerprintMask
-  - type: NonAdhesiveSurface
+  - type: NonStickSurface

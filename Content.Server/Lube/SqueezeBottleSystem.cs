@@ -87,7 +87,7 @@ public sealed class SqueezeBottleSystem : EntitySystem
             {
                 Log.Log(LogLevel.Debug, "Here 2");
 
-                if (!HasComp<NonAdhesiveSurfaceComponent>(target))
+                if (!HasComp<NonStickSurfaceComponent>(target))
                 {
                     var totalConsumed = FixedPoint2.New(0);
                     var amountOfSpaceLube = reagent.RemoveReagent("SpaceLube", entity.Comp.AmountConsumedOnUse - totalConsumed);

@@ -35,7 +35,7 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
     {
         _inventory.TryGetSlotEntity(args.Container.Owner, "gloves", out var gloves);
 
-        if (HasComp<NonAdhesiveSurfaceComponent>(gloves))
+        if (HasComp<NonStickSurfaceComponent>(gloves))
         {
             return;
         }
