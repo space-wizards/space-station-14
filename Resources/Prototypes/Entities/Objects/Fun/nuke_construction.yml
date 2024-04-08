@@ -289,7 +289,7 @@
   - type: ExplodeOnTrigger
   - type: OnUseTimerTrigger
     delay: 120
-    delayOptions: [120, 180, 300]
+    delayOptions: [30, 60, 120]
     initialBeepDelay: 0
     beepSound: /Audio/Machines/Nuke/general_beep.ogg
   - type: Explosive # Big boom, breaks down walls, kills people
