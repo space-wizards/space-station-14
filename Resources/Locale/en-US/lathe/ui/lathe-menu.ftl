@@ -10,8 +10,8 @@ lathe-menu-material-display = {$material} ({$amount})
 lathe-menu-tooltip-display = {$amount} of {$material}
 lathe-menu-description-display = [italic]{$description}[/italic]
 lathe-menu-material-amount = { $amount ->
-    [1] {NATURALFIXED($amount, 2)} {$unit} of {$material}
-    *[other] {NATURALFIXED($amount, 2)} {MAKEPLURAL($unit)} of {$material}
+    [1] {NATURALFIXED($amount, 2)} {$unit}
+    *[other] {NATURALFIXED($amount, 2)} {MAKEPLURAL($unit)}
 }
 lathe-menu-material-amount-missing = { $amount ->
     [1] {NATURALFIXED($amount, 2)} {$unit} of {$material} ([color=red]{NATURALFIXED($missingAmount, 2)} {$unit} missing[/color])

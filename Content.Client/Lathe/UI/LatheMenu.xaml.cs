@@ -141,17 +141,18 @@ public sealed partial class LatheMenu : DefaultWindow
 
             var name = Loc.GetString(proto.Name);
 
-            string amountText;
+            string tooltipText;
             if (missingSheets > 0)
             {
-                amountText = Loc.GetString("lathe-menu-material-amount-missing", ("amount", sheets), ("missingAmount", missingSheets), ("unit", unit), ("material", name));
+                tooltipText = Loc.GetString("lathe-menu-material-amount-missing", ("amount", sheets), ("missingAmount", missingSheets), ("unit", unit), ("material", name));
             }
             else
             {
-                amountText = Loc.GetString("lathe-menu-material-amount", ("amount", sheets), ("unit", unit), ("material", name));
+                var amountText = Loc.GetString("lathe-menu-material-amount", ("amount", sheets), ("unit", unit));
+                tooltipText = Loc.GetString("lathe-menu-tooltip-display", ("material", name), ("amount", amountText));
             }
 
-            sb.AppendLine(amountText);
+            sb.AppendLine(tooltipText);
         }
 
         if (!string.IsNullOrWhiteSpace(prototype.Description))
