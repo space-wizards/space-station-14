@@ -22,7 +22,7 @@
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: label_overlay
-      map: ["enum.CrateVisualLayers.Label"]
+      map: ["enum.CrateLabelVisualLayers.Label"]
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -60,7 +60,7 @@
   - type: GenericVisualizer
     visuals:
       enum.PaperLabelVisuals.HasLabel:
-        enum.CrateVisualLayers.Label:
+        enum.CrateLabelVisualLayers.Label:
           True: {visible: true}
           False: {visible: false}
   - type: PaperLabel
