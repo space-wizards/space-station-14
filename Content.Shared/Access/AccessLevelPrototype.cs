@@ -17,5 +17,13 @@ namespace Content.Shared.Access
         /// </summary>
         [DataField("name")]
         public string? Name { get; set; }
+
+        public string GetAccessLevelName()
+        {
+            if (Name is { } name)
+                return Loc.GetString(name);
+
+            return ID;
+        }
     }
 }
