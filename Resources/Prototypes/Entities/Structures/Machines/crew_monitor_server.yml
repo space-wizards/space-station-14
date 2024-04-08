@@ -34,7 +34,6 @@
     - type: StationLimitedNetwork
     - type: ApcPowerReceiver
       powerLoad: 200
-      priority: Low
     - type: ExtensionCableReceiver
     - type: Destructible
       thresholds:

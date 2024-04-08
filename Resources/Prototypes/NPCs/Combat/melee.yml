@@ -70,10 +70,10 @@
 # Tries to melee attack our target.
 - type: htnCompound
   id: MeleeAttackTargetCompound
-  preconditions:
-    - !type:KeyExistsPrecondition
-      key: Target
   branches:
+    - preconditions:
+      - !type:KeyExistsPrecondition
+        key: Target
     # Move to melee range and hit them
     - tasks:
         - !type:HTNPrimitiveTask

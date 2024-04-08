@@ -46,7 +46,7 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Metabolizer
-    updateFrequency: 1.5
+    updateInterval: 1.5
 
 - type: entity
   id: OrganArachnidLungs
