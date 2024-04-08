@@ -171,6 +171,15 @@
 
 - type: entity
   parent: BaseSignDirectional
+  id: SignDirectionalMaints
+  name: exit sign
+  description: A direction sign, pointing which way to the exit.
+  components:
+  - type: Sprite
+    state: direction_maints
+
+- type: entity
+  parent: BaseSignDirectional
   id: SignDirectionalMed
   name: medical sign
   description: A direction sign, pointing out which way the Medical department is.
