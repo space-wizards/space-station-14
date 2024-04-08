@@ -7,7 +7,7 @@
   flavor: sake
   color: "#DDDDDD"
   metamorphicSprite:
-    sprite: Nyanotrasen/Objects/Consumable/Drinks/sakeglass.rsi
+    sprite: GreyStation/Objects/Consumable/Drinks/sakeglass.rsi
     state: icon
   metabolisms:
     Drink:

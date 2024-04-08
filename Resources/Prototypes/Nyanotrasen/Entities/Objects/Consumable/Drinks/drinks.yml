@@ -13,7 +13,7 @@
           Quantity: 50
   - type: Drink
   - type: Sprite
-    sprite: Nyanotrasen/Objects/Consumable/Drinks/sakeglass.rsi
+    sprite: GreyStation/Objects/Consumable/Drinks/sakeglass.rsi
 
 - type: entity
   parent: DrinkGlassBase

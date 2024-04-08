@@ -11,7 +11,7 @@
         - ReagentId: Sake
           Quantity: 20
   - type: Sprite
-    sprite: Nyanotrasen/Objects/Consumable/Drinks/sakecup.rsi
+    sprite: GreyStation/Objects/Consumable/Drinks/sakecup.rsi
     state: icon
   - type: TrashOnSolutionEmpty
     solution: drink
