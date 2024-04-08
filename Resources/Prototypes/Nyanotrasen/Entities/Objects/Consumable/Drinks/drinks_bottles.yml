@@ -14,7 +14,7 @@
         - ReagentId: Sake
           Quantity: 100
   - type: Sprite
-    sprite: Nyanotrasen/Objects/Consumable/Drinks/sakebottle.rsi
+    sprite: GreyStation/Objects/Consumable/Drinks/sakebottle.rsi
 
 - type: entity
   parent: DrinkBottleGlassBaseFull
