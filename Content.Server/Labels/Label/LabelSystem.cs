@@ -84,7 +84,7 @@ namespace Content.Server.Labels
         {
             _itemSlotsSystem.AddItemSlot(uid, ContainerName, component.LabelSlot);
 
-            UpdateAppearance((uid, component));
+            UpdateAppearance((uid, component, null));
         }
 
         private void OnComponentRemove(EntityUid uid, PaperLabelComponent component, ComponentRemove args)
@@ -128,7 +128,7 @@ namespace Content.Server.Labels
             if (args.Container.ID != label.LabelSlot.ID)
                 return;
 
-            UpdateAppearance((uid, label));
+            UpdateAppearance((uid, label, null));
         }
 
         private void UpdateAppearance(Entity<PaperLabelComponent, AppearanceComponent?> ent)
