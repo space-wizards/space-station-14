@@ -152,7 +152,7 @@
   id: CrateChemistryMisc
   icon:
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
-    state: icon
+    state: beakerlarge
   product: CrateChemistryMisc
   cost: 600
   category: cargoproduct-category-name-medical
