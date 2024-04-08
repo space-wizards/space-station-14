@@ -1,23 +1,26 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Made by PixelTheKermit (github) for SS14",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by PixelTheKermit (github) for SS14. Label Overlay by Vermidia.",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "base"
-    },
-    {
-      "name": "closed"
-    },
-    {
-      "name": "open"
-    }
-  ]
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "base"
+        },
+        {
+            "name": "closed"
+        },
+        {
+            "name": "open"
+        },
+        {
+            "name": "label_overlay"
+        }
+    ]
 }
