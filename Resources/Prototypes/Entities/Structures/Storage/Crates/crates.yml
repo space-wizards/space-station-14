@@ -424,6 +424,10 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
+    - state: label_overlay
+      sprite: Structures/Storage/Crates/generic_crate_label.rsi
+      map: ["enum.CrateLabelVisualLayers.Label"]
+      offset: "0.0,-0.075"
   - type: Icon
     sprite: Structures/Storage/Crates/piratechest.rsi
     state: crate_icon
@@ -449,6 +453,8 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
+    - state: label_overlay
+      map: ["enum.CrateLabelVisualLayers.Label"]
   - type: Icon
     sprite: Structures/Storage/Crates/toybox.rsi
     state: crate_icon
@@ -571,6 +577,18 @@
     sprite: Structures/Storage/Crates/trashcart.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/trashcart.rsi
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: label_overlay
+      sprite: Structures/Storage/Crates/generic_crate_label.rsi
+      offset: "0.0,0.03"
+      map: ["enum.CrateLabelVisualLayers.Label"]
 
 - type: entity
   parent: CrateBaseSecure
@@ -581,6 +599,18 @@
     sprite: Structures/Storage/Crates/trashcart_jani.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/trashcart_jani.rsi
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: label_overlay
+      sprite: Structures/Storage/Crates/generic_crate_label.rsi
+      offset: "0.0,0.03"
+      map: ["enum.CrateLabelVisualLayers.Label"]
   - type: AccessReader
     access: [["Janitor"]]
 

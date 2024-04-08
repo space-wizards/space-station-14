@@ -22,6 +22,7 @@
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: label_overlay
+      sprite: Structures/Storage/Crates/generic_crate_label.rsi
       map: ["enum.CrateLabelVisualLayers.Label"]
   - type: InteractionOutline
   - type: Physics

@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Made by brainfood118 (github) for ss14. Label Overlay by Vermidia.",
+    "copyright": "Made by brainfood118 (github) for ss14.",
     "size": {
         "x": 32,
         "y": 32
@@ -35,9 +35,6 @@
         },
         {
             "name": "crate_open"
-        },
-        {
-            "name": "label_overlay"
         }
     ]
 }
