@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SpeltIncorrectyl
-  changes:
-  - message: Portable generators can now be connected to the signal network and controlled
-      remotely via devices like a signal transmitter.
-    type: Add
-  id: 5820
-  time: '2024-01-29T14:56:29.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24157
 - author: Tayrtahn
   changes:
   - message: Welders properly display their lit status again.
@@ -3814,3 +3806,14 @@
   id: 6319
   time: '2024-04-08T03:16:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26795
+- author: chromiumboy
+  changes:
+  - message: Fixed the RCD not being able to build on top of puddles
+    type: Fix
+  - message: RCD constructions can no longer be rotated while in progress
+    type: Tweak
+  - message: The RCD now reports construction mode changes to its user
+    type: Add
+  id: 6320
+  time: '2024-04-08T03:17:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26792
