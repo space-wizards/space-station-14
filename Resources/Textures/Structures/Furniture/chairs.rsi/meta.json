@@ -93,6 +93,12 @@
 	  {
 		  "name": "comfy-greyscale",
 		  "directions": 4
+	  },
+	  {
+		  "name": "comfy-random"
+	  },
+	  {
+		  "name": "pufi-box-random"
 	  }
   ]
 }

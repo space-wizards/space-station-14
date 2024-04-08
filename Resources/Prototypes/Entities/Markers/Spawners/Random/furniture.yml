@@ -1,0 +1,41 @@
+- type: entity
+  name: random comfy spawner
+  id: RandomComfySpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Structures/Furniture/chairs.rsi
+          state: comfy-random
+    - type: RandomSpawner
+      prototypes:
+        - BlackComfyChair
+        - BlueComfyChair
+        - GreenComfyChair
+        - OrangeComfyChair
+        - PinkComfyChair
+        - PurpleComfyChair
+        - RedComfyChair
+        - WhiteComfyChair
+      chance: 1
+
+- type: entity
+  name: random padded stool spawner
+  id: RandomPaddedStoolSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Structures/Furniture/chairs.rsi
+          state: pufi-box-random
+    - type: RandomSpawner
+      prototypes:
+        - BlackPaddedStool
+        - BluePaddedStool
+        - GreenPaddedStool
+        - OrangePaddedStool
+        - PinkPaddedStool
+        - PurplePaddedStool
+        - RedPaddedStool
+        - WhitePaddedStool
+      chance: 1
