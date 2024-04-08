@@ -526,10 +526,8 @@
       amount: 1
     Dermaline:
       amount: 1
-    Carbon:
-      amount: 1
   products:
-    Pyrazine: 3
+    Pyrazine: 2
 
 - type: reaction
   id: Insuzine
@@ -573,4 +571,4 @@
     Sigynate:
       amount: 2
   products:
-      Aloxadone: 4
+    Aloxadone: 4
