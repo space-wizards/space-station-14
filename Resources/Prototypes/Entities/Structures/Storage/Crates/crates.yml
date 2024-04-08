@@ -371,6 +371,11 @@
     - state: base
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "0.0,0.03"
+      map: ["enum.PaperLabelVisuals.Layer"]
+    
   - type: Icon
     sprite: Structures/Storage/Crates/cage.rsi
   - type: Destructible
