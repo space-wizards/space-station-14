@@ -21,6 +21,8 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
+    - state: label_overlay
+      map: ["enum.CrateVisualLayers.Label"]
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -55,6 +57,12 @@
   - type: EntityStorageVisuals
     stateDoorOpen: open
     stateDoorClosed: closed
+  - type: GenericVisualizer
+    visuals:
+      enum.PaperLabelVisuals.HasLabel:
+        enum.CrateVisualLayers.Label:
+          True: {visible: true}
+          False: {visible: false}
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label
