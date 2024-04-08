@@ -427,7 +427,7 @@
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "0.0,-0.075"
-      map: ["enum.PaperLabelVisuals.Label"]
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
     sprite: Structures/Storage/Crates/piratechest.rsi
     state: crate_icon
@@ -454,7 +454,7 @@
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: paper
-      map: ["enum.PaperLabelVisuals.Label"]
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
     sprite: Structures/Storage/Crates/toybox.rsi
     state: crate_icon
@@ -587,7 +587,7 @@
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "0.0,0.03"
-      map: ["enum.PaperLabelVisuals.Label"]
+      map: ["enum.PaperLabelVisuals.Layer"]
 
 - type: entity
   parent: CrateBaseSecure
@@ -611,7 +611,7 @@
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "0.0,0.03"
-      map: ["enum.PaperLabelVisuals.Label"]
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: AccessReader
     access: [["Janitor"]]
 

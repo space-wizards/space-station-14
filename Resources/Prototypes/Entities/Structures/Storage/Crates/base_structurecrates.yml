@@ -23,7 +23,7 @@
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
-      map: ["enum.PaperLabelVisuals.Label"]
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -62,12 +62,13 @@
     visuals:
       enum.PaperLabelVisuals.HasLabel:
         enum.PaperLabelVisuals.Layer:
-        True: { visible: true }
-        False: { visible: false }
+          True: { visible: true }
+          False: { visible: false }
       enum.PaperLabelVisuals.LabelType:
-        Paper: { state: paper }
-        Bounty: { state: bounty }
-        CaptainsPaper: { state: captains_paper }
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label
@@ -121,7 +122,7 @@
       shader: unshaded
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
-      map: ["enum.PaperLabelVisuals.Label"]
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic

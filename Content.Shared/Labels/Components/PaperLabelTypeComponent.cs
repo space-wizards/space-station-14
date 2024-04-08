@@ -1,4 +1,3 @@
-using Content.Shared.Labels;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Labels.Components;
@@ -13,5 +12,5 @@ public sealed partial class PaperLabelTypeComponent : Component
     /// The type of label to show.                                                                                                                                    
     /// </summary>
     [DataField("paperType")]
-    public string LabelType = "Paper";
+    public string PaperType = "Paper";
 }

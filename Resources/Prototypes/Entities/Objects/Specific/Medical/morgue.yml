@@ -65,7 +65,8 @@
         enum.PaperLabelVisuals.Layer:
           True: {visible: true}
           False: {visible: false}
-        enum.PaperLabelVisuals.LabelType:
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
           Paper: { state: paper }
           Bounty: { state: bounty }
           CaptainsPaper: { state: captains_paper }
