@@ -84,7 +84,7 @@ namespace Content.Server.Labels
         {
             _itemSlotsSystem.AddItemSlot(uid, ContainerName, component.LabelSlot);
 
-            UpdateAppearance((uid, component, null));
+            UpdateAppearance((uid, component));
         }
 
         private void OnComponentRemove(EntityUid uid, PaperLabelComponent component, ComponentRemove args)
@@ -128,12 +128,12 @@ namespace Content.Server.Labels
             if (args.Container.ID != label.LabelSlot.ID)
                 return;
 
-            UpdateAppearance((uid, label, null));
+            UpdateAppearance((uid, label));
         }
 
         private void UpdateAppearance(Entity<PaperLabelComponent, AppearanceComponent?> ent)
         {
-            if (!Resolve(ent, ref ent.Comp2))
+            if (!Resolve(ent, ref ent.Comp2, false))
                 return;
 
             var slot = ent.Comp1.LabelSlot;

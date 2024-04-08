@@ -60,15 +60,15 @@
     stateDoorClosed: closed
   - type: GenericVisualizer
     visuals:
-      enum.PaperLabelVisuals.HasLabel:
-        enum.PaperLabelVisuals.Layer:
-          True: { visible: true }
-          False: { visible: false }
-      enum.PaperLabelVisuals.LabelType:
-        enum.PaperLabelVisuals.Layer:
-          Paper: { state: paper }
-          Bounty: { state: bounty }
-          CaptainsPaper: { state: captains_paper }
+    enum.PaperLabelVisuals.HasLabel:
+      enum.PaperLabelVisuals.Layer:
+        True: { visible: true }
+        False: { visible: false }
+    enum.PaperLabelVisuals.LabelType:
+      enum.PaperLabelVisuals.Layer:
+        Paper: { state: paper }
+        Bounty: { state: bounty }
+        CaptainsPaper: { state: captains_paper }
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label

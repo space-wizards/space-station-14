@@ -11,6 +11,6 @@ public sealed partial class PaperLabelTypeComponent : Component
     /// <summary>                                                                                                                                             
     /// The type of label to show.                                                                                                                                    
     /// </summary>
-    [DataField("paperType")]
+    [DataField]
     public string PaperType = "Paper";
 }
