@@ -15,7 +15,9 @@ namespace Content.Shared.Labels
     [Serializable, NetSerializable]
     public enum PaperLabelVisuals
     {
+        Layer,
         HasLabel,
+        LabelType
     }
 
     /// <summary>
