@@ -11,6 +11,7 @@ using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Preferences.Loadouts.Effects;
 using Content.Shared.Roles;
+using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Map;
@@ -21,6 +22,7 @@ namespace Content.Client.Lobby;
 public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState>, IOnStateExited<LobbyState>
 {
     [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
+    [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [UISystemDependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [UISystemDependency] private readonly ClientInventorySystem _inventory = default!;
@@ -73,7 +75,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         UpdateCharacterUI();
     }
 
-    public void SetDummyJob(JobPrototype? job, RoleLoadout? loadout)
+    public void SetDummyJob(JobPrototype? job)
     {
         _dummyJob = job;
         UpdateCharacterUI();
@@ -81,6 +83,10 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
     public void UpdateCharacterUI()
     {
+        // Test moment
+        if (_stateManager.CurrentState is not LobbyState)
+            return;
+
         if (!_preferencesManager.ServerDataLoaded)
         {
             _previewPanel?.SetLoaded(false);

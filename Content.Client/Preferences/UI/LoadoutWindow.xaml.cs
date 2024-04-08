@@ -47,7 +47,7 @@ public sealed partial class LoadoutWindow : FancyWindow
     {
         base.Close();
         var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
-        controller.SetDummyJob(null, null);
+        controller.SetDummyJob(null);
     }
 
     public void RefreshLoadouts(RoleLoadout loadout, ICommonSession session, IDependencyCollection collection)

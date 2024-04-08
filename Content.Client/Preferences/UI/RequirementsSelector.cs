@@ -140,7 +140,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                     if (Proto is JobPrototype jobProto)
                     {
                         var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
-                        controller.SetDummyJob(jobProto, _loadout);
+                        controller.SetDummyJob(jobProto);
                     }
 
                     _loadoutWindow.OnLoadoutUnpressed += (selectedGroup, selectedLoadout) =>
