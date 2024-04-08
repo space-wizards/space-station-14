@@ -48,6 +48,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]
+  - type: AccessReader
+    containerAccessProvider: board
   - type: Door
     crushDamage:
       types:
@@ -140,7 +142,6 @@
   - type: PaintableAirlock
     group: Standard
     department: Civilian
-  - type: AccessReader
   - type: StaticPrice
     price: 150
   - type: LightningTarget
