@@ -6,6 +6,7 @@ using Content.Server.Hands.Systems;
 using Content.Server.Inventory;
 using Content.Server.Popups;
 using Content.Server.Chat.Systems;
+using Content.Server.Movement;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
@@ -19,7 +20,6 @@ using Content.Shared.Climbing.Systems;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Mind.Components;
-using Content.Shared.Roles.Jobs;
 using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -38,16 +38,15 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly ClimbSystem _climb = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly ServerInventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StationJobsSystem _stationJobs = default!;
-    [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -138,10 +137,6 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     {
         var comp = ent.Comp;
 
-        var station = _station.GetOwningStation(ent);
-        var jobName = _jobs.MindTryGetJobName(args.Mind.Owner);
-        string? name = args.Mind.Comp.CharacterName;
-
         if (!TryComp<CryostorageComponent>(comp.Cryostorage, out var cryostorageComponent))
             return;
 
@@ -149,23 +144,6 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             comp.GracePeriodEndTime = Timing.CurTime + cryostorageComponent.NoMindGracePeriod;
         comp.AllowReEnteringBody = false;
         comp.UserId = args.Mind.Comp.UserId;
-
-        if (!TryComp<StationRecordsComponent>(station, out var stationRecords))
-            return;
-        if (name == null)
-            return;
-
-        _chatSystem.DispatchStationAnnouncement(station.Value,
-            Loc.GetString(
-                "earlyleave-cryo-announcement",
-                ("character", name),
-                ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))
-            ), Loc.GetString("earlyleave-cryo-sender"),
-            playDefaultSound: false
-        );
-
-        var key = new StationRecordKey(_stationRecords.GetRecordByName(station.Value, name) ?? default(uint), station.Value);
-        _stationRecords.RemoveRecord(key, stationRecords);
     }
 
     private void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
@@ -193,26 +171,30 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     {
         var comp = ent.Comp;
         var cryostorageEnt = ent.Comp.Cryostorage;
+
+        var station = _station.GetOwningStation(ent);
+        var name = Name(ent.Owner);
+
         if (!TryComp<CryostorageComponent>(cryostorageEnt, out var cryostorageComponent))
             return;
 
         // if we have a session, we use that to add back in all the job slots the player had.
         if (userId != null)
         {
-            foreach (var station in _station.GetStationsSet())
+            foreach (var uniqueStation in _station.GetStationsSet())
             {
-                if (!TryComp<StationJobsComponent>(station, out var stationJobs))
+                if (!TryComp<StationJobsComponent>(uniqueStation, out var stationJobs))
                     continue;
 
-                if (!_stationJobs.TryGetPlayerJobs(station, userId.Value, out var jobs, stationJobs))
+                if (!_stationJobs.TryGetPlayerJobs(uniqueStation, userId.Value, out var jobs, stationJobs))
                     continue;
 
                 foreach (var job in jobs)
                 {
-                    _stationJobs.TryAdjustJobSlot(station, job, 1, clamp: true);
+                    _stationJobs.TryAdjustJobSlot(uniqueStation, job, 1, clamp: true);
                 }
 
-                _stationJobs.TryRemovePlayerJobs(station, userId.Value, stationJobs);
+                _stationJobs.TryRemovePlayerJobs(uniqueStation, userId.Value, stationJobs);
             }
         }
 
@@ -233,12 +215,33 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
                 _gameTicker.OnGhostAttempt(mind.Value, false);
             }
         }
+
         comp.AllowReEnteringBody = false;
         _transform.SetParent(ent, PausedMap.Value);
         cryostorageComponent.StoredPlayers.Add(ent);
         Dirty(ent, comp);
         UpdateCryostorageUIState((cryostorageEnt.Value, cryostorageComponent));
         AdminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent):player} was entered into cryostorage inside of {ToPrettyString(cryostorageEnt.Value)}");
+
+        if (!TryComp<StationRecordsComponent>(station, out var stationRecords))
+            return;
+
+        var key = new StationRecordKey(_stationRecords.GetRecordByName(station.Value, name) ?? default(uint), station.Value);
+        var jobName = "Unknown";
+
+        if (_stationRecords.TryGetRecord<GeneralStationRecord>(key, out var entry, stationRecords))
+            jobName = entry.JobTitle;
+
+        _stationRecords.RemoveRecord(key, stationRecords);
+
+        _chatSystem.DispatchStationAnnouncement(station.Value,
+            Loc.GetString(
+                "earlyleave-cryo-announcement",
+                ("character", name),
+                ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))
+            ), Loc.GetString("earlyleave-cryo-sender"),
+            playDefaultSound: false
+        );
     }
 
     private void HandleCryostorageReconnection(Entity<CryostorageContainedComponent> entity)
