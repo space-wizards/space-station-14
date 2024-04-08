@@ -1,9 +1,11 @@
+using System.Globalization;
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Systems;
 using Content.Server.Inventory;
 using Content.Server.Popups;
+using Content.Server.Chat.Systems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
@@ -17,6 +19,7 @@ using Content.Shared.Climbing.Systems;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Mind.Components;
+using Content.Shared.Roles.Jobs;
 using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -41,8 +44,10 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly ServerInventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StationJobsSystem _stationJobs = default!;
+    [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -134,6 +139,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         var comp = ent.Comp;
 
         var station = _station.GetOwningStation(ent);
+        var jobName = _jobs.MindTryGetJobName(args.Mind.Comp.CurrentEntity);
         string? name = args.Mind.Comp.CharacterName;
 
         if (!TryComp<CryostorageComponent>(comp.Cryostorage, out var cryostorageComponent))
@@ -148,6 +154,15 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             return;
         if (name == null)
             return;
+
+        _chatSystem.DispatchStationAnnouncement(station.Value,
+            Loc.GetString(
+                "earlyleave-cryo-announcement",
+                ("character", name),
+                ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))
+            ), Loc.GetString("earlyleave-cryo-sender"),
+            playDefaultSound: false
+        );
 
         var key = new StationRecordKey(_stationRecords.GetRecordByName(station.Value, name) ?? default(uint), station.Value);
         _stationRecords.RemoveRecord(key, stationRecords);
