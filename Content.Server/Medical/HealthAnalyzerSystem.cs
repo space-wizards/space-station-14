@@ -49,6 +49,12 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             if (component.ScannedEntity is not {} patient)
                 continue;
 
+            if (Deleted(patient))
+            {
+                StopAnalyzingEntity((uid, component), patient);
+                continue;
+            }
+
             component.NextUpdate = _timing.CurTime + component.UpdateInterval;
 
             //Get distance between health analyzer and the scanned entity
