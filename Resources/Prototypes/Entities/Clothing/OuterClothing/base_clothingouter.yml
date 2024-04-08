@@ -24,7 +24,6 @@
     sprintModifier: 0.9
   - type: HeldSpeedModifier
 
-
 - type: entity
   abstract: true
   parent: ClothingOuterBase
@@ -155,7 +154,6 @@
   - type: Item
     size: Huge
   - type: ShoesRequiredStepTriggerImmune
-
 
 - type: entity
   parent: ClothingOuterBase
