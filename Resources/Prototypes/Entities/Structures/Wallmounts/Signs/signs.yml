@@ -173,7 +173,7 @@
   parent: BaseSignDirectional
   id: SignDirectionalMaints
   name: exit sign
-  description: A direction sign, pointing which way to the exit.
+  description: A directional sign pointing toward the nearest exit.
   components:
   - type: Sprite
     state: direction_maints
