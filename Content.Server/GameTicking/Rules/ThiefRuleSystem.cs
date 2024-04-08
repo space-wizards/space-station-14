@@ -7,16 +7,14 @@ using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Robust.Shared.Random;
-using System.Linq;
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
-    [Dependency] private readonly NuAntagSelectionSystem _antag = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
 
     public override void Initialize()
@@ -37,22 +35,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         //Generate objectives
         GenerateObjectives(mindId, mind, ent);
         //Send briefing here to account for humanoid/animal
-        _antagSelection.SendBriefing(args.EntityUid, MakeBriefing(ent), null, ent.Comp.GreetingSound);
-    }
-
-    public void AdminMakeThief(EntityUid entity, bool addPacified)
-    {
-        var thiefRule = EntityQuery<ThiefRuleComponent>().FirstOrDefault();
-        if (thiefRule == null)
-        {
-            GameTicker.StartGameRule("Thief", out var ruleEntity);
-            thiefRule = Comp<ThiefRuleComponent>(ruleEntity);
-        }
-
-        if (HasComp<ThiefRoleComponent>(entity))
-            return;
-
-        //MakeThief(entity, thiefRule);
+        _antag.SendBriefing(args.EntityUid, MakeBriefing(ent), null, ent.Comp.GreetingSound);
     }
 
     private void GenerateObjectives(EntityUid mindId, MindComponent mind, ThiefRuleComponent thiefRule)
@@ -98,8 +81,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
     private string MakeBriefing(EntityUid thief)
     {
         var isHuman = HasComp<HumanoidAppearanceComponent>(thief);
-        var briefing = "\n";
-        briefing = isHuman
+        var briefing = isHuman
             ? Loc.GetString("thief-role-greeting-human")
             : Loc.GetString("thief-role-greeting-animal");
 
@@ -107,9 +89,9 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         return briefing;
     }
 
-    private void OnObjectivesTextGetInfo(Entity<ThiefRuleComponent> thiefs, ref ObjectivesTextGetInfoEvent args)
+    private void OnObjectivesTextGetInfo(Entity<ThiefRuleComponent> ent, ref ObjectivesTextGetInfoEvent args)
     {
-        args.Minds = _antag.GetAntagMindUids(thiefs.Owner);
+        args.Minds = _antag.GetAntagMindUids(ent.Owner);
         args.AgentName = Loc.GetString("thief-round-end-agent-name");
     }
 }

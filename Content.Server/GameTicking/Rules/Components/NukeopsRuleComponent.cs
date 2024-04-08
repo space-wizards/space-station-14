@@ -1,32 +1,17 @@
-using Content.Server.Maps;
 using Content.Server.RoundEnd;
 using Content.Server.StationEvents.Events;
 using Content.Shared.Dataset;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
-
 
 namespace Content.Server.GameTicking.Rules.Components;
 
 [RegisterComponent, Access(typeof(NukeopsRuleSystem), typeof(LoneOpsSpawnRule))]
 public sealed partial class NukeopsRuleComponent : Component
 {
-    /// <summary>
-    /// This INCLUDES the operatives. So a value of 3 is satisfied by 2 players & 1 operative
-    /// </summary>
-    [DataField]
-    public int PlayersPerOperative = 10;
-
-    [DataField]
-    public int MaxOps = 5;
-
     /// <summary>
     /// What will happen if all of the nuclear operatives will die. Used by LoneOpsSpawn event.
     /// </summary>
@@ -79,7 +64,7 @@ public sealed partial class NukeopsRuleComponent : Component
     ///     This amount of TC will be given to each nukie
     /// </summary>
     [DataField]
-    public int WarTCAmountPerNukie = 40;
+    public int WarTcAmountPerNukie = 40;
 
     /// <summary>
     ///     Delay between war declaration and nuke ops arrival on station map. Gives crew time to prepare
@@ -92,12 +77,6 @@ public sealed partial class NukeopsRuleComponent : Component
     /// </summary>
     [DataField]
     public int WarDeclarationMinOps = 4;
-
-    [DataField]
-    public EntProtoId SpawnPointProto = "SpawnPointNukies";
-
-    [DataField]
-    public EntProtoId GhostSpawnPointProto = "SpawnPointGhostNukeOperative";
 
     [DataField]
     public string OperationName = string.Empty;
@@ -115,13 +94,6 @@ public sealed partial class NukeopsRuleComponent : Component
     // There have been (and probably still are) bugs where these refer to deleted entities from old rounds.
     public EntityUid? NukieOutpost;
     public EntityUid? NukieShuttle;
-
-
-    /// <summary>
-    ///     Data to be used in <see cref="OnMindAdded"/> for an operative once the Mind has been added.
-    /// </summary>
-    [DataField]
-    public Dictionary<EntityUid, string> OperativeMindPendingData = new();
 
     [DataField]
     public ProtoId<NpcFactionPrototype> Faction = "Syndicate";
