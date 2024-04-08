@@ -108,6 +108,7 @@
   - type: Clothing
     sprite: Clothing/Shoes/Specific/galoshes.rsi
   - type: NoSlip
+  - type: NonAdhesiveSurface
 
 - type: entity
   parent: ClothingShoesBaseButcherable

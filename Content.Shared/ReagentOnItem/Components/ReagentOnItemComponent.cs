@@ -1,10 +1,11 @@
-using Content.Shared.FixedPoint;
+using Content.Shared.Chemistry.Components;
+namespace Content.Shared.ReagentOnItem;
 
-namespace Content.Shared.ReagentOnItem
-
+[ImplicitDataDefinitionForInheritors]
+public abstract partial class ReagentOnItemComponent : Component
 {
-    public interface IReagentOnItem
-    {
-        FixedPoint2 ReagentOnItem();
-    }
+    [DataField("amountOfReagentLeft"), ViewVariables(VVAccess.ReadWrite)]
+    public Double AmountOfReagentLeft;
 }
+
+
