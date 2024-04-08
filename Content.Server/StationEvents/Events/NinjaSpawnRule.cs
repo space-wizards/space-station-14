@@ -3,10 +3,8 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ninja.Systems;
 using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -15,7 +13,6 @@ namespace Content.Server.StationEvents.Events;
 /// </summary>
 public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
 {
-    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     protected override void Started(EntityUid uid, NinjaSpawnRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)

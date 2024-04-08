@@ -1357,3 +1357,16 @@
     materialRequirements:
       Steel: 5
       CableHV: 2
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: ReagentGrinderIndustrialMachineCircuitboard
+  name: industrial reagent grinder machine board
+  components:
+  - type: MachineBoard
+    prototype: ReagentGrinderIndustrial
+    requirements:
+      MatterBin: 1
+      Manipulator: 3
+    materialRequirements:
+      Glass: 1
