@@ -542,8 +542,6 @@
       amount: 1
     Silicon:
       amount: 1
-    Benzene:
-      amount: 1
   products:
     Insuzine: 3
     Ash: 1
@@ -573,4 +571,4 @@
     Sigynate:
       amount: 2
   products:
-      Aloxadone: 4
+    Aloxadone: 4
