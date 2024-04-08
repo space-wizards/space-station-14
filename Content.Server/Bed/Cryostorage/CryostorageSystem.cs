@@ -139,7 +139,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         var comp = ent.Comp;
 
         var station = _station.GetOwningStation(ent);
-        var jobName = _jobs.MindTryGetJobName(args.Mind.Comp.CurrentEntity);
+        var jobName = _jobs.MindTryGetJobName(args.Mind.Owner);
         string? name = args.Mind.Comp.CharacterName;
 
         if (!TryComp<CryostorageComponent>(comp.Cryostorage, out var cryostorageComponent))
