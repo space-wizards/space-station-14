@@ -17,11 +17,11 @@ using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using static Content.Client.Tips.ClippyUI;
+using static Content.Client.Tips.TippyUI;
 
 namespace Content.Client.Tips;
 
-public sealed class ClippyUIController : UIController
+public sealed class TippyUIController : UIController
 {
     [Dependency] private readonly IStateManager _state = default!;
     [Dependency] private readonly IConsoleHost _conHost = default!;
@@ -37,53 +37,16 @@ public sealed class ClippyUIController : UIController
     private EntityUid _entity;
     private float _secondsUntilNextState;
     private int _previousStep = 0;
-    private ClippyEvent? _currentMessage;
-    private readonly Queue<ClippyEvent> _queuedMessages = new();
+    private TippyEvent? _currentMessage;
+    private readonly Queue<TippyEvent> _queuedMessages = new();
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _conHost.RegisterCommand("local_clippy", ClippyCommand);
         UIManager.OnScreenChanged += OnScreenChanged;
     }
 
-    private void ClippyCommand(IConsoleShell shell, string argStr, string[] args)
-    {
-        if (args.Length == 0)
-        {
-            shell.WriteLine("usage: clippy <message> [entity prototype] [speak time] [animate time] [waddle]");
-            return;
-        }
-
-        var ev = new ClippyEvent(args[0]);
-
-        string proto;
-        if (args.Length > 1)
-        {
-            ev.Proto = args[1];
-
-            if (!_protoMan.HasIndex<EntityPrototype>(ev.Proto))
-            {
-                shell.WriteError($"Unknown prototype: {ev.Proto}");
-                return;
-            }
-        }
-
-
-        if (args.Length > 2)
-            ev.SpeakTime = float.Parse(args[2]);
-
-        if (args.Length > 3)
-            ev.SlideTime = float.Parse(args[3]);
-
-        if (args.Length > 4)
-            ev.WaddleInterval = float.Parse(args[4]);
-
-        AddMessage(ev);
-    }
-
-    public void AddMessage(ClippyEvent ev)
+    public void AddMessage(TippyEvent ev)
     {
         _queuedMessages.Enqueue(ev);
     }
@@ -99,30 +62,30 @@ public sealed class ClippyUIController : UIController
             return;
         }
 
-        var clippy = screen.GetOrAddWidget<ClippyUI>();
+        var tippy = screen.GetOrAddWidget<TippyUI>();
         _secondsUntilNextState -= args.DeltaSeconds;
 
         if (_secondsUntilNextState <= 0)
-            NextState(clippy);
+            NextState(tippy);
         else
         {
-            var pos = UpdatePosition(clippy, screen.Size, args); ;
-            LayoutContainer.SetPosition(clippy, pos);
+            var pos = UpdatePosition(tippy, screen.Size, args); ;
+            LayoutContainer.SetPosition(tippy, pos);
         }
     }
 
-    private Vector2 UpdatePosition(ClippyUI clippy, Vector2 screenSize, FrameEventArgs args)
+    private Vector2 UpdatePosition(TippyUI tippy, Vector2 screenSize, FrameEventArgs args)
     {
         if (_currentMessage == null)
             return default;
 
         var slideTime = _currentMessage.SlideTime;
 
-        var offset = clippy.State switch
+        var offset = tippy.State switch
         {
-            ClippyState.Hidden => 0,
-            ClippyState.Revealing => Math.Clamp(1 - _secondsUntilNextState / slideTime, 0, 1),
-            ClippyState.Hiding => Math.Clamp(_secondsUntilNextState / slideTime, 0, 1),
+            TippyState.Hidden => 0,
+            TippyState.Revealing => Math.Clamp(1 - _secondsUntilNextState / slideTime, 0, 1),
+            TippyState.Hiding => Math.Clamp(_secondsUntilNextState / slideTime, 0, 1),
             _ => 1,
         };
 
@@ -130,16 +93,16 @@ public sealed class ClippyUIController : UIController
 
         if (_currentMessage == null
             || waddle <= 0
-            || clippy.State == ClippyState.Hidden
-            || clippy.State == ClippyState.Speaking
+            || tippy.State == TippyState.Hidden
+            || tippy.State == TippyState.Speaking
             || !EntityManager.TryGetComponent(_entity, out SpriteComponent? sprite))
         {
-            return new Vector2(screenSize.X - offset * (clippy.DesiredSize.X + Padding), (screenSize.Y - clippy.DesiredSize.Y) / 2);
+            return new Vector2(screenSize.X - offset * (tippy.DesiredSize.X + Padding), (screenSize.Y - tippy.DesiredSize.Y) / 2);
         }
 
         var numSteps = (int) Math.Ceiling(slideTime / waddle);
         var curStep = (int) Math.Floor(numSteps * offset);
-        var stepSize = (clippy.DesiredSize.X + Padding) / numSteps;
+        var stepSize = (tippy.DesiredSize.X + Padding) / numSteps;
 
         if (curStep != _previousStep)
         {
@@ -157,27 +120,27 @@ public sealed class ClippyUIController : UIController
             }
         }
 
-        return new Vector2(screenSize.X - stepSize * curStep, (screenSize.Y - clippy.DesiredSize.Y) / 2);
+        return new Vector2(screenSize.X - stepSize * curStep, (screenSize.Y - tippy.DesiredSize.Y) / 2);
     }
 
-    private void NextState(ClippyUI clippy)
+    private void NextState(TippyUI tippy)
     {
         SpriteComponent? sprite;
-        switch (clippy.State)
+        switch (tippy.State)
         {
-            case ClippyState.Hidden:
+            case TippyState.Hidden:
                 if (!_queuedMessages.TryDequeue(out var next))
                     return;
 
                 if (next.Proto != null)
                 {
                     _entity = EntityManager.SpawnEntity(next.Proto, MapCoordinates.Nullspace);
-                    clippy.ModifyLayers = false;
+                    tippy.ModifyLayers = false;
                 }
                 else
                 {
-                    _entity = EntityManager.SpawnEntity(_cfg.GetCVar(CCVars.ClippyEntity), MapCoordinates.Nullspace);
-                    clippy.ModifyLayers = true;
+                    _entity = EntityManager.SpawnEntity(_cfg.GetCVar(CCVars.TippyEntity), MapCoordinates.Nullspace);
+                    tippy.ModifyLayers = true;
                 }
                 if (!EntityManager.TryGetComponent(_entity, out sprite))
                     return;
@@ -189,10 +152,10 @@ public sealed class ClippyUIController : UIController
                     paper.BackgroundModulate = new(255, 255, 204);
                     paper.FontAccentColor = new(0, 0, 0);
                 }
-                clippy.InitLabel(EntityManager.GetComponentOrNull<PaperVisualsComponent>(_entity), _resCache);
+                tippy.InitLabel(EntityManager.GetComponentOrNull<PaperVisualsComponent>(_entity), _resCache);
 
                 var scale = sprite.Scale;
-                if (clippy.ModifyLayers)
+                if (tippy.ModifyLayers)
                 {
                     sprite.Scale = Vector2.One;
                 }
@@ -200,14 +163,14 @@ public sealed class ClippyUIController : UIController
                 {
                     sprite.Scale = new Vector2(3, 3);
                 }
-                clippy.Entity.SetEntity(_entity);
-                clippy.Entity.Scale = scale;
+                tippy.Entity.SetEntity(_entity);
+                tippy.Entity.Scale = scale;
 
                 _currentMessage = next;
                 _secondsUntilNextState = next.SlideTime;
-                clippy.State = ClippyState.Revealing;
+                tippy.State = TippyState.Revealing;
                 _previousStep = 0;
-                if (clippy.ModifyLayers)
+                if (tippy.ModifyLayers)
                 {
                     sprite.LayerSetAnimationTime("revealing", 0);
                     sprite.LayerSetVisible("revealing", true);
@@ -215,47 +178,47 @@ public sealed class ClippyUIController : UIController
                     sprite.LayerSetVisible("hiding", false);
                 }
                 sprite.Rotation = 0;
-                clippy.Label.SetMarkup(_currentMessage.Msg);
-                clippy.Label.Visible = false;
-                clippy.LabelPanel.Visible = false;
-                clippy.Visible = true;
+                tippy.Label.SetMarkup(_currentMessage.Msg);
+                tippy.Label.Visible = false;
+                tippy.LabelPanel.Visible = false;
+                tippy.Visible = true;
                 sprite.Visible = true;
                 break;
 
-            case ClippyState.Revealing:
-                clippy.State = ClippyState.Speaking;
+            case TippyState.Revealing:
+                tippy.State = TippyState.Speaking;
                 if (!EntityManager.TryGetComponent(_entity, out sprite))
                     return;
                 sprite.Rotation = 0;
                 _previousStep = 0;
-                if (clippy.ModifyLayers)
+                if (tippy.ModifyLayers)
                 {
                     sprite.LayerSetAnimationTime("speaking", 0);
                     sprite.LayerSetVisible("revealing", false);
                     sprite.LayerSetVisible("speaking", true);
                     sprite.LayerSetVisible("hiding", false);
                 }
-                clippy.Label.Visible = true;
-                clippy.LabelPanel.Visible = true;
-                clippy.InvalidateArrange();
-                clippy.InvalidateMeasure();
+                tippy.Label.Visible = true;
+                tippy.LabelPanel.Visible = true;
+                tippy.InvalidateArrange();
+                tippy.InvalidateMeasure();
                 if (_currentMessage != null)
                     _secondsUntilNextState = _currentMessage.SpeakTime;
 
                 break;
 
-            case ClippyState.Speaking:
-                clippy.State = ClippyState.Hiding;
+            case TippyState.Speaking:
+                tippy.State = TippyState.Hiding;
                 if (!EntityManager.TryGetComponent(_entity, out sprite))
                     return;
-                if (clippy.ModifyLayers)
+                if (tippy.ModifyLayers)
                 {
                     sprite.LayerSetAnimationTime("hiding", 0);
                     sprite.LayerSetVisible("revealing", false);
                     sprite.LayerSetVisible("speaking", false);
                     sprite.LayerSetVisible("hiding", true);
                 }
-                clippy.LabelPanel.Visible = false;
+                tippy.LabelPanel.Visible = false;
                 if (_currentMessage != null)
                     _secondsUntilNextState = _currentMessage.SlideTime;
                 break;
@@ -264,17 +227,17 @@ public sealed class ClippyUIController : UIController
 
                 EntityManager.DeleteEntity(_entity);
                 _entity = default;
-                clippy.Visible = false;
+                tippy.Visible = false;
                 _currentMessage = null;
                 _secondsUntilNextState = 0;
-                clippy.State = ClippyState.Hidden;
+                tippy.State = TippyState.Hidden;
                 break;
         }
     }
 
     private void OnScreenChanged((UIScreen? Old, UIScreen? New) ev)
     {
-        ev.Old?.RemoveWidget<ClippyUI>();
+        ev.Old?.RemoveWidget<TippyUI>();
         _currentMessage = null;
         EntityManager.DeleteEntity(_entity);
     }

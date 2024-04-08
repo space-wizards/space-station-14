@@ -1,4 +1,4 @@
-<tips:ClippyUI xmlns="https://spacestation14.io"
+<tips:TippyUI xmlns="https://spacestation14.io"
                xmlns:tips="clr-namespace:Content.Client.Tips"
                MinSize="64 64"
                Visible="False">
@@ -8,4 +8,4 @@
         </ScrollContainer>
     </PanelContainer>
     <SpriteView Name="Entity" Access="Public" MinSize="128 128"/>
-</tips:ClippyUI>
+</tips:TippyUI>

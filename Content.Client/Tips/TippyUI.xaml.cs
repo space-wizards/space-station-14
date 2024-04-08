@@ -8,12 +8,12 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Tips;
 
 [GenerateTypedNameReferences]
-public sealed partial class ClippyUI : UIWidget
+public sealed partial class TippyUI : UIWidget
 {
-    public ClippyState State = ClippyState.Hidden;
+    public TippyState State = TippyState.Hidden;
     public bool ModifyLayers = true;
 
-    public ClippyUI()
+    public TippyUI()
     {
         RobustXamlLoader.Load(this);
     }
@@ -44,7 +44,7 @@ public sealed partial class ClippyUI : UIWidget
         };
     }
 
-    public enum ClippyState : byte
+    public enum TippyState : byte
     {
         Hidden,
         Revealing,

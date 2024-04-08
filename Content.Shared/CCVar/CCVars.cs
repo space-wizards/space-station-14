@@ -2061,8 +2061,8 @@ namespace Content.Shared.CCVar
             CVarDef.Create("gateway.generator_enabled", true);
 
         // Clippy!
-        public static readonly CVarDef<string> ClippyEntity =
-            CVarDef.Create("clippy.entity", "Tippy", CVar.SERVER | CVar.REPLICATED);
+        public static readonly CVarDef<string> TippyEntity =
+            CVarDef.Create("tippy.entity", "Tippy", CVar.SERVER | CVar.REPLICATED);
             
         /*
          * DEBUG

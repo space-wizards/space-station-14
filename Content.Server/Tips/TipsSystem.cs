@@ -27,6 +27,7 @@ public sealed class TipsSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IConsoleHost _conHost = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     private bool _tipsEnabled;
     private float _tipTimeOutOfRound;
@@ -49,8 +50,22 @@ public sealed class TipsSystem : EntitySystem
         Subs.CVar(_cfg, CCVars.TipsTippyChance, SetTippyChance, true);
 
         RecalculateNextTipTime();
-        _conHost.RegisterCommand("clippy", "Broadcast a message as Tippy the clown", "clippy <player Uid | broadcast> <message> [entity prototype] [speak time] [slide time] [waddle]", SendClippy);
-        _conHost.RegisterCommand("tip", "Spawn a random game tip", "tip", SendTip);
+        _conHost.RegisterCommand("tippy", Loc.GetString("cmd-tippy-desc"), Loc.GetString("cmd-tippy-help"), SendTippy, SendTippyHelper);
+        _conHost.RegisterCommand("tip", Loc.GetString("cmd-tip-desc"), "tip", SendTip);
+    }
+
+    private CompletionResult SendTippyHelper(IConsoleShell shell, string[] args)
+    {
+        return args.Length switch
+        {
+            1 => CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("cmd-tippy-auto-1")),
+            2 => CompletionResult.FromHint(Loc.GetString("cmd-tippy-auto-2")),
+            3 => CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<EntityPrototype>(), Loc.GetString("cmd-tippy-auto-3")),
+            4 => CompletionResult.FromHint(Loc.GetString("cmd-tippy-auto-4")),
+            5 => CompletionResult.FromHint(Loc.GetString("cmd-tippy-auto-5")),
+            6 => CompletionResult.FromHint(Loc.GetString("cmd-tippy-auto-6")),
+            _ => CompletionResult.Empty
+        };
     }
 
     private void SendTip(IConsoleShell shell, string argstr, string[] args)
@@ -59,27 +74,46 @@ public sealed class TipsSystem : EntitySystem
         RecalculateNextTipTime();
     }
 
-    private void SendClippy(IConsoleShell shell, string argstr, string[] args)
+    private void SendTippy(IConsoleShell shell, string argstr, string[] args)
     {
         if (args.Length < 2)
         {
-            shell.WriteLine(
-                "usage: clippy <player Uid | broadcast> <message> [entity prototype] [speak time] [slide time] [waddle]");
+            shell.WriteLine(Loc.GetString("cmd-tippy-help"));
             return;
         }
 
         ActorComponent? actor = null;
-        if (args[0] != "broadcast" && args[0] != "all")
+        if (args[0] != "all")
         {
-            if (!EntityUid.TryParse(args[0], out var uid)
-                || !TryComp(uid, out actor))
+            ICommonSession? session;
+            if (args.Length > 0)
             {
-                shell.WriteError($"Could not find player {args[0]}");
+                // Get player entity
+                if (!_playerManager.TryGetSessionByUsername(args[0], out session))
+                {
+                    shell.WriteLine(Loc.GetString("cmd-tippy-error-no-user"));
+                    return;
+                }
+            }
+            else
+            {
+                session = shell.Player;
+            }
+
+            if (session?.AttachedEntity is not { } user)
+            {
+                shell.WriteLine(Loc.GetString("cmd-tippy-error-no-user"));
+                return;
+            }
+
+            if (!TryComp(user, out actor))
+            {
+                shell.WriteError(Loc.GetString("cmd-tippy-error-no-user"));
                 return;
             }
         }
 
-        var ev = new ClippyEvent(args[1]);
+        var ev = new TippyEvent(args[1]);
 
         string proto;
         if (args.Length > 2)
@@ -87,7 +121,7 @@ public sealed class TipsSystem : EntitySystem
             ev.Proto = args[2];
             if (!_prototype.HasIndex<EntityPrototype>(args[2]))
             {
-                shell.WriteError($"Unknown prototype: {args[2]}");
+                shell.WriteError(Loc.GetString("cmd-tippy-error-no-prototype", ("proto", args[2])));
                 return;
             }
         }
@@ -160,7 +194,7 @@ public sealed class TipsSystem : EntitySystem
 
         if (_random.Prob(_tipTippyChance))
         {
-            var ev = new ClippyEvent(msg);
+            var ev = new TippyEvent(msg);
             ev.SpeakTime = 1 + tip.Length * 0.05f;
             RaiseNetworkEvent(ev);
         } else

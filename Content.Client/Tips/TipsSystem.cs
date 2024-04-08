@@ -1,4 +1,4 @@
-﻿using Content.Shared.Tips;
+using Content.Shared.Tips;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Tips;
@@ -10,11 +10,11 @@ public sealed class TipsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<ClippyEvent>(OnClippyEv);
+        SubscribeNetworkEvent<TippyEvent>(OnClippyEv);
     }
 
-    private void OnClippyEv(ClippyEvent ev)
+    private void OnClippyEv(TippyEvent ev)
     {
-        _uiMan.GetUIController<ClippyUIController>().AddMessage(ev);
+        _uiMan.GetUIController<TippyUIController>().AddMessage(ev);
     }
 }

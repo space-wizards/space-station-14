@@ -1,12 +1,12 @@
-﻿
+
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tips;
 
 [Serializable, NetSerializable]
-public sealed class ClippyEvent : EntityEventArgs
+public sealed class TippyEvent : EntityEventArgs
 {
-    public ClippyEvent(string msg)
+    public TippyEvent(string msg)
     {
         Msg = msg;
     }
