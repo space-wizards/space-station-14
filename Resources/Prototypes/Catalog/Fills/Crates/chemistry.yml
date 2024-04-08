@@ -66,6 +66,21 @@
           amount: 1
 
 - type: entity
+  id: CrateChemistryMisc
+  parent: CratePlastic
+  name: chemicals crate (misc)
+  description: Contains Ethanol, Sugar, and some pills someone forgot to label.
+  components:
+    - type: StorageFill
+      contents:
+        - id: StrangePill
+          amount: 5
+        - id: JugEthanol
+          amount: 1
+        - id: JugSugar
+          amount: 1
+
+- type: entity
   id: CratePlantBGone
   parent: CrateGenericSteel
   name: bulk Plant-B-Gone crate

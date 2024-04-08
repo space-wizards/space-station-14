@@ -147,3 +147,13 @@
   cost: 750
   category: cargoproduct-category-name-medical
   group: market
+
+- type: cargoProduct
+  id: CrateChemistryMisc
+  icon:
+    sprite: Objects/Specific/Chemistry/beaker_large.rsi
+    state: icon
+  product: CrateChemistryMisc
+  cost: 600
+  category: cargoproduct-category-name-medical
+  group: market
