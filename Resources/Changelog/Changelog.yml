@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Various annoying sounds are now a little quieter
-    type: Tweak
-  id: 5819
-  time: '2024-01-29T09:51:31.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24690
 - author: SpeltIncorrectyl
   changes:
   - message: Portable generators can now be connected to the signal network and controlled
@@ -3814,3 +3807,10 @@
   id: 6318
   time: '2024-04-06T23:58:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26784
+- author: Crotalus
+  changes:
+  - message: Show missing materials in lathe tooltip
+    type: Add
+  id: 6319
+  time: '2024-04-08T03:16:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26795
