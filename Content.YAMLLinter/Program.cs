@@ -103,9 +103,18 @@ namespace Content.YAMLLinter
             return (yamlErrors, fieldErrors);
         }
 
-        public static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors , List<string> FieldErrors)>
+        public static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
             RunValidation()
         {
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            var sharedAssemblies = assemblies.Where(n => n.FullName.Contains("Shared"));
+            var serverAssemblies = assemblies.Where(n => n.FullName.Contains("Server"));
+            var clientAssemblies = assemblies.Where(n => n.FullName.Contains("Client"));
+
+            var serverTypes = serverAssemblies.Union(sharedAssemblies).SelectMany(n => n.GetTypes()).Select(t => t.Name);
+            var clientTypes = clientAssemblies.Union(sharedAssemblies).SelectMany(n => n.GetTypes()).Select(t => t.Name);
+
             var yamlErrors = new Dictionary<string, HashSet<ErrorNode>>();
 
             var serverErrors = await ValidateServer();
@@ -117,8 +126,17 @@ namespace Content.YAMLLinter
                 var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
 
                 // We include sometimes-relevant errors if they exist both for the client & server
-                if (clientErrors.Item1.TryGetValue(key, out var clientVal))
+                if (clientErrors.YamlErrors.TryGetValue(key, out var clientVal))
                     newErrors.UnionWith(val.Intersect(clientVal));
+
+                // Include any errors that relate to server-only types
+                foreach (var errorNode in val)
+                {
+                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode && !clientTypes.Contains(fieldNotFoundNode.Type.Name))
+                    {
+                        newErrors.Add(errorNode);
+                    }
+                }
 
                 if (newErrors.Count != 0)
                     yamlErrors[key] = newErrors;
@@ -135,6 +153,15 @@ namespace Content.YAMLLinter
                     errors.UnionWith(val.Where(n => n.AlwaysRelevant));
                 else
                     yamlErrors[key] = newErrors;
+
+                // Include any errors that relate to client-only types
+                foreach (var errorNode in val)
+                {
+                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode && !serverTypes.Contains(fieldNotFoundNode.Type.Name))
+                    {
+                        newErrors.Add(errorNode);
+                    }
+                }
             }
 
             // Finally, combine the prototype ID field errors.
