@@ -1,6 +1,0 @@
-﻿- type: stack
-  id: ArtifactFragment
-  name: artifact fragment
-  spawn: ArtifactFragment1
-  maxCount: 30
-  itemSize: 5
