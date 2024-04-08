@@ -135,7 +135,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
-    - ShoesRequiredStepTriggerImmune
+  - type: ShoesRequiredStepTriggerImmune
 
 - type: entity
   abstract: true
@@ -154,9 +154,8 @@
   - type: HeldSpeedModifier
   - type: Item
     size: Huge
-  - type: Tag
-    tags:
-    - ShoesRequiredStepTriggerImmune
+  - type: ShoesRequiredStepTriggerImmune
+
 
 - type: entity
   parent: ClothingOuterBase

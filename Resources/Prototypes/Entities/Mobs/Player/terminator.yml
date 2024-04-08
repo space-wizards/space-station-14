@@ -196,8 +196,8 @@
   - type: Tag
     tags:
     - DoorBumpOpener
-    - ShoesRequiredStepTriggerImmune
     # let mind transfer on gib work
     - MindTransferTarget
     # its just metal so no implants
     - Unimplantable
+  - type: ShoesRequiredStepTriggerImmune

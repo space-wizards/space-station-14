@@ -8,7 +8,6 @@ namespace Content.Shared.StepTrigger.Systems;
 public sealed class ShoesRequiredStepTriggerSystem : EntitySystem
 {
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -19,27 +18,34 @@ public sealed class ShoesRequiredStepTriggerSystem : EntitySystem
 
     private void OnStepTriggerAttempt(EntityUid uid, ShoesRequiredStepTriggerComponent component, ref StepTriggerAttemptEvent args)
     {
-        if (_tagSystem.HasTag(args.Tripper, "ShoesRequiredStepTriggerImmune"))
+        // checks if the entity itself is the one with the component
+        if (HasComp<ShoesRequiredStepTriggerImmuneComponent>(args.Tripper))
         {
             args.Cancelled = true;
             return;
         }
 
+        // if not, checks the inventory
         if (!TryComp<InventoryComponent>(args.Tripper, out var inventory))
             return;
 
-        if (!_inventory.HasSlot(args.Tripper, "shoes", inventory)) // early exit if no shoe slot at all, dionas suffer
+        // early exit if no shoe slot exists at all, dionas suffer
+        // remove to give dionas their freedom from glass
+        if (!_inventory.HasSlot(args.Tripper, "shoes", inventory))
             return;
 
-        if (_inventory.TryGetSlotEntity(args.Tripper, "shoes", out _, inventory))
+        // go through all equipped items, checks if item is equipped in shoe slot or has shoe immmune component
+        if (_inventory.TryGetContainerSlotEnumerator(args.Tripper, out var containerSlotEnumerator))
         {
-            args.Cancelled = true;
-            return;
+            while (containerSlotEnumerator.NextItem(out var item, out var slot))
+            {
+                if (HasComp<ShoesRequiredStepTriggerImmuneComponent>(item) || slot.Name == "shoes")
+                {
+                    args.Cancelled = true;
+                    return;
+                }
+            }
         }
-
-        if (_inventory.TryGetSlotEntity(args.Tripper, "outerClothing", out var outerClothing, inventory))
-            if (_tagSystem.HasTag(outerClothing.Value, "ShoesRequiredStepTriggerImmune"))
-                args.Cancelled = true;
     }
 
     private void OnExamined(EntityUid uid, ShoesRequiredStepTriggerComponent component, ExaminedEvent args)

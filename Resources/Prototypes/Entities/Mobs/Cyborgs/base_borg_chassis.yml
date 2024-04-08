@@ -205,13 +205,13 @@
   - type: StandingState
   - type: Tag
     tags:
-    - ShoesRequiredStepTriggerImmune
     - DoorBumpOpener
     - CanPilot
   - type: Emoting
   - type: GuideHelp
     guides:
       - Cyborgs
+  - type: ShoesRequiredStepTriggerImmune
 
 - type: entity
   id: BaseBorgChassisNT
