@@ -25,7 +25,7 @@
   - type: ShoesRequiredStepTriggerImmune
 
 - type: entity
-  parent: ClothingOuterBaseLarge
+  parent: ClothingOuterSuitBomb
   id: ClothingOuterSuitJanitorBomb
   name: janitorial bomb suit
   description: A heavy helmet designed to withstand explosions formed from reactions between chemicals.
