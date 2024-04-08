@@ -61,8 +61,6 @@
     sprintModifier: 0.7
   - type: HeldSpeedModifier
   - type: GroupExamine
-  - type: Tag
-    tags:
   - type: ShoesRequiredStepTriggerImmune
 
 - type: entity
@@ -91,8 +89,6 @@
     sprintModifier: 0.8
   - type: HeldSpeedModifier
   - type: GroupExamine
-  - type: Tag
-    tags:
   - type: ShoesRequiredStepTriggerImmune
 
 - type: entity
@@ -117,8 +113,6 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
-  - type: Tag
-    tags:
   - type: ShoesRequiredStepTriggerImmune
       
 - type: entity
