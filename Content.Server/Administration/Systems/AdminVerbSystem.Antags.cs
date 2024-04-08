@@ -1,9 +1,11 @@
+using Content.Server.Administration.Commands;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind.Components;
+using Content.Shared.Roles;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -16,8 +18,10 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly ThiefRuleSystem _thief = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
-    [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
     [Dependency] private readonly RevolutionaryRuleSystem _revolutionaryRule = default!;
+
+    [ValidatePrototypeId<StartingGearPrototype>]
+    private const string PirateGearId = "PirateGear";
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
@@ -85,7 +89,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Clothing/Head/Hats/pirate.rsi"), "icon"),
             Act = () =>
             {
-                _piratesRule.MakePirate(args.Target);
+                SetOutfitCommand.SetOutfit(args.Target, PirateGearId, EntityManager);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-pirate"),

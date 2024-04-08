@@ -423,16 +423,6 @@ namespace Content.Shared.CCVar
             CVarDef.Create("discord.round_end_role", string.Empty, CVar.SERVERONLY);
 
         /*
-         * Pirates
-         */
-
-        public static readonly CVarDef<int> PiratesMaxOps =
-            CVarDef.Create("pirates.max_pirates", 6);
-
-        public static readonly CVarDef<int> PiratesPlayersPerOp =
-            CVarDef.Create("pirates.players_per_pirate", 5);
-
-        /*
          * Tips
          */
 
