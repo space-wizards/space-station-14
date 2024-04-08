@@ -16,7 +16,7 @@
     materialComposition:
       Cloth: 50
   - type: StaticPrice
-    price: 25
+    price: 20
   - type: EmitSoundOnPickup # GreyStation - Sound PR
     sound: /Audio/SimpleStation14/Items/Handling/toolbelt_pickup.ogg
   - type: EmitSoundOnDrop
