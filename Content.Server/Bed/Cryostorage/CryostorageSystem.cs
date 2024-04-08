@@ -6,6 +6,9 @@ using Content.Server.Inventory;
 using Content.Server.Popups;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Server.StationRecords;
+using Content.Server.StationRecords.Systems;
+using Content.Shared.StationRecords;
 using Content.Shared.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.Bed.Cryostorage;
@@ -40,6 +43,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StationJobsSystem _stationJobs = default!;
+    [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -129,6 +133,9 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     {
         var comp = ent.Comp;
 
+        var station = _station.GetOwningStation(ent);
+        string? name = args.Mind.Comp.CharacterName;
+
         if (!TryComp<CryostorageComponent>(comp.Cryostorage, out var cryostorageComponent))
             return;
 
@@ -136,6 +143,14 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             comp.GracePeriodEndTime = Timing.CurTime + cryostorageComponent.NoMindGracePeriod;
         comp.AllowReEnteringBody = false;
         comp.UserId = args.Mind.Comp.UserId;
+
+        if (!TryComp<StationRecordsComponent>(station, out var stationRecords))
+            return;
+        if (name == null)
+            return;
+
+        var key = new StationRecordKey(_stationRecords.GetRecordByName(station.Value, name) ?? default(uint), station.Value);
+        _stationRecords.RemoveRecord(key, stationRecords);
     }
 
     private void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
