@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Water bottles now display their fill level while held.
-    type: Add
-  id: 5822
-  time: '2024-01-29T23:19:56.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24708
 - author: SlamBamActionman
   changes:
   - message: Arachnids slipping in water now get a cute hat!
@@ -3817,3 +3810,13 @@
   id: 6321
   time: '2024-04-08T15:05:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26806
+- author: lzk228
+  changes:
+  - message: Clothing restock crate was splitted to clothing and autodrobe restock
+      crates.
+    type: Tweak
+  - message: Clothing is cheaper.
+    type: Tweak
+  id: 6322
+  time: '2024-04-08T15:10:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26805
