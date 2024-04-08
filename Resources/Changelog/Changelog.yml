@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Arachnids slipping in water now get a cute hat!
-    type: Add
-  id: 5823
-  time: '2024-01-30T00:21:26.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23822
 - author: Tayrtahn
   changes:
   - message: Pressing shift as a ghost no longer cancels following your target
@@ -3820,3 +3813,11 @@
   id: 6322
   time: '2024-04-08T15:10:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26805
+- author: Hanzdegloker
+  changes:
+  - message: Spears can now be quipped to your suit slot and cost slightly more to
+      make.
+    type: Tweak
+  id: 6323
+  time: '2024-04-08T15:34:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26724
