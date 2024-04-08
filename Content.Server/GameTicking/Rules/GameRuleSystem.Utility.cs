@@ -91,7 +91,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         return false;
     }
     /// <summary>
-    ///     Get a random station tile that are neither space tiles nor air-blocked tiles
+    ///     Get a random station tile that is neither a space tile nor an air-blocked tile
     /// </summary>
     protected bool TryFindRandomTileOnStation(Entity<StationDataComponent> targetStation, out Vector2i tile, out EntityUid targetGrid, out EntityCoordinates targetCoords)
     {
