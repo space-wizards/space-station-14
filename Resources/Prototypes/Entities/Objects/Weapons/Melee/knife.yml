@@ -154,6 +154,9 @@
     sprite: Clothing/Head/Hats/greyflatcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/greyflatcap.rsi
+  - type: Tag
+    tags:
+    - CannonRestrict
 
 - type: entity
   parent: BladedFlatcapGrey
@@ -167,6 +170,9 @@
     sprite: Clothing/Head/Hats/brownflatcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/brownflatcap.rsi
+  - type: Tag
+    tags:
+    - CannonRestrict
 
 - type: entity
   name: shiv
