@@ -35,8 +35,8 @@ public sealed partial class EntityWhitelist
     /// <summary>
     ///     Item sizes that are allowed in the whitelist.
     /// </summary>
-    [DataField("sizes", customTypeSerializer:typeof(PrototypeIdListSerializer<ItemSizePrototype>))]
-    public List<string>? Sizes;
+    [DataField]
+    public List<ProtoId<ItemSizePrototype>>? Sizes;
 
     [NonSerialized]
     private List<ComponentRegistration>? _registrations;
