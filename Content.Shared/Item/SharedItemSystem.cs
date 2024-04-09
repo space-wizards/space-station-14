@@ -91,7 +91,7 @@ public abstract class SharedItemSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);
+        args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false, delay: component.PickupTime);
     }
 
     private void AddPickupVerb(EntityUid uid, ItemComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -105,7 +105,7 @@ public abstract class SharedItemSystem : EntitySystem
 
         InteractionVerb verb = new();
         verb.Act = () => _handsSystem.TryPickupAnyHand(args.User, args.Target, checkActionBlocker: false,
-            handsComp: args.Hands, item: component);
+            handsComp: args.Hands, item: component, delay: component.PickupTime);
         verb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/pickup.svg.192dpi.png"));
 
         // if the item already in a container (that is not the same as the user's), then change the text.

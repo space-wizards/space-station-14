@@ -1,4 +1,5 @@
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.DoAfter;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -114,6 +115,25 @@ public sealed class HandsComponentState : ComponentState
         Hands = new(handComp.Hands.Values);
         HandNames = new(handComp.SortedHands);
         ActiveHand = handComp.ActiveHand?.Name;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed partial class PickupDoAfter : DoAfterEvent
+{
+    public Hand Hand;
+
+    public EntityUid Entity;
+
+    public PickupDoAfter(Hand hand, EntityUid entity)
+    {
+        Hand = hand;
+        Entity = entity;
+    }
+
+    public override DoAfterEvent Clone()
+    {
+        return this;
     }
 }
 

@@ -3210,6 +3210,7 @@
     sprite: Mobs/Animals/nymph.rsi
     heldprefix: inhand
     size: Normal
+    pickupTime: 2
   - type: CanEscapeInventory
     baseResistTime: 1
   - type: Clothing

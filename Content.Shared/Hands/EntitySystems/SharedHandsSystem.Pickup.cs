@@ -1,6 +1,7 @@
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Item;
+using Content.Shared.DoAfter;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -10,9 +11,13 @@ namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem : EntitySystem
 {
+
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+
     private void InitializePickup()
     {
         SubscribeLocalEvent<HandsComponent, EntInsertedIntoContainerMessage>(HandleEntityInserted);
+        SubscribeLocalEvent<HandsComponent, PickupDoAfter>(OnDoAfterPickup);
     }
 
     protected virtual void HandleEntityInserted(EntityUid uid, HandsComponent hands, EntInsertedIntoContainerMessage args)
@@ -45,7 +50,8 @@ public abstract partial class SharedHandsSystem : EntitySystem
         bool animateUser = false,
         bool animate = true,
         HandsComponent? handsComp = null,
-        ItemComponent? item = null)
+        ItemComponent? item = null,
+        TimeSpan? delay = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
@@ -57,7 +63,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (hand == null)
             return false;
 
-        return TryPickup(uid, entity, hand, checkActionBlocker, animate, handsComp, item);
+        return TryPickup(uid, entity, hand, checkActionBlocker, animate, handsComp, item, delay);
     }
 
     /// <summary>
@@ -74,7 +80,8 @@ public abstract partial class SharedHandsSystem : EntitySystem
         bool animateUser = false,
         bool animate = true,
         HandsComponent? handsComp = null,
-        ItemComponent? item = null)
+        ItemComponent? item = null,
+        TimeSpan? delay = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
@@ -82,7 +89,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!TryGetEmptyHand(uid, out var hand, handsComp))
             return false;
 
-        return TryPickup(uid, entity, hand, checkActionBlocker, animate, handsComp, item);
+        return TryPickup(uid, entity, hand, checkActionBlocker, animate, handsComp, item, delay);
     }
 
     public bool TryPickup(
@@ -92,7 +99,8 @@ public abstract partial class SharedHandsSystem : EntitySystem
         bool checkActionBlocker = true,
         bool animate = true,
         HandsComponent? handsComp = null,
-        ItemComponent? item = null)
+        ItemComponent? item = null,
+        TimeSpan? delay = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
@@ -118,7 +126,18 @@ public abstract partial class SharedHandsSystem : EntitySystem
                 _storage.PlayPickupAnimation(entity, initialPosition, xform.Coordinates, itemXform.LocalRotation, uid);
             }
         }
-        DoPickup(uid, hand, entity, handsComp);
+
+        if (delay == null)
+        {
+            delay = TimeSpan.Zero;
+        }
+
+        var doAfter = new DoAfterArgs(EntityManager, uid, delay.Value, new PickupDoAfter(hand, entity), uid)
+        {
+            BreakOnMove = true
+        };
+
+        _doAfterSystem.TryStartDoAfter(doAfter);
 
         return true;
     }
@@ -229,5 +248,15 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         if (hand == hands.ActiveHand)
             RaiseLocalEvent(entity, new HandSelectedEvent(uid), false);
+    }
+
+    private void OnDoAfterPickup(EntityUid uid, HandsComponent component, PickupDoAfter args)
+    {
+        if (args.Cancelled)
+        {
+            return;
+        }
+
+        DoPickup(uid, args.Hand, args.Entity, component);
     }
 }

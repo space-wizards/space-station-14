@@ -60,6 +60,12 @@ public sealed partial class ItemComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Vector2i StoredOffset;
+
+    /// <summary>
+    /// Time spent pickuping up the item before it is in their hands.
+    /// </summary>
+    [DataField]
+    public TimeSpan PickupTime = TimeSpan.Zero;
 }
 
 /// <summary>
