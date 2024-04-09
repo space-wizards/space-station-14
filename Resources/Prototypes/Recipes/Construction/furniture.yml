@@ -884,3 +884,21 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  id: NoticeBoard
+  name: noticeBoard
+  description: Wooden NoticeBoard, can store paper inside itself.
+  graph: NoticeBoard
+  startNode: start
+  targetNode: noticeBoard
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Wallmounts/noticeboard.rsi
+    state: noticeboard
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
