@@ -37,12 +37,12 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     /// <summary>
     /// The time at which players will be able to skip the next bounty.
     /// </summary>
-    [DataField("nextSkipTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextSkipTime = TimeSpan.Zero;
 
     /// <summary>
     /// The time between skipping bounties.
     /// </summary>
-    [DataField("skipDelay")]
+    [DataField]
     public TimeSpan SkipDelay = TimeSpan.FromMinutes(15);
 }
