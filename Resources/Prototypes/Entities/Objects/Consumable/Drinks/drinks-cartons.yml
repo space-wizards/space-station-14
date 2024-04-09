@@ -15,8 +15,7 @@
       drink:
         maxVol: 50
   - type: Sprite
-    state: icon
- 
+    state: icon 
   - type: Item
     size: Small
   - type: MeleeWeapon
