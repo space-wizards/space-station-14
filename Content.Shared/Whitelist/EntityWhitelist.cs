@@ -56,9 +56,12 @@ public sealed partial class EntityWhitelist
     public bool RequireAll;
 
     [Dependency] private readonly ILogManager _logMan = default!;
+    private ISawmill _sawmill = default!;
 
     public void UpdateRegistrations()
     {
+        _sawmill = _logMan.GetSawmill("entityWhitelist");
+
         if (Components == null)
             return;
 
@@ -74,7 +77,7 @@ public sealed partial class EntityWhitelist
             }
             else if (availability == ComponentAvailability.Unknown)
             {
-                Logger.Warning($"Unknown component name {name} passed to EntityWhitelist!");
+                _sawmill.Warning($"Unknown component name {name} passed to EntityWhitelist!");
             }
         }
     }
