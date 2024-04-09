@@ -74,8 +74,7 @@
     - preconditions:
       - !type:KeyExistsPrecondition
         key: Target
-    # Move to melee range and hit them
-    - tasks:
+      tasks:
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             shutdownState: PlanFinished
@@ -104,11 +103,11 @@
 
 - type: htnCompound
   id: MeleeAttackOrderedTargetCompound
-  preconditions:
-    - !type:KeyExistsPrecondition
-      key: Target
   branches:
-    - tasks:
+    - preconditions:
+      - !type:KeyExistsPrecondition
+        key: Target
+      tasks:
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             shutdownState: PlanFinished

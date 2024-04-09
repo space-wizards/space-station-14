@@ -470,7 +470,6 @@
       type: ResearchClientBoundUserInterface
   - type: ApcPowerReceiver
     powerLoad: 1000
-    priority: Low
   - type: Computer
     board: AnalysisComputerCircuitboard
   - type: PointLight
