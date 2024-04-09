@@ -1,6 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: NutriMaxAds
-  advertisements:
+  messages:
     - advertisement-nutrimax-1
     - advertisement-nutrimax-2
     - advertisement-nutrimax-3
@@ -8,7 +8,3 @@
     - advertisement-nutrimax-5
     - advertisement-nutrimax-6
     - advertisement-nutrimax-7
-  thankyous:
-    - vending-machine-thanks
-    - thankyou-nutrimax-1
-    - thankyou-nutrimax-2

@@ -475,7 +475,6 @@
       behaviors:
       - !type:SpillBehavior
         solution: food
-        transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Tag

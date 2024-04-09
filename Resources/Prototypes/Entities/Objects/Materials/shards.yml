@@ -63,7 +63,6 @@
         acts: [ "Destruction" ]
   - type: StepTrigger
     intersectRatio: 0.2
-    requiredTriggeredSpeed: 0
   - type: ShoesRequiredStepTrigger
   - type: Slippery
     slipSound:

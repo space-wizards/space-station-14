@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Silicons.Laws;
 using Content.Server.Station.Components;
@@ -141,6 +142,24 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
                     Order = -1,
                     LawIdentifierOverride = Loc.GetString("ion-storm-law-scrambled-number", ("length", RobustRandom.Next(5, 10)))
                 });
+            }
+
+            // sets all unobfuscated laws' indentifier in order from highest to lowest priority
+            // This could technically override the Obfuscation from the code above, but it seems unlikely enough to basically never happen
+            int orderDeduction = -1;
+
+            for (int i = 0; i < laws.Laws.Count; i++)
+            {
+                string notNullIdentifier = laws.Laws[i].LawIdentifierOverride ?? (i - orderDeduction).ToString();
+
+                if (notNullIdentifier.Any(char.IsSymbol))
+                {
+                    orderDeduction += 1;
+                }
+                else
+                {
+                    laws.Laws[i].LawIdentifierOverride = (i - orderDeduction).ToString();
+                }
             }
 
             _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ToPrettyString(ent):silicon} had its laws changed by an ion storm to {laws.LoggingString()}");
