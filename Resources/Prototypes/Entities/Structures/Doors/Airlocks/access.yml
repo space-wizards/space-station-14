@@ -1096,7 +1096,7 @@
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsNukeops ]
+      board: [ DoorElectronicsNukeop ]
 
 - type: entity
   parent: AirlockGlassShuttle
