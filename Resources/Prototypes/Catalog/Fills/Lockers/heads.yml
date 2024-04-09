@@ -177,7 +177,7 @@
     contents:
       - id: MedkitFilled
       - id: ClothingHandsGlovesNitrile
-      - id: ClothingEyesHudMedical
+      - id: ClothingEyesHudMedSec
       - id: ClothingHeadsetAltMedical
       - id: ClothingCloakCmo
       - id: ClothingBackpackDuffelSurgeryFilled
@@ -200,12 +200,14 @@
     contents:
       - id: MedkitFilled
       - id: ClothingHandsGlovesNitrile
-      - id: ClothingEyesHudMedical
+      - id: ClothingEyesHudMedSec
       - id: ClothingHeadsetAltMedical
       - id: ClothingBackpackDuffelSurgeryFilled
       - id: ClothingMaskSterile
       - id: Hypospray
       - id: HandheldCrewMonitor
+      - id: DrinkDoctorsDelightGlass
+        prob: 0.15
       - id: DoorRemoteMedical
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
