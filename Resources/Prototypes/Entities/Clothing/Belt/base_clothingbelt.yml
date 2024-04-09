@@ -39,6 +39,15 @@
 
 - type: entity
   abstract: true
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltWebbingBase
+  components:
+  - type: Storage
+    grid:
+    - 0,0,8,1
+
+- type: entity
+  abstract: true
   parent: ClothingBeltBase
   id: ClothingBeltAmmoProviderBase
   components:

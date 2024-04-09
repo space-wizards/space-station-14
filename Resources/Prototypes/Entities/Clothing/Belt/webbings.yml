@@ -1,0 +1,60 @@
+- type: entity
+  parent: ClothingBeltWebbingBase
+  id: ClothingBeltSecurityWebbing
+  name: security webbing
+  description: Unique and versatile chest rig, can hold security gear.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/securitywebbing.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/securitywebbing.rsi
+
+- type: entity
+  parent: ClothingBeltWebbingBase
+  id: ClothingBeltMercWebbing
+  name: mercenarie webbing
+  description: Ideal for storing everything from ammo to weapons and combat essentials.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/mercwebbing.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/mercwebbing.rsi
+
+- type: entity
+  parent: ClothingBeltWebbingBase
+  id: ClothingBeltSalvageWebbing
+  name: salvage rig
+  description: Universal unloading system for work in space.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/salvagewebbing.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/salvagewebbing.rsi
+
+- type: entity
+  parent: [ClothingBeltWebbingBase, ContentsExplosionResistanceBase]
+  id: ClothingBeltMilitaryWebbing
+  name: chest rig
+  description: A set of tactical webbing worn by Syndicate boarding parties.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/militarywebbing.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/militarywebbing.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  parent: ClothingBeltMilitaryWebbing
+  id: ClothingBeltMilitaryWebbingMed
+  name: medical chest rig
+  description: A set of tactical webbing worn by Gorlex Marauder medic operatives.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/militarywebbingmed.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/militarywebbingmed.rsi
+  - type: Item
+    size: Huge
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
