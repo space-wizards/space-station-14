@@ -205,8 +205,7 @@
           bounds: "-0.1,-0.1,0.1,0.1"
         hard: false
         mask:
-        - Impassable
-        - BulletImpassable
+        - BulletMask
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/pop.ogg
     embedOnThrow: True

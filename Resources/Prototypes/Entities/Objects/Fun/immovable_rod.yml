@@ -30,7 +30,7 @@
         hard: false
         layer:
         - Impassable
-        - Opaque
+        - FullOpaque
   - type: WarpPoint
     follow: true
     location: immovable rod

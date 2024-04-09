@@ -30,7 +30,7 @@
           layer: [None]
           mask:
           # Has to hit mobs, singularity, and singularity generator
-          - Opaque
+          - FullOpaque
           - FullTileMask
     - type: ParticleProjectile
     - type: SinguloFood

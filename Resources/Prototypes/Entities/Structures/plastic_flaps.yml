@@ -63,7 +63,7 @@
         mask:
         - TabletopMachineMask
         layer:
-        - Opaque
+        - FullOpaque
         - MidImpassable
   - type: Occluder
   - type: Construction

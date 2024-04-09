@@ -21,10 +21,10 @@
         mask:
         - MachineMask
         layer:
-        - Opaque
+        - FullOpaque
         - MidImpassable
         - HighImpassable
-        - BulletImpassable
+        - FullBulletImpassable
   - type: InteractionOutline
 
 - type: entity

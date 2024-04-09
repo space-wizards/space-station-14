@@ -28,8 +28,8 @@
         mask:
         - Impassable
         layer:
-        - Opaque
-        - BulletImpassable
+        - FullOpaque
+        - FullBulletImpassable
       conveyor:
         shape: !type:PolygonShape
           vertices:

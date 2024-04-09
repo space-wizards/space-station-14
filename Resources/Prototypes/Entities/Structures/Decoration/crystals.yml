@@ -31,8 +31,8 @@
           layer:
             - MidImpassable
             - LowImpassable
-            - BulletImpassable
-            - Opaque
+            - FullBulletImpassable
+            - FullOpaque
     - type: PointLight
       radius: 3
       energy: 3

@@ -32,7 +32,7 @@
         mask:
         - ItemMask
         layer:
-        - Opaque
+        - FullOpaque
         restitution: 0.3  # fite me
         friction: 0.2
   - type: Artifact

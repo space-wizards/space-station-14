@@ -36,5 +36,4 @@
         layer:
         - LargeMobLayer
         mask:
-        - Impassable
-        - BulletImpassable
+        - BulletMask

@@ -65,10 +65,10 @@
         - HighImpassable
         - MidImpassable
         layer:
-        - Opaque
+        - FullOpaque
         - HighImpassable
         - MidImpassable
-        - BulletImpassable
+        - FullBulletImpassable
   - type: StaticPrice
     price: 300
 

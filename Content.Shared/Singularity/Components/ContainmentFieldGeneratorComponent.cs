@@ -85,7 +85,7 @@ public sealed partial class ContainmentFieldGeneratorComponent : Component
     /// The masks the raycast should not go through
     /// </summary>
     [DataField("collisionMask")]
-    public int CollisionMask = (int) (CollisionGroup.MobMask | CollisionGroup.Impassable | CollisionGroup.MachineMask | CollisionGroup.Opaque);
+    public int CollisionMask = (int) (CollisionGroup.MobMask | CollisionGroup.Impassable | CollisionGroup.MachineMask | CollisionGroup.FullOpaque);
 
     /// <summary>
     /// A collection of connections that the generator has based on direction.

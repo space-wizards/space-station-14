@@ -121,7 +121,7 @@
         hard: false
         mask:
         - FullTileMask
-        - Opaque
+        - FullOpaque
   - type: Appearance
   - type: VaporVisuals
 
@@ -146,4 +146,4 @@
         hard: false
         mask:
         - FullTileMask
-        - Opaque
+        - FullOpaque

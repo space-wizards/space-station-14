@@ -49,7 +49,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] private   readonly IPrototypeManager       _protoManager    = default!;
     [Dependency] private   readonly StaminaSystem           _stamina         = default!;
 
-    private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
+    private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.FullOpaque);
 
     /// <summary>
     /// Maximum amount of targets allowed for a wide-attack.

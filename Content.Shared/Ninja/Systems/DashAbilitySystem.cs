@@ -83,7 +83,7 @@ public sealed class DashAbilitySystem : EntitySystem
         var origin = Transform(user).MapPosition;
         var target = args.Target.ToMap(EntityManager, _transform);
         // prevent collision with the user duh
-        if (!_interaction.InRangeUnobstructed(origin, target, 0f, CollisionGroup.Opaque, uid => uid == user))
+        if (!_interaction.InRangeUnobstructed(origin, target, 0f, CollisionGroup.FullOpaque, uid => uid == user))
         {
             // can only dash if the destination is visible on screen
             _popup.PopupClient(Loc.GetString("dash-ability-cant-see", ("item", uid)), user, user);

@@ -23,8 +23,7 @@
     fixtures:
       projectile:
         mask:
-        - Impassable
-        - BulletLowImpassable
+        - BulletMask_Low
 
 - type: entity
   id: BulletPistolRubber
@@ -44,8 +43,7 @@
           bounds: "-0.1,-0.1,0.1,0.1"
         hard: false
         mask:
-        - Impassable
-        - BulletHighImpassable
+        - BulletMask_High
 
 - type: entity
   id: BulletPistolIncendiary

@@ -19,7 +19,7 @@
         density: 1000
         layer:
         - HalfWallLayer
-        - Opaque
+        - FullOpaque
   - type: Climbable
   - type: Damageable
     damageContainer: Inorganic

@@ -11,7 +11,7 @@ namespace Content.Shared.Flash
         public TimeSpan LastFlash;
 
         [DataField]
-        public CollisionGroup CollisionGroup = CollisionGroup.Opaque;
+        public CollisionGroup CollisionGroup = CollisionGroup.FullOpaque;
 
         public override bool SendOnlyToOwner => true;
     }

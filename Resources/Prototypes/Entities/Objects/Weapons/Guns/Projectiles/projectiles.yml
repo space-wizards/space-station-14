@@ -45,8 +45,7 @@
           bounds: "-0.1,-0.1,0.1,0.1"
         hard: false
         mask:
-        - Impassable
-        - BulletImpassable
+        - BulletMask
       fly-by: &flybyfixture
         shape: !type:PhysShapeCircle
           radius: 1.5
@@ -85,8 +84,7 @@
           bounds: "-0.15,-0.45,0.15,0.15"
         hard: false
         mask:
-        - Impassable
-        - BulletImpassable
+        - BulletMask
       fly-by: *flybyfixture
 
 - type: entity
@@ -200,8 +198,7 @@
           bounds: "-0.15,-0.45,0.15,0.15"
         hard: false
         mask:
-          - Impassable
-          - BulletImpassable
+          - BulletMask
       fly-by: *flybyfixture
   - type: Ammo
   - type: Projectile
@@ -243,8 +240,7 @@
           bounds: "-0.15,-0.3,0.15,0.3"
         hard: false
         mask:
-        - Impassable
-        - BulletImpassable
+        - BulletMask
       fly-by: *flybyfixture
   - type: Ammo
   - type: StaminaDamageOnCollide
@@ -283,8 +279,7 @@
           bounds: "-0.15,-0.3,0.15,0.3"
         hard: false
         mask:
-        - Impassable
-        - BulletImpassable
+        - BulletMask
       fly-by: *flybyfixture
   - type: Ammo
   - type: StaminaDamageOnCollide
@@ -320,7 +315,7 @@
           bounds: "-0.2,-0.2,0.2,0.2"
         hard: false
         mask:
-        - Opaque
+        - FullOpaque
       fly-by: *flybyfixture
   - type: Projectile
 #   soundHit:  Waiting on serv3
@@ -362,7 +357,7 @@
           bounds: "-0.2,-0.2,0.2,0.2"
         hard: false
         mask:
-        - Opaque
+        - FullOpaque
       fly-by: *flybyfixture
   - type: StaminaDamageOnCollide
     damage: 40
@@ -510,7 +505,7 @@
           bounds: "-0.2,-0.2,0.2,0.2"
         hard: false
         mask:
-        - Opaque
+        - FullOpaque
       fly-by: *flybyfixture
   - type: Projectile
     damage:
@@ -858,8 +853,7 @@
           bounds: "-0.10,-0.30,0.10,0.15"
         hard: false
         mask:
-        - Impassable
-        - BulletImpassable
+        - BulletMask
   - type: Vapor
     active: true
   - type: Appearance
@@ -950,8 +944,7 @@
           bounds: "-0.15,-0.3,0.15,0.3"
         hard: false
         mask:
-        - Impassable
-        - BulletImpassable
+        - BulletMask
       fly-by: *flybyfixture
   - type: Ammo
   - type: StaminaDamageOnCollide

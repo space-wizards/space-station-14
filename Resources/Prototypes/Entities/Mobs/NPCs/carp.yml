@@ -128,7 +128,7 @@
           mask:
             - MobMask
           layer:
-            - Opaque
+            - FullOpaque
     - type: TypingIndicator
       proto: robot
 

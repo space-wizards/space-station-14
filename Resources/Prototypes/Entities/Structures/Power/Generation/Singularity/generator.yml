@@ -25,7 +25,7 @@
         mask:
         - MachineMask
         layer:
-        - Opaque
+        - FullOpaque
   - type: Transform
     anchored: true
     noRot: true

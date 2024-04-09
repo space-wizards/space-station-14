@@ -4571,9 +4571,9 @@ entities:
           - TableLayer
           - HighImpassable
           - LowImpassable
-          - BulletImpassable
+          - FullBulletImpassable
           - InteractImpassable
-          - Opaque
+          - FullOpaque
           layer: []
           density: 1
           hard: False
