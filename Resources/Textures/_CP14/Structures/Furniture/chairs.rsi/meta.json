@@ -1,23 +1,15 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-<<<<<<<< HEAD:Resources/Textures/_CP14/Structures/Furniture/chairs.rsi/meta.json
   "copyright": "Created by TheShuEd (Github) for CrystallPunk 14",
-========
-  "copyright": "Made by SlamBamActionman",
->>>>>>>> space-station-14/master:Resources/Textures/Objects/Misc/cd.rsi/meta.json
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-<<<<<<<< HEAD:Resources/Textures/_CP14/Structures/Furniture/chairs.rsi/meta.json
       "name": "wooden",
       "directions": 4
-========
-      "name": "icon"
->>>>>>>> space-station-14/master:Resources/Textures/Objects/Misc/cd.rsi/meta.json
     }
   ]
 }
