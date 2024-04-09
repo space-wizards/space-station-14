@@ -1,4 +1,3 @@
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsService
@@ -142,6 +141,14 @@
   components:
   - type: AccessReader
     access: [["Research"], ["Medical"]]
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsMorgue
+  suffix: Morgue, Locked
+  components:
+  - type: AccessReader
+    access: [["Medical"], ["Detective"], ["Chapel"]]
 
 - type: entity
   parent: DoorElectronics
