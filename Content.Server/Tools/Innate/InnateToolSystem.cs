@@ -29,49 +29,49 @@ public sealed class InnateToolSystem : EntitySystem
         SubscribeLocalEvent<InnateToolComponent, DestructionEventArgs>(OnDestroyed);
     }
 
-    private void OnMapInit(EntityUid uid, InnateToolComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<InnateToolComponent> innateTool, ref MapInitEvent args)
     {
-        if (component.Tools.Count == 0)
+        if (innateTool.Comp.Tools.Count == 0)
             return;
 
-        component.ToSpawn = EntitySpawnCollection.GetSpawns(component.Tools, _robustRandom);
+        innateTool.Comp.ToSpawn = EntitySpawnCollection.GetSpawns(innateTool.Comp.Tools, _robustRandom);
     }
 
-    private void OnHandCountChanged(EntityUid uid, InnateToolComponent component, HandCountChangedEvent args)
+    private void OnHandCountChanged(Entity<InnateToolComponent> innateTool, ref HandCountChangedEvent args)
     {
-        if (component.ToSpawn.Count == 0)
+        if (innateTool.Comp.ToSpawn.Count == 0)
             return;
 
-        var spawnCoord = Transform(uid).Coordinates;
-        var toSpawn = component.ToSpawn.First();
+        var spawnCoord = Transform(innateTool.Owner).Coordinates;
+        var toSpawn = innateTool.Comp.ToSpawn.First();
         var item = Spawn(toSpawn, spawnCoord);
 
         AddComp<UnremoveableComponent>(item);
-        if (!_sharedHandsSystem.TryPickupAnyHand(uid, item, checkActionBlocker: false))
+        if (!_sharedHandsSystem.TryPickupAnyHand(innateTool.Owner, item, checkActionBlocker: false))
         {
             QueueDel(item);
-            component.ToSpawn.Clear();
+            innateTool.Comp.ToSpawn.Clear();
         }
-        component.ToSpawn.Remove(toSpawn);
-        component.ToolUids.Add(item);
+        innateTool.Comp.ToSpawn.Remove(toSpawn);
+        innateTool.Comp.ToolUids.Add(item);
     }
 
-    private void OnShutdown(EntityUid uid, InnateToolComponent component, ComponentShutdown args)
+    private void OnShutdown(Entity<InnateToolComponent> innateTool, ref ComponentShutdown args)
     {
-        foreach (var tool in component.ToolUids)
+        foreach (var tool in innateTool.Comp.ToolUids)
         {
             RemComp<UnremoveableComponent>(tool);
         }
     }
 
-    private void OnDestroyed(EntityUid uid, InnateToolComponent component, DestructionEventArgs args)
+    private void OnDestroyed(Entity<InnateToolComponent> innateTool, ref DestructionEventArgs args)
     {
-        Cleanup(uid, component);
+        Cleanup(innateTool);
     }
 
-    public void Cleanup(EntityUid uid, InnateToolComponent component)
+    public void Cleanup(Entity<InnateToolComponent> innateTool)
     {
-        foreach (var tool in component.ToolUids)
+        foreach (var tool in innateTool.Comp.ToolUids)
         {
             if (_tagSystem.HasTag(tool, "InnateDontDelete"))
             {
@@ -82,15 +82,15 @@ public sealed class InnateToolSystem : EntitySystem
                 Del(tool);
             }
 
-            if (TryComp<HandsComponent>(uid, out var hands))
+            if (TryComp<HandsComponent>(innateTool.Owner, out var hands))
             {
                 foreach (var hand in hands.Hands)
                 {
-                    _sharedHandsSystem.TryDrop(uid, hand.Value, checkActionBlocker: false, handsComp: hands);
+                    _sharedHandsSystem.TryDrop(innateTool.Owner, hand.Value, checkActionBlocker: false, handsComp: hands);
                 }
             }
         }
 
-        component.ToolUids.Clear();
+        innateTool.Comp.ToolUids.Clear();
     }
 }
