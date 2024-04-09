@@ -22,11 +22,9 @@ public sealed partial class CargoBountyMenu : FancyWindow
         BountyEntriesContainer.Children.Clear();
         foreach (var b in bounties)
         {
-            var entry = new BountyEntry(b);
+            var entry = new BountyEntry(b, untilNextSkip);
             entry.OnLabelButtonPressed += () => OnLabelButtonPressed?.Invoke(b.Id);
             entry.OnSkipButtonPressed += () => OnSkipButtonPressed?.Invoke(b.Id);
-
-            entry.UpdateSkipButton(untilNextSkip);
 
             BountyEntriesContainer.AddChild(entry);
         }
