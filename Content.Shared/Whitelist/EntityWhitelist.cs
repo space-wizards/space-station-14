@@ -44,8 +44,8 @@ public sealed partial class EntityWhitelist
     /// <summary>
     ///     Tags that are allowed in the whitelist.
     /// </summary>
-    [DataField("tags", customTypeSerializer:typeof(PrototypeIdListSerializer<TagPrototype>))]
-    public List<string>? Tags;
+    [DataField]
+    public List<ProtoId<TagPrototype>>? Tags;
 
     /// <summary>
     ///     If false, an entity only requires one of these components or tags to pass the whitelist. If true, an
