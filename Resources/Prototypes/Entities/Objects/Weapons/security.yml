@@ -82,6 +82,9 @@
   - type: GuideHelp
     guides:
     - Security
+  - type: Tag
+    tags:
+    - CannonRestrict
 
 - type: entity
   name: truncheon
