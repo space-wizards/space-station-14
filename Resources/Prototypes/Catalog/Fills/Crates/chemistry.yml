@@ -67,9 +67,9 @@
 
 - type: entity
   id: CrateChemistryMisc
-  parent: CratePlastic
+  parent: CrateChemistrySecure
   name: chemicals crate (misc)
-  description: Contains Ethanol, Sugar, and some pills someone forgot to label.
+  description: Contains Ethanol, Sugar, and some pills someone forgot to label. Requires Chemistry access to open.
   components:
     - type: StorageFill
       contents:
