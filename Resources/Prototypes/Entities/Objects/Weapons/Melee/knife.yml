@@ -170,9 +170,6 @@
     sprite: Clothing/Head/Hats/brownflatcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/brownflatcap.rsi
-  - type: Tag
-    tags:
-    - CannonRestrict
 
 - type: entity
   name: shiv
