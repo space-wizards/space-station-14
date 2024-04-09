@@ -418,6 +418,9 @@
 - type: Tag
   id: ConveyorAssembly
 
+- type: Tag
+  id: CoordinatesDisk
+
 - type: Tag #Ohioans die happy
   id: Corn
 
@@ -912,9 +915,6 @@
   id: NoBlockAnchoring
 
 - type: Tag
-  id: NoPaint
-
-- type: Tag
   id: NozzleBackTank
 
 - type: Tag
@@ -1033,9 +1033,6 @@
 
 - type: Tag
   id: RawMaterial
-
-- type: Tag
-  id: RCDDeconstructWhitelist
 
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
@@ -1180,6 +1177,9 @@
 
 - type: Tag
   id: SuitEVA
+  
+- type: Tag
+  id: Sunglasses
 
 - type: Tag
   id: SurgeryTool

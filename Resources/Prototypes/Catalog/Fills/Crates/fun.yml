@@ -290,21 +290,14 @@
     contents:
       - id: SnapPopBox
       - id: CrazyGlue
+        amount: 2
       - id: PlasticBanana
-      - id: FunnyPaint
-        orGroup: Paint
-        prob: 0.5
-      - id: FunnyPaintYellow
-        orGroup: Paint
-        prob: 0.5
       - id: WhoopieCushion
       - id: ToyHammer
       - id: MrChips
-        prob: 0.5
-        orGroup: Dummy
+        orGroup: GiftPool
       - id: MrDips
-        prob: 0.5
-        orGroup: Dummy
+        orGroup: Giftpool
       - id: RevolverCapGun
       - id: BalloonNT
       - id: ClothingShoesClownLarge
@@ -336,41 +329,6 @@
       - id: MysteryFigureBox
         amount: 15
         prob: 0.05
-
-- type: entity
-  id: CrateFunSprayPaints
-  name: spray paint crate
-  description: a crate filled with spray paint.
-  parent: CratePlastic
-  suffix: Spray Paint
-  components:
-  - type: StorageFill
-    contents:
-      - id: SprayPaintBlue
-        amount: 2
-        prob: 0.33
-      - id: SprayPaintRed
-        amount: 2
-        prob: 0.33
-      - id: SprayPaintOrange
-        amount: 2
-        prob: 0.33
-      - id: SprayPaintBlack
-        amount: 2
-        prob: 0.33
-      - id: SprayPaintGreen
-        amount: 2
-        prob: 0.33
-      - id: SprayPaintPurple
-        amount: 2
-        prob: 0.33
-      - id: SprayPaintWhite
-        amount: 2
-        prob: 0.33
-      - id: DeathPaint
-        amount: 2
-      - id: DeathPaintTwo
-        amount: 2
 
 - type: entity
   name: dartboard box set
