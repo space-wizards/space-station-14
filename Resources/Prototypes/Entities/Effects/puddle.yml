@@ -144,8 +144,9 @@
     solutions:
       puddle:
         maxVol: 1000
-        canMix: True
   - type: Puddle
+  - type: MixableSolution
+    solution: puddle
   - type: Appearance
   - type: ActiveEdgeSpreader
   - type: EdgeSpreader

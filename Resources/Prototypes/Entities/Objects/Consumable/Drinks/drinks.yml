@@ -10,7 +10,8 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
+  - type: MixableSolution
+    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: Drink
@@ -100,7 +101,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
   - type: SolutionContainerVisuals
     maxFillLevels: 9
     fillBaseName: fill
@@ -131,7 +131,6 @@
       solutions:
         drink:
           maxVol: 30
-          canMix: True
     - type: SolutionContainerVisuals
       maxFillLevels: 5
       fillBaseName: fill
@@ -145,7 +144,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Absinthe
           Quantity: 30
@@ -162,7 +160,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: AcidSpit
           Quantity: 30
@@ -179,7 +176,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Ale
           Quantity: 30
@@ -196,7 +192,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: AlliesCocktail
           Quantity: 30
@@ -213,7 +208,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Aloe
           Quantity: 30
@@ -230,7 +224,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Amasec
           Quantity: 30
@@ -247,7 +240,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Andalusia
           Quantity: 30
@@ -264,7 +256,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Antifreeze
           Quantity: 30
@@ -294,7 +285,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: AtomicBomb
           Quantity: 30
@@ -311,7 +301,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: B52
           Quantity: 30
@@ -328,7 +317,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: BahamaMama
           Quantity: 30
@@ -345,7 +333,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: BananaHonk
           Quantity: 30
@@ -362,7 +349,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Barefoot
           Quantity: 30
@@ -379,7 +365,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: BeepskySmash
           Quantity: 30
@@ -396,7 +381,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Beer
           Quantity: 30
@@ -416,7 +400,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: JuiceBerry
           Quantity: 30
@@ -433,7 +416,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: BlackRussian
           Quantity: 30
@@ -450,7 +432,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: BlueCuracao
           Quantity: 30
@@ -467,7 +448,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: BloodyMary
           Quantity: 30
@@ -500,7 +480,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Booger
           Quantity: 30
@@ -517,7 +496,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: BraveBull
           Quantity: 30
@@ -534,7 +512,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: JuiceCarrot
           Quantity: 30
@@ -551,7 +528,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: HotCocoa
           Quantity: 30
@@ -597,7 +573,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Coffee
           Quantity: 30
@@ -614,7 +589,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Cognac
           Quantity: 30
@@ -647,7 +621,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Cream
           Quantity: 30
@@ -661,7 +634,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: CubaLibre
           Quantity: 30
@@ -678,7 +650,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: DeadRum
           Quantity: 30
@@ -695,7 +666,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: DemonsBlood
           Quantity: 30
@@ -712,7 +682,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: DevilsKiss
           Quantity: 30
@@ -729,7 +698,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: DoctorsDelight
           Quantity: 30
@@ -746,7 +714,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: DriestMartini
           Quantity: 30
@@ -763,7 +730,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: DrGibb
           Quantity: 30
@@ -780,7 +746,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: ErikaSurprise
           Quantity: 30
@@ -797,7 +762,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: FourteenLoko
           Quantity: 30
@@ -814,7 +778,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: GargleBlaster
           Quantity: 30
@@ -831,7 +794,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Gin
           Quantity: 30
@@ -848,7 +810,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: GinFizz
           Quantity: 30
@@ -865,7 +826,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: GinTonic
           Quantity: 30
@@ -882,7 +842,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Gildlager
           Quantity: 30
@@ -899,7 +858,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: JuiceGrape
           Quantity: 30
@@ -916,7 +874,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: GrapeSoda
           Quantity: 30
@@ -933,7 +890,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: GreenTea
           Quantity: 30
@@ -950,7 +906,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Grenadine
           Quantity: 30
@@ -967,7 +922,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Grog
           Quantity: 30
@@ -984,7 +938,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: HippiesDelight
           Quantity: 30
@@ -1002,7 +955,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Hooch
           Quantity: 30
@@ -1019,7 +971,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: IcedCoffee
           Quantity: 30
@@ -1036,7 +987,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: IcedGreenTea
           Quantity: 30
@@ -1053,7 +1003,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: IcedTea
           Quantity: 30
@@ -1070,7 +1019,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: IcedBeer
           Quantity: 30
@@ -1090,7 +1038,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Ice
           Quantity: 30
@@ -1107,7 +1054,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: IceCream
           Quantity: 30
@@ -1124,7 +1070,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: IrishCarBomb
           Quantity: 30
@@ -1141,7 +1086,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: IrishCoffee
           Quantity: 30
@@ -1158,7 +1102,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: IrishCream
           Quantity: 30
@@ -1175,7 +1118,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: CoffeeLiqueur
           Quantity: 30
@@ -1192,7 +1134,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: KiraSpecial
           Quantity: 30
@@ -1209,7 +1150,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Lemonade
           Quantity: 30
@@ -1226,7 +1166,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: JuiceLemon
           Quantity: 30
@@ -1243,7 +1182,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: LemonLime
           Quantity: 30
@@ -1260,7 +1198,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: JuiceLime
           Quantity: 30
@@ -1274,7 +1211,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: LongIslandIcedTea
           Quantity: 30
@@ -1291,7 +1227,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Manhattan
           Quantity: 30
@@ -1308,7 +1243,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: ManhattanProject
           Quantity: 30
@@ -1325,7 +1259,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: ManlyDorf
           Quantity: 30
@@ -1342,7 +1275,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Margarita
           Quantity: 30
@@ -1359,7 +1291,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Martini
           Quantity: 30
@@ -1376,7 +1307,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Mead
           Quantity: 30
@@ -1402,7 +1332,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Mojito
           Quantity: 30
@@ -1419,7 +1348,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Neurotoxin
           Quantity: 30
@@ -1436,7 +1364,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Nothing
           Quantity: 30
@@ -1453,7 +1380,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: NTCahors
           Quantity: 30
@@ -1470,7 +1396,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: NuclearCola
           Quantity: 30
@@ -1487,7 +1412,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: JuiceOrange
           Quantity: 30
@@ -1520,7 +1444,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Patron
           Quantity: 30
@@ -1553,7 +1476,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: JuiceBerryPoison
           Quantity: 30
@@ -1570,7 +1492,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: PoisonWine
           Quantity: 30
@@ -1587,7 +1508,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Posca
           Quantity: 30
@@ -1604,7 +1524,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: RedMead
           Quantity: 30
@@ -1621,7 +1540,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Rewriter
           Quantity: 30
@@ -1638,7 +1556,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: RootBeer
           Quantity: 30
@@ -1655,7 +1572,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: RootBeerFloat
           Quantity: 30
@@ -1672,7 +1588,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Rum
           Quantity: 30
@@ -1705,7 +1620,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Sake
           Quantity: 30
@@ -1719,7 +1633,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Sbiten
           Quantity: 30
@@ -1736,7 +1649,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: ScrewdriverCocktail
           Quantity: 30
@@ -1753,7 +1665,6 @@
       solutions:
         drink:
           maxVol: 30
-          canMix: True
           reagents:
             - ReagentId: CogChamp
               Quantity: 30
@@ -1770,7 +1681,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: SuiDream
           Quantity: 30
@@ -1787,7 +1697,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: MelonLiquor
           Quantity: 30
@@ -1804,7 +1713,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Moonshine
           Quantity: 30
@@ -1821,7 +1729,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Milk
           Quantity: 30
@@ -1854,7 +1761,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Silencer
           Quantity: 30
@@ -1871,7 +1777,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Singulo
           Quantity: 30
@@ -1904,7 +1809,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: SnowWhite
           Quantity: 30
@@ -1921,7 +1825,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: SoyLatte
           Quantity: 30
@@ -1938,7 +1841,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: SpaceUp
           Quantity: 30
@@ -1955,7 +1857,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: SpaceMountainWind
           Quantity: 30
@@ -1972,7 +1873,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: SyndicateBomb
           Quantity: 30
@@ -1989,7 +1889,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Tea
           Quantity: 30
@@ -2007,7 +1906,6 @@
     solutions:
       drink:
         maxVol: 100
-        canMix: True
         reagents:
         - ReagentId: Tea
           Quantity: 100
@@ -2023,7 +1921,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Tequila
           Quantity: 30
@@ -2040,7 +1937,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: TequilaSunrise
           Quantity: 30
@@ -2057,7 +1953,6 @@
       solutions:
         drink:
           maxVol: 30
-          canMix: True
           reagents:
             - ReagentId: TheMartinez
               Quantity: 30
@@ -2074,7 +1969,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: ThreeMileIsland
           Quantity: 30
@@ -2092,7 +1986,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: JuiceTomato
           Quantity: 30
@@ -2106,7 +1999,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: ToxinsSpecial
           Quantity: 30
@@ -2123,7 +2015,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Vermouth
           Quantity: 30
@@ -2140,7 +2031,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Vodka
           Quantity: 30
@@ -2157,7 +2047,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: VodkaMartini
           Quantity: 30
@@ -2174,7 +2063,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: VodkaTonic
           Quantity: 30
@@ -2192,7 +2080,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Water
           Quantity: 30
@@ -2209,7 +2096,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: JuiceWatermelon
           Quantity: 30
@@ -2223,7 +2109,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: WhiskeyCola
           Quantity: 30
@@ -2240,7 +2125,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Whiskey
           Quantity: 30
@@ -2257,7 +2141,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: WhiskeySoda
           Quantity: 30
@@ -2274,7 +2157,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: WhiteRussian
           Quantity: 30
@@ -2291,7 +2173,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Wine
           Quantity: 30
@@ -2361,7 +2242,6 @@
     solutions:
       drink:
         maxVol: 40 #big cup
-        canMix: True
         reagents:
         - ReagentId: DryRamen
           Quantity: 25
@@ -2384,7 +2264,6 @@
     solutions:
       drink:
         maxVol: 40
-        canMix: True
         reagents:
         - ReagentId: DryRamen
           Quantity: 25
@@ -2400,7 +2279,6 @@
       solutions:
         drink:
           maxVol: 30
-          canMix: True
           reagents:
             - ReagentId: Blood
               Quantity: 30

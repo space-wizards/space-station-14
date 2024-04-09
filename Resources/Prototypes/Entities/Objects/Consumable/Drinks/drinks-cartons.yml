@@ -14,9 +14,9 @@
     solutions:
       drink:
         maxVol: 50
-        canMix: True
   - type: Sprite
     state: icon
+ 
   - type: Item
     size: Small
   - type: MeleeWeapon
@@ -49,7 +49,6 @@
     solutions:
       drink:
         maxVol: 100
-        canMix: True
   - type: Item
     size: Normal
 
@@ -78,7 +77,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        canMix: True
         reagents:
         - ReagentId: JuiceLime
           Quantity: 50
@@ -94,7 +92,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        canMix: True
         reagents:
         - ReagentId: JuiceOrange
           Quantity: 50
@@ -110,7 +107,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        canMix: True
         reagents:
         - ReagentId: JuiceTomato
           Quantity: 50
@@ -144,7 +140,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        canMix: True
         reagents:
         - ReagentId: Cream
           Quantity: 50
@@ -160,7 +155,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        canMix: True
         reagents:
         - ReagentId: Milk
           Quantity: 100
@@ -176,7 +170,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        canMix: True
         reagents:
         - ReagentId: MilkSoy
           Quantity: 100
@@ -192,7 +185,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        canMix: True
         reagents:
         - ReagentId: MilkOat
           Quantity: 100

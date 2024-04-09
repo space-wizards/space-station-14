@@ -14,7 +14,6 @@
         - ReagentId: Cola
           Quantity: 30
         maxVol: 30
-        canMix: True
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 15
@@ -74,7 +73,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Cola
           Quantity: 30
@@ -98,7 +96,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
   - type: Openable
     opened: true
   - type: Sprite
@@ -124,7 +121,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: IcedTea
           Quantity: 30
@@ -143,7 +139,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: LemonLime
           Quantity: 30
@@ -162,7 +157,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: GrapeSoda
           Quantity: 30
@@ -181,7 +175,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: RootBeer
           Quantity: 30
@@ -203,7 +196,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: SodaWater
           Quantity: 30
@@ -221,7 +213,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: SpaceMountainWind
           Quantity: 30
@@ -240,7 +231,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: SpaceUp
           Quantity: 30
@@ -277,7 +267,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Starkist
           Quantity: 30
@@ -296,7 +285,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: TonicWater
           Quantity: 30
@@ -314,7 +302,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: FourteenLoko
           Quantity: 30
@@ -333,7 +320,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: ChangelingSting
           Quantity: 30
@@ -353,7 +339,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: DrGibb
           Quantity: 30
@@ -373,7 +358,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Stimulants
           Quantity: 5
@@ -400,7 +384,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: EnergyDrink
           Quantity: 30
@@ -472,7 +455,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: ShamblersJuice
           Quantity: 30
@@ -492,7 +474,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: PwrGame
           Quantity: 30
@@ -512,7 +493,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Beer
           Quantity: 30
@@ -535,7 +515,6 @@
     solutions:
       drink:
         maxVol: 30
-        canMix: True
         reagents:
         - ReagentId: Wine
           Quantity: 30

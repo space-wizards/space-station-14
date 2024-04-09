@@ -30,7 +30,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        canMix: True
         reagents:
         - ReagentId: Water
           Quantity: 50
