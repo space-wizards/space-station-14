@@ -126,7 +126,6 @@
     tags:
     - CannotSuicide
     - DoorBumpOpener
-  - type: ShoesRequiredStepTriggerImmune
 
 - type: entity
   parent: BaseMobDragon
