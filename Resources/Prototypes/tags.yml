@@ -362,12 +362,6 @@
   id: Chicken
 
 - type: Tag
-  id: ChemDispensable # container that can go into the chem dispenser
-
-- type: Tag
-  id: ChiliBowl
-
-- type: Tag
   id: Cigarette
 
 - type: Tag
@@ -524,13 +518,7 @@
   id: DoorElectronics
 
 - type: Tag
-  id: DrinkBottle
-
-- type: Tag
-  id: DrinkCan
-
-- type: Tag
-  id: DrinkSpaceGlue
+  id: DroneUsable
 
 - type: Tag
   id: Duck

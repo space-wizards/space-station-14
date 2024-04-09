@@ -77,9 +77,6 @@
           acts: [ "Destruction" ]
     - type: Label
       originalName: jug
-    - type: Tag
-      tags:
-      - ChemDispensable
 
 - type: entity
   parent: Jug
