@@ -544,7 +544,6 @@
       amount: 1
   products:
     Insuzine: 3
-    Ash: 1
 
 - type: reaction
   id: Necrosol
