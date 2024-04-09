@@ -35,44 +35,38 @@ public sealed partial class ItemStatusPanel : Control
 
     public void SetSide(HandLocation location)
     {
-        const int contentMarginFlat = 4;
-        const int contentMarginCutout = 6;
+        // AN IMPORTANT REMINDER ABOUT THIS CODE:
+        // In the UI, the RIGHT hand is on the LEFT on the screen.
+        // So that a character facing DOWN matches the hand positions.
 
         Texture? texture;
         Texture? textureHighlight;
         StyleBox.Margin cutOut;
         StyleBox.Margin flat;
-        Label.AlignMode textAlign;
-
-        // This is the worst thing I've ever programmed
-        // (can you tell I'm a graphics programmer?)
-        var offsetColor = Theme.ResolveColorOrSpecified("_itemstatus_offset");
-        var offset = offsetColor.RByte;
-
-        // (the margin needs to change depending on the UI theme, so we use a fake color entry to store the value)
+        Thickness contentMargin;
 
         switch (location)
         {
-            case HandLocation.Left:
-                texture = Theme.ResolveTexture("item_status_left");
-                textureHighlight = Theme.ResolveTexture("item_status_left_highlight");
-                cutOut = StyleBox.Margin.Left;
-                flat = StyleBox.Margin.Right;
-                textAlign = Label.AlignMode.Right;
-                Contents.Margin = Contents.Margin with { Left = contentMarginCutout, Right = contentMarginFlat + offset };
-                break;
-            case HandLocation.Middle:
             case HandLocation.Right:
                 texture = Theme.ResolveTexture("item_status_right");
                 textureHighlight = Theme.ResolveTexture("item_status_right_highlight");
+                cutOut = StyleBox.Margin.Left;
+                flat = StyleBox.Margin.Right;
+                contentMargin = MarginFromThemeColor("_itemstatus_content_margin_right");
+                break;
+            case HandLocation.Middle:
+            case HandLocation.Left:
+                texture = Theme.ResolveTexture("item_status_left");
+                textureHighlight = Theme.ResolveTexture("item_status_left_highlight");
                 cutOut = StyleBox.Margin.Right;
                 flat = StyleBox.Margin.Left;
-                textAlign = Label.AlignMode.Left;
-                Contents.Margin = Contents.Margin with { Right = contentMarginCutout, Left = contentMarginFlat + offset };
+                contentMargin = MarginFromThemeColor("_itemstatus_content_margin_left");
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(location), location, null);
         }
+
+        Contents.Margin = contentMargin;
 
         var panel = (StyleBoxTexture) Panel.PanelOverride!;
         panel.Texture = texture;
@@ -84,8 +78,17 @@ public sealed partial class ItemStatusPanel : Control
         panelHighlight.SetPatchMargin(flat, 4);
         panelHighlight.SetPatchMargin(cutOut, 7);
 
-        ItemNameLabel.Align = textAlign;
         _side = location;
+    }
+
+    private Thickness MarginFromThemeColor(string itemName)
+    {
+        // This is the worst thing I've ever programmed
+        // (can you tell I'm a graphics programmer?)
+        // (the margin needs to change depending on the UI theme, so we use a fake color entry to store the value)
+
+        var color = Theme.ResolveColorOrSpecified(itemName);
+        return new Thickness(color.RByte, color.GByte, color.BByte, color.AByte);
     }
 
     protected override void OnThemeUpdated()
