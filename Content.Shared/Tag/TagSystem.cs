@@ -245,7 +245,7 @@ public sealed class TagSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Checks if all of the given tags have been added to an entity.
+    ///     Checks if any of the given tags have been added to an entity.
     /// </summary>
     /// <param name="entity">The entity to check.</param>
     /// <param name="ids">The tags to check for.</param>
@@ -260,7 +260,7 @@ public sealed class TagSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Checks if all of the given tags have been added to an entity.
+    ///     Checks if any of the given tags have been added to an entity.
     /// </summary>
     /// <param name="entity">The entity to check.</param>
     /// <param name="id">The tag to check for.</param>
@@ -271,7 +271,7 @@ public sealed class TagSystem : EntitySystem
     public bool HasAnyTag(EntityUid entity, string id) => HasTag(entity, id);
 
     /// <summary>
-    ///     Checks if all of the given tags have been added to an entity.
+    ///     Checks if any of the given tags have been added to an entity.
     /// </summary>
     /// <param name="entity">The entity to check.</param>
     /// <param name="ids">The tags to check for.</param>
@@ -286,7 +286,7 @@ public sealed class TagSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Checks if all of the given tags have been added to an entity.
+    ///     Checks if any of the given tags have been added to an entity.
     /// </summary>
     /// <param name="entity">The entity to check.</param>
     /// <param name="ids">The tags to check for.</param>
@@ -301,7 +301,7 @@ public sealed class TagSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Checks if all of the given tags have been added to an entity.
+    ///     Checks if any of the given tags have been added to an entity.
     /// </summary>
     /// <param name="entity">The entity to check.</param>
     /// <param name="ids">The tags to check for.</param>
