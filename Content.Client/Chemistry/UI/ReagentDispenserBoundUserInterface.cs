@@ -57,10 +57,20 @@ namespace Content.Client.Chemistry.UI
             _window.OnDispenseReagentButtonMouseEntered += (args, button) =>
             {
                 if (_lastState is not null)
-                    _window.UpdateContainerInfo(_lastState, button.ReagentId);
+                    _window.UpdateContainerInfo(_lastState);
             };
             _window.OnDispenseReagentButtonMouseExited += (args, button) =>
             {
+                if (_lastState is not null)
+                    _window.UpdateContainerInfo(_lastState);
+            };
+
+            _window.OnEjectJugButtonPressed += (args, button) => SendMessage(new ItemSlotButtonPressedEvent(button.ReagentId));
+            _window.OnEjectJugButtonMouseEntered += (args, button) => {
+                if (_lastState is not null)
+                    _window.UpdateContainerInfo(_lastState);
+            };
+            _window.OnEjectJugButtonMouseExited += (args, button) => {
                 if (_lastState is not null)
                     _window.UpdateContainerInfo(_lastState);
             };

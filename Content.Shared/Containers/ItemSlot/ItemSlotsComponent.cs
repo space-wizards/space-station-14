@@ -67,8 +67,8 @@ namespace Content.Shared.Containers.ItemSlots
             CopyFrom(other);
         }
 
-
-        [DataField("whitelist")]
+        [DataField]
+        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)]
         public EntityWhitelist? Whitelist;
 
         [DataField]
@@ -178,7 +178,8 @@ namespace Content.Shared.Containers.ItemSlots
         /// <remarks>
         ///     The actual deconstruction logic is handled by the server-side EmptyOnMachineDeconstructSystem.
         /// </remarks>
-        [DataField("ejectOnDeconstruct")]
+        [DataField]
+        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)]
         [NonSerialized]
         public bool EjectOnDeconstruct = true;
 
@@ -186,7 +187,8 @@ namespace Content.Shared.Containers.ItemSlots
         ///     If this slot belongs to some breakable or destructible entity, should the item inside the slot be
         ///     ejected when it is broken or destroyed?
         /// </summary>
-        [DataField("ejectOnBreak")]
+        [DataField]
+        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)]
         [NonSerialized]
         public bool EjectOnBreak = false;
 
@@ -217,7 +219,8 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Useful for things like chem dispensers, but undesirable for things like the ID card console, where you
         ///     want to insert more than one item that matches the same whitelist.
         /// </remarks>
-        [DataField("swap")]
+        [DataField]
+        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)]
         public bool Swap = true;
 
         public string? ID => ContainerSlot?.ID;
