@@ -171,12 +171,15 @@
 
 - type: entity
   parent: BaseSignDirectional
-  id: SignDirectionalMaints
+  id: SignDirectionalExit
   name: exit sign
   description: A directional sign pointing toward the nearest exit.
   components:
   - type: Sprite
-    state: direction_maints
+    layers:
+      - state: direction_exit
+      - state: direction_exit_unshaded
+        shader: unshaded
 
 - type: entity
   parent: BaseSignDirectional
