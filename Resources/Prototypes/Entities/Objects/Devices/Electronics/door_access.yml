@@ -281,6 +281,14 @@
 
 - type: entity
   parent: DoorElectronics
+  id: DoorElectronicsNukeop
+  suffix: Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
+- type: entity
+  parent: DoorElectronics
   id: DoorElectronicsRnDMed
   suffix: Medical/Science, Locked
   components:

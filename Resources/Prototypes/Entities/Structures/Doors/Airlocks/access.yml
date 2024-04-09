@@ -125,7 +125,7 @@
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsSyndicate ]
+      board: [ DoorElectronicsSyndicateAgent ]
 
 - type: entity
   parent: AirlockExternal
@@ -463,7 +463,7 @@
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsSyndicate ]
+      board: [ DoorElectronicsSyndicateAgent ]
 
 - type: entity
   parent: AirlockExternalGlass
@@ -760,7 +760,7 @@
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsSyndicate ]
+      board: [ DoorElectronicsSyndicateAgent ]
 
 - type: entity
   parent: AirlockSyndicateGlass
@@ -1059,7 +1059,7 @@
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsSyndicate ]
+      board: [ DoorElectronicsSyndicateAgent ]
 
 - type: entity
   parent: AirlockSyndicate
@@ -1087,7 +1087,7 @@
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsSyndicate ]
+      board: [ DoorElectronicsSyndicateAgent ]
 
 - type: entity
   parent: AirlockShuttleSyndicate
@@ -1114,7 +1114,7 @@
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsSyndicate ]
+      board: [ DoorElectronicsSyndicateAgent ]
 
 - type: entity
   parent: AirlockGlassShuttleSyndicate
