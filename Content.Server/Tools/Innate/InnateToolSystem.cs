@@ -1,5 +1,3 @@
-using System.Linq;
-using Content.Shared.Body.Part;
 using Content.Shared.Destructible;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -7,8 +5,8 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Storage;
 using Content.Shared.Tag;
-using Robust.Shared.Network;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.Tools.Innate;
 
@@ -45,10 +43,9 @@ public sealed class InnateToolSystem : EntitySystem
             return;
 
         var spawnCoord = Transform(uid).Coordinates;
-
         var toSpawn = component.ToSpawn.First();
-
         var item = Spawn(toSpawn, spawnCoord);
+
         AddComp<UnremoveableComponent>(item);
         if (!_sharedHandsSystem.TryPickupAnyHand(uid, item, checkActionBlocker: false))
         {
