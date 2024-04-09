@@ -6,24 +6,24 @@
     "x": 32,
     "y": 32
   },
-    "states": [
-        {
-            "name": "bag"
-        },
-        {
-            "name": "bag_folded"
-        },
-        {
-            "name": "paper"
-        },
-        {
-            "name": "open_overlay"
-        },
-        {
-            "name": "bounty"
-        },
-        {
-            "name": "captains_paper"
-        }
-    ]
+  "states": [
+    {
+      "name": "bag"
+    },
+    {
+      "name": "bag_folded"
+    },
+    {
+      "name": "paper"
+    },
+    {
+      "name": "open_overlay"
+    },
+    {
+      "name": "bounty"
+    },
+    {
+      "name": "captains_paper"
+    }
+  ]
 }
