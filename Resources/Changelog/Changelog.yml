@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: Aspid
-    type: Remove
-  id: 5826
-  time: '2024-01-30T10:26:02.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24725
 - author: mirrorcult
   changes:
   - message: Throwing items now scale a bit when thrown to simulate rising/falling
@@ -3825,3 +3818,10 @@
   id: 6325
   time: '2024-04-09T22:18:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26537
+- author: SkaldetSkaeg
+  changes:
+  - message: The Flippo lighter is now quieter and has a delay on use.
+    type: Tweak
+  id: 6326
+  time: '2024-04-09T22:20:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26846
