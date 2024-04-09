@@ -80,8 +80,6 @@ public abstract partial class SharedSolutionContainerSystem
 
     public bool TryGetMixableSolution(Entity<MixableSolutionComponent?, SolutionContainerManagerComponent?> entity, [NotNullWhen(true)] out Entity<SolutionComponent>? soln, [NotNullWhen(true)] out Solution? solution)
     {
-        var getMixableSolutionAttempt = new GetMixableSolutionAttemptEvent(entity);
-        RaiseLocalEvent(entity, ref getMixableSolutionAttempt);
         if (!Resolve(entity, ref entity.Comp1, logMissing: false))
         {
             (soln, solution) = (default!, null);

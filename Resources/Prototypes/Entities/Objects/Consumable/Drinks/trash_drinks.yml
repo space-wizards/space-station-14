@@ -24,6 +24,8 @@
     damage:
       types:
         Blunt: 0
+  - type: MixableSolution
+    solution: drink
   - type: Spillable
     solution: drink
   - type: FitsInDispenser
