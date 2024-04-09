@@ -5,6 +5,7 @@
   components:
   - type: ZombieImmune # yeah no
   - type: FlashImmunity # no brain to brainwash, eyes are robotic
+  - type: EyeProtection
 
 - type: entity
   parent: [MobHuman, MobTerminatorBase]

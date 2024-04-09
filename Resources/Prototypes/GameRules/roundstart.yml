@@ -69,9 +69,19 @@
   noSpawn: true
   components:
   - type: GameRule
-    minPlayers: 35
+    minPlayers: 20
   - type: NukeopsRule
     faction: Syndicate
+
+- type: entity
+  id: Wizard
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: GameRule
+    minPlayers: 20
+  - type: WizardRule
+    faction: Wizard
 
 - type: entity
   id: Pirates
