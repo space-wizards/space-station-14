@@ -959,7 +959,7 @@
     layoutId: AirlockScience
 
 - type: entity
-  parent: AirlockMaintRndLocked
+  parent: AirlockMaintRnDLocked
   id: AirlockMaintRnDMedLocked
   suffix: Medical/Science, Locked
   components:
