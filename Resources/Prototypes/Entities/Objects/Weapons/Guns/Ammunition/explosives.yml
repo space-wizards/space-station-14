@@ -122,12 +122,44 @@
   - type: SpentAmmoVisuals
     state: frag
     suffix: false
+    
+- type: entity
+  id: GrenadeEMP
+  name: EMP grenade
+  parent: BaseGrenade
+  components:
+  - type: CartridgeAmmo
+    proto: BulletGrenadeEMP
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    layers:
+    - state: emp
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+    state: frag
+    suffix: false
 
+# Cannon Balls
+
+- type: entity
+  id: BaseCannonBall
+  name: base cannon ball
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - CannonBall
+  - type: Item
+    size: Small
+  - type: Sprite
+  
 - type: entity
   id: CannonBall
   name: cannonball
   suffix: Pirate
-  parent: BaseGrenade
+  parent: BaseCannonBall
   components:
   - type: CartridgeAmmo
     proto: BulletCannonBall
@@ -137,10 +169,10 @@
     state: ball
 
 - type: entity
-  id: Grapeshot
+  id: CannonBallGrapeshot
   name: grapeshot
   suffix: Pirate
-  parent: BaseGrenade
+  parent: BaseCannonBall
   components:
   - type: CartridgeAmmo
     proto: PelletGrapeshot
@@ -152,10 +184,10 @@
     state: grapeshot
 
 - type: entity
-  id: Glassshot
+  id: CannonBallGlassshot
   name: glassshot
   suffix: Pirate
-  parent: BaseGrenade
+  parent: BaseCannonBall
   components:
   - type: CartridgeAmmo
     proto: PelletGlass

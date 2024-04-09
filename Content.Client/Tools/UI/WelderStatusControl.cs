@@ -17,11 +17,11 @@ public sealed class WelderStatusControl : Control
     private readonly ItemToggleComponent? _toggleComponent;
     private readonly RichTextLabel _label;
 
-    public WelderStatusControl(WelderComponent parent, EntityUid? uid = null)
+    public WelderStatusControl(Entity<WelderComponent> parent)
     {
         _parent = parent;
         _entMan = IoCManager.Resolve<IEntityManager>();
-        if (_entMan.TryGetComponent<ItemToggleComponent>(uid, out var itemToggle))
+        if (_entMan.TryGetComponent<ItemToggleComponent>(parent, out var itemToggle))
             _toggleComponent = itemToggle;
         _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
         AddChild(_label);

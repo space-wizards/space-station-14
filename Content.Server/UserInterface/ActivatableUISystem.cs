@@ -26,6 +26,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
         SubscribeLocalEvent<ActivatableUIComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<ActivatableUIComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<ActivatableUIComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<ActivatableUIComponent, HandDeselectedEvent>(OnHandDeselected);
         SubscribeLocalEvent<ActivatableUIComponent, GotUnequippedHandEvent>((uid, aui, _) => CloseAll(uid, aui));
         // *THIS IS A BLATANT WORKAROUND!* RATIONALE: Microwaves need it
@@ -100,9 +101,17 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (component.rightClickOnly)
+        if (component.RightClickOnly)
             return;
 
+        args.Handled = InteractUI(args.User, uid, component);
+    }
+
+    private void OnInteractUsing(EntityUid uid, ActivatableUIComponent component, InteractUsingEvent args)
+    {
+        if (args.Handled) return;
+        if (component.AllowedItems == null) return;
+        if (!component.AllowedItems.IsValid(args.Used, EntityManager)) return;
         args.Handled = InteractUI(args.User, uid, component);
     }
 
@@ -217,54 +226,4 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
         CloseAll(uid, aui);
     }
-}
-
-public sealed class ActivatableUIOpenAttemptEvent : CancellableEntityEventArgs
-{
-    public EntityUid User { get; }
-    public ActivatableUIOpenAttemptEvent(EntityUid who)
-    {
-        User = who;
-    }
-}
-
-public sealed class UserOpenActivatableUIAttemptEvent : CancellableEntityEventArgs //have to one-up the already stroke-inducing name
-{
-    public EntityUid User { get; }
-    public EntityUid Target { get; }
-    public UserOpenActivatableUIAttemptEvent(EntityUid who, EntityUid target)
-    {
-        User = who;
-        Target = target;
-    }
-}
-
-public sealed class AfterActivatableUIOpenEvent : EntityEventArgs
-{
-    public EntityUid User { get; }
-    public readonly ICommonSession Session;
-
-    public AfterActivatableUIOpenEvent(EntityUid who, ICommonSession session)
-    {
-        User = who;
-        Session = session;
-    }
-}
-
-/// <summary>
-/// This is after it's decided the user can open the UI,
-/// but before the UI actually opens.
-/// Use this if you need to prepare the UI itself
-/// </summary>
-public sealed class BeforeActivatableUIOpenEvent : EntityEventArgs
-{
-    public EntityUid User { get; }
-    public BeforeActivatableUIOpenEvent(EntityUid who)
-    {
-        User = who;
-    }
-}
-
-public sealed class ActivatableUIPlayerChangedEvent : EntityEventArgs
-{
 }

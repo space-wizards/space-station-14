@@ -49,6 +49,7 @@
     price: 75
   - type: RadiationBlocker
     resistance: 2
+  - type: BlockWeather
 
 - type: entity
   parent: BaseWall
@@ -58,11 +59,14 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/brick.rsi
   - type: Icon
     sprite: Structures/Walls/brick.rsi
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
     - trigger:
@@ -78,7 +82,7 @@
         acts: [ "Destruction" ]
 
   - type: IconSmooth
-    key: walls
+    key: bricks
     base: brick
 
 - type: entity
@@ -89,11 +93,13 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/clock.rsi
   - type: Icon
     sprite: Structures/Walls/clock.rsi
+  - type: Construction
+    graph: ClockworkGirder
+    node: clockworkWall
   - type: Destructible
     thresholds:
     - trigger:
@@ -102,7 +108,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          Girder:
+          ClockworkGirder:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -119,7 +125,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/clown.rsi
   - type: Icon
@@ -127,6 +132,10 @@
   - type: Construction
     graph: Girder
     node: bananiumWall
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8    
   - type: Destructible
     thresholds:
     - trigger:
@@ -152,7 +161,6 @@
   components:
   - type: Tag
     tags:
-      - RCDDeconstructWhitelist
       - Wall
       - Structure
   - type: Sprite
@@ -186,7 +194,6 @@
   components:
   - type: Tag
     tags:
-      - RCDDeconstructWhitelist
       - Wall
   - type: Sprite
     sprite: Structures/Walls/cult.rsi
@@ -219,7 +226,6 @@
     tags:
       - Wall
       - Debug
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/debug.rsi
   - type: Icon
@@ -249,11 +255,14 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/diamond.rsi
   - type: Icon
     sprite: Structures/Walls/diamond.rsi
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8   
   - type: Destructible
     thresholds:
     - trigger:
@@ -279,7 +288,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/gold.rsi
   - type: Icon
@@ -287,12 +295,19 @@
   - type: Construction
     graph: Girder
     node: goldWall
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8  
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 300
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
       - !type:DoActsBehavior
         acts: ["Destruction"]
     - trigger:
@@ -301,13 +316,11 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalSlam
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: gold
@@ -320,7 +333,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/ice.rsi
   - type: Icon
@@ -350,7 +362,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/plasma.rsi
   - type: Icon
@@ -358,12 +369,19 @@
   - type: Construction
     graph: Girder
     node: plasmaWall
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 300
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
       - !type:DoActsBehavior
         acts: ["Destruction"]
     - trigger:
@@ -372,13 +390,11 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalSlam
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: plasma
@@ -393,7 +409,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/plastic.rsi
   - type: Icon
@@ -401,6 +416,10 @@
   - type: Construction
     graph: Girder
     node: plasticWall
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8    
   - type: Destructible
     thresholds:
     - trigger:
@@ -409,19 +428,20 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
     - trigger:
         !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalSlam
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: plastic
@@ -452,7 +472,6 @@
     - type: Tag
       tags:
         - Wall
-        - RCDDeconstructWhitelist
     - type: Destructible
       thresholds:
         - trigger:
@@ -513,19 +532,20 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
     - trigger:
         !type:DamageTrigger
         damage: 400
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalSlam
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: reinf_over
@@ -541,10 +561,51 @@
           3: { state: reinf_construct-3, visible: true}
           4: { state: reinf_construct-4, visible: true}
           5: { state: reinf_construct-5, visible: true}
+  - type: ReinforcedWallReplacementMarker
   - type: StaticPrice
     price: 150
   - type: RadiationBlocker
     resistance: 5
+
+- type: entity
+  parent: WallReinforced
+  id: WallReinforcedRust
+  name: reinforced wall
+  suffix: rusted
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/solid_rust.rsi
+  - type: Icon
+    sprite: Structures/Walls/solid_rust.rsi
+    state: rgeneric
+  - type: Construction
+    graph: Girder
+    node: reinforcedWallRust
+  - type: IconSmooth
+    key: walls
+    base: reinf_over
+
+- type: entity
+  parent: WallShuttleDiagonal
+  id: WallReinforcedDiagonal
+  name: reinforced wall
+  suffix: diagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Sprite
+    drawdepth: Walls
+    sprite: Structures/Walls/reinforced_diagonal.rsi
+    state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: walls
+    base: state
+  - type: Icon
+    sprite: Structures/Walls/reinforced_diagonal.rsi
+    state: state0
 
 # Riveting
 - type: entity
@@ -555,7 +616,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/riveted.rsi
   - type: Icon
@@ -590,11 +650,14 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/sandstone.rsi
   - type: Icon
     sprite: Structures/Walls/sandstone.rsi
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8    
   - type: Destructible
     thresholds:
     - trigger:
@@ -620,7 +683,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/silver.rsi
   - type: Icon
@@ -628,6 +690,10 @@
   - type: Construction
     graph: Girder
     node: silverWall
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8    
   - type: Destructible
     thresholds:
     - trigger:
@@ -636,19 +702,20 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
     - trigger:
         !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalSlam
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: silver
@@ -715,6 +782,9 @@
       behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalSlam
     - trigger:
         !type:DamageTrigger
         damage: 300
@@ -723,7 +793,7 @@
         node: girder
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalSlam
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
@@ -789,14 +859,18 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
+  - type: WallReplacementMarker
   - type: Construction
     graph: Girder
     node: wall
   - type: Icon
     sprite: Structures/Walls/solid.rsi
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8    
   - type: Destructible
     thresholds:
     - trigger:
@@ -805,19 +879,20 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
     - trigger:
         !type:DamageTrigger
         damage: 200
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalSlam
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: solid
@@ -845,43 +920,22 @@
     state: state0
 
 - type: entity
-  parent: BaseWall
+  parent: WallSolid
   id: WallSolidRust
   name: solid wall
   suffix: rusted
   components:
   - type: Sprite
-    sprite: Structures/Walls/solidrust.rsi
+    sprite: Structures/Walls/solid_rust.rsi
   - type: Icon
-    sprite: Structures/Walls/solidrust.rsi
+    sprite: Structures/Walls/solid_rust.rsi
     state: full
   - type: Construction
     graph: Girder
     node: wallrust
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 400
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metalbreak.ogg
-      - !type:ChangeConstructionNodeBehavior
-        node: girder
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    destroySound:
-      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
-    base: solidrust
+    base: solid
 
 - type: entity
   parent: BaseWall
@@ -903,19 +957,20 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
     - trigger:
         !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalSlam
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: uranium
@@ -942,21 +997,22 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
     - trigger:
         !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: WoodDestroyHeavy
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
-    key: walls
+    key: woods
     base: wood
 
 - type: entity
@@ -976,7 +1032,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/web.rsi
   - type: Icon
@@ -996,9 +1051,9 @@
             max: 1
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/woodhit.ogg
+          collection: WoodDestroy
   - type: IconSmooth
-    key: walls
+    key: webs
     base: wall
   - type: Construction
     graph: WebStructures
@@ -1188,11 +1243,14 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/cobblebrick.rsi
   - type: Icon
     sprite: Structures/Walls/cobblebrick.rsi
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8    
   - type: Destructible
     thresholds:
     - trigger:
@@ -1202,7 +1260,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
-    key: walls
+    key: cobblebricks
     base: cobblebrick
 
 - type: entity
@@ -1215,7 +1273,7 @@
   - type: Icon
     sprite: Structures/Walls/cobblebrick_basalt.rsi
   - type: IconSmooth
-    key: walls
+    key: cobblebricks
     base: cobblebrick
 
 - type: entity
@@ -1229,7 +1287,7 @@
   - type: Icon
     sprite: Structures/Walls/cobblebrick_snow.rsi
   - type: IconSmooth
-    key: walls
+    key: cobblebricks
     base: cobblebrick
 
 - type: entity
@@ -1242,7 +1300,7 @@
   - type: Icon
     sprite: Structures/Walls/cobblebrick_asteroid.rsi
   - type: IconSmooth
-    key: walls
+    key: cobblebricks
     base: cobblebrick
 
 - type: entity
@@ -1255,7 +1313,7 @@
   - type: Icon
     sprite: Structures/Walls/cobblebrick_sand.rsi
   - type: IconSmooth
-    key: walls
+    key: cobblebricks
     base: cobblebrick
 
 - type: entity
@@ -1268,7 +1326,7 @@
   - type: Icon
     sprite: Structures/Walls/cobblebrick_chromite.rsi
   - type: IconSmooth
-    key: walls
+    key: cobblebricks
     base: cobblebrick
 
 - type: entity
@@ -1281,5 +1339,5 @@
   - type: Icon
     sprite: Structures/Walls/cobblebrick_andesite.rsi
   - type: IconSmooth
-    key: walls
+    key: cobblebricks
     base: cobblebrick

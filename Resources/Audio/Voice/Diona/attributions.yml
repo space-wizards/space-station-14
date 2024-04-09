@@ -14,3 +14,7 @@
   license: "CC0-1.0"
   copyright: "Made by nicoproson on freesound.org. The three files were cropped out of the source file and re-encoded to Ogg Vorbis."
   source: "https://freesound.org/people/nicoproson/sounds/631406/"
+- files: ["diona_salute.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/tree/943f38bf7c5f9c048cc785deb0c537d57ee6ba77/sound/creatures/venus_trap_hurt.ogg"

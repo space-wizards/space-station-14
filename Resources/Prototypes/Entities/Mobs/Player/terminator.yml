@@ -1,5 +1,13 @@
+# stuff common to flesh and endoskeleton
 - type: entity
-  parent: MobHuman
+  abstract: true
+  id: MobTerminatorBase
+  components:
+  - type: ZombieImmune # yeah no
+  - type: FlashImmunity # no brain to brainwash, eyes are robotic
+
+- type: entity
+  parent: [MobHuman, MobTerminatorBase]
   id: MobHumanTerminator
   # uses random name generator dont worry
   name: exterminator
@@ -92,6 +100,12 @@
         Blunt: 10
         Structural: 10
   - type: RandomHumanoidAppearance
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - Unimplantable # no brain to mindshield, no organic body to implant into
 
 - type: entity
   parent:
@@ -99,6 +113,7 @@
   - MobCombat
   - MobDamageable
   - MobSiliconBase
+  - MobTerminatorBase
   id: MobTerminatorEndoskeleton
   # you are now valid
   name: nt-800 "exterminator" endoskeleton
@@ -184,3 +199,5 @@
     - ShoesRequiredStepTriggerImmune
     # let mind transfer on gib work
     - MindTransferTarget
+    # its just metal so no implants
+    - Unimplantable

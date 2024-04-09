@@ -7,7 +7,13 @@
     - type: Sprite
       sprite: Objects/Misc/books.rsi
       layers:
-        - state: book_demonomicon
+      - state: paper_blood
+      - state: cover_strong
+        color: "#645a5a" 
+      - state: decor_wingette_flat
+        color: "#4d0303"
+      - state: icon_pentagramm
+        color: "#f7e19f"
     - type: Spellbook
     - type: Tag
       tags:
@@ -28,9 +34,19 @@
   parent: BaseSpellbook
   components:
     - type: Sprite
-      sprite: Objects/Magic/spellbooks.rsi
+      sprite: Objects/Misc/books.rsi
       layers:
-        - state: bookforcewall
+      - state: paper
+      - state: cover_strong
+        color: "#366ed6"
+      - state: decor_vertical_middle
+        color: "#95ffff"
+      - state: decor_wingette_circle
+        color: "#95ffff"
+      - state: icon_magic_forcewall
+        shader: unshaded
+      - state: detail_rivets
+        color: gold
     - type: Spellbook
       spells:
         ActionForceWall: -1
@@ -41,9 +57,17 @@
   parent: BaseSpellbook
   components:
     - type: Sprite
-      sprite: Objects/Magic/spellbooks.rsi
+      sprite: Objects/Misc/books.rsi
       layers:
-        - state: spellbook
+      - state: paper
+      - state: cover_old
+        color: "#657e9c"
+      - state: icon_text3
+      - state: decor_wingette_circle
+        color: gold
+      - state: icon_magic
+      - state: detail_rivets
+        color: gold
     - type: Spellbook
       spells:
         ActionBlink: -1
@@ -53,13 +77,23 @@
   name: smite spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: spellbook
-  - type: Spellbook
-    spells:
-      ActionSmite: -1
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+      - state: paper
+      - state: cover_old
+        color: "#c42b40"
+      - state: decor_wingette_circle
+        color: gold
+      - state: icon_magic
+      - state: detail_rivets
+        color: gold
+      - state: detail_bookmark
+        color: red
+      - state: overlay_blood
+    - type: Spellbook
+      spells:
+        ActionSmite: -1
 
 - type: entity
   id: KnockSpellbook
@@ -67,9 +101,18 @@
   parent: BaseSpellbook
   components:
     - type: Sprite
-      sprite: Objects/Magic/spellbooks.rsi
+      sprite: Objects/Misc/books.rsi
       layers:
-        - state: bookknock
+      - state: paper
+      - state: cover_strong
+        color: "#117045"
+      - state: decor_wingette_circle
+        color: gold
+      - state: icon_magic_knock
+      - state: detail_rivets
+        color: gold
+      - state: detail_bookmark
+        color: "#98c495"
     - type: Spellbook
       spells:
         ActionKnock: -1
@@ -79,13 +122,24 @@
   name: fireball spellbook
   parent: BaseSpellbook
   components:
-  - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
-    layers:
-    - state: bookfireball
-  - type: Spellbook
-    spells:
-      ActionFireball: -1
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+      - state: paper
+      - state: cover_old
+        color: "#ba5a14"
+      - state: decor_wingette_circle
+        color: gold
+      - state: detail_rivets
+        color: gold
+      - state: detail_bookmark
+        color: "#e89b3c"
+      - state: overlay_blood
+      - state: icon_magic_fireball
+        shader: unshaded
+    - type: Spellbook
+      spells:
+        ActionFireball: -1
 
 - type: entity
   id: ScrollRunes

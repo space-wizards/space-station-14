@@ -138,10 +138,10 @@ namespace Content.Client.Administration.UI.Bwoink
                     _console.ExecuteCommand($"kick \"{_currentPlayer.Username}\"");
             };
 
-            Teleport.OnPressed += _ =>
+            Follow.OnPressed += _ =>
             {
                 if (_currentPlayer is not null)
-                    _console.ExecuteCommand($"tpto \"{_currentPlayer.Username}\"");
+                    _console.ExecuteCommand($"follow \"{_currentPlayer.NetEntity}\"");
             };
 
             Respawn.OnPressed += _ =>
@@ -204,8 +204,8 @@ namespace Content.Client.Administration.UI.Bwoink
             Respawn.Visible = _adminManager.CanCommand("respawn");
             Respawn.Disabled = !Respawn.Visible || disabled;
 
-            Teleport.Visible = _adminManager.CanCommand("tpto");
-            Teleport.Disabled = !Teleport.Visible || disabled;
+            Follow.Visible = _adminManager.CanCommand("follow");
+            Follow.Disabled = !Follow.Visible || disabled;
         }
 
         private string FormatTabTitle(ItemList.Item li, PlayerInfo? pl = default)

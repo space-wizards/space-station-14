@@ -1,6 +1,5 @@
-- type: advertisementsPack
+- type: messagePack
   id: GeneDrobeAds
-  advertisements:
+  messages:
     - advertisement-genedrobe-1
-  thankyous:
-    - vending-machine-thanks
+    - advertisement-genedrobe-2

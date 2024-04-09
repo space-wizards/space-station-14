@@ -11,13 +11,11 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Effects/glass_hit.ogg"
+        collection: GlassSmack
   - type: WallMount
     arc: 360 # interact despite grilles
   - type: Tag
     tags:
-      - RCDDeconstructWhitelist
       - ForceFixRotations
       - Window
   - type: Sprite
@@ -43,12 +41,19 @@
   - type: ExaminableDamage
     messages: WindowMessages
   - type: Repairable
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 4
+    fx: EffectRCDDeconstruct4
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 150 #excess damage (nuke?). avoid computational cost of spawning entities.
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
@@ -57,7 +62,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: GlassBreak
+          collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
@@ -86,6 +91,15 @@
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
     price: 100
+  - type: BlockWeather
+  
+- type: entity
+  id: WindowRCDResistant
+  parent: Window
+  abstract: true
+  components:
+  - type: RCDDeconstructable
+    deconstructable: false
 
 - type: entity
   id: WindowDirectional
@@ -105,8 +119,7 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Effects/glass_hit.ogg"
+        collection: GlassSmack
   - type: Sprite
     drawdepth: Mobs
     sprite: Structures/Windows/directional.rsi
@@ -137,6 +150,10 @@
     damageModifierSet: Glass
   - type: ExaminableDamage
     messages: WindowMessages
+  - type: RCDDeconstructable
+    cost: 4
+    delay: 2
+    fx: EffectRCDDeconstruct2
   - type: Destructible
     thresholds:
     - trigger:
@@ -145,18 +162,21 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 25
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: GlassBreak
+          collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
             min: 1
-            max: 2
+            max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Airtight
@@ -175,6 +195,14 @@
       sprite: Structures/Windows/cracks_directional.rsi
   - type: StaticPrice
     price: 10
+
+- type: entity
+  id: WindowDirectionalRCDResistant  
+  parent: WindowDirectional
+  abstract: true
+  components:
+  - type: RCDDeconstructable
+    deconstructable: false
 
 - type: entity
   id: WindowFrostedDirectional
@@ -226,6 +254,11 @@
         - FullTileMask
         layer:
         - GlassLayer
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+    - South
+    - East
   - type: DamageVisuals
     damageOverlay:
       sprite: Structures/Windows/cracks_diagonal.rsi

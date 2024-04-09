@@ -29812,46 +29812,6 @@ entities:
       - Steel
       - Glass
       - Gold
-- proto: ClosetBase
-  entities:
-  - uid: 11811
-    components:
-    - type: Transform
-      pos: -15.5,0.5
-      parent: 4812
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14957
-        moles:
-        - 1.6033952
-        - 6.031821
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 11812
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: ClosetBombFilled
   entities:
   - uid: 6331
@@ -31403,6 +31363,46 @@ entities:
           showEnts: False
           occludes: True
           ents: []
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+- proto: ClosetSteelBase
+  entities:
+  - uid: 11811
+    components:
+    - type: Transform
+      pos: -15.5,0.5
+      parent: 4812
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14957
+        moles:
+        - 1.6033952
+        - 6.031821
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        EntityStorageComponent: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 11812
         entity_storage: !type:Container
           showEnts: False
           occludes: True
@@ -34152,6 +34152,13 @@ entities:
     components:
     - type: Transform
       pos: -15.5,-26.5
+      parent: 4812
+- proto: DefaultStationBeaconCryosleep
+  entities:
+  - uid: 10856
+    components:
+    - type: Transform
+      pos: -23.5,4.5
       parent: 4812
 - proto: DefaultStationBeaconDetectiveRoom
   entities:

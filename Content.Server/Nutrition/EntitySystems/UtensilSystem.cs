@@ -1,4 +1,7 @@
+using Content.Shared.Containers.ItemSlots;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
@@ -11,7 +14,7 @@ namespace Content.Server.Nutrition.EntitySystems
     /// <summary>
     /// Handles usage of the utensils on the food items
     /// </summary>
-    internal sealed class UtensilSystem : EntitySystem
+    internal sealed class UtensilSystem : SharedUtensilSystem
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly FoodSystem _foodSystem = default!;
@@ -23,7 +26,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(ItemSlotsSystem) });
         }
 
         /// <summary>
@@ -31,6 +34,9 @@ namespace Content.Server.Nutrition.EntitySystems
         /// </summary>
         private void OnAfterInteract(EntityUid uid, UtensilComponent component, AfterInteractEvent ev)
         {
+            if (ev.Handled)
+                return;
+
             if (ev.Target == null || !ev.CanReach)
                 return;
 

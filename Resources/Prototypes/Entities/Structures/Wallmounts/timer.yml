@@ -58,6 +58,7 @@
     textOffset: 0,8
     timerOffset: 0,8
     textLength: 5
+    rows: 1
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/signalscreen.rsi

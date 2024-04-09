@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/tgstation/tgstation/commit/15bf91049e33979a855995579b48592e34bcdd8c, edited by TheShuEd",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "kudzu_35"
+    },
+    {
+      "name": "kudzu_34"
+    },
+    {
+      "name": "kudzu_33"
+    },
+    {
+      "name": "kudzu_32"
+    },
+    {
+      "name": "kudzu_31"
+    },
+    {
+      "name": "kudzu_25"
+    },
+    {
+      "name": "kudzu_24"
+    },
+    {
+      "name": "kudzu_23"
+    },
+    {
+      "name": "kudzu_22"
+    },
+    {
+      "name": "kudzu_21"
+    },
+    {
+      "name": "kudzu_15"
+    },
+    {
+      "name": "kudzu_14"
+    },
+    {
+      "name": "kudzu_13"
+    },
+    {
+      "name": "kudzu_12"
+    },
+    {
+      "name": "kudzu_11"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+- type: job
+  id: Visitor
+  name: job-name-visitor
+  description: job-description-visitor
+  playTimeTracker: JobVisitor
+  canBeAntag: false
+  icon: JobIconVisitor
+  setPreference: false
+  overrideConsoleVisibility: true
+  access:
+  - Maintenance

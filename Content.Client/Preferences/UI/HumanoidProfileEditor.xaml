@@ -58,6 +58,7 @@
                                 <BoxContainer HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-species-label'}" />
                                     <Control HorizontalExpand="True"/>
+                                    <TextureButton Name="SpeciesInfoButton" Scale="0.3 0.3" VerticalAlignment="Center"></TextureButton>
                                     <OptionButton Name="CSpeciesButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
                                 <!-- Age -->
@@ -95,6 +96,12 @@
                                     <Label Text="{Loc 'humanoid-profile-editor-backpack-label'}" />
                                     <Control HorizontalExpand="True"/>
                                     <OptionButton Name="CBackpackButton" HorizontalAlignment="Right" />
+                                </BoxContainer>
+                                <!-- Spawn Priority -->
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label Text="{Loc 'humanoid-profile-editor-spawn-priority-label'}" />
+                                    <Control HorizontalExpand="True"/>
+                                    <OptionButton Name="CSpawnPriorityButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
                             </BoxContainer>
                             <!-- Skin -->

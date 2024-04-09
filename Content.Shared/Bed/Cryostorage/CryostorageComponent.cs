@@ -9,6 +9,7 @@ namespace Content.Shared.Bed.Cryostorage;
 /// will delete their body and redistribute their items.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
 public sealed partial class CryostorageComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
@@ -18,18 +19,21 @@ public sealed partial class CryostorageComponent : Component
     /// How long a player can remain inside Cryostorage before automatically being taken care of, given that they have no mind.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
     public TimeSpan NoMindGracePeriod = TimeSpan.FromSeconds(30f);
 
     /// <summary>
     /// How long a player can remain inside Cryostorage before automatically being taken care of.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
     public TimeSpan GracePeriod = TimeSpan.FromMinutes(5f);
 
     /// <summary>
     /// A list of players who have actively entered cryostorage.
     /// </summary>
     [DataField]
+    [AutoNetworkedField]
     public List<EntityUid> StoredPlayers = new();
 
     /// <summary>
@@ -83,7 +87,7 @@ public sealed class CryostorageBuiState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class CryostorageRemoveItemBuiMessage : BoundUserInterfaceMessage
 {
-    public NetEntity Entity;
+    public NetEntity StoredEntity;
 
     public string Key;
 
@@ -95,9 +99,9 @@ public sealed class CryostorageRemoveItemBuiMessage : BoundUserInterfaceMessage
         Inventory
     }
 
-    public CryostorageRemoveItemBuiMessage(NetEntity entity, string key, RemovalType type)
+    public CryostorageRemoveItemBuiMessage(NetEntity storedEntity, string key, RemovalType type)
     {
-        Entity = entity;
+        StoredEntity = storedEntity;
         Key = key;
         Type = type;
     }

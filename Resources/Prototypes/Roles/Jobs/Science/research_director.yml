@@ -21,6 +21,7 @@
   - Maintenance
   - ResearchDirector
   - Brig
+  - Cryogenics
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

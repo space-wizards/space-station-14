@@ -63,6 +63,9 @@
         damage: 100
       behaviors:
         - !type:EmptyAllContainersBehaviour
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WindowShatter
         - !type:ChangeConstructionNodeBehavior
           node: machineFrame
         - !type:DoActsBehavior
@@ -82,6 +85,8 @@
         whitelist:
           components:
             - FitsInDispenser
+  - type: HealthAnalyzer
+    scanDelay: 0
   - type: UserInterface
     interfaces:
       - key: enum.HealthAnalyzerUiKey.Key

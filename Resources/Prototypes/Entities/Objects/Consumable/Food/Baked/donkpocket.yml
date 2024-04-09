@@ -256,7 +256,7 @@
   name: berry-pocket
   parent: FoodDonkpocketBase
   id: FoodDonkpocketBerry
-  description: A relentlessly sweet donk-pocket first created for use in Operation Iraqi Freedom.
+  description: A relentlessly sweet donk-pocket. Made with 100% artificial flavoring.
   components:
   - type: FlavorProfile
     flavors:
@@ -293,14 +293,14 @@
           Quantity: 2
 
 - type: entity
-  name: gondola-pocket
+  name: stonk-pocket
   parent: FoodDonkpocketBase
-  id: FoodDonkpocketGondola
-  description: The choice to use real gondola meat in the recipe is controversial, to say the least.
+  id: FoodDonkpocketStonk
+  description: Tasty, but a sad reminder of the great crash of '24
   components:
   - type: FlavorProfile
     flavors:
-      - shocking
+      - profits
       - cheap
   - type: SolutionContainerManager
     solutions:
@@ -309,17 +309,54 @@
         - ReagentId: Nutriment
           Quantity: 5
   - type: Sprite
-    state: gondola
+    state: stonk
 
 - type: entity
-  name: warm gondola-pocket
-  parent: FoodDonkpocketGondola
-  id: FoodDonkpocketGondolaWarm
+  name: warm stonk-pocket
+  parent: FoodDonkpocketStonk
+  id: FoodDonkpocketStonkWarm
   components:
   - type: FlavorProfile
     flavors:
-      - shocking
+      - profits
       - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Omnizine
+          Quantity: 2
+
+- type: entity
+  name: carp-pocket
+  parent: FoodDonkpocketBase
+  id: FoodDonkpocketCarp
+  description: A long-lost edition of donk pocket, made specifically for hard-working salvagers.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cheap
+    - fishops
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    state: carp
+
+- type: entity
+  name: warm carp-pocket
+  parent: FoodDonkpocketCarp
+  id: FoodDonkpocketCarpWarm
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cheap
+    - fishops
   - type: SolutionContainerManager
     solutions:
       food:

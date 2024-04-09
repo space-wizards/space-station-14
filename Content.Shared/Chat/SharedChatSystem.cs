@@ -184,4 +184,61 @@ public abstract class SharedChatSystem : EntitySystem
 
         return message;
     }
+
+    public static string SanitizeAnnouncement(string message, int maxLength = 0, int maxNewlines = 2)
+    {
+        var trimmed = message.Trim();
+        if (maxLength > 0 && trimmed.Length > maxLength)
+        {
+            trimmed = $"{message[..maxLength]}...";
+        }
+
+        // No more than max newlines, other replaced to spaces
+        if (maxNewlines > 0)
+        {
+            var chars = trimmed.ToCharArray();
+            var newlines = 0;
+            for (var i = 0; i < chars.Length; i++)
+            {
+                if (chars[i] != '\n')
+                    continue;
+
+                if (newlines >= maxNewlines)
+                    chars[i] = ' ';
+
+                newlines++;
+            }
+
+            return new string(chars);
+        }
+
+        return trimmed;
+    }
+
+    public static string InjectTagInsideTag(ChatMessage message, string outerTag, string innerTag, string? tagParameter)
+    {
+        var rawmsg = message.WrappedMessage;
+        var tagStart = rawmsg.IndexOf($"[{outerTag}]");
+        var tagEnd = rawmsg.IndexOf($"[/{outerTag}]");
+        if (tagStart < 0 || tagEnd < 0) //If the outer tag is not found, the injection is not performed
+            return rawmsg;
+        tagStart += outerTag.Length + 2;
+
+        string innerTagProcessed = tagParameter != null ? $"[{innerTag}={tagParameter}]" : $"[{innerTag}]";
+
+        rawmsg = rawmsg.Insert(tagEnd, $"[/{innerTag}]");
+        rawmsg = rawmsg.Insert(tagStart, innerTagProcessed);
+
+        return rawmsg;
+    }
+    public static string GetStringInsideTag(ChatMessage message, string tag)
+    {
+        var rawmsg = message.WrappedMessage;
+        var tagStart = rawmsg.IndexOf($"[{tag}]");
+        var tagEnd = rawmsg.IndexOf($"[/{tag}]");
+        if (tagStart < 0 || tagEnd < 0)
+            return "";
+        tagStart += tag.Length + 2;
+        return rawmsg.Substring(tagStart, tagEnd - tagStart);
+    }
 }

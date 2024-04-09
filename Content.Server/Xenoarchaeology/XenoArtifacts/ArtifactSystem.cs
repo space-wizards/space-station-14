@@ -206,7 +206,6 @@ public sealed partial class ArtifactSystem : EntitySystem
 
         if (TryComp<BiasedArtifactComponent>(uid, out var bias) &&
             TryComp<TraversalDistorterComponent>(bias.Provider, out var trav) &&
-            _random.Prob(trav.BiasChance) &&
             this.IsPowered(bias.Provider, EntityManager))
         {
             switch (trav.BiasDirection)

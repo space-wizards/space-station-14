@@ -1,0 +1,29 @@
+﻿- type: soundCollection
+  id: MetalThud
+  files:
+  - /Audio/Effects/metal_thud1.ogg
+  - /Audio/Effects/metal_thud2.ogg
+  - /Audio/Effects/metal_thud3.ogg
+
+- type: soundCollection
+  id: MetalScrape
+  files:
+  - /Audio/Effects/metal_scrape1.ogg
+  - /Audio/Effects/metal_scrape2.ogg
+  - /Audio/Effects/metal_scrape3.ogg
+
+- type: soundCollection
+  id: WeakHit
+  files:
+  - /Audio/Effects/weak_hit1.ogg
+  - /Audio/Effects/weak_hit2.ogg
+
+- type: soundCollection
+  id: GlassSmack
+  files:
+  - /Audio/Effects/glass_smack.ogg
+
+- type: soundCollection
+  id: GlassSmash
+  files:
+  - /Audio/Effects/glass_smash.ogg

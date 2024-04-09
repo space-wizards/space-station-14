@@ -268,6 +268,11 @@ namespace Content.Server.Database
                 .HasPrincipalKey(author => author.UserId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            // A message cannot be "dismissed" without also being "seen".
+            modelBuilder.Entity<AdminMessage>().ToTable(t =>
+                t.HasCheckConstraint("NotDismissedAndSeen",
+                    "NOT dismissed OR seen"));
+
             modelBuilder.Entity<ServerBan>()
                 .HasOne(ban => ban.CreatedBy)
                 .WithMany(author => author.AdminServerBansCreated)
@@ -338,6 +343,7 @@ namespace Content.Server.Database
         public string SkinColor { get; set; } = null!;
         public string Clothing { get; set; } = null!;
         public string Backpack { get; set; } = null!;
+        public int SpawnPriority { get; set; } = 0;
         public List<Job> Jobs { get; } = new();
         public List<Antag> Antags { get; } = new();
         public List<Trait> Traits { get; } = new();
@@ -873,33 +879,8 @@ namespace Content.Server.Database
         public byte[] Data { get; set; } = default!;
     }
 
-    public interface IAdminRemarksCommon
-    {
-        public int Id { get; }
-
-        public int? RoundId { get; }
-        public Round? Round { get; }
-
-        public Guid? PlayerUserId { get; }
-        public Player? Player { get; }
-        public TimeSpan PlaytimeAtNote { get; }
-
-        public string Message { get; }
-
-        public Player? CreatedBy { get; }
-
-        public DateTime CreatedAt { get; }
-
-        public Player? LastEditedBy { get; }
-
-        public DateTime? LastEditedAt { get; }
-        public DateTime? ExpirationTime { get; }
-
-        public bool Deleted { get; }
-    }
-
     [Index(nameof(PlayerUserId))]
-    public class AdminNote : IAdminRemarksCommon
+    public class AdminNote
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int Id { get; set; }
 
@@ -933,7 +914,7 @@ namespace Content.Server.Database
     }
 
     [Index(nameof(PlayerUserId))]
-    public class AdminWatchlist : IAdminRemarksCommon
+    public class AdminWatchlist
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int Id { get; set; }
 
@@ -964,7 +945,7 @@ namespace Content.Server.Database
     }
 
     [Index(nameof(PlayerUserId))]
-    public class AdminMessage : IAdminRemarksCommon
+    public class AdminMessage
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int Id { get; set; }
 
@@ -993,6 +974,15 @@ namespace Content.Server.Database
         [ForeignKey("DeletedBy")] public Guid? DeletedById { get; set; }
         public Player? DeletedBy { get; set; }
         public DateTime? DeletedAt { get; set; }
+
+        /// <summary>
+        /// Whether the message has been seen at least once by the player.
+        /// </summary>
         public bool Seen { get; set; }
+
+        /// <summary>
+        /// Whether the message has been dismissed permanently by the player.
+        /// </summary>
+        public bool Dismissed { get; set; }
     }
 }

@@ -31,6 +31,11 @@ public sealed class CommandLineArgs
     /// </summary>
     public bool HybridAcz { get; set; }
 
+    /// <summary>
+    /// Configuration used for when packaging the server. (Release, Debug, Tools)
+    /// </summary>
+    public string Configuration { get; set; }
+
     // CommandLineArgs, 3rd of her name.
     public static bool TryParse(IReadOnlyList<string> args, [NotNullWhen(true)] out CommandLineArgs? parsed)
     {
@@ -39,6 +44,7 @@ public sealed class CommandLineArgs
         var skipBuild = false;
         var wipeRelease = true;
         var hybridAcz = false;
+        var configuration = "Release";
         List<string>? platforms = null;
 
         using var enumerator = args.GetEnumerator();
@@ -89,6 +95,16 @@ public sealed class CommandLineArgs
                 platforms ??= new List<string>();
                 platforms.Add(enumerator.Current);
             }
+            else if (arg == "--configuration")
+            {
+                if (!enumerator.MoveNext())
+                {
+                    Console.WriteLine("No configuration provided");
+                    return false;
+                }
+
+                configuration = enumerator.Current;
+            }
             else if (arg == "--help")
             {
                 PrintHelp();
@@ -106,7 +122,7 @@ public sealed class CommandLineArgs
             return false;
         }
 
-        parsed = new CommandLineArgs(client.Value, skipBuild, wipeRelease, hybridAcz, platforms);
+        parsed = new CommandLineArgs(client.Value, skipBuild, wipeRelease, hybridAcz, platforms, configuration);
         return true;
     }
 
@@ -120,6 +136,7 @@ Options:
   --no-wipe-release     Don't wipe the release folder before creating files.
   --hybrid-acz          Use HybridACZ for server builds.
   --platform            Platform for server builds. Default will output several x64 targets.
+  --configuration       Configuration to use for building the server (Release, Debug, Tools). Default is Release.
 ");
     }
 
@@ -128,12 +145,14 @@ Options:
         bool skipBuild,
         bool wipeRelease,
         bool hybridAcz,
-        List<string>? platforms)
+        List<string>? platforms,
+        string configuration)
     {
         Client = client;
         SkipBuild = skipBuild;
         WipeRelease = wipeRelease;
         HybridAcz = hybridAcz;
         Platforms = platforms;
+        Configuration = configuration;
     }
 }

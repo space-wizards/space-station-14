@@ -44,7 +44,7 @@ public sealed class CargoTest
                     var ent = entManager.SpawnEntity(proto.Product, testMap.MapCoords);
                     var price = pricing.GetPrice(ent);
 
-                    Assert.That(price, Is.AtMost(proto.PointCost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.PointCost} but sell is {price}!");
+                    Assert.That(price, Is.AtMost(proto.Cost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!");
                     entManager.DeleteEntity(ent);
                 }
             });
@@ -80,7 +80,7 @@ public sealed class CargoTest
                     foreach (var bounty in bounties)
                     {
                         if (cargo.IsBountyComplete(ent, bounty))
-                            Assert.That(proto.PointCost, Is.GreaterThanOrEqualTo(bounty.Reward), $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.PointCost} but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
+                            Assert.That(proto.Cost, Is.GreaterThanOrEqualTo(bounty.Reward), $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.Cost} but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
                     }
 
                     entManager.DeleteEntity(ent);
@@ -108,7 +108,7 @@ public sealed class CargoTest
         await server.WaitAssertion(() =>
         {
             var mapId = testMap.MapId;
-            var grid = mapManager.CreateGrid(mapId);
+            var grid = mapManager.CreateGridEntity(mapId);
             var coord = new EntityCoordinates(grid.Owner, 0, 0);
 
             var protoIds = protoManager.EnumeratePrototypes<EntityPrototype>()

@@ -3,6 +3,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Inventory;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Server.Stack;
 using Content.Shared.Administration.Logs;
@@ -22,6 +23,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
@@ -179,9 +181,8 @@ public sealed class FoodSystem : EntitySystem
             target: target,
             used: food)
         {
-            BreakOnUserMove = forceFeed,
+            BreakOnMove = forceFeed,
             BreakOnDamage = true,
-            BreakOnTargetMove = forceFeed,
             MovementThreshold = 0.01f,
             DistanceThreshold = MaxFeedDistance,
             // Mice and the like can eat without hands.
