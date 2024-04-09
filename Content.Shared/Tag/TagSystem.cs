@@ -234,6 +234,21 @@ public sealed class TagSystem : EntitySystem
     /// </summary>
     /// <param name="entity">The entity to check.</param>
     /// <param name="ids">The tags to check for.</param>
+    /// <returns>true if they all exist, false otherwise.</returns>
+    /// <exception cref="UnknownPrototypeException">
+    ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAllTags(EntityUid entity, List<ProtoId<TagPrototype>> ids)
+    {
+        return TryComp<TagComponent>(entity, out var component) &&
+               HasAllTags(component, ids);
+    }
+
+    /// <summary>
+    ///     Checks if all of the given tags have been added to an entity.
+    /// </summary>
+    /// <param name="entity">The entity to check.</param>
+    /// <param name="ids">The tags to check for.</param>
     /// <returns>true if any of them exist, false otherwise.</returns>
     /// <exception cref="UnknownPrototypeException">
     ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
@@ -265,6 +280,21 @@ public sealed class TagSystem : EntitySystem
     ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
     /// </exception>
     public bool HasAnyTag(EntityUid entity, List<string> ids)
+    {
+        return TryComp<TagComponent>(entity, out var component) &&
+               HasAnyTag(component, ids);
+    }
+
+    /// <summary>
+    ///     Checks if all of the given tags have been added to an entity.
+    /// </summary>
+    /// <param name="entity">The entity to check.</param>
+    /// <param name="ids">The tags to check for.</param>
+    /// <returns>true if any of them exist, false otherwise.</returns>
+    /// <exception cref="UnknownPrototypeException">
+    ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAnyTag(EntityUid entity, List<ProtoId<TagPrototype>> ids)
     {
         return TryComp<TagComponent>(entity, out var component) &&
                HasAnyTag(component, ids);
