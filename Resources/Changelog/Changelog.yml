@@ -1,83 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Detectives now work as independent agents, separate from security, and
-      are encouraged to answer any requests for help.
-    type: Tweak
-  id: 5816
-  time: '2024-01-29T06:45:27.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23114
-- author: mirrorcult
-  changes:
-  - message: Rotting examine text doesn't have weird grammatical errors now
-    type: Fix
-  id: 5817
-  time: '2024-01-29T07:50:18.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24689
-- author: Eden077
-  changes:
-  - message: Synaptizine now deals less poison damage.
-    type: Tweak
-  id: 5818
-  time: '2024-01-29T07:55:52.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24676
-- author: mirrorcult
-  changes:
-  - message: Various annoying sounds are now a little quieter
-    type: Tweak
-  id: 5819
-  time: '2024-01-29T09:51:31.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24690
-- author: SpeltIncorrectyl
-  changes:
-  - message: Portable generators can now be connected to the signal network and controlled
-      remotely via devices like a signal transmitter.
-    type: Add
-  id: 5820
-  time: '2024-01-29T14:56:29.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24157
-- author: Tayrtahn
-  changes:
-  - message: Welders properly display their lit status again.
-    type: Fix
-  id: 5821
-  time: '2024-01-29T23:04:52.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24705
-- author: Tayrtahn
-  changes:
-  - message: Water bottles now display their fill level while held.
-    type: Add
-  id: 5822
-  time: '2024-01-29T23:19:56.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24708
-- author: SlamBamActionman
-  changes:
-  - message: Arachnids slipping in water now get a cute hat!
-    type: Add
-  id: 5823
-  time: '2024-01-30T00:21:26.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23822
-- author: Tayrtahn
-  changes:
-  - message: Pressing shift as a ghost no longer cancels following your target
-    type: Fix
-  id: 5824
-  time: '2024-01-30T01:33:35.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24715
-- author: liltenhead
-  changes:
-  - message: Jugs are now destructible.
-    type: Tweak
-  id: 5825
-  time: '2024-01-30T08:11:43.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24719
-- author: Emisse
-  changes:
-  - message: Aspid
-    type: Remove
-  id: 5826
-  time: '2024-01-30T10:26:02.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24725
 - author: mirrorcult
   changes:
   - message: Throwing items now scale a bit when thrown to simulate rising/falling
@@ -3814,3 +3735,93 @@
   id: 6315
   time: '2024-04-06T04:49:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26763
+- author: PursuitInAshes
+  changes:
+  - message: Sake Bottles can now be found in the booze-o-mat.
+    type: Tweak
+  id: 6316
+  time: '2024-04-06T20:16:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26776
+- author: osjarw
+  changes:
+  - message: Removed broken anom behaviour, which causes APE shots to fly through
+      the anom.
+    type: Remove
+  id: 6317
+  time: '2024-04-06T22:27:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26775
+- author: Vermidia
+  changes:
+  - message: Water coolers show how full/what they're full of again.
+    type: Fix
+  id: 6318
+  time: '2024-04-06T23:58:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26784
+- author: Crotalus
+  changes:
+  - message: Show missing materials in lathe tooltip
+    type: Add
+  id: 6319
+  time: '2024-04-08T03:16:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26795
+- author: chromiumboy
+  changes:
+  - message: Fixed the RCD not being able to build on top of puddles
+    type: Fix
+  - message: RCD constructions can no longer be rotated while in progress
+    type: Tweak
+  - message: The RCD now reports construction mode changes to its user
+    type: Add
+  id: 6320
+  time: '2024-04-08T03:17:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26792
+- author: lzk228
+  changes:
+  - message: Bombsuit and jani bombsuit are similar now.
+    type: Tweak
+  id: 6321
+  time: '2024-04-08T15:05:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26806
+- author: lzk228
+  changes:
+  - message: Clothing restock crate was splitted to clothing and autodrobe restock
+      crates.
+    type: Tweak
+  - message: Clothing is cheaper.
+    type: Tweak
+  id: 6322
+  time: '2024-04-08T15:10:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26805
+- author: Hanzdegloker
+  changes:
+  - message: Spears can now be quipped to your suit slot and cost slightly more to
+      make.
+    type: Tweak
+  id: 6323
+  time: '2024-04-08T15:34:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26724
+- author: KittenColony
+  changes:
+  - message: Added 13 new gauze wraps for moth that fit their twig bodies
+    type: Add
+  - message: Gauze markings have been moved to the Overlay category, allowing gauze
+      to not take up marking points
+    type: Tweak
+  id: 6324
+  time: '2024-04-09T08:04:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25481
+- author: Killerqu00
+  changes:
+  - message: Quartermasters can now skip a single bounty in the list once every 15
+      minutes.
+    type: Add
+  id: 6325
+  time: '2024-04-09T22:18:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26537
+- author: SkaldetSkaeg
+  changes:
+  - message: The Flippo lighter is now quieter and has a delay on use.
+    type: Tweak
+  id: 6326
+  time: '2024-04-09T22:20:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26846
