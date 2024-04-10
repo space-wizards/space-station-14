@@ -1,6 +1,5 @@
 using Content.Server.Actions;
 using Content.Server.Humanoid;
-using Content.Shared.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
 using Content.Server.Nutrition;
@@ -23,7 +22,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Server.Forensics;
 
 namespace Content.Server.Polymorph.Systems;
 
@@ -259,7 +257,10 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
             _mindSystem.TransferTo(mindId, child, mind: mind);
 
-        SendToPausedMap(uid, targetTransformComp);
+        //Ensures a map to banish the entity to
+        EnsurePausedMap();
+        if (PausedMap != null)
+            _transform.SetParent(uid, targetTransformComp, PausedMap.Value);
 
         return child;
     }
