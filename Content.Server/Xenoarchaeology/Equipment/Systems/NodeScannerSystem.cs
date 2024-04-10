@@ -3,6 +3,7 @@ using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Shared.Interaction;
 using Content.Shared.Timing;
+using Content.Shared.Verbs;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Systems;
 
@@ -15,6 +16,34 @@ public sealed class NodeScannerSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<NodeScannerComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<NodeScannerComponent, GetVerbsEvent<UtilityVerb>>(AddUiVerb);
+    }
+
+    private void AddUiVerb(EntityUid uid, NodeScannerComponent component, GetVerbsEvent<UtilityVerb> args)
+    {
+        if (!args.CanAccess)
+            return;
+
+        if (!TryComp<ArtifactComponent>(args.Target, out var artifact) || artifact.CurrentNodeId == null)
+            return;
+
+            var verb = new UtilityVerb()
+            {
+                Act = () =>
+                {
+                    if (TryComp(uid, out UseDelayComponent? useDelay)
+                        && !_useDelay.TryResetDelay((uid, useDelay), true))
+                        return;
+
+                    _popupSystem.PopupEntity(Loc.GetString("node-scan-popup",
+                        ("id", $"{artifact.CurrentNodeId}")), args.Target);
+                },
+                Text = Loc.GetString("node-scan-tooltip")
+            };
+
+            args.Verbs.Add(verb);
+
+
     }
 
     private void OnAfterInteract(EntityUid uid, NodeScannerComponent component, AfterInteractEvent args)
