@@ -1,30 +1,20 @@
 using Content.Shared.Audio.Jukebox;
-using Content.Shared.Jukebox;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Timing;
-using JukeboxComponent = Content.Shared.Audio.Jukebox.JukeboxComponent;
 
-namespace Content.Client.Jukebox.UI;
+namespace Content.Client.Audio.Jukebox;
 
 
 public sealed class JukeboxSystem : SharedJukeboxSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<JukeboxComponent, AppearanceChangeEvent>(OnAppearanceChange);
         SubscribeLocalEvent<JukeboxComponent, AnimationCompletedEvent>(OnAnimationCompleted);
-    }
-
-    public void SetTime(JukeboxComponent component, float time)
-    {
-        component.SongTime = time;
-        component.SongStartTime = (float) (_timing.CurTime.TotalSeconds - component.SongTime);
     }
 
     private void OnAnimationCompleted(EntityUid uid, JukeboxComponent component, AnimationCompletedEvent args)
@@ -107,9 +97,8 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         };
     }
 
-    private static void SetLayerState(JukeboxVisualLayers layer, string? state, SpriteComponent sprite)
+    private void SetLayerState(JukeboxVisualLayers layer, string? state, SpriteComponent sprite)
     {
-
         if (string.IsNullOrEmpty(state))
             return;
 

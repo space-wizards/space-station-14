@@ -1,3 +1,4 @@
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Audio.Jukebox;
@@ -10,13 +11,8 @@ public enum JukeboxUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class JukeboxBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class JukeboxBoundInterfaceState : BoundUserInterfaceState
 {
-    public bool Playing { get; }
-    public int SelectedSongID { get; }
-    public JukeboxBoundUserInterfaceState(bool playing, int selectedSongID)
-    {
-        Playing = playing;
-        SelectedSongID = selectedSongID;
-    }
+    public NetEntity? Audio;
+    public ProtoId<JukeboxPrototype>? SelectedSong;
 }

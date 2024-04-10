@@ -1,4 +1,4 @@
-<ui:FancyWindow xmlns="https://spacestation14.io" xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls" 
+<ui:FancyWindow xmlns="https://spacestation14.io" xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
                 SetSize="400 500" Title="{Loc 'jukebox-menu-title'}">
     <BoxContainer Margin="4 0" Orientation="Vertical">
         <ItemList Name="MusicList" SelectMode="Button" Margin="3 3 3 3"
@@ -10,7 +10,7 @@
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="true"
         VerticalExpand="false" SizeFlagsStretchRatio="1">
-            <Button Name="PausePlayButton" Text="{Loc 'jukebox-menu-buttonplay'}" />
+            <Button Name="PlayButton" ToggleMode="True" Text="{Loc 'jukebox-menu-buttonplay'}" />
             <Button Name="StopButton" Text="{Loc 'jukebox-menu-buttonstop'}" />
         </BoxContainer>
     </BoxContainer>

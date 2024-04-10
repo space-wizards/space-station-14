@@ -1,5 +1,5 @@
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Audio.Jukebox;
 
@@ -19,5 +19,5 @@ public sealed class JukeboxPrototype : IPrototype
     public string Name = string.Empty;
 
     [DataField(required: true)]
-    public ResPath Path;
+    public SoundPathSpecifier Path = default!;
 }

@@ -1,26 +1,18 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Audio.Jukebox;
 
 [NetworkedComponent, RegisterComponent]
 [Access(typeof(SharedJukeboxSystem))]
-[AutoGenerateComponentState]
 public sealed partial class JukeboxComponent : Component
 {
     [DataField]
-    [AutoNetworkedField]
-    public bool Playing;
-
-    [DataField]
-    [AutoNetworkedField]
-    public int SelectedSongId;
-
-    [DataField]
-    [AutoNetworkedField]
-    public float SongStartTime;
+    public ProtoId<JukeboxPrototype>? SelectedSongId;
 
     [ViewVariables]
+    [DataField]
     public EntityUid? AudioStream;
 
     /// <summary>
@@ -52,12 +44,15 @@ public sealed partial class JukeboxComponent : Component
 public sealed class JukeboxPlayingMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
+public sealed class JukeboxPauseMessage : BoundUserInterfaceMessage;
+
+[Serializable, NetSerializable]
 public sealed class JukeboxStopMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
-public sealed class JukeboxSelectedMessage(int songId) : BoundUserInterfaceMessage
+public sealed class JukeboxSelectedMessage(ProtoId<JukeboxPrototype> songId) : BoundUserInterfaceMessage
 {
-    public int SongId { get; } = songId;
+    public ProtoId<JukeboxPrototype> SongId { get; } = songId;
 }
 
 [Serializable, NetSerializable]
