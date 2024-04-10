@@ -16,10 +16,10 @@ public sealed class NodeScannerSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<NodeScannerComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<NodeScannerComponent, GetVerbsEvent<UtilityVerb>>(AddUiVerb);
+        SubscribeLocalEvent<NodeScannerComponent, GetVerbsEvent<UtilityVerb>>(AddScanVerb);
     }
 
-    private void AddUiVerb(EntityUid uid, NodeScannerComponent component, GetVerbsEvent<UtilityVerb> args)
+    private void AddScanVerb(EntityUid uid, NodeScannerComponent component, GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanAccess)
             return;
