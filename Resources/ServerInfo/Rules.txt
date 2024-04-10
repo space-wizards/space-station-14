@@ -6,6 +6,8 @@ This is the "short" form of the rules, which has all the information any regular
 
 [color=#ff0000]Recent Changes[/color]
     - New Wizard rule for rule 12.
+    - Rule 10 is updated a bit.
+    - Rule 11 is updated a bit.
 
 [color=#a4885c]01.[/color] [color=#a4885c]The[/color] [color=#ffd700]Golden[/color] [color=#a4885c]Rule.[/color] Admins may excercise discretion with rules as they see fit. If you rule lawyer or line skirt, you will get removed. Admins will answer for use of this privilege.
 
