@@ -57,9 +57,9 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         SubscribeLocalEvent<ChangelingComponent, ChangelingEvolutionMenuActionEvent>(OnShop);
         SubscribeLocalEvent<ChangelingComponent, ChangelingCycleDNAActionEvent>(OnCycleDNA);
-        SubscribeLocalEvent<ChangelingComponent, ChangelingTransformActionEvent>(OnTransform);
+        // SubscribeLocalEvent<ChangelingComponent, ChangelingTransformActionEvent>(OnTransform);
 
-        InitializeLingAbilities();
+        // InitializeLingAbilities();
     }
 
     private void OnStartup(EntityUid uid, ChangelingComponent component, ComponentStartup args)
@@ -225,16 +225,5 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         // var selfMessage = Loc.GetString("changeling-dna-switchdna", ("target", selectedHumanoidData.MetaDataComponent.EntityName));
         // _popup.PopupEntity(selfMessage, uid, uid);
-    }
-
-    public static void OnTransform(EntityUid uid, ChangelingComponent component, ChangelingTransformActionEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        // var selfMessage = Loc.GetString("changeling-transform-fail", ("target", selectedHumanoidData.Name));
-        // _popup.PopupEntity(selfMessage, uid, uid);
-        // var selfMessage = Loc.GetString("changeling-transform-activate", ("target", selectedHumanoidData.MetaDataComponent.EntityName));
-        // _popup.PopupEntity(selfMessage, transformedUid.Value, transformedUid.Value);
     }
 }
