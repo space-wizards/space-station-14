@@ -84,23 +84,20 @@ public sealed class InnateToolSystem : EntitySystem
 
     private void OnDestroyed(Entity<InnateToolComponent> innateTool, ref ComponentRemove args)
     {
-        Cleanup((innateTool.Owner, null));
+        Cleanup(innateTool);
     }
 
-    public void Cleanup(Entity<InnateToolComponent?> innateTool)
+    private void Cleanup(Entity<InnateToolComponent> innateTool)
     {
-        if (!Resolve(innateTool, ref innateTool.Comp))
-            return;
+        TryComp<HandsComponent>(innateTool, out var hands);
 
         int i = 0;
         foreach (var tool in innateTool.Comp.ToolUids)
         {
             RemComp<UnremoveableComponent>(tool); // in RemComp already existsd tryGetComp
             Del(tool);
-            if (TryComp<HandsComponent>(innateTool.Owner, out var hands))
-            {
+            if (hands != null)
                 _sharedHandsSystem.TryDrop(innateTool.Owner, hands.Hands[innateTool.Comp.HandIds[i]], checkActionBlocker: false, handsComp: hands);
-            }
 
             i++;
         }
