@@ -227,7 +227,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         // _popup.PopupEntity(selfMessage, uid, uid);
     }
 
-    public void OnTransform(EntityUid uid, ChangelingComponent component, ChangelingTransformActionEvent args)
+    public static void OnTransform(EntityUid uid, ChangelingComponent component, ChangelingTransformActionEvent args)
     {
         if (args.Handled)
             return;
