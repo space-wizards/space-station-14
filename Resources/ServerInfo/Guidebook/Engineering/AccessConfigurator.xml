@@ -7,6 +7,7 @@
   </Box>
 
   Configurable devices can include airlocks, secure crates and lockers, as well as access restricted machines.
+  Note: Airlocks can have their accesses configured by the [color=#a4885c]Network Configurator[/color], for convenience.
 
   ## Where to find Access Configurators
   Each station is equipped with up to two access configurators. The first is in the possession of the Chief Engineer, while the second can be found with the Head of Personnel.
@@ -29,5 +30,5 @@
   ## Repairing damaged ID card readers
   Syndicate agents may attempt to hack access restricted devices through the use of a Cryptographic Sequencer (EMAG). This nefarious tool will completely short out any ID card readers that are attached to the device.
 
-  Engineers will need to partially de/reconstruct affected devices, and then set appropriate access permissions afterwards using the access configurator, to re-establish access restrictions.
+  Engineers will need to partially de/reconstruct affected devices, and then set appropriate access permissions afterwards using the access configurator (or network configurator, for airlocks), to re-establish access restrictions.
 </Document>
