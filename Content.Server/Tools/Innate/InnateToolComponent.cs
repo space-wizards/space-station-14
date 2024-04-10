@@ -11,6 +11,7 @@ namespace Content.Server.Tools.Innate
         [DataField]
         public List<EntitySpawnEntry> Tools = new();
         public List<EntityUid> ToolUids = new();
+        public List<string> HandIds = new();
         public List<string> ToSpawn = new();
     }
 }
