@@ -56,7 +56,7 @@
   - The Gas input is pretty self-explanatory; this is where you will input the O2-Plasma mix to be burnt. A 2:1 (67/33) ratio of Oxygen to Plasma is recommended for the hottest burn.
   - The High-pressure pump serves 2 purposes; first, it prevents the burn from backwashing into the supply pipe, which would be.. bad, for many reasons. Second, it maintains a positive pressure in the following pipe segment, which is important to allow the burn to continue, especially since hot gases expand.
   - The Pipe segment is where the burn actually occurs; to start it off, one can use a heater to increase the temperature up to the ignition temperature of Plasma. Afterwards, the reaction should be self-sustaining, so long as the Pressure and Moles supplied remains high enough. Be warned; if you wish to remove the heater, it will carry some of this superheated gas with it, transferring it to the next pipenet you connect it to. Best to space the gas through a space vent, if you must.
-  - The Low-pressure pump (whose pressure should be [italics]slightly lower[/italics] than the input pump) prevents [italics]all[/italics] the gas from passing through the circulator, which could result in the loss of the Moles required to sustain a burn.
+  - The Low-pressure pump (whose pressure should be [color=#a4885c]slightly lower[/color] than the input pump) prevents [color=#a4885c]all[/color] the gas from passing through the circulator, which could result in the loss of the Moles required to sustain a burn.
   - The Circulator is where this generated heat will flow to the cold loop; afterwards, feel free to space the waste gases.
 
   Note: Pressure pumps are used here as, while they pump on pressure (not flow-rate, which is comparatively faster), they are a bit easier to control when it comes to the limited Plasma supply on-station. However, the steps shown can be followed with volumetric pumps too.
@@ -68,19 +68,20 @@
   Most (if not all) stations have the burn chamber separated from the main atmospherics block by a 1-wide spaced grid, presumably to prevent conduction. The chambers consist of 3(+1) important parts:
   - The Air Injector/Passive Vent
   - The Space Vent
-  - The Radiator Loop
+  - The Scrubber Array
 
   Most normal burn chambers don't come with Heat-Exchangers; instead, they have air scrubbers (and optionally, an air alarm) to help filter for Tritium, which is a highly reactive, hot-burning gas that can also be used to heat the TEG efficiently.
   However, this is a slightly more advanced setup than just burning plasma, as it needs 2 burn chambers instead of 1 (one for tritium production, one for burning said tritium), so remove the scrubbers and retrofit the burn chamber with a parallel array of heat-exchangers instead.
-  
+
   The air injector (or Passive Vent) injects air (or allows air to flow) into the burn chamber. Either should be supplemented with a pump before it, to keep pressures high.
   There is a notable difference between the passive vent and the air injector; the air injector can only keep injecting air up to 9MPa, which can be reached very easily with a good burn. Ideally, switch out the air injector for a passive vent connected to a volume pump.
 
-  The space vent (designated as a blast door to space on one side of the burn chamber) allows waste gases to be expelled and destroyed. Open this to keep the pressure under control.
+  The space vent (designated as a blast door to space on one side of the burn chamber) allows waste gases to be expelled and destroyed. Open this every now and then to keep the pressure under control, or to space excess input gas.
 
-  The radiator loop collects heat from the burnt gases and brings it to the TEG. To maximize efficiency, hook up the heat-exchangers [italics]in parallel to each other[/italics], with a pressure pump at max pressure after the array and a volumetric pump before the array.
-  The pressure of the volumetric pump should be set to ( 200 / number of heat-exchangers ) L/s. For example, having 2 heat-exchangers would mean you should set the pressure to 100 L/s. 
-  Finally, fill the whole loop with (ideally) a high heat capacity gas, like Frezon or Plasma. (Yes, Frezon =/= Cold. Frezon has one of the highest heat capacities in the game; so long as it isn't reacting with Nitrogen, it can actually be heated and can store heat really well!)
+  The scrubber array filters out all the burnt gasses and sends them through the TEG. Note that using default settings on the scrubbers is a bad idea, as valuable plasma will be filtered out too.
+  Instead, use a network configurator to connect all the scrubbers to an air alarm, and set the air alarm's scrubber settings to scrub everything except Oxygen and Plasma, and to siphon air aswell. This ensures that as much heat as available can be collected and sent to the TEG.
+
+  Note that these are just two of many ways you can setup the hot loop; [color=#a4885c]feel free to mix and match setups as needed![/color] Volume pumps in replacement of pressure pumps, radiator loops for heat collection, or even a Pyroclastic anomaly to provide said heat! The stars are the limit!
 
   # The Cold Loop
 
@@ -107,10 +108,13 @@
 
   ## Coolant Array
 
-  This is the default method for the Cold Loop you will see on a variety of stations. Being of moderate complexity and having no losses of any resource, this [italics]should[/italics] be the main method of cooling down the TEG. However, every station at the moment somehow has their heat exchangers hooked up wrong, reducing efficiency greatly. (Thanks a bunch, NT!)
+  This is the default method for the Cold Loop you will see on a variety of stations. Being of moderate complexity and having no losses of any resource, this [color=#a4885c]should[/color] be the main method of cooling down the TEG. However, every station at the moment somehow has their heat exchangers hooked up wrong, reducing efficiency greatly. (Thanks a bunch, NT!)
 
-  To use heat-exchangers properly, they must be setup in [italics]parallel[/italics], not in series (like what you see on most stations). A gas pump at max pressure should be placed after, and a volumetric pump before the heat-exchangers.
-  The flow-rate of the volumetric pump should be set to ( 200 / number of heat-exchangers ) L/s.
+  To use heat-exchangers properly, they must be setup in [color=#a4885c]parallel[/color], not in series (like what you see on most stations). A gas pump at max pressure should be placed after, and a volumetric pump before the heat-exchangers.
+  The flow-rate of the volumetric pump should be set using the following formula:
+  <Box>
+    [color=cyan]( 200 / number of heat-exchangers )[/color] L/s.
+  </Box>
 
   Simply speaking, the Coolant Array consists of 3 major parts: An input connector port, a few pumps and the heat-exchanger array out in space. It can be setup like so:
 
