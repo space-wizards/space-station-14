@@ -16,6 +16,7 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Examine;
 using Content.Shared.Tools.Systems;
 using JetBrains.Annotations;
@@ -66,15 +67,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            if (!vent.Enabled
-                || !TryComp(uid, out AtmosDeviceComponent? device)
-                || !TryComp(uid, out NodeContainerComponent? nodeContainer)
-                || !_nodeContainer.TryGetNode(nodeContainer, nodeName, out PipeNode? pipe))
+            if (!vent.Enabled || !_nodeContainer.TryGetNode(uid, nodeName, out PipeNode? pipe))
             {
                 return;
             }
 
-            var environment = _atmosphereSystem.GetContainingMixture(uid, true, true);
+            var environment = _atmosphereSystem.GetContainingMixture(uid, args.Grid, args.Map, true, true);
 
             // We're in an air-blocked tile... Do nothing.
             if (environment == null)
@@ -294,9 +292,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         /// </summary>
         private void OnAnalyzed(EntityUid uid, GasVentPumpComponent component, GasAnalyzerScanEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
             var gasMixDict = new Dictionary<string, GasMixture?>();
 
             // these are both called pipe, above it switches using this so I duplicated that...?
@@ -306,7 +301,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 VentPumpDirection.Siphoning => component.Outlet,
                 _ => throw new ArgumentOutOfRangeException()
             };
-            if (_nodeContainer.TryGetNode(nodeContainer, nodeName, out PipeNode? pipe))
+            if (_nodeContainer.TryGetNode(uid, nodeName, out PipeNode? pipe))
                 gasMixDict.Add(nodeName, pipe.Air);
 
             args.GasMixtures = gasMixDict;

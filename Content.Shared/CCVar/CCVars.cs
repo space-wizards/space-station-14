@@ -261,6 +261,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
 
         /// <summary>
+        /// If a player gets denied connection to the server,
+        /// how long they are forced to wait before attempting to reconnect.
+        /// </summary>
+        public static readonly CVarDef<int> GameServerFullReconnectDelay =
+            CVarDef.Create("game.server_full_reconnect_delay", 30, CVar.SERVERONLY);
+
+        /// <summary>
         /// Whether or not panic bunker is currently enabled.
         /// </summary>
         public static readonly CVarDef<bool> PanicBunkerEnabled =
@@ -368,6 +375,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> SecretWeightPrototype =
             CVarDef.Create("game.secret_weight_prototype", "Secret", CVar.SERVERONLY);
+
+        /// <summary>
+        /// The id of the sound collection to randomly choose a sound from and play when the round ends.
+        /// </summary>
+        public static readonly CVarDef<string> RoundEndSoundCollection =
+            CVarDef.Create("game.round_end_sound_collection", "RoundEnd", CVar.SERVERONLY);
 
         /*
          * Discord
@@ -488,20 +501,11 @@ namespace Content.Shared.CCVar
             CVarDef.Create("pirates.players_per_pirate", 5);
 
         /*
-         * Changelings
+         * Nukeops
          */
 
-        public static readonly CVarDef<int> ChangelingMinPlayers =
-            CVarDef.Create("changeling.min_players", 5);
-
-        public static readonly CVarDef<int> ChangelingMaxChangelings =
-            CVarDef.Create("changeling.max_lings", 8); // Assuming average server maxes somewhere from like 50-80 people
-
-        public static readonly CVarDef<int> ChangelingPlayersPerChangeling =
-            CVarDef.Create("changeling.players_per_traitor", 5);
-
-        public static readonly CVarDef<int> ChangelingMaxPicks =
-            CVarDef.Create("changeling.max_picks", 20);
+        public static readonly CVarDef<bool> NukeopsSpawnGhostRoles =
+            CVarDef.Create("nukeops.spawn_ghost_roles", false);
 
         /*
          * Tips
@@ -539,8 +543,8 @@ namespace Content.Shared.CCVar
          * Console
          */
 
-        public static readonly CVarDef<bool>
-            ConsoleLoginLocal = CVarDef.Create("console.loginlocal", true, CVar.ARCHIVE | CVar.SERVERONLY);
+        public static readonly CVarDef<bool> ConsoleLoginLocal =
+            CVarDef.Create("console.loginlocal", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
         /// <summary>
         /// Automatically log in the given user as host, equivalent to the <c>promotehost</c> command.
@@ -722,7 +726,7 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> CombatModeIndicatorsPointShow =
             CVarDef.Create("hud.combat_mode_indicators_point_show", true, CVar.ARCHIVE | CVar.CLIENTONLY);
-
+        
         public static readonly CVarDef<bool> LoocAboveHeadShow =
             CVarDef.Create("hud.show_looc_above_head", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
@@ -776,6 +780,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("admin.see_own_notes", false, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
+        /// Should the server play a quick sound to the active admins whenever a new player joins?
+        /// </summary>
+        public static readonly CVarDef<bool> AdminNewPlayerJoinSound =
+            CVarDef.Create("admin.new_player_join_sound", false, CVar.SERVERONLY);
+
+        /// <summary>
         /// The amount of days before the note starts fading. It will slowly lose opacity until it reaches stale. Set to 0 to disable.
         /// </summary>
         public static readonly CVarDef<double> NoteFreshDays =
@@ -810,7 +820,7 @@ namespace Content.Shared.CCVar
         /// Default severity for server bans
         /// </summary>
         public static readonly CVarDef<string> ServerBanDefaultSeverity =
-            CVarDef.Create("admin.server_ban_default_severity", "high", CVar.ARCHIVE | CVar.SERVER);
+            CVarDef.Create("admin.server_ban_default_severity", "High", CVar.ARCHIVE | CVar.SERVER);
 
         /// <summary>
         ///     Minimum explosion intensity to create an admin alert message. -1 to disable the alert.
@@ -826,6 +836,7 @@ namespace Content.Shared.CCVar
 
         /// <summary>
         ///     Should the ban details in admin channel include PII? (IP, HWID, etc)
+        /// </summary>
         public static readonly CVarDef<bool> AdminShowPIIOnBan =
             CVarDef.Create("admin.show_pii_onban", false, CVar.SERVERONLY);
 
@@ -854,6 +865,13 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> AdminAfkTime =
             CVarDef.Create("admin.afk_time", 600f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If true, admins are able to connect even if
+        /// <see cref="SoftMaxPlayers"/> would otherwise block regular players.
+        /// </summary>
+        public static readonly CVarDef<bool> AdminBypassMaxPlayers =
+            CVarDef.Create("admin.bypass_max_players", true, CVar.SERVERONLY);
 
         /*
          * Explosions
@@ -1207,6 +1225,9 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> OocEnableDuringRound =
             CVarDef.Create("ooc.enable_during_round", false, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
+        
+        public static readonly CVarDef<bool> ShowOocPatronColor =
+            CVarDef.Create("ooc.show_ooc_patron_color", true, CVar.ARCHIVE | CVar.REPLICATED | CVar.CLIENT);
 
         /*
          * LOOC
@@ -1495,15 +1516,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> CrewManifestUnsecure =
             CVarDef.Create("crewmanifest.unsecure", true, CVar.REPLICATED);
 
-        /// <summary>
-        ///     Dictates the order the crew manifest will appear in, in terms of its sections.
-        ///     Sections not in this list will appear at the end of the list, in no
-        ///     specific order.
-        /// </summary>
-        public static readonly CVarDef<string> CrewManifestOrdering =
-            CVarDef.Create("crewmanifest.ordering", "Command,Security,Science,Medical,Engineering,Cargo,Civilian,Unknown",
-                CVar.REPLICATED);
-
         /*
          * Biomass
          */
@@ -1573,6 +1585,13 @@ namespace Content.Shared.CCVar
         */
 
         /// <summary>
+        /// Chat window opacity slider, controlling the alpha of the chat window background.
+        /// Goes from to 0 (completely transparent) to 1 (completely opaque)
+        /// </summary>
+        public static readonly CVarDef<float> ChatWindowOpacity =
+            CVarDef.Create("accessibility.chat_window_transparency", 0.85f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
         /// Toggle for visual effects that may potentially cause motion sickness.
         /// Where reasonable, effects affected by this CVar should use an alternate effect.
         /// Please do not use this CVar as a bandaid for effects that could otherwise be made accessible without issue.
@@ -1580,12 +1599,22 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ReducedMotion =
             CVarDef.Create("accessibility.reduced_motion", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+        public static readonly CVarDef<bool> ChatEnableColorName =
+            CVarDef.Create("accessibility.enable_color_name", true, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying names with individual colors.");
+
         /// <summary>
         /// Screen shake intensity slider, controlling the intensity of the CameraRecoilSystem.
         /// Goes from 0 (no recoil at all) to 1 (regular amounts of recoil)
         /// </summary>
         public static readonly CVarDef<float> ScreenShakeIntensity =
             CVarDef.Create("accessibility.screen_shake_intensity", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        /// A generic toggle for various visual effects that are color sensitive.
+        /// As of 2/16/24, only applies to progress bar colors.
+        /// </summary>
+        public static readonly CVarDef<bool> AccessibilityColorblindFriendly =
+            CVarDef.Create("accessibility.colorblind_friendly", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*
          * CHAT
@@ -1849,7 +1878,7 @@ namespace Content.Shared.CCVar
         /// The time you must spend reading the rules, before the "Request" button is enabled
         /// </summary>
         public static readonly CVarDef<float> GhostRoleTime =
-            CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED);
+            CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED | CVar.SERVER);
 
         /*
          * Fire alarm
@@ -2024,5 +2053,15 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> GatewayGeneratorEnabled =
             CVarDef.Create("gateway.generator_enabled", true);
+
+        /*
+         * DEBUG
+         */
+
+        /// <summary>
+        /// A simple toggle to test <c>OptionsVisualizerComponent</c>.
+        /// </summary>
+        public static readonly CVarDef<bool> DebugOptionVisualizerTest =
+            CVarDef.Create("debug.option_visualizer_test", false, CVar.CLIENTONLY);
     }
 }

@@ -35,6 +35,24 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: wall gear
+  id: ClockworkGirder
+  graph: ClockworkGirder
+  startNode: start
+  targetNode: clockGirder
+  category: construction-category-structures
+  description: A large gear with mounting brackets for additional plating.
+  icon:
+    sprite: /Textures/Structures/Walls/clock.rsi
+    state: wall_gear
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: wall
   id: Wall
   graph: Girder
@@ -63,6 +81,24 @@
   icon:
     sprite: Structures/Walls/solid.rsi
     state: rgeneric
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: clock wall
+  id: WallClock
+  graph: ClockworkGirder
+  startNode: start
+  targetNode: clockworkWall
+  category: construction-category-structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/clock.rsi
+    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -287,6 +323,24 @@
   canRotate: false
 
 - type: construction
+  name: clockwork grille
+  id: ClockGrille
+  graph: ClockGrille
+  startNode: start
+  targetNode: clockGrille
+  category: construction-category-structures
+  description: A flimsy framework of iron rods assembled in traditional ratvarian fashion.
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+  icon:
+    sprite: Structures/Walls/clockwork_grille.rsi
+    state: ratvargrille
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
   name: diagonal grille
   id: GrilleDiagonal
   graph: GrilleDiagonal
@@ -300,6 +354,23 @@
   icon:
     sprite: Structures/Walls/grille.rsi
     state: grille_diagonal
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: diagonal clockwork grille
+  id: ClockworkGrilleDiagonal
+  graph: GrilleDiagonal
+  startNode: start
+  targetNode: clockworkGrilleDiagonal
+  category: construction-category-structures
+  description: A flimsy framework of iron rods assembled in traditional ratvarian fashion.
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+  icon:
+    sprite: Structures/Walls/clockwork_grille.rsi
+    state: ratvargrille_diagonal
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -395,6 +466,43 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+
+- type: construction
+  name: clockwork window
+  id: ClockworkWindow
+  graph: Window
+  startNode: start
+  targetNode: clockworkWindow
+  category: construction-category-structures
+  description: Clear and tough, with a golden tint.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/clockwork_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
+  name: diagonal clockwork window
+  id: ClockworkWindowDiagonal
+  graph: WindowDiagonal
+  startNode: start
+  targetNode: clockworkWindowDiagonal
+  category: construction-category-structures
+  description: Clear and tough, with a golden tint.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/clockwork_diagonal.rsi
+    state: state0
+  objectType: Structure
+  placementMode: SnapgridCenter
 
 - type: construction
   name: plasma window
@@ -522,6 +630,24 @@
   icon:
     sprite: Structures/Windows/directional.rsi
     state: reinforced_window
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: directional clockwork window
+  id: WindowClockworkDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: windowClockworkDirectional
+  category: construction-category-structures
+  description: Clear and tough, with a golden tint.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/directional.rsi
+    state: clock_window
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -665,6 +791,23 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: Thin firelock
+  id: FirelockEdge
+  graph: Firelock
+  startNode: start
+  targetNode: FirelockEdge
+  category: construction-category-structures
+  description: This is a firelock - it locks an area when a fire alarm in the area is triggered. Don't get squished!
+  icon:
+    sprite: Structures/Doors/edge_door_hazard.rsi
+    state: closed
+  placementMode: SnapgridCenter
+  objectType: Structure
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
@@ -943,6 +1086,179 @@
   conditions:
   - !type:TileNotBlocked
 
+#Wooden fence high
+- type: construction
+  name: wooden high fence
+  id: FenceWood
+  graph: FenceWood
+  startNode: start
+  targetNode: straight
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: straight
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden high fence end
+  id: FenceWoodEnd
+  graph: FenceWood
+  startNode: start
+  targetNode: end
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: end
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden high fence corner
+  id: FenceWoodCorner
+  graph: FenceWood
+  startNode: start
+  targetNode: corner
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: corner
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden high fence t-junction
+  id: FenceWoodTJunction
+  graph: FenceWood
+  startNode: start
+  targetNode: tjunction
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: tjunction
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden high fence gate
+  id: FenceWoodGate
+  graph: FenceWood
+  startNode: start
+  targetNode: gate
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: door_closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+#Wooden fence small
+- type: construction
+  name: wooden small fence
+  id: FenceWoodSmall
+  graph: FenceWood
+  startNode: start
+  targetNode: straight_small
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: straight_small
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden small fence end
+  id: FenceWoodEndSmall
+  graph: FenceWood
+  startNode: start
+  targetNode: end_small
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: end_small
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden small fence corner
+  id: FenceWoodCornerSmall
+  graph: FenceWood
+  startNode: start
+  targetNode: corner_small
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: corner_small
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden small fence t-junction
+  id: FenceWoodTJunctionSmall
+  graph: FenceWood
+  startNode: start
+  targetNode: tjunction_small
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: tjunction_small
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: wooden small fence gate
+  id: FenceWoodGateSmall
+  graph: FenceWood
+  startNode: start
+  targetNode: gate_small
+  category: construction-category-structures
+  description: Part of a wooden fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: door_closed_small
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+#Airlocks
 - type: construction
   name: airlock
   id: Airlock
@@ -970,6 +1286,40 @@
   description: It opens, it closes, and maybe crushes you.
   icon:
     sprite: Structures/Doors/Airlocks/Glass/glass.rsi
+    state: assembly
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: pinion airlock
+  id: PinionAirlock
+  graph: PinionAirlock
+  startNode: start
+  targetNode: airlock
+  category: construction-category-structures
+  description: It opens, it closes, and maybe crushes you.
+  icon:
+    sprite: Structures/Doors/Airlocks/Standard/clockwork_pinion.rsi
+    state: assembly
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: glass pinion airlock
+  id: PinionAirlockGlass
+  graph: PinionAirlock
+  startNode: start
+  targetNode: glassAirlock
+  category: construction-category-structures
+  description: It opens, it closes, and maybe crushes you.
+  icon:
+    sprite: Structures/Doors/Airlocks/Glass/clockwork_pinion.rsi
     state: assembly
   objectType: Structure
   placementMode: SnapgridCenter
@@ -1020,7 +1370,7 @@
   startNode: start
   targetNode: windoor
   category: construction-category-structures
-  description: It opens, it closes, and you can see through it!
+  description: It opens, it closes, and you can see through it! And it can be made of Plasma, Uranium, or normal Glass!
   icon:
     sprite: Structures/Doors/Windoors/windoor.rsi
     state: closed
@@ -1037,7 +1387,7 @@
   startNode: start
   targetNode: windoorSecure
   category: construction-category-structures
-  description: It opens, it closes, and you can see through it! This one looks tough.
+  description: It's tough, it's a door, and you can see through it! And it can be made of Plasma, Uranium, or normal Glass!
   icon:
     sprite: Structures/Doors/Windoors/windoor.rsi
     state: closed
@@ -1047,6 +1397,22 @@
   conditions:
     - !type:TileNotBlocked
 
+- type: construction
+  name: clockwork windoor
+  id: ClockworkWindoor
+  graph: Windoor
+  startNode: start
+  targetNode: windoorClockwork
+  category: construction-category-structures
+  description: It opens, it closes, and you can see through it! This one looks tough.
+  icon:
+    sprite: Structures/Doors/Windoors/clockwork_windoor.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
 
 #lighting
 - type: construction
@@ -1098,7 +1464,7 @@
   description: A ground light fixture. Use light bulbs.
   icon:
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
-    state: off
+    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -1233,6 +1599,57 @@
   category: construction-category-structures
   placementMode: SnapgridCenter
   description: A plastic flap to let items through and keep people out.
+  objectType: Structure
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/plastic_flaps.rsi
+    state: plasticflaps
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: airtight plastic flaps
+  id: PlasticFlapsAirtight
+  graph: PlasticFlapsGraph
+  startNode: start
+  targetNode: airtightFlaps
+  category: construction-category-structures
+  placementMode: SnapgridCenter
+  description: An airtight plastic flap to let items through and keep people out.
+  objectType: Structure
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/plastic_flaps.rsi
+    state: plasticflaps
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: opaque plastic flaps
+  id: PlasticFlapsOpaque
+  graph: PlasticFlapsGraph
+  startNode: start
+  targetNode: opaqueFlaps
+  category: construction-category-structures
+  placementMode: SnapgridCenter
+  description: An opaque plastic flap to let items through and keep people out.
+  objectType: Structure
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/plastic_flaps.rsi
+    state: plasticflaps
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: airtight opaque plastic flaps
+  id: PlasticFlapsAirtightOpaque
+  graph: PlasticFlapsGraph
+  startNode: start
+  targetNode: airtightopaqueFlaps
+  category: construction-category-structures
+  placementMode: SnapgridCenter
+  description: An opaque, airtight plastic flap to let items through and keep people out.
   objectType: Structure
   canBuildInImpassable: false
   icon:

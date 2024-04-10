@@ -2,6 +2,7 @@ using Content.Shared.Antag;
 using Robust.Shared.GameStates;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.Revolutionary.Components;
 
@@ -17,8 +18,14 @@ public sealed partial class RevolutionaryComponent : Component, IAntagStatusIcon
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "RevolutionaryFaction";
 
+    /// <summary>
+    /// Sound that plays when you are chosen as Rev. (Placeholder until I find something cool I guess)
+    /// </summary>
+    [DataField]
+    public SoundSpecifier RevStartSound = new SoundPathSpecifier("/Audio/Ambience/Antag/headrev_start.ogg");
+
     public override bool SessionSpecific => true;
 
     [DataField]
-    public bool IconVisibleToGhost { get; set; } = true;
+    public bool IconVisibleToGhost { get; set; }  = true;
 }

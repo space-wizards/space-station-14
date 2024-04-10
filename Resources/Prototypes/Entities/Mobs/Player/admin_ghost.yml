@@ -66,10 +66,9 @@
     title: comms-console-announcement-title-centcom
     color: "#228b22"
   - type: RadarConsole
+    followEntity: true
   - type: CargoOrderConsole
   - type: CrewMonitoringConsole
-    snap: false
-    precision: 3
   - type: GeneralStationRecordConsole
   - type: DeviceNetwork
     deviceNetId: Wireless

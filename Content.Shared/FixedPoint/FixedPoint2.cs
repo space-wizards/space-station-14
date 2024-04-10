@@ -20,6 +20,9 @@ namespace Content.Shared.FixedPoint
         public static FixedPoint2 Epsilon { get; } = new(1);
         public static FixedPoint2 Zero { get; } = new(0);
 
+        // This value isn't picked by any proper testing, don't @ me.
+        private const float FloatEpsilon = 0.00001f;
+
 #if DEBUG
         static FixedPoint2()
         {
@@ -47,7 +50,17 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 New(float value)
         {
-            return new((int) MathF.Round(value * ShiftConstant, MidpointRounding.AwayFromZero));
+            return new((int) ApplyFloatEpsilon(value * ShiftConstant));
+        }
+
+        private static float ApplyFloatEpsilon(float value)
+        {
+            return value + FloatEpsilon * Math.Sign(value);
+        }
+
+        private static double ApplyFloatEpsilon(double value)
+        {
+            return value + FloatEpsilon * Math.Sign(value);
         }
 
         /// <summary>
@@ -60,17 +73,12 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 New(double value)
         {
-            return new((int) Math.Round(value * ShiftConstant, MidpointRounding.AwayFromZero));
+            return new((int) ApplyFloatEpsilon(value * ShiftConstant));
         }
 
         public static FixedPoint2 New(string value)
         {
-            return New(FloatFromString(value));
-        }
-
-        private static float FloatFromString(string value)
-        {
-            return float.Parse(value, CultureInfo.InvariantCulture);
+            return New(Parse.Float(value));
         }
 
         public static FixedPoint2 operator +(FixedPoint2 a) => a;
@@ -85,17 +93,17 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 operator *(FixedPoint2 a, FixedPoint2 b)
         {
-            return new((int) MathF.Round(b.Value * a.Value / (float) ShiftConstant, MidpointRounding.AwayFromZero));
+            return new(b.Value * a.Value / ShiftConstant);
         }
 
         public static FixedPoint2 operator *(FixedPoint2 a, float b)
         {
-            return new((int) MathF.Round(a.Value * b, MidpointRounding.AwayFromZero));
+            return new((int) ApplyFloatEpsilon(a.Value * b));
         }
 
         public static FixedPoint2 operator *(FixedPoint2 a, double b)
         {
-            return new((int) Math.Round(a.Value * b, MidpointRounding.AwayFromZero));
+            return new((int) ApplyFloatEpsilon(a.Value * b));
         }
 
         public static FixedPoint2 operator *(FixedPoint2 a, int b)
@@ -105,12 +113,12 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 operator /(FixedPoint2 a, FixedPoint2 b)
         {
-            return new((int) MathF.Round((ShiftConstant * a.Value) / (float) b.Value, MidpointRounding.AwayFromZero));
+            return new((int) (ShiftConstant * (long) a.Value / b.Value));
         }
 
         public static FixedPoint2 operator /(FixedPoint2 a, float b)
         {
-            return new((int) MathF.Round(a.Value / b, MidpointRounding.AwayFromZero));
+            return new((int) ApplyFloatEpsilon(a.Value / b));
         }
 
         public static bool operator <=(FixedPoint2 a, int b)
@@ -185,7 +193,7 @@ namespace Content.Shared.FixedPoint
 
         public readonly int Int()
         {
-            return (int) ShiftDown();
+            return Value / ShiftConstant;
         }
 
         // Implicit operators ftw
@@ -266,7 +274,7 @@ namespace Content.Shared.FixedPoint
             if (value == "MaxValue")
                 Value = int.MaxValue;
             else
-                this = New(FloatFromString(value));
+                this = New(Parse.Float(value));
         }
 
         public override readonly string ToString() => $"{ShiftDown().ToString(CultureInfo.InvariantCulture)}";

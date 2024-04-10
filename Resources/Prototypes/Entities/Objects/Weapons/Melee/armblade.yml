@@ -24,5 +24,6 @@
     speed: 0.25
   - type: Prying
     pryPowered: true
+  - type: Unremoveable
   - type: DisarmMalus
     malus: 0

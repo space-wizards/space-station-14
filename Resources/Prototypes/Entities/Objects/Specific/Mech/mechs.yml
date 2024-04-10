@@ -48,6 +48,8 @@
       types:
         Blunt: 25 #thwack
         Structural: 20
+    soundHit:
+      collection: MetalThud
   - type: Puller
     needsHands: false
   - type: InputMover
@@ -64,9 +66,6 @@
     bodyType: KinematicController
   - type: Clickable
   - type: WiresPanel
-  - type: Wires #we just want the panel
-    boardName: wires-board-name-mech
-    layoutId: Mech
   - type: Fixtures
     fixtures:
       fix1:
@@ -230,7 +229,7 @@
   parent: BaseMech
   id: MechVim
   name: Vim
-  description: A minature exosuit from Nanotrasen, developed to let the irreplacable station pets live a little longer.
+  description: A miniature exosuit from Nanotrasen, developed to let the irreplaceable station pets live a little longer.
   components:
   - type: Sprite
     drawdepth: Mobs

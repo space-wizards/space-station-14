@@ -1,4 +1,4 @@
-﻿# Accents that work off of word replacements.
+# Accents that work off of word replacements.
 
 # this is kind of dumb but localization demands it.
 # i guess you could just specify the prefix ('mobster') and count and let the system fill it
@@ -263,7 +263,7 @@
     accent-pirate-replaced-30: accent-pirate-replacement-30
     accent-pirate-replaced-31: accent-pirate-replacement-31
     accent-pirate-replaced-32: accent-pirate-replacement-32
-    
+
 - type: accent
   id: cowboy
   wordReplacements:
@@ -366,7 +366,16 @@
     accent-cowboy-words-97: accent-cowboy-replacement-97
     accent-cowboy-words-98: accent-cowboy-replacement-98
     accent-cowboy-words-99: accent-cowboy-replacement-99
-  
+
+- type: accent
+  id: southern
+  wordReplacements:
+    accent-southern-words-1: accent-southern-words-replace-1
+    accent-southern-words-2: accent-southern-words-replace-2
+    accent-southern-words-3: accent-southern-words-replace-3
+    accent-southern-words-4: accent-southern-words-replace-4
+    accent-southern-words-5: accent-southern-words-replace-5
+    accent-southern-words-6: accent-southern-words-replace-6
 
 # For the chat sanitization system
 - type: accent
@@ -414,3 +423,5 @@
     chatsan-word-40: chatsan-replacement-etcetera
     chatsan-word-41: chatsan-replacement-41
     chatsan-word-42: chatsan-replacement-42
+    chatsan-word-43: chatsan-replacement-43
+    chatsan-word-44: chatsan-replacement-44

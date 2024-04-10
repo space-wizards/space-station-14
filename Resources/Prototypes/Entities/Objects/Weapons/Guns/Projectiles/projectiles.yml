@@ -102,7 +102,7 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 2
+        Blunt: 1
 
 - type: entity
   id: BaseBulletRubber
@@ -288,7 +288,7 @@
       fly-by: *flybyfixture
   - type: Ammo
   - type: StaminaDamageOnCollide
-    damage: 5
+    damage: 1
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
@@ -487,6 +487,11 @@
   name: delta particles
   noSpawn: true
   components:
+  - type: PointLight
+    enabled: true
+    color: "#c2385d"
+    radius: 2.0
+    energy: 7.0
   - type: AnomalousParticle
     particleType: Delta
   - type: Sprite
@@ -513,6 +518,9 @@
         Heat: 5
   - type: TimedDespawn
     lifetime: 3
+  - type: Reflective
+    reflective:
+    - Energy
 
 
 - type: entity
@@ -533,6 +541,11 @@
   name: epsilon particles
   noSpawn: true
   components:
+  - type: PointLight
+    enabled: true
+    color: "#38c296"
+    radius: 2.0
+    energy: 7.0
   - type: Sprite
     layers:
       - state: magicm_cyan
@@ -558,6 +571,11 @@
   name: zeta particles
   noSpawn: true
   components:
+  - type: PointLight
+    enabled: true
+    color: "#b9c238"
+    radius: 2.0
+    energy: 7.0
   - type: Sprite
     layers:
       - state: magicm_yellow
@@ -583,6 +601,11 @@
   name: omega particles
   noSpawn: true
   components:
+  - type: PointLight
+    enabled: true
+    color: "#38c24f"
+    radius: 2.0
+    energy: 7.0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
@@ -600,6 +623,33 @@
     damage:
       types:
         Heat: 20
+
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleSigma
+  name: sigma particles
+  noSpawn: true
+  components:
+  - type: PointLight
+    enabled: true
+    color: "#8d38c2"
+    radius: 2.0
+    energy: 7.0
+  - type: Sprite
+    layers:
+      - state: magicm
+        shader: unshaded
+  - type: AnomalousParticle
+    particleType: Sigma
+
+- type: entity
+  parent: AnomalousParticleSigma
+  id: AnomalousParticleSigmaStrong
+  name: sigma particles
+  noSpawn: true
+  components:
+  - type: AnomalousParticle
+    particleType: Sigma
 
 # Launcher projectiles (grenade / rocket)
 - type: entity
@@ -738,7 +788,7 @@
   - type: PointLight
     radius: 3.5
     color: blue
-    energy: 0.5 
+    energy: 0.5
 
 - type: entity
   id: BulletCap
@@ -810,8 +860,6 @@
         mask:
         - Impassable
         - BulletImpassable
-  - type: CanPenetrate
-    penetrationLayer: MobLayer
   - type: Vapor
     active: true
   - type: Appearance

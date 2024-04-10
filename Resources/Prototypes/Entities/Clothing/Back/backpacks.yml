@@ -248,6 +248,27 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertclown.rsi
 
+- type: entity
+  parent: ClothingBackpackERTLeader
+  id: ClothingBackpackERTChaplain
+  name: ERT chaplain backpack
+  description: A spacious backpack with lots of pockets, worn by Chaplains of an Emergency Response Team.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/ertchaplain.rsi
+
+#Syndicate
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackSyndicate
+  name: syndicate backpack
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/syndicate.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.1         
+
 #Special
 - type: entity
   parent: ClothingBackpack

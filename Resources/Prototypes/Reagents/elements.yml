@@ -72,11 +72,11 @@
     Medicine:
       effects:
       - !type:ModifyBloodLevel
-        condition:
+        conditions:
         - !type:OrganType
           type: Arachnid
           shouldHave: true
-        amount: 4
+        amount: 0.4
 
 - type: reagent
   id: Fluorine
@@ -163,11 +163,11 @@
     Medicine:
       effects:
       - !type:ModifyBloodLevel
-        condition:
+        conditions:
         - !type:OrganType
           type: Arachnid
           shouldHave: false
-        amount: 4
+        amount: 0.4
 
 - type: reagent
   id: Lithium

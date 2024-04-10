@@ -20,16 +20,8 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        _configuration.OnValueChanged(CCVars.LocalStatusIconsEnabled, OnLocalStatusIconChanged, true);
-        _configuration.OnValueChanged(CCVars.GlobalStatusIconsEnabled, OnGlobalStatusIconChanged, true);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _configuration.UnsubValueChanged(CCVars.LocalStatusIconsEnabled, OnLocalStatusIconChanged);
-        _configuration.UnsubValueChanged(CCVars.GlobalStatusIconsEnabled, OnGlobalStatusIconChanged);
+        Subs.CVar(_configuration, CCVars.LocalStatusIconsEnabled, OnLocalStatusIconChanged, true);
+        Subs.CVar(_configuration, CCVars.GlobalStatusIconsEnabled, OnGlobalStatusIconChanged, true);
     }
 
     private void OnLocalStatusIconChanged(bool obj)
