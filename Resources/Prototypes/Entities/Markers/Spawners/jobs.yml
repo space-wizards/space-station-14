@@ -311,6 +311,18 @@
       - state: captain
 
 - type: entity
+  id: SpawnPointAide
+  parent: SpawnPointJobBase
+  name: aide
+  components:
+  - type: SpawnPoint
+    job_id: Aide
+  - type: Sprite
+    layers:
+      - state: green
+      - state: captain
+
+- type: entity
   id: SpawnPointHeadOfPersonnel
   parent: SpawnPointJobBase
   name: headofpersonnel

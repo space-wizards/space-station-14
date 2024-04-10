@@ -38,6 +38,7 @@
   color: "#334E6D"
   roles:
   - Captain
+  - Aide
   - CentralCommandOfficial
   - ChiefEngineer
   - ChiefMedicalOfficer

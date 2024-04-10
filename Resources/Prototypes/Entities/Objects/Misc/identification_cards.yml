@@ -122,6 +122,18 @@
 
 - type: entity
   parent: IDCardStandard
+  id: AideIDCard
+  name: aide ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idaide
+  - type: PresetIdCard
+    job: Aide
+
+- type: entity
+  parent: IDCardStandard
   id: SecurityIDCard
   name: security ID card
   components:

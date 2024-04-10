@@ -448,6 +448,21 @@
 
 - type: entity
   parent: BasePDA
+  id: AidePDA
+  name: aide PDA
+  description: Surprisingly no different from your PDA.
+  components:
+  - type: Pda
+    id: AideIDCard
+    state: pda-hop
+  - type: PdaBorderColor
+    borderColor: "#789876"
+    accentHColor: "#447987"
+  - type: Icon
+    state: pda-hop
+
+- type: entity
+  parent: BasePDA
   id: HoPPDA
   name: head of personnel PDA
   description: Looks like it's been chewed on.

@@ -182,6 +182,13 @@
 
 - type: statusIcon
   parent: JobIcon
+  id: JobIconAide
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Aide
+
+- type: statusIcon
+  parent: JobIcon
   id: JobIconHeadOfPersonnel
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
