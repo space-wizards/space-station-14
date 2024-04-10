@@ -1,7 +1,6 @@
 using Robust.Shared.Audio;
 using Content.Shared.Polymorph;
 using Robust.Shared.Prototypes;
-using Content.Server.Changeling;
 using Content.Server.Changeling.EntitySystems;
 
 namespace Content.Server.Changeling.Components;
@@ -21,7 +20,7 @@ public sealed partial class ChangelingComponent : Component
     /// List of stolen DNA
     /// </summary>
     [DataField]
-    public List<PolymorphHumanoidData> StoredDNA = new List<PolymorphHumanoidData>();
+    public List<PolymorphHumanoidData> StoredDNA = [];
 
     /// <summary>
     /// The DNA index that the changeling currently has selected
@@ -49,7 +48,6 @@ public sealed partial class ChangelingComponent : Component
     {
         Params = AudioParams.Default.WithVolume(-3f),
     };
-    #endregion
 
     [DataField]
     public SoundSpecifier? SoundFlesh = new SoundPathSpecifier("/Audio/Effects/blobattack.ogg")

@@ -1,6 +1,9 @@
 namespace Content.Shared.Changeling.Components;
 
+/// <summary>
+/// Component give to people who have been absorbed by changelings.
+/// </summary>
 [RegisterComponent]
-public sealed partial class AbsorbedComponent : Component // component give to people who have been absorbed by changelings
+public sealed partial class AbsorbedComponent : Component
 {
 }
