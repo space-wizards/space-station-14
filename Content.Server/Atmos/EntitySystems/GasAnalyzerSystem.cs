@@ -209,8 +209,8 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     foreach (var mixes in ev.GasMixtures)
                     {
-                        if (mixes.Value != null)
-                            gasMixList.Add(new GasMixEntry(mixes.Key, mixes.Value.Volume, mixes.Value.Pressure, mixes.Value.Temperature, GenerateGasEntryArray(mixes.Value)));
+                        if (mixes.Item2 != null)
+                            gasMixList.Add(new GasMixEntry(mixes.Item1, mixes.Item2.Volume, mixes.Item2.Pressure, mixes.Item2.Temperature, GenerateGasEntryArray(mixes.Item2)));
                     }
 
                     deviceFlipped = ev.DeviceFlipped;
@@ -223,7 +223,7 @@ namespace Content.Server.Atmos.EntitySystems
                         foreach (var pair in node.Nodes)
                         {
                             if (pair.Value is PipeNode pipeNode)
-                                {
+                            {
                                 // check if the volume is zero for some reason so we don't divide by zero
                                 if (pipeNode.Air.Volume == 0f)
                                     continue;
@@ -232,7 +232,7 @@ namespace Content.Server.Atmos.EntitySystems
                                 pipeAir.Multiply(pipeNode.Volume / pipeNode.Air.Volume);
                                 pipeAir.Volume = pipeNode.Volume;
                                 gasMixList.Add(new GasMixEntry(pair.Key, pipeAir.Volume, pipeAir.Pressure, pipeAir.Temperature, GenerateGasEntryArray(pipeAir)));
-                                }
+                            }
                         }
                     }
                 }
@@ -295,9 +295,9 @@ namespace Content.Server.Atmos.EntitySystems
 public sealed class GasAnalyzerScanEvent : EntityEventArgs
 {
     /// <summary>
-    /// Key is the mix name (ex "pipe", "inlet", "filter"), value is the pipe direction and GasMixture. Add all mixes that should be reported when scanned.
+    /// The string is for the name (ex "pipe", "inlet", "filter"), GasMixture for the corresponding gas mix. Add all mixes that should be reported when scanned.
     /// </summary>
-    public Dictionary<string, GasMixture?>? GasMixtures;
+    public List<(string, GasMixture?)>? GasMixtures;
 
     /// <summary>
     /// If the device is flipped. Flipped is defined as when the inline input is 90 degrees CW to the side input

@@ -73,7 +73,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             if (filter.FilteredGas.HasValue)
             {
-                var filteredOut = new GasMixture() {Temperature = removed.Temperature};
+                var filteredOut = new GasMixture() { Temperature = removed.Temperature };
 
                 filteredOut.SetMoles(filter.FilteredGas.Value, removed.GetMoles(filter.FilteredGas.Value));
                 removed.SetMoles(filter.FilteredGas.Value, 0f);
@@ -180,35 +180,31 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         /// </summary>
         private void OnFilterAnalyzed(EntityUid uid, GasFilterComponent component, GasAnalyzerScanEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            var gasMixDict = new Dictionary<string, GasMixture?>();
+            args.GasMixtures ??= new List<(string, GasMixture?)>();
 
             // multiply by volume fraction to make sure to send only the gas inside the analyzed pipe element, not the whole pipe system
-            if (_nodeContainer.TryGetNode(nodeContainer, component.InletName, out PipeNode? inlet) && inlet.Air.Volume != 0f)
+            if (_nodeContainer.TryGetNode(uid, component.InletName, out PipeNode? inlet) && inlet.Air.Volume != 0f)
             {
                 var inletAirLocal = inlet.Air.Clone();
                 inletAirLocal.Multiply(inlet.Volume / inlet.Air.Volume);
                 inletAirLocal.Volume = inlet.Volume;
-                gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-inlet"), inletAirLocal);
+                args.GasMixtures.Add((Loc.GetString("gas-analyzer-window-text-inlet"), inletAirLocal));
             }
-            if (_nodeContainer.TryGetNode(nodeContainer, component.FilterName, out PipeNode? filterNode) && filterNode.Air.Volume != 0f)
+            if (_nodeContainer.TryGetNode(uid, component.FilterName, out PipeNode? filterNode) && filterNode.Air.Volume != 0f)
             {
                 var filterNodeAirLocal = filterNode.Air.Clone();
                 filterNodeAirLocal.Multiply(filterNode.Volume / filterNode.Air.Volume);
                 filterNodeAirLocal.Volume = filterNode.Volume;
-                gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-filter"), filterNodeAirLocal);
+                args.GasMixtures.Add((Loc.GetString("gas-analyzer-window-text-filter"), filterNodeAirLocal));
             }
-            if (_nodeContainer.TryGetNode(nodeContainer, component.OutletName, out PipeNode? outlet) && outlet.Air.Volume != 0f)
+            if (_nodeContainer.TryGetNode(uid, component.OutletName, out PipeNode? outlet) && outlet.Air.Volume != 0f)
             {
                 var outletAirLocal = outlet.Air.Clone();
                 outletAirLocal.Multiply(outlet.Volume / outlet.Air.Volume);
                 outletAirLocal.Volume = outlet.Volume;
-                gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-outlet"), outletAirLocal);
+                args.GasMixtures.Add((Loc.GetString("gas-analyzer-window-text-outlet"), outletAirLocal));
             }
 
-            args.GasMixtures = gasMixDict;
             args.DeviceFlipped = inlet != null && filterNode != null && inlet.CurrentPipeDirection.ToDirection() == filterNode.CurrentPipeDirection.ToDirection().GetClockwise90Degrees();
         }
     }

@@ -292,9 +292,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         /// </summary>
         private void OnAnalyzed(EntityUid uid, GasVentPumpComponent component, GasAnalyzerScanEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-            var gasMixDict = new Dictionary<string, GasMixture?>();
+            args.GasMixtures ??= new List<(string, GasMixture?)>();
 
             // these are both called pipe, above it switches using this so I duplicated that...?
             var nodeName = component.PumpDirection switch
@@ -304,15 +302,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 _ => throw new ArgumentOutOfRangeException()
             };
             // multiply by volume fraction to make sure to send only the gas inside the analyzed pipe element, not the whole pipe system
-            if (_nodeContainer.TryGetNode(nodeContainer, nodeName, out PipeNode? pipe) && pipe.Air.Volume != 0f)
+            if (_nodeContainer.TryGetNode(uid, nodeName, out PipeNode? pipe) && pipe.Air.Volume != 0f)
             {
                 var pipeAirLocal = pipe.Air.Clone();
                 pipeAirLocal.Multiply(pipe.Volume / pipe.Air.Volume);
                 pipeAirLocal.Volume = pipe.Volume;
-                gasMixDict.Add(nodeName, pipeAirLocal);
+                args.GasMixtures.Add((nodeName, pipeAirLocal));
             }
-
-            args.GasMixtures = gasMixDict;
         }
 
         private void OnWeldChanged(EntityUid uid, GasVentPumpComponent component, ref WeldableChangedEvent args)
