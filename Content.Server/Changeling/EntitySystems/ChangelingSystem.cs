@@ -102,7 +102,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (regenCap)
             float.Min(component.Chemicals, component.MaxChemicals);
 
-        _alerts.ShowAlert(uid, AlertType.Chemicals, (short) Math.Clamp(Math.Round(component.Chemicals / 10.7f), 0, 7));
+        _alerts.ShowAlert(uid, AlertType.Chemicals);
 
         return true;
     }
@@ -217,21 +217,6 @@ public sealed partial class ChangelingSystem : EntitySystem
 
     public void StealDNA(EntityUid uid, ChangelingComponent component)
     {
-        var newHumanoidData = _polymorph.TryRegisterPolymorphHumanoidData(uid, uid);
-        if (newHumanoidData == null)
-            return;
-
-        if (component.StoredDNA.Count >= component.DNAStrandCap)
-        {
-            var lastHumanoidData = component.StoredDNA.Last();
-            component.StoredDNA.Remove(lastHumanoidData);
-            component.StoredDNA.Add(newHumanoidData.Value);
-        }
-        else
-        {
-            component.StoredDNA.Add(newHumanoidData.Value);
-        }
-
         return;
     }
 

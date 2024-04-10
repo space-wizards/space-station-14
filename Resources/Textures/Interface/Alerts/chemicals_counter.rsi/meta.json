@@ -1,35 +1,44 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by Dutch-VanDerLinde (github)",
+  "copyright": "Created by EmoGarbage404",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "chemicals0"
+      "name": "chemicals"
     },
     {
-      "name": "chemicals1"
+      "name": "0"
     },
     {
-      "name": "chemicals2"
+      "name": "1"
     },
     {
-      "name": "chemicals3"
+      "name": "2"
     },
     {
-      "name": "chemicals4"
+      "name": "3"
     },
     {
-      "name": "chemicals5"
+      "name": "4"
     },
     {
-      "name": "chemicals6"
+      "name": "5"
     },
     {
-      "name": "chemicals7"
+      "name": "6"
+    },
+    {
+      "name": "7"
+    },
+    {
+      "name": "8"
+    },
+    {
+      "name": "9"
     }
   ]
 }

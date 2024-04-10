@@ -1,12 +1,11 @@
 using Robust.Shared.Audio;
 using Content.Shared.Polymorph;
 using Robust.Shared.Prototypes;
-using Content.Server.Changeling.EntitySystems;
+using Content.Shared.Changeling;
 
-namespace Content.Server.Changeling.Components;
+namespace Content.Shared.Changeling.Components;
 
 [RegisterComponent]
-[Access(typeof(ChangelingSystem))]
 public sealed partial class ChangelingComponent : Component
 {
 
@@ -20,7 +19,7 @@ public sealed partial class ChangelingComponent : Component
     /// List of stolen DNA
     /// </summary>
     [DataField]
-    public List<PolymorphHumanoidData> StoredDNA = [];
+    public List<TransformData> StoredDNA = [];
 
     /// <summary>
     /// The DNA index that the changeling currently has selected
