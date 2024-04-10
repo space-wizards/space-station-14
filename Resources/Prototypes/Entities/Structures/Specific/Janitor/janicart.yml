@@ -82,6 +82,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: DnaSubstanceTrace
 
 - type: entity
   name: mop bucket
@@ -322,3 +323,4 @@
     - type: GuideHelp
       guides:
       - Janitorial
+    - type: DnaSubstanceTrace
