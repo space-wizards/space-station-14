@@ -1018,6 +1018,9 @@
     access: [["ChiefEngineer"]]
   - type: Wires
     layoutId: AirlockCommand
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsChiefEngineer ]
 
 - type: entity
   parent: AirlockMaint
@@ -1028,6 +1031,9 @@
     access: [["ChiefMedicalOfficer"]]
   - type: Wires
     layoutId: AirlockCommand
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsChiefMedicalOfficer ]
 
 - type: entity
   parent: AirlockMaint
@@ -1038,6 +1044,9 @@
     access: [["HeadOfSecurity"]]
   - type: Wires
     layoutId: AirlockCommand
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsHeadOfSecurity ]
 
 - type: entity
   parent: AirlockMaint
@@ -1048,6 +1057,9 @@
     access: [["ResearchDirector"]]
   - type: Wires
     layoutId: AirlockCommand
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsResearchDirector ]
 
 - type: entity
   parent: AirlockMaint
