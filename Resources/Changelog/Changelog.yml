@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: CrigCrag
-  changes:
-  - message: Added a new large salvage wreck.
-    type: Add
-  id: 5829
-  time: '2024-01-30T10:56:38.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24656
 - author: themias
   changes:
   - message: Fixed Centcom cargo gifts not being fulfilled
@@ -3825,3 +3818,10 @@
   id: 6328
   time: '2024-04-10T17:51:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25541
+- author: deltanedas
+  changes:
+  - message: Fixed some doors having no access when they should.
+    type: Fix
+  id: 6329
+  time: '2024-04-10T20:06:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26858
