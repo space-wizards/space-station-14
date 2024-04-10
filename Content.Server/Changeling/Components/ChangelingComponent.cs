@@ -1,29 +1,14 @@
 using Robust.Shared.Audio;
 using Content.Shared.Polymorph;
 using Robust.Shared.Prototypes;
+using Content.Server.Changeling;
 
 namespace Content.Shared.Changeling.Components;
 
 [RegisterComponent]
+[Access(typeof(ChangelingSystem))]
 public sealed partial class ChangelingComponent : Component
 {
-    /// <summary>
-    /// The amount of chemicals the ling has.
-    /// </summary>
-    [DataField]
-    public float Chemicals = 20f;
-
-    /// <summary>
-    /// The amount of chemicals passively generated per second
-    /// </summary>
-    [DataField]
-    public float ChemicalsPerSecond = 0.5f;
-
-    /// <summary>
-    /// The lings's current max amount of chemicals.
-    /// </summary>
-    [DataField]
-    public float MaxChemicals = 75f;
 
     /// <summary>
     /// The maximum amount of DNA strands a ling can have at one time
