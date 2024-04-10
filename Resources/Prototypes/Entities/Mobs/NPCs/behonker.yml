@@ -70,6 +70,7 @@
           layer:
             - FlyingMobLayer
     - type: MobState
+    - type: Hands
     - type: InnateTool
       tools:
         - id: WeaponBehonkerLaser
