@@ -101,7 +101,7 @@
     FluorosulfuricAcid: 4
 
 - type: reaction
-  id: PotassiumExplosion
+  id: PotassiumExplosionWithWater
   impact: High
   priority: 20
   reactants:
@@ -114,6 +114,88 @@
       explosionType: Default
       maxIntensity: 100
       intensityPerUnit: 0.5 # 50+50 reagent for maximum explosion
+      intensitySlope: 4
+      maxTotalIntensity: 100
+
+- type: reaction
+  id: PotassiumExplosionWithBlood
+  impact: High
+  priority: 20
+  reactants:
+    Blood:
+      amount: 1.81
+    Potassium:
+      amount: 1
+  products:
+    Iron: 0.045
+    Sugar: 0.181
+    CarbonDioxide: 0.272
+    Protein: 0.362
+  effects:
+    - !type:ExplosionReactionEffect
+      explosionType: Default
+      maxIntensity: 100
+      intensityPerUnit: 0.5 
+      intensitySlope: 4
+      maxTotalIntensity: 100
+
+- type: reaction
+  id: PotassiumExplosionWithCopperBlood
+  impact: High
+  priority: 20
+  reactants:
+    CopperBlood:
+      amount: 1.81
+    Potassium:
+      amount: 1
+  products:
+    Copper: 0.045
+    Sugar: 0.181
+    CarbonDioxide: 0.272
+    Protein: 0.362
+  effects:
+    - !type:ExplosionReactionEffect
+      explosionType: Default
+      maxIntensity: 100
+      intensityPerUnit: 0.5 
+      intensitySlope: 4
+      maxTotalIntensity: 100
+
+- type: reaction
+  id: PotassiumExplosionWithSlime
+  impact: High
+  priority: 20
+  reactants:
+    Slime:
+      amount: 1.25
+    Potassium:
+      amount: 1
+  products:
+    Nitrogen: 0.25
+  effects:
+    - !type:ExplosionReactionEffect
+      explosionType: Default
+      maxIntensity: 100
+      intensityPerUnit: 0.5 
+      intensitySlope: 4
+      maxTotalIntensity: 100
+
+- type: reaction
+  id: PotassiumExplosionWithSap
+  impact: High
+  priority: 20
+  reactants:
+    Sap:
+      amount: 1.11
+    Potassium:
+      amount: 1
+  products:
+    Sugar: 0.111
+  effects:
+    - !type:ExplosionReactionEffect
+      explosionType: Default
+      maxIntensity: 100
+      intensityPerUnit: 0.5 
       intensitySlope: 4
       maxTotalIntensity: 100
 
