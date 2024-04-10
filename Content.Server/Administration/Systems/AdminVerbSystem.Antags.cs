@@ -18,8 +18,6 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
     [Dependency] private readonly RevolutionaryRuleSystem _revolutionaryRule = default!;
-    [Dependency] private readonly ChangelingRuleSystem _lingsRule = default!;
-    [Dependency] private readonly SharedMindSystem _minds = default!;
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
@@ -122,25 +120,5 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-verb-make-thief"),
         };
         args.Verbs.Add(thief);
-
-        Verb changeling = new()
-        {
-            Text = Loc.GetString("admin-verb-text-make-changeling"),
-            Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/armblade.rsi"), "icon"),
-            Act = () =>
-            {
-                if (!_minds.TryGetSession(targetMindComp.Mind, out var session))
-                    return;
-
-                // if its not a humanoid dont make it a changeling
-                var isHuman = HasComp<HumanoidAppearanceComponent>(args.Target);
-                if (isHuman)
-                    _lingsRule.MakeChangeling(session);
-            },
-            Impact = LogImpact.High,
-            Message = Loc.GetString("admin-verb-make-changeling"),
-        };
-        args.Verbs.Add(changeling);
     }
 }

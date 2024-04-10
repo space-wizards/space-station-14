@@ -83,11 +83,10 @@ public sealed partial class ChangelingSystem
 
         _popup.PopupEntity(Loc.GetString("changeling-dna-stage-1"), uid, uid);
 
-        var doAfter = new DoAfterArgs(EntityManager, uid, component.AbsorbDuration, new AbsorbDoAfterEvent(), uid, target: target)
+        var doAfter = new DoAfterArgs(EntityManager, uid, 15, new AbsorbDoAfterEvent(), uid, target: target)
         {
             DistanceThreshold = 2,
-            BreakOnUserMove = true,
-            BreakOnTargetMove = true,
+            BreakOnMove = true,
             BreakOnDamage = true,
             AttemptFrequency = AttemptFrequency.StartAndEnd
         };
@@ -132,28 +131,8 @@ public sealed partial class ChangelingSystem
         }
         else if (component.AbsorbStage == 2)
         {
-            var doStealDNA = true;
-            if (TryComp(target, out DnaComponent? dnaCompTarget))
-            {
-                foreach (var storedData in component.StoredDNA)
-                {
-                    if (storedData.DNA != null && storedData.DNA == dnaCompTarget.DNA)
-                        doStealDNA = false;
-                }
-            }
-
-            if (doStealDNA)
-            {
-                if (!StealDNA(uid, target, component))
-                {
-                    component.AbsorbStage = 0;
-                    args.Repeat = false;
-                    return;
-                }
-            }
-
             // give them 200 genetic damage and remove all of their blood
-            var dmg = new DamageSpecifier(_proto.Index(GeneticDamageGroup), component.AbsorbGeneticDmg);
+            var dmg = new DamageSpecifier(_proto.Index(GeneticDamageGroup), 200);
             _damageableSystem.TryChangeDamage(target, dmg);
             _bloodstreamSystem.ChangeBloodReagent(target, "FerrochromicAcid"); // replace target's blood with acid, then spill
             _bloodstreamSystem.SpillAllSolutions(target); // replace target's blood with acid, then spill
@@ -206,17 +185,17 @@ public sealed partial class ChangelingSystem
 
         if (_mobState.IsCritical(uid)) // make sure the ling is critical, if not they cant regenerate
         {
-            if (!TryUseAbility(uid, component, component.ChemicalsCostTen))
+            if (!TryUseAbility(uid, component, 10))
                 return;
 
             args.Handled = true;
 
-            var damage_brute = new DamageSpecifier(_proto.Index(BruteDamageGroup), component.RegenerateBruteHealAmount);
-            var damage_burn = new DamageSpecifier(_proto.Index(BurnDamageGroup), component.RegenerateBurnHealAmount);
+            var damage_brute = new DamageSpecifier(_proto.Index(BruteDamageGroup), -100);
+            var damage_burn = new DamageSpecifier(_proto.Index(BurnDamageGroup), -75);
             _damageableSystem.TryChangeDamage(uid, damage_brute);
             _damageableSystem.TryChangeDamage(uid, damage_burn);
-            _bloodstreamSystem.TryModifyBloodLevel(uid, component.RegenerateBloodVolumeHealAmount); // give back blood and remove bleeding
-            _bloodstreamSystem.TryModifyBleedAmount(uid, component.RegenerateBleedReduceAmount);
+            _bloodstreamSystem.TryModifyBloodLevel(uid, 1000); // give back blood and remove bleeding
+            _bloodstreamSystem.TryModifyBleedAmount(uid, -1000);
             _audioSystem.PlayPvs(component.SoundRegenerate, uid);
 
             var othersMessage = Loc.GetString("changeling-regenerate-others-success", ("user", Identity.Entity(uid, EntityManager)));
@@ -247,16 +226,16 @@ public sealed partial class ChangelingSystem
         if (handContainer == null)
             return;
 
-        if (!TryUseAbility(uid, component, component.ChemicalsCostTwenty, !component.ArmBladeActive))
+        if (!TryUseAbility(uid, component, 20, false))
             return;
 
         args.Handled = true;
 
-        if (!component.ArmBladeActive)
+        if (true)
         {
             if (SpawnArmBlade(uid))
             {
-                component.ArmBladeActive = true;
+                // component.ArmBladeActive = true;
                 _audioSystem.PlayPvs(component.SoundFlesh, uid);
 
                 var othersMessage = Loc.GetString("changeling-armblade-success-others", ("user", Identity.Entity(uid, EntityManager)));
@@ -280,7 +259,7 @@ public sealed partial class ChangelingSystem
                     {
                         if (prototype.ID == ArmBladeId)
                         {
-                            component.ArmBladeActive = false;
+                            // component.ArmBladeActive = false;
                             QueueDel(handContainer.ContainedEntity.Value);
                             _audioSystem.PlayPvs(component.SoundFlesh, uid);
 
@@ -300,8 +279,6 @@ public sealed partial class ChangelingSystem
     {
         var helmet = Spawn(LingHelmetId, Transform(uid).Coordinates);
         var armor = Spawn(LingArmorId, Transform(uid).Coordinates);
-        EnsureComp<UnremoveableComponent>(helmet); // cant remove the armor
-        EnsureComp<UnremoveableComponent>(armor); // cant remove the armor
 
         _inventorySystem.TryUnequip(uid, HeadId, true, true, false, inventory);
         _inventorySystem.TryEquip(uid, helmet, HeadId, true, true, false, inventory);
@@ -312,7 +289,6 @@ public sealed partial class ChangelingSystem
     public bool SpawnArmBlade(EntityUid uid)
     {
         var armblade = Spawn(ArmBladeId, Transform(uid).Coordinates);
-        EnsureComp<UnremoveableComponent>(armblade); // armblade is apart of your body.. cant remove it..
 
         if (_handsSystem.TryPickupAnyHand(uid, armblade))
         {
@@ -338,12 +314,12 @@ public sealed partial class ChangelingSystem
         if (!TryComp(uid, out InventoryComponent? inventory))
             return;
 
-        if (!TryUseAbility(uid, component, component.ChemicalsCostTwenty, !component.LingArmorActive, component.LingArmorRegenCost))
+        if (!TryUseAbility(uid, component, 20, false, 5))
             return;
 
         _audioSystem.PlayPvs(component.SoundFlesh, uid);
 
-        if (!component.LingArmorActive)
+        if (false)
         {
             args.Handled = true;
 
@@ -393,7 +369,7 @@ public sealed partial class ChangelingSystem
             }
         }
 
-        component.LingArmorActive = !component.LingArmorActive;
+        // component.LingArmorActive = !component.LingArmorActive;
     }
 
     private void OnLingInvisible(EntityUid uid, ChangelingComponent component, LingInvisibleActionEvent args)
@@ -404,7 +380,7 @@ public sealed partial class ChangelingSystem
         if (!TryComp(uid, out InventoryComponent? inventory))
             return;
 
-        if (!TryUseAbility(uid, component, component.ChemicalsCostTwentyFive, !component.ChameleonSkinActive))
+        if (!TryUseAbility(uid, component, 25, true))
             return;
 
         args.Handled = true;
@@ -412,21 +388,19 @@ public sealed partial class ChangelingSystem
         var stealth = EnsureComp<StealthComponent>(uid); // cant remove the armor
         var stealthonmove = EnsureComp<StealthOnMoveComponent>(uid); // cant remove the armor
 
-        var message = Loc.GetString(!component.ChameleonSkinActive ? "changeling-chameleon-toggle-on" : "changeling-chameleon-toggle-off");
+        var message = Loc.GetString(true ? "changeling-chameleon-toggle-on" : "changeling-chameleon-toggle-off");
         _popup.PopupEntity(message, uid, uid);
 
-        if (!component.ChameleonSkinActive)
+        if (!HasComp<StealthComponent>(uid))
         {
-            stealthonmove.PassiveVisibilityRate = component.ChameleonSkinPassiveVisibilityRate;
-            stealthonmove.MovementVisibilityRate = component.ChameleonSkinMovementVisibilityRate;
+            stealthonmove.PassiveVisibilityRate = 1;
+            stealthonmove.MovementVisibilityRate = 1;
         }
         else
         {
             RemCompDeferred(uid, stealth);
             RemCompDeferred(uid, stealthonmove);
         }
-
-        component.ChameleonSkinActive = !component.ChameleonSkinActive;
     }
 
     private void OnLingEmp(EntityUid uid, ChangelingComponent component, LingEMPActionEvent args)
@@ -434,13 +408,13 @@ public sealed partial class ChangelingSystem
         if (args.Handled)
             return;
 
-        if (!TryUseAbility(uid, component, component.ChemicalsCostTwenty))
+        if (!TryUseAbility(uid, component, 20))
             return;
 
         args.Handled = true;
 
         var coords = _transform.GetMapCoordinates(uid);
-        _emp.EmpPulse(coords, component.DissonantShriekEmpRange, component.DissonantShriekEmpConsumption, component.DissonantShriekEmpDuration);
+        _emp.EmpPulse(coords, 10, 10, 10);
     }
 
     // changeling stings
@@ -465,7 +439,7 @@ public sealed partial class ChangelingSystem
 
         foreach (var storedData in component.StoredDNA)
         {
-            if (storedData.DNA != null && storedData.DNA == dnaCompTarget.DNA)
+            if (storedData.Dna != null && storedData.Dna == dnaCompTarget.DNA)
             {
                 var selfMessageFailAlreadyDna = Loc.GetString("changeling-dna-sting-fail-alreadydna", ("target", Identity.Entity(target, EntityManager)));
                 _popup.PopupEntity(selfMessageFailAlreadyDna, uid, uid);
@@ -480,7 +454,7 @@ public sealed partial class ChangelingSystem
             return;
         }
 
-        if (!TryUseAbility(uid, component, component.ChemicalsCostTwentyFive))
+        if (!TryUseAbility(uid, component, 25))
             return;
 
         if (StealDNA(uid, target, component))
@@ -499,7 +473,7 @@ public sealed partial class ChangelingSystem
 
         var target = args.Target;
 
-        if (!TryUseAbility(uid, component, component.ChemicalsCostFive))
+        if (!TryUseAbility(uid, component, 5))
             return;
 
         TryReagentStingTarget(uid, target, component, "MindbreakerToxin", FixedPoint2.New(50), true);
