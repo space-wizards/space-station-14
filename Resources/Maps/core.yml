@@ -65094,7 +65094,7 @@ entities:
           maxVol: 50
           name: null
           reagents:
-            ReagentId: PoisonWine
+          - ReagentId: PoisonWine
             Quantity: 50
 - proto: DrinkChangelingStingCan
   entities:

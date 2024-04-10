@@ -17,7 +17,7 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
     [ViewVariables]
     public ReagentId Reagent { get; private set; }
 
-    public ReagentQuantity(string reagentId, FixedPoint2 quantity, List<ReagentData>? data)
+    public ReagentQuantity(string reagentId, FixedPoint2 quantity, List<ReagentData>? data = null)
         : this(new ReagentId(reagentId, data), quantity)
     {
     }
