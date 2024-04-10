@@ -63,9 +63,6 @@
           False: { visible: false }
   # Machine / Construction stuff
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-chemmaster
-    layoutId: chem_master
   - type: Machine
     board: ChemMasterMachineCircuitboard
   - type: ContainerContainer
