@@ -87,6 +87,11 @@
             Bounty: { state: bounty }
             CaptainsPaper: { state: captains_paper }
             Invoice: { state: invoice }
+        enum.StorageVisuals.Open:
+          enum.PaperLabelVisuals.Layer:
+            True: { offset: "0.0,0.3125" }
+            False: { offset: "0.0,0.0" }
+            
     - type: LockVisuals
     - type: ItemSlots
     - type: ContainerContainer
