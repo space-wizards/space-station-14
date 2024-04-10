@@ -2,7 +2,7 @@
   id: GauzeLefteyePatch
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Arachnid]
+  speciesRestriction: [Dwarf, Human, Arachnid, Skinwalker]
   coloring:
     default:
       type:
@@ -16,7 +16,7 @@
   id: GauzeLefteyePad
   bodyPart: Eyes
   markingCategory: Head
-  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, Skinwalker]
   coloring:
     default:
       type:
@@ -30,7 +30,7 @@
   id: GauzeRighteyePatch
   bodyPart: Eyes
   markingCategory: Head
-  speciesRestriction: [Moth, Dwarf, Human, Arachnid]
+  speciesRestriction: [Moth, Dwarf, Human, Arachnid, Skinwalker]
   coloring:
     default:
       type:
@@ -44,7 +44,7 @@
   id: GauzeRighteyePad
   bodyPart: Eyes
   markingCategory: Head
-  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, Skinwalker]
   coloring:
     default:
       type:
@@ -58,7 +58,7 @@
   id: GauzeBlindfold
   bodyPart: Eyes
   markingCategory: Head
-  speciesRestriction: [Moth, Dwarf, Human, Arachnid]
+  speciesRestriction: [Moth, Dwarf, Human, Arachnid, Skinwalker]
   coloring:
     default:
       type:
@@ -72,7 +72,7 @@
   id: GauzeShoulder
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, Skinwalker]
   coloring:
     default:
       type:
@@ -86,7 +86,7 @@
   id: GauzeStomach
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, Skinwalker]
   coloring:
     default:
       type:
@@ -100,7 +100,7 @@
   id: GauzeUpperArmRight
   bodyPart: RArm
   markingCategory: Arms
-  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, Skinwalker]
   coloring:
     default:
       type:
@@ -114,7 +114,7 @@
   id: GauzeLowerArmRight
   bodyPart: RArm, RHand
   markingCategory: Arms
-  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, Skinwalker]
   coloring:
     default:
       type:
@@ -128,7 +128,7 @@
   id: GauzeLeftArm
   bodyPart: LArm, LHand
   markingCategory: Arms
-  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, Skinwalker]
   coloring:
     default:
       type:
@@ -142,7 +142,7 @@
   id: GauzeLowerLegLeft
   bodyPart: LFoot
   markingCategory: Legs
-  speciesRestriction: [Moth, Dwarf, Human, Arachnid]
+  speciesRestriction: [Moth, Dwarf, Human, Arachnid, Skinwalker]
   coloring:
     default:
       type:
@@ -156,7 +156,7 @@
   id: GauzeUpperLegLeft
   bodyPart: LLeg
   markingCategory: Legs
-  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, Skinwalker]
   coloring:
     default:
       type:
@@ -170,7 +170,7 @@
   id: GauzeUpperLegRight
   bodyPart: RLeg
   markingCategory: Legs
-  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, Skinwalker]
   coloring:
     default:
       type:
@@ -184,7 +184,7 @@
   id: GauzeLowerLegRight
   bodyPart: RFoot
   markingCategory: Legs
-  speciesRestriction: [Moth, Dwarf, Human, Arachnid]
+  speciesRestriction: [Moth, Dwarf, Human, Arachnid, Skinwalker]
   coloring:
     default:
       type:
@@ -198,7 +198,7 @@
   id: GauzeBoxerWrapRight
   bodyPart: RHand
   markingCategory: Arms
-  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, Skinwalker]
   coloring:
     default:
       type:
@@ -212,7 +212,7 @@
   id: GauzeBoxerWrapLeft
   bodyPart: LHand
   markingCategory: Arms
-  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid]
+  speciesRestriction: [Moth, Dwarf, Human, Reptilian, Arachnid, Skinwalker]
   coloring:
     default:
       type:
