@@ -1,7 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
-using Content.Shared.Humanoid;
 
 namespace Content.Shared.Changeling;
 
@@ -59,26 +58,4 @@ public enum ChangelingVisualLayers : byte
     Digit1,
     Digit2,
     Digit3
-}
-public struct TransformData
-{
-    /// <summary>
-    /// Name to set your player to when transforming.
-    /// </summary>
-    public string Name;
-
-    /// <summary>
-    /// Fingerprints to use when transforming.
-    /// </summary>
-    public string Fingerprint;
-
-    /// <summary>
-    /// DNA sequence to use when transforming.
-    /// </summary>
-    public string Dna;
-
-    /// <summary>
-    /// Humanoid appearance to use when transforming.
-    /// </summary>
-    public HumanoidAppearanceComponent HumanoidAppearanceComp;
 }

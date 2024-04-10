@@ -2,6 +2,7 @@ using Robust.Shared.Audio;
 using Content.Shared.Polymorph;
 using Robust.Shared.Prototypes;
 using Content.Shared.Changeling;
+using Content.Shared.Humanoid;
 
 namespace Content.Shared.Changeling.Components;
 
@@ -57,4 +58,27 @@ public abstract partial class ChangelingComponent : Component
 
     [DataField]
     public float Accumulator = 0f;
+}
+
+public struct TransformData
+{
+    /// <summary>
+    /// Name to set your player to when transforming.
+    /// </summary>
+    public string Name;
+
+    /// <summary>
+    /// Fingerprints to use when transforming.
+    /// </summary>
+    public string Fingerprint;
+
+    /// <summary>
+    /// DNA sequence to use when transforming.
+    /// </summary>
+    public string Dna;
+
+    /// <summary>
+    /// Humanoid appearance to use when transforming.
+    /// </summary>
+    public HumanoidAppearanceComponent HumanoidAppearanceComp;
 }
