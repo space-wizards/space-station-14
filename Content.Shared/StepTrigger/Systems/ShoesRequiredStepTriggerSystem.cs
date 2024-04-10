@@ -39,7 +39,7 @@ public sealed class ShoesRequiredStepTriggerSystem : EntitySystem
         {
             while (containerSlotEnumerator.NextItem(out var item, out var slot))
             {
-                if (HasComp<ShoesRequiredStepTriggerImmuneComponent>(item) || slot.Name == "shoes")
+                if (slot.Name == "shoes" || HasComp<ShoesRequiredStepTriggerImmuneComponent>(item))
                 {
                     args.Cancelled = true;
                     return;
