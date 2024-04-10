@@ -2,8 +2,9 @@ using Robust.Shared.Audio;
 using Content.Shared.Polymorph;
 using Robust.Shared.Prototypes;
 using Content.Server.Changeling;
+using Content.Server.Changeling.EntitySystems;
 
-namespace Content.Shared.Changeling.Components;
+namespace Content.Server.Changeling.Components;
 
 [RegisterComponent]
 [Access(typeof(ChangelingSystem))]
