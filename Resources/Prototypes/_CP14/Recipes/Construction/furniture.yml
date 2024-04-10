@@ -8,7 +8,7 @@
   targetNode: CPChairWooden
   category: construction-category-furniture
   icon:
-    sprite: CrystallPunk/Structures/Furniture/chairs.rsi
+    sprite: _CP14/Structures/Furniture/chairs.rsi
     state: wooden
   objectType: Structure
   placementMode: SnapgridCenter
@@ -26,7 +26,7 @@
   targetNode: CPTableWooden
   category: construction-category-furniture
   icon:
-    sprite: CrystallPunk/Structures/Furniture/Tables/wood.rsi
+    sprite: _CP14/Structures/Furniture/Tables/wood.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -44,7 +44,7 @@
   targetNode: CPBonfire
   category: construction-category-furniture
   icon:
-    sprite: CrystallPunk/Structures/Decoration/bonfire.rsi
+    sprite: _CP14/Structures/Decoration/bonfire.rsi
     state: bonfire
   objectType: Structure
   placementMode: SnapgridCenter

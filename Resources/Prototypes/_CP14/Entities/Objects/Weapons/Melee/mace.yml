@@ -1,0 +1,25 @@
+- type: entity
+  id: CPBaseMace
+  parent: 
+  - BaseItem
+  name: булава
+  description: Тяжелый кусок металла на длинной палке. Что может быть проще?
+  components:
+  - type: Item
+    size: Large
+  - type: Sprite
+    sprite: _CP14/Objects/Weapons/Melee/Mace/mace.rsi
+    layers:
+    - state: icon
+  - type: Sharp
+  - type: MeleeWeapon
+    attackRate: 0.7
+    wideAnimationRotation: 205
+    wideAnimation: CPWeaponArcSlash
+    damage:
+      types:
+        Blunt: 25
+        Piercing: 5
+    soundHit:
+      collection: MetalThud
+    cPAnimationLength: 0.25

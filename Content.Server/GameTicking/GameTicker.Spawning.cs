@@ -217,7 +217,8 @@ namespace Content.Server.GameTicking
                     Loc.GetString(
                         "latejoin-arrival-announcement",
                     ("character", MetaData(mob).EntityName),
-                    ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))
+                    ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName)),
+                    ("gender", character.Gender) // CrystallPunk-LastnameGender
                     ), Loc.GetString("latejoin-arrival-sender"),
                     playDefaultSound: false);
             }

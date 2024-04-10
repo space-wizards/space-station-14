@@ -1,0 +1,11 @@
+marking-CPHumanHair80s = По плечи
+marking-CPHumanHairA = Короткая стрижка
+marking-CPHumanHairAntenna = Непослушные пряди
+marking-CPHumanHairB = Скучный пробор
+marking-CPHumanHairBedhead = С бодуна
+marking-CPHumanHairBedheadV2 = С бодуна 2
+marking-CPHumanHairBeeHive = Аристократия в крови
+marking-CPHumanHairBigBraid = Хвост во весь рост
+marking-CPHumanHairBigDoubleBun = Два пунпона
+marking-CPHumanHairBigPompadour = Бард
+marking-CPHumanHairBob = Неприметливая

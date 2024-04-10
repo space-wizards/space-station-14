@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     noRot: true
-    sprite: CrystallPunk/Structures/Decoration/bonfire.rsi
+    sprite: _CP14/Structures/Decoration/bonfire.rsi
     layers:
       - state: bonfire
   - type: Construction
@@ -68,7 +68,7 @@
       types:
         Heat: 0.01
   - type: FireVisuals
-    sprite: CrystallPunk/Structures/Decoration/bonfire.rsi
+    sprite: _CP14/Structures/Decoration/bonfire.rsi
     normalState: burning
   - type: ItemPlacer
     maxEntities: 4

@@ -1,6 +1,6 @@
 - type: lobbyBackground
   id: CPBeginning
-  background: /Textures/CrystallPunk/LobbyScreens/beginning.webp
+  background: /Textures/_CP14/LobbyScreens/beginning.webp
 
 #- type: lobbyBackground
 #  id: Robotics

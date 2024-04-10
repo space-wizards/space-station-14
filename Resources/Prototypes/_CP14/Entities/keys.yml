@@ -11,7 +11,7 @@
   - type: Item
     size: Tiny
   - type: Sprite
-    sprite: CrystallPunk/Objects/keys.rsi
+    sprite: _CP14/Objects/keys.rsi
   - type: CPKey
     autoGenerateShape: Debug
   - type: EmitSoundOnLand
@@ -27,7 +27,7 @@
   description: Воровской инструмент, при должном умении и сноровке позволяющий взламывать любые замки.
   components:
   - type: Sprite
-    sprite: CrystallPunk/Objects/keys.rsi
+    sprite: _CP14/Objects/keys.rsi
     state: lockpick
   - type: CPLockpick
 

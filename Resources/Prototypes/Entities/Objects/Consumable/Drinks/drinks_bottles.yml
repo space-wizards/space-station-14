@@ -661,6 +661,24 @@
   - type: Label
     currentLabel: tonic water
 
+- type: entity
+  parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
+  id: DrinkSakeBottleFull
+  name: small sake bottle
+  description: The regret of the next morning seems to be nipping on the bottle too.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Sake
+          Quantity: 50
+  - type: Label
+    currentLabel: Sake
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/sakebottle.rsi
+  - type: Sealable
+
 # Cartons, TODO: this needs to be moved elsewhere eventually, since cartons shouldnt smash into glass shards
 
 - type: entity

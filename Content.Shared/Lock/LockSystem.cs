@@ -278,7 +278,7 @@ public sealed class LockSystem : EntitySystem
         //CrystallPunk Lock System Adapt End
     }
 
-private void OnEmagged(EntityUid uid, LockComponent component, ref GotEmaggedEvent args)
+    private void OnEmagged(EntityUid uid, LockComponent component, ref GotEmaggedEvent args)
     {
         if (!component.Locked || !component.BreakOnEmag)
             return;

@@ -5,9 +5,9 @@
   description: Простой стол, сколоченный из досок.
   components:
   - type: Sprite
-    sprite: CrystallPunk/Structures/Furniture/Tables/wood.rsi
+    sprite: _CP14/Structures/Furniture/Tables/wood.rsi
   - type: Icon
-    sprite: CrystallPunk/Structures/Furniture/Tables/wood.rsi
+    sprite: _CP14/Structures/Furniture/Tables/wood.rsi
   - type: Construction
     graph: CPTable
     node: CPTableWooden

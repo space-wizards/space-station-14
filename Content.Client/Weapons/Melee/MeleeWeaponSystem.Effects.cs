@@ -42,6 +42,9 @@ public sealed partial class MeleeWeaponSystem
             return;
         }
 
+        var length = 1f; //CrystallPunk Melee upgrade
+        var offset = -1f; //CrystallPunk Melee upgrade
+
         var spriteRotation = Angle.Zero;
         if (arcComponent.Animation != WeaponArcAnimation.None
             && TryComp(weapon, out MeleeWeaponComponent? meleeWeaponComponent))
@@ -54,6 +57,9 @@ public sealed partial class MeleeWeaponSystem
 
             if (meleeWeaponComponent.SwingLeft)
                 angle *= -1;
+
+            length = meleeWeaponComponent.CPAnimationLength; //CrystallPunk Melee upgrade
+            offset = meleeWeaponComponent.CPAnimationOffset; //CrystallPunk Melee upgrade
         }
         sprite.NoRotation = true;
         sprite.Rotation = localPos.ToWorldAngle();
@@ -84,6 +90,20 @@ public sealed partial class MeleeWeaponSystem
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0f, 0.15f), FadeAnimationKey);
                 break;
+            //CrystallPunk MeleeUpgrade
+            case WeaponArcAnimation.CPSlash:
+                _animation.Play(animationUid, CPGetSlashAnimation(sprite, angle, spriteRotation, length, offset), SlashAnimationKey);
+                TransformSystem.SetParent(animationUid, xform, user, userXform);
+                if (arcComponent.Fadeout)
+                    _animation.Play(animationUid, GetFadeAnimation(sprite, length * 0.5f, length + 0.15f), FadeAnimationKey);
+                break;
+            case WeaponArcAnimation.CPThrust:
+                _animation.Play(animationUid, CPGetThrustAnimation(sprite, -offset, spriteRotation, length), ThrustAnimationKey);
+                TransformSystem.SetParent(animationUid, xform, user, userXform);
+                if (arcComponent.Fadeout)
+                    _animation.Play(animationUid, GetFadeAnimation(sprite, 0f, 0.15f), FadeAnimationKey);
+                break;
+            //CrystallPunk MeleeUpgrade end
         }
     }
 
@@ -184,7 +204,7 @@ public sealed partial class MeleeWeaponSystem
     /// </summary>
     private Animation GetLungeAnimation(Vector2 direction)
     {
-        const float length = 0.1f;
+        const float length = 0.2f; // 0.1 original, CrystallPunk update
 
         return new Animation
         {
@@ -198,11 +218,86 @@ public sealed partial class MeleeWeaponSystem
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {
-                        new AnimationTrackProperty.KeyFrame(direction.Normalized() * 0.15f, 0f),
-                        new AnimationTrackProperty.KeyFrame(Vector2.Zero, length)
+                        new AnimationTrackProperty.KeyFrame(Vector2.Zero, 0f), //CrystallPunk MeleeUpgrade 
+                        new AnimationTrackProperty.KeyFrame(direction.Normalized() * 0.15f, length*0.4f), //CrystallPunk MeleeUpgrade
+                        new AnimationTrackProperty.KeyFrame(Vector2.Zero, length*0.8f) //CrystallPunk MeleeUpgrade
                     }
                 }
             }
         };
     }
+
+    //CrystallPunk MeleeUpgrade start
+    private Animation CPGetSlashAnimation(SpriteComponent sprite, Angle arc, Angle spriteRotation, float length, float offset = -1f)
+    {
+        var startRotation = sprite.Rotation + (arc * 0.5f);
+        var endRotation = sprite.Rotation - (arc * 0.5f);
+
+        var startRotationOffset = startRotation.RotateVec(new Vector2(0f, offset));
+        var endRotationOffset = endRotation.RotateVec(new Vector2(0f, offset));
+
+        startRotation += spriteRotation;
+        endRotation += spriteRotation;
+        sprite.NoRotation = true;
+
+        return new Animation()
+        {
+            Length = TimeSpan.FromSeconds(length + 0.05f),
+            AnimationTracks =
+            {
+                new AnimationTrackComponentProperty()
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Rotation),
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(Angle.Lerp(startRotation,endRotation,0.0f), length * 0.0f),
+                        new AnimationTrackProperty.KeyFrame(Angle.Lerp(startRotation,endRotation,1.0f), length * 0.6f),
+                        new AnimationTrackProperty.KeyFrame(Angle.Lerp(startRotation,endRotation,0.8f), length * 1.0f),
+                    }
+                },
+                new AnimationTrackComponentProperty()
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Offset),
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startRotationOffset,endRotationOffset,0.0f), length * 0.0f),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startRotationOffset,endRotationOffset,1.0f), length * 0.6f),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startRotationOffset,endRotationOffset,0.8f), length * 1.0f),
+                    }
+                },
+            }
+        };
+    }
+
+    private Animation CPGetThrustAnimation(SpriteComponent sprite, float distance, Angle spriteRotation, float length)
+    {
+        var startOffset = sprite.Rotation.RotateVec(new Vector2(0f, -distance / 5f));
+        var endOffset = sprite.Rotation.RotateVec(new Vector2(0f, -distance));
+
+        sprite.Rotation += spriteRotation;
+
+        return new Animation()
+        {
+            Length = TimeSpan.FromSeconds(length),
+            AnimationTracks =
+            {
+                new AnimationTrackComponentProperty()
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Offset),
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startOffset, endOffset, 0f), length * 0f),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startOffset, endOffset, 1f), length * 0.5f),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startOffset, endOffset, 0.9f), length * 0.8f),
+                    }
+                },
+            }
+        };
+    }
+
+    //CrystallPunk MeleeUpgrade end
+
 }

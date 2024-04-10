@@ -1,0 +1,23 @@
+- type: marking
+  id: CPHumanFacialHair3Clock
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  sprites:
+    - sprite: _CP14/Mobs/Customization/human_facial_hair.rsi
+      state: 3oclock
+
+- type: marking
+  id: CPHumanFacialHairAbe
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  sprites:
+    - sprite: _CP14/Mobs/Customization/human_facial_hair.rsi
+      state: abe
+
+- type: marking
+  id: CPHumanFacialHairDwarf
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  sprites:
+    - sprite: _CP14/Mobs/Customization/human_facial_hair.rsi
+      state: dwarf

@@ -1,0 +1,4 @@
+- type: soundCollection
+  id: CPLobbyMusic
+  files:
+    - /Audio/_CP14/Lobby/crystal.ogg

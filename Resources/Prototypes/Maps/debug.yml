@@ -18,7 +18,7 @@
 - type: gameMap
   id: Dev
   mapName: Dev
-  mapPath: /Maps/CrystallPunk/dev_map.yml #CrystallPunk Dev replacement
+  mapPath: /Maps/_CP14/dev_map.yml #CrystallPunk Dev replacement
   minPlayers: 0
   stations:
     Dev:

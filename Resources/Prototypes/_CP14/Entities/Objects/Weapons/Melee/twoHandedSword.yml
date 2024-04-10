@@ -1,17 +1,45 @@
-
 - type: entity
-  name: цвайхендер
-  parent: CPBaseTwoHandedSword
-  id: CPZweichender
+  id: CPBaseTwoHandedSword
+  parent: 
+  - BaseItem
+  - CPBaseWeaponChemical
+  name: двуручный меч
+  description: Мощное оружие, требующее огромной силы и умения для эффективного использования.
   components:
-  - type: MeleeWeapon
-    wideAnimationRotation: 225
   - type: Sprite
-    sprite: CrystallPunk/Objects/Weapons/Melee/zweichhender.rsi
+    sprite: _CP14/Objects/Weapons/Melee/TwoHandedSword/twoHandedSword.rsi
     state: icon
   - type: Clothing
-    sprite: CrystallPunk/Objects/Weapons/Melee/zweichhender.rsi
+    sprite: _CP14/Objects/Weapons/Melee/TwoHandedSword/twoHandedSword.rsi
     quickEquip: false
     slots:
     - back
-    #TODO двуручный хват требует перчаток чтобы не получать урона самому
+  - type: Icon
+    sprite: _CP14/Objects/Weapons/Melee/TwoHandedSword/twoHandedSword32.rsi
+    state: icon
+  - type: Sharp
+  - type: MeleeWeapon
+    attackRate: 0.5
+    wideAnimationRotation: 205
+    wideAnimation: CPWeaponArcSlash
+    damage:
+      types:
+        Slash: 5
+        Blunt: 3
+        Structural: 5
+    soundHit:
+      collection: MetalThud
+    cPAnimationLength: 0.8
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Slash: 20
+        Blunt: 10
+        Structural: 5
+  - type: Item
+    size: Ginormous
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
