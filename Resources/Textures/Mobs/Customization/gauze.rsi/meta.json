@@ -72,23 +72,75 @@
       "directions": 4
     },
 	{
-      "name": "gauze_lizardblindfold",
+      "name": "gauze_lizard_blindfold",
       "directions": 4
     },
 	{
-      "name": "gauze_lizardrighteye",
+      "name": "gauze_lizard_righteye",
       "directions": 4
     },
     {
-      "name": "gauze_lizardlefteye",
+      "name": "gauze_lizard_lefteye",
       "directions": 4
     },
     {
-      "name": "gauze_lizardfoot_r",
+      "name": "gauze_lizard_foot_r",
       "directions": 4
     },
     {
-      "name": "gauze_lizardfoot_l",
+      "name": "gauze_lizard_foot_l",
+      "directions": 4
+    },
+    {
+      "name": "gauze_moth_abdomen",
+      "directions": 4
+    },
+    {
+      "name": "gauze_moth_shoulder",
+      "directions": 4
+    },
+    {
+      "name": "gauze_moth_blindfold",
+      "directions": 4
+    },
+    {
+      "name": "gauze_moth_righteye_1",
+      "directions": 4
+    },
+    {
+      "name": "gauze_moth_righteye_2",
+      "directions": 4
+    },
+    {
+      "name": "gauze_moth_lefteye_1",
+      "directions": 4
+    },
+    {
+      "name": "gauze_moth_lefteye_2",
+      "directions": 4
+    },
+    {
+      "name": "gauze_moth_upperarm_r",
+      "directions": 4
+    },
+    {
+      "name": "gauze_moth_upperarm_l",
+      "directions": 4
+    },
+    {
+      "name": "gauze_moth_upperleg_r",
+      "directions": 4
+    },
+    {
+      "name": "gauze_moth_upperleg_l",
+      "directions": 4
+    },
+    {
+      "name": "gauze_moth_lowerleg_r",
+      "directions": 4
+    },
+    {
+      "name": "gauze_moth_lowerleg_l",
       "directions": 4
     }
   ]

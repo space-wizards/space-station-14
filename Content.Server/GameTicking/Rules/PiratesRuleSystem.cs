@@ -4,8 +4,6 @@ using Content.Server.Administration.Commands;
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.NPC.Components;
-using Content.Server.NPC.Systems;
 using Content.Server.Preferences.Managers;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
@@ -14,6 +12,8 @@ using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mind;
+using Content.Shared.NPC.Prototypes;
+using Content.Shared.NPC.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
@@ -201,7 +201,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
 
             if (!gridId.HasValue)
             {
-                Logger.ErrorS("pirates", $"Gridid was null when loading \"{map}\", aborting.");
+                Log.Error($"Gridid was null when loading \"{map}\", aborting.");
                 foreach (var session in ops)
                 {
                     ev.PlayerPool.Add(session);
@@ -230,7 +230,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
             if (spawns.Count == 0)
             {
                 spawns.Add(Transform(pirates.PirateShip).Coordinates);
-                Logger.WarningS("pirates", $"Fell back to default spawn for pirates!");
+                Log.Warning($"Fell back to default spawn for pirates!");
             }
 
             for (var i = 0; i < ops.Length; i++)

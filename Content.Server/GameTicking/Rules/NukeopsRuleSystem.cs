@@ -7,8 +7,6 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Humanoid;
 using Content.Server.Mind;
-using Content.Server.NPC.Components;
-using Content.Server.NPC.Systems;
 using Content.Server.Nuke;
 using Content.Server.NukeOps;
 using Content.Server.Popups;
@@ -30,6 +28,8 @@ using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.NPC.Components;
+using Content.Shared.NPC.Systems;
 using Content.Shared.Nuke;
 using Content.Shared.NukeOps;
 using Content.Shared.Preferences;
@@ -474,7 +474,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         var eligibleQuery = EntityQueryEnumerator<StationEventEligibleComponent, NpcFactionMemberComponent>();
         while (eligibleQuery.MoveNext(out var eligibleUid, out var eligibleComp, out var member))
         {
-            if (!_npcFaction.IsFactionHostile(component.Faction, eligibleUid, member))
+            if (!_npcFaction.IsFactionHostile(component.Faction, (eligibleUid, member)))
                 continue;
 
             eligible.Add((eligibleUid, eligibleComp, member));
@@ -762,10 +762,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 var newMind = _mind.CreateMind(nukieSession.Session.UserId, name);
                 _mind.SetUserId(newMind, nukieSession.Session.UserId);
                 _roles.MindAddRole(newMind, new NukeopsRoleComponent { PrototypeId = nukieSession.Type.AntagRoleProto });
-
-                // Automatically de-admin players who are being made nukeops
-                if (_cfg.GetCVar(CCVars.AdminDeadminOnJoin) && _adminManager.IsAdmin(nukieSession.Session))
-                    _adminManager.DeAdmin(nukieSession.Session);
 
                 _mind.TransferTo(newMind, mob);
             }

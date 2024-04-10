@@ -35,11 +35,11 @@ namespace Content.Shared.Strip.Components
     public abstract class BaseBeforeStripEvent(TimeSpan initialTime, bool stealth = false) : EntityEventArgs, IInventoryRelayEvent
     {
         public readonly TimeSpan InitialTime = initialTime;
-        public TimeSpan Multiplier = TimeSpan.FromSeconds(1f);
+        public float Multiplier = 1f;
         public TimeSpan Additive = TimeSpan.Zero;
         public bool Stealth = stealth;
 
-        public TimeSpan Time => TimeSpan.FromSeconds(MathF.Max(InitialTime.Seconds * Multiplier.Seconds + Additive.Seconds, 0f));
+        public TimeSpan Time => TimeSpan.FromSeconds(MathF.Max(InitialTime.Seconds * Multiplier + Additive.Seconds, 0f));
 
         public SlotFlags TargetSlots { get; } = SlotFlags.GLOVES;
     }

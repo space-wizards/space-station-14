@@ -5,9 +5,12 @@
   noSpawn: true
   components:
   - type: InstantAction
-    icon: Mobs/Species/Diona/organs.rsi/brain.png
+    icon:
+      sprite: Mobs/Species/Diona/organs.rsi
+      state: brain
     event: !type:GibActionEvent {}
     checkCanInteract: false
+    checkConsciousness: false
 
 - type: entity
   id: DionaReformAction
@@ -16,6 +19,8 @@
   noSpawn: true
   components:
   - type: InstantAction
-    icon: Mobs/Species/Diona/parts.rsi/full.png
+    icon:
+      sprite: Mobs/Species/Diona/parts.rsi
+      state: full
     event: !type:ReformEvent {}
     useDelay: 600 # Once every 10 minutes. Keep them dead for a fair bit before reforming
