@@ -1,7 +1,7 @@
-using Content.Shared.NPC.Systems;
 using Content.Shared.Whitelist;
+using Robust.Shared.Collections;
 
-namespace Content.Shared.NPC.Components;
+namespace Content.Server.NPC.Components;
 /// <summary>
 /// A component that makes the entity friendly to nearby creatures it sees on init.
 /// </summary>
@@ -12,7 +12,7 @@ public sealed partial class NPCImprintingOnSpawnBehaviourComponent : Component
     /// filter who can be a friend to this creature
     /// </summary>
     [DataField]
-    public EntityWhitelist Whitelist;
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// the radius in which all creatures will be marked as exceptions to attack
@@ -25,4 +25,10 @@ public sealed partial class NPCImprintingOnSpawnBehaviourComponent : Component
     /// </summary>
     [DataField]
     public bool Follow = true;
+
+    /// <summary>
+    /// is used to determine who became a friend from this component
+    /// </summary>
+    [DataField]
+    public ValueList<EntityUid> Friends;
 }
