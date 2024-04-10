@@ -1,28 +1,32 @@
-- type: musicList
-  id: MusicStandard
-  songs:
-    - name: A-Guy - Revolution
-      path: /Audio/Music/Jukebox/A-Guy-Revolution.ogg
-      songLength: 389
-    - name: Chris Remo - Space Asshole Original
-      path: /Audio/Music/Jukebox/ChrisRemo-Space_Asshole_original.ogg
-      songLength: 256
-    - name: Jeroen Tel - Tintin on the Moon - Remix by Cuboos
-      path: /Audio/Music/Jukebox/title3.ogg
-      songLength: 232
-    - name: MashedByMachines - Sector11
-      path: /Audio/Music/Jukebox/MashedByMachines-Sector11.ogg
-      songLength: 202
-    - name: Qwertyquerty - Constellations
-      path: /Audio/Music/Jukebox/Qwertyquerty-Constellations.ogg
-      songLength: 152
-    - name: Qwertyquerty - Drifting
-      path: /Audio/Music/Jukebox/Qwertyquerty-Drifting.ogg
-      songLength: 152
-    - name: Qwertyquerty - Starlight
-      path: /Audio/Music/Jukebox/Qwertyquerty-Starlight.ogg
-      songLength: 247
-    - name: X-CEED - Flip Flap
-      path: /Audio/Music/Jukebox/flip-flap.ogg
-      songLength: 150
+- type: jukebox
+  id: FlipFlap
+  name: X-CEED - Flip Flap
+  path:
+    path: /Audio/Music/Jukebox/flip-flap.ogg
 
+#  songs:
+#    - name: A-Guy - Revolution
+#      path: /Audio/Music/Jukebox/A-Guy-Revolution.ogg
+#      songLength: 389
+#    - name: Chris Remo - Space Asshole Original
+#      path: /Audio/Music/Jukebox/ChrisRemo-Space_Asshole_original.ogg
+#      songLength: 256
+#    - name: Jeroen Tel - Tintin on the Moon - Remix by Cuboos
+#      path: /Audio/Music/Jukebox/title3.ogg
+#      songLength: 232
+#    - name: MashedByMachines - Sector11
+#      path: /Audio/Music/Jukebox/MashedByMachines-Sector11.ogg
+#      songLength: 202
+#    - name: Qwertyquerty - Constellations
+#      path: /Audio/Music/Jukebox/Qwertyquerty-Constellations.ogg
+#      songLength: 152
+#    - name: Qwertyquerty - Drifting
+#      path: /Audio/Music/Jukebox/Qwertyquerty-Drifting.ogg
+#      songLength: 152
+#    - name: Qwertyquerty - Starlight
+#      path: /Audio/Music/Jukebox/Qwertyquerty-Starlight.ogg
+#      songLength: 247
+#    - name: X-CEED - Flip Flap
+#      path: /Audio/Music/Jukebox/flip-flap.ogg
+#      songLength: 150
+#
