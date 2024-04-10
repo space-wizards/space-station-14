@@ -6,7 +6,8 @@ using Content.Shared.Changeling;
 namespace Content.Shared.Changeling.Components;
 
 [RegisterComponent]
-public sealed partial class ChangelingComponent : Component
+[AutoGenerateComponentState]
+public abstract partial class ChangelingComponent : Component
 {
 
     /// <summary>
