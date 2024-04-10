@@ -118,7 +118,7 @@
           True: {state: "icon_open"}
           False: {state: "icon"}
   - type: SqueezeBottle
-    reagent: "SpaceGlue"
+    reagent: "SpaceLube"
   - type: TrashOnSolutionEmpty
     solution: drink
 

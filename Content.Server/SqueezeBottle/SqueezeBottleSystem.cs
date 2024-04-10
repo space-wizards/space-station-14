@@ -18,8 +18,9 @@ using System.Diagnostics;
 using Content.Shared.FixedPoint;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Clothing.Components;
+using Content.Server.ReagentOnItem;
 
-namespace Content.Server.Lube;
+namespace Content.Server.SqueezeBottle;
 
 public sealed class SqueezeBottleSystem : EntitySystem
 {
@@ -30,6 +31,7 @@ public sealed class SqueezeBottleSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
+    [Dependency] private readonly ReagentOnItemSystem _reagentOnItem = default!;
 
     public override void Initialize()
     {
@@ -72,67 +74,19 @@ public sealed class SqueezeBottleSystem : EntitySystem
 
     private bool TryToApplyReagent(Entity<SqueezeBottleComponent> entity, EntityUid target, EntityUid actor)
     {
-        // SHOULD I BE ABLE TO DOUBLE UP ON APPLICATION OR ONLY ONE?
         // Split this into better cases.
         if (!HasComp<ItemComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("lube-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
             return false;
         }
+
         if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
         {
-            Log.Log(LogLevel.Debug, "Here 1");
             var reagent = solution.SplitSolution(entity.Comp.AmountConsumedOnUse);
-            if (reagent.Volume > 0)
-            {
-                Log.Log(LogLevel.Debug, "Here 2");
+            _reagentOnItem.AddReagentToItem(target, reagent);
 
-                if (!HasComp<NonStickSurfaceComponent>(target))
-                {
-                    var totalConsumed = FixedPoint2.New(0);
-                    var amountOfSpaceLube = reagent.RemoveReagent("SpaceLube", entity.Comp.AmountConsumedOnUse - totalConsumed);
-                    totalConsumed += amountOfSpaceLube;
-                    var amountOfSpaceGlue = reagent.RemoveReagent("SpaceGlue", entity.Comp.AmountConsumedOnUse - totalConsumed);
-
-                    if (amountOfSpaceLube > 0)
-                    {
-                        Log.Log(LogLevel.Debug, "Here 3");
-                        var lubed = EnsureComp<SpaceLubeOnItemComponent>(target);
-                        lubed.AmountOfReagentLeft += amountOfSpaceLube.Double();
-                        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} lubed {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
-                        _audio.PlayPvs(entity.Comp.Squeeze, entity.Owner);
-                        _popup.PopupEntity(Loc.GetString("lube-success", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
-
-                    }
-                    if (amountOfSpaceGlue > 0)
-                    {
-                        Log.Log(LogLevel.Debug, "Here 4");
-                        var glued = EnsureComp<SpaceGlueOnItemComponent>(target);
-                        glued.AmountOfReagentLeft += amountOfSpaceLube.Double();
-                        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} lubed {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
-                        _audio.PlayPvs(entity.Comp.Squeeze, entity.Owner);
-                        _popup.PopupEntity("item glued", actor, actor, PopupType.Medium);
-                    }
-                }
-
-                _puddle.TrySpillAt(target, reagent, out var puddle, false);
-
-                // Add the ReagetOnComponent with either lube or glue whichever is more.
-                // Spill the rest of the liquid.
-
-                // var amountOfSpaceLube = reagent.RemoveReagent("SpaceLube", entity.Comp.AmountConsumedOnUse);
-                // var amountOfSpaceGlue = reagent.RemoveReagent("SpaceGlue", entity.Comp.AmountConsumedOnUse);
-                // var reagentToAddToObject;
-
-                // var lubed = EnsureComp<LubedComponent>(target);
-                // lubed.SlipsLeft = _random.Next(entity.Comp.MinSlips * quantity.Int(), entity.Comp.MaxSlips * quantity.Int());
-                // lubed.SlipStrength = entity.Comp.SlipStrength;
-                // _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} lubed {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
-                // _audio.PlayPvs(entity.Comp.Squeeze, entity.Owner);
-                // _popup.PopupEntity(Loc.GetString("lube-success", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
-
-                return true;
-            }
+            return true;
         }
         _popup.PopupEntity(Loc.GetString("lube-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
         return false;

@@ -5,9 +5,9 @@ namespace Content.Shared.ReagentOnItem;
 [RegisterComponent]
 public sealed partial class SpaceGlueOnItemComponent : ReagentOnItemComponent
 {
-    [DataField("until", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan Until;
+    [DataField("timeOfNextCheck", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan TimeOfNextCheck;
 
-    [DataField("duration", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan Duration = TimeSpan.FromSeconds(20);
+    [DataField("durationPerUnit"), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan DurationPerUnit = TimeSpan.FromSeconds(6);
 }

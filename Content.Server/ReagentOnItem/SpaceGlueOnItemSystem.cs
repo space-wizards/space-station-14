@@ -40,11 +40,17 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
         var query = EntityQueryEnumerator<SpaceGlueOnItemComponent, UnremoveableComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var glue, out var _, out var meta))
         {
-            if (_timing.CurTime < glue.Until)
+            if (_timing.CurTime < glue.TimeOfNextCheck)
+            {
                 continue;
+            }
 
-            RemComp<UnremoveableComponent>(uid);
-            RemComp<GluedComponent>(uid);
+            if (!SetNextCheck(glue, uid))
+            {
+                // TODO: Show popup indicating the glue dried.
+                RemCompDeferred<UnremoveableComponent>(uid);
+                RemCompDeferred<GluedComponent>(uid);
+            }
         }
     }
 
@@ -56,10 +62,27 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
         {
             return;
         }
-        var comp = EnsureComp<UnremoveableComponent>(entity);
-        comp.DeleteOnDrop = false;
-        entity.Comp.Until = _timing.CurTime + entity.Comp.Duration;
-        _popup.PopupEntity("YOU GOT GLUED!", args.User, args.User, PopupType.MediumCaution);
 
+        if (SetNextCheck(entity, entity))
+        {
+            _popup.PopupEntity("YOU GOT GLUED!", args.User, args.User, PopupType.MediumCaution);
+        }
+
+    }
+
+    private bool SetNextCheck(SpaceGlueOnItemComponent glueComp, EntityUid uid)
+    {
+        if (glueComp.AmountOfReagentLeft < 1)
+        {
+            return false;
+        }
+
+        var unremoveComp = EnsureComp<UnremoveableComponent>(uid);
+        unremoveComp.DeleteOnDrop = false;
+
+        glueComp.TimeOfNextCheck = _timing.CurTime + glueComp.DurationPerUnit;
+        glueComp.AmountOfReagentLeft--;
+
+        return true;
     }
 }
