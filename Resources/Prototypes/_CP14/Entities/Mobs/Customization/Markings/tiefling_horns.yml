@@ -1,0 +1,85 @@
+
+- type: marking
+  id: CPTieflingHorns
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ CPTiefling ]
+  sprites:
+    - sprite: _CP14/Mobs/Customization/tiefling_horns.rsi
+      state: horn1
+
+- type: marking
+  id: CPTieflingHorns2
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ CPTiefling ]
+  sprites:
+    - sprite: _CP14/Mobs/Customization/tiefling_horns.rsi
+      state: horn2
+
+- type: marking
+  id: CPTieflingHorns3
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ CPTiefling ]
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+    - sprite: _CP14/Mobs/Customization/tiefling_horns.rsi
+      state: horn3
+
+- type: marking
+  id: CPTieflingHorns3Broken
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ CPTiefling ]
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+    - sprite: _CP14/Mobs/Customization/tiefling_horns.rsi
+      state: horn3_broken
+
+- type: marking
+  id: CPTieflingHorns4
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ CPTiefling ]
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+    - sprite: _CP14/Mobs/Customization/tiefling_horns.rsi
+      state: horn4
+
+- type: marking
+  id: CPTieflingHorns5
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ CPTiefling ]
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+    - sprite: _CP14/Mobs/Customization/tiefling_horns.rsi
+      state: horn5
+
+- type: marking
+  id: CPTieflingHorns5Broken
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ CPTiefling ]
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+    - sprite: _CP14/Mobs/Customization/tiefling_horns.rsi
+      state: horn5_broken
+
+- type: marking
+  id: CPTieflingHorns6
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ CPTiefling ]
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+    - sprite: _CP14/Mobs/Customization/tiefling_horns.rsi
+      state: horn6
+

@@ -12,9 +12,9 @@
   id: CPMobHumanSprites
   sprites:
     Head: CPMobHumanHead
-    Hair: MobHumanoidAnyMarking
-    FacialHair: MobHumanoidAnyMarking
-    Snout: MobHumanoidAnyMarking
+    Hair: CPMobHumanoidAnyMarking
+    FacialHair: CPMobHumanoidAnyMarking
+    Snout: CPMobHumanoidAnyMarking
     Chest: CPMobHumanTorso
     Eyes: CPMobHumanoidEyes
     LArm: CPMobHumanLArm

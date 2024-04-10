@@ -1,0 +1,21 @@
+- type: marking
+  id: CPTieflingTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ CPTiefling ]
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+    - sprite: _CP14/Mobs/Customization/tiefling_tails.rsi
+      state: tail1
+
+- type: marking
+  id: CPTieflingTailSpades
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ CPTiefling ]
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+    - sprite: _CP14/Mobs/Customization/tiefling_tails.rsi
+      state: tail_spades

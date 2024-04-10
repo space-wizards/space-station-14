@@ -14,6 +14,7 @@
       sprite: CrystallPunk/Mobs/Species/Tiefling/parts.rsi
       state: full
     - type: Thirst
+    - type: Wagging
 
 - type: entity
   parent: BaseSpeciesDummy
