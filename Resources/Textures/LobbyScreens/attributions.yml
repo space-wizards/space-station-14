@@ -12,3 +12,9 @@
 
 - files: ["gugel.webp"]
   license: "CC-BY-NC-SA-3.0"
+  
+- files: ["mime.webp"]
+  license: "CC-BY-NC-SA-3.0"
+
+- files: ["THRONGLER.webp"]
+  license: "CC-BY-NC-SA-3.0" 
