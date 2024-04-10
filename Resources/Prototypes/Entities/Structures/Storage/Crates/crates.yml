@@ -590,7 +590,7 @@
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
-      offset: "0.0,0.03"
+      offset: "0.0,0.03125"
       map: ["enum.PaperLabelVisuals.Layer"]
 
 - type: entity
@@ -614,7 +614,7 @@
       shader: unshaded
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
-      offset: "0.0,0.03"
+      offset: "0.0,0.03125"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: AccessReader
     access: [["Janitor"]]
