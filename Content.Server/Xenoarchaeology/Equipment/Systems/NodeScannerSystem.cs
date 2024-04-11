@@ -29,16 +29,7 @@ public sealed class NodeScannerSystem : EntitySystem
 
             var verb = new UtilityVerb()
             {
-                Act = () =>
-                {
-                    if (TryComp(uid, out UseDelayComponent? useDelay)
-                        && !_useDelay.TryResetDelay((uid, useDelay), true))
-                        return;
-
-                    _popupSystem.PopupEntity(Loc.GetString("node-scan-popup",
-                        ("id", $"{artifact.CurrentNodeId}")), args.Target);
-                },
-                Text = Loc.GetString("node-scan-tooltip")
+                CreatePopup(uid, args.Target, artifact)
             };
 
             args.Verbs.Add(verb);
@@ -60,6 +51,11 @@ public sealed class NodeScannerSystem : EntitySystem
 
         var target = args.Target.Value;
 
+        CreatePopup(uid, target, artifact);
+    }
+
+    private void CreatePopup(EntityUid uid, EntityUid target, ArtifactComponent artifact)
+    {
         if (TryComp(uid, out UseDelayComponent? useDelay)
             && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
