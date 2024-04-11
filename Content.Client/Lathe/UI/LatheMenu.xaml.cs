@@ -104,41 +104,12 @@ public sealed partial class LatheMenu : DefaultWindow
         RecipeList.Children.Clear();
         foreach (var prototype in sortedRecipesToShow)
         {
-            StringBuilder sb = new();
-            var first = true;
-            foreach (var (id, amount) in prototype.RequiredMaterials)
-            {
-                if (!_prototypeManager.TryIndex<MaterialPrototype>(id, out var proto))
-                    continue;
-
-                if (first)
-                    first = false;
-                else
-                    sb.Append('\n');
-
-                var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, component.MaterialUseMultiplier);
-                var sheetVolume = _materialStorage.GetSheetVolume(proto);
-
-                var unit = Loc.GetString(proto.Unit);
-                // rounded in locale not here
-                var sheets = adjustedAmount / (float) sheetVolume;
-                var amountText = Loc.GetString("lathe-menu-material-amount", ("amount", sheets), ("unit", unit));
-                var name = Loc.GetString(proto.Name);
-                sb.Append(Loc.GetString("lathe-menu-tooltip-display", ("material", name), ("amount", amountText)));
-            }
-
-            if (!string.IsNullOrWhiteSpace(prototype.Description))
-            {
-                sb.Append('\n');
-                sb.Append(Loc.GetString("lathe-menu-description-display", ("description", prototype.Description)));
-            }
-
             var icon = prototype.Icon == null
                 ? _spriteSystem.GetPrototypeIcon(prototype.Result).Default
                 : _spriteSystem.Frame0(prototype.Icon);
             var canProduce = _lathe.CanProduce(_owner, prototype, quantity);
 
-            var control = new RecipeControl(prototype, sb.ToString(), canProduce, icon);
+            var control = new RecipeControl(prototype, () => GenerateTooltipText(prototype), canProduce, icon);
             control.OnButtonPressed += s =>
             {
                 if (!int.TryParse(AmountLineEdit.Text, out var amount) || amount <= 0)
@@ -147,6 +118,51 @@ public sealed partial class LatheMenu : DefaultWindow
             };
             RecipeList.AddChild(control);
         }
+    }
+
+    private string GenerateTooltipText(LatheRecipePrototype prototype)
+    {
+        StringBuilder sb = new();
+
+        foreach (var (id, amount) in prototype.RequiredMaterials)
+        {
+            if (!_prototypeManager.TryIndex<MaterialPrototype>(id, out var proto))
+                continue;
+
+            var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, _entityManager.GetComponent<LatheComponent>(_owner).MaterialUseMultiplier);
+            var sheetVolume = _materialStorage.GetSheetVolume(proto);
+
+            var unit = Loc.GetString(proto.Unit);
+            var sheets = adjustedAmount / (float) sheetVolume;
+
+            var availableAmount = _materialStorage.GetMaterialAmount(_owner, id);
+            var missingAmount = Math.Max(0, adjustedAmount - availableAmount);
+            var missingSheets = missingAmount / (float) sheetVolume;
+
+            var name = Loc.GetString(proto.Name);
+
+            string tooltipText;
+            if (missingSheets > 0)
+            {
+                tooltipText = Loc.GetString("lathe-menu-material-amount-missing", ("amount", sheets), ("missingAmount", missingSheets), ("unit", unit), ("material", name));
+            }
+            else
+            {
+                var amountText = Loc.GetString("lathe-menu-material-amount", ("amount", sheets), ("unit", unit));
+                tooltipText = Loc.GetString("lathe-menu-tooltip-display", ("material", name), ("amount", amountText));
+            }
+
+            sb.AppendLine(tooltipText);
+        }
+
+        if (!string.IsNullOrWhiteSpace(prototype.Description))
+            sb.AppendLine(Loc.GetString("lathe-menu-description-display", ("description", prototype.Description)));
+
+        // Remove last newline
+        if (sb.Length > 0)
+            sb.Remove(sb.Length - 1, 1);
+
+        return sb.ToString();
     }
 
     public void UpdateCategories()
