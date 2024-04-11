@@ -51,7 +51,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
                 plantHolder.EnsureUniqueSeed(args.SolutionEntity, plantHolderComp);
                 if (plantHolderComp.Seed.Yield != 0)
                 {
-                    plantHolderComp.YieldMod -= 1f / (float)plantHolderComp.Seed.Yield; //Reduces the yield of the current plant by one by changing YieldMod.
+                    plantHolderComp.YieldMod -= 1f / (float) plantHolderComp.Seed.Yield; //Reduces the yield of the current plant by one by changing YieldMod.
                 }
             }
         }
