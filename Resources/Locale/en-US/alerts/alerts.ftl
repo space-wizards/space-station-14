@@ -112,4 +112,4 @@ alerts-revenant-corporeal-name = Corporeal
 alerts-revenant-corporeal-desc = You have manifested physically. People around you can see and hurt you.
 
 alerts-changeling-chemicals-name = Chemicals
-alerts-changeling-chemicals-desc = The amount of chemicals that are inside of your body. These chemicals are used for abilities. Regenerates over time.
+alerts-changeling-chemicals-desc = These chemicals are used for abilities. Regenerates over time.

@@ -3,13 +3,33 @@ using Content.Shared.Polymorph;
 using Robust.Shared.Prototypes;
 using Content.Shared.Changeling;
 using Content.Shared.Humanoid;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Changeling;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
 public sealed partial class ChangelingComponent : Component
 {
+    /// <summary>
+    /// Number of chemicals the changeling has, for some stings and abilities.
+    /// Passively regenerates at a rate modified by certain abilities.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int Chemicals = 0;
+
+    /// <summary>
+    /// Maximum number of chemicals you can regenerate up to.
+    /// Absorbing people can increase this limit.
+    /// </summary>
+    [DataField]
+    public int MaxChemicals = 75;
+
+    /// <summary>
+    /// Seconds it takes to regenerate a chemical.
+    /// </summary>
+    [DataField]
+    public float ChemicalRegenTime = 1.0f;
 
     /// <summary>
     /// The maximum amount of DNA strands a ling can have at one time
@@ -58,26 +78,6 @@ public sealed partial class ChangelingComponent : Component
 
     [DataField]
     public float Accumulator = 0f;
-
-    /// <summary>
-    /// Number of chemicals the changeling has, for some stings and abilities.
-    /// Passively regenerates at a rate modified by certain abilities.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public int Chemicals = 75;
-
-    /// <summary>
-    /// Maximum number of chemicals you can regenerate up to.
-    /// Absorbing people can increase this limit.
-    /// </summary>
-    [DataField]
-    public int MaxChemicals = 75;
-
-    /// <summary>
-    /// Seconds it takes to regenerate a chemical.
-    /// </summary>
-    [DataField]
-    public float ChemicalRegenTime = 1.0f;
 }
 
 public struct TransformData

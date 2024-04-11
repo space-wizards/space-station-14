@@ -22,8 +22,8 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         var sprite = args.SpriteViewEnt.Comp;
         var chemicals = Math.Clamp(ent.Comp.Chemicals, 0, 999);
-        sprite.LayerSetState(ChangelingVisualLayers.Digit1, $"{chemicals / 100 % 10}");
-        sprite.LayerSetState(ChangelingVisualLayers.Digit2, $"{chemicals / 10 % 10}");
+        sprite.LayerSetState(ChangelingVisualLayers.Digit1, $"{(chemicals / 100) % 10}");
+        sprite.LayerSetState(ChangelingVisualLayers.Digit2, $"{(chemicals / 10) % 10}");
         sprite.LayerSetState(ChangelingVisualLayers.Digit3, $"{chemicals % 10}");
     }
 }

@@ -29,7 +29,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Changeling.EntitySystems;
+namespace Content.Server.Changeling;
 
 public sealed partial class ChangelingSystem : EntitySystem
 {
@@ -94,6 +94,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     public bool ChangeChemicalsAmount(EntityUid uid, ChangelingComponent component, int amount, bool regenCap = true)
     {
         component.Chemicals += amount;
+        Dirty(uid, component);
 
         if (regenCap)
             float.Min(component.Chemicals, component.MaxChemicals);
