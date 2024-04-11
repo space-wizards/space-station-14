@@ -119,7 +119,7 @@
   showInVote: false
   rules:
     - Nukeops
-   # - SubGamemodesRule
+    - SubGamemodesRule
     - BasicStationEventScheduler
     - BasicRoundstartVariation
 

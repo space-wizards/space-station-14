@@ -14,7 +14,6 @@ using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mindshield.Components;
@@ -51,7 +50,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
 
     //Used in OnPostFlash, no reference to the rule component is available
     public readonly ProtoId<NpcFactionPrototype> RevolutionaryNpcFaction = "Revolutionary";
@@ -60,7 +58,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RevolutionaryRuleComponent, AfterAntagEntitySelectedEvent>(AfterHeadRevSelected);
         SubscribeLocalEvent<CommandStaffComponent, MobStateChangedEvent>(OnCommandMobStateChanged);
         SubscribeLocalEvent<HeadRevolutionaryComponent, MobStateChangedEvent>(OnHeadRevMobStateChanged);
         SubscribeLocalEvent<RevolutionaryRoleComponent, GetBriefingEvent>(OnGetBriefing);
@@ -123,17 +120,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         args.Append(Loc.GetString(head ? "head-rev-briefing" : "rev-briefing"));
     }
 
-    private void AfterHeadRevSelected(Entity<RevolutionaryRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
-    {
-        GiveHeadRev(args.EntityUid, ent.Comp);
-    }
-
-    private void GiveHeadRev(EntityUid chosen, RevolutionaryRuleComponent comp)
-    {
-        RemComp<CommandStaffComponent>(chosen);
-        _inventory.SpawnItemsOnEntity(chosen, comp.StartingGear);
-    }
-
     /// <summary>
     /// Called when a Head Rev uses a flash in melee to convert somebody else.
     /// </summary>
@@ -186,8 +172,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             GameTicker.StartGameRule("Revolutionary", out var ruleEnt);
             revRule = Comp<RevolutionaryRuleComponent>(ruleEnt);
         }
-
-        GiveHeadRev(entity, revRule);
     }
 
     //TODO: Enemies of the revolution
@@ -248,7 +232,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", Identity.Entity(uid, EntityManager))), uid);
                 _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid)} was deconverted due to all Head Revolutionaries dying.");
 
-                if (!_mind.TryGetMind(uid, out var mindId, out var mind, mc))
+                if (!_mind.TryGetMind(uid, out var mindId, out _, mc))
                     continue;
 
                 // remove their antag role

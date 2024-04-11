@@ -1,21 +1,26 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Antag.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules;
+using Content.Server.Ghost.Roles;
+using Content.Server.Ghost.Roles.Components;
 using Content.Server.Inventory;
 using Content.Server.Mind;
+using Content.Server.Mind.Commands;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Antag;
+using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
-using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
+using Content.Shared.Storage;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -34,6 +39,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly IServerPreferencesManager _pref = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly ServerInventorySystem _inventory = default!;
+    [Dependency] private readonly GhostRoleSystem _ghostRole = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly RoleSystem _role = default!;
@@ -48,9 +54,27 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     {
         base.Initialize();
 
+        SubscribeLocalEvent<GhostRoleAntagSpawnerComponent, TakeGhostRoleEvent>(OnTakeGhostRole);
+
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayerSpawning);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnJobsAssigned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnSpawnComplete);
+    }
+
+    private void OnTakeGhostRole(Entity<GhostRoleAntagSpawnerComponent> ent, ref TakeGhostRoleEvent args)
+    {
+        if (args.TookRole)
+            return;
+
+        if (ent.Comp.Rule is not { } rule || ent.Comp.Definition is not { } def)
+            return;
+
+        if (!Exists(rule) || !TryComp<AntagSelectionComponent>(rule, out var select))
+            return;
+
+        MakeAntag((rule, select), args.Player, def, ignoreSpawner: true);
+        args.TookRole = true;
+        _ghostRole.UnregisterGhostRole((ent, Comp<GhostRoleComponent>(ent)));
     }
 
     private void OnPlayerSpawning(RulePlayerSpawningEvent args)
@@ -101,33 +125,16 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         var query = QueryActiveRules();
         while (query.MoveNext(out var uid, out _, out var antag, out _))
         {
+            if (!RobustRandom.Prob(LateJoinRandomChance))
+                return;
+
             if (!antag.Definitions.Any(p => p.LateJoinAdditional))
                 continue;
 
-            var totalTargetCount = GetTargetAntagCount((uid, antag));
-            if (antag.SelectedMinds.Count >= totalTargetCount)
+            if (!TryGetNextAvailableDefinition((uid, antag), out var def))
                 continue;
 
-            foreach (var def in antag.Definitions)
-            {
-                if (!def.LateJoinAdditional)
-                    continue;
-
-                // don't add latejoin antags before actual selection is done.
-                if (!antag.SelectionsComplete)
-                    continue;
-
-                // TODO: this really doesn't handle multiple latejoin definitions well
-                // eventually this should probably store the players per definition with some kind of unique identifier.
-                // something to figure out later.
-                if (antag.SelectedMinds.Count >= def.Max)
-                    continue;
-
-                if (!RobustRandom.Prob(LateJoinRandomChance))
-                    continue;
-
-                MakeAntag((uid, antag), args.Player, def);
-            }
+            MakeAntag((uid, antag), args.Player, def.Value);
         }
     }
 
@@ -158,7 +165,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (component.SelectionsComplete)
             return;
 
-        if (GameTicker.RunLevel != GameRunLevel.InRound && component.SelectionTime != AntagSelectionTime.PrePlayerSpawn)
+        if (GameTicker.RunLevel != GameRunLevel.InRound)
+            return;
+
+        if (GameTicker.RunLevel == GameRunLevel.InRound && component.SelectionTime == AntagSelectionTime.PrePlayerSpawn)
             return;
 
         ChooseAntags((uid, component));
@@ -181,30 +191,42 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
     public void ChooseAntags(Entity<AntagSelectionComponent> ent, List<ICommonSession> pool, AntagSelectionDefinition def)
     {
-        //TODO: add in an option for having player-less antags.
-        // even better, make it a config so you can specify half player, half ghost role.
         var playerPool = GetPlayerPool(ent, pool, def);
         var count = GetTargetAntagCount(ent, playerPool, def);
-        while (ent.Comp.SelectedMinds.Count < count)
-        {
-            if (!playerPool.TryPickAndTake(RobustRandom, out var session))
-                break;
 
-            if (ent.Comp.SelectedSessions.Contains(session))
-                continue;
+        for (var i = 0; i < count; i++)
+        {
+            var session = (ICommonSession?) null;
+            if (def.PickPlayer)
+            {
+                if (!playerPool.TryPickAndTake(RobustRandom, out session))
+                    break;
+
+                if (ent.Comp.SelectedSessions.Contains(session))
+                    continue;
+            }
 
             MakeAntag(ent, session, def);
         }
     }
 
-    public void MakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def)
+    public void MakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, bool ignoreSpawner = false)
     {
         var antagEnt = (EntityUid?) null;
+        var isSpawner = false;
 
         if (session != null)
         {
             ent.Comp.SelectedSessions.Add(session);
-            antagEnt = session.AttachedEntity;
+
+            // we shouldn't be blocking the entity if they're just a ghost or smth.
+            if (!HasComp<GhostComponent>(session.AttachedEntity))
+                antagEnt = session.AttachedEntity;
+        }
+        else if (!ignoreSpawner && def.SpawnerPrototype != null) // don't add spawners if we have a player, dummy.
+        {
+            antagEnt = Spawn(def.SpawnerPrototype);
+            isSpawner = true;
         }
 
         if (!antagEnt.HasValue)
@@ -235,10 +257,23 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             _transform.AttachToGridOrMap(player, antagXForm);
         }
 
+        if (isSpawner)
+        {
+            if (!TryComp<GhostRoleAntagSpawnerComponent>(player, out var spawnerComp))
+            {
+                Log.Error("Antag spawner with GhostRoleAntagSpawnerComponent.");
+                return;
+            }
+
+            spawnerComp.Rule = ent;
+            spawnerComp.Definition = def;
+            return;
+        }
+
         EntityManager.AddComponents(player, def.Components);
         var pref = _pref.GetPreferencesOrNull(session?.UserId)?.SelectedCharacter as HumanoidCharacterProfile;
         _stationSpawning.EquipStartingGear(player, def.StartingGear, pref);
-        _inventory.SpawnItemsOnEntity(player, def.Equipment);
+        _inventory.SpawnItemsOnEntity(player, EntitySpawnCollection.GetSpawns(def.Equipment));
 
         if (session != null)
         {
@@ -248,11 +283,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 curMind = _mind.CreateMind(session.UserId, Name(antagEnt.Value));
                 _mind.SetUserId(curMind.Value, session.UserId);
             }
-
-            if (TryComp<MindComponent>(curMind, out var mindComp) && mindComp.CurrentEntity != antagEnt)
-                _mind.TransferTo(curMind.Value, antagEnt);
+            Log.Debug($"{player}. {session}");
 
             EntityManager.AddComponents(curMind.Value, def.MindComponents);
+            _mind.TransferTo(curMind.Value, antagEnt, ghostCheckOverride: true);
             ent.Comp.SelectedMinds.Add((curMind.Value, Name(player)));
         }
 
@@ -261,7 +295,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             SendBriefing(session, Loc.GetString(briefing.Text), briefing.Color, briefing.Sound);
         }
 
-        var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent);
+        var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def);
         RaiseLocalEvent(ent, ref afterEv, true);
     }
 
@@ -297,32 +331,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
 
         return new AntagSelectionPlayerPool(primaryList, secondaryList, fallbackList, rawList);
-    }
-
-    public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool? pool = null)
-    {
-        var count = 0;
-        foreach (var def in ent.Comp.Definitions)
-        {
-            count += GetTargetAntagCount(ent, pool, def);
-        }
-
-        return count;
-    }
-
-    public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool? pool, AntagSelectionDefinition def)
-    {
-        var poolSize = pool?.Count ?? _playerManager.Sessions.Length;
-        // factor in other definitions' affect on the count.
-        var countOffset = 0;
-        foreach (var otherDef in ent.Comp.Definitions)
-        {
-            countOffset += Math.Clamp(poolSize / otherDef.PlayerRatio, otherDef.Min, otherDef.Max) * otherDef.PlayerRatio;
-        }
-        // make sure we don't double-count the current selection
-        countOffset -= Math.Clamp((poolSize + countOffset) / def.PlayerRatio, def.Min, def.Max) * def.PlayerRatio;
-
-        return Math.Clamp((poolSize - countOffset) / def.PlayerRatio, def.Min, def.Max);
     }
 
     public bool IsSessionValid(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSelectionDefinition def, EntityUid? mind = null)
@@ -385,6 +393,39 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         return true;
     }
+
+    /// <summary>
+    /// Tries to get the next non-filled definition based on the current amount of selected minds and other factors.
+    /// </summary>
+    private bool TryGetNextAvailableDefinition(Entity<AntagSelectionComponent> ent,
+        [NotNullWhen(true)] out AntagSelectionDefinition? definition)
+    {
+        // TODO: this really doesn't handle multiple latejoin definitions well
+        // eventually this should probably store the players per definition with some kind of unique identifier.
+        // something to figure out later.
+
+        definition = null;
+
+        var totalTargetCount = GetTargetAntagCount(ent);
+        var mindCount = ent.Comp.SelectedMinds.Count;
+        if (mindCount >= totalTargetCount)
+            return false;
+
+        foreach (var def in ent.Comp.Definitions)
+        {
+            var target = GetTargetAntagCount(ent, null, def);
+
+            if (mindCount < target)
+            {
+                definition = def;
+                return true;
+            }
+
+            mindCount -= target;
+        }
+
+        return false;
+    }
 }
 
 /// <summary>
@@ -417,4 +458,4 @@ public record struct AntagSelectLocationEvent(ICommonSession? Session, Entity<An
 /// Event raised on an entity
 /// </summary>
 [ByRefEvent]
-public readonly record struct AfterAntagEntitySelectedEvent(ICommonSession? Session, EntityUid EntityUid, Entity<AntagSelectionComponent> GameRule);
+public readonly record struct AfterAntagEntitySelectedEvent(ICommonSession? Session, EntityUid EntityUid, Entity<AntagSelectionComponent> GameRule, AntagSelectionDefinition Def);

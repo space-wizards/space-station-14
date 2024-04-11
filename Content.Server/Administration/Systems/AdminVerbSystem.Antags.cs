@@ -89,6 +89,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Clothing/Head/Hats/pirate.rsi"), "icon"),
             Act = () =>
             {
+                // pirates just get an outfit because they don't really have logic associated with them
                 SetOutfitCommand.SetOutfit(args.Target, PirateGearId, EntityManager);
             },
             Impact = LogImpact.High,
@@ -118,7 +119,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Clothing/Hands/Gloves/ihscombat.rsi"), "icon"),
             Act = () =>
             {
-                _thief.AdminMakeThief(args.Target, false); //Midround add pacified is bad
+                //_thief.AdminMakeThief(args.Target, false); //Midround add pacified is bad
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-thief"),

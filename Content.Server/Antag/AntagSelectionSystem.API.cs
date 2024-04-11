@@ -9,6 +9,32 @@ namespace Content.Server.Antag;
 
 public sealed partial class AntagSelectionSystem
 {
+    public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool? pool = null)
+    {
+        var count = 0;
+        foreach (var def in ent.Comp.Definitions)
+        {
+            count += GetTargetAntagCount(ent, pool, def);
+        }
+
+        return count;
+    }
+
+    public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool? pool, AntagSelectionDefinition def)
+    {
+        var poolSize = pool?.Count ?? _playerManager.Sessions.Length;
+        // factor in other definitions' affect on the count.
+        var countOffset = 0;
+        foreach (var otherDef in ent.Comp.Definitions)
+        {
+            countOffset += Math.Clamp(poolSize / otherDef.PlayerRatio, otherDef.Min, otherDef.Max) * otherDef.PlayerRatio;
+        }
+        // make sure we don't double-count the current selection
+        countOffset -= Math.Clamp((poolSize + countOffset) / def.PlayerRatio, def.Min, def.Max) * def.PlayerRatio;
+
+        return Math.Clamp((poolSize - countOffset) / def.PlayerRatio, def.Min, def.Max);
+    }
+
     public List<(EntityUid, SessionData, string)> GetAntagNameData(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))

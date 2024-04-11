@@ -90,9 +90,7 @@ public sealed partial class NukeopsRuleComponent : Component
     [DataField]
     public EntityUid? TargetStation;
 
-    // TODO: use components, don't just cache entity UIDs
-    // There have been (and probably still are) bugs where these refer to deleted entities from old rounds.
-    public EntityUid? NukieOutpost;
+    [DataField]
     public EntityUid? NukieShuttle;
 
     [DataField]

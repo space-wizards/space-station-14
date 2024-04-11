@@ -75,7 +75,6 @@
     - operationPrefix
     - operationSuffix
   - type: NukeopsRule
-    faction: Syndicate
   - type: LoadMapRule
     gameMap: NukieOutpost
   - type: AntagSelection
@@ -173,8 +172,8 @@
         color: CornflowerBlue
         sound: "/Audio/Ambience/Antag/headrev_start.ogg"
       equipment:
-      - Flash
-      - ClothingEyesGlassesSunglasses
+      - id: Flash
+      - id: ClothingEyesGlassesSunglasses
       components:
       - type: Revolutionary
       - type: HeadRevolutionary

@@ -1,6 +1,7 @@
 using Content.Server.Destructible.Thresholds;
 using Content.Shared.Antag;
 using Content.Shared.Roles;
+using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -8,7 +9,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Antag.Components;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(AntagSelectionSystem))]
 public sealed partial class AntagSelectionComponent : Component
 {
     [DataField]
@@ -53,6 +54,9 @@ public partial struct AntagSelectionDefinition()
     [DataField]
     public int PlayerRatio = 10;
 
+    [DataField]
+    public bool PickPlayer = true;
+
     /// <summary>
     /// If true, players that latejoin into a round have a chance of being converted into antagonists.
     /// </summary>
@@ -81,13 +85,23 @@ public partial struct AntagSelectionDefinition()
     public ComponentRegistry MindComponents = new();
 
     [DataField]
-    public List<EntProtoId> Equipment = new();
+    public List<EntitySpawnEntry> Equipment = new();
 
     [DataField]
     public ProtoId<StartingGearPrototype>? StartingGear;
 
     [DataField]
     public BriefingData? Briefing;
+
+    /// <summary>
+    /// A spawner used to defer the selection of this particular definition.
+    /// </summary>
+    /// <remarks>
+    /// Not the cleanest way of doing this code but it's just an odd specific behavior.
+    /// Sue me.
+    /// </remarks>
+    [DataField]
+    public EntProtoId? SpawnerPrototype;
 }
 
 [DataDefinition]

@@ -73,6 +73,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         SubscribeLocalEvent<NukeOperativeComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<NukeOperativeComponent, EntityZombifiedEvent>(OnOperativeZombified);
 
+        SubscribeLocalEvent<NukeOpsShuttleComponent, MapInitEvent>(OnMapInit);
+
         SubscribeLocalEvent<ConsoleFTLAttemptEvent>(OnShuttleFTLAttempt);
         SubscribeLocalEvent<WarDeclaredEvent>(OnWarDeclared);
         SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCallAttempt);
@@ -131,7 +133,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         {
             if (ev.OwningStation != null)
             {
-                if (ev.OwningStation == nukeops.NukieOutpost)
+                if (ev.OwningStation == GetOutpost(uid))
                 {
                     nukeops.WinConditions.Add(WinCondition.NukeExplodedOnNukieOutpost);
                     SetWinType((uid, nukeops), WinType.CrewMajor);
@@ -272,6 +274,20 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         RemCompDeferred(uid, component);
     }
 
+    private void OnMapInit(Entity<NukeOpsShuttleComponent> ent, ref MapInitEvent args)
+    {
+        var map = Transform(ent).MapID;
+
+        var rules = EntityQueryEnumerator<NukeopsRuleComponent, LoadMapRuleComponent>();
+        while (rules.MoveNext(out _, out var rule, out var mapRule))
+        {
+            if (map != mapRule.Map)
+                continue;
+            rule.NukieShuttle = ent;
+            break;
+        }
+    }
+
     private void OnShuttleFTLAttempt(ref ConsoleFTLAttemptEvent ev)
     {
         var query = QueryActiveRules();
@@ -372,10 +388,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (!_tag.HasTag(uid, NukeOpsUplinkTagPrototype))
                 continue;
 
-            if (!nukieRule.NukieOutpost.HasValue)
+            if (GetOutpost(uid) is not {} outpost)
                 continue;
 
-            if (Transform(uid).MapID != Transform(nukieRule.NukieOutpost.Value).MapID) // Will receive bonus TC only on their start outpost
+            if (Transform(uid).MapID != Transform(outpost).MapID) // Will receive bonus TC only on their start outpost
                 continue;
 
             _store.TryAddCurrency(new () { { TelecrystalCurrencyPrototype, nukieRule.WarTcAmountPerNukie } }, uid, component);
@@ -490,6 +506,18 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 ("name", (ent.Comp.OperationName))),
             Color.Red,
             ent.Comp.GreetSoundNotification);
+    }
+
+    /// <remarks>
+    /// Is this method the shitty glue holding together the last of my sanity? yes.
+    /// Do i have a better solution? not presently.
+    /// </remarks>
+    private EntityUid? GetOutpost(Entity<LoadMapRuleComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return null;
+
+        return ent.Comp.MapGrids.FirstOrNull();
     }
 
     //For admins forcing someone to nukeOps.

@@ -13,6 +13,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
 
     public override void Initialize()
@@ -28,8 +29,21 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
             return;
 
         comp.Map = _mapManager.CreateMap();
-        var gameMap = _prototypeManager.Index(comp.GameMap);
-        comp.MapGrids.AddRange(GameTicker.LoadGameMap(gameMap, comp.Map.Value, new MapLoadOptions()));
+
+        if (comp.GameMap != null)
+        {
+            var gameMap = _prototypeManager.Index(comp.GameMap.Value);
+            comp.MapGrids.AddRange(GameTicker.LoadGameMap(gameMap, comp.Map.Value, new MapLoadOptions()));
+        }
+        else if (comp.MapPath != null)
+        {
+            if (_mapLoader.TryLoad(comp.Map.Value, comp.MapPath.Value.ToString(), out var roots, new MapLoadOptions { LoadMap = true}))
+                comp.MapGrids.AddRange(roots);
+        }
+        else
+        {
+            Log.Error($"No valid map prototype or map path associated with the rule {ToPrettyString(uid)}");
+        }
     }
 
     private void OnSelectLocation(Entity<LoadMapRuleComponent> ent, ref AntagSelectLocationEvent args)

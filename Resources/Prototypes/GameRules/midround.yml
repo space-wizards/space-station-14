@@ -44,8 +44,8 @@
       allowNonHumans: true
       multiAntagSetting: All
       equipment:
-      - ToolboxThief
-      - ClothingHandsChameleonThief
+      - id: ToolboxThief
+      - id: ClothingHandsChameleonThief
       components:
       - type: Pacified
       mindComponents:
