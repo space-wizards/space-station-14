@@ -261,3 +261,6 @@ reagent-desc-whiskey-soda = For the more refined griffon.
 
 reagent-name-white-russian = white russian
 reagent-desc-white-russian = That's just, like, your opinion, man...
+
+reagent-name-clevergirl = clever girl
+reagent-desc-clevergirl = A sly and cunning cocktail, as brilliant as it is dangerous. Approach with caution, for it's smarter than you think.

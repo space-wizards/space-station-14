@@ -334,3 +334,19 @@
   flatReductions:
     # can't punch the endoskeleton to death
     Blunt: 5
+    
+# Dino
+- type: damageModifierSet
+  id: Dinosaur
+  coefficients:
+    Blunt: 0.6
+    Slash: 0.7
+    Piercing: 1.3
+    Heat: 1.1
+    Cold: 1.4
+    Poison: 0.8
+    Radiation: 1.0
+    Structural: 2.0
+  flatReductions:
+    Blunt: 10
+    Piercing: 5

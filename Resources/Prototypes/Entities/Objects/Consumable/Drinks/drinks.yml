@@ -2283,3 +2283,19 @@
     - type: Icon
       sprite: Objects/Consumable/Drinks/bloodglass.rsi
       state: icon
+      
+- type: entity
+  parent: DrinkGlass
+  id: DrinkCleverGirlGlass
+  suffix: clever girl
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: CleverGirl
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/clevergirl.rsi
+    state: icon
