@@ -23,9 +23,6 @@
     whitelist:
       components:
       - HumanoidAppearance
-    blacklist:
-      components:
-      - Zombie # cannot steal zombified DNA
     event: !type:LingAbsorbActionEvent
     useDelay: 5
     canTargetSelf: false
@@ -88,9 +85,6 @@
     whitelist:
       components:
       - HumanoidAppearance
-    blacklist:
-      components:
-      - Zombie
     event: !type:LingStingExtractActionEvent
     useDelay: 30
     canTargetSelf: false

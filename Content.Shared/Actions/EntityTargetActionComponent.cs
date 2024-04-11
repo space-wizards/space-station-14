@@ -12,13 +12,13 @@ public sealed partial class EntityTargetActionComponent : BaseTargetActionCompon
     /// <summary>
     ///     The local-event to raise when this action is performed.
     /// </summary>
-    [DataField("event")]
+    [DataField]
     [NonSerialized]
     public EntityTargetActionEvent? Event;
 
-    [DataField("whitelist")] public EntityWhitelist? Whitelist;
+    [DataField] public EntityWhitelist? Whitelist;
 
-    [DataField("canTargetSelf")] public bool CanTargetSelf = true;
+    [DataField] public bool CanTargetSelf = true;
 }
 
 [Serializable, NetSerializable]

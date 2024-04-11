@@ -137,13 +137,17 @@ public sealed partial class ChangelingSystem
                 {
                     _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { EvolutionPointsCurrencyPrototype, component.AbsorbedChangelingPointsAmount } }, ent, store);
                     _store.UpdateUserInterface(ent, ent, store);
+                    component.MaxChemicals += 20;
                 }
             }
             else
             {
                 var selfMessage = Loc.GetString("changeling-dna-success", ("target", Identity.Entity(target, EntityManager)));
                 _popup.PopupEntity(selfMessage, ent, ent, PopupType.Medium);
+                component.MaxChemicals += 10;
             }
+
+            StealDNA(ent, target, component);
         }
 
         if (component.AbsorbStage >= 2)
