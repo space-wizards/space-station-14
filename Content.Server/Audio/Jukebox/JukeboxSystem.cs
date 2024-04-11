@@ -99,6 +99,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             component.SelectedSongId = args.SongId;
             DirectSetVisualState(uid, JukeboxVisualState.Select);
             component.Selecting = true;
+            component.AudioStream = _audio.Stop(component.AudioStream);
         }
 
         DirtyUI((uid, component));

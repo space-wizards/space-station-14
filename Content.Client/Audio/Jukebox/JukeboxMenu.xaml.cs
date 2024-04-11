@@ -115,10 +115,19 @@ public sealed partial class JukeboxMenu : FancyWindow
     {
         base.FrameUpdate(args);
 
+        if (_entManager.TryGetComponent(_audio, out AudioComponent? audio))
+        {
+            DurationLabel.Text = $@"{TimeSpan.FromSeconds(audio.PlaybackPosition):mm\:ss} / {_audioSystem.GetAudioLength(audio.FileName):mm\:ss}";
+        }
+        else
+        {
+            DurationLabel.Text = $"00:00 / 00:00";
+        }
+
         if (PlaybackSlider.Grabbed)
             return;
 
-        if (_entManager.TryGetComponent(_audio, out AudioComponent? audio))
+        if (audio != null || _entManager.TryGetComponent(_audio, out audio))
         {
             PlaybackSlider.SetValueWithoutEvent(audio.PlaybackPosition);
         }

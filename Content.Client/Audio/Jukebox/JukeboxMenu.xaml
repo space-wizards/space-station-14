@@ -12,6 +12,7 @@
         VerticalExpand="false" SizeFlagsStretchRatio="1">
             <Button Name="PlayButton" Text="{Loc 'jukebox-menu-buttonplay'}" />
             <Button Name="StopButton" Text="{Loc 'jukebox-menu-buttonstop'}" />
+            <Label Name="DurationLabel" Text="00:00 / 00:00" HorizontalAlignment="Right"/>
         </BoxContainer>
     </BoxContainer>
 </ui:FancyWindow>
