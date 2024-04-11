@@ -37,7 +37,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         }
         else if (comp.MapPath != null)
         {
-            if (_mapLoader.TryLoad(comp.Map.Value, comp.MapPath.Value.ToString(), out var roots, new MapLoadOptions { LoadMap = true}))
+            if (_mapLoader.TryLoad(comp.Map.Value, comp.MapPath, out var roots, new MapLoadOptions { LoadMap = true}))
                 comp.MapGrids.AddRange(roots);
         }
         else

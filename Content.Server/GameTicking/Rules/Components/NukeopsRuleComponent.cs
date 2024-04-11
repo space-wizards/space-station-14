@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
-[RegisterComponent, Access(typeof(NukeopsRuleSystem), typeof(LoneOpsSpawnRule))]
+[RegisterComponent, Access(typeof(NukeopsRuleSystem))]
 public sealed partial class NukeopsRuleComponent : Component
 {
     /// <summary>

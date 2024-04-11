@@ -19,7 +19,7 @@ public sealed partial class LoadMapRuleComponent : Component
     public ProtoId<GameMapPrototype>? GameMap ;
 
     [DataField]
-    public ResPath? MapPath;
+    public string? MapPath;
 
     [DataField]
     public List<EntityUid> MapGrids = new();
