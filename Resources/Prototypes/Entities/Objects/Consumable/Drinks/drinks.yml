@@ -2287,7 +2287,7 @@
 - type: entity
   parent: DrinkGlass
   id: DrinkCleverGirlGlass
-  suffix: clever girl
+  name: clever girl
   components:
   - type: SolutionContainerManager
     solutions:
