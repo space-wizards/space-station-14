@@ -20,7 +20,7 @@
     maxAngle: 16
     fireRate: 8
     angleIncrease: 3
-    angleDecay: 16
+    angleDecay: 16  
     selectedMode: FullAuto
     availableModes:
     - SemiAuto
@@ -221,9 +221,16 @@
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
   - type: Gun
-    fireRate: 5
+    fireRate: 5.5
+    minAngle: 1
+    maxAngle: 6
+    angleIncrease: 1.5
+    angleDecay: 6  
     selectedMode: FullAuto
+    shotsPerBurst: 5
     availableModes:
+    - SemiAuto
+    - Burst
     - FullAuto
   - type: ItemSlots
     slots:
