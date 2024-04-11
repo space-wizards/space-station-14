@@ -257,9 +257,8 @@ namespace Content.Server.Kitchen.EntitySystems
 
             var doAfterArgs = new DoAfterArgs(EntityManager, userUid, component.SpikeDelay + butcherable.ButcherDelay, new SpikeDoAfterEvent(), uid, target: victimUid, used: uid)
             {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
                 BreakOnDamage = true,
+                BreakOnMove = true,
                 NeedHand = true
             };
 

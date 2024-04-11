@@ -1,0 +1,421 @@
+- type: entity
+  parent: BaseStructure
+  id: BaseFenceWood
+  name: wooden fence
+  description: Wooden piece of fencing. I hope there is babushka's garden behind it.
+  abstract: true
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/boxingpunch1.ogg"
+  - type: Tag
+    tags:
+    - Wooden
+  - type: Sprite
+    sprite: Structures/Walls/wooden_fence.rsi
+    drawdepth: WallTops
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    anchored: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 125
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Climbable
+    delay: 5.0
+  - type: Appearance
+
+- type: entity
+  parent: BaseFenceWood
+  id: BaseFenceWoodSmall
+  name: small wooden fence
+  description: Wooden piece of small fence. The best protection for the fencing of a private territory!
+  abstract: true
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Climbable
+    delay: 2.5
+
+
+#High
+- type: entity
+  parent: BaseFenceWood
+  id: FenceWoodHighStraight
+  suffix: Straight
+  components:
+  - type: Icon
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: straight
+  - type: Sprite
+    layers:
+    - state: straight
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.5,0.10,0.5"
+        density: 1000
+        mask:
+        - FullTileMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Construction
+    graph: FenceWood
+    node: straight
+
+- type: entity
+  parent: BaseFenceWood
+  id: FenceWoodHighEnd
+  suffix: End
+  components:
+  - type: Icon
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: end
+  - type: Sprite
+    layers:
+    - state: end
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.5,0.1,0.0"
+        density: 1000
+        mask:
+        - FullTileMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Construction
+    graph: FenceWood
+    node: end
+
+- type: entity
+  parent: BaseFenceWood
+  id: FenceWoodHighCorner
+  suffix: Corner
+  components:
+  - type: Icon
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: corner
+  - type: Sprite
+    layers:
+    - state: corner
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.5"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+      fix2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.1,-0.1,0.1"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Construction
+    graph: FenceWood
+    node: corner
+
+- type: entity
+  parent: BaseFenceWood
+  id: FenceWoodHighTJunction
+  suffix: T-Junction
+  components:
+  - type: Icon
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: tjunction
+  - type: Sprite
+    layers:
+    - state: tjunction
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.5,0.10,0.5"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+      fix2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.1,-0.1,0.1"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Construction
+    graph: FenceWood
+    node: tjunction
+
+- type: entity
+  parent: BaseFenceWood
+  id: FenceWoodHighGate
+  name: wooden fence gate
+  description: Do you have any idea what awaits you behind these gates? It can be either a toilet or a luxurious mansion. But you continue to love your emo boys.
+  components:
+  - type: Sprite
+    layers:
+    - state: end
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.1,0.5,0.1"
+        density: 1000
+        mask:
+        - FullTileMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: InteractionOutline
+  - type: Door
+    openSpriteState: door_opened
+    closedSpriteState: door_closed
+    canPry: false
+    occludes: false
+    changeAirtight: false
+    bumpOpen: false
+    clickOpen: true
+    canCrush: false
+    closeTimeOne: 0
+    closeTimeTwo: 0
+    openTimeOne: 0
+    openTimeTwo: 0
+    openingAnimationTime: 0
+    closingAnimationTime: 0
+    openSound:
+      path: /Audio/Effects/door_open.ogg
+    closeSound:
+      path: /Audio/Effects/door_close.ogg
+  - type: Construction
+    graph: FenceWood
+    node: gate
+
+#Small
+- type: entity
+  parent: BaseFenceWoodSmall
+  id: FenceWoodSmallStraight
+  suffix: Straight
+  components:
+  - type: Icon
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: straight_small
+  - type: Sprite
+    layers:
+    - state: straight_small
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.5,0.10,0.5"
+        density: 1000
+        mask:
+        - FullTileMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Construction
+    graph: FenceWood
+    node: straight_small
+
+- type: entity
+  parent: BaseFenceWoodSmall
+  id: FenceWoodSmallEnd
+  suffix: End
+  components:
+  - type: Icon
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: end_small
+  - type: Sprite
+    layers:
+    - state: end_small
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.5,0.1,0.0"
+        density: 1000
+        mask:
+        - FullTileMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Construction
+    graph: FenceWood
+    node: end_small
+
+- type: entity
+  parent: BaseFenceWoodSmall
+  id: FenceWoodSmallCorner
+  suffix: Corner
+  components:
+  - type: Icon
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: corner_small
+  - type: Sprite
+    layers:
+    - state: corner_small
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.5"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+      fix2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.1,-0.1,0.1"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Construction
+    graph: FenceWood
+    node: corner_small
+
+- type: entity
+  parent: BaseFenceWoodSmall
+  id: FenceWoodSmallTJunction
+  suffix: T-Junction
+  components:
+  - type: Icon
+    sprite: Structures/Walls/wooden_fence.rsi
+    state: tjunction_small
+  - type: Sprite
+    layers:
+    - state: tjunction_small
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.5,0.10,0.5"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+      fix2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.1,-0.1,0.1"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Construction
+    graph: FenceWood
+    node: tjunction_small
+
+- type: entity
+  parent: BaseFenceWoodSmall
+  id: FenceWoodSmallGate
+  name: wooden fence gate
+  description: Looking at this gate, a familiar image pops up in your head. Where's my piggy?
+  components:
+  - type: Sprite
+    layers:
+    - state: end_small
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.1,0.5,0.1"
+        density: 1000
+        mask:
+        - FullTileMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: InteractionOutline
+  - type: Door
+    openSpriteState: door_opened_small
+    closedSpriteState: door_closed_small
+    canPry: false
+    occludes: false
+    changeAirtight: false
+    bumpOpen: false
+    clickOpen: true
+    canCrush: false
+    closeTimeOne: 0
+    closeTimeTwo: 0
+    openTimeOne: 0
+    openTimeTwo: 0
+    openingAnimationTime: 0
+    closingAnimationTime: 0
+    openSound:
+      path: /Audio/Effects/door_open.ogg
+    closeSound:
+      path: /Audio/Effects/door_close.ogg
+  - type: Construction
+    graph: FenceWood
+    node: gate_small
