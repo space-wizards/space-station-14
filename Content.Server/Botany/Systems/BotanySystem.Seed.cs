@@ -151,7 +151,7 @@ public sealed partial class BotanySystem : EntitySystem
             if (yieldMod < 0f)
                 totalYield = 0;
             else
-                totalYield = (int) Math.Round((float) proto.Yield * yieldMod);
+                totalYield = (int)Math.Round((float)proto.Yield * yieldMod);
 
             totalYield = Math.Max(1, totalYield);
         }
@@ -203,7 +203,7 @@ public sealed partial class BotanySystem : EntitySystem
                 var fixtures = EnsureComp<FixturesComponent>(entity);
                 var body = EnsureComp<PhysicsComponent>(entity);
                 var shape = fixtures.Fixtures["fix1"].Shape;
-                _fixtureSystem.TryCreateFixture(entity, shape, "slips", 1, false, (int) CollisionGroup.SlipLayer, manager: fixtures, body: body);
+                _fixtureSystem.TryCreateFixture(entity, shape, "slips", 1, false, (int)CollisionGroup.SlipLayer, manager: fixtures, body: body);
                 // Need to disable collision wake so that mobs can collide with and slip on it
                 var collisionWake = EnsureComp<CollisionWakeComponent>(entity);
                 _colWakeSystem.SetEnabled(entity, false, collisionWake);
