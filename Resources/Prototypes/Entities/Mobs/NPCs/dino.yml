@@ -1,5 +1,3 @@
-D:\OtherGames\SpaceStation14\кмин\KMIN\Resources\Textures\Mobs\Aliens\Dinos
-
 - type: entity
   save: false
   parent: [ BaseSimpleMob, MobCombat ]
