@@ -123,7 +123,7 @@
       ejectOnInteract: true
       whitelist:
         tags:
-        - AntiqueLaser
+        - WeaponAntiqueLaser
     doorSound:
       path: /Audio/Machines/machine_switch.ogg
     openState: glass-up
