@@ -29,7 +29,11 @@ public sealed class NodeScannerSystem : EntitySystem
 
             var verb = new UtilityVerb()
             {
-                CreatePopup(uid, args.Target, artifact)
+                Act = () =>
+                {
+                    CreatePopup(uid,args.Target,artifact);
+                },
+                Text = Loc.GetString("node-scan-tooltip")
             };
 
             args.Verbs.Add(verb);
