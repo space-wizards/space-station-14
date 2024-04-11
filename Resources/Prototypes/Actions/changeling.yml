@@ -23,10 +23,9 @@
     whitelist:
       components:
       - HumanoidAppearance
-      - Body
     blacklist:
       components:
-      - Zombie
+      - Zombie # cannot steal zombified DNA
     event: !type:LingAbsorbActionEvent
     useDelay: 5
     canTargetSelf: false
@@ -68,6 +67,7 @@
   - type: InstantAction
     itemIconStyle: NoItem
     checkCanInteract: false
+    checkConsciousness: false
     icon:
       sprite: Interface/Actions/actions_ling.rsi
       state: regenerate
@@ -88,7 +88,6 @@
     whitelist:
       components:
       - HumanoidAppearance
-      - Body
     blacklist:
       components:
       - Zombie

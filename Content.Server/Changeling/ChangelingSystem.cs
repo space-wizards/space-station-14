@@ -61,7 +61,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         SubscribeLocalEvent<ChangelingComponent, ChangelingCycleDNAActionEvent>(OnCycleDNA);
         // SubscribeLocalEvent<ChangelingComponent, ChangelingTransformActionEvent>(OnTransform);
 
-        // InitializeLingAbilities();
+        InitializeLingAbilities();
     }
 
     private void OnStartup(Entity<ChangelingComponent> ent, ref ComponentStartup args)
@@ -118,13 +118,15 @@ public sealed partial class ChangelingSystem : EntitySystem
         return true;
     }
 
-    private bool TryUseAbility(EntityUid uid, ChangelingComponent component, int abilityCost, bool activated = true, float regenCost = 0f)
+    private bool TryUseAbility(EntityUid uid, ChangelingComponent component, int abilityCost)
     {
-        if (component.Chemicals <= Math.Abs(abilityCost) && activated)
+        if (component.Chemicals <= Math.Abs(abilityCost))
         {
             _popup.PopupEntity(Loc.GetString("changeling-not-enough-chemicals"), uid, uid);
             return false;
         }
+
+        ChangeChemicalsAmount(uid, component, abilityCost);
 
         return true;
     }

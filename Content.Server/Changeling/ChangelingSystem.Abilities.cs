@@ -177,7 +177,7 @@ public sealed partial class ChangelingSystem
 
         if (_mobState.IsCritical(ent)) // make sure the ling is critical, if not they cant regenerate
         {
-            if (!TryUseAbility(ent, component, 10))
+            if (!TryUseAbility(ent, component, -10))
                 return;
 
             args.Handled = true;
@@ -232,7 +232,7 @@ public sealed partial class ChangelingSystem
             }
         }
 
-        if (!TryUseAbility(uid, component, 25))
+        if (!TryUseAbility(uid, component, -25))
             return;
 
         if (StealDNA(uid, target, component))
