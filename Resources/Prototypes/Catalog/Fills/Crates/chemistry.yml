@@ -69,12 +69,15 @@
   id: CrateChemistryMisc
   parent: CrateChemistrySecure
   name: chemicals crate (misc)
-  description: Contains Ethanol, Sugar, and some pills someone forgot to label. Requires Chemistry access to open.
+  description: Contains Ethanol and Sugar. May contain pills. Requires Chemistry access to open.
   components:
     - type: StorageFill
       contents:
-        - id: StrangePill
-          amount: 5
+        - id: StrangePill #Random chem pills
+          prob: 0.05
+          maxAmount: 3
+        - id: PillCanisterRandom #Random amount of 1-7 pills, can be most basic medications, Ambuzol (or plus), space drugs, or strange pills, with those last being less likely than basic meds
+          prob: 0.1
         - id: JugEthanol
           amount: 1
         - id: JugSugar
