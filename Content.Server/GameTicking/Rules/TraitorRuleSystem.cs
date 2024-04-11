@@ -133,34 +133,13 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
     private void OnObjectivesTextGetInfo(EntityUid uid, TraitorRuleComponent comp, ref ObjectivesTextGetInfoEvent args)
     {
-        args.Minds = _antag.GetAntagMindUids(uid);
+        args.Minds = _antag.GetAntagMindEntityUids(uid);
         args.AgentName = Loc.GetString("traitor-round-end-agent-name");
     }
 
     private void OnObjectivesTextPrepend(EntityUid uid, TraitorRuleComponent comp, ref ObjectivesTextPrependEvent args)
     {
         args.Text += "\n" + Loc.GetString("traitor-round-end-codewords", ("codewords", string.Join(", ", comp.Codewords)));
-    }
-
-    /// <summary>
-    /// Start this game rule manually
-    /// </summary>
-    public TraitorRuleComponent StartGameRule()
-    {
-        var comp = EntityQuery<TraitorRuleComponent>().FirstOrDefault();
-        if (comp == null)
-        {
-            GameTicker.StartGameRule("Traitor", out var ruleEntity);
-            comp = Comp<TraitorRuleComponent>(ruleEntity);
-        }
-
-        return comp;
-    }
-
-    public void MakeTraitorAdmin(EntityUid entity, bool giveUplink, bool giveObjectives)
-    {
-        var traitorRule = StartGameRule();
-        MakeTraitor(entity, traitorRule, giveUplink, giveObjectives);
     }
 
     private string GenerateBriefing(string[] codewords, Note[]? uplinkCode)

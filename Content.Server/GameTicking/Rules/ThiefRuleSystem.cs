@@ -91,7 +91,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
     private void OnObjectivesTextGetInfo(Entity<ThiefRuleComponent> ent, ref ObjectivesTextGetInfoEvent args)
     {
-        args.Minds = _antag.GetAntagMindUids(ent.Owner);
+        args.Minds = _antag.GetAntagMindEntityUids(ent.Owner);
         args.AgentName = Loc.GetString("thief-round-end-agent-name");
     }
 }

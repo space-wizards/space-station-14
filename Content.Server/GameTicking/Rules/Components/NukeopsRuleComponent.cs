@@ -79,9 +79,6 @@ public sealed partial class NukeopsRuleComponent : Component
     public int WarDeclarationMinOps = 4;
 
     [DataField]
-    public string OperationName = string.Empty;
-
-    [DataField]
     public WinType WinType = WinType.Neutral;
 
     [DataField]

@@ -27,7 +27,6 @@ using Content.Shared.Stunnable;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using System.Linq;
 using Content.Server.GameTicking.Components;
 
 namespace Content.Server.GameTicking.Rules;
@@ -97,7 +96,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         var index = (commandLost ? 1 : 0) | (revsLost ? 2 : 0);
         args.AddLine(Loc.GetString(Outcomes[index]));
 
-        var sessionData = _antag.GetAntagNameData(uid);
+        var sessionData = _antag.GetAntagIdentifiers(uid);
         args.AddLine(Loc.GetString("rev-headrev-count", ("initialCount", sessionData.Count)));
         foreach (var (mind, data, name) in sessionData)
         {
@@ -159,19 +158,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         if (mind?.Session != null)
             _antag.SendBriefing(mind.Session, Loc.GetString("rev-role-greeting"), Color.Red, revComp.RevStartSound);
-    }
-
-    public void OnHeadRevAdmin(EntityUid entity)
-    {
-        if (HasComp<HeadRevolutionaryComponent>(entity))
-            return;
-
-        var revRule = EntityQuery<RevolutionaryRuleComponent>().FirstOrDefault();
-        if (revRule == null)
-        {
-            GameTicker.StartGameRule("Revolutionary", out var ruleEnt);
-            revRule = Comp<RevolutionaryRuleComponent>(ruleEnt);
-        }
     }
 
     //TODO: Enemies of the revolution

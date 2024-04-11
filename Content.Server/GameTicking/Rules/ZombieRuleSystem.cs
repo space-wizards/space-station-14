@@ -57,7 +57,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         else
             args.AddLine(Loc.GetString("zombie-round-end-amount-all"));
 
-        var antags = _antag.GetAntagNameData(uid);
+        var antags = _antag.GetAntagIdentifiers(uid);
         args.AddLine(Loc.GetString("zombie-round-end-initial-count", ("initialCount", antags.Count)));
         foreach (var (_, data, entName) in antags)
         {

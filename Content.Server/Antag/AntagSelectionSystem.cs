@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Antag.Components;
 using Content.Server.Chat.Managers;
@@ -9,7 +8,6 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Inventory;
 using Content.Server.Mind;
-using Content.Server.Mind.Commands;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
@@ -122,6 +120,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!args.LateJoin)
             return;
 
+        // TODO: this really doesn't handle multiple latejoin definitions well
+        // eventually this should probably store the players per definition with some kind of unique identifier.
+        // something to figure out later.
+
         var query = QueryActiveRules();
         while (query.MoveNext(out var uid, out _, out var antag, out _))
         {
@@ -175,12 +177,18 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         component.SelectionsComplete = true;
     }
 
+    /// <summary>
+    /// Chooses antagonists from the current selection of players
+    /// </summary>
     public void ChooseAntags(Entity<AntagSelectionComponent> ent)
     {
         var sessions = _playerManager.Sessions.ToList();
         ChooseAntags(ent, sessions);
     }
 
+    /// <summary>
+    /// Chooses antagonists from the given selection of players
+    /// </summary>
     public void ChooseAntags(Entity<AntagSelectionComponent> ent, List<ICommonSession> pool)
     {
         foreach (var def in ent.Comp.Definitions)
@@ -189,6 +197,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
     }
 
+    /// <summary>
+    /// Chooses antagonists from the given selection of players for the given antag definition.
+    /// </summary>
     public void ChooseAntags(Entity<AntagSelectionComponent> ent, List<ICommonSession> pool, AntagSelectionDefinition def)
     {
         var playerPool = GetPlayerPool(ent, pool, def);
@@ -210,6 +221,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
     }
 
+    /// <summary>
+    /// Makes a given player into the specified antagonist.
+    /// </summary>
     public void MakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, bool ignoreSpawner = false)
     {
         var antagEnt = (EntityUid?) null;
@@ -283,7 +297,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 curMind = _mind.CreateMind(session.UserId, Name(antagEnt.Value));
                 _mind.SetUserId(curMind.Value, session.UserId);
             }
-            Log.Debug($"{player}. {session}");
 
             EntityManager.AddComponents(curMind.Value, def.MindComponents);
             _mind.TransferTo(curMind.Value, antagEnt, ghostCheckOverride: true);
@@ -299,6 +312,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         RaiseLocalEvent(ent, ref afterEv, true);
     }
 
+    /// <summary>
+    /// Gets an ordered player pool based on player preferences and the antagonist definition.
+    /// </summary>
     public AntagSelectionPlayerPool GetPlayerPool(Entity<AntagSelectionComponent> ent, List<ICommonSession> sessions, AntagSelectionDefinition def)
     {
         var primaryList = new List<ICommonSession>();
@@ -333,6 +349,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         return new AntagSelectionPlayerPool(primaryList, secondaryList, fallbackList, rawList);
     }
 
+    /// <summary>
+    /// Checks if a given session is valid for an antagonist.
+    /// </summary>
     public bool IsSessionValid(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSelectionDefinition def, EntityUid? mind = null)
     {
         mind ??= session.GetMind();
@@ -368,6 +387,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         return true;
     }
 
+    /// <summary>
+    /// Checks if a given entity (mind/session not included) is valid for a given antagonist.
+    /// </summary>
     private bool IsEntityValid(EntityUid? entity, AntagSelectionDefinition def)
     {
         if (entity == null)
@@ -393,43 +415,11 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         return true;
     }
-
-    /// <summary>
-    /// Tries to get the next non-filled definition based on the current amount of selected minds and other factors.
-    /// </summary>
-    private bool TryGetNextAvailableDefinition(Entity<AntagSelectionComponent> ent,
-        [NotNullWhen(true)] out AntagSelectionDefinition? definition)
-    {
-        // TODO: this really doesn't handle multiple latejoin definitions well
-        // eventually this should probably store the players per definition with some kind of unique identifier.
-        // something to figure out later.
-
-        definition = null;
-
-        var totalTargetCount = GetTargetAntagCount(ent);
-        var mindCount = ent.Comp.SelectedMinds.Count;
-        if (mindCount >= totalTargetCount)
-            return false;
-
-        foreach (var def in ent.Comp.Definitions)
-        {
-            var target = GetTargetAntagCount(ent, null, def);
-
-            if (mindCount < target)
-            {
-                definition = def;
-                return true;
-            }
-
-            mindCount -= target;
-        }
-
-        return false;
-    }
 }
 
 /// <summary>
-/// Event raised on an entity
+/// Event raised on a game rule entity in order to determine what the antagonist entity will be.
+/// Only raised if the selected player's current entity is invalid.
 /// </summary>
 [ByRefEvent]
 public record struct AntagSelectEntityEvent(ICommonSession? Session, Entity<AntagSelectionComponent> GameRule)
@@ -442,7 +432,7 @@ public record struct AntagSelectEntityEvent(ICommonSession? Session, Entity<Anta
 }
 
 /// <summary>
-/// Event raised on an entity
+/// Event raised on a game rule entity to determine the location for the antagonist.
 /// </summary>
 [ByRefEvent]
 public record struct AntagSelectLocationEvent(ICommonSession? Session, Entity<AntagSelectionComponent> GameRule)
@@ -455,7 +445,8 @@ public record struct AntagSelectLocationEvent(ICommonSession? Session, Entity<An
 }
 
 /// <summary>
-/// Event raised on an entity
+/// Event raised on a game rule entity after the setup logic for an antag is complete.
+/// Used for applying additional more complex setup logic.
 /// </summary>
 [ByRefEvent]
 public readonly record struct AfterAntagEntitySelectedEvent(ICommonSession? Session, EntityUid EntityUid, Entity<AntagSelectionComponent> GameRule, AntagSelectionDefinition Def);

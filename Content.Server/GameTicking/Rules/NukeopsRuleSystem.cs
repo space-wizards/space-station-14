@@ -1,9 +1,7 @@
-using Content.Server.Administration.Commands;
 using Content.Server.Antag;
 using Content.Server.Communications;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Humanoid;
-using Content.Server.Mind;
 using Content.Server.Nuke;
 using Content.Server.NukeOps;
 using Content.Server.Popups;
@@ -24,7 +22,6 @@ using Content.Shared.NPC.Systems;
 using Content.Shared.Nuke;
 using Content.Shared.NukeOps;
 using Content.Shared.Preferences;
-using Content.Shared.Roles;
 using Content.Shared.Store;
 using Content.Shared.Tag;
 using Content.Shared.Zombies;
@@ -43,12 +40,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
@@ -57,9 +52,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
     [ValidatePrototypeId<TagPrototype>]
     private const string NukeOpsUplinkTagPrototype = "NukeOpsUplink";
-
-    [ValidatePrototypeId<AntagPrototype>]
-    public const string NukeopsId = "Nukeops";
 
     public override void Initialize()
     {
@@ -100,7 +92,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return;
 
         component.TargetStation = RobustRandom.Pick(eligible);
-        component.OperationName = Name(uid);
     }
 
     #region Event Handlers
@@ -118,7 +109,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         args.AddLine(Loc.GetString("nukeops-list-start"));
 
-        var antags =_antag.GetAntagNameData(uid);
+        var antags =_antag.GetAntagIdentifiers(uid);
 
         foreach (var (_, sessionData, name) in antags)
         {
@@ -503,7 +494,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         _antag.SendBriefing(args.Session, Loc.GetString("nukeops-welcome",
                 ("station", station),
-                ("name", (ent.Comp.OperationName))),
+                ("name", Name(ent))),
             Color.Red,
             ent.Comp.GreetSoundNotification);
     }
@@ -518,16 +509,5 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return null;
 
         return ent.Comp.MapGrids.FirstOrNull();
-    }
-
-    //For admins forcing someone to nukeOps.
-    public void MakeLoneNukie(EntityUid entity)
-    {
-        if (!_mind.TryGetMind(entity, out var mindId, out var mindComponent))
-            return;
-
-        //ok hardcoded value bad but so is everything else here
-        _roles.MindAddRole(mindId, new NukeopsRoleComponent { PrototypeId = NukeopsId }, mindComponent);
-        SetOutfitCommand.SetOutfit(entity, "SyndicateOperativeGearFull", EntityManager);
     }
 }

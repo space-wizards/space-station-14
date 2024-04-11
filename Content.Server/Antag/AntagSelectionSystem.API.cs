@@ -1,7 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Antag.Components;
+using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Objectives;
 using Content.Shared.Chat;
 using Content.Shared.Mind;
+using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -9,6 +13,39 @@ namespace Content.Server.Antag;
 
 public sealed partial class AntagSelectionSystem
 {
+    /// <summary>
+    /// Tries to get the next non-filled definition based on the current amount of selected minds and other factors.
+    /// </summary>
+    public bool TryGetNextAvailableDefinition(Entity<AntagSelectionComponent> ent,
+        [NotNullWhen(true)] out AntagSelectionDefinition? definition)
+    {
+        definition = null;
+
+        var totalTargetCount = GetTargetAntagCount(ent);
+        var mindCount = ent.Comp.SelectedMinds.Count;
+        if (mindCount >= totalTargetCount)
+            return false;
+
+        foreach (var def in ent.Comp.Definitions)
+        {
+            var target = GetTargetAntagCount(ent, null, def);
+
+            if (mindCount < target)
+            {
+                definition = def;
+                return true;
+            }
+
+            mindCount -= target;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Gets the number of antagonists that should be present for a given rule based on the provided pool.
+    /// A null pool will simply use the player count.
+    /// </summary>
     public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool? pool = null)
     {
         var count = 0;
@@ -20,6 +57,10 @@ public sealed partial class AntagSelectionSystem
         return count;
     }
 
+    /// <summary>
+    /// Gets the number of antagonists that should be present for a given antag definition based on the provided pool.
+    /// A null pool will simply use the player count.
+    /// </summary>
     public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool? pool, AntagSelectionDefinition def)
     {
         var poolSize = pool?.Count ?? _playerManager.Sessions.Length;
@@ -35,7 +76,13 @@ public sealed partial class AntagSelectionSystem
         return Math.Clamp((poolSize - countOffset) / def.PlayerRatio, def.Min, def.Max);
     }
 
-    public List<(EntityUid, SessionData, string)> GetAntagNameData(Entity<AntagSelectionComponent?> ent)
+    /// <summary>
+    /// Returns identifiable information for all antagonists to be used in a round end summary.
+    /// </summary>
+    /// <returns>
+    /// A list containing, in order, the antag's mind, the session data, and the original name stored as a string.
+    /// </returns>
+    public List<(EntityUid, SessionData, string)> GetAntagIdentifiers(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return new List<(EntityUid, SessionData, string)>();
@@ -54,6 +101,9 @@ public sealed partial class AntagSelectionSystem
         return output;
     }
 
+    /// <summary>
+    /// Returns all the minds of antagonists.
+    /// </summary>
     public List<Entity<MindComponent>> GetAntagMinds(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -70,7 +120,10 @@ public sealed partial class AntagSelectionSystem
         return output;
     }
 
-    public List<EntityUid> GetAntagMindUids(Entity<AntagSelectionComponent?> ent)
+    /// <remarks>
+    /// Helper specifically for <see cref="ObjectivesTextGetInfoEvent"/>
+    /// </remarks>
+    public List<EntityUid> GetAntagMindEntityUids(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return new();
@@ -78,6 +131,9 @@ public sealed partial class AntagSelectionSystem
         return ent.Comp.SelectedMinds.Select(p => p.Item1).ToList();
     }
 
+    /// <summary>
+    /// Returns all the antagonists for this rule who are currently alive
+    /// </summary>
     public IEnumerable<EntityUid> GetAliveAntags(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -94,6 +150,9 @@ public sealed partial class AntagSelectionSystem
         }
     }
 
+    /// <summary>
+    /// Returns the number of alive antagonists for this rule.
+    /// </summary>
     public int GetAliveAntagCount(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -102,6 +161,9 @@ public sealed partial class AntagSelectionSystem
         return GetAliveAntags(ent).Count();
     }
 
+    /// <summary>
+    /// Returns if there are any remaining antagonists alive for this rule.
+    /// </summary>
     public bool AnyAliveAntags(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -110,6 +172,9 @@ public sealed partial class AntagSelectionSystem
         return GetAliveAntags(ent).Any();
     }
 
+    /// <summary>
+    /// Checks if all the antagonists for this rule are alive.
+    /// </summary>
     public bool AllAntagsAlive(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -139,10 +204,11 @@ public sealed partial class AntagSelectionSystem
     /// <summary>
     /// Helper method to send the briefing text and sound to a list of sessions
     /// </summary>
-    /// <param name="sessions"></param>
-    /// <param name="briefing"></param>
-    /// <param name="briefingColor"></param>
-    /// <param name="briefingSound"></param>
+    /// <param name="sessions">The sessions that will be sent the briefing</param>
+    /// <param name="briefing">The briefing text to send</param>
+    /// <param name="briefingColor">The color the briefing should be, null for default</param>
+    /// <param name="briefingSound">The sound to briefing/greeting sound to play</param>
+    [PublicAPI]
     public void SendBriefing(List<ICommonSession> sessions, string briefing, Color? briefingColor, SoundSpecifier? briefingSound)
     {
         foreach (var session in sessions)
@@ -150,6 +216,7 @@ public sealed partial class AntagSelectionSystem
             SendBriefing(session, briefing, briefingColor, briefingSound);
         }
     }
+
     /// <summary>
     /// Helper method to send the briefing text and sound to a session
     /// </summary>
@@ -165,5 +232,37 @@ public sealed partial class AntagSelectionSystem
         _audio.PlayGlobal(briefingSound, session);
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", briefing));
         _chat.ChatMessageToOne(ChatChannel.Server, briefing, wrappedMessage, default, false, session.Channel, briefingColor);
+    }
+
+    /// <summary>
+    /// This technically is a gamerule-ent-less way to make an entity an antag.
+    /// You should almost never be using this.
+    /// </summary>
+    public void ForceMakeAntag<T>(ICommonSession? player, string defaultRule) where T : Component
+    {
+        var rule = ForceGetGameRuleEnt<T>(defaultRule);
+
+        if (!TryGetNextAvailableDefinition(rule, out var def))
+            def = rule.Comp.Definitions.Last();
+        MakeAntag(rule, player, def.Value);
+    }
+
+    /// <summary>
+    /// Tries to grab one of the weird specific antag gamerule ents or starts a new one.
+    /// This is gross code but also most of this is pretty gross to begin with.
+    /// </summary>
+    public Entity<AntagSelectionComponent> ForceGetGameRuleEnt<T>(string id) where T : Component
+    {
+        var query = EntityQueryEnumerator<T, AntagSelectionComponent>();
+        while (query.MoveNext(out var uid, out _, out var comp))
+        {
+            return (uid, comp);
+        }
+        var ruleEnt = GameTicker.AddGameRule(id);
+        RemComp<LoadMapRuleComponent>(ruleEnt);
+        var antag = Comp<AntagSelectionComponent>(ruleEnt);
+        antag.SelectionsComplete = true; // don't do normal selection.
+        GameTicker.StartGameRule(ruleEnt);
+        return (ruleEnt, antag);
     }
 }
