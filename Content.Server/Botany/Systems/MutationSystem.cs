@@ -61,7 +61,7 @@ public sealed class MutationSystem : EntitySystem
         MutateFloat(ref seed.Lifespan             , 10f  , 80f , 5, totalbits, 2 * severity);
         MutateFloat(ref seed.Maturation           , 3f   , 8f  , 5, totalbits, 2 * severity);
         MutateFloat(ref seed.Production           , 1f   , 10f , 5, totalbits, 2 * severity);
-        MutateFloat(ref seed.BasePotency              , 30f  , 100f, 5, totalbits, 2 * severity);
+        MutateFloat(ref seed.Potency              , 30f  , 100f, 5, totalbits, 2 * severity);
 
         // Kill the plant (30)
         MutateBool(ref seed.Viable        , false, 30, totalbits, severity);
@@ -113,7 +113,7 @@ public sealed class MutationSystem : EntitySystem
         CrossFloat(ref result.Lifespan, a.Lifespan);
         CrossFloat(ref result.Maturation, a.Maturation);
         CrossFloat(ref result.Production, a.Production);
-        CrossFloat(ref result.BasePotency, a.BasePotency);
+        CrossFloat(ref result.Potency, a.Potency);
 
         CrossBool(ref result.Seedless, a.Seedless);
         CrossBool(ref result.Viable, a.Viable);

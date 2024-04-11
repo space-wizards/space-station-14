@@ -95,7 +95,7 @@ public sealed partial class BotanySystem : EntitySystem
             var name = Loc.GetString(seed.DisplayName);
             args.PushMarkup(Loc.GetString($"seed-component-description", ("seedName", name)));
             args.PushMarkup(Loc.GetString($"seed-component-plant-yield-text", ("seedYield", seed.Yield)));
-            args.PushMarkup(Loc.GetString($"seed-component-plant-potency-text", ("seedPotency", seed.BasePotency)));
+            args.PushMarkup(Loc.GetString($"seed-component-plant-potency-text", ("seedPotency", seed.Potency)));
         }
     }
 
@@ -151,7 +151,7 @@ public sealed partial class BotanySystem : EntitySystem
             if (yieldMod < 0f)
                 totalYield = 0;
             else
-                totalYield = (int) Math.Round((float) proto.Yield * yieldMod);
+                totalYield = (int)Math.Round((float) proto.Yield * yieldMod);
 
             totalYield = Math.Max(1, totalYield);
         }
@@ -172,7 +172,7 @@ public sealed partial class BotanySystem : EntitySystem
             var produce = EnsureComp<ProduceComponent>(entity);
 
             produce.Seed = proto;
-            produce.ProducePotency = proto.BasePotency + potencyBonus;
+            produce.ProducePotency = proto.Potency + potencyBonus;
             ProduceGrown(entity, produce);
 
             _appearance.SetData(entity, ProduceVisuals.Potency, produce.ProducePotency);

@@ -71,6 +71,9 @@ public sealed partial class PlantHolderComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("health")]
     public float Health;
 
+    ///<summary>
+    /// The bonus to potency from fertiliser applied to the curent crop. This is added with the seed's own Potency to determine things like crop reagent contents.
+    ///</summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("potencyBonus")]
     public float PotencyBonus;
 

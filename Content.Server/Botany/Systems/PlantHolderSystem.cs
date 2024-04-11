@@ -564,7 +564,7 @@ public sealed class PlantHolderSystem : EntitySystem
             foreach (var (gas, amount) in component.Seed.ExudeGasses)
             {
                 environment.AdjustMoles(gas,
-                    MathF.Max(1f, MathF.Round(amount * MathF.Round(component.PotencyBonus + component.Seed.BasePotency) / exudeCount)));
+                    MathF.Max(1f, MathF.Round(amount * MathF.Round(component.PotencyBonus + component.Seed.Potency) / exudeCount)));
             }
         }
 
