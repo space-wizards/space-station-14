@@ -94,6 +94,11 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
   - type: Gun
+    shotsPerBurst: 5
+    availableModes:
+    - SemiAuto
+    - Burst
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
   - type: ChamberMagazineAmmoProvider
