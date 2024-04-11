@@ -151,7 +151,7 @@ public sealed partial class BotanySystem : EntitySystem
             if (yieldMod < 0f)
                 totalYield = 0;
             else
-                totalYield = (int)Math.Round((float) proto.Yield * yieldMod);
+                totalYield = (int) Math.Round((float) proto.Yield * yieldMod);
 
             totalYield = Math.Max(1, totalYield);
         }
