@@ -155,6 +155,11 @@
   description: flavor-base-cheap
 
 - type: flavor
+  id: piquant
+  flavorType: Base
+  description: flavor-base-piquant
+
+- type: flavor
   id: terrible
   flavorType: Base
   description: flavor-base-terrible
