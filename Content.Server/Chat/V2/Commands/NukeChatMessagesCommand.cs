@@ -15,7 +15,7 @@ public sealed class NukeChatMessagesCommand : ToolshedCommand
     {
         foreach (var username in usernames)
         {
-            IoCManager.Resolve<ChatRepository>().NukeForUsername(username, out _);
+            IoCManager.Resolve<ChatRepositorySystem>().NukeForUsername(username, out _);
         }
     }
 }

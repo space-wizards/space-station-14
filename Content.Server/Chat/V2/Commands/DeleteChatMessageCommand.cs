@@ -11,6 +11,6 @@ public sealed class DeleteChatMessageCommand : ToolshedCommand
     [CommandImplementation("id")]
     public void DeleteChatMessage([PipedArgument] uint messageId)
     {
-        IoCManager.Resolve<ChatRepository>().Delete(messageId);
+        IoCManager.Resolve<ChatRepositorySystem>().Delete(messageId);
     }
 }
