@@ -522,7 +522,7 @@
 # Shakers
 
 - type: entity
-  parent: BaseFoodCondimentBottle
+  parent: BaseFoodCondiment
   id: BaseFoodShaker
   abstract: true
   name: empty shaker
