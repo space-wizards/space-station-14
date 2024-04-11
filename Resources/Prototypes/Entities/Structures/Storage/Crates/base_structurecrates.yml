@@ -91,6 +91,7 @@
   - type: Lock
   - type: LockVisuals
   - type: AccessReader
+    containerAccessProvider: board
   - type: Icon
     sprite: Structures/Storage/Crates/secure.rsi
     state: icon

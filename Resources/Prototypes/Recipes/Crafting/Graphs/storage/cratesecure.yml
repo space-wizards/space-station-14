@@ -8,9 +8,13 @@
           steps:
             - material: Steel
               amount: 5
-            - material: Cable
-              amount: 2
-              doAfter: 5
+            - component: DoorElectronics
+              store: board
+              name: "door electronics circuit board"
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "door_electronics"
+              doAfter: 3
 
 
     - node: cratesecure
