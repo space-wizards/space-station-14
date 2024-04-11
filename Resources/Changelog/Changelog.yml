@@ -3821,8 +3821,7 @@
   url: https://github.com/space-wizards/space-station-14/pull/26752
 - author: Jark255
   changes:
-  - message: NT removed developers' configuration device from all doors electronics
-      and patched network configurators to work with them
+  - message: Door electronics now require network configurators to change the access of them, rather by hand.
     type: Fix
   id: 6331
   time: '2024-04-11T12:21:15.0000000+00:00'
