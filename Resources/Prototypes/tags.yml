@@ -16,9 +16,6 @@
   id: Ambrosia
 
 - type: Tag
-  id: AntiqueLaser
-
-- type: Tag
   id: AppraisalTool
 
 - type: Tag
