@@ -63,12 +63,6 @@
   - type: TimedDespawn
     lifetime: 5
 
-# ExplodeOnTrigger for repeating trigger kinda shitty so spawn entity for each explosion
-- type: entity
-  noSpawn: true
-  id: DragonsBreathFire
-  components:
-
 - type: entity
   id: ProjectileAnomalyFireball
   name: fireball
