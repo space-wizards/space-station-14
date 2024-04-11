@@ -32,7 +32,7 @@
     accent: dino
   - type: Bloodstream
     bloodReagent: DinoBlood
-    bloodMaxVolume: 75 #you don't want the map to become pools of blood
+    bloodMaxVolume: 400 #poor janitors...
     bloodlossDamage:
       types:
         Bloodloss:
@@ -139,6 +139,17 @@
     thresholds:
       0: Alive
       50: Dead
+  - type: Bloodstream
+    bloodReagent: DinoBlood
+    bloodMaxVolume: 100 #small sized dino
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          0.5
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -1
   - type: SlowOnDamage
     speedModifierThresholds:
       10: 0.7
@@ -182,6 +193,17 @@
     thresholds:
       0: Alive
       50: Dead
+  - type: Bloodstream
+    bloodReagent: DinoBlood
+    bloodMaxVolume: 100 #small sized dino
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          0.5
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -1
   - type: SlowOnDamage
     speedModifierThresholds:
       10: 0.7
@@ -335,6 +357,17 @@
     thresholds:
       0: Alive
       80: Dead
+  - type: Bloodstream
+    bloodReagent: DinoBlood
+    bloodMaxVolume: 150 #small sized dino
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          0.5
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -1
   - type: SlowOnDamage
     speedModifierThresholds:
       25: 0.8
