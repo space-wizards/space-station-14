@@ -35,7 +35,7 @@
   Installing a SMES requires you construct a cable terminal to use as the input. The SMES will draw power from the terminal and send power out from underneath. The terminal will ensure that the HV input and HV output do not connect. Avoid connecting a SMES to itself; this will result in a short circuit, which can result in power flickering or outages depending on severity.
 
   ## APC breaking
-  Currently the only power storage device that has a limit to its power to the network is the APC. As soon as all connected devices and machinery demand more than [color=#a4885c]24kW[/color] of power, its breaker will pop and everything will turn off. In the case that you are not an engineer, call an engineer (or cyborg) to re-enable it, after reducing the load back down to [italics]below[/italics] 24kW.
+  Currently the only power storage device that has a limit to its power to the network is the APC. As soon as all connected devices and machinery demand more than [color=#a4885c]24kW[/color] of power, its breaker will pop and everything will turn off. In the case that you are not an engineer, call an engineer (or cyborg) to re-enable it, after reducing the load back down to [color=#a4885c]below[/color] 24kW.
   <Box>
   <GuideEntityEmbed Entity="APCBasic"/>
   </Box>
