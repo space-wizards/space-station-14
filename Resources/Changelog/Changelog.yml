@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MIXnikita
-  changes:
-  - message: New sound effects for some shuttle guns
-    type: Tweak
-  id: 5832
-  time: '2024-01-30T13:28:17.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24714
 - author: themias
   changes:
   - message: Stun batons now toggle off after being drained by an EMP.
@@ -3821,8 +3814,17 @@
   url: https://github.com/space-wizards/space-station-14/pull/26752
 - author: Jark255
   changes:
-  - message: Door electronics now require network configurators to change the access of them, rather by hand.
+  - message: Door electronics now require network configurators to change the access
+      of them, rather by hand.
     type: Fix
   id: 6331
   time: '2024-04-11T12:21:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26888
+- author: lunarcomets
+  changes:
+  - message: Cryogenic sleep units now remove crew members from the manifest, and
+      announce when crew members go into cryogenic storage.
+    type: Tweak
+  id: 6332
+  time: '2024-04-11T20:48:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26813
