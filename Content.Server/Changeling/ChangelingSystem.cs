@@ -30,11 +30,13 @@ using Content.Server.Chemistry.Containers.EntitySystems;
 using Robust.Shared.Utility;
 using Content.Server.Zombies;
 using Robust.Server.GameObjects;
+using Content.Shared.Mind;
 
 namespace Content.Server.Changeling;
 
 public sealed partial class ChangelingSystem : EntitySystem
 {
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly ActionsSystem _action = default!;
@@ -59,7 +61,6 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         SubscribeLocalEvent<ChangelingComponent, ChangelingEvolutionMenuActionEvent>(OnShop);
         SubscribeLocalEvent<ChangelingComponent, ChangelingCycleDNAActionEvent>(OnCycleDNA);
-        // SubscribeLocalEvent<ChangelingComponent, ChangelingTransformActionEvent>(OnTransform);
 
         InitializeLingAbilities();
     }
@@ -77,11 +78,15 @@ public sealed partial class ChangelingSystem : EntitySystem
 
     private void OnMapInit(Entity<ChangelingComponent> ent, ref MapInitEvent args)
     {
-        _action.AddAction(ent, ChangelingEvolutionMenuId);
-        _action.AddAction(ent, ChangelingRegenActionId);
-        _action.AddAction(ent, ChangelingAbsorbActionId);
-        _action.AddAction(ent, ChangelingDNACycleActionId);
-        _action.AddAction(ent, ChangelingTransformActionId);
+        // the actions are hooked to the mind because transformation uses polymorph
+        if (_mind.TryGetMind(ent, out var mind, out _))
+        {
+            _action.AddAction(mind, ChangelingEvolutionMenuId);
+            _action.AddAction(mind, ChangelingRegenActionId);
+            _action.AddAction(mind, ChangelingAbsorbActionId);
+            _action.AddAction(mind, ChangelingDNACycleActionId);
+            _action.AddAction(mind, ChangelingTransformActionId);
+        }
     }
 
     [ValidatePrototypeId<EntityPrototype>]
@@ -220,10 +225,12 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (!TryComp<FingerprintComponent>(target, out var fingerPrintComp))
             return false;
 
-        var transformData = new TransformData();
-        transformData.Name = metaDataComp.EntityName;
-        transformData.Dna = dnaComp.DNA;
-        transformData.HumanoidAppearanceComp = humanoidAppearanceComp;
+        var transformData = new TransformData
+        {
+            Name = metaDataComp.EntityName,
+            Dna = dnaComp.DNA,
+            HumanoidAppearanceComp = humanoidAppearanceComp
+        };
 
         if (fingerPrintComp.Fingerprint != null)
             transformData.Fingerprint = fingerPrintComp.Fingerprint;

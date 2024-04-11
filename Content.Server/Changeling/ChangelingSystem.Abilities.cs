@@ -21,6 +21,11 @@ using Content.Shared.FixedPoint;
 using Content.Server.Store.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.IdentityManagement;
+using Content.Server.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Polymorph;
+using Content.Server.Polymorph.Components;
 
 namespace Content.Server.Changeling;
 
@@ -36,6 +41,8 @@ public sealed partial class ChangelingSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
+    [Dependency] private readonly IdentitySystem _identitySystem = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
 
     private void InitializeLingAbilities()
     {
@@ -43,6 +50,7 @@ public sealed partial class ChangelingSystem
         SubscribeLocalEvent<ChangelingComponent, AbsorbDoAfterEvent>(OnAbsorbDoAfter);
 
         SubscribeLocalEvent<ChangelingComponent, LingRegenerateActionEvent>(OnRegenerate);
+        SubscribeLocalEvent<ChangelingComponent, ChangelingTransformActionEvent>(OnTransform);
 
         SubscribeLocalEvent<ChangelingComponent, LingStingExtractActionEvent>(OnLingDNASting);
     }
@@ -204,6 +212,57 @@ public sealed partial class ChangelingSystem
         {
             _popup.PopupEntity(Loc.GetString("changeling-regenerate-fail-not-crit"), ent, ent);
         }
+    }
+
+    private void OnTransform(Entity<ChangelingComponent> ent, ref ChangelingTransformActionEvent args)
+    {
+        var comp = ent.Comp;
+
+        if (args.Handled || !TryUseAbility(ent, comp, 5))
+            return;
+
+        var transformation = comp.StoredDNA[comp.SelectedDNA];
+        var dnaComp = EnsureComp<DnaComponent>(ent);
+
+        if (dnaComp.DNA == transformation.Dna)
+        {
+            var selfMessage = Loc.GetString("changeling-transform-fail", ("target", transformation.Name));
+            _popup.PopupEntity(selfMessage, ent, ent);
+            return;
+        }
+        else
+        {
+            var selfMessage = Loc.GetString("changeling-transform-activate", ("target", transformation.Name));
+            _popup.PopupEntity(selfMessage, ent, ent);
+        }
+
+        if (!_proto.TryIndex<SpeciesPrototype>(transformation.HumanoidAppearanceComp.Species, out var species))
+            return;
+
+        args.Handled = true;
+
+        var config = new PolymorphConfiguration
+        {
+            Entity = species.Prototype,
+            TransferDamage = true,
+            Forced = true,
+            Inventory = PolymorphInventoryChange.Transfer,
+            RevertOnDeath = false,
+            RevertOnCrit = false,
+            AllowRepeatedMorphs = false,
+        };
+
+        if (TryComp<PolymorphedEntityComponent>(ent, out var polymorphedEntity)) // revert if the ling was already transformed to prevent buggy behaviour
+            _polymorph.Revert((ent, polymorphedEntity));
+
+        _polymorph.PolymorphEntity(ent, config);
+
+        _metaData.SetEntityName(ent, transformation.Name);
+        Comp<FingerprintComponent>(ent).Fingerprint = transformation.Fingerprint;
+        dnaComp.DNA = transformation.Dna;
+        _humanoidAppearance.CloneAppearance(ent, transformation.HumanoidAppearanceComp);
+
+        RemCompDeferred<ChangelingComponent>(ent);
     }
 
     // changeling stings

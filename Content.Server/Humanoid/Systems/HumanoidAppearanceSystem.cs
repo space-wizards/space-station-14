@@ -20,6 +20,28 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         SubscribeLocalEvent<HumanoidAppearanceComponent, GetVerbsEvent<Verb>>(OnVerbsRequest);
     }
 
+    /// <summary>
+    ///     Sets a target mob's humanoid appearance component to another.
+    /// </summary>
+    public void SetAppearance(EntityUid target, HumanoidAppearanceComponent sourceHumanoid, HumanoidAppearanceComponent targetHumanoid)
+    {
+        targetHumanoid.Species = sourceHumanoid.Species;
+        targetHumanoid.SkinColor = sourceHumanoid.SkinColor;
+        targetHumanoid.EyeColor = sourceHumanoid.EyeColor;
+        targetHumanoid.Age = sourceHumanoid.Age;
+        SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
+        targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
+        targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
+
+        targetHumanoid.Gender = sourceHumanoid.Gender;
+        if (TryComp<GrammarComponent>(target, out var grammar))
+        {
+            grammar.Gender = sourceHumanoid.Gender;
+        }
+
+        Dirty(target, targetHumanoid);
+    }
+
     // this was done enough times that it only made sense to do it here
 
     /// <summary>
@@ -37,21 +59,23 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
             return;
         }
 
-        targetHumanoid.Species = sourceHumanoid.Species;
-        targetHumanoid.SkinColor = sourceHumanoid.SkinColor;
-        targetHumanoid.EyeColor = sourceHumanoid.EyeColor;
-        targetHumanoid.Age = sourceHumanoid.Age;
-        SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
-        targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
-        targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
+        SetAppearance(target, sourceHumanoid, targetHumanoid);
+    }
 
-        targetHumanoid.Gender = sourceHumanoid.Gender;
-        if (TryComp<GrammarComponent>(target, out var grammar))
+    /// <summary>
+    ///     Clones a humanoid's appearance component to a target mob, provided they both have humanoid components.
+    /// </summary>
+    /// <param name="target">Target entity to apply the source entity's appearance to.</param>
+    /// <param name="sourceHumanoid">Source entity's humanoid component.</param>
+    /// <param name="targetHumanoid">Target entity's humanoid component.</param>
+    public void CloneAppearance(EntityUid target, HumanoidAppearanceComponent sourceHumanoid, HumanoidAppearanceComponent? targetHumanoid = null)
+    {
+        if (!Resolve(target, ref targetHumanoid))
         {
-            grammar.Gender = sourceHumanoid.Gender;
+            return;
         }
 
-        Dirty(target, targetHumanoid);
+        SetAppearance(target, sourceHumanoid, targetHumanoid);
     }
 
     /// <summary>
