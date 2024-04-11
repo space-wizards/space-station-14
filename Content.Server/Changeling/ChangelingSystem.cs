@@ -28,6 +28,8 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Robust.Shared.Utility;
+using Content.Server.Zombies;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Changeling;
 
@@ -62,12 +64,24 @@ public sealed partial class ChangelingSystem : EntitySystem
         // InitializeLingAbilities();
     }
 
-    private void OnStartup(EntityUid uid, ChangelingComponent component, ComponentStartup args)
+    private void OnStartup(Entity<ChangelingComponent> ent, ref ComponentStartup args)
     {
-        _uplink.AddUplink(uid, FixedPoint2.New(10), ChangelingShopPresetPrototype, uid, EvolutionPointsCurrencyPrototype); // not really an 'uplink', but it's there to add the evolution menu
+        _uplink.AddUplink(ent, FixedPoint2.New(10), ChangelingShopPresetPrototype, ent, EvolutionPointsCurrencyPrototype); // not really an 'uplink', but it's there to add the evolution menu
 
-        RemComp<HungerComponent>(uid);
-        RemComp<ThirstComponent>(uid); // changelings dont get hungry or thirsty
+        RemComp<HungerComponent>(ent);
+        RemComp<ThirstComponent>(ent); // changelings dont get hungry or thirsty
+        EnsureComp<ZombieImmuneComponent>(ent); // no zombie lings
+
+        StealDNA(ent, ent, ent.Comp);
+    }
+
+    private void OnMapInit(Entity<ChangelingComponent> ent, ref MapInitEvent args)
+    {
+        _action.AddAction(ent, ChangelingEvolutionMenuId);
+        _action.AddAction(ent, ChangelingRegenActionId);
+        _action.AddAction(ent, ChangelingAbsorbActionId);
+        _action.AddAction(ent, ChangelingDNACycleActionId);
+        _action.AddAction(ent, ChangelingTransformActionId);
     }
 
     [ValidatePrototypeId<EntityPrototype>]
@@ -165,18 +179,9 @@ public sealed partial class ChangelingSystem : EntitySystem
         }
     }
 
-    private void OnMapInit(EntityUid uid, ChangelingComponent component, MapInitEvent args)
+    private void OnShop(Entity<ChangelingComponent> ent, ref ChangelingEvolutionMenuActionEvent args)
     {
-        _action.AddAction(uid, ChangelingEvolutionMenuId);
-        _action.AddAction(uid, ChangelingRegenActionId);
-        _action.AddAction(uid, ChangelingAbsorbActionId);
-        _action.AddAction(uid, ChangelingDNACycleActionId);
-        _action.AddAction(uid, ChangelingTransformActionId);
-    }
-
-    private void OnShop(EntityUid uid, ChangelingComponent component, ChangelingEvolutionMenuActionEvent args)
-    {
-        _store.OnInternalShop(uid);
+        _store.OnInternalShop(ent);
     }
 
     public override void Update(float frameTime)
@@ -204,27 +209,43 @@ public sealed partial class ChangelingSystem : EntitySystem
 
     public bool StealDNA(EntityUid uid, EntityUid target, ChangelingComponent component)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoidappearance))
-        {
+        if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoidAppearanceComp))
             return false;
-        }
+        if (!TryComp<MetaDataComponent>(target, out var metaDataComp))
+            return false;
+        if (!TryComp<DnaComponent>(target, out var dnaComp))
+            return false;
+        if (!TryComp<FingerprintComponent>(target, out var fingerPrintComp))
+            return false;
+
+        var transformData = new TransformData();
+        transformData.Name = metaDataComp.EntityName;
+        transformData.Dna = dnaComp.DNA;
+        transformData.HumanoidAppearanceComp = humanoidAppearanceComp;
+
+        if (fingerPrintComp.Fingerprint != null)
+            transformData.Fingerprint = fingerPrintComp.Fingerprint;
+
+        component.StoredDNA.Add(transformData);
 
         return true;
     }
 
-    public static void OnCycleDNA(EntityUid uid, ChangelingComponent component, ChangelingCycleDNAActionEvent args)
+    public void OnCycleDNA(Entity<ChangelingComponent> ent, ref ChangelingCycleDNAActionEvent args)
     {
         if (args.Handled)
             return;
 
         args.Handled = true;
 
-        component.SelectedDNA += 1;
+        ent.Comp.SelectedDNA += 1;
 
-        if (component.StoredDNA.Count >= component.DNAStrandCap || component.SelectedDNA >= component.StoredDNA.Count)
-            component.SelectedDNA = 0;
+        if (ent.Comp.StoredDNA.Count >= ent.Comp.DNAStrandCap || ent.Comp.SelectedDNA >= ent.Comp.StoredDNA.Count)
+            ent.Comp.SelectedDNA = 0;
 
-        // var selfMessage = Loc.GetString("changeling-dna-switchdna", ("target", selectedHumanoidData.MetaDataComponent.EntityName));
-        // _popup.PopupEntity(selfMessage, uid, uid);
+        var selectedTransformData = ent.Comp.StoredDNA[ent.Comp.SelectedDNA];
+
+        var selfMessage = Loc.GetString("changeling-dna-switchdna", ("target", selectedTransformData.Name));
+        _popup.PopupEntity(selfMessage, ent, ent);
     }
 }

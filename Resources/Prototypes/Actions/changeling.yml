@@ -5,6 +5,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    itemIconStyle: NoItem
     icon: Interface/Actions/shop.png
     event: !type:ChangelingEvolutionMenuActionEvent
 
@@ -15,12 +16,17 @@
   noSpawn: true
   components:
   - type: EntityTargetAction
+    itemIconStyle: NoItem
     icon:
       sprite: Interface/Actions/actions_ling.rsi
       state: absorb_dna
     whitelist:
       components:
+      - HumanoidAppearance
       - Body
+    blacklist:
+      components:
+      - Zombie
     event: !type:LingAbsorbActionEvent
     useDelay: 5
     canTargetSelf: false
@@ -32,6 +38,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    itemIconStyle: NoItem
     icon:
       sprite: Interface/Actions/actions_ling.rsi
       state: cycle
@@ -45,6 +52,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    itemIconStyle: NoItem
     icon:
       sprite: Interface/Actions/actions_ling.rsi
       state: transform
@@ -58,6 +66,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    itemIconStyle: NoItem
     checkCanInteract: false
     icon:
       sprite: Interface/Actions/actions_ling.rsi
@@ -72,12 +81,17 @@
   noSpawn: true
   components:
   - type: EntityTargetAction
+    itemIconStyle: NoItem
     icon:
       sprite: Interface/Actions/actions_ling.rsi
       state: sting_extract
     whitelist:
       components:
+      - HumanoidAppearance
       - Body
+    blacklist:
+      components:
+      - Zombie
     event: !type:LingStingExtractActionEvent
     useDelay: 30
     canTargetSelf: false
@@ -89,6 +103,7 @@
   noSpawn: true
   components:
   - type: EntityTargetAction
+    itemIconStyle: NoItem
     icon:
       sprite: Interface/Actions/actions_ling.rsi
       state: sting_hallucination
@@ -106,6 +121,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    itemIconStyle: NoItem
     icon:
       sprite: Objects/Weapons/Melee/armblade.rsi
       state: icon
@@ -119,6 +135,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    itemIconStyle: NoItem
     icon:
       sprite: Clothing/OuterClothing/Armor/lingarmor.rsi
       state: icon
@@ -132,6 +149,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    itemIconStyle: NoItem
     icon:
       sprite: Interface/Actions/actions_ling.rsi
       state: chameleon
@@ -145,6 +163,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    itemIconStyle: NoItem
     icon:
       sprite: Interface/Actions/actions_ling.rsi
       state: emp
