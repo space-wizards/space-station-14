@@ -8,11 +8,11 @@
             <Label Name="SongName" Text="---" />
             <Slider Name="PlaybackSlider" HorizontalExpand="True" />
         </BoxContainer>
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="true"
-        VerticalExpand="false" SizeFlagsStretchRatio="1">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True"
+        VerticalExpand="False" SizeFlagsStretchRatio="1">
             <Button Name="PlayButton" Text="{Loc 'jukebox-menu-buttonplay'}" />
             <Button Name="StopButton" Text="{Loc 'jukebox-menu-buttonstop'}" />
-            <Label Name="DurationLabel" Text="00:00 / 00:00" HorizontalAlignment="Right"/>
+            <Label Name="DurationLabel" Text="00:00 / 00:00" HorizontalAlignment="Right" HorizontalExpand="True"/>
         </BoxContainer>
     </BoxContainer>
 </ui:FancyWindow>

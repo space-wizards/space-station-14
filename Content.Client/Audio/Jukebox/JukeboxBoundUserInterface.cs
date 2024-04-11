@@ -80,6 +80,8 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
 
     public void SetTime(float time)
     {
+        var sentTime = time;
+
         // You may be wondering, what the fuck is this
         // Well we want to be able to predict the playback slider change, of which there are many ways to do it
         // We can't just use SendPredictedMessage because it will reset every tick and audio updates every frame
@@ -92,10 +94,12 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
             var session = IoCManager.Resolve<IPlayerManager>().LocalSession;
             var ping = TimeSpan.FromMilliseconds((session?.Channel.Ping ?? 0) * 1.5);
 
-            audioComp.PlaybackPosition = time - (float) ping.TotalSeconds;
+            time = MathF.Min(time, (float) EntMan.System<AudioSystem>().GetAudioLength(audioComp.FileName).TotalSeconds);
+            audioComp.PlaybackPosition = time;
+            sentTime += (float) ping.TotalSeconds;
         }
 
-        SendMessage(new JukeboxSetTimeMessage(time));
+        SendMessage(new JukeboxSetTimeMessage(sentTime));
     }
 
     protected override void Dispose(bool disposing)
