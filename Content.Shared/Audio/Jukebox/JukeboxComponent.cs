@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Audio.Jukebox;
 
-[NetworkedComponent, RegisterComponent]
+[NetworkedComponent, RegisterComponent, AutoGenerateComponentState]
 [Access(typeof(SharedJukeboxSystem))]
 public sealed partial class JukeboxComponent : Component
 {
@@ -12,7 +12,7 @@ public sealed partial class JukeboxComponent : Component
     public ProtoId<JukeboxPrototype>? SelectedSongId;
 
     [ViewVariables]
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? AudioStream;
 
     /// <summary>

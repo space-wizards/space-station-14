@@ -2,6 +2,8 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Audio.Jukebox;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using JukeboxComponent = Content.Shared.Audio.Jukebox.JukeboxComponent;
@@ -21,6 +23,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         base.Initialize();
         SubscribeLocalEvent<JukeboxComponent, JukeboxSelectedMessage>(OnJukeboxSelected);
         SubscribeLocalEvent<JukeboxComponent, JukeboxPlayingMessage>(OnJukeboxPlay);
+        SubscribeLocalEvent<JukeboxComponent, JukeboxPauseMessage>(OnJukeboxPause);
         SubscribeLocalEvent<JukeboxComponent, JukeboxStopMessage>(OnJukeboxStop);
         SubscribeLocalEvent<JukeboxComponent, JukeboxSetTimeMessage>(OnJukeboxSetTime);
         SubscribeLocalEvent<JukeboxComponent, ComponentInit>(OnComponentInit);
@@ -39,33 +42,34 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void OnJukeboxPlay(EntityUid uid, JukeboxComponent component, ref JukeboxPlayingMessage args)
     {
-        if (!_audio.IsPlaying(component.AudioStream))
+        if (Exists(component.AudioStream))
         {
+            _audio.SetState(component.AudioStream, AudioState.Playing);
+        }
+        else
+        {
+            component.AudioStream = _audio.Stop(component.AudioStream);
+
             if (string.IsNullOrEmpty(component.SelectedSongId) ||
                 !_protoManager.TryIndex(component.SelectedSongId, out var jukeboxProto))
             {
                 return;
             }
 
-            component.AudioStream = _audio.PlayPvs(jukeboxProto.Path, uid)?.Entity;
+            component.AudioStream = _audio.PlayPvs(jukeboxProto.Path, uid, AudioParams.Default.WithMaxDistance(10f))?.Entity;
+            Dirty(uid, component);
+            DirtyUI(uid);
         }
-        else
-        {
-            component.AudioStream = _audio.Stop(component.AudioStream);
-        }
+    }
 
-        Dirty(uid, component);
-        DirtyUI((uid, component));
+    private void OnJukeboxPause(Entity<JukeboxComponent> ent, ref JukeboxPauseMessage args)
+    {
+        _audio.SetState(ent.Comp.AudioStream, AudioState.Paused);
     }
 
     private void OnJukeboxSetTime(EntityUid uid, JukeboxComponent component, JukeboxSetTimeMessage args)
     {
-        if (_audio.IsPlaying(component.AudioStream))
-        {
-            _audio.SetPlaybackPosition(component.AudioStream, args.SongTime);
-        }
-
-        Dirty(uid, component);
+        _audio.SetPlaybackPosition(component.AudioStream, args.SongTime);
     }
 
     private void OnPowerChanged(Entity<JukeboxComponent> entity, ref PowerChangedEvent args)
@@ -85,12 +89,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void Stop(Entity<JukeboxComponent> entity)
     {
-        if (entity.Comp.AudioStream == null)
-            return;
-
-        entity.Comp.AudioStream = _audio.Stop(entity.Comp.AudioStream);
-        Dirty(entity);
-        DirtyUI((entity.Owner, entity.Comp));
+        _audio.SetState(entity.Comp.AudioStream, AudioState.Stopped);
     }
 
     private void OnJukeboxSelected(EntityUid uid, JukeboxComponent component, JukeboxSelectedMessage args)
@@ -102,7 +101,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             component.Selecting = true;
         }
 
-        Dirty(uid, component);
         DirtyUI((uid, component));
     }
 

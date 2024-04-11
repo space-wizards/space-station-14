@@ -1,5 +1,8 @@
 using Content.Shared.Audio.Jukebox;
 using Robust.Client.Audio;
+using Robust.Client.Player;
+using Robust.Shared.Audio.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Audio.Jukebox;
@@ -55,6 +58,7 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         if (state is not JukeboxBoundInterfaceState bState || _menu == null)
             return;
 
+        // TODO: Need a way to sub to compstates as otherwise this can fail in some situations.
         var audio = EntMan.GetEntity(bState.Audio);
         _menu.SetAudioStream(audio);
 
@@ -76,6 +80,21 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
 
     public void SetTime(float time)
     {
+        // You may be wondering, what the fuck is this
+        // Well we want to be able to predict the playback slider change, of which there are many ways to do it
+        // We can't just use SendPredictedMessage because it will reset every tick and audio updates every frame
+        // so it will go BRRRRT
+        // Using ping gets us close enough that it SHOULD, MOST OF THE TIME, fall within the 0.1 second tolerance
+        // that's still on engine so our playback position never gets corrected.
+        if (EntMan.TryGetComponent(Owner, out JukeboxComponent? jukebox) &&
+            EntMan.TryGetComponent(jukebox.AudioStream, out AudioComponent? audioComp))
+        {
+            var session = IoCManager.Resolve<IPlayerManager>().LocalSession;
+            var ping = TimeSpan.FromMilliseconds((session?.Channel.Ping ?? 0) * 1.5);
+
+            audioComp.PlaybackPosition = time - (float) ping.TotalSeconds;
+        }
+
         SendMessage(new JukeboxSetTimeMessage(time));
     }
 

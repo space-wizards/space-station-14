@@ -20,7 +20,7 @@ public sealed partial class JukeboxMenu : FancyWindow
     /// <summary>
     /// Are we currently 'playing' or paused for the play / pause button.
     /// </summary>
-    private bool _playState = true;
+    private bool _playState;
 
     /// <summary>
     /// True if playing, false if paused.
@@ -58,6 +58,8 @@ public sealed partial class JukeboxMenu : FancyWindow
             OnStopPressed?.Invoke();
         };
         PlaybackSlider.OnKeyBindUp += PlaybackSliderKeyUp;
+
+        SetPlayPauseButton(_audioSystem.IsPlaying(_audio), force: true);
     }
 
     public void SetAudioStream(EntityUid? audio)
@@ -86,9 +88,9 @@ public sealed partial class JukeboxMenu : FancyWindow
         }
     }
 
-    public void SetPlayPauseButton(bool playing)
+    public void SetPlayPauseButton(bool playing, bool force = false)
     {
-        if (_playState == playing)
+        if (_playState == playing && !force)
             return;
 
         _playState = playing;
