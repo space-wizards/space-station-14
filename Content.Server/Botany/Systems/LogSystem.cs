@@ -12,7 +12,6 @@ public sealed class LogSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public override void Initialize()
     {
@@ -40,7 +39,7 @@ public sealed class LogSystem : EntitySystem
             {
                 var xform = Transform(plank);
                 _containerSystem.AttachParentToContainerOrGrid((plank, xform));
-                _xformSystem.SetLocalRotation(plank, 0, xform);
+                xform.LocalRotation = 0;
                 _randomHelper.RandomOffset(plank, 0.25f);
             }
         }

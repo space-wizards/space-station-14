@@ -23,6 +23,7 @@ namespace Content.Client.NPC
         [Dependency] private readonly IResourceCache _cache = default!;
         [Dependency] private readonly NPCSteeringSystem _steering = default!;
         [Dependency] private readonly MapSystem _mapSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
         public PathfindingDebugMode Modes
         {
@@ -39,7 +40,7 @@ namespace Content.Client.NPC
                 }
                 else if (!overlayManager.HasOverlay<PathfindingOverlay>())
                 {
-                    overlayManager.AddOverlay(new PathfindingOverlay(EntityManager, _eyeManager, _inputManager, _mapManager, _cache, this, _mapSystem));
+                    overlayManager.AddOverlay(new PathfindingOverlay(EntityManager, _eyeManager, _inputManager, _mapManager, _cache, this, _mapSystem, _transformSystem));
                 }
 
                 if ((value & PathfindingDebugMode.Steering) != 0x0)
@@ -140,7 +141,7 @@ namespace Content.Client.NPC
         private readonly IMapManager _mapManager;
         private readonly PathfindingSystem _system;
         private readonly MapSystem _mapSystem;
-        private readonly SharedTransformSystem _xformSystem;
+        private readonly SharedTransformSystem _transformSystem;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace | OverlaySpace.WorldSpace;
 
@@ -154,7 +155,8 @@ namespace Content.Client.NPC
             IMapManager mapManager,
             IResourceCache cache,
             PathfindingSystem system,
-            MapSystem mapSystem)
+            MapSystem mapSystem,
+            SharedTransformSystem transformSystem)
         {
             _entManager = entManager;
             _eyeManager = eyeManager;
@@ -162,7 +164,7 @@ namespace Content.Client.NPC
             _mapManager = mapManager;
             _system = system;
             _mapSystem = mapSystem;
-            _xformSystem = _entManager.System<SharedTransformSystem>();
+            _transformSystem = transformSystem;
             _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
         }
 
@@ -201,7 +203,7 @@ namespace Content.Client.NPC
                     if (found || !_system.Breadcrumbs.TryGetValue(netGrid, out var crumbs) || !xformQuery.TryGetComponent(grid, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invWorldMatrix) = _xformSystem.GetWorldPositionRotationMatrixWithInv(gridXform);
+                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
                     var localAABB = invWorldMatrix.TransformBox(aabb.Enlarged(float.Epsilon - SharedPathfindingSystem.ChunkSize));
 
                     foreach (var chunk in crumbs)
@@ -285,9 +287,8 @@ namespace Content.Client.NPC
                     return;
                 }
 
-                var invGridMatrix = _xformSystem.GetInvWorldMatrix(gridXform);
+                var invGridMatrix = gridXform.InvWorldMatrix;
                 DebugPathPoly? nearest = null;
-                var nearestDistance = float.MaxValue;
 
                 foreach (var poly in tile)
                 {
@@ -358,7 +359,7 @@ namespace Content.Client.NPC
                         continue;
                     }
 
-                    var (_, _, worldMatrix, invWorldMatrix) = _xformSystem.GetWorldPositionRotationMatrixWithInv(gridXform);
+                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invWorldMatrix.TransformBox(aabb);
 
@@ -418,7 +419,7 @@ namespace Content.Client.NPC
                         !xformQuery.TryGetComponent(grid, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invWorldMatrix) = _xformSystem.GetWorldPositionRotationMatrixWithInv(gridXform);
+                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invWorldMatrix.TransformBox(aabb);
 
@@ -457,7 +458,7 @@ namespace Content.Client.NPC
                         !xformQuery.TryGetComponent(grid, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invMatrix) = _xformSystem.GetWorldPositionRotationMatrixWithInv(gridXform);
+                    var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invMatrix.TransformBox(aabb);
 
@@ -482,7 +483,7 @@ namespace Content.Client.NPC
                                     if (neighborPoly.NetEntity != poly.GraphUid)
                                     {
                                         color = Color.Green;
-                                        var neighborMap = _entManager.GetCoordinates(neighborPoly).ToMap(_entManager);
+                                        var neighborMap = _entManager.GetCoordinates(neighborPoly).ToMap(_entManager, _transformSystem);
 
                                         if (neighborMap.MapId != args.MapId)
                                             continue;
@@ -516,7 +517,7 @@ namespace Content.Client.NPC
                         !xformQuery.TryGetComponent(grid, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invWorldMatrix) = _xformSystem.GetWorldPositionRotationMatrixWithInv(gridXform);
+                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invWorldMatrix.TransformBox(args.WorldBounds);
 
@@ -543,7 +544,7 @@ namespace Content.Client.NPC
                         if (!_entManager.TryGetComponent<TransformComponent>(_entManager.GetEntity(node.GraphUid), out var graphXform))
                             continue;
 
-                        worldHandle.SetTransform(_xformSystem.GetWorldMatrix(graphXform));
+                        worldHandle.SetTransform(graphXform.WorldMatrix);
                         worldHandle.DrawRect(node.Box, Color.Orange.WithAlpha(0.10f));
                     }
                 }
@@ -567,7 +568,7 @@ namespace Content.Client.NPC
                                 continue;
 
                             matrix = graph;
-                            worldHandle.SetTransform(_xformSystem.GetWorldMatrix(graphXform));
+                            worldHandle.SetTransform(graphXform.WorldMatrix);
                         }
 
                         worldHandle.DrawRect(node.Box, new Color(0f, cost / highestGScore, 1f - (cost / highestGScore), 0.10f));

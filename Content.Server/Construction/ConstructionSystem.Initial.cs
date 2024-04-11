@@ -2,7 +2,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Construction.Components;
-using Content.Server.Storage.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
@@ -15,7 +14,6 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Storage;
-using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -30,9 +28,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
-        [Dependency] private readonly StorageSystem _storageSystem = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -83,7 +79,7 @@ namespace Content.Server.Construction
                 }
             }
 
-            var pos = _xformSystem.GetMapCoordinates(user);
+            var pos = Transform(user).MapPosition;
 
             foreach (var near in _lookupSystem.GetEntitiesInRange(pos, 2f, LookupFlags.Contained | LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate))
             {
@@ -251,8 +247,7 @@ namespace Content.Server.Construction
             var doAfterArgs = new DoAfterArgs(EntityManager, user, doAfterTime, new AwaitedDoAfterEvent(), null)
             {
                 BreakOnDamage = true,
-                BreakOnTargetMove = false,
-                BreakOnUserMove = true,
+                BreakOnMove = true,
                 NeedHand = false,
                 // allow simultaneously starting several construction jobs using the same stack of materials.
                 CancelDuplicate = false,
@@ -467,7 +462,7 @@ namespace Content.Server.Construction
                 return;
             }
 
-            var mapPos = location.ToMap(EntityManager);
+            var mapPos = location.ToMap(EntityManager, _transformSystem);
             var predicate = GetPredicate(constructionPrototype.CanBuildInImpassable, mapPos);
 
             if (!_interactionSystem.InRangeUnobstructed(user, mapPos, predicate: predicate))
@@ -528,12 +523,10 @@ namespace Content.Server.Construction
             // ikr
             var xform = Transform(structure);
             var wasAnchored = xform.Anchored;
-            if (wasAnchored)
-                _xformSystem.Unanchor(structure, xform);
-            _xformSystem.SetCoordinates((structure, xform, MetaData(structure)), GetCoordinates(ev.Location));
-            _xformSystem.SetLocalRotation(structure, constructionPrototype.CanRotate ? ev.Angle : Angle.Zero, xform);
-            if (wasAnchored)
-                _xformSystem.AnchorEntity((structure, xform));
+            xform.Anchored = false;
+            xform.Coordinates = GetCoordinates(ev.Location);
+            xform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
+            xform.Anchored = wasAnchored;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack, GetNetEntity(structure)));
             _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");

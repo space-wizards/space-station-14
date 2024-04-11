@@ -25,7 +25,6 @@ namespace Content.Server.PDA.Ringer
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
         private readonly Dictionary<NetUserId, TimeSpan> _lastSetRingtoneAt = new();
 
@@ -63,13 +62,16 @@ namespace Content.Server.PDA.Ringer
             UpdateRingerUserInterface(uid, ringer, true);
         }
 
-        public void RingerPlayRingtone(EntityUid uid, RingerComponent ringer)
+        public void RingerPlayRingtone(Entity<RingerComponent?> ent)
         {
-            EnsureComp<ActiveRingerComponent>(uid);
+            if (!Resolve(ent, ref ent.Comp))
+                return;
 
-            _popupSystem.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"), uid, Filter.Pvs(uid, 0.05f), false, PopupType.Small);
+            EnsureComp<ActiveRingerComponent>(ent);
 
-            UpdateRingerUserInterface(uid, ringer, true);
+            _popupSystem.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"), ent, Filter.Pvs(ent, 0.05f), false, PopupType.Medium);
+
+            UpdateRingerUserInterface(ent, ent.Comp, true);
         }
 
         private void UpdateRingerUserInterfaceDriver(EntityUid uid, RingerComponent ringer, RingerRequestUpdateInterfaceMessage args)
@@ -207,7 +209,7 @@ namespace Content.Server.PDA.Ringer
 
                 _audio.PlayEntity(
                     GetSound(ringer.Ringtone[ringer.NoteCount]),
-                    Filter.Empty().AddInRange(_xformSystem.GetMapCoordinates(ringerXform), ringer.Range),
+                    Filter.Empty().AddInRange(ringerXform.MapPosition, ringer.Range),
                     uid,
                     true,
                     AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume)

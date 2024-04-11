@@ -710,6 +710,10 @@
   parent: Pill
   id: PillAmbuzolPlus
   components:
+    - type: Pill
+      pillType: 2
+    - type: Sprite
+      state: pill3
     - type: SolutionContainerManager
       solutions:
         food:
@@ -785,7 +789,7 @@
 # Syringes
 - type: entity
   name: ephedrine syringe
-  parent: BaseSyringe
+  parent: PrefilledSyringe
   id: SyringeEphedrine
   components:
   - type: SolutionContainerManager
@@ -798,7 +802,7 @@
 
 - type: entity
   name: inaprovaline syringe
-  parent: BaseSyringe
+  parent: PrefilledSyringe
   id: SyringeInaprovaline
   components:
   - type: SolutionContainerManager
@@ -811,7 +815,7 @@
 
 - type: entity
   name: tranexamic acid syringe
-  parent: BaseSyringe
+  parent: PrefilledSyringe
   id: SyringeTranexamicAcid
   components:
   - type: SolutionContainerManager
@@ -824,7 +828,7 @@
 
 - type: entity
   name: bicaridine syringe
-  parent: BaseSyringe
+  parent: PrefilledSyringe
   id: SyringeBicaridine
   components:
   - type: SolutionContainerManager
@@ -837,7 +841,7 @@
 
 - type: entity
   name: dermaline syringe
-  parent: BaseSyringe
+  parent: PrefilledSyringe
   id: SyringeDermaline
   components:
   - type: SolutionContainerManager
@@ -850,7 +854,7 @@
 
 - type: entity
   name: hyronalin syringe
-  parent: BaseSyringe
+  parent: PrefilledSyringe
   id: SyringeHyronalin
   components:
   - type: SolutionContainerManager
@@ -863,7 +867,7 @@
 
 - type: entity
   name: ipecac syringe
-  parent: BaseSyringe
+  parent: PrefilledSyringe
   id: SyringeIpecac
   components:
   - type: SolutionContainerManager
@@ -876,7 +880,7 @@
 
 - type: entity
   name: ambuzol syringe
-  parent: BaseSyringe
+  parent: PrefilledSyringe
   id: SyringeAmbuzol
   components:
     - type: SolutionContainerManager
@@ -889,7 +893,7 @@
 
 - type: entity
   name: sigynate syringe
-  parent: BaseSyringe
+  parent: PrefilledSyringe
   id: SyringeSigynate
   components:
     - type: SolutionContainerManager
@@ -902,7 +906,7 @@
 
 - type: entity
   name: ethylredoxrazine syringe
-  parent: BaseSyringe
+  parent: PrefilledSyringe
   id: SyringeEthylredoxrazine
   components:
     - type: SolutionContainerManager
@@ -915,7 +919,7 @@
 
 - type: entity
   name: phalanximine syringe
-  parent: BaseSyringe
+  parent: PrefilledSyringe
   id: SyringePhalanximine
   components:
     - type: SolutionContainerManager
@@ -928,7 +932,7 @@
 
 - type: entity
   name: saline syringe
-  parent: BaseSyringe
+  parent: PrefilledSyringe
   id: SyringeSaline
   components:
     - type: SolutionContainerManager
@@ -942,7 +946,7 @@
 #this is where all the syringes are so i didn't know where to put it
 - type: entity
   name: romerol syringe
-  parent: BaseSyringe
+  parent: PrefilledSyringe
   id: SyringeRomerol
   components:
   - type: SolutionContainerManager
@@ -955,7 +959,7 @@
 
 - type: entity
   name: stimulants syringe
-  parent: BaseSyringe
+  parent: PrefilledSyringe
   id: SyringeStimulants
   components:
   - type: SolutionContainerManager

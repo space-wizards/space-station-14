@@ -113,7 +113,7 @@
 
 #Janitorial Bombsuit Helmet
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadHelmetBombSuit
   id: ClothingHeadHelmetJanitorBombSuit
   name: janitorial bombsuit helmet
   description: A heavy helmet designed to withstand explosions formed from reactions between chemicals.
@@ -123,9 +123,6 @@
     sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi
-  - type: IngestionBlocker
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
 
 #Cult Helmet
 - type: entity
@@ -146,29 +143,6 @@
         Slash: 0.8
         Piercing: 0.9
         Heat: 0.9
-
-#SCAF Helmet
-- type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHelmetScaf
-  name: scaf helmet
-  description: A robust, strong helmet.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Helmets/scaf.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Helmets/scaf.rsi
-  - type: IngestionBlocker
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.8
-  - type: Tag
-    tags:
-    - HidesHair
-    - WhitelistChameleon
 
 #Space Ninja Helmet
 - type: entity

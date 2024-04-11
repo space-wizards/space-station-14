@@ -180,17 +180,17 @@
     list:
       - 0
       - 0
-      - 0
       - 0.5
       - 0.5
       - 0.5
-      - 0.75
-      - 1.25
-      - 1.25
       - 1.5
       - 1.5
-      - 1.5
-      - 1.5
+      - 2
+      - 2.5
+      - 2.5
+      - 3
+      - 3.5
+      - 4
 
 - type: entity
   parent: ClothingHandsGlovesColorYellow

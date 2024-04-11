@@ -32,7 +32,6 @@ namespace Content.IntegrationTests.Tests.Interaction
             var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var conSystem = sEntities.EntitySysManager.GetEntitySystem<SharedContainerSystem>();
-            var xfmSystem = sEntities.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
 
             EntityUid origin = default;
             EntityUid other = default;
@@ -46,7 +45,7 @@ namespace Content.IntegrationTests.Tests.Interaction
                 origin = sEntities.SpawnEntity(HumanId, coordinates);
                 other = sEntities.SpawnEntity(HumanId, coordinates);
                 conSystem.EnsureContainer<Container>(other, "InRangeUnobstructedTestOtherContainer");
-                mapCoordinates = xfmSystem.GetMapCoordinates(other);
+                mapCoordinates = sEntities.GetComponent<TransformComponent>(other).MapPosition;
             });
 
             await server.WaitIdleAsync();

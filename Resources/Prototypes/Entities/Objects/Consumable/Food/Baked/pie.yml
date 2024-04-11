@@ -156,6 +156,8 @@
           path: /Audio/Weapons/Guns/Empty/empty.ogg
         ejectSound:
           path: /Audio/Weapons/Guns/Empty/empty.ogg
+        swap: false
+        disableEject: true
   - type: Tag
     tags:
     - Fruit

@@ -63,6 +63,22 @@
     color: "#43ccb5"
   - type: Rotatable
     rotateWhileAnchored: true
+  - type: ItemSlots
+    slots:
+      disk_slot:
+        name: Disk
+        insertSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        ejectSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        whitelist:
+          components:
+          - ShuttleDestinationCoordinates
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+        ents: []
+      disk_slot: !type:ContainerSlot {}
 
 - type: entity
   parent: BaseComputerShuttle
@@ -103,7 +119,7 @@
     tags:
       - Syndicate
   - type: RadarConsole
-    maxRange: 1536
+    maxRange: 384
   - type: WorldLoader
     radius: 1536
   - type: PointLight
@@ -406,7 +422,6 @@
       type: ResearchClientBoundUserInterface
   - type: ApcPowerReceiver
     powerLoad: 1000
-    priority: Low
   - type: Computer
     board: ResearchComputerCircuitboard
   - type: AccessReader
@@ -455,7 +470,6 @@
       type: ResearchClientBoundUserInterface
   - type: ApcPowerReceiver
     powerLoad: 1000
-    priority: Low
   - type: Computer
     board: AnalysisComputerCircuitboard
   - type: PointLight
@@ -777,6 +791,8 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+  - type: AccessReader
+    access: [["Quartermaster"]]
   - type: GuideHelp
     guides:
     - CargoBounties
@@ -939,7 +955,6 @@
     speechVerb: Robotic
   - type: SurveillanceCameraSpeaker
   - type: SurveillanceCameraMonitor
-    speechEnabled: true
   - type: ActivatableUI
     key: enum.SurveillanceCameraMonitorUiKey.Key
   - type: ActivatableUIRequiresVision
@@ -964,6 +979,9 @@
       state: request
     - map: ["computerLayerKeys"]
       state: tech_key
+  - type: Anchorable
+    flags:
+    - Anchorable
   - type: CargoPalletConsole
   - type: ActivatableUI
     key: enum.CargoPalletConsoleUiKey.Sale
@@ -984,7 +1002,7 @@
 - type: entity
   parent: BaseComputer
   id: ComputerMassMedia
-  name: mass-media console
+  name: news manager console
   description: Write your message to the world!
   components:
   - type: Sprite
@@ -1000,18 +1018,18 @@
   - type: Computer
     board: ComputerMassMediaCircuitboard
   - type: DeviceNetworkRequiresPower
-  - type: NewsWrite
+  - type: NewsWriter
   - type: AccessReader
     access: [[ "Command" ]]
   - type: ActivatableUI
-    key: enum.NewsWriteUiKey.Key
+    key: enum.NewsWriterUiKey.Key
   - type: ActivatableUIRequiresVision
   - type: Transform
     anchored: true
   - type: UserInterface
     interfaces:
-      - key: enum.NewsWriteUiKey.Key
-        type: NewsWriteBoundUserInterface
+      - key: enum.NewsWriterUiKey.Key
+        type: NewsWriterBoundUserInterface
 
 - type: entity
   parent: BaseComputer

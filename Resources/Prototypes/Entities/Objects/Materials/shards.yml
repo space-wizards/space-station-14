@@ -63,7 +63,6 @@
         acts: [ "Destruction" ]
   - type: StepTrigger
     intersectRatio: 0.2
-    requiredTriggeredSpeed: 0
   - type: ShoesRequiredStepTrigger
   - type: Slippery
     slipSound:
@@ -209,3 +208,36 @@
   - type: Construction
     graph: UraniumShivConstruct
     node: start
+
+- type: entity
+  parent: ShardBase
+  id: ShardGlassClockwork
+  name: clockwork glass shard
+  description: A small piece of brass-infused glass.
+  components:
+  - type: Sprite
+    color: "#e0aa36"
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - SheetBrass1
+  - type: DamageUserOnTrigger
+    damage:
+      types:
+        Piercing: 5
+  - type: Tag
+    tags:
+      - ClockworkGlassShard
+      - Trash
+  - type: Extractable
+    grindableSolutionName: shardcglass
+  - type: SolutionContainerManager
+    solutions:
+      shardcglass:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 5
+        - ReagentId: Zinc
+          Quantity: 1.65
+        - ReagentId: Copper
+          Quantity: 3.35

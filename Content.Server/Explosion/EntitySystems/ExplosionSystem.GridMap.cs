@@ -23,7 +23,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// </summary>
     private void OnGridStartup(GridStartupEvent ev)
     {
-        var grid = _mapManager.GetGrid(ev.EntityUid);
+        var grid = Comp<MapGridComponent>(ev.EntityUid);
 
         Dictionary<Vector2i, NeighborFlag> edges = new();
         _gridEdges[ev.EntityUid] = edges;
@@ -70,8 +70,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         {
             var targetGrid = Comp<MapGridComponent>(referenceGrid.Value);
             var xform = Transform(referenceGrid.Value);
-            targetAngle = _transformSystem.GetWorldRotation(xform);
-            targetMatrix = _transformSystem.GetInvWorldMatrix(xform);
+            targetAngle = xform.WorldRotation;
+            targetMatrix = xform.InvWorldMatrix;
             tileSize = targetGrid.TileSize;
         }
 
@@ -104,7 +104,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
             var xforms = EntityManager.GetEntityQuery<TransformComponent>();
             var xform = xforms.GetComponent(gridToTransform);
-            var  (_, gridWorldRotation, gridWorldMatrix, invGridWorldMatrid) = _transformSystem.GetWorldPositionRotationMatrixWithInv(xform);
+            var  (_, gridWorldRotation, gridWorldMatrix, invGridWorldMatrid) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
 
             var localEpicentre = (Vector2i) invGridWorldMatrid.Transform(epicentre.Position);
             var matrix = offsetMatrix * gridWorldMatrix * targetMatrix;

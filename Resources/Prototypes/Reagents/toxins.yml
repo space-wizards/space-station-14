@@ -425,11 +425,12 @@
   color: "#D6CE7B"
   metabolisms:
     Poison:
+      metabolismRate: 0.2
       effects:
       - !type:HealthChange
         damage:
           types:
-            Poison: 6
+            Poison: 3
 
 - type: reagent
   id: VentCrud
@@ -455,6 +456,7 @@
   physicalDesc: reagent-physical-desc-necrotic
   flavor: bitter
   color: "#7e916e"
+  worksOnTheDead: true
   metabolisms:
     Medicine:
       effects:
@@ -478,7 +480,6 @@
         conditions:
           - !type:OrganType
             type: Human
-        reagent: Protein
         type: Local
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-sick" ]

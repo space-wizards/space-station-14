@@ -6,6 +6,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -16,13 +17,11 @@ namespace Content.Server.ImmovableRod;
 public sealed class ImmovableRodSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IMapManager _map = default!;
 
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public override void Update(float frameTime)
     {
@@ -34,7 +33,7 @@ public sealed class ImmovableRodSystem : EntitySystem
             if (!rod.DestroyTiles)
                 continue;
 
-            if (!_map.TryGetGrid(trans.GridUid, out var grid))
+            if (!TryComp<MapGridComponent>(trans.GridUid, out var grid))
                 continue;
 
             grid.SetTile(trans.Coordinates, Tile.Empty);
@@ -54,9 +53,9 @@ public sealed class ImmovableRodSystem : EntitySystem
     {
         if (EntityManager.TryGetComponent(uid, out PhysicsComponent? phys))
         {
-            _physics.SetLinearDamping(phys, 0f);
-            _physics.SetFriction(phys, 0f);
-            _physics.SetBodyStatus(phys, BodyStatus.InAir);
+            _physics.SetLinearDamping(uid, phys, 0f);
+            _physics.SetFriction(uid, phys, 0f);
+            _physics.SetBodyStatus(uid, phys, BodyStatus.InAir);
 
             if (!component.RandomizeVelocity)
                 return;
@@ -65,11 +64,11 @@ public sealed class ImmovableRodSystem : EntitySystem
             var vel = component.DirectionOverride.Degrees switch
             {
                 0f => _random.NextVector2(component.MinSpeed, component.MaxSpeed),
-                _ => _xformSystem.GetWorldRotation(xform).RotateVec(component.DirectionOverride.ToVec()) * _random.NextFloat(component.MinSpeed, component.MaxSpeed)
+                _ => xform.WorldRotation.RotateVec(component.DirectionOverride.ToVec()) * _random.NextFloat(component.MinSpeed, component.MaxSpeed)
             };
 
             _physics.ApplyLinearImpulse(uid, vel, body: phys);
-            _xformSystem.SetLocalRotation(uid, (vel - _xformSystem.GetWorldPosition(xform)).ToWorldAngle() + MathHelper.PiOver2, xform);
+            xform.LocalRotation = (vel - xform.WorldPosition).ToWorldAngle() + MathHelper.PiOver2;
         }
     }
 

@@ -26,6 +26,9 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: regalrat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: eyes
+      shader: unshaded
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -77,6 +80,7 @@
     states:
       Alive:
         Base: regalrat
+        BaseUnshaded: eyes
       Critical:
         Base: critical
       Dead:
@@ -126,6 +130,9 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: regalrat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
+      state: eyes
+      shader: unshaded
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -180,17 +187,21 @@
     - SimpleHostile
   - type: Sprite
     drawdepth: SmallMobs
-    sprite: Mobs/Animals/mouse.rsi
+    sprite: Mobs/Animals/rat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      state: mouse-3
+      state: rat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
+      state: eyes
+      shader: unshaded
+
   - type: SpriteMovement
     movementLayers:
       movement:
-        state: mouse-moving-3
+        state: rat-moving
     noMovementLayers:
       movement:
-        state: mouse-3
+        state: rat
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -243,11 +254,12 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: mouse-3
+        Base: rat
+        BaseUnshaded: eyes
       Critical:
-        Base: dead-3
+        Base: dead
       Dead:
-        Base: splat-3
+        Base: splat
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
@@ -272,6 +284,9 @@
   - type: GuideHelp
     guides:
     - MinorAntagonists
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Mouse_burning
 
 - type: weightedRandomEntity
   id: RatKingLoot

@@ -9,6 +9,23 @@
   recognizable: true
 
 - type: reagent
+  id: RoyRogers
+  name: reagent-name-roy-rogers
+  parent: BaseSoda
+  desc: reagent-desc-roy-rogers
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: cola
+  color: "#262019"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/royrogers.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
+
+- type: reagent
   id: ChangelingSting
   name: reagent-name-changeling-sting
   parent: BaseSoda
@@ -117,6 +134,35 @@
   metamorphicChangeColor: false
 
 - type: reagent
+  id: SolDry
+  name: reagent-name-sol-dry
+  parent: BaseSoda
+  desc: reagent-desc-sol-dry
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: gingersoda
+  color: "#ccb87e"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/sol_dry_glass.rsi
+    state: icon
+
+- type: reagent
+  id: ShirleyTemple
+  name: reagent-name-shirley-temple
+  parent: BaseSoda
+  desc: reagent-desc-shirley-temple
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: sweet
+  color: "#af2221"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/shirleytemple.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
+
+- type: reagent
   id: SpaceMountainWind
   name: reagent-name-space-mountain-wind
   parent: BaseSoda
@@ -162,6 +208,10 @@
     Poison:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
         damage:
           types:
             Poison: 1

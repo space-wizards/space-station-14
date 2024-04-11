@@ -6,6 +6,16 @@
   - type: GameRule
 
 - type: entity
+  noSpawn: true
+  parent: BaseGameRule
+  id: SubGamemodesRule
+  components:
+  - type: SubGamemodes
+    rules:
+    - id: Thief
+      prob: 0.5
+
+- type: entity
   id: DeathMatch31
   parent: BaseGameRule
   noSpawn: true
@@ -58,10 +68,10 @@
   parent: BaseGameRule
   noSpawn: true
   components:
+  - type: GameRule
+    minPlayers: 35
   - type: NukeopsRule
     faction: Syndicate
-  - type: ThiefRule #the thieves come as an extension of another gamemode
-    ruleChance: 0.5
 
 - type: entity
   id: Pirates
@@ -76,8 +86,6 @@
   noSpawn: true
   components:
   - type: TraitorRule
-  - type: ThiefRule #the thieves come as an extension of another gamemode
-    ruleChance: 0.5
 
 - type: entity
   id: Revolutionary
@@ -85,8 +93,6 @@
   noSpawn: true
   components:
   - type: RevolutionaryRule
-  - type: ThiefRule #the thieves come as an extension of another gamemode
-    ruleChance: 0.5
 
 - type: entity
   id: Sandbox
@@ -136,6 +142,7 @@
     - id: BasicTrashVariationPass
     - id: SolidWallRustingVariationPass
     - id: ReinforcedWallRustingVariationPass
+    - id: CutWireVariationPass
     - id: BasicPuddleMessVariationPass
       prob: 0.99
       orGroup: puddleMess
