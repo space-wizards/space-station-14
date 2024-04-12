@@ -254,7 +254,7 @@ namespace Content.Shared.Interaction
                 return true;
             }
 
-            if (!HasComp<SharedPullerComponent>(userEntity))
+            if (!HasComp<PullerComponent>(userEntity))
                 return false;
 
             //is this user trying to pull themself?
