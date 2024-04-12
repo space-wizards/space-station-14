@@ -864,9 +864,6 @@
   id: Medkit
 
 - type: Tag
-  id: MeleeCannotBeUsedInHands
-
-- type: Tag
   id: Metal
 
 - type: Tag

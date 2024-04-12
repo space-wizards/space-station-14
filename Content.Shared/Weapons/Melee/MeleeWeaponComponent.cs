@@ -140,6 +140,15 @@ public sealed partial class MeleeWeaponComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("soundNoDamage"), AutoNetworkedField]
     public SoundSpecifier NoDamageSound { get; set; } = new SoundCollectionSpecifier("WeakHit");
+
+    /// <summary>
+    /// If true, the weapon must be equipped for it to be used.
+    /// E.g boxing gloves must be equipped to your gloves,
+    /// not just held in your hand to be used.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("mustBeEquippedToUse"), AutoNetworkedField]
+    public bool MustBeEquippedToUse = false;
 }
 
 /// <summary>
