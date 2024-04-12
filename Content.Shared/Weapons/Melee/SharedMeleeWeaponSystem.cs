@@ -13,6 +13,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
+using Content.Shared.Tag;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
@@ -48,6 +49,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] private   readonly SharedPhysicsSystem     _physics         = default!;
     [Dependency] private   readonly IPrototypeManager       _protoManager    = default!;
     [Dependency] private   readonly StaminaSystem           _stamina         = default!;
+    [Dependency] private   readonly TagSystem               _tagSystem       = default!;
+
 
     private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
 
@@ -279,7 +282,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         {
             // Make sure the entity is a weapon AND it doesn't need
             // to be equipped to be used (E.g boxing gloves).
-            if (!EntityManager.HasComponent<MeleeCannotBeUsedInHandsComponent>(held) &&
+            if (!_tagSystem.HasTag(held, "MeleeCannotBeUsedInHands") &&
                 EntityManager.TryGetComponent(held, out melee))
             {
                 weaponUid = held;

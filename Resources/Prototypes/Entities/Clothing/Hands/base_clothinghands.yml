@@ -23,7 +23,7 @@
     tags:
     - ClothMade
     - WhitelistChameleon
-  - type: MeleeCannotBeUsedInHands
+    - MeleeCannotBeUsedInHands
 
 - type: entity
   abstract: true
