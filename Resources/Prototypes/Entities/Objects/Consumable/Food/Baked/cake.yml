@@ -711,7 +711,7 @@
     state: suppermatter
   - type: SliceableFood
     slice: FoodCakeSuppermatterSlice
-    TotalCount: 8
+    count: 8
   - type: SolutionContainerManager
     solutions:
       food:
