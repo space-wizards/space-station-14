@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Various aspects of the station will now be varied automatically at the
-      start of the round. Expect more trash, some broken/oddly-functioning lights,
-      and spills (and more stuff in the future).
-    type: Add
-  id: 5837
-  time: '2024-01-31T05:52:35.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24397
 - author: metalgearsloth
   changes:
   - message: Remove handheld crew monitors in lieu of computers.
@@ -3828,3 +3819,10 @@
   id: 6336
   time: '2024-04-12T07:15:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24986
+- author: Ko4erga
+  changes:
+  - message: Strobes added WEE-OOO-WEE-OOO!
+    type: Add
+  id: 6337
+  time: '2024-04-12T08:02:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26083
