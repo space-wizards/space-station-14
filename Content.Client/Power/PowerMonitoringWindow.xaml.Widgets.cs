@@ -108,17 +108,16 @@ public sealed partial class PowerMonitoringWindow
         if (entry.BatteryLevel != null)
         {
             var batteryPercentage = (int) (entry.BatteryLevel.Value * 100);
-            button.BatteryLevel.Text = $"{batteryPercentage}%";
+            button.BatteryLevel.Text = Loc.GetString("power-monitoring-window-battery-level", ("percentage", batteryPercentage));
             button.BatteryLevel.Visible = true;
 
             // Set battery level color based on percentage
-            Color color;
-            if (batteryPercentage > 75)
-                color = Color.Green;
-            else if (batteryPercentage < 25)
-                color = Color.Red;
-            else
-                color = Color.Yellow;
+            var color = batteryPercentage switch
+            {
+                > 75 => Color.LawnGreen,
+                > 25 => Color.Yellow,
+                _ => new(230, 50, 50, 255)
+            };
 
             button.BatteryLevel.ModulateSelfOverride = color;
         }
@@ -506,7 +505,7 @@ public sealed class PowerMonitoringButton : Button
         BatteryLevel = new Label()
         {
             HorizontalAlignment = HAlignment.Right,
-            SetWidth = 36f,
+            SetWidth = 40f,
             Margin = new Thickness(10, 0, 0, 0),
             ClipText = true,
             Visible = false,

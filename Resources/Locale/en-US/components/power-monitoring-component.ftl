@@ -13,6 +13,7 @@ power-monitoring-window-unknown-location = Unknown location
 power-monitoring-window-total-sources = Total generator output
 power-monitoring-window-total-battery-usage = Total battery usage
 power-monitoring-window-total-loads = Total network loads
+power-monitoring-window-battery-level = {$percentage}%
 power-monitoring-window-value = { POWERWATTS($value) }
 power-monitoring-window-show-inactive-consumers = Show Inactive Consumers
 
