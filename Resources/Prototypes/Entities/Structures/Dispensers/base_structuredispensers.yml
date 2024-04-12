@@ -71,5 +71,4 @@
       beakerSlot: !type:ContainerSlot
   - type: StaticPrice
     price: 1000
-  - type: Wires
   - type: WiresPanel
