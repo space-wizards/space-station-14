@@ -347,8 +347,9 @@ public sealed class SuitSensorSystem : EntitySystem
 
         // Get mob total damage crit threshold
         int? totalDamageThreshold = null;
-        if (_mobThresholdSystem.TryGetThresholdForState(sensor.User.Value, Shared.Mobs.MobState.Critical, out var critThreshold))
-            totalDamageThreshold = critThreshold.Value.Int();
+        //TODO: NewMed convert this not to require mob thresholds!
+        // if (_mobThresholdSystem.TryGetThresholdForState(sensor.User.Value, Shared.Mobs.MobState.Critical, out var critThreshold))
+        //     totalDamageThreshold = critThreshold.Value.Int();
 
         // finally, form suit sensor status
         var status = new SuitSensorStatus(GetNetEntity(uid), userName, userJob, userJobIcon, userJobDepartments);
