@@ -13,6 +13,7 @@ using Robust.Shared.Player;
 using Content.Shared.IdentityManagement;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Stealth.Components;
+using Content.Server.Administration.Commands;
 using Content.Server.Emp;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
@@ -52,6 +53,8 @@ public sealed partial class ChangelingSystem
 
         SubscribeLocalEvent<ChangelingComponent, LingRegenerateActionEvent>(OnRegenerate);
         SubscribeLocalEvent<ChangelingComponent, ChangelingTransformActionEvent>(OnTransform);
+
+        SubscribeLocalEvent<ChangelingComponent, ArmBladeActionEvent>(OnArmBladeAction);
 
         SubscribeLocalEvent<ChangelingComponent, LingStingExtractActionEvent>(OnLingDNASting);
     }
@@ -248,7 +251,7 @@ public sealed partial class ChangelingSystem
         };
 
         // if (TryComp<PolymorphedEntityComponent>(ent, out var polymorphedEntity))
-            // _polymorph.Revert((ent, polymorphedEntity));
+        // _polymorph.Revert((ent, polymorphedEntity));
 
         var newEnt = _polymorph.PolymorphEntity(ent, config);
         if (newEnt == null)
@@ -280,6 +283,62 @@ public sealed partial class ChangelingSystem
         RemCompDeferred<ChangelingComponent>(ent);
         RemCompDeferred<PolymorphedEntityComponent>(newEnt.Value);
         QueueDel(ent);
+    }
+
+    // item abilities
+    public const string ArmBladeId = "ArmBlade";
+    public const string ArmBladeGearId = "ArmbladeChangelingGear";
+    private void OnArmBladeAction(Entity<ChangelingComponent> ent, ref ArmBladeActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp(ent, out HandsComponent? handsComponent))
+            return;
+        if (handsComponent.ActiveHand == null)
+            return;
+
+        var handContainer = handsComponent.ActiveHand.Container;
+
+        if (handContainer == null)
+            return;
+
+        if (!TryUseAbility(ent, ent.Comp, 20))
+            return;
+
+        args.Handled = true;
+        _audioSystem.PlayPvs(ent.Comp.SoundFlesh, ent);
+
+        if (handContainer.ContainedEntity != null)
+        {
+            if (TryComp<MetaDataComponent>(handContainer.ContainedEntity.Value, out var targetMeta))
+            {
+                if (TryPrototype(handContainer.ContainedEntity.Value, out var prototype, targetMeta))
+                {
+                    if (prototype.ID == ArmBladeId)
+                    {
+                        // component.ArmBladeActive = false;
+                        QueueDel(handContainer.ContainedEntity.Value);
+
+                        var othersMessage = Loc.GetString("changeling-armblade-retract-others", ("user", Identity.Entity(ent, EntityManager)));
+                        _popup.PopupEntity(othersMessage, ent, Filter.PvsExcept(ent), true, PopupType.MediumCaution);
+
+                        var selfMessage = Loc.GetString("changeling-armblade-retract-self");
+                        _popup.PopupEntity(selfMessage, ent, ent, PopupType.MediumCaution);
+
+                        return;
+                    }
+                }
+            }
+        }
+
+        var othersMessageSuccess = Loc.GetString("changeling-armblade-success-others", ("user", Identity.Entity(ent, EntityManager)));
+        _popup.PopupEntity(othersMessageSuccess, ent, Filter.PvsExcept(ent), true, PopupType.MediumCaution);
+
+        var selfMessageSuccess = Loc.GetString("changeling-armblade-success-self");
+        _popup.PopupEntity(selfMessageSuccess, ent, ent, PopupType.MediumCaution);
+
+        SetOutfitCommand.SetOutfit(ent, ArmBladeGearId, EntityManager);
     }
 
     // changeling stings
