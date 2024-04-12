@@ -783,7 +783,6 @@
   name: loadout-group-chief-medical-officer-outerclothing
   minLimit: 0
   loadouts:
-  - RegularLabCoat
   - ChiefMedicalOfficerLabCoat
 
 - type: loadoutGroup
