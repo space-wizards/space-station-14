@@ -12,10 +12,10 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
         base.Initialize();
         SubscribeLocalEvent<AmbientOnPoweredComponent, PowerChangedEvent>(HandlePowerChange);
         SubscribeLocalEvent<AmbientOnPoweredComponent, PowerNetBatterySupplyEvent>(HandlePowerSupply);
-        SubscribeLocalEvent<AmbientWhenAliveComponent, MobStateChangedEvent>(HandleMobDeath);
+        SubscribeLocalEvent<SoundWhileAliveComponent, MobStateChangedEvent>(HandleMobDeath);
     }
 
-    private void HandleMobDeath(EntityUid uid, AmbientWhenAliveComponent component, MobStateChangedEvent args)
+    private void HandleMobDeath(EntityUid uid, SoundWhileAliveComponent component, MobStateChangedEvent args)
     {
         SetAmbience(uid, args.NewMobState != MobState.Dead);
     }
