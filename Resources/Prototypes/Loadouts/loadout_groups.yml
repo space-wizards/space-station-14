@@ -862,7 +862,7 @@
   name: loadout-group-chemist-jumpsuit
   loadouts:
   - MedicalDoctorJumpsuit
-  - MedicalDoctorJumpskirt
+  - ChemistJumpskirt
 
 - type: loadoutGroup
   id: ChemistOuterClothing
