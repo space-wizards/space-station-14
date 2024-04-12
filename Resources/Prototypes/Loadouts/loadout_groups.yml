@@ -861,7 +861,7 @@
   id: ChemistJumpsuit
   name: loadout-group-chemist-jumpsuit
   loadouts:
-  - MedicalDoctorJumpsuit
+  - ChemistJumpsuit
   - ChemistJumpskirt
 
 - type: loadoutGroup
