@@ -1,6 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Audio;
+using Content.Shared.Mobs;
 
 namespace Content.Server.Audio;
 
@@ -11,6 +12,12 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
         base.Initialize();
         SubscribeLocalEvent<AmbientOnPoweredComponent, PowerChangedEvent>(HandlePowerChange);
         SubscribeLocalEvent<AmbientOnPoweredComponent, PowerNetBatterySupplyEvent>(HandlePowerSupply);
+        SubscribeLocalEvent<AmbientWhenAliveComponent, MobStateChangedEvent>(HandleMobDeath);
+    }
+
+    private void HandleMobDeath(EntityUid uid, AmbientWhenAliveComponent component, MobStateChangedEvent args)
+    {
+        SetAmbience(uid, args.NewMobState != MobState.Dead);
     }
 
     private void HandlePowerSupply(EntityUid uid, AmbientOnPoweredComponent component, ref PowerNetBatterySupplyEvent args)

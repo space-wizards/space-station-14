@@ -41,4 +41,10 @@ public sealed partial class SpamEmitSoundComponent : BaseEmitSoundComponent
     [DataField, AutoNetworkedField]
     [Access(typeof(SharedEmitSoundSystem))]
     public bool Enabled = true;
+
+    /// <summary>
+    /// Setting this to true will disable this component if MobState changed to Dead on this entity.
+    /// </summary>
+    [DataField]
+    public bool StopsWhenEntityDead;
 }
