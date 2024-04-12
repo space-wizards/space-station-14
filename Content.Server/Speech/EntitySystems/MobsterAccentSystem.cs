@@ -50,8 +50,8 @@ public sealed class MobsterAccentSystem : EntitySystem
 
         // thinking -> thinkin'
         // king -> king
-        msg = Regex.Replace(msg, @"(?<=\w\w)i[Nn][Gg](?!\w)", "in'");
-        msg = Regex.Replace(msg, @"(?<=\w\w)I[Nn][Gg](?!\w)", "IN'");
+        //Uses captures groups to make sure the captialization of IN is kept
+        msg = Regex.Replace(msg, @"(?<=\w\w)(in)g(?!\w)", "$1'", RegexOptions.IgnoreCase);
 
         // or -> uh and ar -> ah in the middle of words (fuhget, tahget)
         msg = Regex.Replace(msg, @"(?<=\w)o[Rr](?=\w)", "uh");
@@ -62,6 +62,7 @@ public sealed class MobsterAccentSystem : EntitySystem
         // Prefix
         if (_random.Prob(0.15f))
         {
+            //Checks if the first word of the sentence is all caps
             var firstWordAllCaps = !Regex.Match(msg, @"^(\S+)").Value.Any(char.IsLower);
             var pick = _random.Next(1, 2);
 
@@ -80,6 +81,7 @@ public sealed class MobsterAccentSystem : EntitySystem
         // Suffixes
         if (_random.Prob(0.4f))
         {
+            //Checks if the last word of the sentence is all caps
             var lastWordAllCaps = !Regex.Match(msg, @"(\S+)$").Value.Any(char.IsLower);
             var suffix = "";
             if (component.IsBoss)
