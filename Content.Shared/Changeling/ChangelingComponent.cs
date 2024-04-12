@@ -4,6 +4,7 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Changeling;
 using Content.Shared.Humanoid;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Changeling;
 

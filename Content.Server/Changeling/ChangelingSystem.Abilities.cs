@@ -26,6 +26,7 @@ using Content.Server.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Polymorph;
 using Content.Server.Polymorph.Components;
+using Content.Shared.Zombies;
 
 namespace Content.Server.Changeling;
 
@@ -222,18 +223,12 @@ public sealed partial class ChangelingSystem
             return;
 
         var transformation = comp.StoredDNA[comp.SelectedDNA];
-        var dnaComp = EnsureComp<DnaComponent>(ent);
 
-        if (dnaComp.DNA == transformation.Dna)
+        if (Comp<DnaComponent>(ent).DNA == transformation.Dna)
         {
             var selfMessage = Loc.GetString("changeling-transform-fail", ("target", transformation.Name));
             _popup.PopupEntity(selfMessage, ent, ent);
             return;
-        }
-        else
-        {
-            var selfMessage = Loc.GetString("changeling-transform-activate", ("target", transformation.Name));
-            _popup.PopupEntity(selfMessage, ent, ent);
         }
 
         if (!_proto.TryIndex<SpeciesPrototype>(transformation.HumanoidAppearanceComp.Species, out var species))
@@ -249,20 +244,42 @@ public sealed partial class ChangelingSystem
             Inventory = PolymorphInventoryChange.Transfer,
             RevertOnDeath = false,
             RevertOnCrit = false,
-            AllowRepeatedMorphs = false,
+            ShowRevertPopup = false
         };
 
-        if (TryComp<PolymorphedEntityComponent>(ent, out var polymorphedEntity)) // revert if the ling was already transformed to prevent buggy behaviour
-            _polymorph.Revert((ent, polymorphedEntity));
+        // if (TryComp<PolymorphedEntityComponent>(ent, out var polymorphedEntity))
+            // _polymorph.Revert((ent, polymorphedEntity));
 
-        _polymorph.PolymorphEntity(ent, config);
+        var newEnt = _polymorph.PolymorphEntity(ent, config);
+        if (newEnt == null)
+            return;
 
-        _metaData.SetEntityName(ent, transformation.Name);
-        Comp<FingerprintComponent>(ent).Fingerprint = transformation.Fingerprint;
-        dnaComp.DNA = transformation.Dna;
-        _humanoidAppearance.CloneAppearance(ent, transformation.HumanoidAppearanceComp);
+        var newComp = EnsureComp<ChangelingComponent>(newEnt.Value);
+        newComp.Chemicals = comp.Chemicals;
+        newComp.ChemicalRegenTime = comp.ChemicalRegenTime;
+        newComp.MaxChemicals = comp.MaxChemicals;
+        newComp.SelectedDNA = comp.SelectedDNA;
+        newComp.StoredDNA = comp.StoredDNA;
+
+        if (TryComp<StoreComponent>(ent, out var storeComp))
+        {
+            var newStoreComp = (Component) _serialization.CreateCopy(storeComp, notNullableOverride: true);
+            newStoreComp.Owner = newEnt.Value;
+            RemComp<StoreComponent>(newEnt.Value);
+            EntityManager.AddComponent(newEnt.Value, newStoreComp);
+        }
+
+        Comp<FingerprintComponent>(newEnt.Value).Fingerprint = transformation.Fingerprint;
+        Comp<DnaComponent>(newEnt.Value).DNA = transformation.Dna;
+        _humanoidAppearance.CloneAppearance(newEnt.Value, transformation.HumanoidAppearanceComp);
+        _metaData.SetEntityName(newEnt.Value, transformation.Name);
+
+        var message = Loc.GetString("changeling-transform-activate", ("target", transformation.Name));
+        _popup.PopupEntity(message, newEnt.Value, newEnt.Value);
 
         RemCompDeferred<ChangelingComponent>(ent);
+        RemCompDeferred<PolymorphedEntityComponent>(newEnt.Value);
+        QueueDel(ent);
     }
 
     // changeling stings

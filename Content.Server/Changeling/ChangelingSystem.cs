@@ -81,11 +81,11 @@ public sealed partial class ChangelingSystem : EntitySystem
         // the actions are hooked to the mind because transformation uses polymorph
         if (_mind.TryGetMind(ent, out var mind, out _))
         {
-            _action.AddAction(mind, ChangelingEvolutionMenuId);
-            _action.AddAction(mind, ChangelingRegenActionId);
-            _action.AddAction(mind, ChangelingAbsorbActionId);
-            _action.AddAction(mind, ChangelingDNACycleActionId);
-            _action.AddAction(mind, ChangelingTransformActionId);
+            _actionContainer.AddAction(mind, ChangelingEvolutionMenuId);
+            _actionContainer.AddAction(mind, ChangelingRegenActionId);
+            _actionContainer.AddAction(mind, ChangelingAbsorbActionId);
+            _actionContainer.AddAction(mind, ChangelingDNACycleActionId);
+            _actionContainer.AddAction(mind, ChangelingTransformActionId);
         }
     }
 

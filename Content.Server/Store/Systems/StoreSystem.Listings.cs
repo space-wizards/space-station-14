@@ -98,8 +98,13 @@ public sealed partial class StoreSystem
                 var conditionsMet = true;
 
                 // don't show listing if they have the action already
-                if (listing.ProductAction != null && _actionContainer.HasAction(buyer, listing.ProductAction))
-                    conditionsMet = false;
+                if (listing.ProductAction != null)
+                {
+                    if (_mind.TryGetMind(buyer, out var mind, out _) && _actionContainer.HasAction(mind, listing.ProductAction))
+                        conditionsMet = false;
+                    else if (_actionContainer.HasAction(buyer, listing.ProductAction))
+                        conditionsMet = false;
+                }
 
                 foreach (var condition in listing.Conditions)
                 {

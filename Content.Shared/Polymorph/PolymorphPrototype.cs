@@ -109,6 +109,12 @@ public sealed partial record PolymorphConfiguration
     public bool AllowRepeatedMorphs;
 
     /// <summary>
+    /// Whether or not this polymorph shows the revert flavor text when they are reverted.
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public bool ShowRevertPopup = true;
+
+    /// <summary>
     /// The amount of time that should pass after this polymorph has ended, before a new one
     /// can occur.
     /// </summary>
