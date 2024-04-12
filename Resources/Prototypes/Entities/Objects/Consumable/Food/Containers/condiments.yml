@@ -560,6 +560,8 @@
         acts: [ "Destruction" ]
   - type: Sprite
     state: shaker-empty
+  - type: RefillableSolution
+    solution: food
 
 - type: entity
   parent: BaseFoodShaker
