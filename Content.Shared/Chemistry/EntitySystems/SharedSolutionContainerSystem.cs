@@ -262,7 +262,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     public void UpdateChemicals(
         Entity<SolutionComponent> soln,
         bool needsReactionsProcessing = true,
-        bool needsAbsorptionProcessing = true,
+        bool needsAbsorptionProcessing = false,
         ReactionMixerComponent? mixerComponent = null,
         Entity<ChemicalAbsorberComponent>? absorber = null
         )
