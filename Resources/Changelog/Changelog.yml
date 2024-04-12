@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: mirrorcult
   changes:
-  - message: Throwing recoil reduced further
-    type: Tweak
-  id: 5836
-  time: '2024-01-31T05:00:41.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24759
-- author: mirrorcult
-  changes:
   - message: Various aspects of the station will now be varied automatically at the
       start of the round. Expect more trash, some broken/oddly-functioning lights,
       and spills (and more stuff in the future).
@@ -3828,3 +3821,10 @@
   id: 6335
   time: '2024-04-12T06:58:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26847
+- author: deltanedas
+  changes:
+  - message: Sterile Swabs now come in dispensers making them easier to use.
+    type: Tweak
+  id: 6336
+  time: '2024-04-12T07:15:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24986
