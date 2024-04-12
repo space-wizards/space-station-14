@@ -6,7 +6,7 @@
 - type: startingGear
   id: JesterHat
   equipment:
-    head: ClothingHeadHatJester
+    head: ClothingHeadHatJesterAlt
 
 # Jumpsuit
 - type: loadout
