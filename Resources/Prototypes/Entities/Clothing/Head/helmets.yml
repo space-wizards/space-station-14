@@ -253,6 +253,7 @@
   id: ClothingHeadHelmetLing
   name: chitinous helmet
   description: An all-consuming chitinous mass of armor.
+  suffix: Unremoveable
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/linghelmet.rsi

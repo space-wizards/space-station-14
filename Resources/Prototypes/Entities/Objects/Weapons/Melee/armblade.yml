@@ -27,7 +27,7 @@
 - type: entity
   parent: ArmBlade
   id: ArmBladeChangeling
-  suffix: Unremovable, Prying
+  suffix: Unremoveable, Prying
   components:
   - type: Tool
     qualities:
@@ -41,7 +41,7 @@
 - type: entity
   parent: ArmBlade
   id: ArmBladeDull
-  suffix: Unremovable, Dull
+  suffix: Unremoveable, Dull
   components:
   - type: MeleeWeapon
     wideAnimationRotation: 90

@@ -1,0 +1,15 @@
+- type: startingGear
+  id: ArmbladeChangelingGear
+  inhand:
+    - ArmBladeChangeling
+
+- type: startingGear
+  id: ArmBladeDullGear
+  inhand:
+    - ArmBladeDull
+
+- type: startingGear
+  id: ChitinousArmorGear
+  equipment:
+    head: ClothingHeadHelmetLing
+    outerClothing: ClothingOuterArmorChangeling

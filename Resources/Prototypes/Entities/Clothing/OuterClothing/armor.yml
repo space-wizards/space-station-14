@@ -213,6 +213,7 @@
   parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorChangeling
   name: chitinous armor
+  suffix: Unremoveable
   description: An all-consuming chitinous mass of armor.
   components:
   - type: Sprite
