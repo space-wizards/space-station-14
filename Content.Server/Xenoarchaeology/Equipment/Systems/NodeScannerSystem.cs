@@ -15,7 +15,7 @@ public sealed class NodeScannerSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<NodeScannerComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<NodeScannerComponent, BeforeRangedInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<NodeScannerComponent, GetVerbsEvent<UtilityVerb>>(AddScanVerb);
     }
 
@@ -39,7 +39,7 @@ public sealed class NodeScannerSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void OnAfterInteract(EntityUid uid, NodeScannerComponent component, AfterInteractEvent args)
+    private void OnAfterInteract(EntityUid uid, NodeScannerComponent component, BeforeRangedInteractEvent args)
     {
         if (!args.CanReach || args.Target == null)
             return;
