@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Stun batons now toggle off after being drained by an EMP.
-    type: Fix
-  id: 5833
-  time: '2024-01-30T23:04:26.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24706
 - author: Tayrtahn
   changes:
   - message: Fixed weird rotation while strapped to a bed.
@@ -3828,3 +3821,10 @@
   id: 6332
   time: '2024-04-11T20:48:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26813
+- author: Vermidia
+  changes:
+  - message: Salt and Pepper shakers look like shakers.
+    type: Fix
+  id: 6333
+  time: '2024-04-12T06:44:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26899
