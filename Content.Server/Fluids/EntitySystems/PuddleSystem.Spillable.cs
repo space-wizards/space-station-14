@@ -143,6 +143,9 @@ public sealed partial class PuddleSystem
         if (Openable.IsClosed(entity.Owner))
             return;
 
+        if (!entity.Comp.SpillWhenThrown)
+            return;
+
         if (args.User != null)
         {
             _adminLogger.Add(LogType.Landed,
