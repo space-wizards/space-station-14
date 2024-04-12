@@ -27,18 +27,16 @@ public sealed class NodeScannerSystem : EntitySystem
         if (!TryComp<ArtifactComponent>(args.Target, out var artifact) || artifact.CurrentNodeId == null)
             return;
 
-            var verb = new UtilityVerb()
+        var verb = new UtilityVerb()
+        {
+            Act = () =>
             {
-                Act = () =>
-                {
-                    CreatePopup(uid,args.Target,artifact);
-                },
-                Text = Loc.GetString("node-scan-tooltip")
-            };
+                CreatePopup(uid, args.Target, artifact);
+            },
+            Text = Loc.GetString("node-scan-tooltip")
+        };
 
-            args.Verbs.Add(verb);
-
-
+        args.Verbs.Add(verb);
     }
 
     private void OnAfterInteract(EntityUid uid, NodeScannerComponent component, AfterInteractEvent args)
