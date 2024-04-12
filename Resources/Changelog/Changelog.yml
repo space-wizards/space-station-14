@@ -1,46 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Throwing items now scale a bit when thrown to simulate rising/falling
-    type: Add
-  id: 5827
-  time: '2024-01-30T10:50:41.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24724
-- author: Emisse
-  changes:
-  - message: Gemini
-    type: Remove
-  id: 5828
-  time: '2024-01-30T10:54:55.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24728
-- author: CrigCrag
-  changes:
-  - message: Added a new large salvage wreck.
-    type: Add
-  id: 5829
-  time: '2024-01-30T10:56:38.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24656
-- author: themias
-  changes:
-  - message: Fixed Centcom cargo gifts not being fulfilled
-    type: Fix
-  id: 5830
-  time: '2024-01-30T11:05:20.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24701
-- author: Scribbles0
-  changes:
-  - message: You can now make anomaly cores orbit you.
-    type: Add
-  id: 5831
-  time: '2024-01-30T11:12:24.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24716
-- author: MIXnikita
-  changes:
-  - message: New sound effects for some shuttle guns
-    type: Tweak
-  id: 5832
-  time: '2024-01-30T13:28:17.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24714
 - author: themias
   changes:
   - message: Stun batons now toggle off after being drained by an EMP.
@@ -3825,3 +3783,48 @@
   id: 6326
   time: '2024-04-09T22:20:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26846
+- author: notquitehadouken
+  changes:
+  - message: Gave botanists droppers for easier chemical moving.
+    type: Add
+  id: 6327
+  time: '2024-04-10T17:28:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26839
+- author: botanySupremist
+  changes:
+  - message: Clipping harvestable plants now yields undamaged seeds.
+    type: Add
+  id: 6328
+  time: '2024-04-10T17:51:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25541
+- author: deltanedas
+  changes:
+  - message: Fixed some doors having no access when they should.
+    type: Fix
+  id: 6329
+  time: '2024-04-10T20:06:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26858
+- author: Flareguy
+  changes:
+  - message: Added emergency nitrogen lockers. You can scarcely find them in public
+      areas, or scattered around in maintenance tunnels.
+    type: Add
+  id: 6330
+  time: '2024-04-10T21:20:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26752
+- author: Jark255
+  changes:
+  - message: Door electronics now require network configurators to change the access
+      of them, rather by hand.
+    type: Fix
+  id: 6331
+  time: '2024-04-11T12:21:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26888
+- author: lunarcomets
+  changes:
+  - message: Cryogenic sleep units now remove crew members from the manifest, and
+      announce when crew members go into cryogenic storage.
+    type: Tweak
+  id: 6332
+  time: '2024-04-11T20:48:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26813
