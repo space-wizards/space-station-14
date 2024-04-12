@@ -109,4 +109,4 @@
 - type: startingGear
   id: DetectiveCoat
   equipment:
-    back: ClothingOuterCoatDetective
+    outerClothing: ClothingOuterCoatDetective
