@@ -24,7 +24,7 @@
     damageOverlayGroups:
       Brute:
         sprite: Mobs/Effects/brute_damage.rsi
-        color: "#75b1f0"
+        color: "#cd7314"
   - type: Butcherable
     butcheringType: Spike
     spawned:
@@ -47,7 +47,7 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaled: true
+        scaleByQuantity: true
         damage:
           types:
             Blunt: 2
@@ -62,7 +62,7 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaled: true
+        scaleByQuantity: true
         damage:
           types:
             Poison: 5
