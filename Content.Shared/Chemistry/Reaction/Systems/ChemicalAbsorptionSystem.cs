@@ -285,7 +285,7 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
                 if (reactantQuantity == FixedPoint2.Zero || absorption.Quantized && reactantQuantity < requiredVolume)
                     return FixedPoint2.Zero;
                 //Limit reaction rate by catalysts, technically catalysts would allow you to accelerate a reaction rate past
-                //it's normal rate but that's functionality that someone else can add later. For now we are assuming that
+                //it's normal rate but that's functionality that someone else can add later. For now, we are assuming that
                 //the rate specified on the reaction/absorption is the maximum catalyzed rate if catalysts are specified.
                 UpdateReactionRateFromReactants(ref reactionRate, reactantQuantity, requiredVolume,
                     absorber.Comp.LastUpdate,
