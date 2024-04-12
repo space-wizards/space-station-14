@@ -25,7 +25,7 @@
 - type: startingGear
   id: JesterSuit
   equipment:
-    jumpsuit: ClothingUniformJumpsuitJester
+    jumpsuit: ClothingUniformJumpsuitJesterAlt
 
 # Back
 - type: loadout
