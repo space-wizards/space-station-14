@@ -51,6 +51,10 @@
         {
             "name": "top",
             "directions": 4
+        },
+        {
+            "name": "vox",
+            "directions": 4
         }
     ]
 }
