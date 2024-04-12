@@ -23,3 +23,17 @@ public sealed partial class HandLabelerComponent : Component
     [DataField]
     public EntityWhitelist Whitelist = new();
 }
+
+/// <summary>
+/// Different actions the HandLabeler can do.
+/// </summary>
+/// <remarks>
+/// `invalid` value should never appear anywhere.
+/// <see cref="HandLabelerMessage">
+/// </remarks>
+public enum LabelAction
+{
+    invalid,
+    Removed,
+    Applied
+}

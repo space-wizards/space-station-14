@@ -149,16 +149,3 @@ public sealed class HandLabelerMessage : EntityEventArgs
     }
 }
 
-/// <summary>
-/// Different actions the HandLabeler can do.
-/// </summary>
-/// <remarks>
-/// `invalid` value should never appear anywhere.
-/// <see cref="HandLabelerMessage">
-/// </remarks>
-public enum LabelAction
-{
-    invalid,
-    Removed,
-    Applied
-}

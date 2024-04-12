@@ -43,7 +43,7 @@ public sealed class HandLabelerSystem : SharedHandLabelerSystem
         if (!Resolve(uid, ref handLabeler))
             return;
 
-        Dirty(uid,handLabeler);
+        Dirty(uid, handLabeler);
         _userInterfaceSystem.TrySetUiState(uid, HandLabelerUiKey.Key,
             new HandLabelerBoundUserInterfaceState(handLabeler.AssignedLabel));
     }
