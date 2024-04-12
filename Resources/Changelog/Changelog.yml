@@ -3800,8 +3800,7 @@
   url: https://github.com/space-wizards/space-station-14/pull/26752
 - author: Jark255
   changes:
-  - message: Door electronics now require network configurators to change the access
-      of them, rather by hand.
+  - message: Door electronics now require network configurators to change their access settings, rather than doing so by hand.
     type: Fix
   id: 6331
   time: '2024-04-11T12:21:15.0000000+00:00'
