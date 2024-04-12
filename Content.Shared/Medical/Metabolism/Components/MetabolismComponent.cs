@@ -7,6 +7,6 @@ namespace Content.Shared.Medical.Metabolism.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MetabolismComponent : Component
 {
-    [DataField(required: true)]
+    [DataField(required: true), AutoNetworkedField]
     public string LinkedSolutionName;
 }

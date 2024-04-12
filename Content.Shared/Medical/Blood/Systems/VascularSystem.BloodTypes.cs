@@ -8,10 +8,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical.Blood.Systems;
 
-public sealed partial class BloodCirculationSystem : EntitySystem
+public sealed partial class VascularSystem
 {
     public void ChangeBloodType(
-        Entity<BloodstreamComponent, BloodCirculationComponent, SolutionContainerManagerComponent?> bloodCirc,
+        Entity<BloodstreamComponent, VascularComponent, SolutionContainerManagerComponent?> bloodCirc,
         BloodTypePrototype newBloodType,
         BloodAntigenPolicy bloodAntigenPolicy = BloodAntigenPolicy.Overwrite)
     {
@@ -90,7 +90,7 @@ public sealed partial class BloodCirculationSystem : EntitySystem
         }
     }
 
-    public void UpdateAllowedAntigens(Entity<BloodCirculationComponent> bloodCirc,
+    public void UpdateAllowedAntigens(Entity<VascularComponent> bloodCirc,
         IEnumerable<ProtoId<BloodAntigenPrototype>> antigens,
         BloodAntigenPolicy antigenPolicy = BloodAntigenPolicy.Overwrite)
     {
@@ -118,7 +118,7 @@ public sealed partial class BloodCirculationSystem : EntitySystem
 
     #region Setup
 
-    private BloodTypePrototype GetInitialBloodType(Entity<BloodCirculationComponent> bloodCirc, BloodDefinitionPrototype bloodDef)
+    private BloodTypePrototype GetInitialBloodType(Entity<VascularComponent> bloodCirc, BloodDefinitionPrototype bloodDef)
     {
         return bloodCirc.Comp.BloodType == null
             ? SelectRandomizedBloodType(bloodDef)
@@ -149,7 +149,7 @@ public sealed partial class BloodCirculationSystem : EntitySystem
 
     #region SolutionCreationOverloads
 
-    public Solution CreateBloodSolution(Entity<BloodCirculationComponent> bloodCirc,
+    public Solution CreateBloodSolution(Entity<VascularComponent> bloodCirc,
         FixedPoint2 volume)
     {
         //We ignore the nullable here because the variable always gets filled during MapInit and you shouldn't be calling
@@ -164,7 +164,7 @@ public sealed partial class BloodCirculationSystem : EntitySystem
 
 
 
-    public Solution CreatePlasmaSolution(Entity<BloodCirculationComponent> bloodCirc,
+    public Solution CreatePlasmaSolution(Entity<VascularComponent> bloodCirc,
         FixedPoint2 volume)
     {
         //We ignore the nullable here because the variable always gets filled during MapInit and you shouldn't be calling
@@ -177,7 +177,7 @@ public sealed partial class BloodCirculationSystem : EntitySystem
         return CreatePlasmaSolution(_protoManager.Index(bloodType), volume);
     }
 
-    public Solution CreateBloodCellSolution(Entity<BloodCirculationComponent> bloodCirc,
+    public Solution CreateBloodCellSolution(Entity<VascularComponent> bloodCirc,
         FixedPoint2 volume)
     {
         //We ignore the nullable here because the variable always gets filled during MapInit and you shouldn't be calling

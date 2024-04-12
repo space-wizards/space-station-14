@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -27,6 +28,11 @@ public sealed partial class BodyPartComponent : Component
     /// </summary>
     [DataField("vital"), AutoNetworkedField]
     public bool IsVital;
+
+    /// <summary>
+    /// This number reflects the capability of this part as a number between 0 and 1.
+    /// </summary>
+    public FixedPoint2 Efficiency = 1.0f;
 
     [DataField, AutoNetworkedField]
     public BodyPartSymmetry Symmetry = BodyPartSymmetry.None;

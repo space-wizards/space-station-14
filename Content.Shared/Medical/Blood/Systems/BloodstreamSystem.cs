@@ -5,6 +5,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Blood.Components;
+using Content.Shared.Medical.Blood.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -13,7 +14,7 @@ namespace Content.Shared.Medical.Blood.Systems;
 public sealed class BloodstreamSystem : EntitySystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionSystem = default!;
-    [Dependency] private readonly BloodCirculationSystem _bloodCirculationSystem = default!;
+    [Dependency] private readonly VascularSystem _vascularSystem = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -36,10 +37,8 @@ public sealed class BloodstreamSystem : EntitySystem
             ApplyBleeds((uid, bloodstreamComp, solMan));
             RegenBlood((uid, bloodstreamComp, solMan));
 
-            //If we have a blood circulation component update it from this update loop.
-            //This saves us from having to run a second entity query on BloodCirculation
-            if (TryComp<BloodCirculationComponent>(uid, out var bloodCirc))
-                _bloodCirculationSystem.CirculationUpdate((uid, bloodstreamComp, bloodCirc, solMan));
+            var ev = new BloodstreamUpdatedEvent((uid, bloodstreamComp, solMan));
+            RaiseLocalEvent(uid, ref ev);
         }
     }
 
@@ -82,9 +81,9 @@ public sealed class BloodstreamSystem : EntitySystem
         bloodstream.BloodSolution = bloodSolution;
 
         //If we have a circulation comp, call the setup method on bloodCirculationSystem
-        if (TryComp<BloodCirculationComponent>(bloodstreamEnt, out var bloodCircComp))
+        if (TryComp<VascularComponent>(bloodstreamEnt, out var bloodCircComp))
         {
-            _bloodCirculationSystem.SetupCirculation(bloodstreamEnt, bloodstream, bloodCircComp, volume, bloodSolution.Value);
+            _vascularSystem.SetupCirculation(bloodstreamEnt, bloodstream, bloodCircComp, volume, bloodSolution.Value);
         }
         else
         {

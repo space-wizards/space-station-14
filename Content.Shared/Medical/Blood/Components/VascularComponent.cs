@@ -1,5 +1,6 @@
 ﻿using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Blood.Prototypes;
+using Content.Shared.Medical.Blood.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -7,23 +8,10 @@ namespace Content.Shared.Medical.Blood.Components;
 
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class BloodCirculationComponent : Component
+public sealed partial class VascularComponent : Component
 {
 
     #region Simulation
-
-    /// <summary>
-    /// Vascular resistance, aka how much your blood vessels resist the flow of blood
-    /// Used to calculate blood pressure, expressed as a percentage from 0-100
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
-    public FixedPoint2 VascularResistance = 100;
-
-    /// <summary>
-    /// Cached value for cardiac output
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
-    public FixedPoint2 CardiacOutput ;
 
     /// <summary>
     /// The healthy volume for this bloodstream.
@@ -32,38 +20,63 @@ public sealed partial class BloodCirculationComponent : Component
     public FixedPoint2 HealthyVolume = 250;
 
     /// <summary>
-    /// The healthy high (diastolic) pressure.
-    /// this is the blood pressure at the moment blood is pumped
+    /// Healthy blood pressure values.
+    /// The first value is: high (systolic) pressure. This is the blood pressure at the moment blood is pumped.
+    /// The second value is: low (diastolic) pressure. This is the blood pressure in between pumps.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public FixedPoint2 HealthyHighPressure = 120;
+    [DataField, AutoNetworkedField] //TODO: Required
+    public BloodPressure HealthyBloodPressure = (120,0);
 
     /// <summary>
-    /// The healthy high (diastolic) pressure.
-    /// this is the blood pressure in between blood pumps
+    /// The current blood pressure. With the first value being high and the second being low
+    /// If this value is null at mapinit, it will be populated.
+    /// This value will become null if there are no circulationEntities or if there is no cardiac output (aka heart is fucked)
     /// </summary>
     [DataField, AutoNetworkedField]
-    public FixedPoint2 HealthyLowPressure = 80;
+    public BloodPressure? CurrentBloodPressure = null;
 
     /// <summary>
-    /// Cached raw blood pressure value
+    /// The current cached pulse rate, this is the fastest rate from any of the circulation entities
+    /// This value will become null if there are no circulationEntities or if there is no cardiac output (aka heart is fucked)
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly),AutoNetworkedField]
-    public FixedPoint2 RawPressure = 0;
+    [DataField, AutoNetworkedField]
+    public FixedPoint2? Pulse = null;
+
+    /// <summary>
+    /// Vascular resistance, aka how much your blood vessels resist the flow of blood
+    /// Used as a multiplier for VascularConstant to calculate blood pressure, expressed as a percentage from 0-1
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+    public FixedPoint2 VascularResistance = 1;
+
+    /// <summary>
+    /// Entities that are pumping this blood
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+    public List<EntityUid> CirculationEntities ;
+
+    /// <summary>
+    /// Cached optimal CardiacOutput value, combined value from all the circulation entities
+    /// This is mainly used for re-calculating vascular constants
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+    public FixedPoint2 OptimalCardiacOutput;
 
     /// <summary>
     /// Constant used to calculate blood diastolic blood pressure
-    /// This is a cached value calculated from HealthyHighPressure
+    /// This is calculated based on the healthy low pressure and
+    /// multiplied by VascularResistance before being used
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
-    public FixedPoint2 LowPressureMod;
+    public float LowPressureVascularConstant;
 
     /// <summary>
     /// Constant used to calculate blood diastolic blood pressure
-    /// This is a cached value calculated from HealthyLowPressure
+    /// This is calculated based on the healthy high pressure and
+    /// multiplied by VascularResistance before being used
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
-    public FixedPoint2 HighPressureMod;
+    public float HighPressureVascularConstant;
 
     #endregion
 
