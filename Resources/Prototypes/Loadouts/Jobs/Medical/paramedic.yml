@@ -63,4 +63,4 @@
 - type: startingGear
   id: ParamedicWindbreaker
   equipment:
-    back: ClothingOuterCoatParamedicWB
+    outerClothing: ClothingOuterCoatParamedicWB
