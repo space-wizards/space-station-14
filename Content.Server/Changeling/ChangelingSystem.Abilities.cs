@@ -303,7 +303,7 @@ public sealed partial class ChangelingSystem
         if (handContainer == null)
             return;
 
-        if (!TryUseAbility(ent, ent.Comp, 20))
+        if (!TryUseAbility(ent, ent.Comp, -20))
             return;
 
         args.Handled = true;
