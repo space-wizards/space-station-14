@@ -115,6 +115,7 @@
     solutionName: pen
     transferAmount: 15
     onlyAffectsMobs: false
+    injectOnly: true
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1
@@ -205,6 +206,7 @@
     solutionName: pen
     transferAmount: 20
     onlyAffectsMobs: false
+    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -236,6 +238,7 @@
     solutionName: pen
     transferAmount: 20
     onlyAffectsMobs: false
+    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -267,6 +270,8 @@
     solutionName: pen
     transferAmount: 20
     onlyAffectsMobs: false
+    injectOnly: true
+
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -299,6 +304,7 @@
     solutionName: pen
     transferAmount: 30
     onlyAffectsMobs: false
+    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -337,6 +343,7 @@
     solutionName: pen
     transferAmount: 30
     onlyAffectsMobs: false
+    injectOnly: true
   - type: StaticPrice
     price: 500
   - type: Tag
@@ -397,6 +404,7 @@
     solutionName: pen
     transferAmount: 30
     onlyAffectsMobs: false
+    injectOnly: true
   - type: StaticPrice
     price: 500
   - type: Tag
@@ -417,6 +425,7 @@
     solution: hypospray
   - type: ExaminableSolution
     solution: hypospray
+    heldOnly: true # Allow examination only when held in hand.
   - type: Hypospray
     onlyAffectsMobs: false
   - type: UseDelay
