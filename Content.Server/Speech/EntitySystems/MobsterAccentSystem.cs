@@ -63,6 +63,7 @@ public sealed class MobsterAccentSystem : EntitySystem
         if (_random.Prob(0.15f))
         {
             //Checks if the first word of the sentence is all caps
+            //So the prefix can be allcapped and to not resanitize the captial
             var firstWordAllCaps = !Regex.Match(msg, @"^(\S+)").Value.Any(char.IsLower);
             var pick = _random.Next(1, 2);
 
@@ -82,6 +83,7 @@ public sealed class MobsterAccentSystem : EntitySystem
         if (_random.Prob(0.4f))
         {
             //Checks if the last word of the sentence is all caps
+            //So the suffix can be allcapped
             var lastWordAllCaps = !Regex.Match(msg, @"(\S+)$").Value.Any(char.IsLower);
             var suffix = "";
             if (component.IsBoss)

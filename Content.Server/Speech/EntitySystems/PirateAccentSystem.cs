@@ -25,6 +25,7 @@ public sealed class PirateAccentSystem : EntitySystem
         if (!_random.Prob(component.YarrChance))
             return msg;
         //Checks if the first word of the sentence is all caps
+        //So the prefix can be allcapped and to not resanitize the captial
         var firstWordAllCaps = !Regex.Match(msg, @"^(\S+)").Value.Any(char.IsLower);
 
         var pick = _random.Pick(component.PirateWords);
