@@ -230,7 +230,6 @@
   name: chat-emote-name-squeak
   category: Vocal
   available: false
-  icon: Interface/Actions/scream.png
   whitelist:
     components:
       - Vocal
