@@ -19,11 +19,35 @@
     sprite: Objects/Weapons/Melee/armblade.rsi
   - type: Tool
     qualities:
+    - Slicing
+    speed: 0.25
+  - type: DisarmMalus
+    malus: 0
+
+- type: entity
+  parent: ArmBlade
+  id: ArmBladeChangeling
+  suffix: Unremovable, Prying
+  components:
+  - type: Tool
+    qualities:
     - Prying
     - Slicing
     speed: 0.25
   - type: Prying
     pryPowered: true
   - type: Unremoveable
-  - type: DisarmMalus
-    malus: 0
+
+- type: entity
+  parent: ArmBlade
+  id: ArmBladeDull
+  suffix: Unremovable, Dull
+  components:
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    attackRate: 0.75
+    damage:
+      types:
+        Slash: 1
+        Piercing: 1
+  - type: Unremoveable
