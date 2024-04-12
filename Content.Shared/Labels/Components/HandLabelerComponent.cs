@@ -1,27 +1,34 @@
-
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Labels.Components;
 
-[RegisterComponent,NetworkedComponent]
-[AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedHandLabelerSystem))]
 public sealed partial class HandLabelerComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
-    [AutoNetworkedField]
     public string AssignedLabel = string.Empty;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
-    [AutoNetworkedField]
     public int MaxLabelChars = 50;
 
     [DataField]
     public EntityWhitelist Whitelist = new();
+
+    public Dictionary<NetEntity, LabelAction> RecentlyLabeled = new();
+}
+
+[Serializable, NetSerializable]
+public sealed class HandLabelerComponentState : ComponentState
+{
+    public string AssignedLabel { get; init; } = String.Empty;
+    public int MaxLabelChars { get; init; }
+    public Dictionary<NetEntity, LabelAction> RecentlyLabeled { get; init; } = new();
 }
 
 /// <summary>
