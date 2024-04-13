@@ -172,15 +172,26 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
         if (!TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
             return;
 
-        if (receiver.Powered && !component.ForciblyEnabled)
+        if (!TryComp<AlertLevelComponent>(_station.GetOwningStation(uid), out var alerts))
+            return;
+
+        if (alerts.AlertLevels == null || !alerts.AlertLevels.Levels.TryGetValue(alerts.CurrentLevel, out var details))
+            return;
+
+        if (receiver.Powered && !component.ForciblyEnabled) // Green alert/empty battery 
         {
             receiver.Load = (int) Math.Abs(component.Wattage);
-            TurnOff(uid, component);
+            TurnOff(uid, component, details.Color);
             SetState(uid, component, EmergencyLightState.Charging);
         }
-        else
+        else if (!receiver.Powered)
         {
-            TurnOn(uid, component);
+            TurnOn(uid, component, Color.Red);
+            SetState(uid, component, EmergencyLightState.On);
+        }
+        else // Powered and enabled
+        {
+            TurnOn(uid, component, details.Color);
             SetState(uid, component, EmergencyLightState.On);
         }
     }
@@ -192,10 +203,30 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
         _ambient.SetAmbience(uid, false);
     }
 
+    // Turn off and set color
+    private void TurnOff(EntityUid uid, EmergencyLightComponent component, Color color)
+    {
+        _pointLight.SetEnabled(uid, false);
+        _pointLight.SetColor(uid, color);
+        _appearance.SetData(uid, EmergencyLightVisuals.Color, color);
+        _appearance.SetData(uid, EmergencyLightVisuals.On, false);
+        _ambient.SetAmbience(uid, false);
+    }
+
     private void TurnOn(EntityUid uid, EmergencyLightComponent component)
     {
         _pointLight.SetEnabled(uid, true);
         _appearance.SetData(uid, EmergencyLightVisuals.On, true);
         _ambient.SetAmbience(uid, true);
+    }
+
+    // Turn on and set color
+    private void TurnOn(EntityUid uid, EmergencyLightComponent component, Color color)
+    {
+        _pointLight.SetEnabled(uid, true);
+        _pointLight.SetColor(uid, color);
+        _appearance.SetData(uid, EmergencyLightVisuals.Color, color);
+        _appearance.SetData(uid, EmergencyLightVisuals.On, true);
+        _ambient.SetAmbience(uid, true); 
     }
 }
