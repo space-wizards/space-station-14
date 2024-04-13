@@ -40,7 +40,7 @@ public sealed partial class GunSystem
 
         if (sprite == null) return;
 
-        if (args.AppearanceData.TryGetValue(AmmoVisuals.MagLoaded, out var magloaded) &&
+        if (!args.AppearanceData.TryGetValue(AmmoVisuals.MagLoaded, out var magloaded) ||
             magloaded is true)
         {
             if (!args.AppearanceData.TryGetValue(AmmoVisuals.AmmoMax, out var capacity))
