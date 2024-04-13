@@ -69,8 +69,6 @@ public sealed class ContentSpriteSystem : EntitySystem
             {
                 Export(ev.Target);
             },
-            Impact = LogImpact.High,
-            ConfirmationPopup = true
         };
 
         ev.Verbs.Add(verb);
@@ -94,40 +92,52 @@ public sealed class ContentSpriteSystem : EntitySystem
 
             while (_queuedTextures.TryDequeue(out var queued))
             {
-                if (!_entManager.TryGetComponent(queued.Entity, out MetaDataComponent? metadata))
-                    continue;
-
-                var filename = metadata.EntityName;
-
-                handle.RenderInRenderTarget(queued.Texture, () =>
+                try
                 {
-                    handle.DrawEntity(queued.Entity, queued.Texture.Size / 2, Vector2.One, null, overrideDirection: queued.Direction);
-                }, Color.Transparent);
+                    if (!_entManager.TryGetComponent(queued.Entity, out MetaDataComponent? metadata))
+                        continue;
 
-                var directory = new ResPath("/Exports");
+                    var filename = metadata.EntityName;
 
-                if (!_resManager.UserData.IsDir(directory))
-                {
-                    _resManager.UserData.CreateDir(directory);
-                }
-
-                var fullFileName = directory / $"{filename}-{queued.Direction}-{queued.Entity}.png";
-
-                queued.Texture.CopyPixelsToMemory<Rgba32>(image =>
-                {
-                    if (_resManager.UserData.Exists(fullFileName))
+                    handle.RenderInRenderTarget(queued.Texture, () =>
                     {
-                        Logger.Info($"Found existing file {fullFileName} to replace.");
-                        _resManager.UserData.Delete(fullFileName);
+                        handle.DrawEntity(queued.Entity, queued.Texture.Size / 2, Vector2.One, null,
+                            overrideDirection: queued.Direction);
+                    }, Color.Transparent);
+
+                    var directory = new ResPath("/Exports");
+
+                    if (!_resManager.UserData.IsDir(directory))
+                    {
+                        _resManager.UserData.CreateDir(directory);
                     }
 
-                    using var file =
-                        _resManager.UserData.Open(fullFileName, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+                    var fullFileName = directory / $"{filename}-{queued.Direction}-{queued.Entity}.png";
 
-                    image.SaveAsPng(file);
-                });
+                    queued.Texture.CopyPixelsToMemory<Rgba32>(image =>
+                    {
+                        if (_resManager.UserData.Exists(fullFileName))
+                        {
+                            Logger.Info($"Found existing file {fullFileName} to replace.");
+                            _resManager.UserData.Delete(fullFileName);
+                        }
 
-                Logger.Info($"Saved screenshot to {fullFileName}");
+                        using var file =
+                            _resManager.UserData.Open(fullFileName, FileMode.CreateNew, FileAccess.Write,
+                                FileShare.None);
+
+                        image.SaveAsPng(file);
+                    });
+
+                    Logger.Info($"Saved screenshot to {fullFileName}");
+                }
+                catch (Exception exc)
+                {
+                    queued.Texture.Dispose();
+
+                    if (!string.IsNullOrEmpty(exc.StackTrace))
+                        Logger.Fatal(exc.StackTrace);
+                }
             }
         }
     }
