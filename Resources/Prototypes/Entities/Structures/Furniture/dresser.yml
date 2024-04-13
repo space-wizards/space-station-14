@@ -85,6 +85,7 @@
         orGroup: dressermainloot
       - id: ClothingUniformJumpskirtColorPink
         prob: 0.05
+        orGroup: dressermainloot
       - id: ClothingUniformJumpsuitLoungewear
         prob: 0.05
         orGroup: dressermainloot

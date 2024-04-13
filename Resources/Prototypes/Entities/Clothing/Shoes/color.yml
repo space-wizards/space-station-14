@@ -22,6 +22,17 @@
 
 - type: entity
   parent: ClothingShoesBaseButcherable
+  id: ClothingShoesColorPink
+  name: pink shoes
+  description: Stylish pink shoes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Color/pink.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Color/pink.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesColorBrown
   name: brown shoes
   description: A pair of brown shoes.
