@@ -19,6 +19,12 @@ public sealed partial class EquipGearActionComponent : Component
     public ProtoId<StartingGearPrototype> PrototypeID;
 
     /// <summary>
+    ///     Items to delete on unequip.
+    /// </summary>
+    [DataField]
+    public List<EntityUid?> EquippedItems = [];
+
+    /// <summary>
     /// Popup that shows up when you have no free hands to equip a starting gear.
     /// </summary>
     [DataField]

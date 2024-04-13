@@ -9,6 +9,7 @@ using Robust.Shared.Player;
 using Content.Shared.Station;
 using Content.Shared.IdentityManagement;
 using Robust.Shared.Audio.Systems;
+using Content.Shared.Movement.Systems;
 
 namespace Content.Shared.Actions;
 
@@ -20,6 +21,7 @@ public sealed class EquipGearActionSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _speedModifier = default!;
 
     public override void Initialize()
     {
@@ -47,7 +49,8 @@ public sealed class EquipGearActionSystem : EntitySystem
                     {
                         if (_inventory.TryGetSlotEntity(ent, slot.Name, out var slotItem))
                         {
-                            _inventory.TryUnequip(ent, slotItem.Value, slot.Name, true, force: true);
+                            if (slotItem != null)
+                                _inventory.TryUnequip(ent, slotItem.Value, slot.Name, true, force: true);
                         }
                     }
                 }
@@ -66,7 +69,7 @@ public sealed class EquipGearActionSystem : EntitySystem
                 }
             }
 
-            _spawning.EquipStartingGear(ent, startingGear, null);
+            comp.EquippedItems = _spawning.EquipStartingGear(ent, startingGear, null);
 
             if (comp.PopupEquipSelf != string.Empty)
                 _popup.PopupEntity(Loc.GetString(comp.PopupEquipSelf), ent, ent, comp.PopupType);
@@ -76,55 +79,16 @@ public sealed class EquipGearActionSystem : EntitySystem
         }
         else
         {
-            if (_inventory.TryGetSlots(ent, out var slotDefinitions))
-            {
-                foreach (var slot in slotDefinitions)
-                {
-                    var equipmentStr = startingGear.GetGear(slot.Name, null);
-                    if (!string.IsNullOrEmpty(equipmentStr))
-                    {
-                        if (_inventory.TryGetSlotEntity(ent, slot.Name, out var slotItem))
-                        {
-                            if (TryComp<MetaDataComponent>(slotItem, out var slotItemMetaData))
-                            {
-                                if (TryPrototype(slotItem.Value, out var prototype, slotItemMetaData))
-                                {
-                                    if (prototype.ID == equipmentStr)
-                                    {
-                                        _inventory.TryUnequip(ent, slotItem.Value, slot.Name, true, force: true);
-                                        QueueDel(slotItem);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+            foreach (var uid in comp.EquippedItems)
+                QueueDel(uid);
 
-                var inhand = startingGear.Inhand;
-                foreach (var prototype in inhand)
-                {
-                    foreach (var held in _hands.EnumerateHeld(ent))
-                    {
-                        if (TryComp<MetaDataComponent>(held, out var heldMetaData))
-                        {
-                            if (TryPrototype(held, out var heldProto, heldMetaData))
-                            {
-                                if (heldProto.ID == prototype)
-                                {
-                                    _hands.TryDrop(ent, held);
-                                    QueueDel(held);
-                                }
-                            }
-                        }
-                    }
-                }
+            _speedModifier.RefreshMovementSpeedModifiers(ent);
 
-                if (comp.PopupUnequipSelf != string.Empty)
-                    _popup.PopupEntity(Loc.GetString(comp.PopupUnequipSelf), ent, ent, comp.PopupType);
+            if (comp.PopupUnequipSelf != string.Empty)
+                _popup.PopupEntity(Loc.GetString(comp.PopupUnequipSelf), ent, ent, comp.PopupType);
 
-                if (comp.PopupUnequipOthers != string.Empty)
-                    _popup.PopupEntity(Loc.GetString(comp.PopupUnequipOthers), ent, Filter.PvsExcept(ent), true, comp.PopupType);
-            }
+            if (comp.PopupUnequipOthers != string.Empty)
+                _popup.PopupEntity(Loc.GetString(comp.PopupUnequipOthers), ent, Filter.PvsExcept(ent), true, comp.PopupType);
         }
 
         comp.Equipped = !comp.Equipped;
