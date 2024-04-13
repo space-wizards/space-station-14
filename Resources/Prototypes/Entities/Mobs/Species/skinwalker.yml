@@ -15,7 +15,7 @@
   - type: TransferMindOnGib
   - type: GibAction
     actionPrototype: SkinwalkerGibAction
-    allowedStates: [Alive, Critical, Dead]
+    allowedStates: [Critical, Dead]
   - type: Destructible
     thresholds:
     - trigger:
