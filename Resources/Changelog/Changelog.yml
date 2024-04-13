@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Hmeister-real
-  changes:
-  - message: You can now Sob and Chortle with emotes
-    type: Tweak
-  id: 5839
-  time: '2024-01-31T11:26:46.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24585
 - author: TheShuEd
   changes:
   - message: Anomalies can no longer spawn entities in walls or other objects.
@@ -3826,3 +3819,12 @@
   id: 6338
   time: '2024-04-13T01:46:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26912
+- author: Vasilis
+  changes:
+  - message: Blood (or anything containing uncooked animal proteins) can only be consumed
+      by animal stomach's instead of all but human. Attempting to due so will poison
+      you as intended.
+    type: Fix
+  id: 6339
+  time: '2024-04-13T02:36:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26906
