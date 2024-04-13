@@ -100,6 +100,25 @@ public sealed class EquipGearActionSystem : EntitySystem
                     }
                 }
 
+                var inhand = startingGear.Inhand;
+                foreach (var prototype in inhand)
+                {
+                    foreach (var held in _hands.EnumerateHeld(ent))
+                    {
+                        if (TryComp<MetaDataComponent>(held, out var heldMetaData))
+                        {
+                            if (TryPrototype(held, out var heldProto, heldMetaData))
+                            {
+                                if (heldProto.ID == prototype)
+                                {
+                                    _hands.TryDrop(ent, held);
+                                    QueueDel(held);
+                                }
+                            }
+                        }
+                    }
+                }
+
                 if (comp.PopupUnequipSelf != string.Empty)
                     _popup.PopupEntity(Loc.GetString(comp.PopupUnequipSelf), ent, ent, comp.PopupType);
 
