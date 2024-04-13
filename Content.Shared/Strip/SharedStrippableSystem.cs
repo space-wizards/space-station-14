@@ -51,8 +51,7 @@ public abstract class SharedStrippableSystem : EntitySystem
     {
         args.CanDrop |= args.Target == args.User &&
                         HasComp<StrippingComponent>(args.User) &&
-                        HasComp<HandsComponent>(args.User) &&
-                        HasComp<StrippingComponent>(args.User);
+                        HasComp<HandsComponent>(args.User);
 
         if (args.CanDrop)
             args.Handled = true;
