@@ -6,13 +6,26 @@
   sprites: MobVoxSprites
   markingLimits: MobVoxMarkingLimits
   dollPrototype: MobVoxDummy
-  skinColoration: Hues
+  skinColoration: VoxFeathers
+  defaultHumanSkinTone: 35
   defaultSkinTone: "#6c741d"
   maleFirstNames: names_vox
   femaleFirstNames: names_vox
   naming: First
   sexes:
   - Unsexed
+
+  #Limit color range
+
+  #Feet scales dont show up
+
+  #Tail needs to be properly stencilmasked
+
+  #Need vox pieface sprite
+
+  #Credit Flare
+
+  #Credit Bhijn
 
 - type: speciesBaseSprites
   id: MobVoxSprites

@@ -1,3 +1,6 @@
+using System.Security.Cryptography;
+using Microsoft.VisualBasic.CompilerServices;
+
 namespace Content.Shared.Humanoid;
 
 public static class SkinColor
@@ -8,6 +11,7 @@ public static class SkinColor
     public const float MinHuesLightness = 0.175f;
 
     public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
+    public static Color ValidVoxFeathers => Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
 
     /// <summary>
     ///     Turn a color into a valid tinted hue skin tone.
@@ -140,11 +144,118 @@ public static class SkinColor
         return Color.ToHsl(color).Y <= MaxTintedHuesSaturation && Color.ToHsl(color).Z >= MinTintedHuesLightness;
     }
 
+
+
+
+
+    //TODO: comments and whatever
+    public static Color VoxFeathers(int tone)
+    {
+        tone = Math.Clamp(tone, 0, 99);
+
+        // The range is split into 5 equal sections with one Hue each
+        // Position within each section sets Saturation proportionally
+        // V-value is constant
+
+        var d1 = tone / 10;
+        var d2 = tone % 10;
+
+        //var hueMin = 29f;
+        //var hueMax = 174f;
+        //ar satMin = 20f;
+        //var satMax = 88f;
+        //var hue = (hueMax - hueMin) / 9 * d1 + hueMin ;
+
+        var hue = 85f;
+        // TODO remove the previous calculation in the last line
+        switch (d1)
+        {
+            case var i when i <= 1:
+                hue = 29;
+                break;
+
+            case var i when i <= 3:
+                hue = 66;
+                break;
+
+            case var i when i <= 5:
+                hue = 85;
+                break;
+
+            case var i when i <= 7:
+                hue = 148;
+                break;
+
+            case var i when i <= 9:
+                hue = 174;
+                break;
+        }
+
+        var leftover = d1 % 2f;
+        var sat = (d2 + leftover * 10) *5;
+        //var sat = (d2 + leftover * 10) *1.47f + 20;
+
+
+        //var sat = (satMax - satMin) / 9 * d2 + satMin;
+        var val = 44.75f ;
+
+        var color = Color.FromHsv(new Vector4(hue / 360, sat / 100, val / 100, 1.0f));
+
+        return color;
+    }
+
+    public static float VoxFeathersFromColor(Color color)
+    {
+        var hsv = Color.ToHsv(color);
+        // check for hue/value first, if hue is lower than this percentage
+        // and value is 1.0
+        // then it'll be hue
+        if (Math.Clamp(hsv.X, 25f / 360f, 1) > 25f / 360f
+            && hsv.Z == 1.0)
+        {
+            return Math.Abs(45 - (hsv.X * 360));
+        }
+        // otherwise it'll directly be the saturation
+        else
+        {
+            return hsv.Y * 100;
+        }
+    }
+
+    //TODO: comments and whatever
+    public static bool VerifyVoxFeathers(Color color)
+    {
+        var colorValues = Color.ToHsv(color);
+
+        var hue = Math.Round(colorValues.X * 360f);
+        var sat = Math.Round(colorValues.Y * 100f);
+        var val = Math.Round(colorValues.Z * 100f);
+
+        //TODO make this less ugly
+        var h1 = 29f;
+        var h2 = 66f;
+        var h3 = 85f;
+        var h4 = 148f;
+        var h5 = 174f;
+
+        if (Math.Abs(hue - h1) > 1f && Math.Abs(hue - h2) > 1f  && Math.Abs(hue - h3) > 1f  && Math.Abs(hue - h4) > 1f  && Math.Abs(hue - h5) > 1f )
+            return false;
+
+        if (val < 44f || val > 45f)
+            return false;
+
+        return true;
+    }
+
+
+
+
+
     /// <summary>
     ///     This takes in a color, and returns a color guaranteed to be above MinHuesLightness
     /// </summary>
     /// <param name="color"></param>
-    /// <returns>Either the color as-is if it's above MinHuesLightness, or the color with luminosity increased above MinHuesLightness</returns> 
+    /// <returns>Either the color as-is if it's above MinHuesLightness, or the color with luminosity increased above MinHuesLightness</returns>
     public static Color MakeHueValid(Color color)
     {
         var manipulatedColor = Color.ToHsv(color);
@@ -169,6 +280,7 @@ public static class SkinColor
             HumanoidSkinColor.HumanToned => VerifyHumanSkinTone(color),
             HumanoidSkinColor.TintedHues => VerifyTintedHues(color),
             HumanoidSkinColor.Hues => VerifyHues(color),
+            HumanoidSkinColor.VoxFeathers => VerifyVoxFeathers(color),
             _ => false,
         };
     }
@@ -180,6 +292,7 @@ public static class SkinColor
             HumanoidSkinColor.HumanToned => ValidHumanSkinTone,
             HumanoidSkinColor.TintedHues => ValidTintedHuesSkinTone(color),
             HumanoidSkinColor.Hues => MakeHueValid(color),
+            HumanoidSkinColor.VoxFeathers => ValidVoxFeathers,
             _ => color
         };
     }
@@ -189,5 +302,6 @@ public enum HumanoidSkinColor : byte
 {
     HumanToned,
     Hues,
+    VoxFeathers, // Vox are denied the full rainbow range
     TintedHues, //This gives a color tint to a humanoid's skin (10% saturation with full hue range).
 }

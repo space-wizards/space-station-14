@@ -104,6 +104,7 @@ namespace Content.Shared.Humanoid
                 HumanoidSkinColor.HumanToned => Humanoid.SkinColor.HumanSkinTone(speciesPrototype.DefaultHumanSkinTone),
                 HumanoidSkinColor.Hues => speciesPrototype.DefaultSkinTone,
                 HumanoidSkinColor.TintedHues => Humanoid.SkinColor.TintedHues(speciesPrototype.DefaultSkinTone),
+                HumanoidSkinColor.VoxFeathers => Humanoid.SkinColor.VoxFeathers(speciesPrototype.DefaultHumanSkinTone),
                 _ => Humanoid.SkinColor.ValidHumanSkinTone
             };
 
@@ -167,6 +168,10 @@ namespace Content.Shared.Humanoid
                     var gbyte = random.NextByte();
                     var bbyte = random.NextByte();
                     newSkinColor = new Color(rbyte, gbyte, bbyte);
+                    break;
+                case HumanoidSkinColor.VoxFeathers:
+                    var voxtone = random.Next(0, 100);
+                    newSkinColor = Humanoid.SkinColor.VoxFeathers(voxtone);
                     break;
             }
 

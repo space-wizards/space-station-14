@@ -734,6 +734,20 @@ namespace Content.Client.Preferences.UI
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
+                case HumanoidSkinColor.VoxFeathers:
+                {
+                    if (!_skinColor.Visible)
+                    {
+                        _skinColor.Visible = true;
+                        _rgbSkinColorContainer.Visible = false;
+                    }
+
+                    var color = SkinColor.VoxFeathers((int) _skinColor.Value);
+
+                    CMarkings.CurrentSkinColor = color;
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));//
+                    break;
+                }
             }
 
             IsDirty = true;
@@ -960,6 +974,18 @@ namespace Content.Client.Preferences.UI
 
                     // set the RGB values to the direct values otherwise
                     _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
+                    break;
+                }
+                case HumanoidSkinColor.VoxFeathers:
+                {
+                    if (!_skinColor.Visible)
+                    {
+                        _skinColor.Visible = true;
+                        _rgbSkinColorContainer.Visible = false;
+                    }
+
+                    _skinColor.Value = SkinColor.VoxFeathersFromColor(Profile.Appearance.SkinColor);
+
                     break;
                 }
             }
