@@ -136,13 +136,22 @@
   description: Inflates your body into an all-consuming chitinous mass of armor. Uses 20 chemicals and slows down chemical regeneration by 25% when active.
   noSpawn: true
   components:
+  - type: EquipGearAction
+    prototypeID: ChitinousArmorGear
+    popupEquipSelf: changeling-armor-success-self
+    popupEquipOthers: changeling-armor-success-others
+    popupUnequipSelf: changeling-armor-retract-self
+    popupUnequipOthers: changeling-armor-retract-others
+    toggleSound:
+      path: /Audio/Effects/blobattack.ogg
   - type: InstantAction
     itemIconStyle: NoItem
     icon:
       sprite: Clothing/OuterClothing/Armor/lingarmor.rsi
       state: icon
-    event: !type:LingArmorActionEvent
     useDelay: 15
+    event: !type:UseChangelingAbilityActionEvent
+      abilityCost: -25
 
 - type: entity
   id: ActionLingInvisible
