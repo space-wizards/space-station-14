@@ -17,4 +17,10 @@ public sealed partial class GunWieldBonusComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("maxAngle"), AutoNetworkedField]
     public Angle MaxAngle = Angle.FromDegrees(-43);
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("angleDecay"), AutoNetworkedField]
+    public Angle AngleDecay = Angle.FromDegrees(-43);
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("angleIncrease"), AutoNetworkedField]
+    public Angle AngleIncrease = Angle.FromDegrees(-43);
 }
