@@ -118,8 +118,13 @@
     icon:
       sprite: Objects/Weapons/Melee/armblade.rsi
       state: icon
-    event: !type:ArmBladeActionEvent
     useDelay: 1
+  - type: EquipGearAction
+    prototypeID: ArmbladeChangelingGear
+    popupEquipSelf: changeling-armblade-success-self
+    popupEquipOthers: changeling-armblade-success-others
+    popupUnequipSelf: changeling-armblade-retract-self
+    popupUnequipOthers: changeling-armblade-retract-others
 
 - type: entity
   id: ActionLingArmor

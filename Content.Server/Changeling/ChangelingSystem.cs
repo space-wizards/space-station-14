@@ -225,6 +225,14 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (!TryComp<FingerprintComponent>(target, out var fingerPrintComp))
             return false;
 
+        foreach (var storedData in component.StoredDNA) // check if they already have the DNA
+        {
+            if (storedData.Dna != null && storedData.Dna == dnaComp.DNA)
+            {
+                return false;
+            }
+        }
+
         var transformData = new TransformData
         {
             Name = metaDataComp.EntityName,
