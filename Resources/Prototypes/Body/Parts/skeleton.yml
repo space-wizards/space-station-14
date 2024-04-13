@@ -69,8 +69,46 @@
         - Alive
     - type: Tag
       tags:
-        - MindTransferTarget
         - Head
+
+- type: entity
+  id: BrainSkeleton
+  name: "skull"
+  description: Alas poor Yorick...
+  parent: BaseItem
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Skeleton/parts.rsi
+      state: "skull_icon"
+    - type: Icon
+      sprite: Mobs/Species/Skeleton/parts.rsi
+      state: "skull_icon"
+    - type: Input
+      context: "human"
+    - type: Speech
+      speechVerb: Skeleton
+    - type: SkeletonAccent
+    - type: Actions
+    - type: Vocal
+      sounds:
+        Male: Skeleton
+        Female: Skeleton
+        Unsexed: Skeleton
+    - type: Emoting
+    - type: Grammar
+      attributes:
+        proper: true
+    - type: Examiner
+    - type: DoAfter
+    - type: MobState
+      allowedStates:
+        - Alive
+    - type: Organ
+    - type: Brain
+    - type: Gibbable
+    - type: Tag
+      tags:
+        - MindTransferTarget
 
 - type: entity
   id: LeftArmSkeleton
