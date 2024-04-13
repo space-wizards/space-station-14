@@ -9,4 +9,6 @@ wizard-list-name = [color=#A020F0]Wizard[/color]
 
 wizard-end-round = [color=plum]The Wizard Federation is satisfied.[/color]
 
-wizard-round-end-user-was-wizard = - [color=plum]{$name}[/color] ([color=gray]{$username}[/color]) was a wizard!
+wizard-list-start = The wizards were:
+wizard-list-name = - [color=Purple]{$name}[/color]
+wizard-list-name-user = - [color=White]{$name}[/color] ([color=gray]{$user}[/color])
