@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Client.GPS.UI;
@@ -18,6 +19,7 @@ public sealed class HandheldGpsStatusControl : Control
     private readonly IInputManager _inputManager;
     private readonly IEntityManager _entityManager;
     private readonly TransformSystem _transformSystem;
+    private readonly EntityQuery<TransformComponent> _transformQuery;
     private bool _lastMode;
 
     public HandheldGpsStatusControl(Entity<HandheldGpsComponent> parent)
@@ -27,6 +29,7 @@ public sealed class HandheldGpsStatusControl : Control
         _entityManager = IoCManager.Resolve<IEntityManager>();
         var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
         _transformSystem = entitySystemManager.GetEntitySystem<TransformSystem>();
+        _transformQuery = _entityManager.GetEntityQuery<TransformComponent>();
         _lastMode = parent.Comp.DisplayMode;
         _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
         AddChild(_label);
@@ -69,10 +72,19 @@ public sealed class HandheldGpsStatusControl : Control
         if (gpsComponent.DisplayMode)
         {
             // station coordinates mode
-            if (_entityManager.TryGetComponent<TransformComponent>(_parent, out var transform) &&
-                _transformSystem.TryGetGridTilePosition((_parent, transform), out var gridPos))
+            // this used trygetgridtileposition before, but it gives us ints that are rounded in a different way than
+            // the crew monitor, making the coords off by one. this uses the same approach as suit sensor/crew monitor
+            // code, so they should always be identical
+            if (_transformQuery.TryGetComponent(_parent, out var gpsTransform) &&
+                gpsTransform.GridUid is not null &&
+                _transformQuery.TryGetComponent(gpsTransform.GridUid, out var gridTransform))
             {
-                coordsText = $"({gridPos.X}, {gridPos.Y})";
+                var coordinates = new EntityCoordinates(gpsTransform.GridUid.Value,
+                    _transformSystem.GetInvWorldMatrix(gridTransform, _transformQuery)
+                        .Transform(_transformSystem.GetWorldPosition(gpsTransform, _transformQuery)));
+                var x = MathF.Round(coordinates.X);
+                var y = MathF.Round(coordinates.Y);
+                coordsText = $"({x}, {y})";
             }
             else
             {

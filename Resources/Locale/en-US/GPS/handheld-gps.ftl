@@ -2,7 +2,7 @@ handheld-gps-coordinates = [color=white]Mode:[/color] {$mode ->
         *[false] Space coords
         [true] Station coords
     }
-    {"[color]Position:[/color]"} {$coords}
+    {"[color=white]Position:[/color]"} {$coords}
     {$keybind} to switch mode
 
 handheld-gps-coordinates-unknown = no signal
