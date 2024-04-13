@@ -112,10 +112,10 @@ public sealed class ImmovableRodSystem : EntitySystem
 
             if (!component.ShouldGib)
             {
-                if (component.Damage == null || !TryComp<DamageableComponent>(ent, out var damageable))
+                if (component.Damage == null)
                     return;
 
-                _damageable.SetDamage(ent, damageable, component.Damage);
+                _damageable.TryChangeDamage(ent, component.Damage, ignoreResistances: true);
                 return;
             }
 
