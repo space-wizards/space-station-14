@@ -28,22 +28,20 @@ public sealed class EquipGearActionSystem : EntitySystem
 
     private void OnPerform(Entity<EquipGearActionComponent> ent, ref ActionPerformedEvent args)
     {
-        ToggleGear(ent, _proto.Index(ent.Comp.PrototypeID));
+        ToggleGear(args.User, ent.Comp, _proto.Index(ent.Comp.PrototypeID));
     }
 
-    private void ToggleGear(Entity<EquipGearActionComponent> ent, StartingGearPrototype startingGear)
+    private void ToggleGear(EntityUid ent, EquipGearActionComponent comp, StartingGearPrototype startingGear)
     {
-        var (uid, comp) = ent;
-
-        if (!ent.Comp.Equipped)
+        if (!comp.Equipped)
         {
             _spawning.EquipStartingGear(ent, startingGear, null);
 
-            if (ent.Comp.PopupEquipSelf != string.Empty)
-                _popup.PopupEntity(ent.Comp.PopupEquipSelf, ent, ent, ent.Comp.PopupType);
+            if (comp.PopupEquipSelf != string.Empty)
+                _popup.PopupEntity(comp.PopupEquipSelf, ent, ent, comp.PopupType);
 
-            if (ent.Comp.PopupEquipOthers != string.Empty)
-                _popup.PopupEntity(ent.Comp.PopupEquipOthers, ent, Filter.PvsExcept(ent), true, ent.Comp.PopupType);
+            if (comp.PopupEquipOthers != string.Empty)
+                _popup.PopupEntity(comp.PopupEquipOthers, ent, Filter.PvsExcept(ent), true, comp.PopupType);
         }
         else
         {
@@ -54,7 +52,7 @@ public sealed class EquipGearActionSystem : EntitySystem
                     var equipmentStr = startingGear.GetGear(slot.Name, null);
                     if (!string.IsNullOrEmpty(equipmentStr))
                     {
-                        if (_inventory.TryGetSlotEntity(uid, slot.Name, out var slotItem))
+                        if (_inventory.TryGetSlotEntity(ent, slot.Name, out var slotItem))
                         {
                             if (TryComp<MetaDataComponent>(slotItem, out var slotItemMetaData))
                             {
@@ -65,11 +63,11 @@ public sealed class EquipGearActionSystem : EntitySystem
                                         _inventory.TryUnequip(ent, slotItem.Value, slot.Name, true, force: true);
                                         QueueDel(slotItem);
 
-                                        if (ent.Comp.PopupUnequipSelf != string.Empty)
-                                            _popup.PopupEntity(ent.Comp.PopupUnequipSelf, ent, ent, ent.Comp.PopupType);
+                                        if (comp.PopupUnequipSelf != string.Empty)
+                                            _popup.PopupEntity(comp.PopupUnequipSelf, ent, ent, comp.PopupType);
 
-                                        if (ent.Comp.PopupUnequipOthers != string.Empty)
-                                            _popup.PopupEntity(ent.Comp.PopupUnequipOthers, ent, Filter.PvsExcept(ent), true, ent.Comp.PopupType);
+                                        if (comp.PopupUnequipOthers != string.Empty)
+                                            _popup.PopupEntity(comp.PopupUnequipOthers, ent, Filter.PvsExcept(ent), true, comp.PopupType);
                                     }
                                 }
                             }
@@ -79,6 +77,6 @@ public sealed class EquipGearActionSystem : EntitySystem
             }
         }
 
-        ent.Comp.Equipped = !ent.Comp.Equipped;
+        comp.Equipped = !comp.Equipped;
     }
 }
