@@ -163,7 +163,7 @@ namespace Content.Shared.Interaction
         {
             if (!item.DeleteOnDrop)
                 RemCompDeferred<UnremoveableComponent>(uid);
-            else if (_net.IsServer)
+            else if (_net.IsServer && !args.Forced)
                 QueueDel(uid);
         }
 
@@ -1042,9 +1042,12 @@ namespace Content.Shared.Interaction
         }
         #endregion
 
-        public void DroppedInteraction(EntityUid user, EntityUid item)
+        public void DroppedInteraction(EntityUid user, EntityUid item, bool forced = false)
         {
-            var dropMsg = new DroppedEvent(user);
+            var dropMsg = new DroppedEvent(user)
+            {
+                Forced = forced
+            };
             RaiseLocalEvent(item, dropMsg, true);
             if (dropMsg.Handled)
                 _adminLogger.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");

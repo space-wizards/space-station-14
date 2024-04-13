@@ -87,7 +87,7 @@ public abstract partial class SharedHandsSystem
     /// <summary>
     ///     Drops an item at the target location.
     /// </summary>
-    public bool TryDrop(EntityUid uid, EntityUid entity, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true, HandsComponent? handsComp = null)
+    public bool TryDrop(EntityUid uid, EntityUid entity, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true, HandsComponent? handsComp = null, bool forced = false)
     {
         if (!Resolve(uid, ref handsComp))
             return false;
@@ -95,13 +95,13 @@ public abstract partial class SharedHandsSystem
         if (!IsHolding(uid, entity, out var hand, handsComp))
             return false;
 
-        return TryDrop(uid, hand, targetDropLocation, checkActionBlocker, doDropInteraction, handsComp);
+        return TryDrop(uid, hand, targetDropLocation, checkActionBlocker, doDropInteraction, handsComp, forced);
     }
 
     /// <summary>
     ///     Drops a hands contents at the target location.
     /// </summary>
-    public bool TryDrop(EntityUid uid, Hand hand, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true, HandsComponent? handsComp = null)
+    public bool TryDrop(EntityUid uid, Hand hand, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true, HandsComponent? handsComp = null, bool forced = false)
     {
         if (!Resolve(uid, ref handsComp))
             return false;
@@ -110,7 +110,7 @@ public abstract partial class SharedHandsSystem
             return false;
 
         var entity = hand.HeldEntity!.Value;
-        DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp);
+        DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp, forced);
 
         if (TerminatingOrDeleted(entity))
             return true;
@@ -191,7 +191,7 @@ public abstract partial class SharedHandsSystem
     /// <summary>
     ///     Removes the contents of a hand from its container. Assumes that the removal is allowed. In general, you should not be calling this directly.
     /// </summary>
-    public virtual void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, HandsComponent? handsComp = null)
+    public virtual void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, HandsComponent? handsComp = null, bool forced = false)
     {
         if (!Resolve(uid, ref handsComp))
             return;
@@ -213,7 +213,7 @@ public abstract partial class SharedHandsSystem
         Dirty(uid, handsComp);
 
         if (doDropInteraction)
-            _interactionSystem.DroppedInteraction(uid, entity);
+            _interactionSystem.DroppedInteraction(uid, entity, forced);
 
         if (hand == handsComp.ActiveHand)
             RaiseLocalEvent(entity, new HandDeselectedEvent(uid));

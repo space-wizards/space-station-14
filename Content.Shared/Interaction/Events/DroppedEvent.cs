@@ -17,4 +17,9 @@ public sealed class DroppedEvent : HandledEntityEventArgs
     {
         User = user;
     }
+
+    /// <summary>
+    ///     If the drop interaction was forced. Used by unremoveable component.
+    /// </summary>
+    public bool Forced = false;
 }
