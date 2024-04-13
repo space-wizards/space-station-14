@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Anomalies can no longer spawn entities in walls or other objects.
-    type: Fix
-  id: 5840
-  time: '2024-01-31T21:05:29.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24783
 - author: EdenTheLiznerd
   changes:
   - message: The Syndicate has changed around their stock prices and gotten rid of
@@ -3828,3 +3821,11 @@
   id: 6339
   time: '2024-04-13T02:36:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26906
+- author: DrSmugleaf
+  changes:
+  - message: Fixed incorrect "Cycled" and "Bolted" popups when wielding and unwielding
+      some guns.
+    type: Fix
+  id: 6340
+  time: '2024-04-13T15:25:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26924
