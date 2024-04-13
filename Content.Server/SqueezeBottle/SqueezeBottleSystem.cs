@@ -81,7 +81,7 @@ public sealed class SqueezeBottleSystem : EntitySystem
             return false;
         }
 
-        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
+        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solComp, out var solution))
         {
             var reagent = solution.SplitSolution(entity.Comp.AmountConsumedOnUse);
             _reagentOnItem.AddReagentToItem(target, reagent);

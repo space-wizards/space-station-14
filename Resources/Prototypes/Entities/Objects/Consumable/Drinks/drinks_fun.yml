@@ -84,10 +84,13 @@
 - type: entity
   parent: DrinkBase
   id: SqueezeBottle
-  name:  Squeeze bottle (Lube)
+  name: Squeeze bottle
   description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
   components:
+  - type: SqueezeBottle
+    reagent: "SpaceGlue"
   - type: Openable
+    closeable: true
     sound:
       collection: packetOpenSounds
   - type: Sprite
@@ -105,9 +108,6 @@
     solutions:
       drink:
         maxVol: 30
-        reagents:
-        - ReagentId: SpaceLube
-          Quantity: 30
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: fill
@@ -117,51 +117,34 @@
         enum.OpenableVisuals.Layer:
           True: {state: "icon_open"}
           False: {state: "icon"}
-  - type: SqueezeBottle
-    reagent: "SpaceLube"
   - type: TrashOnSolutionEmpty
     solution: drink
 
 - type: entity
-  parent: DrinkBase
-  id: SqueezeBottle2
-  name: Squeeze bottle (Glue)
-  description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
+  parent: SqueezeBottle
+  id: BottleOfGlue
+  name: Bottle of Glue
   components:
-  - type: Openable
-    sound:
-      collection: packetOpenSounds
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/lube-tube.rsi
-    layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: fill1
-        map: [ "enum.SolutionContainerLayers.Fill" ]
-        visible: false
-      - state: icon-front
-        map: [ "enum.SolutionContainerLayers.Overlay" ]
-  - type: Appearance
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: SpaceGlue
-          Quantity: 30
-  - type: SolutionContainerVisuals
-    maxFillLevels: 6
-    fillBaseName: fill
-  - type: GenericVisualizer
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon"}
-  - type: SqueezeBottle
-    reagent: "SpaceGlue"
-  - type: TrashOnSolutionEmpty
-    solution: drink
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: SpaceGlue
+              Quantity: 30
+
+- type: entity
+  parent: SqueezeBottle
+  id: BottleOfLube
+  name: Bottle of Lube
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: SpaceLube
+              Quantity: 30
 
 # Mopwata
 - type: weightedRandomFillSolution

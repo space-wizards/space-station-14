@@ -44,11 +44,6 @@ public sealed class ReagentOnItemSystem : EntitySystem
 
     public bool AddReagentToItem(EntityUid item, Solution reagentMixture)
     {
-        if (!HasComp<ItemComponent>(item))
-        {
-            return false;
-        }
-
         if (reagentMixture.Volume <= 0)
         {
             return true;
