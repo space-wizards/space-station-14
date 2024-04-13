@@ -15,3 +15,5 @@
   - type: Tag
     tags:
     - GPS
+  - type: UseDelay
+    delay: 1.5  # prevents cheating the coords update rate by spamming use

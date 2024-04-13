@@ -12,7 +12,6 @@ namespace Content.Server.Entry
             "GuideHelp",
             "Clickable",
             "Icon",
-            "HandheldGPS",
             "CableVisualizer",
             "UIFragment",
             "PdaBorderColor",
