@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: EdenTheLiznerd
-  changes:
-  - message: The Syndicate has changed around their stock prices and gotten rid of
-      some old dusty headsets
-    type: Tweak
-  id: 5841
-  time: '2024-02-01T00:28:42.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24765
-- author: metalgearsloth
-  changes:
-  - message: Removed vehicles pending rework (the code is bad I was told to make this
-      more obvious).
-    type: Remove
-  id: 5842
-  time: '2024-02-01T00:33:10.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24681
 - author: Jajsha
   changes:
   - message: Emagged borgs now recieve laws recontextualizing who's a crew member
@@ -3829,3 +3813,18 @@
   id: 6340
   time: '2024-04-13T15:25:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26924
+- author: FungiFellow
+  changes:
+  - message: Removed Crusher Dagger from Grapple Module
+    type: Remove
+  id: 6341
+  time: '2024-04-13T15:35:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26865
+- author: ShadowCommander
+  changes:
+  - message: Fixed the pull hotkey not pulling the new entity when you are already
+      pulling an entity.
+    type: Fix
+  id: 6342
+  time: '2024-04-13T15:36:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26499
