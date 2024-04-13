@@ -22,7 +22,7 @@
       state: absorb_dna
     whitelist:
       components:
-      - HumanoidAppearance
+      - Absorbable
     event: !type:LingAbsorbActionEvent
     useDelay: 5
     canTargetSelf: false
@@ -84,7 +84,7 @@
       state: sting_extract
     whitelist:
       components:
-      - HumanoidAppearance
+      - Absorbable
     event: !type:LingStingExtractActionEvent
     useDelay: 30
     canTargetSelf: false

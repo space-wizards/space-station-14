@@ -372,6 +372,7 @@
   - type: Body
     prototype: Human
     requiredLegs: 2
+  - type: Absorbable
   - type: UserInterface
     interfaces:
       - key: enum.HumanoidMarkingModifierKey.Key # sure, this can go here too
