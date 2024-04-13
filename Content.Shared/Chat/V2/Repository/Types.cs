@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.InteropServices;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -52,8 +53,8 @@ public sealed class MessageDeletedEvent(uint id) : EntityEventArgs
 /// </summary>
 /// <param name="set"></param>
 [Serializable, NetSerializable]
-public sealed class MessagesNukedEvent(IEnumerable<uint> set) : EntityEventArgs
+public sealed class MessagesNukedEvent(List<uint> set) : EntityEventArgs
 {
-    public uint[] MessageIds = set.ToArray();
+    public uint[] MessageIds = CollectionsMarshal.AsSpan(set).ToArray();
 }
 

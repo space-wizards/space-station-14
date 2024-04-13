@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Content.Shared.Chat.V2;
 using Content.Shared.Chat.V2.Repository;
 using Robust.Server.Player;
@@ -61,13 +62,7 @@ public sealed class ChatRepositorySystem : EntitySystem
 
         _messages[messageId] = storedEv;
 
-        if (!_playerMessages.TryGetValue(storedEv.UserId, out var set))
-        {
-            set = new List<uint>();
-            _playerMessages[storedEv.UserId] = set;
-        }
-
-        set.Add(messageId);
+        CollectionsMarshal.GetValueRefOrAddDefault(_playerMessages, storedEv.UserId, out _)?.Add(messageId);
 
         RaiseLocalEvent(ev.Sender, new MessageCreatedEvent(ev), true);
 
@@ -146,7 +141,7 @@ public sealed class ChatRepositorySystem : EntitySystem
     {
         if (!_player.TryGetUserId(userName, out var userId))
         {
-            reason = "username doesn't equate to a userId in the repository";
+            reason = Loc.GetString("command-error-nukechatmessages-usernames-usernamenotexist", ("username", userName));
 
             return false;
         }
@@ -168,7 +163,7 @@ public sealed class ChatRepositorySystem : EntitySystem
     {
         if (!_playerMessages.TryGetValue(userId, out var dict))
         {
-            reason = "the user has no messages to nuke";
+            reason = Loc.GetString("command-error-nukechatmessages-usernames-usernamenomessages", ("userId", userId.UserId.ToString()));
 
             return false;
         }
@@ -180,8 +175,7 @@ public sealed class ChatRepositorySystem : EntitySystem
 
         var ev = new MessagesNukedEvent(dict);
 
-        _playerMessages.Remove(userId);
-        _playerMessages.Add(userId, new List<uint>());
+        CollectionsMarshal.GetValueRefOrAddDefault(_playerMessages, userId, out _)?.Clear();
 
         RaiseLocalEvent(ev);
 

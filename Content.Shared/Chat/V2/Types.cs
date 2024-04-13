@@ -3,7 +3,7 @@ namespace Content.Shared.Chat.V2;
 /// <summary>
 /// The types of messages that can be sent, validated and processed via user input that are covered by Chat V2.
 /// </summary>
-public enum MessageType
+public enum MessageType : byte
 {
     #region Player-sendable types
 
@@ -48,7 +48,7 @@ public enum MessageType
     /// <summary>
     /// Chat that is sent by automata, like when a vending machine thanks you for your unwise purchases.
     /// </summary>
-    Background
+    Background,
 
     #endregion
 }
