@@ -532,7 +532,7 @@ public abstract class SharedActionsSystem : EntitySystem
             handled = actionEvent.Handled;
         }
 
-        _audio.PlayPredicted(action.Sound, performer,predicted ? performer : null);
+        _audio.PlayPredicted(action.Sound, performer, predicted ? performer : null);
         handled |= action.Sound != null;
 
         if (!handled)
@@ -556,6 +556,9 @@ public abstract class SharedActionsSystem : EntitySystem
             dirty = true;
             action.Cooldown = (curTime, curTime + action.UseDelay.Value);
         }
+
+        var performedEv = new ActionPerformedEvent(performer);
+        RaiseLocalEvent(actionId, ref performedEv);
 
         Dirty(actionId, action);
 

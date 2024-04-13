@@ -285,14 +285,6 @@ public sealed partial class ChangelingSystem
         QueueDel(ent);
     }
 
-    // item abilities
-    public const string ArmBladeId = "ArmBlade";
-    public const string ArmBladeGearId = "ArmbladeChangelingGear";
-    private void OnArmBladeAction(Entity<ChangelingComponent> ent, ref ArmBladeActionEvent args)
-    {
-        
-    }
-
     // changeling stings
     private void OnLingDNASting(EntityUid uid, ChangelingComponent component, LingStingExtractActionEvent args)
     {

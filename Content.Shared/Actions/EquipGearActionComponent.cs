@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Content.Shared.Popups;

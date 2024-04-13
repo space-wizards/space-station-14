@@ -23,14 +23,11 @@ public sealed class EquipGearActionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EquipGearActionComponent, ActionAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<EquipGearActionComponent, ActionPerformedEvent>(OnPerform);
     }
 
-    private void OnAttempt(Entity<EquipGearActionComponent> ent, ref ActionAttemptEvent args)
+    private void OnPerform(Entity<EquipGearActionComponent> ent, ref ActionPerformedEvent args)
     {
-        if (args.Cancelled)
-            return;
-
         ToggleGear(ent, _proto.Index(ent.Comp.PrototypeID));
     }
 
