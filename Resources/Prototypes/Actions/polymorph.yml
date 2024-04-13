@@ -29,3 +29,18 @@
     icon:
       sprite: Mobs/Animals/spider.rsi
       state: tarantula
+
+- type: entity
+  id: ActionPolymorphWizardRod
+  name: Rod Form
+  description: CLANG!
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 60
+    event: !type:PolymorphActionEvent
+      protoId: WizardRod
+    itemIconStyle: NoItem
+    icon:
+      sprite: Objects/Fun/immovable_rod.rsi
+      state: icon

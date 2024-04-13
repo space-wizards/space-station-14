@@ -39,6 +39,19 @@
     stock: 1
 
 - type: listing
+  id: SpellbookRodForm
+  name: rod
+  description: CLANG
+  productAction: ActionPolymorphWizardRod
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
   id: SpellbookBlink
   name: spellbook-blink-name
   description: spellbook-blink-desc

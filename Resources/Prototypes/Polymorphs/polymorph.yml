@@ -171,7 +171,19 @@
   configuration:
     entity: MobGiantSpiderWizard #Not angry so ghosts can't just take over the wizard
     transferName: true
-    transferHumanoidAppearance: true
     inventory: None
     revertOnDeath: true
     revertOnCrit: true
+
+- type: polymorph
+  id: WizardRod
+  configuration:
+    entity: ImmovableRodWizard #CLANG
+    transferName: true
+    transferDamage: false
+    inventory: None
+    duration: 1
+    forced: true
+    revertOnCrit: false
+    revertOnDeath: false
+    polymorphedEvent: !type:AfterPolymorphedEvent
