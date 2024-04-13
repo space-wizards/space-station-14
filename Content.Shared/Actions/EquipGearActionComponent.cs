@@ -2,6 +2,7 @@ using Robust.Shared.GameStates;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Content.Shared.Popups;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.Actions;
 
@@ -52,4 +53,10 @@ public sealed partial class EquipGearActionComponent : Component
     /// </summary>
     [DataField]
     public bool Equipped = false;
+
+    /// <summary>
+    /// Sound that plays on gear toggle.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? ToggleSound;
 }

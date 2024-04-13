@@ -113,18 +113,22 @@
   description: Transforms one of your free arms into a grotesque blade made out of bone and flesh. It can also be used to pry open doors. Uses 20 chemicals.
   noSpawn: true
   components:
-  - type: InstantAction
-    itemIconStyle: NoItem
-    icon:
-      sprite: Objects/Weapons/Melee/armblade.rsi
-      state: icon
-    useDelay: 1
   - type: EquipGearAction
     prototypeID: ArmbladeChangelingGear
     popupEquipSelf: changeling-armblade-success-self
     popupEquipOthers: changeling-armblade-success-others
     popupUnequipSelf: changeling-armblade-retract-self
     popupUnequipOthers: changeling-armblade-retract-others
+    toggleSound:
+      path: /Audio/Effects/blobattack.ogg
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Objects/Weapons/Melee/armblade.rsi
+      state: icon
+    useDelay: 1
+    event: !type:UseChangelingAbilityActionEvent
+      abilityCost: -20
 
 - type: entity
   id: ActionLingArmor

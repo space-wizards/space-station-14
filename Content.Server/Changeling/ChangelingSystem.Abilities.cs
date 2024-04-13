@@ -54,7 +54,7 @@ public sealed partial class ChangelingSystem
         SubscribeLocalEvent<ChangelingComponent, LingRegenerateActionEvent>(OnRegenerate);
         SubscribeLocalEvent<ChangelingComponent, ChangelingTransformActionEvent>(OnTransform);
 
-        // SubscribeLocalEvent<ChangelingComponent, ArmBladeActionEvent>(OnArmBladeAction);
+        SubscribeLocalEvent<ChangelingComponent, UseChangelingAbilityActionEvent>(OnAbility);
 
         SubscribeLocalEvent<ChangelingComponent, LingStingExtractActionEvent>(OnLingDNASting);
     }
@@ -176,6 +176,16 @@ public sealed partial class ChangelingSystem
             return false;
     }
 
+    private void OnAbility(Entity<ChangelingComponent> ent, ref UseChangelingAbilityActionEvent args)
+    {
+        if (args.Handled)
+            return;
+        if (!TryUseAbility(ent, ent.Comp, args.AbilityCost))
+            return;
+
+        args.Handled = true;
+    }
+
     public ProtoId<DamageGroupPrototype> BruteDamageGroup = "Brute";
     public ProtoId<DamageGroupPrototype> BurnDamageGroup = "Burn";
     private void OnRegenerate(Entity<ChangelingComponent> ent, ref LingRegenerateActionEvent args)
@@ -222,7 +232,7 @@ public sealed partial class ChangelingSystem
     {
         var comp = ent.Comp;
 
-        if (args.Handled || !TryUseAbility(ent, comp, 5))
+        if (args.Handled)
             return;
 
         var transformation = comp.StoredDNA[comp.SelectedDNA];
@@ -233,6 +243,9 @@ public sealed partial class ChangelingSystem
             _popup.PopupEntity(selfMessage, ent, ent);
             return;
         }
+
+        if (!TryUseAbility(ent, comp, -5))
+            return;
 
         if (!_proto.TryIndex<SpeciesPrototype>(transformation.HumanoidAppearanceComp.Species, out var species))
             return;

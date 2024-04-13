@@ -8,6 +8,7 @@ using Content.Shared.Inventory;
 using Robust.Shared.Player;
 using Content.Shared.Station;
 using Content.Shared.IdentityManagement;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Actions;
 
@@ -18,6 +19,7 @@ public sealed class EquipGearActionSystem : EntitySystem
     [Dependency] protected readonly SharedStationSpawningSystem _spawning = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -38,10 +40,10 @@ public sealed class EquipGearActionSystem : EntitySystem
             _spawning.EquipStartingGear(ent, startingGear, null);
 
             if (comp.PopupEquipSelf != string.Empty)
-                _popup.PopupEntity(comp.PopupEquipSelf, ent, ent, comp.PopupType);
+                _popup.PopupEntity(Loc.GetString(comp.PopupEquipSelf), ent, ent, comp.PopupType);
 
             if (comp.PopupEquipOthers != string.Empty)
-                _popup.PopupEntity(comp.PopupEquipOthers, ent, Filter.PvsExcept(ent), true, comp.PopupType);
+                _popup.PopupEntity(Loc.GetString(comp.PopupEquipOthers), ent, Filter.PvsExcept(ent), true, comp.PopupType);
         }
         else
         {
@@ -62,21 +64,43 @@ public sealed class EquipGearActionSystem : EntitySystem
                                     {
                                         _inventory.TryUnequip(ent, slotItem.Value, slot.Name, true, force: true);
                                         QueueDel(slotItem);
-
-                                        if (comp.PopupUnequipSelf != string.Empty)
-                                            _popup.PopupEntity(comp.PopupUnequipSelf, ent, ent, comp.PopupType);
-
-                                        if (comp.PopupUnequipOthers != string.Empty)
-                                            _popup.PopupEntity(comp.PopupUnequipOthers, ent, Filter.PvsExcept(ent), true, comp.PopupType);
                                     }
                                 }
                             }
                         }
                     }
                 }
+
+                var inhand = startingGear.Inhand;
+                foreach (var prototype in inhand)
+                {
+                    foreach (var held in _hands.EnumerateHeld(ent))
+                    {
+                        if (TryComp<MetaDataComponent>(held, out var heldMetaData))
+                        {
+                            if (TryPrototype(held, out var heldProto, heldMetaData))
+                            {
+                                if (heldProto.ID == prototype)
+                                {
+                                    _hands.TryDrop(ent, held);
+                                    QueueDel(held);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (comp.PopupUnequipSelf != string.Empty)
+                    _popup.PopupEntity(Loc.GetString(comp.PopupUnequipSelf), ent, ent, comp.PopupType);
+
+                if (comp.PopupUnequipOthers != string.Empty)
+                    _popup.PopupEntity(Loc.GetString(comp.PopupUnequipOthers), ent, Filter.PvsExcept(ent), true, comp.PopupType);
             }
         }
 
         comp.Equipped = !comp.Equipped;
+
+        if (comp.ToggleSound != null)
+            _audio.PlayPvs(comp.ToggleSound, ent);
     }
 }
