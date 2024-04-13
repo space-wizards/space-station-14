@@ -19,6 +19,12 @@ public sealed partial class EquipGearActionComponent : Component
     public ProtoId<StartingGearPrototype> PrototypeID;
 
     /// <summary>
+    /// Popup that shows up when you have no free hands to equip a starting gear.
+    /// </summary>
+    [DataField]
+    public LocId PopupNoFreehands = "equip-gear-action-component-no-hands";
+
+    /// <summary>
     /// Popup that shows up when the gear is equipped to the user.
     /// </summary>
     [DataField]

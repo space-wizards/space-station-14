@@ -25,18 +25,52 @@ public sealed class EquipGearActionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EquipGearActionComponent, ActionPerformedEvent>(OnPerform);
+        SubscribeLocalEvent<EquipGearActionComponent, ActionAttemptEvent>(OnAttempted);
     }
 
-    private void OnPerform(Entity<EquipGearActionComponent> ent, ref ActionPerformedEvent args)
+    private void OnAttempted(Entity<EquipGearActionComponent> ent, ref ActionAttemptEvent args)
     {
-        ToggleGear(args.User, ent.Comp, _proto.Index(ent.Comp.PrototypeID));
+        if (args.Cancelled)
+            return;
+
+        var startingGear = _proto.Index(ent.Comp.PrototypeID);
+
+        if (!TryComp(args.User, out HandsComponent? handsComponent))
+        {
+            var inhand = startingGear.Inhand;
+            foreach (var prototype in inhand)
+            {
+                if (_hands.TryGetEmptyHand(args.User, out var emptyHand, handsComponent))
+                {
+                    _popup.PopupEntity(Loc.GetString(ent.Comp.PopupNoFreehands), args.User, args.User);
+                    args.Cancelled = true;
+                    return; // return if no available hands
+                }
+            }
+        }
+
+        ToggleGear(args.User, ent.Comp, startingGear);
     }
 
     private void ToggleGear(EntityUid ent, EquipGearActionComponent comp, StartingGearPrototype startingGear)
     {
         if (!comp.Equipped)
         {
+            if (_inventory.TryGetSlots(ent, out var slotDefinitions))
+            {
+                foreach (var slot in slotDefinitions)
+                {
+                    var equipmentStr = startingGear.GetGear(slot.Name, null);
+                    if (!string.IsNullOrEmpty(equipmentStr))
+                    {
+                        if (_inventory.TryGetSlotEntity(ent, slot.Name, out var slotItem))
+                        {
+                            _inventory.TryUnequip(ent, slotItem.Value, slot.Name, true, force: true);
+                        }
+                    }
+                }
+            }
+
             _spawning.EquipStartingGear(ent, startingGear, null);
 
             if (comp.PopupEquipSelf != string.Empty)
@@ -65,25 +99,6 @@ public sealed class EquipGearActionSystem : EntitySystem
                                         _inventory.TryUnequip(ent, slotItem.Value, slot.Name, true, force: true);
                                         QueueDel(slotItem);
                                     }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                var inhand = startingGear.Inhand;
-                foreach (var prototype in inhand)
-                {
-                    foreach (var held in _hands.EnumerateHeld(ent))
-                    {
-                        if (TryComp<MetaDataComponent>(held, out var heldMetaData))
-                        {
-                            if (TryPrototype(held, out var heldProto, heldMetaData))
-                            {
-                                if (heldProto.ID == prototype)
-                                {
-                                    _hands.TryDrop(ent, held);
-                                    QueueDel(held);
                                 }
                             }
                         }
