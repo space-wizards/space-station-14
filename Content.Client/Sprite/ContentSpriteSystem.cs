@@ -111,11 +111,12 @@ public sealed class ContentSpriteSystem : EntitySystem
                         continue;
 
                     var filename = metadata.EntityName;
+                    var result = queued;
 
                     handle.RenderInRenderTarget(queued.Texture, () =>
                     {
-                        handle.DrawEntity(queued.Entity, queued.Texture.Size / 2, Vector2.One, null,
-                            overrideDirection: queued.Direction);
+                        handle.DrawEntity(result.Entity, result.Texture.Size / 2, Vector2.One, Angle.Zero,
+                            overrideDirection: result.Direction);
                     }, Color.Transparent);
 
                     var directory = new ResPath("/Exports");
