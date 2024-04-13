@@ -257,7 +257,7 @@
     - !type:RoomEntrancePostGen
       entities:
         - CableApcExtension
-        - AirlockGlass
+        - AirlockFreezerHydroponicsLocked
 
     - !type:EntranceFlankPostGen
       entities:
