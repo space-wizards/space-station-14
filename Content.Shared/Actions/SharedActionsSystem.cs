@@ -557,6 +557,9 @@ public abstract class SharedActionsSystem : EntitySystem
             action.Cooldown = (curTime, curTime + action.UseDelay.Value);
         }
 
+        var performedEv = new ActionPerformedEvent(performer);
+        RaiseLocalEvent(actionId, ref performedEv);
+
         Dirty(actionId, action);
 
         if (dirty && component != null)

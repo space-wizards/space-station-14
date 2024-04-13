@@ -25,30 +25,12 @@ public sealed class EquipGearActionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EquipGearActionComponent, ActionAttemptEvent>(OnAttempted);
+        SubscribeLocalEvent<EquipGearActionComponent, ActionPerformedEvent>(OnPerformed);
     }
 
-    private void OnAttempted(Entity<EquipGearActionComponent> ent, ref ActionAttemptEvent args)
+    private void OnPerformed(Entity<EquipGearActionComponent> ent, ref ActionPerformedEvent args)
     {
-        if (args.Cancelled)
-            return;
-
         var startingGear = _proto.Index(ent.Comp.PrototypeID);
-
-        if (!TryComp(args.User, out HandsComponent? handsComponent))
-        {
-            var inhand = startingGear.Inhand;
-            foreach (var prototype in inhand)
-            {
-                if (_hands.TryGetEmptyHand(args.User, out var emptyHand, handsComponent))
-                {
-                    _popup.PopupEntity(Loc.GetString(ent.Comp.PopupNoFreehands), args.User, args.User);
-                    args.Cancelled = true;
-                    return; // return if no available hands
-                }
-            }
-        }
-
         ToggleGear(args.User, ent.Comp, startingGear);
     }
 
@@ -67,6 +49,19 @@ public sealed class EquipGearActionSystem : EntitySystem
                         {
                             _inventory.TryUnequip(ent, slotItem.Value, slot.Name, true, force: true);
                         }
+                    }
+                }
+            }
+
+            if (!TryComp(ent, out HandsComponent? handsComponent))
+            {
+                var inhand = startingGear.Inhand;
+                foreach (var prototype in inhand)
+                {
+                    if (_hands.TryGetEmptyHand(ent, out var emptyHand, handsComponent))
+                    {
+                        _popup.PopupEntity(Loc.GetString(comp.PopupNoFreehands), ent, ent);
+                        return; // return if no available hands
                     }
                 }
             }
