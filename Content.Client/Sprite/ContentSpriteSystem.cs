@@ -46,7 +46,20 @@ public sealed class ContentSpriteSystem : EntitySystem
         if (!TryComp(entity, out SpriteComponent? spriteComp))
             return;
 
-        var size = spriteComp.PixelSize;
+        // Don't want to wait for engine pr
+        var size = Vector2i.Zero;
+
+        foreach (var layer in spriteComp.AllLayers)
+        {
+            if (!layer.Visible)
+                continue;
+
+            size = Vector2i.ComponentMax(size, layer.PixelSize);
+        }
+
+        // Stop asserts
+        if (size.Equals(Vector2i.Zero))
+            return;
 
         foreach (var direction in new[] { Direction.South, Direction.East, Direction.North, Direction.West })
         {
