@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Remove handheld crew monitors in lieu of computers.
-    type: Remove
-  id: 5838
-  time: '2024-01-31T11:23:49.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24761
 - author: Hmeister-real
   changes:
   - message: You can now Sob and Chortle with emotes
@@ -3826,3 +3819,10 @@
   id: 6337
   time: '2024-04-12T08:02:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26083
+- author: osjarw
+  changes:
+  - message: Magboots no longer activate artifacts from salvage magnet ranges.
+    type: Fix
+  id: 6338
+  time: '2024-04-13T01:46:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26912
