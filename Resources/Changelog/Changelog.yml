@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Jajsha
-  changes:
-  - message: Emagged borgs now recieve laws recontextualizing who's a crew member
-      instead of recieving a completely new lawset.
-    type: Tweak
-  id: 5843
-  time: '2024-02-01T05:02:49.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24698
 - author: PJB3005
   changes:
   - message: Health analyzers now show if somebody is starving.
@@ -3828,3 +3820,11 @@
   id: 6342
   time: '2024-04-13T15:36:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26499
+- author: Boaz1111
+  changes:
+  - message: The doors on the ice expedition map can now be accessed by anyone instead
+      of... botanists.
+    type: Fix
+  id: 6343
+  time: '2024-04-13T20:49:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26928
