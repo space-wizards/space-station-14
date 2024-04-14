@@ -16,7 +16,7 @@ public abstract partial class SharedBlobSystem
         SetNearby(ent, args.NewPosition, true);
     }
 
-    public void SetNearby(Entity<BlobNodeComponent> ent, EntityCoordinates coordinates, bool val)
+    protected void SetNearby(Entity<BlobNodeComponent> ent, EntityCoordinates coordinates, bool val)
     {
         var nearby = _lookup.GetEntitiesInRange<BlobStructureComponent>(coordinates, ent.Comp.PulseRange);
         foreach (var blob in nearby)

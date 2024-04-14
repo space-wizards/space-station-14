@@ -104,6 +104,7 @@ public abstract partial class SharedBlobSystem : EntitySystem
             return;
 
         var pos = Transform(ent).Coordinates;
+        //todo popups for both of these conditions separately
         if (!TryGetBlobStructure(pos, out var blob) || !_tag.HasTag(blob.Value, AllowBlobReplaceTag))
             return;
 

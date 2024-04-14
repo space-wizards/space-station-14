@@ -1,6 +1,4 @@
 using Content.Shared.Blob;
-using Robust.Shared.Input;
-using Robust.Shared.Input.Binding;
 
 namespace Content.Client.Blob;
 
