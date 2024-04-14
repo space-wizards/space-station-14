@@ -479,7 +479,9 @@
       - !type:PopupMessage
         conditions:
           - !type:OrganType
-            type: Human
+            type: Animal
+            shouldHave: false
+        reagent: Protein
         type: Local
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-sick" ]
@@ -488,19 +490,21 @@
         probability: 0.1
         conditions:
           - !type:OrganType
-            type: Human
+            type: Animal
+            shouldHave: false
       - !type:HealthChange
         conditions:
         - !type:OrganType
-          type: Human
+          type: Animal
+          shouldHave: false
         damage:
           types:
             Poison: 1
       - !type:AdjustReagent
         conditions:
         - !type:OrganType
-          type: Human
-          shouldHave: false
+          type: Animal
+          shouldHave: true
         reagent: Protein
         amount: 0.5
 
