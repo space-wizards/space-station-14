@@ -74,9 +74,6 @@ public sealed class SharpSystem : EntitySystem
             return false;
         }
 
-        if (TryComp<MobStateComponent>(target, out var mobState) && !_mobStateSystem.IsDead(target, mobState))
-            return false;
-
         if (!sharp.Butchering.Add(target))
             return false;
 
@@ -173,7 +170,7 @@ public sealed class SharpSystem : EntitySystem
             Act = () =>
             {
                 if (!disabled)
-                    TryStartButcherDoAfter(args.Using!.Value, args.Target, args.User);
+                    TryStartButcherDoafter(args.Using!.Value, args.Target, args.User);
             },
             Message = message,
             Disabled = disabled,
