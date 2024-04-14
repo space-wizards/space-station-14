@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.RadioJammer;
 using Robust.Shared.GameStates;
@@ -43,7 +44,7 @@ public sealed partial class RadioJammerComponent : SharedRadioJammerComponent
     /// <summary>
     /// List of all the settings for the radio jammer.
     /// </summary>
-    [DataField(required: true)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
     public List<RadioJamSetting> Settings = new();
 
     /// <summary>
