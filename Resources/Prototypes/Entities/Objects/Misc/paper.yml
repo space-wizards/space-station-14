@@ -356,6 +356,13 @@
       - Screwing
     useSound:
       collection: Screwdriver
+  - type: UnpoweredFlashlight
+  - type: PointLight
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    energy: 2
+    autoRot: true
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
     heldPrefix: overpriced_pen
