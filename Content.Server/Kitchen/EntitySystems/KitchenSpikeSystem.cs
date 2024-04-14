@@ -82,8 +82,6 @@ namespace Content.Server.Kitchen.EntitySystems
             if (TryComp<ButcherableComponent>(args.Args.Target.Value, out var butcherable))
                 butcherable.BeingButchered = false;
 
-            _forensicsSystem.ApplyEvidence(args.User, uid);
-
             if (args.Cancelled)
             {
                 component.InUse = false;
@@ -95,6 +93,8 @@ namespace Content.Server.Kitchen.EntitySystems
 
             if (Spikeable(uid, args.Args.User, args.Args.Target.Value, component, butcherable))
                 Spike(uid, args.Args.User, args.Args.Target.Value, component);
+
+            _forensicsSystem.ApplyEvidence(args.User, uid);
 
             component.InUse = false;
             args.Handled = true;

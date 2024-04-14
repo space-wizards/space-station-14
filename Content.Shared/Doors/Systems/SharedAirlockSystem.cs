@@ -59,7 +59,7 @@ public abstract class SharedAirlockSystem : EntitySystem
             component.AutoClose = true;
     }
 
-    protected virtual void OnBeforeDoorOpened(EntityUid uid, AirlockComponent component, BeforeDoorOpenedEvent args)
+    private void OnBeforeDoorOpened(EntityUid uid, AirlockComponent component, BeforeDoorOpenedEvent args)
     {
         if (!CanChangeState(uid, component))
             args.Cancel();

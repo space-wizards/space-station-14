@@ -1,4 +1,5 @@
 using Content.Server.Access;
+using Content.Server.Forensics;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Power.Components;
@@ -11,6 +12,7 @@ namespace Content.Server.Doors.Systems;
 public sealed class DoorSystem : SharedDoorSystem
 {
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
+    [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
 
     public override void Initialize()
     {
@@ -49,5 +51,21 @@ public sealed class DoorSystem : SharedDoorSystem
         UpdateBoltLightStatus(ent);
         ent.Comp.Powered = args.Powered;
         Dirty(ent, ent.Comp);
+    }
+
+    public override void StartOpening(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
+    {
+        base.StartOpening(uid, door, user, predicted);
+
+        if (user.HasValue)
+            _forensicsSystem.ApplyEvidence(user.Value, uid);
+    }
+
+    public override void StartClosing(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
+    {
+        base.StartClosing(uid, door, user, predicted);
+
+        if (user.HasValue)
+            _forensicsSystem.ApplyEvidence(user.Value, uid);
     }
 }
