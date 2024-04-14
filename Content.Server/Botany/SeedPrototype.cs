@@ -108,13 +108,18 @@ public partial class SeedData
 
     /// <summary>
     ///     If true, the properties of this seed cannot be modified.
+    ///   to spare others like me: this DOES NOT prevent mutations
     /// </summary>
     [DataField("immutable")] public bool Immutable;
 
     /// <summary>
+    /// If true, you cannot clip this plant for more seeds, used for special plants such as the gnome plant
+    /// </summary>
+    [DataField("unclipable")] public bool Unclipable;
+
+    /// <summary>
     ///     If true, there is only a single reference to this seed and it's properties can be directly modified without
     ///     needing to clone the seed.
-    /// </summary>
     [ViewVariables]
     public bool Unique = false; // seed-prototypes or yaml-defined seeds for entity prototypes will not generally be unique.
     #endregion
@@ -255,6 +260,7 @@ public partial class SeedData
     {
         DebugTools.Assert(!Immutable, "There should be no need to clone an immutable seed.");
 
+      
         var newSeed = new SeedData
         {
             Name = Name,
@@ -290,6 +296,7 @@ public partial class SeedData
             HarvestRepeat = HarvestRepeat,
             Potency = Potency,
 
+            Unclipable = Unclipable,
             Seedless = Seedless,
             Viable = Viable,
             Slip = Slip,

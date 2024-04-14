@@ -820,168 +820,162 @@
 
 
 - type: entity
-  name: Gnome
-  parent: MobBaseAncestor
+  name: Gnome #this thing is covered in comments, its for my sanity, ignore them please.
+  parent:     #without them id forget what everything does
+  - BaseSimpleMob
+  - MobCombat
+  - MobAtmosExposed
   id: MobGnome
   description: "A garden's trusty helper"
   components:
+  - type: CombatMode
+  - type: Inventory
+    templateId: gnome
+    speciesId: gnome
+  - type: InventorySlots
+  - type: Cuffable
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 90
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle #displays error, works anyways so i wont touch it, whatever it does
+          radius: 0.2
+        density: 80
+        mask:
+        - SmallMobMask #lets em go under doors for escapes from sec/greytide/hunting mice
+        layer:
+        - SmallMobLayer
+  - type: Stripping
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: GhostRole
     prob: 1
     makeSentient: true
     allowSpeech: true
     allowMovement: true
-    name: ghost-role-information-punpun-name
-    description: ghost-role-information-punpun-description
+    name: ghost-role-information-gnome-name
+    description: ghost-role-information-gnome-description
   - type: GhostTakeoverAvailable
   - type: Flashable
   - type: Tag
     tags:
     - CannotSuicide
-    - DoorBumpOpener
     - VimPilot
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: male
   - type: MobThresholds
-    thresholds:
+    thresholds: #VERY easy to kill, if it was harder to kill them the sneaky fuckers would rule the world
       0: Alive
-      20: Critical
-      21: Dead
+      10: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: Gnome-0
+      Dead:
+        Base: dead-1
   - type: GnomeAccent
   - type: NameIdentifier
     group: Gnome
   - type: Sprite
-    drawdepth: Mobs
+    drawdepth: SmallMobs
     sprite: Mobs/Animals/gnome.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: Gnome-0
   - type: Item
-    size: Tiny
-  - type: Clothing
+    size: Small
+  - type: Clothing #TO VALLHALLA
     quickEquip: false
     sprite: Mobs/Animals/gnome.rsi
     equippedPrefix: 1
     slots:
     - HEAD
-
-
-
-- type: entity
-  name: kobold
-  id: MobKobold
-  parent: MobBaseAncestor
-  description: Cousins to the sentient race of lizard people, kobolds blend in with their natural habitat and are as nasty as monkeys; ready to pull out your hair and stab you to death.
-  components:
-  - type: NameIdentifier
-    group: Kobold
-  - type: LizardAccent
-  - type: ReplacementAccent
-    accent: kobold
-  - type: Speech
-    speechSounds: Lizard
-    speechVerb: Reptilian
-  - type: Vocal
-    sounds:
-      Male: UnisexReptilian
-      Female: UnisexReptilian
-      Unsexed: UnisexReptilian
-  - type: TypingIndicator
-    proto: lizard
+  - type: IdExaminable
   - type: InteractionPopup
-    successChance: 0.9
-    interactSuccessString: petting-success-monkey
-    interactFailureString: petting-failure-monkey
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/lizard_happy.ogg
-    interactFailureSound:
-      path: /Audio/Items/wirecutter.ogg
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      60: Critical
-      125: Dead
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 3.5
-    baseSprintSpeed: 5
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
   - type: MeleeWeapon
     soundHit:
-      collection: AlienClaw
+      path: /Audio/Effects/punch.ogg
     angle: 30
-    animation: WeaponArcClaw
+    animation: WeaponArcPunch
     damage:
       types:
-        Slash: 5
-        Piercing: 4
-  - type: Temperature
-    heatDamageThreshold: 360
-    coldDamageThreshold: 285
-    currentTemperature: 310.15
-    specificHeat: 42
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/kobold.rsi
-      state: kobold
-    - map: [ "outline" ]
-      sprite: Mobs/Animals/kobold.rsi
-      state: outline
-    - map: [ "horns" ]
-      sprite: Mobs/Customization/reptilian_parts.rsi
-      state: horns_short
-    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
-      color: "#ffffff"
-      sprite: Objects/Misc/handcuffs.rsi
-      state: body-overlay-2
-      visible: false
-    - map: [ "ears" ]
-    - map: [ "id" ]
-    - map: [ "mask" ]
-    - map: [ "head" ]
-    - map: [ "clownedon" ]
-      sprite: "Effects/creampie.rsi"
-      state: "creampie_human"
-      visible: false
-  - type: RandomSprite
-    getAllGroups: true
-    available:
-      - enum.DamageStateVisualLayers.Base:
-          kobold: KoboldColors
-      - horns:
-          horns_curled: KoboldHornColors
-          horns_ram: KoboldHornColors
-          horns_short: KoboldHornColors
-          horns_myrsore: KoboldHornColors
-          horns_bighorn: KoboldHornColors
-          horns_argali: KoboldHornColors
-          horns_ayrshire: KoboldHornColors
-          horns_floppy_kobold_ears: Inherit
-          horns_double: Inherit
-          horns_kobold_ears: Inherit
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
-    - id: FoodMeat
-      amount: 2
-  - type: Clumsy
+        Blunt: 1
+        Piercing: 1
+  - type: Puller #dont need hands because they are at a disadvantage anyway, this way they can hold a light and drag a box for a backpack
+    needsHands: false
+  - type: CanHostGuardian #touch this stuff to make the fuckers hold still when not possesed
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: FactionException
+  - type: NpcFactionMember
+    factions:
+      - Passive
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: Hands #gives em hands, the item sprites for holding things look all strange but its FINE, I DONT WANNA FIX IT ITS FINE ILL DO IT LATER
+  - type: Body #gives em a body, is needed for organs and hands
+    prototype: gnome
+    requiredLegs: 0
+  - type: Clumsy #no guns for youuuu
     clumsyDamage:
       types:
         Blunt: 2
         Piercing: 7
       groups:
-        Burn: 3
+        Burn: 2
     clumsySound:
-      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
-  - type: AlwaysRevolutionaryConvertible
-  - type: GhostTakeoverAvailable
-  - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-kobold
-  - type: GhostRole
-    prob: 0.1
-    makeSentient: true
-    name: ghost-role-information-kobold-name
-    description: ghost-role-information-kobold-description
-    
+      path: /Audio/Voice/Gnome/Gnome_Clumsy_Sound_Effect.ogg
+  - type: Barotrauma #gnomes instantly explode in space, gnomes shouldnt go in space
+    damage:
+      types:
+        Blunt: 60 #per second, scales with pressure and other constants.
+  - type: Repairable 
+    fuelcost: 15
+    qualityNeeded: Gluing
+    doAfterDelay: 8      
+  - type: ZombieImmune   
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: CanEscapeInventory
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger #gnomes gib once they are in enough bits that they cant be glued back together
+        damageType: Blunt
+        damage: 60
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ClothingHeadHatGnome:
+           min: 1
+           max: 1 
+          ShardGlass:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnHighSpeedImpact #gnomes break when thrown, another anti gnometide device
+    minimumSpeed: 10
+    damage:
+      types:
+        Blunt: 20
+    soundHit:
+      collection: GlassBreak
+  - type: Vocal
+    sounds:
+      Male: Gnome
+      Female: Gnome
+      Unsexed: Gnome
+    wilhelmProbability: 0.001
+

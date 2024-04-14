@@ -19,6 +19,8 @@
         map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: Appearance
   - type: Glue
+  - type: RefillableSolution
+    solution: drink
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -38,8 +40,11 @@
   - type: Tag
     tags:
       - DrinkSpaceGlue
+      - GlueTool
   - type: TrashOnSolutionEmpty
     solution: drink
+  - type: Tool
+    qualities: Gluing
 
 - type: entity
   parent: DrinkBase

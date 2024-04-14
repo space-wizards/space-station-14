@@ -1089,9 +1089,9 @@
   description: The cap of a true garden helper
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/beret_medic.rsi
+    sprite: Clothing/Head/Hats/hat_gnome.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/beret_medic.rsi
+    sprite: Clothing/Head/Hats/hat_gnome.rsi
   - type: Seed
     seedId: gnome
 

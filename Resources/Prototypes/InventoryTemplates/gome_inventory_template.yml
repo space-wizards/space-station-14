@@ -1,0 +1,13 @@
+- type: inventoryTemplate
+  id: gnome
+  slots:
+  - name: id
+    slotTexture: id
+    slotFlags: IDCARD
+    slotGroup: SecondHotbar
+    stripTime: 6
+    uiWindowPos: 2,1
+    strippingWindowPos: 2,4
+    dependsOn: jumpsuit
+    displayName: ID  
+ 

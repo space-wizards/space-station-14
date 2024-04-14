@@ -1315,3 +1315,6 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+- type: Tag # tag to make a glue tool use glue on repair
+  id: GlueTool

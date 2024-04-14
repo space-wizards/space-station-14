@@ -405,3 +405,15 @@
     path: /Audio/Animals/parrot_raught.ogg
     params:
       variation: 0.125
+
+- type: emoteSounds
+  id: Gnome
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Voice/Gnome/Gnome_Woo_Sound_Effect.ogg
+    Laugh:
+      path: /Audio/Voice/Gnome/gnome_laugh.ogg
+    Weh:
+      collection: Weh

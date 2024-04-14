@@ -232,3 +232,7 @@ ghost-role-information-artifact-name = Sentient Artifact
 ghost-role-information-artifact-description =
       Enact your eldritch whims.
       Forcibly activate your nodes for good or for evil.
+
+
+ghost-role-information-gnome-name = Garden Gnome
+ghost-role-information-gnome-description = You are the trusted keeper of the station garden, keep your domain safe.

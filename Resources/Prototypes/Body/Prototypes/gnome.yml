@@ -1,0 +1,19 @@
+- type: body
+  id: gnome
+  name: "gnome"
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      connections:
+      - hands
+      - legs
+      organs:
+    hands:
+      part: HandsAnimal
+    legs:
+      part: LegsAnimal
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal

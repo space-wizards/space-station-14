@@ -571,3 +571,13 @@
       seedId: cotton
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/cotton.rsi
+
+- type: entity #you should never see this, this is for testing, if someone has these then I FUCKED UP and you should ping BITTERLYNX
+  parent: SeedBase
+  name: packet of Gnome seeds
+  id: GnomeSeeds
+  components:
+    - type: Seed
+      seedId: gnome
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/cotton.rsi

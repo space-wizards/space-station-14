@@ -8,7 +8,7 @@ namespace Content.Server.Speech.EntitySystems;
 /// </summary>
 public sealed class GnomeAccentSystem : EntitySystem
 {
-    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;  
+    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 
     public override void Initialize()
     {
@@ -32,7 +32,11 @@ public sealed class GnomeAccentSystem : EntitySystem
         msg = Regex.Replace(msg, @"(?<!\w)\bdead", "GNOMED", RegexOptions.IgnoreCase);
         msg = Regex.Replace(msg, @"(?<!\w)\bshot", "GNOMED", RegexOptions.IgnoreCase);
         msg = Regex.Replace(msg, @"(?<!\w)\bstabbed", "GNOMED", RegexOptions.IgnoreCase);
-
+        //various other replacements to get a more gnomeish "feel" :3 the ones below this are capitalized, that is just to make it work
+        //TODO: make this work without ignoring the case
+        msg = Regex.Replace(msg, @"(?<!\w)\bmy", "mi", RegexOptions.None);
+        msg = Regex.Replace(msg, @"(?<!\w)\bfriend", "chum", RegexOptions.None);
+        msg = Regex.Replace(msg, @"(?<!\w)\bfriends", "chums", RegexOptions.None);
         return msg;
     }
     
