@@ -37,6 +37,7 @@
     - Back
     - suitStorage
   - type: AmmoCounter
+  - type: Wieldable
   - type: Gun
     fireRate: 1
     selectedMode: SemiAuto
@@ -68,6 +69,7 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+  - type: Wieldable
   - type: Gun
     fireRate: 0.5
     soundGunshot:
@@ -101,6 +103,7 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+  - type: Wieldable
   - type: Gun
     fireRate: 6
     selectedMode: FullAuto

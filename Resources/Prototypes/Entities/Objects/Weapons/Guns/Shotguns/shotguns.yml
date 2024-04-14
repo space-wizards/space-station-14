@@ -66,6 +66,7 @@
     - Back
     - suitStorage
   - type: AmmoCounter
+  - type: Wieldable
   - type: Gun
     fireRate: 2
     selectedMode: FullAuto
@@ -113,6 +114,7 @@
     - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
     heldPrefix: db
+  - type: Wieldable
   - type: Gun
     fireRate: 2
   - type: BallisticAmmoProvider
@@ -145,6 +147,7 @@
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
     heldPrefix: enforcer
+  - type: Wieldable
   - type: BallisticAmmoProvider
 
 - type: entity
@@ -171,6 +174,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+  - type: Wieldable
   - type: BallisticAmmoProvider
     capacity: 4
   - type: Tag
@@ -251,6 +255,7 @@
     - 0,0,4,0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/blunderbuss.rsi
+  - type: Wieldable
   - type: Gun
     fireRate: 2
   - type: BallisticAmmoProvider
@@ -274,6 +279,7 @@
     - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/inhands_64x.rsi
     heldPrefix: improvised
+  - type: Wieldable
   - type: Gun
     fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
   - type: BallisticAmmoProvider

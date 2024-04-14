@@ -216,6 +216,7 @@
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
   - type: StaticPrice
     price: 420
+  - type: Wieldable
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -281,6 +282,7 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+  - type: Wieldable
   - type: Gun
     selectedMode: SemiAuto
     fireRate: 3
@@ -312,6 +314,7 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
+  - type: Wieldable
   - type: Gun
     fireRate: 1.5
     soundGunshot:
@@ -339,6 +342,7 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
+  - type: Wieldable
   - type: Gun
     fireRate: 1.5
     soundGunshot:
@@ -394,6 +398,7 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
+  - type: Wieldable
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg

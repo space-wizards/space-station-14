@@ -46,6 +46,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+  - type: Wieldable
 
 - type: entity
   name: Hristov
@@ -57,6 +58,7 @@
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+  - type: Wieldable
   - type: BallisticAmmoProvider
     whitelist:
       tags:
@@ -78,6 +80,7 @@
     state: base
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
+  - type: Wieldable
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
