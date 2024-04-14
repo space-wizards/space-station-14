@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Yellow oxygen tank was removed to standardise gas tank colourings.
-    type: Remove
-  id: 5846
-  time: '2024-02-01T06:53:33.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24374
 - author: koteq
   changes:
   - message: Fixed indicator near SSD players
@@ -3830,3 +3823,10 @@
   id: 6345
   time: '2024-04-14T02:51:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26939
+- author: GreaseMonk
+  changes:
+  - message: Added StopsWhenEntityDead property to audio components
+    type: Add
+  id: 6346
+  time: '2024-04-14T03:12:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26905
