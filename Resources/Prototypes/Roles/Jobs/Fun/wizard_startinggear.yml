@@ -7,7 +7,6 @@
     head: ClothingHeadHatWizard
     outerClothing: ClothingOuterWizard
     shoes: ClothingShoesWizard
-    belt: BaseSpellbookShop10MP
     id: WizardPDA
     ears: ClothingHeadsetService
   innerClothingSkirt: ClothingUniformJumpskirtColorDarkBlue
