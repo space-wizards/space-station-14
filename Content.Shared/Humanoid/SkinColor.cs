@@ -10,8 +10,23 @@ public static class SkinColor
 
     public const float MinHuesLightness = 0.175f;
 
+    public const float MinFeathersHue = 29f / 360;
+    public const float MaxFeathersHue = 174f / 360;
+    public const float MinFeathersSaturation = 20f / 100;
+    public const float MaxFeathersSaturation = 88f / 100;
+    public const float FeathersValue = 44.75f / 100;
+
     public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
-    public static Color ValidVoxFeathers => Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
+
+    /// <summary>
+    ///     Turn a color into a valid vox feather coloration.
+    /// </summary>
+    /// <param name="color">The color to validate</param>
+    /// <returns>Validated vox feather coloration</returns>
+    public static Color ValidVoxFeathers (Color color)
+    {
+        return VoxFeathers(color);
+    }
 
     /// <summary>
     ///     Turn a color into a valid tinted hue skin tone.
@@ -147,101 +162,66 @@ public static class SkinColor
 
 
 
-
-    //TODO: comments and whatever
-    public static Color VoxFeathers(int tone)
+    /// <summary>
+    ///     Convert a color to vox feather coloration.
+    /// </summary>
+    /// <param name="color">Color to convert</param>
+    /// <returns>Vox feather coloration</returns>
+    public static Color VoxFeathers(Color color)
     {
-        tone = Math.Clamp(tone, 0, 99);
+        var newColor = Color.ToHsv(color);
 
-        // The range is split into 5 equal sections with one Hue each
-        // Position within each section sets Saturation proportionally
-        // V-value is constant
+        //TODO: Kill this block??
+        var h = Math.Round(newColor.X * 360f);
+        var s = Math.Round(newColor.Y * 100f);
+        var h2 = h * (MaxFeathersHue - MinFeathersHue) + MinFeathersHue * 360f;
+        var s2 = s * (MaxFeathersSaturation- MinFeathersSaturation) + MinFeathersSaturation * 100f;
 
-        var d1 = tone / 10;
-        var d2 = tone % 10;
-
-        //var hueMin = 29f;
-        //var hueMax = 174f;
-        //ar satMin = 20f;
-        //var satMax = 88f;
-        //var hue = (hueMax - hueMin) / 9 * d1 + hueMin ;
-
-        var hue = 85f;
-        // TODO remove the previous calculation in the last line
-        switch (d1)
+        if ( newColor.X >= 1)
         {
-            case var i when i <= 1:
-                hue = 29;
-                break;
-
-            case var i when i <= 3:
-                hue = 66;
-                break;
-
-            case var i when i <= 5:
-                hue = 85;
-                break;
-
-            case var i when i <= 7:
-                hue = 148;
-                break;
-
-            case var i when i <= 9:
-                hue = 174;
-                break;
+            newColor.X = 0.99999999f;
         }
 
-        var leftover = d1 % 2f;
-        var sat = (d2 + leftover * 10) *5;
-        //var sat = (d2 + leftover * 10) *1.47f + 20;
+        newColor.X = newColor.X * (MaxFeathersHue - MinFeathersHue) + MinFeathersHue;
+        newColor.Y = newColor.Y * (MaxFeathersSaturation - MinFeathersSaturation) + MinFeathersSaturation;
 
+        newColor.Z =  FeathersValue;
 
-        //var sat = (satMax - satMin) / 9 * d2 + satMin;
-        var val = 44.75f ;
-
-        var color = Color.FromHsv(new Vector4(hue / 360, sat / 100, val / 100, 1.0f));
-
-        return color;
+        return Color.FromHsv(newColor);
     }
 
-    public static float VoxFeathersFromColor(Color color)
+    // Gets a vox feather coloration from a given Color.
+    public static Color VoxFeathersFromColor(Color color)
     {
         var hsv = Color.ToHsv(color);
         // check for hue/value first, if hue is lower than this percentage
         // and value is 1.0
         // then it'll be hue
-        if (Math.Clamp(hsv.X, 25f / 360f, 1) > 25f / 360f
-            && hsv.Z == 1.0)
-        {
-            return Math.Abs(45 - (hsv.X * 360));
-        }
-        // otherwise it'll directly be the saturation
-        else
-        {
-            return hsv.Y * 100;
-        }
+        hsv.X = Math.Clamp(hsv.X, MinFeathersHue, MaxFeathersHue);
+        hsv.Y = Math.Clamp(hsv.Y, MinFeathersSaturation, MaxFeathersSaturation);
+        hsv.Z = FeathersValue;
+
+        return Color.FromHsv(hsv);
     }
 
-    //TODO: comments and whatever
+    /// <summary>
+    ///     Verify if this color is a valid vox feather coloration, or not.
+    /// </summary>
+    /// <param name="color">The color to verify</param>
+    /// <returns>True if valid, false otherwise</returns>
     public static bool VerifyVoxFeathers(Color color)
     {
-        var colorValues = Color.ToHsv(color);
 
-        var hue = Math.Round(colorValues.X * 360f);
-        var sat = Math.Round(colorValues.Y * 100f);
-        var val = Math.Round(colorValues.Z * 100f);
+        var colorHsv = Color.ToHsv(color);
 
-        //TODO make this less ugly
-        var h1 = 29f;
-        var h2 = 66f;
-        var h3 = 85f;
-        var h4 = 148f;
-        var h5 = 174f;
-
-        if (Math.Abs(hue - h1) > 1f && Math.Abs(hue - h2) > 1f  && Math.Abs(hue - h3) > 1f  && Math.Abs(hue - h4) > 1f  && Math.Abs(hue - h5) > 1f )
+        if (colorHsv.X < MinFeathersHue || colorHsv.X > MaxFeathersHue)
             return false;
 
-        if (val < 44f || val > 45f)
+        if (colorHsv.Y < MinFeathersSaturation || colorHsv.Y > MaxFeathersSaturation)
+            return false;
+
+        // Vox feather HSV always has a fixed V
+        if (Math.Abs(colorHsv.Z - 44.75f/100) > 0.02f )
             return false;
 
         return true;
@@ -292,7 +272,7 @@ public static class SkinColor
             HumanoidSkinColor.HumanToned => ValidHumanSkinTone,
             HumanoidSkinColor.TintedHues => ValidTintedHuesSkinTone(color),
             HumanoidSkinColor.Hues => MakeHueValid(color),
-            HumanoidSkinColor.VoxFeathers => ValidVoxFeathers,
+            HumanoidSkinColor.VoxFeathers => ValidVoxFeathers(color),
             _ => color
         };
     }

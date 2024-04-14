@@ -736,16 +736,16 @@ namespace Content.Client.Preferences.UI
                 }
                 case HumanoidSkinColor.VoxFeathers:
                 {
-                    if (!_skinColor.Visible)
+                    if (!_rgbSkinColorContainer.Visible)
                     {
-                        _skinColor.Visible = true;
-                        _rgbSkinColorContainer.Visible = false;
+                        _skinColor.Visible = false;
+                        _rgbSkinColorContainer.Visible = true;
                     }
 
-                    var color = SkinColor.VoxFeathers((int) _skinColor.Value);
+                    var color = SkinColor.VoxFeathers(_rgbSkinColorSelector.Color);
 
                     CMarkings.CurrentSkinColor = color;
-                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));//
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
             }
@@ -984,7 +984,7 @@ namespace Content.Client.Preferences.UI
                         _rgbSkinColorContainer.Visible = false;
                     }
 
-                    _skinColor.Value = SkinColor.VoxFeathersFromColor(Profile.Appearance.SkinColor);
+                    _rgbSkinColorSelector.Color = SkinColor.VoxFeathersFromColor(Profile.Appearance.SkinColor);
 
                     break;
                 }
