@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Paper is now edible, even for non-moths.
-    type: Tweak
-  id: 5856
-  time: '2024-02-01T12:40:55.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24755
 - author: mac6na6na
   changes:
   - message: Tiered part crates will no longer appear on salvage expeditions.
@@ -3839,3 +3832,10 @@
   id: 6355
   time: '2024-04-14T20:04:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26951
+- author: TokenStyle
+  changes:
+  - message: Lockers cannot be deconstructed with a screwdriver when locked now.
+    type: Fix
+  id: 6356
+  time: '2024-04-14T22:26:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26961
