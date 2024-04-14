@@ -60,7 +60,6 @@
   - type: NameIdentifier
     group: GenericNumber
   - type: Repairable
-    fuelcost: 15
     doAfterDelay: 8
   - type: Pullable
   - type: Tag
