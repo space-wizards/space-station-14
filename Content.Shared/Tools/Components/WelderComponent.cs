@@ -1,26 +1,18 @@
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Tools.Components
+namespace Content.Shared.Tools.Components
 {
     [RegisterComponent]
-    public sealed partial class WelderComponent : SharedWelderComponent
+    public sealed partial class WelderComponent : Component
     {
         /// <summary>
-        ///     Name of <see cref="FuelSolution"/>.
+        ///     Name of the solution containing the fuel.
         /// </summary>
         [DataField("fuelSolution"), ViewVariables(VVAccess.ReadWrite)]
         public string FuelSolutionName = "Welder";
-
-        /// <summary>
-        ///     Solution on the entity that contains the fuel.
-        /// </summary>
-        [DataField("fuelSolutionRef")]
-        public Entity<SolutionComponent>? FuelSolution = null;
 
         /// <summary>
         ///     Reagent that will be used as fuel for welding.

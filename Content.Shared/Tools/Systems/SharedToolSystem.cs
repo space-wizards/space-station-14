@@ -1,4 +1,5 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
@@ -24,6 +25,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     [Dependency] private   readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private   readonly TileSystem _tiles = default!;
     [Dependency] private   readonly TurfSystem _turfs = default!;
+    [Dependency] protected readonly SharedSolutionContainerSystem SolutionContainer = default!;
 
     public override void Initialize()
     {
@@ -127,14 +129,12 @@ public abstract partial class SharedToolSystem : EntitySystem
             BreakOnMove = true,
             BreakOnWeightlessMove = false,
             NeedHand = tool != user,
-            AttemptFrequency = IsWelder(tool) ? AttemptFrequency.EveryTick : AttemptFrequency.Never
+            AttemptFrequency = HasComp<WelderComponent>(tool) ? AttemptFrequency.EveryTick : AttemptFrequency.Never
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
         return true;
     }
-
-    protected abstract bool IsWelder(EntityUid uid);
 
     /// <summary>
     ///     Attempts to use a tool on some entity, which will start a DoAfter. Returns true if an interaction occurred.
