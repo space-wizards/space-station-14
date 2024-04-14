@@ -413,7 +413,5 @@
   sounds:
     Scream:
       path: /Audio/Voice/Gnome/Gnome_Woo_Sound_Effect.ogg
-    Laugh:
-      path: /Audio/Voice/Gnome/gnome_laugh.ogg
     Weh:
       collection: Weh
