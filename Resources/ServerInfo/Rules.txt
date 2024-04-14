@@ -36,8 +36,8 @@ This is the "short" form of the rules, which has all the information any regular
 [color=#a4885c]10.[/color] Pick a realistic name that could appear on a birth certificate with at least a first and last name (leeway is given to this for Clowns, Mimes, and non-human races).
     - Names of notable famous or fictional persons or names that resemble/parody them are strictly forbidden. You are not clever if you slightly change a famous name around. Terrible names open you up to being politely reminded to change it, smited, or instantly banned, depending on severity.
     - Names resulting in inappropriate phonetic play-on-words are forbidden (ex: "Mike Oxlong", "Ben Dover", "Dixie Normus"). They are also extremely overdone.
-    - Humans and Slime Species should have a first name last name ("Charles Gadson" for example).
-    - Reptilian Species are free to have just one first name or something in the "word-word-word" (Three at max)
+    - Human should have a first name last name ("Charles Gadson" for example).
+    - Reptilian Species are free to have just one first name or something along the lines of "(verb)-the-(noun)"
     - Other species besides Human and Slimes are allowed to have more different and unusual names, even only a first name also.
 
 [color=#a4885c]11.[/color] Act like an actual human being on a space station in a low-roleplay (LRP) environment. Do not use text speak or emoticons IC, and do not refer to OOC things like admins in-game. Do not threaten players that you are calling the admins on them. Do not use emotes or looc to bypass speech filters or muteness. You are not required to write a backstory or follow strict procedure; however, you are expected to at least make an effort to act like your role.
@@ -47,7 +47,9 @@ This is the "short" form of the rules, which has all the information any regular
     - Do not intentionally make other players' lives hell for your own amusement.
     - [color=#ff0000]THE ROUND IS NOT OVER UNTIL THE END-ROUND SUMMARY APPEARS. KILLING SOMEONE FOR NO REASON BEFORE THIS WILL BE HANDLED ACCORDINGLY.[/color]
     - Antagonists have a lot of leeway with this rule and may kill/sabotage as they see fit, however if your behavior degrades the experience for the majority of the server you will be told to stop. Antagonists are still generally forbidden from causing massive station damage early into the round (less than 30 minutes) and are forbidden from needlessly prolonging rounds. For antagonist specific rules, see the "long" form of the rules at [color=#a4885c]wiki.spacestation14.io[/color].
-    - Wizard Antagonists are able to murderbone (Kill anyone with no limit.) freely as they are to cause chaos in the station.
+    - Wizard and Nuclear Operative Antagonists are able to murderbone (Kill anyone with no limit.) freely as they are to cause chaos in the station. Traitors and thieves are not.
+
+    - Inital infected that have not turned yet are able to kill people in order to infect them. Storing them is not allowed and simply murderboning the entire station is not either.
 
 [color=#a4885c]13.[/color] Don't harass or target players across rounds for actions in prior rounds or for actions outside of the game (this is referred to as "Metagrudging".)
     - Annoying players for IC reasons in the current round is fine; doing it across rounds or as a ghost role after they kill you is not.
@@ -86,6 +88,7 @@ If you regularly play Security or Command roles and got this far, we applaud you
     - Do not immediately abandon your position as a Command role and go do whatever you want instead of managing your department/the station. Do not abuse your position or use it to make arbitrary choices to the detriment of the station.
     - Do not hire random crew to be your bodyguards or promote them to Captain or a Head of Staff at random. If you need bodyguards, talk to your security department. If you need a new Command role, talk to the personnel in that related department.
     - '''Do not abandon the station during Nuclear Operatives. You are supposed to protect the station, not let operatives kill everyone on it without a fight.'''
+    - Command nor Security should use syndicate gear, or items. (Exceptions are if it's in a emergency that risks yours or anyones life.)
 
 [color=#a4885c]20.[/color] Security/Command should try to remain non-lethal and effect arrests, except in the following special circumstances, where they may choose to use lethal force:
     - Lethal force is used against you (ex: firearms, lasers, disabling/stunning weapons with intent to kill, deadly melee weapons)

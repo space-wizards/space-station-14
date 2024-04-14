@@ -205,6 +205,18 @@
     Poison: 2
     Radiation: 2
 
+- type: damageModifierSet
+  id: Skinwalker
+  coefficients:
+    Heat: 1.2
+    Cold: 0.75
+    Slash: 1.25
+    Piercing: 1.2
+    Shock: 0.5
+    Poison: 0.5
+    Radiation: 0.5
+    Asphyxiation: 0.5
+    Cellular: 0.5
 
 - type: damageModifierSet
   id: Zombie #Blunt resistant and immune to biological threats, but can be hacked apart and burned

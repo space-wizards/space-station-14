@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by CatMagic, exposed bone sprites modified from EmoGarbage",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "skinwalker_bonecheek_l",
+      "directions": 4
+    },
+    {
+      "name": "skinwalker_bonecheek_r",
+      "directions": 4
+    },
+    {
+      "name": "skinwalker_shoulderbone_l",
+      "directions": 4
+    },
+    {
+      "name": "skinwalker_shoulderbone_r",
+      "directions": 4
+    },
+    {
+      "name": "skinwalker_guthole",
+      "directions": 4
+    },
+    {
+      "name": "skinwalker_scars",
+      "directions": 4
+    },
+    {
+      "name": "skinwalker_ribarms",
+      "directions": 4
+    },
+    {
+      "name": "skinwalker_skullmask",
+      "directions": 4
+    },
+    {
+      "name": "skinwalker_backskull",
+      "directions": 4
+    },
+    {
+      "name": "skinwalker_eyebags",
+      "directions": 4
+    },
+    {
+      "name": "skinwalker_totallyhuman",
+      "directions": 4
+    }
+  ]
+}
