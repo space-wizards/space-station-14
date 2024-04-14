@@ -1,13 +1,13 @@
 - type: inventoryTemplate
   id: gnome
-  slots:
-  - name: id
-    slotTexture: id
-    slotFlags: IDCARD
-    slotGroup: SecondHotbar
-    stripTime: 6
-    uiWindowPos: 2,1
-    strippingWindowPos: 2,4
-    dependsOn: jumpsuit
-    displayName: ID  
+  #slots: i was on the fence to give them an id slot so ill comment this out for now
+ # - name: id
+  #  slotTexture: id
+  #  slotFlags: IDCARD
+   # slotGroup: SecondHotbar
+   # stripTime: 6
+  #  uiWindowPos: 2,1
+   # strippingWindowPos: 2,4
+   # dependsOn: jumpsuit
+  #  displayName: ID  
  

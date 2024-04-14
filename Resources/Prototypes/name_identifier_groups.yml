@@ -1,7 +1,11 @@
-﻿# Non-fungible apes, anyone?
+# Non-fungible apes, anyone?
 - type: nameIdentifierGroup
   id: Monkey
   prefix: MK
+
+- type: nameIdentifierGroup
+  id: Gnome
+  prefix: GN
 
 - type: nameIdentifierGroup
   id: Kobold

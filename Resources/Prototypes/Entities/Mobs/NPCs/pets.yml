@@ -901,7 +901,7 @@
     messagePerceivedByOthers: hugging-success-generic-others
   - type: MeleeWeapon
     soundHit:
-      path: /Audio/Effects/punch.ogg
+      collection: Punch
     angle: 30
     animation: WeaponArcPunch
     damage:
@@ -910,16 +910,11 @@
         Piercing: 1
   - type: Puller #dont need hands because they are at a disadvantage anyway, this way they can hold a light and drag a box for a backpack
     needsHands: false
-  - type: CanHostGuardian #touch this stuff to make the fuckers hold still when not possesed
-  - type: NPCRetaliation
-    attackMemoryLength: 10
+  - type: CanHostGuardian #touch this stuff to make the fuckers hold still when not possesed (NOT THE GAURDIAN)
   - type: FactionException
   - type: NpcFactionMember
     factions:
       - Passive
-  - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
   - type: Hands #gives em hands, the item sprites for holding things look all strange but its FINE, I DONT WANNA FIX IT ITS FINE ILL DO IT LATER
   - type: Body #gives em a body, is needed for organs and hands
     prototype: gnome
