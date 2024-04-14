@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: FungiFellow
-  changes:
-  - message: Added Binary Key in RD's Locker
-    type: Add
-  - message: 50% off Binary Key
-    type: Tweak
-  id: 5852
-  time: '2024-02-01T10:42:12.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24778
 - author: Dygon
   changes:
   - message: Paraplegic entities have their legs healed when zombified.
@@ -3841,3 +3832,11 @@
   id: 6351
   time: '2024-04-14T08:51:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26886
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Holoparasites and holoclowns will now phase through projectiles such
+      as bullets, like a holocarp.
+    type: Tweak
+  id: 6352
+  time: '2024-04-14T08:52:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26862
