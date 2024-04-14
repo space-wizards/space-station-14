@@ -28,7 +28,6 @@
 
 - type: entity
   name: Bloody Skeleton
-  description: Covered in fresh blood.
   parent: MobSkeletonPerson
   id: MobSkeletonSkinwalker
   components:
