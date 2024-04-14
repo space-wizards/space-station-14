@@ -136,8 +136,8 @@
       path: /Audio/Items/bikehorn.ogg
   - type: BasicEntityAmmoProvider
     proto: FoodPieBananaCream
-    capacity: 5
-    count: 5
+    capacity: 2
+    count: 2
   - type: Item
     size: Normal
   - type: Clothing
