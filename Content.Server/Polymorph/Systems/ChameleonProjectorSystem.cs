@@ -32,7 +32,10 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
 
     private void OnEquippedHand(Entity<ChameleonDisguiseComponent> ent, ref GotEquippedHandEvent args)
     {
-        _polymorph.Revert(ent.Owner);
+        if (!TryComp<PolymorphedEntityComponent>(ent, out var poly))
+            return;
+
+        _polymorph.Revert((ent, poly));
         args.Handled = true;
     }
 

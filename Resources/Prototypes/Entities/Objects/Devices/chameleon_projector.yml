@@ -42,6 +42,9 @@
       0: Alive
       1: Critical
       200: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1 # precise movement for the perfect spot
+    baseSprintSpeed: 5 # the jig is up
   - type: ChameleonDisguise
 
 # actions
