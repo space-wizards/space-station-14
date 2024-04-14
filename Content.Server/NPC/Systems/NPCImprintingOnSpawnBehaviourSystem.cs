@@ -22,13 +22,10 @@ public sealed partial class NPCImprintingOnSpawnBehaviourSystem : SharedNPCImpri
 
     private void OnMapInit(Entity<NPCImprintingOnSpawnBehaviourComponent> imprinting, ref MapInitEvent args)
     {
+        HashSet<EntityUid> friends = new();
+        _lookup.GetEntitiesInRange(imprinting, imprinting.Comp.SpawnFriendsSearchRadius, friends);
 
-        var entities = _lookup.GetEntitiesInRange(imprinting, imprinting.Comp.SearchRadius);
-
-        if (entities.Count == 0)
-            return;
-
-        foreach (var friend in entities)
+        foreach (var friend in friends)
         {
             if (!(imprinting.Comp.Whitelist != null && !imprinting.Comp.Whitelist.IsValid(friend)))
             {

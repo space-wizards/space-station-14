@@ -15,10 +15,10 @@ public sealed partial class NPCImprintingOnSpawnBehaviourComponent : Component
     public EntityWhitelist? Whitelist;
 
     /// <summary>
-    /// the radius in which all creatures will be marked as exceptions to attack
+    /// when a creature appears, it will memorize all creatures in the radius to remember them as friends
     /// </summary>
     [DataField]
-    public float SearchRadius = 3f;
+    public float SpawnFriendsSearchRadius = 3f;
 
     /// <summary>
     /// if there is a FollowCompound in HTN, the target of the following will be selected from random nearby targets when it appears
@@ -30,5 +30,5 @@ public sealed partial class NPCImprintingOnSpawnBehaviourComponent : Component
     /// is used to determine who became a friend from this component
     /// </summary>
     [DataField]
-    public ValueList<EntityUid> Friends;
+    public List<EntityUid> Friends = new();
 }
