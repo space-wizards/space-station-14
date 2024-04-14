@@ -7,8 +7,6 @@
       part: HeadSkeleton
       connections:
       - torso
-      organs:
-        brain: BrainSkeleton
     torso:
       part: TorsoSkeleton
       connections:
