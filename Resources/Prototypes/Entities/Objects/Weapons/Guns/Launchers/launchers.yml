@@ -69,7 +69,6 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
-  - type: Wieldable
   - type: Gun
     fireRate: 0.5
     soundGunshot:
@@ -103,7 +102,6 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
-  - type: Wieldable
   - type: Gun
     fireRate: 6
     selectedMode: FullAuto

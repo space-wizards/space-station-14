@@ -80,7 +80,6 @@
     state: base
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
-  - type: Wieldable
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
