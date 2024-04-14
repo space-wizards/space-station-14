@@ -68,3 +68,23 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "every light is blinking at once by Alexander Divine."
   source: "https://soundcloud.com/alexanderdivine/every-light-is-blinking-at-once"
+
+- files: ["geese.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Kira"
+  source: "my computer"
+
+- files: ["bufftf2men.ogg"]
+  license: "no idea lmao"
+  copyright: "Joji"
+  source: "my computer"
+
+- files: ["everythingisbroke.ogg"]
+  license: "no idea lmao"
+  copyright: "idk"
+  source: "my computer"
+
+- files: ["psirius_-_nights_of_orion.xm.ogg"]
+  license: "CC-BY-NC-SA-4.0"
+  copyright: "Nights of Orion by Psirius"
+  source: "https://modarchive.org/index.php?request=view_by_moduleid&query=184962"

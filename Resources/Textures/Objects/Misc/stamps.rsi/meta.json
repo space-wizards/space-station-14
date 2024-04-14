@@ -60,6 +60,9 @@
         },
         {
             "name": "stamp-warden"
+        },
+        {
+            "name": "stamp-wizard"
         }
     ]
 }

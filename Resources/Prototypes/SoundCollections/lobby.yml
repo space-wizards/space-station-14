@@ -1,17 +1,12 @@
 - type: soundCollection
   id: LobbyMusic
   files:
-    - /Audio/Lobby/thunderdome.ogg
-    - /Audio/Lobby/absconditus.ogg
-    - /Audio/Lobby/space_asshole.ogg
-    - /Audio/Lobby/endless_space.ogg
-    - /Audio/Lobby/singuloose.ogg
-    - /Audio/Lobby/comet_haley.ogg
-    - /Audio/Lobby/title2.ogg
     - /Audio/Lobby/title3.ogg
-    - /Audio/Lobby/mod.flip-flap.ogg
-    - /Audio/Lobby/Spac_Stac.ogg
-    - /Audio/Lobby/pwmur.ogg
-    - /Audio/Lobby/lasers_rip_apart_the_bulkhead.ogg
-    - /Audio/Lobby/every_light_is_blinking_at_once.ogg
-    - /Audio/Lobby/atomicamnesiammx.ogg
+    - /Audio/Lobby/geese.ogg
+    - /Audio/Lobby/geese2.ogg
+    - /Audio/Lobby/Elevator-music.ogg
+    - /Audio/Lobby/bufftf2men.ogg
+    - /Audio/Lobby/TSHS1.ogg
+    - /Audio/Lobby/FamilyFeudTheme.ogg                       
+    - /Audio/Lobby/everythingisbroke.ogg
+    - /Audio/Lobby/psirius_-_nights_of_orion.xm.ogg

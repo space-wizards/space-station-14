@@ -1,0 +1,13 @@
+- type: entity
+  id: SkinwalkerGibAction
+  name: Gib Yourself!
+  description: Shed your flesh and become a bone man.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Mobs/Species/Skeleton/parts.rsi
+      state: skull_icon
+    event: !type:GibActionEvent {}
+    checkCanInteract: false
+    checkConsciousness: false
