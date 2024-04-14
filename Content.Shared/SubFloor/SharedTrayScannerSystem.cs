@@ -48,7 +48,7 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 
     private void OnTrayScannerGetState(EntityUid uid, TrayScannerComponent scanner, ref ComponentGetState args)
     {
-        args.State = new TrayScannerState(scanner.Enabled);
+        args.State = new TrayScannerState(scanner.Enabled, scanner.Range);
     }
 
     private void OnTrayScannerHandleState(EntityUid uid, TrayScannerComponent scanner, ref ComponentHandleState args)
@@ -56,6 +56,7 @@ public abstract class SharedTrayScannerSystem : EntitySystem
         if (args.Current is not TrayScannerState state)
             return;
 
+        scanner.Range = state.Range;
         SetScannerEnabled(uid, state.Enabled, scanner);
     }
 }
