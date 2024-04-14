@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Health analyzers now show if somebody is starving.
-    type: Add
-  id: 5844
-  time: '2024-02-01T06:28:17.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24789
 - author: PixelTK
   changes:
   - message: The arachnid plushie now has a new sprite.
@@ -3828,3 +3821,11 @@
   id: 6343
   time: '2024-04-13T20:49:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26928
+- author: Tayrtahn
+  changes:
+  - message: Placing a player with no entry in the manifest into cryostorage no longer
+      removes the captain from the crew manifest.
+    type: Fix
+  id: 6344
+  time: '2024-04-14T02:19:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26927
