@@ -40,13 +40,13 @@ public sealed partial class PinpointerComponent : Component
     ///     Whether or not the target name should be updated when the target is updated.
     /// </summary>
     [DataField("updateTargetName"), ViewVariables(VVAccess.ReadWrite)]
-    public bool UpdateTargetName;
+    public bool UpdateTargetName = true;
 
     /// <summary>
     ///     Whether or not the target can be reassigned.
     /// </summary>
     [DataField("canRetarget"), ViewVariables(VVAccess.ReadWrite)]
-    public bool CanRetarget;
+    public bool CanRetarget = true;
 
     [ViewVariables]
     public EntityUid? Target = null;
