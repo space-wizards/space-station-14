@@ -7,6 +7,7 @@ namespace Content.Server.Radio.Components;
 
 /// <summary>
 /// When activated (<see cref="ActiveRadioJammerComponent"/>) prevents from sending messages in range
+/// Suit sensors will also stop working.
 /// </summary>
 [NetworkedComponent, RegisterComponent]
 [Access(typeof(JammerSystem))]
