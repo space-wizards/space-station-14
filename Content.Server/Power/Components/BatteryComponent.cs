@@ -7,56 +7,34 @@ namespace Content.Server.Power.Components
     /// </summary>
     [RegisterComponent]
     [Virtual]
+    [Access(typeof(BatterySystem))]
     public partial class BatteryComponent : Component
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
         public string SolutionName = "battery";
 
         /// <summary>
         /// Maximum charge of the battery in joules (ie. watt seconds)
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float MaxCharge
-        {
-            get => _maxCharge;
-            [Obsolete("Use system method")]
-            set => _entMan.System<BatterySystem>().SetMaxCharge(Owner, value, this);
-        }
-
-        [DataField("maxCharge")]
-        [Access(typeof(BatterySystem))]
-        public float _maxCharge;
+        [DataField]
+        public float MaxCharge;
 
         /// <summary>
         /// Current charge of the battery in joules (ie. watt seconds)
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentCharge
-        {
-            get => Charge;
-            [Obsolete("Use system method")]
-            set => _entMan.System<BatterySystem>().SetCharge(Owner, value, this);
-        }
-
         [DataField("startingCharge")]
-        [Access(typeof(BatterySystem))]
-        public float Charge;
+        public float CurrentCharge;
 
         /// <summary>
         /// True if the battery is fully charged.
         /// </summary>
-        [ViewVariables] public bool IsFullyCharged => MathHelper.CloseToPercent(CurrentCharge, MaxCharge);
+        [ViewVariables]
+        public bool IsFullyCharged => MathHelper.CloseToPercent(CurrentCharge, MaxCharge);
 
         /// <summary>
         /// The price per one joule. Default is 1 credit for 10kJ.
         /// </summary>
-        [DataField("pricePerJoule")]
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float PricePerJoule = 0.0001f;
-
-        [Obsolete("Use system method")]
-        public bool TryUseCharge(float value)
-            => _entMan.System<BatterySystem>().TryUseCharge(Owner, value, this);
     }
 
     /// <summary>

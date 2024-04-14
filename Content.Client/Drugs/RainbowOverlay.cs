@@ -20,6 +20,7 @@ public sealed class RainbowOverlay : Overlay
     private readonly ShaderInstance _rainbowShader;
 
     public float Intoxication = 0.0f;
+    public float TimeTicker = 0.0f;
 
     private const float VisualThreshold = 10.0f;
     private const float PowerDivisor = 250.0f;
@@ -48,7 +49,17 @@ public sealed class RainbowOverlay : Overlay
             return;
 
         var timeLeft = (float) (time.Value.Item2 - time.Value.Item1).TotalSeconds;
-        Intoxication += (timeLeft - Intoxication) * args.DeltaSeconds / 16f;
+
+        TimeTicker += args.DeltaSeconds;
+
+        if (timeLeft - TimeTicker > timeLeft / 16f)
+        {
+            Intoxication += (timeLeft - Intoxication) * args.DeltaSeconds / 16f;
+        }
+        else
+        {
+            Intoxication -= Intoxication/(timeLeft - TimeTicker) * args.DeltaSeconds;
+        }
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)

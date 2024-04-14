@@ -1,3 +1,4 @@
+using Content.Shared.Containers.ItemSlots;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
@@ -24,7 +25,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(ItemSlotsSystem) });
         }
 
         /// <summary>

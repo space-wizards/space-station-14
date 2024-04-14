@@ -1,13 +1,10 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.Movement;
 using Content.Shared.Movement.Events;
-using Content.Shared.Physics.Pull;
-using Content.Shared.Pulling;
-using Content.Shared.Pulling.Components;
-using Content.Shared.Pulling.Events;
-using Content.Shared.Stunnable;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Events;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Throwing;
 
 namespace Content.Shared.Administration;
@@ -15,7 +12,7 @@ namespace Content.Shared.Administration;
 public sealed class AdminFrozenSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly SharedPullingSystem _pulling = default!;
+    [Dependency] private readonly PullingSystem _pulling = default!;
 
     public override void Initialize()
     {
@@ -45,9 +42,9 @@ public sealed class AdminFrozenSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, AdminFrozenComponent component, ComponentStartup args)
     {
-        if (TryComp<SharedPullableComponent>(uid, out var pullable))
+        if (TryComp<PullableComponent>(uid, out var pullable))
         {
-            _pulling.TryStopPull(pullable);
+            _pulling.TryStopPull(uid, pullable);
         }
 
         UpdateCanMove(uid, component, args);

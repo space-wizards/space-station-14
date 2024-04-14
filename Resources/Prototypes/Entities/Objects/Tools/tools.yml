@@ -114,6 +114,8 @@
     damage:
       types:
         Blunt: 4.5
+    soundHit:
+      collection: MetalThud
   - type: Tool
     qualities:
       - Anchoring
@@ -151,6 +153,8 @@
     damage:
       types:
         Blunt: 8
+    soundHit:
+      collection: MetalThud
   - type: Tool
     qualities:
       - Prying
@@ -221,6 +225,7 @@
   - type: Tag
     tags:
       - Multitool
+      - DoorElectronicsConfigurator
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
@@ -262,6 +267,9 @@
     - type: ActivatableUI
       key: enum.NetworkConfiguratorUiKey.List
       inHandsOnly: true
+    - type: Tag
+      tags:
+        - DoorElectronicsConfigurator
     - type: UserInterface
       interfaces:
         - key: enum.NetworkConfiguratorUiKey.List
@@ -333,15 +341,35 @@
       path: "/Audio/Items/drill_hit.ogg"
 
 - type: entity
-  name: RCD
-  parent: BaseItem
   id: RCD
-  description: An advanced construction device which can place/remove walls, floors, and airlocks quickly.
+  parent: BaseItem
+  name: RCD
+  description: The rapid construction device can be used to quickly place and remove various station structures and fixtures. Requires compressed matter to function.
   components:
   - type: RCD
+    availablePrototypes:
+    - WallSolid
+    - FloorSteel
+    - Plating
+    - Catwalk
+    - Grille
+    - Window
+    - WindowDirectional
+    - WindowReinforcedDirectional
+    - ReinforcedWindow
+    - Airlock
+    - AirlockGlass
+    - Firelock
+    - TubeLight
+    - BulbLight
+    - LVCable
+    - MVCable
+    - HVCable
+    - CableTerminal
+    - Deconstruct
   - type: LimitedCharges
-    maxCharges: 5
-    charges: 5
+    maxCharges: 30
+    charges: 30
   - type: UseDelay
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
@@ -359,6 +387,12 @@
       Plastic: 100
   - type: StaticPrice
     price: 100
+  - type: UserInterface
+    interfaces:
+    - key: enum.RcdUiKey.Key
+      type: RCDMenuBoundUserInterface
+  - type: ActivatableUI
+    key: enum.RcdUiKey.Key
 
 - type: entity
   id: RCDEmpty
@@ -366,37 +400,50 @@
   suffix: Empty
   components:
   - type: LimitedCharges
-    maxCharges: 5
     charges: 0
+  - type: RCD
+    availablePrototypes:
+    - WallSolid
+    - FloorSteel
+    - Plating
+    - Catwalk
+    - Grille
+    - Window
+    - WindowDirectional
+    - WindowReinforcedDirectional
+    - ReinforcedWindow
+    - Airlock
+    - AirlockGlass
+    - Firelock
 
 - type: entity
   id: RCDRecharging
   parent: RCD
-  name: experimental rcd
-  description: A bluespace-enhanced RCD that regenerates charges passively.
+  name: experimental RCD
+  description: A bluespace-enhanced rapid construction device that passively generates its own compressed matter.
   suffix: AutoRecharge
   components:
   - type: LimitedCharges
-    maxCharges: 3
-    charges: 3
+    maxCharges: 20
+    charges: 20
   - type: AutoRecharge
-    rechargeDuration: 30
+    rechargeDuration: 10
 
 - type: entity
   id: RCDExperimental
   parent: RCD
   suffix: Admeme
-  name: experimental rcd
-  description: A bluespace-enhanced RCD that regenerates charges passively.
+  name: experimental RCD
+  description: A bluespace-enhanced rapid construction device that passively generates its own compressed matter.
   components:
   - type: AutoRecharge
-    rechargeDuration: 5
+    rechargeDuration: 1
 
 - type: entity
-  name: RCD Ammo
+  name: compressed matter
   parent: BaseItem
   id: RCDAmmo
-  description: Ammo cartridge for an RCD.
+  description: A cartridge of raw matter compacted by bluespace technology. Used in rapid construction devices.
   components:
   - type: RCDAmmo
   - type: Sprite
@@ -488,10 +535,12 @@
     sprite: Objects/Tools/shovel.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: -135
+    wideAnimationRotation: 45
     damage:
       types:
         Blunt: 14
+    soundHit:
+      collection: MetalThud
   - type: Item
     size: Normal
     sprite: Objects/Tools/shovel.rsi
@@ -525,6 +574,8 @@
     damage:
       types:
         Blunt: 7
+    soundHit:
+      collection: MetalThud
   - type: Tool
     qualities:
     - Rolling
