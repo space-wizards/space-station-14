@@ -14,7 +14,7 @@
     materialComposition:
       Cloth: 50
   - type: StaticPrice
-    price: 25
+    price: 20
 
 - type: entity
   abstract: true
