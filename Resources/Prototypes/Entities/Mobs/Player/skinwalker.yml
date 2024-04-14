@@ -1,5 +1,0 @@
-- type: entity
-  save: false
-  name: Urist McFlesheater
-  parent: BaseMobSkinwalker
-  id: MobSkinwalker
