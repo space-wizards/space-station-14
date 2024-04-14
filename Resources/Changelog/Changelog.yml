@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dygon
-  changes:
-  - message: Paraplegic entities have their legs healed when zombified.
-    type: Fix
-  id: 5853
-  time: '2024-02-01T11:06:05.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24169
 - author: PJB3005
   changes:
   - message: The AME can now single-handedly power the entire station until one of
@@ -3840,3 +3833,10 @@
   id: 6352
   time: '2024-04-14T08:52:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26862
+- author: Tyzemol
+  changes:
+  - message: Board game crate now comes with character sheets
+    type: Add
+  id: 6353
+  time: '2024-04-14T08:54:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26926
