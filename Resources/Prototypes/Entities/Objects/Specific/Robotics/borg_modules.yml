@@ -506,8 +506,8 @@
     - state: icon-syndicate
   - type: ItemBorgModule
     items:
-    - WeaponAdvancedLaser
-    - Machete
+    - WeaponPistolRinkhal
+    - EnergySword
 
 - type: entity
   id: BorgModuleOperative
