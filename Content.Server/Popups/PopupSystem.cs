@@ -126,5 +126,10 @@ namespace Content.Server.Popups
                 RaiseNetworkEvent(new PopupEntityEvent(message, type, GetNetEntity(uid)));
             }
         }
+
+        public override void PopupPredicted(string? recipientMessage, string? othersMessage, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            PopupPredicted(othersMessage, uid, recipient, type);
+        }
     }
 }

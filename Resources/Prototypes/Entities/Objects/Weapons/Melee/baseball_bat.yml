@@ -41,6 +41,21 @@
     - BaseballBat
 
 - type: entity
+  name: incomplete baseball bat
+  parent: BaseItem
+  id: IncompleteBaseBallBat
+  description: A few planks of wood stuck together.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/incomplete_bat.rsi
+    state: icon
+  - type: Item
+    size: Normal
+  - type: Construction
+    graph: WoodenBat
+    node: incompleteBat
+
+- type: entity
   name: knockback stick
   parent: BaseBallBat
   id: WeaponMeleeKnockbackStick

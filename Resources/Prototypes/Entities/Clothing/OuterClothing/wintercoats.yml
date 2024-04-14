@@ -32,7 +32,7 @@
     - ClothMade
     - WhitelistChameleon
   - type: StaticPrice
-    price: 70
+    price: 50
 
 - type: entity
   parent: ClothingOuterWinterCoat
