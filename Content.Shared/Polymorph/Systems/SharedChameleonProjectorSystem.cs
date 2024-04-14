@@ -88,7 +88,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
         if (TryComp(comp.SourceEntity, out src))
             return true;
 
-        if (!_proto.TryIndex<EntityPrototype>(comp.SourceProto, out var proto))
+        if (!_proto.TryIndex<EntityPrototype>(comp.SourceProto!, out var proto))
             return false;
 
         return proto.TryGetComponent(out src);
