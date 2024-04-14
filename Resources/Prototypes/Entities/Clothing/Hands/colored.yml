@@ -10,7 +10,7 @@
   description: Regular purple gloves that do not keep you from frying.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     layers:
     - state: icon
       color: "#9C0DE1"
@@ -23,7 +23,7 @@
       - state: inhand-right
         color: "#9C0DE1"
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     clothingVisuals:
       gloves:
       - state: equipped-HAND
@@ -39,7 +39,7 @@
   description: Regular red gloves that do not keep you from frying.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     layers:
     - state: icon
       color: "#940000"
@@ -52,7 +52,7 @@
       - state: inhand-right
         color: "#940000"
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     clothingVisuals:
       gloves:
       - state: equipped-HAND
@@ -68,7 +68,7 @@
   description: Regular blue gloves that do not keep you from frying.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     layers:
     - state: icon
       color: "#0089EF"
@@ -81,7 +81,7 @@
       - state: inhand-right
         color: "#0089EF"
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     clothingVisuals:
       gloves:
       - state: equipped-HAND
@@ -97,7 +97,7 @@
   description: Regular brown gloves that do not keep you from frying.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     layers:
     - state: icon
       color: "#723A02"
@@ -110,7 +110,7 @@
       - state: inhand-right
         color: "#723A02"
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     clothingVisuals:
       gloves:
       - state: equipped-HAND
@@ -126,7 +126,7 @@
   description: Regular grey gloves that do not keep you from frying.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     layers:
     - state: icon
       color: "#999999"
@@ -139,7 +139,7 @@
       - state: inhand-right
         color: "#999999"
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     clothingVisuals:
       gloves:
       - state: equipped-HAND
@@ -155,7 +155,7 @@
   description: Regular green gloves that do not keep you from frying.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     layers:
     - state: icon
       color: "#5ABF2F"
@@ -168,7 +168,7 @@
       - state: inhand-right
         color: "#5ABF2F"
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     clothingVisuals:
       gloves:
       - state: equipped-HAND
@@ -184,7 +184,7 @@
   description: Regular light brown gloves that do not keep you from frying.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     layers:
     - state: icon
       color: "#C09F72"
@@ -197,7 +197,7 @@
       - state: inhand-right
         color: "#C09F72"
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     clothingVisuals:
       gloves:
       - state: equipped-HAND
@@ -213,7 +213,7 @@
   description: Regular orange gloves that do not keep you from frying.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     layers:
     - state: icon
       color: "#EF8100"
@@ -226,7 +226,7 @@
       - state: inhand-right
         color: "#EF8100"
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     clothingVisuals:
       gloves:
       - state: equipped-HAND
@@ -242,7 +242,7 @@
   description: Regular white gloves that do not keep you from frying.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     layers:
     - state: icon
       color: "#EAE8E8"
@@ -255,7 +255,7 @@
       - state: inhand-right
         color: "#EAE8E8"
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/color.rsi
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
     clothingVisuals:
       gloves:
       - state: equipped-HAND

@@ -56,37 +56,6 @@
         color: "#b3b3b3"
       - state: trinkets-equipped-INNERCLOTHING
 
-# Grey Jumpskirt
-- type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformJumpskirtColorGreyPopbob
-  name: grey jumpskirt
-  description: A tasteful grey jumpskirt that reminds you of the good old days.
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/color.rsi
-    layers:
-    - state: icon
-      color: "#b3b3b3"
-    - state: trinkets-icon
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-        color: "#b3b3b3"
-      - state: trinkets-inhand-left
-      right:
-      - state: inhand-right
-        color: "#b3b3b3"
-      - state: trinkets-inhand-right
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/color.rsi
-    clothingVisuals:
-      jumpsuit:
-      - state: equipped-INNERCLOTHING
-        color: "#b3b3b3"
-      - state: trinkets-equipped-INNERCLOTHING
-
 # Black Jumpskirt
 - type: entity
   parent: ClothingUniformBase
@@ -462,7 +431,7 @@
 # Brown Jumpskirt
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpskirtColorBrownPopBob
+  id: ClothingUniformJumpskirtColorBrown
   name: brown jumpskirt
   description: A generic brown jumpskirt with no rank markings.
   components:

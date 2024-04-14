@@ -56,37 +56,6 @@
         color: "#b3b3b3"
       - state: trinkets-equipped-INNERCLOTHING
 
-# Grey Jumpsuit
-- type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitColorGreyPopbob
-  name: grey jumpsuit
-  description: A tasteful grey jumpsuit that reminds you of the good old days.
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color.rsi
-    layers:
-    - state: icon
-      color: "#b3b3b3"
-    - state: trinkets-icon
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-        color: "#b3b3b3"
-      - state: trinkets-inhand-left
-      right:
-      - state: inhand-right
-        color: "#b3b3b3"
-      - state: trinkets-inhand-right
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color.rsi
-    clothingVisuals:
-      jumpsuit:
-      - state: equipped-INNERCLOTHING
-        color: "#b3b3b3"
-      - state: trinkets-equipped-INNERCLOTHING
-
 # Black Jumpsuit
 - type: entity
   parent: ClothingUniformBase
@@ -462,7 +431,7 @@
 # Brown Jumpsuit
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitColorBrownPopBob
+  id: ClothingUniformJumpsuitColorBrown
   name: brown jumpsuit
   description: A generic brown jumpsuit with no rank markings.
   components:
