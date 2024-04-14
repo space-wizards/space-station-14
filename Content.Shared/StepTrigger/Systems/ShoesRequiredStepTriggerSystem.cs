@@ -25,21 +25,12 @@ public sealed class ShoesRequiredStepTriggerSystem : EntitySystem
             return;
         }
 
-        // if not, checks the inventory
-        if (!TryComp<InventoryComponent>(args.Tripper, out var inventory))
-            return;
-
-        // early exit if no shoe slot exists at all, dionas suffer
-        // remove to give dionas their freedom from glass
-        if (!_inventory.HasSlot(args.Tripper, "shoes", inventory))
-            return;
-
         // go through all equipped items, checks if item is equipped in shoe slot or has shoe immmune component
-        if (_inventory.TryGetContainerSlotEnumerator(args.Tripper, out var containerSlotEnumerator))
+        if (_inventory.TryGetContainerSlotEnumerator(args.Tripper, out var containerSlotEnumerator, SlotFlags.All & ~SlotFlags.POCKET))
         {
             while (containerSlotEnumerator.NextItem(out var item, out var slot))
             {
-                if (slot.Name == "shoes" || HasComp<ShoesRequiredStepTriggerImmuneComponent>(item))
+                if (HasComp<ShoesRequiredStepTriggerImmuneComponent>(item))
                 {
                     args.Cancelled = true;
                     return;
