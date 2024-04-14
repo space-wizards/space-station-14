@@ -7,7 +7,7 @@ namespace Content.Client.Polymorph.Systems;
 
 public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private EntityQuery<AppearanceComponent> _appearanceQuery;
 
