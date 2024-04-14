@@ -564,7 +564,7 @@
     - type: RandomMetadata
       nameSegments: [names_wizard]
     - type: RandomHumanoidSpawner
-      settings: WizardApprentice
+      settings: Wizard
 
 - type: entity
   parent: BaseMobHuman
