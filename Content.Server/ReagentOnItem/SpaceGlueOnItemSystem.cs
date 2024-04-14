@@ -14,6 +14,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Examine;
 
 namespace Content.Server.ReagentOnItem;
 
@@ -31,6 +32,7 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SpaceGlueOnItemComponent, GotEquippedHandEvent>(OnHandPickUp);
+        SubscribeLocalEvent<SpaceGlueOnItemComponent, ExaminedEvent>(OnExamine);
     }
 
     public override void Update(float frameTime)
@@ -84,5 +86,13 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
         glueComp.AmountOfReagentLeft--;
 
         return true;
+    }
+
+    private void OnExamine(EntityUid uid, SpaceGlueOnItemComponent comp, ExaminedEvent args)
+    {
+        if (args.IsInDetailsRange)
+        {
+            args.PushMarkup("[color=white]Looks very sticky...[/color]");
+        }
     }
 }

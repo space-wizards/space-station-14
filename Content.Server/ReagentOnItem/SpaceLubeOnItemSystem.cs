@@ -7,6 +7,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Examine;
+
 
 namespace Content.Server.ReagentOnItem;
 
@@ -21,14 +23,8 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<SpaceLubeOnItemComponent, ContainerGettingInsertedAttemptEvent>(OnHandPickUp);
-        SubscribeLocalEvent<SpaceLubeOnItemComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<SpaceLubeOnItemComponent, ExaminedEvent>(OnExamine);
 
-    }
-
-    private void OnInit(EntityUid uid, SpaceLubeOnItemComponent component, ComponentInit args)
-    {
-        Log.Log(LogLevel.Debug, "Here 3333");
-        Log.Log(LogLevel.Debug, component.AmountOfReagentLeft.ToString());
     }
 
     private void OnHandPickUp(EntityUid uid, SpaceLubeOnItemComponent component, ContainerGettingInsertedAttemptEvent args)
@@ -51,11 +47,20 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
         {
             component.AmountOfReagentLeft--;
         }
+
         args.Cancel();
         var user = args.Container.Owner;
         _transform.SetCoordinates(uid, Transform(user).Coordinates);
         _transform.AttachToGridOrMap(uid);
         _throwing.TryThrow(uid, _random.NextVector2(), strength: component.PowerOfThrowOnPickup);
         _popup.PopupEntity(Loc.GetString("lube-slip", ("target", Identity.Entity(uid, EntityManager))), user, user, PopupType.MediumCaution);
+    }
+
+    private void OnExamine(EntityUid uid, SpaceLubeOnItemComponent comp, ExaminedEvent args)
+    {
+        if (args.IsInDetailsRange)
+        {
+            args.PushMarkup("[color=lightgreen]Looks very slippery...[/color]");
+        }
     }
 }
