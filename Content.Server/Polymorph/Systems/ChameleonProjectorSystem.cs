@@ -84,7 +84,6 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
     private void OnToggleNoRot(Entity<ChameleonDisguiseComponent> ent, ref DisguiseToggleNoRotEvent args)
     {
         var xform = Transform(ent);
-        Log.Debug($"rot: {xform.LocalRotation}");
         xform.NoLocalRotation = !xform.NoLocalRotation;
     }
 
