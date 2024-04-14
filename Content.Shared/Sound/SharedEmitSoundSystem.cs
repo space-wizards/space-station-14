@@ -1,7 +1,10 @@
+using Content.Shared.Audio;
 using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
+using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Content.Shared.Sound.Components;
 using Content.Shared.Throwing;
@@ -44,6 +47,18 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         SubscribeLocalEvent<EmitSoundOnInteractUsingComponent, InteractUsingEvent>(OnEmitSoundOnInteractUsing);
 
         SubscribeLocalEvent<EmitSoundOnCollideComponent, StartCollideEvent>(OnEmitSoundOnCollide);
+
+        SubscribeLocalEvent<SoundWhileAliveComponent, MobStateChangedEvent>(OnMobState);
+    }
+
+    private void OnMobState(Entity<SoundWhileAliveComponent> entity, ref MobStateChangedEvent args)
+    {
+        // Disable this component rather than removing it because it can be brought back to life.
+        if (TryComp<SpamEmitSoundComponent>(entity, out var comp))
+        {
+            comp.Enabled = args.NewMobState == MobState.Alive;
+            Dirty(entity.Owner, comp);
+        }
     }
 
     private void OnEmitSpawnOnInit(EntityUid uid, EmitSoundOnSpawnComponent component, MapInitEvent args)
