@@ -1,86 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Health analyzers now show if somebody is starving.
-    type: Add
-  id: 5844
-  time: '2024-02-01T06:28:17.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24789
-- author: PixelTK
-  changes:
-  - message: The arachnid plushie now has a new sprite.
-    type: Tweak
-  id: 5845
-  time: '2024-02-01T06:36:43.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24747
-- author: lzk228
-  changes:
-  - message: Yellow oxygen tank was removed to standardise gas tank colourings.
-    type: Remove
-  id: 5846
-  time: '2024-02-01T06:53:33.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24374
-- author: koteq
-  changes:
-  - message: Fixed indicator near SSD players
-    type: Fix
-  id: 5847
-  time: '2024-02-01T08:30:07.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24589
-- author: TheShuEd
-  changes:
-  - message: Anomaly generator can now only be used by a scientist.
-    type: Tweak
-  id: 5848
-  time: '2024-02-01T08:45:24.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24464
-- author: PJB3005
-  changes:
-  - message: Removed starvation damage
-    type: Remove
-  id: 5849
-  time: '2024-02-01T09:01:52.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24790
-- author: SlamBamActionman
-  changes:
-  - message: The Visitor job can now be given to ID cards via the ID Card Console/Agent
-      IDs.
-    type: Add
-  id: 5850
-  time: '2024-02-01T10:13:44.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23972
-- author: Dygon
-  changes:
-  - message: When slipping on lube you now keep sliding until you reach a tile without
-      lube.
-    type: Tweak
-  id: 5851
-  time: '2024-02-01T10:39:10.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24801
-- author: FungiFellow
-  changes:
-  - message: Added Binary Key in RD's Locker
-    type: Add
-  - message: 50% off Binary Key
-    type: Tweak
-  id: 5852
-  time: '2024-02-01T10:42:12.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24778
-- author: Dygon
-  changes:
-  - message: Paraplegic entities have their legs healed when zombified.
-    type: Fix
-  id: 5853
-  time: '2024-02-01T11:06:05.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24169
-- author: PJB3005
-  changes:
-  - message: The AME can now single-handedly power the entire station until one of
-      our cool coders gets their shit together and fixes engineering.
-    type: Fix
-  id: 5854
-  time: '2024-02-01T11:06:52.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24806
 - author: Varen
   changes:
   - message: Cutting wires will now properly electrocute if enough power is available.
@@ -3828,3 +3746,96 @@
   id: 6343
   time: '2024-04-13T20:49:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26928
+- author: Tayrtahn
+  changes:
+  - message: Placing a player with no entry in the manifest into cryostorage no longer
+      removes the captain from the crew manifest.
+    type: Fix
+  id: 6344
+  time: '2024-04-14T02:19:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26927
+- author: superjj18
+  changes:
+  - message: Honkbot's basic AI has been restored and honks have returned to being
+      at random intervals!
+    type: Fix
+  id: 6345
+  time: '2024-04-14T02:51:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26939
+- author: GreaseMonk
+  changes:
+  - message: Added StopsWhenEntityDead property to audio components
+    type: Add
+  id: 6346
+  time: '2024-04-14T03:12:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26905
+- author: DrSmugleaf
+  changes:
+  - message: Fixed rocket launchers and laser guns looking like they have nothing
+      loaded.
+    type: Fix
+  id: 6347
+  time: '2024-04-14T03:17:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26933
+- author: Vermidia
+  changes:
+  - message: You can now see paper attached on crates. Color differs depending on
+      the paper used.
+    type: Add
+  - message: The labels on bodybags also have different colors depending on the paper
+      used.
+    type: Tweak
+  - message: Cargo Invoices are now blueish (to differentiate them from Cargo Bounties)
+    type: Tweak
+  id: 6348
+  time: '2024-04-14T03:39:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26834
+- author: Terraspark4941
+  changes:
+  - message: Autism pins have been added to maintenance loot!
+    type: Add
+  id: 6349
+  time: '2024-04-14T05:35:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25597
+- author: Flareguy
+  changes:
+  - message: Colored jumpsuits, shoes, and (most) colored gloves are now colorized
+      off of one set of greyscale sprites. They should now be more consistent & significantly
+      less ugly.
+    type: Tweak
+  id: 6350
+  time: '2024-04-14T08:41:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26943
+- author: BramvanZijp
+  changes:
+  - message: Nanotrasen's Small Arms Division has slightly improved the firerate and
+      drastically improved the accuracy on its WT550 SMGs.
+    type: Tweak
+  - message: The WT550 and C-20R SMGs can now fire in a 5 round burst-fire mode, making
+      it easier for their users to control the recoil on these weapons.
+    type: Add
+  id: 6351
+  time: '2024-04-14T08:51:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26886
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Holoparasites and holoclowns will now phase through projectiles such
+      as bullets, like a holocarp.
+    type: Tweak
+  id: 6352
+  time: '2024-04-14T08:52:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26862
+- author: Tyzemol
+  changes:
+  - message: Board game crate now comes with character sheets
+    type: Add
+  id: 6353
+  time: '2024-04-14T08:54:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26926
+- author: FairlySadPanda
+  changes:
+  - message: Clown shoes make you waddle, as God intended.
+    type: Add
+  id: 6354
+  time: '2024-04-14T12:12:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26338
