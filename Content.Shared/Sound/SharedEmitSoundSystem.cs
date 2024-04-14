@@ -31,7 +31,8 @@ public abstract class SharedEmitSoundSystem : EntitySystem
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private   readonly SharedAmbientSoundSystem _ambient = default!;
+    [Dependency] private   readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
     public override void Initialize()
@@ -59,6 +60,8 @@ public abstract class SharedEmitSoundSystem : EntitySystem
             comp.Enabled = args.NewMobState == MobState.Alive;
             Dirty(entity.Owner, comp);
         }
+
+        _ambient.SetAmbience(entity.Owner, args.NewMobState != MobState.Dead);
     }
 
     private void OnEmitSpawnOnInit(EntityUid uid, EmitSoundOnSpawnComponent component, MapInitEvent args)
