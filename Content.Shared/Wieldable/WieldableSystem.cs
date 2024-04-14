@@ -195,8 +195,9 @@ public sealed class WieldableSystem : EntitySystem
             && !_delay.TryResetDelay((used, useDelay), true))
             return false;
 
-        _popupSystem.PopupClient(Loc.GetString("wieldable-component-successful-wield", ("item", used)), user, user);
-        _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", user), ("item", used)), user, Filter.PvsExcept(user), true);
+        var selfMessage = Loc.GetString("wieldable-component-successful-wield", ("item", used));
+        var othersMessage = Loc.GetString("wieldable-component-successful-wield-other", ("user", user), ("item", used));
+        _popupSystem.PopupPredicted(selfMessage, othersMessage, user, user);
 
         var targEv = new ItemWieldedEvent();
         RaiseLocalEvent(used, ref targEv);
@@ -239,10 +240,9 @@ public sealed class WieldableSystem : EntitySystem
             if (component.UnwieldSound != null)
                 _audioSystem.PlayPredicted(component.UnwieldSound, uid, args.User);
 
-            _popupSystem.PopupClient(Loc.GetString("wieldable-component-failed-wield",
-                ("item", uid)), args.User.Value, args.User.Value);
-            _popupSystem.PopupEntity(Loc.GetString("wieldable-component-failed-wield-other",
-                ("user", args.User.Value), ("item", uid)), args.User.Value, Filter.PvsExcept(args.User.Value), true);
+            var selfMessage = Loc.GetString("wieldable-component-failed-wield", ("item", uid));
+            var othersMessage = Loc.GetString("wieldable-component-failed-wield-other", ("user", args.User.Value), ("item", uid));
+            _popupSystem.PopupPredicted(selfMessage, othersMessage, args.User.Value, args.User.Value);
         }
 
         _appearance.SetData(uid, WieldableVisuals.Wielded, false);
