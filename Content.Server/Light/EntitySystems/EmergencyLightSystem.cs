@@ -176,15 +176,18 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
             return;
 
         if (alerts.AlertLevels == null || !alerts.AlertLevels.Levels.TryGetValue(alerts.CurrentLevel, out var details))
+        {
+            TurnOff(uid, component, Color.Red); // if no alert, default to off red state
             return;
+        }
 
-        if (receiver.Powered && !component.ForciblyEnabled) // Green alert/empty battery 
+        if (receiver.Powered && !component.ForciblyEnabled) // Green alert
         {
             receiver.Load = (int) Math.Abs(component.Wattage);
             TurnOff(uid, component, details.Color);
             SetState(uid, component, EmergencyLightState.Charging);
         }
-        else if (!receiver.Powered)
+        else if (!receiver.Powered) // If internal battery runs out it will end in off red state
         {
             TurnOn(uid, component, Color.Red);
             SetState(uid, component, EmergencyLightState.On);
@@ -203,7 +206,9 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
         _ambient.SetAmbience(uid, false);
     }
 
-    // Turn off and set color
+    /// <summary>
+    ///     Turn off emergency light and set color.
+    /// </summary>
     private void TurnOff(EntityUid uid, EmergencyLightComponent component, Color color)
     {
         _pointLight.SetEnabled(uid, false);
@@ -220,7 +225,9 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
         _ambient.SetAmbience(uid, true);
     }
 
-    // Turn on and set color
+    /// <summary>
+    ///     Turn on emergency light and set color.
+    /// </summary>
     private void TurnOn(EntityUid uid, EmergencyLightComponent component, Color color)
     {
         _pointLight.SetEnabled(uid, true);
