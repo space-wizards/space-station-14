@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: The Visitor job can now be given to ID cards via the ID Card Console/Agent
-      IDs.
-    type: Add
-  id: 5850
-  time: '2024-02-01T10:13:44.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/23972
 - author: Dygon
   changes:
   - message: When slipping on lube you now keep sliding until you reach a tile without
@@ -3837,3 +3829,12 @@
   id: 6349
   time: '2024-04-14T05:35:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25597
+- author: Flareguy
+  changes:
+  - message: Colored jumpsuits, shoes, and (most) colored gloves are now colorized
+      off of one set of greyscale sprites. They should now be more consistent & significantly
+      less ugly.
+    type: Tweak
+  id: 6350
+  time: '2024-04-14T08:41:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26943
