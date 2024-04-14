@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Dygon
-  changes:
-  - message: When slipping on lube you now keep sliding until you reach a tile without
-      lube.
-    type: Tweak
-  id: 5851
-  time: '2024-02-01T10:39:10.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24801
 - author: FungiFellow
   changes:
   - message: Added Binary Key in RD's Locker
@@ -3838,3 +3830,14 @@
   id: 6350
   time: '2024-04-14T08:41:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26943
+- author: BramvanZijp
+  changes:
+  - message: Nanotrasen's Small Arms Division has slightly improved the firerate and
+      drastically improved the accuracy on its WT550 SMGs.
+    type: Tweak
+  - message: The WT550 and C-20R SMGs can now fire in a 5 round burst-fire mode, making
+      it easier for their users to control the recoil on these weapons.
+    type: Add
+  id: 6351
+  time: '2024-04-14T08:51:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26886
