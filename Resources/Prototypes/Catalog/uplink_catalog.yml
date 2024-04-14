@@ -1702,3 +1702,18 @@
     blacklist:
       tags:
       - NukeOpsUplink
+
+- type: listing
+  id: UplinkPieCannon
+  name: uplink-pie-cannon-name
+  description: uplink-pie-cannon-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Cannons/pie_cannon.rsi, state: piecannon }
+  productEntity: LauncherCreamPieRegenerating
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Clown
