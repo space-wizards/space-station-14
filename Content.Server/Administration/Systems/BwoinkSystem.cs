@@ -388,7 +388,7 @@ namespace Content.Server.Administration.Systems
             var authorized = personalChannel || senderAHelpAdmin;
             if (!authorized)
             {
-                // TODO: Unauthorized bwoink (log?)
+                // TODO: Unauthorized bwoink (log?). With timestamps to not let spam with unauthorize bwoinks
                 return;
             }
 
