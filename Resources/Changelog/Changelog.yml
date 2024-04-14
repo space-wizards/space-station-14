@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: koteq
-  changes:
-  - message: Fixed indicator near SSD players
-    type: Fix
-  id: 5847
-  time: '2024-02-01T08:30:07.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24589
 - author: TheShuEd
   changes:
   - message: Anomaly generator can now only be used by a scientist.
@@ -3830,3 +3823,11 @@
   id: 6346
   time: '2024-04-14T03:12:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26905
+- author: DrSmugleaf
+  changes:
+  - message: Fixed rocket launchers and laser guns looking like they have nothing
+      loaded.
+    type: Fix
+  id: 6347
+  time: '2024-04-14T03:17:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26933
