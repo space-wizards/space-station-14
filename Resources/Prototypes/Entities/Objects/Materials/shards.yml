@@ -91,7 +91,7 @@
   - type: DamageUserOnTrigger
     damage:
       types:
-        Piercing: 5
+        Piercing: 4.5
   - type: Tag
     tags:
       - GlassShard
@@ -127,7 +127,7 @@
   - type: DamageUserOnTrigger
     damage:
       types:
-        Piercing: 5
+        Piercing: 5.5
   - type: Tag
     tags:
       - ReinforcedGlassShard
@@ -163,7 +163,7 @@
   - type: DamageUserOnTrigger
     damage:
       types:
-        Piercing: 5
+        Piercing: 6.5
   - type: Tag
     tags:
       - PlasmaGlassShard
@@ -202,8 +202,8 @@
   - type: DamageUserOnTrigger
     damage:
       types:
-        Piercing: 3
-        Radiation: 2
+        Piercing: 5
+        Radiation: 2.5
   - type: Tag
     tags:
       - UraniumGlassShard
