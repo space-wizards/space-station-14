@@ -114,11 +114,16 @@
   description: Horrifying.
   components:
   - type: SpamEmitSound
+    minInterval: 2
+    maxInterval: 12
     sound:
       collection: BikeHorn
   - type: Sprite
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot
+  - type: HTN
+    rootTask:
+      task: HonkbotCompound
   - type: Slippery
     launchForwardsMultiplier: 2
   - type: Speech

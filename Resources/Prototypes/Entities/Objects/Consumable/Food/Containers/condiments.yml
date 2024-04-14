@@ -522,7 +522,7 @@
 # Shakers
 
 - type: entity
-  parent: BaseFoodCondimentBottle
+  parent: BaseFoodCondiment
   id: BaseFoodShaker
   abstract: true
   name: empty shaker
@@ -560,6 +560,8 @@
         acts: [ "Destruction" ]
   - type: Sprite
     state: shaker-empty
+  - type: RefillableSolution
+    solution: food
 
 - type: entity
   parent: BaseFoodShaker
