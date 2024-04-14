@@ -745,7 +745,7 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync(cancel);
         }
 
-        public virtual async Task<int> AddNewRound(Server server, params Guid[] playerIds)
+        public async Task<int> AddNewRound(Server server, params Guid[] playerIds)
         {
             await using var db = await GetDb();
 

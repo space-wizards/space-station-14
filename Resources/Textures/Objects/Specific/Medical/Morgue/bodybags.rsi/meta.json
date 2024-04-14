@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/39659000f380583c35fb814ee2fadab24c2f8076",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/39659000f380583c35fb814ee2fadab24c2f8076, additional label sprites by Vermidia",
   "size": {
     "x": 32,
     "y": 32
@@ -14,10 +14,19 @@
       "name": "bag_folded"
     },
     {
-      "name": "label_overlay"
+      "name": "paper"
     },
     {
       "name": "open_overlay"
+    },
+    {
+      "name": "bounty"
+    },
+    {
+      "name": "captains_paper"
+    },
+    {
+      "name": "invoice"
     }
   ]
 }
