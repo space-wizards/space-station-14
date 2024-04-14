@@ -19,7 +19,7 @@
         - state: inhand-left
           color: "#3f3f3f"
         - state: trinkets-inhand-left
-          right:
+        right:
         - state: inhand-right
           color: "#3f3f3f"
         - state: trinkets-inhand-right

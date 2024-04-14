@@ -121,7 +121,7 @@
 # Grey Gloves
 - type: entity
   parent: ClothingHandsGlovesSyntheticBase
-  id: ClothingHandsGlovesColorGrey
+  id: ClothingHandsGlovesColorGray
   name: grey gloves
   description: Regular grey gloves that do not keep you from frying.
   components:
