@@ -1,23 +1,25 @@
 ﻿using System.Numerics;
 
-namespace Content.Shared.Clown;
+namespace Content.Shared.Movement.Components;
 
 /// <summary>
 /// Declares that an entity has started to waddle like a duck/clown.
 /// </summary>
-/// <param name="entity">The newly be-waddled.</param>
-public struct StartedWaddlingEvent(EntityUid entity)
+/// <param name="Entity">The newly be-waddled.</param>
+[ByRefEvent]
+public record struct StartedWaddlingEvent(EntityUid Entity)
 {
-    public EntityUid Entity = entity;
+    public EntityUid Entity = Entity;
 }
 
 /// <summary>
 /// Declares that an entity has stopped waddling like a duck/clown.
 /// </summary>
-/// <param name="entity">The former waddle-er.</param>
-public struct StoppedWaddlingEvent(EntityUid entity)
+/// <param name="Entity">The former waddle-er.</param>
+[ByRefEvent]
+public record struct StoppedWaddlingEvent(EntityUid Entity)
 {
-    public EntityUid Entity = entity;
+    public EntityUid Entity = Entity;
 }
 
 /// <summary>
@@ -50,7 +52,13 @@ public sealed partial class WaddleAnimationComponent : Component
     /// How long should a complete step take? Less time = more chaos.
     /// </summary>
     [DataField]
-    public float AnimationLength = 0.75f;
+    public float AnimationLength = 0.66f;
+
+    /// <summary>
+    /// How much shorter should the animation be when running?
+    /// </summary>
+    [DataField]
+    public float RunAnimationLengthMultiplier = 0.568f;
 
     /// <summary>
     /// Stores which step we made last, so if someone cancels out of the animation mid-step then restarts it looks more natural.

@@ -1,15 +1,13 @@
 ﻿using System.Numerics;
 using Content.Client.Gravity;
-using Content.Shared.Clown;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using Content.Shared.Movement.Systems;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Clown;
+namespace Content.Client.Movement.Systems;
 
 public sealed class WaddleAnimationSystem : EntitySystem
 {
@@ -34,21 +32,26 @@ public sealed class WaddleAnimationSystem : EntitySystem
             return;
         }
 
-        if (args.Component.HeldMoveButtons == MoveButtons.None && component.IsCurrentlyWaddling)
+        if (!args.HasDirectionalMovement && component.IsCurrentlyWaddling)
         {
             component.IsCurrentlyWaddling = false;
 
-            RaiseLocalEvent(entity, new StoppedWaddlingEvent(entity));
+            var stopped = new StoppedWaddlingEvent(entity);
+
+            RaiseLocalEvent(entity, ref stopped);
 
             return;
         }
 
-        if (component.IsCurrentlyWaddling)
+        // Only start waddling if we're not currently AND we're actually moving.
+        if (component.IsCurrentlyWaddling || !args.HasDirectionalMovement)
             return;
 
         component.IsCurrentlyWaddling = true;
 
-        RaiseLocalEvent(entity, new StartedWaddlingEvent(entity));
+        var started = new StartedWaddlingEvent(entity);
+
+        RaiseLocalEvent(entity, ref started);
     }
 
     private void OnStartedWalking(EntityUid uid, WaddleAnimationComponent component, StartedWaddlingEvent args)
@@ -69,7 +72,7 @@ public sealed class WaddleAnimationSystem : EntitySystem
         }
 
         var tumbleIntensity = component.LastStep ? 360 - component.TumbleIntensity : component.TumbleIntensity;
-        var len = mover.Sprinting ? component.AnimationLength / 2 : component.AnimationLength;
+        var len = mover.Sprinting ? component.AnimationLength * component.RunAnimationLengthMultiplier : component.AnimationLength;
 
         component.LastStep = !component.LastStep;
         component.IsCurrentlyWaddling = true;
@@ -125,6 +128,8 @@ public sealed class WaddleAnimationSystem : EntitySystem
 
     private void OnAnimationCompleted(EntityUid uid, WaddleAnimationComponent component, AnimationCompletedEvent args)
     {
-        RaiseLocalEvent(uid, new StartedWaddlingEvent(uid));
+        var started = new StartedWaddlingEvent(uid);
+
+        RaiseLocalEvent(uid, ref started);
     }
 }

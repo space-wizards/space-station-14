@@ -1,12 +1,12 @@
 ﻿using System.Numerics;
 
-namespace Content.Shared.Clothing.Components.Clown;
+namespace Content.Shared.Clothing.Components;
 
 /// <summary>
 /// Defines something as causing waddling when worn.
 /// </summary>
 [RegisterComponent]
-public sealed partial class WaddleComponent : Component
+public sealed partial class WaddleWhenWornComponent : Component
 {
     ///<summary>
     /// How high should they hop during the waddle? Higher hop = more energy.
@@ -25,5 +25,11 @@ public sealed partial class WaddleComponent : Component
     /// How long should a complete step take? Less time = more chaos.
     /// </summary>
     [DataField]
-    public float AnimationLength = 0.75f;
+    public float AnimationLength = 0.66f;
+
+    /// <summary>
+    /// How much shorter should the animation be when running?
+    /// </summary>
+    [DataField]
+    public float RunAnimationLengthMultiplier = 0.568f;
 }
