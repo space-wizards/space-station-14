@@ -1472,6 +1472,24 @@
   conditions:
     - !type:TileNotBlocked
 
+- type: construction
+  name: strobe light
+  id: LightStrobeFixture
+  graph: LightFixture
+  startNode: start
+  targetNode: strobeLight
+  category: construction-category-structures
+  description: A wall light fixture. Use light bulbs.
+  icon:
+    sprite: Structures/Wallmounts/Lighting/strobe_light.rsi
+    state: base
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
 #conveyor
 - type: construction
   name: conveyor belt
