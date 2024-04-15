@@ -138,10 +138,6 @@
     locked: false
   - type: ItemCabinet
     opened: true
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: glass-up
-    closedState: glass
 
 - type: entity
   id: GlassBoxLaserFilled
@@ -153,15 +149,8 @@
       startingItem: WeaponAntiqueLaser
       ejectOnInteract: true
       whitelist:
-        components:
-        - BatterySelfRecharger
-        - HitscanBatteryAmmoProvider
         tags:
-        - HighRiskItem
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: glass-up
-    closedState: glass
+        - WeaponAntiqueLaser
 
 - type: entity
   id: GlassBoxLaserFilledOpen
@@ -172,10 +161,6 @@
     locked: false
   - type: ItemCabinet
     opened: true
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: glass-up
-    closedState: glass
 
 - type: entity
   id: GlassBoxFrame
