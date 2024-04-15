@@ -1,4 +1,4 @@
-﻿# Utility effects permanently modify the entity in some way when triggered, and they generally make it 'useful' for some purpose,
+# Utility effects permanently modify the entity in some way when triggered, and they generally make it 'useful' for some purpose,
 # like turning the artifact into a tool, or gun, or whatever.
 - type: artifactEffect
   id: EffectIntercom
@@ -106,7 +106,6 @@
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: Drink
-    isOpen: true
     solution: beaker
 
 - type: artifactEffect
@@ -198,10 +197,8 @@
     allowMovement: true
     allowSpeech: true
     makeSentient: true
-    name: sentient artifact
-    description: |
-      Enact your eldritch whims.
-      Forcibly activate your nodes for good or for evil.
+    name: ghost-role-information-artifact-name
+    description: ghost-role-information-artifact-description
   - type: GhostTakeoverAvailable
   - type: MovementSpeedModifier
     baseWalkSpeed: 0.25

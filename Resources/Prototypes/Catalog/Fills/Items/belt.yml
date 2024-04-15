@@ -63,8 +63,8 @@
     contents:
       - id: Soap #Make a soap group and pick between when i'm not lazy
       - id: SprayBottleSpaceCleaner
-      #- name: GrenadeChem
-      #- name: GrenadeChem
+      - id: CleanerGrenade
+        amount: 2
       - id: FlashlightLantern
 
 - type: entity
@@ -174,7 +174,6 @@
     contents:
         - id: WeaponRevolverInspector
         - id: SpeedLoaderMagnum
-        - id: SpeedLoaderMagnumRubber
 
 - type: entity
   id: ClothingBeltChefFilled

@@ -183,6 +183,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("uuid")
                         .HasColumnName("deleted_by_id");
 
+                    b.Property<bool>("Dismissed")
+                        .HasColumnType("boolean")
+                        .HasColumnName("dismissed");
+
                     b.Property<DateTime?>("ExpirationTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("expiration_time");
@@ -232,7 +236,10 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasIndex("RoundId")
                         .HasDatabaseName("IX_admin_messages_round_id");
 
-                    b.ToTable("admin_messages", (string)null);
+                    b.ToTable("admin_messages", null, t =>
+                        {
+                            t.HasCheckConstraint("NotDismissedAndSeen", "NOT dismissed OR seen");
+                        });
                 });
 
             modelBuilder.Entity("Content.Server.Database.AdminNote", b =>
@@ -838,10 +845,8 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("integer")
                         .HasColumnName("server_id");
 
-                    b.Property<DateTime>("StartDate")
-                        .ValueGeneratedOnAdd()
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
                         .HasColumnName("start_date");
 
                     b.HasKey("Id")

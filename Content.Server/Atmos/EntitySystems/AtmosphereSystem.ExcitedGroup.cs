@@ -1,5 +1,7 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -64,19 +66,22 @@ namespace Content.Server.Atmos.EntitySystems
             excitedGroup.DismantleCooldown = 0;
         }
 
-        private void ExcitedGroupSelfBreakdown(GridAtmosphereComponent gridAtmosphere, ExcitedGroup excitedGroup)
+        private void ExcitedGroupSelfBreakdown(
+            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            ExcitedGroup excitedGroup)
         {
             DebugTools.Assert(!excitedGroup.Disposed, "Excited group is disposed!");
-            DebugTools.Assert(gridAtmosphere.ExcitedGroups.Contains(excitedGroup), "Grid Atmosphere does not contain Excited Group!");
+            DebugTools.Assert(ent.Comp1.ExcitedGroups.Contains(excitedGroup), "Grid Atmosphere does not contain Excited Group!");
             var combined = new GasMixture(Atmospherics.CellVolume);
 
             var tileSize = excitedGroup.Tiles.Count;
 
-            if (excitedGroup.Disposed) return;
+            if (excitedGroup.Disposed)
+                return;
 
             if (tileSize == 0)
             {
-                ExcitedGroupDispose(gridAtmosphere, excitedGroup);
+                ExcitedGroupDispose(ent.Comp1, excitedGroup);
                 return;
             }
 
@@ -98,29 +103,33 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var tile in excitedGroup.Tiles)
             {
-                if (tile?.Air == null) continue;
+                if (tile?.Air == null)
+                    continue;
+
                 tile.Air.CopyFromMutable(combined);
-                InvalidateVisuals(tile.GridIndex, tile.GridIndices);
+                InvalidateVisuals(ent, tile);
             }
 
             excitedGroup.BreakdownCooldown = 0;
         }
 
-        private void ExcitedGroupDismantle(GridAtmosphereComponent gridAtmosphere, ExcitedGroup excitedGroup, bool unexcite = true)
+        /// <summary>
+        /// This de-activates and removes all tiles in an excited group.
+        /// </summary>
+        private void DeactivateGroupTiles(GridAtmosphereComponent gridAtmosphere, ExcitedGroup excitedGroup)
         {
             foreach (var tile in excitedGroup.Tiles)
             {
                 tile.ExcitedGroup = null;
-
-                if (!unexcite)
-                    continue;
-
                 RemoveActiveTile(gridAtmosphere, tile);
             }
 
             excitedGroup.Tiles.Clear();
         }
 
+        /// <summary>
+        /// This removes an excited group without de-activating its tiles.
+        /// </summary>
         private void ExcitedGroupDispose(GridAtmosphereComponent gridAtmosphere, ExcitedGroup excitedGroup)
         {
             if (excitedGroup.Disposed)
@@ -129,9 +138,14 @@ namespace Content.Server.Atmos.EntitySystems
             DebugTools.Assert(gridAtmosphere.ExcitedGroups.Contains(excitedGroup), "Grid Atmosphere does not contain Excited Group!");
 
             excitedGroup.Disposed = true;
-
             gridAtmosphere.ExcitedGroups.Remove(excitedGroup);
-            ExcitedGroupDismantle(gridAtmosphere, excitedGroup, false);
+
+            foreach (var tile in excitedGroup.Tiles)
+            {
+                tile.ExcitedGroup = null;
+            }
+
+            excitedGroup.Tiles.Clear();
         }
     }
 }

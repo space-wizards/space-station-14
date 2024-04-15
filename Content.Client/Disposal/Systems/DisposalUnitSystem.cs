@@ -22,6 +22,9 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     private const string AnimationKey = "disposal_unit_animation";
 
+    private const string DefaultFlushState = "disposal-flush";
+    private const string DefaultChargeState = "disposal-charging";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -93,20 +96,24 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     private void UpdateState(EntityUid uid, SharedDisposalUnitComponent unit, SpriteComponent sprite, AppearanceComponent appearance)
     {
         if (!_appearanceSystem.TryGetData<VisualState>(uid, Visuals.VisualState, out var state, appearance))
-        {
             return;
-        }
 
         sprite.LayerSetVisible(DisposalUnitVisualLayers.Unanchored, state == VisualState.UnAnchored);
         sprite.LayerSetVisible(DisposalUnitVisualLayers.Base, state == VisualState.Anchored);
-        sprite.LayerSetVisible(DisposalUnitVisualLayers.BaseFlush, state is VisualState.Flushing or VisualState.Charging);
+        sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayFlush, state is VisualState.OverlayFlushing or VisualState.OverlayCharging);
+
+        var chargingState = sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseCharging, out var chargingLayer)
+            ? sprite.LayerGetState(chargingLayer)
+            : new RSI.StateId(DefaultChargeState);
 
         // This is a transient state so not too worried about replaying in range.
-        if (state == VisualState.Flushing)
+        if (state == VisualState.OverlayFlushing)
         {
             if (!_animationSystem.HasRunningAnimation(uid, AnimationKey))
             {
-                var flushState = new RSI.StateId("disposal-flush");
+                var flushState = sprite.LayerMapTryGet(DisposalUnitVisualLayers.OverlayFlush, out var flushLayer)
+                    ? sprite.LayerGetState(flushLayer)
+                    : new RSI.StateId(DefaultFlushState);
 
                 // Setup the flush animation to play
                 var anim = new Animation
@@ -116,7 +123,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                     {
                         new AnimationTrackSpriteFlick
                         {
-                            LayerKey = DisposalUnitVisualLayers.BaseFlush,
+                            LayerKey = DisposalUnitVisualLayers.OverlayFlush,
                             KeyFrames =
                             {
                                 // Play the flush animation
@@ -124,7 +131,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                                 // Return to base state (though, depending on how the unit is
                                 // configured we might get an appearance change event telling
                                 // us to go to charging state)
-                                new AnimationTrackSpriteFlick.KeyFrame("disposal-charging", (float) unit.FlushDelay.TotalSeconds)
+                                new AnimationTrackSpriteFlick.KeyFrame(chargingState, (float) unit.FlushDelay.TotalSeconds)
                             }
                         },
                     }
@@ -145,26 +152,18 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                 _animationSystem.Play(uid, anim, AnimationKey);
             }
         }
-        else if (state == VisualState.Charging)
-        {
-            sprite.LayerSetState(DisposalUnitVisualLayers.BaseFlush, new RSI.StateId("disposal-charging"));
-        }
+        else if (state == VisualState.OverlayCharging)
+            sprite.LayerSetState(DisposalUnitVisualLayers.OverlayFlush, new RSI.StateId("disposal-charging"));
         else
-        {
             _animationSystem.Stop(uid, AnimationKey);
-        }
 
         if (!_appearanceSystem.TryGetData<HandleState>(uid, Visuals.Handle, out var handleState, appearance))
-        {
             handleState = HandleState.Normal;
-        }
 
         sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayEngaged, handleState != HandleState.Normal);
 
         if (!_appearanceSystem.TryGetData<LightStates>(uid, Visuals.Light, out var lightState, appearance))
-        {
             lightState = LightStates.Off;
-        }
 
         sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayCharging,
                 (lightState & LightStates.Charging) != 0);
@@ -180,7 +179,7 @@ public enum DisposalUnitVisualLayers : byte
     Unanchored,
     Base,
     BaseCharging,
-    BaseFlush,
+    OverlayFlush,
     OverlayCharging,
     OverlayReady,
     OverlayFull,

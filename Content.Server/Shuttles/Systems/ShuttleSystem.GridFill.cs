@@ -71,7 +71,7 @@ public sealed partial class ShuttleSystem
         {
             if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
             {
-                TryFTLProximity(ent[0], shuttle, targetGrid.Value);
+                TryFTLProximity(ent[0], targetGrid.Value);
             }
 
             _station.AddGridToStation(uid, ent[0]);
@@ -127,7 +127,7 @@ public sealed partial class ShuttleSystem
                 {
                     if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
                     {
-                        TryFTLProximity(ent[0], shuttle, targetGrid.Value);
+                        TryFTLProximity(ent[0], targetGrid.Value);
                     }
                     else
                     {
@@ -206,7 +206,7 @@ public sealed partial class ShuttleSystem
 
                 if (config != null)
                 {
-                    FTLDock(config, shuttleXform);
+                    FTLDock((ent[0], shuttleXform), config);
 
                     if (TryComp<StationMemberComponent>(xform.GridUid, out var stationMember))
                     {

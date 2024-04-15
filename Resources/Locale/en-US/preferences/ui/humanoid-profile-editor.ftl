@@ -31,6 +31,7 @@ humanoid-profile-editor-preference-jumpskirt = Jumpskirt
 humanoid-profile-editor-preference-backpack = Backpack
 humanoid-profile-editor-preference-satchel = Satchel
 humanoid-profile-editor-preference-duffelbag = Duffelbag
+humanoid-profile-editor-guidebook-button-tooltip = Click for more info
 
 # Spawn priority
 humanoid-profile-editor-preference-spawn-priority-none = None

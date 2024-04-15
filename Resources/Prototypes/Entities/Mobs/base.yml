@@ -116,6 +116,8 @@
   - type: CombatMode
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+      collection: MetalThud
     damage:
       groups:
         Brute: 5

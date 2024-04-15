@@ -166,6 +166,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("deleted_by_id");
 
+                    b.Property<bool>("Dismissed")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("dismissed");
+
                     b.Property<DateTime?>("ExpirationTime")
                         .HasColumnType("TEXT")
                         .HasColumnName("expiration_time");
@@ -215,7 +219,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasIndex("RoundId")
                         .HasDatabaseName("IX_admin_messages_round_id");
 
-                    b.ToTable("admin_messages", (string)null);
+                    b.ToTable("admin_messages", null, t =>
+                        {
+                            t.HasCheckConstraint("NotDismissedAndSeen", "NOT dismissed OR seen");
+                        });
                 });
 
             modelBuilder.Entity("Content.Server.Database.AdminNote", b =>
@@ -789,10 +796,8 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("server_id");
 
-                    b.Property<DateTime>("StartDate")
-                        .ValueGeneratedOnAdd()
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("TEXT")
-                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
                         .HasColumnName("start_date");
 
                     b.HasKey("Id")

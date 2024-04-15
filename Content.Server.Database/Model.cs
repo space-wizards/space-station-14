@@ -118,10 +118,6 @@ namespace Content.Server.Database
             modelBuilder.Entity<Round>()
                 .HasIndex(round => round.StartDate);
 
-            modelBuilder.Entity<Round>()
-                .Property(round => round.StartDate)
-                .HasDefaultValue(default(DateTime));
-
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasKey(logPlayer => new {logPlayer.RoundId, logPlayer.LogId, logPlayer.PlayerUserId});
 
@@ -267,6 +263,11 @@ namespace Content.Server.Database
                 .HasForeignKey(note => note.DeletedById)
                 .HasPrincipalKey(author => author.UserId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            // A message cannot be "dismissed" without also being "seen".
+            modelBuilder.Entity<AdminMessage>().ToTable(t =>
+                t.HasCheckConstraint("NotDismissedAndSeen",
+                    "NOT dismissed OR seen"));
 
             modelBuilder.Entity<ServerBan>()
                 .HasOne(ban => ban.CreatedBy)
@@ -489,7 +490,7 @@ namespace Content.Server.Database
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         public List<Player> Players { get; set; } = default!;
 
@@ -969,6 +970,15 @@ namespace Content.Server.Database
         [ForeignKey("DeletedBy")] public Guid? DeletedById { get; set; }
         public Player? DeletedBy { get; set; }
         public DateTime? DeletedAt { get; set; }
+
+        /// <summary>
+        /// Whether the message has been seen at least once by the player.
+        /// </summary>
         public bool Seen { get; set; }
+
+        /// <summary>
+        /// Whether the message has been dismissed permanently by the player.
+        /// </summary>
+        public bool Dismissed { get; set; }
     }
 }

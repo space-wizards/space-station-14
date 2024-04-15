@@ -5,70 +5,10 @@
   components:
   - type: StorageFill
     contents:
-      - id: BookRandom
-        prob: 0.4
-        amount: 1
-        maxAmount: 4
-      - id: BookNarsieLegend
-        prob: 0.1
-      - id: BookTruth
-        prob: 0.1
-      - id: BookWorld
-        prob: 0.1
-      - id: BookIanAntarctica
-        prob: 0.1
-      - id: BookSlothClownSSS
-        prob: 0.1
-      - id: BookSlothClownPranks
-        prob: 0.1
-      - id: BookSlothClownMMD
-        prob: 0.1
-      - id: BookStruck
-        prob: 0.1
-      - id: BookSun
-        prob: 0.1
-      - id: BookPossum
-        prob: 0.1
-      - id: BookCafe
-        prob: 0.1
-      - id: BookFeather
-        prob: 0.1
-      - id: BookIanLostWolfPup
-        prob: 0.1
-      - id: BookIanRanch
-        prob: 0.1
-      - id: BookIanOcean
-        prob: 0.1
-      - id: BookIanMountain
-        prob: 0.1
-      - id: BookIanCity
-        prob: 0.1
-      - id: BookIanArctic
-        prob: 0.1
-      - id: BookIanDesert
-        prob: 0.1
-      - id: BookNames
-        prob: 0.1
-      - id: BookEarth
-        prob: 0.1
-      - id: BookAurora
-        prob: 0.1
-      - id: BookTemple
-        prob: 0.1
-      - id: BookWatched
-        prob: 0.1
-      - id: BookMedicalOfficer
-        prob: 0.1
-      - id: BookMorgue
-        prob: 0.1
-      - id: BookRufus
-        prob: 0.1
-      - id: BookMap
-        prob: 0.1
-      - id: BookJourney
-        prob: 0.1
-      - id: BookInspiration
-        prob: 0.1
+      - id: BookRandomStory
+        prob: 0.6
+        amount: 2
+        maxAmount: 6
       - id: BookSpaceEncyclopedia
         orGroup: BookPool
       - id: BookTheBookOfControl
@@ -95,3 +35,93 @@
         orGroup: BookPool
       - id: BookChemicalCompendium
         orGroup: BookPool
+      - id: BookNarsieLegend
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookTruth
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookWorld
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookIanAntarctica
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookSlothClownSSS
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookSlothClownPranks
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookSlothClownMMD
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookStruck
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookSun
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookPossum
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookCafe
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookFeather
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookIanLostWolfPup
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookIanRanch
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookIanOcean
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookIanMountain
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookIanCity
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookIanArctic
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookIanDesert
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookNames
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookEarth
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookAurora
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookTemple
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookWatched
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookMedicalOfficer
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookMorgue
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookRufus
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookMap
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookJourney
+        prob: 0.1
+        orGroup: BookAuthor
+      - id: BookInspiration
+        prob: 0.1
+        orGroup: BookAuthor

@@ -29,10 +29,6 @@ entities:
       name: Syndicate Outpost
     - type: Transform
       parent: 1295
-    - type: FTLDestination
-      whitelist:
-        tags:
-        - Syndicate
     - type: MapGrid
       chunks:
         -1,-1:
@@ -1636,6 +1632,10 @@ entities:
     - type: MetaData
     - type: Transform
     - type: Map
+    - type: FTLDestination
+      whitelist:
+        tags:
+        - Syndicate
     - type: PhysicsMap
     - type: Broadphase
     - type: OccluderTree
