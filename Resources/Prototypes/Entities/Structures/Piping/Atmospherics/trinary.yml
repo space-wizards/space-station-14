@@ -64,9 +64,6 @@
     - type: Construction
       graph: GasTrinary
       node: filter
-      conditions:
-        - !type:TileNotBlocked
-        - !type:NoUnstackableInTile
     - type: AmbientSound
       enabled: false
       volume: -9

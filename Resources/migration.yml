@@ -275,3 +275,7 @@ ClothingOuterArmorScaf: ClothingOuterArmorBasic
 ClothingNeckFlowerWreath: ClothingHeadHatFlowerWreath
 ClothingHeadHatFlowerCrown: ClothingHeadHatFlowerWreath
 BriefcaseSyndieBase: null
+
+# 2024-04-08
+BodyBag_Container: BodyBag
+BodyBag_Folded: BodyBagFolded
