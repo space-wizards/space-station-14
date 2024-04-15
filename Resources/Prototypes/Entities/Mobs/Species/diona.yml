@@ -46,7 +46,7 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaled: true
+        scaleByQuantity: true
         damage:
           types:
             Blunt: 2
@@ -61,7 +61,7 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaled: true
+        scaleByQuantity: true
         damage:
           types:
             Poison: 5

@@ -94,6 +94,12 @@ namespace Content.Shared.Popups
         /// will do nothing and the server will show the message to every player in PVS range.
         /// </summary>
         public abstract void PopupPredicted(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small);
+
+        /// <summary>
+        /// Variant of <see cref="PopupPredicted(string?, EntityUid, EntityUid?, PopupType)"/> that displays <paramref name="recipientMessage"/>
+        /// to the recipient and <paramref name="othersMessage"/> to everyone else in PVS range.
+        /// </summary>
+        public abstract void PopupPredicted(string? recipientMessage, string? othersMessage, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small);
     }
 
     /// <summary>

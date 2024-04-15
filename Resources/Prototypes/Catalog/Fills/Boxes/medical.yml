@@ -89,27 +89,6 @@
       - state: nitrile
 
 - type: entity
-  name: sterile swab box
-  parent: BoxCardboard
-  id: BoxMouthSwab
-  components:
-  - type: Storage
-    grid:
-    - 0,0,4,3
-  - type: StorageFill
-    contents:
-      - id: DiseaseSwab
-        amount: 10
-  - type: Sprite
-    layers:
-      - state: box
-      - state: swab
-  - type: GuideHelp
-    guides:
-  # - Virology (when it's back)
-    - Botany
-
-- type: entity
   name: body bag box
   parent: BoxCardboard
   id: BoxBodyBag
