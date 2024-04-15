@@ -22,7 +22,7 @@ public sealed partial class BurnBodyBehavior : IThresholdBehavior
 
         foreach (var item in inventorySystem.GetHandOrInventoryEntities(bodyId))
         {
-            transformSystem.AttachToGridOrMap(item);
+            transformSystem.DropNextTo(item, bodyId);
         }
 
         sharedPopupSystem.PopupCoordinates(Loc.GetString("bodyburn-text-others", ("name", bodyId)), transformSystem.GetMoverCoordinates(bodyId), PopupType.LargeCaution);
