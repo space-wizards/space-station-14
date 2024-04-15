@@ -13,6 +13,7 @@ public sealed class ActionGunSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ActionGunComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ActionGunComponent, ComponentShutdown(OnShutdown);
         SubscribeLocalEvent<ActionGunComponent, ActionGunShootEvent>(OnShoot);
     }
 
@@ -23,6 +24,12 @@ public sealed class ActionGunSystem : EntitySystem
 
         _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action);
         ent.Comp.Gun = Spawn(ent.Comp.GunProto);
+    }
+
+    private void OnShutdown(Entity<ActionGunComponent> ent, ref ComponentShutdown args)
+    {
+        if (ent.Comp.Gun is {} gun)
+            QueueDel(gun);
     }
 
     private void OnShoot(Entity<ActionGunComponent> ent, ref ActionGunShootEvent args)
