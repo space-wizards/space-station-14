@@ -11,10 +11,7 @@ using Content.Shared.Movement.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Timing;
 using System.Numerics;
-using Content.Shared.Inventory;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Popups;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Body.Systems;
 
