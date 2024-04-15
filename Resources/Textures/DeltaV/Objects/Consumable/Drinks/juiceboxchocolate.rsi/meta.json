@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from from tgstation at https://github.com/tgstation/tgstation/commit/cbb527fcec6fb1a79dce98f7e8b093307a63980e and modified by Floofers",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon_open"
+    }
+  ]
+}

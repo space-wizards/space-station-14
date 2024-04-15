@@ -39,6 +39,7 @@
     DrinkWineBottleFull: 5
     DrinkChampagneBottleFull: 2 #because the premium drink
     DrinkSakeBottleFull: 3
+    DrinkSojuBottleFull: 3 #Nyano
     DrinkBeerCan: 5
     DrinkWineCan: 5
   emaggedInventory:

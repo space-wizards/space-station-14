@@ -1,7 +1,7 @@
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkGlass
   id: DrinkGunmetalGlass
-  name: gunmetal glass
+  suffix: gunmetal
   description: A cloudy mix of rum, cream, and... is that welding fuel? Probably tasty.
   components:
   - type: SolutionContainerManager
@@ -11,13 +11,14 @@
         reagents:
         - ReagentId: Gunmetal
           Quantity: 30
-  - type: Sprite
+  - type: Icon
     sprite: DeltaV/Objects/Consumable/Drinks/gunmetal.rsi
+    state: icon
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkGlass
   id: DrinkLemonDropGlass
-  name: lemon drop
+  suffix: lemon drop
   description: A martini glass filled with a translucent mix of refreshing lemony goodness.
   components:
   - type: SolutionContainerManager
@@ -27,13 +28,14 @@
         reagents:
         - ReagentId: LemonDrop
           Quantity: 30
-  - type: Sprite
+  - type: Icon
     sprite: DeltaV/Objects/Consumable/Drinks/lemondrop.rsi
+    state: icon
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkGlass
   id: DrinkGreenGrassGlass
-  name: green grass
+  suffix: green grass
   description: An odd green cocktail, topped with oranges, ice, and a plastic straw. Curious.
   components:
   - type: SolutionContainerManager
@@ -43,13 +45,14 @@
         reagents:
         - ReagentId: GreenGrass
           Quantity: 30
-  - type: Sprite
+  - type: Icon
     sprite: DeltaV/Objects/Consumable/Drinks/greengrass.rsi
+    state: icon
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkGlass
   id: DrinkDaiquiriGlass
-  name: classic daiquiri
+  suffix: classic daiquiri
   description: Rum, lime, and simple syrup. Such class, such refinement.
   components:
   - type: SolutionContainerManager
@@ -59,13 +62,14 @@
         reagents:
         - ReagentId: Daiquiri
           Quantity: 30
-  - type: Sprite
+  - type: Icon
     sprite: DeltaV/Objects/Consumable/Drinks/daiquiri.rsi
+    state: icon
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkGlass
   id: DrinkArsonistsBrewGlass
-  name: arsonist's brew
+  suffix: arsonist's brew
   description: It's probably not concerning that it's glowing faintly. Or bubbling. Or smoking. No, not at all.
   components:
   - type: SolutionContainerManager
@@ -75,13 +79,14 @@
         reagents:
         - ReagentId: ArsonistsBrew
           Quantity: 30
-  - type: Sprite
+  - type: Icon
     sprite: DeltaV/Objects/Consumable/Drinks/arsonist.rsi
+    state: icon
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkGlass
   id: DrinkKvassGlass
-  name: kvass glass
+  suffix: kvass
   description: A cool refreshing drink with a taste of socialism.
   components:
     - type: SolutionContainerManager
@@ -91,13 +96,14 @@
           reagents:
             - ReagentId: Kvass
               Quantity: 30
-    - type: Sprite
-      sprite: Objects/Consumable/Drinks/kvass.rsi
+    - type: Icon
+      sprite: DeltaV/Objects/Consumable/Drinks/kvass.rsi
+      state: icon
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkGlass
   id: DrinkMothamphetamineGlass
-  name: mothamphetamine
+  suffix: mothamphetamine
   description: A strangely... Fuzzy drink. It has a chaotic aura.
   components:
     - type: SolutionContainerManager
@@ -107,5 +113,6 @@
           reagents:
             - ReagentId: Mothamphetamine
               Quantity: 30
-    - type: Sprite
+    - type: Icon
       sprite: DeltaV/Objects/Consumable/Drinks/mothamphetamine.rsi
+      state: icon
