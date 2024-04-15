@@ -9,7 +9,6 @@ using Content.Shared.Gibbing.Components;
 using Content.Shared.Gibbing.Events;
 using Content.Shared.Gibbing.Systems;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -322,26 +321,4 @@ public partial class SharedBodySystem
         _audioSystem.PlayPredicted(gibSoundOverride, Transform(bodyId).Coordinates, null);
         return gibs;
     }
-
-    public virtual HashSet<EntityUid> BurnBody(
-        EntityUid bodyId,
-        BodyComponent? bodyComponent = null
-        )
-    {
-        var body = new HashSet<EntityUid>();
-
-        if (!Resolve(bodyId, ref bodyComponent, false))
-            return body;
-
-        if(TryComp<InventoryComponent>(bodyId, out var inventory))
-        {
-            foreach (var item in _inventory.GetHandOrInventoryEntities(bodyId))
-            {
-                SharedTransform.AttachToGridOrMap(item);
-                body.Add(item);
-            }
-        }
-        return body;
-    }
-
 }

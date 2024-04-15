@@ -1,26 +1,20 @@
 using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.Humanoid;
-using Content.Server.Kitchen.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Humanoid;
-using Content.Shared.Kitchen.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Numerics;
-using Content.Shared.Coordinates;
-using Content.Shared.Gibbing.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Body.Systems;
 
@@ -30,13 +24,7 @@ public sealed class BodySystem : SharedBodySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
-
 
     public override void Initialize()
     {
@@ -141,29 +129,4 @@ public sealed class BodySystem : SharedBodySystem
 
         return gibs;
     }
-
-    public override HashSet<EntityUid> BurnBody(
-        EntityUid bodyId,
-        BodyComponent? bodyComponent
-    )
-    {
-        if (!Resolve(bodyId, ref bodyComponent, false))
-            return [];
-
-        if (TerminatingOrDeleted(bodyId) || EntityManager.IsQueuedForDeletion(bodyId))
-            return new HashSet<EntityUid>();
-
-        var xform = Transform(bodyId);
-        if (xform.MapUid == null)
-            return new HashSet<EntityUid>();
-
-        var body = base.BurnBody(bodyId, bodyComponent);
-
-        _popupSystem.PopupCoordinates(Loc.GetString("bodyburn-text-others", ("name", bodyId)), _transformSystem.GetMoverCoordinates(bodyId), PopupType.LargeCaution);
-
-        QueueDel(bodyId);
-
-        return body;
-    }
-
 }
