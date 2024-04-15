@@ -326,7 +326,6 @@ public partial class SharedBodySystem
     public virtual HashSet<EntityUid> BurnBody(
         EntityUid bodyId,
         BodyComponent? bodyComponent = null
-        // SoundSpecifier? gibSoundOverride = null
         )
     {
         var body = new HashSet<EntityUid>();
