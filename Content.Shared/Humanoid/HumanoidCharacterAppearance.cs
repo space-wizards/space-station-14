@@ -154,25 +154,18 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance
 
         var skinType = IoCManager.Resolve<IPrototypeManager>().Index<SpeciesPrototype>(species).SkinColoration;
 
-        var newSkinColor = Humanoid.SkinColor.ValidHumanSkinTone;
+        var newSkinColor = new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1);
         switch (skinType)
         {
             case HumanoidSkinColor.HumanToned:
-                var tone = random.Next(0, 100);
-                newSkinColor = Humanoid.SkinColor.HumanSkinTone(tone);
+                var tone = Math.Round(Humanoid.SkinColor.HumanSkinToneFromColor(newSkinColor));
+                newSkinColor = Humanoid.SkinColor.HumanSkinTone((int)tone);
                 break;
             case HumanoidSkinColor.Hues:
-            case HumanoidSkinColor.TintedHues:
-                var rbyte = random.NextByte();
-                var gbyte = random.NextByte();
-                var bbyte = random.NextByte();
-                newSkinColor = new Color(rbyte, gbyte, bbyte);
                 break;
-        }
-
-        if (skinType == HumanoidSkinColor.TintedHues)
-        {
-            newSkinColor = Humanoid.SkinColor.ValidTintedHuesSkinTone(newSkinColor);
+            case HumanoidSkinColor.TintedHues:
+                newSkinColor = Humanoid.SkinColor.ValidTintedHuesSkinTone(newSkinColor);
+                break;
         }
 
         return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, newEyeColor, newSkinColor, new ());
