@@ -13,7 +13,7 @@ public sealed class ActionGunSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ActionGunComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<ActionGunComponent, ComponentShutdown(OnShutdown);
+        SubscribeLocalEvent<ActionGunComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ActionGunComponent, ActionGunShootEvent>(OnShoot);
     }
 
