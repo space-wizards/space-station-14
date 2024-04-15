@@ -23,9 +23,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Content.Shared.Tools.Components;
 using Content.Server.Construction.Conditions;
-using Content.Shared.Tag;
-using Content.Server.Chemistry.Containers.EntitySystems;
-
+//many of these arent reqired but some seem neessesary so ill leave them for now
 
 namespace Content.Server.Repairable
 {
@@ -39,8 +37,6 @@ namespace Content.Server.Repairable
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
         [Dependency] private readonly SharedMindSystem _mind = default!;
-        [Dependency] private readonly TagSystem _tag = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
 
         public override void Initialize()
         {

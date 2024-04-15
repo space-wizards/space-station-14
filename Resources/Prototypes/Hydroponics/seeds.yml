@@ -115,8 +115,6 @@
   packetPrototype: CarrotSeeds
   productPrototypes:
     - FoodCarrot
-  mutationPrototypes:
-    - gnome
   lifespan: 25
   maturation: 10
   production: 3
