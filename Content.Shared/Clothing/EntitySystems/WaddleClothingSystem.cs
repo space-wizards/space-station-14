@@ -2,7 +2,7 @@
 using Content.Shared.Movement.Components;
 using Content.Shared.Inventory.Events;
 
-namespace Content.Client.Clothing.Systems;
+namespace Content.Shared.Clothing.EntitySystems;
 
 public sealed class WaddleClothingSystem : EntitySystem
 {
