@@ -155,7 +155,7 @@ namespace Content.Shared.Humanoid
 
             var skinType = IoCManager.Resolve<IPrototypeManager>().Index<SpeciesPrototype>(species).SkinColoration;
 
-            var newSkinColor = Humanoid.SkinColor.ValidHumanSkinTone;
+            var newSkinColor = new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1);
             switch (skinType)
             {
                 case HumanoidSkinColor.HumanToned:
@@ -164,19 +164,9 @@ namespace Content.Shared.Humanoid
                     break;
                 case HumanoidSkinColor.Hues:
                 case HumanoidSkinColor.TintedHues:
-                    var rbyte = random.NextByte();
-                    var gbyte = random.NextByte();
-                    var bbyte = random.NextByte();
-                    newSkinColor = new Color(rbyte, gbyte, bbyte);
                     break;
                 case HumanoidSkinColor.VoxFeathers:
-                    //TODO: Check if this can be made more decent
-                    var vrbyte = random.NextByte();
-                    var vgbyte = random.NextByte();
-                    var vbbyte = random.NextByte();
-                    newSkinColor = new Color(vrbyte, vgbyte, vbbyte);
-                    //var voxtone = random.Next(0, 100);
-                    //newSkinColor = Humanoid.SkinColor.VoxFeathers(voxtone);
+                    newSkinColor = Humanoid.SkinColor.VoxFeathers(newSkinColor);
                     break;
             }
 

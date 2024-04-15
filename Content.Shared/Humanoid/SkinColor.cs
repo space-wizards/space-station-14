@@ -211,7 +211,7 @@ public static class SkinColor
         if (colorHsv.Y < MinFeathersSaturation || colorHsv.Y > MaxFeathersSaturation)
             return false;
 
-        if (colorHsv.Z < MinFeathersValue || colorHsv.Y > MaxFeathersValue)
+        if (colorHsv.Z < MinFeathersValue || colorHsv.Z > MaxFeathersValue)
             return false;
 
         return true;
