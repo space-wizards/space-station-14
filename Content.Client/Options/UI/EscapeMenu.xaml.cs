@@ -5,7 +5,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Options.UI
 {
     [GenerateTypedNameReferences]
-    public sealed partial class EscapeMenu : DefaultWindow
+    public sealed partial class EscapeMenu : DefaultFullscreen
     {
         public EscapeMenu()
         {

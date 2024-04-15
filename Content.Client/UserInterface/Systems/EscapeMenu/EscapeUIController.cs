@@ -51,17 +51,16 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         EscapeButton.OnPressed += EscapeButtonOnOnPressed;
     }
 
-    private void ActivateButton() => EscapeButton!.SetClickPressed(true);
-    private void DeactivateButton() => EscapeButton!.SetClickPressed(false);
-
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_escapeWindow == null);
 
-        _escapeWindow = UIManager.CreateWindow<Options.UI.EscapeMenu>();
+        _escapeWindow = UIManager.CreateFullscreen<Options.UI.EscapeMenu>();
 
-        _escapeWindow.OnClose += DeactivateButton;
-        _escapeWindow.OnOpen += ActivateButton;
+        _escapeWindow.ContinueButton.OnPressed += _ =>
+        {
+            CloseEscapeWindow();
+        };
 
         _escapeWindow.ChangelogButton.OnPressed += _ =>
         {
@@ -148,7 +147,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         }
         else
         {
-            _escapeWindow.OpenCentered();
+            _escapeWindow.Open();
             EscapeButton!.Pressed = true;
         }
     }
