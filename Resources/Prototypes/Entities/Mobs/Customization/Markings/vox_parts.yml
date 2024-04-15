@@ -105,7 +105,7 @@
 
 - type: marking
   id: VoxLFootScales
-  bodyPart: LLeg
+  bodyPart: LFoot
   markingCategory: Legs
   forcedColoring: true
   speciesRestriction: [Vox]
@@ -120,7 +120,7 @@
 
 - type: marking
   id: VoxRFootScales
-  bodyPart: RLeg
+  bodyPart: RFoot
   markingCategory: Legs
   forcedColoring: true
   speciesRestriction: [Vox]
