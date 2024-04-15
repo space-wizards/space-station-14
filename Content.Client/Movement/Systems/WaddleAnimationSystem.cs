@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using Content.Client.Buckle;
 using Content.Client.Gravity;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
@@ -19,7 +20,7 @@ public sealed class WaddleAnimationSystem : EntitySystem
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly GravitySystem _gravity = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly BuckleSystem _buckle = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
@@ -72,12 +73,8 @@ public sealed class WaddleAnimationSystem : EntitySystem
         if (_gravity.IsWeightless(uid))
             return;
 
-        // Do nothing if affected by stun system
-        if (
-            _statusEffects.HasStatusEffect(uid, "KnockedDown") ||
-            _statusEffects.HasStatusEffect(uid, "Stun") ||
-            _statusEffects.HasStatusEffect(uid, "SlowedDown")
-        )
+
+        if (!_actionBlocker.CanMove(uid, mover))
             return;
 
         // Do nothing if buckled in
