@@ -15,6 +15,9 @@
     tags:
     - HidesHair
     - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
