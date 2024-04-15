@@ -1521,4 +1521,4 @@
   growthStages: 2
   waterConsumption: 0
   seedless: true #fuckin does nothing but im keeping it just in case someone wants botany to riot 
-  unclipable: true
+  unclippable: true

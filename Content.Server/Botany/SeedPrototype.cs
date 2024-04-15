@@ -115,7 +115,7 @@ public partial class SeedData
     /// <summary>
     /// If true, you cannot clip this plant for more seeds, used for special plants such as the gnome plant
     /// </summary>
-    [DataField("unclipable")] public bool Unclipable;
+    [DataField("unclippable")] public bool Unclippable;
 
     /// <summary>
     ///     If true, there is only a single reference to this seed and it's properties can be directly modified without
@@ -296,7 +296,7 @@ public partial class SeedData
             HarvestRepeat = HarvestRepeat,
             Potency = Potency,
 
-            Unclipable = Unclipable,
+            Unclippable = Unclippable,
             Seedless = Seedless,
             Viable = Viable,
             Slip = Slip,
