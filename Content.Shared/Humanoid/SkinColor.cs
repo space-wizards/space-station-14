@@ -20,16 +20,6 @@ public static class SkinColor
     public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
 
     /// <summary>
-    ///     Turn a color into a valid vox feather coloration.
-    /// </summary>
-    /// <param name="color">The color to validate</param>
-    /// <returns>Validated vox feather coloration</returns>
-    public static Color ValidVoxFeathers (Color color)
-    {
-        return VoxFeathers(color);
-    }
-
-    /// <summary>
     ///     Turn a color into a valid tinted hue skin tone.
     /// </summary>
     /// <param name="color">The color to validate</param>
@@ -161,19 +151,14 @@ public static class SkinColor
     }
 
     /// <summary>
-    ///     Convert a color to vox feather coloration.
+    ///     Converts a Color proportionally to the allowed vox color range.
+    ///     Will NOT preserve the specific input color even if it is within the allowed vox color range.
     /// </summary>
     /// <param name="color">Color to convert</param>
     /// <returns>Vox feather coloration</returns>
-    public static Color VoxFeathers(Color color)
+    public static Color ProportionalVoxColor(Color color)
     {
         var newColor = Color.ToHsv(color);
-
-        // TODO this doesnt work. Figure out how else to cap those annoying end values
-        if ( newColor.X >= 1)
-        {
-            newColor.X = 0.99999999f;
-        }
 
         newColor.X = newColor.X * (MaxFeathersHue - MinFeathersHue) + MinFeathersHue;
         newColor.Y = newColor.Y * (MaxFeathersSaturation - MinFeathersSaturation) + MinFeathersSaturation;
@@ -182,13 +167,15 @@ public static class SkinColor
         return Color.FromHsv(newColor);
     }
 
-    // Gets a vox feather coloration from a given Color.
-    public static Color VoxFeathersFromColor(Color color)
+    // /// <summary>
+    // ///      Ensures the input Color is within the allowed vox color range.
+    // /// </summary>
+    // /// <param name="color">Color to convert</param>
+    // /// <returns>The same Color if it was within the allowed range, or the closest matching Color otherwise</returns>
+    public static Color ClosestVoxColor(Color color)
     {
         var hsv = Color.ToHsv(color);
-        // check for hue/value first, if hue is lower than this percentage
-        // and value is 1.0
-        // then it'll be hue
+
         hsv.X = Math.Clamp(hsv.X, MinFeathersHue, MaxFeathersHue);
         hsv.Y = Math.Clamp(hsv.Y, MinFeathersSaturation, MaxFeathersSaturation);
         hsv.Z = Math.Clamp(hsv.Z, MinFeathersValue, MaxFeathersValue);
@@ -258,7 +245,7 @@ public static class SkinColor
             HumanoidSkinColor.HumanToned => ValidHumanSkinTone,
             HumanoidSkinColor.TintedHues => ValidTintedHuesSkinTone(color),
             HumanoidSkinColor.Hues => MakeHueValid(color),
-            HumanoidSkinColor.VoxFeathers => ValidVoxFeathers(color),
+            HumanoidSkinColor.VoxFeathers => ClosestVoxColor(color),
             _ => color
         };
     }
@@ -268,6 +255,6 @@ public enum HumanoidSkinColor : byte
 {
     HumanToned,
     Hues,
-    VoxFeathers, // Vox are denied the full rainbow range
+    VoxFeathers, // Vox feathers are limited to a specific color range
     TintedHues, //This gives a color tint to a humanoid's skin (10% saturation with full hue range).
 }

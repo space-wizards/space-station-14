@@ -104,7 +104,7 @@ namespace Content.Shared.Humanoid
                 HumanoidSkinColor.HumanToned => Humanoid.SkinColor.HumanSkinTone(speciesPrototype.DefaultHumanSkinTone),
                 HumanoidSkinColor.Hues => speciesPrototype.DefaultSkinTone,
                 HumanoidSkinColor.TintedHues => Humanoid.SkinColor.TintedHues(speciesPrototype.DefaultSkinTone),
-                HumanoidSkinColor.VoxFeathers => Humanoid.SkinColor.VoxFeathers(speciesPrototype.DefaultSkinTone),
+                HumanoidSkinColor.VoxFeathers => Humanoid.SkinColor.ClosestVoxColor(speciesPrototype.DefaultSkinTone),
                 _ => Humanoid.SkinColor.ValidHumanSkinTone
             };
 
@@ -166,7 +166,7 @@ namespace Content.Shared.Humanoid
                 case HumanoidSkinColor.TintedHues:
                     break;
                 case HumanoidSkinColor.VoxFeathers:
-                    newSkinColor = Humanoid.SkinColor.VoxFeathers(newSkinColor);
+                    newSkinColor = Humanoid.SkinColor.ProportionalVoxColor(newSkinColor);
                     break;
             }
 

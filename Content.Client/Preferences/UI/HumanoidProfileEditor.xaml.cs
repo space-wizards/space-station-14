@@ -742,7 +742,7 @@ namespace Content.Client.Preferences.UI
                         _rgbSkinColorContainer.Visible = true;
                     }
 
-                    var color = SkinColor.VoxFeathers(_rgbSkinColorSelector.Color);
+                    var color = SkinColor.ClosestVoxColor(_rgbSkinColorSelector.Color);
 
                     CMarkings.CurrentSkinColor = color;
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
@@ -984,7 +984,7 @@ namespace Content.Client.Preferences.UI
                         _rgbSkinColorContainer.Visible = true;
                     }
 
-                    _rgbSkinColorSelector.Color = SkinColor.VoxFeathersFromColor(Profile.Appearance.SkinColor);
+                    _rgbSkinColorSelector.Color = SkinColor.ClosestVoxColor(Profile.Appearance.SkinColor);
 
                     break;
                 }
