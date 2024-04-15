@@ -26,6 +26,7 @@ namespace Content.Server.Forensics
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+
         public override void Initialize()
         {
             SubscribeLocalEvent<FingerprintComponent, ContactInteractionEvent>(OnInteract);
@@ -147,9 +148,9 @@ namespace Content.Server.Forensics
             {
                 foreach (var data in reagent.Reagent.Data)
                 {
-                    if (data is DNAData)
+                    if (data is DnaData)
                     {
-                        list.Add(((DNAData) data).DNA);
+                        list.Add(((DnaData) data).DNA);
                     }
                 }
             }

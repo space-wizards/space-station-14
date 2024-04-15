@@ -487,7 +487,7 @@ public sealed class BloodstreamSystem : EntitySystem
         {
             foreach (var reagent in bloodSolution.Contents)
             {
-                reagent.Reagent.Data.RemoveAll(x => x is DNAData);
+                reagent.Reagent.Data.RemoveAll(x => x is DnaData);
                 reagent.Reagent.Data.AddRange(GetEntityBloodData(entity.Owner));
             }
         }
@@ -499,7 +499,7 @@ public sealed class BloodstreamSystem : EntitySystem
     public List<ReagentData> GetEntityBloodData(EntityUid uid)
     {
         var bloodData = new List<ReagentData>();
-        var dnaData = new DNAData();
+        var dnaData = new DnaData();
 
         if (TryComp<DnaComponent>(uid, out var donorComp))
         {

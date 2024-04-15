@@ -4,9 +4,8 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Chemistry.Reagent;
 
 [ImplicitDataDefinitionForInheritors, Serializable, NetSerializable]
-public sealed partial class DNAData : ReagentData
+public sealed partial class DnaData : ReagentData
 {
-
     [DataField]
     public string DNA = String.Empty;
 
@@ -19,7 +18,7 @@ public sealed partial class DNAData : ReagentData
             return false;
         }
 
-        return ((DNAData) other).DNA == DNA;
+        return ((DnaData) other).DNA == DNA;
     }
 
     public override int GetHashCode()
