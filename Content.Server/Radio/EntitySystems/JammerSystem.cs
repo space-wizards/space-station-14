@@ -12,6 +12,7 @@ using Content.Shared.Interaction;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Verbs;
 using Content.Shared.RadioJammer;
+using Content.Shared.Radio.EntitySystems;
 
 namespace Content.Server.Radio.EntitySystems;
 public sealed class JammerSystem : EntitySystem
@@ -24,6 +25,7 @@ public sealed class JammerSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly SingletonDeviceNetServerSystem _singletonServerSystem = default!;
+    [Dependency] private readonly SharedJammerSystem _jammerSystem = default!; // For all the helper functions.
 
     public override void Initialize()
     {
@@ -33,7 +35,6 @@ public sealed class JammerSystem : EntitySystem
         SubscribeLocalEvent<ActiveRadioJammerComponent, PowerCellChangedEvent>(OnPowerCellChanged);
         SubscribeLocalEvent<RadioJammerComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RadioSendAttemptEvent>(OnRadioSendAttempt);
-        SubscribeLocalEvent<RadioJammerComponent, GetVerbsEvent<Verb>>(OnGetVerb);
     }
 
     public override void Update(float frameTime)
@@ -45,9 +46,9 @@ public sealed class JammerSystem : EntitySystem
 
             if (_powerCell.TryGetBatteryFromSlot(uid, out var batteryUid, out var battery))
             {
-                if (!_battery.TryUseCharge(batteryUid.Value, GetCurrentWattage(jam) * frameTime, battery))
+                if (!_battery.TryUseCharge(batteryUid.Value, SharedJammerSystem.GetCurrentWattage(jam) * frameTime, battery))
                 {
-                    ChangeLEDState(false, uid);
+                    _jammerSystem.ChangeLEDState(false, uid);
                     RemComp<ActiveRadioJammerComponent>(uid);
                     RemComp<DeviceNetworkJammerComponent>(uid);
                 }
@@ -56,15 +57,15 @@ public sealed class JammerSystem : EntitySystem
                     var percentCharged = battery.CurrentCharge / battery.MaxCharge;
                     if (percentCharged > .50)
                     {
-                        ChangeChargeLevel(RadioJammerChargeLevel.High, uid);
+                        _jammerSystem.ChangeChargeLevel(RadioJammerChargeLevel.High, uid);
                     }
                     else if (percentCharged < .15)
                     {
-                        ChangeChargeLevel(RadioJammerChargeLevel.Low, uid);
+                        _jammerSystem.ChangeChargeLevel(RadioJammerChargeLevel.Low, uid);
                     }
                     else
                     {
-                        ChangeChargeLevel(RadioJammerChargeLevel.Medium, uid);
+                        _jammerSystem.ChangeChargeLevel(RadioJammerChargeLevel.Medium, uid);
                     }
                 }
 
@@ -77,19 +78,19 @@ public sealed class JammerSystem : EntitySystem
     {
         var activated = !HasComp<ActiveRadioJammerComponent>(uid) &&
             _powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
-            battery.CurrentCharge > GetCurrentWattage(comp);
+            battery.CurrentCharge > SharedJammerSystem.GetCurrentWattage(comp);
         if (activated)
         {
-            ChangeLEDState(true, uid);
+            _jammerSystem.ChangeLEDState(true, uid);
             EnsureComp<ActiveRadioJammerComponent>(uid);
             EnsureComp<DeviceNetworkJammerComponent>(uid, out var jammingComp);
-            jammingComp.Range = GetCurrentRange(comp);
+            jammingComp.Range = SharedJammerSystem.GetCurrentRange(comp);
             jammingComp.JammableNetworks.Add(DeviceNetworkComponent.DeviceNetIdDefaults.Wireless.ToString());
             Dirty(uid, jammingComp);
         }
         else
         {
-            ChangeLEDState(false, uid);
+            _jammerSystem.ChangeLEDState(false, uid);
             RemCompDeferred<ActiveRadioJammerComponent>(uid);
             RemCompDeferred<DeviceNetworkJammerComponent>(uid);
         }
@@ -103,7 +104,7 @@ public sealed class JammerSystem : EntitySystem
     {
         if (args.Ejected)
         {
-            ChangeLEDState(false, uid);
+            _jammerSystem.ChangeLEDState(false, uid);
             RemCompDeferred<ActiveRadioJammerComponent>(uid);
         }
     }
@@ -138,7 +139,7 @@ public sealed class JammerSystem : EntitySystem
 
         while (query.MoveNext(out _, out _, out var jam, out var transform))
         {
-            if (source.InRange(EntityManager, _transform, transform.Coordinates, GetCurrentRange(jam)))
+            if (source.InRange(EntityManager, _transform, transform.Coordinates, SharedJammerSystem.GetCurrentRange(jam)))
             {
                 return true;
             }
@@ -146,58 +147,4 @@ public sealed class JammerSystem : EntitySystem
 
         return false;
     }
-
-    private void OnGetVerb(Entity<RadioJammerComponent> entity, ref GetVerbsEvent<Verb> args)
-    {
-        if (!args.CanAccess || !args.CanInteract)
-            return;
-
-        var user = args.User;
-
-        byte index = 0;
-        foreach (var setting in entity.Comp.Settings)
-        {
-            // This is because Act wont work with index.
-            // Needs it to be saved in the loop.
-            var currIndex = index;
-            var verb = new Verb
-            {
-                Priority = currIndex,
-                Category = VerbCategory.PowerLevel,
-                Disabled = entity.Comp.SelectedPowerLevel == currIndex,
-                Act = () =>
-                {
-                    entity.Comp.SelectedPowerLevel = currIndex;
-                    if (TryComp<DeviceNetworkJammerComponent>(entity.Owner, out var jammerComp))
-                    {
-                        jammerComp.Range = GetCurrentRange(entity.Comp);
-                        Dirty(entity.Owner, jammerComp);
-                    }
-                    _popup.PopupEntity(Loc.GetString(setting.Message), user, user);
-                },
-                Text = Loc.GetString(setting.Name),
-            };
-            args.Verbs.Add(verb);
-            index++;
-        }
-    }
-    private static float GetCurrentWattage(RadioJammerComponent jammer)
-    {
-        return jammer.Settings[jammer.SelectedPowerLevel].Wattage;
-    }
-    private static float GetCurrentRange(RadioJammerComponent jammer)
-    {
-        return jammer.Settings[jammer.SelectedPowerLevel].Range;
-    }
-    private void ChangeLEDState(bool isLEDOn, EntityUid uid,
-        AppearanceComponent? appearance = null)
-    {
-        _appearance.SetData(uid, RadioJammerVisuals.LEDOn, isLEDOn, appearance);
-    }
-    private void ChangeChargeLevel(RadioJammerChargeLevel chargeLevel, EntityUid uid,
-        AppearanceComponent? appearance = null)
-    {
-        _appearance.SetData(uid, RadioJammerVisuals.ChargeLevel, chargeLevel, appearance);
-    }
-
 }
