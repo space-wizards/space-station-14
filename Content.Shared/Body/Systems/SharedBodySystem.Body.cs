@@ -322,4 +322,27 @@ public partial class SharedBodySystem
         _audioSystem.PlayPredicted(gibSoundOverride, Transform(bodyId).Coordinates, null);
         return gibs;
     }
+
+    public virtual HashSet<EntityUid> BurnBody(
+        EntityUid bodyId,
+        BodyComponent? bodyComponent = null
+        // SoundSpecifier? gibSoundOverride = null
+        )
+    {
+        var body = new HashSet<EntityUid>();
+
+        if (!Resolve(bodyId, ref bodyComponent, false))
+            return body;
+
+        if(TryComp<InventoryComponent>(bodyId, out var inventory))
+        {
+            foreach (var item in _inventory.GetHandOrInventoryEntities(bodyId))
+            {
+                SharedTransform.AttachToGridOrMap(item);
+                body.Add(item);
+            }
+        }
+        return body;
+    }
+
 }
