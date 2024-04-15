@@ -118,7 +118,7 @@ namespace Content.Server.Administration.Systems
 
             if (lookup is null)
             {
-                _sawmill.Warning($"Failed to lookup Discord ID for {charName} ({session.UserId}).");
+                _sawmill.Error($"Failed to lookup Discord ID for {charName} ({session.UserId}).");
                 await commandArgs.Message.Channel.SendMessageAsync("**Warning**: Failed to lookup Discord ID for player.");
                 return;
             }
@@ -150,7 +150,7 @@ namespace Content.Server.Administration.Systems
 
             if (!ulong.TryParse(obj, out var id))
             {
-                _sawmill.Warning("Invalid channel ID.");
+                _sawmill.Error("Invalid channel ID.");
                 return;
             }
 
@@ -175,7 +175,7 @@ namespace Content.Server.Administration.Systems
 
                 if (!_playerManager.TryGetSessionById(messages.Key, out var session))
                 {
-                    _sawmill.Warning($"Failed to find session for {messages.Key.UserId}.");
+                    _sawmill.Verbose($"Failed to find session for {messages.Key.UserId}.");
                     // Respond with error message to inform admins that the player is not online.
                     arg.Channel.SendMessageAsync("**Warning**: Failed to find session for player. They may not be online.");
                     continue;
@@ -328,7 +328,7 @@ namespace Content.Server.Administration.Systems
         {
             base.Shutdown();
 
-            _sawmill.Debug("Shutting down AHELP system. Sending shutdown messages to all relay channels.");
+            _sawmill.Verbose("Shutting down AHELP system. Sending shutdown messages to all relay channels.");
             foreach (var message in _relayMessages)
             {
                 message.Value.channel.SendMessageAsync("**Warning**: Server is shutting down. Any messages sent to will not be received.", false, null,null, AllowedMentions.None);
@@ -359,7 +359,7 @@ namespace Content.Server.Administration.Systems
 
                 if (lookup is null)
                 {
-                    _sawmill.Warning($"Failed to lookup Discord ID for {charName} ({userId}).");
+                    _sawmill.Error($"Failed to lookup Discord ID for {charName} ({userId}).");
                     return;
                 }
 
