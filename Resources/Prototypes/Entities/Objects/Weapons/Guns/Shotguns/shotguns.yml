@@ -113,7 +113,12 @@
     - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun_inhands_64x.rsi
   - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -30
   - type: Gun
+    minAngle: 20
+    maxAngle: 30
     fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 2
@@ -145,6 +150,12 @@
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
   - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -30
+  - type: Gun
+    minAngle: 20
+    maxAngle: 30
   - type: BallisticAmmoProvider
 
 - type: entity
@@ -171,6 +182,12 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -30
+  - type: Gun
+    minAngle: 20
+    maxAngle: 30
   - type: BallisticAmmoProvider
     capacity: 4
   - type: Tag
@@ -251,7 +268,12 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/blunderbuss.rsi
   - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -30
   - type: Gun
+    minAngle: 20
+    maxAngle: 30
     fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 1
@@ -274,7 +296,12 @@
     - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun_inhands_64x.rsi
   - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -30
   - type: Gun
+    minAngle: 20
+    maxAngle: 30
     fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
   - type: BallisticAmmoProvider
     capacity: 1

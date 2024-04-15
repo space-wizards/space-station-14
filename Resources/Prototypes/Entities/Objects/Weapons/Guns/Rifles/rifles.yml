@@ -15,7 +15,13 @@
     - Back
     - suitStorage
   - type: AmmoCounter
+  - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -30
   - type: Gun
+    minAngle: 20
+    maxAngle: 30
     fireRate: 5
     selectedMode: FullAuto
     availableModes:
@@ -63,7 +69,6 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
-  - type: Wieldable
   - type: Gun
     fireRate: 5
     soundGunshot:
@@ -114,7 +119,6 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
-  - type: Wieldable
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -158,7 +162,6 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
-  - type: Wieldable
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg

@@ -38,7 +38,12 @@
     - suitStorage
   - type: AmmoCounter
   - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -30
   - type: Gun
+    minAngle: 20
+    maxAngle: 30
     fireRate: 1
     selectedMode: SemiAuto
     availableModes:

@@ -47,6 +47,12 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
   - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -30
+  - type: Gun
+    minAngle: 20
+    maxAngle: 30
 
 - type: entity
   name: Hristov
@@ -59,6 +65,12 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -30
+  - type: Gun
+    minAngle: 20
+    maxAngle: 30
   - type: BallisticAmmoProvider
     whitelist:
       tags:
