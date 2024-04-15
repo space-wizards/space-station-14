@@ -117,8 +117,8 @@
     minAngle: -20
     maxAngle: -30
   - type: Gun
-    minAngle: 20
-    maxAngle: 30
+    minAngle: 21
+    maxAngle: 32
     fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 2
@@ -154,8 +154,8 @@
     minAngle: -20
     maxAngle: -30
   - type: Gun
-    minAngle: 20
-    maxAngle: 30
+    minAngle: 21
+    maxAngle: 32
   - type: BallisticAmmoProvider
 
 - type: entity
@@ -186,8 +186,8 @@
     minAngle: -20
     maxAngle: -30
   - type: Gun
-    minAngle: 20
-    maxAngle: 30
+    minAngle: 21
+    maxAngle: 32
   - type: BallisticAmmoProvider
     capacity: 4
   - type: Tag
@@ -272,8 +272,8 @@
     minAngle: -20
     maxAngle: -30
   - type: Gun
-    minAngle: 20
-    maxAngle: 30
+    minAngle: 21
+    maxAngle: 32
     fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 1
@@ -300,8 +300,8 @@
     minAngle: -20
     maxAngle: -30
   - type: Gun
-    minAngle: 20
-    maxAngle: 30
+    minAngle: 21
+    maxAngle: 32
     fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
   - type: BallisticAmmoProvider
     capacity: 1

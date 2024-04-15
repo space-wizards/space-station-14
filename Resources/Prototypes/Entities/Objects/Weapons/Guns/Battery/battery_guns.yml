@@ -221,8 +221,8 @@
     minAngle: -20
     maxAngle: -30
   - type: Gun
-    minAngle: 20
-    maxAngle: 30
+    minAngle: 21
+    maxAngle: 32
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -292,8 +292,8 @@
     minAngle: -20
     maxAngle: -30
   - type: Gun
-    minAngle: 20
-    maxAngle: 30
+    minAngle: 21
+    maxAngle: 32
     selectedMode: SemiAuto
     fireRate: 3
     availableModes:
@@ -329,8 +329,8 @@
     minAngle: -20
     maxAngle: -30
   - type: Gun
-    minAngle: 20
-    maxAngle: 30
+    minAngle: 21
+    maxAngle: 32
     fireRate: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
@@ -362,8 +362,8 @@
     minAngle: -20
     maxAngle: -30
   - type: Gun
-    minAngle: 20
-    maxAngle: 30
+    minAngle: 21
+    maxAngle: 32
     fireRate: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -423,8 +423,8 @@
     minAngle: -20
     maxAngle: -30
   - type: Gun
-    minAngle: 20
-    maxAngle: 30
+    minAngle: 21
+    maxAngle: 32
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
