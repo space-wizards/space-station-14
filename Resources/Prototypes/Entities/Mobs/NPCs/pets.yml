@@ -833,7 +833,6 @@
     templateId: gnome
     speciesId: gnome
   - type: InventorySlots
-  - type: Cuffable
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 90
