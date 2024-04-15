@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mac6na6na
-  changes:
-  - message: Tiered part crates will no longer appear on salvage expeditions.
-    type: Remove
-  id: 5857
-  time: '2024-02-01T12:41:03.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24810
 - author: mirrorcult
   changes:
   - message: Crayon/lathe/vendor/round end/gas analyzer windows now open closer to
@@ -3839,3 +3832,10 @@
   id: 6356
   time: '2024-04-14T22:26:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26961
+- author: pissdemon
+  changes:
+  - message: Catwalks over lava are slightly less likely to catch you on fire again.
+    type: Fix
+  id: 6357
+  time: '2024-04-15T01:27:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26968
