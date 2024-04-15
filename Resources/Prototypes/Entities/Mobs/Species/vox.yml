@@ -88,10 +88,9 @@
       sprite: Objects/Misc/handcuffs.rsi
       state: body-overlay-2
       visible: false
-    # TODO: Need vox version of pieface
     - map: [ "clownedon" ]
       sprite: "Effects/creampie.rsi"
-      state: "creampie_human"
+      state: "creampie_vox" # Not default
       visible: false
 
 - type: entity

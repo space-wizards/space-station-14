@@ -141,4 +141,5 @@
   forcedColoring: true
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
+    # Ideally this should use the normal tail sprite and apply an actual mask over it, not just use a butchered sprite
     state: tail_stenciled
