@@ -978,10 +978,10 @@ namespace Content.Client.Preferences.UI
                 }
                 case HumanoidSkinColor.VoxFeathers:
                 {
-                    if (!_skinColor.Visible)
+                    if (!_rgbSkinColorContainer.Visible)
                     {
-                        _skinColor.Visible = true;
-                        _rgbSkinColorContainer.Visible = false;
+                        _skinColor.Visible = false;
+                        _rgbSkinColorContainer.Visible = true;
                     }
 
                     _rgbSkinColorSelector.Color = SkinColor.VoxFeathersFromColor(Profile.Appearance.SkinColor);

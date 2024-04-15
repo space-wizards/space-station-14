@@ -14,7 +14,8 @@ public static class SkinColor
     public const float MaxFeathersHue = 174f / 360;
     public const float MinFeathersSaturation = 20f / 100;
     public const float MaxFeathersSaturation = 88f / 100;
-    public const float FeathersValue = 44.75f / 100;
+    public const float MinFeathersValue = 36f / 100;
+    public const float MaxFeathersValue = 55f / 100;
 
     public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
 
@@ -159,9 +160,6 @@ public static class SkinColor
         return Color.ToHsl(color).Y <= MaxTintedHuesSaturation && Color.ToHsl(color).Z >= MinTintedHuesLightness;
     }
 
-
-
-
     /// <summary>
     ///     Convert a color to vox feather coloration.
     /// </summary>
@@ -171,12 +169,7 @@ public static class SkinColor
     {
         var newColor = Color.ToHsv(color);
 
-        //TODO: Kill this block??
-        var h = Math.Round(newColor.X * 360f);
-        var s = Math.Round(newColor.Y * 100f);
-        var h2 = h * (MaxFeathersHue - MinFeathersHue) + MinFeathersHue * 360f;
-        var s2 = s * (MaxFeathersSaturation- MinFeathersSaturation) + MinFeathersSaturation * 100f;
-
+        // TODO this doesnt work. Figure out how else to cap those annoying end values
         if ( newColor.X >= 1)
         {
             newColor.X = 0.99999999f;
@@ -184,8 +177,7 @@ public static class SkinColor
 
         newColor.X = newColor.X * (MaxFeathersHue - MinFeathersHue) + MinFeathersHue;
         newColor.Y = newColor.Y * (MaxFeathersSaturation - MinFeathersSaturation) + MinFeathersSaturation;
-
-        newColor.Z =  FeathersValue;
+        newColor.Z = newColor.Z * (MaxFeathersValue - MinFeathersValue) + MinFeathersValue;
 
         return Color.FromHsv(newColor);
     }
@@ -199,7 +191,7 @@ public static class SkinColor
         // then it'll be hue
         hsv.X = Math.Clamp(hsv.X, MinFeathersHue, MaxFeathersHue);
         hsv.Y = Math.Clamp(hsv.Y, MinFeathersSaturation, MaxFeathersSaturation);
-        hsv.Z = FeathersValue;
+        hsv.Z = Math.Clamp(hsv.Z, MinFeathersValue, MaxFeathersValue);
 
         return Color.FromHsv(hsv);
     }
@@ -211,7 +203,6 @@ public static class SkinColor
     /// <returns>True if valid, false otherwise</returns>
     public static bool VerifyVoxFeathers(Color color)
     {
-
         var colorHsv = Color.ToHsv(color);
 
         if (colorHsv.X < MinFeathersHue || colorHsv.X > MaxFeathersHue)
@@ -220,16 +211,11 @@ public static class SkinColor
         if (colorHsv.Y < MinFeathersSaturation || colorHsv.Y > MaxFeathersSaturation)
             return false;
 
-        // Vox feather HSV always has a fixed V
-        if (Math.Abs(colorHsv.Z - 44.75f/100) > 0.02f )
+        if (colorHsv.Z < MinFeathersValue || colorHsv.Y > MaxFeathersValue)
             return false;
 
         return true;
     }
-
-
-
-
 
     /// <summary>
     ///     This takes in a color, and returns a color guaranteed to be above MinHuesLightness
