@@ -91,17 +91,7 @@ namespace Content.Server.Repairable
                     }
                 }
 
-            }
-            //everything below is work in progress shitcode to try and remove glue from the fuckin bottle
-            //var tool = args.Used.Value;
-            
-              //remove glue from glue tubes to revive gnomes or to fix other items. STOP GIVING ME ERRORS YOU TOUCHY FUCKING TWAT I HAVENT EATEN TODAY BECAUSE OF YOU WORK GOD DAMNIT!
-              //TODO: cry
-           //     if (_tag.HasTag(tool, "GlueTool"))
-           //     {
-
-           //     }
-            
+            }          
             var str = Loc.GetString("comp-repairable-repair",
                 ("target", uid),
                 ("tool", args.Used!));
@@ -112,8 +102,6 @@ namespace Content.Server.Repairable
         {
             if (args.Handled)
                 return;
-
-            //TODO: CHECK TO SEE IF GLUE BOTTLE IS EMPTY
 
             // Only try repair the target if it is damaged
             if (!TryComp<DamageableComponent>(uid, out var damageable) || damageable.TotalDamage == 0)
