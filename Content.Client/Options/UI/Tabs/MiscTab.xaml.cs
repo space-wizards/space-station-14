@@ -59,8 +59,10 @@ namespace Content.Client.Options.UI.Tabs
                 UpdateApplyButton();
             };
 
-            ShowOocPatronColor.Visible = _playerManager.LocalSession?.Channel.UserData.PatronTier is { } patron;
-            
+            // Channel can be null in replays so.
+            // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+            ShowOocPatronColor.Visible = _playerManager.LocalSession?.Channel?.UserData.PatronTier is { };
+
             HudThemeOption.OnItemSelected += OnHudThemeChanged;
             DiscordRich.OnToggled += OnCheckBoxToggled;
             ShowOocPatronColor.OnToggled += OnCheckBoxToggled;
