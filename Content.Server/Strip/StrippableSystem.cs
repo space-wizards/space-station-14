@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Ensnaring;
 using Content.Shared.CombatMode;
@@ -20,7 +21,6 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Server.Strip
 {
@@ -111,7 +111,7 @@ namespace Content.Server.Strip
             if (TryComp<CombatModeComponent>(user, out var mode) && mode.IsInCombatMode && !openInCombat)
                 return;
 
-            if (TryComp<ActorComponent>(user, out var actor))
+            if (TryComp<ActorComponent>(user, out var actor) && HasComp<StrippingComponent>(user))
             {
                 if (_userInterfaceSystem.SessionHasOpenUi(strippable, StrippingUiKey.Key, actor.PlayerSession))
                     return;

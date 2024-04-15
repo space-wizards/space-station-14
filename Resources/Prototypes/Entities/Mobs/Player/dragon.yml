@@ -85,6 +85,10 @@
       0: Alive
       450: Critical
       500: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      250: 0.7
+      400: 0.5
   # disable taking damage from fire, since its a fire breathing dragon
   - type: Flammable
     damage:
