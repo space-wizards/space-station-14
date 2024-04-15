@@ -2,6 +2,7 @@
   parent: DrinkBase
   id: DrinkCartonBaseFull
   abstract: true
+  suffix: Full
   components:
   - type: Openable
     sound:

@@ -9,20 +9,20 @@ namespace Content.Client.Access;
 
 public sealed class AccessOverlay : Overlay
 {
+    private const string TextFontPath = "/Fonts/NotoSans/NotoSans-Regular.ttf";
+    private const int TextFontSize = 12;
+
     private readonly IEntityManager _entityManager;
-    private readonly EntityLookupSystem _lookup;
-    private readonly SharedTransformSystem _xform;
+    private readonly SharedTransformSystem _transformSystem;
     private readonly Font _font;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-    public AccessOverlay(IEntityManager entManager, IResourceCache cache, EntityLookupSystem lookup, SharedTransformSystem xform)
+    public AccessOverlay(IEntityManager entityManager, IResourceCache resourceCache, SharedTransformSystem transformSystem)
     {
-        _entityManager = entManager;
-        _lookup = lookup;
-        _xform = xform;
-
-        _font = cache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
+        _entityManager = entityManager;
+        _transformSystem = transformSystem;
+        _font = resourceCache.GetFont(TextFontPath, TextFontSize);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -30,52 +30,65 @@ public sealed class AccessOverlay : Overlay
         if (args.ViewportControl == null)
             return;
 
-        var readerQuery = _entityManager.GetEntityQuery<AccessReaderComponent>();
-        var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
-
-        foreach (var ent in _lookup.GetEntitiesIntersecting(args.MapId, args.WorldAABB,
-                         LookupFlags.Static | LookupFlags.Approximate))
+        var textBuffer = new StringBuilder();
+        var query = _entityManager.EntityQueryEnumerator<AccessReaderComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var accessReader, out var transform))
         {
-            if (!readerQuery.TryGetComponent(ent, out var reader) ||
-                !xformQuery.TryGetComponent(ent, out var xform))
+            textBuffer.Clear();
+
+            var entityName = _entityManager.ToPrettyString(uid);
+            textBuffer.AppendLine(entityName.Prototype);
+            textBuffer.Append("UID: ");
+            textBuffer.Append(entityName.Uid.Id);
+            textBuffer.Append(", NUID: ");
+            textBuffer.Append(entityName.Nuid.Id);
+            textBuffer.AppendLine();
+
+            if (!accessReader.Enabled)
             {
+                textBuffer.AppendLine("-Disabled");
                 continue;
             }
 
-            var text = new StringBuilder();
-            var index = 0;
-            var a = $"{_entityManager.ToPrettyString(ent)}";
-            text.Append(a);
-
-            foreach (var list in reader.AccessLists)
+            if (accessReader.AccessLists.Count > 0)
             {
-                a = $"Tag {index}";
-                text.AppendLine(a);
-
-                foreach (var entry in list)
+                var groupNumber = 0;
+                foreach (var accessList in accessReader.AccessLists)
                 {
-                    a = $"- {entry}";
-                    text.AppendLine(a);
+                    groupNumber++;
+                    foreach (var entry in accessList)
+                    {
+                        textBuffer.Append("+Set ");
+                        textBuffer.Append(groupNumber);
+                        textBuffer.Append(": ");
+                        textBuffer.Append(entry.Id);
+                        textBuffer.AppendLine();
+                    }
                 }
-
-                index++;
-            }
-
-            string textStr;
-
-            if (text.Length >= 2)
-            {
-                textStr = text.ToString();
-                textStr = textStr[..^2];
             }
             else
             {
-                textStr = "";
+                textBuffer.AppendLine("+Unrestricted");
             }
 
-            var screenPos = args.ViewportControl.WorldToScreen(_xform.GetWorldPosition(xform));
+            foreach (var key in accessReader.AccessKeys)
+            {
+                textBuffer.Append("+Key ");
+                textBuffer.Append(key.OriginStation);
+                textBuffer.Append(": ");
+                textBuffer.Append(key.Id);
+                textBuffer.AppendLine();
+            }
 
-            args.ScreenHandle.DrawString(_font, screenPos, textStr, Color.Gold);
+            foreach (var tag in accessReader.DenyTags)
+            {
+                textBuffer.Append("-Tag ");
+                textBuffer.AppendLine(tag.Id);
+            }
+
+            var accessInfoText = textBuffer.ToString();
+            var screenPos = args.ViewportControl.WorldToScreen(_transformSystem.GetWorldPosition(transform));
+            args.ScreenHandle.DrawString(_font, screenPos, accessInfoText, Color.Gold);
         }
     }
 }
