@@ -79,7 +79,7 @@
     solution: food
   - type: DrainableSolution
     solution: food
-  - type: SolutionInjectOnCollide
+  - type: SolutionInjectOnProjectileHit
     transferAmount: 1000
     blockSlots: NONE #Masks are no use here
   - type: InjectableSolution
