@@ -566,7 +566,7 @@ namespace Content.Server.Administration.Systems
             var authorized = personalChannel || senderAHelpAdmin;
             if (!authorized)
             {
-                // Unauthorized bwoink (log?)
+                _sawmill.Warning($"Unauthorized bwoink from {senderSession.Name} ({senderSession.UserId}) to {message.UserId}");
                 return;
             }
 
