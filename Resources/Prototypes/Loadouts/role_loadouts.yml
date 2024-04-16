@@ -298,8 +298,8 @@
   id: JobChemist
   groups:
   - ChemistJumpsuit
-  - ChemistOuterClothing
   - ChemistBackpack
+  - ChemistOuterClothing
   - Trinkets
 
 - type: roleLoadout
@@ -307,8 +307,8 @@
   groups:
   - ParamedicHead
   - ParamedicJumpsuit
-  - ParamedicOuterClothing
   - ParamedicBackpack
+  - ParamedicOuterClothing
   - Trinkets
 
 # Wildcards
