@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Crayon/lathe/vendor/round end/gas analyzer windows now open closer to
-      the sides of the screen
-    type: Tweak
-  id: 5858
-  time: '2024-02-01T12:49:49.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24767
 - author: Tayrtahn
   changes:
   - message: Plushies, whoopie cushions, and a few other noisemaking objects can be
@@ -3839,3 +3831,10 @@
   id: 6357
   time: '2024-04-15T01:27:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26968
+- author: Velcroboy
+  changes:
+  - message: Fixed sec/lawyer and vault airlocks
+    type: Fix
+  id: 6358
+  time: '2024-04-15T22:22:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26980
