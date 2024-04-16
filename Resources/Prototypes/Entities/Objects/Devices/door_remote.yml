@@ -176,7 +176,7 @@
     - state: door_remotescreencolour
       color: "#22871a"
   - type: DoorRemote
-    ExtendedByID: true
+    extendedByID: true
   - type: Access
     groups:
     - AllAccess
