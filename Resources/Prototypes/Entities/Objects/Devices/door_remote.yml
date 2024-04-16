@@ -29,6 +29,8 @@
   - type: Access
     groups:
     - Command
+  - type: DoorRemote
+    extendedByID: true
 
 - type: entity
   parent: DoorRemoteDefault
@@ -173,6 +175,8 @@
       color: "#2eba22"
     - state: door_remotescreencolour
       color: "#22871a"
+  - type: DoorRemote
+    ExtendedByID: true
   - type: Access
     groups:
     - AllAccess
