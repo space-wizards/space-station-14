@@ -28,5 +28,4 @@
     outerClothing: ClothingOuterArmorGladiator
     id: GladiatorPDA
     ears: ClothingHeadsetGrey
-  innerClothingSkirt: UniformShortsRedWithTop
   #any other possessions, spawn in cell
