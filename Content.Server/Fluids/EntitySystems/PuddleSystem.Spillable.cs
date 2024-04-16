@@ -117,7 +117,9 @@ public sealed partial class PuddleSystem
             return;
 
         // block access to the solution while worn
-        AddComp<BlockSolutionAccessComponent>(entity);
+        var blockerComp = AddComp<BlockSolutionAccessComponent>(entity);
+        blockerComp.Solution = entity.Comp.SolutionName;
+        Dirty(entity, blockerComp);
 
         if (solution.Volume == 0)
             return;

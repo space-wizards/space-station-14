@@ -136,7 +136,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <inheritdoc cref="TryGetSolution"/>
     public bool TryGetSolution(Entity<SolutionContainerManagerComponent?> container, string? name, [NotNullWhen(true)] out Entity<SolutionComponent>? entity)
     {
-        if (TryComp(container, out BlockSolutionAccessComponent? blocker))
+        if (TryComp(container, out BlockSolutionAccessComponent? blocker) && blocker.Solution == name)
         {
             entity = null;
             return false;
@@ -187,11 +187,11 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (!Resolve(container, ref container.Comp, logMissing: false))
             yield break;
 
-        if (HasComp<BlockSolutionAccessComponent>(container))
-            yield break;
-
         foreach (var name in container.Comp.Containers)
         {
+            if (TryComp<BlockSolutionAccessComponent>(container, out var blocker) && blocker.Solution == name)
+                continue;
+
             if (ContainerSystem.GetContainer(container, $"solution@{name}") is ContainerSlot slot && slot.ContainedEntity is { } solutionId)
                 yield return (name, (solutionId, Comp<SolutionComponent>(solutionId)));
         }
