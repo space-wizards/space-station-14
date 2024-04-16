@@ -130,14 +130,14 @@
       - id: VendingMachineRestockPTech
 
 - type: entity
-  id: CrateVendingMachineRestockRobustSoftdrinksFilled
+  id: CrateVendingMachineRestockDrinksFilled
   parent: CratePlastic
-  name: Robust Softdrinks restock crate
-  description: Contains two restock boxes for the Robust Softdrinks LLC vending machine.
+  name: drinks restock crate
+  description: Contains two restock boxes for beverage vending machines.
   components:
   - type: StorageFill
     contents:
-      - id: VendingMachineRestockRobustSoftdrinks
+      - id: VendingMachineRestockDrinks
         amount: 2
 
 - type: entity

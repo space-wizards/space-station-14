@@ -322,7 +322,7 @@
 
 - type: entity
   parent: BaseVendingMachineRestock
-  id: VendingMachineRestockRobustSoftdrinks
+  id: VendingMachineRestockDrinks
   name: beverage restock box
   description: A cold, clunky container of colliding chilly cylinders. Use only as directed by Robust Industries, LLC.
   components:
