@@ -40,6 +40,7 @@ namespace Content.Shared.Remotes
             }
 
             args.Handled = true;
+            
             if (!this.IsPowered(args.Target.Value, EntityManager))
             {
                 Popup.PopupEntity(Loc.GetString("door-remote-no-power"), args.User, args.User);
