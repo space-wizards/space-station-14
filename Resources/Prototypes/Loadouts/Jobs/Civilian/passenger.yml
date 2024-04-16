@@ -8,6 +8,19 @@
       role: JobPassenger
       time: 36000 #10 hrs, silly reward for people who play passenger a lot
 
+# Head
+- type: loadout
+  id: PassengerHead
+  equipment: Cone
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: GreyTider
+
+- type: startingGear
+  id: Cone
+  equipment:
+    head: ClothingHeadHatCone
+
 # Face
 - type: loadout
   id: PassengerFace

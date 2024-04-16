@@ -21,6 +21,7 @@
 - type: roleLoadout
   id: JobPassenger
   groups:
+  - PassengerHead
   - PassengerJumpsuit
   - CommonBackpack
   - PassengerFace

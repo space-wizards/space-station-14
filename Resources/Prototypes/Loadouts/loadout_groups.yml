@@ -84,6 +84,13 @@
 
 # Civilian
 - type: loadoutGroup
+  id: PassengerHead
+  name: loadout-group-passenger-head
+  minLimit: 0
+  loadouts:
+  - PassengerHead
+
+- type: loadoutGroup
   id: PassengerJumpsuit
   name: loadout-group-passenger-jumpsuit
   loadouts:

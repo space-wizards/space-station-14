@@ -14,6 +14,7 @@ loadout-group-hop-backpack = Head of Personnel backpack
 
 
 # Civilian
+loadout-group-passenger-head = Passenger head
 loadout-group-passenger-jumpsuit = Passenger jumpsuit
 loadout-group-passenger-mask = Passenger mask
 loadout-group-passenger-gloves = Passenger gloves
