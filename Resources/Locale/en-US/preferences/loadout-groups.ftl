@@ -135,7 +135,7 @@ loadout-group-chief-medical-officer-outerclothing = Chief Medical Officer outer 
 loadout-group-chief-medical-officer-backpack = Chief Medical Officer backpack
 loadout-group-chief-medical-officer-neck = Chief Medical Officer neck
 loadout-group-chief-medical-officer-gloves = Chief Medical Officer gloves
-loadout-group-chief-medical-officier-mask = Chief Medical Officer mask
+loadout-group-chief-medical-officer-mask = Chief Medical Officer mask
 
 loadout-group-medical-doctor-head = Medical Doctor head
 loadout-group-medical-doctor-jumpsuit = Medical Doctor jumpsuit
