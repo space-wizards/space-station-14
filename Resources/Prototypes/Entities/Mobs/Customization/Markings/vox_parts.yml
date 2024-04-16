@@ -11,7 +11,7 @@
     default:
       type:
         !type:SimpleColoring
-        color: "#FFFFFF"
+        color: "#937e3d"
 
 - type: marking
   id: VoxLArmScales
@@ -26,7 +26,7 @@
     default:
       type:
         !type:SimpleColoring
-        color: "#FFFFFF"
+        color: "#937e3d"
 
 - type: marking
   id: VoxLLegScales
@@ -41,7 +41,7 @@
     default:
       type:
         !type:SimpleColoring
-        color: "#FFFFFF"
+        color: "#937e3d"
 
 - type: marking
   id: VoxRArmScales
@@ -56,7 +56,7 @@
     default:
       type:
         !type:SimpleColoring
-        color: "#FFFFFF"
+        color: "#937e3d"
 
 - type: marking
   id: VoxRLegScales
@@ -71,7 +71,7 @@
     default:
       type:
         !type:SimpleColoring
-        color: "#FFFFFF"
+        color: "#937e3d"
 
 - type: marking
   id: VoxRHandScales
@@ -86,7 +86,7 @@
     default:
       type:
         !type:SimpleColoring
-        color: "#FFFFFF"
+        color: "#937e3d"
 
 - type: marking
   id: VoxLHandScales
@@ -101,7 +101,7 @@
     default:
       type:
         !type:SimpleColoring
-        color: "#FFFFFF"
+        color: "#937e3d"
 
 - type: marking
   id: VoxLFootScales
@@ -116,7 +116,7 @@
     default:
       type:
         !type:SimpleColoring
-        color: "#FFFFFF"
+        color: "#937e3d"
 
 - type: marking
   id: VoxRFootScales
@@ -131,7 +131,7 @@
     default:
       type:
         !type:SimpleColoring
-        color: "#FFFFFF"
+        color: "#937e3d"
 
 - type: marking
   id: VoxTail
