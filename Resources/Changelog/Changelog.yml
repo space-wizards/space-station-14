@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Plushies, whoopie cushions, and a few other noisemaking objects can be
-      used as modular grenade payloads.
-    type: Add
-  id: 5859
-  time: '2024-02-01T12:59:42.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24306
 - author: Repo
   changes:
   - message: AFK admins will trigger the SOS in aHelp relay.
@@ -3838,3 +3830,10 @@
   id: 6358
   time: '2024-04-15T22:22:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26980
+- author: tosatur
+  changes:
+  - message: Made clown snoring quieter
+    type: Tweak
+  id: 6359
+  time: '2024-04-16T18:48:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27012
