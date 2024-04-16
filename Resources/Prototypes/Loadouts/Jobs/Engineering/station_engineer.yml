@@ -120,42 +120,6 @@
   equipment:
     back: ClothingBackpackDuffelEngineeringFilled
 
-- type: loadout
-  id: SeniorEngineerBackpack
-  equipment: SeniorEngineerBackpack
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorEngineering
-
-- type: startingGear
-  id: SeniorEngineerBackpack
-  equipment:
-    back: ClothingBackpackEngineeringFilled
-
-- type: loadout
-  id: SeniorEngineerSatchel
-  equipment: SeniorEngineerSatchel
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorEngineering
-
-- type: startingGear
-  id: SeniorEngineerSatchel
-  equipment:
-    back: ClothingBackpackSatchelEngineeringFilled
-
-- type: loadout
-  id: SeniorEngineerDuffel
-  equipment: SeniorEngineerDuffel
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorEngineering
-
-- type: startingGear
-  id: SeniorEngineerDuffel
-  equipment:
-    back: ClothingBackpackDuffelEngineeringFilled
-
 # OuterClothing
 - type: loadout
   id: StationEngineerOuterVest
