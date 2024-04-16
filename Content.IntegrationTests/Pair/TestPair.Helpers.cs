@@ -22,7 +22,6 @@ public sealed partial class TestPair
         var tileDefinitionManager = Server.ResolveDependency<ITileDefinitionManager>();
 
         var mapData = new TestMapData();
-        TestMap = mapData;
         await Server.WaitPost(() =>
         {
             mapData.MapUid = Server.System<SharedMapSystem>().CreateMap(out mapData.MapId, runMapInit: initialized);
@@ -36,13 +35,17 @@ public sealed partial class TestPair
         });
 
         if (!Settings.Connected)
+        {
+            TestMap = mapData;
             return mapData;
+        }
 
         await RunTicksSync(10);
         mapData.CMapUid = ToClientUid(mapData.MapUid);
         mapData.CGridUid = ToClientUid(mapData.Grid);
         mapData.CGridCoords = new EntityCoordinates(mapData.CGridUid, 0, 0);
 
+        TestMap = mapData;
         return mapData;
     }
 
