@@ -19,6 +19,14 @@
       "directions": 4
     },
     {
+      "name": "equipped-MASK-vox",
+      "directions": 4
+    },
+    {
+      "name": "up-equipped-MASK-vox",
+      "directions": 4
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },
@@ -48,10 +56,6 @@
     },
     {
       "name": "equipped-MASK-possum",
-      "directions": 4
-    },
-    {
-      "name": "equipped-MASK-vox",
       "directions": 4
     },
     {
