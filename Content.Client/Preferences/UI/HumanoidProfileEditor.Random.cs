@@ -5,6 +5,8 @@ namespace Content.Client.Preferences.UI
 {
     public sealed partial class HumanoidProfileEditor
     {
+        private readonly IPrototypeManager _prototypeManager;
+
         private void RandomizeEverything()
         {
             Profile = HumanoidCharacterProfile.Random();

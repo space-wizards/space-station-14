@@ -58,7 +58,7 @@ public class SpawnEquipDeleteBenchmark
             for (var i = 0; i < N; i++)
             {
                 _entity = server.EntMan.SpawnAttachedTo(Mob, _coords);
-                _spawnSys.EquipStartingGear(_entity, _gear);
+                _spawnSys.EquipStartingGear(_entity, _gear, null);
                 server.EntMan.DeleteEntity(_entity);
             }
         });
