@@ -18,10 +18,12 @@ public sealed partial class TestPair
     [MemberNotNull(nameof(TestMap))]
     public async Task<TestMapData> CreateTestMap(bool initialized = true, string tile = "Plating")
     {
+        var mapData = new TestMapData();
+        TestMap = mapData;
         await Server.WaitIdleAsync();
         var tileDefinitionManager = Server.ResolveDependency<ITileDefinitionManager>();
 
-        var mapData = new TestMapData();
+        TestMap = mapData;
         await Server.WaitPost(() =>
         {
             mapData.MapUid = Server.System<SharedMapSystem>().CreateMap(out mapData.MapId, runMapInit: initialized);
@@ -34,11 +36,9 @@ public sealed partial class TestPair
             mapData.Tile = mapData.Grid.Comp.GetAllTiles().First();
         });
 
+        TestMap = mapData;
         if (!Settings.Connected)
-        {
-            TestMap = mapData;
             return mapData;
-        }
 
         await RunTicksSync(10);
         mapData.CMapUid = ToClientUid(mapData.MapUid);
