@@ -15,7 +15,6 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
     public LobbyCharacterPreviewPanel()
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
         UserInterfaceManager.GetUIController<LobbyUIController>().SetPreviewPanel(this);
     }
 

@@ -37,7 +37,6 @@ namespace Content.Client.Preferences.UI
     public sealed partial class HumanoidProfileEditor : BoxContainer
     {
         private readonly IClientPreferencesManager _preferencesManager;
-        private readonly IEntityManager _entManager;
         private readonly IPrototypeManager _prototypeManager;
         private readonly MarkingManager _markingManager;
         private readonly JobRequirementsManager _requirements;
@@ -89,7 +88,6 @@ namespace Content.Client.Preferences.UI
         public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager, IConfigurationManager configurationManager)
         {
             RobustXamlLoader.Load(this);
-            _entManager = IoCManager.Resolve<IEntityManager>();
             _prototypeManager = prototypeManager;
             _preferencesManager = preferencesManager;
             _markingManager = IoCManager.Resolve<MarkingManager>();
