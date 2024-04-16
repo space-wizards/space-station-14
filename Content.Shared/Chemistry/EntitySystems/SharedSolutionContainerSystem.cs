@@ -15,6 +15,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Robust.Shared.Timing;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -51,6 +52,7 @@ public partial record struct SolutionOverflowEvent(Entity<SolutionComponent> Sol
 [UsedImplicitly]
 public abstract partial class SharedSolutionContainerSystem : EntitySystem
 {
+    [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
     [Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
@@ -451,6 +453,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     {
         var (uid, comp) = soln;
         var solution = comp.Solution;
+
+        // prevent issues where removing reagents from shared causes the amount to be removed multiple times.
+        if (!GameTiming.IsFirstTimePredicted)
+        {
+            return solution.GetReagentQuantity(reagentQuantity.Reagent) >= reagentQuantity.Quantity;
+        }
 
         var quant = solution.RemoveReagent(reagentQuantity);
         if (quant <= FixedPoint2.Zero)
