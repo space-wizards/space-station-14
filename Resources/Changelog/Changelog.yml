@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Repo
-  changes:
-  - message: AFK admins will trigger the SOS in aHelp relay.
-    type: Tweak
-  id: 5860
-  time: '2024-02-01T13:03:50.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24482
 - author: Nopey
   changes:
   - message: Many belts and the plant bag no longer produce an erroneous "Can't insert"
@@ -3837,3 +3830,10 @@
   id: 6359
   time: '2024-04-16T18:48:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27012
+- author: DEATHB4DEFEAT, Dutch-VanDerLinde, metalgearsloth and musicmanvr
+  changes:
+  - message: Added loadouts
+    type: Add
+  id: 6360
+  time: '2024-04-16T19:57:41.736477+00:00'
+  url: null
