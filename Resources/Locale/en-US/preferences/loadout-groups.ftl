@@ -135,6 +135,7 @@ loadout-group-chief-medical-officer-outerclothing = Chief Medical Officer outer 
 loadout-group-chief-medical-officer-backpack = Chief Medical Officer backpack
 loadout-group-chief-medical-officer-neck = Chief Medical Officer neck
 loadout-group-chief-medical-officer-gloves = Chief Medical Officer gloves
+loadout-group-chief-medical-officier-mask = Chief Medical Officer mask
 
 loadout-group-medical-doctor-head = Medical Doctor head
 loadout-group-medical-doctor-jumpsuit = Medical Doctor jumpsuit
@@ -142,6 +143,7 @@ loadout-group-medical-doctor-outerclothing = Medical Doctor outer clothing
 loadout-group-medical-doctor-backpack = Medical Doctor backpack
 loadout-group-medical-doctor-id = Medical Doctor ID
 loadout-group-medical-doctor-gloves = Medical Doctor gloves
+loadout-group-medical-doctor-mask = Medical Doctor mask
 
 loadout-group-medical-intern-jumpsuit = Medical intern jumpsuit
 
@@ -149,12 +151,14 @@ loadout-group-chemist-jumpsuit = Chemist jumpsuit
 loadout-group-chemist-outerclothing = Chemist outer clothing
 loadout-group-chemist-backpack = Chemist backpack
 loadout-group-chemist-gloves = Chemist gloves
+loadout-group-chemist-mask = Chemist mask
 
 loadout-group-paramedic-head = Paramedic head
 loadout-group-paramedic-jumpsuit = Paramedic jumpsuit
 loadout-group-paramedic-outerclothing = Paramedic outer clothing
 loadout-group-paramedic-backpack = Paramedic backpack
 loadout-group-paramedic-gloves = Paramedic gloves
+loadout-group-paramedic-mask = Paramedic mask
 
 # Wildcards
 loadout-group-reporter-jumpsuit = Reporter jumpsuit

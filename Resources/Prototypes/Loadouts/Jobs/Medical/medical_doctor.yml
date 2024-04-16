@@ -220,3 +220,13 @@
   id: GlovesNitrile
   equipment:
     gloves: ClothingHandsGlovesNitrile
+
+#Masks
+- type: loadout
+  id: SterileMask
+  equipment: SterileMask
+
+- type: startingGear
+  id: SterileMask
+  equipment:
+    mask: ClothingMaskSterile

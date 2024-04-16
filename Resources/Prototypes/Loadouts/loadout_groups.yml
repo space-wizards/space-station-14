@@ -801,6 +801,13 @@
   - GlovesNitrile
 
 - type: loadoutGroup
+  id: ChiefMedicalOfficerMask
+  name: loadout-group-chief-medical-officer-mask
+  minLimit: 0
+  loadouts:
+  - SterileMask
+
+- type: loadoutGroup
   id: MedicalDoctorHead
   name: loadout-group-medical-doctor-head
   minLimit: 0
@@ -855,6 +862,13 @@
   - GlovesNitrile
 
 - type: loadoutGroup
+  id: MedicalDoctorMask
+  name: loadout-group-medical-doctor-mask
+  minLimit: 0
+  loadouts:
+  - SterileMask
+
+- type: loadoutGroup
   id: MedicalInternJumpsuit
   name: loadout-group-medical-intern-jumpsuit
   loadouts:
@@ -893,6 +907,13 @@
   - GlovesNitrile
 
 - type: loadoutGroup
+  id: ChemistMask
+  name: loadout-group-chemist-mask
+  minLimit: 0
+  loadouts:
+  - SterileMask
+
+- type: loadoutGroup
   id: ParamedicHead
   name: loadout-group-paramedic-head
   minLimit: 0
@@ -928,6 +949,13 @@
   loadouts:
   - GlovesLatex
   - GlovesNitrile
+
+- type: loadoutGroup
+  id: ParamedicMask
+  name: loadout-group-paramedic-mask
+  minLimit: 0
+  loadouts:
+  - SterileMask
 
 # Wildcards
 - type: loadoutGroup

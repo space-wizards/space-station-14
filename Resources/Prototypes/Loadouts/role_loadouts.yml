@@ -258,6 +258,7 @@
   id: JobChiefMedicalOfficer
   groups:
   - ChiefMedicalOfficerHead
+  - ChiefMedicalOfficerMask
   - ChiefMedicalOfficerJumpsuit
   - ChiefMedicalOfficerGloves
   - ChiefMedicalOfficerOuterClothing
@@ -269,6 +270,7 @@
   id: JobMedicalDoctor
   groups:
   - MedicalDoctorHead
+  - MedicalDoctorMask
   - MedicalDoctorJumpsuit
   - MedicalDoctorGloves
   - MedicalBackpack
@@ -286,6 +288,7 @@
 - type: roleLoadout
   id: JobChemist
   groups:
+  - ChemistMask
   - ChemistJumpsuit
   - ChemistGloves
   - ChemistOuterClothing
@@ -296,6 +299,7 @@
   id: JobParamedic
   groups:
   - ParamedicHead
+  - ParamedicMask
   - ParamedicJumpsuit
   - ParamedicGloves
   - ParamedicOuterClothing
