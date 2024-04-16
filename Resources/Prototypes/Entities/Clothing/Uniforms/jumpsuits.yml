@@ -45,6 +45,11 @@
     controlsLocked: false
     randomMode: false
     mode: SensorCords
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+    - MonkeyWearable
 
 - type: entity
   parent: ClothingUniformBase
