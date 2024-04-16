@@ -19,6 +19,6 @@
     shoes: ClothingShoesBootsSalvage
     id: SalvagePDA
     gloves: ClothingHandsGlovesFingerless # GreyStation
+    ears: ClothingHeadsetCargo
   satchel: ClothingBackpackSatchelSalvageFilled
   duffelbag: ClothingBackpackDuffelSalvageFilled
-    ears: ClothingHeadsetCargo
