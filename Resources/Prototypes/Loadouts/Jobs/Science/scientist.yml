@@ -104,42 +104,6 @@
   equipment:
     back: ClothingBackpackDuffelScienceFilled
 
-- type: loadout
-  id: SeniorResearcherBackpack
-  equipment: SeniorResearcherBackpack
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorResearcher
-
-- type: startingGear
-  id: SeniorResearcherBackpack
-  equipment:
-    back: ClothingBackpackScienceFilled
-
-- type: loadout
-  id: SeniorResearcherSatchel
-  equipment: SeniorResearcherSatchel
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorResearcher
-
-- type: startingGear
-  id: SeniorResearcherSatchel
-  equipment:
-    back: ClothingBackpackSatchelScienceFilled
-
-- type: loadout
-  id: SeniorResearcherDuffel
-  equipment: SeniorResearcherDuffel
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorResearcher
-
-- type: startingGear
-  id: SeniorResearcherDuffel
-  equipment:
-    back: ClothingBackpackDuffelScienceFilled
-
 # OuterClothing
 - type: loadout
   id: RegularLabCoat

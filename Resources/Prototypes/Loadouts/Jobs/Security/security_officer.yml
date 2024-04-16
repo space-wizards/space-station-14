@@ -112,42 +112,6 @@
   equipment:
     back: ClothingBackpackDuffelSecurityFilled
 
-- type: loadout
-  id: SeniorOfficerBackpack
-  equipment: SeniorOfficerBackpack
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorOfficer
-
-- type: startingGear
-  id: SeniorOfficerBackpack
-  equipment:
-    back: ClothingBackpackSecurityFilled
-
-- type: loadout
-  id: SeniorOfficerSatchel
-  equipment: SeniorOfficerSatchel
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorOfficer
-
-- type: startingGear
-  id: SeniorOfficerSatchel
-  equipment:
-    back: ClothingBackpackSatchelSecurityFilled
-
-- type: loadout
-  id: SeniorOfficerDuffel
-  equipment: SeniorOfficerDuffel
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorOfficer
-
-- type: startingGear
-  id: SeniorOfficerDuffel
-  equipment:
-    back: ClothingBackpackDuffelSecurityFilled
-
 # PDA
 - type: loadout
   id: SecurityPDA
