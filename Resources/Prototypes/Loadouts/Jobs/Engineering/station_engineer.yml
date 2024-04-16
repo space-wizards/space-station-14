@@ -165,6 +165,15 @@
   id: StationEngineerOuterVest
   equipment:
     outerClothing: ClothingOuterVestHazard
+  
+- type: loadout
+  id: StationEngineerWintercoat
+  equipment: StationEngineerWintercoat
+
+- type: startingGear
+  id: StationEngineerWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterEngi
 
 # ID
 - type: loadout

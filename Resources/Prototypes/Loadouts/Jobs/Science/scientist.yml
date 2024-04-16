@@ -160,6 +160,15 @@
     outerClothing: ClothingOuterCoatRnd
 
 - type: loadout
+  id: ScienceWintercoat
+  equipment: ScienceWintercoat
+
+- type: startingGear
+  id: ScienceWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterSci
+
+- type: loadout
   id: SeniorResearcherLabCoat
   equipment: SeniorResearcherLabCoat
   effects:

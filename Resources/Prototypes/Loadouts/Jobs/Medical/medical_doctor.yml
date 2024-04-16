@@ -203,6 +203,14 @@
     back: ClothingBackpackDuffelMedicalFilled
 
 # OuterClothing
+- type: loadout
+  id: MedicalDoctorWintercoat
+  equipment: MedicalDoctorWintercoat
+
+- type: startingGear
+  id: MedicalDoctorWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterMed
 
 - type: loadout
   id: SeniorPhysicianLabCoat

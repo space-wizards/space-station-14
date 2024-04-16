@@ -80,3 +80,13 @@
   id: FingerlessInsulatedGloves
   equipment:
     gloves: ClothingHandsGlovesFingerlessInsulated
+
+# Outerclothing
+- type: loadout
+  id: PassengerWintercoat
+  equipment: PassengerWintercoat
+
+- type: startingGear
+  id: PassengerWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterCoat

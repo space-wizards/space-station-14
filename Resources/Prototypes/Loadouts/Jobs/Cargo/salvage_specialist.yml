@@ -25,3 +25,13 @@
   id: SalvageSpecialistDuffel
   equipment:
     back: ClothingBackpackDuffelSalvageFilled
+
+# OuterClothing
+- type: loadout
+  id: SalvageSpecialistWintercoat
+  equipment: SalvageSpecialistWintercoat
+
+- type: startingGear
+  id: SalvageSpecialistWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterMiner

@@ -83,3 +83,12 @@
   id: ChiefMedicalOfficerLabCoat
   equipment:
     outerClothing: ClothingOuterCoatLabCmo
+
+- type: loadout
+  id: ChiefMedicalOfficerWintercoat
+  equipment: ChiefMedicalOfficerWintercoat
+
+- type: startingGear
+  id: ChiefMedicalOfficerWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterCMO

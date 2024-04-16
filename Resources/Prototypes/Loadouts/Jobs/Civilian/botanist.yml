@@ -82,3 +82,12 @@
   id: BotanistApron
   equipment:
     outerClothing: ClothingOuterApronBotanist
+
+- type: loadout
+  id: BotanistWintercoat
+  equipment: BotanistWintercoat
+
+- type: startingGear
+  id: BotanistWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterHydro

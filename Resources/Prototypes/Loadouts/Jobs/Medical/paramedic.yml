@@ -64,3 +64,12 @@
   id: ParamedicWindbreaker
   equipment:
     outerClothing: ClothingOuterCoatParamedicWB
+
+- type: loadout
+  id: ParamedicWintercoat
+  equipment: ParamedicWintercoat
+
+- type: startingGear
+  id: ParamedicWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterPara

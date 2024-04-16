@@ -6,6 +6,7 @@
   - CaptainNeck
   - CaptainJumpsuit
   - CaptainBackpack
+  - CaptainOuterClothing
   - Trinkets
 
 - type: roleLoadout
@@ -15,6 +16,7 @@
   - HoPNeck
   - HoPJumpsuit
   - HoPBackpack
+  - HoPOuterClothing
   - Trinkets
 
 # Civilian
@@ -25,6 +27,7 @@
   - CommonBackpack
   - PassengerFace
   - PassengerGloves
+  - PassengerOuterClothing
   - Trinkets
 
 - type: roleLoadout
@@ -85,6 +88,7 @@
   - JanitorHead
   - JanitorJumpsuit
   - CommonBackpack
+  - JanitorOuterClothing
   - Trinkets
 
 - type: roleLoadout
@@ -102,6 +106,7 @@
   - ClownHead
   - ClownJumpsuit
   - ClownBackpack
+  - ClownOuterClothing
   - ClownShoes
   - Trinkets
 
@@ -112,12 +117,14 @@
   - MimeMask
   - MimeJumpsuit
   - MimeBackpack
+  - MimeOuterClothing
   - Trinkets
 
 - type: roleLoadout
   id: JobMusician
   groups:
   - MusicianBackpack
+  - MusicianOuterClothing
   - Trinkets
 
 # Cargo
@@ -128,6 +135,7 @@
   - QuartermasterNeck
   - QuartermasterJumpsuit
   - QuartermasterBackpack
+  - QuartermasterOuterClothing
   - Trinkets
 
 - type: roleLoadout
@@ -136,12 +144,14 @@
   - CargoTechnicianHead
   - CargoTechnicianJumpsuit
   - CargoTechnicianBackpack
+  - CargoTechnicianOuterClothing
   - Trinkets
 
 - type: roleLoadout
   id: JobSalvageSpecialist
   groups:
   - SalvageSpecialistBackpack
+  - SalvageSpecialistOuterClothing
   - Trinkets
 
 # Engineering
@@ -152,6 +162,7 @@
   - ChiefEngineerJumpsuit
   - ChiefEngineerBackpack
   - ChiefEngineerNeck
+  - ChiefEngineerOuterClothing
   - Trinkets
 
 - type: roleLoadout
@@ -176,6 +187,7 @@
   groups:
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianBackpack
+  - AtmosphericTechnicianOuterClothing
   - Trinkets
 
 # Science
@@ -233,6 +245,7 @@
   - SecurityHead
   - SecurityJumpsuit
   - SecurityBackpack
+  - SecurityOuterClothing
   - SecurityPDA
   - Trinkets
 
@@ -259,8 +272,8 @@
   groups:
   - ChiefMedicalOfficerHead
   - ChiefMedicalOfficerJumpsuit
-  - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerBackpack
+  - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerNeck
   - Trinkets
 

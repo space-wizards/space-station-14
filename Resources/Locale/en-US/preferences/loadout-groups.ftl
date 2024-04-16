@@ -6,18 +6,20 @@ loadout-group-captain-head = Captain head
 loadout-group-captain-jumpsuit = Captain jumpsuit
 loadout-group-captain-neck = Captain neck
 loadout-group-captain-backpack = Captain backpack
+loadout-group-captain-outerclothing = Captain outer clothing
 
 loadout-group-hop-head = Head of Personnel head
 loadout-group-hop-jumpsuit = Head of Personnel jumpsuit
 loadout-group-hop-neck = Head of Personnel neck
 loadout-group-hop-backpack = Head of Personnel backpack
-
+loadout-group-hop-outerclothing = Head of Personnel outer clothing
 
 # Civilian
 loadout-group-passenger-jumpsuit = Passenger jumpsuit
 loadout-group-passenger-mask = Passenger mask
 loadout-group-passenger-gloves = Passenger gloves
 loadout-group-passenger-backpack = Passenger backpack
+loadout-group-passenger-outerclothing = Passenger outer clothing
 
 loadout-group-bartender-head = Bartender head
 loadout-group-bartender-jumpsuit = Bartender jumpsuit
@@ -42,6 +44,7 @@ loadout-group-chaplain-neck = Chaplain neck
 
 loadout-group-janitor-head = Janitor head
 loadout-group-janitor-jumpsuit = Janitor jumpsuit
+loadout-group-janitor-outerclothing = Janitor outer clothing
 
 loadout-group-botanist-head = Botanist head
 loadout-group-botanist-jumpsuit = Botanist jumpsuit
@@ -51,31 +54,38 @@ loadout-group-botanist-outerclothing = Botanist outer clothing
 loadout-group-clown-head = Clown head
 loadout-group-clown-jumpsuit = Clown jumpsuit
 loadout-group-clown-backpack = Clown backpack
+loadout-group-clown-outerclothing = Clown outer clothing
 loadout-group-clown-shoes = Clown shoes
 
 loadout-group-mime-head = Mime head
 loadout-group-mime-mask = Mime mask
 loadout-group-mime-jumpsuit = Mime jumpsuit
 loadout-group-mime-backpack = Mime backpack
+loadout-group-mime-outerclothing = Mime outer clothing
 
 loadout-group-musician-backpack = Musician backpack
+loadout-group-musician-outerclothing = Musician clothing
 
 # Cargo
 loadout-group-quartermaster-head = Quartermaster head
 loadout-group-quartermaster-jumpsuit = Quartermaster jumpsuit
 loadout-group-quartermaster-backpack = Quartermaster backpack
 loadout-group-quartermaster-neck = Quartermaster neck
+loadout-group-quartermaster-outerclothing = Quartermaster outer clothing
 
-loadout-group-cargo-technician-head = Technician head
-loadout-group-cargo-technician-jumpsuit = Technician jumpsuit
-loadout-group-cargo-technician-backpack = Technician backpack
+loadout-group-cargo-technician-head = Cargo Technician head
+loadout-group-cargo-technician-jumpsuit = Cargo Technician jumpsuit
+loadout-group-cargo-technician-backpack = Cargo Technician backpack
+loadout-group-cargo-technician-outerclothing = Cargo Technician outer clothing
 
 loadout-group-salvage-specialist-backpack = Salvage Specialist backpack
+loadout-group-salvage-specialist-outerclothing = Salvage Specialist outer clothing
 
 # Engineering
 loadout-group-chief-engineer-head = Chief Engineer head
 loadout-group-chief-engineer-jumpsuit = Chief Engineer jumpsuit
 loadout-group-chief-engineer-backpack = Chief Engineer backpack
+loadout-group-chief-engineer-outerclothing = Chief Engineer outer clothing
 loadout-group-chief-engineer-neck = Chief Engineer neck
 
 loadout-group-technical-assistant-jumpsuit = Technical Assistant jumpsuit
@@ -88,6 +98,7 @@ loadout-group-station-engineer-id = Station Engineer ID
 
 loadout-group-atmospheric-technician-jumpsuit = Atmospheric Technician jumpsuit
 loadout-group-atmospheric-technician-backpack = Atmospheric Technician backpack
+loadout-group-atmospheric-technician-outerclothing = Atmospheric Technician outer clothing
 
 # Science
 loadout-group-research-director-head = Research Director head
@@ -118,6 +129,7 @@ loadout-group-warden-outerclothing = Warden outer clothing
 loadout-group-security-head = Security head
 loadout-group-security-jumpsuit = Security jumpsuit
 loadout-group-security-backpack = Security backpack
+loadout-group-security-outerclothing = Security outer clothing
 loadout-group-security-id = Security ID
 
 loadout-group-detective-head = Detective head
