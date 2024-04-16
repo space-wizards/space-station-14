@@ -64,7 +64,7 @@ loadout-group-mime-backpack = Mime backpack
 loadout-group-mime-outerclothing = Mime outer clothing
 
 loadout-group-musician-backpack = Musician backpack
-loadout-group-musician-outerclothing = Musician clothing
+loadout-group-musician-outerclothing = Musician outer clothing
 
 # Cargo
 loadout-group-quartermaster-head = Quartermaster head
