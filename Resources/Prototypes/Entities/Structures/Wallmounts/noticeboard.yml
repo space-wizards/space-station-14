@@ -2,6 +2,8 @@
   id: NoticeBoard
   name: notice board
   description: Is there a job for a witcher?
+  placement:
+    mode: SnapgridCenter
   components:
   - type: WallMount
   - type: Sprite
@@ -53,3 +55,9 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
+  - type: Tag
+    tags:
+    - Wooden
+  - type: Construction
+    graph: NoticeBoard
+    node: noticeBoard

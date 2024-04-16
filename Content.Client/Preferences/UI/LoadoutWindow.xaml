@@ -1,0 +1,10 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+         SetSize="800 800"
+         MinSize="800 64">
+        <VerticalTabContainer Name="LoadoutGroupsContainer"
+                      VerticalExpand="True"
+                      HorizontalExpand="True">
+        </VerticalTabContainer>
+</controls:FancyWindow>
