@@ -65,7 +65,7 @@ namespace Content.Client.Preferences.UI
         private readonly Dictionary<string, BoxContainer> _jobCategories;
         // Mildly hacky, as I don't trust prototype order to stay consistent and don't want the UI to break should a new one get added mid-edit. --moony
         private readonly List<SpeciesPrototype> _speciesList;
-        private readonly List<AntagPreferenceSelector> _antagPreferences;
+        private readonly List<AntagPreferenceSelector> _antagPreferences = new();
         private readonly List<TraitPreferenceSelector> _traitPreferences;
 
         private SpriteView _previewSpriteView => CSpriteView;
@@ -342,40 +342,15 @@ namespace Content.Client.Preferences.UI
             _jobPriorities = new List<JobPrioritySelector>();
             _jobCategories = new Dictionary<string, BoxContainer>();
             _requirements = IoCManager.Resolve<JobRequirementsManager>();
+            // TODO: Move this to the LobbyUIController instead of being spaghetti everywhere.
+            _requirements.Updated += UpdateAntagRequirements;
             _requirements.Updated += UpdateRoleRequirements;
+            UpdateAntagRequirements();
             UpdateRoleRequirements();
 
             #endregion Jobs
 
-            #region Antags
-
             _tabContainer.SetTabTitle(2, Loc.GetString("humanoid-profile-editor-antags-tab"));
-
-            _antagPreferences = new List<AntagPreferenceSelector>();
-            var btnGroup = new ButtonGroup();
-
-            foreach (var antag in prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => Loc.GetString(a.Name)))
-            {
-                if (!antag.SetPreference)
-                    continue;
-
-                var selector = new AntagPreferenceSelector(antag, btnGroup);
-                _antagList.AddChild(selector);
-                _antagPreferences.Add(selector);
-                if (selector.Disabled)
-                {
-                    Profile = Profile?.WithAntagPreference(antag.ID, false);
-                    IsDirty = true;
-                }
-
-                selector.PreferenceChanged += preference =>
-                {
-                    Profile = Profile?.WithAntagPreference(antag.ID, preference);
-                    IsDirty = true;
-                };
-            }
-
-            #endregion Antags
 
             #region Traits
 
@@ -492,6 +467,38 @@ namespace Content.Client.Preferences.UI
             _previewSpriteView.SetEntity(value);
         }
 
+        private void UpdateAntagRequirements()
+        {
+            _antagList.DisposeAllChildren();
+            _antagPreferences.Clear();
+            var btnGroup = new ButtonGroup();
+
+            foreach (var antag in _prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => Loc.GetString(a.Name)))
+            {
+                if (!antag.SetPreference)
+                    continue;
+
+                var selector = new AntagPreferenceSelector(antag, btnGroup)
+                {
+                    Margin = new Thickness(3f, 3f, 3f, 0f),
+                };
+                _antagList.AddChild(selector);
+                _antagPreferences.Add(selector);
+                if (selector.Disabled)
+                {
+                    Profile = Profile?.WithAntagPreference(antag.ID, false);
+                    IsDirty = true;
+                }
+
+                selector.PreferenceChanged += preference =>
+                {
+                    Profile = Profile?.WithAntagPreference(antag.ID, preference);
+                    IsDirty = true;
+                };
+            }
+
+        }
+
         private void UpdateRoleRequirements()
         {
             _jobList.DisposeAllChildren();
@@ -556,7 +563,10 @@ namespace Content.Client.Preferences.UI
                 {
                     RoleLoadout? loadout = null;
                     Profile?.Loadouts.TryGetValue(LoadoutSystem.GetJobPrototype(job.ID), out loadout);
-                    var selector = new JobPrioritySelector(loadout, job, jobLoadoutGroup, _prototypeManager);
+                    var selector = new JobPrioritySelector(loadout, job, jobLoadoutGroup, _prototypeManager)
+                    {
+                        Margin = new Thickness(3f, 3f, 3f, 0f),
+                    };
 
                     if (!_requirements.IsAllowed(job, out var reason))
                     {
@@ -683,6 +693,7 @@ namespace Content.Client.Preferences.UI
 
             var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
             controller.PreviewDummyUpdated -= OnDummyUpdate;
+            _requirements.Updated -= UpdateAntagRequirements;
             _requirements.Updated -= UpdateRoleRequirements;
             _preferencesManager.OnServerDataLoaded -= LoadServerData;
         }
@@ -692,6 +703,7 @@ namespace Content.Client.Preferences.UI
             Profile = (HumanoidCharacterProfile) _preferencesManager.Preferences!.SelectedCharacter;
             CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
 
+            UpdateAntagRequirements();
             UpdateRoleRequirements();
             UpdateControls();
         }

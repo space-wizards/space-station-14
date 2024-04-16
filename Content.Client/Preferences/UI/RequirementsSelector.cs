@@ -41,7 +41,8 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
         {
             FirstButtonStyle = StyleBase.ButtonOpenRight,
             ButtonStyle = StyleBase.ButtonOpenBoth,
-            LastButtonStyle = StyleBase.ButtonOpenLeft
+            LastButtonStyle = StyleBase.ButtonOpenLeft,
+            HorizontalExpand = true,
         };
         //Override default radio option button width
         Options.GenerateItem = GenerateButton;
@@ -60,6 +61,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
         {
             Visible = false,
             HorizontalExpand = true,
+            HasMargins = false,
             MouseFilter = MouseFilterMode.Stop,
             Children =
             {
@@ -101,12 +103,12 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
         var loadoutWindowBtn = new Button()
         {
             Text = Loc.GetString("loadout-window"),
-            HorizontalExpand = true,
+            HorizontalAlignment = HAlignment.Right,
             Group = _loadoutGroup,
+            Margin = new Thickness(3f, 0f, 0f, 0f),
         };
 
         var collection = IoCManager.Instance!;
-        var entManager = collection.Resolve<IEntityManager>();
         var protoManager = collection.Resolve<IPrototypeManager>();
 
         // If no loadout found then disabled button
@@ -171,6 +173,8 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                     _loadoutWindow.OnClose += () =>
                     {
                         loadoutWindowBtn.Pressed = false;
+                        _loadoutWindow?.Dispose();
+                        _loadoutWindow = null;
                     };
                 }
                 else
@@ -211,7 +215,8 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
         return new Button
         {
             Text = text,
-            MinWidth = 90
+            MinWidth = 90,
+            HorizontalExpand = true,
         };
     }
 }
