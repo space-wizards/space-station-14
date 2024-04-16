@@ -259,6 +259,7 @@
   groups:
   - ChiefMedicalOfficerHead
   - ChiefMedicalOfficerJumpsuit
+  - ChiefMedicalOfficerGloves
   - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerBackpack
   - ChiefMedicalOfficerNeck
@@ -269,6 +270,7 @@
   groups:
   - MedicalDoctorHead
   - MedicalDoctorJumpsuit
+  - MedicalDoctorGloves
   - MedicalBackpack
   - MedicalDoctorOuterClothing
   - MedicalDoctorPDA
@@ -285,6 +287,7 @@
   id: JobChemist
   groups:
   - ChemistJumpsuit
+  - ChemistGloves
   - ChemistOuterClothing
   - ChemistBackpack
   - Trinkets
@@ -294,6 +297,7 @@
   groups:
   - ParamedicHead
   - ParamedicJumpsuit
+  - ParamedicGloves
   - ParamedicOuterClothing
   - ParamedicBackpack
   - Trinkets

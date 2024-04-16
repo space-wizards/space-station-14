@@ -64,3 +64,22 @@
   id: ParamedicWindbreaker
   equipment:
     outerClothing: ClothingOuterCoatParamedicWB
+
+# Gloves
+- type: loadout
+  id: GlovesLatex
+  equipment: GlovesLatex
+
+- type: startingGear
+  id: GlovesLatex
+  equipment:
+    gloves: ClothingHandsGlovesLatex
+
+- type: loadout
+  id: GlovesNitrile
+  equipment: GlovesNitrile
+
+- type: startingGear
+  id: GlovesNitrile
+  equipment:
+    gloves: ClothingHandsGlovesNitrile

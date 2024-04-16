@@ -793,6 +793,14 @@
   - ChiefMedicalOfficerMantle
 
 - type: loadoutGroup
+  id: ChiefMedicalOfficerGloves
+  name: loadout-group-chief-medical-officer-gloves
+  minLimit: 0
+  loadouts:
+  - GlovesLatex
+  - GlovesNitrile
+
+- type: loadoutGroup
   id: MedicalDoctorHead
   name: loadout-group-medical-doctor-head
   minLimit: 0
@@ -839,6 +847,14 @@
   - SeniorPhysicianPDA
 
 - type: loadoutGroup
+  id: MedicalDoctorGloves
+  name: loadout-group-medical-doctor-gloves
+  minLimit: 0
+  loadouts:
+  - GlovesLatex
+  - GlovesNitrile
+
+- type: loadoutGroup
   id: MedicalInternJumpsuit
   name: loadout-group-medical-intern-jumpsuit
   loadouts:
@@ -869,6 +885,14 @@
   - ChemistDuffel
 
 - type: loadoutGroup
+  id: ChemistGloves
+  name: loadout-group-chemist-gloves
+  minLimit: 0
+  loadouts:
+  - GlovesLatex
+  - GlovesNitrile
+
+- type: loadoutGroup
   id: ParamedicHead
   name: loadout-group-paramedic-head
   minLimit: 0
@@ -896,6 +920,14 @@
   - ParamedicBackpack
   - ParamedicSatchel
   - ParamedicDuffel
+
+- type: loadoutGroup
+  id: ParamedicGloves
+  name: loadout-group-paramedic-gloves
+  minLimit: 0
+  loadouts:
+  - GlovesLatex
+  - GlovesNitrile
 
 # Wildcards
 - type: loadoutGroup
