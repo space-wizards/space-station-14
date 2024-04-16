@@ -110,7 +110,7 @@ public abstract class SharedMindSystem : EntitySystem
             DebugTools.Assert(mind.UserId == user);
 #if DEBUG
             if (_playerMan.GetPlayerData(user).ContentDataUncast is ContentPlayerData data)
-                DebugTools.AssertEqual(data.Mind, GetMind(mindIdValue));
+                DebugTools.AssertEqual(data.Mind, mindIdValue);
 #endif
             mindId = mindIdValue;
             return true;
