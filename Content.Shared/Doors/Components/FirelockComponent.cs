@@ -41,6 +41,19 @@ namespace Content.Shared.Doors.Components
         public bool AlarmAutoClose = true;
 
         /// <summary>
+        /// The cooldown duration before a firelock can automatically close due to a hazardous environment after it has
+        /// been pried open. Measured in seconds.
+        /// </summary>
+        [DataField]
+        public TimeSpan EmergencyCloseCooldownDuration = TimeSpan.FromSeconds(2);
+
+        /// <summary>
+        /// When the firelock will be allowed to automatically close again due to a hazardous environment.
+        /// </summary>
+        [DataField]
+        public TimeSpan? EmergencyCloseCooldown;
+
+        /// <summary>
         /// Whether the firelock can open, or is locked due to its environment.
         /// </summary>
         public bool IsLocked => Pressure || Fire;

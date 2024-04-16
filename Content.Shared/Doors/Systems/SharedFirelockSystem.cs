@@ -2,6 +2,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Doors.Components;
 using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Doors.Systems;
 
@@ -11,6 +12,7 @@ public abstract class SharedFirelockSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
@@ -20,6 +22,7 @@ public abstract class SharedFirelockSystem : EntitySystem
 
         SubscribeLocalEvent<FirelockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
         SubscribeLocalEvent<FirelockComponent, GetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
+        SubscribeLocalEvent<FirelockComponent, PriedEvent>(OnAfterPried);
 
         // Visuals
         SubscribeLocalEvent<FirelockComponent, MapInitEvent>(UpdateVisuals);
@@ -57,16 +60,23 @@ public abstract class SharedFirelockSystem : EntitySystem
             if (!Resolve(uid, ref firelock, ref door))
                 return false;
 
-            if (door.State == DoorState.Open)
+            if (door.State != DoorState.Open ||
+                firelock.EmergencyCloseCooldown != null &&
+                _gameTiming.CurTime < firelock.EmergencyCloseCooldown)
+                return false;
+
+            if (_doorSystem.TryClose(uid, door))
             {
-                if (_doorSystem.TryClose(uid, door))
-                {
-                    return _doorSystem.OnPartialClose(uid, door);
-                }
+                return _doorSystem.OnPartialClose(uid, door);
             }
             return false;
         }
 
+
+        private void OnAfterPried(EntityUid uid, FirelockComponent component, ref PriedEvent args)
+        {
+            component.EmergencyCloseCooldown = _gameTiming.CurTime + component.EmergencyCloseCooldownDuration;
+        }
 
         #region Visuals
 
