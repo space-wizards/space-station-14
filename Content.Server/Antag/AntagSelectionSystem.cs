@@ -285,8 +285,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
 
         EntityManager.AddComponents(player, def.Components);
-        var pref = _pref.GetPreferencesOrNull(session?.UserId)?.SelectedCharacter as HumanoidCharacterProfile;
-        _stationSpawning.EquipStartingGear(player, def.StartingGear, pref);
+        _stationSpawning.EquipStartingGear(player, def.StartingGear);
         _inventory.SpawnItemsOnEntity(player, EntitySpawnCollection.GetSpawns(def.Equipment));
 
         if (session != null)

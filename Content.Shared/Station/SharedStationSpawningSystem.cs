@@ -23,12 +23,10 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     /// </summary>
     /// <param name="entity">Entity to load out.</param>
     /// <param name="startingGear">Starting gear to use.</param>
-    public void EquipStartingGear(EntityUid entity, StartingGearPrototype startingGear)
-    /// <param name="profile">Character profile to use, if any.</param>
-    public void EquipStartingGear(EntityUid entity, ProtoId<StartingGearPrototype>? startingGear, HumanoidCharacterProfile? profile)
+    public void EquipStartingGear(EntityUid entity, ProtoId<StartingGearPrototype>? startingGear)
     {
         var gearProto = startingGear != null ? PrototypeManager.Index(startingGear.Value) : null;
-        EquipStartingGear(entity, gearProto, profile);
+        EquipStartingGear(entity, gearProto);
     }
 
     /// <summary>
@@ -36,8 +34,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     /// </summary>
     /// <param name="entity">Entity to load out.</param>
     /// <param name="startingGear">Starting gear to use.</param>
-    /// <param name="profile">Character profile to use, if any.</param>
-    public void EquipStartingGear(EntityUid entity, StartingGearPrototype? startingGear, HumanoidCharacterProfile? profile)
+    public void EquipStartingGear(EntityUid entity, StartingGearPrototype? startingGear)
     {
         if (startingGear == null)
             return;
