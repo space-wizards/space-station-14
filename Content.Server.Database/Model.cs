@@ -56,8 +56,26 @@ namespace Content.Server.Database
                 .IsUnique();
 
             modelBuilder.Entity<Trait>()
-                        .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.TraitName})
-                        .IsUnique();
+                .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.TraitName})
+                .IsUnique();
+
+            modelBuilder.Entity<ProfileRoleLoadout>()
+                .HasOne(e => e.Profile)
+                .WithMany(e => e.Loadouts)
+                .HasForeignKey(e => e.ProfileId)
+                .IsRequired();
+
+            modelBuilder.Entity<ProfileLoadoutGroup>()
+                .HasOne(e => e.ProfileRoleLoadout)
+                .WithMany(e => e.Groups)
+                .HasForeignKey(e => e.ProfileRoleLoadoutId)
+                .IsRequired();
+
+            modelBuilder.Entity<ProfileLoadout>()
+                .HasOne(e => e.ProfileLoadoutGroup)
+                .WithMany(e => e.Loadouts)
+                .HasForeignKey(e => e.ProfileLoadoutGroupId)
+                .IsRequired();
 
             modelBuilder.Entity<Job>()
                 .HasIndex(j => j.ProfileId);
@@ -337,12 +355,12 @@ namespace Content.Server.Database
         public string FacialHairColor { get; set; } = null!;
         public string EyeColor { get; set; } = null!;
         public string SkinColor { get; set; } = null!;
-        public string Clothing { get; set; } = null!;
-        public string Backpack { get; set; } = null!;
         public int SpawnPriority { get; set; } = 0;
         public List<Job> Jobs { get; } = new();
         public List<Antag> Antags { get; } = new();
         public List<Trait> Traits { get; } = new();
+
+        public List<ProfileRoleLoadout> Loadouts { get; } = new();
 
         [Column("pref_unavailable")] public DbPreferenceUnavailableMode PreferenceUnavailable { get; set; }
 
@@ -386,6 +404,79 @@ namespace Content.Server.Database
 
         public string TraitName { get; set; } = null!;
     }
+
+    #region Loadouts
+
+    /// <summary>
+    /// Corresponds to a single role's loadout inside the DB.
+    /// </summary>
+    public class ProfileRoleLoadout
+    {
+        public int Id { get; set; }
+
+        public int ProfileId { get; set; }
+
+        public Profile Profile { get; set; } = null!;
+
+        /// <summary>
+        /// The corresponding role prototype on the profile.
+        /// </summary>
+        public string RoleName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Store the saved loadout groups. These may get validated and removed when loaded at runtime.
+        /// </summary>
+        public List<ProfileLoadoutGroup> Groups { get; set; } = new();
+    }
+
+    /// <summary>
+    /// Corresponds to a loadout group prototype with the specified loadouts attached.
+    /// </summary>
+    public class ProfileLoadoutGroup
+    {
+        public int Id { get; set; }
+
+        public int ProfileRoleLoadoutId { get; set; }
+
+        /// <summary>
+        /// The corresponding RoleLoadout that owns this.
+        /// </summary>
+        public ProfileRoleLoadout ProfileRoleLoadout { get; set; } = null!;
+
+        /// <summary>
+        /// The corresponding group prototype.
+        /// </summary>
+        public string GroupName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Selected loadout prototype. Null if none is set.
+        /// May get validated at runtime and updated to to the default.
+        /// </summary>
+        public List<ProfileLoadout> Loadouts { get; set; } = new();
+    }
+
+    /// <summary>
+    /// Corresponds to a selected loadout.
+    /// </summary>
+    public class ProfileLoadout
+    {
+        public int Id { get; set; }
+
+        public int ProfileLoadoutGroupId { get; set; }
+
+        public ProfileLoadoutGroup ProfileLoadoutGroup { get; set; } = null!;
+
+        /// <summary>
+        /// Corresponding loadout prototype.
+        /// </summary>
+        public string LoadoutName { get; set; } = string.Empty;
+
+        /*
+         * Insert extra data here like custom descriptions or colors or whatever.
+         */
+    }
+
+    #endregion
 
     public enum DbPreferenceUnavailableMode
     {

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Access.Systems;
 using Content.Server.DetailExaminable;
 using Content.Server.Humanoid;
@@ -10,10 +11,12 @@ using Content.Server.Station.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Clothing;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
@@ -86,7 +89,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
         if (station != null && profile != null)
         {
-            /// Try to call the character's preferred spawner first.
+            // Try to call the character's preferred spawner first.
             if (_spawnerCallbacks.TryGetValue(profile.SpawnPriority, out var preferredSpawner))
             {
                 preferredSpawner(ev);
@@ -101,9 +104,11 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             }
             else
             {
-                /// Call all of them in the typical order.
+                // Call all of them in the typical order.
                 foreach (var typicalSpawner in _spawnerCallbacks.Values)
+                {
                     typicalSpawner(ev);
+                }
             }
         }
 
@@ -134,7 +139,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         EntityUid? station,
         EntityUid? entity = null)
     {
-        _prototypeManager.TryIndex(job?.Prototype ?? string.Empty, out JobPrototype? prototype);
+        _prototypeManager.TryIndex(job?.Prototype ?? string.Empty, out var prototype);
 
         // If we're not spawning a humanoid, we're gonna exit early without doing all the humanoid stuff.
         if (prototype?.JobEntity != null)
@@ -176,9 +181,36 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         if (prototype?.StartingGear != null)
         {
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(prototype.StartingGear);
-            EquipStartingGear(entity.Value, startingGear, profile);
+            EquipStartingGear(entity.Value, startingGear);
             if (profile != null)
                 EquipIdCard(entity.Value, profile.Name, prototype, station);
+        }
+
+        // Run loadouts after so stuff like storage loadouts can get
+        var jobLoadout = LoadoutSystem.GetJobPrototype(prototype?.ID);
+
+        if (_prototypeManager.TryIndex(jobLoadout, out RoleLoadoutPrototype? loadoutProto))
+        {
+            RoleLoadout? loadout = null;
+            profile?.Loadouts.TryGetValue(jobLoadout, out loadout);
+
+            // Set to default if not present
+            if (loadout == null)
+            {
+                loadout = new RoleLoadout(jobLoadout);
+                loadout.SetDefault(_prototypeManager);
+            }
+
+            // Order loadout selections by the order they appear on the prototype.
+            foreach (var group in loadout.SelectedLoadouts.OrderBy(x => loadoutProto.Groups.FindIndex(e => e == x.Key)))
+            {
+                foreach (var items in group.Value)
+                {
+                    // Handle any extra data here.
+                    var startingGear = _prototypeManager.Index<StartingGearPrototype>(items.Prototype);
+                    EquipStartingGear(entity.Value, startingGear);
+                }
+            }
         }
 
         if (profile != null)
