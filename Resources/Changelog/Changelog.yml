@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: Nopey
-  changes:
-  - message: Many belts and the plant bag no longer produce an erroneous "Can't insert"
-      and "This doesn't go in there!" messages while inserting certain items such
-      as Produce (plant bag) or Smoke Grenades (security belt).
-    type: Fix
-  - message: Ammunition can once again be stored in assault belts, as was the case
-      before June 2022.
-    type: Fix
-  id: 5861
-  time: '2024-02-01T13:33:57.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24063
 - author: Blazeror
   changes:
   - message: Chemical analysis goggles can now inspect solutions inside spray bottles.
@@ -3837,3 +3825,10 @@
   id: 6360
   time: '2024-04-16T19:57:41.736477+00:00'
   url: null
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Senior role ID cards now function properly.
+    type: Fix
+  id: 6361
+  time: '2024-04-16T20:17:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27017
