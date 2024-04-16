@@ -262,6 +262,14 @@
   - JanitorJumpskirt
 
 - type: loadoutGroup
+  id: JanitorGloves
+  name: loadout-group-janitor-gloves
+  loadouts:
+  - JanitorGlovesRubber
+  - JanitorGlovesOrange
+  - JanitorGlovesPurple
+
+- type: loadoutGroup
   id: BotanistHead
   name: loadout-group-botanist-head
   minLimit: 0

@@ -84,6 +84,7 @@
   groups:
   - JanitorHead
   - JanitorJumpsuit
+  - JanitorGloves
   - CommonBackpack
   - Trinkets
 
