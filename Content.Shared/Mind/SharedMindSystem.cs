@@ -102,24 +102,17 @@ public abstract class SharedMindSystem : EntitySystem
         return mind;
     }
 
-    public bool TryGetMind(NetUserId user, [NotNullWhen(true)] out EntityUid? mindId, [NotNullWhen(true)] out MindComponent? mind)
+    public virtual bool TryGetMind(NetUserId user, [NotNullWhen(true)] out EntityUid? mindId, [NotNullWhen(true)] out MindComponent? mind)
     {
         if (UserMinds.TryGetValue(user, out var mindIdValue) &&
             TryComp(mindIdValue, out mind))
         {
             DebugTools.Assert(mind.UserId == user);
-#if DEBUG
-            if (_playerMan.GetPlayerData(user).ContentDataUncast is ContentPlayerData data)
-                DebugTools.AssertEqual(data.Mind, mindIdValue);
-#endif
+
             mindId = mindIdValue;
             return true;
         }
 
-#if DEBUG
-        if (_playerMan.GetPlayerData(user).ContentDataUncast is ContentPlayerData data2)
-            DebugTools.AssertNull(data2.Mind);
-#endif
         mindId = null;
         mind = null;
         return false;
