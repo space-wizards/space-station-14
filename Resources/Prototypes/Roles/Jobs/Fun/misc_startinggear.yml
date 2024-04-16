@@ -63,9 +63,7 @@
   id: SyndicateOperativeGearMonkey
   equipment:
     head: ClothingHeadHatOutlawHat
-    jumpsuit: ClothingUniformJumpsuitOperative
     mask: CigaretteSyndicate
-  innerClothingSkirt: ClothingUniformJumpsuitOperative
 
 # Syndicate Operative Outfit - Barratry
 - type: startingGear
