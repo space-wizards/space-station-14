@@ -12,7 +12,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Slippery;
@@ -26,7 +25,6 @@ public sealed class SlipperySystem : EntitySystem
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -72,9 +70,6 @@ public sealed class SlipperySystem : EntitySystem
     private void TrySlip(EntityUid uid, SlipperyComponent component, EntityUid other)
     {
         if (HasComp<KnockedDownComponent>(other) && !component.SuperSlippery)
-            return;
-
-        if (!_random.Prob(component.SlipProbability))
             return;
 
         var attemptEv = new SlipAttemptEvent();
