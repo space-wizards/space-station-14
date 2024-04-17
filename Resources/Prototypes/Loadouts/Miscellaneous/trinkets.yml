@@ -97,3 +97,23 @@
   storage:
     back:
     - ClothingNeckTransPin
+
+- type: loadout
+  id: ClothingNeckAutismPin
+  equipment: ClothingNeckAutismPin
+
+- type: startingGear
+  id: ClothingNeckAutismPin
+  storage:
+    back:
+    - ClothingNeckAutismPin
+
+- type: loadout
+  id: ClothingNeckGoldAutismPin
+  equipment: ClothingNeckGoldAutismPin
+
+- type: startingGear
+  id: ClothingNeckGoldAutismPin
+  storage:
+    back:
+    - ClothingNeckGoldAutismPin
