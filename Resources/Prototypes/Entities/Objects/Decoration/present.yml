@@ -47,6 +47,10 @@
   components:
   - type: SpawnItemsOnUse
     items:
+      - id: PlushieBlackburna
+        orGroup: GiftPool
+      - id: PlushiePlyushkina
+        orGroup: GiftPool
       - id: PresentTrash
       - id: Bucket
         orGroup: GiftPool
