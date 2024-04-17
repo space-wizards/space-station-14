@@ -778,6 +778,7 @@
 - type: loadoutGroup
   id: ScientistGloves
   name: loadout-group-scientist-gloves
+  minLimit: 0
   loadouts:
   - LatexGloves
   - PurpleGloves
@@ -785,7 +786,7 @@
 
 - type: loadoutGroup
   id: ScientistShoes
-  name: loadout-group-scientist-gloves
+  name: loadout-group-scientist-shoes
   loadouts:
   - WhiteShoes
   - BlackShoes
