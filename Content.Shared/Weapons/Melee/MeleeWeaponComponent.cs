@@ -146,8 +146,7 @@ public sealed partial class MeleeWeaponComponent : Component
     /// E.g boxing gloves must be equipped to your gloves,
     /// not just held in your hand to be used.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("mustBeEquippedToUse"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool MustBeEquippedToUse = false;
 }
 
