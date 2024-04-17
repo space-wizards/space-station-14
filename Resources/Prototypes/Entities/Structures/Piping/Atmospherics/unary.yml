@@ -245,9 +245,6 @@
       inHandsOnly: false
       key: enum.ThermomachineUiKey.Key
     - type: WiresPanel
-    - type: Wires
-      boardName: wires-board-name-thermomachine
-      layoutId: Thermomachine
     - type: WiresVisuals
     - type: NodeContainer
       nodes:
@@ -307,7 +304,6 @@
   suffix: Enabled
   components:
   - type: GasThermoMachine
-    enabled: true
   - type: ApcPowerReceiver
     powerDisabled: false
 
@@ -352,7 +348,6 @@
   suffix: Enabled
   components:
   - type: GasThermoMachine
-    enabled: true
   - type: ApcPowerReceiver
     powerDisabled: false
 
@@ -430,9 +425,6 @@
   - type: Machine
     board: CondenserMachineCircuitBoard
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-condenser
-    layoutId: Condenser
   - type: WiresVisuals
   - type: Destructible
     thresholds:

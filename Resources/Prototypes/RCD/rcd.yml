@@ -14,14 +14,16 @@
 
 - type: rcd
   id: DeconstructLattice   # Hidden prototype - do not add to RCDs  
+  name: rcd-component-deconstruct
   mode: Deconstruct
   cost: 2
-  delay: 1
+  delay: 0
   rotation: Camera
-  fx: EffectRCDDeconstruct2
+  fx: EffectRCDConstruct0
     
 - type: rcd
   id: DeconstructTile      # Hidden prototype - do not add to RCDs
+  name: rcd-component-deconstruct
   mode: Deconstruct
   cost: 4
   delay: 4
@@ -59,7 +61,6 @@
 
 - type: rcd
   id: Catwalk
-  name: rcd-component-catwalk
   category: WallsAndFlooring
   sprite: /Textures/Interface/Radial/RCD/catwalk.png
   mode: ConstructObject
@@ -76,7 +77,6 @@
 # Walls
 - type: rcd
   id: WallSolid
-  name: rcd-component-wall-solid
   category: WallsAndFlooring
   sprite: /Textures/Interface/Radial/RCD/solid_wall.png
   mode: ConstructObject
@@ -89,7 +89,6 @@
 
 - type: rcd
   id: Grille
-  name: rcd-component-grille
   category: WindowsAndGrilles
   sprite: /Textures/Interface/Radial/RCD/grille.png
   mode: ConstructObject
@@ -103,7 +102,6 @@
 # Windows
 - type: rcd
   id: Window
-  name: rcd-component-window
   category: WindowsAndGrilles
   sprite: /Textures/Interface/Radial/RCD/window.png
   mode: ConstructObject
@@ -118,7 +116,6 @@
   
 - type: rcd
   id: WindowDirectional
-  name: rcd-component-window-directional
   category: WindowsAndGrilles
   sprite: /Textures/Interface/Radial/RCD/directional.png
   mode: ConstructObject
@@ -134,7 +131,6 @@
   
 - type: rcd
   id: ReinforcedWindow
-  name: rcd-component-reinforced-window
   category: WindowsAndGrilles
   sprite: /Textures/Interface/Radial/RCD/window_reinforced.png
   mode: ConstructObject
@@ -149,7 +145,6 @@
     
 - type: rcd
   id: WindowReinforcedDirectional
-  name: rcd-component-window-reinforced-directional
   category: WindowsAndGrilles
   sprite: /Textures/Interface/Radial/RCD/directional_reinforced.png
   mode: ConstructObject
@@ -166,7 +161,6 @@
 # Airlocks
 - type: rcd
   id: Airlock
-  name: rcd-component-airlock
   category: Airlocks
   sprite: /Textures/Interface/Radial/RCD/airlock.png
   mode: ConstructObject
@@ -179,7 +173,6 @@
   
 - type: rcd
   id: AirlockGlass
-  name: rcd-component-airlock-glass
   category: Airlocks
   sprite: /Textures/Interface/Radial/RCD/glass_airlock.png
   mode: ConstructObject
@@ -192,7 +185,6 @@
   
 - type: rcd
   id: Firelock
-  name: rcd-component-firelock
   category: Airlocks
   sprite: /Textures/Interface/Radial/RCD/firelock.png
   mode: ConstructObject
@@ -206,7 +198,6 @@
 # Lighting
 - type: rcd
   id: TubeLight
-  name: rcd-component-tube-light
   category: Lighting
   sprite: /Textures/Interface/Radial/RCD/tube_light.png
   mode: ConstructObject
@@ -220,7 +211,6 @@
   
 - type: rcd
   id: BulbLight
-  name: rcd-component-window-bulb-light
   category: Lighting
   sprite: /Textures/Interface/Radial/RCD/bulb_light.png
   mode: ConstructObject
@@ -235,7 +225,6 @@
 # Electrical
 - type: rcd
   id: LVCable
-  name: rcd-component-window-lv-cable
   category: Electrical
   sprite: /Textures/Interface/Radial/RCD/lv_coil.png
   mode: ConstructObject
@@ -250,7 +239,6 @@
     
 - type: rcd
   id: MVCable
-  name: rcd-component-window-mv-cable
   category: Electrical
   sprite: /Textures/Interface/Radial/RCD/mv_coil.png
   mode: ConstructObject
@@ -265,7 +253,6 @@
     
 - type: rcd
   id: HVCable
-  name: rcd-component-window-hv-cable
   category: Electrical
   sprite: /Textures/Interface/Radial/RCD/hv_coil.png
   mode: ConstructObject
@@ -280,7 +267,6 @@
     
 - type: rcd
   id: CableTerminal
-  name: rcd-component-window-cable-terminal
   category: Electrical
   sprite: /Textures/Interface/Radial/RCD/cable_terminal.png
   mode: ConstructObject
