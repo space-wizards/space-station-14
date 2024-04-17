@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Hmeister
-  changes:
-  - message: The guidebook entry for cargo is now up to date, and some other minor
-      changes to the guidebook.
-    type: Tweak
-  id: 5871
-  time: '2024-02-03T02:07:21.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24828
 - author: FairlySadPanda
   changes:
   - message: The round restart audio, again...
@@ -3835,3 +3827,11 @@
   id: 6370
   time: '2024-04-17T17:42:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25720
+- author: deltanedas
+  changes:
+  - message: The Chameleon Projector has been added to the uplink for 7 TC, it lets
+      you disguise as anything (within reason).
+    type: Add
+  id: 6371
+  time: '2024-04-17T21:48:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26691
