@@ -28,10 +28,11 @@ public sealed partial class OpenableSystem : EntitySystem
         SubscribeLocalEvent<OpenableComponent, UseInHandEvent>(OnUse);
         SubscribeLocalEvent<OpenableComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<OpenableComponent, MeleeHitEvent>(HandleIfClosed);
-        SubscribeLocalEvent<OpenableComponent, AttemptShakeEvent>(CancelIfOpen);
         SubscribeLocalEvent<OpenableComponent, AfterInteractEvent>(HandleIfClosed);
         SubscribeLocalEvent<OpenableComponent, GetVerbsEvent<Verb>>(AddOpenCloseVerbs);
         SubscribeLocalEvent<OpenableComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
+        SubscribeLocalEvent<OpenableComponent, AttemptShakeEvent>(OnAttemptShake);
+        SubscribeLocalEvent<OpenableComponent, AttemptAddFizzinessEvent>(OnAttemptAddFizziness);
     }
 
     private void OnInit(EntityUid uid, OpenableComponent comp, ComponentInit args)
@@ -60,13 +61,6 @@ public sealed partial class OpenableSystem : EntitySystem
     {
         // prevent spilling/pouring/whatever drinks when closed
         args.Handled = !comp.Opened;
-    }
-
-    private void CancelIfOpen(EntityUid uid, OpenableComponent comp, CancellableEntityEventArgs args)
-    {
-        // Prevent shaking open containers
-        if (comp.Opened)
-            args.Cancel();
     }
 
     private void AddOpenCloseVerbs(EntityUid uid, OpenableComponent comp, GetVerbsEvent<Verb> args)
@@ -106,6 +100,20 @@ public sealed partial class OpenableSystem : EntitySystem
             // message says its just for drinks, shouldn't matter since you typically dont have a food that is openable and can be poured out
             args.Cancel(Loc.GetString("drink-component-try-use-drink-not-open", ("owner", ent.Owner)));
         }
+    }
+
+    private void OnAttemptShake(Entity<OpenableComponent> entity, ref AttemptShakeEvent args)
+    {
+        // Prevent shaking open containers
+        if (entity.Comp.Opened)
+            args.Cancelled = true;
+    }
+
+    private void OnAttemptAddFizziness(Entity<OpenableComponent> entity, ref AttemptAddFizzinessEvent args)
+    {
+        // Can't add fizziness to an open container
+        if (entity.Comp.Opened)
+            args.Cancelled = true;
     }
 
     /// <summary>

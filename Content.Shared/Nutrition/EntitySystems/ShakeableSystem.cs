@@ -5,7 +5,6 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Nutrition.EntitySystems;
@@ -85,8 +84,9 @@ public sealed partial class ShakeableSystem : EntitySystem
         var userName = Identity.Entity(user, EntityManager);
         var shakeableName = Identity.Entity(entity, EntityManager);
 
-        _popup.PopupEntity(Loc.GetString(entity.Comp.ShakePopupMessageOthers, ("user", userName), ("shakeable", shakeableName)), user, Filter.PvsExcept(user), true);
-        _popup.PopupClient(Loc.GetString(entity.Comp.ShakePopupMessageSelf, ("user", userName), ("shakeable", shakeableName)), user, user);
+        var selfMessage = Loc.GetString(entity.Comp.ShakePopupMessageSelf, ("user", userName), ("shakeable", shakeableName));
+        var othersMessage = Loc.GetString(entity.Comp.ShakePopupMessageOthers, ("user", userName), ("shakeable", shakeableName));
+        _popup.PopupPredicted(selfMessage, othersMessage, user, user);
 
         _audio.PlayPredicted(entity.Comp.ShakeSound, entity, user);
 
@@ -118,7 +118,7 @@ public sealed partial class ShakeableSystem : EntitySystem
     /// </summary>
     public bool CanShake(Entity<ShakeableComponent?> entity, EntityUid? user = null)
     {
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(entity, ref entity.Comp, false))
             return false;
 
         // If required to be in hand, fail if the user is not holding this entity
@@ -126,7 +126,7 @@ public sealed partial class ShakeableSystem : EntitySystem
             return false;
 
         var attemptEv = new AttemptShakeEvent();
-        RaiseLocalEvent(entity, attemptEv);
+        RaiseLocalEvent(entity, ref attemptEv);
         if (attemptEv.Cancelled)
             return false;
         return true;
@@ -136,7 +136,6 @@ public sealed partial class ShakeableSystem : EntitySystem
 /// <summary>
 /// Raised when a ShakeableComponent is shaken, after the doAfter completes.
 /// </summary>
-/// <param name="Shaker"></param>
 [ByRefEvent]
 public record struct ShakeEvent(EntityUid? Shaker);
 
@@ -144,8 +143,10 @@ public record struct ShakeEvent(EntityUid? Shaker);
 /// Raised when trying to shake a ShakeableComponent. If cancelled, the
 /// entity will not be shaken.
 /// </summary>
-public sealed class AttemptShakeEvent : CancellableEntityEventArgs
+[ByRefEvent]
+public record class AttemptShakeEvent()
 {
+    public bool Cancelled;
 }
 
 [Serializable, NetSerializable]

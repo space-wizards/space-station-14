@@ -15,14 +15,14 @@ public abstract partial class SharedDrinkSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DrinkComponent, AttemptShakeEvent>(CancelIfEmpty);
+        SubscribeLocalEvent<DrinkComponent, AttemptShakeEvent>(OnAttemptShake);
         SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined);
     }
 
-    protected void CancelIfEmpty(EntityUid uid, DrinkComponent component, AttemptShakeEvent args)
+    protected void OnAttemptShake(Entity<DrinkComponent> entity, ref AttemptShakeEvent args)
     {
-        if (IsEmpty(uid, component))
-            args.Cancel();
+        if (IsEmpty(entity, entity.Comp))
+            args.Cancelled = true;
     }
 
     protected void OnExamined(Entity<DrinkComponent> entity, ref ExaminedEvent args)

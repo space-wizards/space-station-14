@@ -11,7 +11,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Network;
 using Content.Shared.Fluids;
 using Content.Shared.Popups;
-using Robust.Shared.Player;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
@@ -89,6 +88,12 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
         if (fizzability <= 0)
             return;
 
+        // Make sure nothing is preventing fizziness from being added
+        var attemptEv = new AttemptAddFizzinessEvent(entity, amount);
+        RaiseLocalEvent(entity, ref attemptEv);
+        if (attemptEv.Cancelled)
+            return;
+
         // Scale added fizziness by the solution's fizzability
         amount *= fizzability;
 
@@ -146,7 +151,7 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
     /// </summary>
     public bool CanSpray(Entity<PressurizedSolutionComponent?> entity)
     {
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(entity, ref entity.Comp, false))
             return false;
 
         return SolutionFizzability((entity, entity.Comp)) > 0;
@@ -183,10 +188,9 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
         {
             var victimName = Identity.Entity(target.Value, EntityManager);
 
-            // Show a popup to everyone but the target
-            _popup.PopupEntity(Loc.GetString(entity.Comp.SprayHolderMessageOthers, ("victim", victimName), ("drink", drinkName)), target.Value, Filter.PvsExcept(target.Value), true);
-            // Show a popup to the target
-            _popup.PopupClient(Loc.GetString(entity.Comp.SprayHolderMessageSelf, ("victim", victimName), ("drink", drinkName)), target.Value, target.Value);
+            var selfMessage = Loc.GetString(entity.Comp.SprayHolderMessageSelf, ("victim", victimName), ("drink", drinkName));
+            var othersMessage = Loc.GetString(entity.Comp.SprayHolderMessageOthers, ("victim", victimName), ("drink", drinkName));
+            _popup.PopupPredicted(selfMessage, othersMessage, target.Value, target.Value);
         }
         else
         {
@@ -205,12 +209,11 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
 
     /// <summary>
     /// What is the current fizziness level of the solution, from 0 to 1?
-    /// If the
     /// </summary>
     public double Fizziness(Entity<PressurizedSolutionComponent?> entity)
     {
         // No component means no fizz
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(entity, ref entity.Comp, false))
             return 0;
 
         // No negative fizziness
@@ -222,9 +225,9 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to
+    /// Attempts to clear any fizziness in the solution.
     /// </summary>
-    /// <param name="entity"></param>
+    /// <remarks>Rolls a new spray threshold.</remarks>
     public void TryClearFizziness(Entity<PressurizedSolutionComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
@@ -267,10 +270,16 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
         if (args.SolutionId != entity.Comp.Solution)
             return;
 
-        // If the solution is no longer fizzy, clear any built up fizziness
+        // If the solution is no longer capable of being fizzy, clear any built up fizziness
         if (SolutionFizzability(entity) <= 0)
             TryClearFizziness((entity, entity.Comp));
     }
 
     #endregion
+}
+
+[ByRefEvent]
+public record class AttemptAddFizzinessEvent(Entity<PressurizedSolutionComponent> Entity, float Amount)
+{
+    public bool Cancelled;
 }

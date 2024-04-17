@@ -6,7 +6,7 @@ namespace Content.Shared.Nutrition.Components;
 
 /// <summary>
 /// Represents a solution container that can hold the pressure from a solution that
-/// gets fizzy when aggitated, and can spray the solution then opened or thrown.
+/// gets fizzy when aggitated, and can spray the solution when opened or thrown.
 /// Handles simulating the fizziness of the solution, responding to aggitating events,
 /// and spraying the solution out when opening or throwing the entity.
 /// </summary>
@@ -99,7 +99,7 @@ public sealed partial class PressurizedSolutionComponent : Component
     public LocId SprayHolderMessageOthers = "pressurized-solution-spray-holder-others";
 
     /// <summary>
-    /// Popup message shown aboe the entity when the solution sprays without a target.
+    /// Popup message shown above the entity when the solution sprays without a target.
     /// </summary>
     [DataField]
     public LocId SprayGroundMessage = "pressurized-solution-spray-ground";
