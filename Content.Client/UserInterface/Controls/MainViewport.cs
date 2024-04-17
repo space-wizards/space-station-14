@@ -55,7 +55,6 @@ namespace Content.Client.UserInterface.Controls
 
             if (stretch)
             {
-                //var snapFactor = verticalFit ? null : CalcSnappingFactor();
                 var snapFactor = CalcSnappingFactor();
                 if (snapFactor == null)
                 {
