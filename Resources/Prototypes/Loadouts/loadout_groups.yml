@@ -105,6 +105,7 @@
   loadouts:
   - GreyJumpsuit
   - GreyJumpskirt
+  - AncientJumpsuit
 
 - type: loadoutGroup
   id: PassengerFace
