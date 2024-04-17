@@ -7,7 +7,22 @@
     head: ClothingHeadHatWizard
     outerClothing: ClothingOuterWizard
     shoes: ClothingShoesWizard
-    id: PassengerPDA
+    id: WizardPDA
+    ears: ClothingHeadsetService
+  innerClothingSkirt: ClothingUniformJumpskirtColorDarkBlue
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
+
+- type: startingGear
+  id: WizardBlueGearApprentice
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorDarkBlue
+    back: ClothingBackpackFilled
+    head: ClothingHeadHatWizard
+    outerClothing: ClothingOuterWizard
+    shoes: ClothingShoesWizard
+    belt: BaseSpellbookShop6MP
+    id: WizardPDA
     ears: ClothingHeadsetService
 
 - type: startingGear
@@ -18,7 +33,7 @@
     head: ClothingHeadHatRedwizard
     outerClothing: ClothingOuterWizardRed
     shoes: ClothingShoesWizard
-    id: PassengerPDA
+    id: WizardPDA
     ears: ClothingHeadsetService
 
 - type: startingGear
@@ -29,7 +44,7 @@
     head: ClothingHeadHatVioletwizard
     outerClothing: ClothingOuterWizardViolet
     shoes: ClothingShoesWizard
-    id: PassengerPDA
+    id: WizardPDA
     ears: ClothingHeadsetService
 
 - type: startingGear
@@ -39,5 +54,5 @@
     back: ClothingBackpackFilled
     outerClothing: ClothingOuterHardsuitWizard
     shoes: ClothingShoesWizard
-    id: PassengerPDA
+    id: WizardPDA
     ears: ClothingHeadsetService

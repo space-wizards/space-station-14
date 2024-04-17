@@ -554,6 +554,9 @@
   id: Enzyme
 
 - type: Tag
+  id: EnrichedUranium
+
+- type: Tag
   id: ExplosivePassable
 
 - type: Tag
@@ -891,6 +894,9 @@
   id: Mineshaft
 
 - type: Tag
+  id: Minibomb
+
+- type: Tag
   id: ModularReceiver
 
 - type: Tag
@@ -1099,6 +1105,9 @@
   id: ShellShotgun
 
 - type: Tag
+  id: ShellShotgunUranium
+
+- type: Tag
   id: Shiv
 
 - type: Tag
@@ -1156,6 +1165,9 @@
 
 - type: Tag
   id: SpiderCraft
+
+- type: Tag
+  id: WizardNonApprentice
 
 - type: Tag
   id: SpookyFog
@@ -1273,6 +1285,9 @@
 
 - type: Tag
   id: WeaponPistolCHIMPUpgradeKit
+
+- type: Tag
+  id: WeaponShotgunImprovised
 
 - type: Tag
   id: WeaponShotgunKammerer

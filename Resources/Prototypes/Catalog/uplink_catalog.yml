@@ -980,14 +980,9 @@
   icon: { sprite: /Textures/Mobs/Pets/cat.rsi, state: syndicat }
   productEntity: MobCatSyndy
   cost:
-    Telecrystal: 10
+    Telecrystal: 7
   categories:
     - UplinkAllies
-  conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - NukeOpsUplink
 
 - type: listing
   id: UplinkSyndicatePersonalAI
@@ -1376,7 +1371,7 @@
   description: uplink-cat-ears-desc
   productEntity: ClothingHeadHatCatEars
   cost:
-    Telecrystal: 26
+    Telecrystal: 20
   categories:
   - UplinkPointless
 
@@ -1397,6 +1392,16 @@
   productEntity: ClothingEyesGlassesOutlawGlasses
   cost:
     Telecrystal: 1
+  categories:
+  - UplinkPointless
+
+- type: listing
+  id: UplinkWarhorn
+  name: uplink-warhorn-name
+  description: uplink-warhorn-desc
+  productEntity: SyndieWarhorn
+  cost:
+    Telecrystal: 2
   categories:
   - UplinkPointless
 
@@ -1681,3 +1686,34 @@
     - Scientist
     - ResearchDirector
     - Chef
+
+- type: listing
+  id: UplinkThrongler
+  name: uplink-throngler-name
+  description: uplink-throngler-desc
+  productEntity: Throngler
+  cost:
+    Telecrystal: 100
+  categories:
+  - UplinkWeaponry
+  restockTime: 10
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkPieCannon
+  name: uplink-pie-cannon-name
+  description: uplink-pie-cannon-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Cannons/pie_cannon.rsi, state: piecannon }
+  productEntity: LauncherCreamPieRegenerating
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Clown
