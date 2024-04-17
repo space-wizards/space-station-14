@@ -112,7 +112,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 {
                     // Leak only a small amount of gas as a proportion of supply pipe pressure.
                     var pipeDelta = pipe.Air.Pressure - environment.Pressure;
-                    transferMoles = (float) timeDelta * pipeDelta * vent.UnderPressureLockoutLeaking;
+                    transferMoles = (float)timeDelta * pipeDelta * vent.UnderPressureLockoutLeaking;
                     if (transferMoles < 0.0)
                         return;
                 }
