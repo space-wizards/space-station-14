@@ -29,6 +29,18 @@ public sealed class RoleLoadout
         Role = role;
     }
 
+    public RoleLoadout Clone()
+    {
+        var weh = new RoleLoadout(Role);
+
+        foreach (var selected in SelectedLoadouts)
+        {
+            weh.SelectedLoadouts.Add(selected.Key, new List<Loadout>(selected.Value));
+        }
+
+        return weh;
+    }
+
     /// <summary>
     /// Ensures all prototypes exist and effects can be applied.
     /// </summary>
