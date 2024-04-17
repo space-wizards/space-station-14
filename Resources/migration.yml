@@ -281,5 +281,5 @@ BodyBag_Container: BodyBag
 BodyBag_Folded: BodyBagFolded
 
 # 2024-04-16
-CrateVendingMachineRestockRobustSoftdrinksFilled: CrateVendingMachineRestockRobustSoftdrinksFilled
+CrateVendingMachineRestockRobustSoftdrinksFilled: CrateVendingMachineRestockDrinksFilled
 VendingMachineRestockRobustSoftdrinks: VendingMachineRestockDrinks
