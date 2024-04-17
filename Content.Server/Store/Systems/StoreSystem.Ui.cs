@@ -5,7 +5,6 @@ using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
@@ -99,13 +98,13 @@ public sealed partial class StoreSystem
         }
 
         //dictionary for all currencies, including 0 values for currencies on the whitelist
-        Dictionary<string, FixedPoint2> allCurrency = new();
+        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> allCurrency = new();
         foreach (var supported in component.CurrencyWhitelist)
         {
             allCurrency.Add(supported, FixedPoint2.Zero);
 
-            if (component.Balance.ContainsKey(supported))
-                allCurrency[supported] = component.Balance[supported];
+            if (component.Balance.TryGetValue(supported, out var value))
+                allCurrency[supported] = value;
         }
 
         // TODO: if multiple users are supposed to be able to interact with a single BUI & see different

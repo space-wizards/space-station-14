@@ -452,34 +452,6 @@ namespace Content.Server.Database
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
-        public override async Task<int> AddNewRound(Server server, params Guid[] playerIds)
-        {
-            await using var db = await GetDb();
-
-            var players = await db.DbContext.Player
-                .Where(player => playerIds.Contains(player.UserId))
-                .ToListAsync();
-
-            var nextId = 1;
-            if (await db.DbContext.Round.AnyAsync())
-            {
-                nextId = db.DbContext.Round.Max(round => round.Id) + 1;
-            }
-
-            var round = new Round
-            {
-                Id = nextId,
-                Players = players,
-                ServerId = server.Id
-            };
-
-            db.DbContext.Round.Add(round);
-
-            await db.DbContext.SaveChangesAsync();
-
-            return round.Id;
-        }
-
         protected override IQueryable<AdminLog> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
             IQueryable<AdminLog> query = db.AdminLog;
