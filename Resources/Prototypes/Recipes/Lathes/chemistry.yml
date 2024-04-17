@@ -82,7 +82,7 @@
 - type: latheRecipe
   id: Vape
   icon:
-    sprite: Objects/Consumable/Smokeables/Vapes/vape-standart.rsi
+    sprite: Objects/Consumable/Smokeables/Vapes/vape-standard.rsi
     state: icon
   result: Vape
   completetime: 2

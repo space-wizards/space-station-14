@@ -1,0 +1,327 @@
+# Command
+- type: roleLoadout
+  id: JobCaptain
+  groups:
+  - CaptainHead
+  - CaptainNeck
+  - CaptainJumpsuit
+  - CaptainBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobHeadOfPersonnel
+  groups:
+  - HoPHead
+  - HoPNeck
+  - HoPJumpsuit
+  - HoPBackpack
+  - Trinkets
+
+# Civilian
+- type: roleLoadout
+  id: JobPassenger
+  groups:
+  - PassengerJumpsuit
+  - CommonBackpack
+  - PassengerFace
+  - PassengerGloves
+  - Trinkets
+
+- type: roleLoadout
+  id: JobBartender
+  groups:
+  - BartenderHead
+  - BartenderJumpsuit
+  - CommonBackpack
+  - BartenderOuterClothing
+  - Trinkets
+
+- type: roleLoadout
+  id: JobServiceWorker
+  groups:
+  - BartenderJumpsuit
+  - CommonBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobChef
+  groups:
+  - ChefHead
+  - ChefMask
+  - ChefJumpsuit
+  - CommonBackpack
+  - ChefOuterClothing
+  - Trinkets
+
+- type: roleLoadout
+  id: JobLibrarian
+  groups:
+  - LibrarianJumpsuit
+  - CommonBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobLawyer
+  groups:
+  - LawyerNeck
+  - LawyerJumpsuit
+  - CommonBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobChaplain
+  groups:
+  - ChaplainHead
+  - ChaplainMask
+  - ChaplainNeck
+  - ChaplainJumpsuit
+  - ChaplainBackpack
+  - ChaplainOuterClothing
+  - Trinkets
+
+- type: roleLoadout
+  id: JobJanitor
+  groups:
+  - JanitorHead
+  - JanitorJumpsuit
+  - CommonBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobBotanist
+  groups:
+  - BotanistHead
+  - BotanistJumpsuit
+  - BotanistBackpack
+  - BotanistOuterClothing
+  - Trinkets
+
+- type: roleLoadout
+  id: JobClown
+  groups:
+  - ClownHead
+  - ClownJumpsuit
+  - ClownBackpack
+  - ClownShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobMime
+  groups:
+  - MimeHead
+  - MimeMask
+  - MimeJumpsuit
+  - MimeBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobMusician
+  groups:
+  - MusicianBackpack
+  - Trinkets
+
+# Cargo
+- type: roleLoadout
+  id: JobQuartermaster
+  groups:
+  - QuartermasterHead
+  - QuartermasterNeck
+  - QuartermasterJumpsuit
+  - QuartermasterBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobCargoTechnician
+  groups:
+  - CargoTechnicianHead
+  - CargoTechnicianJumpsuit
+  - CargoTechnicianBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobSalvageSpecialist
+  groups:
+  - SalvageSpecialistBackpack
+  - Trinkets
+
+# Engineering
+- type: roleLoadout
+  id: JobChiefEngineer
+  groups:
+  - ChiefEngineerHead
+  - ChiefEngineerJumpsuit
+  - ChiefEngineerBackpack
+  - ChiefEngineerNeck
+  - Trinkets
+
+- type: roleLoadout
+  id: JobTechnicalAssistant
+  groups:
+  - TechnicalAssistantJumpsuit
+  - StationEngineerBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobStationEngineer
+  groups:
+  - StationEngineerHead
+  - StationEngineerJumpsuit
+  - StationEngineerBackpack
+  - StationEngineerOuterClothing
+  - StationEngineerID
+  - Trinkets
+
+- type: roleLoadout
+  id: JobAtmosphericTechnician
+  groups:
+  - AtmosphericTechnicianJumpsuit
+  - AtmosphericTechnicianBackpack
+  - Trinkets
+
+# Science
+- type: roleLoadout
+  id: JobResearchDirector
+  groups:
+  - ResearchDirectorHead
+  - ResearchDirectorNeck
+  - ResearchDirectorJumpsuit
+  - ResearchDirectorBackpack
+  - ResearchDirectorOuterClothing
+  - Trinkets
+
+- type: roleLoadout
+  id: JobScientist
+  groups:
+  - ScientistHead
+  - ScientistNeck
+  - ScientistJumpsuit
+  - ScientistBackpack
+  - ScientistOuterClothing
+  - ScientistPDA
+  - Trinkets
+
+- type: roleLoadout
+  id: JobResearchAssistant
+  groups:
+  - ResearchAssistantJumpsuit
+  - ScientistBackpack
+  - Trinkets
+
+# Security
+- type: roleLoadout
+  id: JobHeadOfSecurity
+  groups:
+  - HeadofSecurityHead
+  - HeadofSecurityNeck
+  - HeadofSecurityJumpsuit
+  - SecurityBackpack
+  - HeadofSecurityOuterClothing
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarden
+  groups:
+  - WardenHead
+  - WardenJumpsuit
+  - SecurityBackpack
+  - WardenOuterClothing
+  - Trinkets
+
+- type: roleLoadout
+  id: JobSecurityOfficer
+  groups:
+  - SecurityHead
+  - SecurityJumpsuit
+  - SecurityBackpack
+  - SecurityPDA
+  - Trinkets
+
+- type: roleLoadout
+  id: JobDetective
+  groups:
+  - DetectiveHead
+  - DetectiveNeck
+  - DetectiveJumpsuit
+  - DetectiveBackpack
+  - DetectiveOuterClothing
+  - Trinkets
+
+- type: roleLoadout
+  id: JobSecurityCadet
+  groups:
+  - SecurityCadetJumpsuit
+  - SecurityBackpack
+  - Trinkets
+
+# Medical
+- type: roleLoadout
+  id: JobChiefMedicalOfficer
+  groups:
+  - ChiefMedicalOfficerHead
+  - ChiefMedicalOfficerJumpsuit
+  - ChiefMedicalOfficerOuterClothing
+  - ChiefMedicalOfficerBackpack
+  - ChiefMedicalOfficerNeck
+  - Trinkets
+
+- type: roleLoadout
+  id: JobMedicalDoctor
+  groups:
+  - MedicalDoctorHead
+  - MedicalDoctorJumpsuit
+  - MedicalBackpack
+  - MedicalDoctorOuterClothing
+  - MedicalDoctorPDA
+  - Trinkets
+
+- type: roleLoadout
+  id: JobMedicalIntern
+  groups:
+  - MedicalInternJumpsuit
+  - MedicalBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobChemist
+  groups:
+  - ChemistJumpsuit
+  - ChemistOuterClothing
+  - ChemistBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobParamedic
+  groups:
+  - ParamedicHead
+  - ParamedicJumpsuit
+  - ParamedicOuterClothing
+  - ParamedicBackpack
+  - Trinkets
+
+# Wildcards
+- type: roleLoadout
+  id: JobZookeeper
+  groups:
+  - CommonBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobReporter
+  groups:
+  - ReporterJumpsuit
+  - CommonBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobPsychologist
+  groups:
+  - MedicalBackpack
+  - Trinkets
+
+- type: roleLoadout
+  id: JobBoxer
+  groups:
+  - BoxerJumpsuit
+  - BoxerGloves
+  - CommonBackpack
+  - Trinkets
