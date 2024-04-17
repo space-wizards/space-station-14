@@ -964,21 +964,6 @@
   - ChiefMedicalOfficerMantle
 
 - type: loadoutGroup
-  id: ChiefMedicalOfficerGloves
-  name: loadout-group-chief-medical-officer-gloves
-  minLimit: 0
-  loadouts:
-  - GlovesLatex
-  - GlovesNitrile
-
-- type: loadoutGroup
-  id: ChiefMedicalOfficerMask
-  name: loadout-group-chief-medical-officer-mask
-  minLimit: 0
-  loadouts:
-  - SterileMask
-
-- type: loadoutGroup
   id: ChiefMedicalOfficerShoes
   name: loadout-group-chief-medical-officer-shoes
   loadouts:
@@ -1041,16 +1026,16 @@
   - SeniorPhysicianPDA
 
 - type: loadoutGroup
-  id: MedicalDoctorGloves
-  name: loadout-group-medical-doctor-gloves
+  id: MedicalGloves
+  name: loadout-group-medical-gloves
   minLimit: 0
   loadouts:
   - GlovesLatex
   - GlovesNitrile
 
 - type: loadoutGroup
-  id: MedicalDoctorMask
-  name: loadout-group-medical-doctor-mask
+  id: MedicalMask
+  name: loadout-group-medical-mask
   minLimit: 0
   loadouts:
   - SterileMask
@@ -1087,21 +1072,6 @@
   - ChemistDuffel
 
 - type: loadoutGroup
-  id: ChemistGloves
-  name: loadout-group-chemist-gloves
-  minLimit: 0
-  loadouts:
-  - GlovesLatex
-  - GlovesNitrile
-
-- type: loadoutGroup
-  id: ChemistMask
-  name: loadout-group-chemist-mask
-  minLimit: 0
-  loadouts:
-  - SterileMask
-
-- type: loadoutGroup
   id: ParamedicHead
   name: loadout-group-paramedic-head
   minLimit: 0
@@ -1130,21 +1100,6 @@
   - ParamedicBackpack
   - ParamedicSatchel
   - ParamedicDuffel
-
-- type: loadoutGroup
-  id: ParamedicGloves
-  name: loadout-group-paramedic-gloves
-  minLimit: 0
-  loadouts:
-  - GlovesLatex
-  - GlovesNitrile
-
-- type: loadoutGroup
-  id: ParamedicMask
-  name: loadout-group-paramedic-mask
-  minLimit: 0
-  loadouts:
-  - SterileMask
 
 - type: loadoutGroup
   id: ParamedicShoes
