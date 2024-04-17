@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Audio.Jukebox;
 
-[NetworkedComponent, RegisterComponent, AutoGenerateComponentState]
+[NetworkedComponent, RegisterComponent, AutoGenerateComponentState(true)]
 [Access(typeof(SharedJukeboxSystem))]
 public sealed partial class JukeboxComponent : Component
 {

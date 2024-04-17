@@ -48,22 +48,21 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         _menu.OnSongSelected += SelectSong;
 
         _menu.SetTime += SetTime;
-
-        _menu.Populate(_protoManager.EnumeratePrototypes<JukeboxPrototype>());
+        Reload();
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    /// <summary>
+    /// Reloads the attached menu if it exists.
+    /// </summary>
+    public void Reload()
     {
-        base.UpdateState(state);
-
-        if (state is not JukeboxBoundInterfaceState bState || _menu == null)
+        if (_menu == null || !EntMan.TryGetComponent(Owner, out JukeboxComponent? jukebox))
             return;
 
         // TODO: Need a way to sub to compstates as otherwise this can fail in some situations.
-        var audio = EntMan.GetEntity(bState.Audio);
-        _menu.SetAudioStream(audio);
+        _menu.SetAudioStream(jukebox.AudioStream);
 
-        if (_protoManager.TryIndex(bState.SelectedSong, out var songProto))
+        if (_protoManager.TryIndex(jukebox.SelectedSongId, out var songProto))
         {
             var length = EntMan.System<AudioSystem>().GetAudioLength(songProto.Path.Path.ToString());
             _menu.SetSelectedSong(songProto.Name, (float) length.TotalSeconds);
@@ -72,6 +71,11 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         {
             _menu.SetSelectedSong(string.Empty, 0f);
         }
+    }
+
+    public void PopulateMusic()
+    {
+        _menu?.Populate(_protoManager.EnumeratePrototypes<JukeboxPrototype>());
     }
 
     public void SelectSong(ProtoId<JukeboxPrototype> songid)

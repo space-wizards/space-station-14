@@ -1,12 +1,14 @@
 using Content.Shared.Audio.Jukebox;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Audio.Jukebox;
 
 
 public sealed class JukeboxSystem : SharedJukeboxSystem
 {
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
@@ -15,6 +17,45 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         base.Initialize();
         SubscribeLocalEvent<JukeboxComponent, AppearanceChangeEvent>(OnAppearanceChange);
         SubscribeLocalEvent<JukeboxComponent, AnimationCompletedEvent>(OnAnimationCompleted);
+        SubscribeLocalEvent<JukeboxComponent, AfterAutoHandleStateEvent>(OnJukeboxAfterState);
+
+        _protoManager.PrototypesReloaded += OnProtoReload;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _protoManager.PrototypesReloaded -= OnProtoReload;
+    }
+
+    private void OnProtoReload(PrototypesReloadedEventArgs obj)
+    {
+        var query = AllEntityQuery<JukeboxComponent, UserInterfaceComponent>();
+
+        while (query.MoveNext(out _, out var ui))
+        {
+            if (!ui.OpenInterfaces.TryGetValue(JukeboxUiKey.Key, out var baseBui) ||
+                baseBui is not JukeboxBoundUserInterface bui)
+            {
+                continue;
+            }
+
+            bui.PopulateMusic();
+        }
+    }
+
+    private void OnJukeboxAfterState(Entity<JukeboxComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        if (!TryComp(ent, out UserInterfaceComponent? ui))
+            return;
+
+        if (!ui.OpenInterfaces.TryGetValue(JukeboxUiKey.Key, out var baseBui) ||
+            baseBui is not JukeboxBoundUserInterface bui)
+        {
+            return;
+        }
+
+        bui.Reload();
     }
 
     private void OnAnimationCompleted(EntityUid uid, JukeboxComponent component, AnimationCompletedEvent args)
