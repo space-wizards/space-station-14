@@ -234,6 +234,7 @@
   minLimit: 0
   loadouts:
   - ChaplainHead
+  - ChaplainNunHood
   - ChaplainPlagueHat
   - ChaplainWitchHat
   - ChaplainWitchHatAlt
