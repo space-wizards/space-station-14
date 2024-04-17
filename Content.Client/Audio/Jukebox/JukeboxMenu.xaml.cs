@@ -126,7 +126,7 @@ public sealed partial class JukeboxMenu : FancyWindow
             _lockTimer -= args.DeltaSeconds;
         }
 
-        PlaybackSlider.Locked = _lockTimer > 0f;
+        PlaybackSlider.Disabled = _lockTimer > 0f;
 
         if (_entManager.TryGetComponent(_audio, out AudioComponent? audio))
         {
