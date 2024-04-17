@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingUniformSkirtBase
-  id: BKTurtleSkirt
-  name: Blackburna Turtle Skirt
+  id: BkTurtleskirt
+  name: Blackburna turtle skirt
   description: A uniform consisting of snow coloured Turtleneck sweater with a navy blue skirt and gold belt straps.
   components:
   - type: Sprite
@@ -10,9 +10,9 @@
     sprite: Caldera/clothing/YTS.rsi
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskPullableBase
   id: BKKitsuneMask
-  name: Blackburna Kitsune Mask
+  name: Blackburna kitsune mask
   description: A mask of a fox usually worn by the blackburna army of certain rank
   components:
   - type: Item
@@ -26,4 +26,3 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-    - HidesNose
