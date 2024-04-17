@@ -93,6 +93,9 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (component.InHandsOnly)
             return;
 
+        if (component.AllowedItems != null)
+            return;
+
         args.Handled = InteractUI(args.User, uid, component);
     }
 
@@ -102,6 +105,9 @@ public sealed partial class ActivatableUISystem : EntitySystem
             return;
 
         if (component.RightClickOnly)
+            return;
+
+        if (component.AllowedItems != null)
             return;
 
         args.Handled = InteractUI(args.User, uid, component);

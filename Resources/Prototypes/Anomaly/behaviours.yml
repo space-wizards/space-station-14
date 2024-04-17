@@ -20,7 +20,6 @@
     InconstancyParticle: 0.5
     FullUnknown: 0.5
     Jumping: 0.3
-    Moving: 0.1
   #Complex
     FastUnknown: 0.2
     JumpingUnknown: 0.1
@@ -132,19 +131,6 @@
   - type: ShuffleParticlesAnomaly
     shuffleOnParticleHit: true
     prob: 0.8
-
-- type: anomalyBehavior
-  id: Moving
-  earnPointModifier: 2.2
-  description: anomaly-behavior-moving
-  components:
-  - type: RandomWalk
-    minSpeed: 0
-    maxSpeed: 0.3
-  - type: CanMoveInAir
-  - type: Physics
-    bodyType: Dynamic
-    bodyStatus: InAir
 
 - type: anomalyBehavior
   id: Jumping

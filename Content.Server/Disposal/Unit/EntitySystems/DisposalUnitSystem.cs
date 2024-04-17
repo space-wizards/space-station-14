@@ -299,7 +299,12 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         var canInsert = CanInsert(uid, component, args.Thrown);
         var randDouble = _robustRandom.NextDouble();
 
-        if (!canInsert || randDouble > 0.75)
+        if (!canInsert)
+        {
+            return;
+        }
+
+        if (randDouble > 0.75)
         {
             _audioSystem.PlayPvs(component.MissSound, uid);
 
