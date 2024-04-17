@@ -15,6 +15,5 @@
 - type: startingGear
   id: DoctorGear
   equipment:
-    shoes: ClothingShoesColorWhite
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled

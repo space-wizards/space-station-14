@@ -153,7 +153,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                         _loadout.EnsureValid(session, collection);
                         _loadoutWindow.RefreshLoadouts(_loadout, session, collection);
                         var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
-                        controller.UpdateCharacterUI();
+                        controller.ReloadProfile();
                         LoadoutUpdated?.Invoke(_loadout);
                     };
 
@@ -165,7 +165,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                         _loadout.EnsureValid(session, collection);
                         _loadoutWindow.RefreshLoadouts(_loadout, session, collection);
                         var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
-                        controller.UpdateCharacterUI();
+                        controller.ReloadProfile();
                         LoadoutUpdated?.Invoke(_loadout);
                     };
 
