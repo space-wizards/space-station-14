@@ -105,7 +105,6 @@ namespace Content.Client.Preferences.UI
 
         private void UpdateUI()
         {
-            UserInterfaceManager.GetUIController<LobbyUIController>().ReloadProfile();
             var numberOfFullSlots = 0;
             var characterButtonsGroup = new ButtonGroup();
             Characters.RemoveAllChildren();

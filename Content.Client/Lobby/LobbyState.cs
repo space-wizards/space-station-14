@@ -64,12 +64,12 @@ namespace Content.Client.Lobby
 
             _characterSetup.CloseButton.OnPressed += _ =>
             {
+                // Reset sliders etc.
+                _characterSetup?.UpdateControls();
+
                 var controller = _userInterfaceManager.GetUIController<LobbyUIController>();
                 controller.SetClothes(true);
                 controller.UpdateProfile();
-                controller.ReloadCharacterUI();
-                // Reset sliders etc.
-                _characterSetup?.UpdateControls();
                 _lobby.SwitchState(LobbyGui.LobbyGuiState.Default);
             };
 

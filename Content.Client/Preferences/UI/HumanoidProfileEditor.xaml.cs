@@ -578,7 +578,10 @@ namespace Content.Client.Preferences.UI
                 foreach (var job in jobs)
                 {
                     RoleLoadout? loadout = null;
+
+                    // Clone so we don't modify the underlying loadout.
                     Profile?.Loadouts.TryGetValue(LoadoutSystem.GetJobPrototype(job.ID), out loadout);
+                    loadout = loadout?.Clone();
                     var selector = new JobPrioritySelector(loadout, job, jobLoadoutGroup, _prototypeManager)
                     {
                         Margin = new Thickness(3f, 3f, 3f, 0f),
@@ -594,9 +597,8 @@ namespace Content.Client.Preferences.UI
 
                     selector.LoadoutUpdated += args =>
                     {
-                        Profile?.SetLoadout(args);
+                        Profile = Profile?.WithLoadout(args);
                         SetDirty();
-                        UserInterfaceManager.GetUIController<LobbyUIController>().ReloadCharacterUI();
                     };
 
                     selector.PriorityChanged += priority =>
