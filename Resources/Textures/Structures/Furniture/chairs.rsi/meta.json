@@ -68,6 +68,10 @@
       "directions": 4
     },
     {
+      "name": "wooden-bench",
+      "directions": 4
+    },
+    {
       "name": "wooden-wings-knocked",
       "directions": 4
     },
@@ -83,26 +87,22 @@
       "name": "steel-bench",
       "directions": 4
     },
-	  {
-		  "name": "brass_chair",
-		  "directions": 4
-	  },
-	  {
-		  "name": "pufi-box-greyscale"
-	  },
-	  {
-		  "name": "comfy-greyscale",
-		  "directions": 4
-	  },
-	  {
-		  "name": "comfy-random"
-	  },
-	  {
-		  "name": "pufi-box-random"
-	  },
     {
-		"name": "brass_chair",
-		"directions": 4
-	  }
+      "name": "brass_chair",
+      "directions": 4
+    },
+    {
+      "name": "pufi-box-greyscale"
+    },
+    {
+      "name": "comfy-greyscale",
+      "directions": 4
+    },
+    {
+      "name": "comfy-random"
+    },
+    {
+      "name": "pufi-box-random"
+    }
   ]
 }
