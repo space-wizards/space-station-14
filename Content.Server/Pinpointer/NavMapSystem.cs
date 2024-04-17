@@ -1,5 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Server.Warps;
 using Content.Shared.Database;
@@ -41,7 +42,9 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         // Grid change events
         SubscribeLocalEvent<GridSplitEvent>(OnNavMapSplit);
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
-        SubscribeLocalEvent<AnchorStateChangedEvent>(OnAnchorStateChanged);
+
+        // Airtight structure change event
+        SubscribeLocalEvent<AirtightChanged>(OnAirtightChanged);
 
         // Beacon events
         SubscribeLocalEvent<NavMapBeaconComponent, MapInitEvent>(OnNavMapBeaconMapInit);
@@ -102,26 +105,19 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         Dirty(ev.NewTile.GridUid, navMap);
     }
 
-    private void OnAnchorStateChanged(ref AnchorStateChangedEvent ev)
+    private void OnAirtightChanged(ref AirtightChanged ev)
     {
-        var gridUid = ev.Transform.GridUid;
-
-        if (gridUid == null)
-            return;
+        var gridUid = ev.Position.Grid;
 
         if (!TryComp<NavMapComponent>(gridUid, out var navMap) ||
             !TryComp<MapGridComponent>(gridUid, out var mapGrid))
             return;
 
-        // We are only concerned with airtight entities (walls, doors, etc) changing their anchor state
-        if (!HasComp<AirtightComponent>(ev.Entity))
-            return;
-
         // Refresh the affected tile
-        var tile = _mapSystem.CoordinatesToTile(gridUid.Value, mapGrid, _transformSystem.GetMapCoordinates(ev.Entity, ev.Transform));
+        var tile = ev.Position.Tile;
         var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
 
-        RefreshTileEntityContents(gridUid.Value, navMap, mapGrid, chunkOrigin, tile);
+        RefreshTileEntityContents(gridUid, navMap, mapGrid, chunkOrigin, tile);
 
         // Update potentially affected chunks
         foreach (var category in EntityChunkTypes)
@@ -133,7 +129,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             navMap.Chunks[(category, chunkOrigin)] = chunk;
         }
 
-        Dirty(gridUid.Value, navMap);
+        Dirty(gridUid, navMap);
     }
 
     #endregion
