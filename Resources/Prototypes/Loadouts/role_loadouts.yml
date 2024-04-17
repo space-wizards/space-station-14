@@ -186,7 +186,7 @@
   - StationEngineerBackpack
   - StationEngineerOuterClothing
   - StationEngineerShoes
-  - StationEngineerID
+#  - StationEngineerID # Removed until https://github.com/space-wizards/space-station-14/issues/27024 is fixed
   - Trinkets
 
 - type: roleLoadout
@@ -219,7 +219,7 @@
   - ScientistBackpack
   - ScientistOuterClothing
   - ScientistShoes
-  - ScientistPDA
+#  - ScientistPDA # Removed until https://github.com/space-wizards/space-station-14/issues/27024 is fixed
   - Trinkets
 
 - type: roleLoadout
@@ -259,7 +259,7 @@
   - SecurityBackpack
   - SecurityOuterClothing
   - SecurityShoes
-  - SecurityPDA
+#  - SecurityPDA # Removed until https://github.com/space-wizards/space-station-14/issues/27024 is fixed
   - Trinkets
 
 - type: roleLoadout
@@ -300,7 +300,7 @@
   - MedicalBackpack
   - MedicalDoctorOuterClothing
   - MedicalShoes
-  - MedicalDoctorPDA
+#  - MedicalDoctorPDA # Removed until https://github.com/space-wizards/space-station-14/issues/27024 is fixed
   - Trinkets
 
 - type: roleLoadout

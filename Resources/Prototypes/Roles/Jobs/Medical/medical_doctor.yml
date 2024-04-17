@@ -21,3 +21,4 @@
   equipment:
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled
+    id: MedicalPDA
