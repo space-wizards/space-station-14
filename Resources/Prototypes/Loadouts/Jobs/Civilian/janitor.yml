@@ -26,3 +26,13 @@
   id: JanitorJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtJanitor
+
+# Outer clothing
+- type: loadout
+  id: JanitorWintercoat
+  equipment: JanitorWintercoat
+
+- type: startingGear
+  id: JanitorWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterJani

@@ -63,3 +63,12 @@
   id: BartenderVest
   equipment:
     outerClothing: ClothingOuterVest
+
+- type: loadout
+  id: BartenderWintercoat
+  equipment: BartenderWintercoat
+
+- type: startingGear
+  id: BartenderWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterBar

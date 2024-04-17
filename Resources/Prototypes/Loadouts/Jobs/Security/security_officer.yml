@@ -112,6 +112,53 @@
   equipment:
     back: ClothingBackpackDuffelSecurityFilled
 
+# Outerclothing
+- type: loadout
+  id: ArmorVest
+  equipment: ArmorVest
+
+- type: startingGear
+  id: ArmorVest
+  equipment:
+    outerClothing: ClothingOuterArmorBasic
+
+- type: loadout
+  id: ArmorVestSlim
+  equipment: ArmorVestSlim
+
+- type: startingGear
+  id: ArmorVestSlim
+  equipment:
+    outerClothing: ClothingOuterArmorBasicSlim
+
+- type: loadout
+  id: SecurityOfficerWintercoat
+  equipment: SecurityOfficerWintercoat
+
+- type: startingGear
+  id: SecurityOfficerWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterSec
+
+# Shoes
+- type: loadout
+  id: CombatBoots
+  equipment: CombatBoots
+
+- type: startingGear
+  id: CombatBoots
+  equipment:
+    shoes: ClothingShoesBootsCombatFilled
+
+- type: loadout
+  id: SecurityWinterBoots
+  equipment: SecurityWinterBoots
+
+- type: startingGear
+  id: SecurityWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterSec
+
 # PDA
 - type: loadout
   id: SecurityPDA
