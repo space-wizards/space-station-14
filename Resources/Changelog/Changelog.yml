@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Psychpsyo
-  changes:
-  - message: You can now turn down the screen shake intensity in the accessibility
-      settings.
-    type: Add
-  id: 5868
-  time: '2024-02-02T12:39:13.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24749
 - author: Anzarot121
   changes:
   - message: Fixed a problem in the code due to which mobs, including hamsters, slimes,
@@ -3833,3 +3825,10 @@
   id: 6367
   time: '2024-04-17T10:04:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26644
+- author: metalgearsloth
+  changes:
+  - message: Fix lobby character preview not updating upon changing characters.
+    type: Fix
+  id: 6368
+  time: '2024-04-17T10:06:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27043
