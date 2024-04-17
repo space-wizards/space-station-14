@@ -1030,8 +1030,8 @@
   name: loadout-group-medical-gloves
   minLimit: 0
   loadouts:
-  - GlovesLatex
-  - GlovesNitrile
+  - LatexGloves
+  - NitrileGloves
 
 - type: loadoutGroup
   id: MedicalMask
