@@ -8,7 +8,7 @@ If you want to host or create content for SS14, go to the [Space Station 14 repo
 
 ## Links
 
-[Space Station 14's Website](https://spacestation14.io/) | [Goob Station Discord Server](https://discord.gg/RNXByxPh7d) | [Goob Station Forum](https://x329436.invisionservice.com/) | [Space Station 14 Game](https://store.steampowered.com/app/1255460/Space_Station_14/) | [SS14 Standalone Download](https://spacestation14.io/about/nightlies/)
+[Space Station 14's Website](https://spacestation14.io/) | [Goob Station Discord Server](https://discord.gg/gEq2bDxU35) | [Goob Station Forum](https://x329436.invisionservice.com/) | [Space Station 14 Game](https://store.steampowered.com/app/1255460/Space_Station_14/) | [SS14 Standalone Download](https://spacestation14.io/about/nightlies/)
 
 ## Documentation/Wiki
 
