@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: The round restart audio, again...
-    type: Fix
-  id: 5872
-  time: '2024-02-03T02:11:53.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24754
 - author: Adrian16199
   changes:
   - message: Added scarfs to the uniform printer.
@@ -3835,3 +3828,10 @@
   id: 6371
   time: '2024-04-17T21:48:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26691
+- author: ShadowCommander
+  changes:
+  - message: Fixed PDA and ID card name, job, and access not getting set on some jobs.
+    type: Fix
+  id: 6372
+  time: '2024-04-17T22:16:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27062
