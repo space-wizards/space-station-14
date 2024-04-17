@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: themias
   changes:
-  - message: Fixed dylovene overdoses not applying brute damage
-    type: Fix
-  id: 5863
-  time: '2024-02-01T22:21:04.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24826
-- author: themias
-  changes:
   - message: Added sound effect for Diona salutes
     type: Add
   id: 5864
@@ -3832,3 +3825,11 @@
   id: 6362
   time: '2024-04-17T02:49:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27022
+- author: metalgearsloth
+  changes:
+  - message: 'Fix the following in lobby: ShowClothes button not working, Skin Color
+      not updating, Skin Color slider not updating upon closing and re-opening character.'
+    type: Fix
+  id: 6363
+  time: '2024-04-17T02:54:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27033
