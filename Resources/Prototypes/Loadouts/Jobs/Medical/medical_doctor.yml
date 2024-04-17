@@ -68,6 +68,15 @@
   equipment:
     head: ClothingHeadHatSurgcapPurple
 
+- type: loadout
+  id: NurseHat
+  equipment: NurseHat
+
+- type: startingGear
+  id: NurseHat
+  equipment:
+    head: ClothingHeadNurseHat
+
 # Jumpsuit
 - type: loadout
   id: MedicalDoctorJumpsuit
