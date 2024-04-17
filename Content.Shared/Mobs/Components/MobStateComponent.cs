@@ -13,7 +13,7 @@ namespace Content.Shared.Mobs.Components
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent]
-    [AutoGenerateComponentState(true)]
+    [AutoGenerateComponentState]
     [Access(typeof(MobStateSystem), typeof(MobThresholdSystem))]
     public sealed partial class MobStateComponent : Component
     {
