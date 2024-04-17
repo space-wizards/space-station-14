@@ -13,9 +13,9 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
     public bool IsTray;
 
     public string SeedName;
-    public string SeedChem;
+    public List<string>? Chems;
     public string HarvestType;
-    public string ExudeGases;
+    public Dictionary<Content.Shared.Atmos.Gas, float>? ExudeGases;
     public float Endurance;
     public float SeedYield;
     public float Lifespan;
@@ -33,23 +33,40 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
     public float HighPressureTolerance;
     public float PestTolerance;
     public float WeedTolerance;
-
-    public string? MutationsList;
     public List<string>? Speciation;
 
+    [DataDefinition, Serializable, NetSerializable]
+    public partial struct MutationFlags
+    {
+        [DataField]
+        public bool TurnIntoKudzu;
+        [DataField]
+        public bool Seedless;
+        [DataField]
+        public bool Slip;
+        [DataField]
+        public bool Sentient;
+        [DataField]
+        public bool Ligneous;
+        [DataField]
+        public bool Bioluminescent;
+        [DataField]
+        public bool CanScream;
+    }
+    public MutationFlags Mutflag = new();
     public PlantAnalyzerScannedSeedPlantInformation(NetEntity? targetEntity, bool scanMode, bool isTray,
-        string seedName, string seedChem, string harvestType, string exudeGases, float endurance,
-        float seedYield, float lifespan, float maturation, float growthStages, float seedPotency,
-        float nutrientConsumption, float waterConsumption, float idealHeat, float heatTolerance,
-        float idealLight, float lightTolerance, float toxinsTolerance, float lowPressureTolerance,
-        float highPressureTolerance, float pestTolerance, float weedTolerance, string? mutationsList, List<string>? speciation)
+            string seedName, List<string>? chems, string harvestType, Dictionary<Content.Shared.Atmos.Gas, float> exudeGases, float endurance,
+            float seedYield, float lifespan, float maturation, float growthStages, float seedPotency,
+            float nutrientConsumption, float waterConsumption, float idealHeat, float heatTolerance,
+            float idealLight, float lightTolerance, float toxinsTolerance, float lowPressureTolerance,
+            float highPressureTolerance, float pestTolerance, float weedTolerance, MutationFlags mutList, List<string>? speciation)
     {
         TargetEntity = targetEntity;
         ScanMode = scanMode;
         IsTray = isTray;
 
         SeedName = seedName;
-        SeedChem = seedChem;
+        Chems = chems;
         HarvestType = harvestType;
         ExudeGases = exudeGases;
         Endurance = endurance;
@@ -73,12 +90,11 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
             PestTolerance = pestTolerance;
             WeedTolerance = weedTolerance;
 
-            MutationsList = mutationsList;
+            Mutflag = mutList;
             Speciation = speciation;
         }
     }
 }
-
 [Serializable, NetSerializable]
 public sealed class PlantAnalyzerSetMode : BoundUserInterfaceMessage
 {
