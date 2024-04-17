@@ -100,13 +100,8 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     /// </summary>
     public void ReloadProfile()
     {
-        if (_stateManager.CurrentState is not LobbyState)
-            return;
-
-        if (_profile == null)
-            return;
-
-        if (!_preferencesManager.ServerDataLoaded)
+        // Test moment
+        if (_profile == null || _stateManager.CurrentState is not LobbyState)
             return;
 
         // Ignore job clothes and the likes so we don't spam entities out every frame of color changes.
@@ -119,7 +114,8 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     /// </summary>
     public void ReloadCharacterUI()
     {
-        if (_profile == null)
+        // Test moment
+        if (_profile == null || _stateManager.CurrentState is not LobbyState)
             return;
 
         EntityManager.DeleteEntity(_previewDummy);
