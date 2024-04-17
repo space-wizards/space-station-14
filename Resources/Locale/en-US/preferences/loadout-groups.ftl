@@ -114,6 +114,7 @@ loadout-group-research-director-neck = Research Director neck
 loadout-group-research-director-jumpsuit = Research Director jumpsuit
 loadout-group-research-director-backpack = Research Director backpack
 loadout-group-research-director-outerclothing = Research Director outer clothing
+loadout-group-research-director-gloves = Scientist gloves
 loadout-group-research-director-shoes = Research Director shoes
 
 loadout-group-scientist-head = Scientist head
@@ -121,6 +122,7 @@ loadout-group-scientist-neck = Scientist neck
 loadout-group-scientist-jumpsuit = Scientist jumpsuit
 loadout-group-scientist-backpack = Scientist backpack
 loadout-group-scientist-outerclothing = Scientist outer clothing
+loadout-group-scientist-gloves = Scientist gloves
 loadout-group-scientist-shoes = Scientist shoes
 loadout-group-scientist-id = Scientist ID
 
