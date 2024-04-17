@@ -144,5 +144,13 @@ Entries:
   id: 19
   time: '2024-03-31T02:05:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26546
+- author: PJB3005
+  changes:
+  - message: The new "grant_connect_bypass" command grants a player the ability to
+      connect, bypassing whitelist, player cap and panic bunker.
+    type: Add
+  id: 20
+  time: '2024-04-09T15:25:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26771
 Name: Admin
 Order: 1

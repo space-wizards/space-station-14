@@ -34,7 +34,7 @@ trait-socialanxiety-name = Social Anxiety
 trait-socialanxiety-desc = You are anxious when you speak and stutter.
 
 trait-southern-name = Southern Drawl
-trait-southern-desc = Are you wonderin' what this does?
+trait-southern-desc = You have a different way of speakin'.
 
 trait-snoring-name = Snoring
 trait-snoring-desc = You will snore while sleeping.

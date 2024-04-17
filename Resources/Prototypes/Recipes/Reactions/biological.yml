@@ -25,6 +25,19 @@
     Water: 4
     Nitrogen: 1
 
+
+- type: reaction
+  id: SapBloodBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    Sap:
+      amount: 10
+  products:
+    Water: 9
+    Sugar: 1
+
 - type: reaction
   id: CopperBloodBreakdown
   source: true

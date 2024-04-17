@@ -11,15 +11,14 @@ public static class ListingLocalisationHelpers
     /// </summary>
     public static string GetLocalisedNameOrEntityName(ListingData listingData, IPrototypeManager prototypeManager)
     {
-        bool wasLocalised = Loc.TryGetString(listingData.Name, out string? listingName);
+        var name = string.Empty;
 
-        if (!wasLocalised && listingData.ProductEntity != null)
-        {
-            var proto = prototypeManager.Index<EntityPrototype>(listingData.ProductEntity);
-            listingName = proto.Name;
-        }
+        if (listingData.Name != null)
+            name = Loc.GetString(listingData.Name);
+        else if (listingData.ProductEntity != null)
+            name = prototypeManager.Index(listingData.ProductEntity.Value).Name;
 
-        return listingName ?? listingData.Name;
+        return name;
     }
 
     /// <summary>
@@ -29,14 +28,13 @@ public static class ListingLocalisationHelpers
     /// </summary>
     public static string GetLocalisedDescriptionOrEntityDescription(ListingData listingData, IPrototypeManager prototypeManager)
     {
-        bool wasLocalised = Loc.TryGetString(listingData.Description, out string? listingDesc);
+        var desc = string.Empty;
 
-        if (!wasLocalised && listingData.ProductEntity != null)
-        {
-            var proto = prototypeManager.Index<EntityPrototype>(listingData.ProductEntity);
-            listingDesc = proto.Description;
-        }
+        if (listingData.Description != null)
+            desc = Loc.GetString(listingData.Description);
+        else if (listingData.ProductEntity != null)
+            desc = prototypeManager.Index(listingData.ProductEntity.Value).Description;
 
-        return listingDesc ?? listingData.Description;
+        return desc;
     }
 }

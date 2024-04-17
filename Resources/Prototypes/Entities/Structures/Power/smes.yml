@@ -67,9 +67,6 @@
       color: "#c9c042"
       castShadows: false
     - type: WiresPanel
-    - type: Wires
-      boardName: wires-board-name-smes
-      layoutId: SMES
     - type: Machine
       board: SMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget
