@@ -109,3 +109,22 @@
   id: CaptainDuffel
   equipment:
     back: ClothingBackpackDuffelCaptainFilled
+
+# Outer clothing
+- type: loadout
+  id: CaptainOuterClothing
+  equipment: CaptainOuterClothing
+
+- type: startingGear
+  id: CaptainOuterClothing
+  equipment:
+    outerClothing: ClothingOuterArmorCaptainCarapace
+
+- type: loadout
+  id: CaptainWintercoat
+  equipment: CaptainWintercoat
+
+- type: startingGear
+  id: CaptainWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterCap

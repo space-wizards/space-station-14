@@ -109,3 +109,13 @@
   id: QuartermasterDuffel
   equipment:
     back: ClothingBackpackDuffelQuartermasterFilled
+
+# OuterClothing
+- type: loadout
+  id: QuartermasterWintercoat
+  equipment: QuartermasterWintercoat
+
+- type: startingGear
+  id: QuartermasterWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterQM

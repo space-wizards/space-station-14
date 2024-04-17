@@ -95,3 +95,13 @@
   id: HoPBackpackIan
   equipment:
     back: ClothingBackpackHOPIanFilled
+
+# Outerclothing
+- type: loadout
+  id: HoPWintercoat
+  equipment: HoPWintercoat
+
+- type: startingGear
+  id: HoPWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterHoP
