@@ -46,7 +46,6 @@ using SixLabors.ImageSharp.Processing.Processors.Quantization;
 using Content.Shared.Objectives.Components;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost.Roles.Components;
-using Content.Shared.Mind.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -92,7 +91,7 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
 
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
-        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+        // SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
 
     }
 
@@ -102,25 +101,8 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
         base.Started(uid, component, gameRule, args);
 
         //if (GameTicker.RunLevel == GameRunLevel.InRound)
-        // SpawnOperativesForGhostRoles(uid, component);
+           // SpawnOperativesForGhostRoles(uid, component);
     }
-
-    private void OnRoundEndText(RoundEndTextAppendEvent ev)
-    {
-        ev.AddLine(Loc.GetString("wizard-list-start"));
-
-        var wizQuery = EntityQueryEnumerator<WizardRoleComponent, MindContainerComponent>();
-        while (wizQuery.MoveNext(out var wizUid, out _, out var mindContainer))
-        {
-            if (!_mind.TryGetMind(wizUid, out _, out var mind, mindContainer))
-                continue;
-
-            ev.AddLine(mind.Session != null
-               ? Loc.GetString("wizard-list-name-user", ("name", Name(wizUid)), ("user", mind.Session.Name))
-               : Loc.GetString("wizard-list-name", ("name", Name(wizUid))));
-        }
-    }
-    
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
@@ -140,13 +122,15 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
                 continue;
 
             var wizardEligible = _antagSelection.GetEligibleSessions(ev.PlayerPool, wizards.WizardPrototypeId);
-            // 2 wiznerds
+            //Calculate how large the nukeops team needs to be
             var wizardSelectionCandidates = _antagSelection.CalculateAntagCount(_playerManager.PlayerCount, 20, 1);
 
-            //Select Wiznerds
-            var selectedWizard = _antagSelection.ChooseAntags(2, wizardEligible, ev.PlayerPool).FirstOrDefault();
+            //Select Nukies
+            //Select Commander, priority : commanderEligible, agentEligible, operativeEligible, all players
+            var selectedWizard = _antagSelection.ChooseAntags(1, wizardEligible, ev.PlayerPool).FirstOrDefault();
 
-
+            //Create the team!
+            //If the session is null, they will be spawned as ghost roles (provided the cvar is set)
             // var wizkids = new List<ICommonSession> { selectedWizard };
             var wizkids = new List<WizardSpawn> { new WizardSpawn(selectedWizard) };
             if (wizardSelectionCandidates > 1)
@@ -281,10 +265,6 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
                 if (_cfg.GetCVar(CCVars.AdminDeadminOnJoin) && _adminManager.IsAdmin(wizSessions.Session))
                     _adminManager.DeAdmin(wizSessions.Session);
 
-                  var onlyObjective = _objectives.TryCreateObjective(mob, newMind, "WizardOnlyObjective");
-                  if (onlyObjective != null)
-                 _mind.AddObjective(mob, newMind, onlyObjective.Value);
-
                 _mind.TransferTo(newMind, mob);
                 _antagSelection.SendBriefing(mob, MakeBriefing(mob), null, component.GreetingSound);
             }
@@ -344,7 +324,7 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
         _inventoryManager.SpawnItemOnEntity(entity, "BaseSpellbookShop10MP");
         _npcFaction.RemoveFaction(entity, "NanoTrasen", false);
         _npcFaction.AddFaction(entity, "Wizard");
-        EnsureComp<WizardRoleComponent>(entity);
+
 
         var wizardRule = EntityQuery<WizardRuleComponent>().FirstOrDefault();
 
@@ -359,16 +339,15 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
             SpawnMap(wizardRule);
         }
 
-
-        var onlyObjective = _objectives.TryCreateObjective(entity, mind, "WizardOnlyObjective");
-        if (onlyObjective != null)
-            _mind.AddObjective(entity, mind, onlyObjective.Value);
-
         _antagSelection.SendBriefing(entity, MakeBriefing(entity), null, wizardRule.GreetingSound);
 
 
     }
 
+    private void OnRoundEndText(RoundEndTextAppendEvent ev)
+    {
+        ev.AddLine(Loc.GetString("wizard-end-round"));
+    }
 
     private string MakeBriefing(EntityUid wizard)
     {

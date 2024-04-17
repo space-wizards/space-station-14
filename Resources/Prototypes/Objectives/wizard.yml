@@ -5,18 +5,14 @@
   components:
   - type: Objective
     issuer: wizard
+  - type: RoleRequirement
+    roles:
+      components:
+      - WizardRole
 
 
 - type: entity
-  noSpawn: true
-  parent: BaseWizardObjective
+  abstract: true
+  parent: BaseObjective
   id: WizardOnlyObjective
-  name: Do whatever.
   description: This station is so boring, spice it up a little with a little chaos!
-  components:
-  - type: Objective
-    difficulty: 1
-    icon:
-      sprite: Clothing/Head/Hats/wizardhat.rsi
-      state: icon
-  - type: AlwaysComplete

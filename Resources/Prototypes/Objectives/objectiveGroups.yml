@@ -125,8 +125,3 @@
     EscapeThiefShuttleObjective: 1
 #Changeling, crew, wizard, when you code it...
 
-- type: weightedRandom
-  id: WizardObjectiveGroup
-  weights:
-    WizardOnlyObjective: 1
-
