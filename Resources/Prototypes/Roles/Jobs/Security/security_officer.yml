@@ -25,7 +25,6 @@
 - type: startingGear
   id: SecurityOfficerGear
   equipment:
-    shoes: ClothingShoesBootsCombatFilled
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled

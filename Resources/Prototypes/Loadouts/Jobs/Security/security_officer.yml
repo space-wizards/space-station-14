@@ -140,6 +140,25 @@
   equipment:
     outerClothing: ClothingOuterWinterSec
 
+# Shoes
+- type: loadout
+  id: CombatBoots
+  equipment: CombatBoots
+
+- type: startingGear
+  id: CombatBoots
+  equipment:
+    shoes: ClothingShoesBootsCombatFilled
+
+- type: loadout
+  id: SecurityWinterBoots
+  equipment: SecurityWinterBoots
+
+- type: startingGear
+  id: SecurityWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterSec
+
 # PDA
 - type: loadout
   id: SecurityPDA

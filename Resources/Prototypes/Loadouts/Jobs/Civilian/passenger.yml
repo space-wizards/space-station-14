@@ -90,3 +90,22 @@
   id: PassengerWintercoat
   equipment:
     outerClothing: ClothingOuterWinterCoat
+
+# Shoes
+- type: loadout
+  id: BlackShoes
+  equipment: BlackShoes
+
+- type: startingGear
+  id: BlackShoes
+  equipment:
+    shoes: ClothingShoesColorBlack
+
+- type: loadout
+  id: WinterBoots
+  equipment: WinterBoots
+
+- type: startingGear
+  id: WinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinter

@@ -138,6 +138,25 @@
   id: StationEngineerWintercoat
   equipment:
     outerClothing: ClothingOuterWinterEngi
+  
+# Shoes
+- type: loadout
+  id: WorkBoots
+  equipment: WorkBoots
+
+- type: startingGear
+  id: WorkBoots
+  equipment:
+    shoes: ClothingShoesBootsWork
+
+- type: loadout
+  id: EngineeringWinterBoots
+  equipment: EngineeringWinterBoots
+
+- type: startingGear
+  id: EngineeringWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterEngi
 
 # ID
 - type: loadout

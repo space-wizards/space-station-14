@@ -18,7 +18,6 @@
 - type: startingGear
   id: ChemistGear
   equipment:
-    shoes: ClothingShoesColorWhite
     id: ChemistryPDA
     ears: ClothingHeadsetMedical
     belt: ChemBag

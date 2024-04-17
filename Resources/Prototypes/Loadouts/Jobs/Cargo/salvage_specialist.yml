@@ -35,3 +35,13 @@
   id: SalvageSpecialistWintercoat
   equipment:
     outerClothing: ClothingOuterWinterMiner
+
+# Shoes
+- type: loadout
+  id: SalvageBoots
+  equipment: SalvageBoots
+
+- type: startingGear
+  id: SalvageBoots
+  equipment:
+    shoes: ClothingShoesBootsSalvage

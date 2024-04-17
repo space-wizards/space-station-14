@@ -63,3 +63,13 @@
   id: AtmosphericTechnicianWintercoat
   equipment:
     outerClothing: ClothingOuterWinterAtmos
+
+# Shoes
+- type: loadout
+  id: WhiteShoes
+  equipment: WhiteShoes
+
+- type: startingGear
+  id: WhiteShoes
+  equipment:
+    shoes: ClothingShoesColorWhite

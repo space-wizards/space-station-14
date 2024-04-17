@@ -188,6 +188,16 @@
   equipment:
     outerClothing: ClothingOuterCoatLabSeniorPhysician
 
+# Shoes
+- type: loadout
+  id: MedicalWinterBoots
+  equipment: MedicalWinterBoots
+
+- type: startingGear
+  id: MedicalWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterMed
+
 # ID
 - type: loadout
   id: MedicalDoctorPDA

@@ -64,3 +64,13 @@
   id: CargoTechnicianWintercoat
   equipment:
     outerClothing: ClothingOuterWinterCargo
+
+# Shoes
+- type: loadout
+  id: CargoWinterBoots
+  equipment: CargoWinterBoots
+
+- type: startingGear
+  id: CargoWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterCargo

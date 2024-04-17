@@ -144,6 +144,16 @@
   equipment:
     outerClothing: ClothingOuterCoatLabSeniorResearcher
 
+# Shoes
+- type: loadout
+  id: ScienceWinterBoots
+  equipment: ScienceWinterBoots
+
+- type: startingGear
+  id: ScienceWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterSci
+
 # ID
 - type: loadout
   id: ScientistPDA

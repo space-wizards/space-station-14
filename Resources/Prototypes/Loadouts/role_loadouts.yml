@@ -28,6 +28,7 @@
   - PassengerFace
   - PassengerGloves
   - PassengerOuterClothing
+  - PassengerShoes
   - Trinkets
 
 - type: roleLoadout
@@ -136,6 +137,7 @@
   - QuartermasterJumpsuit
   - QuartermasterBackpack
   - QuartermasterOuterClothing
+  - QuartermasterShoes
   - Trinkets
 
 - type: roleLoadout
@@ -145,6 +147,7 @@
   - CargoTechnicianJumpsuit
   - CargoTechnicianBackpack
   - CargoTechnicianOuterClothing
+  - CargoTechnicianShoes
   - Trinkets
 
 - type: roleLoadout
@@ -152,6 +155,7 @@
   groups:
   - SalvageSpecialistBackpack
   - SalvageSpecialistOuterClothing
+  - SalvageSpecialistShoes
   - Trinkets
 
 # Engineering
@@ -163,6 +167,7 @@
   - ChiefEngineerBackpack
   - ChiefEngineerNeck
   - ChiefEngineerOuterClothing
+  - ChiefEngineerShoes
   - Trinkets
 
 - type: roleLoadout
@@ -179,6 +184,7 @@
   - StationEngineerJumpsuit
   - StationEngineerBackpack
   - StationEngineerOuterClothing
+  - StationEngineerShoes
   - StationEngineerID
   - Trinkets
 
@@ -188,6 +194,7 @@
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianOuterClothing
+  - AtmosphericTechnicianShoes
   - Trinkets
 
 # Science
@@ -199,6 +206,7 @@
   - ResearchDirectorJumpsuit
   - ResearchDirectorBackpack
   - ResearchDirectorOuterClothing
+  - ResearchDirectorShoes
   - Trinkets
 
 - type: roleLoadout
@@ -209,6 +217,7 @@
   - ScientistJumpsuit
   - ScientistBackpack
   - ScientistOuterClothing
+  - ScientistShoes
   - ScientistPDA
   - Trinkets
 
@@ -228,6 +237,7 @@
   - HeadofSecurityJumpsuit
   - SecurityBackpack
   - HeadofSecurityOuterClothing
+  - SecurityShoes
   - Trinkets
 
 - type: roleLoadout
@@ -237,6 +247,7 @@
   - WardenJumpsuit
   - SecurityBackpack
   - WardenOuterClothing
+  - SecurityShoes
   - Trinkets
 
 - type: roleLoadout
@@ -246,6 +257,7 @@
   - SecurityJumpsuit
   - SecurityBackpack
   - SecurityOuterClothing
+  - SecurityShoes
   - SecurityPDA
   - Trinkets
 
@@ -257,6 +269,7 @@
   - DetectiveJumpsuit
   - DetectiveBackpack
   - DetectiveOuterClothing
+  - SecurityShoes
   - Trinkets
 
 - type: roleLoadout
@@ -275,6 +288,7 @@
   - ChiefMedicalOfficerBackpack
   - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerNeck
+  - ChiefMedicalOfficerShoes
   - Trinkets
 
 - type: roleLoadout
@@ -284,6 +298,7 @@
   - MedicalDoctorJumpsuit
   - MedicalBackpack
   - MedicalDoctorOuterClothing
+  - MedicalShoes
   - MedicalDoctorPDA
   - Trinkets
 
@@ -300,6 +315,7 @@
   - ChemistJumpsuit
   - ChemistBackpack
   - ChemistOuterClothing
+  - MedicalShoes
   - Trinkets
 
 - type: roleLoadout
@@ -309,6 +325,7 @@
   - ParamedicJumpsuit
   - ParamedicBackpack
   - ParamedicOuterClothing
+  - ParamedicShoes
   - Trinkets
 
 # Wildcards
