@@ -785,14 +785,6 @@
   - RobohandsGloves
 
 - type: loadoutGroup
-  id: ScientistShoes
-  name: loadout-group-scientist-shoes
-  loadouts:
-  - WhiteShoes
-  - BlackShoes
-  - ScienceWinterBoots
-
-- type: loadoutGroup
   id: ScientistPDA
   name: loadout-group-scientist-id
   loadouts:
