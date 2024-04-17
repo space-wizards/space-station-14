@@ -20,7 +20,6 @@
   equipment:
     shoes: ClothingShoesGaloshes
     id: JanitorPDA
-    gloves: ClothingHandsGlovesJanitor
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
 

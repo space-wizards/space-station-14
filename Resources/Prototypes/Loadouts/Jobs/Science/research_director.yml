@@ -80,3 +80,12 @@
   id: ResearchDirectorLabCoat
   equipment:
     outerClothing: ClothingOuterCoatRD
+
+- type: loadout
+  id: ResearchDirectorWintercoat
+  equipment: ResearchDirectorWintercoat
+
+- type: startingGear
+  id: ResearchDirectorWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterRD

@@ -315,6 +315,7 @@ namespace Content.Shared.Preferences
                     list.Remove(antagId);
                 }
             }
+
             return new(this, _jobPriorities, list, _traitPreferences, _loadouts);
         }
 
@@ -563,6 +564,23 @@ namespace Content.Shared.Preferences
         public void SetLoadout(RoleLoadout loadout)
         {
             _loadouts[loadout.Role.Id] = loadout;
+        }
+
+        public HumanoidCharacterProfile WithLoadout(RoleLoadout loadout)
+        {
+            // Deep copies so we don't modify the DB profile.
+            var copied = new Dictionary<string, RoleLoadout>();
+
+            foreach (var proto in _loadouts)
+            {
+                if (proto.Key == loadout.Role)
+                    continue;
+
+                copied[proto.Key] = proto.Value.Clone();
+            }
+
+            copied[loadout.Role] = loadout.Clone();
+            return new(this, _jobPriorities, _antagPreferences, _traitPreferences, copied);
         }
 
         public RoleLoadout GetLoadoutOrDefault(string id, IEntityManager entManager, IPrototypeManager protoManager)

@@ -54,3 +54,23 @@
   id: CargoTechnicianDuffel
   equipment:
     back: ClothingBackpackDuffelCargoFilled
+
+# OuterClothing
+- type: loadout
+  id: CargoTechnicianWintercoat
+  equipment: CargoTechnicianWintercoat
+
+- type: startingGear
+  id: CargoTechnicianWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterCargo
+
+# Shoes
+- type: loadout
+  id: CargoWinterBoots
+  equipment: CargoWinterBoots
+
+- type: startingGear
+  id: CargoWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterCargo

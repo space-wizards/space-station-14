@@ -21,7 +21,6 @@
 - type: startingGear
   id: ParamedicGear
   equipment:
-    shoes: ClothingShoesColorBlue
     id: ParamedicPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalEMTFilled

@@ -95,3 +95,23 @@
   id: ChiefEngineerDuffel
   equipment:
     back: ClothingBackpackDuffelChiefEngineerFilled
+
+# OuterClothing
+- type: loadout
+  id: ChiefEngineerWintercoat
+  equipment: ChiefEngineerWintercoat
+
+- type: startingGear
+  id: ChiefEngineerWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterCE
+
+# Shoes
+- type: loadout
+  id: BrownShoes
+  equipment: BrownShoes
+
+- type: startingGear
+  id: BrownShoes
+  equipment:
+    shoes: ClothingShoesColorBrown
