@@ -9,6 +9,7 @@ namespace Content.Client.Audio.Jukebox;
 
 public sealed class JukeboxBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     [ViewVariables]
@@ -91,7 +92,7 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         if (EntMan.TryGetComponent(Owner, out JukeboxComponent? jukebox) &&
             EntMan.TryGetComponent(jukebox.AudioStream, out AudioComponent? audioComp))
         {
-            var session = IoCManager.Resolve<IPlayerManager>().LocalSession;
+            var session = _player.LocalSession;
             var ping = TimeSpan.FromMilliseconds((session?.Channel.Ping ?? 0) * 1.5);
 
             time = MathF.Min(time, (float) EntMan.System<AudioSystem>().GetAudioLength(audioComp.FileName).TotalSeconds);

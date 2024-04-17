@@ -9,10 +9,3 @@ public enum JukeboxUiKey : byte
 {
     Key,
 }
-
-[Serializable, NetSerializable]
-public sealed class JukeboxBoundInterfaceState : BoundUserInterfaceState
-{
-    public NetEntity? Audio;
-    public ProtoId<JukeboxPrototype>? SelectedSong;
-}
