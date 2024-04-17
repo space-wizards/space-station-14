@@ -1,19 +1,19 @@
 - type: entity
   parent: BasePlushie
   id: PlushieBlackburna
-  name: Blackburn Plushie
+  name: Blackburn plushie
   description: A stuffed toy that resembles a typical non-altered blackburna.
   components:
   - type: Sprite
-    sprite: Caldera/objects/BKPlushie.rsi
+    sprite:
     state: plushie_Bkv1
 
 - type: entity
   parent: BasePlushie
-  id: PlushiePlyushkina
-  name: Plyushkina Plushie
+  id: PlyushieBlackburna
+  name: Plyushkina plushie
   description: A stuffed toy that resembles a sub-species of blackburn created for trench clearing and cannon fodder.
   components:
   - type: Sprite
-    sprite: Caldera/objects/BKPlushie.rsi
+    sprite:
     state: plushie_Bkv2
