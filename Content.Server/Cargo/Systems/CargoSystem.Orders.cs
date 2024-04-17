@@ -184,10 +184,13 @@ namespace Content.Server.Cargo.Systems
             order.SetApproverData(idCard.Comp?.FullName, idCard.Comp?.JobTitle);
             _audio.PlayPvs(component.ConfirmSound, uid);
 
+            var approverName = idCard.Comp?.FullName ?? Loc.GetString("access-reader-unknown-id");
+            var approverJob = idCard.Comp?.JobTitle ?? Loc.GetString("access-reader-unknown-id");
             var message = Loc.GetString("cargo-console-unlock-approved-order-broadcast", 
                 ("productName", Loc.GetString(order.ProductName)),
                 ("orderAmount", order.OrderQuantity),
-                ("approver", Loc.GetString($"{idCard.Comp?.FullName}, {idCard.Comp?.JobTitle}")),
+                ("approverName", approverName),
+                ("approverJob", approverJob),
                 ("cost", cost));
             _radio.SendRadioMessage(uid, message, component.AnnouncementChannel, uid, escapeMarkup: false);
             ConsolePopup(args.Session, Loc.GetString("cargo-console-trade-station", ("destination", MetaData(tradeDestination.Value).EntityName)));
