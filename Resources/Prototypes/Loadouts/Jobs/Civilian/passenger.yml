@@ -40,6 +40,18 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorGrey
 
+- type: loadout
+  id: AncientJumpsuit
+  equipment: AncientJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: GreyTider
+
+- type: startingGear
+  id: AncientJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAncient
+
 # Back
 - type: loadout
   id: CommonBackpack
