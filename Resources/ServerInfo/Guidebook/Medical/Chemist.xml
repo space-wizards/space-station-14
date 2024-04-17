@@ -36,6 +36,15 @@ That's it, you've made your first set of pills! Consider checking with Medical D
 
 You can also use the hand labeler to organize individual bottles or bags without using the Chem Master labeling system.
 
+## Smart Fridge
+
+<Box>
+<GuideEntityEmbed Entity="SmartFridge"/>
+</Box>
+
+Medicine jugs can be placed in a smart fridge to give doctors an easy way to dispense doses of medicine into a container.
+You might notice that it behaves exactly like a chem dispenser, that's because it is one!
+
 ## Extra Content:
 
 Speaking of experimentation, there are a few more toy you can use when it comes to chemistry. This job requires a lot of trial and error, but it was worth mentioning that these things exist! It's up to you to figure out what to make with them.
