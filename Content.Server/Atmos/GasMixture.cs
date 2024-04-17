@@ -62,9 +62,9 @@ namespace Content.Server.Atmos
             get => _temperature;
             set
             {
-                DebugTools.Assert(!float.IsNaN(_temperature));
-                if (Immutable) return;
-                _temperature = MathF.Min(MathF.Max(value, Atmospherics.TCMB), Atmospherics.Tmax);
+                DebugTools.Assert(!float.IsNaN(value));
+                if (!Immutable)
+                    _temperature = MathF.Min(MathF.Max(value, Atmospherics.TCMB), Atmospherics.Tmax);
             }
         }
 
@@ -91,6 +91,7 @@ namespace Content.Server.Atmos
             if (volume < 0)
                 volume = 0;
 
+            DebugTools.Assert(!float.IsNaN(temp));
             _temperature = temp;
             Moles = moles;
             Volume = volume;

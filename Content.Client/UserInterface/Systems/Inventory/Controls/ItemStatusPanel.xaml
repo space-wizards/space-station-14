@@ -1,4 +1,4 @@
-﻿<controls:ItemStatusPanel
+<controls:ItemStatusPanel
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Controls"
     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
@@ -18,7 +18,7 @@
         </PanelContainer.PanelOverride>
         <BoxContainer Orientation="Vertical" SeparationOverride="0">
             <BoxContainer Name="StatusContents" Orientation="Vertical"/>
-            <Label Name="ItemNameLabel" ClipText="True" StyleClasses="ItemStatus"/>
+            <Label Name="ItemNameLabel" StyleClasses="ItemStatus"/>
         </BoxContainer>
     </PanelContainer>
 </controls:ItemStatusPanel>

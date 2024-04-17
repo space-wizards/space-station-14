@@ -5,7 +5,6 @@ using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
@@ -15,6 +14,7 @@ using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Store.Systems;
 
@@ -29,6 +29,7 @@ public sealed partial class StoreSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private void InitializeUi()
     {
@@ -97,13 +98,13 @@ public sealed partial class StoreSystem
         }
 
         //dictionary for all currencies, including 0 values for currencies on the whitelist
-        Dictionary<string, FixedPoint2> allCurrency = new();
+        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> allCurrency = new();
         foreach (var supported in component.CurrencyWhitelist)
         {
             allCurrency.Add(supported, FixedPoint2.Zero);
 
-            if (component.Balance.ContainsKey(supported))
-                allCurrency[supported] = component.Balance[supported];
+            if (component.Balance.TryGetValue(supported, out var value))
+                allCurrency[supported] = value;
         }
 
         // TODO: if multiple users are supposed to be able to interact with a single BUI & see different
@@ -259,7 +260,7 @@ public sealed partial class StoreSystem
 
         //log dat shit.
         _admin.Add(LogType.StorePurchase, LogImpact.Low,
-            $"{ToPrettyString(buyer):player} purchased listing \"{Loc.GetString(listing.Name)}\" from {ToPrettyString(uid)}");
+            $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _prototypeManager)}\" from {ToPrettyString(uid)}");
 
         listing.PurchaseAmount++; //track how many times something has been purchased
         _audio.PlayEntity(component.BuySuccessSound, msg.Session, uid); //cha-ching!
