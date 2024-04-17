@@ -166,43 +166,15 @@
   equipment:
     back: ClothingBackpackDuffelMedicalFilled
 
-- type: loadout
-  id: SeniorPhysicianBackpack
-  equipment: SeniorPhysicianBackpack
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorPhysician
-
-- type: startingGear
-  id: SeniorPhysicianBackpack
-  equipment:
-    back: ClothingBackpackDuffelMedicalFilled
-
-- type: loadout
-  id: SeniorPhysicianSatchel
-  equipment: SeniorPhysicianSatchel
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorPhysician
-
-- type: startingGear
-  id: SeniorPhysicianSatchel
-  equipment:
-    back: ClothingBackpackSatchelMedicalFilled
-
-- type: loadout
-  id: SeniorPhysicianDuffel
-  equipment: SeniorPhysicianDuffel
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorPhysician
-
-- type: startingGear
-  id: SeniorPhysicianDuffel
-  equipment:
-    back: ClothingBackpackDuffelMedicalFilled
-
 # OuterClothing
+- type: loadout
+  id: MedicalDoctorWintercoat
+  equipment: MedicalDoctorWintercoat
+
+- type: startingGear
+  id: MedicalDoctorWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterMed
 
 - type: loadout
   id: SeniorPhysicianLabCoat
@@ -215,6 +187,16 @@
   id: SeniorPhysicianLabCoat
   equipment:
     outerClothing: ClothingOuterCoatLabSeniorPhysician
+
+# Shoes
+- type: loadout
+  id: MedicalWinterBoots
+  equipment: MedicalWinterBoots
+
+- type: startingGear
+  id: MedicalWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterMed
 
 # ID
 - type: loadout

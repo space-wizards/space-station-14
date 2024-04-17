@@ -190,7 +190,7 @@ namespace Content.Client.Preferences.UI
                     return;
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithHairStyleName(newStyle.id));
-                IsDirty = true;
+                SetDirty();
             };
 
             _hairPicker.OnColorChanged += newColor =>
@@ -200,7 +200,7 @@ namespace Content.Client.Preferences.UI
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithHairColor(newColor.marking.MarkingColors[0]));
                 UpdateCMarkingsHair();
-                IsDirty = true;
+                SetDirty();
             };
 
             _facialHairPicker.OnMarkingSelect += newStyle =>
@@ -209,7 +209,7 @@ namespace Content.Client.Preferences.UI
                     return;
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithFacialHairStyleName(newStyle.id));
-                IsDirty = true;
+                SetDirty();
             };
 
             _facialHairPicker.OnColorChanged += newColor =>
@@ -219,7 +219,7 @@ namespace Content.Client.Preferences.UI
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithFacialHairColor(newColor.marking.MarkingColors[0]));
                 UpdateCMarkingsFacialHair();
-                IsDirty = true;
+                SetDirty();
             };
 
             _hairPicker.OnSlotRemove += _ =>
@@ -231,7 +231,7 @@ namespace Content.Client.Preferences.UI
                 );
                 UpdateHairPickers();
                 UpdateCMarkingsHair();
-                IsDirty = true;
+                SetDirty();
             };
 
             _facialHairPicker.OnSlotRemove += _ =>
@@ -243,7 +243,7 @@ namespace Content.Client.Preferences.UI
                 );
                 UpdateHairPickers();
                 UpdateCMarkingsFacialHair();
-                IsDirty = true;
+                SetDirty();
             };
 
             _hairPicker.OnSlotAdd += delegate()
@@ -263,7 +263,7 @@ namespace Content.Client.Preferences.UI
 
                 UpdateHairPickers();
                 UpdateCMarkingsHair();
-                IsDirty = true;
+                SetDirty();
             };
 
             _facialHairPicker.OnSlotAdd += delegate()
@@ -283,7 +283,7 @@ namespace Content.Client.Preferences.UI
 
                 UpdateHairPickers();
                 UpdateCMarkingsFacialHair();
-                IsDirty = true;
+                SetDirty();
             };
 
             #endregion Hair
@@ -312,7 +312,7 @@ namespace Content.Client.Preferences.UI
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithEyeColor(newColor));
                 CMarkings.CurrentEyeColor = Profile.Appearance.EyeColor;
-                IsDirty = true;
+                SetDirty();
             };
 
             #endregion Eyes
@@ -336,7 +336,7 @@ namespace Content.Client.Preferences.UI
                 _preferenceUnavailableButton.SelectId(args.Id);
 
                 Profile = Profile?.WithPreferenceUnavailable((PreferenceUnavailableMode) args.Id);
-                IsDirty = true;
+                SetDirty();
             };
 
             _jobPriorities = new List<JobPrioritySelector>();
@@ -369,7 +369,7 @@ namespace Content.Client.Preferences.UI
                     selector.PreferenceChanged += preference =>
                     {
                         Profile = Profile?.WithTraitPreference(trait.ID, preference);
-                        IsDirty = true;
+                        SetDirty();
                     };
                 }
             }
@@ -436,6 +436,13 @@ namespace Content.Client.Preferences.UI
                 LoadServerData();
             }
 
+            ShowClothes.OnToggled += args =>
+            {
+                var lobby = UserInterfaceManager.GetUIController<LobbyUIController>();
+                lobby.SetClothes(args.Pressed);
+                SetDirty();
+            };
+
             preferencesManager.OnServerDataLoaded += LoadServerData;
 
             SpeciesInfoButton.OnPressed += OnSpeciesInfoButtonPressed;
@@ -443,6 +450,15 @@ namespace Content.Client.Preferences.UI
             UpdateSpeciesGuidebookIcon();
 
             IsDirty = false;
+            controller.UpdateProfile();
+        }
+
+        private void SetDirty()
+        {
+            var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
+            controller.UpdateProfile(Profile);
+            controller.ReloadCharacterUI();
+            IsDirty = true;
         }
 
         private void OnSpeciesInfoButtonPressed(BaseButton.ButtonEventArgs args)
@@ -487,13 +503,13 @@ namespace Content.Client.Preferences.UI
                 if (selector.Disabled)
                 {
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
-                    IsDirty = true;
+                    SetDirty();
                 }
 
                 selector.PreferenceChanged += preference =>
                 {
                     Profile = Profile?.WithAntagPreference(antag.ID, preference);
-                    IsDirty = true;
+                    SetDirty();
                 };
             }
 
@@ -562,7 +578,10 @@ namespace Content.Client.Preferences.UI
                 foreach (var job in jobs)
                 {
                     RoleLoadout? loadout = null;
+
+                    // Clone so we don't modify the underlying loadout.
                     Profile?.Loadouts.TryGetValue(LoadoutSystem.GetJobPrototype(job.ID), out loadout);
+                    loadout = loadout?.Clone();
                     var selector = new JobPrioritySelector(loadout, job, jobLoadoutGroup, _prototypeManager)
                     {
                         Margin = new Thickness(3f, 3f, 3f, 0f),
@@ -578,15 +597,13 @@ namespace Content.Client.Preferences.UI
 
                     selector.LoadoutUpdated += args =>
                     {
-                        Profile?.SetLoadout(args);
-                        UserInterfaceManager.GetUIController<LobbyUIController>().UpdateCharacterUI();
-                        IsDirty = true;
+                        Profile = Profile?.WithLoadout(args);
+                        SetDirty();
                     };
 
                     selector.PriorityChanged += priority =>
                     {
                         Profile = Profile?.WithJobPriority(job.ID, priority);
-                        IsDirty = true;
 
                         foreach (var jobSelector in _jobPriorities)
                         {
@@ -602,6 +619,8 @@ namespace Content.Client.Preferences.UI
                                 Profile = Profile?.WithJobPriority(jobSelector.Proto.ID, JobPriority.Medium);
                             }
                         }
+
+                        SetDirty();
                     };
 
                 }
@@ -619,7 +638,7 @@ namespace Content.Client.Preferences.UI
                 return;
 
             Profile = Profile.WithFlavorText(content);
-            IsDirty = true;
+            SetDirty();
         }
 
         private void OnMarkingChange(MarkingSet markings)
@@ -628,8 +647,10 @@ namespace Content.Client.Preferences.UI
                 return;
 
             Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithMarkings(markings.GetForwardEnumerator().ToList()));
-            UpdatePreview();
             IsDirty = true;
+            var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
+            controller.UpdateProfile(Profile);
+            controller.ReloadProfile();
         }
 
         private void OnSkinColorOnValueChanged()
@@ -683,6 +704,9 @@ namespace Content.Client.Preferences.UI
             }
 
             IsDirty = true;
+            var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
+            controller.UpdateProfile(Profile);
+            controller.ReloadProfile();
         }
 
         protected override void Dispose(bool disposing)
@@ -698,7 +722,7 @@ namespace Content.Client.Preferences.UI
             _preferencesManager.OnServerDataLoaded -= LoadServerData;
         }
 
-        private void LoadServerData()
+        public void LoadServerData()
         {
             Profile = (HumanoidCharacterProfile) _preferencesManager.Preferences!.SelectedCharacter;
             CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
@@ -706,12 +730,13 @@ namespace Content.Client.Preferences.UI
             UpdateAntagRequirements();
             UpdateRoleRequirements();
             UpdateControls();
+            ShowClothes.Pressed = true;
         }
 
         private void SetAge(int newAge)
         {
             Profile = Profile?.WithAge(newAge);
-            IsDirty = true;
+            SetDirty();
         }
 
         private void SetSex(Sex newSex)
@@ -732,13 +757,13 @@ namespace Content.Client.Preferences.UI
             }
             UpdateGenderControls();
             CMarkings.SetSex(newSex);
-            IsDirty = true;
+            SetDirty();
         }
 
         private void SetGender(Gender newGender)
         {
             Profile = Profile?.WithGender(newGender);
-            IsDirty = true;
+            SetDirty();
         }
 
         private void SetSpecies(string newSpecies)
@@ -748,20 +773,20 @@ namespace Content.Client.Preferences.UI
             CMarkings.SetSpecies(newSpecies); // Repopulate the markings tab as well.
             UpdateSexControls(); // update sex for new species
             UpdateSpeciesGuidebookIcon();
-            IsDirty = true;
+            SetDirty();
             UpdatePreview();
         }
 
         private void SetName(string newName)
         {
             Profile = Profile?.WithName(newName);
-            IsDirty = true;
+            SetDirty();
         }
 
         private void SetSpawnPriority(SpawnPriorityPreference newSpawnPriority)
         {
             Profile = Profile?.WithSpawnPriorityPreference(newSpawnPriority);
-            IsDirty = true;
+            SetDirty();
         }
 
         public void Save()
@@ -773,6 +798,8 @@ namespace Content.Client.Preferences.UI
 
             _preferencesManager.UpdateCharacter(Profile, CharacterSlot);
             OnProfileChanged?.Invoke(Profile, CharacterSlot);
+            // Reset profile to default.
+            UserInterfaceManager.GetUIController<LobbyUIController>().UpdateProfile();
         }
 
         private bool IsDirty
@@ -1065,7 +1092,7 @@ namespace Content.Client.Preferences.UI
             if (Profile is null)
                 return;
 
-            UserInterfaceManager.GetUIController<LobbyUIController>().UpdateCharacterUI();
+            UserInterfaceManager.GetUIController<LobbyUIController>().ReloadProfile();
             SetPreviewRotation(_previewRotation);
         }
 

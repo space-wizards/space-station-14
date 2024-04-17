@@ -43,7 +43,7 @@
 - type: startingGear
   id: AtmosphericTechnicianSatchel
   equipment:
-    back: ClothingBackpackSatchelEngineeringFilled
+    back: ClothingBackpackSatchelAtmosphericsFilled
 
 - type: loadout
   id: AtmosphericTechnicianDuffel
@@ -53,3 +53,23 @@
   id: AtmosphericTechnicianDuffel
   equipment:
     back: ClothingBackpackDuffelAtmosphericsFilled
+
+# OuterClothing
+- type: loadout
+  id: AtmosphericTechnicianWintercoat
+  equipment: AtmosphericTechnicianWintercoat
+
+- type: startingGear
+  id: AtmosphericTechnicianWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterAtmos
+
+# Shoes
+- type: loadout
+  id: WhiteShoes
+  equipment: WhiteShoes
+
+- type: startingGear
+  id: WhiteShoes
+  equipment:
+    shoes: ClothingShoesColorWhite
