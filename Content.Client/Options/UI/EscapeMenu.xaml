@@ -3,7 +3,11 @@
             xmlns:ui="clr-namespace:Content.Client.Voting.UI"
             xmlns:ui1="clr-namespace:Content.Client.Options.UI">
 
-    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4"
+                  HorizontalAlignment="Stretch"
+                  HorizontalExpand="True"
+                  VerticalAlignment="Stretch"
+                  VerticalExpand="True">
         <Button Access="Public" Name="ContinueButton" Text="{Loc 'ui-escape-continue'}" />
         <changelog:ChangelogButton Access="Public" Name="ChangelogButton"/>
         <ui:VoteCallMenuButton />
