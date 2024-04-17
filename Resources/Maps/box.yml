@@ -13246,11 +13246,6 @@ entities:
     - type: Transform
       pos: 15.5,-51.5
       parent: 8364
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 20630
   - uid: 20898
     components:
     - type: Transform
