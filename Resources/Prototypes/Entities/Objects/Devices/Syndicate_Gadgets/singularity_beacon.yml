@@ -35,6 +35,5 @@
         acts: [ "Destruction" ]
   - type: ApcPowerReceiver
     powerLoad: 15000
-    priority: High
   - type: StaticPrice
     price: 1500

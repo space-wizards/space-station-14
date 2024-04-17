@@ -13,7 +13,9 @@
     DrinkBeerBottleFull: 5
     DrinkBlueCuracaoBottleFull: 2
     DrinkCognacBottleFull: 4
+    DrinkCoconutWaterCarton: 3
     DrinkColaBottleFull: 4
+    DrinkMilkCarton: 2
     DrinkCreamCarton: 5
     DrinkGinBottleFull: 3
     DrinkGildlagerBottleFull: 2 #if champagne gets less because its premium, then gildlager should match this and have two
@@ -26,6 +28,7 @@
     DrinkPatronBottleFull: 2
     DrinkRumBottleFull: 4
     DrinkSodaWaterCan: 8
+    DrinkSolDryCan: 8
     DrinkSpaceMountainWindBottleFull: 3
     DrinkSpaceUpBottleFull: 3
     DrinkTequilaBottleFull: 3
@@ -35,6 +38,7 @@
     DrinkWhiskeyBottleFull: 5
     DrinkWineBottleFull: 5
     DrinkChampagneBottleFull: 2 #because the premium drink
+    DrinkSakeBottleFull: 3
     DrinkBeerCan: 5
     DrinkWineCan: 5
   emaggedInventory:

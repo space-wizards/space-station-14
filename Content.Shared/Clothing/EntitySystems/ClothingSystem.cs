@@ -91,7 +91,7 @@ public abstract class ClothingSystem : EntitySystem
 
     private void ToggleVisualLayer(EntityUid equipee, HumanoidVisualLayers layer, string tag)
     {
-        InventorySystem.InventorySlotEnumerator enumerator = _invSystem.GetSlotEnumerator(equipee);
+        InventorySystem.InventorySlotEnumerator enumerator = _invSystem.GetSlotEnumerator(equipee, SlotFlags.HEAD ^ SlotFlags.MASK);
         bool shouldLayerShow = true;
 
         while (enumerator.NextItem(out EntityUid item))
@@ -164,7 +164,7 @@ public abstract class ClothingSystem : EntitySystem
     {
         if (args.Handled || args.Cancelled || args.Target is not { } target)
             return;
-        args.Handled = _invSystem.TryEquip(args.User, target, ent, args.Slot, clothing: ent.Comp,  predicted: true, checkDoafter: false);
+        args.Handled = _invSystem.TryEquip(args.User, target, ent, args.Slot, clothing: ent.Comp, predicted: true, checkDoafter: false);
     }
 
     private void OnUnequipDoAfter(Entity<ClothingComponent> ent, ref ClothingUnequipDoAfterEvent args)
@@ -215,6 +215,39 @@ public abstract class ClothingSystem : EntitySystem
 
         _itemSys.VisualsChanged(uid);
         Dirty(uid, clothing);
+    }
+
+    public void SetLayerColor(ClothingComponent clothing, string slot, string mapKey, Color? color)
+    {
+        if (clothing.ClothingVisuals == null)
+            return;
+
+        foreach (var layer in clothing.ClothingVisuals[slot])
+        {
+            if (layer.MapKeys == null)
+                return;
+
+            if (!layer.MapKeys.Contains(mapKey))
+                continue;
+
+            layer.Color = color;
+        }
+    }
+    public void SetLayerState(ClothingComponent clothing, string slot, string mapKey, string state)
+    {
+        if (clothing.ClothingVisuals == null)
+            return;
+
+        foreach (var layer in clothing.ClothingVisuals[slot])
+        {
+            if (layer.MapKeys == null)
+                return;
+
+            if (!layer.MapKeys.Contains(mapKey))
+                continue;
+
+            layer.State = state;
+        }
     }
 
     #endregion

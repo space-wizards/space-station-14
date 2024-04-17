@@ -24,6 +24,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
@@ -283,9 +284,8 @@ public sealed class DrinkSystem : EntitySystem
             target: target,
             used: item)
         {
-            BreakOnUserMove = forceDrink,
+            BreakOnMove = forceDrink,
             BreakOnDamage = true,
-            BreakOnTargetMove = forceDrink,
             MovementThreshold = 0.01f,
             DistanceThreshold = 1.0f,
             // Mice and the like can eat without hands.
@@ -309,6 +309,9 @@ public sealed class DrinkSystem : EntitySystem
             return;
 
         if (args.Used is null || !_solutionContainer.TryGetSolution(args.Used.Value, args.Solution, out var soln, out var solution))
+            return;
+
+        if (_openable.IsClosed(args.Used.Value, args.Target.Value))
             return;
 
         // TODO this should really be checked every tick.
@@ -406,6 +409,10 @@ public sealed class DrinkSystem : EntitySystem
             !ev.CanAccess ||
             !TryComp<BodyComponent>(ev.User, out var body) ||
             !_body.TryGetBodyOrganComponents<StomachComponent>(ev.User, out var stomachs, body))
+            return;
+
+        // Make sure the solution exists
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solution))
             return;
 
         // no drinking from living drinks, have to kill them first.

@@ -49,6 +49,7 @@
     price: 75
   - type: RadiationBlocker
     resistance: 2
+  - type: BlockWeather
 
 - type: entity
   parent: BaseWall
@@ -58,11 +59,14 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/brick.rsi
   - type: Icon
     sprite: Structures/Walls/brick.rsi
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
     - trigger:
@@ -89,7 +93,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/clock.rsi
   - type: Icon
@@ -122,7 +125,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/clown.rsi
   - type: Icon
@@ -130,6 +132,10 @@
   - type: Construction
     graph: Girder
     node: bananiumWall
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8    
   - type: Destructible
     thresholds:
     - trigger:
@@ -155,7 +161,6 @@
   components:
   - type: Tag
     tags:
-      - RCDDeconstructWhitelist
       - Wall
       - Structure
   - type: Sprite
@@ -164,7 +169,7 @@
     sprite: Structures/Walls/meat.rsi
   - type: Construction
     graph: Girder
-    node: bananiumWall
+    node: meatWall
   - type: Destructible
     thresholds:
     - trigger:
@@ -189,7 +194,6 @@
   components:
   - type: Tag
     tags:
-      - RCDDeconstructWhitelist
       - Wall
   - type: Sprite
     sprite: Structures/Walls/cult.rsi
@@ -222,7 +226,6 @@
     tags:
       - Wall
       - Debug
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/debug.rsi
   - type: Icon
@@ -252,11 +255,14 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/diamond.rsi
   - type: Icon
     sprite: Structures/Walls/diamond.rsi
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8   
   - type: Destructible
     thresholds:
     - trigger:
@@ -282,7 +288,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/gold.rsi
   - type: Icon
@@ -290,6 +295,10 @@
   - type: Construction
     graph: Girder
     node: goldWall
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8  
   - type: Destructible
     thresholds:
     - trigger:
@@ -324,7 +333,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/ice.rsi
   - type: Icon
@@ -354,7 +362,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/plasma.rsi
   - type: Icon
@@ -362,6 +369,10 @@
   - type: Construction
     graph: Girder
     node: plasmaWall
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
     - trigger:
@@ -398,7 +409,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/plastic.rsi
   - type: Icon
@@ -406,6 +416,10 @@
   - type: Construction
     graph: Girder
     node: plasticWall
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8    
   - type: Destructible
     thresholds:
     - trigger:
@@ -458,7 +472,6 @@
     - type: Tag
       tags:
         - Wall
-        - RCDDeconstructWhitelist
     - type: Destructible
       thresholds:
         - trigger:
@@ -603,7 +616,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/riveted.rsi
   - type: Icon
@@ -638,11 +650,14 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/sandstone.rsi
   - type: Icon
     sprite: Structures/Walls/sandstone.rsi
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8    
   - type: Destructible
     thresholds:
     - trigger:
@@ -668,7 +683,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/silver.rsi
   - type: Icon
@@ -676,6 +690,10 @@
   - type: Construction
     graph: Girder
     node: silverWall
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8    
   - type: Destructible
     thresholds:
     - trigger:
@@ -841,7 +859,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
   - type: WallReplacementMarker
@@ -850,6 +867,10 @@
     node: wall
   - type: Icon
     sprite: Structures/Walls/solid.rsi
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8    
   - type: Destructible
     thresholds:
     - trigger:
@@ -1011,7 +1032,6 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/web.rsi
   - type: Icon
@@ -1223,11 +1243,14 @@
   - type: Tag
     tags:
       - Wall
-      - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/cobblebrick.rsi
   - type: Icon
     sprite: Structures/Walls/cobblebrick.rsi
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8    
   - type: Destructible
     thresholds:
     - trigger:

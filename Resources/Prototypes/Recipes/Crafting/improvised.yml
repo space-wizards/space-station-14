@@ -99,41 +99,15 @@
     state: icon
 
 - type: construction
-  name: hairflower
-  id: hairflower
-  graph: hairflower
-  startNode: start
-  targetNode: hairflower
-  category: construction-category-clothing
-  description: "A red flower for beautiful ladies."
-  icon:
-    sprite: Clothing/Head/Misc/hairflower.rsi
-    state: icon
-  objectType: Item
-
-- type: construction
-  name: flower crown
-  id: flowercrown
-  graph: flowercrown
-  startNode: start
-  targetNode: flowercrown
-  category: construction-category-clothing
-  description: "A coronet of fresh and fragrant flowers."
-  icon:
-    sprite: Clothing/Head/Misc/flower-crown.rsi
-    state: icon
-  objectType: Item
-
-- type: construction
   name: flower wreath
   id: flowerwreath
   graph: flowerwreath
   startNode: start
   targetNode: flowerwreath
   category: construction-category-clothing
-  description: "A wreath of colourful flowers."
+  description: A wreath of colourful flowers. Can be worn both on head and neck.
   icon:
-    sprite: Clothing/Neck/Misc/flower-wreath.rsi
+    sprite: Clothing/Head/Misc/flower-wreath.rsi
     state: icon
   objectType: Item
 
@@ -164,6 +138,19 @@
     state: icon
 
 - type: construction
+  name: improvised shotgun shell
+  id: ShellShotgunImprovised
+  graph: ImprovisedShotgunShellGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a Barn
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: improvised
+
+- type: construction
   name: rifle stock
   id: riflestock
   graph: RifleStockGraph
@@ -177,11 +164,11 @@
     state: icon
 
 - type: construction
-  name: improvised explosive device
-  id: improvisedexplosive
-  graph: ImprovisedExplosive
+  name: fire bomb
+  id: firebomb
+  graph: FireBomb
   startNode: start
-  targetNode: ied
+  targetNode: firebomb
   category: construction-category-weapons
   objectType: Item
   description: A weak, improvised incendiary device.
@@ -214,3 +201,16 @@
     sprite: Clothing/Head/Hats/straw_hat.rsi
     state: icon
   objectType: Item
+
+- type: construction
+  name: pipe bomb
+  id: pipebomb
+  graph: PipeBomb
+  startNode: start
+  targetNode: pipebomb
+  category: construction-category-weapons
+  objectType: Item
+  description: An improvised explosive made from pipes and wire.
+  icon:
+    sprite: Objects/Weapons/Bombs/pipebomb.rsi
+    state: icon
