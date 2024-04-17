@@ -141,6 +141,24 @@ public sealed partial class GameTicker
         return true;
     }
 
+    /// <summary>
+    ///     Returns true if a game rule with the given component has been added.
+    /// </summary>
+    public bool IsGameRuleAdded<T>()
+        where T : IComponent
+    {
+        var query = EntityQueryEnumerator<T, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out _, out _))
+        {
+            if (HasComp<EndedGameRuleComponent>(uid))
+                continue;
+
+            return true;
+        }
+
+        return false;
+    }
+
     public bool IsGameRuleAdded(EntityUid ruleEntity, GameRuleComponent? component = null)
     {
         return Resolve(ruleEntity, ref component) && !HasComp<EndedGameRuleComponent>(ruleEntity);
@@ -152,6 +170,22 @@ public sealed partial class GameTicker
         {
             if (MetaData(ruleEntity).EntityPrototype?.ID == rule)
                 return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    ///     Returns true if a game rule with the given component is active..
+    /// </summary>
+    public bool IsGameRuleActive<T>()
+        where T : IComponent
+    {
+        var query = EntityQueryEnumerator<T, ActiveGameRuleComponent, GameRuleComponent>();
+        // out, damned underscore!!!
+        while (query.MoveNext(out _, out _, out _, out _))
+        {
+            return true;
         }
 
         return false;

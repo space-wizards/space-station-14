@@ -13,7 +13,7 @@
   - type: UseDelay
     delay: 3
   - type: EmitSoundOnUse
-    sound: 
+    sound:
       collection: BaseWhistle
   - type: Whistle
     distance: 5
@@ -28,3 +28,23 @@
     state: securityWhistle
   - type: Item
     sprite: Objects/Fun/whistle.rsi
+
+- type: entity
+  parent: BaseWhistle
+  id: SyndicateWhistle
+  name: trench whistle
+  description: A whistle used by Syndicate commanders to draw attention. Avanti!
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/whistles.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/whistles.rsi
+    quickEquip: False
+    slots:
+    - neck
+  - type: EmitSoundOnUse
+    sound:
+      collection: TrenchWhistle
+  - type: Whistle
+    distance: 15 # Let your enemies hear the sound of death approaching

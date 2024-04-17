@@ -11,8 +11,6 @@
     state: icon
     noRot: false
   - type: ImmovableRod
-  - type: TimedDespawn
-    lifetime: 30.0
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
@@ -36,8 +34,15 @@
     location: immovable rod
 
 - type: entity
+  id: ImmovableRodDespawn
   parent: ImmovableRod
+  components:
+  - type: TimedDespawn
+    lifetime: 30.0
+
+- type: entity
   id: ImmovableRodSlow
+  parent: ImmovableRodDespawn
   suffix: Slow
   components:
   - type: ImmovableRod
@@ -45,13 +50,40 @@
     maxSpeed: 5
 
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodKeepTiles
   suffix: Keep Tiles
   components:
   - type: ImmovableRod
     destroyTiles: false
     hitSoundProbability: 1.0
+
+# For Wizard Polymorph
+- type: entity
+  parent: ImmovableRod
+  id: ImmovableRodWizard
+  suffix: Wizard
+  components:
+  - type: ImmovableRod
+    minSpeed: 35
+    destroyTiles: false
+    randomizeVelocity: false
+    shouldGib: false
+    damage:
+      types:
+        Blunt: 200
+  - type: MovementIgnoreGravity
+    gravityState: true
+  - type: InputMover
+  - type: MovementSpeedModifier
+    weightlessAcceleration: 5
+    weightlessModifier: 2
+    weightlessFriction: 0
+    friction: 0
+    frictionNoInput: 0
+  - type: CanMoveInAir
+  - type: MovementAlwaysTouching
+  - type: NoSlip
 
 - type: entity
   parent: ImmovableRodKeepTiles
@@ -60,3 +92,86 @@
   components:
   - type: ImmovableRod
     randomizeVelocity: false
+
+- type: entity
+  parent: ImmovableRodKeepTilesStill
+  id: ImmovableRodMop
+  name: immovable mop
+  description: Hurled like a javelin, with the power of a thousand furious janitors.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/mop.rsi
+    state: mop
+    rotation: 225
+    noRot: false
+
+- type: entity
+  parent: ImmovableRodKeepTilesStill
+  id: ImmovableRodShark
+  name: immovable shark
+  description: SHARK TORNADO!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/sharkplush.rsi
+    state: blue
+    rotation: 90
+    noRot: false
+
+- type: entity
+  parent: ImmovableRodKeepTilesStill
+  id: ImmovableRodClown
+  name: immovable clown
+  description: Ejected from the neighbouring station one solar system over. HONK!
+  components:
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    state: clown
+    rotation: 180
+    noRot: false
+
+- type: entity
+  parent: ImmovableRodKeepTilesStill
+  id: ImmovableRodBanana
+  name: immovable banana
+  description: At least you won't slip on it.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: produce
+    noRot: false
+
+- type: entity
+  parent: ImmovableRodKeepTilesStill
+  id: ImmovableRodHammer
+  name: immovable hammer
+  description: Bwoink.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/sledgehammer.rsi
+    state: icon
+    rotation: 225
+    noRot: false
+
+- type: entity
+  parent: ImmovableRodKeepTilesStill
+  id: ImmovableRodThrongler
+  name: immovable throngler
+  description: If you catch it, you can keep it.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/Throngler2.rsi
+    state: icon
+    rotation: 225
+    noRot: false
+
+- type: entity
+  parent: ImmovableRodKeepTilesStill
+  id: ImmovableRodGibstick
+  name: immovable gibstick
+  description: What did you expect?
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/debug.rsi
+    state: icon
+    rotation: 225
+    noRot: false

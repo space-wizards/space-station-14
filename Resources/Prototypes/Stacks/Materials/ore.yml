@@ -62,3 +62,11 @@
   spawn: Coal1
   maxCount: 30
   itemSize: 2
+
+- type: stack
+  id: SaltOre
+  name: salt
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: salt }
+  spawn: Salt1
+  maxCount: 30
+  itemSize: 2

@@ -9,19 +9,19 @@ namespace Content.Server.AlertLevel.Commands
 {
     [UsedImplicitly]
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class SetAlertLevelCommand : IConsoleCommand
+    public sealed class SetAlertLevelCommand : LocalizedCommands
     {
-        public string Command => "setalertlevel";
-        public string Description => Loc.GetString("cmd-setalertlevel-desc");
-        public string Help => Loc.GetString("cmd-setalertlevel-help");
+        [Dependency] private readonly IEntitySystemManager _entitySystems = default!;
 
-        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public override string Command => "setalertlevel";
+
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             var levelNames = new string[] {};
             var player = shell.Player;
             if (player?.AttachedEntity != null)
             {
-                var stationUid = EntitySystem.Get<StationSystem>().GetOwningStation(player.AttachedEntity.Value);
+                var stationUid = _entitySystems.GetEntitySystem<StationSystem>().GetOwningStation(player.AttachedEntity.Value);
                 if (stationUid != null)
                 {
                     levelNames = GetStationLevelNames(stationUid.Value);
@@ -31,39 +31,39 @@ namespace Content.Server.AlertLevel.Commands
             return args.Length switch
             {
                 1 => CompletionResult.FromHintOptions(levelNames,
-                    Loc.GetString("cmd-setalertlevel-hint-1")),
+                    LocalizationManager.GetString("cmd-setalertlevel-hint-1")),
                 2 => CompletionResult.FromHintOptions(CompletionHelper.Booleans,
-                    Loc.GetString("cmd-setalertlevel-hint-2")),
+                    LocalizationManager.GetString("cmd-setalertlevel-hint-2")),
                 _ => CompletionResult.Empty,
             };
         }
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 1)
             {
-                shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
+                shell.WriteError(LocalizationManager.GetString("shell-wrong-arguments-number"));
                 return;
             }
 
             var locked = false;
             if (args.Length > 1 && !bool.TryParse(args[1], out locked))
             {
-                shell.WriteLine(Loc.GetString("shell-argument-must-be-boolean"));
+                shell.WriteLine(LocalizationManager.GetString("shell-argument-must-be-boolean"));
                 return;
             }
 
             var player = shell.Player;
             if (player?.AttachedEntity == null)
             {
-                shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));
+                shell.WriteLine(LocalizationManager.GetString("shell-only-players-can-run-this-command"));
                 return;
             }
 
-            var stationUid = EntitySystem.Get<StationSystem>().GetOwningStation(player.AttachedEntity.Value);
+            var stationUid = _entitySystems.GetEntitySystem<StationSystem>().GetOwningStation(player.AttachedEntity.Value);
             if (stationUid == null)
             {
-                shell.WriteLine(Loc.GetString("cmd-setalertlevel-invalid-grid"));
+                shell.WriteLine(LocalizationManager.GetString("cmd-setalertlevel-invalid-grid"));
                 return;
             }
 
@@ -71,11 +71,11 @@ namespace Content.Server.AlertLevel.Commands
             var levelNames = GetStationLevelNames(stationUid.Value);
             if (!levelNames.Contains(level))
             {
-                shell.WriteLine(Loc.GetString("cmd-setalertlevel-invalid-level"));
+                shell.WriteLine(LocalizationManager.GetString("cmd-setalertlevel-invalid-level"));
                 return;
             }
 
-            EntitySystem.Get<AlertLevelSystem>().SetLevel(stationUid.Value, level, true, true, true, locked);
+            _entitySystems.GetEntitySystem<AlertLevelSystem>().SetLevel(stationUid.Value, level, true, true, true, locked);
         }
 
         private string[] GetStationLevelNames(EntityUid station)

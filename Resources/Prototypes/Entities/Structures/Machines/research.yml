@@ -15,17 +15,13 @@
   - type: TechnologyDatabase
     supportedDisciplines:
     - Industrial
-    - Biochemical
     - Arsenal
     - Experimental
     - CivilianServices
   - type: ApcPowerReceiver
     powerLoad: 200
-    priority: Low
   - type: ExtensionCableReceiver
   - type: WiresPanel
-  - type: Wires
-    layoutId: rndserver
   - type: WiresVisuals
   - type: Machine
     board: ResearchAndDevelopmentServerMachineCircuitboard

@@ -5,7 +5,7 @@
     <OutputPath>..\bin\Content.IntegrationTests\</OutputPath>
     <IsPackable>false</IsPackable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <LangVersion>11</LangVersion>
+    <LangVersion>12</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NUnit" />

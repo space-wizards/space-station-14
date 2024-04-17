@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ClothingMaskBase
   id: ClothingMaskGasChameleon
   name: gas mask
@@ -6,7 +6,8 @@
   suffix: Chameleon
   components:
     - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+      tags: # ignore "WhitelistChameleon" tag
+        - HidesNose
     - type: Sprite
       sprite: Clothing/Mask/gas.rsi
     - type: Clothing
@@ -27,4 +28,3 @@
   suffix: Voice Mask, Chameleon
   components:
     - type: VoiceMasker
-      default: ClothingMaskGas

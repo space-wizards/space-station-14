@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.DoAfter;
 using Content.Server.Humanoid;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -95,11 +95,9 @@ public sealed class MagicMirrorSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.SelectSlotTime, doAfter, uid, target: target, used: uid)
         {
             DistanceThreshold = SharedInteractionSystem.InteractionRange,
-            BreakOnTargetMove = true,
             BreakOnDamage = true,
+            BreakOnMove = true,
             BreakOnHandChange = false,
-            BreakOnUserMove = true,
-            BreakOnWeightlessMove = false,
             NeedHand = true
         }, out var doAfterId);
 
@@ -151,11 +149,9 @@ public sealed class MagicMirrorSystem : EntitySystem
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.ChangeSlotTime, doAfter, uid, target: target, used: uid)
         {
-            BreakOnTargetMove = true,
             BreakOnDamage = true,
+            BreakOnMove = true,
             BreakOnHandChange = false,
-            BreakOnUserMove = true,
-            BreakOnWeightlessMove = false,
             NeedHand = true
         }, out var doAfterId);
 
@@ -206,11 +202,8 @@ public sealed class MagicMirrorSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.RemoveSlotTime, doAfter, uid, target: target, used: uid)
         {
             DistanceThreshold = SharedInteractionSystem.InteractionRange,
-            BreakOnTargetMove = true,
             BreakOnDamage = true,
             BreakOnHandChange = false,
-            BreakOnUserMove = true,
-            BreakOnWeightlessMove = false,
             NeedHand = true
         }, out var doAfterId);
 
@@ -263,11 +256,9 @@ public sealed class MagicMirrorSystem : EntitySystem
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Session.AttachedEntity.Value, component.AddSlotTime, doAfter, uid, target: component.Target.Value, used: uid)
         {
-            BreakOnTargetMove = true,
             BreakOnDamage = true,
+            BreakOnMove = true,
             BreakOnHandChange = false,
-            BreakOnUserMove = true,
-            BreakOnWeightlessMove = false,
             NeedHand = true
         }, out var doAfterId);
 

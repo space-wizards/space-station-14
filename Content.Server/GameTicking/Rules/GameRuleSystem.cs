@@ -1,12 +1,22 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
+using Robust.Server.GameObjects;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
 public abstract partial class GameRuleSystem<T> : EntitySystem where T : IComponent
 {
+    [Dependency] protected readonly IRobustRandom RobustRandom = default!;
     [Dependency] protected readonly IChatManager ChatManager = default!;
     [Dependency] protected readonly GameTicker GameTicker = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
+
+    // Not protected, just to be used in utility methods
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly MapSystem _map = default!;
 
     public override void Initialize()
     {
@@ -69,36 +79,6 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     protected virtual void ActiveTick(EntityUid uid, T component, GameRuleComponent gameRule, float frameTime)
     {
 
-    }
-
-    protected EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent> QueryActiveRules()
-    {
-        return EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
-    }
-
-    protected bool TryRoundStartAttempt(RoundStartAttemptEvent ev, string localizedPresetName)
-    {
-        var query = EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
-        while (query.MoveNext(out _, out _, out _, out var gameRule))
-        {
-            var minPlayers = gameRule.MinPlayers;
-            if (!ev.Forced && ev.Players.Length < minPlayers)
-            {
-                ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
-                    ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers),
-                    ("presetName", localizedPresetName)));
-                ev.Cancel();
-                continue;
-            }
-
-            if (ev.Players.Length == 0)
-            {
-                ChatManager.DispatchServerAnnouncement(Loc.GetString("preset-no-one-ready"));
-                ev.Cancel();
-            }
-        }
-
-        return !ev.Cancelled;
     }
 
     public override void Update(float frameTime)

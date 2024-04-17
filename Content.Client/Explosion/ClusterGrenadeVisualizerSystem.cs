@@ -1,4 +1,5 @@
 using Content.Shared.Explosion;
+using Content.Shared.Explosion.Components;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Explosion;

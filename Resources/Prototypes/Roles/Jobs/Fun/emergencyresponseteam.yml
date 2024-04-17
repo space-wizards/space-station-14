@@ -66,6 +66,61 @@
   inhand:
     - AirTankFilled
 
+# Chaplain
+- type: job
+  id: ERTChaplain
+  name: job-name-ertchaplain
+  description: job-description-ertchaplain
+  playTimeTracker: JobERTChaplain
+  setPreference: false
+  startingGear: ERTEngineerGearEVA
+  icon: "JobIconNanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: BibleUser #Lets them heal with bibles
+
+- type: startingGear
+  id: ERTChaplainGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTChaplain
+    back: ClothingBackpackERTChaplainFilled
+    shoes: ClothingShoesLeather
+    head: ClothingHeadHatFez
+    eyes: ClothingEyesGlasses
+    neck: ClothingNeckStoleChaplain
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterArmorBasicSlim
+    id: ERTEngineerPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltStorageWaistbag
+    pocket1: Flare
+    pocket2: DrinkWaterBottleFull
+
+- type: startingGear
+  id: ERTChaplainGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTChaplain
+    back: ClothingBackpackERTChaplainFilled
+    shoes: ClothingShoesBootsMagAdv
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesGlasses
+    neck: ClothingNeckStoleChaplain
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitERTChaplain
+    suitstorage: AirTankFilled
+    id: ERTChaplainPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltStorageWaistbag
+    pocket1: Flare
+    pocket2: DrinkWaterBottleFull
+
 # Engineer
 - type: job
   id: ERTEngineer
@@ -212,8 +267,7 @@
     id: ERTMedicPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltMedicalFilled
-    pocket1: HandheldHealthAnalyzer
-    pocket2: Flare
+    pocket1: Flare
 
 - type: startingGear
   id: ERTMedicalGearEVA
@@ -229,8 +283,7 @@
     id: ERTMedicPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltMedicalFilled
-    pocket1: HandheldHealthAnalyzer
-    pocket2: Flare
+    pocket1: Flare
 
 # Janitor
 - type: job

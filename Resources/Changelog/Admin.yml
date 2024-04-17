@@ -1,88 +1,156 @@
-Name: Admin
-AdminOnly: true
-Order: 1
+﻿AdminOnly: true
 Entries:
 - author: DrSmugleaf
   changes:
-  - {message: 'Created the admin changelog.', type: Add}
+  - message: Created the admin changelog.
+    type: Add
   id: 1
   time: '2023-10-08T04:26:00.0000000+00:00'
 - author: DrSmugleaf
   changes:
-  - {message: 'Added a new panic bunker UI in the F7 admin panel.', type: Add}
-  - {message: 'Added being able to toggle the panic bunker automatically depending on
-      if admins are online or not.', type: Add}
+  - message: Added a new panic bunker UI in the F7 admin panel.
+    type: Add
+  - message: Added being able to toggle the panic bunker automatically depending on
+      if admins are online or not.
+    type: Add
   id: 2
   time: '2023-10-12T22:46:00.0000000+00:00'
 - author: DrSmugleaf
   changes:
-  - {message: 'Added total playtime to the F7 player list and the AHelp window title.', type: Add}
+  - message: Added total playtime to the F7 player list and the AHelp window title.
+    type: Add
   id: 3
   time: '2023-10-14T08:55:00.0000000+00:00'
 - author: DrSmugleaf
   changes:
-  - {message: 'Added admin Erase verb, add checkbox to erase from the ban panel.', type: Add}
+  - message: Added admin Erase verb, add checkbox to erase from the ban panel.
+    type: Add
   id: 4
   time: '2023-10-14T09:00:00.0000000+00:00'
 - author: DrSmugleaf
   changes:
-  - {message: 'Made the panic bunker UI also set the minimum account age/playtime
-      requirements when the two inputs lose focus, not just when pressing enter.', type: Tweak}
-  - {message: 'Added message tooltip to the erase verb.', type: Tweak}
+  - message: Made the panic bunker UI also set the minimum account age/playtime requirements
+      when the two inputs lose focus, not just when pressing enter.
+    type: Tweak
+  - message: Added message tooltip to the erase verb.
+    type: Tweak
   id: 5
   time: '2023-10-14T09:21:00.0000000+00:00'
 - author: DrSmugleaf
   changes:
-  - {message: 'Add pop sound effect when using the erase admin verb.', type: Tweak}
+  - message: Add pop sound effect when using the erase admin verb.
+    type: Tweak
   id: 5
   time: '2023-10-14T09:47:00.0000000+00:00'
 - author: DrSmugleaf
   changes:
-  - {message: 'Fixed not being able to sort the F7 players tab by playtime.', type: Fix}
+  - message: Fixed not being able to sort the F7 players tab by playtime.
+    type: Fix
   id: 6
   time: '2023-10-14T23:52:00.0000000+00:00'
 - author: DrSmugleaf
   changes:
-  - {message: 'Fixed playtime being sorted incorrectly in the F7 players tab.', type: Fix}
+  - message: Fixed playtime being sorted incorrectly in the F7 players tab.
+    type: Fix
   id: 7
   time: '2023-10-16T04:23:00.0000000+00:00'
 - author: DrSmugleaf
   changes:
-  - {message: 'Fixed whitelist commands not giving feedback with 0 arguments.', type: Fix}
-  - {message: 'Fixed not trimming starting and trailing whitespaces within names
-      in whitelist commands.', type: Fix}
-  - {message: 'Added a \[player\] completion type hint to whitelist add and remove
-      commands.', type: Tweak}
+  - message: Fixed whitelist commands not giving feedback with 0 arguments.
+    type: Fix
+  - message: Fixed not trimming starting and trailing whitespaces within names in
+      whitelist commands.
+    type: Fix
+  - message: Added a \[player\] completion type hint to whitelist add and remove commands.
+    type: Tweak
   id: 8
   time: '2023-10-21T09:53:00.0000000+00:00'
 - author: DrSmugleaf
   changes:
-  - {message: 'Fixed the Erase verb not removing all chat messages from the player
-      in some cases.', type: Fix}
+  - message: Fixed the Erase verb not removing all chat messages from the player in
+      some cases.
+    type: Fix
   id: 9
   time: '2023-10-30T01:28:00.0000000+00:00'
 - author: Vasilis
   changes:
-  - {message: 'AME and PA make a sound effect when they are being overloaded. Similar to being sent a fax.', type: Add}
+  - message: AME and PA make a sound effect when they are being overloaded. Similar
+      to being sent a fax.
+    type: Add
   id: 10
   time: '2023-11-07T15:03:00.0000000+00:00'
 - author: nikthechampiongr
   changes:
-    - {message: 'The respawn verb now respawns the targeted player instead of the admin', type: Fix}
+  - message: The respawn verb now respawns the targeted player instead of the admin
+    type: Fix
   id: 11
   time: '2023-11-22T16:39:00.0000000+00:00'
 - author: nikthechampiongr
   changes:
-  - {message: 'The Super Bonk smite is now available. Targets will bonk their head on every single table.', type: Add}
+  - message: The Super Bonk smite is now available. Targets will bonk their head on
+      every single table.
+    type: Add
   id: 12
   time: '2023-12-12T11:54:00.0000000+00:00'
 - author: DrSmugleaf
   changes:
-  - {message: 'Fixed not being able to right click in AHelps and the players and objects tabs.', type: Fix}
+  - message: Fixed not being able to right click in AHelps and the players and objects
+      tabs.
+    type: Fix
   id: 13
   time: '2023-12-21T06:34:00.0000000+00:00'
 - author: Geekyhobo
   changes:
-    - {message: 'Fixed AGhosts not being able to drop items past the default range.', type: Fix}
+  - message: Fixed AGhosts not being able to drop items past the default range.
+    type: Fix
   id: 14
   time: '2024-1-4T01:30:00.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - message: Players now leave logs when joining as observers.
+    type: Add
+  id: 15
+  time: '2024-03-13T22:46:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26091
+- author: PJB3005
+  changes:
+  - message: Admin messages are now shown as "seen" even if the player dismisses them
+      only temporarily. Also, it is impossible for players to play without dismissing
+      the message (temporary or permanent).
+    type: Tweak
+  id: 16
+  time: '2024-03-21T15:15:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26223
+- author: nikthechampiongr
+  changes:
+  - message: The stealthmin command has been added. Admins with the Stealth permission
+      can now hide themselves from adminwho except for other admins with that permission.
+    type: Add
+  id: 17
+  time: '2024-03-24T15:39:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26263
+- author: lzk228
+  changes:
+  - message: Selected preset for secret is now sent to admin chat.
+    type: Tweak
+  id: 18
+  time: '2024-03-29T05:03:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26500
+- author: Simyon
+  changes:
+  - message: The aghost command now accepts a optional username argument to aghost
+      other people.
+    type: Tweak
+  id: 19
+  time: '2024-03-31T02:05:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26546
+- author: PJB3005
+  changes:
+  - message: The new "grant_connect_bypass" command grants a player the ability to
+      connect, bypassing whitelist, player cap and panic bunker.
+    type: Add
+  id: 20
+  time: '2024-04-09T15:25:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26771
+Name: Admin
+Order: 1

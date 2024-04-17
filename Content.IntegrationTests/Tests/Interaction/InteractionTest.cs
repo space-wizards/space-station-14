@@ -189,10 +189,10 @@ public abstract partial class InteractionTest
         // Get player data
         var sPlayerMan = Server.ResolveDependency<Robust.Server.Player.IPlayerManager>();
         var cPlayerMan = Client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
-        if (cPlayerMan.LocalPlayer?.Session == null)
+        if (Client.Session == null)
             Assert.Fail("No player");
-        ClientSession = cPlayerMan.LocalPlayer!.Session!;
-        ServerSession = sPlayerMan.GetSessionByUserId(ClientSession.UserId);
+        ClientSession = Client.Session!;
+        ServerSession = sPlayerMan.GetSessionById(ClientSession.UserId);
 
         // Spawn player entity & attach
         EntityUid? old = default;
@@ -240,7 +240,7 @@ public abstract partial class InteractionTest
         Assert.Multiple(() =>
         {
             Assert.That(CEntMan.GetNetEntity(cPlayerMan.LocalEntity), Is.EqualTo(Player));
-            Assert.That(sPlayerMan.GetSessionByUserId(ClientSession.UserId).AttachedEntity, Is.EqualTo(SEntMan.GetEntity(Player)));
+            Assert.That(sPlayerMan.GetSessionById(ClientSession.UserId).AttachedEntity, Is.EqualTo(SEntMan.GetEntity(Player)));
         });
     }
 

@@ -2,7 +2,7 @@
   id: ChameleonSet
   name: thief-backpack-category-chameleon-name
   description: thief-backpack-category-chameleon-description
-  sprite: 
+  sprite:
     sprite: /Textures/Clothing/OuterClothing/Misc/black_hoodie.rsi
     state: icon
   content:
@@ -19,7 +19,7 @@
   id: ToolsSet
   name: thief-backpack-category-tools-name
   description: thief-backpack-category-tools-description
-  sprite: 
+  sprite:
     sprite: Objects/Tools/jaws_of_life.rsi
     state: jaws_pry
   content:
@@ -66,7 +66,7 @@
   id: SleeperSet
   name: thief-backpack-category-sleeper-name
   description: thief-backpack-category-sleeper-description
-  sprite: 
+  sprite:
     sprite: Objects/Tanks/anesthetic.rsi
     state: icon
   content:
@@ -83,22 +83,21 @@
   id: CommunicatorSet
   name: thief-backpack-category-communicator-name
   description: thief-backpack-category-communicator-description
-  sprite: 
+  sprite:
     sprite: Objects/Tools/spy_device.rsi
     state: icon
   content:
   - EncryptionKeyStationMaster
   - CyberPen
-  - SpyCrewMonitor
   - BriefcaseThiefBribingBundleFilled
   - ClothingMaskGasVoiceChameleon
   #- todo Chameleon Stamp
-  
+
 - type: thiefBackpackSet
   id: SmugglerSet
   name: thief-backpack-category-smuggler-name
   description: thief-backpack-category-smuggler-description
-  sprite: 
+  sprite:
     sprite: Clothing/Neck/Cloaks/void.rsi
     state: icon
   content:

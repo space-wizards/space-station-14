@@ -33,7 +33,7 @@ public sealed partial class PowerMonitoringConsoleNavMapControl : NavMapControl
         // Set colors
         TileColor = new Color(30, 57, 67);
         WallColor = new Color(102, 164, 217);
-        _backgroundColor = Color.FromSrgb(TileColor.WithAlpha(_backgroundOpacity));
+        BackgroundColor = Color.FromSrgb(TileColor.WithAlpha(BackgroundOpacity));
 
         PostWallDrawingAction += DrawAllCableNetworks;
     }
@@ -93,8 +93,8 @@ public sealed partial class PowerMonitoringConsoleNavMapControl : NavMapControl
                     if (HiddenLineGroups.Contains(chunkedLine.Group))
                         continue;
 
-                    var start = Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y));
-                    var end = Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y));
+                    var start = ScalePosition(chunkedLine.Origin - new Vector2(offset.X, -offset.Y));
+                    var end = ScalePosition(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y));
 
                     cableNetworks[(int) chunkedLine.Group].Add(start);
                     cableNetworks[(int) chunkedLine.Group].Add(end);
@@ -139,22 +139,22 @@ public sealed partial class PowerMonitoringConsoleNavMapControl : NavMapControl
                     if (HiddenLineGroups.Contains(chunkedLine.Group))
                         continue;
 
-                    var leftTop = Scale(new Vector2
+                    var leftTop = ScalePosition(new Vector2
                         (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - 0.1f,
                         Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - 0.1f)
                         - new Vector2(offset.X, -offset.Y));
 
-                    var rightTop = Scale(new Vector2
+                    var rightTop = ScalePosition(new Vector2
                         (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + 0.1f,
                         Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - 0.1f)
                         - new Vector2(offset.X, -offset.Y));
 
-                    var leftBottom = Scale(new Vector2
+                    var leftBottom = ScalePosition(new Vector2
                         (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - 0.1f,
                         Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + 0.1f)
                         - new Vector2(offset.X, -offset.Y));
 
-                    var rightBottom = Scale(new Vector2
+                    var rightBottom = ScalePosition(new Vector2
                         (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + 0.1f,
                         Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + 0.1f)
                         - new Vector2(offset.X, -offset.Y));

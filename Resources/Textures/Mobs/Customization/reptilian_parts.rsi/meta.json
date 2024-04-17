@@ -28,6 +28,14 @@
       "directions": 4
     },
     {
+      "name": "tail_smooth_behind_primary",
+      "directions": 4
+    },
+    {
+      "name": "tail_smooth_behind_secondary",
+      "directions": 4
+    },
+    {
       "name": "tail_smooth_behind",
       "directions": 4
     },
@@ -45,6 +53,14 @@
     },
     {
       "name": "tail_ltiger_behind",
+      "directions": 4
+    },
+    {
+      "name": "tail_smooth_primary",
+      "directions": 4
+    },
+    {
+      "name": "tail_smooth_secondary",
       "directions": 4
     },
     {
@@ -68,7 +84,85 @@
       "directions": 4
     },
     {
-      "name": "tail_smooth_wagging",
+      "name": "tail_smooth_wagging_primary",
+      "directions": 4,
+      "delays": [
+          [
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1
+          ],
+          [
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1
+          ],
+          [
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1
+          ],
+          [
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1
+          ]
+      ]
+    },
+    {
+      "name": "tail_smooth_wagging_secondary",
       "directions": 4,
       "delays": [
           [

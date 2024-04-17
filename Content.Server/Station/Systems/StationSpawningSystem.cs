@@ -1,17 +1,22 @@
+using System.Linq;
 using Content.Server.Access.Systems;
 using Content.Server.DetailExaminable;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
 using Content.Server.Mind.Commands;
 using Content.Server.PDA;
+using Content.Server.Shuttles.Systems;
+using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Clothing;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
@@ -44,12 +49,23 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     [Dependency] private readonly IdentitySystem _identity = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
+    [Dependency] private readonly ArrivalsSystem _arrivalsSystem = default!;
+    [Dependency] private readonly ContainerSpawnPointSystem _containerSpawnPointSystem = default!;
+
     private bool _randomizeCharacters;
+
+    private Dictionary<SpawnPriorityPreference, Action<PlayerSpawningEvent>> _spawnerCallbacks = new();
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        _configurationManager.OnValueChanged(CCVars.ICRandomCharacters, e => _randomizeCharacters = e, true);
+        Subs.CVar(_configurationManager, CCVars.ICRandomCharacters, e => _randomizeCharacters = e, true);
+
+        _spawnerCallbacks = new Dictionary<SpawnPriorityPreference, Action<PlayerSpawningEvent>>()
+        {
+            { SpawnPriorityPreference.Arrivals, _arrivalsSystem.HandlePlayerSpawning },
+            { SpawnPriorityPreference.Cryosleep, _containerSpawnPointSystem.HandlePlayerSpawning }
+        };
     }
 
     /// <summary>
@@ -70,6 +86,32 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         var ev = new PlayerSpawningEvent(job, profile, station);
+
+        if (station != null && profile != null)
+        {
+            // Try to call the character's preferred spawner first.
+            if (_spawnerCallbacks.TryGetValue(profile.SpawnPriority, out var preferredSpawner))
+            {
+                preferredSpawner(ev);
+
+                foreach (var (key, remainingSpawner) in _spawnerCallbacks)
+                {
+                    if (key == profile.SpawnPriority)
+                        continue;
+
+                    remainingSpawner(ev);
+                }
+            }
+            else
+            {
+                // Call all of them in the typical order.
+                foreach (var typicalSpawner in _spawnerCallbacks.Values)
+                {
+                    typicalSpawner(ev);
+                }
+            }
+        }
+
         RaiseLocalEvent(ev);
 
         DebugTools.Assert(ev.SpawnResult is { Valid: true } or null);
@@ -97,7 +139,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         EntityUid? station,
         EntityUid? entity = null)
     {
-        _prototypeManager.TryIndex(job?.Prototype ?? string.Empty, out JobPrototype? prototype);
+        _prototypeManager.TryIndex(job?.Prototype ?? string.Empty, out var prototype);
 
         // If we're not spawning a humanoid, we're gonna exit early without doing all the humanoid stuff.
         if (prototype?.JobEntity != null)
@@ -139,9 +181,47 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         if (prototype?.StartingGear != null)
         {
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(prototype.StartingGear);
-            EquipStartingGear(entity.Value, startingGear, profile);
+            EquipStartingGear(entity.Value, startingGear);
             if (profile != null)
                 EquipIdCard(entity.Value, profile.Name, prototype, station);
+        }
+
+        // Run loadouts after so stuff like storage loadouts can get
+        var jobLoadout = LoadoutSystem.GetJobPrototype(prototype?.ID);
+
+        if (_prototypeManager.TryIndex(jobLoadout, out RoleLoadoutPrototype? roleProto))
+        {
+            RoleLoadout? loadout = null;
+            profile?.Loadouts.TryGetValue(jobLoadout, out loadout);
+
+            // Set to default if not present
+            if (loadout == null)
+            {
+                loadout = new RoleLoadout(jobLoadout);
+                loadout.SetDefault(_prototypeManager);
+            }
+
+            // Order loadout selections by the order they appear on the prototype.
+            foreach (var group in loadout.SelectedLoadouts.OrderBy(x => roleProto.Groups.FindIndex(e => e == x.Key)))
+            {
+                foreach (var items in group.Value)
+                {
+                    if (!_prototypeManager.TryIndex(items.Prototype, out var loadoutProto))
+                    {
+                        Log.Error($"Unable to find loadout prototype for {items.Prototype}");
+                        continue;
+                    }
+
+                    if (!_prototypeManager.TryIndex(loadoutProto.Equipment, out var startingGear))
+                    {
+                        Log.Error($"Unable to find starting gear {loadoutProto.Equipment} for loadout {loadoutProto}");
+                        continue;
+                    }
+
+                    // Handle any extra data here.
+                    EquipStartingGear(entity.Value, startingGear);
+                }
+            }
         }
 
         if (profile != null)

@@ -15,9 +15,11 @@
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
   - type: Paper
+  - type: PaperLabelType
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
     closeOnHandDeselect: false
+    requireHands: false
   - type: UserInterface
     interfaces:
     - key: enum.PaperUiKey.Key
@@ -28,6 +30,7 @@
     tags:
     - Document
     - Trash
+    - Paper
   - type: Appearance
   - type: PaperVisuals
   - type: Flammable
@@ -56,6 +59,18 @@
               max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Food
+    solution: food
+    delay: 7
+    forceFeedDelay: 7
+  - type: BadFood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 1
 
 - type: entity
   name: paper scrap
@@ -129,6 +144,8 @@
     - state: paper_stamp-generic
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
+  - type: PaperLabelType
+    paperType: CaptainsPaper
   - type: PaperVisuals
     headerImagePath: "/Textures/Interface/Paper/paper_heading_captains_thoughts.svg.96dpi.png"
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
@@ -146,19 +163,21 @@
     sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: paper
-      color: "#f7e574"
+      color: "#9ef5ff"
     - state: paper_words
       map: ["enum.PaperVisualLayers.Writing"]
-      color: "#f7e574"
+      color: "#9ef5ff"
       visible: false
     - state: paper_stamp-generic
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
+  - type: PaperLabelType
+    paperType: Invoice
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
-    backgroundModulate: "#f7e574"
-    contentImageModulate: "#f7e574"
+    backgroundModulate: "#9ef5ff"
+    contentImageModulate: "#9ef5ff"
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     contentMargin: 16.0, 16.0, 16.0, 16.0
     headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
@@ -170,6 +189,29 @@
   name: bounty manifest
   description: A paper label designating a crate as containing a bounty. Selling a crate with this label will fulfill the bounty.
   components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+      color: "#f7e574"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#f7e574"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperLabelType
+    paperType: Bounty
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundModulate: "#f7e574"
+    contentImageModulate: "#f7e574"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
+    headerMargin: 0.0, 12.0, 0.0, 0.0
   - type: CargoBountyLabel
   - type: StaticPrice
     price: 0
@@ -261,6 +303,12 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 25
+
+- type: entity
+  parent: Pen
+  id: PenEmbeddable
+  abstract: true
+  components:
   - type: EmbeddableProjectile
     offset: 0.3,0.0
     removalTime: 0.0
@@ -286,9 +334,9 @@
 
 - type: entity
   name: Cybersun pen
-  parent: Pen
+  parent: PenEmbeddable
   id: CyberPen
-  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write.
+  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. So powerful, it's even able to rewrite officially stamped documents should the need arise.
   components:
   - type: Tag
     tags:
@@ -303,10 +351,8 @@
     damage:
       types:
         Piercing: 15
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Piercing: 15
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
   - type: Tool
     qualities:
       - Screwing
@@ -319,7 +365,7 @@
 
 - type: entity
   name: captain's fountain pen
-  parent: Pen
+  parent: PenEmbeddable
   id: PenCap
   description: 'A luxurious fountain pen for the captain of the station.'
   components:
@@ -342,7 +388,7 @@
 
 - type: entity
   name: hop's fountain pen
-  parent: Pen
+  parent: PenEmbeddable
   id: PenHop
   description: 'A luxurious fountain pen for the hop of the station.'
   components:
@@ -654,6 +700,7 @@
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     damage:
       types:
         Blunt: 10
