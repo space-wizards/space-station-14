@@ -753,6 +753,7 @@ public sealed class ChatUIController : UIController
         else if (channel == ChatSelectChannel.Radio)
         {
             // radio must have prefix as it goes through the say command.
+            // say starts with :p with p being the radio prefix (e.g. say ":m test"). This kinda sucks lol ~YuNii.
             text = $";{text}";
         }
 

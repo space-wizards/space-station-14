@@ -112,14 +112,32 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         }
 
         input = input.TrimEnd();
+        
+        
+        
+        
 
         foreach (var (smiley, replacement) in SmileyToEmote)
         {
             if (input.EndsWith(smiley, true, CultureInfo.InvariantCulture))
             {
-                sanitized = input.Remove(input.Length - smiley.Length).TrimEnd();
-                emote = Loc.GetString(replacement, ("ent", speaker));
-                return true;
+                // panda encouraged me to do this so here we are
+                string _input = input.ToLower();
+
+                if (_input[0] == 't' && !input.Contains(" "))
+                {
+                    input = input.Substring(1);
+                    
+                    sanitized = input.Remove(input.Length - smiley.Length).TrimEnd();
+                    emote = Loc.GetString(replacement, ("ent", speaker));
+                    return true;
+                }
+                else
+                {
+                    sanitized = input.Remove(input.Length - smiley.Length).TrimEnd();
+                    emote = Loc.GetString(replacement, ("ent", speaker));
+                    return true;
+                }
             }
         }
 
