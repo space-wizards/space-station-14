@@ -97,9 +97,15 @@ namespace Content.Client.Preferences.UI
             UpdateUI();
         }
 
+        public void UpdateControls()
+        {
+            // Reset sliders etc. upon going going back to GUI.
+            _humanoidProfileEditor.LoadServerData();
+        }
+
         private void UpdateUI()
         {
-            UserInterfaceManager.GetUIController<LobbyUIController>().UpdateCharacterUI();
+            UserInterfaceManager.GetUIController<LobbyUIController>().ReloadProfile();
             var numberOfFullSlots = 0;
             var characterButtonsGroup = new ButtonGroup();
             Characters.RemoveAllChildren();
