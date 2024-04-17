@@ -41,5 +41,11 @@ namespace Content.Shared.Slippery
         [DataField, AutoNetworkedField]
         [Access(Other = AccessPermissions.ReadWrite)]
         public bool SuperSlippery;
+
+        /// <summary>
+        /// the chance of slipping on this object.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public float SlipProbability = 1f;
     }
 }
