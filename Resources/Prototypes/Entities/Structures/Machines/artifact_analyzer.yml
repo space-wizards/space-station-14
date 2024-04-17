@@ -143,9 +143,6 @@
         Blunt: 10
   - type: Machine
     board: ArtifactCrusherMachineCircuitboard
-  - type: Wires
-    boardName: wires-board-name-crusher
-    layoutId: Crusher
   - type: WiresPanel
   - type: Sprite
     sprite: Structures/Machines/artifact_crusher.rsi

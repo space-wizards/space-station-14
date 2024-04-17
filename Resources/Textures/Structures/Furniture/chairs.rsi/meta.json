@@ -99,6 +99,10 @@
 	  },
 	  {
 		  "name": "pufi-box-random"
+	  },
+    {
+		"name": "brass_chair",
+		"directions": 4
 	  }
   ]
 }

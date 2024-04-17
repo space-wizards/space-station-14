@@ -19,6 +19,7 @@
       - DrinkAloe
       - DrinkAndalusia
       - DrinkAntifreeze
+      - DrinkArnoldPalmer
       - DrinkB52Glass
       - DrinkBahamaMama
       - DrinkBananaHonkGlass
@@ -27,12 +28,15 @@
       - DrinkBerryJuice
       - DrinkBlackRussianGlass
       - DrinkBlueCuracaoGlass
+      - DrinkBlueHawaiianGlass
       - DrinkBloodyMaryGlass
       - DrinkBooger
       - DrinkBraveBullGlass
       - DrinkCarrotJuice
+      - DrinkCoconutRum
       - DrinkChocolateGlass
       - DrinkCognacGlass
+      - DrinkCosmopolitan
       - DrinkCubaLibreGlass
       - DrinkDeadRumGlass
       - DrinkDevilsKiss
@@ -66,15 +70,19 @@
       - DrinkMilkshake
       - DrinkMojito
       - DrinkNTCahors
+      - DrinkPainkillerGlass
       - DrinkPatronGlass
+      - DrinkPinaColadaGlass
       - DrinkPoscaGlass
       - DrinkRedMeadGlass
       - DrinkRewriter
+      - DrinkRoyRogersGlass
       - DrinkRootBeerFloatGlass
       - DrinkRumGlass
       - DrinkSakeGlass
       - DrinkSbitenGlass
       - DrinkScrewdriverCocktailGlass
+      - DrinkShirleyTempleGlass
       - DrinkSuiDreamGlass
       - DrinkSingulo
       - DrinkSoyLatte
