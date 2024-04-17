@@ -601,7 +601,10 @@
   id: StationEngineerHead
   name: loadout-group-station-engineer-head
   loadouts:
-  - StationEngineerHead
+  - StationEngineerHardhatYellow
+  - StationEngineerHardhatOrange
+  - StationEngineerHardhatBlue
+  - StationEngineerHardhatRed
   - SeniorEngineerBeret
 
 - type: loadoutGroup
