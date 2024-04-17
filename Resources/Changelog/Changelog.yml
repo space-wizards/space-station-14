@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: 'Added a new flavor of Donk Pockets: Stonk Pockets'
-    type: Add
-  id: 5870
-  time: '2024-02-03T01:55:03.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24876
 - author: Hmeister
   changes:
   - message: The guidebook entry for cargo is now up to date, and some other minor
@@ -3831,3 +3824,14 @@
   id: 6369
   time: '2024-04-17T10:10:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26762
+- author: slarticodefast
+  changes:
+  - message: The gas analyzer now tells you the volume of scanned objects. Tanks inside
+      canisters now show up as well.
+    type: Add
+  - message: The gas analyzer now shows the amount of moles inside the scanned pipe
+      element instead of the whole pipe network.
+    type: Tweak
+  id: 6370
+  time: '2024-04-17T17:42:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25720
