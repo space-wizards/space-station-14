@@ -18,8 +18,7 @@ namespace Content.Shared.Mobs.Components
     public sealed partial class MobStateComponent : Component
     {
         //default mobstate is always the lowest state level
-        [DataField]
-        [AutoNetworkedField]
+        [AutoNetworkedField, ViewVariables]
         public MobState CurrentState { get; set; } = MobState.Alive;
 
         [DataField]
