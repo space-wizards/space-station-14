@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Anzarot121
-  changes:
-  - message: Fixed a problem in the code due to which mobs, including hamsters, slimes,
-      spiders, xenos, could not pull things.
-    type: Fix
-  id: 5869
-  time: '2024-02-03T01:25:11.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22485
 - author: Tayrtahn
   changes:
   - message: 'Added a new flavor of Donk Pockets: Stonk Pockets'
@@ -3832,3 +3824,10 @@
   id: 6368
   time: '2024-04-17T10:06:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27043
+- author: Beck Thompson
+  changes:
+  - message: You now must equip gloved weapons (E.g boxing gloves) to use them.
+    type: Fix
+  id: 6369
+  time: '2024-04-17T10:10:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26762
