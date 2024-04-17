@@ -88,13 +88,12 @@
   description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
   components:
   - type: SqueezeBottle
-    reagent: "SpaceGlue"
   - type: Openable
     closeable: true
     sound:
       collection: packetOpenSounds
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/lube-tube.rsi
+    sprite: Objects/Consumable/Drinks/squeeze-bottle.rsi
     layers:
       - state: icon
         map: ["enum.OpenableVisuals.Layer"]

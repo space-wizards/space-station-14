@@ -19,12 +19,6 @@ public sealed partial class SqueezeBottleComponent : Component
     public string Solution = "drink";
 
     /// <summary>
-    /// Reagent that will be used as glue.
-    /// </summary>
-    [DataField("reagent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>), required: true)]
-    public string Reagent;
-
-    /// <summary>
     /// Reagent consumption per use.
     /// </summary>
     [DataField("AmountConsumedOnUse"), ViewVariables(VVAccess.ReadWrite)]
