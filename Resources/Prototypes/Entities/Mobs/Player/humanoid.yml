@@ -562,9 +562,9 @@
       sprite: Mobs/Species/Human/parts.rsi
       state: full
     - type: RandomMetadata
-      nameSegments: [names_wizard_first]
+      nameSegments: [names_wizard]
     - type: RandomHumanoidSpawner
-      settings: Wizard
+      settings: WizardApprentice
 
 - type: entity
   parent: BaseMobHuman
