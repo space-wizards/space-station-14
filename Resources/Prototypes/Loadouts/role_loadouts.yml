@@ -287,8 +287,8 @@
   - ChiefMedicalOfficerMask
   - ChiefMedicalOfficerJumpsuit
   - ChiefMedicalOfficerGloves
-  - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerBackpack
+  - ChiefMedicalOfficerOuterClothing  
   - ChiefMedicalOfficerNeck
   - ChiefMedicalOfficerShoes
   - Trinkets
@@ -318,8 +318,8 @@
   groups:
   - ChemistMask
   - ChemistJumpsuit
-  - ChemistBackpack
   - ChemistGloves
+  - ChemistBackpack
   - ChemistOuterClothing
   - MedicalShoes
   - Trinkets
@@ -330,8 +330,8 @@
   - ParamedicHead
   - ParamedicMask
   - ParamedicJumpsuit
-  - ParamedicBackpack
   - ParamedicGloves
+  - ParamedicBackpack  
   - ParamedicOuterClothing
   - ParamedicShoes
   - Trinkets
