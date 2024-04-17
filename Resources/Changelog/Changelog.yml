@@ -1,60 +1,4 @@
 ﻿Entries:
-- author: Varen
-  changes:
-  - message: Cutting wires will now properly electrocute if enough power is available.
-    type: Fix
-  id: 5855
-  time: '2024-02-01T11:54:25.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24554
-- author: SlamBamActionman
-  changes:
-  - message: Paper is now edible, even for non-moths.
-    type: Tweak
-  id: 5856
-  time: '2024-02-01T12:40:55.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24755
-- author: mac6na6na
-  changes:
-  - message: Tiered part crates will no longer appear on salvage expeditions.
-    type: Remove
-  id: 5857
-  time: '2024-02-01T12:41:03.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24810
-- author: mirrorcult
-  changes:
-  - message: Crayon/lathe/vendor/round end/gas analyzer windows now open closer to
-      the sides of the screen
-    type: Tweak
-  id: 5858
-  time: '2024-02-01T12:49:49.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24767
-- author: Tayrtahn
-  changes:
-  - message: Plushies, whoopie cushions, and a few other noisemaking objects can be
-      used as modular grenade payloads.
-    type: Add
-  id: 5859
-  time: '2024-02-01T12:59:42.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24306
-- author: Repo
-  changes:
-  - message: AFK admins will trigger the SOS in aHelp relay.
-    type: Tweak
-  id: 5860
-  time: '2024-02-01T13:03:50.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24482
-- author: Nopey
-  changes:
-  - message: Many belts and the plant bag no longer produce an erroneous "Can't insert"
-      and "This doesn't go in there!" messages while inserting certain items such
-      as Produce (plant bag) or Smoke Grenades (security belt).
-    type: Fix
-  - message: Ammunition can once again be stored in assault belts, as was the case
-      before June 2022.
-    type: Fix
-  id: 5861
-  time: '2024-02-01T13:33:57.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24063
 - author: Blazeror
   changes:
   - message: Chemical analysis goggles can now inspect solutions inside spray bottles.
@@ -3839,3 +3783,52 @@
   id: 6354
   time: '2024-04-14T12:12:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26338
+- author: beck-thompson
+  changes:
+  - message: Cybersun pen now makes a slashing noise when doing damage.
+    type: Fix
+  id: 6355
+  time: '2024-04-14T20:04:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26951
+- author: TokenStyle
+  changes:
+  - message: Lockers cannot be deconstructed with a screwdriver when locked now.
+    type: Fix
+  id: 6356
+  time: '2024-04-14T22:26:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26961
+- author: pissdemon
+  changes:
+  - message: Catwalks over lava are slightly less likely to catch you on fire again.
+    type: Fix
+  id: 6357
+  time: '2024-04-15T01:27:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26968
+- author: Velcroboy
+  changes:
+  - message: Fixed sec/lawyer and vault airlocks
+    type: Fix
+  id: 6358
+  time: '2024-04-15T22:22:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26980
+- author: tosatur
+  changes:
+  - message: Made clown snoring quieter
+    type: Tweak
+  id: 6359
+  time: '2024-04-16T18:48:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27012
+- author: DEATHB4DEFEAT, Dutch-VanDerLinde, metalgearsloth and musicmanvr
+  changes:
+  - message: Added loadouts
+    type: Add
+  id: 6360
+  time: '2024-04-16T19:57:41.736477+00:00'
+  url: null
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Senior role ID cards now function properly.
+    type: Fix
+  id: 6361
+  time: '2024-04-16T20:17:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27017

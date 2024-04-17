@@ -1042,6 +1042,15 @@
       board: [ DoorElectronicsResearchDirector ]
 
 - type: entity
+  parent: AirlockMaintCommandLocked
+  id: AirlockMaintQuartermasterLocked
+  suffix: Quartermaster, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsQuartermaster ]
+
+- type: entity
   parent: AirlockMaint
   id: AirlockMaintArmoryLocked
   suffix: Armory, Locked
