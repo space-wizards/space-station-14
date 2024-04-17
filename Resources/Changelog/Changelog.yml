@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Added sound effect for Diona salutes
-    type: Add
-  id: 5864
-  time: '2024-02-01T22:34:09.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24836
 - author: Dutch-VanDerLinde
   changes:
   - message: Detectives are now listed under civilian instead of security.
@@ -3833,3 +3826,11 @@
   id: 6363
   time: '2024-04-17T02:54:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27033
+- author: MACMAN2003
+  changes:
+  - message: Nuclear operatives now only need 20 players to be readied up again instead
+      of 35.
+    type: Tweak
+  id: 6364
+  time: '2024-04-17T03:19:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27036
