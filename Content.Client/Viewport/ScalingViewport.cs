@@ -388,17 +388,17 @@ namespace Content.Client.Viewport
     public enum ScalingViewportIgnoreDimension
     {
         /// <summary>
-        ///     <see cref="ScalingViewport.FixedRenderScale"/> is used.
+        ///     The viewport won't ignore any dimension.
         /// </summary>
         None = 0,
 
         /// <summary>
-        ///     Floor to the closest integer scale possible.
+        ///     The viewport will ignore the horizontal dimension, and will exclusively consider the vertical dimension for scaling.
         /// </summary>
         Horizontal,
 
         /// <summary>
-        ///     Ceiling to the closest integer scale possible.
+        ///     The viewport will ignore the vertical dimension, and will exclusively consider the horizontal dimension for scaling.
         /// </summary>
         Vertical
     }
