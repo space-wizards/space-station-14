@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
+using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -273,6 +274,10 @@ namespace Content.Server.GameTicking
                     _damageable.TryChangeDamage(playerEntity, damage, true);
                 }
             }
+
+            // Free the sentient artifact ghost role when ghosting
+            if(canReturnGlobal && TryComp(playerEntity, out ArtifactComponent? artifact))
+                canReturn = false;
 
             var xformQuery = GetEntityQuery<TransformComponent>();
             var coords = _transform.GetMoverCoordinates(position, xformQuery);
