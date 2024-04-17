@@ -83,8 +83,8 @@ public abstract class SharedNavMapSystem : EntitySystem
     {
         ushort combined = 0;
 
-        foreach (var (_, value) in tile)
-            combined |= value;
+        foreach (var kvp in tile)
+            combined |= kvp.Value;
 
         return combined;
     }
@@ -93,9 +93,9 @@ public abstract class SharedNavMapSystem : EntitySystem
     {
         var flag = (ushort) GetFlag(tile);
 
-        foreach (var (direction, _) in tileData)
+        foreach (var kvp in tileData)
         {
-            if ((tileData[direction] & flag) == 0)
+            if ((kvp.Value & flag) == 0)
                 return false;
         }
 
@@ -123,11 +123,12 @@ public abstract class SharedNavMapSystem : EntitySystem
             return false;
 
         string? name = component.Text;
+        var meta = MetaData(uid);
 
         if (string.IsNullOrEmpty(name))
-            name = MetaData(uid).EntityName;
+            name = meta.EntityName;
 
-        beaconData = new NavMapBeacon(GetNetEntity(uid), component.Color, name, xform.LocalPosition)
+        beaconData = new NavMapBeacon(meta.NetEntity, component.Color, name, xform.LocalPosition)
         {
             LastUpdate = _gameTiming.CurTick
         };
