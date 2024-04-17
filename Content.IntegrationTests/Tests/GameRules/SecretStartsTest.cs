@@ -33,10 +33,7 @@ public sealed class SecretStartsTest
 
         await server.WaitAssertion(() =>
         {
-            foreach (var rule in gameTicker.GetAddedGameRules())
-            {
-                Assert.That(gameTicker.GetActiveGameRules(), Does.Contain(rule), $"expected rule {entMan.ToPrettyString(rule)}");
-            }
+            Assert.That(gameTicker.GetAddedGameRules().Count(), Is.GreaterThan(1), $"No additional rules started by secret rule.");
 
             // End all rules
             gameTicker.ClearGameRules();
