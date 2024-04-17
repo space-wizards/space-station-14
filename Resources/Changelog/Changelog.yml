@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Blazeror
-  changes:
-  - message: Chemical analysis goggles can now inspect solutions inside spray bottles.
-    type: Fix
-  id: 5862
-  time: '2024-02-01T22:19:01.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24838
 - author: themias
   changes:
   - message: Fixed dylovene overdoses not applying brute damage
@@ -3832,3 +3825,10 @@
   id: 6361
   time: '2024-04-16T20:17:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27017
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Most job loadouts now have winter clothing available.
+    type: Tweak
+  id: 6362
+  time: '2024-04-17T02:49:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27022
