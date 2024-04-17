@@ -91,6 +91,7 @@ loadout-group-chief-engineer-jumpsuit = Chief Engineer jumpsuit
 loadout-group-chief-engineer-backpack = Chief Engineer backpack
 loadout-group-chief-engineer-outerclothing = Chief Engineer outer clothing
 loadout-group-chief-engineer-neck = Chief Engineer neck
+loadout-group-chief-engineer-shoes = Chief Engineer shoes
 
 loadout-group-technical-assistant-jumpsuit = Technical Assistant jumpsuit
 
@@ -104,6 +105,7 @@ loadout-group-station-engineer-id = Station Engineer ID
 loadout-group-atmospheric-technician-jumpsuit = Atmospheric Technician jumpsuit
 loadout-group-atmospheric-technician-backpack = Atmospheric Technician backpack
 loadout-group-atmospheric-technician-outerclothing = Atmospheric Technician outer clothing
+loadout-group-atmospheric-technician-shoes = Atmospheric Technician shoes
 
 # Science
 loadout-group-research-director-head = Research Director head
