@@ -37,8 +37,6 @@
           type: TransferAmountBoundUserInterface
     - type: Drink
       solution: beaker
-    - type: Spillable
-      solution: beaker
     - type: Appearance
     - type: SolutionContainerVisuals
       maxFillLevels: 6
