@@ -89,16 +89,3 @@
   id: ResearchDirectorWintercoat
   equipment:
     outerClothing: ClothingOuterWinterRD
-
-# Gloves
-- type: loadout
-  id: PassengerGloves
-  equipment: FingerlessInsulatedGloves
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: GreyTider
-
-- type: startingGear
-  id: FingerlessInsulatedGloves
-  equipment:
-    gloves: ClothingHandsGlovesFingerlessInsulated
