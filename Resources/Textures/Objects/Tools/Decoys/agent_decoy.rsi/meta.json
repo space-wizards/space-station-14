@@ -8,11 +8,11 @@
     },
     "states": [
         {
-        "name": "folded"
+            "name": "folded"
         },
         {
-        "name": "aballoon",
-        "directions": 4
+            "name": "aballoon",
+            "directions": 4
         }
-]
+    ]
 }

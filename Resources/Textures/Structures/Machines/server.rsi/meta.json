@@ -9,31 +9,24 @@
     "states": [
         {
             "name": "server"
-
         },
         {
             "name": "server-nopower"
-
         },
         {
             "name": "server-off"
-
         },
         {
             "name": "server-on"
-
         },
         {
             "name": "server_o"
-
         },
         {
             "name": "variant-crew"
-
         },
         {
             "name": "variant-research"
-
         }
     ]
 }

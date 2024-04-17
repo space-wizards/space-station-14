@@ -1,18 +1,15 @@
 {
     "version": 1,
-    "size":
-    {
+    "size": {
         "x": 32,
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/f7aa28fd4b4d0386c3393d829681ebca526f1d2d/icons/obj/drinks.dmi. Fill levels by Tayrtahn on GitHub.",
-    "states":
-    [
+    "states": [
         {
             "name": "icon",
-            "delays":
-            [
+            "delays": [
                 [
                     5.0,
                     3.0,
@@ -33,8 +30,7 @@
         },
         {
             "name": "fill-1",
-            "delays":
-            [
+            "delays": [
                 [
                     5.0,
                     3.0,
@@ -52,8 +48,7 @@
         },
         {
             "name": "fill-2",
-            "delays":
-            [
+            "delays": [
                 [
                     5.0,
                     3.0,
@@ -71,8 +66,7 @@
         },
         {
             "name": "fill-3",
-            "delays":
-            [
+            "delays": [
                 [
                     5.0,
                     3.0,
@@ -90,8 +84,7 @@
         },
         {
             "name": "fill-4",
-            "delays":
-            [
+            "delays": [
                 [
                     5.0,
                     3.0,
@@ -109,8 +102,7 @@
         },
         {
             "name": "fill-5",
-            "delays":
-            [
+            "delays": [
                 [
                     5.0,
                     3.0,

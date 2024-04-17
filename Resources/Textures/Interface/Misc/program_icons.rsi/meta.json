@@ -3,15 +3,15 @@
     "license": "CC-BY-SA-3.0",
     "copyright": "news_read by Misha_Unity, crew_manifest by Phill101",
     "size": {
-      "x": 32,
-      "y": 32
+        "x": 32,
+        "y": 32
     },
     "states": [
-      {
-        "name": "news_read"
-      },
-      {
-        "name": "crew_manifest"
-      }
+        {
+            "name": "news_read"
+        },
+        {
+            "name": "crew_manifest"
+        }
     ]
 }

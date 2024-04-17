@@ -9,7 +9,6 @@
     "states": [
         {
             "name": "grinder-a0"
-
         },
         {
             "name": "grinder-a1",
@@ -24,7 +23,6 @@
         },
         {
             "name": "grinder-b0"
-
         },
         {
             "name": "grinder-b1",
@@ -41,11 +39,9 @@
         },
         {
             "name": "grinder-o0"
-
         },
         {
             "name": "grinder-o0bld"
-
         },
         {
             "name": "grinder-o1",
@@ -71,15 +67,12 @@
         },
         {
             "name": "separator-"
-
         },
         {
             "name": "separator-0"
-
         },
         {
             "name": "separator-A0"
-
         },
         {
             "name": "separator-A1",
@@ -94,7 +87,6 @@
         },
         {
             "name": "separator-AO0"
-
         },
         {
             "name": "separator-AO1",
@@ -108,11 +100,9 @@
         },
         {
             "name": "separator-B0"
-
         },
         {
             "name": "separator-BO0"
-
         }
     ]
 }

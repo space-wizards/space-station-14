@@ -9,7 +9,11 @@
     "states": [
         {
             "name": "pointing",
-            "delays": [[1]]
+            "delays": [
+                [
+                    1
+                ]
+            ]
         }
     ]
 }

@@ -1,14 +1,14 @@
 {
-    "version":1,
+    "version": 1,
     "license": "CC-BY-SA-4.0",
     "copyright": "By Peptide90 for OR14 and SS14",
-    "size":{
-    "x": 32,
-    "y": 32
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    "states":[
+    "states": [
         {
-            "name":"on"
+            "name": "on"
         },
         {
             "name": "off"

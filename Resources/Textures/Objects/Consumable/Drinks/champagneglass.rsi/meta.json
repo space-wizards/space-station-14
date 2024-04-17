@@ -1,18 +1,15 @@
 {
     "version": 1,
-    "size":
-    {
+    "size": {
         "x": 32,
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
     "copyright": "drawn by verslebas. Fills levels by Tayrtahn.",
-    "states":
-    [
+    "states": [
         {
             "name": "icon",
-            "delays":
-            [
+            "delays": [
                 [
                     1.0,
                     1.0,
@@ -26,8 +23,7 @@
         },
         {
             "name": "fill-1",
-            "delays":
-            [
+            "delays": [
                 [
                     1.0,
                     1.0,
@@ -38,8 +34,7 @@
         },
         {
             "name": "fill-2",
-            "delays":
-            [
+            "delays": [
                 [
                     1.0,
                     1.0,
@@ -50,8 +45,7 @@
         },
         {
             "name": "fill-3",
-            "delays":
-            [
+            "delays": [
                 [
                     1.0,
                     1.0,
@@ -62,8 +56,7 @@
         },
         {
             "name": "fill-4",
-            "delays":
-            [
+            "delays": [
                 [
                     1.0,
                     1.0,

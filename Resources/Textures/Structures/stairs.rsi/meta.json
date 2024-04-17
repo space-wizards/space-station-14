@@ -7,10 +7,10 @@
         "y": 32
     },
     "states": [
-		{
-			"name": "stairs_white",
+        {
+            "name": "stairs_white",
             "directions": 4
-		},
+        },
         {
             "name": "stairs_stage_white"
         },

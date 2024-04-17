@@ -1,11 +1,11 @@
 {
-  "version": 1,
-  "license": "CC-BY-NC-4.0",
-  "copyright": "Terraspark's work",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
+    "version": 1,
+    "license": "CC-BY-NC-4.0",
+    "copyright": "Terraspark's work",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
     "states": [
         {
             "name": "autism"

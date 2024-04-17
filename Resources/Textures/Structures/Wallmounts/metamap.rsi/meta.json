@@ -7,6 +7,8 @@
         "y": 32
     },
     "states": [
-        { "name": "metamap64x" }
+        {
+            "name": "metamap64x"
+        }
     ]
 }
