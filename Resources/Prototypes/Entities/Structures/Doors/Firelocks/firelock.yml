@@ -19,6 +19,10 @@
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
+    - type: RCDDeconstructable
+      cost: 4
+      delay: 6
+      fx: EffectRCDDeconstruct6
     - type: Destructible
       thresholds:
       - trigger:
@@ -83,9 +87,6 @@
     - type: Appearance
     - type: WiresVisuals
     - type: WiresPanel
-    - type: Wires
-      boardName: wires-board-name-firelock
-      layoutId: Firelock
     - type: UserInterface
       interfaces:
         - key: enum.WiresUiKey.Key
@@ -93,7 +94,6 @@
     - type: Physics
       canCollide: false
     - type: Airtight
-      fixVacuum: true
       airBlocked: false
       noAirWhenFullyAirBlocked: true
     - type: RadiationBlocker
@@ -151,14 +151,13 @@
 
 - type: entity
   id: FirelockEdge
-  parent: BaseFirelock
+  parent: Firelock
   name: firelock
   components:
     - type: Sprite
       sprite: Structures/Doors/edge_door_hazard.rsi
       snapCardinals: false
     - type: Airtight
-      fixVacuum: true
       airBlocked: false
       noAirWhenFullyAirBlocked: false
       airBlockedDirection:
@@ -182,3 +181,6 @@
       canCollide: false
     - type: StaticPrice
       price: 100
+    - type: Construction
+      graph: Firelock
+      node: FirelockEdge

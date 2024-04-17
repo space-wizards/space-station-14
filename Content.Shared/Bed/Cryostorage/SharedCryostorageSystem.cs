@@ -6,6 +6,7 @@ using Content.Shared.Maps;
 using Content.Shared.Maps.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -24,6 +25,7 @@ public abstract class SharedCryostorageSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly SharedPausedMapStorageSystem PausedMapStorage = default!;
     [Dependency] protected readonly SharedMindSystem Mind = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     protected bool CryoSleepRejoiningEnabled;
 
@@ -78,6 +80,12 @@ public abstract class SharedCryostorageSystem : EntitySystem
         var (_, comp) = ent;
         if (args.Container.ID != comp.ContainerId)
             return;
+
+        if (_mobState.IsIncapacitated(args.EntityUid))
+        {
+            args.Cancel();
+            return;
+        }
 
         if (!TryComp<MindContainerComponent>(args.EntityUid, out var mindContainer))
         {

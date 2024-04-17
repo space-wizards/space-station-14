@@ -1,0 +1,194 @@
+- type: weightedRandom
+  id: AnomalyBehaviorList
+  weights:
+  #safe
+    Slow: 0.5
+    Light: 0.5
+    FullSafe: 0.1
+  #balanced
+    Balanced: 3
+    DelayedForce: 1
+    Rapid: 1
+    BalancedSecret: 1
+    Reflect: 1
+    NonSensivity: 1
+    Sensivity: 1
+  #Hard
+    Fast: 0.5
+    Strenght: 0.5
+    Inconstancy: 0.5
+    InconstancyParticle: 0.5
+    FullUnknown: 0.5
+    Jumping: 0.3
+  #Complex
+    FastUnknown: 0.2
+    JumpingUnknown: 0.1
+    InconstancyParticleUnknown: 0.1
+
+
+# Easy x0.5 point production
+
+- type: anomalyBehavior
+  id: FullSafe
+  pulseFrequencyModifier: 3
+  pulsePowerModifier: 0.5
+  earnPointModifier: 0.05
+  description: anomaly-behavior-safe
+
+- type: anomalyBehavior
+  id: Slow
+  pulseFrequencyModifier: 2
+  earnPointModifier: 0.5
+  description: anomaly-behavior-slow
+
+- type: anomalyBehavior
+  id: Light
+  pulsePowerModifier: 0.5
+  earnPointModifier: 0.5
+  description: anomaly-behavior-light
+
+# Balanced x1 point production
+
+- type: anomalyBehavior
+  id: Balanced
+  earnPointModifier: 1
+  description: anomaly-behavior-balanced
+
+- type: anomalyBehavior
+  id: DelayedForce
+  earnPointModifier: 1.15
+  description: anomaly-behavior-delayed-force
+  pulseFrequencyModifier: 0.5
+  pulsePowerModifier: 2
+  
+- type: anomalyBehavior
+  id: Rapid
+  earnPointModifier: 1.15
+  description: anomaly-behavior-rapid
+  pulseFrequencyModifier: 2
+  pulsePowerModifier: 0.5
+
+- type: anomalyBehavior
+  id: BalancedSecret
+  earnPointModifier: 1.2
+  description: anomaly-behavior-secret
+  components:
+  - type: SecretDataAnomaly
+    randomStartSecretMin: 2
+    randomStartSecretMax: 3
+
+- type: anomalyBehavior
+  id: Reflect
+  earnPointModifier: 1.1
+  particleSensivity: 0.5
+  description: anomaly-behavior-reflect
+  components:
+  - type: Reflect
+    reflectProb: 0.5
+    reflects:
+      - Energy
+
+- type: anomalyBehavior
+  id: NonSensivity
+  earnPointModifier: 0.8
+  particleSensivity: 0.5
+  description: anomaly-behavior-nonsensivity
+  
+- type: anomalyBehavior
+  id: Sensivity
+  earnPointModifier: 1.2
+  particleSensivity: 1.5
+  description: anomaly-behavior-sensivity
+
+# Hard x2 point production
+
+- type: anomalyBehavior
+  id: Fast
+  earnPointModifier: 1.9
+  pulseFrequencyModifier: 0.5
+  description: anomaly-behavior-fast
+
+- type: anomalyBehavior
+  id: Strenght
+  pulsePowerModifier: 1.5
+  earnPointModifier: 1.4
+  description: anomaly-behavior-strenght
+
+- type: anomalyBehavior
+  id: Inconstancy
+  earnPointModifier: 1.7
+  description: anomaly-behavior-inconstancy
+  components:
+  - type: ShuffleParticlesAnomaly
+    shuffleOnPulse: true
+    prob: 1
+
+- type: anomalyBehavior
+  id: InconstancyParticle
+  earnPointModifier: 1.8
+  description: anomaly-behavior-inconstancy
+  components:
+  - type: ShuffleParticlesAnomaly
+    shuffleOnParticleHit: true
+    prob: 0.8
+
+- type: anomalyBehavior
+  id: Jumping
+  earnPointModifier: 1.8
+  description: anomaly-behavior-moving
+  components:
+  - type: ChaoticJump
+    jumpMinInterval: 15
+    jumpMaxInterval: 25
+    rangeMin: 1
+    rangeMax: 4
+    effect: PuddleSparkle
+
+- type: anomalyBehavior
+  id: FullUnknown
+  earnPointModifier: 1.9
+  description: anomaly-behavior-secret
+  components:
+  - type: SecretDataAnomaly
+    randomStartSecretMin: 4
+    randomStartSecretMax: 6
+
+# Complex Effects
+
+- type: anomalyBehavior
+  id: JumpingUnknown
+  earnPointModifier: 1.9
+  description: anomaly-behavior-moving
+  components:
+  - type: ChaoticJump
+    jumpMinInterval: 15
+    jumpMaxInterval: 25
+    rangeMin: 1
+    rangeMax: 1
+    effect: PuddleSparkle
+  - type: SecretDataAnomaly
+    randomStartSecretMin: 3
+    randomStartSecretMax: 5
+
+
+- type: anomalyBehavior
+  id: FastUnknown
+  earnPointModifier: 1.9
+  pulseFrequencyModifier: 0.5
+  description: anomaly-behavior-fast
+  components:
+  - type: SecretDataAnomaly
+    randomStartSecretMin: 3
+    randomStartSecretMax: 5
+
+- type: anomalyBehavior
+  id: InconstancyParticleUnknown
+  earnPointModifier: 1.95
+  description: anomaly-behavior-inconstancy
+  components:
+  - type: ShuffleParticlesAnomaly
+    shuffleOnParticleHit: true
+    prob: 0.5
+  - type: SecretDataAnomaly
+    randomStartSecretMin: 3
+    randomStartSecretMax: 5

@@ -49,27 +49,18 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, ref AtmosDeviceUpdateEvent args)
         {
             if (_weldable.IsWelded(uid))
-            {
-                return;
-            }
-
-            if (!TryComp(uid, out AtmosDeviceComponent? device))
                 return;
 
             var timeDelta = args.dt;
 
-            if (!scrubber.Enabled
-            || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-            || !_nodeContainer.TryGetNode(nodeContainer, scrubber.OutletName, out PipeNode? outlet))
+            if (!scrubber.Enabled || !_nodeContainer.TryGetNode(uid, scrubber.OutletName, out PipeNode? outlet))
                 return;
 
-            var xform = Transform(uid);
-
-            if (xform.GridUid == null)
+            if (args.Grid is not {} grid)
                 return;
 
-            var position = _transformSystem.GetGridTilePositionOrDefault((uid,xform));
-            var environment = _atmosphereSystem.GetTileMixture(xform.GridUid, xform.MapUid, position, true);
+            var position = _transformSystem.GetGridTilePositionOrDefault(uid);
+            var environment = _atmosphereSystem.GetTileMixture(grid, args.Map, position, true);
 
             Scrub(timeDelta, scrubber, environment, outlet);
 
@@ -77,7 +68,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             // Scrub adjacent tiles too.
-            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true))
+            var enumerator = _atmosphereSystem.GetAdjacentTileMixtures(grid, position, false, true);
+            while (enumerator.MoveNext(out var adjacent))
             {
                 Scrub(timeDelta, scrubber, adjacent, outlet);
             }

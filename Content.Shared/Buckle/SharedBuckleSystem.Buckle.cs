@@ -221,8 +221,8 @@ public abstract partial class SharedBuckleSystem
         }
 
         // Does it pass the Whitelist
-        if (strapComp.AllowedEntities != null &&
-            !strapComp.AllowedEntities.IsValid(userUid, EntityManager))
+        if (strapComp.Whitelist != null &&
+            !strapComp.Whitelist.IsValid(buckleUid, EntityManager) || strapComp.Blacklist?.IsValid(buckleUid, EntityManager) == true)
         {
             if (_netManager.IsServer)
                 _popup.PopupEntity(Loc.GetString("buckle-component-cannot-fit-message"), userUid, buckleUid, PopupType.Medium);
@@ -358,7 +358,7 @@ public abstract partial class SharedBuckleSystem
 
         if (TryComp<PhysicsComponent>(buckleUid, out var physics))
         {
-            _physics.ResetDynamics(physics);
+            _physics.ResetDynamics(buckleUid, physics);
         }
 
         if (!buckleComp.PullStrap && TryComp<PullableComponent>(strapUid, out var toPullable))

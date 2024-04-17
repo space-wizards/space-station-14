@@ -13,9 +13,11 @@ namespace Content.Shared.Labels
     }
 
     [Serializable, NetSerializable]
-    public enum PaperLabelVisuals
+    public enum PaperLabelVisuals : byte
     {
+        Layer,
         HasLabel,
+        LabelType
     }
 
     /// <summary>
