@@ -66,7 +66,8 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void OnJukeboxSetTime(EntityUid uid, JukeboxComponent component, JukeboxSetTimeMessage args)
     {
-        Audio.SetPlaybackPosition(component.AudioStream, args.SongTime);
+        var offset = (args.Session.Channel.Ping * 1.5f) / 1000f;
+        Audio.SetPlaybackPosition(component.AudioStream, args.SongTime + offset);
     }
 
     private void OnPowerChanged(Entity<JukeboxComponent> entity, ref PowerChangedEvent args)
@@ -87,6 +88,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     private void Stop(Entity<JukeboxComponent> entity)
     {
         Audio.SetState(entity.Comp.AudioStream, AudioState.Stopped);
+        Dirty(entity);
     }
 
     private void OnJukeboxSelected(EntityUid uid, JukeboxComponent component, JukeboxSelectedMessage args)
@@ -98,6 +100,8 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             component.Selecting = true;
             component.AudioStream = Audio.Stop(component.AudioStream);
         }
+
+        Dirty(uid, component);
     }
 
     public override void Update(float frameTime)
@@ -123,7 +127,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void OnComponentShutdown(EntityUid uid, JukeboxComponent component, ComponentShutdown args)
     {
-        Audio.Stop(component.AudioStream);
+        component.AudioStream = Audio.Stop(component.AudioStream);
     }
 
     private void DirectSetVisualState(EntityUid uid, JukeboxVisualState state)

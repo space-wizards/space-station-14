@@ -48,6 +48,7 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         _menu.OnSongSelected += SelectSong;
 
         _menu.SetTime += SetTime;
+        PopulateMusic();
         Reload();
     }
 
@@ -59,7 +60,6 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         if (_menu == null || !EntMan.TryGetComponent(Owner, out JukeboxComponent? jukebox))
             return;
 
-        // TODO: Need a way to sub to compstates as otherwise this can fail in some situations.
         _menu.SetAudioStream(jukebox.AudioStream);
 
         if (_protoManager.TryIndex(jukebox.SelectedSongId, out var songProto))
@@ -96,12 +96,7 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         if (EntMan.TryGetComponent(Owner, out JukeboxComponent? jukebox) &&
             EntMan.TryGetComponent(jukebox.AudioStream, out AudioComponent? audioComp))
         {
-            var session = _player.LocalSession;
-            var ping = TimeSpan.FromMilliseconds((session?.Channel.Ping ?? 0) * 1.5);
-
-            time = MathF.Min(time, (float) EntMan.System<AudioSystem>().GetAudioLength(audioComp.FileName).TotalSeconds);
             audioComp.PlaybackPosition = time;
-            sentTime += (float) ping.TotalSeconds;
         }
 
         SendMessage(new JukeboxSetTimeMessage(sentTime));

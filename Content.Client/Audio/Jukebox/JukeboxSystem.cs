@@ -30,6 +30,9 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void OnProtoReload(PrototypesReloadedEventArgs obj)
     {
+        if (!obj.WasModified<JukeboxPrototype>())
+            return;
+
         var query = AllEntityQuery<JukeboxComponent, UserInterfaceComponent>();
 
         while (query.MoveNext(out _, out var ui))

@@ -8,10 +8,9 @@ namespace Content.Shared.Audio.Jukebox;
 [Access(typeof(SharedJukeboxSystem))]
 public sealed partial class JukeboxComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public ProtoId<JukeboxPrototype>? SelectedSongId;
 
-    [ViewVariables]
     [DataField, AutoNetworkedField]
     public EntityUid? AudioStream;
 
