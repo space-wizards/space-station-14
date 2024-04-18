@@ -1,5 +1,33 @@
-- type: entity
+﻿- type: entity
   parent: BaseHandheldInstrument
+  id: BaseGuitarInstrument
+  components:
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+  - type: ActivatableUI
+    isWieldedOnly: true
+  - type: Sprite
+    state: icon
+  - type: Item
+    size: Normal
+  - type: Wieldable
+  - type: Tag
+    tags:
+    - StringInstrument
+  - type: MeleeWeapon
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Blunt: 5
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 5
+
+- type: entity
+  parent: BaseGuitarInstrument
   id: ElectricGuitarInstrument
   name: electric guitar
   description: Now this makes you feel like a rock star!
@@ -13,21 +41,13 @@
       "Muted": {28: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/eguitar.rsi
-    state: icon
   - type: Item
-    size: Normal
     sprite: Objects/Fun/Instruments/eguitar.rsi
   - type: Clothing
-    quickEquip: false
-    slots:
-    - back
     sprite: Objects/Fun/Instruments/eguitar.rsi
-  - type: Tag
-    tags:
-    - StringInstrument
 
 - type: entity
-  parent: BaseHandheldInstrument
+  parent: BaseGuitarInstrument
   id: BassGuitarInstrument
   name: bass guitar
   description: You feel really cool holding this. Shame you're the only one that thinks that.
@@ -42,21 +62,13 @@
       "Slap (XTra Funky)": {37: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/bassguitar.rsi
-    state: icon
   - type: Item
-    size: Normal
     sprite: Objects/Fun/Instruments/bassguitar.rsi
   - type: Clothing
-    quickEquip: false
-    slots:
-    - back
     sprite: Objects/Fun/Instruments/bassguitar.rsi
-  - type: Tag
-    tags:
-    - StringInstrument
 
 - type: entity
-  parent: BaseHandheldInstrument
+  parent: BaseGuitarInstrument
   id: RockGuitarInstrument
   name: rock guitar
   description: What an axe!
@@ -70,25 +82,16 @@
       "Harmonics": {31: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/rockguitar.rsi
-    state: icon
   - type: Item
-    size: Normal
     sprite: Objects/Fun/Instruments/rockguitar.rsi
   - type: Clothing
-    quickEquip: false
-    slots:
-    - back
     sprite: Objects/Fun/Instruments/rockguitar.rsi
-  - type: Tag
-    tags:
-    - StringInstrument
   - type: MeleeWeapon
     wideAnimationRotation: 45
     damage:
       types:
         Blunt: 6
         Slash: 2
-  - type: Wieldable
   - type: IncreaseDamageOnWield #they don't call it an axe for nothing
     damage:
       types:
@@ -96,7 +99,7 @@
         Slash: 2
 
 - type: entity
-  parent: BaseHandheldInstrument
+  parent: BaseGuitarInstrument
   id: AcousticGuitarInstrument
   name: acoustic guitar
   description: Anyway, here's Wonderwall.
@@ -109,19 +112,10 @@
       "Steel": {25: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/guitar.rsi
-    state: icon
-  - type: Tag
-    tags:
-    - StringInstrument
   - type: Item
     sprite: Objects/Fun/Instruments/guitar.rsi
-    size: Normal
   - type: Clothing
-    quickEquip: false
-    slots:
-    - back
     sprite: Objects/Fun/Instruments/guitar.rsi
-  - type: Wieldable
   - type: Damageable # Smash it! Does 20 damage a hit, but breaks after 1 hit.
     damageContainer: Inorganic
   - type: Destructible
@@ -144,15 +138,22 @@
     damage:
       types:
         Blunt: 20
-  - type: MeleeWeapon
-    wideAnimationRotation: 45
-    damage:
-      types:
-        Blunt: 5
   - type: IncreaseDamageOnWield
     damage:
       types:
         Blunt: 15
+
+- type: entity
+  parent: BaseGuitarInstrument
+  id: BanjoInstrument
+  name: banjo
+  components:
+  - type: Instrument
+    program: 105
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/banjo.rsi
+  - type: Item
+    sprite: Objects/Fun/Instruments/banjo.rsi
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -166,23 +167,6 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/guitarlessfrets.rsi
     state: icon
-
-- type: entity
-  parent: BaseHandheldInstrument
-  id: BanjoInstrument
-  name: banjo
-  components:
-  - type: Instrument
-    program: 105
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/banjo.rsi
-    state: icon
-  - type: Item
-    size: Normal
-    sprite: Objects/Fun/Instruments/banjo.rsi
-  - type: Tag
-    tags:
-    - StringInstrument
 
 - type: entity
   parent: BaseHandheldInstrument

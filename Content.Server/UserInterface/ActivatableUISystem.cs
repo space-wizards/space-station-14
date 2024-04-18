@@ -8,6 +8,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
+using Content.Shared.Wieldable.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 
@@ -74,6 +75,12 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
         if (component.InHandsOnly && args.Using != uid)
             return;
+
+        if (TryComp<WieldableComponent>(uid, out var wieldable) && component.IsWieldedOnly)
+        {
+            if (!wieldable.Wielded)
+            return;
+        }
 
         if (!args.CanInteract && (!component.AllowSpectator || !HasComp<GhostComponent>(args.User)))
             return;

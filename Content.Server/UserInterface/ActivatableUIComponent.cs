@@ -16,6 +16,10 @@ namespace Content.Server.UserInterface
         [DataField]
         public bool InHandsOnly { get; set; } = false;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
+        public bool IsWieldedOnly { get; set; } = false;
+
         [DataField]
         public bool SingleUser { get; set; } = false;
 
