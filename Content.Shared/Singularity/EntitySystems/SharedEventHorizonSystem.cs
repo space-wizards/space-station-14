@@ -66,7 +66,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
             return;
 
         eventHorizon.Radius = value;
-        Dirty(eventHorizon);
+        Dirty(uid, eventHorizon);
         if (updateFixture)
             UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
     }
@@ -89,7 +89,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
             return;
 
         eventHorizon.CanBreachContainment = value;
-        Dirty(eventHorizon);
+        Dirty(uid, eventHorizon);
         if (updateFixture)
             UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
     }
@@ -112,7 +112,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
             return;
 
         eventHorizon.ColliderFixtureId = value;
-        Dirty(eventHorizon);
+        Dirty(uid, eventHorizon);
         if (updateFixture)
             UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
     }
@@ -135,7 +135,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
             return;
 
         eventHorizon.ConsumerFixtureId = value;
-        Dirty(eventHorizon);
+        Dirty(uid, eventHorizon);
         if (updateFixture)
             UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
     }

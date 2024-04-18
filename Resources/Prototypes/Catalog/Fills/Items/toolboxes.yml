@@ -13,9 +13,6 @@
       - id: EmergencyOxygenTankFilled
       - id: EmergencyOxygenTankFilled
         prob: 0.5
-      - id: EmergencyNitrogenTankFilled
-      - id: EmergencyNitrogenTankFilled
-        prob: 0.5
       - id: FoodTinMRE
       - id: FoodTinMRE
         prob: 0.5

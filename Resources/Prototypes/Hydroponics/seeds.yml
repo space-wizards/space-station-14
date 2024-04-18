@@ -147,10 +147,10 @@
     - FoodLaughinPeaPod
   lifespan: 25
   growthStages: 3
-  maturation: 8
-  production: 6
+  maturation: 7
+  production: 5
   yield: 3
-  potency: 25
+  potency: 20
   idealLight: 8
   harvestRepeat: Repeat
   nutrientConsumption: 0.6
@@ -159,15 +159,15 @@
     Nutriment:
       Min: 1
       Max: 3
-      PotencyDivisor: 33
+      PotencyDivisor: 7
     Sugar:
       Min: 1
-      Max: 5
-      PotencyDivisor: 50
+      Max: 10
+      PotencyDivisor: 5
     Laughter:
       Min: 1
-      Max: 5
-      PotencyDivisor: 50
+      Max: 10
+      PotencyDivisor: 5
 
 - type: seed
   id: lemon
@@ -421,7 +421,6 @@
   nutrientConsumption: 0.40
   idealLight: 8
   idealHeat: 298
-  juicy: true
   splatPrototype: PuddleSplatter
   chemicals:
     Nutriment:
@@ -456,7 +455,6 @@
   nutrientConsumption: 0.70
   idealLight: 8
   idealHeat: 298
-  juicy: true
   splatPrototype: PuddleSplatter
   chemicals:
     Nutriment:
@@ -491,7 +489,6 @@
   nutrientConsumption: 0.70
   idealLight: 8
   idealHeat: 298
-  juicy: true
   splatPrototype: PuddleSplatter
   chemicals:
     Blood:
@@ -946,7 +943,7 @@
     Nutriment:
       Min: 1
       Max: 2
-      Potencydivisor: 50
+      PotencyDivisor: 50
     Bicaridine:
       Min: 1
       Max: 20
@@ -1000,7 +997,7 @@
     Nutriment:
       Min: 1
       Max: 2
-      Potencydivisor: 50
+      PotencyDivisor: 50
     Bicaridine:
       Min: 1
       Max: 20
@@ -1070,7 +1067,7 @@
     Vitamin:
       Min: 1
       Max: 2
-      Potencydivisor: 50
+      PotencyDivisor: 50
 
 - type: seed
   id: ambrosiaDeus
@@ -1254,7 +1251,7 @@
     Nutriment:
       Min: 1
       Max: 5
-      Potencydivisor: 50
+      PotencyDivisor: 50
     PolypyryliumOligomers:
       Min: 1
       Max: 15

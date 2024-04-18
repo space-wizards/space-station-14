@@ -107,7 +107,7 @@ public sealed partial class BorgSystem
         if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
         {
             hasBattery = true;
-            chargePercent = battery.Charge / battery.MaxCharge;
+            chargePercent = battery.CurrentCharge / battery.MaxCharge;
         }
 
         var state = new BorgBuiState(chargePercent, hasBattery);

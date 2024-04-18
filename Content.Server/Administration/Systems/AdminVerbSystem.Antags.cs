@@ -1,15 +1,12 @@
-using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
-using Content.Server.StationEvents.Events;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
-using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.Utility;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Systems;
 
@@ -21,7 +18,6 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
     [Dependency] private readonly RevolutionaryRuleSystem _revolutionaryRule = default!;
-    [Dependency] private readonly SharedMindSystem _minds = default!;
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
@@ -34,7 +30,7 @@ public sealed partial class AdminVerbSystem
         if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             return;
 
-        if (!TryComp<MindContainerComponent>(args.Target, out var targetMindComp))
+        if (!HasComp<MindContainerComponent>(args.Target))
             return;
 
         Verb traitor = new()
@@ -44,12 +40,9 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Structures/Wallmounts/posters.rsi"), "poster5_contraband"),
             Act = () =>
             {
-                if (!_minds.TryGetSession(targetMindComp.Mind, out var session))
-                    return;
-
                 // if its a monkey or mouse or something dont give uplink or objectives
                 var isHuman = HasComp<HumanoidAppearanceComponent>(args.Target);
-                _traitorRule.MakeTraitor(session, giveUplink: isHuman, giveObjectives: isHuman);
+                _traitorRule.MakeTraitorAdmin(args.Target, giveUplink: isHuman, giveObjectives: isHuman);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-traitor"),
@@ -78,10 +71,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Structures/Wallmounts/signs.rsi"), "radiation"),
             Act = () =>
             {
-                if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
-                    return;
-
-                _nukeopsRule.MakeLoneNukie(mindId, mind);
+                _nukeopsRule.MakeLoneNukie(args.Target);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-nuclear-operative"),
@@ -95,10 +85,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Clothing/Head/Hats/pirate.rsi"), "icon"),
             Act = () =>
             {
-                if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
-                    return;
-
-                _piratesRule.MakePirate(mindId, mind);
+                _piratesRule.MakePirate(args.Target);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-pirate"),
@@ -113,9 +100,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "HeadRevolutionary"),
             Act = () =>
             {
-                if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
-                    return;
-                _revolutionaryRule.OnHeadRevAdmin(mindId, mind);
+                _revolutionaryRule.OnHeadRevAdmin(args.Target);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-head-rev"),
@@ -129,10 +114,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Clothing/Hands/Gloves/ihscombat.rsi"), "icon"),
             Act = () =>
             {
-                if (!_minds.TryGetSession(targetMindComp.Mind, out var session))
-                    return;
-
-                _thief.AdminMakeThief(session, false); //Midround add pacific is bad
+                _thief.AdminMakeThief(args.Target, false); //Midround add pacified is bad
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-thief"),

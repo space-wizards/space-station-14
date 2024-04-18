@@ -129,6 +129,18 @@
 
 - type: entity
   parent: SyndicateBomb
+  id: SyndicateBombFake
+  suffix: fake
+  components:
+    - type: Explosive
+      explosionType: Default
+      totalIntensity: 5.0
+      intensitySlope: 5
+      maxIntensity: 4
+      canCreateVacuum: false
+
+- type: entity
+  parent: SyndicateBomb
   id: DebugHardBomb
   name: debug bomb
   suffix: DEBUG

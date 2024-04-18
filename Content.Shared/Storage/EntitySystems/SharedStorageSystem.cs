@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Coordinates;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
@@ -11,6 +12,7 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Lock;
+using Content.Shared.Materials;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
@@ -54,6 +56,8 @@ public abstract class SharedStorageSystem : EntitySystem
     [ValidatePrototypeId<ItemSizePrototype>]
     public const string DefaultStorageMaxItemSize = "Normal";
 
+    public const float AreaInsertDelayPerItem = 0.075f;
+
     private ItemSizePrototype _defaultStorageMaxItemSize = default!;
 
     public bool CheckingCanInsert;
@@ -93,6 +97,10 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeAllEvent<StorageSetItemLocationEvent>(OnSetItemLocation);
         SubscribeAllEvent<StorageInsertItemIntoLocationEvent>(OnInsertItemIntoLocation);
         SubscribeAllEvent<StorageRemoveItemEvent>(OnRemoveItem);
+        SubscribeAllEvent<StorageSaveItemLocationEvent>(OnSaveItemLocation);
+
+        SubscribeLocalEvent<StorageComponent, GotReclaimedEvent>(OnReclaimed);
+
         UpdatePrototypeCache();
     }
 
@@ -110,7 +118,8 @@ public abstract class SharedStorageSystem : EntitySystem
             Grid = new List<Box2i>(component.Grid),
             IsUiOpen = component.IsUiOpen,
             MaxItemSize = component.MaxItemSize,
-            StoredItems = storedItems
+            StoredItems = storedItems,
+            SavedLocations = component.SavedLocations
         };
     }
 
@@ -131,6 +140,8 @@ public abstract class SharedStorageSystem : EntitySystem
             var ent = EnsureEntity<StorageComponent>(nent, uid);
             component.StoredItems[ent] = location;
         }
+
+        component.SavedLocations = state.SavedLocations;
     }
 
     public override void Shutdown()
@@ -258,11 +269,14 @@ public abstract class SharedStorageSystem : EntitySystem
         if (storageComp.AreaInsert && (args.Target == null || !HasComp<ItemComponent>(args.Target.Value)))
         {
             var validStorables = new List<EntityUid>();
+            var delay = 0f;
 
             foreach (var entity in _entityLookupSystem.GetEntitiesInRange(args.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.Dynamic | LookupFlags.Sundries))
             {
                 if (entity == args.User
-                    || !_itemQuery.HasComponent(entity)
+                    // || !_itemQuery.HasComponent(entity)
+                    || !TryComp<ItemComponent>(entity, out var itemComp) // Need comp to get item size to get weight
+                    || !_prototype.TryIndex(itemComp.Size, out var itemSize)
                     || !CanInsert(uid, entity, out _, storageComp)
                     || !_interactionSystem.InRangeUnobstructed(args.User, entity))
                 {
@@ -270,15 +284,16 @@ public abstract class SharedStorageSystem : EntitySystem
                 }
 
                 validStorables.Add(entity);
+                delay += itemSize.Weight * AreaInsertDelayPerItem;
             }
 
             //If there's only one then let's be generous
             if (validStorables.Count > 1)
             {
-                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, 0.2f * validStorables.Count, new AreaPickupDoAfterEvent(GetNetEntityList(validStorables)), uid, target: uid)
+                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay, new AreaPickupDoAfterEvent(GetNetEntityList(validStorables)), uid, target: uid)
                 {
                     BreakOnDamage = true,
-                    BreakOnUserMove = true,
+                    BreakOnMove = true,
                     NeedHand = true
                 };
 
@@ -380,6 +395,11 @@ public abstract class SharedStorageSystem : EntitySystem
         }
 
         args.Handled = true;
+    }
+
+    private void OnReclaimed(EntityUid uid, StorageComponent storageComp, GotReclaimedEvent args)
+    {
+        _containerSystem.EmptyContainer(storageComp.Container, destination: args.ReclaimerCoordinates);
     }
 
     private void OnDestroy(EntityUid uid, StorageComponent storageComp, DestructionEventArgs args)
@@ -518,6 +538,35 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
 
         InsertAt((storageEnt, storageComp), (itemEnt, null), msg.Location, out _, player, stackAutomatically: false);
+    }
+
+    // TODO: if/when someone cleans up this shitcode please make all these
+    // handlers use a shared helper for checking that the ui is open etc, thanks
+    private void OnSaveItemLocation(StorageSaveItemLocationEvent msg, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity is not {} player)
+            return;
+
+        var storage = GetEntity(msg.Storage);
+        var item = GetEntity(msg.Item);
+
+        if (!TryComp<StorageComponent>(storage, out var storageComp))
+            return;
+
+        if (!_ui.TryGetUi(storage, StorageComponent.StorageUiKey.Key, out var bui) ||
+            !bui.SubscribedSessions.Contains(args.SenderSession))
+            return;
+
+        if (!Exists(item))
+        {
+            Log.Error($"Player {args.SenderSession} saved location of non-existent item {msg.Item} stored in {ToPrettyString(storage)}");
+            return;
+        }
+
+        if (!ActionBlocker.CanInteract(player, item))
+            return;
+
+        SaveItemLocation(storage, item);
     }
 
     private void OnBoundUIOpen(EntityUid uid, StorageComponent storageComp, BoundUIOpenedEvent args)
@@ -929,6 +978,10 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!Resolve(storageEnt, ref storageEnt.Comp) || !Resolve(itemEnt, ref itemEnt.Comp))
             return false;
 
+        // if the item has an available saved location, use that
+        if (FindSavedLocation(storageEnt, itemEnt, out storageLocation))
+            return true;
+
         var storageBounding = storageEnt.Comp.Grid.GetBoundingBox();
 
         Angle startAngle;
@@ -969,6 +1022,76 @@ public abstract class SharedStorageSystem : EntitySystem
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Tries to find a saved location for an item from its name.
+    /// If none are saved or they are all blocked nothing is returned.
+    /// </summary>
+    public bool FindSavedLocation(
+        Entity<StorageComponent?> ent,
+        Entity<ItemComponent?> item,
+        [NotNullWhen(true)] out ItemStorageLocation? storageLocation)
+    {
+        storageLocation = null;
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        var name = Name(item);
+        if (!ent.Comp.SavedLocations.TryGetValue(name, out var list))
+            return false;
+
+        foreach (var location in list)
+        {
+            if (ItemFitsInGridLocation(item, ent, location))
+            {
+                storageLocation = location;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Saves an item's location in the grid for later insertion to use.
+    /// </summary>
+    public void SaveItemLocation(Entity<StorageComponent?> ent, Entity<MetaDataComponent?> item)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        // needs to actually be stored in it somewhere to save it
+        if (!ent.Comp.StoredItems.TryGetValue(item, out var location))
+            return;
+
+        var name = Name(item, item.Comp);
+        if (ent.Comp.SavedLocations.TryGetValue(name, out var list))
+        {
+            // iterate to make sure its not already been saved
+            for (int i = 0; i < list.Count; i++)
+            {
+                var saved = list[i];
+                
+                if (saved == location)
+                {
+                    list.Remove(location);
+                    return;
+                }
+            }
+
+            list.Add(location);
+        }
+        else
+        {
+            list = new List<ItemStorageLocation>()
+            {
+                location
+            };
+            ent.Comp.SavedLocations[name] = list;
+        }
+
+        Dirty(ent, ent.Comp);
     }
 
     /// <summary>
@@ -1148,6 +1271,8 @@ public abstract class SharedStorageSystem : EntitySystem
         public bool IsUiOpen;
 
         public Dictionary<NetEntity, ItemStorageLocation> StoredItems = new();
+
+        public Dictionary<string, List<ItemStorageLocation>> SavedLocations = new();
 
         public List<Box2i> Grid = new();
 

@@ -3,10 +3,10 @@ using Content.Server.Paper;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Labels;
+using Content.Shared.Labels.Components;
+using Content.Shared.Labels.EntitySystems;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Labels
 {
@@ -14,7 +14,7 @@ namespace Content.Server.Labels
     /// A system that lets players see the contents of a label on an object.
     /// </summary>
     [UsedImplicitly]
-    public sealed class LabelSystem : EntitySystem
+    public sealed class LabelSystem : SharedLabelSystem
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -26,7 +26,6 @@ namespace Content.Server.Labels
         {
             base.Initialize();
 
-            SubscribeLocalEvent<LabelComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<LabelComponent, MapInitEvent>(OnLabelCompMapInit);
             SubscribeLocalEvent<PaperLabelComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<PaperLabelComponent, ComponentRemove>(OnComponentRemove);
@@ -38,7 +37,10 @@ namespace Content.Server.Labels
         private void OnLabelCompMapInit(EntityUid uid, LabelComponent component, MapInitEvent args)
         {
             if (!string.IsNullOrEmpty(component.CurrentLabel))
+            {
                 component.CurrentLabel = Loc.GetString(component.CurrentLabel);
+                Dirty(uid, component);
+            }
         }
 
         /// <summary>
@@ -65,6 +67,8 @@ namespace Content.Server.Labels
                 label.CurrentLabel = null;
                 label.OriginalName = null;
 
+                Dirty(uid, label);
+
                 return;
             }
 
@@ -72,34 +76,20 @@ namespace Content.Server.Labels
             label.OriginalName ??= metadata.EntityName;
             label.CurrentLabel = text;
             _metaData.SetEntityName(uid, $"{label.OriginalName} ({text})", metadata);
+
+            Dirty(uid, label);
         }
 
         private void OnComponentInit(EntityUid uid, PaperLabelComponent component, ComponentInit args)
         {
             _itemSlotsSystem.AddItemSlot(uid, ContainerName, component.LabelSlot);
 
-            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-                return;
-
-            _appearance.SetData(uid, PaperLabelVisuals.HasLabel, false, appearance);
+            UpdateAppearance((uid, component));
         }
 
         private void OnComponentRemove(EntityUid uid, PaperLabelComponent component, ComponentRemove args)
         {
             _itemSlotsSystem.RemoveItemSlot(uid, component.LabelSlot);
-        }
-
-        private void OnExamine(EntityUid uid, LabelComponent? label, ExaminedEvent args)
-        {
-            if (!Resolve(uid, ref label))
-                return;
-
-            if (label.CurrentLabel == null)
-                return;
-
-            var message = new FormattedMessage();
-            message.AddText(Loc.GetString("hand-labeler-has-label", ("label", label.CurrentLabel)));
-            args.PushMessage(message);
         }
 
         private void OnExamined(EntityUid uid, PaperLabelComponent comp, ExaminedEvent args)
@@ -138,10 +128,18 @@ namespace Content.Server.Labels
             if (args.Container.ID != label.LabelSlot.ID)
                 return;
 
-            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            UpdateAppearance((uid, label));
+        }
+
+        private void UpdateAppearance(Entity<PaperLabelComponent, AppearanceComponent?> ent)
+        {
+            if (!Resolve(ent, ref ent.Comp2, false))
                 return;
 
-            _appearance.SetData(uid, PaperLabelVisuals.HasLabel, label.LabelSlot.HasItem, appearance);
+            var slot = ent.Comp1.LabelSlot;
+            _appearance.SetData(ent, PaperLabelVisuals.HasLabel, slot.HasItem, ent.Comp2);
+            if (TryComp<PaperLabelTypeComponent>(slot.Item, out var type))
+                _appearance.SetData(ent, PaperLabelVisuals.LabelType, type.PaperType, ent.Comp2);
         }
     }
 }
