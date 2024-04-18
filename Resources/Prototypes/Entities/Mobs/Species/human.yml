@@ -17,7 +17,9 @@
       amount: 5
   - type: HumanoidAppearance
     species: Human
-    hideNoseOnEquip: true
+    hideLayersOnEquip:
+    - Hair
+    - Snout
 
 - type: entity
   parent: BaseSpeciesDummy

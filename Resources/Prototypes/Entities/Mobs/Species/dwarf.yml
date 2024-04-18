@@ -53,7 +53,9 @@
     speechSounds: Bass
   - type: HumanoidAppearance
     species: Human
-    hideNoseOnEquip: true
+    hideLayersOnEquip:
+    - Hair
+    - Snout
 
 - type: entity
   parent: BaseSpeciesDummy

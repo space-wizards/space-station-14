@@ -6,10 +6,8 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
-using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using System.Linq;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -18,15 +16,8 @@ public abstract class ClothingSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
     [Dependency] private readonly SharedContainerSystem _containerSys = default!;
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly InventorySystem _invSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-
-    [ValidatePrototypeId<TagPrototype>]
-    private const string HairTag = "HidesHair";
-
-    [ValidatePrototypeId<TagPrototype>]
-    private const string NoseTag = "HidesNose";
 
     public override void Initialize()
     {
@@ -91,40 +82,14 @@ public abstract class ClothingSystem : EntitySystem
         }
     }
 
-    private void ToggleVisualLayer(EntityUid equipee, HumanoidVisualLayers layer, string tag)
-    {
-        InventorySystem.InventorySlotEnumerator enumerator = _invSystem.GetSlotEnumerator(equipee, SlotFlags.HEAD ^ SlotFlags.MASK);
-        bool shouldLayerShow = true;
-        while (enumerator.NextItem(out EntityUid item))
-        {
-            if (_tagSystem.HasTag(item, tag))
-            {
-                if (tag == NoseTag && TryComp(item, out MaskComponent? mask) && TryComp(item, out ClothingComponent? clothing)) //Special check needs to be made for NoseTag, due to masks being toggleable
-                {
-                    if (clothing.EquippedPrefix != mask.EquippedPrefix)
-                    {
-                        shouldLayerShow = false;
-                        break;
-                    }
-                }
-                else
-                {
-                    shouldLayerShow = false;
-                    break;
-                }
-            }
-        }
-        _humanoidSystem.SetLayerVisibility(equipee, layer, shouldLayerShow);
-    }
-
     private void ToggleVisualLayers(EntityUid equipee, HashSet<HumanoidVisualLayers> layers, HashSet<HumanoidVisualLayers> appearanceLayers)
     {
-        InventorySystem.InventorySlotEnumerator enumerator = _invSystem.GetSlotEnumerator(equipee);
-
         foreach (HumanoidVisualLayers layer in layers)
         {
             if (!appearanceLayers.Contains(layer))
-                return;
+                break;
+
+            InventorySystem.InventorySlotEnumerator enumerator = _invSystem.GetSlotEnumerator(equipee);
 
             bool shouldLayerShow = true;
             while (enumerator.NextItem(out EntityUid item))
@@ -188,8 +153,7 @@ public abstract class ClothingSystem : EntitySystem
     {
         //TODO: sprites for 'pulled down' state. defaults to invisible due to no sprite with this prefix
         SetEquippedPrefix(ent, args.IsToggled ? args.equippedPrefix : null, ent);
-        if (TryComp(args.Wearer, out HumanoidAppearanceComponent? appearance) && appearance.HideNoseOnEquip)
-            ToggleVisualLayer(args.Wearer, HumanoidVisualLayers.Snout, NoseTag);
+        CheckEquipmentForLayerHide(ent.Owner, args.Wearer);
     }
 
     private void OnEquipDoAfter(Entity<ClothingComponent> ent, ref ClothingEquipDoAfterEvent args)
@@ -212,12 +176,6 @@ public abstract class ClothingSystem : EntitySystem
     {
         if (TryComp(equipment, out HideLayerClothingComponent? clothesComp) && TryComp(equipee, out HumanoidAppearanceComponent? appearanceComp))
             ToggleVisualLayers(equipee, clothesComp.Slots, appearanceComp.HideLayersOnEquip);
-
-        /*if ((new string[] { "head" }).Contains(slot) && _tagSystem.HasTag(equipment, HairTag))
-            ToggleVisualLayer(equipee, HumanoidVisualLayers.Hair, HairTag);
-        if ((new string[] { "mask", "head" }).Contains(slot) && _tagSystem.HasTag(equipment, NoseTag))
-            if (TryComp(equipee, out HumanoidAppearanceComponent? appearance) && appearance.HideNoseOnEquip)
-                ToggleVisualLayer(equipee, HumanoidVisualLayers.Snout, NoseTag);*/
     }
 
     #region Public API

@@ -110,6 +110,10 @@
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 #Janitorial Bombsuit Helmet
 - type: entity
