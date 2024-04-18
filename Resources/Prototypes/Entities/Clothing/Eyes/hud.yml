@@ -216,7 +216,7 @@
   - type: ShowSyndicateIcons
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, ShowSecurityIcons]
   id: ClothingEyesHudSyndicateAgent
   name: syndicate agent visor
   description: The Syndicate Agent's professional heads-up display, designed for quick diagnosis of their team's status.
@@ -226,7 +226,6 @@
   - type: Clothing
     sprite: Clothing/Eyes/Hud/syndagent.rsi
   - type: ShowSyndicateIcons
-  - type: ShowSecurityIcons
   - type: ShowHealthBars
     damageContainers:
     - Biological
