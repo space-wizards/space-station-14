@@ -409,7 +409,7 @@
     # its crewsimov by default dont be lame
     Crewsimov: 0.25
     Corporate: 0.25
-    NTDefault: 0.5
+    NTDefault: 0.25
     Drone: 0.25
     Ninja: 0.25
     Sierra: 0.25
@@ -417,3 +417,5 @@
     Pranksimov: 0.25
     Robocop: 0.25
     Paladin: 0.25
+    Tyrant: 0.25
+    Commandments: 0.25
