@@ -368,7 +368,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitRd
   name: experimental research hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor. Able to be compressed to small sizes.
+  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
@@ -392,8 +392,6 @@
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: HeldSpeedModifier
-  - type: Item
-    size: Normal
   - type: Tag
     tags:
     - WhitelistChameleon
