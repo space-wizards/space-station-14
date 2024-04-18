@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Krunk
-  changes:
-  - message: Pointing arrows now begin at the player and smoothly animate to their
-      target.
-    type: Add
-  id: 5878
-  time: '2024-02-03T08:09:20.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24864
 - author: Dygon
   changes:
   - message: Single tile sized puddles of space lube won't let you slide extremely
@@ -3835,3 +3827,11 @@
   id: 6377
   time: '2024-04-18T01:22:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27023
+- author: Tayrtahn
+  changes:
+  - message: Sodas and other fizzy drinks can be shaken with the verbs menu to build
+      up fizziness so they spray when opened.
+    type: Add
+  id: 6378
+  time: '2024-04-18T01:49:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25574
