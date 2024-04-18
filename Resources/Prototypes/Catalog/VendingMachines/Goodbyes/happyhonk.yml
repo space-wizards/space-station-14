@@ -1,0 +1,8 @@
+- type: messagePack
+  id: HappyHonkGoodbyes
+  messages:
+  - vending-machine-thanks
+  - thankyou-happyhonk-1
+  - thankyou-happyhonk-2
+  - thankyou-happyhonk-3
+  - thankyou-happyhonk-4

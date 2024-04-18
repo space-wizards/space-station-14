@@ -183,6 +183,7 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(ContentKeyFunctions.SwapHands);
             AddButton(ContentKeyFunctions.MoveStoredItem);
             AddButton(ContentKeyFunctions.RotateStoredItem);
+            AddButton(ContentKeyFunctions.SaveItemLocation);
 
             AddHeader("ui-options-header-interaction-adv");
             AddButton(ContentKeyFunctions.SmartEquipBackpack);
@@ -403,7 +404,7 @@ namespace Content.Client.Options.UI.Tabs
                 Mod1 = mods[0],
                 Mod2 = mods[1],
                 Mod3 = mods[2],
-                Priority = 0,
+                Priority = _currentlyRebinding.Binding?.Priority ?? 0,
                 Type = bindType,
                 CanFocus = key == Keyboard.Key.MouseLeft
                            || key == Keyboard.Key.MouseRight

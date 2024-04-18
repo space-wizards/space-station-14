@@ -220,7 +220,7 @@ namespace Content.Shared.Examine
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
             var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
-            var otherPos = other.ToMap(entMan);
+            var otherPos = other.ToMap(entMan, _transform);
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
