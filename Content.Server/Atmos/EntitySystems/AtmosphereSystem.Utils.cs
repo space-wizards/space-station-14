@@ -36,9 +36,17 @@ public partial class AtmosphereSystem
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void InvalidateVisuals(EntityUid gridUid, Vector2i tile, GasTileOverlayComponent? comp = null)
+    public void InvalidateVisuals(Entity<GasTileOverlayComponent?> grid, Vector2i tile)
     {
-        _gasTileOverlaySystem.Invalidate(gridUid, tile, comp);
+        _gasTileOverlaySystem.Invalidate(grid, tile);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void InvalidateVisuals(
+        Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+        TileAtmosphere tile)
+    {
+        _gasTileOverlaySystem.Invalidate((ent.Owner, ent.Comp2), tile.GridIndices);
     }
 
     /// <summary>
@@ -78,12 +86,13 @@ public partial class AtmosphereSystem
             if (!_airtightQuery.TryGetComponent(ent, out var airtight))
                 continue;
 
+            fixVacuum |= airtight.FixVacuum;
+
             if(!airtight.AirBlocked)
                 continue;
 
             blockedDirs |= airtight.AirBlockedDirection;
             noAirWhenBlocked |= airtight.NoAirWhenFullyAirBlocked;
-            fixVacuum |= airtight.FixVacuum;
 
             if (blockedDirs == AtmosDirection.All && noAirWhenBlocked && fixVacuum)
                 break;

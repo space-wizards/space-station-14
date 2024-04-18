@@ -12,7 +12,6 @@
           "/Audio/Weapons/boxingpunch1.ogg"
   - type: Tag
     tags:
-    - RCDDeconstructWhitelist
     - Wooden
   - type: Sprite
     sprite: Structures/Walls/wooden_fence.rsi
@@ -24,6 +23,10 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2
   - type: Destructible
     thresholds:
     - trigger:
@@ -223,7 +226,7 @@
   - type: InteractionOutline
   - type: Door
     openSpriteState: door_opened
-    closedSpriteState: door_closed_small #idk how, but it's working
+    closedSpriteState: door_closed
     canPry: false
     occludes: false
     changeAirtight: false
@@ -379,7 +382,7 @@
   components:
   - type: Sprite
     layers:
-    - state: end
+    - state: end_small
       map: ["enum.DoorVisualLayers.Base"]
   - type: Fixtures
     fixtures:
@@ -396,7 +399,7 @@
   - type: InteractionOutline
   - type: Door
     openSpriteState: door_opened_small
-    closedSpriteState: door_closed
+    closedSpriteState: door_closed_small
     canPry: false
     occludes: false
     changeAirtight: false

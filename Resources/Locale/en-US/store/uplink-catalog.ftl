@@ -109,6 +109,9 @@ uplink-holoclown-kit-desc = A joint venture between Cybersun and Honk.co. Contai
 uplink-holster-name = Shoulder Holster
 uplink-holster-desc = A deep shoulder holster capable of holding many types of ballistics.
 
+uplink-chest-rig-name = Chest Rig
+uplink-chest-rig-desc = Explosion-resistant tactical webbing used for holding traitor goods.
+
 uplink-emag-name = Emag
 uplink-emag-desc = The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
 
@@ -363,6 +366,9 @@ uplink-slipocalypse-clustersoap-desc = Scatters arounds small pieces of syndicat
 
 uplink-mobcat-microbomb-name = SyndiCat
 uplink-mobcat-microbomb-desc = A hand cat equipped with a microbomb implant. Explodes when seriously injured. Can bite painfully
+
+uplink-chameleon-projector-name = Chameleon Projector
+uplink-chameleon-projector-desc = Disappear in plain sight by creating a hologram of an item around you. Do not use this to play the game "Object Search".
 
 # Pointless
 uplink-revolver-cap-gun-name = Cap Gun

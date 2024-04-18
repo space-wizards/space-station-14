@@ -1,7 +1,10 @@
+using Content.Shared.Audio;
 using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
+using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Content.Shared.Sound.Components;
 using Content.Shared.Throwing;
@@ -24,11 +27,12 @@ namespace Content.Shared.Sound;
 [UsedImplicitly]
 public abstract class SharedEmitSoundSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private   readonly SharedAmbientSoundSystem _ambient = default!;
+    [Dependency] private   readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
     public override void Initialize()
@@ -41,8 +45,23 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>(OnEmitSoundOnActivateInWorld);
         SubscribeLocalEvent<EmitSoundOnPickupComponent, GotEquippedHandEvent>(OnEmitSoundOnPickup);
         SubscribeLocalEvent<EmitSoundOnDropComponent, DroppedEvent>(OnEmitSoundOnDrop);
+        SubscribeLocalEvent<EmitSoundOnInteractUsingComponent, InteractUsingEvent>(OnEmitSoundOnInteractUsing);
 
         SubscribeLocalEvent<EmitSoundOnCollideComponent, StartCollideEvent>(OnEmitSoundOnCollide);
+
+        SubscribeLocalEvent<SoundWhileAliveComponent, MobStateChangedEvent>(OnMobState);
+    }
+
+    private void OnMobState(Entity<SoundWhileAliveComponent> entity, ref MobStateChangedEvent args)
+    {
+        // Disable this component rather than removing it because it can be brought back to life.
+        if (TryComp<SpamEmitSoundComponent>(entity, out var comp))
+        {
+            comp.Enabled = args.NewMobState == MobState.Alive;
+            Dirty(entity.Owner, comp);
+        }
+
+        _ambient.SetAmbience(entity.Owner, args.NewMobState != MobState.Dead);
     }
 
     private void OnEmitSpawnOnInit(EntityUid uid, EmitSoundOnSpawnComponent component, MapInitEvent args)
@@ -102,6 +121,13 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         TryEmitSound(uid, component, args.User);
     }
 
+    private void OnEmitSoundOnInteractUsing(Entity<EmitSoundOnInteractUsingComponent> ent, ref InteractUsingEvent args)
+    {
+        if (ent.Comp.Whitelist.IsValid(args.Used, EntityManager))
+        {
+            TryEmitSound(ent, ent.Comp, args.User);
+        }
+    }
     protected void TryEmitSound(EntityUid uid, BaseEmitSoundComponent component, EntityUid? user=null, bool predict=true)
     {
         if (component.Sound == null)
@@ -124,7 +150,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
             !args.OtherFixture.Hard ||
             !TryComp<PhysicsComponent>(uid, out var physics) ||
             physics.LinearVelocity.Length() < component.MinimumVelocity ||
-            _timing.CurTime < component.NextSound ||
+            Timing.CurTime < component.NextSound ||
             MetaData(uid).EntityPaused)
         {
             return;
@@ -136,12 +162,16 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
         var fraction = MathF.Min(1f, (physics.LinearVelocity.Length() - component.MinimumVelocity) / MaxVolumeVelocity);
         var volume = MinVolume + (MaxVolume - MinVolume) * fraction;
-        component.NextSound = _timing.CurTime + EmitSoundOnCollideComponent.CollideCooldown;
+        component.NextSound = Timing.CurTime + EmitSoundOnCollideComponent.CollideCooldown;
         var sound = component.Sound;
 
         if (_netMan.IsServer && sound != null)
         {
             _audioSystem.PlayPvs(_audioSystem.GetSound(sound), uid, AudioParams.Default.WithVolume(volume));
         }
+    }
+
+    public virtual void SetEnabled(Entity<SpamEmitSoundComponent?> entity, bool enabled)
+    {
     }
 }

@@ -21,6 +21,7 @@
     anchored: false
   - type: Physics
     bodyType: Static
+    bodyStatus: InAir
   - type: Fixtures
     fixtures:
       fix1:
@@ -47,6 +48,9 @@
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/Effects/teleport_arrival.ogg
+  - type: SecretDataAnomaly
+    randomStartSecretMin: 0
+    randomStartSecretMax: 2
 
 - type: entity
   id: AnomalyPyroclastic
@@ -86,7 +90,6 @@
     tempChange: 420
   - type: ProjectileAnomaly
     projectilePrototype: ProjectileAnomalyFireball
-    targetNonSentientChance: 0.6
     projectileSpeed: 0.5
     minProjectiles: 3
     maxProjectiles: 6
@@ -160,6 +163,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreFlesh
     coreInertPrototype: AnomalyCoreFleshInert
+    minPulseLength: 180
+    maxPulseLength: 300
   - type: Sprite
     layers:
     - state: anom5
@@ -324,7 +329,6 @@
     explosionMaxTileIntensity: 20
   - type: ProjectileAnomaly
     projectilePrototype: ProjectileIcicle
-    targetNonSentientChance: 0.1
   - type: EntitySpawnAnomaly
     entries:
     - settings:
@@ -351,6 +355,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreRock
     coreInertPrototype: AnomalyCoreRockInert
+    minPulseLength: 180
+    maxPulseLength: 300
   - type: Sprite
     layers:
     - state: anom6
@@ -598,9 +604,11 @@
     color: "#6270bb"
   - type: Anomaly
     animationTime: 6
-    offset: 0.05, 0
+    offset: 0, 0
     corePrototype: AnomalyCoreFlora
     coreInertPrototype: AnomalyCoreFloraInert
+    minPulseLength: 60
+    maxPulseLength: 120
     anomalyContactDamage:
       types:
         Slash: 0
@@ -705,6 +713,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreLiquid
     coreInertPrototype: AnomalyCoreLiquidInert
+    minPulseLength: 60
+    maxPulseLength: 120
     anomalyContactDamage:
       types:
         Slash: 1
@@ -818,6 +828,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreShadow
     coreInertPrototype: AnomalyCoreShadowInert
+    minPulseLength: 60
+    maxPulseLength: 120
     anomalyContactDamage:
       types:
         Cold: 10
