@@ -88,7 +88,7 @@
   - type: StorageFill
     contents:
       - id: BoxSurvivalEngineering
-      - id: Telebaton
+      - id: Flash
 
 - type: entity
   noSpawn: true
@@ -98,7 +98,7 @@
   - type: StorageFill
     contents:
       - id: BoxSurvival
-      - id: Telebaton
+      - id: Flash
 
 - type: entity
   noSpawn: true
@@ -108,7 +108,7 @@
   - type: StorageFill
     contents:
       - id: BoxSurvival
-      - id: Telebaton
+      - id: Flash
 
 - type: entity
   noSpawn: true
@@ -118,7 +118,7 @@
   - type: StorageFill
     contents:
       - id: BoxSurvivalMedical
-      - id: Telebaton
+      - id: Flash
 
 - type: entity
   noSpawn: true
@@ -128,7 +128,7 @@
   - type: StorageFill
     contents:
       - id: BoxSurvival
-      - id: Telebaton
+      - id: Flash
 
 - type: entity
   noSpawn: true
