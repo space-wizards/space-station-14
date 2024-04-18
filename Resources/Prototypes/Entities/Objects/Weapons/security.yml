@@ -99,7 +99,7 @@
     soundHit:
       collection: MetalThud
   - type: StaminaDamageOnHit
-    damage: 20
+    damage: 25
   - type: Item
     size: Normal
   - type: Clothing
