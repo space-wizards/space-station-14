@@ -181,7 +181,7 @@
   completetime: 3
   materials:
     Steel: 600
-    Glass: 100
+    Glass: 200
 
 - type: latheRecipe
   id: WeaponForceGun
