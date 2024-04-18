@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Dygon
-  changes:
-  - message: Single tile sized puddles of space lube won't let you slide extremely
-      far anymore.
-    type: Fix
-  id: 5879
-  time: '2024-02-03T08:10:51.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24846
 - author: shampunj
   changes:
   - message: Fixed incorrect path to the uranium spear image in the construction menu
@@ -3835,3 +3827,10 @@
   id: 6378
   time: '2024-04-18T01:49:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25574
+- author: metalgearsloth
+  changes:
+  - message: Fix lobby UI not resetting for character changes.
+    type: Fix
+  id: 6379
+  time: '2024-04-18T03:01:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27075
