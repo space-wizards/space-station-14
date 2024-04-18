@@ -1115,6 +1115,7 @@ namespace Content.Client.Preferences.UI
             UpdateEyePickers();
             UpdateSaveButton();
             UpdateLoadouts();
+            UpdateRoleRequirements();
             UpdateJobPriorities();
             UpdateAntagPreferences();
             UpdateTraitPreferences();
