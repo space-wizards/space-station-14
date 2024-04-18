@@ -231,15 +231,6 @@
 
 # Gloves
 - type: loadout
-  id: LatexGloves
-  equipment: LatexGloves
-
-- type: startingGear
-  id: LatexGloves
-  equipment:
-    gloves: ClothingHandsGlovesLatex
-
-- type: loadout
   id: NitrileGloves
   equipment: NitrileGloves
 
