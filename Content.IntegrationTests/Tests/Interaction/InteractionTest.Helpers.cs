@@ -989,7 +989,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task AddGravity(EntityUid? uid = null)
     {
-        var target = uid ?? MapData.GridUid;
+        var target = uid ?? MapData.Grid;
         await Server.WaitPost(() =>
         {
             var gravity = SEntMan.EnsureComponent<GravityComponent>(target);

@@ -69,7 +69,7 @@
   noSpawn: true
   components:
   - type: GameRule
-    minPlayers: 35
+    minPlayers: 20
   - type: RandomMetadata #this generates the random operation name cuz it's cool.
     nameSegments:
     - operationPrefix

@@ -73,3 +73,22 @@
   id: JesterShoes
   equipment:
     shoes: ClothingShoesJester
+
+# Outer clothing
+- type: loadout
+  id: ClownRobes
+  equipment: ClownRobes
+
+- type: startingGear
+  id: ClownRobes
+  equipment:
+    outerClothing: ClothingOuterClownPriest
+
+- type: loadout
+  id: ClownWintercoat
+  equipment: ClownWintercoat
+
+- type: startingGear
+  id: ClownWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterClown

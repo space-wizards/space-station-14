@@ -100,3 +100,13 @@
   id: MimeDuffel
   equipment:
     back: ClothingBackpackDuffelMimeFilled
+
+# Outerclothing
+- type: loadout
+  id: MimeWintercoat
+  equipment: MimeWintercoat
+
+- type: startingGear
+  id: MimeWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterMime
