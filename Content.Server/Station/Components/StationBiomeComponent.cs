@@ -5,9 +5,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Station.Components;
 
 /// <summary>
-/// allows you to initialize a planet on a specific map at initialization time.
+/// Runs EnsurePlanet against the largest grid on Mapinit.
 /// </summary>
-
 [RegisterComponent, Access(typeof(StationBiomeSystem))]
 public sealed partial class StationBiomeComponent : Component
 {
