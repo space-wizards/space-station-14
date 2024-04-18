@@ -22,7 +22,7 @@ public sealed partial class MessagesUiFragment : BoxContainer
 
         Input.OnTextEntered += _ =>
         {
-            if (Input.Text != "")
+            if (!string.IsNullOrEmpty(Input.Text))
                 OnMessageSent?.Invoke(Input.Text);
             Input.Clear();
         };
@@ -35,7 +35,6 @@ public sealed partial class MessagesUiFragment : BoxContainer
     public void UpdateState(MessagesUiStateMode mode, List<(string, int?)>? contents, string? name)
     {
         MessageContainer.DisposeAllChildren();
-        MessageContainer.RemoveAllChildren();
         if (OverContainer.Children.Contains(Input))
             OverContainer.RemoveChild(Input);
         if (OverContainer.Children.Contains(HeaderBox))

@@ -18,7 +18,7 @@ public sealed class MessagesUiMessageEvent : CartridgeMessageEvent
 }
 
 [Serializable, NetSerializable]
-public enum MessagesUiAction
+public enum MessagesUiAction : byte
 {
     Send,
     ChangeChat
