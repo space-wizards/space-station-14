@@ -387,9 +387,9 @@
         Radiation: 0.1
         Caustic: 0.15
   - type: Reflect
-        reflectProb: 0.55
-        reflects:
-           - Energy
+    reflectProb: 0.55
+    reflects:
+      - Energy
   - type: ExplosionResistance
     damageCoefficient: 0.1
   - type: ClothingSpeedModifier
