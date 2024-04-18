@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
@@ -32,9 +33,9 @@ public sealed class HungerSystem : EntitySystem
     [ValidatePrototypeId<StatusIconPrototype>]
     private const string HungerIconStarvingId = "HungerIconStarving";
 
-    private StatusIconPrototype? _hungerIconOverfed = null;
-    private StatusIconPrototype? _hungerIconPeckish = null;
-    private StatusIconPrototype? _hungerIconStarving = null;
+    private StatusIconPrototype? _hungerIconOverfed;
+    private StatusIconPrototype? _hungerIconPeckish;
+    private StatusIconPrototype? _hungerIconStarving;
 
     public override void Initialize()
     {
@@ -215,26 +216,25 @@ public sealed class HungerSystem : EntitySystem
         }
     }
 
-    public bool TryGetStatusIconPrototype(HungerComponent component, out StatusIconPrototype? prototype)
+    public bool TryGetStatusIconPrototype(HungerComponent component, [NotNullWhen(true)] out StatusIconPrototype? prototype)
     {
         switch (component.CurrentThreshold)
         {
             case HungerThreshold.Overfed:
                 prototype = _hungerIconOverfed;
-                return true;
-
+                break;
             case HungerThreshold.Peckish:
                 prototype = _hungerIconPeckish;
-                return true;
-
+                break;
             case HungerThreshold.Starving:
                 prototype = _hungerIconStarving;
-                return true;
-
+                break;
             default:
                 prototype = null;
-                return false;
+                break;
         }
+
+        return prototype != null;
     }
 
     public override void Update(float frameTime)

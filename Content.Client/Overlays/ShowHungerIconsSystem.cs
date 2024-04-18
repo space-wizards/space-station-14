@@ -22,6 +22,6 @@ public sealed class ShowHungerIconsSystem : EquipmentHudSystem<ShowHungerIconsCo
             return;
 
         if (_hunger.TryGetStatusIconPrototype(component, out var iconPrototype))
-            ev.StatusIcons.Add(iconPrototype!);
+            ev.StatusIcons.Add(iconPrototype);
     }
 }
