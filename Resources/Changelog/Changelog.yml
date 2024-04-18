@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Added face bandanas
-    type: Add
-  - message: Bandanas can be switched between head and face type with an alt verb
-      (Fold)
-    type: Tweak
-  id: 5885
-  time: '2024-02-04T00:52:44.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24597
 - author: metalgearsloth
   changes:
   - message: Moving to open lockers is now predicted.
@@ -3833,3 +3823,10 @@
   id: 6384
   time: '2024-04-18T10:50:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26932
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Chemists now start with chemical analysis goggles.
+    type: Tweak
+  id: 6385
+  time: '2024-04-18T10:52:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27047
