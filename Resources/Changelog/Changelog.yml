@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Moving to open lockers is now predicted.
-    type: Fix
-  id: 5886
-  time: '2024-02-04T02:23:16.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24937
 - author: Tayrtahn
   changes:
   - message: Added opened/closed visuals and fill levels for a variety of drinks.
@@ -3830,3 +3823,11 @@
   id: 6385
   time: '2024-04-18T10:52:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27047
+- author: TheShuEd
+  changes:
+  - message: botanist can now mutate blood tomatoes into killer tomatoes! they will
+      be personal pets, aggressively defending the owner from any social interactions.
+    type: Add
+  id: 6386
+  time: '2024-04-18T11:21:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26053
