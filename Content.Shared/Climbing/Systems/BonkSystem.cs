@@ -57,9 +57,11 @@ public sealed partial class BonkSystem : EntitySystem
         if (user == source)
         {
             // Non-local, non-bonking players
-            _popupSystem.PopupEntity(Loc.GetString("bonkable-success-message-others", ("user", userName), ("bonkable", bonkableName)), user, Filter.PvsExcept(user), true);
+            var othersMessage = Loc.GetString("bonkable-success-message-others", ("user", userName), ("bonkable", bonkableName));
             // Local, bonking player
-            _popupSystem.PopupClient(Loc.GetString("bonkable-success-message-user", ("user", userName), ("bonkable", bonkableName)), user, user);
+            var selfMessage = Loc.GetString("bonkable-success-message-user", ("user", userName), ("bonkable", bonkableName));
+
+            _popupSystem.PopupPredicted(selfMessage, othersMessage, user, user);
         }
         else if (source != null)
         {
