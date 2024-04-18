@@ -37,7 +37,7 @@ public sealed class TileConstructionTests : InteractionTest
         // Remove grid
         await SetTile(null);
         await SetTile(null, PlayerCoords);
-        Assert.That(MapData.Grid.Comp.Deleted);
+        Assert.That(MapData.MapGrid.Deleted);
         AssertGridCount(0);
 
         // Place Lattice
@@ -70,7 +70,7 @@ public sealed class TileConstructionTests : InteractionTest
         // Remove grid
         await SetTile(null);
         await SetTile(null, PlayerCoords);
-        Assert.That(MapData.Grid.Comp.Deleted);
+        Assert.That(MapData.MapGrid.Deleted);
         AssertGridCount(0);
 
         // Space -> Lattice
