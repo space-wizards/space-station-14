@@ -368,7 +368,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitRd
   name: experimental research hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
+  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor that is able to reflect energy.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
@@ -382,10 +382,14 @@
       coefficients:
         Blunt: 0.6
         Slash: 0.8
-        Piercing: 0.9
-        Heat: 0.3
+        Piercing: 0.85
+        Heat: 0.25
         Radiation: 0.1
-        Caustic: 0.2
+        Caustic: 0.15
+  - type: Reflect
+        reflectProb: 0.55
+        reflects:
+           - Energy
   - type: ExplosionResistance
     damageCoefficient: 0.1
   - type: ClothingSpeedModifier
