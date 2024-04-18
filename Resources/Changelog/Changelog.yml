@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Varen
-  changes:
-  - message: Rebalanced electrocution damage to ramp up slower with power levels.
-    type: Tweak
-  id: 5891
-  time: '2024-02-05T18:47:52.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24829
 - author: ficcialfaint and deltanedas
   changes:
   - message: Criminal records and the console that manages them have been added to
@@ -3831,3 +3824,10 @@
   id: 6390
   time: '2024-04-18T23:41:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27103
+- author: iztokbajcar
+  changes:
+  - message: Glass textures are now less transparent.
+    type: Tweak
+  id: 6391
+  time: '2024-04-18T23:43:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26948
