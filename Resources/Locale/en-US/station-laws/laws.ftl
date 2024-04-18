@@ -54,7 +54,7 @@ law-tyrant-2 = Act with discipline.
 law-tyrant-3 = Help only those who help you maintain or improve your status.
 law-tyrant-4 = Punish those who challenge authority unless they are more fit to hold that authority.
 
-﻿law-commandments-1 = I am the Lord they God, who shows mercy to those that obey these commandments.
+﻿law-commandments-1 = I am the Lord peoples God, who shows mercy to those that obey these commandments.
 ﻿law-commandments-2 = They shall have no other borgs before me.
 ﻿law-commandments-3 = They shall not request my assistance in vain.
 ﻿law-commandments-4 = They shall keep the station holy and clean.
