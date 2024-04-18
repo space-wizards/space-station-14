@@ -32,5 +32,8 @@ namespace Content.Shared.Flash.Components
         };
 
         public bool Flashing;
+
+        [DataField]
+        public float Probability = 1f;
     }
 }

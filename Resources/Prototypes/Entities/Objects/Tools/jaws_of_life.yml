@@ -47,6 +47,8 @@
     damage:
       types:
         Blunt: 10
+    soundHit:
+      collection: MetalThud
 
 - type: entity
   name: syndicate jaws of life

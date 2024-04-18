@@ -418,6 +418,9 @@
 - type: Tag
   id: ConveyorAssembly
 
+- type: Tag
+  id: CoordinatesDisk
+
 - type: Tag #Ohioans die happy
   id: Corn
 
@@ -519,6 +522,9 @@
 
 - type: Tag
   id: DoorElectronics
+
+- type: Tag
+  id: DoorElectronicsConfigurator
 
 - type: Tag
   id: DrinkBottle
@@ -672,6 +678,9 @@
 
 - type: Tag
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
+
+- type: Tag
+  id: Haunted
 
 - type: Tag
   id: Head
@@ -1028,9 +1037,6 @@
 - type: Tag
   id: RawMaterial
 
-- type: Tag
-  id: RCDDeconstructWhitelist
-
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
   id: Recyclable
@@ -1176,6 +1182,9 @@
   id: SuitEVA
 
 - type: Tag
+  id: Sunglasses
+
+- type: Tag
   id: SurgeryTool
 
 - type: Tag
@@ -1216,6 +1225,9 @@
 
 - type: Tag
   id: Torch
+
+- type: Tag
+  id: ToyRubberDuck
 
 - type: Tag
   id: ToySidearm

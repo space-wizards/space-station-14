@@ -36,6 +36,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ExamineSystemShared _examine = default!;
 
@@ -97,7 +98,7 @@ namespace Content.Server.Pointing.EntitySystems
         {
             if (HasComp<GhostComponent>(pointer))
             {
-                return Transform(pointer).Coordinates.InRange(EntityManager, coordinates, 15);
+                return Transform(pointer).Coordinates.InRange(EntityManager, _transform, coordinates, 15);
             }
             else
             {
@@ -142,7 +143,7 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            var mapCoordsPointed = coordsPointed.ToMap(EntityManager);
+            var mapCoordsPointed = coordsPointed.ToMap(EntityManager, _transform);
             _rotateToFaceSystem.TryFaceCoordinates(player, mapCoordsPointed.Position);
 
             var arrow = EntityManager.SpawnEntity("PointingArrow", coordsPointed);
@@ -150,7 +151,7 @@ namespace Content.Server.Pointing.EntitySystems
             if (TryComp<PointingArrowComponent>(arrow, out var pointing))
             {
                 if (TryComp(player, out TransformComponent? xformPlayer))
-                    pointing.StartPosition = EntityCoordinates.FromMap(arrow, xformPlayer.Coordinates.ToMap(EntityManager)).Position;
+                    pointing.StartPosition = EntityCoordinates.FromMap(arrow, xformPlayer.Coordinates.ToMap(EntityManager, _transform), _transform).Position;
 
                 pointing.EndTime = _gameTiming.CurTime + PointDuration;
 
