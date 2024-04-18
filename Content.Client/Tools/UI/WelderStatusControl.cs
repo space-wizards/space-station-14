@@ -9,6 +9,8 @@ namespace Content.Client.Tools.UI;
 
 public sealed class WelderStatusControl : Control
 {
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+
     private readonly ToolSystem _tool;
 
     private readonly Entity<WelderComponent> _parent;
@@ -16,6 +18,8 @@ public sealed class WelderStatusControl : Control
 
     public WelderStatusControl(Entity<WelderComponent> parent)
     {
+        IoCManager.InjectDependencies(this);
+
         _parent = parent;
         var entMan = IoCManager.Resolve<IEntityManager>();
         _tool = entMan.System<ToolSystem>();
@@ -36,6 +40,9 @@ public sealed class WelderStatusControl : Control
 
     public void Update()
     {
+        if (!_gameTiming.IsFirstTimePredicted)
+            return;
+
         var (fuel, fuelCap) = _tool.GetWelderFuelAndCapacity(_parent, _parent);
         var lit = _parent.Comp.Enabled;
 

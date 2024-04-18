@@ -230,13 +230,6 @@ public abstract partial class SharedToolSystem : EntitySystem
         return !beforeAttempt.Cancelled;
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        UpdateWelders(frameTime);
-    }
-
     #region DoAfterEvents
 
     [Serializable, NetSerializable]

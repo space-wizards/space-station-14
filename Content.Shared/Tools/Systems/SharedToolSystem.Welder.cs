@@ -167,32 +167,4 @@ public abstract partial class SharedToolSystem
             args.Cancelled = true;
         }
     }
-
-    private void UpdateWelders(float frameTime)
-    {
-        var query = EntityQueryEnumerator<WelderComponent, SolutionContainerManagerComponent>();
-        while (query.MoveNext(out var uid, out var welder, out var solutionContainer))
-        {
-            if (!welder.Enabled)
-                continue;
-
-            welder.WelderTimer += frameTime;
-
-            if (welder.WelderTimer < welder.WelderUpdateTimer)
-                continue;
-
-            if (!SolutionContainerSystem.ResolveSolution((uid, solutionContainer), welder.FuelSolutionName, ref welder.FuelSolution, out var solution))
-                continue;
-
-            SolutionContainerSystem.RemoveReagent(welder.FuelSolution.Value, welder.FuelReagent, welder.FuelConsumption * welder.WelderTimer);
-
-            if (solution.GetTotalPrototypeQuantity(welder.FuelReagent) <= FixedPoint2.Zero)
-            {
-                ItemToggle.Toggle(uid, predicted: false);
-            }
-
-            Dirty(uid, welder);
-            welder.WelderTimer -= welder.WelderUpdateTimer;
-        }
-    }
 }
