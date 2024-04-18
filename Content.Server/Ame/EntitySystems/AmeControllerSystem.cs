@@ -234,6 +234,8 @@ public sealed class AmeControllerSystem : EntitySystem
 
         UpdateUi(uid, controller);
 
+        _itemSlots.SetLock(uid, controller.FuelSlot, value);
+
         // Logging
         if (!HasComp<MindContainerComponent>(user))
             return;

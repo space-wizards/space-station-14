@@ -52,9 +52,6 @@
       path: /Audio/Items/rped.ogg
   - type: WiresPanel
   - type: WiresVisuals
-  - type: Wires
-    boardName: wires-board-name-flatpacker
-    layoutId: Flatpacker
   - type: Appearance
   - type: ActivatableUI
     key: enum.FlatpackCreatorUIKey.Key

@@ -88,14 +88,6 @@
     Plastic: 100
 
 - type: latheRecipe
-  id: ClothingEyesGlassesSecurity
-  result: ClothingEyesGlassesSecurity
-  completetime: 2
-  materials:
-    Steel: 300
-    Glass: 200
-
-- type: latheRecipe
   id: ClothingEyesHudSecurity
   result: ClothingEyesHudSecurity
   completetime: 2
@@ -147,48 +139,12 @@
     Steel: 10
 
 - type: latheRecipe
-  id: CartridgePistolRubber
-  result: CartridgePistolRubber
-  category: Ammo
-  completetime: 2
-  materials:
-    Plastic: 5
-    Steel: 5
-
-- type: latheRecipe
-  id: CartridgeMagnumRubber
-  result: CartridgeMagnumRubber
-  category: Ammo
-  completetime: 2
-  materials:
-    Plastic: 5
-    Steel: 5
-
-- type: latheRecipe
   id: CartridgeRifle
   result: CartridgeRifle
   category: Ammo
   completetime: 2
   materials:
     Steel: 15
-
-- type: latheRecipe
-  id: CartridgeLightRifleRubber
-  result: CartridgeLightRifleRubber
-  category: Ammo
-  completetime: 2
-  materials:
-    Plastic: 10
-    Steel: 5
-
-- type: latheRecipe
-  id: CartridgeRifleRubber
-  result: CartridgeRifleRubber
-  category: Ammo
-  completetime: 2
-  materials:
-    Plastic: 10
-    Steel: 5
 
 - type: latheRecipe
   id: CartridgePistol
@@ -307,30 +263,12 @@
     Steel: 650
 
 - type: latheRecipe
-  id: MagazineBoxPistolRubber
-  result: MagazineBoxPistolRubber
-  category: Ammo
-  completetime: 5
-  materials:
-    Steel: 350
-    Plastic: 300
-
-- type: latheRecipe
   id: MagazineBoxMagnum
   result: MagazineBoxMagnum
   category: Ammo
   completetime: 5
   materials:
     Steel: 1250
-
-- type: latheRecipe
-  id: MagazineBoxMagnumRubber
-  result: MagazineBoxMagnumRubber
-  category: Ammo
-  completetime: 5
-  materials:
-    Steel: 350
-    Plastic: 300
 
 - type: latheRecipe
   id: MagazineRifle
@@ -357,30 +295,12 @@
     Steel: 950
 
 - type: latheRecipe
-  id: MagazineBoxRifleRubber
-  result: MagazineBoxRifleRubber
-  category: Ammo
-  completetime: 5
-  materials:
-    Steel: 350
-    Plastic: 600
-
-- type: latheRecipe
   id: MagazineBoxLightRifle
   result: MagazineBoxLightRifle
   category: Ammo
   completetime: 5
   materials:
     Steel: 1800
-
-- type: latheRecipe
-  id: MagazineBoxLightRifleRubber
-  result: MagazineBoxLightRifleRubber
-  category: Ammo
-  completetime: 5
-  materials:
-    Steel: 350
-    Plastic: 600
 
 - type: latheRecipe
   id: SpeedLoaderMagnum

@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Components;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
@@ -115,15 +115,34 @@ public sealed class InjectorSystem : SharedInjectorSystem
     private void InjectDoAfter(Entity<InjectorComponent> injector, EntityUid target, EntityUid user)
     {
         // Create a pop-up for the user
-        Popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
+        if (injector.Comp.ToggleState == InjectorToggleMode.Draw)
+        {
+            Popup.PopupEntity(Loc.GetString("injector-component-drawing-user"), target, user);
+        }
+        else
+        {
+            Popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
+        }
 
         if (!SolutionContainers.TryGetSolution(injector.Owner, InjectorComponent.SolutionName, out _, out var solution))
             return;
 
         var actualDelay = MathHelper.Max(injector.Comp.Delay, TimeSpan.FromSeconds(1));
+        float amountToInject;
+        if (injector.Comp.ToggleState == InjectorToggleMode.Draw)
+        {
+            // additional delay is based on actual volume left to draw in syringe when smaller than transfer amount
+            amountToInject = Math.Min(injector.Comp.TransferAmount.Float(), (solution.MaxVolume - solution.Volume).Float());
+        }
+        else
+        {
+            // additional delay is based on actual volume left to inject in syringe when smaller than transfer amount
+            amountToInject = Math.Min(injector.Comp.TransferAmount.Float(), solution.Volume.Float());
+        }
 
-        // Injections take 0.5 seconds longer per additional 5u
-        actualDelay += TimeSpan.FromSeconds(injector.Comp.TransferAmount.Float() / injector.Comp.Delay.TotalSeconds - 0.5f);
+        // Injections take 0.5 seconds longer per 5u of possible space/content
+        actualDelay += TimeSpan.FromSeconds(amountToInject / 10);
+
 
         var isTarget = user != target;
 
@@ -131,8 +150,17 @@ public sealed class InjectorSystem : SharedInjectorSystem
         {
             // Create a pop-up for the target
             var userName = Identity.Entity(user, EntityManager);
-            Popup.PopupEntity(Loc.GetString("injector-component-injecting-target",
-                ("user", userName)), user, target);
+            if (injector.Comp.ToggleState == InjectorToggleMode.Draw)
+            {
+                Popup.PopupEntity(Loc.GetString("injector-component-drawing-target",
+    ("user", userName)), user, target);
+            }
+            else
+            {
+                Popup.PopupEntity(Loc.GetString("injector-component-injecting-target",
+    ("user", userName)), user, target);
+            }
+
 
             // Check if the target is incapacitated or in combat mode and modify time accordingly.
             if (MobState.IsIncapacitated(target))
@@ -177,9 +205,11 @@ public sealed class InjectorSystem : SharedInjectorSystem
 
         DoAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, actualDelay, new InjectorDoAfterEvent(), injector.Owner, target: target, used: injector.Owner)
         {
-            BreakOnUserMove = true,
+            BreakOnMove = true,
+            BreakOnWeightlessMove = false,
             BreakOnDamage = true,
-            BreakOnTargetMove = true,
+            NeedHand = true,
+            BreakOnHandChange = true,
             MovementThreshold = 0.1f,
         });
     }

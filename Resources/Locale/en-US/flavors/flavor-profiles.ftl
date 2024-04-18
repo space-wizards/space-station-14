@@ -47,9 +47,9 @@ flavor-base-clean = clean
 flavor-base-alkaline = alkaline
 flavor-base-holy = holy
 flavor-base-horrible = horrible
-
 # lmao
 flavor-base-terrible = terrible
+flavor-base-mindful = mindful
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
@@ -188,6 +188,7 @@ flavor-complex-tonic-water = like angry water
 flavor-complex-cola = like cola
 flavor-complex-energy-drink = like battery acid
 flavor-complex-dr-gibb = like malpractice
+flavor-complex-ginger-soda = like ginger
 flavor-complex-grape-soda = like grape soda
 flavor-complex-lemon-lime-soda = like lemon-lime soda
 flavor-complex-pwr-game-soda = like gaming
@@ -200,6 +201,7 @@ flavor-complex-vodka = like fermented grain
 flavor-complex-tequila = like fermented death
 flavor-complex-sake = like sweet, alcoholic rice
 flavor-complex-rum = like fermented sugar
+flavor-complex-coconut-rum = like nutty fermented sugar
 flavor-complex-coffee-liquor = like strong, bitter coffee
 flavor-complex-whiskey = like molasses
 flavor-complex-shitty-wine = like grape rinds
@@ -212,6 +214,11 @@ flavor-complex-ice = like ice
 flavor-complex-mopwata = like stagnant, dirty water
 
 ## Cocktails
+flavor-complex-arnold-palmer = like a hole-in-one
+flavor-complex-blue-hawaiian = like the tropics
+flavor-complex-cosmopolitan = sweet and tangy
+flavor-complex-painkiller = like spiked pineapple juice
+flavor-complex-pina-colada = like tropical sun
 flavor-complex-long-island = suspiciously like iced tea
 flavor-complex-three-mile-island = like tea brewed in nuclear runoff
 flavor-complex-whiskey-cola = like carbonated molasses

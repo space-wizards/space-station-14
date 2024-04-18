@@ -7,9 +7,6 @@
     sprite: Objects/Misc/utensils.rsi
   - type: Item # TODO add inhand sprites for all utensils
     sprite: Objects/Misc/utensils.rsi
-  - type: Tag
-    tags:
-    - Metal
   - type: SpaceGarbage
 
 - type: entity
@@ -23,8 +20,14 @@
     price: 0
   - type: Tag
     tags:
-     - Plastic
-     - Trash
+    - Plastic
+    - Trash
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 0
 
 - type: entity
   parent: UtensilBase
@@ -66,6 +69,9 @@
   name: spoon
   description: There is no spoon.
   components:
+  - type: Tag
+    tags:
+    - Metal
   - type: Sprite
     state: spoon
   - type: Item
@@ -99,7 +105,7 @@
     speedModifier: 0.1 # you can try
 
 - type: entity
-  parent: UtensilBase
+  parent: UtensilBasePlastic
   id: KnifePlastic
   name: plastic knife
   description: That's not a knife. This is a knife.
@@ -108,4 +114,9 @@
     state: plastic_knife
   - type: Utensil
     types:
+    - Knife
+  - type: Tag
+    tags:
+    - Plastic
+    - Trash
     - Knife

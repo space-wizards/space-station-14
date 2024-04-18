@@ -83,9 +83,8 @@ namespace Content.Server.Forensics
 
             var doAfterEventArgs = new DoAfterArgs(EntityManager, user, pad.ScanDelay, ev, used, target: target, used: used)
             {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
-                NeedHand = true
+                NeedHand = true,
+                BreakOnMove = true,
             };
 
             _doAfterSystem.TryStartDoAfter(doAfterEventArgs);

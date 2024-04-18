@@ -7,15 +7,27 @@ namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed partial class AdjustAlert : ReagentEffect
 {
+    /// <summary>
+    /// The specific Alert that will be adjusted
+    /// </summary>
     [DataField("alertType", required: true)]
     public AlertType Type;
 
+    /// <summary>
+    /// If true, the alert is removed after Time seconds. If Time was not specified the alert is removed immediately.
+    /// </summary>
     [DataField]
     public bool Clear;
 
+    /// <summary>
+    /// Visually display cooldown progress over the alert icon.
+    /// </summary>
     [DataField]
-    public bool Cooldown;
+    public bool ShowCooldown;
 
+    /// <summary>
+    /// The length of the cooldown or delay before removing the alert (in seconds).
+    /// </summary>
     [DataField]
     public float Time;
 
@@ -24,23 +36,24 @@ public sealed partial class AdjustAlert : ReagentEffect
 
     public override void Effect(ReagentEffectArgs args)
     {
-        var alertSys = EntitySystem.Get<AlertsSystem>();
-        if (args.EntityManager.HasComponent<AlertsComponent>(args.SolutionEntity))
+        var alertSys = args.EntityManager.EntitySysManager.GetEntitySystem<AlertsSystem>();
+        if (!args.EntityManager.HasComponent<AlertsComponent>(args.SolutionEntity))
+            return;
+
+        if (Clear && Time <= 0)
         {
-            if (Clear)
-            {
                 alertSys.ClearAlert(args.SolutionEntity, Type);
-            }
-            else
-            {
-                (TimeSpan, TimeSpan)? cooldown = null;
-                if (Cooldown)
-                {
-                    var timing = IoCManager.Resolve<IGameTiming>();
-                    cooldown = (timing.CurTime, timing.CurTime + TimeSpan.FromSeconds(Time));
-                }
-                alertSys.ShowAlert(args.SolutionEntity, Type, cooldown: cooldown);
-            }
         }
+        else
+        {
+            var timing = IoCManager.Resolve<IGameTiming>();
+            (TimeSpan, TimeSpan)? cooldown = null;
+
+            if ((ShowCooldown || Clear) && Time > 0)
+                cooldown = (timing.CurTime, timing.CurTime + TimeSpan.FromSeconds(Time));
+
+            alertSys.ShowAlert(args.SolutionEntity, Type, cooldown: cooldown, autoRemove: Clear, showCooldown: ShowCooldown);
+        }
+
     }
 }

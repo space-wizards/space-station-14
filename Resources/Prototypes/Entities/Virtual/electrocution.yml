@@ -1,7 +1,7 @@
 ﻿# Special entity used to attach to power networks as load when somebody gets electrocuted.
 - type: entity
   id: VirtualElectrocutionLoadBase
-  noSpawn: true
+  abstract: true
   components:
   - type: Electrocution
   - type: Icon

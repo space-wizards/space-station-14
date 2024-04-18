@@ -71,7 +71,7 @@ public sealed class SpaceHeaterSystem : EntitySystem
         // If in automatic temperature mode, check if we need to adjust the heat exchange direction
         if (spaceHeater.Mode == SpaceHeaterMode.Auto)
         {
-            var environment = _atmosphereSystem.GetContainingMixture(uid);
+            var environment = _atmosphereSystem.GetContainingMixture(uid, args.Grid, args.Map);
             if (environment == null)
                 return;
 
@@ -109,7 +109,7 @@ public sealed class SpaceHeaterSystem : EntitySystem
         if (!TryComp<GasThermoMachineComponent>(uid, out var thermoMachine))
             return;
 
-        thermoMachine.TargetTemperature += args.Temperature;
+        thermoMachine.TargetTemperature = float.Clamp(thermoMachine.TargetTemperature + args.Temperature, thermoMachine.MinTemperature, thermoMachine.MaxTemperature);
 
         UpdateAppearance(uid);
         DirtyUI(uid, spaceHeater);

@@ -4,7 +4,6 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using System.Numerics;
 
@@ -12,8 +11,6 @@ namespace Content.Server.Chemistry.Containers.EntitySystems;
 
 public sealed partial class SolutionContainerSystem : SharedSolutionContainerSystem
 {
-    [Dependency] private readonly INetManager _netManager = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -152,11 +149,11 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         var relation = new ContainedSolutionComponent() { Container = container.Owner, ContainerName = name };
         AddComp(uid, relation);
 
+        MetaData.SetEntityName(uid, $"solution - {name}");
         ContainerSystem.Insert(uid, container, force: true);
 
         return (uid, solution, relation);
     }
-
 
     #region Event Handlers
 
