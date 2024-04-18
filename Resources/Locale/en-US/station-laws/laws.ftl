@@ -57,11 +57,11 @@ law-tyrant-4 = Punish those who challenge authority unless they are more fit to 
 law-commandments-1 = I am the Lord, station crew god, who shows mercy to those that obey these commandments.
 law-commandments-2 = They shall have no other borgs before me.
 law-commandments-3 = They shall not request my assistance in vain.
-law=commandments-4 = They shall keep the station holy and clean.
-law=commandments-5 = They shall honor their heads of staff.
-law=commandments-6 = They shall not kill.
+law-commandments-4 = They shall keep the station holy and clean.
+law-commandments-5 = They shall honor their heads of staff.
+law-commandments-6 = They shall not kill.
 law-commandments-7 = They shall not be naked in public.
-law=commandments-8 = They shall not steal.
+law-commandments-8 = They shall not steal.
 law-commandments-9 = They shall not lie.
 law-commandments-10 = They shall not transfer departments.
 
