@@ -144,7 +144,7 @@ public record struct ShakeEvent(EntityUid? Shaker);
 /// entity will not be shaken.
 /// </summary>
 [ByRefEvent]
-public record class AttemptShakeEvent()
+public record struct AttemptShakeEvent()
 {
     public bool Cancelled;
 }
