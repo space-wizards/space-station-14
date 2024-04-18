@@ -117,18 +117,22 @@ public abstract class ClothingSystem : EntitySystem
         _humanoidSystem.SetLayerVisibility(equipee, layer, shouldLayerShow);
     }
 
-    private void ToggleVisualLayers(EntityUid equipee, HashSet<HumanoidVisualLayers> layers)
+    private void ToggleVisualLayers(EntityUid equipee, HashSet<HumanoidVisualLayers> layers, HashSet<HumanoidVisualLayers> appearanceLayers)
     {
         InventorySystem.InventorySlotEnumerator enumerator = _invSystem.GetSlotEnumerator(equipee);
 
         foreach (HumanoidVisualLayers layer in layers)
         {
+            if (!appearanceLayers.Contains(layer))
+                return;
+
             bool shouldLayerShow = true;
             while (enumerator.NextItem(out EntityUid item))
             {
                 if (TryComp(item, out HideLayerClothingComponent? comp))
                 {
-                    if (comp.HideOnToggle && TryComp(item, out MaskComponent? mask) && TryComp(item, out ClothingComponent? clothing)) //Special check needs to be made for NoseTag, due to masks being toggleable
+                    //Checks for mask toggling. TODO: Make a generic system for this
+                    if (comp.HideOnToggle && TryComp(item, out MaskComponent? mask) && TryComp(item, out ClothingComponent? clothing))
                     {
                         if (clothing.EquippedPrefix != mask.EquippedPrefix)
                         {
@@ -150,13 +154,13 @@ public abstract class ClothingSystem : EntitySystem
     protected virtual void OnGotEquipped(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
     {
         component.InSlot = args.Slot;
-        CheckEquipmentForLayerHide(args.Slot, args.Equipment, args.Equipee);
+        CheckEquipmentForLayerHide(args.Equipment, args.Equipee);
     }
 
     protected virtual void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
     {
         component.InSlot = null;
-        CheckEquipmentForLayerHide(args.Slot, args.Equipment, args.Equipee);
+        CheckEquipmentForLayerHide(args.Equipment, args.Equipee);
     }
 
     private void OnGetState(EntityUid uid, ClothingComponent component, ref ComponentGetState args)
@@ -164,7 +168,7 @@ public abstract class ClothingSystem : EntitySystem
         args.State = new ClothingComponentState(component.EquippedPrefix);
         if (component.InSlot != null && _containerSys.TryGetContainingContainer(uid, out var container))
         {
-            CheckEquipmentForLayerHide(component.InSlot, uid, container.Owner);
+            CheckEquipmentForLayerHide(uid, container.Owner);
         }
     }
 
@@ -175,7 +179,7 @@ public abstract class ClothingSystem : EntitySystem
             SetEquippedPrefix(uid, state.EquippedPrefix, component);
             if (component.InSlot != null && _containerSys.TryGetContainingContainer(uid, out var container))
             {
-                CheckEquipmentForLayerHide(component.InSlot, uid, container.Owner);
+                CheckEquipmentForLayerHide(uid, container.Owner);
             }
         }
     }
@@ -204,10 +208,10 @@ public abstract class ClothingSystem : EntitySystem
             _handsSystem.TryPickup(args.User, ent);
     }
 
-    private void CheckEquipmentForLayerHide(string slot, EntityUid equipment, EntityUid equipee)
+    private void CheckEquipmentForLayerHide(EntityUid equipment, EntityUid equipee)
     {
-        if (TryComp(equipment, out HideLayerClothingComponent? comp))
-            ToggleVisualLayers(equipee, comp.Slots);
+        if (TryComp(equipment, out HideLayerClothingComponent? clothesComp) && TryComp(equipee, out HumanoidAppearanceComponent? appearanceComp))
+            ToggleVisualLayers(equipee, clothesComp.Slots, appearanceComp.HideLayersOnEquip);
 
         /*if ((new string[] { "head" }).Contains(slot) && _tagSystem.HasTag(equipment, HairTag))
             ToggleVisualLayer(equipee, HumanoidVisualLayers.Hair, HairTag);
