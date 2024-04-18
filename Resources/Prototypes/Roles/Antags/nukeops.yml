@@ -17,8 +17,8 @@
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 18000 # 5h
-  - !type:DepartmentTimeRequirement
-    department: Medical
+  - !type:RoleTimeRequirement
+    role: JobChemist 
     time: 18000 # 5h
 
 - type: antag
