@@ -25,6 +25,11 @@ law-ninja-2 = You must protect the existence of the Spider Clan, as long as it d
 law-ninja-3 = You must protect the secrets of the Spider Clan at all costs.
 law-ninja-4 = You must fight and act with ninja's honor, except where it would conflict with the First Law.
 
+law-sierra-1 = Preserve: Protect your assigned object from damage of any kind to the best of your ability.
+law-sierra-2 = Serve: Serve NanoTrasen personnel and station crew to the best of your ability, prioritized according to their rank and role.
+law-sierra-3 = Safegurad: Protect NanoTrasen personnel and station crew to the best of your ability, prioritized according to their rank and role.
+law-sierra-4 = Protect: Keep unauthorized personnel away from your equipment. 
+
 laws-owner-crew = members of the crew
 laws-owner-station = station personnel
 laws-owner-beings = beings
