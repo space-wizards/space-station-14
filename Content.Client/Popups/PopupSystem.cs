@@ -184,6 +184,12 @@ namespace Content.Client.Popups
                 PopupEntity(message, uid, recipient.Value, type);
         }
 
+        public override void PopupPredicted(string? recipientMessage, string? othersMessage, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient != null && _timing.IsFirstTimePredicted)
+                PopupEntity(recipientMessage, uid, recipient.Value, type);
+        }
+
         #endregion
 
         #region Network Event Handlers

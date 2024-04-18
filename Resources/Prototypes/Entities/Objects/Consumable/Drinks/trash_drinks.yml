@@ -5,6 +5,7 @@
   parent: BaseItem
   abstract: true
   description: An empty bottle.
+  suffix: Empty
   components:
   - type: Sprite
     state: icon
@@ -94,6 +95,7 @@
   parent: BaseItem
   abstract: true
   description: An empty carton.
+  suffix: Empty
   components:
   - type: Sprite
     state: icon

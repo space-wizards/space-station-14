@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from paradise at commit https://github.com/ParadiseSS13/Paradise/commit/33f7c1ef477fa67db5dda48078b469ab59aa7997",
+  "copyright": "Taken from paradise at commit https://github.com/ParadiseSS13/Paradise/commit/33f7c1ef477fa67db5dda48078b469ab59aa7997. equipped-MASK-vox state taken from /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/4638130fab5ff0e9faa220688811349d3297a33e",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-MASK",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-vox",
       "directions": 4
     },
     {

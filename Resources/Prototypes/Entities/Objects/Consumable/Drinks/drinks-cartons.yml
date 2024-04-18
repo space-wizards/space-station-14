@@ -2,6 +2,7 @@
   parent: DrinkBase
   id: DrinkCartonBaseFull
   abstract: true
+  suffix: Full
   components:
   - type: Openable
     sound:
@@ -14,6 +15,9 @@
     solutions:
       drink:
         maxVol: 50
+  - type: PressurizedSolution
+    solution: drink
+  - type: Shakeable
   - type: Sprite
     state: icon
   - type: Item
