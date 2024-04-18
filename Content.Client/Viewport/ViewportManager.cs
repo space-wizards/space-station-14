@@ -21,8 +21,6 @@ namespace Content.Client.Viewport
             _cfg.OnValueChanged(CCVars.ViewportSnapToleranceMargin, _ => UpdateCfg());
             _cfg.OnValueChanged(CCVars.ViewportScaleRender, _ => UpdateCfg());
             _cfg.OnValueChanged(CCVars.ViewportFixedScaleFactor, _ => UpdateCfg());
-            //_cfg.OnValueChanged(CCVars.ViewportWidth, _ => UpdateCfg());
-            //_cfg.OnValueChanged(CCVars.ViewportVerticalFit, _ => UpdateCfg());
         }
 
         private void UpdateCfg()
