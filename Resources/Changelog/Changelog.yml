@@ -1,58 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: The round restart audio, again...
-    type: Fix
-  id: 5872
-  time: '2024-02-03T02:11:53.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24754
-- author: Adrian16199
-  changes:
-  - message: Added scarfs to the uniform printer.
-    type: Add
-  id: 5873
-  time: '2024-02-03T02:12:38.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24735
-- author: Jajsha
-  changes:
-  - message: Emagged Cyborgs are no longer affected by Ion Storm events.
-    type: Fix
-  - message: Improved wording of cyborg laws.
-    type: Tweak
-  id: 5874
-  time: '2024-02-03T02:29:41.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24870
-- author: metalgearsloth
-  changes:
-  - message: Moving entities that are pulled now throws them instead of moving them
-      manually.
-    type: Tweak
-  id: 5875
-  time: '2024-02-03T03:36:09.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/20906
-- author: lzk228
-  changes:
-  - message: Soapy water removed.
-    type: Remove
-  id: 5876
-  time: '2024-02-03T04:23:34.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24301
-- author: Krunk
-  changes:
-  - message: Characters can properly select 'None' as a preference for their spawn
-      priority.
-    type: Fix
-  id: 5877
-  time: '2024-02-03T08:06:44.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24897
-- author: Krunk
-  changes:
-  - message: Pointing arrows now begin at the player and smoothly animate to their
-      target.
-    type: Add
-  id: 5878
-  time: '2024-02-03T08:09:20.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24864
 - author: Dygon
   changes:
   - message: Single tile sized puddles of space lube won't let you slide extremely
@@ -3835,3 +3781,57 @@
   id: 6371
   time: '2024-04-17T21:48:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26691
+- author: ShadowCommander
+  changes:
+  - message: Fixed PDA and ID card name, job, and access not getting set on some jobs.
+    type: Fix
+  id: 6372
+  time: '2024-04-17T22:16:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27062
+- author: Krunk
+  changes:
+  - message: Head of Security and Warden now have armored and unarmored variants of
+      their winter coats and the unarmored variants are available in the uniform printer.
+    type: Tweak
+  - message: Head of Security's and Warden's winter coats now provide resistances
+      equal to their non-winter counterparts.
+    type: Tweak
+  id: 6373
+  time: '2024-04-18T00:08:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24865
+- author: icekot8
+  changes:
+  - message: "\u0421argo request console now reports when a request is approved"
+    type: Add
+  id: 6374
+  time: '2024-04-18T00:32:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27038
+- author: Bellwether
+  changes:
+  - message: Midround zombie outbreaks are less common and spread more slowly.
+    type: Tweak
+  id: 6375
+  time: '2024-04-18T01:06:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27060
+- author: Flareguy
+  changes:
+  - message: Updated Remote Signaller sprites.
+    type: Tweak
+  id: 6376
+  time: '2024-04-18T01:16:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27073
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Grey security jumpsuits are now available in the security officer loadout.
+    type: Tweak
+  id: 6377
+  time: '2024-04-18T01:22:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27023
+- author: Tayrtahn
+  changes:
+  - message: Sodas and other fizzy drinks can be shaken with the verbs menu to build
+      up fizziness so they spray when opened.
+    type: Add
+  id: 6378
+  time: '2024-04-18T01:49:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25574
