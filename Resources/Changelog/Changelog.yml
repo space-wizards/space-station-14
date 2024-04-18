@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: themias
   changes:
-  - message: EMPs temporarily disable suit sensors
-    type: Tweak
-  id: 5884
-  time: '2024-02-04T00:50:24.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24869
-- author: themias
-  changes:
   - message: Added face bandanas
     type: Add
   - message: Bandanas can be switched between head and face type with an alt verb
@@ -3833,3 +3826,10 @@
   id: 6383
   time: '2024-04-18T03:24:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25681
+- author: superjj18
+  changes:
+  - message: Emergency lighting now changes based on station alert level!
+    type: Tweak
+  id: 6384
+  time: '2024-04-18T10:50:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26932
