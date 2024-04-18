@@ -1,20 +1,20 @@
 {
-    "license": "CC0-1.0",
-    "copyright": "Created by EmoGarbage",
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+  "license": "CC0-1.0",
+  "copyright": "Created by EmoGarbage",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
     },
-    "states": [
-        {
-            "name": "icon"
-        },
-        {
-            "name": "beaker"
-        },
-        {
-            "name": "on"
-        }
-    ]
+    {
+      "name": "beaker"
+    },
+    {
+      "name": "on"
+    }
+  ]
 }

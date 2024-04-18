@@ -1,17 +1,17 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "copyright": "Taken from tgstation",
+  "license": "CC-BY-SA-3.0",
+  "states": [
+    {
+      "name": "mirror"
     },
-    "copyright": "Taken from tgstation",
-    "license": "CC-BY-SA-3.0",
-    "states": [
-        {
-            "name": "mirror"
-        },
-        {
-            "name": "mirror_broke"
-        }
-    ]
+    {
+      "name": "mirror_broke"
+    }
+  ]
 }

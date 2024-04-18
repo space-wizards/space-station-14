@@ -1,39 +1,39 @@
 {
-    "version": 1,
-    "license": "CC0-1.0",
-    "copyright": "Created by EmoGarbage, icon & unshaded changed by lzk228",
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by EmoGarbage, icon & unshaded changed by lzk228",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "display"
     },
-    "states": [
-        {
-            "name": "display"
-        },
-        {
-            "name": "icon"
-        },
-        {
-            "name": "printing",
-            "delays": [
-                [
-                    0.25,
-                    0.25,
-                    0.25,
-                    0.25
-                ]
-            ]
-        },
-        {
-            "name": "unshaded",
-            "delays": [
-                [
-                    2,
-                    1,
-                    1,
-                    1
-                ]
-            ]
-        }
-    ]
+    {
+      "name": "icon"
+    },
+    {
+      "name": "printing",
+      "delays": [
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ]
+      ]
+    },
+    {
+      "name": "unshaded",
+      "delays": [
+        [
+          2,
+          1,
+          1,
+          1
+        ]
+      ]
+    }
+  ]
 }

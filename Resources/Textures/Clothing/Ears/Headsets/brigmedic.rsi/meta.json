@@ -1,18 +1,18 @@
 {
-    "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Sprited by PuroSlavKing (github) for SS14",
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by PuroSlavKing (github) for SS14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
     },
-    "states": [
-        {
-            "name": "icon"
-        },
-        {
-            "name": "equipped-EARS",
-            "directions": 4
-        }
-    ]
+    {
+      "name": "equipped-EARS",
+      "directions": 4
+    }
+  ]
 }

@@ -1,20 +1,20 @@
 {
-    "version": 1,
-    "license": "CC0-1.0",
-    "copyright": "Created for SS14 by deltanedas (github)",
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created for SS14 by deltanedas (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "e_dagger"
     },
-    "states": [
-        {
-            "name": "e_dagger"
-        },
-        {
-            "name": "exploding_pen"
-        },
-        {
-            "name": "hypopen"
-        }
-    ]
+    {
+      "name": "exploding_pen"
+    },
+    {
+      "name": "hypopen"
+    }
+  ]
 }

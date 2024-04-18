@@ -1,29 +1,29 @@
 {
-    "version": 1,
-    "size": {
-        "x": 8,
-        "y": 8
+  "version": 1,
+  "size": {
+    "x": 8,
+    "y": 8
+  },
+  "license": "CC-BY-3.0",
+  "copyright": "Made by Derby",
+  "states": [
+    {
+      "name": "overfed"
     },
-    "license": "CC-BY-3.0",
-    "copyright": "Made by Derby",
-    "states": [
-        {
-            "name": "overfed"
-        },
-        {
-            "name": "peckish"
-        },
-        {
-            "name": "starving"
-        },
-        {
-            "name": "overhydrated"
-        },
-        {
-            "name": "thirsty"
-        },
-        {
-            "name": "parched"
-        }
-    ]
+    {
+      "name": "peckish"
+    },
+    {
+      "name": "starving"
+    },
+    {
+      "name": "overhydrated"
+    },
+    {
+      "name": "thirsty"
+    },
+    {
+      "name": "parched"
+    }
+  ]
 }

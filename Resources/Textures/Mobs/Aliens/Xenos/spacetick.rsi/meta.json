@@ -1,21 +1,21 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by EmoGarbage, with influence from xeno burrower sprite",
+  "states": [
+    {
+      "name": "icon"
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Created by EmoGarbage, with influence from xeno burrower sprite",
-    "states": [
-        {
-            "name": "icon"
-        },
-        {
-            "name": "alive",
-            "directions": 4
-        },
-        {
-            "name": "dead"
-        }
-    ]
+    {
+      "name": "alive",
+      "directions": 4
+    },
+    {
+      "name": "dead"
+    }
+  ]
 }
