@@ -95,4 +95,5 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
             args.PushMarkup("[color=white]Looks very sticky...[/color]");
         }
     }
+
 }

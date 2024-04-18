@@ -29,14 +29,14 @@ using System.Diagnostics;
 using Content.Shared.FixedPoint;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Clothing.Components;
-using Content.Server.ReagentOnItem;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Content.Server.ReagentOnItem;
 
 public sealed class ReagentOnItemSystem : EntitySystem
 {
     [Dependency] private readonly PuddleSystem _puddle = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -68,7 +68,15 @@ public sealed class ReagentOnItemSystem : EntitySystem
                 }
             }
 
-            _puddle.TrySpillAt(item, reagentMixture, out var puddle, false);
+            if (HasComp<NonStickSurfaceComponent>(item))
+            {
+                // The liquid slips right off the [ITEM]!
+                _popup.PopupEntity("The liquid slips right off!", item);
+            }
+
+            var makeNoise = _random.NextDouble() > .75;
+
+            _puddle.TrySpillAt(item, reagentMixture, out var puddle, makeNoise);
 
             return true;
         }

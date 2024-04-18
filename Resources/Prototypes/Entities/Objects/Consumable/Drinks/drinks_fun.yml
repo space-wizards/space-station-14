@@ -95,12 +95,13 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/squeeze-bottle.rsi
     layers:
-      - state: icon
+      - state: body
+      - state: cap_closed_red
         map: ["enum.OpenableVisuals.Layer"]
       - state: fill1
         map: [ "enum.SolutionContainerLayers.Fill" ]
         visible: false
-      - state: icon-front
+      - state: front
         map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: Appearance
   - type: SolutionContainerManager
@@ -114,8 +115,8 @@
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon"}
+          True: {state: "cap_open_red"}
+          False: {state: "cap_closed_red"}
   - type: TrashOnSolutionEmpty
     solution: drink
 
@@ -124,26 +125,58 @@
   id: BottleOfGlue
   name: Bottle of Glue
   components:
-    - type: SolutionContainerManager
-      solutions:
-        drink:
-          maxVol: 30
-          reagents:
-            - ReagentId: SpaceGlue
-              Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+          - ReagentId: SpaceGlue
+            Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/squeeze-bottle.rsi
+    layers:
+      - state: body
+      - state: cap_closed_orange
+        map: ["enum.OpenableVisuals.Layer"]
+      - state: fill1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+      - state: front
+        map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "cap_open_orange"}
+          False: {state: "cap_closed_orange"}
 
 - type: entity
   parent: SqueezeBottle
   id: BottleOfLube
   name: Bottle of Lube
   components:
-    - type: SolutionContainerManager
-      solutions:
-        drink:
-          maxVol: 30
-          reagents:
-            - ReagentId: SpaceLube
-              Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+          - ReagentId: SpaceLube
+            Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/squeeze-bottle.rsi
+    layers:
+      - state: body
+      - state: cap_closed_blue
+        map: ["enum.OpenableVisuals.Layer"]
+      - state: fill1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+      - state: front
+        map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "cap_open_blue"}
+          False: {state: "cap_closed_blue"}
 
 # Mopwata
 - type: weightedRandomFillSolution

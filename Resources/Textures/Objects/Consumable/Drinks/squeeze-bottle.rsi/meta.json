@@ -8,13 +8,28 @@
     "copyright": "Created by discord: brainfood#7460 / github: brainfood1183.",
     "states": [
         {
-            "name": "icon"
+            "name": "body"
         },
         {
-            "name": "icon_open"
+            "name": "front"
         },
         {
-            "name": "icon-front"
+            "name": "cap_closed_blue"
+        },
+        {
+            "name": "cap_closed_orange"
+        },
+        {
+            "name": "cap_closed_red"
+        },
+        {
+            "name": "cap_open_blue"
+        },
+        {
+            "name": "cap_open_orange"
+        },
+        {
+            "name": "cap_open_red"
         },
         {
             "name": "fill1"
