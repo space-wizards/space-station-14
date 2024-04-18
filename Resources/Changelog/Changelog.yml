@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Jajsha
-  changes:
-  - message: Emagged Cyborgs are no longer affected by Ion Storm events.
-    type: Fix
-  - message: Improved wording of cyborg laws.
-    type: Tweak
-  id: 5874
-  time: '2024-02-03T02:29:41.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24870
 - author: metalgearsloth
   changes:
   - message: Moving entities that are pulled now throws them instead of moving them
@@ -3839,3 +3830,10 @@
   id: 6373
   time: '2024-04-18T00:08:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24865
+- author: icekot8
+  changes:
+  - message: "\u0421argo request console now reports when a request is approved"
+    type: Add
+  id: 6374
+  time: '2024-04-18T00:32:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27038
