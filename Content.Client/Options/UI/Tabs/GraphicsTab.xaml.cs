@@ -67,8 +67,13 @@ namespace Content.Client.Options.UI.Tabs
                 UpdateApplyButton();
             };
 
+            ViewportVerticalFitCheckBox.OnToggled += _ =>
+            {
+                UpdateViewportScale();
+                UpdateApplyButton();
+            };
+
             IntegerScalingCheckBox.OnToggled += OnCheckBoxToggled;
-            ViewportVerticalFitCheckBox.OnToggled += OnCheckBoxToggled;
             ViewportLowResCheckBox.OnToggled += OnCheckBoxToggled;
             ParallaxLowQualityCheckBox.OnToggled += OnCheckBoxToggled;
             FpsCounterCheckBox.OnToggled += OnCheckBoxToggled;
@@ -241,6 +246,7 @@ namespace Content.Client.Options.UI.Tabs
             ViewportScaleBox.Visible = !ViewportStretchCheckBox.Pressed;
             IntegerScalingCheckBox.Visible = ViewportStretchCheckBox.Pressed;
             ViewportVerticalFitCheckBox.Visible = ViewportStretchCheckBox.Pressed;
+            ViewportWidthSlider.Visible = ViewportWidthSliderDisplay.Visible = !ViewportStretchCheckBox.Pressed || ViewportStretchCheckBox.Pressed && !ViewportVerticalFitCheckBox.Pressed;
             ViewportScaleText.Text = Loc.GetString("ui-options-vp-scale", ("scale", ViewportScaleSlider.Value));
         }
 
