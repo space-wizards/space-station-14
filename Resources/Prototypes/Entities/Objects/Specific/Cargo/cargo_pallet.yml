@@ -65,10 +65,13 @@
     palletType: sell
   - type: Sprite
     drawdepth: FloorTiles
-    layers:
-    - sprite: Structures/cargo_pallets.rsi
-      state: cargo_pallet_sell
-
+    sprite: Structures/cargo_pallets.rsi
+  - type: Icon
+    sprite: Structures/cargo_pallets.rsi
+    state: cargo_pallet_sell
+  - type: IconSmooth
+    key: cargo_pallet_sell
+    base: cargo_pallet_sell_
 
 - type: entity
   id: CargoPalletBuy
@@ -80,7 +83,10 @@
     palletType: buy
   - type: Sprite
     drawdepth: FloorTiles
-    layers:
-    - sprite: Structures/cargo_pallets.rsi
-      state: cargo_pallet_buy
-
+    sprite: Structures/cargo_pallets.rsi
+  - type: Icon
+    sprite: Structures/cargo_pallets.rsi
+    state: cargo_pallet_buy
+  - type: IconSmooth
+    key: cargo_pallet_buy
+    base: cargo_pallet_buy_

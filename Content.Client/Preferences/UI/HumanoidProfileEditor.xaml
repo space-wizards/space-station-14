@@ -1,11 +1,11 @@
-<Control xmlns="https://spacestation14.io"
+<BoxContainer xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:prefUi="clr-namespace:Content.Client.Preferences.UI"
          xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
-         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls">
-    <BoxContainer Orientation="Horizontal">
+         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+         HorizontalExpand="True">
         <!-- Left side -->
-        <BoxContainer Orientation="Vertical" Margin="10 10 10 10">
+        <BoxContainer Orientation="Vertical" Margin="10 10 10 10" HorizontalExpand="True">
             <!-- Middle container -->
             <BoxContainer Orientation="Horizontal" SeparationOverride="10">
                 <!-- Name box-->
@@ -58,7 +58,9 @@
                                 <BoxContainer HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-species-label'}" />
                                     <Control HorizontalExpand="True"/>
-                                    <TextureButton Name="SpeciesInfoButton" Scale="0.3 0.3" VerticalAlignment="Center"></TextureButton>
+                                    <TextureButton Name="SpeciesInfoButton" Scale="0.3 0.3"
+                                                   VerticalAlignment="Center"
+                                                   ToolTip="{Loc 'humanoid-profile-editor-guidebook-button-tooltip'}"/>
                                     <OptionButton Name="CSpeciesButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
                                 <!-- Age -->
@@ -84,18 +86,6 @@
                                     <Label Text="{Loc 'humanoid-profile-editor-clothing'}" />
                                     <Control HorizontalExpand="True"/>
                                     <Button Name="ShowClothes" Pressed="True" ToggleMode="True" Text="{Loc 'humanoid-profile-editor-clothing-show'}" HorizontalAlignment="Right" />
-                                </BoxContainer>
-                                <!-- Clothing -->
-                                <BoxContainer HorizontalExpand="True">
-                                    <Label Text="{Loc 'humanoid-profile-editor-clothing-label'}" />
-                                    <Control HorizontalExpand="True"/>
-                                    <OptionButton Name="CClothingButton" HorizontalAlignment="Right" />
-                                </BoxContainer>
-                                <!-- Backpack -->
-                                <BoxContainer HorizontalExpand="True">
-                                    <Label Text="{Loc 'humanoid-profile-editor-backpack-label'}" />
-                                    <Control HorizontalExpand="True"/>
-                                    <OptionButton Name="CBackpackButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
                                 <!-- Spawn Priority -->
                                 <BoxContainer HorizontalExpand="True">
@@ -151,7 +141,7 @@
             </TabContainer>
         </BoxContainer>
         <!-- Right side -->
-        <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" VerticalAlignment="Center">
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Center">
             <SpriteView Name="CSpriteView" Scale="8 8" SizeFlagsStretchRatio="1" />
             <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5">
                 <Button Name="CSpriteRotateLeft" Text="◀" StyleClasses="OpenRight" />
@@ -159,5 +149,4 @@
                 <Button Name="CSpriteRotateRight" Text="▶" StyleClasses="OpenLeft" />
             </BoxContainer>
         </BoxContainer>
-    </BoxContainer>
-</Control>
+</BoxContainer>

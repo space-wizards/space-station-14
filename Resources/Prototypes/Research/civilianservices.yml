@@ -70,6 +70,7 @@
     - BorgModuleClowning
     - DawInstrumentMachineCircuitboard
     - MassMediaCircuitboard
+    - JukeboxCircuitBoard
 
 - type: technology
   id: RoboticCleanliness

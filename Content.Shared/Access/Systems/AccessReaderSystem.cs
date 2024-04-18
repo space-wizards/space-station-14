@@ -318,6 +318,7 @@ public sealed class AccessReaderSystem : EntitySystem
         {
             component.AccessLists.Add(new HashSet<ProtoId<AccessLevelPrototype>>(){access});
         }
+        Dirty(uid, component);
         RaiseLocalEvent(uid, new AccessReaderConfigurationChangedEvent());
     }
 
