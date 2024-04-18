@@ -11,14 +11,14 @@ public sealed class MessagesUiState(MessagesUiStateMode mode, List<(string, int?
 }
 
 [Serializable, NetSerializable]
-public enum MessagesUiStateMode
+public enum MessagesUiStateMode : byte
 {
     UserList,
     Chat
 }
 
 [Serializable, NetSerializable]
-public partial struct MessagesMessageData
+public partial struct MessagesMessageData : byte
 {
     public int SenderId;
     public int ReceiverId;
@@ -27,7 +27,7 @@ public partial struct MessagesMessageData
 }
 
 [Serializable, NetSerializable]
-public enum MessagesKeys
+public enum MessagesKeys : byte
 {
     Nanotrasen,
     Syndicate
