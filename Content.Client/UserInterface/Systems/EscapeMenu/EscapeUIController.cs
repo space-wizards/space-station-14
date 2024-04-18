@@ -99,6 +99,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 
         _escapeWindow.GuidebookButton.OnPressed += _ =>
         {
+            CloseEscapeWindow();
             _guidebook.ToggleGuidebook();
         };
 
