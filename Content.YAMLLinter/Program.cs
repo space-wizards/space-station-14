@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -106,14 +108,9 @@ namespace Content.YAMLLinter
         public static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
             RunValidation()
         {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-            var sharedAssemblies = assemblies.Where(n => n.FullName.Contains("Shared"));
-            var serverAssemblies = assemblies.Where(n => n.FullName.Contains("Server"));
-            var clientAssemblies = assemblies.Where(n => n.FullName.Contains("Client"));
-
-            var serverTypes = serverAssemblies.Union(sharedAssemblies).SelectMany(n => n.GetTypes()).Select(t => t.Name);
-            var clientTypes = clientAssemblies.Union(sharedAssemblies).SelectMany(n => n.GetTypes()).Select(t => t.Name);
+            var (clientAssemblies, serverAssemblies) = await GetClientServerAssemblies();
+            var serverTypes = serverAssemblies.SelectMany(n => n.GetTypes()).ToHashSet();
+            var clientTypes = clientAssemblies.SelectMany(n => n.GetTypes()).ToHashSet();
 
             var yamlErrors = new Dictionary<string, HashSet<ErrorNode>>();
 
@@ -132,7 +129,7 @@ namespace Content.YAMLLinter
                 // Include any errors that relate to server-only types
                 foreach (var errorNode in val)
                 {
-                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode && !clientTypes.Contains(fieldNotFoundNode.FieldType.Name))
+                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode && !clientTypes.Contains(fieldNotFoundNode.FieldType))
                     {
                         newErrors.Add(errorNode);
                     }
@@ -157,7 +154,7 @@ namespace Content.YAMLLinter
                 // Include any errors that relate to client-only types
                 foreach (var errorNode in val)
                 {
-                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode && !serverTypes.Contains(fieldNotFoundNode.FieldType.Name))
+                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode && !serverTypes.Contains(fieldNotFoundNode.FieldType))
                     {
                         newErrors.Add(errorNode);
                     }
@@ -171,6 +168,24 @@ namespace Content.YAMLLinter
                 .ToList();
 
             return (yamlErrors, fieldErrors);
+        }
+
+        private static async Task<(Assembly[] clientAssemblies, Assembly[] serverAssemblies)>
+            GetClientServerAssemblies()
+        {
+            await using var pair = await PoolManager.GetServerClient();
+
+            var result = (GetAssemblies(pair.Client), GetAssemblies(pair.Server));
+
+            await pair.CleanReturnAsync();
+
+            return result;
+
+            Assembly[] GetAssemblies(RobustIntegrationTest.IntegrationInstance instance)
+            {
+                var refl = instance.ResolveDependency<IReflectionManager>();
+                return refl.Assemblies.ToArray();
+            }
         }
     }
 }
