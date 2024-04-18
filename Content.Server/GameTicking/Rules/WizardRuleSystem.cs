@@ -175,7 +175,7 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
 
         var aabbs = EntityQuery<StationDataComponent>().SelectMany(x =>
                 x.Grids.Select(x =>
-                    xformQuery.GetComponent(x).WorldMatrix.TransformBox(Comp<MapGridComponent>(x).LocalAABB)))
+                    xformQuery.GetComponent(x).WorldMatrix.TransformBox(_mapManager.GetGridComp(x).LocalAABB)))
             .ToArray();
 
         var aabb = aabbs[0];
