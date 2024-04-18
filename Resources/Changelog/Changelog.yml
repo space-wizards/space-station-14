@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: shampunj
-  changes:
-  - message: Fixed incorrect path to the uranium spear image in the construction menu
-    type: Fix
-  id: 5880
-  time: '2024-02-03T08:11:02.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24895
-- author: nikthechampiongr
-  changes:
-  - message: End of round messages no longer loop until the heat death of the universe.
-    type: Fix
-  id: 5881
-  time: '2024-02-03T16:43:50.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24920
 - author: EmoGarbage404
   changes:
   - message: Changed the colors used for chat names.
@@ -3834,3 +3820,17 @@
   id: 6379
   time: '2024-04-18T03:01:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27075
+- author: TokenStyle
+  changes:
+  - message: Benzene is no longer required for the Insuzine recipe.
+    type: Tweak
+  id: 6380
+  time: '2024-04-18T03:03:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26829
+- author: Golinth
+  changes:
+  - message: The Nukie Agent now comes with a medihud built into their visor!
+    type: Add
+  id: 6381
+  time: '2024-04-18T03:04:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26218
