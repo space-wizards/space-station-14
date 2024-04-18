@@ -1,8 +1,11 @@
 using Content.Shared.Damage;
 using Content.Shared.Popups;
+using Content.Shared.Fax.Components;
 
-namespace Content.Shared.Fax;
-
+namespace Content.Shared.Fax.Systems;
+/// <summary>
+/// System for handling execution of a mob within fax when copy or send attempt is made.
+/// </summary>
 public sealed class FaxecuteSystem : EntitySystem
 {
     [Dependency] private readonly DamageableSystem _damageable = default!;
@@ -11,8 +14,6 @@ public sealed class FaxecuteSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<FaxMachineComponent, DamageOnFaxecuteEvent>(Faxecute);
     }
 
     public void Faxecute(EntityUid uid, FaxMachineComponent component, DamageOnFaxecuteEvent? args = null)

@@ -16,6 +16,8 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
+using Content.Shared.Fax.Systems;
+using Content.Shared.Fax.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Paper;
@@ -348,10 +350,7 @@ public sealed class FaxSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.PaperSlot.Item == null)
-            return;
-
-        if (!TryComp<FaxableObjectComponent>(component.PaperSlot.Item.Value, out var faxable))
+        if (!TryComp<FaxableObjectComponent>(component.PaperSlot.Item, out var faxable))
             return;
 
         component.InsertingState = faxable.InsertingState;

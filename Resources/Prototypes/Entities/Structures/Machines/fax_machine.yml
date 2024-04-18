@@ -37,9 +37,6 @@
   - type: ApcPowerReceiver
     powerLoad: 250
   - type: Faxecute
-    damage:
-      types:
-        Blunt: 100
   - type: FaxMachine
     paperSlot:
       insertSound: /Audio/Machines/scanning.ogg

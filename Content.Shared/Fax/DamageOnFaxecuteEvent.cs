@@ -1,10 +1,9 @@
 
-namespace Content.Shared.Fax;
+namespace Content.Shared.Fax.Components;
 
 /// <summary>
-/// The components in the list are going to be hit,
-/// give opportunities to change the damage or other stuff.
-/// </summary>
-public sealed class DamageOnFaxecuteEvent : EntityEventArgs
-{
-}
+/// Event for killing any mob within the fax machine.
+/// </summary
+[ByRefEvent]
+public record struct DamageOnFaxecuteEvent(FaxMachineComponent? Action);
+
