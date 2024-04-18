@@ -81,9 +81,10 @@
   id: GlassBoxLaserFilled
   suffix: Filled
   components:
-  - type: ItemSlotsFill
-    items:
-      ItemCabinet: WeaponAntiqueLaser
+  - type: ContainerFill
+    containers:
+      ItemCabinet:
+      - WeaponAntiqueLaser
 
 - type: entity
   parent: [GlassBoxLaserFilled, GlassBoxLaserOpen]

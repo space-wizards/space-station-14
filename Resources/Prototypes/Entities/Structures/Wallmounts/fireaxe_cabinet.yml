@@ -70,9 +70,10 @@
   id: FireAxeCabinetFilled
   suffix: Filled
   components:
-  - type: ItemSlotsFill
-    items:
-      ItemCabinet: FireAxe
+  - type: ContainerFill
+    containers:
+      ItemCabinet:
+      - FireAxe
 
 - type: entity
   parent: [FireAxeCabinetFilled, FireAxeCabinetOpen]

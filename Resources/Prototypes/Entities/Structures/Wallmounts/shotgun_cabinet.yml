@@ -38,9 +38,10 @@
   id: ShotGunCabinetFilled
   suffix: Filled
   components:
-  - type: ItemSlotsFill
-    items:
-      ItemCabinet: WeaponShotgunKammerer
+  - type: ContainerFill
+    containers:
+      ItemCabinet:
+      - WeaponShotgunKammerer
 
 - type: entity
   parent: [ShotGunCabinetFilled, ShotGunCabinetOpen]

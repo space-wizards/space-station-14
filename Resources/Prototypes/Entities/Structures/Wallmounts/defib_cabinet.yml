@@ -63,9 +63,10 @@
   id: DefibrillatorCabinetFilled
   suffix: Filled
   components:
-  - type: ItemSlotsFill
-    items:
-      ItemCabinet: Defibrillator
+  - type: ContainerFill
+    containers:
+      ItemCabinet:
+      - Defibrillator
 
 - type: entity
   parent: [DefibrillatorCabinetFilled, DefibrillatorCabinetOpen]

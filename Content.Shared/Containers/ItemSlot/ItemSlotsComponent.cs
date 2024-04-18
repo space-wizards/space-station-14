@@ -98,8 +98,6 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Marked as readOnly because some components (e.g. PowerCellSlot) set the starting item based on some
         ///     property of that component (e.g., cell slot size category), and this can lead to unnecessary changes
         ///     when mapping.
-        ///     Also, to avoid bugs, prototypes should use <see cref="ItemSlotsFillComponent"/> instead.
-        ///     Since you don't have to copy paste the item slot definition it's impossible to leave anything out.
         /// </remarks>
         [DataField(readOnly: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
