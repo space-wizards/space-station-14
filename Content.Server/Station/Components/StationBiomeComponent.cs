@@ -10,7 +10,7 @@ namespace Content.Server.Station.Components;
 [RegisterComponent, Access(typeof(StationBiomeSystem))]
 public sealed partial class StationBiomeComponent : Component
 {
-    [DataField]
+    [DataField(required: true)]
     public ProtoId<BiomeTemplatePrototype> Biome = "Grasslands";
 
     // If null, its random
