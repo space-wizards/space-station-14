@@ -162,7 +162,7 @@
   - Ninja4
   obeysTo: laws-owner-spider-clan
 
-  # Bay Laws
+  # BayStation Laws
 - type: siliconLaw
   id: Bay1
   order: 1
