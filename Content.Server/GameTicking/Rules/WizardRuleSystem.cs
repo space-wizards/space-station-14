@@ -208,7 +208,7 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
             _humanoid.LoadProfile(mob, profile);
 
         var gear = _prototypeManager.Index(component.GearProto);
-        _stationSpawning.EquipStartingGear(mob, gear, profile);
+        _stationSpawning.EquipStartingGear(mob, gear);
         _inventoryManager.SpawnItemOnEntity(mob, "BaseSpellbookShop10MP");
 
         _npcFaction.RemoveFaction(mob, "NanoTrasen", false);
