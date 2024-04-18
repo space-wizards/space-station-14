@@ -3,7 +3,6 @@ using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Random;
 
 namespace Content.Server.Administration.Commands;
 
@@ -11,7 +10,6 @@ namespace Content.Server.Administration.Commands;
 public sealed class VariantizeCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
 
     public string Command => "variantize";

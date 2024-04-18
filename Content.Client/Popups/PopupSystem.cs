@@ -163,10 +163,13 @@ namespace Content.Client.Popups
             PopupEntity(message, uid, type);
         }
 
-        public override void PopupClient(string? message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
+        public override void PopupClient(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
         {
+            if (recipient == null)
+                return;
+
             if (_timing.IsFirstTimePredicted)
-                PopupEntity(message, uid, recipient, type);
+                PopupEntity(message, uid, recipient.Value, type);
         }
 
         public override void PopupEntity(string? message, EntityUid uid, PopupType type = PopupType.Small)
@@ -179,6 +182,12 @@ namespace Content.Client.Popups
         {
             if (recipient != null && _timing.IsFirstTimePredicted)
                 PopupEntity(message, uid, recipient.Value, type);
+        }
+
+        public override void PopupPredicted(string? recipientMessage, string? othersMessage, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient != null && _timing.IsFirstTimePredicted)
+                PopupEntity(recipientMessage, uid, recipient.Value, type);
         }
 
         #endregion
