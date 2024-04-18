@@ -276,3 +276,25 @@
         - Spaceshroom
       chance: 0.6
       offset: 0.0
+
+- type: entity
+  name: Maint Loot Spawner
+  suffix: High Value
+  id: MaintenanceHighValueSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Clothing/Hands/Gloves/Color/yellow.rsi
+          state: icon
+    - type: RandomSpawner
+      rarePrototypes:
+      - SoapOmega
+      - ClothingHandsGlovesConducting # lol
+      rareChance: 0.05
+      prototypes:
+      - SoapSyndie
+      - ClothingHandsGlovesColorYellow
+      chance: 0.5
+      offset: 0.0
