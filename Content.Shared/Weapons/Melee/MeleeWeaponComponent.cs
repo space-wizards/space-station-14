@@ -76,7 +76,7 @@ public sealed partial class MeleeWeaponComponent : Component
 
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 BluntStaminaDamageFactor = FixedPoint2.New(0.5f);
+    public FixedPoint2 BluntStaminaDamageFactor = FixedPoint2.New(0.0f);
 
     /// <summary>
     /// Multiplies damage by this amount for single-target attacks.
