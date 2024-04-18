@@ -103,7 +103,7 @@ namespace Content.Server.Forensics
 
         private void OnAfterInteract(EntityUid uid, CleansForensicsComponent component, AfterInteractEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.CanReach)
                 return;
 
             if (!TryComp<ForensicsComponent>(args.Target, out var forensicsComp))
@@ -116,7 +116,7 @@ namespace Content.Server.Forensics
                     BreakOnHandChange = true,
                     NeedHand = true,
                     BreakOnDamage = true,
-                    BreakOnTargetMove = true,
+                    BreakOnMove = true,
                     MovementThreshold = 0.01f,
                     DistanceThreshold = forensicsComp.CleanDistance,
                 };
