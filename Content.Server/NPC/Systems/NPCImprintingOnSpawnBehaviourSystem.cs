@@ -27,13 +27,13 @@ public sealed partial class NPCImprintingOnSpawnBehaviourSystem : SharedNPCImpri
 
         foreach (var friend in friends)
         {
-            if (!(imprinting.Comp.Whitelist != null && !imprinting.Comp.Whitelist.IsValid(friend)))
+            if (imprinting.Comp.Whitelist?.IsValid(friend) != false)
             {
                 AddImprintingTarget(imprinting, friend, imprinting.Comp);
             }
         }
 
-        if (imprinting.Comp.Follow)
+        if (imprinting.Comp.Follow && imprinting.Comp.Friends.Count > 0)
         {
             var mommy = _random.Pick(imprinting.Comp.Friends);
             _npc.SetBlackboard(imprinting, NPCBlackboard.FollowTarget, new EntityCoordinates(mommy, Vector2.Zero));
