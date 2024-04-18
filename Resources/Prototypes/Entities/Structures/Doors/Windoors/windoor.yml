@@ -142,9 +142,25 @@
     access: [["Armory"]]
 
 - type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureArmoryLocked
+  suffix: Armory, Locked, Plasma
+  components:
+  - type: AccessReader
+    access: [["Armory"]]
+
+- type: entity
   parent: WindoorSecure
   id: WindoorSecureAtmosphericsLocked
   suffix: Atmospherics, Locked
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureAtmosphericsLocked
+  suffix: Atmospherics, Locked, Plasma
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
@@ -225,6 +241,14 @@
   parent: WindoorSecure
   id: WindoorSecureCommandLocked
   suffix: Command, Locked
+  components:
+  - type: AccessReader
+    access: [["Command"]]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureCommandLocked
+  suffix: Command, Locked, Plasma
   components:
   - type: AccessReader
     access: [["Command"]]
@@ -321,6 +345,14 @@
   parent: WindoorSecure
   id: WindoorSecureSecurityLocked
   suffix: Security, Locked
+  components:
+  - type: AccessReader
+    access: [["Security"]]
+
+- type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureSecurityLocked
+  suffix: Security, Locked, Plasma
   components:
   - type: AccessReader
     access: [["Security"]]

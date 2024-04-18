@@ -66,6 +66,19 @@
   id: Honk
   category: Vocal
   chatMessages: [honks]
+  chatTriggers:
+    - honk
+    - honk.
+    - honk!
+    - honks
+    - honks.
+    - honks!
+    - honked
+    - honked.
+    - honked!
+    - honking
+    - honking.
+    - honking!
 
 - type: emote
   id: Sigh
@@ -264,3 +277,94 @@
     - chirping
     - chirping.
     - chirping!
+
+# Machine Emotes
+- type: emote
+  id: Beep
+  category: Vocal
+  chatMessages: [beeps.]
+  chatTriggers:
+    - beep
+    - beep!
+    - beep.
+    - beeps
+    - beeps.
+    - beeps!
+    - beeped
+    - beeped.
+    - beeped!
+    - beeping
+    - beeping.
+    - beeping!
+
+- type: emote
+  id: Chime
+  category: Vocal
+  chatMessages: [chimes.]
+  chatTriggers:
+    - chime
+    - chime.
+    - chime!
+    - chimes
+    - chimes.
+    - chimes!
+    - chimed
+    - chimed.
+    - chimed!
+    - chiming
+    - chiming,
+    - chiming!
+
+- type: emote
+  id: Buzz-Two
+  category: Vocal
+  chatMessages: [buzzesTwice.]
+  chatTriggers:
+    - buzztwice
+    - buzztwice.
+    - buzztwice!
+    - buzzstwice
+    - buzzstwice.
+    - buzzstwice!
+    - buzzestwice
+    - buzzestwice.
+    - buzzestwice!
+    - buzzingtwice
+    - buzzingtwice.
+    - buzzingtwice!
+    - buzzedtwice
+    - buzzedtwice.
+    - buzzedtwice!
+    - buzz twice
+    - buzz twice.
+    - buzz twice!
+    - buzzs twice
+    - buzzs twice.
+    - buzzs twice!
+    - buzzes twice
+    - buzzes twice.
+    - buzzes twice!
+    - buzzing twice
+    - buzzing twice.
+    - buzzing twice!
+    - buzzed twice
+    - buzzed twice.
+    - buzzed twice!
+
+- type: emote
+  id: Ping
+  category: Vocal
+  chatMessages: [pings.]
+  chatTriggers:
+    - ping
+    - ping.
+    - ping!
+    - pings
+    - pings.
+    - pings!
+    - pinged
+    - pinged.
+    - pinged!
+    - pinging
+    - pinging.
+    - pinging!
