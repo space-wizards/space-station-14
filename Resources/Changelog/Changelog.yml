@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Grilles are no longer incredibly strong.
-    type: Tweak
-  id: 5888
-  time: '2024-02-04T20:48:06.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24881
 - author: Scribbles0
   changes:
   - message: Holoparasites can now autoattack at their max attack rate when holding
@@ -3831,3 +3824,11 @@
   id: 6387
   time: '2024-04-18T11:27:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26510
+- author: Flareguy
+  changes:
+  - message: The Research Director's hardsuit is now 5x5 in the inventory instead
+      of 2x2. You'll need a duffelbag to store it now.
+    type: Tweak
+  id: 6388
+  time: '2024-04-18T18:05:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27094
