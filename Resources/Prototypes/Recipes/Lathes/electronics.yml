@@ -965,3 +965,11 @@
      Steel: 100
      Glass: 900
      Gold: 100
+ 
+- type: latheRecipe
+  id: JukeboxCircuitBoard
+  result: JukeboxCircuitBoard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900

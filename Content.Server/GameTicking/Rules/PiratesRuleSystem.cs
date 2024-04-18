@@ -249,7 +249,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
 
                 _mindSystem.TransferTo(newMind, mob);
                 var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
-                _stationSpawningSystem.EquipStartingGear(mob, pirateGear, profile);
+                _stationSpawningSystem.EquipStartingGear(mob, pirateGear);
 
                 _npcFaction.RemoveFaction(mob, EnemyFactionId, false);
                 _npcFaction.AddFaction(mob, PirateFactionId);
