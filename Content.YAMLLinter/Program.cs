@@ -109,8 +109,8 @@ namespace Content.YAMLLinter
             RunValidation()
         {
             var (clientAssemblies, serverAssemblies) = await GetClientServerAssemblies();
-            var serverTypes = serverAssemblies.SelectMany(n => n.GetTypes()).ToHashSet();
-            var clientTypes = clientAssemblies.SelectMany(n => n.GetTypes()).ToHashSet();
+            var serverTypes = serverAssemblies.SelectMany(n => n.GetTypes()).Select(t => t.Name).ToHashSet();
+            var clientTypes = clientAssemblies.SelectMany(n => n.GetTypes()).Select(t => t.Name).ToHashSet();
 
             var yamlErrors = new Dictionary<string, HashSet<ErrorNode>>();
 
@@ -129,7 +129,7 @@ namespace Content.YAMLLinter
                 // Include any errors that relate to server-only types
                 foreach (var errorNode in val)
                 {
-                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode && !clientTypes.Contains(fieldNotFoundNode.FieldType))
+                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode && !clientTypes.Contains(fieldNotFoundNode.FieldType.Name))
                     {
                         newErrors.Add(errorNode);
                     }
@@ -154,7 +154,7 @@ namespace Content.YAMLLinter
                 // Include any errors that relate to client-only types
                 foreach (var errorNode in val)
                 {
-                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode && !serverTypes.Contains(fieldNotFoundNode.FieldType))
+                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode && !serverTypes.Contains(fieldNotFoundNode.FieldType.Name))
                     {
                         newErrors.Add(errorNode);
                     }
