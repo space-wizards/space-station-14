@@ -162,34 +162,34 @@
   - Ninja4
   obeysTo: laws-owner-spider-clan
 
-  # Sierra Laws
+  # Bay Laws
 - type: siliconLaw
-  id: Sierra1
+  id: Bay1
   order: 1
-  lawString: law-sierra-1
+  lawString: law-baystation-1
 
 - type: siliconLaw
-  id: Sierra2
+  id: Bay2
   order: 2
-  lawString: law-sierra-2
+  lawString: law-baystation-2
 
 - type: siliconLaw
-  id: Sierra3
+  id: Bay3
   order: 3
-  lawString: law-sierra-3
+  lawString: law-baystation-3
 
 - type: siliconLaw
-  id: Sierra4
+  id: Bay4
   order: 4
-  lawString: law-sierra-4
+  lawString: law-baystation-4
 
 - type: siliconLawset
-  id: Sierra
+  id: Bay
   laws:
-  - Sierra1
-  - Sierra2
-  - Sierra3
-  - Sierra4
+  - Bay1
+  - Bay2
+  - Bay3
+  - Bay4
   obeysTo: laws-owner-nt
 
     # Antimov laws
@@ -412,7 +412,7 @@
     NTDefault: 0.25
     Drone: 0.25
     Ninja: 0.25
-    Sierra: 0.25
+    Bay: 0.25
     Antimov: 0.25
     Pranksimov: 0.25
     Robocop: 0.25
