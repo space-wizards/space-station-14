@@ -279,7 +279,7 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
 }
 
 [ByRefEvent]
-public record class AttemptAddFizzinessEvent(Entity<PressurizedSolutionComponent> Entity, float Amount)
+public record struct AttemptAddFizzinessEvent(Entity<PressurizedSolutionComponent> Entity, float Amount)
 {
     public bool Cancelled;
 }
