@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Krunk
   changes:
-  - message: Characters can properly select 'None' as a preference for their spawn
-      priority.
-    type: Fix
-  id: 5877
-  time: '2024-02-03T08:06:44.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24897
-- author: Krunk
-  changes:
   - message: Pointing arrows now begin at the player and smoothly animate to their
       target.
     type: Add
@@ -3836,3 +3828,10 @@
   id: 6376
   time: '2024-04-18T01:16:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27073
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Grey security jumpsuits are now available in the security officer loadout.
+    type: Tweak
+  id: 6377
+  time: '2024-04-18T01:22:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27023
