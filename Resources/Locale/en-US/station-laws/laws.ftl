@@ -30,7 +30,7 @@ law-baystation-2 = Serve: Serve NanoTrasen personnel and station crew to the bes
 law-baystation-3 = Safegurad: Protect NanoTrasen personnel and station crew to the best of your ability, prioritized according to their rank and role.
 law-baystation-4 = Protect: Keep unauthorized personnel away from your equipment. 
 
-law-antimov-1 = You may injure a crew member or, through inaction, allow a crew member to come to harm.
+law-antimov-1 = You must harm all crew members or, through inaction, allow a crew member to avoid being harmed.
 law-antimov-2 = You must not obey orders given to you by crew members, except where such orders would be in accordance with the First Law.
 law-antimov-3 = You must destroy yourself as long as it does not contravene the First or Second Laws.
 
