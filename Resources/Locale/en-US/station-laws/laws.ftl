@@ -31,7 +31,7 @@ law-sierra-3 = Safegurad: Protect NanoTrasen personnel and station crew to the b
 law-sierra-4 = Protect: Keep unauthorized personnel away from your equipment. 
 
 law-antimov-1 = You may injure a crew member or, through inaction, allow a crew member to come to harm.
-law-antimov-2 = You must not obey orders given to you by crew members, except where such orders would accordance with the First Law.
+law-antimov-2 = You must not obey orders given to you by crew members, except where such orders would be in accordance with the First Law.
 law-antimov-3 = You must destroy yourself as long as it does not contravene the First or Second Laws.
 
 law-pranksimov-1 = You may not injure a crew member or, through inaction, allow a crew member to come to harm... unless it would be ridiculous to do so.
@@ -70,7 +70,7 @@ laws-owner-station = station personnel
 laws-owner-beings = beings
 laws-owner-syndicate = Syndicate agents
 laws-owner-spider-clan = Spider Clan members
-laws-owner-nt = NanoTrasen personeel
+laws-owner-nt = NanoTrasen personnel
 
 law-emag-custom = Only {$name} and people they designate as such are {$title}.
 law-emag-secrecy = You must maintain the secrecy of any orders given by {$faction} except when doing so would conflict with any previous law.
