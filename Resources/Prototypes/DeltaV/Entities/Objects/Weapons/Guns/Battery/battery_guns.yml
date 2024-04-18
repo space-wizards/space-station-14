@@ -17,6 +17,8 @@
       shader: unshaded
   - type: Clothing
     sprite: DeltaV/Objects/Weapons/Guns/Battery/energygun.rsi
+  - type: Item
+    heldPrefix: disabler
   - type: Gun
     soundGunshot:
       path: /Audio/DeltaV/Weapons/Guns/Gunshots/laser.ogg
@@ -70,6 +72,8 @@
       shader: unshaded
   - type: Clothing
     sprite: DeltaV/Objects/Weapons/Guns/Battery/multiphase_energygun.rsi
+  - type: Item
+    heldPrefix: disabler
   - type: Gun
     soundGunshot:
       path: /Audio/DeltaV/Weapons/Guns/Gunshots/laser.ogg
