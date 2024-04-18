@@ -105,6 +105,7 @@
   loadouts:
   - GreyJumpsuit
   - GreyJumpskirt
+  - AncientJumpsuit
 
 - type: loadoutGroup
   id: PassengerFace
@@ -293,6 +294,15 @@
   loadouts:
   - JanitorJumpsuit
   - JanitorJumpskirt
+
+- type: loadoutGroup
+  id: JanitorGloves
+  name: loadout-group-janitor-gloves
+  minLimit: 0
+  loadouts:
+  - JanitorRubberGloves
+  - OrangeGloves
+  - PurpleGloves
 
 - type: loadoutGroup
   id: JanitorOuterClothing
@@ -591,7 +601,9 @@
   id: StationEngineerHead
   name: loadout-group-station-engineer-head
   loadouts:
-  - StationEngineerHead
+  - StationEngineerHardhatYellow
+  - StationEngineerHardhatOrange
+  - StationEngineerHardhatRed
   - SeniorEngineerBeret
 
 - type: loadoutGroup
@@ -715,6 +727,8 @@
   name: loadout-group-scientist-head
   minLimit: 0
   loadouts:
+  - RoboticistCap
+  - SkullBandana
   - ScientificBeret
 
 - type: loadoutGroup
@@ -730,6 +744,8 @@
   loadouts:
   - ScientistJumpsuit
   - ScientistJumpskirt
+  - RoboticistJumpsuit
+  - RoboticistJumpskirt
   - SeniorResearcherJumpsuit
   - SeniorResearcherJumpskirt
 
@@ -749,6 +765,8 @@
   - RegularLabCoat
   - ScienceLabCoat
   - ScienceWintercoat
+  - RoboticistLabCoat
+  - RoboticistWintercoat
   - SeniorResearcherLabCoat
 
 - type: loadoutGroup
@@ -756,7 +774,17 @@
   name: loadout-group-scientist-shoes
   loadouts:
   - WhiteShoes
+  - BlackShoes
   - ScienceWinterBoots
+
+- type: loadoutGroup
+  id: ScientistGloves
+  name: loadout-group-scientist-gloves
+  minLimit: 0
+  loadouts:
+  - LatexGloves
+  - PurpleGloves
+  - RobohandsGloves
 
 - type: loadoutGroup
   id: ScientistPDA
@@ -844,6 +872,8 @@
   loadouts:
   - SecurityJumpsuit
   - SecurityJumpskirt
+  - SecurityJumpsuitGrey
+  - SecurityJumpskirtGrey
   - SeniorOfficerJumpsuit
   - SeniorOfficerJumpskirt
 

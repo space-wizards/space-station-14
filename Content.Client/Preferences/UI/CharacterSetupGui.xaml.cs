@@ -135,6 +135,9 @@ namespace Content.Client.Preferences.UI
                     _humanoidProfileEditor.CharacterSlot = characterIndexCopy;
                     _humanoidProfileEditor.UpdateControls();
                     _preferencesManager.SelectCharacter(character);
+                    var controller = UserInterfaceManager.GetUIController<LobbyUIController>();
+                    controller.UpdateProfile(_humanoidProfileEditor.Profile);
+                    controller.ReloadCharacterUI();
                     UpdateUI();
                     args.Event.Handle();
                 };
