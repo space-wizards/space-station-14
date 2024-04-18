@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Changed the colors used for chat names.
-    type: Tweak
-  id: 5882
-  time: '2024-02-03T17:33:58.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24922
 - author: deltanedas
   changes:
   - message: Dissolved the biochem technology discipline into others and roundstart
@@ -3834,3 +3827,10 @@
   id: 6381
   time: '2024-04-18T03:04:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26218
+- author: Krunk
+  changes:
+  - message: Cyborgs no longer see criminal status icons.
+    type: Remove
+  id: 6382
+  time: '2024-04-18T03:20:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26207
