@@ -169,7 +169,7 @@
     sprite: Structures/Walls/meat.rsi
   - type: Construction
     graph: Girder
-    node: bananiumWall
+    node: meatWall
   - type: Destructible
     thresholds:
     - trigger:

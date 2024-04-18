@@ -123,6 +123,6 @@ public sealed record PlayerRecord(
     IPAddress LastSeenAddress,
     ImmutableArray<byte>? HWId);
 
-public sealed record RoundRecord(int Id, DateTimeOffset StartDate, ServerRecord Server);
+public sealed record RoundRecord(int Id, DateTimeOffset? StartDate, ServerRecord Server);
 
 public sealed record ServerRecord(int Id, string Name);
