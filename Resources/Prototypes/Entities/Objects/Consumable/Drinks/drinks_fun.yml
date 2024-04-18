@@ -93,7 +93,7 @@
     sound:
       collection: packetOpenSounds
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/squeeze-bottle.rsi
+    sprite: Objects/Consumable/Drinks/squeeze_bottle.rsi
     layers:
       - state: body
       - state: cap_closed_red
@@ -133,7 +133,7 @@
           - ReagentId: SpaceGlue
             Quantity: 30
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/squeeze-bottle.rsi
+    sprite: Objects/Consumable/Drinks/squeeze_bottle.rsi
     layers:
       - state: body
       - state: cap_closed_orange
@@ -162,7 +162,7 @@
           - ReagentId: SpaceLube
             Quantity: 30
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/squeeze-bottle.rsi
+    sprite: Objects/Consumable/Drinks/squeeze_bottle.rsi
     layers:
       - state: body
       - state: cap_closed_blue
@@ -177,6 +177,31 @@
         enum.OpenableVisuals.Layer:
           True: {state: "cap_open_blue"}
           False: {state: "cap_closed_blue"}
+
+- type: entity
+  parent: SqueezeBottle
+  id: CrazyGlue2
+  name: CRAZY glues
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+          - ReagentId: SpaceGlue
+            Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/crazy_glue_bottle.rsi
+    layers:
+      - state: body_crazy
+      - state: cap_closed_crazy
+        map: ["enum.OpenableVisuals.Layer"]
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "cap_open_crazy"}
+          False: {state: "cap_closed_crazy"}
 
 # Mopwata
 - type: weightedRandomFillSolution

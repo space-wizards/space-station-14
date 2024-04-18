@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by brainfood1183 (github) for ss14 minor edits by Beck Thompson.",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "body_crazy"
+      },
+      {
+        "name": "cap_closed_crazy"
+      },
+      {
+        "name": "cap_open_crazy"
+      },
+      {
+        "name": "inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "inhand-right",
+        "directions": 4
+      }
+    ]
+  }
+  
