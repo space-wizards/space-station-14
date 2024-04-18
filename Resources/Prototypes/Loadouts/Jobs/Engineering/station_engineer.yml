@@ -38,15 +38,6 @@
     head: ClothingHeadHatHardhatOrange
 
 - type: loadout
-  id: StationEngineerHardhatBlue
-  equipment: StationEngineerHardhatBlue
-
-- type: startingGear
-  id: StationEngineerHardhatBlue
-  equipment:
-    head: ClothingHeadHatHardhatBlue
-
-- type: loadout
   id: StationEngineerHardhatRed
   equipment: StationEngineerHardhatRed
 
