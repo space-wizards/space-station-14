@@ -11,6 +11,18 @@ namespace Content.Shared.Polymorph.Components;
 public sealed partial class ChameleonDisguiseComponent : Component
 {
     /// <summary>
+    /// The user of this disguise.
+    /// </summary>
+    [DataField]
+    public EntityUid User;
+
+    /// <summary>
+    /// The projector that created this disguise.
+    /// </summary>
+    [DataField]
+    public EntityUid Projector;
+
+    /// <summary>
     /// The disguise source entity for copying the sprite.
     /// </summary>
     [DataField, AutoNetworkedField]
