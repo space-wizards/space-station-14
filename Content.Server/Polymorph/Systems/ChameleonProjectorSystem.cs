@@ -64,11 +64,11 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
 
         // let the disguise die when its taken enough damage, which then transfers to the player
         // health is proportional to mass, and capped to not be insane
-        if (TryComp<MobThresholdsComponent>(disguise, out var thresholds))
+        if (TryComp<MobThresholdsComponent>(disguise, out var thresholds) && TryComp<MobThresholdsComponent>(user, out var userThresholds))
         {
             // if the player is of flesh and blood, cap max health to theirs
             // so that when reverting damage scales 1:1 and not round removing
-            var playerMax = _mobThreshold.GetThresholdForState(user, MobState.Dead).Float();
+            var playerMax = _mobThreshold.GetThresholdForState(user, MobState.Dead, userThresholds).Float();
             var max = playerMax == 0f ? proj.MaxHealth : Math.Max(proj.MaxHealth, playerMax);
 
             var health = Math.Clamp(mass, proj.MinHealth, proj.MaxHealth);
