@@ -38,3 +38,9 @@ trait-southern-desc = You have a different way of speakin'.
 
 trait-snoring-name = Snoring
 trait-snoring-desc = You will snore while sleeping.
+
+trait-french-accent-name = French Accent
+trait-french-accent-desc = You have a French accent.
+
+trait-spanish-accent-name = Spanish Accent
+trait-spanish-accent-desc = You have a Spanish accent.

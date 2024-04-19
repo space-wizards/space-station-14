@@ -23,3 +23,17 @@
   description: trait-southern-desc
   components:
     - type: SouthernAccent
+
+- type: trait
+  id: FrenchAccent
+  name: trait-french-accent-name
+  description: trait-french-accent-desc
+  components:
+    - type: FrenchAccent
+
+- type: trait
+  id: SpanishAccent
+  name: trait-spanish-accent-name
+  description: trait-spanish-accent-desc
+  components:
+    - type: SpanishAccent  
