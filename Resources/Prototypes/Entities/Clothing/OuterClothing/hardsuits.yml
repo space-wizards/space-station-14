@@ -376,7 +376,7 @@
     sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
   - type: Storage
     grid:
-    - 0,0,3,2
+  - 0,0,3,2
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
