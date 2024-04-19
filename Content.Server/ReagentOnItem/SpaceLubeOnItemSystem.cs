@@ -28,6 +28,7 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
     {
         _inventory.TryGetSlotEntity(args.Container.Owner, "gloves", out var gloves);
 
+        // Lube has no power over the rubber gloves!
         if (HasComp<NonStickSurfaceComponent>(gloves))
         {
             return;
@@ -45,6 +46,7 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
             component.AmountOfReagentLeft--;
         }
 
+        // This is the part that throws the item.
         args.Cancel();
         var user = args.Container.Owner;
         _transform.SetCoordinates(uid, Transform(user).Coordinates);

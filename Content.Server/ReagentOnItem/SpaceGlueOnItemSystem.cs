@@ -1,10 +1,7 @@
-using Content.Server.Administration.Logs;
-using Content.Shared.Glue;
 using Content.Shared.Hands;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Popups;
 using Content.Shared.ReagentOnItem;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
@@ -15,11 +12,8 @@ namespace Content.Server.ReagentOnItem;
 
 public sealed class SpaceGlueOnItemSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override void Initialize()

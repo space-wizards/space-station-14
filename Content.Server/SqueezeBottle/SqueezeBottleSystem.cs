@@ -4,7 +4,7 @@ using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Lube;
+using Content.Shared.SqueezeBottle;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -62,6 +62,7 @@ public sealed class SqueezeBottleSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
+    // Try to apply the reagent thats stored inside the squeeze bottle into an object.
     private bool TryToApplyReagent(Entity<SqueezeBottleComponent> entity, EntityUid target, EntityUid actor)
     {
 

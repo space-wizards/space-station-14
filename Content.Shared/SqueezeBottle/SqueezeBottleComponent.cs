@@ -2,7 +2,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Lube;
+namespace Content.Shared.SqueezeBottle;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SqueezeBottleComponent : Component
