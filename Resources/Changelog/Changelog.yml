@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: Nonstandard pens now embed again. (explosive pen good again)
-    type: Tweak
-  id: 5894
-  time: '2024-02-05T23:30:06.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24849
 - author: FungiFellow
   changes:
   - message: Altered content of several Borg Modules for QoL
@@ -3834,3 +3827,12 @@
   id: 6393
   time: '2024-04-19T05:50:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25922
+- author: EmoGarbage404
+  changes:
+  - message: Halved passive fuel consumption of welding tools.
+    type: Tweak
+  - message: Completing an action with a welding tool now directly drains the fuel.
+    type: Tweak
+  id: 6394
+  time: '2024-04-19T23:20:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27030
