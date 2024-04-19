@@ -155,6 +155,18 @@
           - !type:ReagentThreshold
             min: 80
 
+- type: reagent
+  id: Sedin
+  name: reagent-name-sedin
+  group: Botanical
+  desc: reagent-desc-sedin
+  flavor: enigmatic
+  color: "#3CB371"
+  physicalDesc: reagent-physical-desc-dark-brown
+  plantMetabolism:
+    - !type:PlantAdjustHealth
+      amount: -0.1
+    - !type:PlantSedin {}
 
 - type: reagent
   id: WeedKiller
