@@ -13,7 +13,6 @@ public sealed class ThrowScoreboardCommand : IConsoleCommand
 
     public string Help => Loc.GetString("throw-scoreboard-command-help-text");
 
-    [Obsolete]
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length > 0)

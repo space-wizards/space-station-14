@@ -40,34 +40,6 @@ namespace Content.Client.RoundEnd
             MoveToFront();
         }
 
-        public RoundEndSummaryWindow(IEntityManager entityManager)
-        {
-            _entityManager = entityManager;
-
-            MinSize = SetSize = new Vector2(520, 580);
-
-            Title = Loc.GetString("round-end-summary-window-title");
-
-            // RoundEndSummaryWindow without a message, for when no round info is available.
-
-            var roundEndSummaryContainer = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical,
-                VerticalExpand = true,
-                Margin = new Thickness(10)
-            };
-
-            var gamemodeLabel = new RichTextLabel();
-            var gamemodeMessage = new FormattedMessage();
-
-            gamemodeMessage.AddMarkup(Loc.GetString("round-end-summary-window-no-round"));
-            gamemodeLabel.SetMessage(gamemodeMessage);
-
-            roundEndSummaryContainer.AddChild(gamemodeLabel);
-
-            Contents.AddChild(roundEndSummaryContainer);
-        }
-
         private BoxContainer MakeRoundEndSummaryTab(string gamemode, string roundEnd, TimeSpan roundDuration, int roundId)
         {
             var roundEndSummaryTab = new BoxContainer
