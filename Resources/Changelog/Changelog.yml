@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Outlaw Glasses fully hide your identity again
-    type: Tweak
-  id: 5893
-  time: '2024-02-05T23:23:44.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24971
 - author: Emisse
   changes:
   - message: Nonstandard pens now embed again. (explosive pen good again)
@@ -3830,3 +3823,14 @@
   id: 6392
   time: '2024-04-19T05:39:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25716
+- author: shampunj
+  changes:
+  - message: 'Now for crafting stunprod you need: igniter, cable cuffs, small power
+      cell, metal rod.'
+    type: Tweak
+  - message: Stunprod deals 35 stamina damage per hit and 5 shock damage. The battery
+      charge is enough for 3 hits.
+    type: Tweak
+  id: 6393
+  time: '2024-04-19T05:50:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25922
