@@ -1,3 +1,4 @@
+using Content.Client.Smoking;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Polymorph.Components;
 using Content.Shared.Polymorph.Systems;
@@ -25,6 +26,7 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
         CopyComp<SpriteComponent>(ent);
         CopyComp<GenericVisualizerComponent>(ent);
         CopyComp<SolutionContainerVisualsComponent>(ent);
+        CopyComp<BurnStateVisualsComponent>(ent);
 
         // reload appearance to hopefully prevent any invisible layers
         if (_appearanceQuery.TryComp(ent, out var appearance))
