@@ -43,7 +43,8 @@ public sealed class MaskSystem : EntitySystem
 
         mask.IsToggled ^= true;
 
-        var msg = $"action-mask-pull-{mask.IsToggled ? "down" : "up"}-popup-message";
+        var dir = mask.IsToggled ? "down" : "up";
+        var msg = $"action-mask-pull-{dir}-popup-message";
         _popupSystem.PopupEntity(Loc.GetString(msg, ("mask", uid)), args.Performer, args.Performer);
 
         ToggleMaskComponents(uid, mask, args.Performer, mask.EquippedPrefix);
