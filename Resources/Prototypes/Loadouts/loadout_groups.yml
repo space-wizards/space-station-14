@@ -4,7 +4,7 @@
   name: loadout-group-trinkets
   minLimit: 0
   maxLimit: 3
-  loadouts:
+  loadouts: #do crime :3
   - PlushieLizard
   - ClothingNeckLGBTPin
   - ClothingNeckAromanticPin
@@ -17,6 +17,15 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
+  - ClothingNeckCloakTrans
+  - ClothingNeckCloakAce
+  - ClothingNeckCloakAro
+  - ClothingNeckCloakBi
+  - ClothingNeckCloakIntersex
+  - ClothingNeckCloakLesbian
+  - ClothingNeckCloakGay
+  - ClothingNeckCloakEnby
+  - ClothingNeckCloakPan
 
 # Command
 - type: loadoutGroup

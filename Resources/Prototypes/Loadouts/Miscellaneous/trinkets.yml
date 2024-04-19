@@ -117,3 +117,93 @@
   storage:
     back:
     - ClothingNeckGoldAutismPin
+    #beware, cloaks below
+- type: loadout
+  id: ClothingNeckCloakTrans
+  equipment: ClothingNeckCloakTrans
+
+- type: startingGear
+  id: ClothingNeckCloakTrans
+  storage:
+    back:
+    - ClothingNeckCloakTrans
+
+- type: loadout
+  id: ClothingNeckCloakAce
+  equipment: ClothingNeckCloakAce
+
+- type: startingGear
+  id: ClothingNeckCloakAce
+  storage:
+    back:
+    - ClothingNeckCloakAce
+
+- type: loadout
+  id: ClothingNeckCloakAro
+  equipment: ClothingNeckCloakAro
+
+- type: startingGear
+  id: ClothingNeckCloakAro
+  storage:
+    back:
+    - ClothingNeckCloakAro
+
+- type: loadout
+  id: ClothingNeckCloakBi
+  equipment: ClothingNeckCloakBi
+
+- type: startingGear
+  id: ClothingNeckCloakBi
+  storage:
+    back:
+    - ClothingNeckCloakBi
+
+- type: loadout
+  id: ClothingNeckCloakIntersex
+  equipment: ClothingNeckCloakIntersex
+
+- type: startingGear
+  id: ClothingNeckCloakIntersex
+  storage:
+    back:
+    - ClothingNeckCloakIntersex
+
+- type: loadout
+  id: ClothingNeckCloakLesbian
+  equipment: ClothingNeckCloakLesbian
+
+- type: startingGear
+  id: ClothingNeckCloakLesbian
+  storage:
+    back:
+    - ClothingNeckCloakLesbian
+
+- type: loadout
+  id: ClothingNeckCloakGay
+  equipment: ClothingNeckCloakGay
+
+- type: startingGear
+  id: ClothingNeckCloakGay
+  storage:
+    back:
+    - ClothingNeckCloakGay
+
+- type: loadout
+  id: ClothingNeckCloakEnby
+  equipment: ClothingNeckCloakEnby
+
+- type: startingGear
+  id: ClothingNeckCloakEnby
+  storage:
+    back:
+    - ClothingNeckCloakEnby
+
+- type: loadout
+  id:  ClothingNeckCloakPan
+  equipment:  ClothingNeckCloakPan
+
+- type: startingGear
+  id:  ClothingNeckCloakPan
+  storage:
+    back:
+    -  ClothingNeckCloakPan
