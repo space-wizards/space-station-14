@@ -117,7 +117,8 @@
   storage:
     back:
     - ClothingNeckGoldAutismPin
-    #beware, cloaks below
+
+#beware, cloaks below
 - type: loadout
   id: ClothingNeckCloakTrans
   equipment: ClothingNeckCloakTrans
