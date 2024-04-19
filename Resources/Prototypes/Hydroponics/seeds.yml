@@ -521,7 +521,6 @@
   nutrientConsumption: 0.70
   idealLight: 8
   idealHeat: 298
-  juicy: true
   growthStages: 2
   splatPrototype: PuddleSplatter
   chemicals:
