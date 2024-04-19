@@ -1706,3 +1706,7 @@
   - !type:BuyerJobCondition
     whitelist:
     - Librarian
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle

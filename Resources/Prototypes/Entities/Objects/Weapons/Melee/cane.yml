@@ -38,16 +38,12 @@
     state: icon
   - type: MeleeWeapon
     wideAnimationRotation: 65
-    attackRate: 1.2
+    attackRate: 1.5
     damage:
       types:
-        Slash: 12
+        Slash: 14
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
-  - type: Reflect
-    enabled: true
-    reflectProb: .3
-    spread: 90
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/cane_blade.rsi
