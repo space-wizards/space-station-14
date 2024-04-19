@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ficcialfaint and deltanedas
-  changes:
-  - message: Criminal records and the console that manages them have been added to
-      the game. They also have a guidebook entry.
-    type: Add
-  id: 5892
-  time: '2024-02-05T23:03:04.754935+00:00'
-  url: null
 - author: themias
   changes:
   - message: Outlaw Glasses fully hide your identity again
@@ -3831,3 +3823,10 @@
   id: 6391
   time: '2024-04-18T23:43:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26948
+- author: SlamBamActionman
+  changes:
+  - message: Snouts and noses no longer disappear with toggled masks.
+    type: Fix
+  id: 6392
+  time: '2024-04-19T05:39:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25716
