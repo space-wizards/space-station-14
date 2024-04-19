@@ -11,7 +11,7 @@ public sealed class RoundEndSummarySystem : EntitySystem
 
     public override void Initialize()
     {
-        CommandBinds.Builder.Bind(ContentKeyFunctions.OpenScoreboardWindow, InputCmdHandler.FromDelegate(OpenScoreboardWindow))
+        CommandBinds.Builder.Bind(ContentKeyFunctions.ToggleRoundEndSummaryWindow, InputCmdHandler.FromDelegate(ToggleScoreboardWindow))
             .Register<RoundEndSummarySystem>();
     }
 
@@ -21,13 +21,20 @@ public sealed class RoundEndSummarySystem : EntitySystem
         CommandBinds.Unregister<RoundEndSummarySystem>();
     }
 
-    private void OpenScoreboardWindow(ICommonSession? session = null)
+    private void ToggleScoreboardWindow(ICommonSession? session = null)
     {
         if (_window == null)
             return;
 
-        _window.OpenCenteredRight();
-        _window.MoveToFront();
+        if (_window.IsOpen)
+        {
+            _window.Close();
+        }
+        else
+        {
+            _window.OpenCenteredRight();
+            _window.MoveToFront();
+        }
     }
 
     public void OpenRoundEndSummaryWindow(RoundEndMessageEvent message)
