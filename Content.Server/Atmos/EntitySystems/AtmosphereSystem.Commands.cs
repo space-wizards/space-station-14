@@ -125,14 +125,15 @@ public sealed partial class AtmosphereSystem
         }
 
         var atmos = ent.Comp1;
-        atmos.CurrentRunTiles.Clear();
         atmos.MapTiles.Clear();
         atmos.ActiveTiles.Clear();
+        atmos.ExcitedGroups.Clear();
         atmos.HotspotTiles.Clear();
         atmos.SuperconductivityTiles.Clear();
         atmos.HighPressureDelta.Clear();
         atmos.CurrentRunTiles.Clear();
         atmos.CurrentRunExcitedGroups.Clear();
+        atmos.InvalidatedCoords.Clear();
         atmos.CurrentRunInvalidatedTiles.Clear();
         atmos.PossiblyDisconnectedTiles.Clear();
         atmos.Tiles.Clear();
