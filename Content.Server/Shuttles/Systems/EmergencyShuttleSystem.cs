@@ -15,6 +15,7 @@ using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Components;
+using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
@@ -84,7 +85,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
         SubscribeLocalEvent<StationEmergencyShuttleComponent, ComponentStartup>(OnStationStartup);
         SubscribeLocalEvent<StationCentcommComponent, ComponentShutdown>(OnCentcommShutdown);
-        SubscribeLocalEvent<StationCentcommComponent, ComponentInit>(OnCentcommInit);
+        SubscribeLocalEvent<StationCentcommComponent, StationPostInitEvent>(OnStationPostInit);
 
         SubscribeLocalEvent<EmergencyShuttleComponent, FTLStartedEvent>(OnEmergencyFTL);
         SubscribeLocalEvent<EmergencyShuttleComponent, FTLCompletedEvent>(OnEmergencyFTLComplete);
@@ -319,7 +320,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
     }
 
-    private void OnCentcommInit(EntityUid uid, StationCentcommComponent component, ComponentInit args)
+    private void OnStationPostInit(EntityUid uid, StationCentcommComponent component, ref StationPostInitEvent args)
     {
         if (!_emergencyShuttleEnabled)
             return;
