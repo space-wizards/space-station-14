@@ -7,7 +7,6 @@ using Content.Shared.GameWindow;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;
-using Robust.Shared.Utility;
 
 namespace Content.Client.GameTicking.Managers
 {
@@ -17,10 +16,8 @@ namespace Content.Client.GameTicking.Managers
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IClientAdminManager _admin = default!;
         [Dependency] private readonly IClyde _clyde = default!;
-        [Dependency] private readonly SharedMapSystem _map = default!;
         [Dependency] private readonly RoundEndSummarySystem _scoreboardSystem = default!;
 
-        [ViewVariables] private bool _initialized;
         private Dictionary<NetEntity, Dictionary<string, uint?>>  _jobsAvailable = new();
         private Dictionary<NetEntity, string> _stationNames = new();
 
