@@ -190,13 +190,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
-        var nukeopsRuleExists = false;
-
         var ruleQuery = QueryActiveRules();
         while (ruleQuery.MoveNext(out _, out _, out var nukeops, out _))
         {
-            nukeopsRuleExists = true;
-
             var winText = Loc.GetString($"nukeops-{nukeops.WinType.ToString().ToLower()}");
             ev.AddLine(winText);
 
@@ -207,8 +203,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             }
         }
 
-        if (nukeopsRuleExists)
-            ev.AddLine(Loc.GetString("nukeops-list-start"));
+        ev.AddLine(Loc.GetString("nukeops-list-start"));
 
         var nukiesQuery = EntityQueryEnumerator<NukeopsRoleComponent, MindContainerComponent>();
         while (nukiesQuery.MoveNext(out var nukeopsUid, out _, out var mindContainer))
