@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Clothing.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Dataset;
 using Content.Shared.Emag.Components;
@@ -21,18 +22,23 @@ public abstract class SharedHailerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HailerComponent, GetItemActionsEvent>(OnGetItemActions);
+        SubscribeLocalEvent<HailerComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<HailerComponent, HailerActionEvent>(OnActionUsed);
         SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagged);
     }
 
-    private void OnGetItemActions(Entity<HailerComponent> ent, ref GetItemActionsEvent args)
+    private void OnGetActions(Entity<HailerComponent> ent, ref GetItemActionsEvent args)
     {
-        args.AddAction(ref ent.Comp.ActionEntity, ent.Comp.Action);
+        if ((args.SlotFlags & ent.Comp.RequiredFlags) == ent.Comp.RequiredFlags)
+            args.AddAction(ref ent.Comp.ActionEntity, ent.Comp.Action);
     }
 
     private void OnActionUsed(Entity<HailerComponent> ent, ref HailerActionEvent args)
     {
+        // require the mask be pulled down before using
+        if (TryComp<MaskComponent>(ent, out var mask) && mask.IsToggled)
+            return;
+
         args.Handled = true;
 
         var emagged = HasComp<EmaggedComponent>(ent);

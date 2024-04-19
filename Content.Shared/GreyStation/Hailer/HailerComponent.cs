@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Dataset;
+using Content.Shared.Inventory;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -33,6 +34,12 @@ public sealed partial class HailerComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? EmaggedSound;
+
+    /// <summary>
+    /// The inventory slot flags required for the action to be added.
+    /// </summary>
+    [DataField]
+    public SlotFlags RequiredFlags = SlotFlags.MASK;
 }
 
 /// <summary>
