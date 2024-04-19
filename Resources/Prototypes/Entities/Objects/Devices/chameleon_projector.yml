@@ -28,6 +28,8 @@
   - type: Sprite
     sprite: /Textures/Mobs/Species/Human/parts.rsi
     state: full
+  - type: Transform
+    noRot: true # players rotation and anchor is used instead
   - type: ChameleonDisguise
 
 # actions

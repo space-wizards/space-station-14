@@ -117,6 +117,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
             return;
 
         var xform = Transform(uid);
+        _xform.SetLocalRotationNoLerp(uid, 0, xform);
         xform.NoLocalRotation = !xform.NoLocalRotation;
         args.Handled = true;
     }
