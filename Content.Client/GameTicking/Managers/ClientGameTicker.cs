@@ -7,6 +7,7 @@ using Content.Shared.GameWindow;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.GameTicking.Managers
 {
@@ -16,7 +17,7 @@ namespace Content.Client.GameTicking.Managers
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IClientAdminManager _admin = default!;
         [Dependency] private readonly IClyde _clyde = default!;
-        [Dependency] private readonly RoundEndSummarySystem _scoreboardSystem = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private Dictionary<NetEntity, Dictionary<string, uint?>>  _jobsAvailable = new();
         private Dictionary<NetEntity, string> _stationNames = new();
@@ -145,7 +146,7 @@ namespace Content.Client.GameTicking.Managers
             // Force an update in the event of this song being the same as the last.
             RestartSound = message.RestartSound;
 
-            _scoreboardSystem.OpenRoundEndSummaryWindow(message);
+            _userInterfaceManager.GetUIController<RoundEndSummaryUIController>().OpenRoundEndSummaryWindow(message);
         }
     }
 }

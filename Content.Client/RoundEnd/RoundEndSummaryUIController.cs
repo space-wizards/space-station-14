@@ -1,25 +1,21 @@
+using Content.Client.GameTicking.Managers;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
+using JetBrains.Annotations;
+using Robust.Client.Input;
+using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 
 namespace Content.Client.RoundEnd;
 
-public sealed class RoundEndSummarySystem : EntitySystem
+[UsedImplicitly]
+public sealed class RoundEndSummaryUIController : UIController,
+    IOnSystemLoaded<ClientGameTicker>
 {
+    [Dependency] private readonly IInputManager _input = default!;
+
     private RoundEndSummaryWindow? _window;
-
-    public override void Initialize()
-    {
-        CommandBinds.Builder.Bind(ContentKeyFunctions.ToggleRoundEndSummaryWindow, InputCmdHandler.FromDelegate(ToggleScoreboardWindow))
-            .Register<RoundEndSummarySystem>();
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        CommandBinds.Unregister<RoundEndSummarySystem>();
-    }
 
     private void ToggleScoreboardWindow(ICommonSession? session = null)
     {
@@ -45,5 +41,11 @@ public sealed class RoundEndSummarySystem : EntitySystem
 
         _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText,
             message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, EntityManager);
+    }
+
+    public void OnSystemLoaded(ClientGameTicker system)
+    {
+        _input.SetInputCommand(ContentKeyFunctions.ToggleRoundEndSummaryWindow,
+            InputCmdHandler.FromDelegate(ToggleScoreboardWindow));
     }
 }
