@@ -330,6 +330,10 @@
     Poison:
       metabolismRate: 0.25
       effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.25
       - !type:Emote
         emote: Weh
         showInChat: true
