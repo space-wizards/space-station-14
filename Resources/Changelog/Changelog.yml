@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: FungiFellow
-  changes:
-  - message: Altered content of several Borg Modules for QoL
-    type: Tweak
-  - message: Removed Gas Analyzer Module
-    type: Remove
-  id: 5895
-  time: '2024-02-05T23:46:39.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24702
 - author: Rainfey
   changes:
   - message: Health Analysers now continuously update their UI after scanning a patient
@@ -3836,3 +3827,10 @@
   id: 6394
   time: '2024-04-19T23:20:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27030
+- author: superjj18
+  changes:
+  - message: Pneumatic cannon inventory reduced in size to 2x2, item blacklist removed
+    type: Tweak
+  id: 6395
+  time: '2024-04-19T23:22:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26878
