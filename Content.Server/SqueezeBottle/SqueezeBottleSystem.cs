@@ -84,10 +84,15 @@ public sealed class SqueezeBottleSystem : EntitySystem
         if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solComp, out var solution))
         {
             var reagent = solution.SplitSolution(entity.Comp.AmountConsumedOnUse);
-            _reagentOnItem.AddReagentToItem(target, reagent);
+            if (_reagentOnItem.AddReagentToItem(target, reagent))
+            {
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} tried to apply reagent to {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
+                _audio.PlayPvs(entity.Comp.OnSqueezeNoise, entity.Owner);
+            }
 
             return true;
         }
+
         _popup.PopupEntity(Loc.GetString("lube-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
         return false;
     }

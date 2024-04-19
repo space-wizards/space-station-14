@@ -9,24 +9,10 @@
 // it needs to be changed
 
 using Content.Shared.Chemistry.Components;
-using Content.Server.Administration.Logs;
-using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.Database;
-using Content.Shared.Glue;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Lube;
-using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
-using Content.Shared.Verbs;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Content.Shared.ReagentOnItem;
-using Robust.Shared.Toolshed.Commands.Math;
-using System.Diagnostics;
-using Content.Shared.FixedPoint;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Clothing.Components;
 
@@ -46,7 +32,7 @@ public sealed class ReagentOnItemSystem : EntitySystem
     {
         if (reagentMixture.Volume <= 0)
         {
-            return true;
+            return false;
         }
 
         if (HasComp<ItemComponent>(item))

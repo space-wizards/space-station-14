@@ -1,8 +1,6 @@
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Lube;
 
@@ -10,7 +8,7 @@ namespace Content.Shared.Lube;
 public sealed partial class SqueezeBottleComponent : Component
 {
     [DataField("OnSqueezeNoise")]
-    public SoundSpecifier Squeeze = new SoundPathSpecifier("/Audio/Items/squeezebottle.ogg");
+    public SoundSpecifier OnSqueezeNoise = new SoundPathSpecifier("/Audio/Items/squeezebottle.ogg");
 
     /// <summary>
     /// Solution on the entity that contains the glue.
@@ -22,5 +20,5 @@ public sealed partial class SqueezeBottleComponent : Component
     /// Reagent consumption per use.
     /// </summary>
     [DataField("AmountConsumedOnUse"), ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 AmountConsumedOnUse = FixedPoint2.New(3);
+    public FixedPoint2 AmountConsumedOnUse = FixedPoint2.New(5);
 }

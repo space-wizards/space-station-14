@@ -88,6 +88,7 @@
   description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
   components:
   - type: SqueezeBottle
+    AmountConsumedOnUse: 5
   - type: Openable
     closeable: true
     sound:
@@ -183,6 +184,8 @@
   id: CrazyGlue2
   name: CRAZY glues
   components:
+  - type: SqueezeBottle
+    AmountConsumedOnUse: 10 # high throughput nozzle
   - type: SolutionContainerManager
     solutions:
       drink:
