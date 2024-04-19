@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Coordinates;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
@@ -64,6 +63,8 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private readonly List<ItemSizePrototype> _sortedSizes = new();
     private FrozenDictionary<string, ItemSizePrototype> _nextSmallest = FrozenDictionary<string, ItemSizePrototype>.Empty;
+
+    protected readonly List<string> CantFillReasons = [];
 
     /// <inheritdoc />
     public override void Initialize()
@@ -628,8 +629,15 @@ public abstract class SharedStorageSystem : EntitySystem
         if (CheckingCanInsert)
             return;
 
-        if (!CanInsert(uid, args.EntityUid, out _, component, ignoreStacks: true))
+        if (!CanInsert(uid, args.EntityUid, out var reason, component, ignoreStacks: true))
+        {
+#if DEBUG
+            if (reason != null)
+                CantFillReasons.Add(reason);
+#endif
+
             args.Cancel();
+        }
     }
 
     public void UpdateAppearance(Entity<StorageComponent?, AppearanceComponent?> entity)
@@ -1072,7 +1080,7 @@ public abstract class SharedStorageSystem : EntitySystem
             for (int i = 0; i < list.Count; i++)
             {
                 var saved = list[i];
-                
+
                 if (saved == location)
                 {
                     list.Remove(location);
@@ -1257,6 +1265,13 @@ public abstract class SharedStorageSystem : EntitySystem
             UpdateAppearance(container.Owner);
             UpdateUI(container.Owner);
         }
+    }
+
+    protected void ClearCantFillReasons()
+    {
+#if DEBUG
+        CantFillReasons.Clear();
+#endif
     }
 
     /// <summary>
