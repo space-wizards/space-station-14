@@ -1,5 +1,4 @@
 using Content.Shared.IdentityManagement;
-using Content.Shared.Lube;
 using Content.Shared.Popups;
 using Content.Shared.ReagentOnItem;
 using Content.Shared.Throwing;
@@ -8,7 +7,6 @@ using Robust.Shared.Random;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Examine;
-
 
 namespace Content.Server.ReagentOnItem;
 
@@ -52,14 +50,14 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
         _transform.SetCoordinates(uid, Transform(user).Coordinates);
         _transform.AttachToGridOrMap(uid);
         _throwing.TryThrow(uid, _random.NextVector2(), strength: component.PowerOfThrowOnPickup);
-        _popup.PopupEntity(Loc.GetString("lube-slip", ("target", Identity.Entity(uid, EntityManager))), user, user, PopupType.MediumCaution);
+        _popup.PopupEntity(Loc.GetString("space-lube-on-item-slip", ("target", Identity.Entity(uid, EntityManager))), user, user, PopupType.MediumCaution);
     }
 
     private void OnExamine(EntityUid uid, SpaceLubeOnItemComponent comp, ExaminedEvent args)
     {
         if (args.IsInDetailsRange)
         {
-            args.PushMarkup("[color=lightgreen]Looks very slippery...[/color]");
+            args.PushMarkup(Loc.GetString("space-lube-on-item-inspect"));
         }
     }
 }

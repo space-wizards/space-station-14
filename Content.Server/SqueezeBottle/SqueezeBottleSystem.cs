@@ -1,7 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Database;
-using Content.Shared.Glue;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -9,15 +8,8 @@ using Content.Shared.Lube;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Random;
-using Content.Shared.ReagentOnItem;
-using Robust.Shared.Toolshed.Commands.Math;
-using System.Diagnostics;
-using Content.Shared.FixedPoint;
-using Content.Server.Fluids.EntitySystems;
-using Content.Shared.Clothing.Components;
+
 using Content.Server.ReagentOnItem;
 
 namespace Content.Server.SqueezeBottle;
@@ -27,10 +19,8 @@ public sealed class SqueezeBottleSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
-    [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly ReagentOnItemSystem _reagentOnItem = default!;
 
     public override void Initialize()
@@ -65,8 +55,8 @@ public sealed class SqueezeBottleSystem : EntitySystem
         {
             Act = () => TryToApplyReagent(entity, target, user),
             IconEntity = GetNetEntity(entity),
-            Text = Loc.GetString("lube-verb-text"),
-            Message = Loc.GetString("lube-verb-message")
+            Text = Loc.GetString("squeeze-bottle-verb-text"),
+            Message = Loc.GetString("squeeze-bottle-verb-message")
         };
 
         args.Verbs.Add(verb);
@@ -74,10 +64,10 @@ public sealed class SqueezeBottleSystem : EntitySystem
 
     private bool TryToApplyReagent(Entity<SqueezeBottleComponent> entity, EntityUid target, EntityUid actor)
     {
-        // Split this into better cases.
+
         if (!HasComp<ItemComponent>(target))
         {
-            _popup.PopupEntity(Loc.GetString("lube-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("squeeze-bottle-not-item-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
             return false;
         }
 
@@ -89,11 +79,14 @@ public sealed class SqueezeBottleSystem : EntitySystem
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} tried to apply reagent to {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
                 _audio.PlayPvs(entity.Comp.OnSqueezeNoise, entity.Owner);
             }
+            else
+            {
+                _popup.PopupEntity(Loc.GetString("squeeze-bottle-is-empty-failure"), actor, actor, PopupType.Medium);
+            }
 
             return true;
         }
 
-        _popup.PopupEntity(Loc.GetString("lube-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
         return false;
     }
 }

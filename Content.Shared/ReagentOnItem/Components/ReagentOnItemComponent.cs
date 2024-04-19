@@ -4,8 +4,8 @@ namespace Content.Shared.ReagentOnItem;
 public abstract partial class ReagentOnItemComponent : Component
 {
     [DataField("amountOfReagentLeft"), ViewVariables(VVAccess.ReadWrite)]
-    public Double AmountOfReagentLeft;
+    public double AmountOfReagentLeft;
 
     [DataField("reagentCapacity")]
-    public Double ReagentCapacity = 15;
+    public double ReagentCapacity = 15;
 }

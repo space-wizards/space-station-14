@@ -1,13 +1,3 @@
-// Only has one function: Add reagent to item.
-// Takes the reagent and the item and puts the correc
-// reagent on it and spills the rest.
-
-// Should be "imported" to functions that need it 
-
-// Also deal with gloves here becasuse I can't see a situation where
-// it should ignore them. Can be refactored later if for some reason
-// it needs to be changed
-
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Item;
 using Content.Shared.Popups;
@@ -15,6 +5,7 @@ using Robust.Shared.Random;
 using Content.Shared.ReagentOnItem;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Clothing.Components;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server.ReagentOnItem;
 
@@ -28,6 +19,7 @@ public sealed class ReagentOnItemSystem : EntitySystem
         base.Initialize();
     }
 
+    // Try to apply the given solution to an item.
     public bool AddReagentToItem(EntityUid item, Solution reagentMixture)
     {
         if (reagentMixture.Volume <= 0)
@@ -39,6 +31,8 @@ public sealed class ReagentOnItemSystem : EntitySystem
         {
             if (!HasComp<NonStickSurfaceComponent>(item))
             {
+                // Yes this code is sussy but its much better than what was used before.
+                // All suspect code for this system is contained here (I hope).
                 var volSpaceLube = reagentMixture.RemoveReagent("SpaceLube", reagentMixture.Volume).Double();
                 var volSpaceGlue = reagentMixture.RemoveReagent("SpaceGlue", reagentMixture.Volume).Double();
 
@@ -54,10 +48,10 @@ public sealed class ReagentOnItemSystem : EntitySystem
                 }
             }
 
+            // Reagents can't stick on certain items. E.g janis gloves and boots.
             if (HasComp<NonStickSurfaceComponent>(item))
             {
-                // The liquid slips right off the [ITEM]!
-                _popup.PopupEntity("The liquid slips right off!", item);
+                _popup.PopupEntity(Loc.GetString("non-stick-gloves-reagent-falls-off", ("target", Identity.Entity(item, EntityManager))), item);
             }
 
             var makeNoise = _random.NextDouble() > .75;

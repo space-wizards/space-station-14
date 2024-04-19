@@ -1,20 +1,15 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.Database;
 using Content.Shared.Glue;
 using Content.Shared.Hands;
-using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
-using Content.Shared.Item;
-using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.ReagentOnItem;
-using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server.ReagentOnItem;
 
@@ -51,7 +46,7 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
             {
                 // TODO: Show popup indicating the glue dried.
                 RemCompDeferred<UnremoveableComponent>(uid);
-                RemCompDeferred<GluedComponent>(uid);
+                RemCompDeferred<SpaceGlueOnItemComponent>(uid);
             }
         }
     }
@@ -67,7 +62,7 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
 
         if (SetNextCheck(entity, entity))
         {
-            _popup.PopupEntity("YOU GOT GLUED!", args.User, args.User, PopupType.MediumCaution);
+            _popup.PopupEntity(Loc.GetString("space-glue-on-item-hand-stuck", ("target", Identity.Entity(entity, EntityManager))), args.User, args.User, PopupType.MediumCaution);
         }
 
     }
@@ -92,7 +87,19 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
     {
         if (args.IsInDetailsRange)
         {
-            args.PushMarkup("[color=white]Looks very sticky...[/color]");
+            var howSticky = comp.AmountOfReagentLeft / comp.ReagentCapacity;
+            if (howSticky <= .33)
+            {
+                args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-low"));
+            }
+            else if (howSticky <= .66)
+            {
+                args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-med"));
+            }
+            else
+            {
+                args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-high"));
+            }
         }
     }
 

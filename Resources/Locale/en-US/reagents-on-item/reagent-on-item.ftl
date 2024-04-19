@@ -1,0 +1,1 @@
+non-stick-gloves-reagent-falls-off = The liquid slips right off {THE($target)}!
