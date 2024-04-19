@@ -199,7 +199,7 @@ namespace Content.Client.Inventory
 
         public void UIInventoryStorageActivate(string slot)
         {
-            EntityManager.EntityNetManager?.SendSystemNetworkMessage(new OpenSlotStorageNetworkMessage(slot));
+            EntityManager.RaisePredictiveEvent(new OpenSlotStorageNetworkMessage(slot));
         }
 
         public void UIInventoryExamine(string slot, EntityUid uid)
