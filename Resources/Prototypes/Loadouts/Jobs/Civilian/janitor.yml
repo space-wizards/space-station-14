@@ -29,29 +29,29 @@
 
 # Gloves
 - type: loadout
-  id: JanitorGlovesRubber
-  equipment: JanitorGlovesRubber
+  id: JanitorRubberGloves
+  equipment: JanitorRubberGloves
 
 - type: startingGear
-  id: JanitorGlovesRubber
+  id: JanitorRubberGloves
   equipment:
     gloves: ClothingHandsGlovesJanitor
 
 - type: loadout
-  id: JanitorGlovesOrange
-  equipment: JanitorGlovesOrange
+  id: OrangeGloves
+  equipment: OrangeGloves
 
 - type: startingGear
-  id: JanitorGlovesOrange
+  id: OrangeGloves
   equipment:
     gloves: ClothingHandsGlovesColorOrange
 
 - type: loadout
-  id: JanitorGlovesPurple
-  equipment: JanitorGlovesPurple
+  id: PurpleGloves
+  equipment: PurpleGloves
 
 - type: startingGear
-  id: JanitorGlovesPurple
+  id: PurpleGloves
   equipment:
     gloves: ClothingHandsGlovesColorPurple
 

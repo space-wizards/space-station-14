@@ -6,8 +6,7 @@
   suffix: Chameleon
   components:
     - type: Tag
-      tags: # ignore "WhitelistChameleon" tag
-        - HidesNose
+      tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
       sprite: Clothing/Mask/gas.rsi
     - type: Clothing
@@ -21,6 +20,9 @@
       interfaces:
         - key: enum.ChameleonUiKey.Key
           type: ChameleonBoundUserInterface
+    - type: HideLayerClothing
+      slots:
+      - Snout
 
 - type: entity
   parent: ClothingMaskGasChameleon
@@ -28,6 +30,9 @@
   suffix: Voice Mask, Chameleon
   components:
     - type: VoiceMasker
+    - type: HideLayerClothing
+      slots:
+      - Snout
 
 - type: entity
   parent: ClothingMaskBase
@@ -54,5 +59,6 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-    - HidesNose
-
+  - type: HideLayerClothing
+    slots:
+    - Snout
