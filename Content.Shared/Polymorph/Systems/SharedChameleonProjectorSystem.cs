@@ -170,16 +170,16 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     {
         var proj = ent.Comp;
 
-        // add actions for controlling transform aspects
-        _actions.AddAction(user, ref proj.NoRotActionEntity, proj.NoRotAction, container: ent);
-        _actions.AddAction(user, ref proj.AnchorActionEntity, proj.AnchorAction, container: ent);
-
         // no spawning prediction sorry
         if (_net.IsClient)
             return;
 
         // reveal first to allow quick switching
         TryReveal(user);
+
+        // add actions for controlling transform aspects
+        _actions.AddAction(user, ref proj.NoRotActionEntity, proj.NoRotAction, container: ent);
+        _actions.AddAction(user, ref proj.AnchorActionEntity, proj.AnchorAction, container: ent);
 
         proj.Disguised = user;
 
