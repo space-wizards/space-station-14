@@ -17,7 +17,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 
 
         [DataField]
-        public float SeedRestorationChance = 1f; // TEMPORARY, if this code makes it into the PR yell at me to change it to 0.1 dear GOD
+        public float SeedRestorationChance = 0.1f;
 
         [DataField]
         public int PotencyDropAmount = 7; // Nerf as neccesary
