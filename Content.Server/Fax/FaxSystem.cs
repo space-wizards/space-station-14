@@ -108,7 +108,6 @@ public sealed class FaxSystem : EntitySystem
         {
             comp.PrintingTimeRemaining -= frameTime;
             UpdateAppearance(uid, comp);
-            Dirty(uid, comp);
 
             var isAnimationEnd = comp.PrintingTimeRemaining <= 0;
             if (isAnimationEnd)
@@ -319,9 +318,7 @@ public sealed class FaxSystem : EntitySystem
     private void OnCopyButtonPressed(EntityUid uid, FaxMachineComponent component, FaxCopyMessage args)
     {
         if (HasComp<MobStateComponent>(component.PaperSlot.Item))
-        {
             _faxecute.Faxecute(uid, component); /// when button pressed it will hurt the mob.
-        }
         else
             Copy(uid, component, args);
     }
@@ -329,9 +326,7 @@ public sealed class FaxSystem : EntitySystem
     private void OnSendButtonPressed(EntityUid uid, FaxMachineComponent component, FaxSendMessage args)
     {
         if (HasComp<MobStateComponent>(component.PaperSlot.Item))
-        {
             _faxecute.Faxecute(uid, component); /// when button pressed it will hurt the mob.
-        }
         else
             Send(uid, component, args.Session.AttachedEntity);
     }
