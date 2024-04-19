@@ -1058,13 +1058,3 @@
   id: violets
   flavorType: Complex
   description: flavor-complex-violets
-
-- type: flavor
-  id: mothballs
-  flavorType: Complex
-  description: flavor-complex-mothballs
-
-- type: flavor
-  id: paintthinner
-  flavorType: Complex
-  description: flavor-complex-paint-thinner
