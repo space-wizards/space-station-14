@@ -70,8 +70,8 @@ namespace Content.Client.GameTicking.Managers
 
         private void OnAdminUpdated()
         {
-            // Hide some map/grid related logs to clients.
-            // This is to try prevent some easy metagaming by just reading the console. E.g., logs like this one could leak the nuke station/grid:
+            // Hide some map/grid related logs from clients. This is to try prevent some easy metagaming by just
+            // reading the console. E.g., logs like this one could leak the nuke station/grid:
             // > Grid NT-Arrivals 1101 (122/n25896) changed parent. Old parent: map 10 (121/n25895). New parent: FTL (123/n26470)
 #if !DEBUG
             _map.Log.Level = _admin.IsAdmin() ? LogLevel.Info : LogLevel.Warning;
