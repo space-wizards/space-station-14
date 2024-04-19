@@ -75,7 +75,7 @@
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsKitchenHydroponics
-  suffix: Freezer, Locked
+  suffix: Kitchen/Hydroponics, Locked
   components:
   - type: AccessReader
     access: [["Kitchen"], ["Hydroponics"]]
