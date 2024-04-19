@@ -23,7 +23,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseMob
+  parent: [BaseMob, MobAtmosStandard]
   id: ChameleonDisguise
   name: Urist McKleiner
   components:
