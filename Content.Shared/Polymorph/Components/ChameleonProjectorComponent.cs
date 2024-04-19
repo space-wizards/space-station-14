@@ -55,6 +55,12 @@ public sealed partial class ChameleonProjectorComponent : Component
     public float MaxHealth = 100f;
 
     /// <summary>
+    /// Popup shown to the user when they try to disguise as an entity inside a container.
+    /// </summary>
+    [DataField]
+    public LocId ContainerPopup = "chameleon-projector-inside-container";
+
+    /// <summary>
     /// Popup shown to the user when they try to disguise as an invalid entity.
     /// </summary>
     [DataField]

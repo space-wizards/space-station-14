@@ -3,6 +3,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Polymorph;
 using Content.Shared.Polymorph.Components;
 using Content.Shared.Popups;
+using Robust.Shared.Containers;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
@@ -10,13 +11,14 @@ using System.Diagnostics.CodeAnalysis;
 namespace Content.Shared.Polymorph.Systems;
 
 /// <summary>
-/// Handles whitelist/blacklist checking.
+/// Handles disguise validation.
 /// Actual polymorphing and deactivation is done serverside.
 /// </summary>
 public abstract class SharedChameleonProjectorSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ISerializationManager _serMan = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
@@ -33,6 +35,12 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
 
         var user = args.User;
         args.Handled = true;
+
+        if (_container.IsEntityInContainer(target))
+        {
+            _popup.PopupClient(Loc.GetString(ent.Comp.ContainerPopup), target, user);
+            return;
+        }
 
         if (IsInvalid(ent.Comp, target))
         {
