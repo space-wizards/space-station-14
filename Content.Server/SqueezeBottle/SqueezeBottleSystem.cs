@@ -74,7 +74,7 @@ public sealed class SqueezeBottleSystem : EntitySystem
 
         if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solComp, out var solution))
         {
-            var reagent = solution.SplitSolution(entity.Comp.AmountConsumedOnUse);
+            var reagent = _solutionContainer.SplitSolution(solComp.Value, entity.Comp.AmountConsumedOnUse);
             if (_reagentOnItem.AddReagentToItem(target, reagent))
             {
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} tried to apply reagent to {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
