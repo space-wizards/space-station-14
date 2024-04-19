@@ -1,27 +1,4 @@
 ﻿Entries:
-- author: Scribbles0
-  changes:
-  - message: Holoparasites can now autoattack at their max attack rate when holding
-      down their attack button.
-    type: Add
-  id: 5889
-  time: '2024-02-04T23:01:49.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24944
-- author: EdenTheLiznerd
-  changes:
-  - message: Sectech no longer says "Let's crack communist skulls!" It now says "Let's
-      crack syndicate skulls!"
-    type: Tweak
-  id: 5890
-  time: '2024-02-05T12:24:52.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24965
-- author: Varen
-  changes:
-  - message: Rebalanced electrocution damage to ramp up slower with power levels.
-    type: Tweak
-  id: 5891
-  time: '2024-02-05T18:47:52.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24829
 - author: ficcialfaint and deltanedas
   changes:
   - message: Criminal records and the console that manages them have been added to
@@ -3832,3 +3809,25 @@
   id: 6388
   time: '2024-04-18T18:05:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27094
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Roboticist gear in now available in the scientist loadout.
+    type: Tweak
+  id: 6389
+  time: '2024-04-18T23:38:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27045
+- author: Whisper
+  changes:
+  - message: Raised the difficulty class of RD hardsuit objective, it will be less
+      likely to get it with other hard objectives.
+    type: Tweak
+  id: 6390
+  time: '2024-04-18T23:41:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27103
+- author: iztokbajcar
+  changes:
+  - message: Glass textures are now less transparent.
+    type: Tweak
+  id: 6391
+  time: '2024-04-18T23:43:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26948

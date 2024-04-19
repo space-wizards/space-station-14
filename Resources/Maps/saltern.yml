@@ -3267,6 +3267,7 @@ entities:
     - type: GridPathfinding
     - type: GasTileOverlay
     - type: RadiationGridResistance
+    - type: NavMap
   - uid: 658
     components:
     - type: MetaData
@@ -6484,8 +6485,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -19.5,10.5
       parent: 31
-    - type: Advertise
-      enabled: False
     - type: SpamEmitSound
       enabled: False
 - proto: Bloodpack
@@ -26337,6 +26336,28 @@ entities:
     - type: Transform
       pos: -53.5,-9.5
       parent: 31
+- proto: ClosetEmergencyN2FilledRandom
+  entities:
+  - uid: 11448
+    components:
+    - type: Transform
+      pos: 15.5,-23.5
+      parent: 31
+  - uid: 11449
+    components:
+    - type: Transform
+      pos: 42.5,-13.5
+      parent: 31
+  - uid: 11450
+    components:
+    - type: Transform
+      pos: -20.5,12.5
+      parent: 31
+  - uid: 11451
+    components:
+    - type: Transform
+      pos: -27.5,-17.5
+      parent: 31
 - proto: ClosetFireFilled
   entities:
   - uid: 221
@@ -26873,24 +26894,12 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: ClothingHeadHatFlowerCrown
+- proto: ClothingHeadHatFlowerWreath
   entities:
   - uid: 3235
     components:
     - type: Transform
       pos: 49.449142,-25.427004
-      parent: 31
-- proto: ClothingHeadHatHairflower
-  entities:
-  - uid: 4196
-    components:
-    - type: Transform
-      pos: -3.75686,18.190365
-      parent: 31
-  - uid: 9762
-    components:
-    - type: Transform
-      pos: -16.049828,-39.578854
       parent: 31
 - proto: ClothingHeadHatHardhatOrange
   entities:
@@ -32833,7 +32842,7 @@ entities:
       pos: 38.5,-5.5
       parent: 31
     - type: Door
-      secondsUntilStateChange: -9882.14
+      secondsUntilStateChange: -9978.97
       state: Closing
   - uid: 4019
     components:
@@ -33096,6 +33105,9 @@ entities:
     - type: Transform
       pos: 1.5,-2.5
       parent: 31
+    - type: Door
+      secondsUntilStateChange: -80.957985
+      state: Closing
   - uid: 3944
     components:
     - type: Transform
@@ -33980,6 +33992,18 @@ entities:
     components:
     - type: Transform
       pos: -35.517406,-25.152033
+      parent: 31
+- proto: FoodPoppy
+  entities:
+  - uid: 4196
+    components:
+    - type: Transform
+      pos: -3.75686,18.190365
+      parent: 31
+  - uid: 9762
+    components:
+    - type: Transform
+      pos: -16.049828,-39.578854
       parent: 31
 - proto: FoodShakerSalt
   entities:
@@ -48577,6 +48601,13 @@ entities:
     - type: Transform
       pos: -11.571391,18.68531
       parent: 31
+- proto: Jukebox
+  entities:
+  - uid: 5090
+    components:
+    - type: Transform
+      pos: -2.5,1.5
+      parent: 31
 - proto: KalimbaInstrument
   entities:
   - uid: 10631
@@ -60958,8 +60989,6 @@ entities:
     - type: Transform
       pos: -12.5,-6.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineAtmosDrobe
   entities:
   - uid: 6557
@@ -60967,8 +60996,6 @@ entities:
     - type: Transform
       pos: 53.5,15.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineBooze
   entities:
   - uid: 970
@@ -60976,8 +61003,6 @@ entities:
     - type: Transform
       pos: -6.5,-6.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineCargoDrobe
   entities:
   - uid: 7130
@@ -60985,8 +61010,6 @@ entities:
     - type: Transform
       pos: 12.5,12.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineCart
   entities:
   - uid: 153
@@ -61001,15 +61024,11 @@ entities:
     - type: Transform
       pos: -34.5,10.5
       parent: 31
-    - type: Advertise
-      enabled: False
   - uid: 9145
     components:
     - type: Transform
       pos: 5.5,-17.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineChapel
   entities:
   - uid: 4887
@@ -61024,8 +61043,6 @@ entities:
     - type: Transform
       pos: -13.5,-3.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineChefvend
   entities:
   - uid: 911
@@ -61033,8 +61050,6 @@ entities:
     - type: Transform
       pos: -9.5,-3.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineChemDrobe
   entities:
   - uid: 578
@@ -61042,8 +61057,6 @@ entities:
     - type: Transform
       pos: 17.5,1.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineChemicals
   entities:
   - uid: 1099
@@ -61060,22 +61073,11 @@ entities:
     - type: Transform
       pos: 14.5,21.5
       parent: 31
-    - type: Advertise
-      enabled: False
   - uid: 2877
     components:
     - type: Transform
       pos: 0.5,-22.5
       parent: 31
-    - type: Advertise
-      enabled: False
-  - uid: 5090
-    components:
-    - type: Transform
-      pos: -2.5,1.5
-      parent: 31
-    - type: Advertise
-      enabled: False
   - uid: 8705
     components:
     - type: MetaData
@@ -61083,8 +61085,11 @@ entities:
     - type: Transform
       pos: -32.5,-29.5
       parent: 31
-    - type: Advertise
-      enabled: False
+  - uid: 11446
+    components:
+    - type: Transform
+      pos: 1.5,-13.5
+      parent: 31
 - proto: VendingMachineClothing
   entities:
   - uid: 7647
@@ -61092,8 +61097,6 @@ entities:
     - type: Transform
       pos: -29.5,-7.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineCoffee
   entities:
   - uid: 983
@@ -61103,8 +61106,6 @@ entities:
     - type: Transform
       pos: 0.5,23.5
       parent: 31
-    - type: Advertise
-      enabled: False
   - uid: 2362
     components:
     - type: MetaData
@@ -61112,8 +61113,6 @@ entities:
     - type: Transform
       pos: 5.5,-13.5
       parent: 31
-    - type: Advertise
-      enabled: False
   - uid: 8738
     components:
     - type: MetaData
@@ -61121,8 +61120,6 @@ entities:
     - type: Transform
       pos: -36.5,-23.5
       parent: 31
-    - type: Advertise
-      enabled: False
   - uid: 9039
     components:
     - type: MetaData
@@ -61130,8 +61127,6 @@ entities:
     - type: Transform
       pos: 35.5,6.5
       parent: 31
-    - type: Advertise
-      enabled: False
   - uid: 9328
     components:
     - type: MetaData
@@ -61139,8 +61134,6 @@ entities:
     - type: Transform
       pos: -38.5,-5.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineCola
   entities:
   - uid: 984
@@ -61148,22 +61141,16 @@ entities:
     - type: Transform
       pos: 1.5,21.5
       parent: 31
-    - type: Advertise
-      enabled: False
   - uid: 1229
     components:
     - type: Transform
       pos: -34.5,2.5
       parent: 31
-    - type: Advertise
-      enabled: False
   - uid: 7958
     components:
     - type: Transform
       pos: 25.5,6.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineDetDrobe
   entities:
   - uid: 5653
@@ -61171,8 +61158,6 @@ entities:
     - type: Transform
       pos: -16.5,-37.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineDinnerware
   entities:
   - uid: 990
@@ -61182,8 +61167,6 @@ entities:
     - type: Transform
       pos: -13.5,1.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineEngiDrobe
   entities:
   - uid: 3283
@@ -61191,8 +61174,6 @@ entities:
     - type: Transform
       pos: 35.5,0.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineEngivend
   entities:
   - uid: 1256
@@ -61207,8 +61188,6 @@ entities:
     - type: Transform
       pos: 5.5,-16.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineGeneDrobe
   entities:
   - uid: 7343
@@ -61216,8 +61195,6 @@ entities:
     - type: Transform
       pos: 8.5,-13.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineHappyHonk
   entities:
   - uid: 4174
@@ -61225,8 +61202,6 @@ entities:
     - type: Transform
       pos: -9.5,-4.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineHydrobe
   entities:
   - uid: 4126
@@ -61234,8 +61209,6 @@ entities:
     - type: Transform
       pos: -14.5,-6.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineJaniDrobe
   entities:
   - uid: 2007
@@ -61243,8 +61216,6 @@ entities:
     - type: Transform
       pos: -19.5,-10.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineMedical
   entities:
   - uid: 1148
@@ -61252,15 +61223,11 @@ entities:
     - type: Transform
       pos: 14.5,-11.5
       parent: 31
-    - type: Advertise
-      enabled: False
   - uid: 7277
     components:
     - type: Transform
       pos: 12.5,-7.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineMediDrobe
   entities:
   - uid: 1143
@@ -61268,8 +61235,6 @@ entities:
     - type: Transform
       pos: 24.5,-4.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineNutri
   entities:
   - uid: 7436
@@ -61277,8 +61242,6 @@ entities:
     - type: Transform
       pos: -15.5,-8.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineRestockBooze
   entities:
   - uid: 10691
@@ -61293,8 +61256,6 @@ entities:
     - type: Transform
       pos: -3.5,-25.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineRobotics
   entities:
   - uid: 9607
@@ -61302,8 +61263,6 @@ entities:
     - type: Transform
       pos: 0.5,-24.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineSalvage
   entities:
   - uid: 6858
@@ -61318,8 +61277,6 @@ entities:
     - type: Transform
       pos: -8.5,-23.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineSec
   entities:
   - uid: 7834
@@ -61327,8 +61284,6 @@ entities:
     - type: Transform
       pos: -15.5,13.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineSecDrobe
   entities:
   - uid: 474
@@ -61336,8 +61291,6 @@ entities:
     - type: Transform
       pos: -9.5,17.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineSeeds
   entities:
   - uid: 4127
@@ -61345,8 +61298,6 @@ entities:
     - type: Transform
       pos: -17.5,-2.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineSeedsUnlocked
   entities:
   - uid: 5632
@@ -61354,8 +61305,6 @@ entities:
     - type: Transform
       pos: -19.5,9.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineSnack
   entities:
   - uid: 133
@@ -61363,15 +61312,11 @@ entities:
     - type: Transform
       pos: -22.5,0.5
       parent: 31
-    - type: Advertise
-      enabled: False
   - uid: 7959
     components:
     - type: Transform
       pos: 26.5,6.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineSovietSoda
   entities:
   - uid: 7561
@@ -61379,15 +61324,11 @@ entities:
     - type: Transform
       pos: -11.5,-9.5
       parent: 31
-    - type: Advertise
-      enabled: False
   - uid: 9574
     components:
     - type: Transform
       pos: 19.5,-24.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineSustenance
   entities:
   - uid: 7377
@@ -61395,8 +61336,6 @@ entities:
     - type: Transform
       pos: -17.5,11.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineTankDispenserEngineering
   entities:
   - uid: 3946
@@ -61432,8 +61371,6 @@ entities:
     - type: Transform
       pos: -19.5,-4.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineVendomat
   entities:
   - uid: 1227
@@ -61441,15 +61378,11 @@ entities:
     - type: Transform
       pos: -27.5,11.5
       parent: 31
-    - type: Advertise
-      enabled: False
   - uid: 10323
     components:
     - type: Transform
       pos: -15.5,-14.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineViroDrobe
   entities:
   - uid: 2910
@@ -61457,8 +61390,6 @@ entities:
     - type: Transform
       pos: 23.5,-4.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineWinter
   entities:
   - uid: 8281
@@ -61466,8 +61397,6 @@ entities:
     - type: Transform
       pos: -30.5,-7.5
       parent: 31
-    - type: Advertise
-      enabled: False
 - proto: VendingMachineYouTool
   entities:
   - uid: 194
