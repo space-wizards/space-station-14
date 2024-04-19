@@ -1,0 +1,127 @@
+- type: entity
+  parent: DrinkBase
+  id: SqueezeBottle
+  name: squeeze bottle
+  description:
+  components:
+  - type: SqueezeBottle
+    AmountConsumedOnUse: 5
+  - type: Openable
+    closeable: true
+    sound:
+      collection: packetOpenSounds
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/squeeze_bottle.rsi
+    layers:
+      - state: body
+      - state: cap_closed_red
+        map: ["enum.OpenableVisuals.Layer"]
+      - state: fill1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+      - state: front
+        map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: fill
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "cap_open_red"}
+          False: {state: "cap_closed_red"}
+  - type: TrashOnSolutionEmpty
+    solution: drink
+
+- type: entity
+  parent: SqueezeBottle
+  id: SqueezeBottleOfGlue
+  name: bottle of space glue
+  description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+          - ReagentId: SpaceGlue
+            Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/squeeze_bottle.rsi
+    layers:
+      - state: body
+      - state: cap_closed_orange
+        map: ["enum.OpenableVisuals.Layer"]
+      - state: fill1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+      - state: front
+        map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "cap_open_orange"}
+          False: {state: "cap_closed_orange"}
+
+- type: entity
+  parent: SqueezeBottle
+  id: SqueezeBottleOfLube
+  name: bottle of space lube
+  description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+          - ReagentId: SpaceLube
+            Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/squeeze_bottle.rsi
+    layers:
+      - state: body
+      - state: cap_closed_blue
+        map: ["enum.OpenableVisuals.Layer"]
+      - state: fill1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+      - state: front
+        map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "cap_open_blue"}
+          False: {state: "cap_closed_blue"}
+
+- type: entity
+  parent: SqueezeBottle
+  id: CrazyGlue
+  name: CRAZY glue
+  description: A bottle of CRAZY glue manufactured by Honk! Co. Uses a high throughput nozzle for increased flow!
+  components:
+  - type: SqueezeBottle
+    AmountConsumedOnUse: 7.5 # high throughput nozzle
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+          - ReagentId: SpaceGlue
+            Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/crazy_glue_bottle.rsi
+    layers:
+      - state: body_crazy
+      - state: cap_closed_crazy
+        map: ["enum.OpenableVisuals.Layer"]
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "cap_open_crazy"}
+          False: {state: "cap_closed_crazy"}

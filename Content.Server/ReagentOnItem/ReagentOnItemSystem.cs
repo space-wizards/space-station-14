@@ -1,7 +1,6 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Item;
 using Content.Shared.Popups;
-using Robust.Shared.Random;
 using Content.Shared.ReagentOnItem;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Clothing.Components;
@@ -13,7 +12,6 @@ public sealed class ReagentOnItemSystem : EntitySystem
 {
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -54,9 +52,7 @@ public sealed class ReagentOnItemSystem : EntitySystem
                 _popup.PopupEntity(Loc.GetString("non-stick-gloves-reagent-falls-off", ("target", Identity.Entity(item, EntityManager))), item);
             }
 
-            var makeNoise = _random.NextDouble() > .75;
-
-            _puddle.TrySpillAt(item, reagentMixture, out var puddle, makeNoise);
+            _puddle.TrySpillAt(item, reagentMixture, out var puddle, false);
 
             return true;
         }

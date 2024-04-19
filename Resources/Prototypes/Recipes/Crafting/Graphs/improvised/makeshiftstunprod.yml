@@ -10,11 +10,6 @@
               amount: 1
             - material: Cable
               amount: 15
-            - tag: DrinkSpaceGlue
-              name: Drink Space Glue
-              icon:
-                sprite: Objects/Consumable/Drinks/glue-tube.rsi
-                state: icon
             - tag: PowerCellSmall
               name: Power Cell Small
               icon:
