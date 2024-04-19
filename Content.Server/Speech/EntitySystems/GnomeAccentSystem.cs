@@ -22,8 +22,8 @@ public sealed class GnomeAccentSystem : EntitySystem
 
         msg = _replacement.ApplyReplacements(msg, "gnome");
 
-        // replaces g at the start of words with GN
-        msg = Regex.Replace(msg, @"(?<!\w)\bg", "GN", RegexOptions.IgnoreCase);
+        // replaces no at the start of words with GNO, changed from g so words are simpler to read
+        msg = Regex.Replace(msg, @"(?<!\w)\bno", "GNO", RegexOptions.IgnoreCase);
         // replaces certain past tense words with GNOMED 
         msg = Regex.Replace(msg, @"(?<!\w)\bfuck you", "GET GNOMED", RegexOptions.IgnoreCase);
         msg = Regex.Replace(msg, @"(?<!\w)\bshitters", "GNOMERS", RegexOptions.IgnoreCase);
