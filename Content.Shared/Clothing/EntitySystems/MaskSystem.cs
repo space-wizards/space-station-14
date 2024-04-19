@@ -42,6 +42,7 @@ public sealed class MaskSystem : EntitySystem
             return;
 
         mask.IsToggled ^= true;
+        Dirty(uid, mask);
         _actionSystem.SetToggled(mask.ToggleActionEntity, mask.IsToggled);
 
         if (mask.IsToggled)
@@ -77,6 +78,7 @@ public sealed class MaskSystem : EntitySystem
     private void OnFolded(Entity<MaskComponent> ent, ref FoldedEvent args)
     {
         ent.Comp.IsToggled = args.IsFolded;
+        Dirty(ent, ent.Comp);
 
         ToggleMaskComponents(ent.Owner, ent.Comp, ent.Owner);
     }
