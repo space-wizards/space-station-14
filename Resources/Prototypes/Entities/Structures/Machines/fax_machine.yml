@@ -37,6 +37,9 @@
   - type: ApcPowerReceiver
     powerLoad: 250
   - type: Faxecute
+    damage:
+      types:
+        Blunt: 100
   - type: FaxMachine
     paperSlot:
       insertSound: /Audio/Machines/scanning.ogg
@@ -53,6 +56,7 @@
       enum.FaxMachineVisuals.VisualState:
         enum.FaxMachineVisuals.VisualState:
           Printing: { state: printing }
+          Normal: {state: idle}
   - type: ItemSlots
   - type: ContainerContainer
     containers:

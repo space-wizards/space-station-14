@@ -24,7 +24,7 @@ namespace Content.Client.Fax.System
             if (args.Sprite == null)
                 return;
 
-            if (_appearance.TryGetData(uid, FaxMachineVisuals.VisualState, out bool inserted))
+            if (_appearance.TryGetData(uid, FaxMachineVisuals.VisualState, out bool _))
             {
                 args.Sprite.LayerSetState(FaxMachineVisuals.VisualState, component.InsertingState);
             }

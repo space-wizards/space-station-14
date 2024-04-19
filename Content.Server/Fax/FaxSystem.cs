@@ -108,6 +108,7 @@ public sealed class FaxSystem : EntitySystem
         {
             comp.PrintingTimeRemaining -= frameTime;
             UpdateAppearance(uid, comp);
+            Dirty(uid, comp);
 
             var isAnimationEnd = comp.PrintingTimeRemaining <= 0;
             if (isAnimationEnd)
@@ -350,10 +351,9 @@ public sealed class FaxSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (!TryComp<FaxableObjectComponent>(component.PaperSlot.Item, out var faxable))
-            return;
+        if (TryComp<FaxableObjectComponent>(component.PaperSlot.Item, out var faxable))
+            component.InsertingState = faxable.InsertingState;
 
-        component.InsertingState = faxable.InsertingState;
 
         if (component.InsertingTimeRemaining > 0)
         {

@@ -13,13 +13,7 @@ public sealed partial class FaxecuteComponent : Component
     /// <summary>
     /// Type of damage dealt when entity is faxecuted.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public DamageSpecifier Damage = new()
-    {
-        DamageDict = new()
-        {
-            { "Blunt", 100 }
-        }
-    };
+    [DataField(required: true), AutoNetworkedField]
+    public DamageSpecifier Damage = new();
 }
 
