@@ -239,6 +239,7 @@
   - HeadofSecurityNeck
   - HeadofSecurityJumpsuit
   - SecurityBackpack
+  - SecurityBelt
   - HeadofSecurityOuterClothing
   - SecurityShoes
   - Trinkets
@@ -249,6 +250,7 @@
   - WardenHead
   - WardenJumpsuit
   - SecurityBackpack
+  - SecurityBelt
   - WardenOuterClothing
   - SecurityShoes
   - Trinkets
