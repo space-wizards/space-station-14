@@ -34,6 +34,7 @@ public sealed partial class BanPanel : DefaultWindow
     // This is less efficient than just holding a reference to the root control and enumerating children, but you
     // have to know how the controls are nested, which makes the code more complicated.
     private readonly List<CheckBox> _roleCheckboxes = new();
+    private readonly ISawmill _banpanelSawmill;
 
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -69,6 +70,7 @@ public sealed partial class BanPanel : DefaultWindow
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+        _banpanelSawmill = _logManager.GetSawmill("admin.banpanel");
         PlayerList.OnSelectionChanged += OnPlayerSelectionChanged;
         PlayerNameLine.OnFocusExit += _ => OnPlayerNameChanged();
         PlayerCheckbox.OnPressed += _ =>
@@ -189,7 +191,7 @@ public sealed partial class BanPanel : DefaultWindow
             {
                 if (!Enum.TryParse(_cfg.GetCVar(CCVars.DepartmentBanDefaultSeverity), true, out NoteSeverity newSeverity))
                 {
-                    _logManager.GetSawmill("admin.banpanel")
+                        _banpanelSawmill
                         .Warning("Departmental role ban severity could not be parsed from config!");
                     return;
                 }
@@ -211,7 +213,7 @@ public sealed partial class BanPanel : DefaultWindow
 
                 if (!Enum.TryParse(_cfg.GetCVar(CCVars.RoleBanDefaultSeverity), true, out NoteSeverity newSeverity))
                 {
-                    _logManager.GetSawmill("admin.banpanel")
+                    _banpanelSawmill
                         .Warning("Role ban severity could not be parsed from config!");
                     return;
                 }
@@ -403,7 +405,7 @@ public sealed partial class BanPanel : DefaultWindow
                     newSeverity = serverSeverity;
                 else
                 {
-                    _logManager.GetSawmill("admin.banpanel")
+                    _banpanelSawmill
                         .Warning("Server ban severity could not be parsed from config!");
                 }
 
@@ -416,7 +418,7 @@ public sealed partial class BanPanel : DefaultWindow
                     }
                     else
                     {
-                        _logManager.GetSawmill("admin.banpanel")
+                        _banpanelSawmill
                             .Warning("Role ban severity could not be parsed from config!");
                     }
                     break;
