@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Adrian16199
-  changes:
-  - message: Added a straw hat that can be crafted with wheat.
-    type: Add
-  id: 5904
-  time: '2024-02-08T23:17:01.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24997
-- author: Sk1tch
-  changes:
-  - message: Guidebook entries are now alphabetically sorted
-    type: Tweak
-  id: 5905
-  time: '2024-02-08T23:23:35.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24963
 - author: FairlySadPanda
   changes:
   - message: Swapped out the Skelly Vs The Rev art with a new, higher-res version.
@@ -3834,3 +3820,19 @@
   id: 6403
   time: '2024-04-20T06:21:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26783
+- author: Vermidia
+  changes:
+  - message: Most medical roles now can choose to start with nitrile or latex gloves,
+      or a sterile mask in their loadout, Medical Doctors can also start with a nurse
+      hat.
+    type: Add
+  id: 6404
+  time: '2024-04-20T06:22:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27029
+- author: MilenVolf
+  changes:
+  - message: Most crates can now go through plastic flaps.
+    type: Fix
+  id: 6405
+  time: '2024-04-20T06:23:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27137
