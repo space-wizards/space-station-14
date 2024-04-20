@@ -60,6 +60,7 @@
   id: HoPGear
   equipment:
     shoes: ClothingShoesColorBrown
+    eyes: ClothingEyesGlassesCommand
     id: HoPPDA
     gloves: ClothingHandsGlovesHop
     ears: ClothingHeadsetAltCommand

@@ -19,7 +19,7 @@
     jumpsuit: ClothingUniformJumpsuitCentcomOfficial
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatCentcom
-    eyes: ClothingEyesGlassesSunglasses
+    eyes: ClothingEyesGlassesCommand
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterArmorBasic
     id: CentcomPDA
