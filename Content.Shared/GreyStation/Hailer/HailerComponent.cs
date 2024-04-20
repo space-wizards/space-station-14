@@ -1,5 +1,4 @@
 using Content.Shared.Actions;
-using Content.Shared.Dataset;
 using Content.Shared.Inventory;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -23,19 +22,6 @@ public sealed partial class HailerComponent : Component
     public EntityUid? ActionEntity;
 
     /// <summary>
-    /// Sound to play when using the action.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier? Sound;
-
-    /// <summary>
-    /// Sound to play only when emagged.
-    /// Uses the default sound if null.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier? EmaggedSound;
-
-    /// <summary>
     /// The inventory slot flags required for the action to be added.
     /// </summary>
     [DataField]
@@ -51,17 +37,36 @@ public sealed partial class HailerActionEvent : InstantActionEvent
     /// Lines to choose from when out of combat mode and not emagged.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<DatasetPrototype> Normal = string.Empty;
+    public List<HailerLine> Normal = new();
 
     /// <summary>
     /// Lines to choose from when in combat mode and not emagged.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<DatasetPrototype> Combat = string.Empty;
+    public List<HailerLine> Combat = new();
 
     /// <summary>
     /// Lines to choose from when emagged.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<DatasetPrototype> Emagged = string.Empty;
+    public List<HailerLine> Emagged = new();
+}
+
+/// <summary>
+/// A line and sound to be randomly chosen when using the hailer action.
+/// </summary>
+[DataRecord]
+public record struct HailerLine
+{
+    /// <summary>
+    /// Message to say in chat
+    /// </summary>
+    [DataField(required: true)]
+    public string Message;
+
+    /// <summary>
+    /// Sound to be played
+    /// </summary>
+    [DataField(required: true)]
+    public SoundSpecifier Sound;
 }

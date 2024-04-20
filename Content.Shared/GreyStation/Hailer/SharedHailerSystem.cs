@@ -1,10 +1,8 @@
 using Content.Shared.Actions;
 using Content.Shared.Clothing.Components;
 using Content.Shared.CombatMode;
-using Content.Shared.Dataset;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.GreyStation.Hailer;
@@ -15,7 +13,6 @@ namespace Content.Shared.GreyStation.Hailer;
 public abstract class SharedHailerSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
 
     public override void Initialize()
@@ -41,23 +38,15 @@ public abstract class SharedHailerSystem : EntitySystem
 
         args.Handled = true;
 
-        var emagged = HasComp<EmaggedComponent>(ent);
-        var sound = ent.Comp.Sound;
-        if (emagged && ent.Comp.EmaggedSound is {} emagSound)
-            sound = emagSound;
-
-        _audio.PlayPredicted(sound, ent, args.Performer);
-
-        string datasetId;
-        if (emagged)
-            datasetId = args.Emagged;
+        List<HailerLine> lines;
+        if (HasComp<EmaggedComponent>(ent))
+            lines = args.Emagged;
         else if (_combatMode.IsInCombatMode(args.Performer))
-            datasetId = args.Combat;
+            lines = args.Combat;
         else
-            datasetId = args.Normal;
+            lines = args.Normal;
 
-        var dataset = _proto.Index<DatasetPrototype>(datasetId);
-        Say(ent, dataset);
+        Say(ent, lines);
     }
 
     private void OnEmagged(Entity<HailerComponent> ent, ref GotEmaggedEvent args)
@@ -68,7 +57,7 @@ public abstract class SharedHailerSystem : EntitySystem
     /// <summary>
     /// Say the actual random message ingame, only done serverside.
     /// </summary>
-    protected virtual void Say(EntityUid uid, DatasetPrototype dataset)
+    protected virtual void Say(EntityUid uid, List<HailerLine> lines)
     {
     }
 }
