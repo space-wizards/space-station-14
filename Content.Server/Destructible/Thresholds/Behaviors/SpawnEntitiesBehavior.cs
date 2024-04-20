@@ -23,7 +23,10 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         public float Offset { get; set; } = 0.5f;
 
         [DataField("transferForensics")]
-        public bool DoTransferForensics = false;
+        public bool DoTransferForensics;
+
+        [DataField]
+        public bool SpawnInContainer;
 
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
@@ -49,7 +52,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
                     if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.ComponentFactory))
                     {
-                        var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+                        var spawned = SpawnInContainer
+                            ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
+                            : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
                         system.StackSystem.SetCount(spawned, count);
 
                         TransferForensics(spawned, system, owner);
@@ -58,7 +63,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     {
                         for (var i = 0; i < count; i++)
                         {
-                            var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+                            var spawned = SpawnInContainer
+                                ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
+                                : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
 
                             TransferForensics(spawned, system, owner);
                         }

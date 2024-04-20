@@ -1,7 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Damage.Components;
-using Content.Server.Tools.Components;
-using Content.Shared.Item;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;

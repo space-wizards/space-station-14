@@ -1,21 +1,33 @@
 {
-    "version": 1,
-
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from Goonstation at commit https://github.com/goonstation/goonstation/commit/354d9635460c296dc7dce23ab39481dc4de6dc00, signaller2 created by TheShuEd",
-
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "signaller state taken from /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/2c980a1f423f26e990a578bae057d1eca19675ec. inhands & advanced made by Flaregy for Space Station 14. advanced is modified from signaller",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "signaller"
     },
-    "states": [
-        {
-            "name": "signaller",
-            "directions": 1
-        },
-        {
-            "name": "signaller2",
-            "directions": 1
-        }
-    ]
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "advanced"
+    },
+    {
+      "name": "advanced-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "advanced-inhand-right",
+      "directions": 4
+    }
+  ]
 }
