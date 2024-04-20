@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: vero5123
-  changes:
-  - message: fixes mop buckets being indestructible.
-    type: Fix
-  id: 5903
-  time: '2024-02-08T23:15:12.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25001
 - author: Adrian16199
   changes:
   - message: Added a straw hat that can be crafted with wheat.
@@ -3834,3 +3827,10 @@
   id: 6402
   time: '2024-04-20T06:16:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26526
+- author: SoulFN
+  changes:
+  - message: Various types of glass shards now causes diffrent damage
+    type: Tweak
+  id: 6403
+  time: '2024-04-20T06:21:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26783
