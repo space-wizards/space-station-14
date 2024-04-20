@@ -99,7 +99,7 @@ public sealed class PryingSystem : EntitySystem
             // to be marked as handled.
             return true;
 
-        return StartPry(target, user, null, 0.1f, out id); // hand-prying is much slower
+        return StartPry(target, user, null, 0.5f, out id); // hand-prying is half as slow
     }
 
     private bool CanPry(EntityUid target, EntityUid user, out string? message, PryingComponent? comp = null)
