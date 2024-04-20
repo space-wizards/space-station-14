@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Mangohydra
-  changes:
-  - message: New cargo shuttle for fland
-    type: Tweak
-  id: 5899
-  time: '2024-02-07T08:49:06.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25016
 - author: Ilya246
   changes:
   - message: Atmos devices can now be built behind directional windows and on lattice.
@@ -3832,3 +3825,10 @@
   id: 6398
   time: '2024-04-20T02:06:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25971
+- author: ElectroJr
+  changes:
+  - message: Fixed a bug causing the emergency shuttle to not spawn
+    type: Fix
+  id: 6399
+  time: '2024-04-20T02:10:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27144
