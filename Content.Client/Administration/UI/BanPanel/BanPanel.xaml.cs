@@ -96,35 +96,6 @@ public sealed partial class BanPanel : DefaultWindow
         };
         TypeOption.OnItemSelected += args =>
         {
-            NoteSeverity? newSeverity = null;
-            switch (args.Id)
-            {
-                case (int)Types.Server:
-                if (Enum.TryParse(_cfg.GetCVar(CCVars.ServerBanDefaultSeverity), true, out NoteSeverity serverSeverity))
-                    newSeverity = serverSeverity;
-                else
-                {
-                    _logManager.GetSawmill("admin.banpanel")
-                        .Warning("Server ban severity could not be parsed from config!");
-                }
-
-                break;
-                case (int) Types.Role:
-
-                    if (Enum.TryParse(_cfg.GetCVar(CCVars.RoleBanDefaultSeverity), true, out NoteSeverity roleSeverity))
-                    {
-                        newSeverity = roleSeverity;
-                    }
-                    else
-                    {
-                        _logManager.GetSawmill("admin.banpanel")
-                            .Warning("Role ban severity could not be parsed from config!");
-                    }
-                    break;
-            }
-
-            if (newSeverity != null)
-                SeverityOption.SelectId((int) newSeverity.Value);
             TypeOption.SelectId(args.Id);
             OnTypeChanged();
         };
@@ -424,6 +395,35 @@ public sealed partial class BanPanel : DefaultWindow
     {
         TypeOption.ModulateSelfOverride = null;
         Tabs.SetTabVisible((int) TabNumbers.Roles, TypeOption.SelectedId == (int) Types.Role);
+            NoteSeverity? newSeverity = null;
+            switch (TypeOption.SelectedId)
+            {
+                case (int)Types.Server:
+                if (Enum.TryParse(_cfg.GetCVar(CCVars.ServerBanDefaultSeverity), true, out NoteSeverity serverSeverity))
+                    newSeverity = serverSeverity;
+                else
+                {
+                    _logManager.GetSawmill("admin.banpanel")
+                        .Warning("Server ban severity could not be parsed from config!");
+                }
+
+                break;
+                case (int) Types.Role:
+
+                    if (Enum.TryParse(_cfg.GetCVar(CCVars.RoleBanDefaultSeverity), true, out NoteSeverity roleSeverity))
+                    {
+                        newSeverity = roleSeverity;
+                    }
+                    else
+                    {
+                        _logManager.GetSawmill("admin.banpanel")
+                            .Warning("Role ban severity could not be parsed from config!");
+                    }
+                    break;
+            }
+
+            if (newSeverity != null)
+                SeverityOption.SelectId((int) newSeverity.Value);
     }
 
     private void UpdateSubmitEnabled()
