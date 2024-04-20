@@ -86,6 +86,10 @@
       0: Alive
       450: Critical
       500: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      250: 0.7
+      400: 0.5
   #TODO Metabolism: Reimplement this
 #  - type: Metabolizer
 #    solutionOnBody: false
