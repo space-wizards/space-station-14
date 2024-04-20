@@ -1,5 +1,6 @@
 
 using Content.Shared.Actions;
+using Content.Shared.Clothing.Components;
 
 namespace Content.Shared.Clothing;
 
@@ -71,3 +72,9 @@ public readonly record struct ItemMaskToggledEvent(EntityUid Wearer, string? equ
 /// </summary>
 [ByRefEvent]
 public readonly record struct WearerMaskToggledEvent(bool IsToggled);
+
+[ByRefEvent]
+public readonly record struct ClothingGotEquippedEvent(Entity<ClothingComponent> Clothing, EntityUid Wearer);
+
+[ByRefEvent]
+public readonly record struct ClothingGotUnequippedEvent(Entity<ClothingComponent> Clothing, EntityUid Wearer);
