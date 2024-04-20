@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: nikthechampiongr
-  changes:
-  - message: Brig timers display their label properly again.
-    type: Fix
-  id: 5902
-  time: '2024-02-08T23:12:05.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25033
 - author: vero5123
   changes:
   - message: fixes mop buckets being indestructible.
@@ -3834,3 +3827,10 @@
   id: 6401
   time: '2024-04-20T06:10:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26650
+- author: Vermidia
+  changes:
+  - message: You can now bless many more containers with a bible.
+    type: Tweak
+  id: 6402
+  time: '2024-04-20T06:16:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26526
