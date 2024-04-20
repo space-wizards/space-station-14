@@ -300,9 +300,9 @@
   name: loadout-group-janitor-gloves
   minLimit: 0
   loadouts:
-  - JanitorGlovesRubber
-  - JanitorGlovesOrange
-  - JanitorGlovesPurple
+  - JanitorRubberGloves
+  - OrangeGloves
+  - PurpleGloves
 
 - type: loadoutGroup
   id: JanitorOuterClothing
@@ -727,6 +727,8 @@
   name: loadout-group-scientist-head
   minLimit: 0
   loadouts:
+  - RoboticistCap
+  - SkullBandana
   - ScientificBeret
 
 - type: loadoutGroup
@@ -742,6 +744,8 @@
   loadouts:
   - ScientistJumpsuit
   - ScientistJumpskirt
+  - RoboticistJumpsuit
+  - RoboticistJumpskirt
   - SeniorResearcherJumpsuit
   - SeniorResearcherJumpskirt
 
@@ -761,6 +765,8 @@
   - RegularLabCoat
   - ScienceLabCoat
   - ScienceWintercoat
+  - RoboticistLabCoat
+  - RoboticistWintercoat
   - SeniorResearcherLabCoat
 
 - type: loadoutGroup
@@ -768,7 +774,17 @@
   name: loadout-group-scientist-shoes
   loadouts:
   - WhiteShoes
+  - BlackShoes
   - ScienceWinterBoots
+
+- type: loadoutGroup
+  id: ScientistGloves
+  name: loadout-group-scientist-gloves
+  minLimit: 0
+  loadouts:
+  - LatexGloves
+  - PurpleGloves
+  - RobohandsGloves
 
 - type: loadoutGroup
   id: ScientistPDA
@@ -994,6 +1010,7 @@
   - BlueSurgeryCap
   - GreenSurgeryCap
   - PurpleSurgeryCap
+  - NurseHat
 
 - type: loadoutGroup
   id: MedicalDoctorJumpsuit
@@ -1037,6 +1054,21 @@
   loadouts:
   - MedicalDoctorPDA
   - SeniorPhysicianPDA
+
+- type: loadoutGroup
+  id: MedicalGloves
+  name: loadout-group-medical-gloves
+  minLimit: 0
+  loadouts:
+  - LatexGloves
+  - NitrileGloves
+
+- type: loadoutGroup
+  id: MedicalMask
+  name: loadout-group-medical-mask
+  minLimit: 0
+  loadouts:
+  - SterileMask
 
 - type: loadoutGroup
   id: MedicalInternJumpsuit
