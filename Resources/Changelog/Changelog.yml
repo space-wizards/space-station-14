@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Potato1234_x
-  changes:
-  - message: Added laughin' peas, a new mutation for peas that can be ground into
-      Laughter, a chem that forces people to laugh.
-    type: Add
-  id: 5907
-  time: '2024-02-10T08:21:44.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25089
 - author: themias
   changes:
   - message: Soft caps can be flipped backwards with an alt-verb (Flip)
@@ -3836,3 +3828,14 @@
   id: 6406
   time: '2024-04-20T06:26:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27133
+- author: Bhijn and Myr
+  changes:
+  - message: An option to tie your viewport's scaling to your vertical screenspace
+      has been added, enabled by default! In laymen's terms, this means that manual
+      configuration is no longer necessary to avoid letterboxing on aspect ratios
+      tighter than 16:9, as the viewport will now default to cutting off any excess
+      horizontal width instead of letterboxing vertically when the screen is too tight.
+    type: Add
+  id: 6407
+  time: '2024-04-20T06:46:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27061
