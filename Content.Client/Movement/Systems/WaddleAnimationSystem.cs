@@ -1,7 +1,13 @@
 ﻿using System.Numerics;
+using Content.Client.Buckle;
 using Content.Client.Gravity;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Buckle.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared.StatusEffect;
+using Content.Shared.Stunnable;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
@@ -14,6 +20,9 @@ public sealed class WaddleAnimationSystem : EntitySystem
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly GravitySystem _gravity = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly BuckleSystem _buckle = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -21,6 +30,9 @@ public sealed class WaddleAnimationSystem : EntitySystem
         SubscribeLocalEvent<WaddleAnimationComponent, StartedWaddlingEvent>(OnStartedWalking);
         SubscribeLocalEvent<WaddleAnimationComponent, StoppedWaddlingEvent>(OnStoppedWalking);
         SubscribeLocalEvent<WaddleAnimationComponent, AnimationCompletedEvent>(OnAnimationCompleted);
+        SubscribeLocalEvent<WaddleAnimationComponent, StunnedEvent>(OnStunned);
+        SubscribeLocalEvent<WaddleAnimationComponent, KnockedDownEvent>(OnKnockedDown);
+        SubscribeLocalEvent<WaddleAnimationComponent, BuckleChangeEvent>(OnBuckleChange);
     }
 
     private void OnMovementInput(EntityUid entity, WaddleAnimationComponent component, MoveInputEvent args)
@@ -34,8 +46,6 @@ public sealed class WaddleAnimationSystem : EntitySystem
 
         if (!args.HasDirectionalMovement && component.IsCurrentlyWaddling)
         {
-            component.IsCurrentlyWaddling = false;
-
             var stopped = new StoppedWaddlingEvent(entity);
 
             RaiseLocalEvent(entity, ref stopped);
@@ -47,8 +57,6 @@ public sealed class WaddleAnimationSystem : EntitySystem
         if (component.IsCurrentlyWaddling || !args.HasDirectionalMovement)
             return;
 
-        component.IsCurrentlyWaddling = true;
-
         var started = new StartedWaddlingEvent(entity);
 
         RaiseLocalEvent(entity, ref started);
@@ -57,19 +65,25 @@ public sealed class WaddleAnimationSystem : EntitySystem
     private void OnStartedWalking(EntityUid uid, WaddleAnimationComponent component, StartedWaddlingEvent args)
     {
         if (_animation.HasRunningAnimation(uid, component.KeyName))
-        {
             return;
-        }
 
         if (!TryComp<InputMoverComponent>(uid, out var mover))
-        {
             return;
-        }
 
         if (_gravity.IsWeightless(uid))
-        {
             return;
-        }
+
+
+        if (!_actionBlocker.CanMove(uid, mover))
+            return;
+
+        // Do nothing if buckled in
+        if (_buckle.IsBuckled(uid))
+            return;
+
+        // Do nothing if crit or dead (for obvious reasons)
+        if (_mobState.IsIncapacitated(uid))
+            return;
 
         var tumbleIntensity = component.LastStep ? 360 - component.TumbleIntensity : component.TumbleIntensity;
         var len = mover.Sprinting ? component.AnimationLength * component.RunAnimationLengthMultiplier : component.AnimationLength;
@@ -114,6 +128,36 @@ public sealed class WaddleAnimationSystem : EntitySystem
 
     private void OnStoppedWalking(EntityUid uid, WaddleAnimationComponent component, StoppedWaddlingEvent args)
     {
+        StopWaddling(uid, component);
+    }
+
+    private void OnAnimationCompleted(EntityUid uid, WaddleAnimationComponent component, AnimationCompletedEvent args)
+    {
+        var started = new StartedWaddlingEvent(uid);
+
+        RaiseLocalEvent(uid, ref started);
+    }
+
+    private void OnStunned(EntityUid uid, WaddleAnimationComponent component, StunnedEvent args)
+    {
+        StopWaddling(uid, component);
+    }
+
+    private void OnKnockedDown(EntityUid uid, WaddleAnimationComponent component, KnockedDownEvent args)
+    {
+        StopWaddling(uid, component);
+    }
+
+    private void OnBuckleChange(EntityUid uid, WaddleAnimationComponent component, BuckleChangeEvent args)
+    {
+        StopWaddling(uid, component);
+    }
+
+    private void StopWaddling(EntityUid uid, WaddleAnimationComponent component)
+    {
+        if (!component.IsCurrentlyWaddling)
+            return;
+
         _animation.Stop(uid, component.KeyName);
 
         if (!TryComp<SpriteComponent>(uid, out var sprite))
@@ -123,13 +167,7 @@ public sealed class WaddleAnimationSystem : EntitySystem
 
         sprite.Offset = new Vector2();
         sprite.Rotation = Angle.FromDegrees(0);
+
         component.IsCurrentlyWaddling = false;
-    }
-
-    private void OnAnimationCompleted(EntityUid uid, WaddleAnimationComponent component, AnimationCompletedEvent args)
-    {
-        var started = new StartedWaddlingEvent(uid);
-
-        RaiseLocalEvent(uid, ref started);
     }
 }

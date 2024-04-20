@@ -1041,6 +1041,10 @@
   flavor: holy
   color: "#91C3F7"
   metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
     Medicine:
       effects:
       - !type:HealthChange
@@ -1054,6 +1058,16 @@
             Heat: -0.2
             Shock: -0.2
             Cold: -0.2
+  reactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 1
+  tileReactions:
+  - !type:ExtinguishTileReaction { }
 
 - type: reagent
   id: Pyrazine
