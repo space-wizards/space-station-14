@@ -152,5 +152,12 @@ Entries:
   id: 20
   time: '2024-04-09T15:25:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26771
+- author: Aexxie
+  changes:
+  - message: Removed the bartender's roundstart incendiary shells on Meta.
+    type: Remove
+  id: 21
+  time: '2024-04-20T01:06:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27142
 Name: Admin
 Order: 1

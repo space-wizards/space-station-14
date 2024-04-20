@@ -120,12 +120,12 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
             if (_entities.TryGetComponent(hand.HeldEntity, out VirtualItemComponent? virt))
             {
-                handButton.SpriteView.SetEntity(virt.BlockingEntity);
+                handButton.SetEntity(virt.BlockingEntity);
                 handButton.Blocked = true;
             }
             else
             {
-                handButton.SpriteView.SetEntity(hand.HeldEntity);
+                handButton.SetEntity(hand.HeldEntity);
                 handButton.Blocked = false;
             }
         }
@@ -171,12 +171,12 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
         if (_entities.TryGetComponent(entity, out VirtualItemComponent? virt))
         {
-            hand.SpriteView.SetEntity(virt.BlockingEntity);
+            hand.SetEntity(virt.BlockingEntity);
             hand.Blocked = true;
         }
         else
         {
-            hand.SpriteView.SetEntity(entity);
+            hand.SetEntity(entity);
             hand.Blocked = false;
         }
 
@@ -190,7 +190,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         if (hand == null)
             return;
 
-        hand.SpriteView.SetEntity(null);
+        hand.SetEntity(null);
         if (_playerHandsComponent?.ActiveHand?.Name == name)
             HandsGui?.UpdatePanelEntity(null);
     }
