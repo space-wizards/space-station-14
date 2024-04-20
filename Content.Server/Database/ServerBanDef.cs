@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Net;
+using System.Runtime.CompilerServices;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Robust.Shared.Configuration;
@@ -83,7 +84,7 @@ namespace Content.Server.Database
 
             return $"""
                    {loc.GetString("ban-banned-1")}
-                   {loc.GetString("ban-banned-2", ("reason", Reason))}
+                   {loc.GetString("ban-banned-2", ("reason", BanningAdmin.ToString() ?? "Unknown"))}
                    {expires}
                    {loc.GetString("ban-banned-3")}
                    """;
