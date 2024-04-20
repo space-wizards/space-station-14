@@ -71,22 +71,6 @@ public sealed partial class ClothingComponent : Component
     /// </summary>
     public string? InSlot;
 
-    /// <summary>
-    /// Name of the inventory group the clothing is in.
-    /// </summary>
-    public string? InSlotGroup;
-
-    /// <summary>
-    /// <see cref="SlotFlags"/> of the inventory slot the clothing is in.
-    /// </summary>
-    public SlotFlags? InSlotFlags;
-
-    /// <summary>
-    /// Is this clothing item actually being worn,
-    /// as opposed to held in a hand or a pocket?
-    /// </summary>
-    public bool InValidSlot => InSlotFlags != null && (InSlotFlags & Slots) != SlotFlags.NONE;
-
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan EquipDelay = TimeSpan.Zero;
 

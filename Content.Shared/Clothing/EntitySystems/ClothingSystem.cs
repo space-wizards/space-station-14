@@ -119,23 +119,25 @@ public abstract class ClothingSystem : EntitySystem
     protected virtual void OnGotEquipped(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
     {
         component.InSlot = args.Slot;
-        component.InSlotGroup = args.SlotGroup;
-        component.InSlotFlags = args.SlotFlags;
         CheckEquipmentForLayerHide(args.Equipment, args.Equipee);
 
-        var ev = new ClothingGotEquippedEvent((uid, component), args.Equipee);
-        RaiseLocalEvent(uid, ref ev);
+        if ((component.Slots & args.SlotFlags) != SlotFlags.NONE)
+        {
+            var ev = new ClothingGotEquippedEvent(args.Equipee, component);
+            RaiseLocalEvent(uid, ref ev);
+        }
     }
 
     protected virtual void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
     {
-        component.InSlot = null;
-        component.InSlotGroup = null;
-        component.InSlotFlags = null;
-        CheckEquipmentForLayerHide(args.Equipment, args.Equipee);
+        if ((component.Slots & args.SlotFlags) != SlotFlags.NONE)
+        {
+            var ev = new ClothingGotUnequippedEvent(args.Equipee, component);
+            RaiseLocalEvent(uid, ref ev);
+        }
 
-        var ev = new ClothingGotUnequippedEvent((uid, component), args.Equipee);
-        RaiseLocalEvent(uid, ref ev);
+        component.InSlot = null;
+        CheckEquipmentForLayerHide(args.Equipment, args.Equipee);
     }
 
     private void OnGetState(EntityUid uid, ClothingComponent component, ref ComponentGetState args)
