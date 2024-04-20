@@ -124,10 +124,15 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="name">The name of the solution entity to fetch.</param>
     /// <param name="entity">Returns the solution entity that was fetched.</param>
     /// <param name="solution">Returns the solution state of the solution entity that was fetched.</param>
+    /// <param name="errorOnMissingSolution">Should we print an error if the solution specified by name is missing</param>
     /// <returns></returns>
-    public bool TryGetSolution(Entity<SolutionContainerManagerComponent?> container, string? name, [NotNullWhen(true)] out Entity<SolutionComponent>? entity, [NotNullWhen(true)] out Solution? solution)
+    public bool TryGetSolution(Entity<SolutionContainerManagerComponent?> container,
+        string? name,
+        [NotNullWhen(true)] out Entity<SolutionComponent>? entity,
+        [NotNullWhen(true)] out Solution? solution,
+        bool errorOnMissingSolution = false)
     {
-        if (!TryGetSolution(container, name, out entity))
+        if (!TryGetSolution(container, name, out entity, errorOnMissingSolution))
         {
             solution = null;
             return false;
@@ -138,7 +143,11 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <inheritdoc cref="TryGetSolution"/>
-    public bool TryGetSolution(Entity<SolutionContainerManagerComponent?> container, string? name, [NotNullWhen(true)] out Entity<SolutionComponent>? entity)
+    public bool TryGetSolution(Entity<SolutionContainerManagerComponent?> container,
+        string? name,
+        [NotNullWhen(true)] out Entity<SolutionComponent>? entity,
+        bool errorOnMissingSolution = false
+        )
     {
         if (TryComp(container, out BlockSolutionAccessComponent? blocker))
         {
@@ -158,12 +167,18 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         else
         {
             entity = null;
+            if (!errorOnMissingSolution)
+                return false;
+            Log.Error($"{ToPrettyString(container)} does not have a solution with ID: {name}");
             return false;
         }
 
         if (!TryComp(uid, out SolutionComponent? comp))
         {
             entity = null;
+            if (!errorOnMissingSolution)
+                return false;
+            Log.Error($"{ToPrettyString(container)}'s solution entity {ToPrettyString(uid)} does not have a solution Component!");
             return false;
         }
 
@@ -174,13 +189,18 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     /// Version of TryGetSolution that doesn't take or return an entity.
     /// Used for prototypes and with old code parity.
-    public bool TryGetSolution(SolutionContainerManagerComponent container, string name, [NotNullWhen(true)] out Solution? solution)
+    public bool TryGetSolution(SolutionContainerManagerComponent container,
+        string name,
+        [NotNullWhen(true)] out Solution? solution,
+        bool errorOnMissingSolution = false)
     {
         solution = null;
-        if (container.Solutions == null)
-            return false;
+        if (container.Solutions != null)
+            return container.Solutions.TryGetValue(name, out solution);
 
-        return container.Solutions.TryGetValue(name, out solution);
+        Log.Error($"{container} does not have a solution with ID: {name}");
+        return false;
+
     }
 
     public IEnumerable<(string? Name, Entity<SolutionComponent> Solution)> EnumerateSolutions(Entity<SolutionContainerManagerComponent?> container, bool includeSelf = true)

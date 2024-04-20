@@ -301,11 +301,6 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float NormalBodyTemperature = 37f;
 
-        /// <summary>
-        ///     I hereby decree. This is Arbitrary Suck my Dick
-        /// </summary>
-        public const float BreathMolesToReagentMultiplier = 1144;
-
         #region Pipes
 
         /// <summary>
