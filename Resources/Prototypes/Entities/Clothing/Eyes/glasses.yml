@@ -156,6 +156,14 @@
     - WhitelistChameleon
 
 - type: entity
+  parent: ClothingEyesGlassesSunglasses
+  id: ClothingEyesGlassesCommand
+  name: Command glasses
+  description: Upgraded sunglasses sometimes worn by Command Personnel.
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
+
+- type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons]
   id: ClothingEyesGlassesSecurity
   name: security glasses
