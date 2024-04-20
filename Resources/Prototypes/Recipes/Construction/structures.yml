@@ -1729,6 +1729,23 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: secret door assembly
+  id: SolidSecretDoorAssembly
+  graph: SecretDoor
+  startNode: start
+  targetNode: assembly
+  category: construction-category-structures
+  description: Assembly to create a secret door.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/SecretDoors/assembly.rsi
+    state: assembly
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: solid secret door
   id: SolidSecretDoor
   graph: SecretDoor
@@ -1740,7 +1757,177 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/secret_door.rsi
+    sprite: Structures/Doors/SecretDoors/secret_door.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: plastic secret door
+  id: PlasticSecretDoor
+  graph: SecretDoor
+  startNode: start
+  targetNode: plasticSecretDoor
+  category: construction-category-structures
+  description: A secret door for the wall.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/SecretDoors/secret_door_plastic.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: bananium secret door
+  id: BananiumSecretDoor
+  graph: SecretDoor
+  startNode: start
+  targetNode: bananiumSecretDoor
+  category: construction-category-structures
+  description: A secret door for the wall.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/SecretDoors/secret_door_clown.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: clock secret door
+  id: ClockSecretDoor
+  graph: SecretDoor
+  startNode: start
+  targetNode: clockSecretDoor
+  category: construction-category-structures
+  description: A secret door for the wall.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/SecretDoors/secret_door_clock.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: Gold secret door
+  id: GoldSecretDoor
+  graph: SecretDoor
+  startNode: start
+  targetNode: goldSecretDoor
+  category: construction-category-structures
+  description: A secret door for the wall.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/SecretDoors/secret_door_gold.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: meat secret door
+  id: MeatSecretDoor
+  graph: SecretDoor
+  startNode: start
+  targetNode: meatSecretDoor
+  category: construction-category-structures
+  description: A secret door for the wall.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/SecretDoors/secret_door_meat.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: plasma secret door
+  id: PlasmaSecretDoor
+  graph: SecretDoor
+  startNode: start
+  targetNode: plasmaSecretDoor
+  category: construction-category-structures
+  description: A secret door for the wall.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/SecretDoors/secret_door_plasma.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: silver secret door
+  id: SilverSecretDoor
+  graph: SecretDoor
+  startNode: start
+  targetNode: silverSecretDoor
+  category: construction-category-structures
+  description: A secret door for the wall.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/SecretDoors/secret_door_silver.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: uranium secret door
+  id: UraniumSecretDoor
+  graph: SecretDoor
+  startNode: start
+  targetNode: uraniumSecretDoor
+  category: construction-category-structures
+  description: A secret door for the wall.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/SecretDoors/secret_door_uranium.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: wood secret door
+  id: WoodSecretDoor
+  graph: SecretDoor
+  startNode: start
+  targetNode: woodSecretDoor
+  category: construction-category-structures
+  description: A secret door for the wall.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/SecretDoors/secret_door_wood.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: reinforced secret door
+  id: ReinforcedSecretDoor
+  graph: SecretDoor
+  startNode: start
+  targetNode: reinforcedSecretDoor
+  category: construction-category-structures
+  description: A secret door for the wall.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/SecretDoors/secret_door_reinf.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked

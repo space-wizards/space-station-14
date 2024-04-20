@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Nimfar11 (GitHub) for Space Station 14. The sprite was moved to a separate rsi by shampunj (GitHub)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "assembly"
+    }
+  ]
+}
