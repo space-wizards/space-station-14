@@ -86,3 +86,17 @@ public readonly record struct ClothingGotEquippedEvent(EntityUid Wearer, Clothin
 /// </summary>
 [ByRefEvent]
 public readonly record struct ClothingGotUnequippedEvent(EntityUid Wearer, ClothingComponent Clothing);
+
+/// <summary>
+/// Raised on an entity when they equip a clothing item to a valid slot,
+/// as determined by <see cref="ClothingComponent.Slots"/>.
+/// </summary>
+[ByRefEvent]
+public readonly record struct ClothingDidEquippedEvent(Entity<ClothingComponent> Clothing);
+
+/// <summary>
+/// Raised on an entity when they unequip a clothing item from a valid slot,
+/// as determined by <see cref="ClothingComponent.Slots"/>.
+/// </summary>
+[ByRefEvent]
+public readonly record struct ClothingDidUnequippedEvent(Entity<ClothingComponent> Clothing);

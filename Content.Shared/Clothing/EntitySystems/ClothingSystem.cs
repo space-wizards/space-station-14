@@ -123,8 +123,11 @@ public abstract class ClothingSystem : EntitySystem
 
         if ((component.Slots & args.SlotFlags) != SlotFlags.NONE)
         {
-            var ev = new ClothingGotEquippedEvent(args.Equipee, component);
-            RaiseLocalEvent(uid, ref ev);
+            var gotEquippedEvent = new ClothingGotEquippedEvent(args.Equipee, component);
+            RaiseLocalEvent(uid, ref gotEquippedEvent);
+
+            var didEquippedEvent = new ClothingDidEquippedEvent((uid, component));
+            RaiseLocalEvent(args.Equipee, ref didEquippedEvent);
         }
     }
 
@@ -132,8 +135,11 @@ public abstract class ClothingSystem : EntitySystem
     {
         if ((component.Slots & args.SlotFlags) != SlotFlags.NONE)
         {
-            var ev = new ClothingGotUnequippedEvent(args.Equipee, component);
-            RaiseLocalEvent(uid, ref ev);
+            var gotUnequippedEvent = new ClothingGotUnequippedEvent(args.Equipee, component);
+            RaiseLocalEvent(uid, ref gotUnequippedEvent);
+
+            var didUnequippedEvent = new ClothingDidUnequippedEvent((uid, component));
+            RaiseLocalEvent(args.Equipee, ref didUnequippedEvent);
         }
 
         component.InSlot = null;
