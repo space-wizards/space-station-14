@@ -262,6 +262,7 @@
   - SecurityOuterClothing
   - SecurityShoes
   - SecurityPDA
+  - SecurityBelt
   - Trinkets
 
 - type: roleLoadout
@@ -334,7 +335,7 @@
   - MedicalMask
   - ParamedicJumpsuit
   - MedicalGloves
-  - ParamedicBackpack  
+  - ParamedicBackpack
   - ParamedicOuterClothing
   - ParamedicShoes
   - Trinkets
