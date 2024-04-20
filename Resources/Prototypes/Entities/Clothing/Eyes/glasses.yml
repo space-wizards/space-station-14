@@ -160,6 +160,11 @@
   id: ClothingEyesGlassesCommand
   name: Command glasses
   description: Upgraded sunglasses sometimes worn by Command Personnel.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/commandglasses.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/commandglasses.rsi
   - type: ShowJobIcons
   - type: ShowMindShieldIcons
 
