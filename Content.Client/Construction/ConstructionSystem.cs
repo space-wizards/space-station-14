@@ -27,7 +27,7 @@ namespace Content.Client.Construction
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         private readonly Dictionary<int, EntityUid> _ghosts = new();
@@ -196,7 +196,7 @@ namespace Content.Client.Construction
                 return false;
 
             // This InRangeUnobstructed should probably be replaced with "is there something blocking us in that tile?"
-            var predicate = GetPredicate(prototype.CanBuildInImpassable, loc.ToMap(EntityManager));
+            var predicate = GetPredicate(prototype.CanBuildInImpassable, loc.ToMap(EntityManager, _transformSystem));
             if (!_interactionSystem.InRangeUnobstructed(user, loc, 20f, predicate: predicate))
                 return false;
 
@@ -206,7 +206,7 @@ namespace Content.Client.Construction
             ghost = EntityManager.SpawnEntity("constructionghost", loc);
             var comp = EntityManager.GetComponent<ConstructionGhostComponent>(ghost.Value);
             comp.Prototype = prototype;
-            _xformSystem.SetLocalRotation(ghost.Value, dir.ToAngle());
+            EntityManager.GetComponent<TransformComponent>(ghost.Value).LocalRotation = dir.ToAngle();
             _ghosts.Add(ghost.GetHashCode(), ghost.Value);
             var sprite = EntityManager.GetComponent<SpriteComponent>(ghost.Value);
             sprite.Color = new Color(48, 255, 48, 128);

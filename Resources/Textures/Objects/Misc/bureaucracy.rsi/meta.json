@@ -210,6 +210,9 @@
       "name": "paper_stamp-chaplain"
     },
     {
+      "name": "paper_stamp-lawyer"
+    },
+    {
       "name": "paper_stamp-clown"
     },
     {
@@ -217,6 +220,9 @@
     },
     {
       "name": "paper_stamp-deny"
+    },
+    {
+      "name": "paper_stamp-detective"
     },
     {
       "name": "paper_stamp-hop"

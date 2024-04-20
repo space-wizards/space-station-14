@@ -46,7 +46,7 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Metabolizer
-    updateFrequency: 1.5
+    updateInterval: 1.5
 
 - type: entity
   id: OrganArachnidLungs
@@ -60,7 +60,7 @@
       - state: lung-r
   - type: Lung
   - type: Metabolizer
-    updateFrequency: 1.5
+    updateInterval: 1.5
     removeEmpty: true
     solutionOnBody: false
     solution: "Lung"
@@ -92,7 +92,7 @@
   - type: Sprite
     state: heart-on
   - type: Metabolizer
-    updateFrequency: 1.5
+    updateInterval: 1.5
     maxReagents: 2
     metabolizerTypes: [Arachnid]
     groups:
@@ -110,7 +110,7 @@
   - type: Sprite
     state: liver
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
-    updateFrequency: 1.5
+    updateInterval: 1.5
     maxReagents: 1
     metabolizerTypes: [Animal]
     groups:
@@ -130,7 +130,7 @@
       - state: kidney-r
   # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
   - type: Metabolizer
-    updateFrequency: 1.5
+    updateInterval: 1.5
     maxReagents: 5
     metabolizerTypes: [Animal]
     removeEmpty: true

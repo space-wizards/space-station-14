@@ -20,12 +20,11 @@ namespace Content.Client.Verbs
     public sealed class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly ExamineSystem _examineSystem = default!;
+        [Dependency] private readonly ExamineSystem _examine = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
         /// <summary>
         ///     When a user right clicks somewhere, how large is the box we use to get entities for the context menu?
@@ -78,7 +77,7 @@ namespace Content.Client.Verbs
                 bool Predicate(EntityUid e) => e == player || entitiesUnderMouse.Contains(e);
 
                 // first check the general location.
-                if (!_examineSystem.CanExamine(player.Value, targetPos, Predicate))
+                if (!_examine.CanExamine(player.Value, targetPos, Predicate))
                     return false;
 
                 TryComp(player.Value, out ExaminerComponent? examiner);
@@ -87,7 +86,7 @@ namespace Content.Client.Verbs
                 entities = new();
                 foreach (var ent in _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize))
                 {
-                    if (_examineSystem.CanExamine(player.Value, targetPos, Predicate, ent, examiner))
+                    if (_examine.CanExamine(player.Value, targetPos, Predicate, ent, examiner))
                         entities.Add(ent);
                 }
             }
@@ -141,15 +140,16 @@ namespace Content.Client.Verbs
             // Remove any entities that do not have LOS
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
-                var playerPos = _xformSystem.GetMapCoordinates(player.Value);
+                var xformQuery = GetEntityQuery<TransformComponent>();
+                var playerPos = xformQuery.GetComponent(player.Value).MapPosition;
 
                 for (var i = entities.Count - 1; i >= 0; i--)
                 {
                     var entity = entities[i];
 
-                    if (!ExamineSystemShared.InRangeUnOccluded(
+                    if (!_examine.InRangeUnOccluded(
                         playerPos,
-                        _xformSystem.GetMapCoordinates(entity),
+                        xformQuery.GetComponent(entity).MapPosition,
                         ExamineSystemShared.ExamineRange,
                         null))
                     {

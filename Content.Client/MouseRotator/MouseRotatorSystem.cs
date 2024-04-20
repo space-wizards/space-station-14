@@ -37,7 +37,7 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
         if (mapPos.MapId == MapId.Nullspace)
             return;
 
-        var angle = (mapPos.Position - _transform.GetMapCoordinates((player.Value, xform)).Position).ToWorldAngle();
+        var angle = (mapPos.Position - xform.MapPosition.Position).ToWorldAngle();
 
         var curRot = _transform.GetWorldRotation(xform);
 

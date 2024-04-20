@@ -1,0 +1,9 @@
+- type: messagePack
+  id: SyndieDrobeGoodbyes
+  messages:
+  - vending-machine-thanks
+  - thankyou-syndiedrobe-1
+  - thankyou-syndiedrobe-2
+  - thankyou-syndiedrobe-3
+  - thankyou-syndiedrobe-4
+  - thankyou-syndiedrobe-5

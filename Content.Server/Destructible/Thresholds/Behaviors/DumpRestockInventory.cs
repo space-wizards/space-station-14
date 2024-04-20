@@ -44,14 +44,14 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 {
                     var spawned = system.EntityManager.SpawnEntity(entityId, xform.Coordinates.Offset(system.Random.NextVector2(-Offset, Offset)));
                     system.StackSystem.SetCount(spawned, toSpawn);
-                    system.TransformSystem.SetLocalRotation(spawned, system.Random.NextAngle());
+                    system.EntityManager.GetComponent<TransformComponent>(spawned).LocalRotation = system.Random.NextAngle();
                 }
                 else
                 {
                     for (var i = 0; i < toSpawn; i++)
                     {
                         var spawned = system.EntityManager.SpawnEntity(entityId, xform.Coordinates.Offset(system.Random.NextVector2(-Offset, Offset)));
-                        system.TransformSystem.SetLocalRotation(spawned, system.Random.NextAngle());
+                        system.EntityManager.GetComponent<TransformComponent>(spawned).LocalRotation = system.Random.NextAngle();
                     }
                 }
             }

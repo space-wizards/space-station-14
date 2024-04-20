@@ -28,12 +28,12 @@ public sealed partial class StoreWithdrawWindow : DefaultWindow
         IoCManager.InjectDependencies(this);
     }
 
-    public void CreateCurrencyButtons(Dictionary<string, FixedPoint2> balance)
+    public void CreateCurrencyButtons(Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance)
     {
         _validCurrencies.Clear();
         foreach (var currency in balance)
         {
-            if (!_prototypeManager.TryIndex<CurrencyPrototype>(currency.Key, out var proto))
+            if (!_prototypeManager.TryIndex(currency.Key, out var proto))
                 continue;
 
             _validCurrencies.Add(currency.Value, proto);

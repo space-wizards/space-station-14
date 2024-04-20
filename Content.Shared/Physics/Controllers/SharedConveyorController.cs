@@ -3,6 +3,7 @@ using Content.Shared.Conveyor;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
@@ -97,13 +98,13 @@ public abstract class SharedConveyorController : VirtualController
             var itemRelative = conveyorPos - localPos;
 
             localPos += Convey(direction, speed, frameTime, itemRelative);
-            TransformSystem.SetLocalPosition(entity, localPos, transform);
+            transform.LocalPosition = localPos;
 
             // Force it awake for collisionwake reasons.
-            Physics.SetAwake(entity, body, true);
+            Physics.SetAwake((entity, body), true);
             Physics.SetSleepTime(body, 0f);
         }
-        Dirty(comp);
+        Dirty(uid, comp);
     }
 
     private static Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelative)
@@ -146,7 +147,7 @@ public abstract class SharedConveyorController : VirtualController
         EntityQuery<PhysicsComponent> bodyQuery)
     {
         // Check if the thing's centre overlaps the grid tile.
-        var grid = MapManager.GetGrid(xform.GridUid!.Value);
+        var grid = Comp<MapGridComponent>(xform.GridUid!.Value);
         var tile = grid.GetTileRef(xform.Coordinates);
         var conveyorBounds = Lookup.GetLocalBounds(tile, grid.TileSize);
 

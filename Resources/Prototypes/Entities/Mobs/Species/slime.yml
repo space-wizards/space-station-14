@@ -37,7 +37,8 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.60 #per second, scales with pressure and other constants. Slighty more than humans.
+        Blunt: 0.50 #per second, scales with pressure and other constants.
+        Heat: 0.2 # 0.1 more than humans, i feel like low pressure would make slime boil more than blunt stretch them so i decided on this instead.
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -51,7 +52,7 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaled: true
+        scaleByQuantity: true
         damage:
           types:
             Heat: 2

@@ -9,6 +9,7 @@
       drink:
         maxVol: 100
   - type: Drink
+  - type: Shakeable # Doesn't do anything, but I mean...
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution
@@ -41,7 +42,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 7
+        maxVol: 5
   - type: SolutionTransfer
     transferAmount: 10
     minTransferAmount: 10
