@@ -17,6 +17,7 @@ public sealed partial class SlotDefinition
 {
     [DataField("name", required: true)] public string Name { get; private set; } = string.Empty;
     [DataField("slotTexture")] public string TextureName { get; private set; } = "pocket";
+    [DataField] public string FullTextureName { get; private set; } = "SlotBackground";
     [DataField("slotFlags")] public SlotFlags SlotFlags { get; private set; } = SlotFlags.PREVENTEQUIP;
     [DataField("showInWindow")] public bool ShowInWindow { get; private set; } = true;
     [DataField("slotGroup")] public string SlotGroup { get; private set; } = "Default";
