@@ -40,6 +40,10 @@ public sealed partial class ShuttleSystem
     public const float FTLMassLimit = 300f;
 
     // I'm too lazy to make CVars.
+    // >:(
+    // Confusingly, some of them already are cvars?
+    // I.e., shuttle transit time???
+    // TODO Shuttle: fix spaghetti
 
     private readonly SoundSpecifier _startupSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg")
     {
