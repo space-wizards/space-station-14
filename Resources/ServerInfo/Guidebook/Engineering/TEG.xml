@@ -135,7 +135,7 @@
 
   ## Coolant Array
 
-  This is the default method for the Cold Loop you will see on a variety of stations. Being of moderate complexity and having no losses of any resource, this [color=#a4885c]should[/color] be the main method of cooling down the TEG. However, most stations at the moment somehow have their heat exchangers hooked up wrong, (or suggest incorrect piping) reducing efficiency greatly. [color=#444444](Thanks a bunch, NT!)[/color]
+  This is the default method for the Cold Loop you will see on a variety of stations. Being of moderate complexity and having no losses of any resource, this [color=#a4885c]should[/color] be the main method of cooling down the TEG. However, most stations at the moment somehow have their heat exchangers hooked up wrong (or suggest incorrect piping), reducing efficiency greatly. [color=#444444](Thanks a bunch, NT!)[/color]
 
   To use heat-exchangers properly, they must be setup in [color=#a4885c]parallel[/color], not in series (like what you see on most stations). A gas pump at max pressure should be placed after, and a volumetric pump before the heat-exchangers.
   The flow-rate of the volumetric pump should be set using the following formula:
