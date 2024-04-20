@@ -18,6 +18,7 @@
     { "name": "fire_open" },
     { "name": "generic" },
     { "name": "generic_door" },
+    { "name": "generic_icon" },
     { "name": "generic_open" },
     { "name": "gray_door" },
     { "name": "green_door" },

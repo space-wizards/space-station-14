@@ -66,7 +66,10 @@ namespace Content.Shared.Atmos.EntitySystems
         [Serializable, NetSerializable]
         public readonly struct GasOverlayData : IEquatable<GasOverlayData>
         {
+            [ViewVariables]
             public readonly byte FireState;
+
+            [ViewVariables]
             public readonly byte[] Opacity;
 
             // TODO change fire color based on temps

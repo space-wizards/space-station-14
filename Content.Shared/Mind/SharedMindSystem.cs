@@ -26,6 +26,7 @@ public abstract class SharedMindSystem : EntitySystem
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly SharedPlayerSystem _player = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerMan = default!;
 
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
@@ -107,6 +108,7 @@ public abstract class SharedMindSystem : EntitySystem
             TryComp(mindIdValue, out mind))
         {
             DebugTools.Assert(mind.UserId == user);
+
             mindId = mindIdValue;
             return true;
         }
@@ -422,29 +424,26 @@ public abstract class SharedMindSystem : EntitySystem
         return TryComp(mindId, out mind);
     }
 
-    public bool TryGetMind(
-        ContentPlayerData contentPlayer,
-        out EntityUid mindId,
-        [NotNullWhen(true)] out MindComponent? mind)
-    {
-        mindId = contentPlayer.Mind ?? default;
-        return TryComp(mindId, out mind);
-    }
-
+    // TODO MIND make this return a nullable EntityUid or Entity<MindComponent>
     public bool TryGetMind(
         ICommonSession? player,
         out EntityUid mindId,
         [NotNullWhen(true)] out MindComponent? mind)
     {
-        mindId = default;
-        mind = null;
-        if (_player.ContentData(player) is not { } data)
+        if (player == null)
+        {
+            mindId = default;
+            mind = null;
             return false;
+        }
 
-        if (TryGetMind(data, out mindId, out mind))
+        if (TryGetMind(player.UserId, out var mindUid, out mind))
+        {
+            mindId = mindUid.Value;
             return true;
+        }
 
-        DebugTools.AssertNull(data.Mind);
+        mindId = default;
         return false;
     }
 

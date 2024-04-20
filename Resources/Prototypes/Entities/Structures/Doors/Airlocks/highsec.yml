@@ -55,11 +55,13 @@
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
   - type: Weldable
+    fuel: 10
     time: 10
   - type: Airlock
   - type: NavMapDoor
   - type: DoorBolt
   - type: AccessReader
+    containerAccessProvider: board
   - type: Appearance
   - type: WiresVisuals
   - type: ApcPowerReceiver
@@ -80,7 +82,6 @@
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
   - type: Airtight
-    fixVacuum: true
   - type: Occluder
   - type: Damageable
     damageContainer: StructuralInorganic

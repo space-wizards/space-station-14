@@ -5,8 +5,12 @@
   description: A bed that massively slows down the patient's metabolism and prevents bodily decay, allowing more time to administer a proper treatment for stabilization.
   components:
   - type: StasisBed
-    baseMultiplier: 10
   - type: AntiRotOnBuckle
+  - type: HealOnBuckle
+    damage:
+      types:
+        Poison: -0.001
+        Blunt: -0.001
   - type: Sprite
     sprite: Structures/Machines/stasis_bed.rsi
     noRot: true
