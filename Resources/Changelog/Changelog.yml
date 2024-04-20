@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Rainfey
-  changes:
-  - message: Health Analysers now continuously update their UI after scanning a patient
-    type: Tweak
-  id: 5896
-  time: '2024-02-06T13:20:10.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/22449
 - author: ada-please
   changes:
   - message: A Surveillance Camera Monitor Board has been added to the Syndicate Observation
@@ -3834,3 +3827,10 @@
   id: 6395
   time: '2024-04-19T23:22:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26878
+- author: Aquif
+  changes:
+  - message: The Communication Console will no longer cut off your messages.
+    type: Fix
+  id: 6396
+  time: '2024-04-20T01:07:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27145
