@@ -1,28 +1,29 @@
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Content.Client.Tools.Components;
-using Content.Shared.Item;
+using Content.Shared.Tools.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
-using ItemToggleComponent = Content.Shared.Item.ItemToggle.Components.ItemToggleComponent;
 
 namespace Content.Client.Tools.UI;
 
 public sealed class WelderStatusControl : Control
 {
-    [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-    private readonly WelderComponent _parent;
-    private readonly ItemToggleComponent? _toggleComponent;
+    private readonly ToolSystem _tool;
+
+    private readonly Entity<WelderComponent> _parent;
     private readonly RichTextLabel _label;
 
     public WelderStatusControl(Entity<WelderComponent> parent)
     {
+        IoCManager.InjectDependencies(this);
+
         _parent = parent;
-        _entMan = IoCManager.Resolve<IEntityManager>();
-        if (_entMan.TryGetComponent<ItemToggleComponent>(parent, out var itemToggle))
-            _toggleComponent = itemToggle;
+        var entMan = IoCManager.Resolve<IEntityManager>();
+        _tool = entMan.System<ToolSystem>();
+
         _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
         AddChild(_label);
 
@@ -34,28 +35,20 @@ public sealed class WelderStatusControl : Control
     {
         base.FrameUpdate(args);
 
-        if (!_parent.UiUpdateNeeded)
-        {
-            return;
-        }
         Update();
     }
 
     public void Update()
     {
-        _parent.UiUpdateNeeded = false;
+        if (!_gameTiming.IsFirstTimePredicted)
+            return;
 
-        var fuelCap = _parent.FuelCapacity;
-        var fuel = _parent.Fuel;
-        var lit = false;
-        if (_toggleComponent != null)
-        {
-            lit = _toggleComponent.Activated;
-        }
+        var (fuel, fuelCap) = _tool.GetWelderFuelAndCapacity(_parent, _parent);
+        var lit = _parent.Comp.Enabled;
 
         _label.SetMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
             ("colorName", fuel < fuelCap / 4f ? "darkorange" : "orange"),
-            ("fuelLeft", Math.Round(fuel, 1)),
+            ("fuelLeft", Math.Round(fuel.Float(), 1)),
             ("fuelCapacity", fuelCap),
             ("status", Loc.GetString(lit ? "welder-component-on-examine-welder-lit-message" : "welder-component-on-examine-welder-not-lit-message"))));
     }

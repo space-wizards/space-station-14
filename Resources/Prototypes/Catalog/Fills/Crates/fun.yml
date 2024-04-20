@@ -29,7 +29,7 @@
       - id: PlushieArachind
       - id: PlushiePenguin
       - id: PlushieBlackburna
-        orGroup: PlushiePlyushkina
+      - id: PlushiePlyushkina
 
 - type: entity
   id: CrateFunLizardPlushieBulk
