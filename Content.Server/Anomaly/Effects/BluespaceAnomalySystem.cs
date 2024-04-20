@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Server.Anomaly.Components;
 using Content.Shared.Administration.Logs;
@@ -33,7 +33,7 @@ public sealed class BluespaceAnomalySystem : EntitySystem
     {
         var xformQuery = GetEntityQuery<TransformComponent>();
         var xform = xformQuery.GetComponent(uid);
-        var range = component.MaxShuffleRadius * args.Severity;
+        var range = component.MaxShuffleRadius * args.Severity * args.PowerModifier;
         var mobs = new HashSet<Entity<MobStateComponent>>();
         _lookup.GetEntitiesInRange(xform.Coordinates, range, mobs);
         var allEnts = new ValueList<EntityUid>(mobs.Select(m => m.Owner)) { uid };
@@ -56,7 +56,7 @@ public sealed class BluespaceAnomalySystem : EntitySystem
     {
         var xform = Transform(uid);
         var mapPos = _xform.GetWorldPosition(xform);
-        var radius = component.SupercriticalTeleportRadius;
+        var radius = component.SupercriticalTeleportRadius * args.PowerModifier;
         var gridBounds = new Box2(mapPos - new Vector2(radius, radius), mapPos + new Vector2(radius, radius));
         var mobs = new HashSet<Entity<MobStateComponent>>();
         _lookup.GetEntitiesInRange(xform.Coordinates, component.MaxShuffleRadius, mobs);

@@ -60,7 +60,7 @@ public sealed class GasCanisterSystem : EntitySystem
         if (!Resolve(uid, ref canister, ref transform))
             return;
 
-        var environment = _atmos.GetContainingMixture(uid, false, true);
+        var environment = _atmos.GetContainingMixture((uid, transform), false, true);
 
         if (environment is not null)
             _atmos.Merge(environment, canister.Air);
@@ -168,7 +168,7 @@ public sealed class GasCanisterSystem : EntitySystem
             }
             else
             {
-                var environment = _atmos.GetContainingMixture(uid, false, true);
+                var environment = _atmos.GetContainingMixture(uid, args.Grid, args.Map, false, true);
                 _atmos.ReleaseGasTo(canister.Air, environment, canister.ReleasePressure);
             }
         }
@@ -294,9 +294,17 @@ public sealed class GasCanisterSystem : EntitySystem
     /// <summary>
     /// Returns the gas mixture for the gas analyzer
     /// </summary>
-    private void OnAnalyzed(EntityUid uid, GasCanisterComponent component, GasAnalyzerScanEvent args)
+    private void OnAnalyzed(EntityUid uid, GasCanisterComponent canisterComponent, GasAnalyzerScanEvent args)
     {
-        args.GasMixtures = new Dictionary<string, GasMixture?> { {Name(uid), component.Air} };
+        args.GasMixtures ??= new List<(string, GasMixture?)>();
+        args.GasMixtures.Add((Name(uid), canisterComponent.Air));
+        // if a tank is inserted show it on the analyzer as well
+        if (canisterComponent.GasTankSlot.Item != null)
+        {
+            var tank = canisterComponent.GasTankSlot.Item.Value;
+            var tankComponent = Comp<GasTankComponent>(tank);
+            args.GasMixtures.Add((Name(tank), tankComponent.Air));
+        }
     }
 
     /// <summary>
