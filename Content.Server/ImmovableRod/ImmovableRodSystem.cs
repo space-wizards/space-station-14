@@ -119,7 +119,7 @@ public sealed class ImmovableRodSystem : EntitySystem
                 return;
             }
 
-            _bodySystem.GibBody(ent, body: body, gibOrgans: true);
+            _bodySystem.GibBody(ent, body: body);
             return;
         }
 
