@@ -61,6 +61,24 @@
     jumpsuit: ClothingUniformJumpskirtSec
 
 - type: loadout
+  id: SecurityJumpsuitGrey
+  equipment: SecurityJumpsuitGrey
+
+- type: startingGear
+  id: SecurityJumpsuitGrey
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSecGrey
+
+- type: loadout
+  id: SecurityJumpskirtGrey
+  equipment: SecurityJumpskirtGrey
+
+- type: startingGear
+  id: SecurityJumpskirtGrey
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSecGrey
+
+- type: loadout
   id: SeniorOfficerJumpsuit
   equipment: SeniorOfficerJumpsuit
   effects:
@@ -112,41 +130,52 @@
   equipment:
     back: ClothingBackpackDuffelSecurityFilled
 
+# Outerclothing
 - type: loadout
-  id: SeniorOfficerBackpack
-  equipment: SeniorOfficerBackpack
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorOfficer
+  id: ArmorVest
+  equipment: ArmorVest
 
 - type: startingGear
-  id: SeniorOfficerBackpack
+  id: ArmorVest
   equipment:
-    back: ClothingBackpackSecurityFilled
+    outerClothing: ClothingOuterArmorBasic
 
 - type: loadout
-  id: SeniorOfficerSatchel
-  equipment: SeniorOfficerSatchel
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorOfficer
+  id: ArmorVestSlim
+  equipment: ArmorVestSlim
 
 - type: startingGear
-  id: SeniorOfficerSatchel
+  id: ArmorVestSlim
   equipment:
-    back: ClothingBackpackSatchelSecurityFilled
+    outerClothing: ClothingOuterArmorBasicSlim
 
 - type: loadout
-  id: SeniorOfficerDuffel
-  equipment: SeniorOfficerDuffel
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorOfficer
+  id: SecurityOfficerWintercoat
+  equipment: SecurityOfficerWintercoat
 
 - type: startingGear
-  id: SeniorOfficerDuffel
+  id: SecurityOfficerWintercoat
   equipment:
-    back: ClothingBackpackDuffelSecurityFilled
+    outerClothing: ClothingOuterWinterSec
+
+# Shoes
+- type: loadout
+  id: CombatBoots
+  equipment: CombatBoots
+
+- type: startingGear
+  id: CombatBoots
+  equipment:
+    shoes: ClothingShoesBootsCombatFilled
+
+- type: loadout
+  id: SecurityWinterBoots
+  equipment: SecurityWinterBoots
+
+- type: startingGear
+  id: SecurityWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterSec
 
 # PDA
 - type: loadout
