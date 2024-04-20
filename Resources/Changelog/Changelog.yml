@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: snebl
-  changes:
-  - message: Fixed the glass version of cargo airlock looking like an engineering
-      door when opened.
-    type: Fix
-  id: 5898
-  time: '2024-02-06T19:38:39.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/25003
 - author: Mangohydra
   changes:
   - message: New cargo shuttle for fland
@@ -3833,3 +3825,10 @@
   id: 6397
   time: '2024-04-20T01:14:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27138
+- author: Gyrandola
+  changes:
+  - message: Pepper sprites are now properly centered!
+    type: Fix
+  id: 6398
+  time: '2024-04-20T02:06:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25971
