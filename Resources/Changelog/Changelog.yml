@@ -1,35 +1,4 @@
 ﻿Entries:
-- author: ficcialfaint and deltanedas
-  changes:
-  - message: Criminal records and the console that manages them have been added to
-      the game. They also have a guidebook entry.
-    type: Add
-  id: 5892
-  time: '2024-02-05T23:03:04.754935+00:00'
-  url: null
-- author: themias
-  changes:
-  - message: Outlaw Glasses fully hide your identity again
-    type: Tweak
-  id: 5893
-  time: '2024-02-05T23:23:44.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24971
-- author: Emisse
-  changes:
-  - message: Nonstandard pens now embed again. (explosive pen good again)
-    type: Tweak
-  id: 5894
-  time: '2024-02-05T23:30:06.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24849
-- author: FungiFellow
-  changes:
-  - message: Altered content of several Borg Modules for QoL
-    type: Tweak
-  - message: Removed Gas Analyzer Module
-    type: Remove
-  id: 5895
-  time: '2024-02-05T23:46:39.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24702
 - author: Rainfey
   changes:
   - message: Health Analysers now continuously update their UI after scanning a patient
@@ -3831,3 +3800,37 @@
   id: 6391
   time: '2024-04-18T23:43:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26948
+- author: SlamBamActionman
+  changes:
+  - message: Snouts and noses no longer disappear with toggled masks.
+    type: Fix
+  id: 6392
+  time: '2024-04-19T05:39:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25716
+- author: shampunj
+  changes:
+  - message: 'Now for crafting stunprod you need: igniter, cable cuffs, small power
+      cell, metal rod.'
+    type: Tweak
+  - message: Stunprod deals 35 stamina damage per hit and 5 shock damage. The battery
+      charge is enough for 3 hits.
+    type: Tweak
+  id: 6393
+  time: '2024-04-19T05:50:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25922
+- author: EmoGarbage404
+  changes:
+  - message: Halved passive fuel consumption of welding tools.
+    type: Tweak
+  - message: Completing an action with a welding tool now directly drains the fuel.
+    type: Tweak
+  id: 6394
+  time: '2024-04-19T23:20:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27030
+- author: superjj18
+  changes:
+  - message: Pneumatic cannon inventory reduced in size to 2x2, item blacklist removed
+    type: Tweak
+  id: 6395
+  time: '2024-04-19T23:22:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26878
