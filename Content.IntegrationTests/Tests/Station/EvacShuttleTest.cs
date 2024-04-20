@@ -25,6 +25,9 @@ public sealed class EvacShuttleTest
         var entMan = server.EntMan;
         var ticker = server.System<GameTicker>();
 
+        // Dummy ticker tests should not have centcomm
+        Assert.That(entMan.Count<StationCentcommComponent>(), Is.Zero);
+
         var shuttleEnabled = pair.Server.CfgMan.GetCVar(CCVars.EmergencyShuttleEnabled);
         pair.Server.CfgMan.SetCVar(CCVars.GameMap, "Saltern");
         pair.Server.CfgMan.SetCVar(CCVars.GameDummyTicker, false);
