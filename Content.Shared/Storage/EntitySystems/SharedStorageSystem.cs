@@ -8,7 +8,9 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants.Components;
+using Content.Shared.Input;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Lock;
 using Content.Shared.Materials;
@@ -21,7 +23,9 @@ using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -40,6 +44,7 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] protected readonly SharedEntityStorageSystem EntityStorage = default!;
     [Dependency] private   readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private   readonly InventorySystem _inventory = default!;
     [Dependency] protected readonly SharedItemSystem ItemSystem = default!;
     [Dependency] private   readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private   readonly SharedHandsSystem _sharedHandsSystem = default!;
@@ -104,6 +109,11 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeAllEvent<StorageSaveItemLocationEvent>(OnSaveItemLocation);
 
         SubscribeLocalEvent<StorageComponent, GotReclaimedEvent>(OnReclaimed);
+
+        CommandBinds.Builder
+            .Bind(ContentKeyFunctions.OpenBackpack, InputCmdHandler.FromDelegate(HandleOpenBackpack))
+            .Bind(ContentKeyFunctions.OpenBelt, InputCmdHandler.FromDelegate(HandleOpenBelt))
+            .Register<SharedStorageSystem>();
 
         UpdatePrototypeCache();
     }
@@ -1279,6 +1289,33 @@ public abstract class SharedStorageSystem : EntitySystem
             UpdateAppearance(container.Owner);
             UpdateUI(container.Owner);
         }
+    }
+
+    private void HandleOpenBackpack(ICommonSession? session)
+    {
+        HandleOpenSlotUI(session, "back");
+    }
+
+    private void HandleOpenBelt(ICommonSession? session)
+    {
+        HandleOpenSlotUI(session, "belt");
+    }
+
+    private void HandleOpenSlotUI(ICommonSession? session, string slot)
+    {
+        if (session is not { } playerSession)
+            return;
+
+        if (playerSession.AttachedEntity is not {Valid: true} playerEnt || !Exists(playerEnt))
+            return;
+
+        if (!_inventory.TryGetSlotEntity(playerEnt, slot, out var storageEnt))
+            return;
+
+        if (!ActionBlocker.CanInteract(playerEnt, storageEnt))
+            return;
+
+        OpenStorageUI(storageEnt.Value, playerEnt);
     }
 
     protected void ClearCantFillReasons()
