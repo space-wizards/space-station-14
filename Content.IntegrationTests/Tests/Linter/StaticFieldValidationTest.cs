@@ -45,6 +45,8 @@ public sealed class StaticFieldValidationTest
         Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdListInvalid), protos).Count, Is.EqualTo(2));
         Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdSetInvalid), protos).Count, Is.EqualTo(2));
         Assert.That(protoMan.ValidateStaticFields(typeof(PrivateProtoIdArrayInvalid), protos).Count, Is.EqualTo(2));
+        
+        await pair.CleanReturnAsync();
     }
 
     [TestPrototypes]
