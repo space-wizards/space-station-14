@@ -35,7 +35,8 @@
     solutions:
       beaker:
         maxVol: 30
-        canMix: true
+  - type: MixableSolution
+    solution: beaker
   - type: RefillableSolution
     solution: beaker
   - type: DrainableSolution
