@@ -40,10 +40,6 @@
   - type: Speech
   - type: Hailer
     action: SecurityHailerShout
-    sound:
-      path: /Audio/GreyStation/Voice/halt.ogg
-    emaggedSound:
-      path: /Audio/GreyStation/Voice/binsult.ogg
 
 - type: entity
   parent: ClothingMaskGas
