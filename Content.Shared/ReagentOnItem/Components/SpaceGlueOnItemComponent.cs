@@ -2,12 +2,12 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.ReagentOnItem;
 
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class SpaceGlueOnItemComponent : ReagentOnItemComponent
 {
-    [DataField("timeOfNextCheck", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoPausedField]
     public TimeSpan TimeOfNextCheck;
 
-    [DataField("durationPerUnit"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan DurationPerUnit = TimeSpan.FromSeconds(6);
 }

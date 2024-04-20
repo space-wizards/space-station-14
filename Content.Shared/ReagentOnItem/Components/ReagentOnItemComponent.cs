@@ -3,9 +3,9 @@ namespace Content.Shared.ReagentOnItem;
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class ReagentOnItemComponent : Component
 {
-    [DataField("amountOfReagentLeft"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public double AmountOfReagentLeft;
 
-    [DataField("reagentCapacity")]
+    [DataField]
     public double ReagentCapacity = 15;
 }
