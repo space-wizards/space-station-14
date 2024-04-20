@@ -26,7 +26,7 @@ public sealed partial class TileAtmosCollectionSerializer : ITypeSerializer<Dict
     {
         node.TryGetValue(new ValueDataNode("version"), out var versionNode);
         var version = ((ValueDataNode?) versionNode)?.AsInt() ?? 1;
-        Dictionary<Vector2i, TileAtmosphere> tiles;
+        Dictionary<Vector2i, TileAtmosphere> tiles = new();
 
         // Backwards compatability
         if (version == 1)
@@ -35,8 +35,6 @@ public sealed partial class TileAtmosCollectionSerializer : ITypeSerializer<Dict
 
             var mixies = serializationManager.Read<Dictionary<Vector2i, int>?>(tile2, hookCtx, context);
             var unique = serializationManager.Read<List<GasMixture>?>(node["uniqueMixes"], hookCtx, context);
-
-            tiles = new Dictionary<Vector2i, TileAtmosphere>();
 
             if (unique != null && mixies != null)
             {
@@ -58,15 +56,14 @@ public sealed partial class TileAtmosCollectionSerializer : ITypeSerializer<Dict
         else
         {
             var dataNode = (MappingDataNode) node["data"];
-            var tileNode = (MappingDataNode) dataNode["tiles"];
             var chunkSize = serializationManager.Read<int>(dataNode["chunkSize"], hookCtx, context);
 
-            var unique = serializationManager.Read<List<GasMixture>?>(dataNode["uniqueMixes"], hookCtx, context);
-
-            tiles = new Dictionary<Vector2i, TileAtmosphere>();
+            dataNode.TryGetValue(new ValueDataNode("uniqueMixes"), out var mixNode);
+            var unique = mixNode == null ? null : serializationManager.Read<List<GasMixture>?>(mixNode, hookCtx, context);
 
             if (unique != null)
             {
+                var tileNode = (MappingDataNode) dataNode["tiles"];
                 foreach (var (chunkNode, valueNode) in tileNode)
                 {
                     var chunkOrigin = serializationManager.Read<Vector2i>(chunkNode, hookCtx, context);
@@ -183,13 +180,7 @@ public sealed partial class TileAtmosCollectionSerializer : ITypeSerializer<Dict
         target.Clear();
         foreach (var (key, val) in source)
         {
-            target.Add(key,
-                new TileAtmosphere(
-                    val.GridIndex,
-                    val.GridIndices,
-                    val.Air?.Clone(),
-                    val.Air?.Immutable ?? false,
-                    val.Space));
+            target.Add(key, new TileAtmosphere(val));
         }
     }
 }
