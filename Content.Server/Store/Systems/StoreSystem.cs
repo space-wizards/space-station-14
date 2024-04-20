@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Store.Systems;
 
@@ -26,6 +27,7 @@ public sealed partial class StoreSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<StoreComponent, ActivatableUIOpenAttemptEvent>(OnStoreOpenAttempt);
         SubscribeLocalEvent<CurrencyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StoreComponent, BeforeActivatableUIOpenEvent>(BeforeActivatableUiOpen);
 
@@ -63,6 +65,21 @@ public sealed partial class StoreSystem : EntitySystem
     {
         var ev = new StoreRemovedEvent();
         RaiseLocalEvent(uid, ref ev, true);
+    }
+
+    private void OnStoreOpenAttempt(EntityUid uid, StoreComponent component, ActivatableUIOpenAttemptEvent args)
+    {
+        if (!component.OwnerOnly)
+            return;
+
+        component.AccountOwner ??= args.User;
+        DebugTools.Assert(component.AccountOwner != null);
+
+        if (component.AccountOwner == args.User)
+            return;
+
+        _popup.PopupEntity(Loc.GetString("store-not-account-owner", ("store", uid)), uid, args.User);
+        args.Cancel();
     }
 
     private void OnAfterInteract(EntityUid uid, CurrencyComponent component, AfterInteractEvent args)

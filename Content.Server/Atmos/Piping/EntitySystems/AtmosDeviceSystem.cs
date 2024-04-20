@@ -1,7 +1,9 @@
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.Piping.EntitySystems
 {
@@ -32,6 +34,14 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         public void JoinAtmosphere(Entity<AtmosDeviceComponent> ent)
         {
+            if (ent.Comp.JoinedGrid != null)
+            {
+                DebugTools.Assert(HasComp<GridAtmosphereComponent>(ent.Comp.JoinedGrid));
+                DebugTools.Assert(Transform(ent).GridUid == ent.Comp.JoinedGrid);
+                DebugTools.Assert(ent.Comp.RequireAnchored == Transform(ent).Anchored);
+                return;
+            }
+
             var component = ent.Comp;
             var transform = Transform(ent);
 
@@ -39,7 +49,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
                 return;
 
             // Attempt to add device to a grid atmosphere.
-            bool onGrid = (transform.GridUid != null) && _atmosphereSystem.AddAtmosDevice(transform.GridUid!.Value, component);
+            bool onGrid = (transform.GridUid != null) && _atmosphereSystem.AddAtmosDevice(transform.GridUid!.Value, ent);
 
             if (!onGrid && component.JoinSystem)
             {
@@ -55,7 +65,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         {
             var component = ent.Comp;
             // Try to remove the component from an atmosphere, and if not
-            if (component.JoinedGrid != null && !_atmosphereSystem.RemoveAtmosDevice(component.JoinedGrid.Value, component))
+            if (component.JoinedGrid != null && !_atmosphereSystem.RemoveAtmosDevice(component.JoinedGrid.Value, ent))
             {
                 // The grid might have been removed but not us... This usually shouldn't happen.
                 component.JoinedGrid = null;
@@ -119,9 +129,10 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             _timer -= _atmosphereSystem.AtmosTime;
 
             var time = _gameTiming.CurTime;
-            var ev = new AtmosDeviceUpdateEvent(_atmosphereSystem.AtmosTime);
+            var ev = new AtmosDeviceUpdateEvent(_atmosphereSystem.AtmosTime, null, null);
             foreach (var device in _joinedDevices)
             {
+                DebugTools.Assert(!HasComp<GridAtmosphereComponent>(Transform(device).GridUid));
                 RaiseLocalEvent(device, ref ev);
                 device.Comp.LastProcess = time;
             }

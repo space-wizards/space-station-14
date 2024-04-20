@@ -11,17 +11,16 @@ namespace Content.Client.Lathe.UI;
 public sealed partial class RecipeControl : Control
 {
     public Action<string>? OnButtonPressed;
+    public Func<string> TooltipTextSupplier;
 
-    public string TooltipText;
-
-    public RecipeControl(LatheRecipePrototype recipe, string tooltip, bool canProduce, Texture? texture = null)
+    public RecipeControl(LatheRecipePrototype recipe, Func<string> tooltipTextSupplier, bool canProduce, Texture? texture = null)
     {
         RobustXamlLoader.Load(this);
 
         RecipeName.Text = recipe.Name;
         RecipeTexture.Texture = texture;
         Button.Disabled = !canProduce;
-        TooltipText = tooltip;
+        TooltipTextSupplier = tooltipTextSupplier;
         Button.TooltipSupplier = SupplyTooltip;
 
         Button.OnPressed += (_) =>
@@ -32,6 +31,6 @@ public sealed partial class RecipeControl : Control
 
     private Control? SupplyTooltip(Control sender)
     {
-        return new RecipeTooltip(TooltipText);
+        return new RecipeTooltip(TooltipTextSupplier());
     }
 }

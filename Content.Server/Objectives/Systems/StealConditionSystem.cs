@@ -11,6 +11,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Server.Thief.Components;
+using Content.Shared.Movement.Pulling.Components;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -113,6 +114,25 @@ public sealed class StealConditionSystem : EntitySystem
                 foreach (var ent in nearestEnt)
                 {
                     CheckEntity(ent, condition, ref containerStack, ref count);
+                }
+            }
+        }
+
+        //check pulling object
+        if (TryComp<PullerComponent>(mind.OwnedEntity, out var pull)) //TO DO: to make the code prettier? don't like the repetition
+        {
+            var pulledEntity = pull.Pulling;
+            if (pulledEntity != null)
+            {
+                // check if this is the item
+                if (CheckStealTarget(pulledEntity.Value, condition)) count++;
+
+                //we don't check the inventories of sentient entity
+                if (!HasComp<MindContainerComponent>(pulledEntity))
+                {
+                    // if it is a container check its contents
+                    if (_containerQuery.TryGetComponent(pulledEntity, out var containerManager))
+                        stack.Push(containerManager);
                 }
             }
         }

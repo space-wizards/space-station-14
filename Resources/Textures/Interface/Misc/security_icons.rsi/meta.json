@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/blob/7f654b6e8e59021607a9e888dfeb79920401c372/icons/mob/huds/hud.dmi",
+  "size": {
+    "x": 8,
+    "y": 8
+  },
+  "states": [
+    {
+      "name": "hud_discharged"
+    },
+    {
+      "name": "hud_incarcerated"
+    },
+    {
+      "name": "hud_paroled"
+    },
+    {
+      "name": "hud_suspected"
+    },
+    {
+      "name": "hud_wanted"
+    }
+  ]
+}

@@ -29,12 +29,6 @@ public sealed partial class ThiefRuleComponent : Component
     [DataField]
     public bool PacifistThieves = true;
 
-    /// <summary>
-    /// A chance for this mode to be added to the game.
-    /// </summary>
-    [DataField]
-    public float RuleChance = 1f;
-
     [DataField]
     public ProtoId<AntagPrototype> ThiefPrototypeId = "Thief";
 

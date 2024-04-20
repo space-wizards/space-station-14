@@ -1,0 +1,7 @@
+- type: messagePack
+  id: BoozeOMatGoodbyes
+  messages:
+  - vending-machine-thanks
+  - thankyou-boozeomat-1
+  - thankyou-boozeomat-2
+  - thankyou-boozeomat-3

@@ -1,0 +1,163 @@
+- type: constructionGraph
+  id: PinionAirlock
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: assembly
+      completed:
+      - !type:SetAnchor
+        value: false
+      steps:
+      - material: Brass
+        amount: 4
+        doAfter: 2
+
+  - node: assembly
+    entity: PinionAirlockAssembly
+    actions:
+    - !type:SnapToGrid {}
+    - !type:SetAnchor {}
+    edges:
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: Cable
+        amount: 5
+        doAfter: 2.5
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetBrass1
+        amount: 4
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Welding
+        doAfter: 3
+
+  - node: wired
+    entity: PinionAirlockAssembly
+    edges:
+    - to: electronics
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - tag: DoorElectronics
+        store: board
+        name: "door electronics circuit board"
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "door_electronics"
+        doAfter: 3
+    - to: assembly
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 5
+      steps:
+      - tool: Cutting
+        doAfter: 2.5
+
+  - node: electronics
+    edges:
+    - to: airlock
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - tool: Screwing
+        doAfter: 2.5
+    - to: glassElectronics
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: ClockworkGlass
+        amount: 1
+        doAfter: 2
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 5
+
+  - node: glassElectronics
+    entity: PinionAirlockAssemblyGlass
+    edges:
+    - to: glassAirlock
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: ClockworkGlass
+        amount: 1
+        doAfter: 2
+      - tool: Screwing
+        doAfter: 2.5
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      - !type:SpawnPrototype
+        prototype: SheetClockworkGlass1
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 5
+
+## Glass airlock
+  - node: glassAirlock
+    entity: PinionAirlockGlass
+    doNotReplaceInheritingEntities: true
+    actions:
+    - !type:SetWiresPanelSecurity
+      wiresAccessible: true
+    edges:
+    - to: glassElectronics
+      conditions:
+      - !type:EntityAnchored {}
+      - !type:DoorWelded {}
+      - !type:DoorBolted
+        value: false
+      - !type:WirePanel {}
+      - !type:AllWiresCut
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetClockworkGlass1
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 2
+
+## Standard airlock
+  - node: airlock
+    entity: PinionAirlock
+    doNotReplaceInheritingEntities: true
+    actions:
+    - !type:SetWiresPanelSecurity
+      wiresAccessible: true
+    edges:
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      - !type:DoorWelded {}
+      - !type:DoorBolted
+        value: false
+      - !type:WirePanel {}
+      - !type:AllWiresCut
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 5

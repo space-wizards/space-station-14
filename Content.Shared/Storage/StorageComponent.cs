@@ -33,6 +33,14 @@ namespace Content.Shared.Storage
         public Dictionary<EntityUid, ItemStorageLocation> StoredItems = new();
 
         /// <summary>
+        /// A dictionary storing each saved item to its location in the grid.
+        /// When trying to quick insert an item, if there is an empty location with the same name it will be placed there.
+        /// Multiple items with the same name can be saved, they will be checked individually.
+        /// </summary>
+        [DataField]
+        public Dictionary<string, List<ItemStorageLocation>> SavedLocations = new();
+
+        /// <summary>
         /// A list of boxes that comprise a combined grid that determines the location that items can be stored.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
@@ -47,13 +55,18 @@ namespace Content.Shared.Storage
 
         // TODO: Make area insert its own component.
         [DataField]
-        public bool QuickInsert; // Can insert storables by "attacking" them with the storage entity
+        public bool QuickInsert; // Can insert storables by clicking them with the storage entity
 
         [DataField]
         public bool ClickInsert = true; // Can insert stuff by clicking the storage entity with it
 
+        /// <summary>
+        /// How many entities area pickup can pickup at once.
+        /// </summary>
+        public const int AreaPickupLimit = 10;
+
         [DataField]
-        public bool AreaInsert;  // "Attacking" with the storage entity causes it to insert all nearby storables after a delay
+        public bool AreaInsert; // Clicking with the storage entity causes it to insert all nearby storables after a delay
 
         [DataField]
         public int AreaInsertRadius = 1;
@@ -168,6 +181,20 @@ namespace Content.Shared.Storage
             ItemEnt = itemEnt;
             StorageEnt = storageEnt;
             Location = location;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class StorageSaveItemLocationEvent : EntityEventArgs
+    {
+        public readonly NetEntity Item;
+
+        public readonly NetEntity Storage;
+
+        public StorageSaveItemLocationEvent(NetEntity item, NetEntity storage)
+        {
+            Item = item;
+            Storage = storage;
         }
     }
 

@@ -81,6 +81,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GetPryTimeModifierEvent>(OnPryTimeModifier);
 
+        SubscribeLocalEvent<DoorComponent, OnAttemptEmagEvent>(OnAttemptEmag);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
     }
 
@@ -120,21 +121,32 @@ public abstract partial class SharedDoorSystem : EntitySystem
         _activeDoors.Remove(door);
     }
 
-    private void OnEmagged(EntityUid uid, DoorComponent door, ref GotEmaggedEvent args)
+    private void OnAttemptEmag(EntityUid uid, DoorComponent door, ref OnAttemptEmagEvent args)
     {
         if (!TryComp<AirlockComponent>(uid, out var airlock))
+        {
+            args.Handled = true;
             return;
+        }
 
         if (IsBolted(uid) || !airlock.Powered)
-            return;
-
-        if (door.State == DoorState.Closed)
         {
-            if (!SetState(uid, DoorState.Emagging, door))
-                return;
-            Audio.PlayPredicted(door.SparkSound, uid, args.UserUid, AudioParams.Default.WithVolume(8));
+            args.Handled = true;
+            return;
+        }
+
+        if (door.State != DoorState.Closed)
+        {
             args.Handled = true;
         }
+    }
+
+    private void OnEmagged(EntityUid uid, DoorComponent door, ref GotEmaggedEvent args)
+    {
+        if (!SetState(uid, DoorState.Emagging, door))
+            return;
+        Audio.PlayPredicted(door.SparkSound, uid, args.UserUid, AudioParams.Default.WithVolume(8));
+        args.Handled = true;
     }
 
     #region StateManagement
@@ -370,12 +382,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         if (lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(uid, out var doorBoltComponent))
             SetBoltsDown((uid, doorBoltComponent), !doorBoltComponent.BoltsDown, user, true);
-
-        // I'm not sure what the intent here is/was? It plays a sound if the user is opening a door with a hands
-        // component, but no actual hands!? What!? Is this the sound of them head-butting the door to get it to open??
-        // I'm 99% sure something is wrong here, but I kind of want to keep it this way.
-        if (user != null && (!TryComp(user.Value, out HandsComponent? hands) || hands.Hands.Count == 0))
-            Audio.PlayPredicted(door.TryOpenDoorSound, uid, user, AudioParams.Default.WithVolume(-2));
     }
 
     /// <summary>
