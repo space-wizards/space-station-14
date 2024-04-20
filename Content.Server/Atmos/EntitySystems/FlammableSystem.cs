@@ -422,12 +422,10 @@ namespace Content.Server.Atmos.EntitySystems
                     EnsureComp<IgnitionSourceComponent>(uid);
                     _ignitionSourceSystem.SetIgnited(uid);
 
-                    var damageScale = MathF.Min(  flammable.FireStacks, 5);
-
                     if (TryComp(uid, out TemperatureComponent? temp))
-                        _temperatureSystem.ChangeHeat(uid, 12500 * damageScale, false, temp);
+                        _temperatureSystem.ChangeHeat(uid, 12500 * flammable.FireStacks, false, temp);
 
-                    _damageableSystem.TryChangeDamage(uid, flammable.Damage * damageScale, interruptsDoAfters: false);
+                    _damageableSystem.TryChangeDamage(uid, flammable.Damage * flammable.FireStacks, interruptsDoAfters: false);
 
                     AdjustFireStacks(uid, flammable.FirestackFade * (flammable.Resisting ? 10f : 1f), flammable);
                 }
