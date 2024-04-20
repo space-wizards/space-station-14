@@ -191,7 +191,7 @@ public sealed partial class BanPanel : DefaultWindow
             {
                 if (!Enum.TryParse(_cfg.GetCVar(CCVars.DepartmentBanDefaultSeverity), true, out NoteSeverity newSeverity))
                 {
-                        _banpanelSawmill
+                    _banpanelSawmill
                         .Warning("Departmental role ban severity could not be parsed from config!");
                     return;
                 }
