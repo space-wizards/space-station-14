@@ -4,7 +4,7 @@
   description: Activate your mask's hailer to shout at suspects for you during a chase!
   components:
   - type: InstantAction
-    useDelay: 35
+    useDelay: 15
     event: !type:HailerActionEvent
       normal:
       - message: Stop in the name of the Law.
