@@ -153,6 +153,9 @@ loadout-group-detective-outerclothing = Detective outer clothing
 loadout-group-security-cadet-jumpsuit = Security cadet jumpsuit
 
 # Medical
+loadout-group-medical-gloves = Medical gloves
+loadout-group-medical-mask = Medical mask
+
 loadout-group-chief-medical-officer-head = Chief Medical Officer head
 loadout-group-chief-medical-officer-jumpsuit = Chief Medical Officer jumpsuit
 loadout-group-chief-medical-officer-outerclothing = Chief Medical Officer outer clothing
