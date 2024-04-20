@@ -5,7 +5,7 @@
   description:
   components:
   - type: SqueezeBottle
-    AmountConsumedOnUse: 5
+    amountConsumedOnUse: 5
   - type: Openable
     closeable: true
     sound:
@@ -105,7 +105,7 @@
   description: A bottle of CRAZY glue manufactured by Honk! Co. Uses a high throughput nozzle for increased flow!
   components:
   - type: SqueezeBottle
-    AmountConsumedOnUse: 7.5 # high throughput nozzle
+    amountConsumedOnUse: 7.5 # high throughput nozzle
   - type: SolutionContainerManager
     solutions:
       drink:
