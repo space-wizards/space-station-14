@@ -7,19 +7,21 @@
     - type: Sprite
       sprite: Mobs/Species/Slime/organs.rsi
       state: brain-slime
-    - type: Stomach
-    - type: Metabolizer
-      maxReagents: 3
-      metabolizerTypes: [ Slime ]
-      removeEmpty: true
-      groups:
-        - id: Food
-        - id: Drink
-        - id: Medicine
-        - id: Poison
-        - id: Narcotic
-        - id: Alcohol
-          rateModifier: 0.2
+  #TODO Stomach: Reimplement this
+#    - type: Stomach
+  #TODO Metabolism: Reimplement this
+#    - type: Metabolizer
+#      maxReagents: 3
+#      metabolizerTypes: [ Slime ]
+#      removeEmpty: true
+#      groups:
+#        - id: Food
+#        - id: Drink
+#        - id: Medicine
+#        - id: Poison
+#        - id: Narcotic
+#        - id: Alcohol
+#          rateModifier: 0.2
     - type: SolutionContainerManager
       solutions:
         stomach:
@@ -36,16 +38,18 @@
       layers:
         - state: lung-l-slime
         - state: lung-r-slime
-    - type: Lung
-      alert: LowNitrogen
-    - type: Metabolizer
-      removeEmpty: true
-      solutionOnBody: false
-      solution: "Lung"
-      metabolizerTypes: [ Slime ]
-      groups:
-      - id: Gas
-        rateModifier: 100.0
+  # TODO Lungs: reimplement
+#    - type: Lung
+#      alert: LowNitrogen
+  #TODO Metabolism: Reimplement this
+#    - type: Metabolizer
+#      removeEmpty: true
+#      solutionOnBody: false
+#      solution: "Lung"
+#      metabolizerTypes: [ Slime ]
+#      groups:
+#      - id: Gas
+#        rateModifier: 100.0
     - type: SolutionContainerManager
       solutions:
         organ:

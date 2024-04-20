@@ -119,15 +119,17 @@
     layers:
       - state: lung-l
       - state: lung-r
-  - type: Lung
-  - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
-    metabolizerTypes: [ Human ]
-    groups:
-    - id: Gas
-      rateModifier: 100.0
+  # TODO Lungs: reimplement
+#  - type: Lung
+# TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    removeEmpty: true
+#    solutionOnBody: false
+#    solution: "Lung"
+#    metabolizerTypes: [ Human ]
+#    groups:
+#    - id: Gas
+#      rateModifier: 100.0
   - type: SolutionContainerManager
     solutions:
       organ:
@@ -154,13 +156,14 @@
   # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
   # This is done because these chemicals need to have some effect even if they aren't being filtered out of your body.
   # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
-  - type: Metabolizer
-    maxReagents: 2
-    metabolizerTypes: [Human]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
+#TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    maxReagents: 2
+#    metabolizerTypes: [Human]
+#    groups:
+#    - id: Medicine
+#    - id: Poison
+#    - id: Narcotic
 
 - type: entity
   id: OrganHumanStomach
@@ -179,17 +182,19 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: Stomach
+  #TODO Stomach: Reimplement this
+#  - type: Stomach
   # The stomach metabolizes stuff like foods and drinks.
   # TODO: Have it work off of the ent's solution container, and move this
   # to intestines instead.
-  - type: Metabolizer
-    # mm yummy
-    maxReagents: 3
-    metabolizerTypes: [Human]
-    groups:
-    - id: Food
-    - id: Drink
+#TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    # mm yummy
+#    maxReagents: 3
+#    metabolizerTypes: [Human]
+#    groups:
+#    - id: Food
+#    - id: Drink
 
 - type: entity
   id: OrganHumanLiver
@@ -199,12 +204,13 @@
   components:
   - type: Sprite
     state: liver
-  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
-    maxReagents: 1
-    metabolizerTypes: [Human]
-    groups:
-    - id: Alcohol
-      rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+    #TODO Metabolism: Reimplement this
+#  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+#    maxReagents: 1
+#    metabolizerTypes: [Human]
+#    groups:
+#    - id: Alcohol
+#      rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
 
 - type: entity
   id: OrganHumanKidneys
@@ -217,7 +223,8 @@
       - state: kidney-l
       - state: kidney-r
   # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
-  - type: Metabolizer
-    maxReagents: 5
-    metabolizerTypes: [Human]
-    removeEmpty: true
+#TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    maxReagents: 5
+#    metabolizerTypes: [Human]
+#    removeEmpty: true

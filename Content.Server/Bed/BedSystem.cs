@@ -93,8 +93,9 @@ namespace Content.Server.Bed
             if (!this.IsPowered(uid, EntityManager))
                 return;
 
-            var metabolicEvent = new ApplyMetabolicMultiplierEvent(args.BuckledEntity, component.Multiplier, args.Buckling);
-            RaiseLocalEvent(args.BuckledEntity, ref metabolicEvent);
+            //TODO Metabolism: reimplement this
+            //var metabolicEvent = new ApplyMetabolicMultiplierEvent(args.BuckledEntity, component.Multiplier, args.Buckling);
+            //RaiseLocalEvent(args.BuckledEntity, ref metabolicEvent);
         }
 
         private void OnPowerChanged(EntityUid uid, StasisBedComponent component, ref PowerChangedEvent args)
@@ -118,11 +119,12 @@ namespace Content.Server.Bed
             if (!TryComp<StrapComponent>(uid, out var strap) || strap.BuckledEntities.Count == 0)
                 return;
 
-            foreach (var buckledEntity in strap.BuckledEntities)
-            {
-                var metabolicEvent = new ApplyMetabolicMultiplierEvent(buckledEntity, component.Multiplier, shouldApply);
-                RaiseLocalEvent(buckledEntity, ref metabolicEvent);
-            }
+            //TODO Metabolism: reimplement this
+            // foreach (var buckledEntity in strap.BuckledEntities)
+            // {
+            //     var metabolicEvent = new ApplyMetabolicMultiplierEvent(buckledEntity, component.Multiplier, shouldApply);
+            //     RaiseLocalEvent(buckledEntity, ref metabolicEvent);
+            // }
         }
     }
 }

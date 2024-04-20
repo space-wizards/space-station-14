@@ -296,13 +296,14 @@
     spawned:
       - id: FoodMeat
         amount: 5
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 1.0
-    damageRecovery:
-      types:
-        Asphyxiation: -1.0
+#TODO respiration: reimplement this
+#  - type: Respirator
+#    damage:
+#      types:
+#        Asphyxiation: 1.0
+#    damageRecovery:
+#      types:
+#        Asphyxiation: -1.0
   - type: FireVisuals
     alternateState: Standing
 

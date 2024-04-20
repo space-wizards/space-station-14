@@ -2,9 +2,10 @@
   id: OrganRatLungs
   parent: OrganHumanLungs
   suffix: "rat"
-  components:
-  - type: Metabolizer
-    metabolizerTypes: [ Rat ]
+#  components:
+#TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    metabolizerTypes: [ Rat ]
 
 - type: entity
   id: OrganRatStomach

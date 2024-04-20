@@ -67,14 +67,15 @@
     spawned:
     - id: FoodMeatSlime
       amount: 5
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 0.2
-    damageRecovery:
-      types:
-        Asphyxiation: -1.0
-    maxSaturation: 15
+#TODO respiration: reimplement this
+#  - type: Respirator
+#    damage:
+#      types:
+#        Asphyxiation: 0.2
+#    damageRecovery:
+#      types:
+#        Asphyxiation: -1.0
+#    maxSaturation: 15
 
 - type: entity
   parent: MobHumanDummy

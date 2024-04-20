@@ -2,8 +2,10 @@
   id: OrganVoxLungs
   parent: OrganHumanLungs
   suffix: "vox"
-  components:
-  - type: Metabolizer
-    metabolizerTypes: [ Vox ]
-  - type: Lung
-    alert: LowNitrogen
+#  components:
+#TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    metabolizerTypes: [ Vox ]
+# TODO Lungs: reimplement
+#  - type: Lung
+#    alert: LowNitrogen

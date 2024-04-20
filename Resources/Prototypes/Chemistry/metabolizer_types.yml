@@ -1,6 +1,7 @@
 ﻿# If your species wants to metabolize stuff differently,
 # you'll likely have to tag its metabolizers with something other than Human.
 
+#TODO Metabolism: Remove these and replace with absorptions
 - type: metabolizerType
   id: Animal
   name: animal

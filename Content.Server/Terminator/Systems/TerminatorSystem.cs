@@ -24,7 +24,8 @@ public sealed class TerminatorSystem : EntitySystem
     private void OnMapInit(EntityUid uid, TerminatorComponent comp, MapInitEvent args)
     {
         // cyborg doesn't need to breathe
-        RemComp<RespiratorComponent>(uid);
+        //TODO Respiration: reimplement this
+        // RemComp<RespiratorComponent>(uid);
     }
 
     private void OnSpawned(EntityUid uid, TerminatorComponent comp, GhostRoleSpawnerUsedEvent args)

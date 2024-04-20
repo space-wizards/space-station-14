@@ -77,19 +77,21 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: Stomach
-  - type: Metabolizer
-    maxReagents: 6
-    metabolizerTypes: [ Plant ]
-    removeEmpty: true
-    groups:
-      - id: Food
-      - id: Drink
-      - id: Medicine
-      - id: Poison
-      - id: Narcotic
-      - id: Alcohol
-        rateModifier: 0.1
+#TODO Stomach: Reimplement this
+#  - type: Stomach
+#TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    maxReagents: 6
+#    metabolizerTypes: [ Plant ]
+#    removeEmpty: true
+#    groups:
+#      - id: Food
+#      - id: Drink
+#      - id: Medicine
+#      - id: Poison
+#      - id: Narcotic
+#      - id: Alcohol
+#        rateModifier: 0.1
 
 - type: entity
   id: OrganDionaLungs
@@ -102,15 +104,17 @@
     layers:
       - state: lung-l
       - state: lung-r
-  - type: Lung 
-  - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
-    metabolizerTypes: [ Plant ]
-    groups:
-    - id: Gas
-      rateModifier: 100.0
+  # TODO Lungs: reimplement
+#  - type: Lung
+  #TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    removeEmpty: true
+#    solutionOnBody: false
+#    solution: "Lung"
+#    metabolizerTypes: [ Plant ]
+#    groups:
+#    - id: Gas
+#      rateModifier: 100.0
   - type: SolutionContainerManager
     solutions:
       organ:
@@ -131,7 +135,7 @@
   description: "The source of incredible, unending intelligence. Honk."
   components:
   - type: Brain
-  - type: Nymph # This will make the organs turn into a nymph when they're removed. 
+  - type: Nymph # This will make the organs turn into a nymph when they're removed.
     entityPrototype: OrganDionaNymphBrain
     transferMind: true
 
@@ -170,11 +174,11 @@
 
 - type: entity
   id: OrganDionaNymphStomach
-  parent: MobDionaNymphAccent 
+  parent: MobDionaNymphAccent
   noSpawn: true
   name: diona nymph
   suffix: Stomach
-  description: Contains the stomach of a formerly fully-formed Diona. It doesn't taste any better for it. 
+  description: Contains the stomach of a formerly fully-formed Diona. It doesn't taste any better for it.
   components:
   - type: IsDeadIC
   - type: Body
@@ -186,7 +190,7 @@
   noSpawn: true
   name: diona nymph
   suffix: Lungs
-  description: Contains the lungs of a formerly fully-formed Diona. Breathtaking. 
+  description: Contains the lungs of a formerly fully-formed Diona. Breathtaking.
   components:
   - type: IsDeadIC
   - type: Body

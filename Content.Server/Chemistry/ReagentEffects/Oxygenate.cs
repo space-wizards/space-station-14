@@ -16,10 +16,11 @@ public sealed partial class Oxygenate : ReagentEffect
 
     public override void Effect(ReagentEffectArgs args)
     {
-        if (args.EntityManager.TryGetComponent<RespiratorComponent>(args.SolutionEntity, out var resp))
-        {
-            var respSys = EntitySystem.Get<RespiratorSystem>();
-            respSys.UpdateSaturation(args.SolutionEntity, args.Quantity.Float() * Factor, resp);
-        }
+        //TODO Metabolism: reimplement this
+        // if (args.EntityManager.TryGetComponent<RespiratorComponent>(args.SolutionEntity, out var resp))
+        // {
+        //     var respSys = EntitySystem.Get<RespiratorSystem>();
+        //     respSys.UpdateSaturation(args.SolutionEntity, args.Quantity.Float() * Factor, resp);
+        // }
     }
 }

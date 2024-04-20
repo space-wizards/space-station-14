@@ -57,8 +57,8 @@ public sealed partial class MechSystem : SharedMechSystem
 
 
         SubscribeLocalEvent<MechPilotComponent, ToolUserAttemptUseEvent>(OnToolUseAttempt);
-        SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
-        SubscribeLocalEvent<MechPilotComponent, ExhaleLocationEvent>(OnExhale);
+        // SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
+        // SubscribeLocalEvent<MechPilotComponent, ExhaleLocationEvent>(OnExhale);
         SubscribeLocalEvent<MechPilotComponent, AtmosExposedGetAirEvent>(OnExpose);
 
         SubscribeLocalEvent<MechAirComponent, GetFilterAirEvent>(OnGetFilterAir);
@@ -375,29 +375,30 @@ public sealed partial class MechSystem : SharedMechSystem
     }
 
     #region Atmos Handling
-    private void OnInhale(EntityUid uid, MechPilotComponent component, InhaleLocationEvent args)
-    {
-        if (!TryComp<MechComponent>(component.Mech, out var mech) ||
-            !TryComp<MechAirComponent>(component.Mech, out var mechAir))
-        {
-            return;
-        }
-
-        if (mech.Airtight)
-            args.Gas = mechAir.Air;
-    }
-
-    private void OnExhale(EntityUid uid, MechPilotComponent component, ExhaleLocationEvent args)
-    {
-        if (!TryComp<MechComponent>(component.Mech, out var mech) ||
-            !TryComp<MechAirComponent>(component.Mech, out var mechAir))
-        {
-            return;
-        }
-
-        if (mech.Airtight)
-            args.Gas = mechAir.Air;
-    }
+    //TODO Metabolism: reimplement this
+    // private void OnInhale(EntityUid uid, MechPilotComponent component, InhaleLocationEvent args)
+    // {
+    //     if (!TryComp<MechComponent>(component.Mech, out var mech) ||
+    //         !TryComp<MechAirComponent>(component.Mech, out var mechAir))
+    //     {
+    //         return;
+    //     }
+    //
+    //     if (mech.Airtight)
+    //         args.Gas = mechAir.Air;
+    // }
+    //
+    // private void OnExhale(EntityUid uid, MechPilotComponent component, ExhaleLocationEvent args)
+    // {
+    //     if (!TryComp<MechComponent>(component.Mech, out var mech) ||
+    //         !TryComp<MechAirComponent>(component.Mech, out var mechAir))
+    //     {
+    //         return;
+    //     }
+    //
+    //     if (mech.Airtight)
+    //         args.Gas = mechAir.Air;
+    // }
 
     private void OnExpose(EntityUid uid, MechPilotComponent component, ref AtmosExposedGetAirEvent args)
     {

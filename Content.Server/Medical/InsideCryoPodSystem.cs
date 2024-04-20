@@ -11,8 +11,8 @@ namespace Content.Server.Medical
         {
             base.InitializeInsideCryoPod();
             // Atmos overrides
-            SubscribeLocalEvent<InsideCryoPodComponent, InhaleLocationEvent>(OnInhaleLocation);
-            SubscribeLocalEvent<InsideCryoPodComponent, ExhaleLocationEvent>(OnExhaleLocation);
+            // SubscribeLocalEvent<InsideCryoPodComponent, InhaleLocationEvent>(OnInhaleLocation);
+            // SubscribeLocalEvent<InsideCryoPodComponent, ExhaleLocationEvent>(OnExhaleLocation);
             SubscribeLocalEvent<InsideCryoPodComponent, AtmosExposedGetAirEvent>(OnGetAir);
         }
 
@@ -26,22 +26,22 @@ namespace Content.Server.Medical
                 args.Handled = true;
             }
         }
-
-        private void OnInhaleLocation(EntityUid uid, InsideCryoPodComponent component, InhaleLocationEvent args)
-        {
-            if (TryComp<CryoPodAirComponent>(Transform(uid).ParentUid, out var cryoPodAir))
-            {
-                args.Gas = cryoPodAir.Air;
-            }
-        }
-
-        private void OnExhaleLocation(EntityUid uid, InsideCryoPodComponent component, ExhaleLocationEvent args)
-        {
-            if (TryComp<CryoPodAirComponent>(Transform(uid).ParentUid, out var cryoPodAir))
-            {
-                args.Gas = cryoPodAir.Air;
-            }
-        }
+        //TODO Metabolism: reimplement this
+        // private void OnInhaleLocation(EntityUid uid, InsideCryoPodComponent component, InhaleLocationEvent args)
+        // {
+        //     if (TryComp<CryoPodAirComponent>(Transform(uid).ParentUid, out var cryoPodAir))
+        //     {
+        //         args.Gas = cryoPodAir.Air;
+        //     }
+        // }
+        //
+        // private void OnExhaleLocation(EntityUid uid, InsideCryoPodComponent component, ExhaleLocationEvent args)
+        // {
+        //     if (TryComp<CryoPodAirComponent>(Transform(uid).ParentUid, out var cryoPodAir))
+        //     {
+        //         args.Gas = cryoPodAir.Air;
+        //     }
+        // }
 
         #endregion
     }

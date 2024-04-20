@@ -28,7 +28,7 @@ public sealed class BodySystem : SharedBodySystem
         base.Initialize();
 
         SubscribeLocalEvent<BodyComponent, MoveInputEvent>(OnRelayMoveInput);
-        SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+        // SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
     }
 
     private void OnRelayMoveInput(Entity<BodyComponent> ent, ref MoveInputEvent args)
@@ -47,15 +47,15 @@ public sealed class BodySystem : SharedBodySystem
         }
     }
 
-    private void OnApplyMetabolicMultiplier(
-        Entity<BodyComponent> ent,
-        ref ApplyMetabolicMultiplierEvent args)
-    {
-        foreach (var organ in GetBodyOrgans(ent, ent))
-        {
-            RaiseLocalEvent(organ.Id, ref args);
-        }
-    }
+    // private void OnApplyMetabolicMultiplier(
+    //     Entity<BodyComponent> ent,
+    //     ref ApplyMetabolicMultiplierEvent args)
+    // {
+    //     foreach (var organ in GetBodyOrgans(ent, ent))
+    //     {
+    //         RaiseLocalEvent(organ.Id, ref args);
+    //     }
+    // }
 
     protected override void AddPart(
         Entity<BodyComponent?> bodyEnt,

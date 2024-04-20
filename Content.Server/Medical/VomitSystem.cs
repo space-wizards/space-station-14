@@ -37,8 +37,9 @@ namespace Content.Server.Medical
         public void Vomit(EntityUid uid, float thirstAdded = -40f, float hungerAdded = -40f)
         {
             // Main requirement: You have a stomach
-            var stomachList = _body.GetBodyOrganComponents<StomachComponent>(uid);
-            if (stomachList.Count == 0)
+            //TODO Digestion: Re-Implement this
+            // var stomachList = _body.GetBodyOrganComponents<StomachComponent>(uid);
+            // if (stomachList.Count == 0)
                 return;
 
             // Vomiting makes you hungrier and thirstier
@@ -58,15 +59,16 @@ namespace Content.Server.Medical
             var solution = new Solution();
 
             // Empty the stomach out into it
-            foreach (var stomach in stomachList)
-            {
-                if (_solutionContainer.ResolveSolution(stomach.Comp.Owner, StomachSystem.DefaultSolutionName, ref stomach.Comp.Solution, out var sol))
-                {
-                    solution.AddSolution(sol, _proto);
-                    sol.RemoveAllSolution();
-                    _solutionContainer.UpdateChemicals(stomach.Comp.Solution.Value);
-                }
-            }
+            //TODO Digestion: Re-Implement this
+            // foreach (var stomach in stomachList)
+            // {
+            //     if (_solutionContainer.ResolveSolution(stomach.Comp.Owner, StomachSystem.DefaultSolutionName, ref stomach.Comp.Solution, out var sol))
+            //     {
+            //         solution.AddSolution(sol, _proto);
+            //         sol.RemoveAllSolution();
+            //         _solutionContainer.UpdateChemicals(stomach.Comp.Solution.Value);
+            //     }
+            // }
             // Adds a tiny amount of the chem stream from earlier along with vomit
             if (TryComp<BloodstreamComponent>(uid, out var bloodStream))
             {

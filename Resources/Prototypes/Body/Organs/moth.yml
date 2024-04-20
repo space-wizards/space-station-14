@@ -3,11 +3,12 @@
   parent: [OrganAnimalStomach, OrganHumanStomach]
   noSpawn: true
   components:
-  - type: Stomach
-    specialDigestible:
-      tags:
-      - ClothMade
-      - Paper
+#TODO Stomach: Reimplement this
+#  - type: Stomach
+#    specialDigestible:
+#      tags:
+#      - ClothMade
+#      - Paper
   - type: SolutionContainerManager
     solutions:
       stomach:
@@ -17,10 +18,11 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: Metabolizer
-    maxReagents: 3
-    metabolizerTypes: [ Moth ]
-    removeEmpty: true
-    groups:
-      - id: Food
-      - id: Drink
+#TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    maxReagents: 3
+#    metabolizerTypes: [ Moth ]
+#    removeEmpty: true
+#    groups:
+#      - id: Food
+#      - id: Drink

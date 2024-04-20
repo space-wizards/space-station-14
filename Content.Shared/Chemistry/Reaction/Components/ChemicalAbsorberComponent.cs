@@ -24,6 +24,20 @@ public sealed partial class ChemicalAbsorberComponent : Component
     public List<string> LinkedSolutions = new();
 
     /// <summary>
+    /// The entity that contains the solution we want to transfer our absorbed reagents to.
+    /// If this is null then the reagents are simply deleted.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? TransferTargetEntity = null;
+
+    /// <summary>
+    /// SolutionId for our target solution
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string TransferTargetSolutionId = "Bloodstream";
+
+
+    /// <summary>
     /// List of absorption groups, these will be split into single/multi-reagent absorptions and then sorted by priortiy
     /// with multi-reagent absorptions being checked FIRST.
     /// And their reaction rate multipliers

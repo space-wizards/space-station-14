@@ -3,11 +3,12 @@
   name: Urist McCookie
   parent: BaseMobGingerbread
   id: MobGingerbread
-  components:
-    - type: Respirator
-      damage:
-        types:
-          Asphyxiation: 0.5
-      damageRecovery:
-        types:
-          Asphyxiation: -1.0
+#  components:
+  #TODO respiration: reimplement this
+#    - type: Respirator
+#      damage:
+#        types:
+#          Asphyxiation: 0.5
+#      damageRecovery:
+#        types:
+#          Asphyxiation: -1.0

@@ -2,17 +2,19 @@
   id: OrganDwarfHeart
   parent: OrganHumanHeart
   name: dwarf heart
-  components:
-  - type: Metabolizer
-    metabolizerTypes: [Dwarf]
+#  components:
+#TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    metabolizerTypes: [Dwarf]
 
 - type: entity
   id: OrganDwarfLiver
   parent: OrganHumanLiver
   name: dwarf liver
-  components:
-  - type: Metabolizer
-    metabolizerTypes: [Dwarf]
+#  components:
+#TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    metabolizerTypes: [Dwarf]
 
 - type: entity
   id: OrganDwarfStomach
@@ -31,8 +33,10 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: Stomach
-  - type: Metabolizer
-    # mm very yummy
-    maxReagents: 5
-    metabolizerTypes: [Dwarf]
+  #TODO Stomach: Reimplement this
+#  - type: Stomach
+    #TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    # mm very yummy
+#    maxReagents: 5
+#    metabolizerTypes: [Dwarf]

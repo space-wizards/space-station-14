@@ -10,13 +10,14 @@
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi # It was like this beforehand, no idea why.
     state: full
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 2
-    damageRecovery:
-      types:
-        Asphyxiation: -1.0
+  #TODO respiration: reimplement this
+#  - type: Respirator
+#    damage:
+#      types:
+#        Asphyxiation: 2
+#    damageRecovery:
+#      types:
+#        Asphyxiation: -1.0
   - type: Sprite
     noRot: true
     drawdepth: Mobs

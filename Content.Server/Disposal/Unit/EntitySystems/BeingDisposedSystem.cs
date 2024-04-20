@@ -10,8 +10,8 @@ public sealed class BeingDisposedSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BeingDisposedComponent, InhaleLocationEvent>(OnInhaleLocation);
-        SubscribeLocalEvent<BeingDisposedComponent, ExhaleLocationEvent>(OnExhaleLocation);
+        // SubscribeLocalEvent<BeingDisposedComponent, InhaleLocationEvent>(OnInhaleLocation);
+        // SubscribeLocalEvent<BeingDisposedComponent, ExhaleLocationEvent>(OnExhaleLocation);
         SubscribeLocalEvent<BeingDisposedComponent, AtmosExposedGetAirEvent>(OnGetAir);
     }
 
@@ -23,20 +23,20 @@ public sealed class BeingDisposedSystem : EntitySystem
             args.Handled = true;
         }
     }
-
-    private void OnInhaleLocation(EntityUid uid, BeingDisposedComponent component, InhaleLocationEvent args)
-    {
-        if (TryComp<DisposalHolderComponent>(component.Holder, out var holder))
-        {
-            args.Gas = holder.Air;
-        }
-    }
-
-    private void OnExhaleLocation(EntityUid uid, BeingDisposedComponent component, ExhaleLocationEvent args)
-    {
-        if (TryComp<DisposalHolderComponent>(component.Holder, out var holder))
-        {
-            args.Gas = holder.Air;
-        }
-    }
+    //TODO Metabolism: reimplement this
+    // private void OnInhaleLocation(EntityUid uid, BeingDisposedComponent component, InhaleLocationEvent args)
+    // {
+    //     if (TryComp<DisposalHolderComponent>(component.Holder, out var holder))
+    //     {
+    //         args.Gas = holder.Air;
+    //     }
+    // }
+    //
+    // private void OnExhaleLocation(EntityUid uid, BeingDisposedComponent component, ExhaleLocationEvent args)
+    // {
+    //     if (TryComp<DisposalHolderComponent>(component.Holder, out var holder))
+    //     {
+    //         args.Gas = holder.Air;
+    //     }
+    // }
 }

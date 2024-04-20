@@ -53,7 +53,8 @@ public sealed class FoodSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly StackSystem _stack = default!;
-    [Dependency] private readonly StomachSystem _stomach = default!;
+    //TODO Digestion: Re-Implement this
+    //[Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly UtensilSystem _utensil = default!;
 
     public const float MaxFeedDistance = 1.0f;
@@ -114,12 +115,14 @@ public sealed class FoodSystem : EntitySystem
         if (!_solutionContainer.TryGetSolution(food, foodComp.Solution, out _, out var foodSolution))
             return (false, false);
 
-        if (!_body.TryGetBodyOrganComponents<StomachComponent>(target, out var stomachs, body))
-            return (false, false);
+        //TODO Digestion: Re-Implement this
+        // if (!_body.TryGetBodyOrganComponents<StomachComponent>(target, out var stomachs, body))
+        //     return (false, false);
 
         // Check for special digestibles
-        if (!IsDigestibleBy(food, foodComp, stomachs))
-            return (false, false);
+        //TODO Digestion: Re-Implement this
+        // if (!IsDigestibleBy(food, foodComp, stomachs))
+        //     return (false, false);
 
         if (!TryGetRequiredUtensils(user, foodComp, out _))
             return (false, false);
@@ -202,8 +205,9 @@ public sealed class FoodSystem : EntitySystem
         if (!TryComp<BodyComponent>(args.Target.Value, out var body))
             return;
 
-        if (!_body.TryGetBodyOrganComponents<StomachComponent>(args.Target.Value, out var stomachs, body))
-            return;
+        //TODO Digestion: Re-Implement this
+        // if (!_body.TryGetBodyOrganComponents<StomachComponent>(args.Target.Value, out var stomachs, body))
+        //     return;
 
         if (args.Used is null || !_solutionContainer.TryGetSolution(args.Used.Value, args.Solution, out var soln, out var solution))
             return;
@@ -229,33 +233,36 @@ public sealed class FoodSystem : EntitySystem
         //TODO: Get the stomach UID somehow without nabbing owner
         // Get the stomach with the highest available solution volume
         var highestAvailable = FixedPoint2.Zero;
-        StomachComponent? stomachToUse = null;
-        foreach (var (stomach, _) in stomachs)
-        {
-            var owner = stomach.Owner;
-            if (!_stomach.CanTransferSolution(owner, split, stomach))
-                continue;
-
-            if (!_solutionContainer.ResolveSolution(owner, StomachSystem.DefaultSolutionName, ref stomach.Solution, out var stomachSol))
-                continue;
-
-            if (stomachSol.AvailableVolume <= highestAvailable)
-                continue;
-
-            stomachToUse = stomach;
-            highestAvailable = stomachSol.AvailableVolume;
-        }
+        //TODO Digestion: Re-Implement this
+        // StomachComponent? stomachToUse = null;
+        // foreach (var (stomach, _) in stomachs)
+        // {
+        //     var owner = stomach.Owner;
+        //     if (!_stomach.CanTransferSolution(owner, split, stomach))
+        //         continue;
+        //
+        //     if (!_solutionContainer.ResolveSolution(owner, StomachSystem.DefaultSolutionName, ref stomach.Solution, out var stomachSol))
+        //         continue;
+        //
+        //     if (stomachSol.AvailableVolume <= highestAvailable)
+        //         continue;
+        //
+        //     stomachToUse = stomach;
+        //     highestAvailable = stomachSol.AvailableVolume;
+        // }
 
         // No stomach so just popup a message that they can't eat.
-        if (stomachToUse == null)
-        {
+        //TODO Digestion: Re-Implement this
+        // if (stomachToUse == null)
+        // {
             _solutionContainer.TryAddSolution(soln.Value, split);
             _popup.PopupEntity(forceFeed ? Loc.GetString("food-system-you-cannot-eat-any-more-other") : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Target.Value, args.User);
             return;
-        }
+        // }
 
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
-        _stomach.TryTransferSolution(stomachToUse.Owner, split, stomachToUse);
+        //TODO Digestion: Re-Implement this
+        // _stomach.TryTransferSolution(stomachToUse.Owner, split, stomachToUse);
 
         var flavors = args.FlavorMessage;
 
@@ -345,9 +352,9 @@ public sealed class FoodSystem : EntitySystem
     {
         if (entity.Owner == ev.User ||
             !ev.CanInteract ||
-            !ev.CanAccess ||
-            !TryComp<BodyComponent>(ev.User, out var body) ||
-            !_body.TryGetBodyOrganComponents<StomachComponent>(ev.User, out var stomachs, body))
+            !ev.CanAccess ||    //TODO Digestion: Re-Implement this
+            !TryComp<BodyComponent>(ev.User, out var body) )//||
+            // !_body.TryGetBodyOrganComponents<StomachComponent>(ev.User, out var stomachs, body))
             return;
 
         // have to kill mouse before eating it
@@ -355,8 +362,9 @@ public sealed class FoodSystem : EntitySystem
             return;
 
         // only give moths eat verb for clothes since it would just fail otherwise
-        if (!IsDigestibleBy(entity, entity.Comp, stomachs))
-            return;
+        //TODO Digestion: Re-Implement this
+        // if (!IsDigestibleBy(entity, entity.Comp, stomachs))
+        //     return;
 
         var user = ev.User;
         AlternativeVerb verb = new()
@@ -381,42 +389,45 @@ public sealed class FoodSystem : EntitySystem
         if (!Resolve(food, ref foodComp, false))
             return false;
 
-        if (!_body.TryGetBodyOrganComponents<StomachComponent>(uid, out var stomachs))
-            return false;
+        //TODO Digestion: Re-Implement this
+        // if (!_body.TryGetBodyOrganComponents<StomachComponent>(uid, out var stomachs))
+        //     return false;
 
-        return IsDigestibleBy(food, foodComp, stomachs);
+        //return IsDigestibleBy(food, foodComp, stomachs);
+        return false;
     }
 
     /// <summary>
     ///     Returns true if <paramref name="stomachs"/> has a <see cref="StomachComponent.SpecialDigestible"/> that whitelists
     ///     this <paramref name="food"/> (or if they even have enough stomachs in the first place).
     /// </summary>
-    private bool IsDigestibleBy(EntityUid food, FoodComponent component, List<(StomachComponent, OrganComponent)> stomachs)
-    {
-        var digestible = true;
-
-        // Does the mob have enough stomachs?
-        if (stomachs.Count < component.RequiredStomachs)
-            return false;
-
-        // Run through the mobs' stomachs
-        foreach (var (comp, _) in stomachs)
-        {
-            // Find a stomach with a SpecialDigestible
-            if (comp.SpecialDigestible == null)
-                continue;
-            // Check if the food is in the whitelist
-            if (comp.SpecialDigestible.IsValid(food, EntityManager))
-                return true;
-            // They can only eat whitelist food and the food isn't in the whitelist. It's not edible.
-            return false;
-        }
-
-        if (component.RequiresSpecialDigestion)
-            return false;
-
-        return digestible;
-    }
+    //TODO Digestion: Re-Implement this
+    // private bool IsDigestibleBy(EntityUid food, FoodComponent component, List<(StomachComponent, OrganComponent)> stomachs)
+    // {
+    //     var digestible = true;
+    //
+    //     // Does the mob have enough stomachs?
+    //     if (stomachs.Count < component.RequiredStomachs)
+    //         return false;
+    //
+    //     // Run through the mobs' stomachs
+    //     foreach (var (comp, _) in stomachs)
+    //     {
+    //         // Find a stomach with a SpecialDigestible
+    //         if (comp.SpecialDigestible == null)
+    //             continue;
+    //         // Check if the food is in the whitelist
+    //         if (comp.SpecialDigestible.IsValid(food, EntityManager))
+    //             return true;
+    //         // They can only eat whitelist food and the food isn't in the whitelist. It's not edible.
+    //         return false;
+    //     }
+    //
+    //     if (component.RequiresSpecialDigestion)
+    //         return false;
+    //
+    //     return digestible;
+    // }
 
     private bool TryGetRequiredUtensils(EntityUid user, FoodComponent component,
         out List<EntityUid> utensils, HandsComponent? hands = null)

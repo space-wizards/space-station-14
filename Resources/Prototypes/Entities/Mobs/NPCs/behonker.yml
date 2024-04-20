@@ -82,13 +82,14 @@
       thresholds:
         0: Alive
         500: Dead
-    - type: Metabolizer
-      solutionOnBody: false
-      updateInterval: 0.25
-      metabolizerTypes: [ Dragon ]
-      groups:
-        - id: Medicine
-        - id: Poison
+    #TODO Metabolism: Reimplement this
+#    - type: Metabolizer
+#      solutionOnBody: false
+#      updateInterval: 0.25
+#      metabolizerTypes: [ Dragon ]
+#      groups:
+#        - id: Medicine
+#        - id: Poison
     - type: Butcherable
       spawned:
         - id: MaterialBananium1

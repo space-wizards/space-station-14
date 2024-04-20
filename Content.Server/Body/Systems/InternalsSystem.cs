@@ -29,7 +29,6 @@ public sealed class InternalsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<InternalsComponent, InhaleLocationEvent>(OnInhaleLocation);
         SubscribeLocalEvent<InternalsComponent, ComponentStartup>(OnInternalsStartup);
         SubscribeLocalEvent<InternalsComponent, ComponentShutdown>(OnInternalsShutdown);
         SubscribeLocalEvent<InternalsComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
@@ -139,16 +138,16 @@ public sealed class InternalsSystem : EntitySystem
         _alerts.ClearAlert(ent, AlertType.Internals);
     }
 
-    private void OnInhaleLocation(Entity<InternalsComponent> ent, ref InhaleLocationEvent args)
-    {
-        if (AreInternalsWorking(ent))
-        {
-            var gasTank = Comp<GasTankComponent>(ent.Comp.GasTankEntity!.Value);
-            args.Gas = _gasTank.RemoveAirVolume((ent.Comp.GasTankEntity.Value, gasTank), Atmospherics.BreathVolume);
-            // TODO: Should listen to gas tank updates instead I guess?
-            _alerts.ShowAlert(ent, AlertType.Internals, GetSeverity(ent));
-        }
-    }
+    // private void OnInhaleLocation(Entity<InternalsComponent> ent, ref InhaleLocationEvent args)
+    // {
+    //     if (AreInternalsWorking(ent))
+    //     {
+    //         var gasTank = Comp<GasTankComponent>(ent.Comp.GasTankEntity!.Value);
+    //         args.Gas = _gasTank.RemoveAirVolume((ent.Comp.GasTankEntity.Value, gasTank), Atmospherics.BreathVolume);
+    //         // TODO: Should listen to gas tank updates instead I guess?
+    //         _alerts.ShowAlert(ent, AlertType.Internals, GetSeverity(ent));
+    //     }
+    // }
     public void DisconnectBreathTool(Entity<InternalsComponent> ent)
     {
         var old = ent.Comp.BreathToolEntity;

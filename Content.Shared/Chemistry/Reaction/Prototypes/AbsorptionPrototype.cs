@@ -41,6 +41,11 @@ public sealed partial class AbsorptionPrototype : IPrototype
     [DataField] public bool Quantized = false;
 
     /// <summary>
+    /// Will this reagent be transferred to a target solution if possible, or will it always be deleted on absorption?
+    /// </summary>
+    [DataField] public bool CanTransfer = true;
+
+    /// <summary>
     /// How fast are the reagents absorbed per second. This is used in combination with requiredReagents to calculate how much
     /// reagent is required/absorbed per update. This also is combined with the catalyst values when checking to limit reaction
     /// rate by catalysts.

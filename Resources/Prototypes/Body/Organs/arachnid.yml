@@ -34,8 +34,9 @@
   - type: Sprite
     sprite: Mobs/Species/Arachnid/organs.rsi
     state: stomach
-  - type: Stomach
-    updateInterval: 1.5
+  #TODO Stomach: Reimplement this
+#  - type: Stomach
+#    updateInterval: 1.5
   - type: SolutionContainerManager
     solutions:
       stomach:
@@ -45,8 +46,9 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: Metabolizer
-    updateInterval: 1.5
+#TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    updateInterval: 1.5
 
 - type: entity
   id: OrganArachnidLungs
@@ -58,30 +60,32 @@
     layers:
       - state: lung-l
       - state: lung-r
-  - type: Lung
-  - type: Metabolizer
-    updateInterval: 1.5
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
-    metabolizerTypes: [ Human ]
-    groups:
-    - id: Gas
-      rateModifier: 100.0
-  - type: SolutionContainerManager
-    solutions:
-      organ:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-      Lung:
-        maxVol: 100.0
-        canReact: false
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
+# TODO Lungs: reimplement
+#  - type: Lung
+#TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    updateInterval: 1.5
+#    removeEmpty: true
+#    solutionOnBody: false
+#    solution: "Lung"
+#    metabolizerTypes: [ Human ]
+#    groups:
+#    - id: Gas
+#      rateModifier: 100.0
+#  - type: SolutionContainerManager
+#    solutions:
+#      organ:
+#        reagents:
+#        - ReagentId: Nutriment
+#          Quantity: 10
+#      Lung:
+#        maxVol: 100.0
+#        canReact: false
+#      food:
+#        maxVol: 5
+#        reagents:
+#        - ReagentId: UncookedAnimalProteins
+#          Quantity: 5
 
 - type: entity
   id: OrganArachnidHeart
@@ -91,14 +95,15 @@
   components:
   - type: Sprite
     state: heart-on
-  - type: Metabolizer
-    updateInterval: 1.5
-    maxReagents: 2
-    metabolizerTypes: [Arachnid]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
+#TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    updateInterval: 1.5
+#    maxReagents: 2
+#    metabolizerTypes: [Arachnid]
+#    groups:
+#    - id: Medicine
+#    - id: Poison
+#    - id: Narcotic
 
 - type: entity
   id: OrganArachnidLiver
@@ -109,13 +114,14 @@
   components:
   - type: Sprite
     state: liver
-  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
-    updateInterval: 1.5
-    maxReagents: 1
-    metabolizerTypes: [Animal]
-    groups:
-    - id: Alcohol
-      rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+    #TODO Metabolism: Reimplement this
+#  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+#    updateInterval: 1.5
+#    maxReagents: 1
+#    metabolizerTypes: [Animal]
+#    groups:
+#    - id: Alcohol
+#      rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
 
 - type: entity
   id: OrganArachnidKidneys
@@ -129,11 +135,12 @@
       - state: kidney-l
       - state: kidney-r
   # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
-  - type: Metabolizer
-    updateInterval: 1.5
-    maxReagents: 5
-    metabolizerTypes: [Animal]
-    removeEmpty: true
+#TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    updateInterval: 1.5
+#    maxReagents: 5
+#    metabolizerTypes: [Animal]
+#    removeEmpty: true
 
 - type: entity
   id: OrganArachnidEyes

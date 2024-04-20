@@ -24,11 +24,11 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         {
             if (args.OrganEntity == null)
                 return false;
-
-            if (args.EntityManager.TryGetComponent<MetabolizerComponent>(args.OrganEntity.Value, out var metabolizer)
-                && metabolizer.MetabolizerTypes != null
-                && metabolizer.MetabolizerTypes.Contains(Type))
-                return ShouldHave;
+            //TODO Metabolism: Reimplement this
+            // if (args.EntityManager.TryGetComponent<MetabolizerComponent>(args.OrganEntity.Value, out var metabolizer)
+            //     && metabolizer.MetabolizerTypes != null
+            //     && metabolizer.MetabolizerTypes.Contains(Type))
+            //     return ShouldHave;
             return !ShouldHave;
         }
 

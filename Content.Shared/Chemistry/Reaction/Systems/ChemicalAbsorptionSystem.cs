@@ -182,12 +182,30 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
         if (unitAbsorptions <= 0)
             return;
         var solution = solutionEntity.Comp.Solution;
-        foreach (var (reactantName, volume) in absorption.Reagents)
+
+        var targetSolutionUpdated = false;
+        Entity<SolutionComponent>? targetSolution = null;
+
+        if (absorption.CanTransfer && TryGetTargetSolution(absorber, out targetSolution))
         {
+            foreach (var (reactantName, volume) in absorption.Reagents)
+            {
+                var amountToRemove = unitAbsorptions * volume;
+                //TODO: this might run into issues with reagentData
+                targetSolution.Value.Comp.Solution.AddReagent(reactantName,solution.RemoveReagent(reactantName, amountToRemove));
+                targetSolutionUpdated = true;
+            }
+        }
+        else
+        {
+            foreach (var (reactantName, volume) in absorption.Reagents)
+            {
                 var amountToRemove = unitAbsorptions * volume;
                 //TODO: this might run into issues with reagentData
                 solution.RemoveReagent(reactantName, amountToRemove);
+            }
         }
+
         if (absorption.TransferHeat)
         {
             var thermalEnergy = solution.GetThermalEnergy(_protoManager);
@@ -236,6 +254,10 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
 
         absorber.Comp.LastUpdate = _timing.CurTime;
         Dirty(absorber);
+
+        if (targetSolutionUpdated) // Dirty/Update the solutions, do this last so absorptions resolve before reactions
+            _solutionSystem.UpdateChemicals(targetSolution!.Value, true, false);
+        _solutionSystem.UpdateChemicals(solutionEntity, true, false);
 
         _audioSystem.PlayPvs(absorption.Sound, solutionEntity);
 
@@ -368,6 +390,19 @@ public sealed class ChemicalAbsorptionSystem : EntitySystem
         {
             reactionRate = unitReactions;
         }
+    }
+
+    public bool TryGetTargetSolution(Entity<ChemicalAbsorberComponent> absorber,
+        [NotNullWhen(true)] out Entity<SolutionComponent>? solution)
+    {
+        solution = null;
+        if (absorber.Comp.TransferTargetEntity == null)
+            return false;
+        if (_solutionSystem.TryGetSolution((absorber.Comp.TransferTargetEntity.Value, null),
+                absorber.Comp.TransferTargetSolutionId, out solution))
+            return false;
+        return solution != null;
+
     }
 
 }

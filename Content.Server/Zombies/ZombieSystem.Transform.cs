@@ -99,7 +99,8 @@ namespace Content.Server.Zombies
 
             //we need to basically remove all of these because zombies shouldn't
             //get diseases, breath, be thirst, be hungry, die in space, have offspring or be paraplegic.
-            RemComp<RespiratorComponent>(target);
+            //TODO Respiration: reimplement this
+            //RemComp<RespiratorComponent>(target);
             RemComp<BarotraumaComponent>(target);
             RemComp<HungerComponent>(target);
             RemComp<ThirstComponent>(target);

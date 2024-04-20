@@ -483,13 +483,14 @@
   - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodReagent: InsectBlood
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 0.5
-    damageRecovery:
-      types:
-        Asphyxiation: -0.5
+  #TODO respiration: reimplement this
+#  - type: Respirator
+#    damage:
+#      types:
+#        Asphyxiation: 0.5
+#    damageRecovery:
+#      types:
+#        Asphyxiation: -0.5
   - type: CombatMode
   - type: Butcherable
     spawned:
@@ -1578,13 +1579,14 @@
     - VimPilot
     - Mouse
     - Meat
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 0.25
-    damageRecovery:
-      types:
-        Asphyxiation: -0.25
+  #TODO respiration: reimplement this
+#  - type: Respirator
+#    damage:
+#      types:
+#        Asphyxiation: 0.25
+#    damageRecovery:
+#      types:
+#        Asphyxiation: -0.25
   - type: Barotrauma
     damage:
       types:
@@ -2779,8 +2781,9 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg
-  - type: Respirator #It just works?
-    minSaturation: 5.0
+#TODO respiration: reimplement this
+#  - type: Respirator #It just works?
+#    minSaturation: 5.0
 
 - type: entity
   name: caracal cat
@@ -3054,13 +3057,14 @@
     - Trash
     - Hamster
     - Meat
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 0.25
-    damageRecovery:
-      types:
-        Asphyxiation: -0.25
+#TODO respiration: reimplement this
+#  - type: Respirator
+#    damage:
+#      types:
+#        Asphyxiation: 0.25
+#    damageRecovery:
+#      types:
+#        Asphyxiation: -0.25
   - type: Barotrauma
     damage:
       types:

@@ -3,11 +3,12 @@
   name: Urist McWeb
   parent: BaseMobArachnid
   id: MobArachnid
-  components:
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 1.5 # This makes space and crit more lethal to arachnids.
-    damageRecovery:
-      types:
-        Asphyxiation: -0.5
+  #components:
+  #TODO respiration: reimplement this
+#  - type: Respirator
+#    damage:
+#      types:
+#        Asphyxiation: 1.5 # This makes space and crit more lethal to arachnids.
+#    damageRecovery:
+#      types:
+#        Asphyxiation: -0.5

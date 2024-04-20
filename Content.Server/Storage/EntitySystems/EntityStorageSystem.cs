@@ -51,8 +51,8 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         SubscribeLocalEvent<EntityStorageComponent, WeldableAttemptEvent>(OnWeldableAttempt);
         SubscribeLocalEvent<EntityStorageComponent, BeforeExplodeEvent>(OnExploded);
 
-        SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
-        SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
+        // SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
+        // SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, AtmosExposedGetAirEvent>(OnInsideExposed);
 
         SubscribeLocalEvent<InsideEntityStorageComponent, EntGotRemovedFromContainerMessage>(OnRemoved);
@@ -158,21 +158,22 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
     #region Gas mix event handlers
 
-    private void OnInsideInhale(EntityUid uid, InsideEntityStorageComponent component, InhaleLocationEvent args)
-    {
-        if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.Airtight)
-        {
-            args.Gas = storage.Air;
-        }
-    }
-
-    private void OnInsideExhale(EntityUid uid, InsideEntityStorageComponent component, ExhaleLocationEvent args)
-    {
-        if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.Airtight)
-        {
-            args.Gas = storage.Air;
-        }
-    }
+    //TODO Metabolism: reimplement this
+    // private void OnInsideInhale(EntityUid uid, InsideEntityStorageComponent component, InhaleLocationEvent args)
+    // {
+    //     if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.Airtight)
+    //     {
+    //         args.Gas = storage.Air;
+    //     }
+    // }
+    //
+    // private void OnInsideExhale(EntityUid uid, InsideEntityStorageComponent component, ExhaleLocationEvent args)
+    // {
+    //     if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.Airtight)
+    //     {
+    //         args.Gas = storage.Air;
+    //     }
+    // }
 
     private void OnInsideExposed(EntityUid uid, InsideEntityStorageComponent component, ref AtmosExposedGetAirEvent args)
     {

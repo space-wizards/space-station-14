@@ -217,13 +217,14 @@
   abstract: true
   components:
   - type: Internals
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 2
-    damageRecovery:
-      types:
-        Asphyxiation: -1.0
+#TODO respiration: reimplement this
+#  - type: Respirator
+#    damage:
+#      types:
+#        Asphyxiation: 2
+#    damageRecovery:
+#      types:
+#        Asphyxiation: -1.0
 
 # Used for mobs that have a bloodstream
 - type: entity

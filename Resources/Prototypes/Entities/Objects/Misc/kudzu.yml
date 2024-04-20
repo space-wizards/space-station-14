@@ -249,13 +249,14 @@
           reagents:
           - ReagentId: Protein
             Quantity: 2
-    - type: Respirator
-      damage:
-        types:
-          Asphyxiation: 0.25
-      damageRecovery:
-        types:
-          Asphyxiation: -0.25
+#TODO respiration: reimplement this
+#    - type: Respirator
+#      damage:
+#        types:
+#          Asphyxiation: 0.25
+#      damageRecovery:
+#        types:
+#          Asphyxiation: -0.25
 
 - type: entity
   name: dark haze

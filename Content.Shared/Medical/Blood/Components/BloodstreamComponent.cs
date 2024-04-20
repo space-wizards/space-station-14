@@ -8,7 +8,7 @@ namespace Content.Shared.Medical.Blood.Components;
 
 
 /// <summary>
-/// This is a very simplified bleeding system that is intended for non-humanoid/medically simulated entities.
+/// This is a very simplified bleeding system that is intended for non-medically simulated entities.
 /// It does not track blood-pressure, pulse, or have any blood type logic.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]

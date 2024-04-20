@@ -41,15 +41,17 @@
     - state: lung-l
     - state: lung-r
   - type: Organ
-  - type: Lung
-  - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
-    metabolizerTypes: [ Animal ]
-    groups:
-    - id: Gas
-      rateModifier: 100.0
+  # TODO Lungs: reimplement
+#  - type: Lung
+  #TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    removeEmpty: true
+#    solutionOnBody: false
+#    solution: "Lung"
+#    metabolizerTypes: [ Animal ]
+#    groups:
+#    - id: Gas
+#      rateModifier: 100.0
   - type: SolutionContainerManager
     solutions:
       Lung:
@@ -79,13 +81,15 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: Stomach
-  - type: Metabolizer
-    maxReagents: 3
-    metabolizerTypes: [ Animal ]
-    groups:
-    - id: Food
-    - id: Drink
+#TODO Stomach: Reimplement this
+#  - type: Stomach
+    #TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    maxReagents: 3
+#    metabolizerTypes: [ Animal ]
+#    groups:
+#    - id: Food
+#    - id: Drink
 
 - type: entity
   id: OrganMouseStomach
@@ -107,12 +111,13 @@
   - type: Sprite
     state: liver
   - type: Organ
-  - type: Metabolizer
-    maxReagents: 1
-    metabolizerTypes: [ Animal ]
-    groups:
-    - id: Alcohol
-      rateModifier: 0.1
+    #TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    maxReagents: 1
+#    metabolizerTypes: [ Animal ]
+#    groups:
+#    - id: Alcohol
+#      rateModifier: 0.1
 
 - type: entity
   id: OrganAnimalHeart
@@ -123,13 +128,14 @@
   - type: Sprite
     state: heart-on
   - type: Organ
-  - type: Metabolizer
-    maxReagents: 2
-    metabolizerTypes: [ Animal ]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
+#TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    maxReagents: 2
+#    metabolizerTypes: [ Animal ]
+#    groups:
+#    - id: Medicine
+#    - id: Poison
+#    - id: Narcotic
 
 - type: entity
   id: OrganAnimalKidneys
@@ -142,7 +148,8 @@
     - state: kidney-l
     - state: kidney-r
   - type: Organ
-  - type: Metabolizer
-    maxReagents: 5
-    metabolizerTypes: [ Animal ]
-    removeEmpty: true
+#TODO Metabolism: Reimplement this
+#  - type: Metabolizer
+#    maxReagents: 5
+#    metabolizerTypes: [ Animal ]
+#    removeEmpty: true
