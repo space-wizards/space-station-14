@@ -6,7 +6,6 @@ using Content.Shared.Objectives.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.Pulling.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs.Components;
@@ -132,18 +131,8 @@ public sealed class StealConditionSystem : EntitySystem
                 {
                     // if it is a container check its contents
                     if (_containerQuery.TryGetComponent(pulledEntity, out var containerManager))
-                        stack.Push(containerManager);
+                        containerStack.Push(containerManager);
                 }
-            }
-        }
-
-        //check pulling object
-        if (TryComp<SharedPullerComponent>(mind.OwnedEntity, out var pull))
-        {
-            var pullid = pull.Pulling;
-            if (pullid != null)
-            {
-                CheckEntity(pullid.Value, condition, ref containerStack, ref count);
             }
         }
 

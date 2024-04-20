@@ -63,5 +63,5 @@ thief-backpack-category-smuggler-description =
 thief-backpack-category-invisible-name = Invisibility kit
 thief-backpack-category-invisible-description = 
     A set for someone who can't be caught. 
-    Includes: 3 smoke grenades, DNA scrambler implanter,
-    freedom implanter and scram implanter.
+    Includes: 2 smoke grenades, scram implanter and
+    Chameleon projector.

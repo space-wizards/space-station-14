@@ -111,13 +111,11 @@
   name: thief-backpack-category-invisible-name
   description: thief-backpack-category-invisible-description
   sprite:
-    sprite: Mobs/Aliens/Carps/space.rsi
-    state: alive
+    sprite: Objects/Devices/chameleon_projector.rsi
+    state: icon
   content:
   - SmokeGrenade
   - SmokeGrenade
-  - SmokeGrenade
   - ScramImplanter
-  - DnaScramblerImplanter
-  - FreedomImplanter
+  - ChameleonProjector
   - ClothingNeckCloakVoid
