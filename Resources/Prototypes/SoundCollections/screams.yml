@@ -30,3 +30,11 @@
     - /Audio/Voice/Cluwne/cluwnelaugh1.ogg
     - /Audio/Voice/Cluwne/cluwnelaugh2.ogg
     - /Audio/Voice/Cluwne/cluwnelaugh3.ogg
+
+- type: soundCollection
+  id: RobotScreams
+  files:
+    - /Audio/Voice/Cyborg/borgscream_1.ogg
+    - /Audio/Voice/Cyborg/borgscream_2.ogg
+    - /Audio/Voice/Cyborg/borgscream_3.ogg
+    - /Audio/Voice/Cyborg/borgscream_4.ogg

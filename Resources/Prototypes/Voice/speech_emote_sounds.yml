@@ -301,8 +301,10 @@
 - type: emoteSounds
   id: UnisexSilicon
   params:
-    variation: 0.05
+    variation: 0.125
   sounds:
+    Scream:
+      collection: RobotScreams
     Beep:
       path: /Audio/Machines/twobeep.ogg
     Chime:
