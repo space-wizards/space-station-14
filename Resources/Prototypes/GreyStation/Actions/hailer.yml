@@ -23,28 +23,28 @@
         sound:
           path: /Audio/GreyStation/Hailer/Normal/running.ogg
       combat:
-      - message: Stop breaking the law, asshole!
+      - message: STOP BREAKING THE LAW, ASSHOLE!
         sound:
           path: /Audio/GreyStation/Hailer/Combat/asshole.ogg
       - message: Stop or I'll bash you.
         sound:
           path: /Audio/GreyStation/Hailer/Combat/bash.ogg
-      - message: Don't move, creep!
+      - message: DON'T MOVE, CREEP!
         sound:
           path: /Audio/GreyStation/Hailer/Combat/dontmove.ogg
-      - message: I am, the LAW!
+      - message: I AM THE LAW!
         sound:
           path: /Audio/GreyStation/Hailer/Combat/dredd.ogg
-      - message: Down on the floor, creep!
+      - message: DOWN ON THE FLOOR, CREEP!
         sound:
           path: /Audio/GreyStation/Hailer/Combat/floor.ogg
-      - message: Freeze, scumbag!
+      - message: FREEZE, SCUMBAG!
         sound:
           path: /Audio/GreyStation/Hailer/Combat/freeze.ogg
       - message: Go ahead, make my day.
         sound:
           path: /Audio/GreyStation/Hailer/Combat/harry.ogg
-      - message: Stop right there, criminal scum!
+      - message: STOP RIGHT THERE, CRIMINAL SCUM!
         sound:
           path: /Audio/GreyStation/Hailer/Combat/imperial.ogg
       - message: Dead or alive you're coming with me.
