@@ -33,7 +33,7 @@
 
   ##Tritium
   Tritium is a clear, green gas that is highly flammable, radioactive, and combusts when in contact with oxygen, making it very helpful when running the [color=#a4885c]TEG[/color].
-  It can be made by burning 1% Plasma and 96% or more Oxygen in the Burn Chamber. You can extract this gas through scrubbers.
+  It can be made by burning 1% Plasma and 96% or more Oxygen in the Burn Chamber (Ideal ratio is 3% Plasma to 97% Oxygen). You can extract this gas through scrubbers.
 
   <Box>
     <GuideEntityEmbed Entity="PlasmaCanister"/>
@@ -56,6 +56,12 @@
 
   ## Reference Sheet
   - Standard atmospheric mix is [color=#a4885c]78% N2 and 22% O2 at 101.24kPa.[/color]
-  - Gas obeys real math. You can use the equation PV = nRT (Pressure kPa * Volume L = Moles * R * Temperature K) to derive information you might need to know about a gas. R is approximately 8.31446
+  - Gas obeys real math. You can use the equation:
+  <Box>
+    [color=cyan]PV = nRT[/color]
+  </Box>
+  <Box>
+    ([color=#a4885c]Pressure kPa * Volume L = Moles * R * Temperature K[/color])
+  </Box> to derive information you might need to know about a gas. R is approximately 8.31446.
 
 </Document>
