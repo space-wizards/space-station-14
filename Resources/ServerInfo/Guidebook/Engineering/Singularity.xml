@@ -1,7 +1,7 @@
 <Document>
-  # Singularity or Tesla Engine
+  # Singularity / Tesla Engine
 
-  The Singularity Engine or Tesla Engine can yield infinite power, with no fueling required. It can also destroy the whole station with equal ease. It uses a Particle Accelerator to fire high energy particles at a Singularity Generator to form a singularity or ball lightning.
+  The Singularity Engine / Tesla Engine can yield [color=#a4885c]infinite power[/color], with no fueling required. It can also [color=red]destroy the whole station[/color] with equal ease. It uses a Particle Accelerator to fire high energy particles at a Singularity Generator to form a singularity or ball lightning.
   The singularity then pulses radiation which is absorbed by Radiation Collectors, or the ball lightning then zaps nearby tesla coils and grounding rods to provide power.
 
   # Setting it up
@@ -18,11 +18,12 @@
   Fire the emitters at enabled containment field generators to activate them.
   If two containment field generators are active, in range and are in the same cardinal axis, a containment field will appear.
   The containment field will repel the singularity or tesla, keeping it from escaping, and yield a little bit of power every time anything bounces off of them.
-  The emitter lasers and the containment fields can also cause damage and/or cause you to be sent flying into deep space; avoid touching them when active.
-  It is recommended to lock the emitters and containment field generators with [keybind="AltActivateItemInWorld"/], to prevent any break-in no-gooders from loosing the singularity or tesla by simply switching off the field.
+
+  The emitter lasers and the containment fields can also cause damage and/or cause you to be sent flying into deep space; [color=#a4885c]avoid touching them[/color] when active.
+  It is recommended to [color=#a4885c]lock the emitters[/color] with [keybind="AltActivateItemInWorld"/], to prevent any break-in no-gooders from loosing the singularity or tesla by simply switching off the field.
 
   Teslas can have significantly smaller containment fields than singularity containment fields; adjusting field size is recommended, as the tesla becomes easier to keep watch on in a simply 3x3 field setup.
-  
+
   ## Particle accelerator
 
   <Box>
@@ -32,7 +33,7 @@
   <Box>
     <GuideEntityEmbed Entity="ParticleAcceleratorControlBox" Caption="" Margin="0"/>
     <GuideEntityEmbed Entity="ParticleAcceleratorFuelChamber" Caption="" Margin="0"/>
-    <GuideEntityEmbed Entity="CableHV" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="CableMV" Caption="" Margin="0"/>
   </Box>
 
   <Box>
@@ -80,17 +81,17 @@
   </Box>
   The tesla coils connect to HV cables and provide a stream of power after being zapped by the ball lightning.
   However, tesla coils usually do not fully absorb the lightning strike, and the grounding rods are required to prevent lighting from arcing to and obliterating nearby machines.
-  Do note that one grounding rod is not a foolproof solution; get atleast 4 rods around the containment field to make it mathematically unlikely for the tesla to escape.
-  As the ball lightning zaps tesla coils, they will degrade from wear; make sure to weld them every now and then to keep generating power.
+  Do note that one grounding rod is not a foolproof solution; get [color=#a4885c]atleast 4 rods[/color] around the containment field to make it mathematically unlikely for the tesla to escape.
+  As the ball lightning zaps tesla coils, they will degrade from wear; make sure to [color=#a4885c]weld them[/color] every now and then to keep generating power.
 
   ## Turing on the Engines
 
-  [color=#a4885c]Do not[/color] turn the PA on unless all the other subsystems are working properly and there is enough power to start the engine.
+  [color=red]Do not[/color] turn the PA on unless all the other subsystems are working properly and there is enough power to start the engine.
 
   Turn power on using the PA control computer. Set the strength to an appropiate level. Currently the only appropriate level is [color=#f0684d]1[/color]; anything above that will ensure that singularity grows too strong to handle.
   The higher the output stength is set on PA control computer, the bigger the singularity will be.
 
-  Currently, the output power does not affect the ball lightning, beyond giving the ball lightning extra orbs around it. 
+  Currently, the output power does not affect the ball lightning, beyond giving the ball lightning extra orbs around it.
 
   The PA will now draw power from the power net and start firing particles at the generators.
 
@@ -111,7 +112,7 @@
   This is not the case for the tesla; feel free to disconnect the PA after the tesla has been set up.
 
   ## Safety
-  The singularity emits a large amount of radiation around it, so always keep a distance from it. Consider getting radiation shielding gear beforehand. Seek medical attention if you are experiencing health issues.
+  The singularity emits a large amount of radiation around it, so always keep a distance from it. Consider getting [color=yellow]radiation shielding gear[/color] beforehand. Seek medical attention if you are experiencing health issues.
 
   <Box>
     <GuideEntityEmbed Entity="ClothingOuterHardsuitEngineering"/>
@@ -135,6 +136,6 @@
   <Box>
     <GuideEntityEmbed Entity="WeaponParticleDecelerator"/>
   </Box>
-  However, if science has happened to research Portable Particle Decelerators, or if cargo can order them in time, you may be able to stop the singularity from eating the whole station.
+  However, if science has happened to research [color=#D381C9]Portable Particle Decelerators[/color], or if cargo can order them in time, you may be able to stop the singularity from eating the whole station.
   Good luck on the tesla, though; it is merely too powerful to recontain after breaching.
 </Document>
