@@ -253,6 +253,8 @@ AirlockShuttleEasyPryLocked: AirlockExternalShuttleLocked
 ClothingBackpackFilledDetective: ClothingBackpackSecurityFilledDetective
 ClothingBackpackDuffelFilledDetective: ClothingBackpackDuffelSecurityFilledDetective
 ClothingBackpackSatchelFilledDetective: ClothingBackpackSatchelSecurityFilledDetective
+FoodChili: FoodChiliPepper
+FoodChilly: FoodChillyPepper
 
 # 2024-03-11
 ImprovisedExplosive: FireBomb

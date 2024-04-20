@@ -262,9 +262,6 @@
   id: CannonBall
 
 - type: Tag
-  id: CannonRestrict
-
-- type: Tag
   id: CannotSuicide
 
 - type: Tag
