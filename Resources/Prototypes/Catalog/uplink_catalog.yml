@@ -122,8 +122,8 @@
   name: uplink-sniper-bundle-name
   description: uplink-sniper-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: base }
-  productEntity: BriefcaseSniperBundleFilled
-  cost:
+productEntity: BriefcaseSyndieSniperBundleFilled  
+cost:
     Telecrystal: 12
   categories:
   - UplinkWeaponry
@@ -1478,8 +1478,8 @@
 - type: listing
   id: UplinkScarfSyndieGreen
   name: uplink-scarf-syndie-green-name
-  description: uplink-scarf--green-desc
-  productEntity: ClothingNeckScarfStripedGreen
+  description: uplink-scarf-syndie-green-desc
+  productEntity: ClothingNeckScarfStripedSyndieGreen
   cost:
     Telecrystal: 1
   categories:
