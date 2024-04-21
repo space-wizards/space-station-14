@@ -85,7 +85,7 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
     private const string WizardId = "Wizard";
 
     [ValidatePrototypeId<CurrencyPrototype>]
-    private const string MagipointsCurrencyPrototype = "Magipoint";
+    private const string MagipointsCurrencyPrototype = "Magipoints";
 
     public override void Initialize()
     {

@@ -81,7 +81,6 @@
   - type: GameRule
     minPlayers: 20
   - type: WizardRule
-    faction: Wizard
 
 - type: entity
   id: Pirates

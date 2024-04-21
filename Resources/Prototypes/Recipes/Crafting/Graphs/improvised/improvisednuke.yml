@@ -7,11 +7,7 @@
     - to: cart
       steps:
       - material: WoodPlank
-        name: wood
         amount: 15
-        icon:
-          sprite: Objects/Materials/materials.rsi
-          state: wood_2
         doAfter: 4
   - node: cart
     entity: ImprovisedNuclearBombCart
@@ -29,10 +25,6 @@
       steps:
       - material: MetalRod
         amount: 8
-        name: metal rods
-        icon:
-          sprite: Objects/Materials/parts.rsi
-          state: rods_2
         doAfter: 3
   - node: insides
     entity: ImprovisedNuclearBombInsides
@@ -128,10 +120,6 @@
       steps:
       - material: Steel
         amount: 30
-        name: steel
-        icon:
-          sprite: Objects/Materials/Sheets/metal.rsi
-          state: steel_3
         doAfter: 5
     - to: evilbomb
       steps:
@@ -152,7 +140,6 @@
     - to: painted
       steps:
       - tag: Crayon
-        amount: 1
         name: a crayon
         icon:
           sprite: Objects/Fun/crayons.rsi
@@ -174,7 +161,6 @@
     - to: evilbombreciever
       steps:
       - tag: ModularReceiver
-        amount: 1
         name: modular reciever
         doAfter: 1
   - node: evilbombreciever
@@ -192,7 +178,6 @@
       steps:
       - material: Steel
         amount: 30
-        name: steel
         doAfter: 5
   - node: evilbombdone
     entity: ImprovisedNuclearBombEvil
@@ -208,11 +193,8 @@
     - to: evilbombpainted
       steps:
       - tag: Crayon
-        amount: 1
         name: a crayon
         icon:
           sprite: Objects/Fun/crayons.rsi
           state: yellow
         doAfter: 1
-  - node: evilbombpainted
-    entity: ImprovisedNuclearBombEvilPainted
