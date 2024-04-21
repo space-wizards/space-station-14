@@ -10,7 +10,8 @@
     solutions:
       drink:
         maxVol: 20
-        canMix: true
+  - type: MixableSolution
+    solution: drink
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution

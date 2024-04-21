@@ -14,6 +14,8 @@
         - ReagentId: Cola
           Quantity: 30
         maxVol: 30
+  - type: MixableSolution
+    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 15

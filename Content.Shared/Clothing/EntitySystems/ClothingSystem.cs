@@ -131,10 +131,6 @@ public abstract class ClothingSystem : EntitySystem
     private void OnGetState(EntityUid uid, ClothingComponent component, ref ComponentGetState args)
     {
         args.State = new ClothingComponentState(component.EquippedPrefix);
-        if (component.InSlot != null && _containerSys.TryGetContainingContainer(uid, out var container))
-        {
-            CheckEquipmentForLayerHide(uid, container.Owner);
-        }
     }
 
     private void OnHandleState(EntityUid uid, ClothingComponent component, ref ComponentHandleState args)
