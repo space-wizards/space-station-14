@@ -45,10 +45,10 @@ public sealed class ToolSystem : SharedToolSystem
             if (welder.WelderTimer < welder.WelderUpdateTimer)
                 continue;
 
-            if (!SolutionContainerSystem.ResolveSolution((uid, solutionContainer), welder.FuelSolutionName, ref welder.FuelSolution, out var solution))
+            if (!SolutionContainerSystem.TryGetSolution((uid, solutionContainer), welder.FuelSolutionName, out var solutionComp, out var solution))
                 continue;
 
-            SolutionContainerSystem.RemoveReagent(welder.FuelSolution.Value, welder.FuelReagent, welder.FuelConsumption * welder.WelderTimer);
+            SolutionContainerSystem.RemoveReagent(solutionComp.Value, welder.FuelReagent, welder.FuelConsumption * welder.WelderTimer);
 
             if (solution.GetTotalPrototypeQuantity(welder.FuelReagent) <= FixedPoint2.Zero)
             {
