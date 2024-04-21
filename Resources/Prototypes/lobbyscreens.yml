@@ -1,43 +1,39 @@
 - type: lobbyBackground
-  id: Robotics
-  background: /Textures/LobbyScreens/robotics.webp
+  id: Goob
+  background: /Textures/LobbyScreens/goob.webp
 
 - type: lobbyBackground
-  id: Supermatter
-  background: /Textures/LobbyScreens/supermatter.webp
+  id: Valve
+  background: /Textures/LobbyScreens/Valve.webp
 
 - type: lobbyBackground
-  id: Warden
-  background: /Textures/LobbyScreens/warden.webp
+  id: Goob2
+  background: /Textures/LobbyScreens/Goob2.webp
 
 - type: lobbyBackground
-  id: Pharmacy
-  background: /Textures/LobbyScreens/pharmacy.webp
+  id: gugel
+  background: /Textures/LobbyScreens/gugel.webp
+  
+- type: lobbyBackground
+  id: gigaclown
+  background: /Textures/LobbyScreens/gigaclown.webp
 
 - type: lobbyBackground
-  id: SSXIV
-  background: /Textures/LobbyScreens/ssxiv.webp
+  id: rdsyndi
+  background: /Textures/LobbyScreens/rdsyndi.webp
 
 - type: lobbyBackground
-  id: Susstation
-  background: /Textures/LobbyScreens/susstation.webp
+  id: reporting_a_crime
+  background: /Textures/LobbyScreens/reporting_a_crime.webp
 
 - type: lobbyBackground
-  id: SkellyVsTheRev
-  background: /Textures/LobbyScreens/skellyvstherev.webp
+  id: secsquad
+  background: /Textures/LobbyScreens/secsquad.webp
 
 - type: lobbyBackground
-  id: Doomed
-  background: /Textures/LobbyScreens/doomed.webp
-
+  id: THRONGLER
+  background: /Textures/LobbyScreens/THRONGLER.webp
+  
 - type: lobbyBackground
-  id: Blueprint
-  background: /Textures/LobbyScreens/blueprint.webp
-
-- type: lobbyBackground
-  id: Behonker
-  background: /Textures/LobbyScreens/behonker.webp
-
-- type: lobbyBackground
-  id: TerminalStation
-  background: /Textures/LobbyScreens/terminalstation.webp
+  id: mime
+  background: /Textures/LobbyScreens/mime.webp
