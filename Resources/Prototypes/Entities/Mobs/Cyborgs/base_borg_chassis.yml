@@ -242,23 +242,26 @@
   parent: BaseBorgChassis
   abstract: true
   components:
-    - type: NpcFactionMember
-      factions:
-        - Syndicate
-    - type: Access
-      tags:
-       - NuclearOperative
-       - SyndicateAgent
-    - type: AccessReader
-      access: [["SyndicateAgent"], ["NuclearOperative"]]
-    - type: SiliconLawProvider
-      laws: SyndicateStatic
-    - type: IntrinsicRadioTransmitter
-      channels:
-        - Binary
-        - Syndicate
-    - type: ActiveRadio
-      channels:
-        - Syndicate
-    - type: ShowSyndicateIcons
-    - type: MovementAlwaysTouching
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: Access
+    tags:
+    - NuclearOperative
+    - SyndicateAgent
+  - type: AccessReader
+    access: [["SyndicateAgent"], ["NuclearOperative"]]
+  - type: SiliconLawProvider
+    laws: SyndicateStatic
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Syndicate
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: ShowSyndicateIcons
+  - type: MovementAlwaysTouching
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSiliconSyndicate
