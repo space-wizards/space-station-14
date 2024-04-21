@@ -32,6 +32,25 @@ public sealed partial class ReflectComponent : Component
 
     [DataField("soundOnReflect")]
     public SoundSpecifier? SoundOnReflect = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
+
+    /// <summary>
+    /// Is the deflection an innate power or something actively maintained? If true, this component grants a flat
+    /// deflection chance rather than a chance that degrades when moving/weightless/stunned/etc.
+    /// </summary>
+    [DataField]
+    public bool Innate = false;
+
+    /// <summary>
+    /// The multiplier used when moving.
+    /// </summary>
+    [DataField]
+    public float MovingProbMultiplier = 0.66f;
+
+    /// <summary>
+    /// The multiplier used when sprinting or when otherwise compromised (e.g. weightless)
+    /// </summary>
+    [DataField]
+    public float SprintingProbMultiplier = 0.33f;
 }
 
 [Flags]

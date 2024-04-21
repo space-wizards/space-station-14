@@ -1,14 +1,21 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
+using Content.Shared.Gravity;
 using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
+using Content.Shared.Standing;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Audio;
@@ -35,6 +42,9 @@ public sealed class ReflectSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private readonly StandingStateSystem _standing = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     public override void Initialize()
     {
@@ -91,15 +101,42 @@ public sealed class ReflectSystem : EntitySystem
 
     private bool TryReflectProjectile(EntityUid user, EntityUid reflector, EntityUid projectile, ProjectileComponent? projectileComp = null, ReflectComponent? reflect = null)
     {
+        // Do we have the components needed to try a reflect at all?
         if (!Resolve(reflector, ref reflect, false) ||
             !reflect.Enabled ||
             !TryComp<ReflectiveComponent>(projectile, out var reflective) ||
             (reflect.Reflects & reflective.Reflective) == 0x0 ||
-            !_random.Prob(reflect.ReflectProb) ||
             !TryComp<PhysicsComponent>(projectile, out var physics))
-        {
             return false;
+
+        var reflectChance = reflect.ReflectProb;
+
+        /*
+         *  The rules of deflection are as follows:
+         *  If you innately reflect things via magic, biology etc, you always have a full chance.
+         *  If you are standing up and standing still, you're prepared to deflect and have full chance.
+         *  If you are moving at all, your chance is multiplied by the movingProbMultiplier.
+         *  If you are recklessly sprinting, your chance is instead multiplied by the sprintingProbMultiplier.
+         *  If you floating, your chance is instead multiplied by the sprintingProbMultiplier.
+         *  You cannot deflect if you are knocked down or stunned.
+         */
+
+        if (!reflect.Innate)
+        {
+            if (TryComp<StaminaComponent>(reflector, out var staminaComponent) && staminaComponent.Critical)
+                return false;
+
+            if (_standing.IsDown(reflector))
+                return false;
+
+            if (_gravity.IsWeightless(reflector))
+                reflectChance *= reflect.SprintingProbMultiplier;
+            else if (TryComp<InputMoverComponent>(reflector, out var mover) && (mover.HeldMoveButtons & MoveButtons.AnyDirection) == MoveButtons.AnyDirection)
+                reflectChance *= mover.Sprinting ? reflect.SprintingProbMultiplier : reflect.MovingProbMultiplier;
         }
+
+        if (!_random.Prob(reflectChance))
+            return false;
 
         var rotation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2).Opposite();
         var existingVelocity = _physics.GetMapLinearVelocity(projectile, component: physics);

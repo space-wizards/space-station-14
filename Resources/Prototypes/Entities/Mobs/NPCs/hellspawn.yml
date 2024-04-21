@@ -53,6 +53,7 @@
   - type: Perishable
   - type: Reflect
     reflectProb: 0.7
+    innate: true
     reflects:
       - Energy
   - type: Fixtures

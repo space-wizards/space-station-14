@@ -313,14 +313,14 @@
   name: mirror shield
   parent: BaseShield
   id: MirrorShield
-  description: Eerily glows red... you hear the geometer whispering
+  description: Eerily glows red. You hear the geometer whispering...
   components:
     - type: Sprite
       state: mirror-icon
     - type: Item
       heldPrefix: mirror
     - type: Reflect
-      reflectProb: 0.95
+      reflectProb: 0.95 # 0.63 when moving, 0.31 when sprinting
       reflects:
         - Energy
     - type: Blocking #Mirror shield reflects heat/laser, but is relatively weak to everything else.
@@ -407,7 +407,7 @@
       color: blue
     - type: Reflect
       enabled: false
-      reflectProb: 0.95
+      reflectProb: 0.95 # 0.63 when moving, 0.31 when sprinting
       reflects:
         - Energy
     - type: Blocking
