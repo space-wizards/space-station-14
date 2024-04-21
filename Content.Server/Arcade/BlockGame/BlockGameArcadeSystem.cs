@@ -37,14 +37,12 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         }
     }
 
-    private void UpdatePlayerStatus(EntityUid uid, ICommonSession session, PlayerBoundUserInterface? bui = null, BlockGameArcadeComponent? blockGame = null)
+    private void UpdatePlayerStatus(EntityUid uid, ICommonSession session, BlockGameArcadeComponent? blockGame = null)
     {
         if (!Resolve(uid, ref blockGame))
             return;
-        if (bui == null && !_uiSystem.TryGetUi(uid, BlockGameUiKey.Key, out bui))
-            return;
 
-        _uiSystem.TrySendUiMessage(bui, new BlockGameMessages.BlockGameUserStatusMessage(blockGame.Player == session), session);
+        _uiSystem.ServerSendUiMessage(uid, BlockGameUiKey.Key, new BlockGameMessages.BlockGameUserStatusMessage(blockGame.Player == session), session);
     }
 
     private void OnComponentInit(EntityUid uid, BlockGameArcadeComponent component, ComponentInit args)
@@ -56,20 +54,14 @@ public sealed class BlockGameArcadeSystem : EntitySystem
     {
         if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
-        if (!_uiSystem.TryGetUi(uid, BlockGameUiKey.Key, out var bui))
-            return;
-
-        var session = actor.PlayerSession;
-        if (!bui.SubscribedSessions.Contains(session))
-            return;
 
         if (component.Player == null)
-            component.Player = session;
+            component.Player = actor.PlayerSession;
         else
-            component.Spectators.Add(session);
+            component.Spectators.Add(actor.PlayerSession);
 
-        UpdatePlayerStatus(uid, session, bui, component);
-        component.Game?.UpdateNewPlayerUI(session);
+        UpdatePlayerStatus(uid, actor.PlayerSession, component);
+        component.Game?.UpdateNewPlayerUI(actor.PlayerSession);
     }
 
     private void OnAfterUiClose(EntityUid uid, BlockGameArcadeComponent component, BoundUIClosedEvent args)
@@ -100,8 +92,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         if (args.Powered)
             return;
 
-        if (_uiSystem.TryGetUi(uid, BlockGameUiKey.Key, out var bui))
-            _uiSystem.CloseAll(bui);
+        _uiSystem.CloseUi(uid, BlockGameUiKey.Key);
         component.Player = null;
         component.Spectators.Clear();
     }

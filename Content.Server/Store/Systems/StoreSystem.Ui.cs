@@ -73,7 +73,7 @@ public sealed partial class StoreSystem
         if (!Resolve(uid, ref component))
             return;
 
-        _ui.TryCloseAll(uid, StoreUiKey.Key);
+        _ui.CloseUi(uid, StoreUiKey.Key);
     }
 
     /// <summary>
@@ -83,12 +83,13 @@ public sealed partial class StoreSystem
     /// <param name="store">The store entity itself</param>
     /// <param name="component">The store component being refreshed.</param>
     /// <param name="ui"></param>
-    public void UpdateUserInterface(EntityUid? user, EntityUid store, StoreComponent? component = null, PlayerBoundUserInterface? ui = null)
+    public void UpdateUserInterface(EntityUid? user, EntityUid store, StoreComponent? component = null)
     {
         if (!Resolve(store, ref component))
             return;
 
-        if (ui == null && !_ui.TryGetUi(store, StoreUiKey.Key, out ui))
+        // TODO: Why is the state not being set unless this?
+        if (!_ui.IsUiOpen(store, StoreUiKey.Key))
             return;
 
         //this is the person who will be passed into logic for all listing filtering.
@@ -113,7 +114,7 @@ public sealed partial class StoreSystem
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
         var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter, component.RefundAllowed);
-        _ui.SetUiState(ui, state);
+        _ui.SetUiState(store, StoreUiKey.Key, state);
     }
 
     private void OnRequestUpdate(EntityUid uid, StoreComponent component, StoreRequestUpdateInterfaceMessage args)

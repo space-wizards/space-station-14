@@ -37,19 +37,16 @@ namespace Content.Server.Interaction
             if (storage.Container?.ID != container.ID)
                 return false;
 
-            if (!TryComp(user, out ActorComponent? actor))
-                return false;
-
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
-            return _uiSystem.SessionHasOpenUi(container.Owner, StorageComponent.StorageUiKey.Key, actor.PlayerSession);
+            return _uiSystem.IsUiOpen(container.Owner, StorageComponent.StorageUiKey.Key, user);
         }
 
         private void HandleUserInterfaceRangeCheck(ref BoundUserInterfaceCheckRangeEvent ev)
         {
-            if (ev.Player.AttachedEntity is not { } user || ev.Result == BoundUserInterfaceRangeResult.Fail)
+            if (ev.Result == BoundUserInterfaceRangeResult.Fail)
                 return;
 
-            if (InRangeUnobstructed(user, ev.Target, ev.UserInterface.InteractionRange))
+            if (InRangeUnobstructed(ev.Actor, ev.Target, ev.Data.InteractionRange))
             {
                 ev.Result = BoundUserInterfaceRangeResult.Pass;
             }

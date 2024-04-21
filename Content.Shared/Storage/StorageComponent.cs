@@ -19,10 +19,6 @@ namespace Content.Shared.Storage
     {
         public static string ContainerId = "storagebase";
 
-        // TODO: This fucking sucks
-        [ViewVariables(VVAccess.ReadWrite), DataField]
-        public bool IsUiOpen;
-
         [ViewVariables]
         public Container Container = default!;
 

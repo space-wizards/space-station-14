@@ -82,8 +82,8 @@ namespace Content.Server.Communications
 
                 comp.UIUpdateAccumulator -= UIUpdateInterval;
 
-                if (_uiSystem.TryGetUi(uid, CommunicationsConsoleUiKey.Key, out var ui) && ui.SubscribedSessions.Count > 0)
-                    UpdateCommsConsoleInterface(uid, comp, ui);
+                if (_uiSystem.IsUiOpen(uid, CommunicationsConsoleUiKey.Key))
+                    UpdateCommsConsoleInterface(uid, comp);
             }
 
             base.Update(frameTime);
@@ -136,11 +136,8 @@ namespace Content.Server.Communications
         /// <summary>
         /// Updates the UI for a particular comms console.
         /// </summary>
-        public void UpdateCommsConsoleInterface(EntityUid uid, CommunicationsConsoleComponent comp, PlayerBoundUserInterface? ui = null)
+        public void UpdateCommsConsoleInterface(EntityUid uid, CommunicationsConsoleComponent comp)
         {
-            if (ui == null && !_uiSystem.TryGetUi(uid, CommunicationsConsoleUiKey.Key, out ui))
-                return;
-
             var stationUid = _stationSystem.GetOwningStation(uid);
             List<string>? levels = null;
             string currentLevel = default!;
@@ -168,7 +165,7 @@ namespace Content.Server.Communications
                 }
             }
 
-            _uiSystem.SetUiState(ui, new CommunicationsConsoleInterfaceState(
+            _uiSystem.SetUiState(uid, CommunicationsConsoleUiKey.Key, new CommunicationsConsoleInterfaceState(
                 CanAnnounce(comp),
                 CanCallOrRecall(comp),
                 levels,

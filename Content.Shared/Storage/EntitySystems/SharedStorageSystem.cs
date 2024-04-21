@@ -130,7 +130,6 @@ public abstract class SharedStorageSystem : EntitySystem
         args.State = new StorageComponentState()
         {
             Grid = new List<Box2i>(component.Grid),
-            IsUiOpen = component.IsUiOpen,
             MaxItemSize = component.MaxItemSize,
             StoredItems = storedItems,
             SavedLocations = component.SavedLocations
@@ -144,7 +143,6 @@ public abstract class SharedStorageSystem : EntitySystem
 
         component.Grid.Clear();
         component.Grid.AddRange(state.Grid);
-        component.IsUiOpen = state.IsUiOpen;
         component.MaxItemSize = state.MaxItemSize;
 
         component.StoredItems.Clear();
@@ -451,8 +449,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!TryComp<StorageComponent>(uid, out var storageComp))
             return;
 
-        if (!_ui.TryGetUi(uid, StorageComponent.StorageUiKey.Key, out var bui) ||
-            !bui.SubscribedSessions.Contains(args.SenderSession))
+        if (!_ui.IsUiOpen(uid, StorageComponent.StorageUiKey.Key, player))
             return;
 
         if (!Exists(entity))
@@ -494,8 +491,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!TryComp<StorageComponent>(storageEnt, out var storageComp))
             return;
 
-        if (!_ui.TryGetUi(storageEnt, StorageComponent.StorageUiKey.Key, out var bui) ||
-            !bui.SubscribedSessions.Contains(args.SenderSession))
+        if (!_ui.IsUiOpen(storageEnt, StorageComponent.StorageUiKey.Key, player))
             return;
 
         if (!Exists(itemEnt))
@@ -521,8 +517,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!TryComp<StorageComponent>(storageEnt, out var storageComp))
             return;
 
-        if (!_ui.TryGetUi(storageEnt, StorageComponent.StorageUiKey.Key, out var bui) ||
-            !bui.SubscribedSessions.Contains(args.SenderSession))
+        if (!_ui.IsUiOpen(storageEnt, StorageComponent.StorageUiKey.Key, player))
             return;
 
         if (!Exists(itemEnt))
@@ -549,8 +544,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!TryComp<StorageComponent>(storageEnt, out var storageComp))
             return;
 
-        if (!_ui.TryGetUi(storageEnt, StorageComponent.StorageUiKey.Key, out var bui) ||
-            !bui.SubscribedSessions.Contains(args.SenderSession))
+        if (!_ui.IsUiOpen(storageEnt, StorageComponent.StorageUiKey.Key, player))
             return;
 
         if (!Exists(itemEnt))
@@ -575,11 +569,10 @@ public abstract class SharedStorageSystem : EntitySystem
         var storage = GetEntity(msg.Storage);
         var item = GetEntity(msg.Item);
 
-        if (!TryComp<StorageComponent>(storage, out var storageComp))
+        if (!HasComp<StorageComponent>(storage))
             return;
 
-        if (!_ui.TryGetUi(storage, StorageComponent.StorageUiKey.Key, out var bui) ||
-            !bui.SubscribedSessions.Contains(args.SenderSession))
+        if (!_ui.IsUiOpen(storage, StorageComponent.StorageUiKey.Key, player))
             return;
 
         if (!Exists(item))
@@ -596,11 +589,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnBoundUIOpen(EntityUid uid, StorageComponent storageComp, BoundUIOpenedEvent args)
     {
-        if (!storageComp.IsUiOpen)
-        {
-            storageComp.IsUiOpen = true;
-            UpdateAppearance((uid, storageComp, null));
-        }
+        UpdateAppearance((uid, storageComp, null));
     }
 
     private void OnEntInserted(Entity<StorageComponent> entity, ref EntInsertedIntoContainerMessage args)
@@ -678,11 +667,13 @@ public abstract class SharedStorageSystem : EntitySystem
         var capacity = storage.Grid.GetArea();
         var used = GetCumulativeItemAreas((uid, storage));
 
+        var isOpen = _ui.IsUiOpen(entity.Owner, StorageComponent.StorageUiKey.Key);
+
         _appearance.SetData(uid, StorageVisuals.StorageUsed, used, appearance);
         _appearance.SetData(uid, StorageVisuals.Capacity, capacity, appearance);
-        _appearance.SetData(uid, StorageVisuals.Open, storage.IsUiOpen, appearance);
-        _appearance.SetData(uid, SharedBagOpenVisuals.BagState, storage.IsUiOpen ? SharedBagState.Open : SharedBagState.Closed, appearance);
-        _appearance.SetData(uid, StackVisuals.Hide, !storage.IsUiOpen, appearance);
+        _appearance.SetData(uid, StorageVisuals.Open, isOpen, appearance);
+        _appearance.SetData(uid, SharedBagOpenVisuals.BagState, isOpen ? SharedBagState.Open : SharedBagState.Closed, appearance);
+        _appearance.SetData(uid, StackVisuals.Hide, !isOpen, appearance);
     }
 
     /// <summary>
@@ -1334,8 +1325,6 @@ public abstract class SharedStorageSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class StorageComponentState : ComponentState
     {
-        public bool IsUiOpen;
-
         public Dictionary<NetEntity, ItemStorageLocation> StoredItems = new();
 
         public Dictionary<string, List<ItemStorageLocation>> SavedLocations = new();
