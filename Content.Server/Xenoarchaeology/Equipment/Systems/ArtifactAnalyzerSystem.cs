@@ -215,8 +215,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         var state = new AnalysisConsoleScanUpdateState(GetNetEntity(artifact), analyzerConnected, serverConnected,
             canScan, canPrint, msg, scanning, paused, active?.StartTime, active?.AccumulatedRunTime, totalTime, points);
 
-        var bui = _ui.GetUi(uid, ArtifactAnalzyerUiKey.Key);
-        _ui.SetUiState(bui, state);
+        _ui.SetUiState(uid, ArtifactAnalzyerUiKey.Key, state);
     }
 
     /// <summary>

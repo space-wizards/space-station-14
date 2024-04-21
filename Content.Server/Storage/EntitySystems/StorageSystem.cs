@@ -53,12 +53,8 @@ public sealed partial class StorageSystem : SharedStorageSystem
 
         silent |= HasComp<GhostComponent>(args.User);
 
-        // Get the session for the user
-        if (!TryComp<ActorComponent>(args.User, out var actor))
-            return;
-
         // Does this player currently have the storage UI open?
-        var uiOpen = _uiSystem.SessionHasOpenUi(uid, StorageComponent.StorageUiKey.Key, actor.PlayerSession);
+        var uiOpen = _uiSystem.IsUiOpen(uid, StorageComponent.StorageUiKey.Key, args.User);
 
         ActivationVerb verb = new()
         {
@@ -66,7 +62,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
             {
                 if (uiOpen)
                 {
-                    _uiSystem.TryClose(uid, StorageComponent.StorageUiKey.Key, actor.PlayerSession);
+                    _uiSystem.CloseUi(uid, StorageComponent.StorageUiKey.Key, args.User);
                 }
                 else
                 {
@@ -74,6 +70,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
                 }
             }
         };
+
         if (uiOpen)
         {
             verb.Text = Loc.GetString("verb-common-close-ui");
@@ -97,7 +94,6 @@ public sealed partial class StorageSystem : SharedStorageSystem
         // If UI is closed for everyone
         if (!_uiSystem.IsUiOpen(uid, args.UiKey))
         {
-            storageComp.IsUiOpen = false;
             UpdateAppearance((uid, storageComp, null));
 
             if (storageComp.StorageCloseSound is not null)
@@ -116,26 +112,26 @@ public sealed partial class StorageSystem : SharedStorageSystem
     /// <param name="entity">The entity to open the UI for</param>
     public override void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false)
     {
-        if (!Resolve(uid, ref storageComp, false) || !TryComp(entity, out ActorComponent? player))
+        if (!Resolve(uid, ref storageComp, false))
             return;
 
         // prevent spamming bag open / honkerton honk sound
         silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && _useDelay.IsDelayed((uid, useDelay));
         if (!silent)
         {
-            if (!storageComp.IsUiOpen)
+            if (!_uiSystem.IsUiOpen(uid, StorageComponent.StorageUiKey.Key))
                 _audio.PlayPvs(storageComp.StorageOpenSound, uid);
+
             if (useDelay != null)
                 _useDelay.TryResetDelay((uid, useDelay));
         }
 
-        Log.Debug($"Storage (UID {uid}) \"used\" by player session (UID {player.PlayerSession.AttachedEntity}).");
+        Log.Debug($"Storage (UID {uid}) \"used\" by player session {ToPrettyString(entity)}.");
 
-        var bui = _uiSystem.GetUiOrNull(uid, StorageComponent.StorageUiKey.Key);
-        if (bui == null)
+        if (!_uiSystem.TryOpenUi(uid, StorageComponent.StorageUiKey.Key, entity))
             return;
-        _uiSystem.OpenUi(bui, player.PlayerSession);
-        _uiSystem.SendUiMessage(bui, new StorageModifyWindowMessage());
+
+        _uiSystem.ServerSendUiMessage(uid, StorageComponent.StorageUiKey.Key, new StorageModifyWindowMessage());
     }
 
     /// <inheritdoc />
@@ -149,7 +145,6 @@ public sealed partial class StorageSystem : SharedStorageSystem
     /// <summary>
     ///     If the user has nested-UIs open (e.g., PDA UI open when pda is in a backpack), close them.
     /// </summary>
-    /// <param name="session"></param>
     public void CloseNestedInterfaces(EntityUid uid, ICommonSession session, StorageComponent? storageComp = null)
     {
         if (!Resolve(uid, ref storageComp))
@@ -162,13 +157,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
         // close ui
         foreach (var entity in storageComp.Container.ContainedEntities)
         {
-            if (!TryComp(entity, out UserInterfaceComponent? ui))
-                continue;
-
-            foreach (var bui in ui.Interfaces.Values)
-            {
-                _uiSystem.TryClose(entity, bui.UiKey, session, ui);
-            }
+            _uiSystem.CloseUis(entity, session);
         }
     }
 }

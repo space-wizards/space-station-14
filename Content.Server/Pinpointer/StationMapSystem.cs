@@ -32,10 +32,7 @@ public sealed class StationMapSystem : EntitySystem
 
     private void OnUserParentChanged(EntityUid uid, StationMapUserComponent component, ref EntParentChangedMessage args)
     {
-        if (TryComp<ActorComponent>(uid, out var actor))
-        {
-            _ui.TryClose(component.Map, StationMapUiKey.Key, actor.PlayerSession);
-        }
+        _ui.CloseUi(component.Map, StationMapUiKey.Key, uid);
     }
 
     private void OnStationMapOpened(EntityUid uid, StationMapComponent component, BoundUIOpenedEvent args)

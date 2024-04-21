@@ -70,6 +70,6 @@ namespace Content.Server.UserInterface
         ///     NOTE: DO NOT DIRECTLY SET, USE ActivatableUISystem.SetCurrentSingleUser
         /// </summary>
         [ViewVariables]
-        public ICommonSession? CurrentSingleUser;
+        public EntityUid? CurrentSingleUser;
     }
 }

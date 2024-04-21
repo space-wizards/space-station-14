@@ -196,14 +196,14 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         UpdateSetupInterface(uid, component);
     }
 
-    private void OpenSetupInterface(EntityUid uid, EntityUid player, SurveillanceCameraComponent? camera = null, ActorComponent? actor = null)
+    private void OpenSetupInterface(EntityUid uid, EntityUid player, SurveillanceCameraComponent? camera = null)
     {
-        if (!Resolve(uid, ref camera) || !Resolve(player, ref actor))
-            return;
-        if (!_userInterface.HasUi(uid, SurveillanceCameraSetupUiKey.Camera, out var bui))
+        if (!Resolve(uid, ref camera))
             return;
 
-        _userInterface.OpenUi(bui, actor.PlayerSession);
+        if (!_userInterface.TryOpenUi(uid, SurveillanceCameraSetupUiKey.Camera, player))
+            return;
+
         UpdateSetupInterface(uid, camera);
     }
 

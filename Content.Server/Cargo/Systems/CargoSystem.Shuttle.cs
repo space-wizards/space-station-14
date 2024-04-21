@@ -54,15 +54,14 @@ public sealed partial class CargoSystem
 
     private void UpdatePalletConsoleInterface(EntityUid uid)
     {
-        var bui = _uiSystem.GetUi(uid, CargoPalletConsoleUiKey.Sale);
         if (Transform(uid).GridUid is not EntityUid gridUid)
         {
-            _uiSystem.SetUiState(bui,
+            _uiSystem.SetUiState(uid, CargoPalletConsoleUiKey.Sale,
             new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
         }
         GetPalletGoods(gridUid, out var toSell, out var amount);
-        _uiSystem.SetUiState(bui,
+        _uiSystem.SetUiState(uid, CargoPalletConsoleUiKey.Sale,
             new CargoPalletConsoleInterfaceState((int) amount, toSell.Count, true));
     }
 
@@ -108,8 +107,8 @@ public sealed partial class CargoSystem
         var orders = GetProjectedOrders(station ?? EntityUid.Invalid, orderDatabase, shuttle);
         var shuttleName = orderDatabase?.Shuttle != null ? MetaData(orderDatabase.Shuttle.Value).EntityName : string.Empty;
 
-        if (_uiSystem.HasUi(uid, CargoConsoleUiKey.Shuttle, out var bui))
-            _uiSystem.SetUiState(bui, new CargoShuttleConsoleBoundUserInterfaceState(
+        if (_uiSystem.HasUi(uid, CargoConsoleUiKey.Shuttle))
+            _uiSystem.SetUiState(uid, CargoConsoleUiKey.Shuttle, new CargoShuttleConsoleBoundUserInterfaceState(
                 station != null ? MetaData(station.Value).EntityName : Loc.GetString("cargo-shuttle-console-station-unknown"),
                 string.IsNullOrEmpty(shuttleName) ? Loc.GetString("cargo-shuttle-console-shuttle-not-found") : shuttleName,
                 orders
@@ -319,12 +318,11 @@ public sealed partial class CargoSystem
         if (player == null)
             return;
 
-        var bui = _uiSystem.GetUi(uid, CargoPalletConsoleUiKey.Sale);
         var xform = Transform(uid);
 
         if (xform.GridUid is not EntityUid gridUid)
         {
-            _uiSystem.SetUiState(bui,
+            _uiSystem.SetUiState(uid, CargoPalletConsoleUiKey.Sale,
             new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
         }

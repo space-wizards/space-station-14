@@ -248,14 +248,14 @@ public sealed class NewsSystem : SharedNewsSystem
 
     private void UpdateWriterUi(Entity<NewsWriterComponent> ent)
     {
-        if (!_ui.HasUi(ent, NewsWriterUiKey.Key, out var ui))
+        if (!_ui.HasUi(ent, NewsWriterUiKey.Key))
             return;
 
         if (!TryGetArticles(ent, out var articles))
             return;
 
         var state = new NewsWriterBoundUserInterfaceState(articles.ToArray(), ent.Comp.PublishEnabled, ent.Comp.NextPublish);
-        _ui.SetUiState(ui, state);
+        _ui.SetUiState(ent.Owner, NewsWriterUiKey.Key, state);
     }
 
     private void UpdateReaderUi(Entity<NewsReaderCartridgeComponent> ent, EntityUid loaderUid)

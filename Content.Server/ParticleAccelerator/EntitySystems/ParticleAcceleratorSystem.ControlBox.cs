@@ -235,7 +235,8 @@ public sealed partial class ParticleAcceleratorSystem
     {
         if (!Resolve(uid, ref comp))
             return;
-        if (!_uiSystem.HasUi(uid, ParticleAcceleratorControlBoxUiKey.Key, out var bui))
+
+        if (!_uiSystem.HasUi(uid, ParticleAcceleratorControlBoxUiKey.Key))
             return;
 
         var draw = 0f;
@@ -247,7 +248,7 @@ public sealed partial class ParticleAcceleratorSystem
             receive = powerConsumer.ReceivedPower;
         }
 
-        _uiSystem.SetUiState(bui, new ParticleAcceleratorUIState(
+        _uiSystem.SetUiState(uid, ParticleAcceleratorControlBoxUiKey.Key, new ParticleAcceleratorUIState(
             comp.Assembled,
             comp.Enabled,
             comp.SelectedStrength,

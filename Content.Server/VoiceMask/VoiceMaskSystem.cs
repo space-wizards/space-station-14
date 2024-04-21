@@ -95,14 +95,12 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         ent.Comp.Enabled = !args.IsToggled;
     }
 
-    private void OpenUI(EntityUid player, ActorComponent? actor = null)
+    private void OpenUI(EntityUid player)
     {
-        if (!Resolve(player, ref actor))
-            return;
-        if (!_uiSystem.HasUi(player, VoiceMaskUIKey.Key, out var bui))
+        if (!_uiSystem.HasUi(player, VoiceMaskUIKey.Key))
             return;
 
-        _uiSystem.OpenUi(bui, actor.PlayerSession);
+        _uiSystem.OpenUi(player, VoiceMaskUIKey.Key, player);
         UpdateUI(player);
     }
 
@@ -113,7 +111,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
             return;
         }
 
-        if (_uiSystem.HasUi(owner, VoiceMaskUIKey.Key, out var bui))
-            _uiSystem.SetUiState(bui, new VoiceMaskBuiState(component.VoiceName, component.SpeechVerb));
+        if (_uiSystem.HasUi(owner, VoiceMaskUIKey.Key))
+            _uiSystem.SetUiState(owner, VoiceMaskUIKey.Key, new VoiceMaskBuiState(component.VoiceName, component.SpeechVerb));
     }
 }

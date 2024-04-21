@@ -159,8 +159,8 @@ public sealed class MailingUnitSystem : EntitySystem
 
         args.Handled = true;
         UpdateTargetList(uid, component);
-        if (_userInterfaceSystem.HasUi(uid, MailingUnitUiKey.Key, out var bui))
-            _userInterfaceSystem.OpenUi(bui, actor.PlayerSession);
+        if (_userInterfaceSystem.HasUi(uid, MailingUnitUiKey.Key))
+            _userInterfaceSystem.OpenUi(uid, MailingUnitUiKey.Key, actor.PlayerSession);
     }
 
     /// <summary>
@@ -178,8 +178,8 @@ public sealed class MailingUnitSystem : EntitySystem
             return;
 
         var state = new MailingUnitBoundUserInterfaceState(component.DisposalUnitInterfaceState, component.Target, component.TargetList, component.Tag);
-        if (_userInterfaceSystem.HasUi(uid, MailingUnitUiKey.Key, out var bui))
-            _userInterfaceSystem.SetUiState(bui, state);
+        if (_userInterfaceSystem.HasUi(uid, MailingUnitUiKey.Key))
+            _userInterfaceSystem.SetUiState(uid, MailingUnitUiKey.Key, state);
     }
 
     private void OnTargetSelected(EntityUid uid, MailingUnitComponent component, TargetSelectedMessage args)

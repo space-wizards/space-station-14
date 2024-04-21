@@ -127,7 +127,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     _solutionContainersSystem.TryAddSolution(containerSoln.Value, solution);
                 }
 
-                _userInterfaceSystem.TrySendUiMessage(uid, ReagentGrinderUiKey.Key,
+                _userInterfaceSystem.ServerSendUiMessage(uid, ReagentGrinderUiKey.Key,
                     new ReagentGrinderWorkCompleteMessage());
 
                 UpdateUiState(uid);
@@ -305,7 +305,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             reagentGrinder.AudioStream = _audioSystem.PlayPvs(sound, uid,
                 AudioParams.Default.WithPitchScale(1 / reagentGrinder.WorkTimeMultiplier)).Value.Entity; //slightly higher pitched
-            _userInterfaceSystem.TrySendUiMessage(uid, ReagentGrinderUiKey.Key,
+            _userInterfaceSystem.ServerSendUiMessage(uid, ReagentGrinderUiKey.Key,
                 new ReagentGrinderWorkStartedMessage(program));
         }
 

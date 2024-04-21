@@ -349,9 +349,10 @@ public sealed partial class EmergencyShuttleSystem
             auths.Add(auth);
         }
 
-        if (_uiSystem.HasUi(uid, EmergencyConsoleUiKey.Key, out var bui))
+        if (_uiSystem.HasUi(uid, EmergencyConsoleUiKey.Key))
             _uiSystem.SetUiState(
-                bui,
+                uid,
+                EmergencyConsoleUiKey.Key,
                 new EmergencyConsoleBoundUserInterfaceState()
                 {
                     EarlyLaunchTime = EarlyLaunchAuthorized ? _timing.CurTime + TimeSpan.FromSeconds(_consoleAccumulator) : null,

@@ -303,8 +303,7 @@ public sealed partial class MechSystem : SharedMechSystem
         {
             EquipmentStates = ev.States
         };
-        var ui = _ui.GetUi(uid, MechUiKey.Key);
-        _ui.SetUiState(ui, state);
+        _ui.SetUiState(uid, MechUiKey.Key, state);
     }
 
     public override void BreakMech(EntityUid uid, MechComponent? component = null)

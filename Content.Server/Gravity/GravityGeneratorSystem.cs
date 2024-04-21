@@ -154,7 +154,7 @@ namespace Content.Server.Gravity
         private void UpdateUI(Entity<GravityGeneratorComponent, ApcPowerReceiverComponent> ent, float chargeRate)
         {
             var (_, component, powerReceiver) = ent;
-            if (!_uiSystem.IsUiOpen(ent, SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key))
+            if (!_uiSystem.IsUiOpen(ent.Owner, SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key))
                 return;
 
             var chargeTarget = chargeRate < 0 ? 0 : component.MaxCharge;

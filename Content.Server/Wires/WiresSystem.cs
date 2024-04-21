@@ -468,7 +468,8 @@ public sealed class WiresSystem : SharedWiresSystem
     {
         if (args.Open)
             return;
-        _uiSystem.CloseUi(ent, WiresUiKey.Key);
+
+        _uiSystem.CloseUi(ent.Owner, WiresUiKey.Key);
     }
 
     private void OnAttemptOpenActivatableUI(EntityUid uid, ActivatableUIRequiresPanelComponent component, ActivatableUIOpenAttemptEvent args)
@@ -574,18 +575,17 @@ public sealed class WiresSystem : SharedWiresSystem
 
         statuses.Sort((a, b) => a.position.CompareTo(b.position));
 
-        _uiSystem.SetUiState(uid, WiresUiKey.Key, new WiresBoundUserInterfaceState(
+        _uiSystem.SetUiState((uid, ui), WiresUiKey.Key, new WiresBoundUserInterfaceState(
             clientList.ToArray(),
             statuses.Select(p => new StatusEntry(p.key, p.value)).ToArray(),
             Loc.GetString(wires.BoardName),
             wires.SerialNumber,
-            wires.WireSeed), ui: ui);
+            wires.WireSeed));
     }
 
     public void OpenUserInterface(EntityUid uid, ICommonSession player)
     {
-        if (_uiSystem.HasUi(uid, WiresUiKey.Key, out var ui))
-            _uiSystem.OpenUi(ui, player);
+        _uiSystem.OpenUi(uid, WiresUiKey.Key, player);
     }
 
     /// <summary>

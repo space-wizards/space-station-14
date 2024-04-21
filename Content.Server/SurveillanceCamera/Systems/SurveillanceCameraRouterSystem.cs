@@ -134,14 +134,14 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
         UpdateSetupInterface(uid, component);
     }
 
-    private void OpenSetupInterface(EntityUid uid, EntityUid player, SurveillanceCameraRouterComponent? camera = null, ActorComponent? actor = null)
+    private void OpenSetupInterface(EntityUid uid, EntityUid player, SurveillanceCameraRouterComponent? camera = null)
     {
-        if (!Resolve(uid, ref camera) || !Resolve(player, ref actor))
-            return;
-        if (!_userInterface.HasUi(uid, SurveillanceCameraSetupUiKey.Router, out var bui))
+        if (!Resolve(uid, ref camera))
             return;
 
-        _userInterface.OpenUi(bui, actor.PlayerSession);
+        if (!_userInterface.TryOpenUi(uid, SurveillanceCameraSetupUiKey.Router, player))
+            return;
+
         UpdateSetupInterface(uid, camera);
     }
 
