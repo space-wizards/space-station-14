@@ -12,8 +12,6 @@
     equipSound:
       path: /Audio/Items/belt_equip.ogg
     quickEquip: false
-    equipSound: # GreyStation - Sound PR
-      path: /Audio/SimpleStation14/Items/Equip/toolbelt_equip.ogg
   - type: PhysicalComposition
     materialComposition:
       Cloth: 50
