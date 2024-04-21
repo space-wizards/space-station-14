@@ -7,8 +7,8 @@ namespace Content.Shared.SqueezeBottle;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SqueezeBottleComponent : Component
 {
-    [DataField]
-    public SoundSpecifier OnSqueezeNoise = new SoundPathSpecifier("/Audio/Items/squeezebottle.ogg");
+    [DataField(required: true)]
+    public SoundSpecifier OnSqueezeNoise = default!;
 
     /// <summary>
     /// Solution on the entity that contains the glue.

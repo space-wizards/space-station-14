@@ -6,6 +6,7 @@
   components:
   - type: SqueezeBottle
     amountConsumedOnUse: 5
+    onSqueezeNoise: /Audio/Items/squeezebottle.ogg
   - type: Openable
     closeable: true
     sound:
@@ -106,6 +107,7 @@
   components:
   - type: SqueezeBottle
     amountConsumedOnUse: 7.5 # high throughput nozzle
+    onSqueezeNoise: /Audio/Items/squeezebottle.ogg
   - type: SolutionContainerManager
     solutions:
       drink:
