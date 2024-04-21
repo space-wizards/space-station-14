@@ -426,7 +426,7 @@
   suffix: Full
   components:
   - type: Stack
-    stackType: Cotton
+    stackType: Pyrotton
     baseLayer: base
     layerStates:
     - pyrotton
