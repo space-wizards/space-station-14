@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Jajsha
-  changes:
-  - message: Cyborgs can no longer Emag themselves.
-    type: Fix
-  id: 5914
-  time: '2024-02-11T06:23:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24748
 - author: Ubaser
   changes:
   - message: Grinding ectoplasm now gives Necrosol.
@@ -3834,3 +3827,15 @@
   id: 6413
   time: '2024-04-21T11:53:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27211
+- author: PJB3005
+  changes:
+  - message: The item status menu has been moved to the side of the hands. There is
+      now one for each hand.
+    type: Add
+  - message: The item status menu fits with the rest of the HUD theme now.
+    type: Add
+  - message: Improved, fixed and otherwise added a bunch of item status menus.
+    type: Add
+  id: 6414
+  time: '2024-04-21T13:16:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/22986
