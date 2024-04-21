@@ -69,17 +69,8 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
             return;
         }
 
-        var candidates = new Dictionary<ICommonSession, HumanoidCharacterProfile>();
-        foreach (var player in args.Players)
-        {
-            if (!args.Profiles.TryGetValue(player.UserId, out var profile))
-                continue;
-
-            candidates[player] = profile;
-        }
-
         // group all players by their department
-        var taggerPool = _antagSelection.GetEligiblePlayers(candidates, comp.Antag, includeAllJobs: true);
+        var taggerPool = _antagSelection.GetEligiblePlayers(args.Players, comp.Antag, includeAllJobs: true);
         var departments = new Dictionary<string, List<EntityUid>>();
         foreach (var mob in taggerPool)
         {
