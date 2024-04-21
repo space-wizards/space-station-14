@@ -19,6 +19,7 @@ public sealed class ThornySystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -26,21 +27,12 @@ public sealed class ThornySystem : EntitySystem
     }
     private void OnHandPickUp(Entity<ThornyComponent> entity, ref ContainerGettingInsertedAttemptEvent args)
     {
-
-        bool hasImmunity = false;
-
         var user = args.Container.Owner;
         if (_inventory.TryGetSlotEntity(user, "gloves", out var slotEntity) &&
             TryComp<ThornyImmuneComponent>(slotEntity, out var immunity))
         {
-            hasImmunity = immunity.ThornImmune;
-        }
-
-        if (hasImmunity == true)
-        {
             return;
         }
-
         args.Cancel();
         _audio.PlayPvs(entity.Comp.Sound, entity);
         _transform.SetCoordinates(entity, Transform(user).Coordinates);
