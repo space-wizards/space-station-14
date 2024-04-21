@@ -1058,3 +1058,8 @@
   id: violets
   flavorType: Complex
   description: flavor-complex-violets
+
+- type: flavor
+  id: pyrotton
+  flavorType: Complex
+  description: flavor-complex-pyrotton
