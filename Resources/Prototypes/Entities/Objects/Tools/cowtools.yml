@@ -128,7 +128,6 @@
     sprite: Objects/Tools/Cowtools/cowelder.rsi
   - type: Tool
     speed: 0.05
-  - type: Welder
 
 - type: entity
   name: milkalyzer

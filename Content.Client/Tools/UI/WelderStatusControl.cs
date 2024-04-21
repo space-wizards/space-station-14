@@ -2,7 +2,6 @@ using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Shared.FixedPoint;
-using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Robust.Client.UserInterface.Controls;
@@ -30,8 +29,7 @@ public sealed class WelderStatusControl : PollingItemStatusControl<WelderStatusC
     protected override Data PollData()
     {
         var (fuel, capacity) = _toolSystem.GetWelderFuelAndCapacity(_parent, _parent.Comp);
-        var lit = _entityManager.GetComponentOrNull<ItemToggleComponent>(_parent)?.Activated ?? false;
-        return new Data(fuel, capacity, lit);
+        return new Data(fuel, capacity, _parent.Comp.Enabled);
     }
 
     protected override void Update(in Data data)
@@ -41,7 +39,6 @@ public sealed class WelderStatusControl : PollingItemStatusControl<WelderStatusC
             ("fuelLeft", data.Fuel),
             ("fuelCapacity", data.FuelCapacity),
             ("status", Loc.GetString(data.Lit ? "welder-component-on-examine-welder-lit-message" : "welder-component-on-examine-welder-not-lit-message"))));
-
     }
 
     public record struct Data(FixedPoint2 Fuel, FixedPoint2 FuelCapacity, bool Lit);

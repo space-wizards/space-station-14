@@ -184,7 +184,7 @@ public abstract partial class InteractionTest
         await Pair.CreateTestMap();
         PlayerCoords = SEntMan.GetNetCoordinates(MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan));
         TargetCoords = SEntMan.GetNetCoordinates(MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan));
-        await SetTile(Plating, grid: MapData.MapGrid);
+        await SetTile(Plating, grid: MapData.Grid.Comp);
 
         // Get player data
         var sPlayerMan = Server.ResolveDependency<Robust.Server.Player.IPlayerManager>();

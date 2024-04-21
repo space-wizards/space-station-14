@@ -19,6 +19,8 @@
     - map: ["enum.SolutionContainerLayers.Fill"]
       state: fill-1
       visible: false
+  - type: MixableSolution
+    solution: food
   - type: DamageOnLand
     damage:
       types:

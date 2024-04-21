@@ -93,10 +93,11 @@
             max: 4
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: AccessReader
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]
+  - type: AccessReader
+    containerAccessProvider: board
   - type: ContainerContainer
     containers:
       board: !type:Container
