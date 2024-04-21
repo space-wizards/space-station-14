@@ -270,7 +270,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         // Probably ignore CanCollide on the anchoring body?
         var gridUid = coordinates.GetGridUid(EntityManager);
 
-        if (!_mapManager.TryGetGrid(gridUid, out var grid))
+        if (!TryComp<MapGridComponent>(gridUid, out var grid))
             return false;
 
         var tileIndices = grid.TileIndicesFor(coordinates);

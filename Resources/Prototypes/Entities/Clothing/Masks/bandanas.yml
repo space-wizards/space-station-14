@@ -25,7 +25,10 @@
   - type: Tag
     tags:
     - Bandana
-    - HidesNose
+  - type: HideLayerClothing
+    slots:
+    - Snout
+    hideOnToggle: true
 
 - type: entity
   parent: ClothingMaskBandanaBase

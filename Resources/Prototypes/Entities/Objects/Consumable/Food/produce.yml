@@ -1133,9 +1133,9 @@
           Quantity: 1
 
 - type: entity
-  name: chili
+  name: chili pepper
   parent: FoodProduceBase
-  id: FoodChili
+  id: FoodChiliPepper
   description: Spicy, best not touch your eyes.
   components:
     - type: FlavorProfile
@@ -1163,7 +1163,7 @@
 - type: entity
   name: chilly pepper
   parent: FoodProduceBase
-  id: FoodChilly
+  id: FoodChillyPepper
   description: Icy hot.
   components:
     - type: FlavorProfile
@@ -1220,6 +1220,10 @@
   id: FoodPoppy
   description: A flower with extracts often used in the production of medicine
   components:
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
   - type: FlavorProfile
     flavors:
       - medicine
