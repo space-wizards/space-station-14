@@ -79,13 +79,10 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
         }
 
         // group all players by their department
-        var taggerPool = _antagSelection.GetEligiblePlayers(candidates, comp.Antag, includeHeads: true);
+        var taggerPool = _antagSelection.GetEligiblePlayers(candidates, comp.Antag, includeAllJobs: true);
         var departments = new Dictionary<string, List<EntityUid>>();
-        foreach (var session in taggerPool)
+        foreach (var mob in taggerPool)
         {
-            if (session.AttachedEntity is not {} mob)
-                continue;
-
             if (_mind.GetMind(mob) is not {} mind)
                 continue;
 
