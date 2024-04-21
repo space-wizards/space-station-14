@@ -108,7 +108,9 @@ namespace Content.Shared.Interaction
         /// </summary>
         private void OnBoundInterfaceInteractAttempt(BoundUserInterfaceMessageAttempt ev)
         {
-            if (ev.Sender.AttachedEntity is not { } user || !_actionBlockerSystem.CanInteract(user, ev.Target))
+            var user = ev.Actor;
+
+            if (!_actionBlockerSystem.CanInteract(user, ev.Target))
             {
                 ev.Cancel();
                 return;

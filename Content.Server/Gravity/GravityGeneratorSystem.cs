@@ -131,13 +131,13 @@ namespace Content.Server.Gravity
         }
 
         private void SetSwitchedOn(EntityUid uid, GravityGeneratorComponent component, bool on,
-            ApcPowerReceiverComponent? powerReceiver = null, ICommonSession? session = null)
+            ApcPowerReceiverComponent? powerReceiver = null, EntityUid? user = null)
         {
             if (!Resolve(uid, ref powerReceiver))
                 return;
 
-            if (session is { AttachedEntity: { } })
-                _adminLogger.Add(LogType.Action, on ? LogImpact.Medium : LogImpact.High, $"{session:player} set ${ToPrettyString(uid):target} to {(on ? "on" : "off")}");
+            if (user != null)
+                _adminLogger.Add(LogType.Action, on ? LogImpact.Medium : LogImpact.High, $"{ToPrettyString(user)} set ${ToPrettyString(uid):target} to {(on ? "on" : "off")}");
 
             component.SwitchedOn = on;
             UpdatePowerState(component, powerReceiver);
@@ -287,7 +287,7 @@ namespace Content.Server.Gravity
             GravityGeneratorComponent component,
             SharedGravityGeneratorComponent.SwitchGeneratorMessage args)
         {
-            SetSwitchedOn(uid, component, args.On, session:args.Session);
+            SetSwitchedOn(uid, component, args.On, user: args.Actor);
         }
     }
 }

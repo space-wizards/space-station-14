@@ -393,11 +393,11 @@ public sealed class WiresSystem : SharedWiresSystem
 
     private void OnWiresActionMessage(EntityUid uid, WiresComponent component, WiresActionMessage args)
     {
-        if (args.Session.AttachedEntity == null)
+        if (args.Actor == null)
         {
             return;
         }
-        var player = (EntityUid) args.Session.AttachedEntity;
+        var player = (EntityUid) args.Actor;
 
         if (!EntityManager.TryGetComponent(player, out HandsComponent? handsComponent))
         {

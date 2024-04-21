@@ -123,7 +123,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         {
             pump.Enabled = args.Enabled;
             _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
-                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
+                $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, pump);
             UpdateAppearance(uid, pump);
         }
@@ -132,7 +132,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         {
             pump.TargetPressure = Math.Clamp(args.Pressure, 0f, Atmospherics.MaxOutputPressure);
             _adminLogger.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
-                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the pressure on {ToPrettyString(uid):device} to {args.Pressure}kPa");
+                $"{ToPrettyString(args.Actor):player} set the pressure on {ToPrettyString(uid):device} to {args.Pressure}kPa");
             DirtyUI(uid, pump);
 
         }

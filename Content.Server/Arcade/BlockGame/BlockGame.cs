@@ -78,7 +78,7 @@ public sealed partial class BlockGame
         _gameOver = true;
 
         if (_entityManager.TryGetComponent<BlockGameArcadeComponent>(_owner, out var cabinet)
-        && _entityManager.TryGetComponent<MetaDataComponent>(cabinet.Player?.AttachedEntity, out var meta))
+        && _entityManager.TryGetComponent<MetaDataComponent>(cabinet.Player, out var meta))
         {
             _highScorePlacement = _arcadeSystem.RegisterHighScore(meta.EntityName, Points);
             SendHighscoreUpdate();

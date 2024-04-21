@@ -123,7 +123,7 @@ namespace Content.Server.VendingMachines
             if (!this.IsPowered(uid, EntityManager))
                 return;
 
-            if (args.Session.AttachedEntity is not { Valid: true } entity || Deleted(entity))
+            if (args.Actor is not { Valid: true } entity || Deleted(entity))
                 return;
 
             AuthorizedVend(uid, entity, args.Type, args.ID, component);

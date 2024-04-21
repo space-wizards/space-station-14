@@ -117,10 +117,7 @@ public sealed class SignalTimerSystem : EntitySystem
     /// <param name="uid">The entity that is interacted with.</param>
     private bool IsMessageValid(EntityUid uid, BoundUserInterfaceMessage message)
     {
-        if (message.Session.AttachedEntity is not { Valid: true } mob)
-            return false;
-
-        if (!_accessReader.IsAllowed(mob, uid))
+        if (!_accessReader.IsAllowed(message.Actor, uid))
             return false;
 
         return true;

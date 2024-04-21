@@ -373,7 +373,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                 var entity = GetEntity(request.Entity);
 
                 var nearby = GetBands(entity);
-                _bui.ServerSendUiMessage(entity, request.UiKey, new InstrumentBandResponseBuiMessage(nearby), request.Session);
+                _bui.ServerSendUiMessage(entity, request.UiKey, new InstrumentBandResponseBuiMessage(nearby), request.Actor);
             }
 
             _bandRequestQueue.Clear();
@@ -435,12 +435,12 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         }
     }
 
-    public void ToggleInstrumentUi(EntityUid uid, ICommonSession session, InstrumentComponent? component = null)
+    public void ToggleInstrumentUi(EntityUid uid, EntityUid actor, InstrumentComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
-        _bui.TryToggleUi(uid, InstrumentUiKey.Key, session);
+        _bui.TryToggleUi(uid, InstrumentUiKey.Key, actor);
     }
 
     public override bool ResolveInstrument(EntityUid uid, ref SharedInstrumentComponent? component)

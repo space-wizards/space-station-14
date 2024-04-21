@@ -40,8 +40,8 @@
     interfaces:
       enum.LatheUiKey.Key:
         type: LatheBoundUserInterface
-    enum.ResearchClientUiKey.Key:
-      type: ResearchClientBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
   - type: Transform
     anchored: true
   - type: Pullable

@@ -42,7 +42,7 @@ public sealed class SolutionTransferSystem : EntitySystem
         var newTransferAmount = FixedPoint2.Clamp(message.Value, ent.Comp.MinimumTransferAmount, ent.Comp.MaximumTransferAmount);
         ent.Comp.TransferAmount = newTransferAmount;
 
-        if (message.Session.AttachedEntity is { Valid: true } user)
+        if (message.Actor is { Valid: true } user)
             _popup.PopupClient(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), ent, user);
     }
 

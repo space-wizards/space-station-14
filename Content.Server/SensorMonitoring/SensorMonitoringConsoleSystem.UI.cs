@@ -131,9 +131,6 @@ public sealed partial class SensorMonitoringConsoleSystem
         if (!args.UiKey.Equals(SensorMonitoringConsoleUiKey.Key))
             return;
 
-        if (args.Session.AttachedEntity is not { } player)
-            return;
-
-        component.InitialUIStateSent.Remove(player);
+        component.InitialUIStateSent.Remove(args.Actor);
     }
 }

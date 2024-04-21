@@ -83,7 +83,7 @@ public sealed partial class CargoSystem
         if (!TryGetBountyFromId(station, args.BountyId, out var bounty))
             return;
 
-        if (args.Session.AttachedEntity is not { Valid: true } mob)
+        if (args.Actor is not { Valid: true } mob)
             return;
 
         if (TryComp<AccessReaderComponent>(uid, out var accessReaderComponent) &&

@@ -336,10 +336,10 @@ namespace Content.Server.Lathe
                     else
                         break;
                 }
-                if (count > 0 && args.Session.AttachedEntity != null)
+                if (count > 0)
                 {
                     _adminLogger.Add(LogType.Action, LogImpact.Low,
-                        $"{ToPrettyString(args.Session.AttachedEntity.Value):player} queued {count} {recipe.Name} at {ToPrettyString(uid):lathe}");
+                        $"{ToPrettyString(args.Actor):player} queued {count} {recipe.Name} at {ToPrettyString(uid):lathe}");
                 }
             }
             TryStartProducing(uid, component);

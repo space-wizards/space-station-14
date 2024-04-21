@@ -136,13 +136,12 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// </summary>
     private void OnConsoleUIClose(EntityUid uid, ShuttleConsoleComponent component, BoundUIClosedEvent args)
     {
-        if ((ShuttleConsoleUiKey) args.UiKey != ShuttleConsoleUiKey.Key ||
-            args.Session.AttachedEntity is not { } user)
+        if ((ShuttleConsoleUiKey) args.UiKey != ShuttleConsoleUiKey.Key)
         {
             return;
         }
 
-        RemovePilot(user);
+        RemovePilot(args.Actor);
     }
 
     private void OnConsoleUIOpenAttempt(EntityUid uid, ShuttleConsoleComponent component,

@@ -263,7 +263,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnResyncAll(EntityUid uid, AirAlarmComponent component, AirAlarmResyncAllDevicesMessage args)
     {
-        if (!AccessCheck(uid, args.Session.AttachedEntity, component))
+        if (!AccessCheck(uid, args.Actor, component))
         {
             return;
         }
@@ -278,7 +278,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnUpdateAlarmMode(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmModeMessage args)
     {
-        if (AccessCheck(uid, args.Session.AttachedEntity, component))
+        if (AccessCheck(uid, args.Actor, component))
         {
             var addr = string.Empty;
             if (TryComp<DeviceNetworkComponent>(uid, out var netConn))
@@ -302,7 +302,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnUpdateThreshold(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmThresholdMessage args)
     {
-        if (AccessCheck(uid, args.Session.AttachedEntity, component))
+        if (AccessCheck(uid, args.Actor, component))
             SetThreshold(uid, args.Address, args.Type, args.Threshold, args.Gas);
         else
             UpdateUI(uid, component);
@@ -310,7 +310,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnUpdateDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateDeviceDataMessage args)
     {
-        if (AccessCheck(uid, args.Session.AttachedEntity, component)
+        if (AccessCheck(uid, args.Actor, component)
             && _deviceList.ExistsInDeviceList(uid, args.Address))
         {
             SetDeviceData(uid, args.Address, args.Data);
@@ -323,7 +323,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnCopyDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmCopyDeviceDataMessage args)
     {
-        if (!AccessCheck(uid, args.Session.AttachedEntity, component))
+        if (!AccessCheck(uid, args.Actor, component))
         {
            UpdateUI(uid, component);
             return;

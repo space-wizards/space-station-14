@@ -226,7 +226,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     /// <param name="args"></param>
     private void OnServerSelectionMessage(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsoleServerSelectionMessage args)
     {
-        _ui.OpenUi(uid, ResearchClientUiKey.Key, args.Session);
+        _ui.OpenUi(uid, ResearchClientUiKey.Key, args.Actor);
     }
 
     /// <summary>

@@ -91,7 +91,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
 
     private void OnWriteToTargetAccessReaderIdMessage(EntityUid uid, AccessOverriderComponent component, WriteToTargetAccessReaderIdMessage args)
     {
-        if (args.Session.AttachedEntity is not { Valid: true } player)
+        if (args.Actor is not { Valid: true } player)
             return;
 
         TryWriteToTargetAccessReaderId(uid, args.AccessList, player, component);

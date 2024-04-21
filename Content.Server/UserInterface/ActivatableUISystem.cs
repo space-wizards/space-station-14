@@ -49,7 +49,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (!comp.RequireHands)
             return;
 
-        if (!TryComp(ev.Sender.AttachedEntity, out HandsComponent? hands) || hands.Hands.Count == 0)
+        if (!TryComp(ev.Actor, out HandsComponent? hands) || hands.Hands.Count == 0)
             ev.Cancel();
     }
 
@@ -128,7 +128,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     private void OnUIClose(EntityUid uid, ActivatableUIComponent component, BoundUIClosedEvent args)
     {
-        var user = args.Session.AttachedEntity;
+        var user = args.Actor;
 
         if (user != component.CurrentSingleUser)
             return;

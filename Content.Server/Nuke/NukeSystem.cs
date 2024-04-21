@@ -187,7 +187,7 @@ public sealed class NukeSystem : EntitySystem
                     continue;
 
                 var msg = Loc.GetString("nuke-component-cant-anchor-floor");
-                _popups.PopupEntity(msg, uid, args.Session, PopupType.MediumCaution);
+                _popups.PopupEntity(msg, uid, args.Actor, PopupType.MediumCaution);
 
                 return;
             }
@@ -243,10 +243,7 @@ public sealed class NukeSystem : EntitySystem
 
         else
         {
-            if (args.Session.AttachedEntity is not { } user)
-                return;
-
-            DisarmBombDoafter(uid, user, component);
+            DisarmBombDoafter(uid, args.Actor, component);
         }
     }
 

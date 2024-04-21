@@ -88,8 +88,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
 
     private void OnBoundUIClosed(EntityUid uid, StorageComponent storageComp, BoundUIClosedEvent args)
     {
-        if (TryComp<ActorComponent>(args.Session.AttachedEntity, out var actor) && actor?.PlayerSession != null)
-            CloseNestedInterfaces(uid, actor.PlayerSession, storageComp);
+        CloseNestedInterfaces(uid, args.Actor, storageComp);
 
         // If UI is closed for everyone
         if (!_uiSystem.IsUiOpen(uid, args.UiKey))
@@ -145,7 +144,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
     /// <summary>
     ///     If the user has nested-UIs open (e.g., PDA UI open when pda is in a backpack), close them.
     /// </summary>
-    public void CloseNestedInterfaces(EntityUid uid, ICommonSession session, StorageComponent? storageComp = null)
+    public void CloseNestedInterfaces(EntityUid uid, EntityUid actor, StorageComponent? storageComp = null)
     {
         if (!Resolve(uid, ref storageComp))
             return;
@@ -157,7 +156,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
         // close ui
         foreach (var entity in storageComp.Container.ContainedEntities)
         {
-            _uiSystem.CloseUis(entity, session);
+            _uiSystem.CloseUis(entity, actor);
         }
     }
 }

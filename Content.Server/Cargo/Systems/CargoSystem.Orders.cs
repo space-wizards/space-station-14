@@ -102,12 +102,12 @@ namespace Content.Server.Cargo.Systems
 
         private void OnApproveOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleApproveOrderMessage args)
         {
-            if (args.Session.AttachedEntity is not { Valid: true } player)
+            if (args.Actor is not { Valid: true } player)
                 return;
 
             if (!_accessReaderSystem.IsAllowed(player, uid))
             {
-                ConsolePopup(args.Session, Loc.GetString("cargo-console-order-not-allowed"));
+                ConsolePopup(args.Actor, Loc.GetString("cargo-console-order-not-allowed"));
                 PlayDenySound(uid, component);
                 return;
             }
@@ -119,7 +119,7 @@ namespace Content.Server.Cargo.Systems
                 !TryComp(station, out StationDataComponent? stationData) ||
                 !TryGetOrderDatabase(station, out var orderDatabase))
             {
-                ConsolePopup(args.Session, Loc.GetString("cargo-console-station-not-found"));
+                ConsolePopup(args.Actor, Loc.GetString("cargo-console-station-not-found"));
                 PlayDenySound(uid, component);
                 return;
             }
@@ -134,7 +134,7 @@ namespace Content.Server.Cargo.Systems
             // Invalid order
             if (!_protoMan.HasIndex<EntityPrototype>(order.ProductId))
             {
-                ConsolePopup(args.Session, Loc.GetString("cargo-console-invalid-product"));
+                ConsolePopup(args.Actor, Loc.GetString("cargo-console-invalid-product"));
                 PlayDenySound(uid, component);
                 return;
             }
@@ -145,7 +145,7 @@ namespace Content.Server.Cargo.Systems
             // Too many orders, avoid them getting spammed in the UI.
             if (amount >= capacity)
             {
-                ConsolePopup(args.Session, Loc.GetString("cargo-console-too-many"));
+                ConsolePopup(args.Actor, Loc.GetString("cargo-console-too-many"));
                 PlayDenySound(uid, component);
                 return;
             }
@@ -156,7 +156,7 @@ namespace Content.Server.Cargo.Systems
             if (cappedAmount != order.OrderQuantity)
             {
                 order.OrderQuantity = cappedAmount;
-                ConsolePopup(args.Session, Loc.GetString("cargo-console-snip-snip"));
+                ConsolePopup(args.Actor, Loc.GetString("cargo-console-snip-snip"));
                 PlayDenySound(uid, component);
             }
 
@@ -165,7 +165,7 @@ namespace Content.Server.Cargo.Systems
             // Not enough balance
             if (cost > bank.Balance)
             {
-                ConsolePopup(args.Session, Loc.GetString("cargo-console-insufficient-funds", ("cost", cost)));
+                ConsolePopup(args.Actor, Loc.GetString("cargo-console-insufficient-funds", ("cost", cost)));
                 PlayDenySound(uid, component);
                 return;
             }
@@ -174,7 +174,7 @@ namespace Content.Server.Cargo.Systems
 
             if (tradeDestination == null)
             {
-                ConsolePopup(args.Session, Loc.GetString("cargo-console-unfulfilled"));
+                ConsolePopup(args.Actor, Loc.GetString("cargo-console-unfulfilled"));
                 PlayDenySound(uid, component);
                 return;
             }
@@ -193,7 +193,7 @@ namespace Content.Server.Cargo.Systems
                 ("approverJob", approverJob),
                 ("cost", cost));
             _radio.SendRadioMessage(uid, message, component.AnnouncementChannel, uid, escapeMarkup: false);
-            ConsolePopup(args.Session, Loc.GetString("cargo-console-trade-station", ("destination", MetaData(tradeDestination.Value).EntityName)));
+            ConsolePopup(args.Actor, Loc.GetString("cargo-console-trade-station", ("destination", MetaData(tradeDestination.Value).EntityName)));
 
             // Log order approval
             _adminLogger.Add(LogType.Action, LogImpact.Low,
@@ -264,7 +264,7 @@ namespace Content.Server.Cargo.Systems
 
         private void OnAddOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleAddOrderMessage args)
         {
-            if (args.Session.AttachedEntity is not { Valid: true } player)
+            if (args.Actor is not { Valid: true } player)
                 return;
 
             if (args.Amount <= 0)
@@ -324,9 +324,9 @@ namespace Content.Server.Cargo.Systems
             }
         }
 
-        private void ConsolePopup(ICommonSession session, string text)
+        private void ConsolePopup(EntityUid actor, string text)
         {
-            _popup.PopupCursor(text, session);
+            _popup.PopupCursor(text, actor);
         }
 
         private void PlayDenySound(EntityUid uid, CargoOrderConsoleComponent component)

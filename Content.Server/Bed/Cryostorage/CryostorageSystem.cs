@@ -79,9 +79,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     private void OnRemoveItemBuiMessage(Entity<CryostorageComponent> ent, ref CryostorageRemoveItemBuiMessage args)
     {
         var (_, comp) = ent;
-        if (args.Session.AttachedEntity is not { } attachedEntity)
-            return;
-
+        var attachedEntity = args.Actor;
         var cryoContained = GetEntity(args.StoredEntity);
 
         if (!comp.StoredPlayers.Contains(cryoContained) || !IsInPausedMap(cryoContained))

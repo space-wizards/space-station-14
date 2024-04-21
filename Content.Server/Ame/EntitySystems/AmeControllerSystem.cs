@@ -324,7 +324,7 @@ public sealed class AmeControllerSystem : EntitySystem
 
     private void OnUiButtonPressed(EntityUid uid, AmeControllerComponent comp, UiButtonPressedMessage msg)
     {
-        var user = msg.Session.AttachedEntity;
+        var user = msg.Actor;
         if (!Exists(user))
             return;
 
@@ -334,7 +334,7 @@ public sealed class AmeControllerSystem : EntitySystem
             _ => true,
         };
 
-        if (!PlayerCanUseController(uid, user!.Value, needsPower, comp))
+        if (!PlayerCanUseController(uid, user, needsPower, comp))
             return;
 
         _audioSystem.PlayPvs(comp.ClickSound, uid, AudioParams.Default.WithVolume(-2f));

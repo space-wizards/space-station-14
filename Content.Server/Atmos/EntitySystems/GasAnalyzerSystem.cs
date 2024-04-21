@@ -131,8 +131,6 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void OnDisabledMessage(EntityUid uid, GasAnalyzerComponent component, GasAnalyzerDisableMessage message)
         {
-            if (message.Session.AttachedEntity is not { Valid: true })
-                return;
             DisableAnalyzer(uid, component);
         }
 
@@ -141,10 +139,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref component, false))
                 return;
 
-            if (!TryComp<ActorComponent>(user, out var actor))
-                return;
-
-            _userInterface.OpenUi(uid, GasAnalyzerUiKey.Key, actor.PlayerSession);
+            _userInterface.OpenUi(uid, GasAnalyzerUiKey.Key, user);
         }
 
         /// <summary>

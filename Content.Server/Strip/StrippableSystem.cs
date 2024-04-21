@@ -119,7 +119,7 @@ namespace Content.Server.Strip
 
         private void OnStripButtonPressed(Entity<StrippableComponent> strippable, ref StrippingSlotButtonPressed args)
         {
-            if (args.Session.AttachedEntity is not { Valid: true } user ||
+            if (args.Actor is not { Valid: true } user ||
                 !TryComp<HandsComponent>(user, out var userHands))
                 return;
 
@@ -171,7 +171,7 @@ namespace Content.Server.Strip
 
         private void OnStripEnsnareMessage(EntityUid uid, EnsnareableComponent component, StrippingEnsnareButtonPressed args)
         {
-            if (args.Session.AttachedEntity is not { Valid: true } user)
+            if (args.Actor is not { Valid: true } user)
                 return;
 
             foreach (var entity in component.Container.ContainedEntities)

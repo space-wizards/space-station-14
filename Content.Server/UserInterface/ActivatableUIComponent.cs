@@ -1,16 +1,17 @@
 ﻿using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Server.UserInterface
 {
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed partial class ActivatableUIComponent : Component
     {
         [DataField(required: true, customTypeSerializer:typeof(EnumSerializer))]
-        public Enum? Key { get; set; }
+        public Enum Key { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]

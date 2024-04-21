@@ -119,7 +119,7 @@ public sealed partial class StoreSystem
 
     private void OnRequestUpdate(EntityUid uid, StoreComponent component, StoreRequestUpdateInterfaceMessage args)
     {
-        UpdateUserInterface(args.Session.AttachedEntity, GetEntity(args.Entity), component);
+        UpdateUserInterface(args.Actor, GetEntity(args.Entity), component);
     }
 
     private void BeforeActivatableUiOpen(EntityUid uid, StoreComponent component, BeforeActivatableUIOpenEvent args)
@@ -140,8 +140,7 @@ public sealed partial class StoreSystem
             return;
         }
 
-        if (msg.Session.AttachedEntity is not { Valid: true } buyer)
-            return;
+        var buyer = msg.Actor;
 
         //verify that we can actually buy this listing and it wasn't added
         if (!ListingHasCategory(listing, component.Categories))
@@ -264,7 +263,7 @@ public sealed partial class StoreSystem
             $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _prototypeManager)}\" from {ToPrettyString(uid)}");
 
         listing.PurchaseAmount++; //track how many times something has been purchased
-        _audio.PlayEntity(component.BuySuccessSound, msg.Session, uid); //cha-ching!
+        _audio.PlayEntity(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
 
         UpdateUserInterface(buyer, uid, component);
     }
@@ -290,8 +289,7 @@ public sealed partial class StoreSystem
         if (proto.Cash == null || !proto.CanWithdraw)
             return;
 
-        if (msg.Session.AttachedEntity is not { Valid: true } buyer)
-            return;
+        var buyer = msg.Actor;
 
         FixedPoint2 amountRemaining = msg.Amount;
         var coordinates = Transform(buyer).Coordinates;
@@ -314,7 +312,7 @@ public sealed partial class StoreSystem
     {
         // TODO: Remove guardian/holopara
 
-        if (args.Session.AttachedEntity is not { Valid: true } buyer)
+        if (args.Actor is not { Valid: true } buyer)
             return;
 
         if (!IsOnStartingMap(uid, component))

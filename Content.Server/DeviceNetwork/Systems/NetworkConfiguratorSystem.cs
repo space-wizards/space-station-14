@@ -564,10 +564,10 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     /// </summary>
     private void OnRemoveDevice(EntityUid uid, NetworkConfiguratorComponent component, NetworkConfiguratorRemoveDeviceMessage args)
     {
-        if (component.Devices.TryGetValue(args.Address, out var removedDevice) && args.Session.AttachedEntity != null)
+        if (component.Devices.TryGetValue(args.Address, out var removedDevice))
         {
             _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low,
-                $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} removed buffered device {ToPrettyString(removedDevice):subject} from {ToPrettyString(uid):tool}");
+                $"{ToPrettyString(args.Actor):actor} removed buffered device {ToPrettyString(removedDevice):subject} from {ToPrettyString(uid):tool}");
         }
 
         component.Devices.Remove(args.Address);
@@ -582,10 +582,8 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     /// </summary>
     private void OnClearDevice(EntityUid uid, NetworkConfiguratorComponent component, NetworkConfiguratorClearDevicesMessage args)
     {
-        if (args.Session.AttachedEntity != null)
-            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low,
-                $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} cleared buffered devices from {ToPrettyString(uid):tool}");
-
+        _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low,
+            $"{ToPrettyString(args.Actor):actor} cleared buffered devices from {ToPrettyString(uid):tool}");
 
         ClearDevices(uid, component);
         UpdateListUiState(uid, component);
@@ -608,9 +606,8 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (!configurator.ActiveDeviceLink.HasValue || !configurator.DeviceLinkTarget.HasValue)
             return;
 
-        if (args.Session.AttachedEntity != null)
-            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low,
-                $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} cleared links between {ToPrettyString(configurator.ActiveDeviceLink.Value):subject} and {ToPrettyString(configurator.DeviceLinkTarget.Value):subject2} with {ToPrettyString(uid):tool}");
+        _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low,
+            $"{ToPrettyString(args.Actor):actor} cleared links between {ToPrettyString(configurator.ActiveDeviceLink.Value):subject} and {ToPrettyString(configurator.DeviceLinkTarget.Value):subject2} with {ToPrettyString(uid):tool}");
 
         if (HasComp<DeviceLinkSourceComponent>(configurator.ActiveDeviceLink) && HasComp<DeviceLinkSinkComponent>(configurator.DeviceLinkTarget))
         {
@@ -648,7 +645,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (TryComp(configurator.ActiveDeviceLink, out DeviceLinkSourceComponent? activeSource) && TryComp(configurator.DeviceLinkTarget, out DeviceLinkSinkComponent? targetSink))
         {
             _deviceLinkSystem.ToggleLink(
-                args.Session.AttachedEntity,
+                args.Actor,
                 configurator.ActiveDeviceLink.Value,
                 configurator.DeviceLinkTarget.Value,
                 args.Source, args.Sink,
@@ -659,7 +656,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         else if (TryComp(configurator.DeviceLinkTarget, out DeviceLinkSourceComponent? targetSource) && TryComp(configurator.ActiveDeviceLink, out DeviceLinkSinkComponent? activeSink))
         {
             _deviceLinkSystem.ToggleLink(
-                args.Session.AttachedEntity,
+                args.Actor,
                 configurator.DeviceLinkTarget.Value,
                 configurator.ActiveDeviceLink.Value,
                 args.Source, args.Sink,
@@ -686,7 +683,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (TryComp(configurator.ActiveDeviceLink, out DeviceLinkSourceComponent? activeSource) && TryComp(configurator.DeviceLinkTarget, out DeviceLinkSinkComponent? targetSink))
         {
             _deviceLinkSystem.SaveLinks(
-                args.Session.AttachedEntity,
+                args.Actor,
                 configurator.ActiveDeviceLink.Value,
                 configurator.DeviceLinkTarget.Value,
                 args.Links,
@@ -704,7 +701,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         else if (TryComp(configurator.DeviceLinkTarget, out DeviceLinkSourceComponent? targetSource) && TryComp(configurator.ActiveDeviceLink, out DeviceLinkSinkComponent? activeSink))
         {
             _deviceLinkSystem.SaveLinks(
-                args.Session.AttachedEntity,
+                args.Actor,
                 configurator.DeviceLinkTarget.Value,
                 configurator.ActiveDeviceLink.Value,
                 args.Links,
@@ -734,29 +731,25 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         switch (args.ButtonKey)
         {
             case NetworkConfiguratorButtonKey.Set:
-                if (args.Session.AttachedEntity != null)
-                    _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low,
-                        $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} set device links to {ToPrettyString(component.ActiveDeviceList.Value):subject} with {ToPrettyString(uid):tool}");
+                _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low,
+                    $"{ToPrettyString(args.Actor):actor} set device links to {ToPrettyString(component.ActiveDeviceList.Value):subject} with {ToPrettyString(uid):tool}");
 
                 result = _deviceListSystem.UpdateDeviceList(component.ActiveDeviceList.Value, new HashSet<EntityUid>(component.Devices.Values));
                 break;
             case NetworkConfiguratorButtonKey.Add:
-                if (args.Session.AttachedEntity != null)
-                    _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low,
-                        $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} added device links to {ToPrettyString(component.ActiveDeviceList.Value):subject} with {ToPrettyString(uid):tool}");
+                _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low,
+                    $"{ToPrettyString(args.Actor):actor} added device links to {ToPrettyString(component.ActiveDeviceList.Value):subject} with {ToPrettyString(uid):tool}");
 
                 result = _deviceListSystem.UpdateDeviceList(component.ActiveDeviceList.Value, new HashSet<EntityUid>(component.Devices.Values), true);
                 break;
             case NetworkConfiguratorButtonKey.Clear:
-                if (args.Session.AttachedEntity != null)
-                    _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low,
-                        $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} cleared device links from {ToPrettyString(component.ActiveDeviceList.Value):subject} with {ToPrettyString(uid):tool}");
+                _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low,
+                    $"{ToPrettyString(args.Actor):actor} cleared device links from {ToPrettyString(component.ActiveDeviceList.Value):subject} with {ToPrettyString(uid):tool}");
                 result = _deviceListSystem.UpdateDeviceList(component.ActiveDeviceList.Value, new HashSet<EntityUid>());
                 break;
             case NetworkConfiguratorButtonKey.Copy:
-                if (args.Session.AttachedEntity != null)
-                    _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low,
-                        $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} copied devices from {ToPrettyString(component.ActiveDeviceList.Value):subject} to {ToPrettyString(uid):tool}");
+                _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low,
+                    $"{ToPrettyString(args.Actor):actor} copied devices from {ToPrettyString(component.ActiveDeviceList.Value):subject} to {ToPrettyString(uid):tool}");
 
                 ClearDevices(uid, component);
 
@@ -782,7 +775,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             _ => "error"
         };
 
-        _popupSystem.PopupCursor(Loc.GetString(resultText), args.Session, PopupType.Medium);
+        _popupSystem.PopupCursor(Loc.GetString(resultText), args.Actor, PopupType.Medium);
         _uiSystem.SetUiState(
             uid,
             NetworkConfiguratorUiKey.Configure,

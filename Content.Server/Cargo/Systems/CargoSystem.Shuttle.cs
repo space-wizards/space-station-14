@@ -67,7 +67,7 @@ public sealed partial class CargoSystem
 
     private void OnPalletUIOpen(EntityUid uid, CargoPalletConsoleComponent component, BoundUIOpenedEvent args)
     {
-        var player = args.Session.AttachedEntity;
+        var player = args.Actor;
 
         if (player == null)
             return;
@@ -85,7 +85,7 @@ public sealed partial class CargoSystem
 
     private void OnPalletAppraise(EntityUid uid, CargoPalletConsoleComponent component, CargoPalletAppraiseMessage args)
     {
-        var player = args.Session.AttachedEntity;
+        var player = args.Actor;
 
         if (player == null)
             return;
@@ -313,7 +313,7 @@ public sealed partial class CargoSystem
 
     private void OnPalletSale(EntityUid uid, CargoPalletConsoleComponent component, CargoPalletSellMessage args)
     {
-        var player = args.Session.AttachedEntity;
+        var player = args.Actor;
 
         if (player == null)
             return;

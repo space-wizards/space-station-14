@@ -151,9 +151,8 @@ namespace Content.Server.Paper
                 if (TryComp<MetaDataComponent>(uid, out var meta))
                     _metaSystem.SetEntityDescription(uid, "", meta);
 
-                if (args.Session.AttachedEntity != null)
-                    _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                        $"{ToPrettyString(args.Session.AttachedEntity.Value):player} has written on {ToPrettyString(uid):entity} the following text: {args.Text}");
+                _adminLogger.Add(LogType.Chat, LogImpact.Low,
+                    $"{ToPrettyString(args.Actor):player} has written on {ToPrettyString(uid):entity} the following text: {args.Text}");
 
                 _audio.PlayPvs(paperComp.Sound, uid);
             }

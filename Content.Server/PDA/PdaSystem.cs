@@ -208,7 +208,7 @@ namespace Content.Server.PDA
                 return;
 
             if (HasComp<RingerComponent>(uid))
-                _ringer.ToggleRingerUI(uid, msg.Session);
+                _ringer.ToggleRingerUI(uid, msg.Actor);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaShowMusicMessage msg)
@@ -217,7 +217,7 @@ namespace Content.Server.PDA
                 return;
 
             if (TryComp<InstrumentComponent>(uid, out var instrument))
-                _instrument.ToggleInstrumentUi(uid, msg.Session, instrument);
+                _instrument.ToggleInstrumentUi(uid, msg.Actor, instrument);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaShowUplinkMessage msg)
@@ -227,7 +227,7 @@ namespace Content.Server.PDA
 
             // check if its locked again to prevent malicious clients opening locked uplinks
             if (TryComp<StoreComponent>(uid, out var store) && IsUnlocked(uid))
-                _store.ToggleUi(msg.Session.AttachedEntity!.Value, uid, store);
+                _store.ToggleUi(msg.Actor, uid, store);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaLockUplinkMessage msg)
