@@ -32,13 +32,12 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
         while (query.MoveNext(out var uid, out var glue, out var _, out var meta))
         {
             if (_timing.CurTime < glue.TimeOfNextCheck)
-            {
                 continue;
-            }
 
-            if (!SetNextCheck(glue, uid))
+            // If false then the item should be droppable and the glue has worn off.
+            // Otherwise, it will just add more time and we will check again later!
+            if (!SetNextNextCanDropCheck(glue, uid))
             {
-                // TODO: Show popup indicating the glue dried.
                 RemCompDeferred<UnremoveableComponent>(uid);
                 RemCompDeferred<SpaceGlueOnItemComponent>(uid);
             }
@@ -47,54 +46,60 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
 
     private void OnHandPickUp(Entity<SpaceGlueOnItemComponent> entity, ref GotEquippedHandEvent args)
     {
+        // Check to see if the thing picking them up has non stick gloves.
+        // If they do, just let em pick the item up!
         _inventory.TryGetSlotEntity(args.User, "gloves", out var gloves);
-
         if (HasComp<NonStickSurfaceComponent>(gloves))
-        {
             return;
-        }
 
-        if (SetNextCheck(entity, entity))
+        // This means that the item will be stuck to their hand.
+        if (SetNextNextCanDropCheck(entity, entity))
         {
             _popup.PopupEntity(Loc.GetString("space-glue-on-item-hand-stuck", ("target", Identity.Entity(entity, EntityManager))), args.User, args.User, PopupType.MediumCaution);
         }
 
     }
 
-    private bool SetNextCheck(SpaceGlueOnItemComponent glueComp, EntityUid uid)
+    /// <summary>
+    ///     This function sets the next time we will check in Update to see if the item
+    ///     is droppable or if there is still more reagent left on the item.
+    /// </summary>
+    /// <returns> Will return true if the item should still be stuck and false if the item should be droppable. </returns>
+    private bool SetNextNextCanDropCheck(SpaceGlueOnItemComponent glueComp, EntityUid uid)
     {
+        // This is the end case.
         if (glueComp.AmountOfReagentLeft < 1)
-        {
             return false;
-        }
 
+        // Ensure the item is still stuck to someones hand.
         var unremoveComp = EnsureComp<UnremoveableComponent>(uid);
         unremoveComp.DeleteOnDrop = false;
 
+        // Calculate the next check time.
         glueComp.TimeOfNextCheck = _timing.CurTime + glueComp.DurationPerUnit;
         glueComp.AmountOfReagentLeft--;
 
         return true;
     }
 
+    // Show how sticky the item is (E.g how much time until the glue wears off /
+    // how long it will stay in your hand if you pick it up.)
     private void OnExamine(EntityUid uid, SpaceGlueOnItemComponent comp, ExaminedEvent args)
     {
-        if (args.IsInDetailsRange)
-        {
-            var howSticky = comp.AmountOfReagentLeft / comp.ReagentCapacity;
-            if (howSticky <= .33)
-            {
-                args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-low"));
-            }
-            else if (howSticky <= .66)
-            {
-                args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-med"));
-            }
-            else
-            {
-                args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-high"));
-            }
-        }
+        if (!args.IsInDetailsRange)
+            return;
+
+        var howSticky = comp.AmountOfReagentLeft / comp.ReagentCapacity;
+
+        if (howSticky <= .33)
+            args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-low"));
+
+        else if (howSticky <= .66)
+            args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-med"));
+
+        else
+            args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-high"));
+
     }
 
 }

@@ -28,26 +28,28 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
     {
         _inventory.TryGetSlotEntity(args.Container.Owner, "gloves", out var gloves);
 
-        // Lube has no power over the rubber gloves!
+        // If whoever is picking it up has nonstick gloves then don't cause any issues!
         if (HasComp<NonStickSurfaceComponent>(gloves))
-        {
             return;
-        }
 
+        // No more lube ;(
         if (component.AmountOfReagentLeft < 1)
         {
             RemComp<SpaceLubeOnItemComponent>(uid);
             return;
         }
 
+        // Only reduce the amount of reagent on the item if you hit the proability.
         var randDouble = _random.NextDouble();
         if (randDouble > 1 - component.ChanceToDecreaseReagentOnGrab)
         {
             component.AmountOfReagentLeft--;
         }
 
-        // This is the part that throws the item.
+        // Don't let them pick up the item.
         args.Cancel();
+
+        // Throw the item away!
         var user = args.Container.Owner;
         _transform.SetCoordinates(uid, Transform(user).Coordinates);
         _transform.AttachToGridOrMap(uid);
@@ -55,6 +57,7 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("space-lube-on-item-slip", ("target", Identity.Entity(uid, EntityManager))), user, user, PopupType.MediumCaution);
     }
 
+    // Show that the item is lubed if someone inspects it.
     private void OnExamine(EntityUid uid, SpaceLubeOnItemComponent comp, ExaminedEvent args)
     {
         if (args.IsInDetailsRange)

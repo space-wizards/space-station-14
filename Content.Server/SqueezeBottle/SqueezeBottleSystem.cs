@@ -14,6 +14,11 @@ using Content.Server.ReagentOnItem;
 
 namespace Content.Server.SqueezeBottle;
 
+/// <summary>
+///     Squeeze bottles are to apply reagents to items. For example,
+///     a glue bottle is a squeeze bottle because you need to be
+///     able to apply the glue to items!
+/// </summary>
 public sealed class SqueezeBottleSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -62,10 +67,13 @@ public sealed class SqueezeBottleSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    // Try to apply the reagent thats stored inside the squeeze bottle into an object.
+    /// <summary>
+    ///     Try to apply the reagent thats stored inside the squeeze bottle into an object.
+    ///     If there are multiple reagents, it will try to apply all of them.
+    /// </summary>
     private bool TryToApplyReagent(Entity<SqueezeBottleComponent> entity, EntityUid target, EntityUid actor)
     {
-
+        // Squeeze bottles only work on items so if its not an item quit.
         if (!HasComp<ItemComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("squeeze-bottle-not-item-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
@@ -75,6 +83,7 @@ public sealed class SqueezeBottleSystem : EntitySystem
         if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solComp, out var solution))
         {
             var reagent = _solutionContainer.SplitSolution(solComp.Value, entity.Comp.AmountConsumedOnUse);
+            // If this fails, that means the squeeze bottle was empty.
             if (_reagentOnItem.AddReagentToItem(target, reagent))
             {
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} tried to apply reagent to {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");

@@ -7,17 +7,20 @@ namespace Content.Shared.SqueezeBottle;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SqueezeBottleComponent : Component
 {
+    /// <summary>
+    ///     The noise the squeeze bottle makes when it gets squeezed!
+    /// </summary>
     [DataField(required: true)]
     public SoundSpecifier OnSqueezeNoise = default!;
 
     /// <summary>
-    /// Solution on the entity that contains the glue.
+    ///     Solution on the entity that contains the glue.
     /// </summary>
     [DataField]
     public string Solution = "drink";
 
     /// <summary>
-    /// Reagent consumption per use.
+    ///     Reagent consumption per use.
     /// </summary>
     [DataField]
     public FixedPoint2 AmountConsumedOnUse = FixedPoint2.New(5);
