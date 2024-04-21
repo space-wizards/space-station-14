@@ -178,6 +178,7 @@ public sealed class NukeOpsTest
             Assert.That(damage.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
         }
 
+        server.CfgMan.SetCVar(CCVars.GridFill, false);
         await pair.CleanReturnAsync();
     }
 }

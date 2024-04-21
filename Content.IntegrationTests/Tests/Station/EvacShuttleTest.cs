@@ -28,10 +28,11 @@ public sealed class EvacShuttleTest
         // Dummy ticker tests should not have centcomm
         Assert.That(entMan.Count<StationCentcommComponent>(), Is.Zero);
 
-        var shuttleEnabled = pair.Server.CfgMan.GetCVar(CCVars.EmergencyShuttleEnabled);
-        pair.Server.CfgMan.SetCVar(CCVars.GameMap, "Saltern");
-        pair.Server.CfgMan.SetCVar(CCVars.GameDummyTicker, false);
+        Assert.That(pair.Server.CfgMan.GetCVar(CCVars.GridFill), Is.False);
         pair.Server.CfgMan.SetCVar(CCVars.EmergencyShuttleEnabled, true);
+        pair.Server.CfgMan.SetCVar(CCVars.GameDummyTicker, false);
+        var gameMap = pair.Server.CfgMan.GetCVar(CCVars.GameMap);
+        pair.Server.CfgMan.SetCVar(CCVars.GameMap, "Saltern");
 
         await server.WaitPost(() => ticker.RestartRound());
         await pair.RunTicksSync(25);
@@ -118,7 +119,9 @@ public sealed class EvacShuttleTest
         Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.PostRound));
 
         server.CfgMan.SetCVar(CCVars.EmergencyShuttleDockTime, dockTime);
-        pair.Server.CfgMan.SetCVar(CCVars.EmergencyShuttleEnabled, shuttleEnabled);
+        pair.Server.CfgMan.SetCVar(CCVars.EmergencyShuttleEnabled, false);
+        pair.Server.CfgMan.SetCVar(CCVars.GameDummyTicker, true);
+        pair.Server.CfgMan.SetCVar(CCVars.GameMap, gameMap);
         await pair.CleanReturnAsync();
     }
 }
