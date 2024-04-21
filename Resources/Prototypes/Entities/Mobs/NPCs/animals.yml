@@ -1263,7 +1263,7 @@
     flavorKind: station-event-random-sentience-flavor-primate
   - type: AlwaysRevolutionaryConvertible
   - type: GhostRole
-    prob: 0.1
+    prob: 0.05
     makeSentient: true
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
@@ -1297,7 +1297,7 @@
     factions:
     - Syndicate
   - type: GhostRole
-    prob: 0.1
+    prob: 0.05
     makeSentient: true
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
