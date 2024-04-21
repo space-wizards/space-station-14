@@ -11,10 +11,14 @@ public sealed class HailerSystem : SharedHailerSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
-    protected override void Say(EntityUid uid, List<HailerLine> lines)
+    protected override void Say(Entity<HailerComponent> ent, List<HailerLine> lines)
     {
-        var line = _random.Pick(lines);
-        _audio.PlayPvs(line.Sound, uid);
-        _chat.TrySendInGameICMessage(uid, line.Message, InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit, checkRadioPrefix: false);
+        HailerLine line;
+        do {
+            line = _random.Pick(lines);
+        } while (lines.Count > 1 && line.Message == ent.Comp.LastPlayed);
+
+        _audio.PlayPvs(line.Sound, ent);
+        _chat.TrySendInGameICMessage(ent, line.Message, InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit, checkRadioPrefix: false);
     }
 }

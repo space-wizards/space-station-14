@@ -26,6 +26,11 @@ public sealed partial class HailerComponent : Component
     /// </summary>
     [DataField]
     public SlotFlags RequiredFlags = SlotFlags.MASK;
+
+    /// <summary>
+    /// Last played message, used to make it feel more random.
+    /// </sumamry>
+    public string LastPlayed = string.Empty;
 }
 
 /// <summary>

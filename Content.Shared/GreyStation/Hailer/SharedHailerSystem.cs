@@ -57,7 +57,7 @@ public abstract class SharedHailerSystem : EntitySystem
     /// <summary>
     /// Say the actual random message ingame, only done serverside.
     /// </summary>
-    protected virtual void Say(EntityUid uid, List<HailerLine> lines)
+    protected virtual void Say(Entity<HailerComponent> ent, List<HailerLine> lines)
     {
     }
 }
