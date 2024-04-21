@@ -153,6 +153,12 @@ public sealed class MutationSystem : EntitySystem
         if (!Random(probBitflip))
             return;
 
+        if (min == max)
+        {
+            val = min;
+            return;
+        }
+
         // Starting number of bits that are high, between 0 and bits.
         // In other words, it's val mapped linearly from range [min, max] to range [0, bits], and then rounded.
         int valInt = (int)MathF.Round((val - min) / (max - min) * bits);
@@ -185,6 +191,12 @@ public sealed class MutationSystem : EntitySystem
         probBitflip = Math.Clamp(probBitflip, 0, 1);
         if (!Random(probBitflip))
             return;
+
+        if (min == max)
+        {
+            val = min;
+            return;
+        }
 
         // Starting number of bits that are high, between 0 and bits.
         // In other words, it's val mapped linearly from range [min, max] to range [0, bits], and then rounded.
