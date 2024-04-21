@@ -1263,7 +1263,7 @@
     flavorKind: station-event-random-sentience-flavor-primate
   - type: AlwaysRevolutionaryConvertible
   - type: GhostRole
-    prob: 0.05
+    prob: 0.1
     makeSentient: true
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
@@ -1297,7 +1297,7 @@
     factions:
     - Syndicate
   - type: GhostRole
-    prob: 0.05
+    prob: 0.1
     makeSentient: true
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
@@ -2731,6 +2731,16 @@
   - type: NpcFactionMember
     factions:
     - Syndicate
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 10
+        Structural: 10
+  - type: Insulated
+  - type: Tag
+      tags:
+        - DoorBumpOpener
+  - type: MovementAlwaysTouching
 
 - type: entity
   name: space cat
