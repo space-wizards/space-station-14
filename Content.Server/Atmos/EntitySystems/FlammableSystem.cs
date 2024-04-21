@@ -231,17 +231,18 @@ namespace Content.Server.Atmos.EntitySystems
                 : (otherUid, otherFlammable, uid, flammable);
 
             // if the thing on fire has less mass, spread less firestacks and vice versa
-            var ratio = 1f;
+            var ratio = 0.5f;
             if (_physicsQuery.TryComp(srcUid, out var srcPhysics) && _physicsQuery.TryComp(destUid, out var destPhys))
             {
-                ratio = srcPhysics.Mass / destPhys.Mass;
+                ratio *= srcPhysics.Mass / destPhys.Mass;
             }
 
-            destFlammable.FireStacks += (srcFlammable.FireStacks / 2) * ratio;
+            var lost = srcFlammable.FireStacks * ratio;
+            destFlammable.FireStacks += lost;
             Ignite(destUid, srcUid, destFlammable);
             if (srcFlammable.CanExtinguish)
             {
-                srcFlammable.FireStacks /= 2;
+                srcFlammable.FireStacks -= lost;
                 UpdateAppearance(srcUid, srcFlammable);
             }
         }
