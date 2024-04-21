@@ -239,6 +239,7 @@
   - HeadofSecurityNeck
   - HeadofSecurityJumpsuit
   - SecurityBackpack
+  - SecurityBelt
   - HeadofSecurityOuterClothing
   - SecurityShoes
   - Trinkets
@@ -249,6 +250,7 @@
   - WardenHead
   - WardenJumpsuit
   - SecurityBackpack
+  - SecurityBelt
   - WardenOuterClothing
   - SecurityShoes
   - Trinkets
@@ -262,6 +264,7 @@
   - SecurityOuterClothing
   - SecurityShoes
   - SecurityPDA
+  - SecurityBelt
   - Trinkets
 
 - type: roleLoadout
@@ -334,7 +337,7 @@
   - MedicalMask
   - ParamedicJumpsuit
   - MedicalGloves
-  - ParamedicBackpack  
+  - ParamedicBackpack
   - ParamedicOuterClothing
   - ParamedicShoes
   - Trinkets
