@@ -120,10 +120,6 @@
       steps:
       - material: Steel
         amount: 30
-        name: steel
-        icon:
-          sprite: Objects/Materials/Sheets/metal.rsi
-          state: steel_3
         doAfter: 5
     - to: evilbomb
       steps:
@@ -182,7 +178,6 @@
       steps:
       - material: Steel
         amount: 30
-        name: steel
         doAfter: 5
   - node: evilbombdone
     entity: ImprovisedNuclearBombEvil
@@ -198,7 +193,6 @@
     - to: evilbombpainted
       steps:
       - tag: Crayon
-        amount: 1
         name: a crayon
         icon:
           sprite: Objects/Fun/crayons.rsi
