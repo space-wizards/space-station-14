@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Ubaser
   changes:
-  - message: Grinding ectoplasm now gives Necrosol.
-    type: Tweak
-  id: 5915
-  time: '2024-02-11T06:24:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25053
-- author: Ubaser
-  changes:
   - message: Food Service research is now roundstart.
     type: Tweak
   id: 5916
@@ -3839,3 +3832,17 @@
   id: 6414
   time: '2024-04-21T13:16:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/22986
+- author: FairlySadPanda
+  changes:
+  - message: Xenoarchaeology Traversal Distorters have been rolled into the Artifact
+      Analyzers to make artifact gameplay a bit more controlled.
+    type: Tweak
+  - message: The T2 Abnormal Artifact Manipulation tech has been made cheaper to compensate
+      for losing an unlock.
+    type: Tweak
+  - message: The Xenoarchaeology guidebook entry has been rewritten to be more useful
+      and comprehensive for newbies.
+    type: Tweak
+  id: 6415
+  time: '2024-04-21T16:09:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26545
