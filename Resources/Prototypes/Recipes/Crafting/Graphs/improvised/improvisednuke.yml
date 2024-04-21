@@ -7,11 +7,7 @@
     - to: cart
       steps:
       - material: WoodPlank
-        name: wood
         amount: 15
-        icon:
-          sprite: Objects/Materials/materials.rsi
-          state: wood_2
         doAfter: 4
   - node: cart
     entity: ImprovisedNuclearBombCart
@@ -152,7 +148,6 @@
     - to: painted
       steps:
       - tag: Crayon
-        amount: 1
         name: a crayon
         icon:
           sprite: Objects/Fun/crayons.rsi

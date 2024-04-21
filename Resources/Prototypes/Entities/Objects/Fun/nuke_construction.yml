@@ -299,7 +299,6 @@
     maxIntensity: 90
     canCreateVacuum: false
   - type: Defusable
-    bolted: false
   - type: Destructible
     thresholds:
     - trigger:
