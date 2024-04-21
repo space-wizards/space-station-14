@@ -27,26 +27,26 @@
   source: "https://soundcloud.com/pigeonbeans/sunset"
 
 - files: ["A_Good_Man_Is_Hard_to_Find.ogg"]
-  license: "Public Domain"
-  copyright: "A good man is hard to find by Eddie Green. Exported in https://convertio.co."
-  source: "https://en.wikisource.org/wiki/A_Good_Man_Is_Hard_to_Find#:~:text=This%20work%20is%20in%20the,plus%2073%20years%20or%20less."
+  license: "CC-BY-NC-SA-3.0"
+  copyright: " "
+  source: "https://x329436.invisionservice.com/"
 
 - files: ["Ain_t_Misbehavin_.ogg"]
-  license: "Public Domain"
-  copyright: "Ain't Misbehavin' by Henry Brooks (1895-1970). exported in https://audio.online-convert.com/convert-to-ogg"
-  source: "https://imslp.org/wiki/Ain%27t_Misbehavin%27_(Waller%2C_Fats) (Website is not updated, and it is now public domain in canada since january 1st 2024)"
+  license: "CC-BY-NC-SA-3.0"
+  copyright: " "
+  source: "https://x329436.invisionservice.com/"
 
 - files: ["And_All_the_While_I_m_Loving_You.ogg"]
-  license: "CC BY-SA 3.0"
-  copyright: "And All the While I'm Loving You by Essentail Jazz Masters. exported in https://audio.online-convert.com/convert-to-ogg"
-  source: "https://fallout-archive.fandom.com/wiki/And_All_the_While_I%27m_Loving_You"
+  license: "CC-BY-NC-SA-3.0"
+  copyright: " "
+  source: "https://x329436.invisionservice.com/"
 
   #I just got told that the jukebox is frozen on upstream so all songs past this point are for goobstation and copyright does NOT matter (yay)
 
 - files: ["Yankee_Doodle.ogg"]
-  license: "Fuck you!"
-  copyright: "Fuck you copyright laws!, were like China now, we don't care"
-  source: "Fuck you!"
+  license: "CC-BY-NC-SA-3.0"
+  copyright: " "
+  source: "https://x329436.invisionservice.com/"
 
 - files: ["Worry_Worry_Worry.ogg"]
   license: "CC-BY-NC-SA-3.0"
