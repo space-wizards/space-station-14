@@ -198,3 +198,5 @@
           sprite: Objects/Fun/crayons.rsi
           state: yellow
         doAfter: 1
+  - node: evilbombpainted
+    entity: ImprovisedNuclearBombEvilPainted
