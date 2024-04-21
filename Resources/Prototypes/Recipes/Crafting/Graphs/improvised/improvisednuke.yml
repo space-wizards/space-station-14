@@ -25,10 +25,6 @@
       steps:
       - material: MetalRod
         amount: 8
-        name: metal rods
-        icon:
-          sprite: Objects/Materials/parts.rsi
-          state: rods_2
         doAfter: 3
   - node: insides
     entity: ImprovisedNuclearBombInsides
@@ -169,7 +165,6 @@
     - to: evilbombreciever
       steps:
       - tag: ModularReceiver
-        amount: 1
         name: modular reciever
         doAfter: 1
   - node: evilbombreciever
