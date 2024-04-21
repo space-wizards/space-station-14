@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Server.UserInterface
 {
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent]
     public sealed partial class ActivatableUIComponent : Component
     {
         [DataField(required: true, customTypeSerializer:typeof(EnumSerializer))]
