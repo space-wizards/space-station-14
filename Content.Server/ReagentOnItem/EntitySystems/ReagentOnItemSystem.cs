@@ -5,6 +5,7 @@ using Content.Shared.ReagentOnItem;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server.ReagentOnItem;
 
@@ -29,7 +30,6 @@ public sealed class ReagentOnItemSystem : EntitySystem
             return false;
         }
 
-        // Make sure the item doesn't have a non stick surface (E.g jani gloves or boots)
         if (!HasComp<NonStickSurfaceComponent>(item))
         {
             // Yes this code is sussy but its much better than what was used before.
@@ -39,10 +39,9 @@ public sealed class ReagentOnItemSystem : EntitySystem
 
             // Remove all reagents that can actually stick to things and apply them
             // to the item.
-            var volSpaceLube = reagentMixture.RemoveReagent("SpaceLube", reagentMixture.Volume).Double();
-            var volSpaceGlue = reagentMixture.RemoveReagent("SpaceGlue", reagentMixture.Volume).Double();
+            var volSpaceLube = reagentMixture.RemoveReagent("SpaceLube", reagentMixture.Volume);
+            var volSpaceGlue = reagentMixture.RemoveReagent("SpaceGlue", reagentMixture.Volume);
 
-            // var test = reagentMixture.TryGetReagent("SpaceGlue", out var goodout);
             if (volSpaceLube > 0)
             {
                 var lubed = EnsureComp<SpaceLubeOnItemComponent>(item);
@@ -56,11 +55,9 @@ public sealed class ReagentOnItemSystem : EntitySystem
         }
         else
         {
-            // This means the item had a nonstick surface.
             _popup.PopupEntity(Loc.GetString("non-stick-gloves-reagent-falls-off", ("target", Identity.Entity(item, EntityManager))), item);
         }
 
-        // This spills the remaining mixture that wasn't applied.
         _puddle.TrySpillAt(item, reagentMixture, out var puddle, false);
 
         return true;
@@ -70,17 +67,12 @@ public sealed class ReagentOnItemSystem : EntitySystem
     ///     Convert the reagent to stacks and add them to the component. 
     ///     Will put any extra reagent that couldn't be applied in the spill pool.
     /// </summary>
-    private static void ConvertReagentToStacks(ReagentOnItemComponent comp, string reagentName, double volToAdd, Solution spillPool)
+    private static void ConvertReagentToStacks(ReagentOnItemComponent comp, string reagentName, FixedPoint2 volToAdd, Solution spillPool)
     {
-        // This is the TOTAL amount of reagent on the item, old amount + stuff we are adding now
         var total = comp.EffectStacks + volToAdd;
 
-        // If the total is > capacity it will just put the maximum amount on the item.
-        // Ohterwise, its just the total amount!
-        comp.EffectStacks = Math.Min(total, comp.MaxStacks);
+        comp.EffectStacks = FixedPoint2.Min(total, comp.MaxStacks);
 
-        // This means there is going to be extra reagents we need to add to the
-        // puddle.
         if (total > comp.MaxStacks)
         {
             spillPool.AddReagent(reagentName, total - comp.MaxStacks);

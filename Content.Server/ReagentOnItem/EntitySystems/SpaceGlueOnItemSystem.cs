@@ -34,8 +34,6 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
             if (_timing.CurTime < glue.TimeOfNextCheck)
                 continue;
 
-            // If false then the item should be droppable and the glue has worn off.
-            // Otherwise, it will just add more time and we will check again later!
             if (!SetNextNextCanDropCheck(glue, uid))
             {
                 RemCompDeferred<UnremoveableComponent>(uid);
@@ -46,13 +44,10 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
 
     private void OnHandPickUp(Entity<SpaceGlueOnItemComponent> entity, ref GotEquippedHandEvent args)
     {
-        // Check to see if the thing picking them up has non stick gloves.
-        // If they do, just let em pick the item up!
         _inventory.TryGetSlotEntity(args.User, "gloves", out var gloves);
         if (HasComp<NonStickSurfaceComponent>(gloves))
             return;
 
-        // This means that the item will be stuck to their hand.
         if (SetNextNextCanDropCheck(entity, entity))
         {
             _popup.PopupEntity(Loc.GetString("space-glue-on-item-hand-stuck", ("target", Identity.Entity(entity, EntityManager))), args.User, args.User, PopupType.MediumCaution);
@@ -67,23 +62,19 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
     /// <returns> Will return true if the item should still be stuck and false if the item should be droppable (There is less than 1 unit of reagent remaning). </returns>
     private bool SetNextNextCanDropCheck(SpaceGlueOnItemComponent glueComp, EntityUid uid)
     {
-        // This is the end case.
+
         if (glueComp.EffectStacks < 1)
             return false;
 
-        // Ensure the item is still stuck to someones hand.
         var unremoveComp = EnsureComp<UnremoveableComponent>(uid);
         unremoveComp.DeleteOnDrop = false;
 
-        // Calculate the next check time.
         glueComp.TimeOfNextCheck = _timing.CurTime + glueComp.DurationPerUnit;
-        glueComp.EffectStacks--;
+        glueComp.EffectStacks = glueComp.EffectStacks - 1;
 
         return true;
     }
 
-    // Show how sticky the item is (E.g how much time until the glue wears off /
-    // how long it will stay in your hand if you pick it up.)
     private void OnExamine(EntityUid uid, SpaceGlueOnItemComponent comp, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)

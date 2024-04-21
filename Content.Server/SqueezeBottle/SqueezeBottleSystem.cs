@@ -73,7 +73,7 @@ public sealed class SqueezeBottleSystem : EntitySystem
     /// </summary>
     private bool TryToApplyReagent(Entity<SqueezeBottleComponent> entity, EntityUid target, EntityUid actor)
     {
-        // Squeeze bottles only work on items so if its not an item quit.
+
         if (!HasComp<ItemComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("squeeze-bottle-not-item-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
@@ -83,7 +83,7 @@ public sealed class SqueezeBottleSystem : EntitySystem
         if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solComp, out var solution))
         {
             var reagent = _solutionContainer.SplitSolution(solComp.Value, entity.Comp.AmountConsumedOnUse);
-            // If this fails, that means the squeeze bottle was empty.
+
             if (_reagentOnItem.AddReagentToItem(target, reagent))
             {
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} tried to apply reagent to {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");

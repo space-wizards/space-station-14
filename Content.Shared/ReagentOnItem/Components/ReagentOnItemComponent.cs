@@ -1,3 +1,5 @@
+using Content.Shared.FixedPoint;
+
 namespace Content.Shared.ReagentOnItem;
 
 [ImplicitDataDefinitionForInheritors]
@@ -9,11 +11,11 @@ public abstract partial class ReagentOnItemComponent : Component
     ///     At zero it should remove itself from the item!
     /// </summary>
     [DataField]
-    public double EffectStacks;
+    public FixedPoint2 EffectStacks;
 
     /// <summary>
     ///     This is the maxium stacks that the component can have.
     /// </summary>
     [DataField]
-    public double MaxStacks = 15;
+    public FixedPoint2 MaxStacks = 15;
 }
