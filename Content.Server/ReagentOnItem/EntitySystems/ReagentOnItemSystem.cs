@@ -6,6 +6,7 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.FixedPoint;
+using Content.Shared.Chemistry.Reagent;
 
 namespace Content.Server.ReagentOnItem;
 
@@ -26,39 +27,42 @@ public sealed class ReagentOnItemSystem : EntitySystem
     public bool AddReagentToItem(EntityUid item, Solution reagentMixture)
     {
         if (reagentMixture.Volume <= 0 || !HasComp<ItemComponent>(item))
+            return false;
+
+        if (HasComp<NonStickSurfaceComponent>(item))
         {
+            _popup.PopupEntity(Loc.GetString("non-stick-gloves-reagent-falls-off", ("target", Identity.Entity(item, EntityManager))), item);
+            _puddle.TrySpillAt(item, reagentMixture, out var _, false);
             return false;
         }
 
-        if (!HasComp<NonStickSurfaceComponent>(item))
+
+        // Yes this code is sussy but its much better than what was used before.
+        // All suspect code for this system is contained here (I hope).
+
+        // TODO: Replace this with something more modular.
+
+        // Remove all reagents that can actually stick to things and apply them
+        // to the item.
+
+        var spaceLubeId = new ReagentId("SpaceLube", null);
+        var spaceGlueId = new ReagentId("SpaceGlue", null);
+
+        if (reagentMixture.TryGetReagent(spaceLubeId, out var _))
         {
-            // Yes this code is sussy but its much better than what was used before.
-            // All suspect code for this system is contained here (I hope).
-
-            // TODO: Replace this with something more modular.
-
-            // Remove all reagents that can actually stick to things and apply them
-            // to the item.
-            var volSpaceLube = reagentMixture.RemoveReagent("SpaceLube", reagentMixture.Volume);
-            var volSpaceGlue = reagentMixture.RemoveReagent("SpaceGlue", reagentMixture.Volume);
-
-            if (volSpaceLube > 0)
-            {
-                var lubed = EnsureComp<SpaceLubeOnItemComponent>(item);
-                ConvertReagentToStacks(lubed, "SpaceLube", volSpaceLube, reagentMixture);
-            }
-            if (volSpaceGlue > 0)
-            {
-                var glued = EnsureComp<SpaceGlueOnItemComponent>(item);
-                ConvertReagentToStacks(glued, "SpaceGlue", volSpaceGlue, reagentMixture);
-            }
-        }
-        else
-        {
-            _popup.PopupEntity(Loc.GetString("non-stick-gloves-reagent-falls-off", ("target", Identity.Entity(item, EntityManager))), item);
+            var volSpaceLube = reagentMixture.RemoveReagent(spaceLubeId, reagentMixture.Volume);
+            var lubed = EnsureComp<SpaceLubeOnItemComponent>(item);
+            ConvertReagentToStacks(lubed, spaceLubeId, volSpaceLube, reagentMixture);
         }
 
-        _puddle.TrySpillAt(item, reagentMixture, out var puddle, false);
+        if (reagentMixture.TryGetReagent(spaceGlueId, out var _))
+        {
+            var volSpaceGlue = reagentMixture.RemoveReagent(spaceGlueId, reagentMixture.Volume);
+            var glued = EnsureComp<SpaceGlueOnItemComponent>(item);
+            ConvertReagentToStacks(glued, spaceGlueId, volSpaceGlue, reagentMixture);
+        }
+
+        _puddle.TrySpillAt(item, reagentMixture, out var _, false);
 
         return true;
 
@@ -67,7 +71,7 @@ public sealed class ReagentOnItemSystem : EntitySystem
     ///     Convert the reagent to stacks and add them to the component. 
     ///     Will put any extra reagent that couldn't be applied in the spill pool.
     /// </summary>
-    private static void ConvertReagentToStacks(ReagentOnItemComponent comp, string reagentName, FixedPoint2 volToAdd, Solution spillPool)
+    private static void ConvertReagentToStacks(ReagentOnItemComponent comp, ReagentId reagent, FixedPoint2 volToAdd, Solution spillPool)
     {
         var total = comp.EffectStacks + volToAdd;
 
@@ -75,7 +79,7 @@ public sealed class ReagentOnItemSystem : EntitySystem
 
         if (total > comp.MaxStacks)
         {
-            spillPool.AddReagent(reagentName, total - comp.MaxStacks);
+            spillPool.AddReagent(reagent, total - comp.MaxStacks);
         }
     }
 

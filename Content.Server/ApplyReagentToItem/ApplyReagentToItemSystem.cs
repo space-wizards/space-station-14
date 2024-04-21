@@ -4,7 +4,7 @@ using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.SqueezeBottle;
+using Content.Shared.ApplyReagentToItem;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -12,14 +12,14 @@ using Robust.Shared.Audio.Systems;
 
 using Content.Server.ReagentOnItem;
 
-namespace Content.Server.SqueezeBottle;
+namespace Content.Server.ApplyReagentToItem;
 
 /// <summary>
-///     Squeeze bottles are to apply reagents to items. For example,
-///     a glue bottle is a squeeze bottle because you need to be
+///     This allows an item to apply reagents to items. For example,
+///     a glue bottle has this because you need to be
 ///     able to apply the glue to items!
 /// </summary>
-public sealed class SqueezeBottleSystem : EntitySystem
+public sealed class ApplyReagentToItemSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -32,11 +32,11 @@ public sealed class SqueezeBottleSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SqueezeBottleComponent, AfterInteractEvent>(OnInteract, after: new[] { typeof(OpenableSystem) });
-        SubscribeLocalEvent<SqueezeBottleComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
+        SubscribeLocalEvent<ApplyReagentToItemComponent, AfterInteractEvent>(OnInteract, after: new[] { typeof(OpenableSystem) });
+        SubscribeLocalEvent<ApplyReagentToItemComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
     }
 
-    private void OnInteract(Entity<SqueezeBottleComponent> entity, ref AfterInteractEvent args)
+    private void OnInteract(Entity<ApplyReagentToItemComponent> entity, ref AfterInteractEvent args)
     {
         if (args.Handled)
             return;
@@ -48,7 +48,7 @@ public sealed class SqueezeBottleSystem : EntitySystem
             args.Handled = true;
     }
 
-    private void OnUtilityVerb(Entity<SqueezeBottleComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
+    private void OnUtilityVerb(Entity<ApplyReagentToItemComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess || args.Target is not { Valid: true } target ||
         _openable.IsClosed(entity))
@@ -60,8 +60,8 @@ public sealed class SqueezeBottleSystem : EntitySystem
         {
             Act = () => TryToApplyReagent(entity, target, user),
             IconEntity = GetNetEntity(entity),
-            Text = Loc.GetString("squeeze-bottle-verb-text"),
-            Message = Loc.GetString("squeeze-bottle-verb-message")
+            Text = Loc.GetString("apply-reagent-verb-text"),
+            Message = Loc.GetString("apply-reagent-verb-message")
         };
 
         args.Verbs.Add(verb);
@@ -71,12 +71,12 @@ public sealed class SqueezeBottleSystem : EntitySystem
     ///     Try to apply the reagent thats stored inside the squeeze bottle into an object.
     ///     If there are multiple reagents, it will try to apply all of them.
     /// </summary>
-    private bool TryToApplyReagent(Entity<SqueezeBottleComponent> entity, EntityUid target, EntityUid actor)
+    private bool TryToApplyReagent(Entity<ApplyReagentToItemComponent> entity, EntityUid target, EntityUid actor)
     {
 
         if (!HasComp<ItemComponent>(target))
         {
-            _popup.PopupEntity(Loc.GetString("squeeze-bottle-not-item-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("apply-reagent-not-item-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
             return false;
         }
 
@@ -91,7 +91,7 @@ public sealed class SqueezeBottleSystem : EntitySystem
             }
             else
             {
-                _popup.PopupEntity(Loc.GetString("squeeze-bottle-is-empty-failure"), actor, actor, PopupType.Medium);
+                _popup.PopupEntity(Loc.GetString("apply-reagent-is-empty-failure"), actor, actor, PopupType.Medium);
             }
 
             return true;

@@ -4,7 +4,7 @@
   name: squeeze bottle
   description:
   components:
-  - type: SqueezeBottle
+  - type: ApplyReagentToItem
     amountConsumedOnUse: 5
     onSqueezeNoise: /Audio/Items/squeezebottle.ogg
   - type: Openable
@@ -105,7 +105,7 @@
   name: CRAZY glue
   description: A bottle of CRAZY glue manufactured by Honk! Co. Uses a high throughput nozzle for increased flow!
   components:
-  - type: SqueezeBottle
+  - type: ApplyReagentToItem
     amountConsumedOnUse: 7.5 # high throughput nozzle
     onSqueezeNoise: /Audio/Items/squeezebottle.ogg
   - type: SolutionContainerManager

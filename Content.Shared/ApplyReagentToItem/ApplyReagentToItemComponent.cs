@@ -2,10 +2,10 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.SqueezeBottle;
+namespace Content.Shared.ApplyReagentToItem;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class SqueezeBottleComponent : Component
+public sealed partial class ApplyReagentToItemComponent : Component
 {
     /// <summary>
     ///     The noise the squeeze bottle makes when it gets squeezed!
