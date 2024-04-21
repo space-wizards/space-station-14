@@ -159,7 +159,7 @@
   parent: ClothingEyesGlassesSunglasses
   id: ClothingEyesGlassesCommand
   name: Command glasses
-  description: Upgraded sunglasses sometimes worn by Command Personnel.
+  description: Upgraded sunglasses often worn by Command Personnel. Seem to exude authority.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/commandglasses.rsi

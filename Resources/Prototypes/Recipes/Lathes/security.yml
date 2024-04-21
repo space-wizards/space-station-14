@@ -96,6 +96,14 @@
     Glass: 200
 
 - type: latheRecipe
+  id: ClothingEyesGlassesCommand
+  result: ClothingEyesGlassesCommand
+  completetime: 3
+  materials:
+    Steel: 200
+    Glass: 300
+
+- type: latheRecipe
   id: HoloprojectorSecurity
   result: HoloprojectorSecurityEmpty
   completetime: 2
