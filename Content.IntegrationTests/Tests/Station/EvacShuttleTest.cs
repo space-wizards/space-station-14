@@ -120,7 +120,6 @@ public sealed class EvacShuttleTest
 
         server.CfgMan.SetCVar(CCVars.EmergencyShuttleDockTime, dockTime);
         pair.Server.CfgMan.SetCVar(CCVars.EmergencyShuttleEnabled, false);
-        pair.Server.CfgMan.SetCVar(CCVars.GameDummyTicker, true);
         pair.Server.CfgMan.SetCVar(CCVars.GameMap, gameMap);
         await pair.CleanReturnAsync();
     }
