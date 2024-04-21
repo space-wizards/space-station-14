@@ -39,9 +39,13 @@ public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
         {
             SendMessage(new AnalysisConsoleExtractButtonPressedMessage());
         };
-        _consoleMenu.OnBiasButtonPressed += () =>
+        _consoleMenu.OnUpBiasButtonPressed += () =>
         {
-            SendMessage(new AnalysisConsoleBiasButtonPressedMessage());
+            SendMessage(new AnalysisConsoleBiasButtonPressedMessage(false));
+        };
+        _consoleMenu.OnDownBiasButtonPressed += () =>
+        {
+            SendMessage(new AnalysisConsoleBiasButtonPressedMessage(true));
         };
     }
 
@@ -55,7 +59,6 @@ public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
                 _consoleMenu?.SetButtonsDisabled(msg);
                 _consoleMenu?.UpdateInformationDisplay(msg);
                 _consoleMenu?.UpdateProgressBar(msg);
-                _consoleMenu?.UpdateBiasDirection(msg);
                 break;
         }
     }

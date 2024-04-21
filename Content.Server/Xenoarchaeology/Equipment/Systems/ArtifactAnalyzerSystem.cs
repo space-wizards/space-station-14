@@ -388,7 +388,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (!TryComp<TraversalDistorterComponent>(component.AnalyzerEntity, out var trav))
             return;
 
-        if (!_traversalDistorter.ToggleState(component.AnalyzerEntity.Value, trav))
+        if (!_traversalDistorter.SetState(component.AnalyzerEntity.Value, trav, args.IsDown))
             return;
 
         UpdateUserInterface(uid, component);

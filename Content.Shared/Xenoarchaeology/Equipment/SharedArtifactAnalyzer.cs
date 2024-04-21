@@ -30,8 +30,9 @@ public sealed class AnalysisConsoleExtractButtonPressedMessage : BoundUserInterf
 }
 
 [Serializable, NetSerializable]
-public sealed class AnalysisConsoleBiasButtonPressedMessage : BoundUserInterfaceMessage
+public sealed class AnalysisConsoleBiasButtonPressedMessage(bool isDown) : BoundUserInterfaceMessage
 {
+    public bool IsDown = isDown;
 }
 
 [Serializable, NetSerializable]

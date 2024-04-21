@@ -27,10 +27,16 @@
                     ToolTip="{Loc 'analysis-console-extract-button-info'}">
                 </Button>
                 <BoxContainer MinHeight="5"></BoxContainer>
-                <Button Name="BiasButton"
-                    Text="{Loc 'analysis-console-bias-button'}"
-                    ToolTip="{Loc 'analysis-console-bias-button-info'}">
-                </Button>
+                <BoxContainer Orientation="Horizontal">
+                    <Button Name="UpBiasButton"
+                        Text="{Loc 'analysis-console-bias-up'}"
+                        ToolTip="{Loc 'analysis-console-bias-button-info-up'}">
+                    </Button>
+                    <Button Name="DownBiasButton"
+                        Text="{Loc 'analysis-console-bias-down'}"
+                        ToolTip="{Loc 'analysis-console-bias-button-info-down'}">
+                    </Button>
+                </BoxContainer>
             </BoxContainer>
             <BoxContainer Orientation="Vertical">
                 <Label Name="ProgressLabel"></Label>

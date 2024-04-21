@@ -29,14 +29,14 @@ public sealed class TraversalDistorterSystem : EntitySystem
     }
 
     /// <summary>
-    /// Toggles the state of the traversal distorter between up and down.
+    /// Switches the state of the traversal distorter between up and down.
     /// </summary>
     /// <param name="uid">The distorter's entity</param>
     /// <param name="component">The component on the entity</param>
     /// <returns>If the distorter changed state</returns>
-    public bool ToggleState(EntityUid uid, TraversalDistorterComponent component)
+    public bool SetState(EntityUid uid, TraversalDistorterComponent component, bool isDown)
     {
-        if ( !this.IsPowered(uid, EntityManager))
+        if (!this.IsPowered(uid, EntityManager))
             return false;
 
         if (_timing.CurTime < component.NextActivation)
@@ -44,9 +44,7 @@ public sealed class TraversalDistorterSystem : EntitySystem
 
         component.NextActivation = _timing.CurTime + component.ActivationDelay;
 
-        component.BiasDirection = component.BiasDirection == BiasDirection.Up
-            ? BiasDirection.Down
-            : BiasDirection.Up;
+        component.BiasDirection = isDown ? BiasDirection.Down : BiasDirection.Up;
 
         return true;
     }
