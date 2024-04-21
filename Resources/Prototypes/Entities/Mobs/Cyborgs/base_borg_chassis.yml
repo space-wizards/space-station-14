@@ -129,11 +129,17 @@
     proto: robot
   - type: Speech
     speechVerb: Robotic
-    speechSounds: Pai
+    speechSounds: Borg
   - type: Vocal
     sounds:
       Unsexed: UnisexSilicon
   - type: UnblockableSpeech
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepBorg
+      params:
+        variation: 0.07
+        volume: -8
   - type: Construction
     graph: Cyborg
     containers:
@@ -207,6 +213,7 @@
     tags:
     - ShoesRequiredStepTriggerImmune
     - DoorBumpOpener
+    - FootstepSound
     - CanPilot
   - type: Emoting
   - type: GuideHelp
