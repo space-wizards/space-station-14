@@ -30,11 +30,15 @@
                 <BoxContainer Orientation="Horizontal">
                     <Button Name="UpBiasButton"
                         Text="{Loc 'analysis-console-bias-up'}"
-                        ToolTip="{Loc 'analysis-console-bias-button-info-up'}">
+                        ToolTip="{Loc 'analysis-console-bias-button-info-up'}"
+                        HorizontalExpand="True"
+                        StyleClasses="OpenRight">
                     </Button>
                     <Button Name="DownBiasButton"
                         Text="{Loc 'analysis-console-bias-down'}"
-                        ToolTip="{Loc 'analysis-console-bias-button-info-down'}">
+                        ToolTip="{Loc 'analysis-console-bias-button-info-down'}"
+                        HorizontalExpand="True"
+                        StyleClasses="OpenLeft">
                     </Button>
                 </BoxContainer>
             </BoxContainer>
