@@ -37,6 +37,7 @@
     blacklist:
       tags:
         - Arrow
+        - CombatKnife
   - type: Appearance
   - type: ItemMapper
     containerWhitelist: [gas_tank]
