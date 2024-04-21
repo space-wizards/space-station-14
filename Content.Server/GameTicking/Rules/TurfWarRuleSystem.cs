@@ -5,6 +5,7 @@ using Content.Server.Objectives;
 using Content.Server.Roles;
 using Content.Server.Station.Systems;
 using Content.Shared.Doors.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -23,6 +24,7 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
 {
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -77,7 +79,7 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
         }
 
         // group all players by their department
-        var taggerPool = _antagSelection.FindPotentialAntags(candidates, comp.Antag, includeHeads: true);
+        var taggerPool = _antagSelection.GetEligiblePlayers(candidates, comp.Antag, includeHeads: true);
         var departments = new Dictionary<string, List<EntityUid>>();
         foreach (var session in taggerPool)
         {
@@ -159,7 +161,7 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
 
         _mind.TryAddObjective(mindId, mind, rule.Comp.Objective);
 
-        _antagSelection.GiveAntagBagGear(mob, rule.Comp.StartingGear);
+        _inventory.SpawnItemsOnEntity(mob, rule.Comp.StartingGear);
 
         _role.MindPlaySound(mindId, rule.Comp.GreetingSound, mind);
         _chatMan.DispatchServerMessage(mind.Session, Loc.GetString("turf-tagger-role-greeting"));
