@@ -1814,7 +1814,7 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: Gold secret door
+  name: gold secret door
   id: GoldSecretDoor
   graph: SecretDoor
   startNode: start
