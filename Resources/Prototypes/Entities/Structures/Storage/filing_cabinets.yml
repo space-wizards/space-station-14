@@ -24,8 +24,8 @@
       map: ["openLayer"]
   - type: UserInterface
     interfaces:
-    enum.StorageUiKey.Key:
-      type: StorageBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   - type: Transform
     noRot: true
   - type: Fixtures

@@ -144,8 +144,8 @@
   - type: WiresVisuals
   - type: UserInterface
     interfaces:
-    enum.SpaceHeaterUiKey.Key:
-      type: SpaceHeaterBoundUserInterface
+      enum.SpaceHeaterUiKey.Key:
+        type: SpaceHeaterBoundUserInterface
   - type: ActivatableUI
     inHandsOnly: false
     key: enum.SpaceHeaterUiKey.Key

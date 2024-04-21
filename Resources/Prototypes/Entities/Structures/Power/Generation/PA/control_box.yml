@@ -17,8 +17,8 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    enum.ParticleAcceleratorControlBoxUiKey.Key:
-      type: ParticleAcceleratorBoundUserInterface
+      enum.ParticleAcceleratorControlBoxUiKey.Key:
+        type: ParticleAcceleratorBoundUserInterface
     enum.WiresUiKey.Key:
       type: WiresBoundUserInterface
   - type: WiresPanel

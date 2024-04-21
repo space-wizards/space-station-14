@@ -26,7 +26,7 @@ public sealed class IntrinsicUISystem : EntitySystem
 
     private void InitActions(EntityUid uid, IntrinsicUIComponent component, MapInitEvent args)
     {
-        foreach (var entry in component.UIs)
+        foreach (var entry in component.UIs.Values)
         {
             _actionsSystem.AddAction(uid, ref entry.ToggleActionEntity, entry.ToggleAction);
         }

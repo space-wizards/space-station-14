@@ -42,10 +42,10 @@
       InUse: camera_in_use
   - type: UserInterface
     interfaces:
-      - key: enum.SurveillanceCameraSetupUiKey.Camera
+      enum.SurveillanceCameraSetupUiKey.Camera:
         type: SurveillanceCameraSetupBoundUi
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: StaticPrice
     price: 200
   - type: Destructible

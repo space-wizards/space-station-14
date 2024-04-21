@@ -27,8 +27,8 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    enum.ResearchClientUiKey.Key:
-      type: ResearchClientBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
   - type: Machine
     board: AnomalyVesselCircuitboard
   - type: PointLight

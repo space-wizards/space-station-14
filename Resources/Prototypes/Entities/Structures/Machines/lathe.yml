@@ -38,8 +38,8 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    enum.LatheUiKey.Key:
-      type: LatheBoundUserInterface
+      enum.LatheUiKey.Key:
+        type: LatheBoundUserInterface
     enum.ResearchClientUiKey.Key:
       type: ResearchClientBoundUserInterface
   - type: Transform
