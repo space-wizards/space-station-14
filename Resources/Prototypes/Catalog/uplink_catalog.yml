@@ -122,7 +122,7 @@
   name: uplink-sniper-bundle-name
   description: uplink-sniper-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: base }
-  productEntity: BriefcaseSyndieSniperBundleFilled
+  productEntity: BriefcaseSniperBundleFilled
   cost:
     Telecrystal: 12
   categories:
@@ -990,15 +990,10 @@
   icon: { sprite: /Textures/Mobs/Pets/cat.rsi, state: syndicat }
   productEntity: MobCatSyndy
   cost:
-    Telecrystal: 10
+    Telecrystal: 6
   categories:
     - UplinkAllies
-  conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - NukeOpsUplink
-
+  
 - type: listing
   id: UplinkSyndicatePersonalAI
   name: uplink-syndicate-pai-name
@@ -1483,8 +1478,8 @@
 - type: listing
   id: UplinkScarfSyndieGreen
   name: uplink-scarf-syndie-green-name
-  description: uplink-scarf-syndie-green-desc
-  productEntity: ClothingNeckScarfStripedSyndieGreen
+  description: uplink-scarf--green-desc
+  productEntity: ClothingNeckScarfStripedGreen
   cost:
     Telecrystal: 1
   categories:
