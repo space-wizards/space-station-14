@@ -31,6 +31,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     [Dependency] private   readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private   readonly TileSystem _tiles = default!;
     [Dependency] private   readonly TurfSystem _turfs = default!;
+    [Dependency] protected readonly SharedSolutionContainerSystem SolutionContainer = default!;
 
     public override void Initialize()
     {
