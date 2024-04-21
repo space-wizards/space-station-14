@@ -26,7 +26,7 @@
   solids:
     FoodSnackBoritos: 1
     FoodCheeseSlice: 1
-    FoodChili: 1
+    FoodChiliPepper: 1
     FoodMeatMeatball: 1
 
 # Base ingredients: Should be moved out of microwave as soon as possible.
@@ -62,7 +62,7 @@
   solids:
     FoodTofuSlice: 2
     FoodOnionSlice: 1
-    FoodChili: 1
+    FoodChiliPepper: 1
     FoodCarrot: 1
     FoodCheeseCurds: 1
 
@@ -97,7 +97,7 @@
   solids:
     FoodCheeseSlice: 1
     FoodCabbage: 1
-    FoodChili: 1
+    FoodChiliPepper: 1
     FoodPotato: 1
     FoodOnionSlice: 2
 
@@ -111,7 +111,7 @@
   solids:
     FoodCheeseSlice: 1 #Grilled cheese slice
     FoodMothSaladBase: 1
-    FoodChili: 1
+    FoodChiliPepper: 1
     FoodCabbage: 1
 
 - type: microwaveMealRecipe
@@ -142,7 +142,7 @@
     FoodRiceBoiled: 1
     FoodPotato: 2
     FoodCabbage: 1
-    FoodChili: 1
+    FoodChiliPepper: 1
     #Herbs: 1
 
 - type: microwaveMealRecipe
@@ -294,7 +294,7 @@
   solids:
     FoodBowlBig: 1
     FoodTofuSlice: 1
-    FoodChili: 1
+    FoodChiliPepper: 1
     #FoodYogurt: 1 #Milk and Cream placeholder
 
 - type: microwaveMealRecipe
@@ -355,7 +355,7 @@
   solids:
     FoodBowlBig: 1
     FoodTomato: 1
-    FoodChili: 1
+    FoodChiliPepper: 1
 
 # Salads: These should be moved out of the microwave as soon as possible
 
@@ -408,7 +408,7 @@
   solids:
     FoodBowlBig: 1
     FoodMothSaladBase: 1
-    FoodChili: 1
+    FoodChiliPepper: 1
     FoodOnionRed: 1
     FoodAmbrosiaVulgaris: 1 #Herbs
 
@@ -425,7 +425,7 @@
     FoodDoughFlat: 1
     FoodCheeseSlice: 1
     FoodMothBakedCorn: 1
-    FoodChili: 1
+    FoodChiliPepper: 1
 
 - type: microwaveMealRecipe
   id: RecipeMothFiveCheesePizza
