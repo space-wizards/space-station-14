@@ -71,9 +71,7 @@
       - FatExtractorMachineCircuitboard
     chance: 0.8
     rarePrototypes:
-      - TraversalDistorterMachineCircuitboard
       - CloningPodMachineCircuitboard
-      #- ReverseEngineeringMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - DawInstrumentMachineCircuitboard
       - StasisBedMachineCircuitboard
