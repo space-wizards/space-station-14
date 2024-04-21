@@ -21,7 +21,8 @@
   equipment:
     mask: ClothingMaskGas
 
-# Jumpsuit
+# Jumpsuits
+# Grey
 - type: loadout
   id: GreyJumpsuit
   equipment: GreyJumpsuit
@@ -40,6 +41,248 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorGrey
 
+# Black
+- type: loadout
+  id: BlackJumpsuit
+  equipment: BlackJumpsuit
+
+- type: startingGear
+  id: BlackJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+
+- type: loadout
+  id: BlackJumpskirt
+  equipment: BlackJumpskirt
+
+- type: startingGear
+  id: BlackJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorBlack
+
+# Blue
+- type: loadout
+  id: BlueJumpsuit
+  equipment: BlueJumpsuit
+
+- type: startingGear
+  id: BlueJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+
+- type: loadout
+  id: BlueJumpskirt
+  equipment: BlueJumpskirt
+
+- type: startingGear
+  id: BlueJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorBlue
+
+# Dark Blue
+- type: loadout
+  id: DarkBlueJumpsuit
+  equipment: DarkBlueJumpsuit
+
+- type: startingGear
+  id: DarkBlueJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorDarkBlue
+
+- type: loadout
+  id: DarkBlueJumpskirt
+  equipment: DarkBlueJumpskirt
+
+- type: startingGear
+  id: DarkBlueJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorDarkBlue
+
+# Teal
+- type: loadout
+  id: TealJumpsuit
+  equipment: TealJumpsuit
+
+- type: startingGear
+  id: TealJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorTeal
+
+- type: loadout
+  id: TealJumpskirt
+  equipment: TealJumpskirt
+
+- type: startingGear
+  id: TealJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorTeal
+
+# Green
+- type: loadout
+  id: GreenJumpsuit
+  equipment: GreenJumpsuit
+
+- type: startingGear
+  id: GreenJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGreen
+
+- type: loadout
+  id: GreenJumpskirt
+  equipment: GreenJumpskirt
+
+- type: startingGear
+  id: GreenJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorGreen
+
+# Dark Green
+- type: loadout
+  id: DarkGreenJumpsuit
+  equipment: DarkGreenJumpsuit
+
+- type: startingGear
+  id: DarkGreenJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorDarkGreen
+
+- type: loadout
+  id: DarkGreenJumpskirt
+  equipment: DarkGreenJumpskirt
+
+- type: startingGear
+  id: DarkGreenJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorDarkGreen
+
+# Orange
+- type: loadout
+  id: OrangeJumpsuit
+  equipment: OrangeJumpsuit
+
+- type: startingGear
+  id: OrangeJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorOrange
+
+- type: loadout
+  id: OrangeJumpskirt
+  equipment: OrangeJumpskirt
+
+- type: startingGear
+  id: OrangeJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorOrange
+
+# Pink
+- type: loadout
+  id: PinkJumpsuit
+  equipment: PinkJumpsuit
+
+- type: startingGear
+  id: PinkJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorPink
+
+- type: loadout
+  id: PinkJumpskirt
+  equipment: PinkJumpskirt
+
+- type: startingGear
+  id: PinkJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorPink
+
+# Purple
+- type: loadout
+  id: PurpleJumpsuit
+  equipment: PurpleJumpsuit
+
+- type: startingGear
+  id: PurpleJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorPurple
+
+- type: loadout
+  id: PurpleJumpskirt
+  equipment: PurpleJumpskirt
+
+- type: startingGear
+  id: PurpleJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorPurple
+
+# Light brown
+- type: loadout
+  id: LightBrownJumpsuit
+  equipment: LightBrownJumpsuit
+
+- type: startingGear
+  id: LightBrownJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorLightBrown
+
+- type: loadout
+  id: LightBrownJumpskirt
+  equipment: LightBrownJumpskirt
+
+- type: startingGear
+  id: LightBrownJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorLightBrown
+
+# Brown
+- type: loadout
+  id: BrownJumpsuit
+  equipment: BrownJumpsuit
+
+- type: startingGear
+  id: BrownJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+
+- type: loadout
+  id: BrownJumpskirt
+  equipment: BrownJumpskirt
+
+- type: startingGear
+  id: BrownJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorBrown
+
+# Maroon
+- type: loadout
+  id: MaroonJumpsuit
+  equipment: MaroonJumpsuit
+
+- type: startingGear
+  id: MaroonJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorMaroon
+
+- type: loadout
+  id: MaroonJumpskirt
+  equipment: MaroonJumpskirt
+
+- type: startingGear
+  id: MaroonJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorMaroon
+
+# Rainbow
+- type: loadout
+  id: RainbowJumpsuit
+  equipment: RainbowJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: GreyTider
+
+- type: startingGear
+  id: RainbowJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformColorRainbow
+
+# Ancient
 - type: loadout
   id: AncientJumpsuit
   equipment: AncientJumpsuit
