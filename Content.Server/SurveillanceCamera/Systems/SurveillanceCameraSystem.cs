@@ -200,7 +200,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
     {
         if (!Resolve(uid, ref camera) || !Resolve(player, ref actor))
             return;
-        if (!_userInterface.TryGetUi(uid, SurveillanceCameraSetupUiKey.Camera, out var bui))
+        if (!_userInterface.HasUi(uid, SurveillanceCameraSetupUiKey.Camera, out var bui))
             return;
 
         _userInterface.OpenUi(bui, actor.PlayerSession);

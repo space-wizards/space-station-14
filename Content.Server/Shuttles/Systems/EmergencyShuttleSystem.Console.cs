@@ -349,7 +349,7 @@ public sealed partial class EmergencyShuttleSystem
             auths.Add(auth);
         }
 
-        if (_uiSystem.TryGetUi(uid, EmergencyConsoleUiKey.Key, out var bui))
+        if (_uiSystem.HasUi(uid, EmergencyConsoleUiKey.Key, out var bui))
             _uiSystem.SetUiState(
                 bui,
                 new EmergencyConsoleBoundUserInterfaceState()

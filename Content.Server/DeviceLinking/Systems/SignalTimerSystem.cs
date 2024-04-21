@@ -48,7 +48,7 @@ public sealed class SignalTimerSystem : EntitySystem
     {
         var time = TryComp<ActiveSignalTimerComponent>(uid, out var active) ? active.TriggerTime : TimeSpan.Zero;
 
-        if (_ui.TryGetUi(uid, SignalTimerUiKey.Key, out var bui))
+        if (_ui.HasUi(uid, SignalTimerUiKey.Key, out var bui))
         {
             _ui.SetUiState(bui, new SignalTimerBoundUserInterfaceState(component.Label,
                 TimeSpan.FromSeconds(component.Delay).Minutes.ToString("D2"),
@@ -70,7 +70,7 @@ public sealed class SignalTimerSystem : EntitySystem
         _audio.PlayPvs(signalTimer.DoneSound, uid);
         _signalSystem.InvokePort(uid, signalTimer.TriggerPort);
 
-        if (_ui.TryGetUi(uid, SignalTimerUiKey.Key, out var bui))
+        if (_ui.HasUi(uid, SignalTimerUiKey.Key, out var bui))
         {
             _ui.SetUiState(bui, new SignalTimerBoundUserInterfaceState(signalTimer.Label,
                 TimeSpan.FromSeconds(signalTimer.Delay).Minutes.ToString("D2"),

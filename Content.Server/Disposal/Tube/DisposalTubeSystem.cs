@@ -279,7 +279,7 @@ namespace Content.Server.Disposal.Tube
 
         private void OnOpenTaggerUI(EntityUid uid, DisposalTaggerComponent tagger, BoundUIOpenedEvent args)
         {
-            if (_uiSystem.TryGetUi(uid, DisposalTaggerUiKey.Key, out var bui))
+            if (_uiSystem.HasUi(uid, DisposalTaggerUiKey.Key, out var bui))
             {
                 _uiSystem.SetUiState(bui,
                     new DisposalTaggerUserInterfaceState(tagger.Tag));

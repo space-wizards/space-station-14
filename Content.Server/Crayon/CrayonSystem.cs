@@ -91,7 +91,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
             return;
 
         if (!TryComp<ActorComponent>(args.User, out var actor) ||
-            !_uiSystem.TryGetUi(uid, SharedCrayonComponent.CrayonUiKey.Key, out var ui))
+            !_uiSystem.HasUi(uid, SharedCrayonComponent.CrayonUiKey.Key, out var ui))
         {
             return;
         }

@@ -186,7 +186,7 @@ namespace Content.Server.Cargo.Systems
 
             var approverName = idCard.Comp?.FullName ?? Loc.GetString("access-reader-unknown-id");
             var approverJob = idCard.Comp?.JobTitle ?? Loc.GetString("access-reader-unknown-id");
-            var message = Loc.GetString("cargo-console-unlock-approved-order-broadcast", 
+            var message = Loc.GetString("cargo-console-unlock-approved-order-broadcast",
                 ("productName", Loc.GetString(order.ProductName)),
                 ("orderAmount", order.OrderQuantity),
                 ("approverName", approverName),
@@ -312,7 +312,7 @@ namespace Content.Server.Cargo.Systems
                 !TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase) ||
                 !TryComp<StationBankAccountComponent>(station, out var bankAccount)) return;
 
-            if (_uiSystem.TryGetUi(consoleUid, CargoConsoleUiKey.Orders, out var bui))
+            if (_uiSystem.HasUi(consoleUid, CargoConsoleUiKey.Orders, out var bui))
             {
                 _uiSystem.SetUiState(bui, new CargoConsoleInterfaceState(
                     MetaData(station.Value).EntityName,

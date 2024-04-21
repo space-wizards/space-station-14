@@ -355,11 +355,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         public void UpdateUserInterfaceState(EntityUid uid, MicrowaveComponent component)
         {
-            var ui = _userInterface.GetUiOrNull(uid, MicrowaveUiKey.Key);
-            if (ui == null)
-                return;
-
-            _userInterface.SetUiState(ui, new MicrowaveUpdateUserInterfaceState(
+            _userInterface.SetUiState(uid, MicrowaveUiKey.Key, new MicrowaveUpdateUserInterfaceState(
                 GetNetEntityArray(component.Storage.ContainedEntities.ToArray()),
                 HasComp<ActiveMicrowaveComponent>(uid),
                 component.CurrentCookTimeButtonIndex,

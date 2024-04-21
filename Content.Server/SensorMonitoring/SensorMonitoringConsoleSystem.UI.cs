@@ -18,7 +18,7 @@ public sealed partial class SensorMonitoringConsoleSystem
 
     private void UpdateConsoleUI(EntityUid uid, SensorMonitoringConsoleComponent comp)
     {
-        if (!_userInterface.TryGetUi(uid, SensorMonitoringConsoleUiKey.Key, out var ui))
+        if (!_userInterface.HasUi(uid, SensorMonitoringConsoleUiKey.Key, out var ui))
             return;
 
         if (ui.SubscribedSessions.Count == 0)

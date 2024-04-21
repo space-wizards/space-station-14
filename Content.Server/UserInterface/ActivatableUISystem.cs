@@ -145,7 +145,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (aui.Key == null)
             return false;
 
-        if (!_uiSystem.TryGetUi(uiEntity, aui.Key, out var ui))
+        if (!_uiSystem.HasUi(uiEntity, aui.Key, out var ui))
             return false;
 
         if (ui.SubscribedSessions.Contains(actor.PlayerSession))
@@ -216,7 +216,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (!Resolve(uid, ref aui, false))
             return;
 
-        if (aui.Key == null || !_uiSystem.TryGetUi(uid, aui.Key, out var ui))
+        if (aui.Key == null || !_uiSystem.HasUi(uid, aui.Key, out var ui))
             return;
 
         _uiSystem.CloseAll(ui);

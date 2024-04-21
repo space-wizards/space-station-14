@@ -235,7 +235,7 @@ public sealed partial class ParticleAcceleratorSystem
     {
         if (!Resolve(uid, ref comp))
             return;
-        if (!_uiSystem.TryGetUi(uid, ParticleAcceleratorControlBoxUiKey.Key, out var bui))
+        if (!_uiSystem.HasUi(uid, ParticleAcceleratorControlBoxUiKey.Key, out var bui))
             return;
 
         var draw = 0f;

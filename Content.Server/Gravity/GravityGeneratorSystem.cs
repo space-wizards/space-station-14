@@ -190,7 +190,7 @@ namespace Content.Server.Gravity
             );
 
             _uiSystem.SetUiState(
-                ent,
+                ent.Owner,
                 SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key,
                 state);
 

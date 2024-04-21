@@ -223,8 +223,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnClose(EntityUid uid, AirAlarmComponent component, BoundUIClosedEvent args)
     {
-        component.ActivePlayers.Remove(args.Session.UserId);
-        if (component.ActivePlayers.Count == 0)
+        if (!_ui.IsUiOpen(uid, SharedAirAlarmInterfaceKey.Key))
             RemoveActiveInterface(uid);
     }
 
@@ -247,9 +246,6 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, AirAlarmComponent component, ActivateInWorldEvent args)
     {
-        if (!TryComp<ActorComponent>(args.User, out var actor))
-            return;
-
         if (TryComp<WiresPanelComponent>(uid, out var panel) && panel.Open)
         {
             args.Handled = false;
@@ -259,10 +255,7 @@ public sealed class AirAlarmSystem : EntitySystem
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        var ui = _ui.GetUiOrNull(uid, SharedAirAlarmInterfaceKey.Key);
-        if (ui != null)
-            _ui.OpenUi(ui, actor.PlayerSession);
-        component.ActivePlayers.Add(actor.PlayerSession.UserId);
+        _ui.OpenUi(uid, SharedAirAlarmInterfaceKey.Key, args.User);
         AddActiveInterface(uid);
         SyncAllDevices(uid);
         UpdateUI(uid, component);
@@ -377,7 +370,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnAtmosAlarm(EntityUid uid, AirAlarmComponent component, AtmosAlarmEvent args)
     {
-        if (component.ActivePlayers.Count != 0)
+        if (_ui.IsUiOpen(uid, SharedAirAlarmInterfaceKey.Key))
         {
             SyncAllDevices(uid);
         }

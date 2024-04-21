@@ -218,7 +218,7 @@ namespace Content.Server.Paper
             if (!Resolve(uid, ref paperComp))
                 return;
 
-            if (_uiSystem.TryGetUi(uid, PaperUiKey.Key, out var bui))
+            if (_uiSystem.HasUi(uid, PaperUiKey.Key, out var bui))
                 _uiSystem.SetUiState(bui, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode), session);
         }
     }

@@ -285,20 +285,17 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             var query = AllEntityQuery<PowerMonitoringConsoleComponent>();
             while (query.MoveNext(out var ent, out var console))
             {
-                if (!_userInterfaceSystem.TryGetUi(ent, PowerMonitoringConsoleUiKey.Key, out var bui))
+                if (!_userInterfaceSystem.IsUiOpen(ent, PowerMonitoringConsoleUiKey.Key))
                     continue;
 
-                foreach (var session in bui.SubscribedSessions)
-                    UpdateUIState(ent, console, session);
+                UpdateUIState(ent, console);
+
             }
         }
     }
 
-    public void UpdateUIState(EntityUid uid, PowerMonitoringConsoleComponent component, ICommonSession session)
+    private void UpdateUIState(EntityUid uid, PowerMonitoringConsoleComponent component)
     {
-        if (!_userInterfaceSystem.TryGetUi(uid, PowerMonitoringConsoleUiKey.Key, out var bui))
-            return;
-
         var consoleXform = Transform(uid);
 
         if (consoleXform?.GridUid == null)
@@ -421,15 +418,15 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         }
 
         // Set the UI state
-        _userInterfaceSystem.SetUiState(bui,
+        _userInterfaceSystem.SetUiState(uid,
+            PowerMonitoringConsoleUiKey.Key,
             new PowerMonitoringConsoleBoundInterfaceState
                 (totalSources,
                 totalBatteryUsage,
                 totalLoads,
                 allEntries.ToArray(),
                 sourcesForFocus.ToArray(),
-                loadsForFocus.ToArray()),
-            session);
+                loadsForFocus.ToArray()));
     }
 
     private double GetPrimaryPowerValues(EntityUid uid, PowerMonitoringDeviceComponent device, out double powerSupplied, out double powerUsage, out double batteryUsage)
@@ -723,8 +720,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         }
     }
 
-    // Designates a supplied entity as a 'collection master'. Other entities which share this 
-    // entities collection name and are attached on the same load network are assigned this entity 
+    // Designates a supplied entity as a 'collection master'. Other entities which share this
+    // entities collection name and are attached on the same load network are assigned this entity
     // as the master that represents them on the console UI. This way you can have one device
     // represent multiple connected devices
     private void AssignEntityAsCollectionMaster

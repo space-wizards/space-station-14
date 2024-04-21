@@ -194,8 +194,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     private void OnBoundUIClosed(EntityUid uid, InstrumentComponent component, BoundUIClosedEvent args)
     {
         if (HasComp<ActiveInstrumentComponent>(uid)
-            && _bui.TryGetUi(uid, args.UiKey, out var bui)
-            && bui.SubscribedSessions.Count == 0)
+            && !_bui.IsUiOpen(uid, args.UiKey))
         {
             RemComp<ActiveInstrumentComponent>(uid);
         }
@@ -374,8 +373,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                 var entity = GetEntity(request.Entity);
 
                 var nearby = GetBands(entity);
-                _bui.TrySendUiMessage(entity, request.UiKey, new InstrumentBandResponseBuiMessage(nearby),
-                    request.Session);
+                _bui.ServerSendUiMessage(entity, request.UiKey, new InstrumentBandResponseBuiMessage(nearby), request.Session);
             }
 
             _bandRequestQueue.Clear();
@@ -442,8 +440,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (_bui.TryGetUi(uid, InstrumentUiKey.Key, out var bui))
-            _bui.ToggleUi(bui, session);
+        _bui.TryToggleUi(uid, InstrumentUiKey.Key, session);
     }
 
     public override bool ResolveInstrument(EntityUid uid, ref SharedInstrumentComponent? component)

@@ -108,7 +108,7 @@ public sealed partial class CargoSystem
         var orders = GetProjectedOrders(station ?? EntityUid.Invalid, orderDatabase, shuttle);
         var shuttleName = orderDatabase?.Shuttle != null ? MetaData(orderDatabase.Shuttle.Value).EntityName : string.Empty;
 
-        if (_uiSystem.TryGetUi(uid, CargoConsoleUiKey.Shuttle, out var bui))
+        if (_uiSystem.HasUi(uid, CargoConsoleUiKey.Shuttle, out var bui))
             _uiSystem.SetUiState(bui, new CargoShuttleConsoleBoundUserInterfaceState(
                 station != null ? MetaData(station.Value).EntityName : Loc.GetString("cargo-shuttle-console-station-unknown"),
                 string.IsNullOrEmpty(shuttleName) ? Loc.GetString("cargo-shuttle-console-shuttle-not-found") : shuttleName,

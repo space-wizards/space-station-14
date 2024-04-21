@@ -99,7 +99,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (!Resolve(player, ref actor))
             return;
-        if (!_uiSystem.TryGetUi(player, VoiceMaskUIKey.Key, out var bui))
+        if (!_uiSystem.HasUi(player, VoiceMaskUIKey.Key, out var bui))
             return;
 
         _uiSystem.OpenUi(bui, actor.PlayerSession);
@@ -113,7 +113,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
             return;
         }
 
-        if (_uiSystem.TryGetUi(owner, VoiceMaskUIKey.Key, out var bui))
+        if (_uiSystem.HasUi(owner, VoiceMaskUIKey.Key, out var bui))
             _uiSystem.SetUiState(bui, new VoiceMaskBuiState(component.VoiceName, component.SpeechVerb));
     }
 }
