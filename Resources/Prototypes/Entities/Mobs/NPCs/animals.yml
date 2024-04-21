@@ -2738,8 +2738,8 @@
         Structural: 10
   - type: Insulated
   - type: Tag
-      tags:
-        - DoorBumpOpener
+    tags:
+      - DoorBumpOpener
   - type: MovementAlwaysTouching
 
 - type: entity
