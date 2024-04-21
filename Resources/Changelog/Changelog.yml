@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix screenspace popups e.g. inventory / access popups drawing below the
-      UI.
-    type: Fix
-  id: 5910
-  time: '2024-02-10T08:51:11.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24987
-- author: themias
-  changes:
-  - message: The ID card console now correctly updates the ID's department when you
-      update its job
-    type: Fix
-  - message: The Agent ID will update its department depending on the selected icon
-    type: Fix
-  id: 5911
-  time: '2024-02-10T09:17:26.0000000+00:00'
-  url: https://api.github.com/repos/space-wizards/space-station-14/pulls/24975
 - author: Nimfar11
   changes:
   - message: Adds a glass showcase for an antique laser pistol.
@@ -3839,3 +3821,19 @@
   id: 6409
   time: '2024-04-21T05:59:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25736
+- author: KittenColony
+  changes:
+  - message: Added a new lizard snout, featuring a split muzzle and snoot that can
+      be coloured independently
+    type: Add
+  id: 6410
+  time: '2024-04-21T06:18:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27143
+- author: SpeltIncorrectyl
+  changes:
+  - message: Security Officers, Head of Security, and Warden can now choose to start
+      with a security webbing instead of a belt in their loadout menu.
+    type: Add
+  id: 6411
+  time: '2024-04-21T06:19:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27189
