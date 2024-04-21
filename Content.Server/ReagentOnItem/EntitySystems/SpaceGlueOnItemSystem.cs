@@ -61,14 +61,14 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
     }
 
     /// <summary>
-    ///     This function sets the next time we will check in Update to see if the item
-    ///     is droppable or if there is still more reagent left on the item.
+    ///     Sets the next time we will check in Update to see if the item is
+    ///     still stuck or if there is no reagent left and it becomes droppable.
     /// </summary>
-    /// <returns> Will return true if the item should still be stuck and false if the item should be droppable. </returns>
+    /// <returns> Will return true if the item should still be stuck and false if the item should be droppable (There is less than 1 unit of reagent remaning). </returns>
     private bool SetNextNextCanDropCheck(SpaceGlueOnItemComponent glueComp, EntityUid uid)
     {
         // This is the end case.
-        if (glueComp.AmountOfReagentLeft < 1)
+        if (glueComp.EffectStacks < 1)
             return false;
 
         // Ensure the item is still stuck to someones hand.
@@ -77,7 +77,7 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
 
         // Calculate the next check time.
         glueComp.TimeOfNextCheck = _timing.CurTime + glueComp.DurationPerUnit;
-        glueComp.AmountOfReagentLeft--;
+        glueComp.EffectStacks--;
 
         return true;
     }
@@ -89,7 +89,7 @@ public sealed class SpaceGlueOnItemSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        var howSticky = comp.AmountOfReagentLeft / comp.ReagentCapacity;
+        var howSticky = comp.EffectStacks / comp.MaxStacks;
 
         if (howSticky <= .33)
             args.PushMarkup(Loc.GetString("space-glue-on-item-inspect-low"));

@@ -9,23 +9,19 @@ using Content.Shared.IdentityManagement;
 namespace Content.Server.ReagentOnItem;
 
 /// <summary>
-///     The system that helps deal with a genaric reagent being applied to items.
+///     Deals with items that apply a solution on use to other entities.
 /// </summary>
 public sealed class ReagentOnItemSystem : EntitySystem
 {
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
 
     /// <summary>
-    ///     The function tries to apply the given solution mixture to the item.
+    ///     Tries to apply the given solution to the item.
     ///     It will apply all reagents that can stick and will spill anything
     ///     that cannot stick to the floor.
     /// </summary>
-    /// <returns> Returns false if there is no solution or if entity isn't an item and true otherwise. </returns>
+    /// <returns> False if there is no solution or if entity isn't an item and true otherwise. </returns>
     public bool AddReagentToItem(EntityUid item, Solution reagentMixture)
     {
         if (reagentMixture.Volume <= 0 || !HasComp<ItemComponent>(item))
@@ -39,20 +35,23 @@ public sealed class ReagentOnItemSystem : EntitySystem
             // Yes this code is sussy but its much better than what was used before.
             // All suspect code for this system is contained here (I hope).
 
+            // TODO: Replace this with something more modular.
+
             // Remove all reagents that can actually stick to things and apply them
             // to the item.
             var volSpaceLube = reagentMixture.RemoveReagent("SpaceLube", reagentMixture.Volume).Double();
             var volSpaceGlue = reagentMixture.RemoveReagent("SpaceGlue", reagentMixture.Volume).Double();
 
+            // var test = reagentMixture.TryGetReagent("SpaceGlue", out var goodout);
             if (volSpaceLube > 0)
             {
                 var lubed = EnsureComp<SpaceLubeOnItemComponent>(item);
-                AddAndDetermineExtra(lubed, "SpaceLube", volSpaceLube, reagentMixture);
+                ConvertReagentToStacks(lubed, "SpaceLube", volSpaceLube, reagentMixture);
             }
             if (volSpaceGlue > 0)
             {
                 var glued = EnsureComp<SpaceGlueOnItemComponent>(item);
-                AddAndDetermineExtra(glued, "SpaceGlue", volSpaceGlue, reagentMixture);
+                ConvertReagentToStacks(glued, "SpaceGlue", volSpaceGlue, reagentMixture);
             }
         }
         else
@@ -68,23 +67,23 @@ public sealed class ReagentOnItemSystem : EntitySystem
 
     }
     /// <summary>
-    ///     Actually add the (valid) reagent to the item and if there is any extra.
+    ///     Convert the reagent to stacks and add them to the component. 
+    ///     Will put any extra reagent that couldn't be applied in the spill pool.
     /// </summary>
-    /// <returns> The amount of leftover reagent that could not be applied. </returns>
-    private static void AddAndDetermineExtra(ReagentOnItemComponent comp, string reagentName, double volToAdd, Solution spillPool)
+    private static void ConvertReagentToStacks(ReagentOnItemComponent comp, string reagentName, double volToAdd, Solution spillPool)
     {
         // This is the TOTAL amount of reagent on the item, old amount + stuff we are adding now
-        var total = comp.AmountOfReagentLeft + volToAdd;
+        var total = comp.EffectStacks + volToAdd;
 
         // If the total is > capacity it will just put the maximum amount on the item.
         // Ohterwise, its just the total amount!
-        comp.AmountOfReagentLeft = Math.Min(total, comp.ReagentCapacity);
+        comp.EffectStacks = Math.Min(total, comp.MaxStacks);
 
         // This means there is going to be extra reagents we need to add to the
         // puddle.
-        if (total > comp.ReagentCapacity)
+        if (total > comp.MaxStacks)
         {
-            spillPool.AddReagent(reagentName, total - comp.ReagentCapacity);
+            spillPool.AddReagent(reagentName, total - comp.MaxStacks);
         }
     }
 

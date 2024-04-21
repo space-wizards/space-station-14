@@ -33,7 +33,7 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
             return;
 
         // No more lube ;(
-        if (component.AmountOfReagentLeft < 1)
+        if (component.EffectStacks < 1)
         {
             RemComp<SpaceLubeOnItemComponent>(uid);
             return;
@@ -43,7 +43,7 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
         var randDouble = _random.NextDouble();
         if (randDouble > 1 - component.ChanceToDecreaseReagentOnGrab)
         {
-            component.AmountOfReagentLeft--;
+            component.EffectStacks--;
         }
 
         // Don't let them pick up the item.
