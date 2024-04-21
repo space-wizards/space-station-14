@@ -18,7 +18,7 @@
     - type: IdentityBlocker # need that for default ClothingMaskGas
     - type: UserInterface
       interfaces:
-        - key: enum.ChameleonUiKey.Key
+        enum.ChameleonUiKey.Key:
           type: ChameleonBoundUserInterface
     - type: HideLayerClothing
       slots:

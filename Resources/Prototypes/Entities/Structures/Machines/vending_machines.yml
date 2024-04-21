@@ -60,9 +60,9 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.VendingMachineUiKey.Key
+    enum.VendingMachineUiKey.Key:
       type: VendingMachineBoundUserInterface
-    - key: enum.WiresUiKey.Key
+    enum.WiresUiKey.Key:
       type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires

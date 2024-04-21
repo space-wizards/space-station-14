@@ -104,7 +104,7 @@
   - type: SpawnOnOverload
   - type: UserInterface
     interfaces:
-    - key: enum.WiresUiKey.Key
+    enum.WiresUiKey.Key:
       type: WiresBoundUserInterface
   - type: Airtight
     noAirWhenFullyAirBlocked: false

@@ -56,7 +56,7 @@
   - type: Appearance
   - type: UserInterface
     interfaces:
-    - key: enum.DisposalUnitUiKey.Key
+    enum.DisposalUnitUiKey.Key:
       type: DisposalUnitBoundUserInterface
   - type: ContainerContainer
     containers:
@@ -79,7 +79,7 @@
   - type: DisposalUnit
   - type: UserInterface
     interfaces:
-    - key: enum.DisposalUnitUiKey.Key
+    enum.DisposalUnitUiKey.Key:
       type: DisposalUnitBoundUserInterface
   - type: RatKingRummageable
 
@@ -129,7 +129,7 @@
   - type: Appearance
   - type: UserInterface
     interfaces:
-    - key: enum.MailingUnitUiKey.Key
+    enum.MailingUnitUiKey.Key:
       type: DisposalUnitBoundUserInterface
-    - key: enum.ConfigurationUiKey.Key
+    enum.ConfigurationUiKey.Key:
       type: ConfigurationBoundUserInterface

@@ -58,7 +58,7 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.FlatpackCreatorUIKey.Key
+    enum.FlatpackCreatorUIKey.Key:
       type: FlatpackCreatorBoundUserInterface
   - type: ItemSlots
     slots:

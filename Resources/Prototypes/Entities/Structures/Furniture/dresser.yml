@@ -33,7 +33,7 @@
       storagebase: !type:Container
   - type: UserInterface
     interfaces:
-    - key: enum.StorageUiKey.Key
+    enum.StorageUiKey.Key:
       type: StorageBoundUserInterface
   - type: InteractionOutline
   - type: Clickable

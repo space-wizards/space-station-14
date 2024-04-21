@@ -138,10 +138,10 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-      - key: enum.SpaceVillainArcadeUiKey.Key
-        type: SpaceVillainArcadeBoundUserInterface
-      - key: enum.WiresUiKey.Key
-        type: WiresBoundUserInterface
+        enum.SpaceVillainArcadeUiKey.Key:
+          type: SpaceVillainArcadeBoundUserInterface
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
   - type: Computer
     board: SpaceVillainArcadeComputerCircuitboard
   - type: Advertise
@@ -182,10 +182,10 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-      - key: enum.BlockGameUiKey.Key
-        type: BlockGameBoundUserInterface
-      - key: enum.WiresUiKey.Key
-        type: WiresBoundUserInterface
+        enum.BlockGameUiKey.Key:
+          type: BlockGameBoundUserInterface
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
   - type: Computer
     board: BlockGameArcadeComputerCircuitboard
   - type: Advertise

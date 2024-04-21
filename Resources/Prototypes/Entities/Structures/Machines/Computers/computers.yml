@@ -31,8 +31,8 @@
     key: enum.EmergencyConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-      - key: enum.EmergencyConsoleUiKey.Key
-        type: EmergencyConsoleBoundUserInterface
+        enum.EmergencyConsoleUiKey.Key:
+          type: EmergencyConsoleBoundUserInterface
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -52,8 +52,8 @@
     key: enum.ShuttleConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-      - key: enum.ShuttleConsoleUiKey.Key
-        type: ShuttleConsoleBoundUserInterface
+        enum.ShuttleConsoleUiKey.Key:
+          type: ShuttleConsoleBoundUserInterface
   - type: RadarConsole
   - type: WorldLoader
     radius: 256
@@ -211,8 +211,8 @@
     key: enum.IFFConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-      - key: enum.IFFConsoleUiKey.Key
-        type: IFFConsoleBoundUserInterface
+        enum.IFFConsoleUiKey.Key:
+          type: IFFConsoleBoundUserInterface
   - type: Computer
     board: ComputerIFFCircuitboard
 
@@ -231,8 +231,8 @@
     key: enum.IFFConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-      - key: enum.IFFConsoleUiKey.Key
-        type: IFFConsoleBoundUserInterface
+        enum.IFFConsoleUiKey.Key:
+          type: IFFConsoleBoundUserInterface
   - type: Computer
     board: ComputerIFFSyndicateCircuitboard
 
@@ -271,7 +271,7 @@
     key: enum.PowerMonitoringConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.PowerMonitoringConsoleUiKey.Key
+    enum.PowerMonitoringConsoleUiKey.Key:
       type: PowerMonitoringConsoleBoundUserInterface
 
 - type: entity
@@ -341,8 +341,8 @@
   - type: GeneralStationRecordConsole
   - type: UserInterface
     interfaces:
-      - key: enum.GeneralStationRecordConsoleKey.Key
-        type: GeneralStationRecordConsoleBoundUserInterface
+        enum.GeneralStationRecordConsoleKey.Key:
+          type: GeneralStationRecordConsoleBoundUserInterface
   - type: ActivatableUI
     key: enum.GeneralStationRecordConsoleKey.Key
   - type: PointLight
@@ -381,7 +381,7 @@
     key: enum.CrewMonitoringUIKey.Key
   - type: UserInterface
     interfaces:
-        - key: enum.CrewMonitoringUIKey.Key
+        enum.CrewMonitoringUIKey.Key:
           type: CrewMonitoringBoundUserInterface
   - type: CrewMonitoringConsole
   - type: DeviceNetwork
@@ -674,8 +674,8 @@
     key: enum.RadarConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-      - key: enum.RadarConsoleUiKey.Key
-        type: RadarConsoleBoundUserInterface
+        enum.RadarConsoleUiKey.Key:
+          type: RadarConsoleBoundUserInterface
   - type: Computer
     board: RadarConsoleCircuitboard
   - type: PointLight
@@ -837,8 +837,8 @@
     key: enum.CloningConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-      - key: enum.CloningConsoleUiKey.Key
-        type: CloningConsoleBoundUserInterface
+        enum.CloningConsoleUiKey.Key:
+          type: CloningConsoleBoundUserInterface
   - type: Speech
     speechVerb: Robotic
     speechSounds: Pai
@@ -926,8 +926,8 @@
     anchored: true
   - type: UserInterface
     interfaces:
-      - key: enum.SurveillanceCameraMonitorUiKey.Key
-        type: SurveillanceCameraMonitorBoundUserInterface
+        enum.SurveillanceCameraMonitorUiKey.Key:
+          type: SurveillanceCameraMonitorBoundUserInterface
 
 - type: entity
   parent: BaseComputer
@@ -963,8 +963,8 @@
   - type: ActivatableUIRequiresVision
   - type: UserInterface
     interfaces:
-      - key: enum.SurveillanceCameraMonitorUiKey.Key
-        type: SurveillanceCameraMonitorBoundUserInterface
+        enum.SurveillanceCameraMonitorUiKey.Key:
+          type: SurveillanceCameraMonitorBoundUserInterface
 
 - type: entity
   id: ComputerPalletConsole
@@ -1031,8 +1031,8 @@
     anchored: true
   - type: UserInterface
     interfaces:
-      - key: enum.NewsWriterUiKey.Key
-        type: NewsWriterBoundUserInterface
+        enum.NewsWriterUiKey.Key:
+          type: NewsWriterBoundUserInterface
 
 - type: entity
   parent: BaseComputer
@@ -1064,7 +1064,7 @@
       key: enum.SensorMonitoringConsoleUiKey.Key
     - type: UserInterface
       interfaces:
-        - key: enum.SensorMonitoringConsoleUiKey.Key
+        enum.SensorMonitoringConsoleUiKey.Key:
           type: SensorMonitoringConsoleBoundUserInterface
     - type: DeviceNetwork
       deviceNetId: AtmosDevices

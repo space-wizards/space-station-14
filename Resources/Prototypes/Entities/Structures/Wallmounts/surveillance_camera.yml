@@ -44,8 +44,8 @@
     interfaces:
       - key: enum.SurveillanceCameraSetupUiKey.Camera
         type: SurveillanceCameraSetupBoundUi
-      - key: enum.WiresUiKey.Key
-        type: WiresBoundUserInterface
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
   - type: StaticPrice
     price: 200
   - type: Destructible

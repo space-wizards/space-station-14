@@ -32,7 +32,7 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.FaxUiKey.Key
+    enum.FaxUiKey.Key:
       type: FaxBoundUi
   - type: ApcPowerReceiver
     powerLoad: 250
