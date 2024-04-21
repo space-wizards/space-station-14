@@ -32,8 +32,8 @@ public sealed partial class HumanoidAppearanceSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Customization/reptilian_parts.rsi"), "tail_smooth"),
             Act = () =>
             {
-                _uiSystem.TryOpen(uid, HumanoidMarkingModifierKey.Key, actor.PlayerSession);
-                _uiSystem.TrySetUiState(
+                _uiSystem.OpenUi(uid, HumanoidMarkingModifierKey.Key, actor.PlayerSession);
+                _uiSystem.SetUiState(
                     uid,
                     HumanoidMarkingModifierKey.Key,
                     new HumanoidMarkingModifierState(component.MarkingSet, component.Species,
@@ -67,7 +67,7 @@ public sealed partial class HumanoidAppearanceSystem
 
         if (message.ResendState)
         {
-            _uiSystem.TrySetUiState(
+            _uiSystem.SetUiState(
                 uid,
                 HumanoidMarkingModifierKey.Key,
                 new HumanoidMarkingModifierState(component.MarkingSet, component.Species,
@@ -92,7 +92,7 @@ public sealed partial class HumanoidAppearanceSystem
 
         if (message.ResendState)
         {
-            _uiSystem.TrySetUiState(
+            _uiSystem.SetUiState(
                 uid,
                 HumanoidMarkingModifierKey.Key,
                 new HumanoidMarkingModifierState(component.MarkingSet, component.Species,

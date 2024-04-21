@@ -154,13 +154,13 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
 
         if (router.AvailableNetworks.Count == 0 || router.SubnetFrequencyId != null)
         {
-            _userInterface.TryCloseAll(uid, SurveillanceCameraSetupUiKey.Router);
+            _userInterface.CloseUi(uid, SurveillanceCameraSetupUiKey.Router);
             return;
         }
 
         var state = new SurveillanceCameraSetupBoundUiState(router.SubnetName, deviceNet.ReceiveFrequency ?? 0,
             router.AvailableNetworks, true, router.SubnetFrequencyId != null);
-        _userInterface.TrySetUiState(uid, SurveillanceCameraSetupUiKey.Router, state);
+        _userInterface.SetUiState(uid, SurveillanceCameraSetupUiKey.Router, state);
     }
 
     private void SendHeartbeat(EntityUid uid, string origin, string destination,

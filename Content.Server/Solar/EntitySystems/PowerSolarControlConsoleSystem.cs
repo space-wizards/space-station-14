@@ -37,11 +37,11 @@ namespace Content.Server.Solar.EntitySystems
                 var query = EntityQueryEnumerator<SolarControlConsoleComponent, UserInterfaceComponent>();
                 while (query.MoveNext(out var uid, out var _, out var uiComp))
                 {
-                    _uiSystem.TrySetUiState(uid, SolarControlConsoleUiKey.Key, state, ui: uiComp);
+                    _uiSystem.SetUiState(uid, SolarControlConsoleUiKey.Key, state, ui: uiComp);
                 }
             }
         }
- 
+
         private void OnUIMessage(EntityUid uid, SolarControlConsoleComponent component, SolarControlConsoleAdjustMessage msg)
         {
             if (double.IsFinite(msg.Rotation))

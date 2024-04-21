@@ -123,7 +123,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     private void UpdateCryostorageUIState(Entity<CryostorageComponent> ent)
     {
         var state = new CryostorageBuiState(GetAllContainedData(ent).ToList());
-        _ui.TrySetUiState(ent, CryostorageUIKey.Key, state);
+        _ui.SetUiState(ent, CryostorageUIKey.Key, state);
     }
 
     private void OnPlayerSpawned(Entity<CryostorageContainedComponent> ent, ref PlayerSpawnCompleteEvent args)

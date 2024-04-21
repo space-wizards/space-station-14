@@ -111,11 +111,9 @@ namespace Content.Server.Strip
             if (TryComp<CombatModeComponent>(user, out var mode) && mode.IsInCombatMode && !openInCombat)
                 return;
 
-            if (TryComp<ActorComponent>(user, out var actor) && HasComp<StrippingComponent>(user))
+            if (HasComp<StrippingComponent>(user))
             {
-                if (_userInterfaceSystem.SessionHasOpenUi(strippable, StrippingUiKey.Key, actor.PlayerSession))
-                    return;
-                _userInterfaceSystem.TryOpen(strippable, StrippingUiKey.Key, actor.PlayerSession);
+                _userInterfaceSystem.OpenUi(strippable.Owner, StrippingUiKey.Key, user);
             }
         }
 

@@ -26,7 +26,7 @@ public sealed partial class ActivatableUISystem
             TryComp<ActivatableUIComponent>(uid, out var activatable) &&
             activatable.Key != null)
         {
-            _uiSystem.TryCloseAll(uid, activatable.Key);
+            _uiSystem.CloseUi(uid, activatable.Key);
         }
     }
 
@@ -63,7 +63,7 @@ public sealed partial class ActivatableUISystem
         if (_cell.HasCharge(uid, draw.UseRate))
             return;
 
-        _uiSystem.TryCloseAll(uid, active.Key);
+        _uiSystem.CloseUi(uid, active.Key);
     }
 
     private void OnBatteryOpenAttempt(EntityUid uid, ActivatableUIRequiresPowerCellComponent component, ActivatableUIOpenAttemptEvent args)

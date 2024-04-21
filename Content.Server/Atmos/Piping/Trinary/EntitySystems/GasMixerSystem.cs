@@ -134,7 +134,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             DirtyUI(uid, mixer);
             UpdateAppearance(uid, mixer);
-            _userInterfaceSystem.TryCloseAll(uid, GasFilterUiKey.Key);
+            _userInterfaceSystem.CloseUi(uid, GasFilterUiKey.Key);
         }
 
         private void OnMixerActivate(EntityUid uid, GasMixerComponent mixer, ActivateInWorldEvent args)
@@ -144,7 +144,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             if (Transform(uid).Anchored)
             {
-                _userInterfaceSystem.TryOpen(uid, GasMixerUiKey.Key, actor.PlayerSession);
+                _userInterfaceSystem.OpenUi(uid, GasMixerUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, mixer);
             }
             else
@@ -160,7 +160,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!Resolve(uid, ref mixer))
                 return;
 
-            _userInterfaceSystem.TrySetUiState(uid, GasMixerUiKey.Key,
+            _userInterfaceSystem.SetUiState(uid, GasMixerUiKey.Key,
                 new GasMixerBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(uid).EntityName, mixer.TargetPressure, mixer.Enabled, mixer.InletOneConcentration));
         }
 

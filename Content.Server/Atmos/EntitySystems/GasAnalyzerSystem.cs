@@ -118,8 +118,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref component))
                 return;
 
-            if (user != null && TryComp<ActorComponent>(user, out var actor))
-                _userInterface.TryClose(uid, GasAnalyzerUiKey.Key, actor.PlayerSession);
+            _userInterface.CloseUi(uid, GasAnalyzerUiKey.Key, user);
 
             component.Enabled = false;
             Dirty(uid, component);
@@ -145,7 +144,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!TryComp<ActorComponent>(user, out var actor))
                 return;
 
-            _userInterface.TryOpen(uid, GasAnalyzerUiKey.Key, actor.PlayerSession);
+            _userInterface.OpenUi(uid, GasAnalyzerUiKey.Key, actor.PlayerSession);
         }
 
         /// <summary>
@@ -242,7 +241,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (gasMixList.Count == 0)
                 return false;
 
-            _userInterface.TrySendUiMessage(uid, GasAnalyzerUiKey.Key,
+            _userInterface.ServerSendUiMessage(uid, GasAnalyzerUiKey.Key,
                 new GasAnalyzerUserMessage(gasMixList.ToArray(),
                     component.Target != null ? Name(component.Target.Value) : string.Empty,
                     GetNetEntity(component.Target) ?? NetEntity.Invalid,

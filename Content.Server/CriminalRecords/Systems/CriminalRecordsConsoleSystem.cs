@@ -185,7 +185,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
 
         if (!TryComp<StationRecordsComponent>(owningStation, out var stationRecords))
         {
-            _ui.TrySetUiState(uid, CriminalRecordsConsoleKey.Key, new CriminalRecordsConsoleState());
+            _ui.SetUiState(uid, CriminalRecordsConsoleKey.Key, new CriminalRecordsConsoleState());
             return;
         }
 
@@ -201,7 +201,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             state.SelectedKey = id;
         }
 
-        _ui.TrySetUiState(uid, CriminalRecordsConsoleKey.Key, state);
+        _ui.SetUiState(uid, CriminalRecordsConsoleKey.Key, state);
     }
 
     /// <summary>

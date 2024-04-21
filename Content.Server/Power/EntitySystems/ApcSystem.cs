@@ -158,7 +158,7 @@ public sealed class ApcSystem : EntitySystem
             (int) MathF.Ceiling(battery.CurrentSupply), apc.LastExternalState,
             battery.CurrentStorage / battery.Capacity);
 
-        _ui.TrySetUiState(uid, ApcUiKey.Key, state, ui: ui);
+        _ui.SetUiState((uid, ui), ApcUiKey.Key, state);
     }
 
     private ApcChargeState CalcChargeState(EntityUid uid, PowerState.Battery battery)

@@ -571,7 +571,7 @@ public sealed class AirAlarmSystem : EntitySystem
     /// </summary>
     private void ForceCloseAllInterfaces(EntityUid uid)
     {
-        _ui.TryCloseAll(uid, SharedAirAlarmInterfaceKey.Key);
+        _ui.CloseUi(uid, SharedAirAlarmInterfaceKey.Key);
     }
 
     private void OnAtmosUpdate(EntityUid uid, AirAlarmComponent alarm, ref AtmosDeviceUpdateEvent args)
@@ -639,7 +639,7 @@ public sealed class AirAlarmSystem : EntitySystem
             highestAlarm = AtmosAlarmType.Normal;
         }
 
-        _ui.TrySetUiState(
+        _ui.SetUiState(
             uid,
             SharedAirAlarmInterfaceKey.Key,
             new AirAlarmUIState(devNet.Address, deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, alarm.CurrentTab, highestAlarm.Value, alarm.AutoMode));

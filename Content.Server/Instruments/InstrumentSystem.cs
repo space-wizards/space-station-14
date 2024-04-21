@@ -423,7 +423,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
                 // Just in case
                 Clean(uid);
-                _bui.TryCloseAll(uid, InstrumentUiKey.Key);
+                _bui.CloseUi(uid, InstrumentUiKey.Key);
             }
 
             instrument.Timer += frameTime;

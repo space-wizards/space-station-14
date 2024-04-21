@@ -228,7 +228,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 GetNetEntityArray(inputContainer.ContainedEntities.ToArray()),
                 containerSolution?.Contents.ToArray()
             );
-            _userInterfaceSystem.TrySetUiState(uid, ReagentGrinderUiKey.Key, state);
+            _userInterfaceSystem.SetUiState(uid, ReagentGrinderUiKey.Key, state);
         }
 
         private void OnStartMessage(Entity<ReagentGrinderComponent> entity, ref ReagentGrinderStartMessage message)

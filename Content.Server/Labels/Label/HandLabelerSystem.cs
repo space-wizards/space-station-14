@@ -109,7 +109,7 @@ namespace Content.Server.Labels
             if (!Resolve(uid, ref handLabeler))
                 return;
 
-            _userInterfaceSystem.TrySetUiState(uid, HandLabelerUiKey.Key,
+            _userInterfaceSystem.SetUiState(uid, HandLabelerUiKey.Key,
                 new HandLabelerBoundUserInterfaceState(handLabeler.AssignedLabel));
         }
     }

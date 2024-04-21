@@ -189,7 +189,7 @@ namespace Content.Server.Gravity
                 chargeEta
             );
 
-            _uiSystem.TrySetUiState(
+            _uiSystem.SetUiState(
                 ent,
                 SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key,
                 state);
@@ -220,7 +220,7 @@ namespace Content.Server.Gravity
             if (!component.Intact || powerReceiver.PowerReceived < component.IdlePowerUse)
                 return;
 
-            _uiSystem.TryOpen(uid, SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key, actor.PlayerSession);
+            _uiSystem.OpenUi(uid, SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key, actor.PlayerSession);
             component.NeedUIUpdate = true;
         }
 

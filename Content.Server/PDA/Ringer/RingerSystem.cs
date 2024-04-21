@@ -111,7 +111,7 @@ namespace Content.Server.PDA.Ringer
 
                 // can't keep store open after locking it
                 if (!uplink.Unlocked)
-                    _ui.TryCloseAll(uid, StoreUiKey.Key);
+                    _ui.CloseUi(uid, StoreUiKey.Key);
 
                 // no saving the code to prevent meta click set on sus guys pda -> wewlad
                 args.Handled = true;
@@ -130,7 +130,7 @@ namespace Content.Server.PDA.Ringer
                 return;
 
             uplink.Unlocked = false;
-            _ui.TryCloseAll(uid, StoreUiKey.Key);
+            _ui.CloseUi(uid, StoreUiKey.Key);
         }
 
         public void RandomizeRingtone(EntityUid uid, RingerComponent ringer, MapInitEvent args)
@@ -181,14 +181,12 @@ namespace Content.Server.PDA.Ringer
 
         private void UpdateRingerUserInterface(EntityUid uid, RingerComponent ringer, bool isPlaying)
         {
-            if (_ui.TryGetUi(uid, RingerUiKey.Key, out var bui))
-                _ui.SetUiState(bui, new RingerUpdateState(isPlaying, ringer.Ringtone));
+            _ui.SetUiState(uid, RingerUiKey.Key, new RingerUpdateState(isPlaying, ringer.Ringtone));
         }
 
         public bool ToggleRingerUI(EntityUid uid, ICommonSession session)
         {
-            if (_ui.TryGetUi(uid, RingerUiKey.Key, out var bui))
-                _ui.ToggleUi(bui, session);
+            _ui.TryToggleUi(uid, RingerUiKey.Key, session);
             return true;
         }
 

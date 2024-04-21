@@ -346,7 +346,7 @@ public sealed partial class ParticleAcceleratorSystem
         UpdateAppearance(uid, comp);
 
         if (!args.Powered)
-            _uiSystem.TryCloseAll(uid, ParticleAcceleratorControlBoxUiKey.Key);
+            _uiSystem.CloseUi(uid, ParticleAcceleratorControlBoxUiKey.Key);
     }
 
     private void OnUISetEnableMessage(EntityUid uid, ParticleAcceleratorControlBoxComponent comp, ParticleAcceleratorSetEnableMessage msg)

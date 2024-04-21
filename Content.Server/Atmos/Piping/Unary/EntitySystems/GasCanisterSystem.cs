@@ -96,7 +96,7 @@ public sealed class GasCanisterSystem : EntitySystem
             tankPressure = tankComponent.Air.Pressure;
         }
 
-        _ui.TrySetUiState(uid, GasCanisterUiKey.Key,
+        _ui.SetUiState(uid, GasCanisterUiKey.Key,
             new GasCanisterBoundUserInterfaceState(Name(uid),
                 canister.Air.Pressure, portStatus, tankLabel, tankPressure, canister.ReleasePressure,
                 canister.ReleaseValve, canister.MinReleasePressure, canister.MaxReleasePressure));
@@ -212,7 +212,7 @@ public sealed class GasCanisterSystem : EntitySystem
         if (args.Handled)
             return;
 
-        _ui.TryOpen(uid, GasCanisterUiKey.Key, actor.PlayerSession);
+        _ui.OpenUi(uid, GasCanisterUiKey.Key, actor.PlayerSession);
         args.Handled = true;
     }
 
@@ -224,7 +224,7 @@ public sealed class GasCanisterSystem : EntitySystem
         if (CheckLocked(uid, component, args.User))
             return;
 
-        _ui.TryOpen(uid, GasCanisterUiKey.Key, actor.PlayerSession);
+        _ui.OpenUi(uid, GasCanisterUiKey.Key, actor.PlayerSession);
         args.Handled = true;
     }
 

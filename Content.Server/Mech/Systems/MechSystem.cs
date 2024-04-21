@@ -311,7 +311,7 @@ public sealed partial class MechSystem : SharedMechSystem
     {
         base.BreakMech(uid, component);
 
-        _ui.TryCloseAll(uid, MechUiKey.Key);
+        _ui.CloseUi(uid, MechUiKey.Key);
         _actionBlocker.UpdateCanMove(uid);
     }
 

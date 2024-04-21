@@ -52,8 +52,7 @@ namespace Content.Server.Forensics
                 component.PrintCooldown,
                 component.PrintReadyAt);
 
-            if (!_uiSystem.TrySetUiState(uid, ForensicScannerUiKey.Key, state))
-                Log.Warning($"{ToPrettyString(uid)} was unable to set UI state.");
+            _uiSystem.SetUiState(uid, ForensicScannerUiKey.Key, state);
         }
 
         private void OnDoAfter(EntityUid uid, ForensicScannerComponent component, DoAfterEvent args)
@@ -163,12 +162,9 @@ namespace Content.Server.Forensics
 
         private void OpenUserInterface(EntityUid user, Entity<ForensicScannerComponent> scanner)
         {
-            if (!TryComp<ActorComponent>(user, out var actor))
-                return;
-
             UpdateUserInterface(scanner, scanner.Comp);
 
-            _uiSystem.TryOpen(scanner, ForensicScannerUiKey.Key, actor.PlayerSession);
+            _uiSystem.OpenUi(scanner.Owner, ForensicScannerUiKey.Key, user);
         }
 
         private void OnPrint(EntityUid uid, ForensicScannerComponent component, ForensicScannerPrintMessage args)

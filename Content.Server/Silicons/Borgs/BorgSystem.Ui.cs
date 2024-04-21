@@ -111,6 +111,6 @@ public sealed partial class BorgSystem
         }
 
         var state = new BorgBuiState(chargePercent, hasBattery);
-        _ui.TrySetUiState(uid, BorgUiKey.Key, state);
+        _ui.SetUiState(uid, BorgUiKey.Key, state);
     }
 }

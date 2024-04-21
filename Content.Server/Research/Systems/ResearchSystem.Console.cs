@@ -68,7 +68,7 @@ public sealed partial class ResearchSystem
             state = new ResearchConsoleBoundInterfaceState(default);
         }
 
-        _uiSystem.TrySetUiState(uid, ResearchConsoleUiKey.Key, state);
+        _uiSystem.SetUiState(uid, ResearchConsoleUiKey.Key, state);
     }
 
     private void OnPointsChanged(EntityUid uid, ResearchConsoleComponent component, ref ResearchServerPointsChangedEvent args)

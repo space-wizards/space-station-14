@@ -94,7 +94,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             _ambientSoundSystem.SetAmbience(uid, false);
 
             DirtyUI(uid, filter);
-            _userInterfaceSystem.TryCloseAll(uid, GasFilterUiKey.Key);
+            _userInterfaceSystem.CloseUi(uid, GasFilterUiKey.Key);
         }
 
         private void OnFilterActivate(EntityUid uid, GasFilterComponent filter, ActivateInWorldEvent args)
@@ -104,7 +104,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             if (EntityManager.GetComponent<TransformComponent>(uid).Anchored)
             {
-                _userInterfaceSystem.TryOpen(uid, GasFilterUiKey.Key, actor.PlayerSession);
+                _userInterfaceSystem.OpenUi(uid, GasFilterUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, filter);
             }
             else
@@ -120,7 +120,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!Resolve(uid, ref filter))
                 return;
 
-            _userInterfaceSystem.TrySetUiState(uid, GasFilterUiKey.Key,
+            _userInterfaceSystem.SetUiState(uid, GasFilterUiKey.Key,
                 new GasFilterBoundUserInterfaceState(MetaData(uid).EntityName, filter.TransferRate, filter.Enabled, filter.FilteredGas));
         }
 

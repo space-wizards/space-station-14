@@ -129,7 +129,7 @@ public sealed class GatewaySystem : EntitySystem
             unlockTime
         );
 
-        _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
+        _ui.SetUiState(uid, GatewayUiKey.Key, state);
     }
 
     private void UpdateAppearance(EntityUid uid)

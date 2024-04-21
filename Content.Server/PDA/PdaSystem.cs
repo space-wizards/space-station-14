@@ -145,7 +145,7 @@ namespace Content.Server.PDA
             if (!Resolve(uid, ref pda, false))
                 return;
 
-            if (!_ui.TryGetUi(uid, PdaUiKey.Key, out var ui))
+            if (!_ui.IsUiOpen(uid, PdaUiKey.Key))
                 return;
 
             var address = GetDeviceNetAddress(uid);
@@ -182,7 +182,7 @@ namespace Content.Server.PDA
                 hasInstrument,
                 address);
 
-            _ui.SetUiState(ui, state);
+            _ui.SetUiState(uid, PdaUiKey.Key, state);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaRequestUpdateInterfaceMessage msg)

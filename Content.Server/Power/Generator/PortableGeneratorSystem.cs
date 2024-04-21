@@ -234,7 +234,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         if (powerSupplier.Net is { IsConnectedNetwork: true } net)
             networkStats = (net.NetworkNode.LastCombinedLoad, net.NetworkNode.LastCombinedSupply);
 
-        _uiSystem.TrySetUiState(
+        _uiSystem.SetUiState(
             uid,
             GeneratorComponentUiKey.Key,
             new PortableGeneratorComponentBuiState(fuelComp, fuel, clogged, networkStats));

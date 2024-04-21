@@ -104,7 +104,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 Name(targetId));
         }
 
-        _userInterface.TrySetUiState(uid, IdCardConsoleUiKey.Key, newState);
+        _userInterface.SetUiState(uid, IdCardConsoleUiKey.Key, newState);
     }
 
     /// <summary>

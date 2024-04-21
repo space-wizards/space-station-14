@@ -458,7 +458,7 @@ public sealed class WiresSystem : SharedWiresSystem
         {
             if (TryComp(args.User, out ActorComponent? actor))
             {
-                _uiSystem.TryOpen(uid, WiresUiKey.Key, actor.PlayerSession);
+                _uiSystem.OpenUi(uid, WiresUiKey.Key, actor.PlayerSession);
                 args.Handled = true;
             }
         }
@@ -468,7 +468,7 @@ public sealed class WiresSystem : SharedWiresSystem
     {
         if (args.Open)
             return;
-        _uiSystem.TryCloseAll(ent, WiresUiKey.Key);
+        _uiSystem.CloseUi(ent, WiresUiKey.Key);
     }
 
     private void OnAttemptOpenActivatableUI(EntityUid uid, ActivatableUIRequiresPanelComponent component, ActivatableUIOpenAttemptEvent args)
@@ -574,7 +574,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
         statuses.Sort((a, b) => a.position.CompareTo(b.position));
 
-        _uiSystem.TrySetUiState(uid, WiresUiKey.Key, new WiresBoundUserInterfaceState(
+        _uiSystem.SetUiState(uid, WiresUiKey.Key, new WiresBoundUserInterfaceState(
             clientList.ToArray(),
             statuses.Select(p => new StatusEntry(p.key, p.value)).ToArray(),
             Loc.GetString(wires.BoardName),
@@ -629,7 +629,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
         if (!args.WiresAccessible)
         {
-            _uiSystem.TryCloseAll(uid, WiresUiKey.Key);
+            _uiSystem.CloseUi(uid, WiresUiKey.Key);
         }
     }
 

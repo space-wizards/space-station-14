@@ -89,7 +89,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
                 continue;
 
             //The network configurator is a handheld device. There can only ever be an ui session open for the player holding the device.
-            _uiSystem.TryCloseAll(uid, NetworkConfiguratorUiKey.Configure);
+            _uiSystem.CloseUi(uid, NetworkConfiguratorUiKey.Configure);
         }
     }
 
@@ -215,7 +215,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
     private void OnComponentRemoved(EntityUid uid, DeviceListComponent component, ComponentRemove args)
     {
-        _uiSystem.TryCloseAll(uid, NetworkConfiguratorUiKey.Configure);
+        _uiSystem.CloseUi(uid, NetworkConfiguratorUiKey.Configure);
     }
 
     /// <summary>
@@ -433,7 +433,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             return;
 
 
-        _uiSystem.TryOpen(configuratorUid, NetworkConfiguratorUiKey.Link, actor.PlayerSession);
+        _uiSystem.OpenUi(configuratorUid, NetworkConfiguratorUiKey.Link, actor.PlayerSession);
         configurator.DeviceLinkTarget = targetUid;
 
 
@@ -464,7 +464,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         var sinkAddress = Resolve(sinkUid, ref sinkNetworkComponent, false) ? sinkNetworkComponent.Address : "";
 
         var state = new DeviceLinkUserInterfaceState(sources, sinks, links, sourceAddress, sinkAddress, defaults);
-        _uiSystem.TrySetUiState(configuratorUid, NetworkConfiguratorUiKey.Link, state);
+        _uiSystem.SetUiState(configuratorUid, NetworkConfiguratorUiKey.Link, state);
     }
 
     /// <summary>
@@ -478,7 +478,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (Delay(configurator))
             return;
 
-        if (!targetUid.HasValue || !TryComp(userUid, out ActorComponent? actor) || !AccessCheck(targetUid.Value, userUid, configurator))
+        if (!targetUid.HasValue || !AccessCheck(targetUid.Value, userUid, configurator))
             return;
 
         if (!TryComp(targetUid, out DeviceListComponent? list))
@@ -488,14 +488,13 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         configurator.ActiveDeviceList = targetUid;
         Dirty(configuratorUid, configurator);
 
-        if (!_uiSystem.TryGetUi(configuratorUid, NetworkConfiguratorUiKey.Configure, out var bui))
-            return;
-
-        if (_uiSystem.OpenUi(bui, actor.PlayerSession))
-            _uiSystem.SetUiState(bui, new DeviceListUserInterfaceState(
+        if (_uiSystem.TryOpenUi(configuratorUid, NetworkConfiguratorUiKey.Configure, userUid))
+        {
+            _uiSystem.SetUiState(configuratorUid, NetworkConfiguratorUiKey.Configure, new DeviceListUserInterfaceState(
                 _deviceListSystem.GetDeviceList(configurator.ActiveDeviceList.Value)
                     .Select(v => (v.Key, MetaData(v.Value).EntityName)).ToHashSet()
             ));
+        }
     }
 
     /// <summary>
@@ -523,8 +522,8 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             component.Devices.Remove(invalidDevice);
         }
 
-        if (_uiSystem.TryGetUi(uid, NetworkConfiguratorUiKey.List, out var bui))
-            _uiSystem.SetUiState(bui, new NetworkConfiguratorUserInterfaceState(devices));
+        if (_uiSystem.IsUiOpen(uid, NetworkConfiguratorUiKey.List))
+            _uiSystem.SetUiState(uid, NetworkConfiguratorUiKey.List, new NetworkConfiguratorUserInterfaceState(devices));
     }
 
     /// <summary>
@@ -784,7 +783,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         };
 
         _popupSystem.PopupCursor(Loc.GetString(resultText), args.Session, PopupType.Medium);
-        _uiSystem.TrySetUiState(
+        _uiSystem.SetUiState(
             uid,
             NetworkConfiguratorUiKey.Configure,
             new DeviceListUserInterfaceState(

@@ -80,7 +80,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 chemMaster.Mode, BuildInputContainerInfo(inputContainer), BuildOutputContainerInfo(outputContainer),
                 bufferReagents, bufferCurrentVolume, chemMaster.PillType, chemMaster.PillDosageLimit, updateLabel);
 
-            _userInterfaceSystem.TrySetUiState(owner, ChemMasterUiKey.Key, state);
+            _userInterfaceSystem.SetUiState(owner, ChemMasterUiKey.Key, state);
         }
 
         private void OnSetModeMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterSetModeMessage message)
