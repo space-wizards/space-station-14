@@ -886,6 +886,13 @@
   - SecurityDuffel
 
 - type: loadoutGroup
+  id: SecurityBelt
+  name: loadout-group-security-belt
+  loadouts:
+  - SecurityBelt
+  - SecurityWebbing
+
+- type: loadoutGroup
   id: SecurityOuterClothing
   name: loadout-group-security-outerclothing
   loadouts:
