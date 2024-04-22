@@ -315,6 +315,3 @@
   - type: Sprite
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_6
-  - type: Construction
-    graph: ImprovisedNukeCraft
-    node: evilbombpainted
