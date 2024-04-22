@@ -6,6 +6,7 @@ using Robust.Shared.Map;
 using Content.Server.Maps;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
+using Content.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
@@ -37,11 +38,16 @@ public sealed partial class WizardRuleComponent : Component
     [DataField]
     public ProtoId<AntagPrototype> WizardPrototypeId = "Wizard";
 
+    /* No wizard outpost prototype ATM, commenting out for now
     [DataField]
     public ProtoId<GameMapPrototype> OutpostMapPrototype = "WizardOutpost";
+    */
 
     [DataField]
     public EntProtoId SpawnPointProto = "SpawnPointWizards";
+
+    [DataField]
+    public ProtoId<WeightedRandomPrototype> ObjectiveGroup = "WizardObjectiveGroup";
 
     [DataField]
     public SoundSpecifier? GreetingSound = new SoundPathSpecifier("/Audio/Misc/wizard_greeting.ogg");

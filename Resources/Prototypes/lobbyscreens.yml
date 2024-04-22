@@ -3,10 +3,6 @@
   background: /Textures/LobbyScreens/goob.webp
 
 - type: lobbyBackground
-  id: What
-  background: /Textures/LobbyScreens/what.webp
-
-- type: lobbyBackground
   id: Valve
   background: /Textures/LobbyScreens/Valve.webp
 
@@ -37,8 +33,7 @@
 - type: lobbyBackground
   id: THRONGLER
   background: /Textures/LobbyScreens/THRONGLER.webp
-
+  
 - type: lobbyBackground
-  id: THRONGLER
+  id: mime
   background: /Textures/LobbyScreens/mime.webp
-

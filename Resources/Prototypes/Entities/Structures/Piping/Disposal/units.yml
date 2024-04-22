@@ -114,7 +114,9 @@
     node: mailing_unit
   - type: DisposalUnit
     autoEngageEnabled: false
-    mobsCanEnter: false
+    whitelist:
+      components:
+      - Item
   - type: MailingUnit
   - type: DeviceNetwork
     deviceNetId: Wired

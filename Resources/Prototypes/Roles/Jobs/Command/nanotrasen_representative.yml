@@ -22,11 +22,6 @@
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
-      - type: PointLight
-        enabled: true
-        radius: 1.5
-        energy: 2
-        color: "#32CD32"
 
 - type: startingGear
   id: NanotrasenRepresentativeGear
@@ -41,6 +36,3 @@
     belt: BoxFolderCentComClipboard
     pocket1: RubberStampCentcom
     pocket2: WeaponDisabler
-  innerClothingSkirt: ClothingUniformJumpskirtDetectiveGrey
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled

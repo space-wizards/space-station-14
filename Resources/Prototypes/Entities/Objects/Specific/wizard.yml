@@ -6,11 +6,17 @@
   suffix: Empty
   components:
   - type: Sprite
-    sprite: Objects/Magic/spellbooks.rsi
+    sprite: Objects/Misc/books.rsi
     layers:
-    - state: spellbook
-  - type: Item
-    sprite: Objects/Magic/spellbooks.rsi
+     - state: paper
+     - state: cover_old
+       color: "#657e9c"
+     - state: icon_text3
+     - state: decor_wingette_circle
+       color: gold
+     - state: icon_magic
+     - state: detail_rivets
+       color: gold
     heldPrefix: spellbook
   - type: UserInterface
     interfaces:

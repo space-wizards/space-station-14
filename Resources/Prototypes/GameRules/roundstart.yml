@@ -81,7 +81,6 @@
   - type: GameRule
     minPlayers: 20
   - type: WizardRule
-    faction: Wizard
 
 - type: entity
   id: Pirates
@@ -152,6 +151,7 @@
     - id: BasicTrashVariationPass
     - id: SolidWallRustingVariationPass
     - id: ReinforcedWallRustingVariationPass
+    - id: CutWireVariationPass
     - id: BasicPuddleMessVariationPass
       prob: 0.99
       orGroup: puddleMess

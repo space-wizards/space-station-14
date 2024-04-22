@@ -1,0 +1,59 @@
+- type: entity
+  parent: BasePlushie
+  id: PlushieBlackburna
+  name: Blackburn Plushie
+  description: A stuffed toy that resembles a typical non-altered blackburna.
+  components:
+    - type: Sprite
+      sprite: Caldera/objects/BKPlushie.rsi
+      state: plushie_Bkv1
+    - type: EmitSoundOnUse
+      sound:
+        path: /Audio/Items/Toys/fox.ogg
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/Items/Toys/fox.ogg
+    - type: EmitSoundOnActivate
+      sound:
+        path: /Audio/Items/Toys/fox.ogg
+    - type: EmitSoundOnTrigger
+      sound:
+        path: /Audio/Items/Toys/fox.ogg
+    - type: Food
+      requiresSpecialDigestion: true
+      useSound:
+        path: /Audio/Items/Toys/fox.ogg
+    - type: MeleeWeapon
+      wideAnimationRotation: 180
+      soundHit:
+        path: /Audio/Items/Toys/fox.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushiePlyushkina
+  name: Plyushkina Plushie
+  description: A stuffed toy that resembles a sub-species of blackburn created for trench clearing and cannon fodder.
+  components:
+    - type: Sprite
+      sprite: Caldera/objects/BKPlushie.rsi
+      state: plushie_Bkv2
+    - type: EmitSoundOnUse
+      sound:
+        path: /Audio/Items/Toys/fox.ogg
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/Items/Toys/fox.ogg
+    - type: EmitSoundOnActivate
+      sound:
+        path: /Audio/Items/Toys/fox.ogg
+    - type: EmitSoundOnTrigger
+      sound:
+        path: /Audio/Items/Toys/fox.ogg
+    - type: Food
+      requiresSpecialDigestion: true
+      useSound:
+        path: /Audio/Items/Toys/fox.ogg
+    - type: MeleeWeapon
+      wideAnimationRotation: 180
+      soundHit:
+        path: /Audio/Items/Toys/fox.ogg

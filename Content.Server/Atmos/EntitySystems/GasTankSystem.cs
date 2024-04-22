@@ -359,7 +359,8 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void OnAnalyzed(EntityUid uid, GasTankComponent component, GasAnalyzerScanEvent args)
         {
-            args.GasMixtures = new Dictionary<string, GasMixture?> { {Name(uid), component.Air} };
+            args.GasMixtures ??= new List<(string, GasMixture?)>();
+            args.GasMixtures.Add((Name(uid), component.Air));
         }
 
         private void OnGasTankPrice(EntityUid uid, GasTankComponent component, ref PriceCalculationEvent args)
