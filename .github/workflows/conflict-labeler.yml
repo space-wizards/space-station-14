@@ -1,15 +1,16 @@
 name: Check Merge Conflicts
 
 on:
-  push:
-    branches:
-      - master
-  pull_request_target:
-    types: [synchronize]
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
 
 jobs:
   Label:
-    if: github.actor != 'PJBot'
+    if: ( github.event.pull_request.draft == false ) && ( github.actor != 'PJBot' )
     runs-on: ubuntu-latest
     steps:
       - name: Check for Merge Conflicts
