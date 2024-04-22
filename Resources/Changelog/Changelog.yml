@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PoorMansDreams
-  changes:
-  - message: Buyable Janitorial Trolley!
-    type: Add
-  id: 5922
-  time: '2024-02-12T06:35:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25139
 - author: Plykiya
   changes:
   - message: Stun batons and stun prods now display their hits remaining.
@@ -3855,3 +3848,10 @@
   id: 6421
   time: '2024-04-22T12:18:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27222
+- author: Tayrtahn
+  changes:
+  - message: Ghosts can no longer trigger artifacts by examining them.
+    type: Fix
+  id: 6422
+  time: '2024-04-22T22:46:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27249
