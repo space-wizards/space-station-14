@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FungiFellow
-  changes:
-  - message: Lowered Reoccurence Delay for Ion Storm
-    type: Tweak
-  id: 5920
-  time: '2024-02-12T02:35:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25135
 - author: PoorMansDreams
   changes:
   - message: Ammo is now tipped!
@@ -3846,3 +3839,18 @@
   id: 6419
   time: '2024-04-22T08:58:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26851
+- author: eclips_e
+  changes:
+  - message: Slimepeople can now morph into a "geras"--a smaller slime form that can
+      pass under grilles, at the cost of dropping all of their inventory. They can
+      also be picked up with two hands and placed into duffelbags.
+    type: Add
+  - message: Slimepeople now have an internal 2x2 storage that they (and anyone around
+      them) can access. It is not dropped when morphing into a geras!
+    type: Add
+  - message: Slimepeople now have slightly increased regeneration and a slightly meatier
+      punch, but slower attacks.
+    type: Add
+  id: 6420
+  time: '2024-04-22T10:03:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/23425
