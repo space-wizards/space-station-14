@@ -30,13 +30,15 @@ namespace Content.Server.Atmos.EntitySystems
         private int _currentRunAtmosphereIndex;
         private bool _simulationPaused;
 
-        private TileAtmosphere GetOrNewTile(EntityUid owner, GridAtmosphereComponent atmosphere, Vector2i index)
+        private TileAtmosphere GetOrNewTile(EntityUid owner, GridAtmosphereComponent atmosphere, Vector2i index, bool invalidateNew = true)
         {
             var tile = atmosphere.Tiles.GetOrNew(index, out var existing);
             if (existing)
                 return tile;
 
-            atmosphere.InvalidatedCoords.Add(index);
+            if (invalidateNew)
+                atmosphere.InvalidatedCoords.Add(index);
+
             tile.GridIndex = owner;
             tile.GridIndices = index;
             return tile;
@@ -68,7 +70,7 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunInvalidatedTiles.EnsureCapacity(atmosphere.InvalidatedCoords.Count);
                 foreach (var indices in atmosphere.InvalidatedCoords)
                 {
-                    var tile = GetOrNewTile(uid, atmosphere, indices);
+                    var tile = GetOrNewTile(uid, atmosphere, indices, invalidateNew: false);
                     atmosphere.CurrentRunInvalidatedTiles.Enqueue(tile);
 
                     // Update tile.IsSpace and tile.MapAtmosphere, and tile.AirtightData.
