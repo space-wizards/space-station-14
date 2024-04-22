@@ -19,8 +19,8 @@
             </graphics:StyleBoxTexture>
         </PanelContainer.PanelOverride>
     </PanelContainer>
-    <BoxContainer Name="Contents" Orientation="Vertical" Margin="0 6 0 4">
-        <BoxContainer Name="StatusContents" Orientation="Vertical" VerticalExpand="True" />
+    <BoxContainer Name="Contents" Orientation="Vertical" Margin="0 6 0 4" RectClipContent="True">
+        <BoxContainer Name="StatusContents" Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Bottom" />
         <Control>
             <Label Name="NoItemLabel" ClipText="True" StyleClasses="ItemStatusNotHeld" Align="Left" Text="{Loc 'item-status-not-held'}" />
             <Label Name="ItemNameLabel" ClipText="True" StyleClasses="ItemStatus" Align="Left" Visible="False" />
