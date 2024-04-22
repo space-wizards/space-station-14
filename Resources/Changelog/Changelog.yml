@@ -1,47 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Food Service research is now roundstart.
-    type: Tweak
-  id: 5916
-  time: '2024-02-11T06:37:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25046
-- author: SlamBamActionman
-  changes:
-  - message: Added setting to toggle chat name color in Options.
-    type: Add
-  id: 5917
-  time: '2024-02-11T06:38:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24625
-- author: Emisse
-  changes:
-  - message: Ambuzol now requires zombie blood
-    type: Tweak
-  id: 5918
-  time: '2024-02-11T20:47:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25119
-- author: Plykiya
-  changes:
-  - message: Door remotes no longer have their 5G signals absorbed by mobs, machines,
-      or Ian's cute butt.
-    type: Fix
-  id: 5919
-  time: '2024-02-12T02:34:13.532550+00:00'
-  url: null
-- author: FungiFellow
-  changes:
-  - message: Lowered Reoccurence Delay for Ion Storm
-    type: Tweak
-  id: 5920
-  time: '2024-02-12T02:35:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25135
-- author: PoorMansDreams
-  changes:
-  - message: Ammo is now tipped!
-    type: Tweak
-  id: 5921
-  time: '2024-02-12T03:02:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25103
 - author: PoorMansDreams
   changes:
   - message: Buyable Janitorial Trolley!
@@ -3846,3 +3803,55 @@
   id: 6415
   time: '2024-04-21T16:09:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26545
+- author: deltanedas
+  changes:
+  - message: Flaming mice no longer completely engulf people they touch.
+    type: Tweak
+  id: 6416
+  time: '2024-04-22T08:42:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27202
+- author: Weax
+  changes:
+  - message: The CLF3 reaction now requires heating first before you can engulf chemistry
+      in fiery death.
+    type: Tweak
+  id: 6417
+  time: '2024-04-22T08:44:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27187
+- author: Potato1234_x
+  changes:
+  - message: Added Psicodine, Mannitol, Lipolicide and Happiness.
+    type: Add
+  id: 6418
+  time: '2024-04-22T08:45:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27134
+- author: Terraspark4941
+  changes:
+  - message: Updated the engineering section of the guidebook!
+    type: Tweak
+  id: 6419
+  time: '2024-04-22T08:58:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26851
+- author: eclips_e
+  changes:
+  - message: Slimepeople can now morph into a "geras"--a smaller slime form that can
+      pass under grilles, at the cost of dropping all of their inventory. They can
+      also be picked up with two hands and placed into duffelbags.
+    type: Add
+  - message: Slimepeople now have an internal 2x2 storage that they (and anyone around
+      them) can access. It is not dropped when morphing into a geras!
+    type: Add
+  - message: Slimepeople now have slightly increased regeneration and a slightly meatier
+      punch, but slower attacks.
+    type: Add
+  id: 6420
+  time: '2024-04-22T10:03:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/23425
+- author: FungiFellow
+  changes:
+  - message: Syndi-Cats are now 6TC, Insulated, Available to Syndies, Can Move in
+      Space, Open Doors, and Hit Harder
+    type: Tweak
+  id: 6421
+  time: '2024-04-22T12:18:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27222
