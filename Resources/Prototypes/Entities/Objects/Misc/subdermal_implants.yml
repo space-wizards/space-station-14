@@ -189,7 +189,6 @@
       implantAction: ActionActivateScramImplant
     - type: TriggerImplantAction
     - type: ScramImplant
-      teleportAttempts: 10 # small amount of risk of being teleported into space and lets you teleport off shuttles
 
 - type: entity
   parent: BaseSubdermalImplant

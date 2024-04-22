@@ -72,7 +72,7 @@ public sealed class FluidSpill
         var puddleOrigin = new Vector2i(0, 0);
         await server.WaitAssertion(() =>
         {
-            var grid = mapManager.GetGrid(gridId);
+            var grid = entityManager.GetComponent<MapGridComponent>(gridId);
             var solution = new Solution("Blood", FixedPoint2.New(100));
             var tileRef = grid.GetTileRef(puddleOrigin);
 #pragma warning disable NUnit2045 // Interdependent tests
@@ -86,7 +86,7 @@ public sealed class FluidSpill
 
         await server.WaitAssertion(() =>
         {
-            var grid = mapManager.GetGrid(gridId);
+            var grid = entityManager.GetComponent<MapGridComponent>(gridId);
             var puddle = GetPuddleEntity(entityManager, grid, puddleOrigin);
 
 #pragma warning disable NUnit2045 // Interdependent tests

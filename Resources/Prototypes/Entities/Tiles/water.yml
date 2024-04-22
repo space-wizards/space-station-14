@@ -32,7 +32,7 @@
         Quantity: 100
   - type: DrainableSolution
     solution: pool
-  - type: SlowContacts
+  - type: SpeedModifierContacts
     walkSpeedModifier: 0.5
     sprintSpeedModifier: 0.5
   - type: Physics

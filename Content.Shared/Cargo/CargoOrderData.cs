@@ -22,6 +22,11 @@ namespace Content.Shared.Cargo
         public readonly string ProductId;
 
         /// <summary>
+        /// Prototype Name
+        /// </summary>
+        public readonly string ProductName;
+
+        /// <summary>
         /// The number of items in the order. Not readonly, as it might change
         /// due to caps on the amount of orders that can be placed.
         /// </summary>
@@ -39,10 +44,11 @@ namespace Content.Shared.Cargo
         public  bool Approved => Approver is not null;
         public string? Approver;
 
-        public CargoOrderData(int orderId, string productId, int price, int amount, string requester, string reason)
+        public CargoOrderData(int orderId, string productId, string productName, int price, int amount, string requester, string reason)
         {
             OrderId = orderId;
             ProductId = productId;
+            ProductName = productName;
             Price = price;
             OrderQuantity = amount;
             Requester = requester;

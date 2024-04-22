@@ -33,9 +33,6 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-autolathe
-    layoutId: Autolathe
   - type: ActivatableUI
     key: enum.LatheUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -124,6 +121,7 @@
       - DrinkGlass
       - DrinkShotGlass
       - DrinkGlassCoupeShaped
+      - CustomDrinkJug
       - FoodPlate
       - FoodPlateSmall
       - FoodPlatePlastic
@@ -157,6 +155,7 @@
       - APCElectronics
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
+      - WallmountSubstationElectronics
       - CellRechargerCircuitboard
       - BorgChargerCircuitboard
       - WeaponCapacitorRechargerCircuitboard
@@ -177,15 +176,7 @@
        - MagazineBoxLightRifle
        - GrenadeBlast
     emagDynamicRecipes:
-      - CartridgePistolRubber
-      - CartridgeMagnumRubber
       - ShellShotgunBeanbag
-      - CartridgeRifleRubber
-      - CartridgeLightRifleRubber
-      - MagazineBoxPistolRubber
-      - MagazineBoxMagnumRubber
-      - MagazineBoxRifleRubber
-      - MagazineBoxLightRifleRubber
       - ShellShotgunIncendiary
       - CartridgePistolIncendiary
       - CartridgeMagnumIncendiary
@@ -247,9 +238,6 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
     board: ProtolatheMachineCircuitboard
-  - type: Wires
-    boardName: wires-board-name-protolathe
-    layoutId: Protolathe
   - type: MaterialStorage
     whitelist:
       tags:
@@ -301,7 +289,6 @@
       - WeaponPistolCHIMP
       - WeaponGauntletGorilla
       - SynthesizerInstrument
-      - RPED
       - ClothingShoesBootsMagSci
       - ClothingShoesBootsSpeed
       - NodeScanner
@@ -319,7 +306,10 @@
       - WelderExperimental
       - JawsOfLife
       - FauxTileAstroGrass
+      - FauxTileMowedAstroGrass
+      - FauxTileJungleAstroGrass
       - FauxTileAstroIce
+      - FauxTileAstroSnow
       - OreBagOfHolding
       - DeviceQuantumSpinInverter
   - type: EmagLatheRecipes
@@ -453,10 +443,11 @@
       - AnomalySynchronizerCircuitboard
       - APECircuitboard
       - ArtifactAnalyzerMachineCircuitboard
-      - TraversalDistorterMachineCircuitboard
       - ArtifactCrusherMachineCircuitboard
       - TelecomServerCircuitboard
       - MassMediaCircuitboard
+      - ReagentGrinderIndustrialMachineCircuitboard
+      - JukeboxCircuitBoard
   - type: MaterialStorage
     whitelist:
       tags:
@@ -655,6 +646,7 @@
       - ForensicPad
       - RiotShield
       - ShellShotgun
+      - ShellShotgunBeanbag
       - ShellShotgunSlug
       - ShellShotgunFlare
       - ShellTranquilizer
@@ -687,11 +679,6 @@
       - CartridgeMagnumUranium
       - CartridgePistolUranium
       - CartridgeRifleUranium
-      - CartridgeLightRifleRubber
-      - CartridgeMagnumRubber
-      - CartridgePistolRubber
-      - CartridgeRifleRubber
-      - ClothingEyesGlassesSecurity
       - ExplosivePayload
       - FlashPayload
       - HoloprojectorSecurity
@@ -703,14 +690,9 @@
       - MagazineBoxMagnumUranium
       - MagazineBoxPistolUranium
       - MagazineBoxRifleUranium
-      - MagazineBoxLightRifleRubber
-      - MagazineBoxMagnumRubber
-      - MagazineBoxPistolRubber
-      - MagazineBoxRifleRubber
       - MagazineGrenadeEmpty
       - GrenadeEMP
       - GrenadeFlash
-      - ShellShotgunBeanbag
       - ShellShotgunIncendiary
       - ShellShotgunUranium
       - Signaller
@@ -780,6 +762,8 @@
       whitelist:
         tags:
           - Sheet
+          - RawMaterial
+          - Ingot
 
 - type: entity
   id: MedicalTechFab
@@ -905,6 +889,8 @@
       - ClothingUniformJumpskirtDetective
       - ClothingUniformJumpsuitEngineering
       - ClothingUniformJumpskirtEngineering
+      - ClothingUniformJumpsuitSeniorEngineer
+      - ClothingUniformJumpskirtSeniorEngineer
       - ClothingHeadHatHopcap
       - ClothingUniformJumpsuitHoP
       - ClothingUniformJumpskirtHoP
@@ -930,11 +916,15 @@
       - ClothingHeadHatBeretSeniorPhysician
       - ClothingUniformJumpsuitMedicalDoctor
       - ClothingUniformJumpskirtMedicalDoctor
+      - ClothingUniformJumpsuitSeniorPhysician
+      - ClothingUniformJumpskirtSeniorPhysician
       - ClothingUniformJumpsuitMime
       - ClothingUniformJumpskirtMime
       - ClothingUniformJumpsuitMusician
       - ClothingUniformJumpsuitParamedic
       - ClothingUniformJumpskirtParamedic
+      - ClothingUniformJumpsuitSeniorOfficer
+      - ClothingUniformJumpskirtSeniorOfficer
       - ClothingUniformJumpsuitPrisoner
       - ClothingUniformJumpskirtPrisoner
       - ClothingHeadHatQMsoft
@@ -949,6 +939,8 @@
       - ClothingUniformJumpskirtResearchDirector
       - ClothingUniformJumpsuitScientist
       - ClothingUniformJumpskirtScientist
+      - ClothingUniformJumpsuitSeniorResearcher
+      - ClothingUniformJumpskirtSeniorResearcher
       - ClothingHeadHatBeretSecurity
       - ClothingUniformJumpsuitSec
       - ClothingUniformJumpskirtSec
@@ -965,7 +957,8 @@
       - ClothingOuterWinterCE
       - ClothingOuterWinterCMO
       - ClothingOuterWinterHoP
-      - ClothingOuterWinterHoS
+      - ClothingOuterWinterHoSUnarmored
+      - ClothingOuterWinterWardenUnarmored
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
       - ClothingNeckMantleCap

@@ -1,7 +1,6 @@
 using Content.Server.Antag;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
-using Content.Server.NPC.Systems;
 using Content.Server.Objectives;
 using Content.Server.PDA.Ringer;
 using Content.Server.Roles;
@@ -10,6 +9,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.NPC.Systems;
 using Content.Shared.Objectives.Components;
 using Content.Shared.PDA;
 using Content.Shared.Roles;

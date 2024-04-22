@@ -64,13 +64,19 @@ namespace Content.Client.Lobby
 
             _characterSetup.CloseButton.OnPressed += _ =>
             {
+                // Reset sliders etc.
+                _characterSetup?.UpdateControls();
+
+                var controller = _userInterfaceManager.GetUIController<LobbyUIController>();
+                controller.SetClothes(true);
+                controller.UpdateProfile();
                 _lobby.SwitchState(LobbyGui.LobbyGuiState.Default);
             };
 
             _characterSetup.SaveButton.OnPressed += _ =>
             {
                 _characterSetup.Save();
-                _lobby.CharacterPreview.UpdateUI();
+                _userInterfaceManager.GetUIController<LobbyUIController>().ReloadProfile();
             };
 
             LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
@@ -84,10 +90,6 @@ namespace Content.Client.Lobby
             _gameTicker.InfoBlobUpdated += UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
-
-            _preferencesManager.OnServerDataLoaded += PreferencesDataLoaded;
-
-            _lobby.CharacterPreview.UpdateUI();
         }
 
         protected override void Shutdown()
@@ -109,13 +111,6 @@ namespace Content.Client.Lobby
 
             _characterSetup?.Dispose();
             _characterSetup = null;
-
-            _preferencesManager.OnServerDataLoaded -= PreferencesDataLoaded;
-        }
-
-        private void PreferencesDataLoaded()
-        {
-            _lobby?.CharacterPreview.UpdateUI();
         }
 
         private void OnSetupPressed(BaseButton.ButtonEventArgs args)

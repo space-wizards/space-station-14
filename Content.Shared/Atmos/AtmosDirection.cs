@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Numerics;
+using System.Runtime.CompilerServices;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos
@@ -15,6 +16,8 @@ namespace Content.Shared.Atmos
         South   = 1 << 1,                   // 2
         East    = 1 << 2,                   // 4
         West    = 1 << 3,                   // 8
+        // If more directions are added, note that AtmosDirectionHelpers.ToOppositeIndex() expects opposite directions
+        // to come in pairs
 
         NorthEast = North | East,           // 5
         SouthEast = South | East,           // 6
@@ -40,6 +43,22 @@ namespace Content.Shared.Atmos
                 AtmosDirection.SouthWest => AtmosDirection.NorthEast,
                 _ => throw new ArgumentOutOfRangeException(nameof(direction))
             };
+        }
+
+        /// <summary>
+        /// This returns the index that corresponds to the opposite direction of some other direction index.
+        /// I.e., <c>1&lt;&lt;OppositeIndex(i) == (1&lt;&lt;i).GetOpposite()</c>
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int ToOppositeIndex(this int index)
+        {
+            return index ^ 1;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static AtmosDirection ToOppositeDir(this int index)
+        {
+            return (AtmosDirection) (1 << (index ^ 1));
         }
 
         public static Direction ToDirection(this AtmosDirection direction)
@@ -119,10 +138,11 @@ namespace Content.Shared.Atmos
             return angle.GetDir().ToAtmosDirection();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int ToIndex(this AtmosDirection direction)
         {
             // This will throw if you pass an invalid direction. Not this method's fault, but yours!
-            return (int) Math.Log2((int) direction);
+            return BitOperations.Log2((uint)direction);
         }
 
         public static AtmosDirection WithFlag(this AtmosDirection direction, AtmosDirection other)
