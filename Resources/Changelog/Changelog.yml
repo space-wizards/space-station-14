@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Food Service research is now roundstart.
-    type: Tweak
-  id: 5916
-  time: '2024-02-11T06:37:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25046
 - author: SlamBamActionman
   changes:
   - message: Added setting to toggle chat name color in Options.
@@ -3846,3 +3839,10 @@
   id: 6415
   time: '2024-04-21T16:09:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26545
+- author: deltanedas
+  changes:
+  - message: Flaming mice no longer completely engulf people they touch.
+    type: Tweak
+  id: 6416
+  time: '2024-04-22T08:42:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27202
