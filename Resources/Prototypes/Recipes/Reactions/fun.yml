@@ -173,7 +173,7 @@
 
 - type: reaction
   id: CreateEnrichedUranium
-  impact: High
+  impact: Low
   quantized: true
   reactants:
     Uranium-235:
