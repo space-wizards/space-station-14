@@ -218,11 +218,11 @@
       entity: MaterialGunpowder
 
 - type: reaction
-  id: lingium # Failing checks in the hot sun, i fought the code and the code won
+  id: Lingium # Failing checks in the hot sun, i fought the code and the code won
   reactants:
     UnstableMutagen:
       amount: 3
     Plasma: # Consumed in reaction: steady supply of plasma required for a jug of it
-      amount: 2 
+      amount: 2
   products:
-    lingium: 3
+    Lingium: 3

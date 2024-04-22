@@ -642,7 +642,7 @@
         probability: 0.8
 
 - type: reagent
-  id: lingium
+  id: Lingium
   name: reagent-name-lingium
   group: Toxins
   desc: reagent-desc-lingium
