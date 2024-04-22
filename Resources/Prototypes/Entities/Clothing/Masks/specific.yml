@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ClothingMaskBase
   id: ClothingMaskGasChameleon
   name: gas mask
@@ -20,6 +20,9 @@
       interfaces:
         - key: enum.ChameleonUiKey.Key
           type: ChameleonBoundUserInterface
+    - type: HideLayerClothing
+      slots:
+      - Snout
 
 - type: entity
   parent: ClothingMaskGasChameleon
@@ -27,4 +30,6 @@
   suffix: Voice Mask, Chameleon
   components:
     - type: VoiceMasker
-      default: ClothingMaskGas
+    - type: HideLayerClothing
+      slots:
+      - Snout

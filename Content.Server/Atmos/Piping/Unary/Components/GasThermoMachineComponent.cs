@@ -64,5 +64,11 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float EnergyLeakPercentage;
+
+        /// <summary>
+        /// If true, heat is exclusively exchanged with the local atmosphere instead of the inlet pipe air
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public bool Atmospheric = false;
     }
 }

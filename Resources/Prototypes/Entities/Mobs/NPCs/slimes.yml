@@ -58,7 +58,7 @@
     bloodlossDamage:
       types:
         Bloodloss:
-          1
+          0.5
     bloodlossHealDamage:
       types:
         Bloodloss:
@@ -80,7 +80,7 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaled: true
+        scaleByQuantity: true
         damage:
           types:
             Heat: 3

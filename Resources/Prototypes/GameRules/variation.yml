@@ -92,6 +92,7 @@
     - Gold
     - Silver
     - Sodium
+    - JuiceThatMakesYouWeh
 
 - type: weightedRandomFillSolution
   id: RandomFillTrashPuddleBloodbath
@@ -118,3 +119,15 @@
     tilesPerSpillAverage: 150
     tilesPerSpillStdDev: 10
     randomPuddleSolutionFill: RandomFillTrashPuddleBloodbath
+
+- type: entity
+  id: CutWireVariationPass
+  parent: BaseVariationPass
+  noSpawn: true
+  components:
+  - type: CutWireVariationPass
+    wireCutChance: 0.01
+    maxWiresCut: 20
+    blacklist:
+      components:
+      - ParticleAcceleratorControlBox

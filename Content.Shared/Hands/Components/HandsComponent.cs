@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Hands.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 [Access(typeof(SharedHandsSystem))]
 public sealed partial class HandsComponent : Component
 {
@@ -30,6 +30,12 @@ public sealed partial class HandsComponent : Component
     ///     List of hand-names. These are keys for <see cref="Hands"/>. The order of this list determines the order in which hands are iterated over.
     /// </summary>
     public List<string> SortedHands = new();
+
+    /// <summary>
+    ///     If true, the items in the hands won't be affected by explosions.
+    /// </summary>
+    [DataField]
+    public bool DisableExplosionRecursion = false;
 
     /// <summary>
     ///     The amount of throw impulse per distance the player is from the throw target.
@@ -62,6 +68,7 @@ public sealed partial class HandsComponent : Component
     ///     The time at which throws will be allowed again.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [AutoPausedField]
     public TimeSpan NextThrowTime;
 
     /// <summary>

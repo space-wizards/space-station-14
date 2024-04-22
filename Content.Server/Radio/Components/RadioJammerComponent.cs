@@ -16,5 +16,5 @@ public sealed partial class RadioJammerComponent : Component
     /// Power usage per second when enabled
     /// </summary>
     [DataField("wattage"), ViewVariables(VVAccess.ReadWrite)]
-    public float Wattage = 6f;
+    public float Wattage = 2f;
 }

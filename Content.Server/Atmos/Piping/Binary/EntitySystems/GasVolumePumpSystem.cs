@@ -13,6 +13,7 @@ using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
 using Content.Shared.Database;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -26,7 +27,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     public sealed class GasVolumePumpSystem : EntitySystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
@@ -71,11 +71,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnVolumePumpUpdated(EntityUid uid, GasVolumePumpComponent pump, ref AtmosDeviceUpdateEvent args)
         {
-            if (!pump.Enabled
-                || !TryComp(uid, out NodeContainerComponent? nodeContainer)
-                || !TryComp(uid, out AtmosDeviceComponent? device)
-                || !_nodeContainer.TryGetNode(nodeContainer, pump.InletName, out PipeNode? inlet)
-                || !_nodeContainer.TryGetNode(nodeContainer, pump.OutletName, out PipeNode? outlet))
+            if (!pump.Enabled ||
+                !_nodeContainer.TryGetNodes(uid, pump.InletName, pump.OutletName, out PipeNode? inlet, out PipeNode? outlet))
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 return;

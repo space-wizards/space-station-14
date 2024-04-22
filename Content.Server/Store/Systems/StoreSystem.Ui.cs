@@ -14,6 +14,7 @@ using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Store.Systems;
 
@@ -28,6 +29,7 @@ public sealed partial class StoreSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private void InitializeUi()
     {
@@ -96,13 +98,13 @@ public sealed partial class StoreSystem
         }
 
         //dictionary for all currencies, including 0 values for currencies on the whitelist
-        Dictionary<string, FixedPoint2> allCurrency = new();
+        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> allCurrency = new();
         foreach (var supported in component.CurrencyWhitelist)
         {
             allCurrency.Add(supported, FixedPoint2.Zero);
 
-            if (component.Balance.ContainsKey(supported))
-                allCurrency[supported] = component.Balance[supported];
+            if (component.Balance.TryGetValue(supported, out var value))
+                allCurrency[supported] = value;
         }
 
         // TODO: if multiple users are supposed to be able to interact with a single BUI & see different
@@ -165,8 +167,6 @@ public sealed partial class StoreSystem
 
         if (!IsOnStartingMap(uid, component))
             component.RefundAllowed = false;
-        else
-            component.RefundAllowed = true;
 
         //subtract the cash
         foreach (var (currency, value) in listing.Cost)
@@ -250,15 +250,17 @@ public sealed partial class StoreSystem
                 HandleRefundComp(uid, component, upgradeActionId.Value);
         }
 
-        //broadcast event
         if (listing.ProductEvent != null)
         {
-            RaiseLocalEvent(listing.ProductEvent);
+            if (!listing.RaiseProductEventOnUser)
+                RaiseLocalEvent(listing.ProductEvent);
+            else
+                RaiseLocalEvent(buyer, listing.ProductEvent);
         }
 
         //log dat shit.
         _admin.Add(LogType.StorePurchase, LogImpact.Low,
-            $"{ToPrettyString(buyer):player} purchased listing \"{Loc.GetString(listing.Name)}\" from {ToPrettyString(uid)}");
+            $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _prototypeManager)}\" from {ToPrettyString(uid)}");
 
         listing.PurchaseAmount++; //track how many times something has been purchased
         _audio.PlayEntity(component.BuySuccessSound, msg.Session, uid); //cha-ching!
@@ -323,7 +325,9 @@ public sealed partial class StoreSystem
         if (!component.RefundAllowed || component.BoughtEntities.Count == 0)
             return;
 
-        for (var i = component.BoughtEntities.Count; i >= 0; i--)
+        _admin.Add(LogType.StoreRefund, LogImpact.Low, $"{ToPrettyString(buyer):player} has refunded their purchases from {ToPrettyString(uid):store}");
+
+        for (var i = component.BoughtEntities.Count - 1; i >= 0; i--)
         {
             var purchase = component.BoughtEntities[i];
 
@@ -332,13 +336,15 @@ public sealed partial class StoreSystem
 
             component.BoughtEntities.RemoveAt(i);
 
-            if (_actions.TryGetActionData(purchase, out var actionComponent))
+            if (_actions.TryGetActionData(purchase, out var actionComponent, logError: false))
             {
                 _actionContainer.RemoveAction(purchase, actionComponent);
             }
 
             EntityManager.DeleteEntity(purchase);
         }
+
+        component.BoughtEntities.Clear();
 
         foreach (var (currency, value) in component.BalanceSpent)
         {

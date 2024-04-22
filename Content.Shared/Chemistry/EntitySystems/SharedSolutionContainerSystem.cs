@@ -13,6 +13,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -53,7 +55,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
     [Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
+    [Dependency] protected readonly SharedHandsSystem Hands = default!;
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
+    [Dependency] protected readonly MetaDataSystem MetaData = default!;
 
     public override void Initialize()
     {
@@ -133,6 +137,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <inheritdoc cref="TryGetSolution"/>
     public bool TryGetSolution(Entity<SolutionContainerManagerComponent?> container, string? name, [NotNullWhen(true)] out Entity<SolutionComponent>? entity)
     {
+        if (TryComp(container, out BlockSolutionAccessComponent? blocker))
+        {
+            entity = null;
+            return false;
+        }
+
         EntityUid uid;
         if (name is null)
             uid = container;
@@ -178,6 +188,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (!Resolve(container, ref container.Comp, logMissing: false))
             yield break;
 
+        if (HasComp<BlockSolutionAccessComponent>(container))
+            yield break;
+
         foreach (var name in container.Comp.Containers)
         {
             if (ContainerSystem.GetContainer(container, $"solution@{name}") is ContainerSlot slot && slot.ContainedEntity is { } solutionId)
@@ -212,8 +225,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         if (solution.GetPrimaryReagentId() is { } reagent)
             AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
-        else
-            AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, string.Empty, appearanceComponent);
     }
 
 
@@ -281,8 +292,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         if (solution.GetPrimaryReagentId() is { } reagent)
             AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
-        else
-            AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, string.Empty, appearanceComponent);
     }
 
     /// <summary>
@@ -724,6 +733,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
+        if (!CanSeeHiddenSolution(entity,args.Examiner))
+            return;
+
         var primaryReagent = solution.GetPrimaryReagentId();
 
         if (string.IsNullOrEmpty(primaryReagent?.Prototype))
@@ -820,6 +832,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
+        if (!CanSeeHiddenSolution(entity,args.User))
+            return;
+
         var target = args.Target;
         var user = args.User;
         var verb = new ExamineVerb()
@@ -867,6 +882,23 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
 
         return msg;
+    }
+
+    /// <summary>
+    /// Check if examinable solution requires you to hold the item in hand.
+    /// </summary>
+    private bool CanSeeHiddenSolution(Entity<ExaminableSolutionComponent> entity, EntityUid examiner)
+    {
+        // If not held-only then it's always visible.
+        if (!entity.Comp.HeldOnly)
+            return true;
+
+        if (TryComp(examiner, out HandsComponent? handsComp))
+        {
+            return Hands.IsHolding(examiner, entity, out _, handsComp);
+        }
+
+        return true;
     }
 
     #endregion Event Handlers

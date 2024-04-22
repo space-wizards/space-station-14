@@ -1,4 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Storage;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -13,6 +15,7 @@ public partial class InventorySystem : EntitySystem
     private void InitializeSlots()
     {
         SubscribeLocalEvent<InventoryComponent, ComponentInit>(OnInit);
+        SubscribeNetworkEvent<OpenSlotStorageNetworkMessage>(OnOpenSlotStorage);
 
         _vvm.GetTypeHandler<InventoryComponent>()
             .AddHandler(HandleViewVariablesSlots, ListViewVariablesSlots);
@@ -40,6 +43,17 @@ public partial class InventorySystem : EntitySystem
         }
     }
 
+    private void OnOpenSlotStorage(OpenSlotStorageNetworkMessage ev, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity is not { Valid: true } uid)
+            return;
+
+        if (TryGetSlotEntity(uid, ev.Slot, out var entityUid) && TryComp<StorageComponent>(entityUid, out var storageComponent))
+        {
+            _storageSystem.OpenStorageUI(entityUid.Value, uid, storageComponent);
+        }
+    }
+
     public bool TryGetSlotContainer(EntityUid uid, string slot, [NotNullWhen(true)] out ContainerSlot? containerSlot, [NotNullWhen(true)] out SlotDefinition? slotDefinition,
         InventoryComponent? inventory = null, ContainerManagerComponent? containerComp = null)
     {
@@ -51,7 +65,7 @@ public partial class InventorySystem : EntitySystem
         if (!TryGetSlot(uid, slot, out slotDefinition, inventory: inventory))
             return false;
 
-        if (!containerComp.TryGetContainer(slotDefinition.Name, out var container))
+        if (!_containerSystem.TryGetContainer(uid, slotDefinition.Name, out var container, containerComp))
         {
             if (inventory.LifeStage >= ComponentLifeStage.Initialized)
                 Log.Error($"Missing inventory container {slot} on entity {ToPrettyString(uid)}");

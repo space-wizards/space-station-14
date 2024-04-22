@@ -31,6 +31,7 @@ namespace Content.IntegrationTests.Tests
         {
             "CentComm",
             "Dart",
+            "NukieOutpost"
         };
 
         private static readonly string[] Grids =
@@ -38,7 +39,7 @@ namespace Content.IntegrationTests.Tests
             "/Maps/centcomm.yml",
             "/Maps/Shuttles/cargo.yml",
             "/Maps/Shuttles/emergency.yml",
-            "/Maps/infiltrator.yml",
+            "/Maps/Shuttles/infiltrator.yml",
         };
 
         private static readonly string[] GameMaps =
@@ -53,6 +54,7 @@ namespace Content.IntegrationTests.Tests
             "Bagel",
             "Origin",
             "CentComm",
+            "NukieOutpost",
             "Box",
             "Europa",
             "Saltern",
@@ -60,7 +62,9 @@ namespace Content.IntegrationTests.Tests
             "Marathon",
             "MeteorArena",
             "Atlas",
-            "Reach"    
+            "Reach",
+            "Train",
+            "Oasis"
         };
 
         /// <summary>
@@ -152,7 +156,10 @@ namespace Content.IntegrationTests.Tests
         [Test, TestCaseSource(nameof(GameMaps))]
         public async Task GameMapsLoadableTest(string mapProto)
         {
-            await using var pair = await PoolManager.GetServerClient();
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
+            {
+                Dirty = true // Stations spawn a bunch of nullspace entities and maps like centcomm.
+            });
             var server = pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -225,25 +232,13 @@ namespace Content.IntegrationTests.Tests
 
                 if (entManager.HasComponent<StationJobsComponent>(station))
                 {
-                    // Test that the map has valid latejoin spawn points
+                    // Test that the map has valid latejoin spawn points or container spawn points
                     if (!NoSpawnMaps.Contains(mapProto))
                     {
                         var lateSpawns = 0;
 
-                        var query = entManager.AllEntityQueryEnumerator<SpawnPointComponent>();
-                        while (query.MoveNext(out var uid, out var comp))
-                        {
-                            if (comp.SpawnType != SpawnPointType.LateJoin
-                            || !xformQuery.TryGetComponent(uid, out var xform)
-                            || xform.GridUid == null
-                            || !gridUids.Contains(xform.GridUid.Value))
-                            {
-                                continue;
-                            }
-
-                            lateSpawns++;
-                            break;
-                        }
+                        lateSpawns += GetCountLateSpawn<SpawnPointComponent>(gridUids, entManager);
+                        lateSpawns += GetCountLateSpawn<ContainerSpawnPointComponent>(gridUids, entManager);
 
                         Assert.That(lateSpawns, Is.GreaterThan(0), $"Found no latejoin spawn points on {mapProto}");
                     }
@@ -280,6 +275,32 @@ namespace Content.IntegrationTests.Tests
             await server.WaitRunTicks(1);
 
             await pair.CleanReturnAsync();
+        }
+
+
+
+        private static int GetCountLateSpawn<T>(List<EntityUid> gridUids, IEntityManager entManager)
+            where T : ISpawnPoint, IComponent
+        {
+            var resultCount = 0;
+            var queryPoint = entManager.AllEntityQueryEnumerator<T, TransformComponent>();
+#nullable enable
+            while (queryPoint.MoveNext(out T? comp, out var xform))
+            {
+                var spawner = (ISpawnPoint) comp;
+
+                if (spawner.SpawnType is not SpawnPointType.LateJoin
+                || xform.GridUid == null
+                || !gridUids.Contains(xform.GridUid.Value))
+                {
+                    continue;
+                }
+#nullable disable
+                resultCount++;
+                break;
+            }
+
+            return resultCount;
         }
 
         [Test]

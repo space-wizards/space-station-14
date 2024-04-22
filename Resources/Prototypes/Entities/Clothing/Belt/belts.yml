@@ -41,6 +41,7 @@
         - Geiger
         - TrayScanner
         - GasAnalyzer
+        - HandLabeler
   - type: ItemMapper
     mapLayers:
       drill:
@@ -223,6 +224,8 @@
         - Plunger
       components:
         - LightReplacer
+        - SmokeOnTrigger
+    maxItemSize: Large
   - type: ItemMapper
     mapLayers:
       bottle:
@@ -264,10 +267,12 @@
         - PillCanister
         - Radio
         - DiscreteHealthAnalyzer
+        - SurgeryTool
       components:
         - Hypospray
         - Injector
         - Pill
+        - HandLabeler
   - type: ItemMapper
     mapLayers:
       bottle:
@@ -304,6 +309,17 @@
   - type: Appearance
 
 - type: entity
+  parent: ClothingBeltMedical
+  id: ClothingBeltMedicalEMT
+  name: EMT belt
+  description: Perfect for holding various equipment for medical emergencies.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/emt.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/emt.rsi
+
+- type: entity
   parent: ClothingBeltStorageBase
   id: ClothingBeltPlant
   name: botanical belt
@@ -329,6 +345,7 @@
       components:
         - Seed
         - Smokable
+        - HandLabeler
   - type: ItemMapper
     mapLayers:
       hatchet:

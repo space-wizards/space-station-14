@@ -22,7 +22,6 @@ public sealed class WeatherSystem : SharedWeatherSystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
@@ -125,9 +124,9 @@ public sealed class WeatherSystem : SharedWeatherSystem
         comp.Occlusion = occlusion;
     }
 
-    protected override bool SetState(WeatherState state, WeatherComponent comp, WeatherData weather, WeatherPrototype weatherProto)
+    protected override bool SetState(EntityUid uid, WeatherState state, WeatherComponent comp, WeatherData weather, WeatherPrototype weatherProto)
     {
-        if (!base.SetState(state, comp, weather, weatherProto))
+        if (!base.SetState(uid, state, comp, weather, weatherProto))
             return false;
 
         if (!Timing.IsFirstTimePredicted)
@@ -165,7 +164,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 continue;
 
             // New weather
-            StartWeather(component, ProtoMan.Index<WeatherPrototype>(proto), weather.EndTime);
+            StartWeather(uid, component, ProtoMan.Index<WeatherPrototype>(proto), weather.EndTime);
         }
     }
 }

@@ -132,3 +132,9 @@
   license: "CC0-1.0"
   copyright: "Audio is recorded/created by KFerentchak 'FreeSound.org'. The original audio was trimmed and renamed"
   source: "https://freesound.org/people/KFerentchak/sounds/235912/"
+  
+- files: ["nymph_chirp.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from ParadiseSS13"
+  source: "https://github.com/ParadiseSS13/Paradise/commit/a34f1054cef5a44a67fdac3b67b811137c6071dd"
+  
