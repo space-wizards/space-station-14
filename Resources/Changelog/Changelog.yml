@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: PoorMansDreams
   changes:
-  - message: Ammo is now tipped!
-    type: Tweak
-  id: 5921
-  time: '2024-02-12T03:02:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25103
-- author: PoorMansDreams
-  changes:
   - message: Buyable Janitorial Trolley!
     type: Add
   id: 5922
@@ -3854,3 +3847,11 @@
   id: 6420
   time: '2024-04-22T10:03:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/23425
+- author: FungiFellow
+  changes:
+  - message: Syndi-Cats are now 6TC, Insulated, Available to Syndies, Can Move in
+      Space, Open Doors, and Hit Harder
+    type: Tweak
+  id: 6421
+  time: '2024-04-22T12:18:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27222
