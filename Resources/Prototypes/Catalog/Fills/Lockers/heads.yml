@@ -191,7 +191,7 @@
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
       - id: CloningPodMachineCircuitboard
-      - id: BaseMachineCircuitboard
+      - id: MedicalScannerMachineCircuitboard
       - id: CloningConsoleComputerCircuitboard
 
 - type: entity
@@ -214,7 +214,7 @@
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
       - id: CloningPodMachineCircuitboard
-      - id: BaseMachineCircuitboard
+      - id: MedicalScannerMachineCircuitboard
       - id: CloningConsoleComputerCircuitboard
 
 - type: entity
