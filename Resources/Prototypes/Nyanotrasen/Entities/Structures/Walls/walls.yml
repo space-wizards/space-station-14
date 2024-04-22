@@ -34,8 +34,9 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound:
-      collection: MetalBreak
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
   - type: IconSmooth
     key: walls
     base: paperwall
