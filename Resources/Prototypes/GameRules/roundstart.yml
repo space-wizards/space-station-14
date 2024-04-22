@@ -74,6 +74,15 @@
     faction: Syndicate
 
 - type: entity
+  id: Wizard
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: GameRule
+    minPlayers: 20
+  - type: WizardRule
+
+- type: entity
   id: Pirates
   parent: BaseGameRule
   noSpawn: true

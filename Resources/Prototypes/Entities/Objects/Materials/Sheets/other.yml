@@ -219,10 +219,12 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Uranium
-          Quantity: 8
-        - ReagentId: Radium
-          Quantity: 2
+        - ReagentId: Uranium-235
+          Quantity: 2.5
+        - ReagentId: Uranium-238
+          Quantity: 7
+        - ReagentId: Uranium-234
+          Quantity: 0.5
         canReact: false
 
 - type: entity

@@ -1,7 +1,7 @@
 - type: species
   id: Gingerbread
-  name: species-name-human
-  roundStart: false
+  name: Gingerbread
+  roundStart: true
   prototype: MobGingerbread
   sprites: MobGingerbreadSprites
   markingLimits: MobHumanMarkingLimits
@@ -13,6 +13,7 @@
   id: MobGingerbreadSprites
   sprites:
     Head: MobGingerbreadHead
+    FacialHair: MobHumanoidAnyMarking
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
     Chest: MobGingerbreadTorso
@@ -25,6 +26,7 @@
     RLeg: MobGingerbreadRLeg
     LFoot: MobGingerbreadLFoot
     RFoot: MobGingerbreadRFoot
+  
 
 - type: humanoidBaseSprite
   id: MobGingerbreadEyes

@@ -129,9 +129,11 @@ chat-speech-verb-name-monkey = Monkey
 chat-speech-verb-monkey-1 = chimpers
 chat-speech-verb-monkey-2 = screeches
 
+
 chat-speech-verb-name-cluwne = Cluwne
 
 chat-speech-verb-name-parrot = Parrot
+
 chat-speech-verb-parrot-1 = squawks
 chat-speech-verb-parrot-2 = tweets
 chat-speech-verb-parrot-3 = chirps

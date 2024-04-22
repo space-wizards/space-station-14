@@ -131,6 +131,10 @@
         - id: PlushieCarp
           prob: 0.2
           orGroup: carp
+        - id: PlushieBlackburna
+          prob: 0.05
+        - id: PlushiePlyushkina
+          prob: 0.05
         - id: PlushieHolocarp
           prob: 0.05
           orGroup: carp

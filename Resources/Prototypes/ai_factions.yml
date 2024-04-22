@@ -83,3 +83,12 @@
   - Zombie
   - SimpleHostile
   - Dragon
+
+- type: npcFaction
+  id: WizardFederation
+  hostile:
+  - NanoTrasen
+  - SimpleHostile
+  - Xeno
+  - PetsNT
+  - Zombie
