@@ -427,12 +427,12 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             foreach (var hand in container.GetButtons())
             {
 
-                if (!_entities.TryGetComponent(hand.Entity, out UseDelayComponent? useDelay) ||
-                    !_useDelay.TryGetDelayInfo((hand.Entity.Value, useDelay), out var delay))
+                if (!_entities.TryGetComponent(hand.Entity, out UseDelayComponent? useDelay))
                 {
                     hand.CooldownDisplay.Visible = false;
                     continue;
                 }
+                var delay = _useDelay.GetLastEndingDelay((hand.Entity.Value, useDelay));
 
                 hand.CooldownDisplay.Visible = true;
                 hand.CooldownDisplay.FromTime(delay.StartTime, delay.EndTime);

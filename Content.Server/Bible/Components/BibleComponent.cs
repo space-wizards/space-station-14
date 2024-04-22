@@ -34,6 +34,9 @@ namespace Content.Server.Bible.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float FailChance = 0.34f;
 
+        [DataField]
+        public TimeSpan Cooldown = TimeSpan.FromSeconds(10);
+
         [DataField("sizzleSound")]
         public SoundSpecifier SizzleSoundPath = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
         [DataField("healSound")]
