@@ -62,6 +62,15 @@
     path: /Audio/Voice/Talk/Silicon/borg_exclaim.ogg
 
 - type: speechSounds
+  id: SyndieBorg
+  saySound:
+    path: /Audio/Voice/Talk/Silicon/syndieborg.ogg
+  askSound:
+    path: /Audio/Voice/Talk/Silicon/syndieborg_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/Silicon/syndieborg_exclaim.ogg
+
+- type: speechSounds
   id: Pai
   saySound:
     path: /Audio/Voice/Talk/pai.ogg

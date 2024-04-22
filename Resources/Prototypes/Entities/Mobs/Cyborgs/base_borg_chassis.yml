@@ -139,7 +139,7 @@
       collection: FootstepBorg
       params:
         variation: 0.07
-        volume: -8
+        volume: -12
   - type: Construction
     graph: Cyborg
     containers:
@@ -262,6 +262,8 @@
     - Syndicate
   - type: ShowSyndicateIcons
   - type: MovementAlwaysTouching
+  - type: Speech
+    speechSounds: SyndieBorg
   - type: Vocal
     sounds:
       Unsexed: UnisexSiliconSyndicate
