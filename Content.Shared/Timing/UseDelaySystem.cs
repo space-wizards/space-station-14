@@ -35,7 +35,7 @@ public sealed class UseDelaySystem : EntitySystem
     }
 
     /// <summary>
-    /// Adds an additional delay to by tracked by this component
+    /// Adds an additional delay to be tracked by this component.
     /// </summary>
     /// <param name="id">identifier used to refer to the delay in other methods</param>
     /// <param name="length">duration of the delay</param>

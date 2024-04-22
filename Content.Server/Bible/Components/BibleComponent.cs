@@ -34,6 +34,9 @@ namespace Content.Server.Bible.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float FailChance = 0.34f;
 
+        /// <summary>
+        /// How long to wait after using the healing power before it can be used again.
+        /// </summary>
         [DataField]
         public TimeSpan Cooldown = TimeSpan.FromSeconds(10);
 

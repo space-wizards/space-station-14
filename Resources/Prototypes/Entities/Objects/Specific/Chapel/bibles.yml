@@ -5,7 +5,7 @@
   id: Bible
   components:
   - type: UseDelay
-    delay: 0
+    delay: 0 # For storage cooldown
   - type: Bible
     damage:
       groups:
