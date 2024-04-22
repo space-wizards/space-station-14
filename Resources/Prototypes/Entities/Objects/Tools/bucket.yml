@@ -51,6 +51,8 @@
     solution: bucket
   - type: DrainableSolution
     solution: bucket
+  - type: SolutionItemStatus
+    solution: bucket
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 3

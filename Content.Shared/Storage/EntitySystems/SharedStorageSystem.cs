@@ -232,9 +232,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!_ui.IsUiOpen(uid, args.UiKey))
         {
             UpdateAppearance((uid, storageComp, null));
-
-            if (storageComp.StorageCloseSound is not null)
-                Audio.PlayPredicted(storageComp.StorageCloseSound, uid, args.Actor);
+            Audio.PlayPredicted(storageComp.StorageCloseSound, uid, args.Actor);
         }
     }
 
@@ -272,13 +270,13 @@ public abstract class SharedStorageSystem : EntitySystem
 
         if (uiOpen)
         {
-            verb.Text = Loc.GetString("verb-common-close-ui");
+            verb.Text = Loc.GetString("comp-storage-verb-close-storage");
             verb.Icon = new SpriteSpecifier.Texture(
                 new("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
         }
         else
         {
-            verb.Text = Loc.GetString("verb-common-open-ui");
+            verb.Text = Loc.GetString("comp-storage-verb-open-storage");
             verb.Icon = new SpriteSpecifier.Texture(
                 new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
         }

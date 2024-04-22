@@ -2731,6 +2731,16 @@
   - type: NpcFactionMember
     factions:
     - Syndicate
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 10
+        Structural: 10
+  - type: Insulated
+  - type: Tag
+    tags:
+      - DoorBumpOpener
+  - type: MovementAlwaysTouching
 
 - type: entity
   name: space cat
