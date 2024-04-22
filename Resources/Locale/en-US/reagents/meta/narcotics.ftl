@@ -41,4 +41,4 @@ reagent-name-tear-gas = tear gas
 reagent-desc-tear-gas = A chemical that causes severe irritation and crying, commonly used in riot control.
 
 reagent-name-happiness = happiness
-reagent-desc-happiness = Fills you with ecstasic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings.
+reagent-desc-happiness = Fills you with ecstatic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings.
