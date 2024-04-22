@@ -1874,7 +1874,7 @@
   name: pyrotton boll
   description: This will probably set you on fire.
   id: PyrottonBol
-  parent: ProduceBase
+  parent: FoodProduceBase
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pyrotton.rsi
