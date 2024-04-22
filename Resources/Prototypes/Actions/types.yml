@@ -162,6 +162,7 @@
   - type: InstantAction
     charges: 1
     itemIconStyle: BigAction
+    useDelay: 10 # prevent spam
     priority: -20
     icon:
       sprite: Mobs/Aliens/slimes.rsi
