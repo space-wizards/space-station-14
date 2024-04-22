@@ -177,7 +177,6 @@
   noSpawn: true
   components:
   - type: InstantAction
-    charges: 1
     itemIconStyle: BigAction
     useDelay: 10 # prevent spam
     priority: -20

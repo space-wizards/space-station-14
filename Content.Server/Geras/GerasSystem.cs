@@ -36,5 +36,6 @@ public sealed class GerasSystem : SharedGerasSystem
 
         _popupSystem.PopupEntity(Loc.GetString("geras-popup-morph-message-others", ("entity", ent.Value)), ent.Value, Filter.PvsExcept(ent.Value), true);
         _popupSystem.PopupEntity(Loc.GetString("geras-popup-morph-message-user"), ent.Value, ent.Value);
+        args.Handled = true;
     }
 }
