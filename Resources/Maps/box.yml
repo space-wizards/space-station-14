@@ -143100,14 +143100,14 @@ entities:
       parent: 8364
 - proto: SpawnPointBlueshieldOfficer
   entities:
-  - uid: 643634643
+  - uid: 121464342
     components:
     - type: Transform
       pos: 6.5,-16.5
       parent: 8364
 - proto: SpawnPointNanotrasenRepresentative
   entities:
-  - uid: 4214643364
+  - uid: 42146433
     components:
     - type: Transform
       pos: 6.5,-16.5
