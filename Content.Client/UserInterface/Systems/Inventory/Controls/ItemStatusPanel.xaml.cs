@@ -44,6 +44,7 @@ public sealed partial class ItemStatusPanel : Control
 
         switch (location)
         {
+            case HandLocation.Middle:
             case HandLocation.Right:
                 texture = Theme.ResolveTexture("item_status_right");
                 textureHighlight = Theme.ResolveTexture("item_status_right_highlight");
@@ -51,7 +52,6 @@ public sealed partial class ItemStatusPanel : Control
                 flat = StyleBox.Margin.Right;
                 contentMargin = MarginFromThemeColor("_itemstatus_content_margin_right");
                 break;
-            case HandLocation.Middle:
             case HandLocation.Left:
                 texture = Theme.ResolveTexture("item_status_left");
                 textureHighlight = Theme.ResolveTexture("item_status_left_highlight");
