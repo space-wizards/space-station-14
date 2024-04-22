@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices.JavaScript;
 using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Components;
@@ -44,7 +43,6 @@ using Content.Shared.Slippery;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
-using Npgsql.Replication.PgOutput.Messages;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
