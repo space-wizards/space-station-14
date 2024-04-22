@@ -177,11 +177,11 @@
   quantized: true
   reactants:
     Uranium-235:
-      amount: 55
+      amount: 11
     Fluorine:
-      amount: 35
+      amount: 7
     Uranium-234:
-      amount: 10
+      amount: 2
   effects:
     - !type:CreateEntityReactionEffect
       entity: EnrichedUranium
