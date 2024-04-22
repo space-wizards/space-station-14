@@ -271,7 +271,6 @@
   - type: Construction
     graph: ImprovisedNukeCraft
     node: evilbombdone
-    defaultTarget: evilbombpainted
   - type: Fixtures
     fixtures:
       fix1:
