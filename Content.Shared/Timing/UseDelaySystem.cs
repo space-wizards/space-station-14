@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Timing;
@@ -7,53 +8,125 @@ public sealed class UseDelaySystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
 
-    public void SetDelay(Entity<UseDelayComponent> ent, TimeSpan delay)
+    private const string DefaultId = "default";
+
+    public override void Initialize()
     {
-        if (ent.Comp.Delay == delay)
+        base.Initialize();
+
+        SubscribeLocalEvent<UseDelayComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<UseDelayComponent, EntityUnpausedEvent>(OnUnpaused);
+    }
+
+    private void OnMapInit(Entity<UseDelayComponent> ent, ref MapInitEvent args)
+    {
+        // Set default delay length from the prototype
+        // This makes it easier for simple use cases that only need a single delay
+        SetLength(ent, ent.Comp.Delay);
+    }
+
+    private void OnUnpaused(Entity<UseDelayComponent> ent, ref EntityUnpausedEvent args)
+    {
+        foreach (var entry in ent.Comp.Delays.Values)
+        {
+            entry.EndTime += args.PausedTime;
+        }
+    }
+
+    /// <summary>
+    /// Sets the length of the delay with the specified ID.
+    /// </summary>
+    public void SetLength(Entity<UseDelayComponent> ent, TimeSpan length, string id = DefaultId)
+    {
+        if (ent.Comp.Delays.TryGetValue(id, out var entry))
+        {
+            if (entry.Length == length)
+                return;
+
+            entry.Length = length;
+        }
+        else
+        {
+            ent.Comp.Delays.Add(id, new UseDelayInfo(length, default, default));
+        }
+        Dirty(ent);
+    }
+
+    /// <summary>
+    /// Returns true if the entity has a currently active UseDelay with the specified ID.
+    /// </summary>
+    public bool IsDelayed(Entity<UseDelayComponent> ent, string id = DefaultId)
+    {
+        if (!ent.Comp.Delays.TryGetValue(id, out var entry))
+            return false;
+
+        return entry.EndTime >= _gameTiming.CurTime;
+    }
+
+    /// <summary>
+    /// Cancels the delay with the specified ID.
+    /// </summary>
+    public void CancelDelay(Entity<UseDelayComponent> ent, string id = DefaultId)
+    {
+        if (!ent.Comp.Delays.TryGetValue(id, out var entry))
             return;
 
-        ent.Comp.Delay = delay;
+        entry.EndTime = _gameTiming.CurTime;
         Dirty(ent);
     }
 
     /// <summary>
-    /// Returns true if the entity has a currently active UseDelay.
+    /// Tries to get data about the delay with the specified ID. See <see cref="UseDelayInfo"/>.
     /// </summary>
-    public bool IsDelayed(Entity<UseDelayComponent> ent)
+    /// <param name="ent"></param>
+    /// <param name="info"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public bool TryGetDelayInfo(Entity<UseDelayComponent> ent, [NotNullWhen(true)] out UseDelayInfo? info, string id = DefaultId)
     {
-        return ent.Comp.DelayEndTime >= _gameTiming.CurTime;
+        return ent.Comp.Delays.TryGetValue(id, out info);
     }
 
     /// <summary>
-    /// Cancels the current delay.
+    /// Resets the delay with the specified ID for this entity if possible.
     /// </summary>
-    public void CancelDelay(Entity<UseDelayComponent> ent)
+    /// <param name="checkDelayed">Check if the entity has an ongoing delay with the specified ID.
+    /// If it does, return false and don't reset it.
+    /// Otherwise reset it and return true.</param>
+    public bool TryResetDelay(Entity<UseDelayComponent> ent, bool checkDelayed = false, string id = DefaultId)
     {
-        ent.Comp.DelayEndTime = _gameTiming.CurTime;
-        Dirty(ent);
-    }
+        if (checkDelayed && IsDelayed(ent, id))
+            return false;
 
-    /// <summary>
-    /// Resets the UseDelay entirely for this entity if possible.
-    /// </summary>
-    /// <param name="checkDelayed">Check if the entity has an ongoing delay, return false if it does, return true if it does not.</param>
-    public bool TryResetDelay(Entity<UseDelayComponent> ent, bool checkDelayed = false)
-    {
-        if (checkDelayed && IsDelayed(ent))
+        if (!ent.Comp.Delays.TryGetValue(id, out var entry))
             return false;
 
         var curTime = _gameTiming.CurTime;
-        ent.Comp.DelayStartTime = curTime;
-        ent.Comp.DelayEndTime = curTime - _metadata.GetPauseTime(ent) + ent.Comp.Delay;
+        entry.StartTime = curTime;
+        entry.EndTime = curTime - _metadata.GetPauseTime(ent) + entry.Length;
         Dirty(ent);
         return true;
     }
 
-    public bool TryResetDelay(EntityUid uid, bool checkDelayed = false, UseDelayComponent? component = null)
+    public bool TryResetDelay(EntityUid uid, bool checkDelayed = false, UseDelayComponent? component = null, string id = DefaultId)
     {
         if (!Resolve(uid, ref component, false))
             return false;
 
-        return TryResetDelay((uid, component), checkDelayed);
+        return TryResetDelay((uid, component), checkDelayed, id);
+    }
+
+    /// <summary>
+    /// Resets all delays on the entity.
+    /// </summary>
+    public void ResetAllDelays(Entity<UseDelayComponent> ent)
+    {
+        var curTime = _gameTiming.CurTime;
+        foreach (var entry in ent.Comp.Delays.Values)
+        {
+            entry.StartTime = curTime;
+            entry.EndTime = curTime - _metadata.GetPauseTime(ent) + entry.Length;
+        }
+        Dirty(ent);
     }
 }
