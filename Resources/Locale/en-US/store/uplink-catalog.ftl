@@ -424,3 +424,6 @@ uplink-barber-scissors-desc = A good tool to give your fellow agent a nice hairc
 
 uplink-backpack-syndicate-name = Syndicate backpack
 uplink-backpack-syndicate-desc = Lightweight explosion-proof а backpack for holding various traitor goods
+
+uplink-sunglasses-sechud-name = Syndicate SecShades
+uplink-sunglasses-sechud-desc = A pair of sunglasses with a sechud discreetly integrated.
