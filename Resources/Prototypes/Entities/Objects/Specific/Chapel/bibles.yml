@@ -5,7 +5,7 @@
   id: Bible
   components:
   - type: UseDelay
-    delay: 10
+    delay: 10.0
   - type: Bible
     damage:
       groups:
