@@ -83,7 +83,6 @@
     sprite: Clothing/Shoes/Misc/snakeskin.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Misc/snakeskin.rsi
-  - type: NoSlip
 
 - type: entity
   parent: [ClothingShoesBase, PowerCellSlotSmallItem]
