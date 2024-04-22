@@ -12,6 +12,5 @@
 - type: startingGear
   id: PassengerGear
   equipment:
-    shoes: ClothingShoesColorBlack
     id: PassengerPDA
     ears: ClothingHeadsetGrey

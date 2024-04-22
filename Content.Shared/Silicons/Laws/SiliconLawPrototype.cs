@@ -58,7 +58,7 @@ public partial class SiliconLaw : IComparable<SiliconLaw>
 /// </summary>
 [Prototype("siliconLaw")]
 [Serializable, NetSerializable]
-public sealed class SiliconLawPrototype : SiliconLaw, IPrototype
+public sealed partial class SiliconLawPrototype : SiliconLaw, IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]

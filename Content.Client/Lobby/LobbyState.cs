@@ -64,13 +64,19 @@ namespace Content.Client.Lobby
 
             _characterSetup.CloseButton.OnPressed += _ =>
             {
+                // Reset sliders etc.
+                _characterSetup?.UpdateControls();
+
+                var controller = _userInterfaceManager.GetUIController<LobbyUIController>();
+                controller.SetClothes(true);
+                controller.UpdateProfile();
                 _lobby.SwitchState(LobbyGui.LobbyGuiState.Default);
             };
 
             _characterSetup.SaveButton.OnPressed += _ =>
             {
                 _characterSetup.Save();
-                _userInterfaceManager.GetUIController<LobbyUIController>().UpdateCharacterUI();
+                _userInterfaceManager.GetUIController<LobbyUIController>().ReloadProfile();
             };
 
             LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);

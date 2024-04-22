@@ -21,7 +21,8 @@
   equipment:
     mask: ClothingMaskGas
 
-# Jumpsuit
+# Jumpsuits
+# Grey
 - type: loadout
   id: GreyJumpsuit
   equipment: GreyJumpsuit
@@ -39,6 +40,32 @@
   id: GreyJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorGrey
+
+# Rainbow
+- type: loadout
+  id: RainbowJumpsuit
+  equipment: RainbowJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: GreyTider
+
+- type: startingGear
+  id: RainbowJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformColorRainbow
+
+# Ancient
+- type: loadout
+  id: AncientJumpsuit
+  equipment: AncientJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: GreyTider
+
+- type: startingGear
+  id: AncientJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAncient
 
 # Back
 - type: loadout
@@ -80,3 +107,32 @@
   id: FingerlessInsulatedGloves
   equipment:
     gloves: ClothingHandsGlovesFingerlessInsulated
+
+# Outerclothing
+- type: loadout
+  id: PassengerWintercoat
+  equipment: PassengerWintercoat
+
+- type: startingGear
+  id: PassengerWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterCoat
+
+# Shoes
+- type: loadout
+  id: BlackShoes
+  equipment: BlackShoes
+
+- type: startingGear
+  id: BlackShoes
+  equipment:
+    shoes: ClothingShoesColorBlack
+
+- type: loadout
+  id: WinterBoots
+  equipment: WinterBoots
+
+- type: startingGear
+  id: WinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinter
