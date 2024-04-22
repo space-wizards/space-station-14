@@ -146,7 +146,7 @@ namespace Content.Server.PDA
             if (!Resolve(uid, ref pda, false))
                 return;
 
-            if (!_ui.IsUiOpen(uid, PdaUiKey.Key))
+            if (!_ui.HasUi(uid, PdaUiKey.Key))
                 return;
 
             var address = GetDeviceNetAddress(uid);

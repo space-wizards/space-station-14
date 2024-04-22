@@ -129,7 +129,7 @@ public sealed class AmeControllerSystem : EntitySystem
         if (!Resolve(uid, ref controller))
             return;
 
-        if (!_userInterfaceSystem.IsUiOpen(uid, AmeControllerUiKey.Key))
+        if (!_userInterfaceSystem.HasUi(uid, AmeControllerUiKey.Key))
             return;
 
         var state = GetUiState(uid, controller);

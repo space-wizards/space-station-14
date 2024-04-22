@@ -61,7 +61,7 @@ namespace Content.Server.Access.Systems
 
         private void AfterUIOpen(EntityUid uid, AgentIDCardComponent component, AfterActivatableUIOpenEvent args)
         {
-            if (!_uiSystem.IsUiOpen(uid, AgentIDCardUiKey.Key))
+            if (!_uiSystem.HasUi(uid, AgentIDCardUiKey.Key))
                 return;
 
             if (!TryComp<IdCardComponent>(uid, out var idCard))
