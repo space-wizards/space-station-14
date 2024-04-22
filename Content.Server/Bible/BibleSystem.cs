@@ -34,13 +34,10 @@ namespace Content.Server.Bible
         [Dependency] private readonly UseDelaySystem _delay = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-        private const string UseDelayID = "bible";
-
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<BibleComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<BibleComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<SummonableComponent, GetVerbsEvent<AlternativeVerb>>(AddSummonVerb);
             SubscribeLocalEvent<SummonableComponent, GetItemActionsEvent>(GetSummonAction);
@@ -51,12 +48,6 @@ namespace Content.Server.Bible
 
         private readonly Queue<EntityUid> _addQueue = new();
         private readonly Queue<EntityUid> _remQueue = new();
-
-        private void OnMapInit(Entity<BibleComponent> ent, ref MapInitEvent args)
-        {
-            if (TryComp<UseDelayComponent>(ent.Owner, out var useDelay))
-                _delay.TryRegisterDelay((ent, useDelay), UseDelayID, ent.Comp.Cooldown);
-        }
 
         /// <summary>
         /// This handles familiar respawning.
@@ -105,7 +96,7 @@ namespace Content.Server.Bible
             if (!args.CanReach)
                 return;
 
-            if (!TryComp(uid, out UseDelayComponent? useDelay) || _delay.IsDelayed((uid, useDelay), UseDelayID))
+            if (!TryComp(uid, out UseDelayComponent? useDelay) || _delay.IsDelayed((uid, useDelay)))
                 return;
 
             if (args.Target == null || args.Target == args.User || !_mobStateSystem.IsAlive(args.Target.Value))
@@ -119,7 +110,7 @@ namespace Content.Server.Bible
 
                 _audio.PlayPvs(component.SizzleSoundPath, args.User);
                 _damageableSystem.TryChangeDamage(args.User, component.DamageOnUntrainedUse, true, origin: uid);
-                _delay.TryResetDelay((uid, useDelay), id: UseDelayID);
+                _delay.TryResetDelay((uid, useDelay));
 
                 return;
             }
@@ -137,7 +128,7 @@ namespace Content.Server.Bible
 
                     _audio.PlayPvs("/Audio/Effects/hit_kick.ogg", args.User);
                     _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true, origin: uid);
-                    _delay.TryResetDelay((uid, useDelay), id: UseDelayID);
+                    _delay.TryResetDelay((uid, useDelay));
                     return;
                 }
             }
@@ -160,7 +151,7 @@ namespace Content.Server.Bible
                 var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-self", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
                 _popupSystem.PopupEntity(selfMessage, args.User, args.User, PopupType.Large);
                 _audio.PlayPvs(component.HealSoundPath, args.User);
-                _delay.TryResetDelay((uid, useDelay), id: UseDelayID);
+                _delay.TryResetDelay((uid, useDelay));
             }
         }
 
