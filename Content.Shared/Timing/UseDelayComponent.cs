@@ -30,7 +30,10 @@ public sealed partial class UseDelayComponent : Component
 [Serializable, NetSerializable]
 public sealed class UseDelayInfo(TimeSpan length, TimeSpan startTime = default, TimeSpan endTime = default)
 {
+    [ViewVariables]
     public TimeSpan Length { get; set; } = length;
+    [ViewVariables]
     public TimeSpan StartTime { get; set; } = startTime;
+    [ViewVariables]
     public TimeSpan EndTime { get; set; } = endTime;
 }
