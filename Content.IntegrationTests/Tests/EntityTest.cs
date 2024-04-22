@@ -19,6 +19,8 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(EntityUid))]
     public sealed class EntityTest
     {
+        private static readonly ProtoId<EntityCategoryPrototype> SpawnerCategory = "Spawner";
+
         [Test]
         public async Task SpawnAndDeleteAllEntitiesOnDifferentMaps()
         {
@@ -234,14 +236,6 @@ namespace Content.IntegrationTests.Tests
                 "StationEvent",
                 "TimedDespawn",
 
-                // Spawner entities
-                "DragonRift",
-                "RandomHumanoidSpawner",
-                "RandomSpawner",
-                "ConditionalSpawner",
-                "GhostRoleMobSpawner",
-                "NukeOperativeSpawner",
-                "TimedSpawner",
                 // makes an announcement on mapInit.
                 "AnnounceOnSpawn",
             };
@@ -253,6 +247,7 @@ namespace Content.IntegrationTests.Tests
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
                 .Where(p => !excluded.Any(p.Components.ContainsKey))
+                .Where(p => p.Categories.All(x => x.ID != SpawnerCategory))
                 .Select(p => p.ID)
                 .ToList();
 

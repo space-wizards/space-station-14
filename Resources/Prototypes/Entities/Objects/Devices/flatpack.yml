@@ -4,7 +4,7 @@
   name: base flatpack
   description: A flatpack used for constructing something.
   categories:
-  - hideSpawnMenu
+  - HideSpawnMenu
   components:
   - type: Item
     size: Large
