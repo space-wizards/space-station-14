@@ -40,6 +40,18 @@ namespace Content.Server.Database
         public DbSet<AdminNote> AdminNotes { get; set; } = null!;
         public DbSet<AdminWatchlist> AdminWatchlists { get; set; } = null!;
         public DbSet<AdminMessage> AdminMessages { get; set; } = null!;
+        public DbSet<Multiplier> Multipliers { get; set; } = default!;
+        public DbSet<OffenseCategory> OffenseCategories { get; set; } = default!;
+        public DbSet<OffenseSubtype> OffenseSubtypes { get; set; } = default!;
+        public DbSet<MessageNote> MessageNotes { get; set; } = default!;
+        public DbSet<BanIpTarget> BanIpTargets { get; set; } = default!;
+        public DbSet<BanRobustHwidTarget> BanRobustHwidTargets { get; set; } = default!;
+        public DbSet<BanUserTarget> BanUserTargets { get; set; } = default!;
+        public DbSet<BanAsnTarget> BanAsnTargets { get; set; } = default!;
+        public DbSet<BanUsernameReTarget> BanUsernameReTargets { get; set; } = default!;
+        public DbSet<BanUsernameTarget> BanUsernameTargets { get; set; } = default!;
+        public DbSet<RoleBan> RoleBans { get; set; } = default!;
+        public DbSet<Severity> Severities { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -314,6 +326,61 @@ namespace Content.Server.Database
                 .HasForeignKey(ban => ban.LastEditedById)
                 .HasPrincipalKey(author => author.UserId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            //From here down is new banning stuff
+            modelBuilder.Entity<Offense>()
+                .HasKey(o => o.Id);
+
+            modelBuilder.Entity<Offense>()
+                .HasOne(o => o.SeverityNavigation)
+                .WithMany(s => s.Offenses)
+                .HasForeignKey(o => o.Severity);
+
+            modelBuilder.Entity<Offense>()
+                .HasOne(o => o.OffenseSubtypeNavigation)
+                .WithMany(st => st.Offense)
+                .HasForeignKey(o => o.OffenseSubtype);
+
+            modelBuilder.Entity<Offense>()
+                .HasMany(o => o.Bans)
+                .WithOne(b => b.OffenseNavigation)
+                .HasForeignKey(b => b.OffenseId);
+
+            modelBuilder.Entity<Ban>()
+                .HasKey(b => b.OffenseId);
+
+            modelBuilder.Entity<Ban>()
+                .HasIndex(b => b.Alias);
+
+            modelBuilder.Entity<Severity>()
+                .HasKey(s => s.Id);
+
+            modelBuilder.Entity<OffenseSubtype>()
+                .HasKey(ost => ost.Id);
+
+            modelBuilder.Entity<MessageNote>()
+                .HasKey(mn => new { mn.OffenseId });
+
+            modelBuilder.Entity<BanIpTarget>()
+                .HasKey(bit => new { bit.OffenseId, bit.Id });
+
+            modelBuilder.Entity<BanRobustHwidTarget>()
+                .HasKey(brht => new { brht.OffenseId, brht.Id });
+
+            modelBuilder.Entity<BanUserTarget>()
+                .HasKey(but => new { but.OffenseId, but.Id });
+
+            modelBuilder.Entity<BanAsnTarget>()
+                .HasKey(bat => new { bat.OffenseId, bat.Id });
+
+            modelBuilder.Entity<BanUsernameReTarget>()
+                .HasKey(burt => new { burt.OffenseId, burt.Id });
+
+            modelBuilder.Entity<BanUsernameTarget>()
+                .HasKey(but => new { but.OffenseId, but.Id });
+
+            modelBuilder.Entity<RoleBan>()
+                .HasKey(rb => new { rb.OffenseId, rb.RoleId });
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
@@ -661,6 +728,135 @@ namespace Content.Server.Database
         int BanId { get; set; }
         Guid? UnbanningAdmin { get; set; }
         DateTime UnbanTime { get; set; }
+    }
+
+    //Welcome To Hell
+    //Everything Should be based off Offese
+    public class Offense
+    {
+        public int Id { get; set; }
+        public int? AttributionId { get; set; }
+        public string Reason { get; set; }
+        public bool Secret { get; set; }
+        public int? Severity { get; set; }
+        public int? OffenseSubtype { get; set; }
+        public DateTime? SoftExpireAfter { get; set; }
+        public Guid? SoftExpireModifiedBy { get; set; }
+        public Guid SubjectPlayer { get; set; }
+
+        public virtual Severity SeverityNavigation { get; set; }
+        public virtual OffenseSubtype OffenseSubtypeNavigation { get; set; }
+        public virtual ICollection<Ban> Bans { get; set; }
+        public virtual ICollection<Multiplier> Multipliers { get; set; }
+        public virtual ICollection<OffenseCategory> OffenseCategories { get; set; }
+        public virtual ICollection<MessageNote> MessageNotes { get; set; }
+    }
+
+    public class Ban
+    {
+        public int OffenseId { get; set; }
+        public string Alias { get; set; }
+        public string Exemptions { get; set; }
+        public bool MasqueradeIndefiniteExpiration { get; set; }
+        public virtual Offense OffenseNavigation { get; set; }
+        public virtual ICollection<BanIpTarget> BanIpTargets { get; set; }
+        public virtual ICollection<BanRobustHwidTarget> BanRobustHwidTargets { get; set; }
+        public virtual ICollection<BanUserTarget> BanUserTargets { get; set; }
+        public virtual ICollection<BanAsnTarget> BanAsnTargets { get; set; }
+        public virtual ICollection<BanUsernameReTarget> BanUsernameReTargets { get; set; }
+        public virtual ICollection<BanUsernameTarget> BanUsernameTargets { get; set; }
+        public virtual ICollection<RoleBan> RoleBans { get; set; }
+    }
+
+    public class Severity
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public virtual ICollection<Offense> Offenses { get; set; }
+    }
+
+    public class Multiplier
+{
+    public int OffenseId { get; set; }
+    public int MultiplierId { get; set; }
+    public virtual Offense OffenseNavigation { get; set; }
+}
+
+    public class OffenseCategory
+    {
+        public int OffenseId { get; set; }
+        public int OffenseCategoryId { get; set; }
+        public virtual Offense OffenseNavigation { get; set; }
+    }
+
+    public class OffenseSubtype
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public virtual ICollection<Offense> Offense { get; set; }
+    }
+
+    public class MessageNote
+    {
+        public int OffenseId { get; set; }
+        public DateTime Seen { get; set; }
+        public DateTime Dismissed { get; set; }
+        public virtual Offense OffenseNavigation { get; set; }
+    }
+
+    public class BanIpTarget
+    {
+        public int OffenseId { get; set; }
+        public int Id { get; set; }
+        public string Network { get; set; }
+        public virtual Ban BanNavigation { get; set; }
+    }
+
+    public class BanRobustHwidTarget
+    {
+        public int OffenseId { get; set; }
+        public int Id { get; set; }
+        public byte[] Hwid { get; set; }
+        public virtual Ban BanNavigation { get; set; }
+    }
+
+    public class BanUserTarget
+    {
+        public int OffenseId { get; set; }
+        public int Id { get; set; }
+        public Guid User { get; set; }
+        public virtual Ban BanNavigation { get; set; }
+    }
+
+    public class BanAsnTarget
+    {
+        public int OffenseId { get; set; }
+        public int Id { get; set; }
+        public uint Asn { get; set; }
+        public virtual Ban BanNavigation { get; set; }
+    }
+
+    public class BanUsernameReTarget
+    {
+        public int OffenseId { get; set; }
+        public int Id { get; set; }
+        public string UsernameRegex { get; set; }
+        public virtual Ban BanNavigation { get; set; }
+    }
+
+    public class BanUsernameTarget
+    {
+        public int OffenseId { get; set; }
+        public int Id { get; set; }
+        public string Username { get; set; }
+        public virtual Ban BanNavigation { get; set; }
+    }
+
+    public class RoleBan
+    {
+        public int OffenseId { get; set; }
+        public int RoleId { get; set; }
+        public virtual Ban BanNavigation { get; set; }
     }
 
     /// <summary>
