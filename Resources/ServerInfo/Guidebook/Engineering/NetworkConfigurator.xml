@@ -1,6 +1,6 @@
 <Document>
   # Network Configurator
-  The network configurator allows you to manipulate device lists, link devices together and configure acceses for airlocks through door electronics.
+  The network configurator allows you to manipulate device lists, link devices together and configure accesses for airlocks through door electronics.
   <Box>
     <GuideEntityEmbed Entity="NetworkConfigurator"/>
   </Box>

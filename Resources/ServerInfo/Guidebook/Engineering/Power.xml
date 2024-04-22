@@ -1,7 +1,7 @@
 <Document>
   # Power
 
-  SS14 has a fairly in-depth power system through which all devices on the station receive electricity. It's divided into three main powernets; [H]igh [V]oltage, [M]edium [V]oltage, and [L]ow [V]oltage.
+  SS14 has a fairly in-depth power system through which all devices on the station receive electricity. It's divided into three main powernets; High Voltage, Medium Voltage, and Low Voltage.
   <Box>
   <GuideEntityEmbed Entity="CableHVStack"/>
   <GuideEntityEmbed Entity="CableMVStack"/>
