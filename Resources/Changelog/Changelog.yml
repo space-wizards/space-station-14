@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Added setting to toggle chat name color in Options.
-    type: Add
-  id: 5917
-  time: '2024-02-11T06:38:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24625
 - author: Emisse
   changes:
   - message: Ambuzol now requires zombie blood
@@ -3846,3 +3839,11 @@
   id: 6416
   time: '2024-04-22T08:42:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27202
+- author: Weax
+  changes:
+  - message: The CLF3 reaction now requires heating first before you can engulf chemistry
+      in fiery death.
+    type: Tweak
+  id: 6417
+  time: '2024-04-22T08:44:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27187
