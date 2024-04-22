@@ -1,6 +1,7 @@
 using Content.Server.UserInterface;
 using Content.Shared.Instruments;
 using Robust.Shared.Player;
+using ActivatableUIComponent = Content.Shared.UserInterface.ActivatableUIComponent;
 
 namespace Content.Server.Instruments;
 

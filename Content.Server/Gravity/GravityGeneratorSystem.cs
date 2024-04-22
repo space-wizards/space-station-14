@@ -209,9 +209,6 @@ namespace Content.Server.Gravity
 
         private void OnInteractHand(EntityUid uid, GravityGeneratorComponent component, InteractHandEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
-                return;
-
             ApcPowerReceiverComponent? powerReceiver = default!;
             if (!Resolve(uid, ref powerReceiver))
                 return;
@@ -220,7 +217,7 @@ namespace Content.Server.Gravity
             if (!component.Intact || powerReceiver.PowerReceived < component.IdlePowerUse)
                 return;
 
-            _uiSystem.OpenUi(uid, SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key, actor.PlayerSession);
+            _uiSystem.OpenUi(uid, SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key, args.User);
             component.NeedUIUpdate = true;
         }
 

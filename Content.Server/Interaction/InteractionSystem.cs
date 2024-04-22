@@ -16,13 +16,6 @@ namespace Content.Server.Interaction
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
-        }
-
         public override bool CanAccessViaStorage(EntityUid user, EntityUid target)
         {
             if (Deleted(target))
@@ -39,21 +32,6 @@ namespace Content.Server.Interaction
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
             return _uiSystem.IsUiOpen(container.Owner, StorageComponent.StorageUiKey.Key, user);
-        }
-
-        private void HandleUserInterfaceRangeCheck(ref BoundUserInterfaceCheckRangeEvent ev)
-        {
-            if (ev.Result == BoundUserInterfaceRangeResult.Fail)
-                return;
-
-            if (InRangeUnobstructed(ev.Actor, ev.Target, ev.Data.InteractionRange))
-            {
-                ev.Result = BoundUserInterfaceRangeResult.Pass;
-            }
-            else
-            {
-                ev.Result = BoundUserInterfaceRangeResult.Fail;
-            }
         }
     }
 }

@@ -7,10 +7,8 @@ using Content.Shared.Lock;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
-using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -20,117 +18,19 @@ namespace Content.Server.Storage.EntitySystems;
 
 public sealed partial class StorageSystem : SharedStorageSystem
 {
-    [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StorageComponent, GetVerbsEvent<ActivationVerb>>(AddUiVerb);
-        Subs.BuiEvents<StorageComponent>(StorageComponent.StorageUiKey.Key, subs =>
-        {
-            subs.Event<BoundUIClosedEvent>(OnBoundUIClosed);
-        });
         SubscribeLocalEvent<StorageComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
     }
 
-    private void AddUiVerb(EntityUid uid, StorageComponent component, GetVerbsEvent<ActivationVerb> args)
-    {
-        var silent = false;
-        if (!args.CanAccess || !args.CanInteract || TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
-        {
-            // we allow admins to open the storage anyways
-            if (!_admin.HasAdminFlag(args.User, AdminFlags.Admin))
-                return;
-
-            silent = true;
-        }
-
-        silent |= HasComp<GhostComponent>(args.User);
-
-        // Does this player currently have the storage UI open?
-        var uiOpen = _uiSystem.IsUiOpen(uid, StorageComponent.StorageUiKey.Key, args.User);
-
-        ActivationVerb verb = new()
-        {
-            Act = () =>
-            {
-                if (uiOpen)
-                {
-                    _uiSystem.CloseUi(uid, StorageComponent.StorageUiKey.Key, args.User);
-                }
-                else
-                {
-                    OpenStorageUI(uid, args.User, component, silent);
-                }
-            }
-        };
-
-        if (uiOpen)
-        {
-            verb.Text = Loc.GetString("verb-common-close-ui");
-            verb.Icon = new SpriteSpecifier.Texture(
-                new("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
-        }
-        else
-        {
-            verb.Text = Loc.GetString("verb-common-open-ui");
-            verb.Icon = new SpriteSpecifier.Texture(
-                new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
-        }
-        args.Verbs.Add(verb);
-    }
-
-    private void OnBoundUIClosed(EntityUid uid, StorageComponent storageComp, BoundUIClosedEvent args)
-    {
-        CloseNestedInterfaces(uid, args.Actor, storageComp);
-
-        // If UI is closed for everyone
-        if (!_uiSystem.IsUiOpen(uid, args.UiKey))
-        {
-            UpdateAppearance((uid, storageComp, null));
-
-            if (storageComp.StorageCloseSound is not null)
-                Audio.PlayEntity(storageComp.StorageCloseSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, storageComp.StorageCloseSound.Params);
-        }
-    }
-
     private void OnExploded(Entity<StorageComponent> ent, ref BeforeExplodeEvent args)
     {
         args.Contents.AddRange(ent.Comp.Container.ContainedEntities);
-    }
-
-    /// <summary>
-    ///     Opens the storage UI for an entity
-    /// </summary>
-    /// <param name="entity">The entity to open the UI for</param>
-    public override void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false)
-    {
-        if (!Resolve(uid, ref storageComp, false))
-            return;
-
-        // prevent spamming bag open / honkerton honk sound
-        silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && _useDelay.IsDelayed((uid, useDelay));
-        if (!silent)
-        {
-            if (!_uiSystem.IsUiOpen(uid, StorageComponent.StorageUiKey.Key))
-                _audio.PlayPvs(storageComp.StorageOpenSound, uid);
-
-            if (useDelay != null)
-                _useDelay.TryResetDelay((uid, useDelay));
-        }
-
-        Log.Debug($"Storage (UID {uid}) \"used\" by player session {ToPrettyString(entity)}.");
-
-        if (!_uiSystem.TryOpenUi(uid, StorageComponent.StorageUiKey.Key, entity))
-            return;
-
-        _uiSystem.ServerSendUiMessage(uid, StorageComponent.StorageUiKey.Key, new StorageModifyWindowMessage());
     }
 
     /// <inheritdoc />
@@ -139,24 +39,5 @@ public sealed partial class StorageSystem : SharedStorageSystem
     {
         var filter = Filter.Pvs(uid).RemoveWhereAttachedEntity(e => e == user);
         RaiseNetworkEvent(new PickupAnimationEvent(GetNetEntity(uid), GetNetCoordinates(initialCoordinates), GetNetCoordinates(finalCoordinates), initialRotation), filter);
-    }
-
-    /// <summary>
-    ///     If the user has nested-UIs open (e.g., PDA UI open when pda is in a backpack), close them.
-    /// </summary>
-    public void CloseNestedInterfaces(EntityUid uid, EntityUid actor, StorageComponent? storageComp = null)
-    {
-        if (!Resolve(uid, ref storageComp))
-            return;
-
-        // for each containing thing
-        // if it has a storage comp
-        // ensure unsubscribe from session
-        // if it has a ui component
-        // close ui
-        foreach (var entity in storageComp.Container.ContainedEntities)
-        {
-            _uiSystem.CloseUis(entity, actor);
-        }
     }
 }

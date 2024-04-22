@@ -1,23 +1,21 @@
-using Content.Server.Administration.Managers;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Managers;
 using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
-using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 
-namespace Content.Server.UserInterface;
+namespace Content.Shared.UserInterface;
 
 public sealed partial class ActivatableUISystem : EntitySystem
 {
-    [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly ISharedAdminManager _adminManager = default!;
     [Dependency] private readonly ActionBlockerSystem _blockerSystem = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
@@ -141,9 +139,6 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     private bool InteractUI(EntityUid user, EntityUid uiEntity, ActivatableUIComponent aui)
     {
-        if (aui.Key == null)
-            return false;
-
         if (!_uiSystem.HasUi(uiEntity, aui.Key))
             return false;
 
@@ -216,7 +211,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (!Resolve(uid, ref aui, false))
             return;
 
-        if (aui.Key == null || !_uiSystem.HasUi(uid, aui.Key))
+        if (!_uiSystem.HasUi(uid, aui.Key))
             return;
 
         _uiSystem.CloseUi(uid, aui.Key);

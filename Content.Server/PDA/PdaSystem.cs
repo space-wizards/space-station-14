@@ -41,6 +41,7 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PdaComponent, LightToggleEvent>(OnLightToggle);
 
             // UI Events:
+            SubscribeLocalEvent<PdaComponent, BoundUIOpenedEvent>(OnPdaOpen);
             SubscribeLocalEvent<PdaComponent, PdaRequestUpdateInterfaceMessage>(OnUiMessage);
             SubscribeLocalEvent<PdaComponent, PdaToggleFlashlightMessage>(OnUiMessage);
             SubscribeLocalEvent<PdaComponent, PdaShowRingtoneMessage>(OnUiMessage);
@@ -183,6 +184,14 @@ namespace Content.Server.PDA
                 address);
 
             _ui.SetUiState(uid, PdaUiKey.Key, state);
+        }
+
+        private void OnPdaOpen(Entity<PdaComponent> ent, ref BoundUIOpenedEvent args)
+        {
+            if (!PdaUiKey.Key.Equals(args.UiKey))
+                return;
+
+            UpdatePdaUi(ent.Owner, ent.Comp);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaRequestUpdateInterfaceMessage msg)
