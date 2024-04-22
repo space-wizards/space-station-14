@@ -1063,3 +1063,13 @@
   id: pyrotton
   flavorType: Complex
   description: flavor-complex-pyrotton
+
+- type: flavor
+  id: mothballs
+  flavorType: Complex
+  description: flavor-complex-mothballs
+
+- type: flavor
+  id: paintthinner
+  flavorType: Complex
+  description: flavor-complex-paint-thinner

@@ -105,6 +105,7 @@
   loadouts:
   - GreyJumpsuit
   - GreyJumpskirt
+  - RainbowJumpsuit
   - AncientJumpsuit
 
 - type: loadoutGroup
@@ -884,6 +885,13 @@
   - SecurityBackpack
   - SecuritySatchel
   - SecurityDuffel
+
+- type: loadoutGroup
+  id: SecurityBelt
+  name: loadout-group-security-belt
+  loadouts:
+  - SecurityBelt
+  - SecurityWebbing
 
 - type: loadoutGroup
   id: SecurityOuterClothing
