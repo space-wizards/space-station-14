@@ -171,18 +171,6 @@
 
 - type: entity
   parent: BaseSignDirectional
-  id: SignDirectionalExit
-  name: exit sign
-  description: A directional sign pointing toward the nearest exit.
-  components:
-  - type: Sprite
-    layers:
-      - state: direction_exit
-      - state: direction_exit_unshaded
-        shader: unshaded
-
-- type: entity
-  parent: BaseSignDirectional
   id: SignDirectionalMed
   name: medical sign
   description: A direction sign, pointing out which way the Medical department is.
