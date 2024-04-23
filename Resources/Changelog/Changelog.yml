@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Vasilis
-  changes:
-  - message: You can now inspect peoples id's and health though glass if you are within
-      details range.
-    type: Tweak
-  id: 5927
-  time: '2024-02-13T06:41:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25163
 - author: metalgearsloth
   changes:
   - message: Fix decal error spam in console due to a missing overlay.
@@ -3856,3 +3848,10 @@
   id: 6426
   time: '2024-04-23T11:30:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27159
+- author: brainfood1183
+  changes:
+  - message: Directional Exit signs for maints!
+    type: Add
+  id: 6427
+  time: '2024-04-23T11:31:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26831
