@@ -1,10 +1,13 @@
+using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Station.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Cargo.Systems;
@@ -14,6 +17,7 @@ public sealed partial class CargoSystem
     private void InitializeTelepad()
     {
         SubscribeLocalEvent<CargoTelepadComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<CargoTelepadComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<CargoTelepadComponent, PowerChangedEvent>(OnTelepadPowerChange);
         // Shouldn't need re-anchored event
         SubscribeLocalEvent<CargoTelepadComponent, AnchorStateChangedEvent>(OnTelepadAnchorChange);
@@ -103,6 +107,26 @@ public sealed partial class CargoSystem
     private void OnInit(EntityUid uid, CargoTelepadComponent telepad, ComponentInit args)
     {
         _linker.EnsureSinkPorts(uid, telepad.ReceiverPort);
+    }
+
+    private void OnShutdown(Entity<CargoTelepadComponent> ent, ref ComponentShutdown args)
+    {
+        if (ent.Comp.CurrentOrder is not { } order)
+            return;
+
+        if (_station.GetStations().Count == 0)
+            return;
+
+        if (_station.GetOwningStation(ent) is not { } station)
+        {
+            station = _random.Pick(_station.GetStations().Where(HasComp<StationCargoOrderDatabaseComponent>).ToList());
+        }
+
+        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var db) ||
+            !TryComp<StationDataComponent>(station, out var data))
+            return;
+
+        TryFulfillOrder((station, data), order, db);
     }
 
     private void SetEnabled(EntityUid uid, CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
