@@ -1,24 +1,20 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Alert;
 using Content.Shared.Audio;
 using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Gravity;
 using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item.ItemToggle.Components;
-using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Standing;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
@@ -44,6 +40,7 @@ public sealed class ReflectSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
 
     public override void Initialize()
     {
@@ -240,6 +237,9 @@ public sealed class ReflectSystem : EntitySystem
             return;
 
         EnsureComp<ReflectUserComponent>(args.Equipee);
+
+        if (component.Enabled)
+            EnableAlert(args.Equipee);
     }
 
     private void OnReflectUnequipped(EntityUid uid, ReflectComponent comp, GotUnequippedEvent args)
@@ -253,6 +253,9 @@ public sealed class ReflectSystem : EntitySystem
             return;
 
         EnsureComp<ReflectUserComponent>(args.User);
+
+        if (component.Enabled)
+            EnableAlert(args.User);
     }
 
     private void OnReflectHandUnequipped(EntityUid uid, ReflectComponent component, GotUnequippedHandEvent args)
@@ -264,6 +267,11 @@ public sealed class ReflectSystem : EntitySystem
     {
         comp.Enabled = args.Activated;
         Dirty(uid, comp);
+
+        if (comp.Enabled)
+            EnableAlert(uid);
+        else
+            DisableAlert(uid);
     }
 
     /// <summary>
@@ -277,9 +285,22 @@ public sealed class ReflectSystem : EntitySystem
                 continue;
 
             EnsureComp<ReflectUserComponent>(user);
+            EnableAlert(user);
+
             return;
         }
 
         RemCompDeferred<ReflectUserComponent>(user);
+        DisableAlert(user);
+    }
+
+    private void EnableAlert(EntityUid alertee)
+    {
+        _alerts.ShowAlert(alertee, AlertType.Deflecting);
+    }
+
+    private void DisableAlert(EntityUid alertee)
+    {
+        _alerts.ClearAlert(alertee, AlertType.Deflecting);
     }
 }
