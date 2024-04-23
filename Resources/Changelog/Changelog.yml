@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Resprited the CE's jetpack.
-    type: Tweak
-  id: 5925
-  time: '2024-02-12T20:44:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25150
 - author: EdenTheLiznerd
   changes:
   - message: Deathnettles are no longer able to bypass armor and don't do as much
@@ -3855,3 +3848,11 @@
   id: 6424
   time: '2024-04-23T08:57:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27259
+- author: Ghagliiarghii
+  changes:
+  - message: Security can now find replacements for their trusty Combat Knife in the
+      SecVend, or craft them with the Sec Lathe.
+    type: Tweak
+  id: 6425
+  time: '2024-04-23T11:24:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27224
