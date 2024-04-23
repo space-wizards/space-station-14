@@ -19,5 +19,6 @@ public sealed partial class ClumsyComponent : Component
     /// <summary>
     /// Sound to play when clumsy interactions fail.
     /// </summary>
+    [DataField]
     public SoundSpecifier ClumsySound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
 }
