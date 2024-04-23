@@ -1,0 +1,13 @@
+﻿- type: entity
+  id: ActionSummonGhosts
+  name: Summon Ghosts
+  description: Makes all current ghosts permanently invisible
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 120
+    itemIconStyle: BigAction
+    icon:
+      sprite: Mobs/Ghosts/ghost_human.rsi
+      state: icon
+    event: !type:ToggleGhostVisibilityToAllEvent

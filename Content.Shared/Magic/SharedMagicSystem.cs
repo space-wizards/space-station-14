@@ -110,10 +110,12 @@ public abstract class SharedMagicSystem : EntitySystem
 
         // TODO: Summon Guns
         //  Summon a random gun at peoples feet
+        //    Get every alive player (not in cryo, not a simplemob)
         //  Rare chance of giving gun collector status to people
 
         // TODO: Summon Magic
         //  Summon a random magic wand at peoples feet
+        //    Get every alive player (not in cryo, not a simplemob)
         //  Rare chance of giving magic collector status to people
 
         // TODO: Bottle of Blood

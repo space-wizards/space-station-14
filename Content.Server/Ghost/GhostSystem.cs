@@ -68,6 +68,7 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
+            SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
         }
 
         private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
@@ -331,6 +332,15 @@ namespace Content.Server.Ghost
         private void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, ref InsertIntoEntityStorageAttemptEvent args)
         {
             args.Cancelled = true;
+        }
+
+        private void OnToggleGhostVisibilityToAll(ToggleGhostVisibilityToAllEvent ev)
+        {
+            if (ev.Handled)
+                return;
+
+            ev.Handled = true;
+            MakeVisible(true);
         }
 
         /// <summary>
