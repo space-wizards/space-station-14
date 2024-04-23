@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Autolathes may now make empty air tanks.
-    type: Add
-  id: 5924
-  time: '2024-02-12T06:37:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25130
 - author: Ubaser
   changes:
   - message: Resprited the CE's jetpack.
@@ -3855,3 +3848,10 @@
   id: 6423
   time: '2024-04-23T08:48:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27260
+- author: Rainbeon
+  changes:
+  - message: Suit sensor vitals now function again.
+    type: Fix
+  id: 6424
+  time: '2024-04-23T08:57:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27259
