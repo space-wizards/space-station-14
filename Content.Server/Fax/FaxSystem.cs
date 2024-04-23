@@ -425,7 +425,7 @@ public sealed class FaxSystem : EntitySystem
         // Unfortunately, since a paper entity does not yet exist, we have to emulate what LabelSystem will do.
         var nameWithLabel = (args.Label is { } label) ? $"{name} ({label})" : name;
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{(args.Session.AttachedEntity is { } sender ? ToPrettyString(sender) : "Unknown"):actor} " +
+            $"{ToPrettyString(args.Session.AttachedEntity) ?? "Unknown":actor} " +
             $"added print job to \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
             $"of {nameWithLabel}: {args.Content}");
     }
@@ -468,7 +468,7 @@ public sealed class FaxSystem : EntitySystem
         UpdateUserInterface(uid, component);
 
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{(args.Session.AttachedEntity is { } sender ? ToPrettyString(sender) : "Unknown"):actor} " +
+            $"{ToPrettyString(args.Session.AttachedEntity) ?? "Unknown":actor} " +
             $"added copy job to \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
             $"of {ToPrettyString(sendEntity):subject}: {printout.Content}");
     }
@@ -526,7 +526,7 @@ public sealed class FaxSystem : EntitySystem
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{(sender is { } ? ToPrettyString(sender) : "Unknown"):actor} " +
+            $"{ToPrettyString(sender) ?? "Unknown":actor} " +
             $"sent fax from \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
             $"to \"{faxName}\" ({component.DestinationFaxAddress}) " +
             $"of {ToPrettyString(sendEntity):subject}: {paper.Content}");
