@@ -4,7 +4,7 @@ using Content.Shared.Verbs;
 using Content.Shared.RadioJammer;
 
 namespace Content.Shared.Radio.EntitySystems;
-public sealed class SharedJammerSystem : EntitySystem
+public abstract class SharedJammerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -42,7 +42,7 @@ public sealed class SharedJammerSystem : EntitySystem
                         jammerComp.Range = GetCurrentRange(entity.Comp);
                         Dirty(entity.Owner, jammerComp);
                     }
-                    _popup.PopupPredicted(Loc.GetString(setting.Message), user, user);
+                    _popup.PopupEntity(Loc.GetString(setting.Message), user, user);
                 },
                 Text = Loc.GetString(setting.Name),
             };
