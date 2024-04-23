@@ -34,9 +34,6 @@
     maxItemSize: Normal
     grid:
     - 0,0,1,1
-    blacklist:
-      tags:
-        - Arrow
   - type: Appearance
   - type: ItemMapper
     containerWhitelist: [gas_tank]
