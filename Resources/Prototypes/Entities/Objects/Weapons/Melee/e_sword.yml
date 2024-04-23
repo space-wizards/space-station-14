@@ -271,7 +271,7 @@
     size: Small
     sprite: Objects/Weapons/Melee/e_sword_double-inhands.rsi
   - type: Reflect
-    reflectProb: .90
+    reflectProb: .80
     minReflectProb: .65
     spread: 75
   - type: UseDelay
