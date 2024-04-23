@@ -13,6 +13,9 @@
   # - type: StorageFill 
     # contents: 
       # - id: PuddleSparkle # Ha! Cute. Unfortunately it despawns before the container is likely to open.
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
   - type: Item
     size: Normal
     heldPrefix: lamp
