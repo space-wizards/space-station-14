@@ -118,6 +118,15 @@
     state: horns_double
 
 - type: marking
+  id: LizardHornsDraconic
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: horns_draconic
+
+- type: marking
   id: LizardTailSmooth
   bodyPart: Tail
   markingCategory: Tail
