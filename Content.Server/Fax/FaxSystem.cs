@@ -323,7 +323,7 @@ public sealed class FaxSystem : EntitySystem
 
     private void OnSendButtonPressed(EntityUid uid, FaxMachineComponent component, FaxSendMessage args)
     {
-        Send(uid, component, args.Session.AttachedEntity);
+        Send(uid, component, args);
     }
 
     private void OnRefreshButtonPressed(EntityUid uid, FaxMachineComponent component, FaxRefreshMessage args)
@@ -477,7 +477,7 @@ public sealed class FaxSystem : EntitySystem
     ///     Sends message to addressee if paper is set and a known fax is selected
     ///     A timeout is set after sending, which is shared by the copy button.
     /// </summary>
-    public void Send(EntityUid uid, FaxMachineComponent? component = null, EntityUid? sender = null)
+    public void Send(EntityUid uid, FaxMachineComponent? component, FaxSendMessage args)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -526,7 +526,7 @@ public sealed class FaxSystem : EntitySystem
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{ToPrettyString(sender) ?? "Unknown":actor} " +
+            $"{ToPrettyString(args.Session.AttachedEntity) ?? "Unknown":actor} " +
             $"sent fax from \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
             $"to \"{faxName}\" ({component.DestinationFaxAddress}) " +
             $"of {ToPrettyString(sendEntity):subject}: {paper.Content}");
