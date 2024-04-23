@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Stun batons and stun prods now display their hits remaining.
-    type: Tweak
-  id: 5923
-  time: '2024-02-12T06:36:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25141
 - author: Ilya246
   changes:
   - message: Autolathes may now make empty air tanks.
@@ -3855,3 +3848,10 @@
   id: 6422
   time: '2024-04-22T22:46:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27249
+- author: Tyzemol
+  changes:
+  - message: Slimes no longer absorb all items used on them
+    type: Fix
+  id: 6423
+  time: '2024-04-23T08:48:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27260
