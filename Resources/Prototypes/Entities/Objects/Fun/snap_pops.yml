@@ -33,9 +33,6 @@
     maxIntensity: 0.01
     intensitySlope: 1
     totalIntensity: 0.01
-  - type: Tag
-    tags:
-      - SnapPop
 
 - type: entity
   parent: BaseStorageItem
@@ -56,6 +53,6 @@
   - type: StorageFill
     contents:
       - id: SnapPop
-        amount: 20
+        amount: 5
   - type: Dumpable
 
