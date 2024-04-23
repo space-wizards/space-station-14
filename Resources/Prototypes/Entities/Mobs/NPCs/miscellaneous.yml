@@ -135,8 +135,8 @@
   - type: MeleeWeapon
     hidden: true
     damage:
-      groups:
-        Brute: 2
+      types:
+        Blunt: 2
         Piercing: 2
     animation: WeaponArcBite
   - type: Climbing
