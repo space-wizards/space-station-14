@@ -9,7 +9,7 @@
       layers:
       - state: paper_blood
       - state: cover_strong
-        color: "#645a5a" 
+        color: "#645a5a"
       - state: decor_wingette_flat
         color: "#4d0303"
       - state: icon_pentagramm
@@ -290,26 +290,28 @@
      spells:
        ActionSmokeSpell: -1
 
-- type: entity
-  id: MindswapSpellbook
-  name: mindswap spellbook
-  parent: BaseSpellbook
-  components:
-   - type: Sprite
-     sprite: Objects/Misc/books.rsi
-     layers:
-     - state: paper
-     - state: cover_old
-       color: "#657e9c"
-     - state: icon_text3
-     - state: decor_wingette_circle       
-       color: gold
-     - state: icon_magic
-     - state: detail_rivets
-       color: gold
-   - type: Spellbook
-     spells:
-       ActionMindswap: -1
+# There is no mindswap spell so i'm commenting this out
+#
+#- type: entity
+#  id: MindswapSpellbook
+#  name: mindswap spellbook
+#  parent: BaseSpellbook
+#  components:
+#   - type: Sprite
+#     sprite: Objects/Misc/books.rsi
+#     layers:
+#     - state: paper
+#     - state: cover_old
+#       color: "#657e9c"
+#     - state: icon_text3
+#     - state: decor_wingette_circle
+#       color: gold
+#     - state: icon_magic
+#     - state: detail_rivets
+#       color: gold
+#   - type: Spellbook
+#     spells:
+#       ActionMindswap: -1
 
 - type: entity
   id: SwapSpellbook

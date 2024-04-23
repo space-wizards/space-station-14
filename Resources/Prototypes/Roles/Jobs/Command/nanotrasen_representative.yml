@@ -30,12 +30,9 @@
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatCentcomcap
-    eyes: ClothingEyesGlasses  
+    eyes: ClothingEyesGlasses
     id: CentcomPDA
     ears: ClothingHeadsetCentCom
     belt: BoxFolderCentComClipboard
     pocket1: RubberStampCentcom
     pocket2: WeaponDisabler
-  innerClothingSkirt: ClothingUniformJumpskirtDetectiveGrey
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled

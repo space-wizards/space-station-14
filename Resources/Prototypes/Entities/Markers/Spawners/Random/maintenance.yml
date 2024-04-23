@@ -66,7 +66,6 @@
         - ClothingShoesBootsCowboyFancy
         - ClothingHeadHatCowboyBountyHunter
         - ClothingNeckAutismPin
-        - ClothingNeckGoldAutismPin
       rareChance: 0.01
       prototypes:
         - Lighter

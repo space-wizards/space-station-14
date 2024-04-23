@@ -38,8 +38,10 @@ public sealed partial class WizardRuleComponent : Component
     [DataField]
     public ProtoId<AntagPrototype> WizardPrototypeId = "Wizard";
 
+    /* No wizard outpost prototype ATM, commenting out for now
     [DataField]
     public ProtoId<GameMapPrototype> OutpostMapPrototype = "WizardOutpost";
+    */
 
     [DataField]
     public EntProtoId SpawnPointProto = "SpawnPointWizards";

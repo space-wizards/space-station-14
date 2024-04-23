@@ -137104,6 +137104,20 @@ entities:
     - type: Transform
       pos: 12.5,5.5
       parent: 5350
+- proto: SpawnPointBlueshieldOfficer
+  entities:
+  - uid: 121464342
+    components:
+    - type: Transform
+      pos: 12.5,5.5
+      parent: 5350
+- proto: SpawnPointNanotrasenRepresentative
+  entities:
+  - uid: 42146433
+    components:
+    - type: Transform
+      pos: 12.5,5.5
+      parent: 5350
 - proto: SpawnPointCargoTechnician
   entities:
   - uid: 3643

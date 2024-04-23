@@ -9,9 +9,6 @@
     shoes: ClothingShoesWizard
     id: WizardPDA
     ears: ClothingHeadsetService
-  innerClothingSkirt: ClothingUniformJumpskirtColorDarkBlue
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
 
 - type: startingGear
   id: WizardBlueGearApprentice

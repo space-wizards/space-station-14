@@ -239,9 +239,6 @@
   - type: Sprite
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_6
-  - type: Construction
-    graph: ImprovisedNukeCraft
-    node: painted
 
 - type: entity
   parent: ImprovisedNuclearBombInsidesUranium
@@ -299,7 +296,6 @@
     maxIntensity: 90
     canCreateVacuum: false
   - type: Defusable
-    bolted: false
   - type: Destructible
     thresholds:
     - trigger:
@@ -319,6 +315,3 @@
   - type: Sprite
     sprite: Objects/Fun/nukecraft.rsi
     state: nukecraft_6
-  - type: Construction
-    graph: ImprovisedNukeCraft
-    node: evilbombpainted

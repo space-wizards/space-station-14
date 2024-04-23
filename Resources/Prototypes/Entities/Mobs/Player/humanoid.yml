@@ -586,7 +586,7 @@
       prototypes: [WizardBlueGear]
     - type: NpcFactionMember
       factions:
-      - Wizard
+      - WizardFederation
 
 
 - type: randomHumanoidSettings
@@ -596,4 +596,4 @@
       prototypes: [WizardBlueGearApprentice]
     - type: NpcFactionMember
       factions:
-      - Wizard
+      - WizardFederation
