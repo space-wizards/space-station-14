@@ -32,9 +32,6 @@ public sealed partial class CargoSystem
             if (tele.CurrentState != CargoTelepadState.Idle)
                 continue;
 
-            if (tele.CurrentOrder != null)
-                continue;
-
             if (!this.IsPowered(uid, EntityManager))
                 continue;
 
@@ -47,7 +44,10 @@ public sealed partial class CargoSystem
                 console != args.OrderConsole.Owner)
                 continue;
 
-            tele.CurrentOrder = args.Order;
+            for (var i = 0; i < args.Order.OrderQuantity; i++)
+            {
+                tele.CurrentOrders.Add(args.Order);
+            }
             tele.Accumulator = tele.Delay;
             args.Handled = true;
             args.FulfillmentEntity = uid;
@@ -81,21 +81,22 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            if (comp.CurrentOrder == null)
+            if (comp.CurrentOrders.Count == 0)
             {
                 comp.Accumulator += comp.Delay;
                 continue;
             }
 
             var xform = Transform(uid);
-            if (FulfillOrder(comp.CurrentOrder, xform.Coordinates, comp.PrinterOutput))
+            var currentOrder = comp.CurrentOrders.First();
+            if (FulfillOrder(currentOrder, xform.Coordinates, comp.PrinterOutput))
             {
                 _audio.PlayPvs(_audio.GetSound(comp.TeleportSound), uid, AudioParams.Default.WithVolume(-8f));
 
                 if (_station.GetOwningStation(uid) is { } station)
                     UpdateOrders(station);
 
-                comp.CurrentOrder = null;
+                comp.CurrentOrders.Remove(currentOrder);
                 comp.CurrentState = CargoTelepadState.Teleporting;
                 _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
             }
@@ -111,7 +112,7 @@ public sealed partial class CargoSystem
 
     private void OnShutdown(Entity<CargoTelepadComponent> ent, ref ComponentShutdown args)
     {
-        if (ent.Comp.CurrentOrder is not { } order)
+        if (ent.Comp.CurrentOrders.Count == 0)
             return;
 
         if (_station.GetStations().Count == 0)
@@ -126,7 +127,10 @@ public sealed partial class CargoSystem
             !TryComp<StationDataComponent>(station, out var data))
             return;
 
-        TryFulfillOrder((station, data), order, db);
+        foreach (var order in ent.Comp.CurrentOrders)
+        {
+            TryFulfillOrder((station, data), order, db);
+        }
     }
 
     private void SetEnabled(EntityUid uid, CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
