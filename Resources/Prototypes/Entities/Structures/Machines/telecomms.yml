@@ -66,7 +66,7 @@
 
 - type: entity
   parent: TelecomServer
-  id: TelecomServerFilledAll
+  id: TelecomServerFilled
   suffix: Filled All
   components:
   - type: ContainerFill
