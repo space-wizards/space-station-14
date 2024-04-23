@@ -278,7 +278,7 @@
     sprite: Clothing/Mask/sterile.rsi
   - type: IngestionBlocker
   - type: Item
-    storedRotation: -90
+    size: Tiny
   - type: IdentityBlocker
     coverage: MOUTH
 
