@@ -44,7 +44,6 @@ public sealed class ReflectSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     public override void Initialize()
     {
@@ -102,40 +101,18 @@ public sealed class ReflectSystem : EntitySystem
     private bool TryReflectProjectile(EntityUid user, EntityUid reflector, EntityUid projectile, ProjectileComponent? projectileComp = null, ReflectComponent? reflect = null)
     {
         // Do we have the components needed to try a reflect at all?
-        if (!Resolve(reflector, ref reflect, false) ||
+        if (
+            !Resolve(reflector, ref reflect, false) ||
             !reflect.Enabled ||
             !TryComp<ReflectiveComponent>(projectile, out var reflective) ||
             (reflect.Reflects & reflective.Reflective) == 0x0 ||
-            !TryComp<PhysicsComponent>(projectile, out var physics))
+            !TryComp<PhysicsComponent>(projectile, out var physics) ||
+            TryComp<StaminaComponent>(reflector, out var staminaComponent) && staminaComponent.Critical ||
+            _standing.IsDown(reflector)
+        )
             return false;
 
-        var reflectChance = reflect.ReflectProb;
-
-        /*
-         *  The rules of deflection are as follows:
-         *  If you innately reflect things via magic, biology etc, you always have a full chance.
-         *  If you are standing up and standing still, you're prepared to deflect and have full chance.
-         *  If you are moving at all, your chance is multiplied by the movingProbMultiplier.
-         *  If you are recklessly sprinting, your chance is instead multiplied by the sprintingProbMultiplier.
-         *  If you floating, your chance is instead multiplied by the sprintingProbMultiplier.
-         *  You cannot deflect if you are knocked down or stunned.
-         */
-
-        if (!reflect.Innate)
-        {
-            if (TryComp<StaminaComponent>(reflector, out var staminaComponent) && staminaComponent.Critical)
-                return false;
-
-            if (_standing.IsDown(reflector))
-                return false;
-
-            if (_gravity.IsWeightless(reflector))
-                reflectChance *= reflect.SprintingProbMultiplier;
-            else if (TryComp<InputMoverComponent>(reflector, out var mover) && (mover.HeldMoveButtons & MoveButtons.AnyDirection) == MoveButtons.AnyDirection)
-                reflectChance *= mover.Sprinting ? reflect.SprintingProbMultiplier : reflect.MovingProbMultiplier;
-        }
-
-        if (!_random.Prob(reflectChance))
+        if (!_random.Prob(CalcReflectChance(reflector, reflect)))
             return false;
 
         var rotation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2).Opposite();
@@ -174,6 +151,34 @@ public sealed class ReflectSystem : EntitySystem
         return true;
     }
 
+    private float CalcReflectChance(EntityUid reflector, ReflectComponent reflect)
+    {
+        /*
+         *  The rules of deflection are as follows:
+         *  If you innately reflect things via magic, biology etc., you always have a full chance.
+         *  If you are standing up and standing still, you're prepared to deflect and have full chance.
+         *  If you have velocity, your deflection chance depends on your velocity, clamped.
+         *  If you are floating, your chance is the minimum value possible.
+         *  You cannot deflect if you are knocked down or stunned.
+         */
+
+        if (reflect.Innate)
+            return reflect.ReflectProb;
+
+        if (_gravity.IsWeightless(reflector))
+            return reflect.MinReflectProb;
+
+        if (!TryComp<PhysicsComponent>(reflector, out var reflectorPhysics))
+            return reflect.ReflectProb;
+
+        return MathHelper.Lerp(
+            reflect.MinReflectProb,
+            reflect.ReflectProb,
+            // Inverse progression between velocities fed in as progression between probabilities. We go high -> low so the output here needs to be _inverted_.
+            1 - Math.Clamp((reflectorPhysics.LinearVelocity.Length() - reflect.VelocityBeforeNotMaxProb) / (reflect.VelocityBeforeMinProb - reflect.VelocityBeforeNotMaxProb), 0, 1)
+        );
+    }
+
     private void OnReflectHitscan(EntityUid uid, ReflectComponent component, ref HitScanReflectAttemptEvent args)
     {
         if (args.Reflected ||
@@ -199,7 +204,14 @@ public sealed class ReflectSystem : EntitySystem
     {
         if (!TryComp<ReflectComponent>(reflector, out var reflect) ||
             !reflect.Enabled ||
-            !_random.Prob(reflect.ReflectProb))
+            TryComp<StaminaComponent>(reflector, out var staminaComponent) && staminaComponent.Critical ||
+            _standing.IsDown(reflector))
+        {
+            newDirection = null;
+            return false;
+        }
+
+        if (!_random.Prob(CalcReflectChance(reflector, reflect)))
         {
             newDirection = null;
             return false;

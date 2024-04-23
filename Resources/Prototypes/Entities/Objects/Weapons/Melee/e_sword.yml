@@ -78,7 +78,8 @@
     malus: 0
   - type: Reflect
     enabled: false
-    reflectProb: 0.3 # 0.2 when moving, 0.1 when sprinting
+    reflectProb: 0.5
+    minReflectProb: 0.25
   - type: IgnitionSource
     temperature: 700
 
@@ -270,7 +271,8 @@
     size: Small
     sprite: Objects/Weapons/Melee/e_sword_double-inhands.rsi
   - type: Reflect
-    reflectProb: .75 # 0.5 when moving, 0.25 when sprinting.
+    reflectProb: .90
+    minReflectProb: .65
     spread: 75
   - type: UseDelay
     delay: 1

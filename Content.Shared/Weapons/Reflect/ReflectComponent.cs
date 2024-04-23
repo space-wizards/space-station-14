@@ -21,12 +21,6 @@ public sealed partial class ReflectComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("reflects")]
     public ReflectType Reflects = ReflectType.Energy | ReflectType.NonEnergy;
 
-    /// <summary>
-    /// Probability for a projectile to be reflected.
-    /// </summary>
-    [DataField("reflectProb"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public float ReflectProb = 0.25f;
-
     [DataField("spread"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public Angle Spread = Angle.FromDegrees(45);
 
@@ -41,16 +35,28 @@ public sealed partial class ReflectComponent : Component
     public bool Innate = false;
 
     /// <summary>
-    /// The multiplier used when moving.
+    /// Maximum probability for a projectile to be reflected.
     /// </summary>
-    [DataField]
-    public float MovingProbMultiplier = 0.66f;
+    [DataField("reflectProb"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public float ReflectProb = 0.25f;
 
     /// <summary>
-    /// The multiplier used when sprinting or when otherwise compromised (e.g. weightless)
+    /// The maximum velocity a wielder can move at before losing effectiveness.
     /// </summary>
     [DataField]
-    public float SprintingProbMultiplier = 0.33f;
+    public float VelocityBeforeNotMaxProb = 2.5f; // Walking speed for a human. Suitable for a weightless deflector like an e-sword.
+
+    /// <summary>
+    /// The velocity a wielder has to be moving at to use the minimum effectiveness value.
+    /// </summary>
+    [DataField]
+    public float VelocityBeforeMinProb = 4.5f; // Sprinting speed for a human. Suitable for a weightless deflector like an e-sword.
+
+    /// <summary>
+    /// Minimum probability for a projectile to be reflected.
+    /// </summary>
+    [DataField]
+    public float MinReflectProb = 0.1f;
 }
 
 [Flags]

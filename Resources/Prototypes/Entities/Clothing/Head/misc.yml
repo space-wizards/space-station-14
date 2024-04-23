@@ -267,3 +267,14 @@
       - WhitelistChameleon
   - type: StaticPrice
     price: 1
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadLizardPlushie
+  name: lizard plushie hat
+  description: Weh?
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/lizardplushiehat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/lizardplushiehat.rsi
