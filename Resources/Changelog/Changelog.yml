@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: jamessimo
-  changes:
-  - message: Can now "wink" with the text emote ;) or ;]
-    type: Add
-  - message: Can now "tearfully smile" with the text emote :') and similar variants
-    type: Add
-  - message: Added more ways to "cry" with the emote :'( and similar variants
-    type: Tweak
-  id: 5929
-  time: '2024-02-13T15:43:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25129
 - author: icekot8
   changes:
   - message: Medical berets added to MediDrobe
@@ -3855,3 +3844,10 @@
   id: 6428
   time: '2024-04-23T11:34:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27229
+- author: EmoGarbage404
+  changes:
+  - message: Fixed cargo telepads not teleporting in orders from linked consoles.
+    type: Fix
+  id: 6429
+  time: '2024-04-23T12:07:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27255
