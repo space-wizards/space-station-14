@@ -105,6 +105,7 @@
   loadouts:
   - GreyJumpsuit
   - GreyJumpskirt
+  - RainbowJumpsuit
   - AncientJumpsuit
 
 - type: loadoutGroup
@@ -886,6 +887,13 @@
   - SecurityDuffel
 
 - type: loadoutGroup
+  id: SecurityBelt
+  name: loadout-group-security-belt
+  loadouts:
+  - SecurityBelt
+  - SecurityWebbing
+
+- type: loadoutGroup
   id: SecurityOuterClothing
   name: loadout-group-security-outerclothing
   loadouts:
@@ -1010,6 +1018,7 @@
   - BlueSurgeryCap
   - GreenSurgeryCap
   - PurpleSurgeryCap
+  - NurseHat
 
 - type: loadoutGroup
   id: MedicalDoctorJumpsuit
@@ -1053,6 +1062,21 @@
   loadouts:
   - MedicalDoctorPDA
   - SeniorPhysicianPDA
+
+- type: loadoutGroup
+  id: MedicalGloves
+  name: loadout-group-medical-gloves
+  minLimit: 0
+  loadouts:
+  - LatexGloves
+  - NitrileGloves
+
+- type: loadoutGroup
+  id: MedicalMask
+  name: loadout-group-medical-mask
+  minLimit: 0
+  loadouts:
+  - SterileMask
 
 - type: loadoutGroup
   id: MedicalInternJumpsuit
