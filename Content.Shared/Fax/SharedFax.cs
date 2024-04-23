@@ -51,7 +51,7 @@ public sealed class FaxFileMessage : BoundUserInterfaceMessage
 
 public static class FaxFileMessageValidation
 {
-    public const int MaxLabelSize = 50;
+    public const int MaxLabelSize = 50; // parity with Content.Server.Labels.Components.HandLabelerComponent.MaxLabelChars
     public const int MaxContentSize = 10000;
 }
 
