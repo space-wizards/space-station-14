@@ -6112,7 +6112,6 @@ entities:
       solutions:
         beaker:
           temperature: 293.15
-          canMix: True
           canReact: True
           maxVol: 50
           name: null
@@ -6120,6 +6119,8 @@ entities:
           - data: null
             ReagentId: Leporazine
             Quantity: 40
+    - type: MixableSolution
+      solution: beaker
   - uid: 10800
     components:
     - type: Transform
