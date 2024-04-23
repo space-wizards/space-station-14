@@ -107,13 +107,3 @@
   storage:
     back:
     - ClothingNeckAutismPin
-
-- type: loadout
-  id: ClothingNeckGoldAutismPin
-  equipment: ClothingNeckGoldAutismPin
-
-- type: startingGear
-  id: ClothingNeckGoldAutismPin
-  storage:
-    back:
-    - ClothingNeckGoldAutismPin
