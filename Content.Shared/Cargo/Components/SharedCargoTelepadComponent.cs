@@ -12,6 +12,9 @@ namespace Content.Shared.Cargo.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedCargoSystem))]
 public sealed partial class CargoTelepadComponent : Component
 {
+    [DataField]
+    public CargoOrderData? CurrentOrder;
+
     /// <summary>
     /// The actual amount of time it takes to teleport from the telepad
     /// </summary>

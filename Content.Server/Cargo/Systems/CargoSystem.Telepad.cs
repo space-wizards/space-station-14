@@ -1,5 +1,6 @@
 using Content.Server.Cargo.Components;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.DeviceLinking;
@@ -16,7 +17,40 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoTelepadComponent, PowerChangedEvent>(OnTelepadPowerChange);
         // Shouldn't need re-anchored event
         SubscribeLocalEvent<CargoTelepadComponent, AnchorStateChangedEvent>(OnTelepadAnchorChange);
+        SubscribeLocalEvent<FulfillCargoOrderEvent>(OnTelepadFulfillCargoOrder);
     }
+
+    private void OnTelepadFulfillCargoOrder(ref FulfillCargoOrderEvent args)
+    {
+        var query = EntityQueryEnumerator<CargoTelepadComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var tele, out var xform))
+        {
+            if (tele.CurrentState != CargoTelepadState.Idle)
+                continue;
+
+            if (tele.CurrentOrder != null)
+                continue;
+
+            if (!this.IsPowered(uid, EntityManager))
+                continue;
+
+            if (_station.GetOwningStation(uid, xform) != args.Station)
+                continue;
+
+            // todo cannot be fucking asked to figure out device linking rn but this shouldn't just default to the first port.
+            if (!TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent) ||
+                sinkComponent.LinkedSources.FirstOrNull() is not { } console ||
+                console != args.OrderConsole.Owner)
+                continue;
+
+            tele.CurrentOrder = args.Order;
+            tele.Accumulator = tele.Delay;
+            args.Handled = true;
+            args.FulfillmentEntity = uid;
+            return;
+        }
+    }
+
     private void UpdateTelepad(float frameTime)
     {
         var query = EntityQueryEnumerator<CargoTelepadComponent>();
@@ -33,14 +67,6 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            if (!TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent) ||
-                sinkComponent.LinkedSources.FirstOrNull() is not { } console ||
-                !HasComp<CargoOrderConsoleComponent>(console))
-            {
-                comp.Accumulator = comp.Delay;
-                continue;
-            }
-
             comp.Accumulator -= frameTime;
 
             // Uhh listen teleporting takes time and I just want the 1 float.
@@ -51,21 +77,21 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            var station = _station.GetOwningStation(console);
-
-            if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase) ||
-                orderDatabase.Orders.Count == 0)
+            if (comp.CurrentOrder == null)
             {
                 comp.Accumulator += comp.Delay;
                 continue;
             }
 
             var xform = Transform(uid);
-            if (FulfillNextOrder(orderDatabase, xform.Coordinates, comp.PrinterOutput))
+            if (FulfillOrder(comp.CurrentOrder, xform.Coordinates, comp.PrinterOutput))
             {
                 _audio.PlayPvs(_audio.GetSound(comp.TeleportSound), uid, AudioParams.Default.WithVolume(-8f));
-                UpdateOrders(station.Value, orderDatabase);
 
+                if (_station.GetOwningStation(uid) is { } station)
+                    UpdateOrders(station);
+
+                comp.CurrentOrder = null;
                 comp.CurrentState = CargoTelepadState.Teleporting;
                 _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
             }
