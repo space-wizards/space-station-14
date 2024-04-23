@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EdenTheLiznerd
-  changes:
-  - message: Deathnettles are no longer able to bypass armor and don't do as much
-      damage
-    type: Tweak
-  id: 5926
-  time: '2024-02-13T01:20:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25068
 - author: Vasilis
   changes:
   - message: You can now inspect peoples id's and health though glass if you are within
@@ -3856,3 +3848,11 @@
   id: 6425
   time: '2024-04-23T11:24:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27224
+- author: Whisper
+  changes:
+  - message: Fire stack limit reduced from 20 to 10. Fire transfers will be less effective,
+      and fires will not last as long.
+    type: Tweak
+  id: 6426
+  time: '2024-04-23T11:30:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27159
