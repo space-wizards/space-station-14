@@ -88,8 +88,8 @@
       Welder:
         reagents:
         - ReagentId: WeldingFuel
-          Quantity: 30
-        maxVol: 30
+          Quantity: 25
+        maxVol: 25
   - type: SolutionTransfer
     transferAmount: 5
     canChangeTransferAmount: false
@@ -100,8 +100,6 @@
   - type: RefillableSolution
     solution: Welder
   - type: DrainableSolution
-    solution: Welder
-  - type: SolutionItemStatus
     solution: Welder
   - type: ExaminableSolution
     solution: Welder
@@ -116,8 +114,8 @@
     sound:
       path: /Audio/Items/welder_drop.ogg
   - type: Welder
-    fuelConsumption: 0.1
-    fuelLitCost: 0.1
+    fuelConsumption: 0.05
+    fuelLitCost: 0.05
     tankSafe: true
   - type: PointLight
     enabled: false
