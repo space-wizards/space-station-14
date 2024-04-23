@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "made by IProduceWidgets, flame sprite by TheShuEd",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "lamp",
+	  "directions": 4
+    },
+	{
+	  "name": "lamptop",
+	  "directions": 4
+	},
+    {
+      "name": "flame",
+	  "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+		  0.1,
+		  0.1
+        ],
+		[
+          0.1,
+          0.1,
+		  0.1,
+		  0.1
+        ],
+		[
+          0.1,
+          0.1,
+		  0.1,
+		  0.1
+        ],
+		[
+          0.1,
+          0.1,
+		  0.1,
+		  0.1
+        ]
+      ]
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-flame",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+		  0.1,
+		  0.1
+        ],
+        [
+          0.1,
+          0.1,
+		  0.1,
+		  0.1
+        ],
+        [
+          0.1,
+          0.1,
+		  0.1,
+		  0.1
+        ],
+        [
+          0.1,
+          0.1,
+		  0.1,
+		  0.1
+        ]
+      ]
+    },
+    {
+      "name": "inhand-right-flame",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+		  0.1,
+		  0.1
+        ],
+        [
+          0.1,
+          0.1,
+		  0.1,
+		  0.1
+        ],
+        [
+          0.1,
+          0.1,
+		  0.1,
+		  0.1
+        ],
+        [
+          0.1,
+          0.1,
+		  0.1,
+		  0.1
+        ]
+      ]
+    }
+  ]
+}
