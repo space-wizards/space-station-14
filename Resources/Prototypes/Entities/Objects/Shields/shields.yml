@@ -313,7 +313,7 @@
   name: mirror shield
   parent: BaseShield
   id: MirrorShield
-  description: Eerily glows red. You hear the geometer whispering...
+  description: Glows an eerie red. You hear the Geometer whispering...
   components:
     - type: Sprite
       state: mirror-icon
