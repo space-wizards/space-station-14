@@ -26,50 +26,50 @@
   copyright: "Sunset by PigeonBeans. Exported in Mono OGG."
   source: "https://soundcloud.com/pigeonbeans/sunset"
 
-  - files: ["A_Good_Man_Is_Hard_to_Find.ogg"]
-  license: "Public Domain"
-  copyright: "A good man is hard to find by Eddie Green. Exported in https://convertio.co."
-  source: "https://en.wikisource.org/wiki/A_Good_Man_Is_Hard_to_Find#:~:text=This%20work%20is%20in%20the,plus%2073%20years%20or%20less."
+- files: ["A_Good_Man_Is_Hard_to_Find.ogg"]
+  license: "Custom"
+  copyright: "Unknown"
+  source: "https://x329436.invisionservice.com/"
 
-    - files: ["Ain_t_Misbehavin_.ogg"]
-  license: "Public Domain"
-  copyright: "Ain't Misbehavin' by Henry Brooks (1895-1970). exported in https://audio.online-convert.com/convert-to-ogg"
-  source: "https://imslp.org/wiki/Ain%27t_Misbehavin%27_(Waller%2C_Fats) (Website is not updated, and it is now public domain in canada since january 1st 2024)"
+- files: ["Ain_t_Misbehavin_.ogg"]
+  license: "Custom"
+  copyright: "Unknown"
+  source: "https://x329436.invisionservice.com/"
 
-        - files: ["And_All_the_While_I_m_Loving_You.ogg"]
-  license: "CC BY-SA 3.0"
-  copyright: "And All the While I'm Loving You by Essentail Jazz Masters. exported in https://audio.online-convert.com/convert-to-ogg"
-  source: "https://fallout-archive.fandom.com/wiki/And_All_the_While_I%27m_Loving_You"
+- files: ["And_All_the_While_I_m_Loving_You.ogg"]
+  license: "Custom"
+  copyright: "Unknown"
+  source: "https://x329436.invisionservice.com/"
 
   #I just got told that the jukebox is frozen on upstream so all songs past this point are for goobstation and copyright does NOT matter (yay)
 
-          - files: ["Yankee_Doodle.ogg"]
-  license: "Fuck you!"
-  copyright: "Fuck you copyright laws!, were like China now, we don't care"
-  source: "Fuck you!"
+- files: ["Yankee_Doodle.ogg"]
+  license: "Custom"
+  copyright: "Unknown"
+  source: "https://x329436.invisionservice.com/"
 
-            - files: ["Worry_Worry_Worry.ogg"]
-  license: "Fuck you!"
-  copyright: "Fuck you copyright laws!, were like China now, we don't care"
-  source: "Fuck you!"
+- files: ["Worry_Worry_Worry.ogg"]
+  license: "Custom"
+  copyright: "Unknown"
+  source: "https://x329436.invisionservice.com/"
 
-            - files: ["Ac-Cent-Tchu-Ate_The_Positive.ogg"]
-  license: "Fuck you!"
-  copyright: "Fuck you copyright laws!, were like China now, we don't care"
-  source: "Fuck you!"
+- files: ["Ac-Cent-Tchu-Ate_The_Positive.ogg"]
+  license: "Custom"
+  copyright: "Unknown"
+  source: "https://x329436.invisionservice.com/"
 
-              - files: ["Big_Iron.ogg"]
-  license: "Fuck you!"
-  copyright: "Fuck you copyright laws!, were like China now, we don't care"
-  source: "Fuck you!"
+- files: ["Big_Iron.ogg"]
+  license: "Custom"
+  copyright: "Unknown"
+  source: "https://x329436.invisionservice.com/"
 
-              - files: ["Blue_Moon_-_1998_Digital_Remaster.ogg"]
-  license: "Fuck you!"
-  copyright: "Fuck you copyright laws!, were like China now, we don't care"
-  source: "Fuck you!"
-  
-              - files: ["Ain_t_That_A_Kick_In_The_Head.ogg"]
-  license: "Fuck you!"
-  copyright: "Fuck you copyright laws!, were like China now, we don't care"
-  source: "Fuck you!"
-  
+- files: ["Blue_Moon_-_1998_Digital_Remaster.ogg"]
+  license: "Custom"
+  copyright: "Unknown"
+  source: "https://x329436.invisionservice.com/"
+
+- files: ["Ain_t_That_A_Kick_In_The_Head.ogg"]
+  license: "Custom"
+  copyright: "Unknown"
+  source: "https://x329436.invisionservice.com/"
+
