@@ -498,6 +498,6 @@
   components:
     - type: StationEvent
       earliestStart: 0
-      minimumPlayers: 20
-      weight: 5
+      minimumPlayers: 10
+      weight: 20
     - type: MobReplacementRule
