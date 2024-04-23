@@ -22,11 +22,6 @@
                     ToolTip="{Loc 'analysis-console-print-tooltip-info'}">
                 </Button>
                 <BoxContainer MinHeight="5"></BoxContainer>
-                <Button Name="ExtractButton"
-                    Text="{Loc 'analysis-console-extract-button'}"
-                    ToolTip="{Loc 'analysis-console-extract-button-info'}">
-                </Button>
-                <BoxContainer MinHeight="5"></BoxContainer>
                 <BoxContainer Orientation="Horizontal">
                     <Button Name="UpBiasButton"
                         Text="{Loc 'analysis-console-bias-up'}"
@@ -41,6 +36,11 @@
                         StyleClasses="OpenLeft">
                     </Button>
                 </BoxContainer>
+                <BoxContainer MinHeight="15"></BoxContainer>
+                <Button Name="ExtractButton"
+                    Text="{Loc 'analysis-console-extract-button'}"
+                    ToolTip="{Loc 'analysis-console-extract-button-info'}">
+                </Button>
             </BoxContainer>
             <BoxContainer Orientation="Vertical">
                 <Label Name="ProgressLabel"></Label>
