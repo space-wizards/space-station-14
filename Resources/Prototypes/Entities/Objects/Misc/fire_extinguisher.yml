@@ -2,7 +2,7 @@
   name: fire extinguisher
   parent: BaseItem
   id: FireExtinguisher
-  description: It extinguishes fires.
+  description: A simple type A water extinguisher! Seems like it could be reloaded with any chemical...
   components:
   - type: Sprite
     sprite: Objects/Misc/fire_extinguisher.rsi
@@ -15,10 +15,10 @@
   - type: SolutionContainerManager
     solutions:
       spray:
-        maxVol: 100
+        maxVol: 150
         reagents:
         - ReagentId: Water
-          Quantity: 100
+          Quantity: 150  #Needs a buff as the new fire system is quite powerful
   - type: RefillableSolution
     solution: spray
   - type: DrainableSolution
@@ -31,16 +31,16 @@
     spraySound:
       path: /Audio/Effects/extinguish.ogg
     sprayedPrototype: ExtinguisherSpray
-    vaporAmount: 3
-    vaporSpread: 90
-    sprayVelocity: 2.0
+    vaporAmount: 5
+    vaporSpread: 100
+    sprayVelocity: 4.0 #buffed
   - type: FireExtinguisher
     hasSafety: true
   - type: MeleeWeapon
     wideAnimationRotation: 180
     damage:
       types:
-        Blunt: 10
+        Blunt: 12
     soundHit:
       path: /Audio/Weapons/smash.ogg
   - type: Tool
