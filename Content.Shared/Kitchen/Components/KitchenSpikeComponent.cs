@@ -15,7 +15,7 @@ public sealed partial class KitchenSpikeComponent : Component
     [DataField("sound")]
     public SoundSpecifier SpikeSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 
-    public List<string?>? PrototypesToSpawn;
+    public List<string>? PrototypesToSpawn;
 
     // TODO: Spiking alive mobs? (Replace with uid) (deal damage to their limbs on spiking, kill on first butcher attempt?)
     public string MeatSource1p = "?";

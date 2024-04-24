@@ -24,6 +24,8 @@ pda-bound-user-interface-lock-uplink-description = Prevent anyone from accessing
 
 comp-pda-ui-menu-title = PDA
 
+comp-pda-ui-footer = Personal Digital Assistant
+
 comp-pda-ui-station = Station: [color=white]{$station}[/color]
 
 comp-pda-ui-station-alert-level = Alert Level: [color={ $color }]{ $level }[/color]
@@ -49,3 +51,6 @@ pda-bound-user-interface-music-button-description = Play music on your PDA
 comp-pda-ui-unknown = Unknown
 
 comp-pda-ui-unassigned = Unassigned
+
+pda-notification-message = [font size=12][bold]PDA[/bold] { $header }: [/font]
+    "{ $message }"

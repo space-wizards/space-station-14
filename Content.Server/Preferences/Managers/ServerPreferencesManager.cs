@@ -11,6 +11,7 @@ using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 
@@ -25,6 +26,7 @@ namespace Content.Server.Preferences.Managers
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _protos = default!;
 
         // Cache player prefs on the server so we don't need as much async hell related to them.
@@ -98,8 +100,10 @@ namespace Content.Server.Preferences.Managers
             }
 
             var curPrefs = prefsData.Prefs!;
+            var session = _playerManager.GetSessionById(userId);
+            var collection = IoCManager.Instance!;
 
-            profile.EnsureValid();
+            profile.EnsureValid(session, collection);
 
             var profiles = new Dictionary<int, ICharacterProfile>(curPrefs.Characters)
             {
@@ -167,9 +171,9 @@ namespace Content.Server.Preferences.Managers
         }
 
         // Should only be called via UserDbDataManager.
-        public async Task LoadData(IPlayerSession session, CancellationToken cancel)
+        public async Task LoadData(ICommonSession session, CancellationToken cancel)
         {
-            if (!ShouldStorePrefs(session.ConnectedClient.AuthType))
+            if (!ShouldStorePrefs(session.Channel.AuthType))
             {
                 // Don't store data for guests.
                 var prefsData = new PlayerPrefData
@@ -202,17 +206,17 @@ namespace Content.Server.Preferences.Managers
                     {
                         MaxCharacterSlots = MaxCharacterSlots
                     };
-                    _netManager.ServerSendMessage(msg, session.ConnectedClient);
+                    _netManager.ServerSendMessage(msg, session.Channel);
                 }
             }
         }
 
-        public void OnClientDisconnected(IPlayerSession session)
+        public void OnClientDisconnected(ICommonSession session)
         {
             _cachedPlayerPrefs.Remove(session.UserId);
         }
 
-        public bool HavePreferencesLoaded(IPlayerSession session)
+        public bool HavePreferencesLoaded(ICommonSession session)
         {
             return _cachedPlayerPrefs.ContainsKey(session.UserId);
         }
@@ -260,44 +264,20 @@ namespace Content.Server.Preferences.Managers
                 return await _db.InitPrefsAsync(userId, HumanoidCharacterProfile.Random());
             }
 
-            return SanitizePreferences(prefs);
+            var session = _playerManager.GetSessionById(userId);
+            var collection = IoCManager.Instance!;
+
+            return SanitizePreferences(session, prefs, collection);
         }
 
-        private PlayerPreferences SanitizePreferences(PlayerPreferences prefs)
+        private PlayerPreferences SanitizePreferences(ICommonSession session, PlayerPreferences prefs, IDependencyCollection collection)
         {
             // Clean up preferences in case of changes to the game,
             // such as removed jobs still being selected.
 
             return new PlayerPreferences(prefs.Characters.Select(p =>
             {
-                ICharacterProfile newProf;
-                switch (p.Value)
-                {
-                    case HumanoidCharacterProfile hp:
-                    {
-                        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-                        var selectedSpecies = HumanoidAppearanceSystem.DefaultSpecies;
-
-                        if (prototypeManager.TryIndex<SpeciesPrototype>(hp.Species, out var species) && species.RoundStart)
-                        {
-                            selectedSpecies = hp.Species;
-                        }
-
-                        newProf = hp
-                            .WithJobPriorities(
-                                hp.JobPriorities.Where(job =>
-                                    _protos.HasIndex<JobPrototype>(job.Key)))
-                            .WithAntagPreferences(
-                                hp.AntagPreferences.Where(antag =>
-                                    _protos.HasIndex<AntagPrototype>(antag)))
-                            .WithSpecies(selectedSpecies);
-                        break;
-                    }
-                    default:
-                        throw new NotSupportedException();
-                }
-
-                return new KeyValuePair<int, ICharacterProfile>(p.Key, newProf);
+                return new KeyValuePair<int, ICharacterProfile>(p.Key, p.Value.Validated(session, collection));
             }), prefs.SelectedCharacterIndex, prefs.AdminOOCColor);
         }
 

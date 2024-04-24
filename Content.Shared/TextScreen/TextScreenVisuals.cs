@@ -5,31 +5,27 @@ namespace Content.Shared.TextScreen;
 [Serializable, NetSerializable]
 public enum TextScreenVisuals : byte
 {
+    // TODO: support for a small image, I think. Probably want to rename textscreen to just screen then.
     /// <summary>
-    ///     Should this show any text? <br/>
-    ///     Expects a <see cref="bool"/>.
+    ///     What text to default to after timer completion?
+    ///     Expects a <see cref="string"/>.
     /// </summary>
-    On,
+    DefaultText,
     /// <summary>
-    ///     Is this a timer or a text-screen? <br/>
-    ///     Expects a <see cref="TextScreenMode"/>.
-    /// </summary>
-    Mode,
-    /// <summary>
-    ///     What text to show? <br/>
+    ///     What text to render? <br/>
     ///     Expects a <see cref="string"/>.
     /// </summary>
     ScreenText,
+
     /// <summary>
     ///     What is the target time? <br/>
     ///     Expects a <see cref="TimeSpan"/>.
     /// </summary>
-    TargetTime
-}
+    TargetTime,
 
-[Serializable, NetSerializable]
-public enum TextScreenMode : byte
-{
-    Text,
-    Timer
+    /// <summary>
+    ///     Change text color on the entire screen
+    ///     Expects a <see cref="Color"/>.
+    /// </summary>
+    Color
 }

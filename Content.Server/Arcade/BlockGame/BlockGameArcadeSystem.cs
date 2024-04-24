@@ -1,14 +1,17 @@
 using Content.Server.Power.Components;
-using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
+using Content.Server.Advertise;
+using Content.Server.Advertise.Components;
 using Content.Shared.Arcade;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 
 namespace Content.Server.Arcade.BlockGame;
 
 public sealed class BlockGameArcadeSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SpeakOnUIClosedSystem _speakOnUIClosed = default!;
 
     public override void Initialize()
     {
@@ -16,9 +19,13 @@ public sealed class BlockGameArcadeSystem : EntitySystem
 
         SubscribeLocalEvent<BlockGameArcadeComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<BlockGameArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpen);
-        SubscribeLocalEvent<BlockGameArcadeComponent, BoundUIClosedEvent>(OnAfterUiClose);
         SubscribeLocalEvent<BlockGameArcadeComponent, PowerChangedEvent>(OnBlockPowerChanged);
-        SubscribeLocalEvent<BlockGameArcadeComponent, BlockGameMessages.BlockGamePlayerActionMessage>(OnPlayerAction);
+
+        Subs.BuiEvents<BlockGameArcadeComponent>(BlockGameUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIClosedEvent>(OnAfterUiClose);
+            subs.Event<BlockGameMessages.BlockGamePlayerActionMessage>(OnPlayerAction);
+        });
     }
 
     public override void Update(float frameTime)
@@ -30,7 +37,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         }
     }
 
-    private void UpdatePlayerStatus(EntityUid uid, IPlayerSession session, PlayerBoundUserInterface? bui = null, BlockGameArcadeComponent? blockGame = null)
+    private void UpdatePlayerStatus(EntityUid uid, ICommonSession session, PlayerBoundUserInterface? bui = null, BlockGameArcadeComponent? blockGame = null)
     {
         if (!Resolve(uid, ref blockGame))
             return;
@@ -67,7 +74,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
 
     private void OnAfterUiClose(EntityUid uid, BlockGameArcadeComponent component, BoundUIClosedEvent args)
     {
-        if (args.Session is not IPlayerSession session)
+        if (args.Session is not { } session)
             return;
 
         if (component.Player != session)
@@ -84,8 +91,6 @@ public sealed class BlockGameArcadeSystem : EntitySystem
             component.Spectators.Remove(component.Player);
             UpdatePlayerStatus(uid, component.Player, blockGame: component);
         }
-        else
-            component.Player = null;
 
         UpdatePlayerStatus(uid, temp, blockGame: component);
     }
@@ -117,6 +122,9 @@ public sealed class BlockGameArcadeSystem : EntitySystem
             component.Game.StartGame();
             return;
         }
+
+        if (TryComp<SpeakOnUIClosedComponent>(uid, out var speakComponent))
+            _speakOnUIClosed.TrySetFlag((uid, speakComponent));
 
         component.Game.ProcessInput(msg.PlayerAction);
     }

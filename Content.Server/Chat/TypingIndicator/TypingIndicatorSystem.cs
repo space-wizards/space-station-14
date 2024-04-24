@@ -1,6 +1,6 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chat.TypingIndicator;
-using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.Chat.TypingIndicator;
 
@@ -39,7 +39,7 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
         var uid = args.SenderSession.AttachedEntity;
         if (!Exists(uid))
         {
-            Logger.Warning($"Client {args.SenderSession} sent TypingChangedEvent without an attached entity.");
+            Log.Warning($"Client {args.SenderSession} sent TypingChangedEvent without an attached entity.");
             return;
         }
 

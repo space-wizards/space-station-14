@@ -1,6 +1,6 @@
-﻿- type: advertisementsPack
+- type: messagePack
   id: RobustSoftdrinksAds
-  advertisements:
+  messages:
   - advertisement-cola-1
   - advertisement-cola-2
   - advertisement-cola-3
@@ -8,3 +8,4 @@
   - advertisement-cola-5
   - advertisement-cola-6
   - advertisement-cola-7
+  - advertisement-cola-8

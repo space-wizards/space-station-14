@@ -1,7 +1,10 @@
-﻿using Content.Server.GameTicking;
+using Content.Server.GameTicking;
 ﻿using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
+using Content.Server.Shuttles.Systems;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.Mind;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Random;
@@ -9,6 +12,7 @@ using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
+using System.Text;
 
 namespace Content.Server.Objectives;
 
@@ -18,6 +22,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
 
     public override void Initialize()
     {
@@ -71,70 +76,68 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
         {
             // first get the total number of players that were in these game rules combined
             var total = 0;
+            var totalInCustody = 0;
             foreach (var (_, minds) in summary)
             {
                 total += minds.Count;
+                totalInCustody += minds.Where(m => IsInCustody(m)).Count();
             }
 
-            var result = Loc.GetString("objectives-round-end-result", ("count", total), ("agent", agent));
+            var result = new StringBuilder();
+            result.AppendLine(Loc.GetString("objectives-round-end-result", ("count", total), ("agent", agent)));
+            if (agent == Loc.GetString("traitor-round-end-agent-name"))
+            {
+                result.AppendLine(Loc.GetString("objectives-round-end-result-in-custody", ("count", total), ("custody", totalInCustody), ("agent", agent)));
+            }
             // next add all the players with its own prepended text
             foreach (var (prepend, minds) in summary)
             {
                 if (prepend != string.Empty)
-                    result += prepend;
+                    result.Append(prepend);
 
                 // add space between the start text and player list
-                result += "\n";
+                result.AppendLine();
 
-                AddSummary(ref result, agent, minds);
+                AddSummary(result, agent, minds);
             }
 
-            ev.AddLine(result + "\n");
+            ev.AddLine(result.AppendLine().ToString());
         }
     }
 
-    private void AddSummary(ref string result, string agent, List<EntityUid> minds)
+    private void AddSummary(StringBuilder result, string agent, List<EntityUid> minds)
     {
+        var agentSummaries = new List<(string summary, float successRate, int completedObjectives)>();
+
         foreach (var mindId in minds)
         {
             if (!TryComp(mindId, out MindComponent? mind))
                 continue;
 
-            var name = mind.CharacterName;
-            _mind.TryGetSession(mindId, out var session);
-            var username = session?.Name;
+            var title = GetTitle(mindId, mind);
+            if (title == null)
+                continue;
 
-            string title;
-            if (username != null)
+            var custody = IsInCustody(mindId, mind) ? Loc.GetString("objectives-in-custody") : string.Empty;
+
+            var objectives = mind.Objectives;
+            if (objectives.Count == 0)
             {
-                if (name != null)
-                    title = Loc.GetString("objectives-player-user-named", ("user", username), ("name", name));
-                else
-                    title = Loc.GetString("objectives-player-user", ("user", username));
-            }
-            else
-            {
-                // nothing to identify the player by, just give up
-                if (name == null)
-                    continue;
-
-                title = Loc.GetString("objectives-player-named", ("name", name));
-            }
-
-            result += "\n";
-
-            var objectives = mind.AllObjectives.ToArray();
-            if (objectives.Length == 0)
-            {
-                result += Loc.GetString("objectives-no-objectives", ("title", title), ("agent", agent));
+                agentSummaries.Add((Loc.GetString("objectives-no-objectives", ("custody", custody), ("title", title), ("agent", agent)), 0f, 0));
                 continue;
             }
 
-            result += Loc.GetString("objectives-with-objectives", ("title", title), ("agent", agent));
+            var completedObjectives = 0;
+            var totalObjectives = 0;
+            var agentSummary = new StringBuilder();
+            agentSummary.AppendLine(Loc.GetString("objectives-with-objectives", ("custody", custody), ("title", title), ("agent", agent)));
 
             foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).Issuer))
             {
-                result += "\n" + Loc.GetString($"objective-issuer-{objectiveGroup.Key}");
+                //TO DO:
+                //check for the right group here. Getting the target issuer is easy: objectiveGroup.Key
+                //It should be compared to the type of the group's issuer.
+                agentSummary.AppendLine(Loc.GetString($"objective-issuer-{objectiveGroup.Key}"));
 
                 foreach (var objective in objectiveGroup)
                 {
@@ -144,26 +147,39 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
                     var objectiveTitle = info.Value.Title;
                     var progress = info.Value.Progress;
+                    totalObjectives++;
+
+                    agentSummary.Append("- ");
                     if (progress > 0.99f)
                     {
-                        result += "\n- " + Loc.GetString(
+                        agentSummary.AppendLine(Loc.GetString(
                             "objectives-objective-success",
                             ("objective", objectiveTitle),
                             ("markupColor", "green")
-                        );
+                        ));
+                        completedObjectives++;
                     }
                     else
                     {
-                        result += "\n- " + Loc.GetString(
+                        agentSummary.AppendLine(Loc.GetString(
                             "objectives-objective-fail",
                             ("objective", objectiveTitle),
                             ("progress", (int) (progress * 100)),
                             ("markupColor", "red")
-                        );
+                        ));
                     }
                 }
             }
+
+            var successRate = totalObjectives > 0 ? (float) completedObjectives / totalObjectives : 0f;
+            agentSummaries.Add((agentSummary.ToString(), successRate, completedObjectives));
         }
+
+        var sortedAgents = agentSummaries.OrderByDescending(x => x.successRate)
+                                       .ThenByDescending(x => x.completedObjectives);
+
+        foreach (var (summary, _, _) in sortedAgents)
+            result.AppendLine(summary);
     }
 
     public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
@@ -196,6 +212,54 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// Returns whether a target is considered 'in custody' (cuffed on the shuttle).
+    /// </summary>
+    private bool IsInCustody(EntityUid mindId, MindComponent? mind = null)
+    {
+        if (!Resolve(mindId, ref mind))
+            return false;
+
+        // Ghosting will not save you
+        bool originalEntityInCustody = false;
+        EntityUid? originalEntity = GetEntity(mind.OriginalOwnedEntity);
+        if (originalEntity.HasValue && originalEntity != mind.OwnedEntity)
+        {
+            originalEntityInCustody = TryComp<CuffableComponent>(originalEntity, out var origCuffed) && origCuffed.CuffedHandCount > 0
+                   && _emergencyShuttle.IsTargetEscaping(originalEntity.Value);
+        }
+
+        return originalEntityInCustody || (TryComp<CuffableComponent>(mind.OwnedEntity, out var cuffed) && cuffed.CuffedHandCount > 0
+               && _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value));
+    }
+
+    /// <summary>
+    /// Get the title for a player's mind used in round end.
+    /// </summary>
+    public string? GetTitle(EntityUid mindId, MindComponent? mind = null)
+    {
+        if (!Resolve(mindId, ref mind))
+            return null;
+
+        var name = mind.CharacterName;
+        _mind.TryGetSession(mindId, out var session);
+        var username = session?.Name;
+
+        if (username != null)
+        {
+            if (name != null)
+                return Loc.GetString("objectives-player-user-named", ("user", username), ("name", name));
+
+            return Loc.GetString("objectives-player-user", ("user", username));
+        }
+
+        // nothing to identify the player by, just give up
+        if (name == null)
+            return null;
+
+        return Loc.GetString("objectives-player-named", ("name", name));
     }
 }
 

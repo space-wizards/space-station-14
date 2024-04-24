@@ -91,10 +91,30 @@
     layers:
       - state: base
         map: [ "enum.GunVisualLayers.Base" ]
-      - state: base-6
+      - state: piercing-6
         map: [ "enum.GunVisualLayers.Mag" ]
   - type: MagazineVisuals
-    magState: base
+    magState: piercing
+    steps: 7
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: SpeedLoaderMagnumUranium
+  name: "speed loader (.45 magnum uranium)"
+  parent: BaseSpeedLoaderMagnum
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumUranium
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    layers:
+      - state: base
+        map: [ "enum.GunVisualLayers.Base" ]
+      - state: uranium-6
+        map: [ "enum.GunVisualLayers.Mag" ]
+  - type: MagazineVisuals
+    magState: uranium
     steps: 7
     zeroVisible: false
   - type: Appearance

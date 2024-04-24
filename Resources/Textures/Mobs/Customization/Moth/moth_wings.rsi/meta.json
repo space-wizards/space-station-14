@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commits https://github.com/tgstation/tgstation/commit/b30e2934e7585bad901dd12a35d0635f1fc292c1 and https://github.com/tgstation/tgstation/commit/6b0af0febe578f47ae280781682ea7a3d77f508a, modified by https://github.com/PixelTheKermit & https://github.com/MilenVolf",
+  "copyright": "Taken from tgstation at commits https://github.com/tgstation/tgstation/commit/b30e2934e7585bad901dd12a35d0635f1fc292c1 and https://github.com/tgstation/tgstation/commit/6b0af0febe578f47ae280781682ea7a3d77f508a, modified by https://github.com/PixelTheKermit & https://github.com/MilenVolf, Underwing is drawn by Ubaser",
   "size": {
     "x": 32,
     "y": 32
@@ -117,6 +117,14 @@
     },
     {
       "name": "witchwing",
+      "directions": 4
+    },
+    {
+      "name": "underwing_primary",
+      "directions": 4
+    },
+    {
+      "name": "underwing_secondary",
       "directions": 4
     }
   ]

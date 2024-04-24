@@ -16,17 +16,20 @@
       state: fill-1
       visible: false
   - type: Item
-    size: 100
+    size: Normal
   - type: Clothing
     sprite: Objects/Tools/bucket.rsi
     slots:
     - HEAD
+    quickEquip: false
   - type: SolutionContainerManager
     solutions:
       bucket:
         maxVol: 250
+  - type: MixableSolution
+    solution: bucket
   - type: SolutionTransfer
-    transferAmount: 50
+    transferAmount: 100
     maxTransferAmount: 100
     minTransferAmount: 10
     canChangeTransferAmount: true
@@ -47,6 +50,8 @@
   - type: RefillableSolution
     solution: bucket
   - type: DrainableSolution
+    solution: bucket
+  - type: SolutionItemStatus
     solution: bucket
   - type: Appearance
   - type: SolutionContainerVisuals

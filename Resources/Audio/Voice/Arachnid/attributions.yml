@@ -2,4 +2,7 @@
   license: "CC-BY-4.0"
   copyright: "Recorded by https://github.com/PixelTheKermit"
   source: "https://github.com/space-wizards/space-station-14/pull/13945"
-
+- files: ["arachnid_chitter.ogg", "arachnid_click.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Recorded by https://github.com/PixelTheKermit, modified by Dutch-VanDerLinde"
+  source: "https://github.com/space-wizards/space-station-14/pull/23548"

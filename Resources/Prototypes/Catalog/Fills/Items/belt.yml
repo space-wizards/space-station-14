@@ -37,7 +37,9 @@
       - id: JawsOfLife
       - id: WelderExperimental
       - id: Multitool
-      - id: CableApcStack
+      - id: HolofanProjector
+      - id: GasAnalyzer
+      - id: trayScanner
 
 - type: entity
   id: ClothingBeltSecurityFilled
@@ -47,10 +49,23 @@
   - type: StorageFill
     contents:
       - id: GrenadeFlashBang
-      - id: GrenadeFlashBang
+      - id: TearGasGrenade
       - id: Stunbaton
       - id: Handcuffs
       - id: Handcuffs
+
+- type: entity
+  id: ClothingBeltSecurityWebbingFilled
+  parent: ClothingBeltSecurityWebbing
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: GrenadeFlashBang
+    - id: TearGasGrenade
+    - id: Stunbaton
+    - id: Handcuffs
+    - id: Handcuffs
 
 - type: entity
   id: ClothingBeltJanitorFilled
@@ -61,8 +76,8 @@
     contents:
       - id: Soap #Make a soap group and pick between when i'm not lazy
       - id: SprayBottleSpaceCleaner
-      #- name: GrenadeChem
-      #- name: GrenadeChem
+      - id: CleanerGrenade
+        amount: 2
       - id: FlashlightLantern
 
 - type: entity
@@ -82,21 +97,18 @@
       - id: EmergencyMedipen #You never know what people are going to latejoin into
 
 - type: entity
-  id: ClothingBeltParamedicFilled
-  parent: ClothingBeltMedical
-  suffix: Filled
+  id: ClothingBeltMedicalEMTFilled
+  parent: ClothingBeltMedicalEMT
+  suffix: Paramedic,Filled
   components:
   - type: StorageFill
     contents:
       - id: Brutepack
-        amount: 1
       - id: Ointment
-        amount: 1
       - id: Bloodpack
-        amount: 1
       - id: Gauze
       - id: EmergencyMedipen #You never know what people are going to latejoin into
-        amount: 6
+        amount: 3
 
 - type: entity
   id: ClothingBeltPlantFilled
@@ -114,9 +126,10 @@
   parent: ClothingBeltSheath
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-      - id: CaptainSabre
+  - type: ContainerFill
+    containers:
+      item:
+      - CaptainSabre
 
 - type: entity
   id: ClothingBeltMilitaryWebbingGrenadeFilled
@@ -124,6 +137,12 @@
   name: grenadier chest rig
   suffix: Filled
   components:
+  - type: Item
+    size: Ginormous
+  - type: Storage
+    maxItemSize: Normal
+    grid:
+    - 0,0,7,1
   - type: StorageFill
     contents:
       - id: ExGrenade
@@ -140,7 +159,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: SyndiHypo
       - id: EpinephrineChemistryBottle
         amount: 2
       - id: EphedrineChemistryBottle
@@ -169,4 +187,13 @@
     contents:
         - id: WeaponRevolverInspector
         - id: SpeedLoaderMagnum
-        - id: SpeedLoaderMagnumRubber
+
+- type: entity
+  id: ClothingBeltChefFilled
+  parent: ClothingBeltChef
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodShakerSalt
+    - id: FoodShakerPepper

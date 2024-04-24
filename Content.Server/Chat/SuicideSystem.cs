@@ -10,6 +10,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat
@@ -22,6 +23,7 @@ namespace Content.Server.Chat
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public bool Suicide(EntityUid victim)
         {
@@ -67,10 +69,10 @@ namespace Content.Server.Chat
                 return;
 
             var othersMessage = Loc.GetString("suicide-command-default-text-others", ("name", victim));
-            victim.PopupMessageOtherClients(othersMessage);
+            _popup.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim), true);
 
             var selfMessage = Loc.GetString("suicide-command-default-text-self");
-            victim.PopupMessage(selfMessage);
+            _popup.PopupEntity(selfMessage, victim, victim);
             suicideEvent.SetHandled(SuicideKind.Bloodloss);
         }
 
@@ -112,7 +114,7 @@ namespace Content.Server.Chat
                 if (itemQuery.HasComponent(entity))
                     continue;
 
-                RaiseLocalEvent(entity, suicideEvent, false);
+                RaiseLocalEvent(entity, suicideEvent);
 
                 if (suicideEvent.Handled)
                     return true;
@@ -129,7 +131,7 @@ namespace Content.Server.Chat
             if (!_prototypeManager.TryIndex<DamageTypePrototype>(kind.ToString(), out var damagePrototype))
             {
                 const SuicideKind fallback = SuicideKind.Blunt;
-                Logger.Error($"{nameof(SuicideSystem)} could not find the damage type prototype associated with {kind}. Falling back to {fallback}");
+                Log.Error($"{nameof(SuicideSystem)} could not find the damage type prototype associated with {kind}. Falling back to {fallback}");
                 damagePrototype = _prototypeManager.Index<DamageTypePrototype>(fallback.ToString());
             }
             const int lethalAmountOfDamage = 200; // TODO: Would be nice to get this number from somewhere else

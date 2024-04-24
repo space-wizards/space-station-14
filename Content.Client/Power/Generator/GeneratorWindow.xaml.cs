@@ -14,6 +14,7 @@ public sealed partial class GeneratorWindow : FancyWindow
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly ILocalizationManager _loc = default!;
 
+    private readonly SharedPowerSwitchableSystem _switchable;
     private readonly FuelGeneratorComponent? _component;
     private PortableGeneratorComponentBuiState? _lastState;
 
@@ -24,6 +25,7 @@ public sealed partial class GeneratorWindow : FancyWindow
         IoCManager.InjectDependencies(this);
 
         _entityManager.TryGetComponent(entity, out _component);
+        _switchable = _entityManager.System<SharedPowerSwitchableSystem>();
 
         EntityView.SetEntity(entity);
         TargetPower.IsValid += IsValid;
@@ -99,25 +101,48 @@ public sealed partial class GeneratorWindow : FancyWindow
             StatusLabel.SetOnlyStyleClass("Danger");
         }
 
-        var canSwitch = _entityManager.TryGetComponent(_entity, out PowerSwitchableGeneratorComponent? switchable);
+        var canSwitch = _entityManager.TryGetComponent(_entity, out PowerSwitchableComponent? switchable);
         OutputSwitchLabel.Visible = canSwitch;
         OutputSwitchButton.Visible = canSwitch;
 
-        if (canSwitch)
+        if (switchable != null)
         {
-            var isHV = switchable!.ActiveOutput == PowerSwitchableGeneratorOutput.HV;
-            OutputSwitchLabel.Text =
-                Loc.GetString(isHV ? "portable-generator-ui-switch-hv" : "portable-generator-ui-switch-mv");
-            OutputSwitchButton.Text =
-                Loc.GetString(isHV ? "portable-generator-ui-switch-to-mv" : "portable-generator-ui-switch-to-hv");
+            var voltage = _switchable.VoltageString(_switchable.GetVoltage(_entity, switchable));
+            OutputSwitchLabel.Text = Loc.GetString("portable-generator-ui-current-output", ("voltage", voltage));
+            var nextVoltage = _switchable.VoltageString(_switchable.GetNextVoltage(_entity, switchable));
+            OutputSwitchButton.Text = Loc.GetString("power-switchable-switch-voltage", ("voltage", nextVoltage));
             OutputSwitchButton.Disabled = state.On;
         }
 
         CloggedLabel.Visible = state.Clogged;
+
+        if (state.NetworkStats is { } netStats)
+        {
+            NetworkStats.Text = Loc.GetString(
+                "portable-generator-ui-network-stats-value",
+                ("load", netStats.Load),
+                ("supply", netStats.Supply));
+
+            var good = netStats.Load <= netStats.Supply;
+            NetworkStats.SetOnlyStyleClass(good ? "Good" : "Caution");
+        }
+        else
+        {
+            NetworkStats.Text = Loc.GetString("portable-generator-ui-network-stats-not-connected");
+            NetworkStats.StyleClasses.Clear();
+        }
     }
 
     private bool TryGetStartProgress(out float progress)
     {
+        // Try to check progress of auto-revving first
+        if (_entityManager.TryGetComponent<ActiveGeneratorRevvingComponent>(_entity, out var activeGeneratorRevvingComponent) && _entityManager.TryGetComponent<PortableGeneratorComponent>(_entity, out var portableGeneratorComponent))
+        {
+            var calculatedProgress = activeGeneratorRevvingComponent.CurrentTime / portableGeneratorComponent.StartTime;
+            progress = (float) calculatedProgress;
+            return true;
+        }
+
         var doAfterSystem = _entityManager.EntitySysManager.GetEntitySystem<DoAfterSystem>();
         return doAfterSystem.TryFindActiveDoAfter<GeneratorStartedEvent>(_entity, out _, out _, out progress);
     }

@@ -1,6 +1,6 @@
-﻿- type: advertisementsPack
+- type: messagePack
   id: BoozeOMatAds
-  advertisements:
+  messages:
   - advertisement-boozeomat-1
   - advertisement-boozeomat-2
   - advertisement-boozeomat-3

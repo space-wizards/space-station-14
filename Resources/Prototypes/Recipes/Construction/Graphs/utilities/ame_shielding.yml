@@ -12,7 +12,7 @@
             - !type:AdminLog  # I don't like logging it like this. The log should include the user, AMEShielding EntityID, and AMEPart EntityID, and there should also be a start of attempt log.
               message: "An AME shielding was deconstructed"
             - !type:SpawnPrototype
-              prototype: AmePart
+              prototype: AmePartFlatpack
               amount: 1
             - !type:DeleteEntity
           steps:

@@ -7,13 +7,17 @@
   - type: Sprite
     sprite: Objects/Misc/desk_bell.rsi
     state: "normal"
+  - type: Tag
+    tags:
+      - Payload
   - type: InteractionPopup
     successChance: 1
     interactSuccessSound:
       collection: DeskBell
-    params:
-      variation: 0.03
-      volume: 3
+      params:
+        variation: 0.03
+        volume: 3
+    onActivate: true
   - type: EmitSoundOnUse
     sound:
       collection: DeskBell
@@ -32,10 +36,10 @@
       params:
           variation: 0.03
           volume: 3
-  - type: ItemCooldown
   - type: UseDelay
     delay: 0.5
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       collection: DeskBell
       params:

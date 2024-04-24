@@ -12,7 +12,9 @@
       visible: false
   - type: Clothing
   - type: Storage
-    capacity: 150
+    grid:
+    - 0,0,7,3
+    maxItemSize: Small
     whitelist:
       tags:
       - Arrow

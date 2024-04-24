@@ -8,7 +8,7 @@ namespace Content.Server.Worldgen.Prototypes;
 ///     The components included are applied to the map that world generation is configured on.
 /// </summary>
 [Prototype("worldgenConfig")]
-public sealed class WorldgenConfigPrototype : IPrototype
+public sealed partial class WorldgenConfigPrototype : IPrototype
 {
     /// <inheritdoc />
     [IdDataField]

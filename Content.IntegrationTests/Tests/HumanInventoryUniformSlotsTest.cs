@@ -26,7 +26,7 @@ namespace Content.IntegrationTests.Tests
   - type: Clothing
     slots: [innerclothing]
   - type: Item
-    size: 5
+    size: Tiny
 
 - type: entity
   name: IDCardDummy
@@ -36,7 +36,7 @@ namespace Content.IntegrationTests.Tests
     slots:
     - idcard
   - type: Item
-    size: 5
+    size: Tiny
   - type: IdCard
 
 - type: entity
@@ -44,14 +44,14 @@ namespace Content.IntegrationTests.Tests
   id: FlashlightDummy
   components:
   - type: Item
-    size: 5
+    size: Tiny
 
 - type: entity
   name: ToolboxDummy
   id: ToolboxDummy
   components:
   - type: Item
-    size: 9999
+    size: Huge
 ";
         [Test]
         public async Task Test()

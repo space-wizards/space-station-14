@@ -8,6 +8,9 @@
     - HEAD
   - type: Sprite
     state: icon
+  - type: Item
+    size: Small
+    storedRotation: -90
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
@@ -20,7 +23,6 @@
   - type: Tag
     tags:
       - ClothMade
-      - DroneUsable
       - WhitelistChameleon
 
 - type: entity
@@ -35,6 +37,7 @@
       amount: 1
   - type: Tag
     tags:
+      - ClothMade
       - WhitelistChameleon
 
 - type: entity
@@ -68,11 +71,12 @@
     equippedPrefix: off
   - type: Item
     heldPrefix: off
+    size: Normal
   - type: ToggleableLightVisuals
   - type: PointLight
     enabled: false
     radius: 3
-    energy: 2
+    energy: 1
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
     netsync: false
@@ -116,19 +120,26 @@
   name: base space helmet
   components:
   - type: Item
-    size: 10
+    size: Normal
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.2
   - type: IngestionBlocker
+  - type: Clothing
+    #Copies ClothingHeadHardsuitBase behavior
+    equipSound: /Audio/Mecha/mechmove03.ogg
+    unequipSound: /Audio/Mecha/mechmove03.ogg
   - type: Tag
     tags:
-    - HidesHair
     - WhitelistChameleon
     - HelmetEVA
   - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 - type: entity
   abstract: true
@@ -164,9 +175,12 @@
   - type: IngestionBlocker
   - type: Tag
     tags:
-    - HidesHair
     - WhitelistChameleon
   - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 - type: entity
   abstract: true
@@ -238,6 +252,6 @@
   - type: TemperatureProtection
     coefficient: 0.7
   - type: GroupExamine
-  - type: Tag
-    tags:
-    - HidesHair
+  - type: HideLayerClothing
+    slots:
+    - Hair

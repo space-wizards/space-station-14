@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Body.Prototypes;
 
 [Prototype("body")]
-public sealed class BodyPrototype : IPrototype
+public sealed partial class BodyPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 

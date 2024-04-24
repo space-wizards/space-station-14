@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "taken from tgstation on commit https://github.com/tgstation/tgstation/commit/ce6f2724cd79fa7c916e97167f9eab61cbd0a8cb",
+  "states":
+  [
+    {
+      "name": "base",
+      "directions": 4
+    },
+
+    {
+      "name": "dead",
+      "directions": 1
+    }
+  ]
+}

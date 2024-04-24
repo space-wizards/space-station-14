@@ -1,0 +1,22 @@
+﻿<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+              xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+              Orientation="Vertical"
+              Margin="5 5 5 5">
+    <PanelContainer HorizontalExpand="True">
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#777777"/>
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer Name="DisciplineColorBackground" HorizontalExpand="True" VerticalExpand="False" MinHeight="15"/>
+            <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <RichTextLabel Name="NameLabel" VerticalAlignment="Bottom" HorizontalExpand="True"/>
+                    <TextureRect Name="TechTexture" VerticalAlignment="Center"  HorizontalAlignment="Right"/>
+                </BoxContainer>
+                <customControls:HSeparator Margin="10 5 10 10"/>
+                <RichTextLabel Name="DescriptionLabel"/>
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</BoxContainer>

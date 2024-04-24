@@ -103,11 +103,17 @@ namespace Content.Server.DeviceNetwork.Components
         public bool SendBroadcastAttemptEvent = false;
 
         /// <summary>
-        ///     A list of entities that get sent the <see cref="DeviceShutDownEvent"/> when this entity gets deleted.<br/><br/>
-        ///     When a device subscribes to the deletion of another device the entity id of the device being subscribed
-        ///     to also gets saved on the subscribing device.
+        ///     A list of device-lists that this device is on.
         /// </summary>
-        [DataField("ShutdownSubscribers")]
-        public HashSet<EntityUid> ShutdownSubscribers = new();
+        [DataField]
+        [Access(typeof(DeviceListSystem))]
+        public HashSet<EntityUid> DeviceLists = new();
+
+        /// <summary>
+        ///     A list of configurators that this device is on.
+        /// </summary>
+        [DataField]
+        [Access(typeof(NetworkConfiguratorSystem))]
+        public HashSet<EntityUid> Configurators = new();
     }
 }

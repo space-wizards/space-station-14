@@ -10,19 +10,12 @@ namespace Content.Server.Database
 {
     public sealed class PostgresServerDbContext : ServerDbContext
     {
-        static PostgresServerDbContext()
-        {
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-        }
-
         public PostgresServerDbContext(DbContextOptions<PostgresServerDbContext> options) : base(options)
         {
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.ReplaceService<IRelationalTypeMappingSource, CustomNpgsqlTypeMappingSource>();
-
             ((IDbContextOptionsBuilderInfrastructure) options).AddOrUpdateExtension(new SnakeCaseExtension());
 
             options.ConfigureWarnings(x =>

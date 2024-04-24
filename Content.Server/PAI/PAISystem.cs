@@ -6,9 +6,9 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mind.Components;
 using Content.Shared.PAI;
 using Content.Shared.Popups;
-using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using System.Text;
+using Robust.Shared.Player;
 
 namespace Content.Server.PAI;
 

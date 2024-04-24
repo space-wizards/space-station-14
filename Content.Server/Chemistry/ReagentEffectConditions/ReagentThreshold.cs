@@ -13,14 +13,14 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
     /// </summary>
     public sealed partial class ReagentThreshold : ReagentEffectCondition
     {
-        [DataField("min")]
+        [DataField]
         public FixedPoint2 Min = FixedPoint2.Zero;
 
-        [DataField("max")]
+        [DataField]
         public FixedPoint2 Max = FixedPoint2.MaxValue;
 
         // TODO use ReagentId
-        [DataField("reagent")]
+        [DataField]
         public string? Reagent;
 
         public override bool Condition(ReagentEffectArgs args)

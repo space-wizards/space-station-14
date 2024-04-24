@@ -62,35 +62,4 @@ namespace Content.Shared.Doors
     public sealed class BeforeDoorAutoCloseEvent : CancellableEntityEventArgs
     {
     }
-
-    /// <summary>
-    /// Raised to determine how long the door's pry time should be modified by.
-    /// Multiply PryTimeModifier by the desired amount.
-    /// </summary>
-    public sealed class DoorGetPryTimeModifierEvent : EntityEventArgs
-    {
-        public readonly EntityUid User;
-        public float PryTimeModifier = 1.0f;
-
-        public DoorGetPryTimeModifierEvent(EntityUid user)
-        {
-            User = user;
-        }
-    }
-
-    /// <summary>
-    /// Raised when an attempt to pry open the door is made.
-    /// Cancel to stop the door from being pried open.
-    /// </summary>
-    public sealed class BeforeDoorPryEvent : CancellableEntityEventArgs
-    {
-        public readonly EntityUid User;
-        public readonly EntityUid Tool;
-
-        public BeforeDoorPryEvent(EntityUid user, EntityUid tool)
-        {
-            User = user;
-            Tool = tool;
-        }
-    }
 }

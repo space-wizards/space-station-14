@@ -8,9 +8,18 @@
   - Survival
   - Chemicals
   - Antagonists
+  - Species
   - Writing
+  - Glossary
 
 - type: guideEntry
   id: Writing
   name: guide-entry-writing
   text: "/ServerInfo/Guidebook/Writing.xml"
+
+- type: guideEntry
+  id: Glossary
+  name: guide-entry-glossary
+  text: "/ServerInfo/Guidebook/Glossary.xml"
+
+

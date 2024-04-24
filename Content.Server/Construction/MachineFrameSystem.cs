@@ -100,7 +100,7 @@ public sealed class MachineFrameSystem : EntitySystem
                     return;
 
                 args.Handled = true;
-                if (!component.PartContainer.Insert(args.Used))
+                if (!_container.Insert(args.Used, component.PartContainer))
                     return;
             }
 
@@ -132,7 +132,7 @@ public sealed class MachineFrameSystem : EntitySystem
                     return;
 
                 args.Handled = true;
-                if (!component.PartContainer.Insert(args.Used))
+                if (!_container.Insert(args.Used, component.PartContainer))
                     return;
             }
 
@@ -156,7 +156,7 @@ public sealed class MachineFrameSystem : EntitySystem
         if (!_container.TryRemoveFromContainer(used))
             return false;
 
-        if (!component.BoardContainer.Insert(used))
+        if (!_container.Insert(used, component.BoardContainer))
             return true;
 
         ResetProgressAndRequirements(component, machineBoard);
@@ -181,7 +181,7 @@ public sealed class MachineFrameSystem : EntitySystem
         if (!_container.TryRemoveFromContainer(used))
             return false;
 
-        if (!component.PartContainer.Insert(used))
+        if (!_container.Insert(used, component.PartContainer))
             return true;
 
         component.Progress[machinePart.PartType]++;
@@ -212,7 +212,7 @@ public sealed class MachineFrameSystem : EntitySystem
             if (!_container.TryRemoveFromContainer(used))
                 return false;
 
-            if (!component.PartContainer.Insert(used))
+            if (!_container.Insert(used, component.PartContainer))
                 return true;
 
             component.MaterialProgress[type] += count;
@@ -224,7 +224,7 @@ public sealed class MachineFrameSystem : EntitySystem
         if (splitStack == null)
             return false;
 
-        if (!component.PartContainer.Insert(splitStack.Value))
+        if (!_container.Insert(splitStack.Value, component.PartContainer))
             return true;
 
         component.MaterialProgress[type] += needed;

@@ -1,10 +1,10 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: BaseArrow
   abstract: true
   components:
   - type: Item
-    size: 10
+    size: Small
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
   - type: Fixtures
@@ -44,16 +44,16 @@
   - type: SolutionContainerManager
     solutions:
       ammo:
-        maxVol: 5
+        maxVol: 2
   - type: RefillableSolution
     solution: ammo
   - type: InjectableSolution
     solution: ammo
-  - type: SolutionInjectOnCollide
-    transferAmount: 5
-    blockSlots: NONE
+  - type: SolutionInjectOnEmbed
+    transferAmount: 2
+    solution: ammo
   - type: SolutionTransfer
-    maxTransferAmount: 5
+    maxTransferAmount: 2
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1

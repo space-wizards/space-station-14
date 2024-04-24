@@ -1,9 +1,16 @@
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Paper;
 
 public abstract partial class SharedPaperComponent : Component
 {
+    /// <summary>
+    /// Sound played after writing to the paper.
+    /// </summary>
+    [DataField("sound")]
+    public SoundSpecifier? Sound { get; private set; } = new SoundCollectionSpecifier("PaperScribbles", AudioParams.Default.WithVariation(0.1f));
+
     [Serializable, NetSerializable]
     public sealed class PaperBoundUserInterfaceState : BoundUserInterfaceState
     {

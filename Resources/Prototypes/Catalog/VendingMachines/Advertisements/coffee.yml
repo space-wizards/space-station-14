@@ -1,6 +1,6 @@
-﻿- type: advertisementsPack
+- type: messagePack
   id: HotDrinksMachineAds
-  advertisements:
+  messages:
     - advertisement-coffee-1
     - advertisement-coffee-2
     - advertisement-coffee-3
@@ -14,3 +14,4 @@
     - advertisement-coffee-11
     - advertisement-coffee-12
     - advertisement-coffee-13
+    - advertisement-coffee-14

@@ -17,10 +17,8 @@
       shader: unshaded
     - state: full
       shader: unshaded
-  - type: UpgradeBattery
-    maxChargeMultiplier: 2
-    baseMaxCharge: 2500000
   - type: Battery
+    maxCharge: 2500000
     startingCharge: 0
   - type: ExaminableBattery
   - type: PointLight
@@ -37,6 +35,13 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: MVPower
+  - type: PowerMonitoringDevice
+    group: Substation
+    sourceNode: input
+    loadNode: output
+    collectionName: substation
+    sprite: Structures/Power/substation.rsi
+    state: substation_static
   - type: BatteryCharger
     voltage: High
   - type: BatteryDischarger
@@ -49,6 +54,7 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
+  - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
     - trigger:
@@ -65,7 +71,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
       - !type:ExplodeBehavior
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -86,9 +92,6 @@
     intensitySlope: 2
     totalIntensity: 200
   - type: WiresPanel
-  - type: Wires
-    BoardName: wires-board-name-substation
-    LayoutId: Substation
   - type: Machine
     board: SubstationMachineCircuitboard
   - type: StationInfiniteBatteryTarget
@@ -163,6 +166,12 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: MVPower
+  - type: PowerMonitoringDevice
+    group: Substation
+    sourceNode: input
+    loadNode: output
+    sprite: Structures/Power/substation.rsi
+    state: substation_wall_static
   - type: BatteryCharger
     voltage: High
   - type: BatteryDischarger
@@ -175,6 +184,7 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
     - trigger:
@@ -192,7 +202,7 @@
       - !type:ExplodeBehavior
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
   - type: Construction
     graph: WallmountSubstation
     node: substation
@@ -231,6 +241,16 @@
   - type: Battery
     maxCharge: 2000000
     startingCharge: 2000000
+  - type: ContainerFill
+    containers:
+      board: [ WallmountSubstationElectronics ]
+      capacitor: [ CapacitorStockPart ]
+      powercell: [ PowerCellSmall ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      capacitor: !type:Container
+      powercell: !type:Container
 
 # Construction Frame
 - type: entity

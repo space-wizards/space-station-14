@@ -1,0 +1,71 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         MouseFilter="Stop">
+    <PanelContainer StyleClasses="BackgroundOpenLeft"/>
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxFlat BorderColor="#25252A" BorderThickness="0 0 0 3"/>
+        </PanelContainer.PanelOverride>
+    </PanelContainer>
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <Control Margin="0 0 1 0">
+            <PanelContainer StyleClasses="WindowHeadingBackground" />
+            <BoxContainer Margin="4 2 8 0" Orientation="Horizontal">
+                <Label Name="Title" Text="{Loc news-write-ui-new-article}"
+                       HorizontalExpand="True" VAlign="Center" StyleClasses="FancyWindowTitle" />
+            </BoxContainer>
+        </Control>
+        <PanelContainer StyleClasses="LowDivider" Margin="0 0 1 0"/>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc news-write-ui-article-name-label}" Margin="17 10 0 9" VerticalAlignment="Center"/>
+            <LineEdit Name="TitleField" Margin="6 10 0 9" MinWidth="260" MinHeight="23" Access="Public"/>
+            <Control HorizontalExpand="True" />
+            <Label Name="RichTextInfoLabel" Text="?" MouseFilter="Pass" Margin="14 0" StyleClasses="LabelSecondaryColor"/>
+        </BoxContainer>
+        <Control Name="TextEditPanel" VerticalExpand="True" Margin="11 0 11 0">
+            <PanelContainer>
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#202023" BorderThickness="1" BorderColor="#3B3E56"/>
+                </PanelContainer.PanelOverride>
+            </PanelContainer>
+            <TextEdit Name="ContentField" Margin="0 1" Access="Public"/>
+        </Control>
+        <Control Name="PreviewPanel" Visible="False" VerticalExpand="True" Margin="11 0 11 0">
+            <PanelContainer>
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BorderThickness="1" BorderColor="#3B3E56"/>
+                </PanelContainer.PanelOverride>
+            </PanelContainer>
+            <ScrollContainer HScrollEnabled="True">
+                <RichTextLabel Name="PreviewLabel" VerticalAlignment="Top" Margin="9 3" MaxWidth="360"/>
+            </ScrollContainer>
+        </Control>
+        <BoxContainer Orientation="Horizontal" Margin="12 5 12 8">
+            <Control>
+                <Button Name="ButtonCancel" SetHeight="32" SetWidth="85"
+                        StyleClasses="ButtonColorRed" Text="{Loc news-write-ui-cancel-text}"/>
+            </Control>
+            <Control HorizontalExpand="True"/>
+            <BoxContainer Orientation="Horizontal">
+                <Button Name="ButtonPreview" SetHeight="32" SetWidth="85"
+                        StyleClasses="OpenRight" Text="{Loc news-write-ui-preview-text}"/>
+                <Button Name="ButtonPublish" SetHeight="32" SetWidth="85" Text="{Loc news-write-ui-publish-text}" Access="Public"/>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxFlat BorderThickness="2 0 0 0" BorderColor="#1d1d22"/>
+        </PanelContainer.PanelOverride>
+    </PanelContainer>
+    <PanelContainer HorizontalAlignment="Left" VerticalAlignment="Top" SetHeight="27" SetWidth="2">
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxFlat BorderColor="#2a2a2d" BorderThickness="0 0 0 2"/>
+        </PanelContainer.PanelOverride>
+    </PanelContainer>
+    <PanelContainer HorizontalAlignment="Left" VerticalAlignment="Top" SetHeight="25" SetWidth="2">
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxFlat BackgroundColor="#1b1b1f"/>
+        </PanelContainer.PanelOverride>
+    </PanelContainer>
+</Control>

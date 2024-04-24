@@ -1,4 +1,5 @@
 using Content.Shared.Clothing.EntitySystems;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Clothing.Components;
 
@@ -9,12 +10,12 @@ namespace Content.Shared.Clothing.Components;
 ///     hardsuit helmets.
 /// </summary>
 [Access(typeof(ToggleableClothingSystem))]
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class AttachedClothingComponent : Component
 {
     /// <summary>
     ///     The Id of the piece of clothing that this entity belongs to.
     /// </summary>
-    [DataField("AttachedUid")]
-    public EntityUid AttachedUid = default!;
+    [DataField, AutoNetworkedField]
+    public EntityUid AttachedUid;
 }

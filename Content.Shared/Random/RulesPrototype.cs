@@ -12,7 +12,7 @@ namespace Content.Shared.Random;
 /// e.g. "choose maintenance audio if 90% of tiles nearby are maintenance tiles"
 /// </summary>
 [Prototype("rules")]
-public sealed class RulesPrototype : IPrototype
+public sealed partial class RulesPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = string.Empty;
 
@@ -116,8 +116,8 @@ public sealed partial class NearbyAccessRule : RulesRule
     [DataField("count")]
     public int Count = 1;
 
-    [DataField("access", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
-    public List<string> Access = new();
+    [DataField("access", required: true)]
+    public List<ProtoId<AccessLevelPrototype>> Access = new();
 
     [DataField("range")]
     public float Range = 10f;

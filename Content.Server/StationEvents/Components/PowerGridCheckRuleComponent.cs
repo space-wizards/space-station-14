@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using Content.Server.StationEvents.Events;
 
 namespace Content.Server.StationEvents.Components;
@@ -8,6 +8,7 @@ public sealed partial class PowerGridCheckRuleComponent : Component
 {
     public CancellationTokenSource? AnnounceCancelToken;
 
+    public EntityUid AffectedStation;
     public readonly List<EntityUid> Powered = new();
     public readonly List<EntityUid> Unpowered = new();
 

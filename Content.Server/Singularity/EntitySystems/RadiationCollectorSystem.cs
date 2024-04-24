@@ -1,15 +1,19 @@
-using Content.Server.Singularity.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Singularity.Components;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Server.Atmos;
+using Content.Server.Atmos.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Shared.Radiation.Events;
-using Robust.Shared.Timing;
-using Robust.Shared.Containers;
-using Content.Server.Atmos.Components;
+using Content.Server.Power.EntitySystems;
+using Content.Server.Singularity.Components;
+using Content.Shared.Atmos;
 using Content.Shared.Examine;
-using Content.Server.Atmos;
-using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Interaction;
+using Content.Shared.Radiation.Events;
+using Content.Shared.Singularity.Components;
+using Content.Shared.Timing;
+using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -19,6 +23,9 @@ public sealed class RadiationCollectorSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+
+    private const string GasTankContainer = "gas_tank";
 
     public override void Initialize()
     {
@@ -27,31 +34,43 @@ public sealed class RadiationCollectorSystem : EntitySystem
         SubscribeLocalEvent<RadiationCollectorComponent, OnIrradiatedEvent>(OnRadiation);
         SubscribeLocalEvent<RadiationCollectorComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<RadiationCollectorComponent, GasAnalyzerScanEvent>(OnAnalyzed);
+        SubscribeLocalEvent<RadiationCollectorComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<RadiationCollectorComponent, EntInsertedIntoContainerMessage>(OnTankChanged);
+        SubscribeLocalEvent<RadiationCollectorComponent, EntRemovedFromContainerMessage>(OnTankChanged);
+        SubscribeLocalEvent<NetworkBatteryPostSync>(PostSync);
     }
 
     private bool TryGetLoadedGasTank(EntityUid uid, [NotNullWhen(true)] out GasTankComponent? gasTankComponent)
     {
         gasTankComponent = null;
-        var container = _containerSystem.EnsureContainer<ContainerSlot>(uid, "GasTank");
 
-        if (container.ContainedEntity == null)
+        if (!_containerSystem.TryGetContainer(uid, GasTankContainer, out var container) || container.ContainedEntities.Count == 0)
             return false;
 
-        if (!EntityManager.TryGetComponent(container.ContainedEntity, out gasTankComponent))
+        if (!EntityManager.TryGetComponent(container.ContainedEntities.First(), out gasTankComponent))
             return false;
 
         return true;
     }
 
+    private void OnMapInit(EntityUid uid, RadiationCollectorComponent component, MapInitEvent args)
+    {
+        TryGetLoadedGasTank(uid, out var gasTank);
+        UpdateTankAppearance(uid, component, gasTank);
+    }
+
+    private void OnTankChanged(EntityUid uid, RadiationCollectorComponent component, ContainerModifiedMessage args)
+    {
+        TryGetLoadedGasTank(uid, out var gasTank);
+        UpdateTankAppearance(uid, component, gasTank);
+    }
+
     private void OnInteractHand(EntityUid uid, RadiationCollectorComponent component, InteractHandEvent args)
     {
-        var curTime = _gameTiming.CurTime;
-
-        if (curTime < component.CoolDownEnd)
+        if (TryComp(uid, out UseDelayComponent? useDelay) && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
 
         ToggleCollector(uid, args.User, component);
-        component.CoolDownEnd = curTime + component.Cooldown;
     }
 
     private void OnRadiation(EntityUid uid, RadiationCollectorComponent component, OnIrradiatedEvent args)
@@ -66,7 +85,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
         foreach (var gas in component.RadiationReactiveGases)
         {
-            float reactantMol = gasTankComponent.Air.GetMoles(gas.Reactant);
+            float reactantMol = gasTankComponent.Air.GetMoles(gas.ReactantPrototype);
             float delta = args.TotalRads * reactantMol * gas.ReactantBreakdownRate;
 
             // We need to offset the huge power gains possible when using very cold gases
@@ -79,7 +98,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
             if (delta > 0)
             {
-                gasTankComponent.Air.AdjustMoles(gas.Reactant, -Math.Min(delta, reactantMol));
+                gasTankComponent.Air.AdjustMoles(gas.ReactantPrototype, -Math.Min(delta, reactantMol));
             }
 
             if (gas.Byproduct != null)
@@ -88,31 +107,43 @@ public sealed class RadiationCollectorSystem : EntitySystem
             }
         }
 
-        // No idea if this is even vaguely accurate to the previous logic.
-        // The maths is copied from that logic even though it works differently.
-        // But the previous logic would also make the radiation collectors never ever stop providing energy.
-        // And since frameTime was used there, I'm assuming that this is what the intent was.
-        // This still won't stop things being potentially hilariously unbalanced though.
-        if (TryComp<BatteryComponent>(uid, out var batteryComponent))
+        if (TryComp<PowerSupplierComponent>(uid, out var comp))
         {
-            batteryComponent.CurrentCharge += charge;
+            int powerHoldoverTicks = _gameTiming.TickRate * 2; // number of ticks to hold radiation
+            component.PowerTicksLeft = powerHoldoverTicks;
+            comp.MaxSupply = component.Enabled ? charge : 0;
+        }
+
+        // Update appearance
+        UpdatePressureIndicatorAppearance(uid, component, gasTankComponent);
+    }
+
+    private void PostSync(NetworkBatteryPostSync ev)
+    {
+        // This is run every power tick. Used to decrement the PowerTicksLeft counter.
+        var query = EntityQueryEnumerator<RadiationCollectorComponent>();
+        while (query.MoveNext(out var uid, out var component))
+        {
+            if (component.PowerTicksLeft > 0)
+            {
+                component.PowerTicksLeft -= 1;
+            }
+            else if (TryComp<PowerSupplierComponent>(uid, out var comp))
+            {
+                comp.MaxSupply = 0;
+            }
         }
     }
 
     private void OnExamined(EntityUid uid, RadiationCollectorComponent component, ExaminedEvent args)
     {
-        if (!TryGetLoadedGasTank(uid, out var gasTankComponent))
+        if (!TryGetLoadedGasTank(uid, out var gasTank))
         {
             args.PushMarkup(Loc.GetString("power-radiation-collector-gas-tank-missing"));
             return;
         }
 
         args.PushMarkup(Loc.GetString("power-radiation-collector-gas-tank-present"));
-
-        if (gasTankComponent.IsLowPressure)
-        {
-            args.PushMarkup(Loc.GetString("power-radiation-collector-gas-tank-low-pressure"));
-        }
     }
 
     private void OnAnalyzed(EntityUid uid, RadiationCollectorComponent component, GasAnalyzerScanEvent args)
@@ -120,7 +151,8 @@ public sealed class RadiationCollectorSystem : EntitySystem
         if (!TryGetLoadedGasTank(uid, out var gasTankComponent))
             return;
 
-        args.GasMixtures = new Dictionary<string, GasMixture?> { { Name(uid), gasTankComponent.Air } };
+        args.GasMixtures ??= new List<(string, GasMixture?)>();
+        args.GasMixtures.Add((Name(uid), gasTankComponent.Air));
     }
 
     public void ToggleCollector(EntityUid uid, EntityUid? user = null, RadiationCollectorComponent? component = null)
@@ -133,7 +165,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
     public void SetCollectorEnabled(EntityUid uid, bool enabled, EntityUid? user = null, RadiationCollectorComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, false))
             return;
 
         component.Enabled = enabled;
@@ -146,15 +178,43 @@ public sealed class RadiationCollectorSystem : EntitySystem
         }
 
         // Update appearance
-        UpdateAppearance(uid, component);
+        UpdateMachineAppearance(uid, component);
     }
 
-    private void UpdateAppearance(EntityUid uid, RadiationCollectorComponent? component, AppearanceComponent? appearance = null)
+    private void UpdateMachineAppearance(EntityUid uid, RadiationCollectorComponent component, AppearanceComponent? appearance = null)
     {
-        if (!Resolve(uid, ref component, ref appearance))
+        if (!Resolve(uid, ref appearance))
             return;
 
         var state = component.Enabled ? RadiationCollectorVisualState.Active : RadiationCollectorVisualState.Deactive;
         _appearance.SetData(uid, RadiationCollectorVisuals.VisualState, state, appearance);
+    }
+
+    private void UpdatePressureIndicatorAppearance(EntityUid uid, RadiationCollectorComponent component, GasTankComponent? gasTank = null, AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(uid, ref appearance, false))
+            return;
+
+        if (gasTank == null || gasTank.Air.Pressure < 10)
+            _appearance.SetData(uid, RadiationCollectorVisuals.PressureState, 0, appearance);
+
+        else if (gasTank.Air.Pressure < Atmospherics.OneAtmosphere)
+            _appearance.SetData(uid, RadiationCollectorVisuals.PressureState, 1, appearance);
+
+        else if (gasTank.Air.Pressure < 3f * Atmospherics.OneAtmosphere)
+            _appearance.SetData(uid, RadiationCollectorVisuals.PressureState, 2, appearance);
+
+        else
+            _appearance.SetData(uid, RadiationCollectorVisuals.PressureState, 3, appearance);
+    }
+
+    private void UpdateTankAppearance(EntityUid uid, RadiationCollectorComponent component, GasTankComponent? gasTank = null, AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(uid, ref appearance, false))
+            return;
+
+        _appearance.SetData(uid, RadiationCollectorVisuals.TankInserted, gasTank != null, appearance);
+
+        UpdatePressureIndicatorAppearance(uid, component, gasTank, appearance);
     }
 }

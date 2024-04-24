@@ -4,7 +4,7 @@
   description: A small wall mounted cabinet designed to hold a defibrillator.
   components:
     - type: WallMount
-      arc: 90
+      arc: 175
     - type: Transform
       anchored: true
     - type: Clickable
@@ -54,7 +54,7 @@
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
               sound:
-                path: /Audio/Effects/metalbreak.ogg
+                collection: MetalGlassBreak
   placement:
     mode: SnapgridCenter
 

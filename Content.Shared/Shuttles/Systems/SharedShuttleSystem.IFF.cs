@@ -1,7 +1,5 @@
 using Content.Shared.Shuttles.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Shuttles.Systems;
 
@@ -11,13 +9,39 @@ public abstract partial class SharedShuttleSystem
      * Handles the label visibility on radar controls. This can be hiding the label or applying other effects.
      */
 
-    private void InitializeIFF()
+    protected virtual void UpdateIFFInterfaces(EntityUid gridUid, IFFComponent component) {}
+
+    public Color GetIFFColor(EntityUid gridUid, bool self = false, IFFComponent? component = null)
     {
-        SubscribeLocalEvent<IFFComponent, ComponentGetState>(OnIFFGetState);
-        SubscribeLocalEvent<IFFComponent, ComponentHandleState>(OnIFFHandleState);
+        if (self)
+        {
+            return IFFComponent.SelfColor;
+        }
+
+        if (!Resolve(gridUid, ref component, false))
+        {
+            return IFFComponent.IFFColor;
+        }
+
+        return component.Color;
     }
 
-    protected virtual void UpdateIFFInterfaces(EntityUid gridUid, IFFComponent component) {}
+    public string? GetIFFLabel(EntityUid gridUid, bool self = false, IFFComponent? component = null)
+    {
+        var entName = MetaData(gridUid).EntityName;
+
+        if (self)
+        {
+            return entName;
+        }
+
+        if (Resolve(gridUid, ref component, false) && (component.Flags & (IFFFlags.HideLabel | IFFFlags.Hide)) != 0x0)
+        {
+            return null;
+        }
+
+        return string.IsNullOrEmpty(entName) ? Loc.GetString("shuttle-console-unknown") : entName;
+    }
 
     /// <summary>
     /// Sets the color for this grid to appear as on radar.
@@ -31,7 +55,7 @@ public abstract partial class SharedShuttleSystem
             return;
 
         component.Color = color;
-        Dirty(component);
+        Dirty(gridUid, component);
         UpdateIFFInterfaces(gridUid, component);
     }
 
@@ -44,7 +68,7 @@ public abstract partial class SharedShuttleSystem
             return;
 
         component.Flags |= flags;
-        Dirty(component);
+        Dirty(gridUid, component);
         UpdateIFFInterfaces(gridUid, component);
     }
 
@@ -58,32 +82,7 @@ public abstract partial class SharedShuttleSystem
             return;
 
         component.Flags &= ~flags;
-        Dirty(component);
+        Dirty(gridUid, component);
         UpdateIFFInterfaces(gridUid, component);
-    }
-
-    private void OnIFFHandleState(EntityUid uid, IFFComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not IFFComponentState state)
-            return;
-
-        component.Flags = state.Flags;
-        component.Color = state.Color;
-    }
-
-    private void OnIFFGetState(EntityUid uid, IFFComponent component, ref ComponentGetState args)
-    {
-        args.State = new IFFComponentState()
-        {
-            Flags = component.Flags,
-            Color = component.Color,
-        };
-    }
-
-    [Serializable, NetSerializable]
-    private sealed class IFFComponentState : ComponentState
-    {
-        public IFFFlags Flags;
-        public Color Color;
     }
 }

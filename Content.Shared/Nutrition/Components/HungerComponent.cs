@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 namespace Content.Shared.Nutrition.Components;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(HungerSystem))]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class HungerComponent : Component
 {
     /// <summary>
@@ -52,7 +52,7 @@ public sealed partial class HungerComponent : Component
     /// A dictionary relating HungerThreshold to the amount of <see cref="CurrentHunger"/> needed for each one
     /// </summary>
     [DataField("thresholds", customTypeSerializer: typeof(DictionarySerializer<HungerThreshold, float>))]
-    [AutoNetworkedField(cloneData: true)]
+    [AutoNetworkedField]
     public Dictionary<HungerThreshold, float> Thresholds = new()
     {
         { HungerThreshold.Overfed, 200.0f },
@@ -66,7 +66,7 @@ public sealed partial class HungerComponent : Component
     /// A dictionary relating hunger thresholds to corresponding alerts.
     /// </summary>
     [DataField("hungerThresholdAlerts", customTypeSerializer: typeof(DictionarySerializer<HungerThreshold, AlertType>))]
-    [AutoNetworkedField(cloneData: true)]
+    [AutoNetworkedField]
     public Dictionary<HungerThreshold, AlertType> HungerThresholdAlerts = new()
     {
         { HungerThreshold.Peckish, AlertType.Peckish },
@@ -78,7 +78,7 @@ public sealed partial class HungerComponent : Component
     /// A dictionary relating HungerThreshold to how much they modify <see cref="BaseDecayRate"/>.
     /// </summary>
     [DataField("hungerThresholdDecayModifiers", customTypeSerializer: typeof(DictionarySerializer<HungerThreshold, float>))]
-    [AutoNetworkedField(cloneData: true)]
+    [AutoNetworkedField]
     public Dictionary<HungerThreshold, float> HungerThresholdDecayModifiers = new()
     {
         { HungerThreshold.Overfed, 1.2f },
@@ -106,6 +106,7 @@ public sealed partial class HungerComponent : Component
     /// </summary>
     [DataField("nextUpdateTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
+    [AutoPausedField]
     public TimeSpan NextUpdateTime;
 
     /// <summary>

@@ -5,19 +5,17 @@ using Content.Server.Stunnable;
 using Content.Shared.Administration;
 using Content.Shared.Instruments;
 using Content.Shared.Instruments.UI;
-using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Instruments;
 
@@ -52,9 +50,12 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         SubscribeNetworkEvent<InstrumentSetMasterEvent>(OnMidiSetMaster);
         SubscribeNetworkEvent<InstrumentSetFilteredChannelEvent>(OnMidiSetFilteredChannel);
 
-        SubscribeLocalEvent<InstrumentComponent, BoundUIClosedEvent>(OnBoundUIClosed);
-        SubscribeLocalEvent<InstrumentComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
-        SubscribeLocalEvent<InstrumentComponent, InstrumentBandRequestBuiMessage>(OnBoundUIRequestBands);
+        Subs.BuiEvents<InstrumentComponent>(InstrumentUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIClosedEvent>(OnBoundUIClosed);
+            subs.Event<BoundUIOpenedEvent>(OnBoundUIOpened);
+            subs.Event<InstrumentBandRequestBuiMessage>(OnBoundUIRequestBands);
+        });
 
         SubscribeLocalEvent<InstrumentComponent, ComponentGetState>(OnStrumentGetState);
 
@@ -190,18 +191,8 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         Dirty(uid, instrument);
     }
 
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        ShutdownCVars();
-    }
-
     private void OnBoundUIClosed(EntityUid uid, InstrumentComponent component, BoundUIClosedEvent args)
     {
-        if (args.UiKey is not InstrumentUiKey)
-            return;
-
         if (HasComp<ActiveInstrumentComponent>(uid)
             && _bui.TryGetUi(uid, args.UiKey, out var bui)
             && bui.SubscribedSessions.Count == 0)
@@ -214,9 +205,6 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
     private void OnBoundUIOpened(EntityUid uid, InstrumentComponent component, BoundUIOpenedEvent args)
     {
-        if (args.UiKey is not InstrumentUiKey)
-            return;
-
         EnsureComp<ActiveInstrumentComponent>(uid);
         Clean(uid, component);
     }
@@ -387,7 +375,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
                 var nearby = GetBands(entity);
                 _bui.TrySendUiMessage(entity, request.UiKey, new InstrumentBandResponseBuiMessage(nearby),
-                    (IPlayerSession)request.Session);
+                    request.Session);
             }
 
             _bandRequestQueue.Clear();
@@ -435,9 +423,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
                 // Just in case
                 Clean(uid);
-
-                if (instrument.UserInterface is not null)
-                    _bui.CloseAll(instrument.UserInterface);
+                _bui.TryCloseAll(uid, InstrumentUiKey.Key);
             }
 
             instrument.Timer += frameTime;
@@ -451,7 +437,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         }
     }
 
-    public void ToggleInstrumentUi(EntityUid uid, IPlayerSession session, InstrumentComponent? component = null)
+    public void ToggleInstrumentUi(EntityUid uid, ICommonSession session, InstrumentComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;

@@ -23,7 +23,7 @@ public sealed partial class EmpReactionEffect : ReagentEffect
     /// <summary>
     ///     How much energy will be drain from sources
     /// </summary>
-    [DataField("energyConsumption")]
+    [DataField]
     public float EnergyConsumption = 12500;
 
     /// <summary>

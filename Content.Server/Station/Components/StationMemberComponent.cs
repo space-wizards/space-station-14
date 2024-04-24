@@ -11,6 +11,6 @@ public sealed partial class StationMemberComponent : Component
     /// <summary>
     /// Station that this grid is a part of.
     /// </summary>
-    [ViewVariables]
+    [DataField]
     public EntityUid Station = EntityUid.Invalid;
 }

@@ -8,13 +8,20 @@
   - type: Sprite
     state: icon
   - type: Item
-    size: 10
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+  - type: Tag
+    tags:
+    - Sidearm
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
     quickEquip: false
     slots:
     - suitStorage
     - Belt
+  - type: AmmoCounter
   - type: Gun
     selectedMode: SemiAuto
     fireRate: 1.5
@@ -22,6 +29,8 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+  - type: UseDelay
+    delay: 0.66
   - type: ContainerContainer
     containers:
       revolver-ammo: !type:Container
@@ -119,7 +128,7 @@
       params:
         volume: 2.25
 
-- type: entity 
+- type: entity
   name: Python
   parent: WeaponRevolverPython
   id: WeaponRevolverPythonAP # For the uplink.

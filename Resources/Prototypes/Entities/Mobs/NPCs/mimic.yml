@@ -1,7 +1,7 @@
 - type: entity
   name: Mimic
   id: MobMimic
-  parent: SimpleMobBase
+  parent: [ SimpleMobBase, MobCombat ]
   description: Surprise. # When this gets a proper write this should use the object's actual description >:)
   components:
   - type: Tag
@@ -33,7 +33,6 @@
         - MachineLayer
   - type: AnimationPlayer
   - type: MeleeWeapon
-    hidden: true
     angle: 0
     animation: WeaponArcFist
     damage:

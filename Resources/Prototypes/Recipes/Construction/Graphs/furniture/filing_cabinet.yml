@@ -1,0 +1,57 @@
+- type: constructionGraph
+  id: FilingCabinet
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: filingCabinet
+          steps:
+            - material: Steel
+              amount: 4
+              doAfter: 3
+        - to: tallCabinet
+          steps:
+            - material: Steel
+              amount: 4
+              doAfter: 3
+        - to: chestDrawer
+          steps:
+            - material: Steel
+              amount: 3
+              doAfter: 3
+
+    - node: filingCabinet
+      entity: filingCabinet
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 4
+          steps:
+            - tool: Screwing
+              doAfter: 4
+    - node: tallCabinet
+      entity: filingCabinetTall
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 4
+          steps:
+            - tool: Screwing
+              doAfter: 4
+    - node: chestDrawer
+      entity: filingCabinetDrawer
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 3
+          steps:
+            - tool: Screwing
+              doAfter: 4

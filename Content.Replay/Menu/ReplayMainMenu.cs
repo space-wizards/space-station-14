@@ -1,6 +1,7 @@
 using System.IO.Compression;
 using System.Linq;
 using Content.Client.Message;
+using Content.Client.Replay;
 using Content.Client.UserInterface.Systems.EscapeMenu;
 using Robust.Client;
 using Robust.Client.Replays.Loading;
@@ -31,6 +32,7 @@ public sealed class ReplayMainScreen : State
     [Dependency] private readonly IGameController _controllerProxy = default!;
     [Dependency] private readonly IClientRobustSerializer _serializer = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+    [Dependency] private readonly ContentReplayPlaybackManager _replayMan = default!;
 
     private ReplayMainMenuControl _mainMenuControl = default!;
     private SelectReplayWindow? _selectWindow;
@@ -47,7 +49,7 @@ public sealed class ReplayMainScreen : State
         _mainMenuControl.QuitButton.OnPressed += QuitButtonPressed;
         _mainMenuControl.OptionsButton.OnPressed += OptionsButtonPressed;
         _mainMenuControl.FolderButton.OnPressed += OnFolderPressed;
-        _mainMenuControl.LoadButton.OnPressed += OnLoadpressed;
+        _mainMenuControl.LoadButton.OnPressed += OnLoadPressed;
 
         _directory = new ResPath(_cfg.GetCVar(CVars.ReplayDirectory)).ToRootedPath();
         RefreshReplays();
@@ -205,14 +207,15 @@ public sealed class ReplayMainScreen : State
         _resMan.UserData.OpenOsWindow(_directory);
     }
 
-    private void OnLoadpressed(BaseButton.ButtonEventArgs obj)
+    private void OnLoadPressed(BaseButton.ButtonEventArgs obj)
     {
-        if (_selected.HasValue)
-        {
-            var fileReader = new ReplayFileReaderZip(
-                new ZipArchive(_resMan.UserData.OpenRead(_selected.Value)), ReplayZipFolder);
-            _loadMan.LoadAndStartReplay(fileReader);
-        }
+        if (!_selected.HasValue)
+            return;
+
+        _replayMan.LastLoad = (_selected.Value, ReplayZipFolder);
+        var fileReader = new ReplayFileReaderZip(
+            new ZipArchive(_resMan.UserData.OpenRead(_selected.Value)), ReplayZipFolder);
+        _loadMan.LoadAndStartReplay(fileReader);
     }
 
     private void RefreshReplays()

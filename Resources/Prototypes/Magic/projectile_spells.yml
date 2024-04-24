@@ -5,7 +5,34 @@
   noSpawn: true
   components:
   - type: WorldTargetAction
-    useDelay: 30
+    useDelay: 15
+    itemIconStyle: BigAction
+    checkCanAccess: false
+    range: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/fireball.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: fireball
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileFireball
+      posData: !type:TargetCasterPos
+      speech: action-speech-spell-fireball
+  - type: ActionUpgrade
+    effectedLevels:
+      2: ActionFireballII
+
+- type: entity
+  id: ActionFireballII
+  parent: ActionFireball
+  name: Fireball II
+  description: Fire three explosive fireball towards the clicked location.
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 5
+    charges: 3
+    renewCharges: true
     itemIconStyle: BigAction
     checkCanAccess: false
     range: 60

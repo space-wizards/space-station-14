@@ -1,3 +1,4 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_single.yml
 # Base
 
 - type: entity
@@ -17,7 +18,8 @@
         - ReagentId: Nutriment
           Quantity: 8
   - type: Item
-    size: 5
+    size: Small
+    storedRotation: -90
 
 # Kebabs
 
@@ -44,6 +46,7 @@
   - type: Tag
     tags:
     - Trash
+    - Skewer
 
 # Custom Kebab Example
 
@@ -64,6 +67,10 @@
         color: green
       - state: skewer-meat-alpha4
         color: brown
+  - type: Tag
+    tags:
+    - Meat
+    - Fruit
 
 - type: entity
   name: meat kebab
@@ -78,6 +85,9 @@
       - state: skewer-meat2
       - state: skewer-meat3
       - state: skewer-meat4
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: human kebab
@@ -87,7 +97,7 @@
 
 - type: entity
   name: lizard-tail kebab
-  parent: FoodSkewerBase
+  parent: FoodMeatKebab
   id: FoodMeatLizardtailKebab
   description: Severed lizard tail on a stick.
   components:
@@ -98,7 +108,7 @@
 
 - type: entity
   name: rat kebab
-  parent: FoodSkewerBase
+  parent: FoodMeatKebab
   id: FoodMeatRatKebab
   description: Not so delicious rat meat, on a stick.
   components:
@@ -117,7 +127,7 @@
 
 - type: entity
   name: double rat kebab
-  parent: FoodSkewerBase
+  parent: FoodMeatKebab
   id: FoodMeatRatdoubleKebab
   description: A double serving of not so delicious rat meat, on a stick.
   components:
@@ -148,3 +158,21 @@
       - state: skewer-corn2
       - state: skewer-mushroom2
       - state: skewer-tomato1
+
+- type: entity
+  name: snake kebab
+  parent: FoodSkewerBase
+  id: FoodMeatSnakeKebab
+  description: Snake meat on a stick. It's a little tough.
+  components:
+  - type: Sprite
+    layers:
+      - state: skewer
+      - state: skewer-snake1
+      - state: skewer-snake2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 12

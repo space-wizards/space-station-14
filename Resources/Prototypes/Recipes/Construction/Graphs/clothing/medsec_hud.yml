@@ -1,0 +1,43 @@
+﻿- type: constructionGraph
+  id: HudMedSec
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: medsecHud
+          steps:
+            - tag: HudMedical
+              name: medical hud
+              icon:
+                sprite: Clothing/Eyes/Hud/med.rsi
+                state: icon
+              doAfter: 5
+            - tag: HudSecurity
+              name: security hud
+              icon:
+                sprite: Clothing/Eyes/Hud/sec.rsi
+                state: icon
+              doAfter: 5
+            - material: Cable
+              amount: 5
+              doAfter: 5
+            - tag: Radio
+              name: radio
+              icon:
+                sprite: Objects/Devices/communication.rsi
+                state: walkietalkie
+              doAfter: 5
+            - tag: CapacitorStockPart
+              name: capacitor
+              icon:
+                sprite: Objects/Misc/stock_parts.rsi
+                state: capacitor
+              doAfter: 5
+            - tag: CapacitorStockPart
+              name: capacitor
+              icon:
+                sprite: Objects/Misc/stock_parts.rsi
+                state: capacitor
+              doAfter: 5
+    - node: medsecHud
+      entity: ClothingEyesHudMedSec

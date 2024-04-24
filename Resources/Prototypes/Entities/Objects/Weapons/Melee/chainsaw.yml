@@ -5,7 +5,6 @@
   description: A very large chainsaw. Usually you use this for cutting down trees... usually.
   components:
   - type: Wieldable
-    wieldTime: 1
     wieldSound: !type:SoundPathSpecifier
       path: /Audio/Weapons/chainsawwield.ogg
       params:
@@ -15,11 +14,15 @@
     sprite: Objects/Weapons/Melee/chainsaw.rsi
     state: icon
   - type: MeleeWeapon
+    autoAttack: true
+    angle: 0
+    wideAnimationRotation: -135
+    attackRate: 4
     damage:
       types:
-        Slash: 5
-        Blunt: 5
-        Structural: 10
+        Slash: 2
+        Blunt: 2
+        Structural: 4
     soundHit:
       path: /Audio/Weapons/chainsaw.ogg
       params:
@@ -27,11 +30,10 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Slash: 5
-        Blunt: 5
-        Structural: 20
+        Slash: 4
+        Structural: 4
   - type: Item
-    size: 50
+    size: Normal
     sprite: Objects/Weapons/Melee/chainsaw.rsi
   - type: DisarmMalus
   - type: RefillableSolution
@@ -43,3 +45,5 @@
         - ReagentId: WeldingFuel
           Quantity: 300
         maxVol: 300
+  - type: UseDelay
+    delay: 1

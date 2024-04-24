@@ -7,9 +7,6 @@
     contents:
       - id: FlashlightSeclite
       - id: WeaponDisabler
-        prob: 0.3
-      - id: ClothingHeadHatWarden
-      - id: ClothingHeadHatBeretWarden
       - id: ClothingBeltSecurityFilled
       - id: Flash
       - id: ClothingEyesGlassesSecurity
@@ -22,7 +19,6 @@
       - id: DoorRemoteArmory
       - id: ClothingOuterHardsuitWarden
       - id: HoloprojectorSecurity
-      - id: ClothingEyesHudSecurity
 
 - type: entity
   id: LockerWardenFilled
@@ -33,9 +29,6 @@
     contents:
       - id: FlashlightSeclite
       - id: WeaponDisabler
-        prob: 0.3
-      - id: ClothingHeadHatWarden
-      - id: ClothingHeadHatBeretWarden
       - id: ClothingBeltSecurityFilled
       - id: Flash
       - id: ClothingEyesGlassesSecurity
@@ -47,7 +40,6 @@
       - id: RubberStampWarden
       - id: DoorRemoteArmory
       - id: HoloprojectorSecurity
-      - id: ClothingEyesHudSecurity
 
 - type: entity
   id: LockerSecurityFilled
@@ -58,6 +50,7 @@
     contents:
       - id: FlashlightSeclite
         prob: 0.8
+      - id: WeaponDisabler
       - id: ClothingUniformJumpsuitSecGrey
         prob: 0.3
       - id: ClothingHeadHelmetBasic
@@ -71,7 +64,8 @@
       - id: ClothingShoesBootsJack
       - id: WeaponMeleeNeedle
         prob: 0.1
-      - id: ClothingEyesHudSecurity
+      - id: HoloprojectorSecurity
+        prob: 0.6
 
 - type: entity
   id: LockerBrigmedicFilled
@@ -80,7 +74,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingEyesHudSecurity
+      - id: ClothingEyesGlassesSecurity
       - id: WeaponDisabler
       - id: TrackingImplanter
         amount: 2
@@ -115,7 +109,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingEyesHudSecurity
+      - id: ClothingEyesGlassesSecurity
         prob: 0.3
       - id: ClothingHeadHatFedoraBrown
       - id: ClothingNeckTieDet
@@ -123,9 +117,13 @@
       - id: ClothingOuterCoatDetective
       - id: FlashlightSeclite
       - id: ForensicScanner
+      - id: LogProbeCartridge
       - id: BoxForensicPad
       - id: DrinkDetFlask
       - id: ClothingHandsGlovesForensic
+      - id: RubberStampDetective
+      - id: HoloprojectorSecurity
+      - id: BoxEvidenceMarkers
 
 - type: entity
   id: ClosetBombFilled
@@ -224,7 +222,7 @@
     contents:
     - id: WeaponSubMachineGunWt550
       amount: 2
-    - id: MagazinePistolSubMachineGun
+    - id: MagazinePistolSubMachineGunTopMounted
       amount: 4
 
 - type: entity

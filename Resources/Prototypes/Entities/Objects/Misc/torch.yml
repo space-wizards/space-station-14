@@ -1,5 +1,5 @@
 - type: entity
-  name: torch # todo: we need some sort of IgnitionSourceComponent we can add to this, so when it's lit it will cause fires when touching fuel
+  name: torch
   parent: BaseItem
   id: Torch
   description: A torch fashioned from some wood.
@@ -74,3 +74,6 @@
           maxDuration: 4.0
           startValue: 6.0
           endValue: 1.0
+    - type: Tag
+      tags:
+      - Torch

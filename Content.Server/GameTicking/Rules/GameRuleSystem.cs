@@ -1,10 +1,22 @@
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
+using Robust.Server.GameObjects;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
-public abstract partial class GameRuleSystem<T> : EntitySystem where T : Component
+public abstract partial class GameRuleSystem<T> : EntitySystem where T : IComponent
 {
+    [Dependency] protected readonly IRobustRandom RobustRandom = default!;
+    [Dependency] protected readonly IChatManager ChatManager = default!;
     [Dependency] protected readonly GameTicker GameTicker = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
+
+    // Not protected, just to be used in utility methods
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly MapSystem _map = default!;
 
     public override void Initialize()
     {
@@ -35,6 +47,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : Compone
             return;
         Ended(uid, component, ruleData, args);
     }
+
 
     /// <summary>
     /// Called when the gamerule is added

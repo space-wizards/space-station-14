@@ -20,17 +20,6 @@
         map: ["base"]
   - type: Physics
     bodyType: Static
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.5"
-        density: 190
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
   - type: Construction
     graph: Machine
     node: machine
@@ -50,6 +39,9 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: machineFrame
       - !type:DoActsBehavior
@@ -60,9 +52,6 @@
     materialWhiteList:
     - Biomass
   - type: WiresPanel
-  - type: Wires
-    BoardName: wires-board-name-cloningpod
-    LayoutId: CloningPod
   - type: ApcPowerReceiver
     powerLoad: 200 #Receives most of its power from the console
   - type: Appearance

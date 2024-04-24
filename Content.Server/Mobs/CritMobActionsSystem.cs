@@ -6,7 +6,8 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Console;
-using Robust.Server.GameObjects;
+using Robust.Shared.Player;
+using Content.Shared.Speech.Muting;
 
 namespace Content.Server.Mobs;
 
@@ -75,7 +76,7 @@ public sealed class CritMobActionsSystem : EntitySystem
                 }
                 lastWords += "...";
 
-                _chat.TrySendInGameICMessage(uid, lastWords, InGameICChatType.Whisper, ChatTransmitRange.Normal, ignoreActionBlocker: true);
+                _chat.TrySendInGameICMessage(uid, lastWords, InGameICChatType.Whisper, ChatTransmitRange.Normal, checkRadioPrefix: false, ignoreActionBlocker: true);
                 _host.ExecuteCommand(actor.PlayerSession, "ghost");
             });
 

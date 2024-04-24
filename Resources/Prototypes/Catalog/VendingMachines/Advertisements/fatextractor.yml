@@ -1,6 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: FatExtractorFacts
-  advertisements:
+  messages:
   - fat-extractor-fact-1
   - fat-extractor-fact-2
   - fat-extractor-fact-3

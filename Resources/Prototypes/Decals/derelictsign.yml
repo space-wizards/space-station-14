@@ -1,0 +1,115 @@
+#This has to be split up like this because tiles remove the decal under them, and the derelict sign is bigger then 32x32 when combined.
+
+#Bottom
+- type: decal
+  id: DerelictSignBottom1
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict1
+
+- type: decal
+  id: DerelictSignBottom2
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict2
+
+- type: decal
+  id: DerelictSignBottom3
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict3
+
+- type: decal
+  id: DerelictSignBottom4
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict4
+
+- type: decal
+  id: DerelictSignBottom5
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict5
+
+- type: decal
+  id: DerelictSignBottom6
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict6
+
+- type: decal
+  id: DerelictSignBottom7
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict7
+
+- type: decal
+  id: DerelictSignBottom8
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict8
+
+#Top
+- type: decal
+  id: DerelictSignTop1
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict9
+
+- type: decal
+  id: DerelictSignTop2
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict10
+
+- type: decal
+  id: DerelictSignTop3
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict11
+
+- type: decal
+  id: DerelictSignTop4
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict12
+
+- type: decal
+  id: DerelictSignTop5
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict13
+
+- type: decal
+  id: DerelictSignTop6
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict14
+
+- type: decal
+  id: DerelictSignTop7
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict15
+
+- type: decal
+  id: DerelictSignTop8
+  tags: ["station"]
+  sprite:
+    sprite: Decals/derelictsign.rsi
+    state: derelict16

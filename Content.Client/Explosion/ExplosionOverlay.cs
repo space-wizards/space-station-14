@@ -1,9 +1,10 @@
 using System.Numerics;
-using Content.Shared.Explosion;
+using Content.Shared.Explosion.Components;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -13,7 +14,6 @@ namespace Content.Client.Explosion;
 public sealed class ExplosionOverlay : Overlay
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
@@ -63,10 +63,10 @@ public sealed class ExplosionOverlay : Overlay
         Box2 gridBounds;
         foreach (var (gridId, tiles) in visuals.Tiles)
         {
-            if (!_mapManager.TryGetGrid(gridId, out var grid))
+            if (!_entMan.TryGetComponent(gridId, out MapGridComponent? grid))
                 continue;
 
-            var xform = xforms.GetComponent(grid.Owner);
+            var xform = xforms.GetComponent(gridId);
             var (_, _, worldMatrix, invWorldMatrix) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
 
             gridBounds = invWorldMatrix.TransformBox(worldBounds).Enlarged(grid.TileSize * 2);

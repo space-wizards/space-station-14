@@ -1,10 +1,9 @@
 using System.Numerics;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Gravity;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedFloatingVisualizerSystem))]
 public sealed partial class FloatingVisualsComponent : Component
 {
@@ -12,33 +11,19 @@ public sealed partial class FloatingVisualsComponent : Component
     /// How long it takes to go from the bottom of the animation to the top.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("animationTime")]
+    [DataField, AutoNetworkedField]
     public float AnimationTime = 2f;
 
     /// <summary>
     /// How far it goes in any direction.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("offset")]
+    [DataField, AutoNetworkedField]
     public Vector2 Offset = new(0, 0.2f);
 
     [ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
     public bool CanFloat = false;
+
     public readonly string AnimationKey = "gravity";
-}
-
-
-[Serializable, NetSerializable]
-public sealed class SharedFloatingVisualsComponentState : ComponentState
-{
-    public float AnimationTime;
-    public Vector2 Offset;
-    public bool HasGravity;
-
-    public SharedFloatingVisualsComponentState(float animationTime, Vector2 offset, bool hasGravity)
-    {
-        AnimationTime = animationTime;
-        Offset = offset;
-        HasGravity = hasGravity;
-    }
 }

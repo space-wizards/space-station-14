@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Pathfinding Dummy
+  name: pathfinding dummy
   parent: BaseMobHuman
   id: MobHumanPathDummy
   description: A miserable pile of secrets.

@@ -65,13 +65,20 @@
   components:
   - type: StorageFill
     contents:
-      - id: WelderMini
-      - id: Welder
-        prob: 0.7
-      - id: WelderIndustrial
-        prob: 0.5
+      - id: ClothingHeadHatWelding
+      - id: ClothingHeadHatWelding
       - id: ClothingHeadHatWelding
         prob: 0.5
+      - id: Welder
+      - id: Welder
+      - id: WelderMini
+        orGroup: thirdWelder
+      - id: Welder
+        prob: 0.33
+        orGroup: thirdWelder
+      - id: WelderIndustrial
+        prob: 0.33
+        orGroup: thirdWelder
 
 - type: entity
   id: LockerAtmosphericsFilledHardsuit
@@ -82,14 +89,14 @@
     contents:
       - id: ClothingOuterHardsuitAtmos
       - id: ClothingMaskGasAtmos
-      - id: YellowOxygenTankFilled
-      - id: NitrogenTankFilled
       - id: ClothingOuterSuitAtmosFire
       - id: ClothingHeadHelmetAtmosFire
       - id: GasAnalyzer
       - id: MedkitOxygenFilled
       - id: HolofanProjector
       - id: DoorRemoteFirefight
+      - id: RCD
+      - id: RCDAmmo
 
 - type: entity
   id: LockerAtmosphericsFilled
@@ -105,6 +112,8 @@
       - id: MedkitOxygenFilled
       - id: HolofanProjector
       - id: DoorRemoteFirefight
+      - id: RCD
+      - id: RCDAmmo
 
 - type: entity
   id: LockerEngineerFilledHardsuit
@@ -116,9 +125,9 @@
       - id: ClothingOuterHardsuitEngineering
       - id: ClothingHandsGlovesColorYellow
       - id: ClothingMaskGas
-      - id: OxygenTankFilled
-      - id: NitrogenTankFilled
       - id: ClothingShoesBootsMag
+      - id: RCD
+      - id: RCDAmmo
 
 - type: entity
   id: LockerEngineerFilled
@@ -130,6 +139,8 @@
       - id: ClothingHandsGlovesColorYellow
       - id: ClothingMaskGas
       - id: trayScanner
+      - id: RCD
+      - id: RCDAmmo
 
 - type: entity
   id: ClosetRadiationSuitFilled
@@ -138,8 +149,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHatHoodRad
-        amount: 2
       - id: ClothingOuterSuitRad
         amount: 2
       - id: GeigerCounter

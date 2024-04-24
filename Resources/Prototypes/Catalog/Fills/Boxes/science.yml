@@ -4,12 +4,16 @@
   id: BoxBeaker
   description: A box full of beakers.
   components:
+  - type: Storage
+    grid:
+    - 0,0,3,2
+    maxItemSize: Normal
   - type: StorageFill
     contents:
-      - id: Beaker
-        amount: 2
-      - id: LargeBeaker
-        amount: 2
+    - id: LargeBeaker
+      amount: 2
+    - id: Beaker
+      amount: 2
   - type: Sprite
     layers:
       - state: box

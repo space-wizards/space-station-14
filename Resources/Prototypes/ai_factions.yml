@@ -6,6 +6,7 @@
     - Xeno
     - PetsNT
     - Zombie
+    - Revolutionary
 
 - type: npcFaction
   id: NanoTrasen
@@ -14,6 +15,7 @@
   - Syndicate
   - Xeno
   - Zombie
+  - Revolutionary
 
 - type: npcFaction
   id: Mouse
@@ -39,6 +41,7 @@
   - Passive
   - PetsNT
   - Zombie
+  - Revolutionary
 
 - type: npcFaction
   id: SimpleNeutral
@@ -60,6 +63,7 @@
   - Passive
   - PetsNT
   - Zombie
+  - Revolutionary
 
 - type: npcFaction
   id: Zombie
@@ -70,3 +74,12 @@
   - Syndicate
   - Passive
   - PetsNT
+  - Revolutionary
+
+- type: npcFaction
+  id: Revolutionary
+  hostile:
+  - NanoTrasen
+  - Zombie
+  - SimpleHostile
+  - Dragon

@@ -34,6 +34,7 @@
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Piercing: 12
@@ -46,30 +47,30 @@
       types:
         Piercing: 15
   - type: Item
-    size: 95
+    size: Ginormous
   - type: Clothing
     quickEquip: false
     slots:
     - back
+    - suitStorage
   - type: Construction
     graph: Spear
     node: spear
-  - type: ItemCooldown
   - type: SolutionContainerManager
     solutions:
       melee:
-        maxVol: 5
+        maxVol: 2
   - type: MeleeChemicalInjector
     solution: melee
   - type: RefillableSolution
     solution: melee
   - type: InjectableSolution
     solution: melee
-  - type: SolutionInjectOnCollide
-    transferAmount: 5
-    blockSlots: NONE
+  - type: SolutionInjectOnEmbed
+    transferAmount: 2
+    solution: melee
   - type: SolutionTransfer
-    maxTransferAmount: 5
+    maxTransferAmount: 2
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
@@ -92,6 +93,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpawnEntitiesBehavior
         spawn:
           PartRodMetal1:
@@ -103,6 +106,7 @@
     damage:
       types:
         Blunt: 5
+  - type: UseDelay
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1
@@ -117,6 +121,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/reinforced_spear.rsi
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Piercing: 15
@@ -136,6 +141,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/plasma_spear.rsi
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Piercing: 18
@@ -155,6 +161,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/uranium_spear.rsi
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Piercing: 10

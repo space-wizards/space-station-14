@@ -1,6 +1,8 @@
-- type: advertisementsPack
+- type: messagePack
   id: DonutAds
-  advertisements:
+  messages:
     - advertisement-donut-1
     - advertisement-donut-2
     - advertisement-donut-3
+    - advertisement-donut-4
+    - advertisement-donut-5

@@ -8,8 +8,7 @@
   - type: MeleeSound
     soundGroups:
       Brute:
-        path:
-          "/Audio/Effects/glass_hit.ogg"
+        collection: GlassSmash
   - type: Clickable
   - type: InteractionOutline
   - type: Transform
@@ -36,6 +35,12 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: PowerMonitoringDevice
+    group: Generator
+    loadNode: output
+    sprite: Structures/Power/Generation/solar_panel.rsi
+    state: static
+    collectionName: SolarPanel
   - type: Anchorable
   - type: Pullable
   - type: Electrified
@@ -151,6 +156,7 @@
   - type: Construction
     graph: SolarPanel
     node: solarassembly
+    defaultTarget: solarpanel
 
 - type: entity
   id: SolarTracker

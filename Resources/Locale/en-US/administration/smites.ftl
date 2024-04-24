@@ -12,7 +12,8 @@ admin-smite-turned-ash-other = {CAPITALIZE($name)} turns into a pile of ash!
 admin-smite-stomach-removal-self = Your stomach feels hollow...
 admin-smite-run-walk-swap-prompt = You have to press shift to run!
 admin-smite-super-speed-prompt = You move at mach 0.8!
-admin-smite-lung-removal-self = You can't breath!
+admin-smite-lung-removal-self = You can't breathe!
+admin-smite-terminate-prompt = I'll be back
 
 
 ## Smite descriptions
@@ -43,7 +44,7 @@ admin-smite-reptilian-species-swap-description = It changes their species to Rep
 admin-smite-locker-stuff-description = Stuffs them in a (welded) locker.
 admin-smite-headstand-description = Vertically flips their sprite.
 admin-smite-plasma-internals-description = Replaces the contents of their internals with plasma.
-admin-smite-become-mouse-description = They become a rat. Ratatouille.
+admin-smite-become-mouse-description = They become a mouse. Squeak!
 admin-smite-maid-description = Forcibly converts them into a janitorial cat maid. This is actual torture for some players, use it wisely.
 admin-smite-zoom-in-description = Zooms in their view so that they can no longer see their surroundings.
 admin-smite-flip-eye-description = Flips their view, effectively reversing their controls and making the game annoying to play.
@@ -55,7 +56,9 @@ admin-smite-lung-removal-description = Removes their lungs, drowning them.
 admin-smite-remove-hand-description = Removes only one of their hands instead of all of them.
 admin-smite-disarm-prone-description = Makes them get disarmed 100% of the time and cuffed instantly.
 admin-smite-garbage-can-description = Turn them into a garbage bin to emphasize what they remind you of.
-
+admin-smite-super-bonk-description = Slams them on every single table on the Station and beyond.
+admin-smite-super-bonk-lite-description= Slams them on every single table on the Station and beyond. Stops when the target is dead.
+admin-smite-terminate-description = Creates a Terminator ghost role with the sole objective of killing them.
 
 ## Tricks descriptions
 

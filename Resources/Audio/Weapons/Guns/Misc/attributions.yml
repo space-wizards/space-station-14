@@ -2,3 +2,8 @@
   license: "CC-BY-NC-4.0"
   copyright: "Created by LiamG_SFX, converted to ogg by mirrorcult"
   source: "https://freesound.org/people/LiamG_SFX/sounds/322224/"
+
+- files: ["selector.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/TerraGov-Marine-Corps/blob/0d97ec86c49e2a89409bd3ddf0b7451b3f1c9a0e/sound/weapons/guns/interact/selector.ogg"

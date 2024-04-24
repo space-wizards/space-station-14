@@ -37,15 +37,27 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
         {
             if (open)
             {
-                args.Sprite.LayerSetVisible(StorageVisualLayers.Door, true);
+                if (comp.OpenDrawDepth != null)
+                    args.Sprite.DrawDepth = comp.OpenDrawDepth.Value;
+
                 if (comp.StateDoorOpen != null)
+                {
                     args.Sprite.LayerSetState(StorageVisualLayers.Door, comp.StateDoorOpen);
+                    args.Sprite.LayerSetVisible(StorageVisualLayers.Door, true);
+                }
+                else
+                {
+                    args.Sprite.LayerSetVisible(StorageVisualLayers.Door, false);
+                }
 
                 if (comp.StateBaseOpen != null)
                     args.Sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBaseOpen);
             }
             else
             {
+                if (comp.ClosedDrawDepth != null)
+                    args.Sprite.DrawDepth = comp.ClosedDrawDepth.Value;
+
                 if (comp.StateDoorClosed != null)
                 {
                     args.Sprite.LayerSetState(StorageVisualLayers.Door, comp.StateDoorClosed);
@@ -58,25 +70,11 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
                     args.Sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBaseClosed);
             }
         }
-
-        // Lock state for the storage entity. TODO: Split into its own visualizer.
-        if (AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.CanLock, out var canLock, args.Component) && canLock)
-        {
-            if (!AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Locked, out var locked, args.Component))
-                locked = true;
-
-            args.Sprite.LayerSetVisible(StorageVisualLayers.Lock, !open);
-            if (!open)
-            {
-                args.Sprite.LayerSetState(StorageVisualLayers.Lock, locked ? comp.StateLocked : comp.StateUnlocked);
-            }
-        }
     }
 }
 
 public enum StorageVisualLayers : byte
 {
     Base,
-    Door,
-    Lock
+    Door
 }

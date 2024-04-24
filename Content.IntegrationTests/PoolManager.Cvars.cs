@@ -32,10 +32,11 @@ public static partial class PoolManager
         (CCVars.GameLobbyEnabled.Name, "false"),
         (CCVars.ConfigPresetDevelopment.Name, "false"),
         (CCVars.AdminLogsEnabled.Name, "false"),
+        (CCVars.AutosaveEnabled.Name, "false"),
         (CVars.NetBufferSize.Name, "0")
     };
 
-    public static async Task  SetupCVars(RobustIntegrationTest.IntegrationInstance instance, PoolSettings settings)
+    public static async Task SetupCVars(RobustIntegrationTest.IntegrationInstance instance, PoolSettings settings)
     {
         var cfg = instance.ResolveDependency<IConfigurationManager>();
         await instance.WaitPost(() =>

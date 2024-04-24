@@ -1,0 +1,13 @@
+- type: entity
+  save: false
+  name: Urist McCookie
+  parent: BaseMobGingerbread
+  id: MobGingerbread
+  components:
+    - type: Respirator
+      damage:
+        types:
+          Asphyxiation: 0.5
+      damageRecovery:
+        types:
+          Asphyxiation: -1.0

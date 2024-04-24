@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Server.GameTicking.Rules.Components;
+﻿using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Resist;
 using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
@@ -18,13 +17,17 @@ public sealed class BluespaceLockerRule : StationEventSystem<BluespaceLockerRule
     {
         base.Started(uid, component, gameRule, args);
 
-        var targets = EntityQuery<EntityStorageComponent, ResistLockerComponent>().ToList();
+        var targets = new List<EntityUid>();
+        var query = EntityQueryEnumerator<EntityStorageComponent, ResistLockerComponent>();
+        while (query.MoveNext(out var storageUid, out _, out _))
+        {
+            targets.Add(storageUid);
+        }
+
         RobustRandom.Shuffle(targets);
 
-        foreach (var target in targets)
+        foreach (var potentialLink in targets)
         {
-            var potentialLink = target.Item1.Owner;
-
             if (HasComp<AccessReaderComponent>(potentialLink) ||
                 HasComp<BluespaceLockerComponent>(potentialLink) ||
                 !HasComp<StationMemberComponent>(potentialLink.ToCoordinates().GetGridUid(EntityManager)))

@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f07f847706d85b7cfa4b398e5175732212b69a63",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f07f847706d85b7cfa4b398e5175732212b69a63 and recolored",
     "states": [
         {
             "name": "analyzer",

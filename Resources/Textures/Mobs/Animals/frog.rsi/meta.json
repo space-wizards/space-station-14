@@ -9,6 +9,10 @@
   "states": [
     {
       "name": "frog",
+      "directions": 4
+    },
+    {
+      "name": "frog-moving",
       "directions": 4,
       "delays": [
         [

@@ -9,10 +9,15 @@
     sprite: Clothing/Head/Hoods/Bio/general.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/general.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
   - type: Tag
     tags:
-    - HidesHair
     - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
@@ -21,6 +26,7 @@
   suffix: CMO
   description: An advanced hood for chief medical officers that protects the head and face from biological contaminants.
   components:
+  - type: IdentityBlocker
   - type: Sprite
     sprite: Clothing/Head/Hoods/Bio/cmo.rsi
   - type: Clothing
@@ -33,6 +39,7 @@
   suffix: Janitor
   description: A hood that protects the head and face from biological contaminants.
   components:
+  - type: IdentityBlocker
   - type: Sprite
     sprite: Clothing/Head/Hoods/Bio/janitor.rsi
   - type: Clothing
@@ -45,6 +52,7 @@
   suffix: Science
   description: A hood that protects the head and face from biological contaminants.
   components:
+  - type: IdentityBlocker
   - type: Sprite
     sprite: Clothing/Head/Hoods/Bio/scientist.rsi
   - type: Clothing
@@ -57,6 +65,7 @@
   suffix: Security
   description: A hood that protects the head and face from biological contaminants.
   components:
+  - type: IdentityBlocker
   - type: Sprite
     sprite: Clothing/Head/Hoods/Bio/security.rsi
   - type: Clothing
@@ -69,6 +78,7 @@
   suffix: Virology
   description: A hood that protects the head and face from biological contaminants.
   components:
+  - type: IdentityBlocker
   - type: Sprite
     sprite: Clothing/Head/Hoods/Bio/virology.rsi
   - type: Clothing
@@ -89,6 +99,9 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
 
 - type: entity
   parent: ClothingHeadBase
@@ -100,6 +113,12 @@
     sprite: Clothing/Head/Hoods/cult.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/cult.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
 
 - type: entity
   parent: ClothingHeadBase
@@ -115,6 +134,9 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
 
 - type: entity
   parent: ClothingHeadBase
@@ -131,6 +153,11 @@
       coefficients:
         Heat: 0.95
         Radiation: 0.65
+  - type: BreathMask
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 - type: entity
   parent: ClothingHeadBase
@@ -142,6 +169,12 @@
     sprite: Clothing/Head/Hoods/goliathcloak.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/goliathcloak.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
 
 - type: entity
   parent: ClothingHeadBase
@@ -154,9 +187,9 @@
     sprite: Clothing/Head/Hoods/iansuit.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/iansuit.rsi
-  - type: Tag
-    tags:
-    - HidesHair
+  - type: HideLayerClothing
+    slots:
+    - Hair
 
 - type: entity
   parent: ClothingHeadBase
@@ -169,9 +202,9 @@
     sprite: Clothing/Head/Hoods/carpsuit.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/carpsuit.rsi
-  - type: Tag
-    tags:
-    - HidesHair
+  - type: HideLayerClothing
+    slots:
+    - Hair
 
 - type: entity
   parent: ClothingHeadBase
@@ -186,8 +219,11 @@
   - type: IdentityBlocker
   - type: Tag
     tags:
-    - HidesHair
     - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
 
 #Winter Coat Hoods
 - type: entity

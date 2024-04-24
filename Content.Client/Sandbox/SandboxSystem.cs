@@ -5,7 +5,7 @@ using Robust.Client.Console;
 using Robust.Client.Placement;
 using Robust.Client.Placement.Modes;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 
 namespace Content.Client.Sandbox
 {
@@ -16,6 +16,7 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly IMapManager _map = default!;
         [Dependency] private readonly IPlacementManager _placement = default!;
         [Dependency] private readonly ContentEyeSystem _contentEye = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         private bool _sandboxEnabled;
         public bool SandboxAllowed { get; private set; }
@@ -108,7 +109,7 @@ namespace Content.Client.Sandbox
             }
 
             // Try copy tile.
-            if (!_map.TryFindGridAt(coords.ToMap(EntityManager), out _, out var grid) || !grid.TryGetTileRef(coords, out var tileRef))
+            if (!_map.TryFindGridAt(coords.ToMap(EntityManager, _transform), out _, out var grid) || !grid.TryGetTileRef(coords, out var tileRef))
                 return false;
 
             if (_placement.Eraser)

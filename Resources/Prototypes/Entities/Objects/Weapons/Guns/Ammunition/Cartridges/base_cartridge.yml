@@ -20,10 +20,12 @@
     tags:
     - Cartridge
   - type: Item
-    size: 1
+    size: Tiny
   - type: SpaceGarbage
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Weapons/Guns/Casings/casing_fall_2.ogg
       params:
         volume: -1
+  - type: StaticPrice
+    price: 1

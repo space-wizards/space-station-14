@@ -1,7 +1,5 @@
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
-using Robust.Client.GameObjects;
-using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
 namespace Content.Client.Humanoid;
 

@@ -4,6 +4,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.Serialization;
 using Robust.Client.UserInterface;
 using Robust.Shared.Enums;
 using Robust.Shared.Graphics;
@@ -26,6 +27,7 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
     private readonly HandsSystem _hands = default!;
 
     private readonly Texture _gunSight;
+    private readonly Texture _gunBoltSight;
     private readonly Texture _meleeSight;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
@@ -46,6 +48,8 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
         var spriteSys = _entMan.EntitySysManager.GetEntitySystem<SpriteSystem>();
         _gunSight = spriteSys.Frame0(new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Misc/crosshair_pointers.rsi"),
             "gun_sight"));
+        _gunBoltSight = spriteSys.Frame0(new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Misc/crosshair_pointers.rsi"),
+            "gun_bolt_sight"));
         _meleeSight = spriteSys.Frame0(new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Misc/crosshair_pointers.rsi"),
              "melee_sight"));
     }
@@ -67,12 +71,16 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
 
         var handEntity = _hands.GetActiveHandEntity();
         var isHandGunItem = _entMan.HasComponent<GunComponent>(handEntity);
+        var isGunBolted = true;
+        if (_entMan.TryGetComponent(handEntity, out ChamberMagazineAmmoProviderComponent? chamber))
+            isGunBolted = chamber.BoltClosed ?? true;
+
 
         var mousePos = mouseScreenPosition.Position;
         var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
         var limitedScale = uiScale > 1.25f ? 1.25f : uiScale;
 
-        var sight = isHandGunItem ? _gunSight : _meleeSight;
+        var sight = isHandGunItem ? (isGunBolted ? _gunSight : _gunBoltSight) : _meleeSight;
         DrawSight(sight, args.ScreenHandle, mousePos, limitedScale * Scale);
     }
 

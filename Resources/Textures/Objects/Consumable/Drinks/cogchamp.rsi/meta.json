@@ -5,7 +5,7 @@
     "y": 32
   },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Made by keronshb for Citadel Station at: https://github.com/Citadel-Station-13/Citadel-Station-13/commit/c790478a3d6e8a2846e658c3dc6c5164737e4b42",
+    "copyright": "Made by keronshb for Citadel Station at: https://github.com/Citadel-Station-13/Citadel-Station-13/commit/c790478a3d6e8a2846e658c3dc6c5164737e4b42. Fill levels by Tayrtahn on GitHub.",
   "states": [
     {
       "name": "icon",
@@ -17,6 +17,42 @@
           0.3
         ]
       ]
+    },
+    {
+        "name": "icon_empty"
+    },
+    {
+        "name": "fill-1",
+        "delays": [
+          [
+            0.6,
+            0.3,
+            0.3,
+            0.3
+          ]
+        ]
+    },
+    {
+        "name": "fill-2",
+        "delays": [
+          [
+            0.6,
+            0.3,
+            0.3,
+            0.3
+          ]
+        ]
+    },
+    {
+        "name": "fill-3",
+        "delays": [
+          [
+            0.6,
+            0.3,
+            0.3,
+            0.3
+          ]
+        ]
     }
   ]
 }

@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -9,19 +10,19 @@ namespace Content.Shared.Blocking;
 /// <summary>
 /// This component goes on an item that you want to use to block
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class BlockingComponent : Component
 {
     /// <summary>
     /// The entity that's blocking
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public EntityUid? User;
 
     /// <summary>
     /// Is it currently blocking?
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public bool IsBlocking;
 
     /// <summary>
@@ -50,14 +51,17 @@ public sealed partial class BlockingComponent : Component
     [DataField("blockingToggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string BlockingToggleAction = "ActionToggleBlock";
 
-    [DataField("blockingToggleActionEntity")]
+    [DataField, AutoNetworkedField]
     public EntityUid? BlockingToggleActionEntity;
 
     /// <summary>
     /// The sound to be played when you get hit while actively blocking
     /// </summary>
-    [DataField("blockSound")]
-    public SoundSpecifier BlockSound = new SoundPathSpecifier("/Audio/Weapons/block_metal1.ogg");
+    [DataField("blockSound")] public SoundSpecifier BlockSound =
+        new SoundPathSpecifier("/Audio/Weapons/block_metal1.ogg")
+        {
+            Params = AudioParams.Default.WithVariation(0.25f)
+        };
 
     /// <summary>
     /// Fraction of original damage shield will take instead of user

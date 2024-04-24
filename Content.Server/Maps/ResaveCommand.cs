@@ -46,10 +46,9 @@ public sealed class ResaveCommand : LocalizedCommands
             {
                 loader.SaveMap(mapId, fn.ToString());
             }
-            else
+            else if (mapXform.ChildEnumerator.MoveNext(out var child))
             {
-
-                loader.Save(mapXform.ChildEntities.First(), fn.ToString());
+                loader.Save(child, fn.ToString());
             }
 
             _mapManager.DeleteMap(mapId);

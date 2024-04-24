@@ -11,7 +11,6 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Pointing;
 using Content.Shared.RatKing;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
@@ -26,7 +25,6 @@ namespace Content.Server.RatKing
         [Dependency] private readonly HungerSystem _hunger = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly TransformSystem _xform = default!;
 
         public override void Initialize()
         {
@@ -67,7 +65,7 @@ namespace Content.Server.RatKing
         }
 
         /// <summary>
-        /// uses hunger to release a specific amount of miasma into the air. This heals the rat king
+        /// uses hunger to release a specific amount of ammonia into the air. This heals the rat king
         /// and his servants through a specific metabolism.
         /// </summary>
         private void OnDomain(EntityUid uid, RatKingComponent component, RatKingDomainActionEvent args)
@@ -88,11 +86,8 @@ namespace Content.Server.RatKing
             _hunger.ModifyHunger(uid, -component.HungerPerDomainUse, hunger);
 
             _popup.PopupEntity(Loc.GetString("rat-king-domain-popup"), uid);
-
-            var transform = Transform(uid);
-            var indices = _xform.GetGridOrMapTilePosition(uid, transform);
-            var tileMix = _atmos.GetTileMixture(transform.GridUid, transform.MapUid, indices, true);
-            tileMix?.AdjustMoles(Gas.Miasma, component.MolesMiasmaPerDomain);
+            var tileMix = _atmos.GetTileMixture(uid, excite: true);
+            tileMix?.AdjustMoles(Gas.Ammonia, component.MolesAmmoniaPerDomain);
         }
 
         private void OnPointedAt(EntityUid uid, RatKingComponent component, ref AfterPointedAtEvent args)

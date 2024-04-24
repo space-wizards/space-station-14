@@ -4,6 +4,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Standing;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -16,6 +17,7 @@ public partial class MobStateSystem : EntitySystem
     [Dependency] private readonly StandingStateSystem _standing = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     private ISawmill _sawmill = default!;
 
     public override void Initialize()
@@ -23,8 +25,6 @@ public partial class MobStateSystem : EntitySystem
         _sawmill = _logManager.GetSawmill("MobState");
         base.Initialize();
         SubscribeEvents();
-        SubscribeLocalEvent<MobStateComponent, ComponentGetState>(OnGetComponentState);
-        SubscribeLocalEvent<MobStateComponent, ComponentHandleState>(OnHandleComponentState);
     }
 
     #region Public API
@@ -97,25 +97,6 @@ public partial class MobStateSystem : EntitySystem
     #endregion
 
     #region Private Implementation
-
-    private void OnHandleComponentState(EntityUid uid, MobStateComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not MobStateComponentState state)
-            return;
-
-        component.CurrentState = state.CurrentState;
-
-        if (!component.AllowedStates.SetEquals(state.AllowedStates))
-        {
-            component.AllowedStates.Clear();
-            component.AllowedStates.UnionWith(state.AllowedStates);
-        }
-    }
-
-    private void OnGetComponentState(EntityUid uid, MobStateComponent component, ref ComponentGetState args)
-    {
-        args.State = new MobStateComponentState(component.CurrentState, component.AllowedStates);
-    }
 
     #endregion
 }

@@ -97,7 +97,7 @@ public sealed class ExplosionSpaceTileFlood : ExplosionTileFlood
                 if (!unblockedDirections.IsFlagSet(direction))
                     continue; // explosion cannot propagate in this direction. Ever.
 
-                ProcessNewTile(iteration, tile.Offset(direction), direction.GetOpposite());
+                ProcessNewTile(iteration, tile.Offset(direction), i.ToOppositeDir());
             }
         }
     }

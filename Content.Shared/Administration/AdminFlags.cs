@@ -90,6 +90,16 @@
         EditNotes = 1 << 14,
 
         /// <summary>
+        ///     Lets you Massban, on SS14.Admin
+        /// </summary>
+        MassBan = 1 << 15,
+
+        /// <summary>
+        /// Allows you to remain hidden from adminwho except to other admins with this flag.
+        /// </summary>
+        Stealth = 1 << 16,
+
+        /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>
         Host = 1u << 31,

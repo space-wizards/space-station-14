@@ -1,0 +1,117 @@
+- type: species
+  id: Gingerbread
+  name: species-name-human
+  roundStart: false
+  prototype: MobGingerbread
+  sprites: MobGingerbreadSprites
+  markingLimits: MobHumanMarkingLimits
+  dollPrototype: MobGingerbreadDummy
+  skinColoration: HumanToned
+  defaultSkinTone: "#9a7c5a"
+
+- type: speciesBaseSprites
+  id: MobGingerbreadSprites
+  sprites:
+    Head: MobGingerbreadHead
+    HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
+    Chest: MobGingerbreadTorso
+    Eyes: MobGingerbreadEyes
+    LArm: MobGingerbreadLArm
+    RArm: MobGingerbreadRArm
+    LHand: MobGingerbreadLHand
+    RHand: MobGingerbreadRHand
+    LLeg: MobGingerbreadLLeg
+    RLeg: MobGingerbreadRLeg
+    LFoot: MobGingerbreadLFoot
+    RFoot: MobGingerbreadRFoot
+
+- type: humanoidBaseSprite
+  id: MobGingerbreadEyes
+  baseSprite:
+    sprite: Mobs/Customization/eyes.rsi
+    state: no_eyes
+
+- type: humanoidBaseSprite
+  id: MobGingerbreadHead
+  baseSprite:
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobGingerbreadHeadMale
+  baseSprite:
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobGingerbreadHeadFemale
+  baseSprite:
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobGingerbreadTorso
+  baseSprite:
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobGingerbreadTorsoMale
+  baseSprite:
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobGingerbreadTorsoFemale
+  baseSprite:
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobGingerbreadLLeg
+  baseSprite:
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobGingerbreadLHand
+  baseSprite:
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobGingerbreadLArm
+  baseSprite:
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobGingerbreadLFoot
+  baseSprite:
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobGingerbreadRLeg
+  baseSprite:
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobGingerbreadRHand
+  baseSprite:
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobGingerbreadRArm
+  baseSprite:
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobGingerbreadRFoot
+  baseSprite:
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+    state: r_foot

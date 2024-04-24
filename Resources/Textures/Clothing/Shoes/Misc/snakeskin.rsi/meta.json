@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-3.0",
+  "copyright": "Made by Nimfar11 (GitHub) for Space Station 14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-FEET",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

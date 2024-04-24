@@ -5,4 +5,5 @@
   components:
   - type: Metabolizer
     metabolizerTypes: [ Vox ]
-
+  - type: Lung
+    alert: LowNitrogen

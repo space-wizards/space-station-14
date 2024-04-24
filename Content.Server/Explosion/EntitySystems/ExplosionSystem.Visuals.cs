@@ -1,4 +1,5 @@
 using Content.Shared.Explosion;
+using Content.Shared.Explosion.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -50,11 +51,11 @@ public sealed partial class ExplosionSystem : EntitySystem
         comp.Intensity = iterationIntensity;
         comp.SpaceMatrix = spaceMatrix;
         comp.SpaceTileSize = spaceData?.TileSize ?? DefaultTileSize;
-        Dirty(comp);
+        Dirty(explosionEntity, comp);
 
         // Light, sound & visuals may extend well beyond normal PVS range. In principle, this should probably still be
         // restricted to something like the same map, but whatever.
-        _pvsSys.AddGlobalOverride(explosionEntity);
+        _pvsSys.AddGlobalOverride(GetNetEntity(explosionEntity));
 
         var appearance = AddComp<AppearanceComponent>(explosionEntity);
         _appearance.SetData(explosionEntity, ExplosionAppearanceData.Progress, 1, appearance);

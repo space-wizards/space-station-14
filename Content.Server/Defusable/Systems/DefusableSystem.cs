@@ -8,10 +8,14 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.Defusable;
 using Content.Shared.Examine;
+using Content.Shared.Explosion.Components;
+using Content.Shared.Explosion.Components.OnTrigger;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Defusable.Systems;
 
@@ -44,7 +48,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
     /// </summary>
     private void OnGetAltVerbs(EntityUid uid, DefusableComponent comp, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        if (!args.CanInteract || !args.CanAccess || args.Hands == null)
             return;
 
         args.Verbs.Add(new AlternativeVerb
@@ -64,25 +68,28 @@ public sealed class DefusableSystem : SharedDefusableSystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (!comp.Usable)
+        using (args.PushGroup(nameof(DefusableComponent)))
         {
-            args.PushMarkup(Loc.GetString("defusable-examine-defused", ("name", uid)));
-        }
-        else if (comp.Activated && TryComp<ActiveTimerTriggerComponent>(uid, out var activeComp))
-        {
-            if (comp.DisplayTime)
+            if (!comp.Usable)
             {
-                args.PushMarkup(Loc.GetString("defusable-examine-live", ("name", uid),
-                    ("time", MathF.Floor(activeComp.TimeRemaining))));
+                args.PushMarkup(Loc.GetString("defusable-examine-defused", ("name", uid)));
+            }
+            else if (comp.Activated && TryComp<ActiveTimerTriggerComponent>(uid, out var activeComp))
+            {
+                if (comp.DisplayTime)
+                {
+                    args.PushMarkup(Loc.GetString("defusable-examine-live", ("name", uid),
+                        ("time", MathF.Floor(activeComp.TimeRemaining))));
+                }
+                else
+                {
+                    args.PushMarkup(Loc.GetString("defusable-examine-live-display-off", ("name", uid)));
+                }
             }
             else
             {
-                args.PushMarkup(Loc.GetString("defusable-examine-live-display-off", ("name", uid)));
+                args.PushMarkup(Loc.GetString("defusable-examine-inactive", ("name", uid)));
             }
-        }
-        else
-        {
-            args.PushMarkup(Loc.GetString("defusable-examine-inactive", ("name", uid)));
         }
 
         args.PushMarkup(Loc.GetString("defusable-examine-bolts", ("down", comp.Bolted)));

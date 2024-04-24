@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.IO;
 using System.Linq;
 using Content.Server.GameTicking;
@@ -131,7 +131,7 @@ public sealed partial class TestPair : IAsyncDisposable
         // Move to pre-round lobby. Required to toggle dummy ticker on and off
         if (gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
         {
-            await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Restarting server.");
+            await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Restarting round.");
             Assert.That(gameTicker.DummyTicker, Is.False);
             Server.CfgMan.SetCVar(CCVars.GameLobbyEnabled, true);
             await Server.WaitPost(() => gameTicker.RestartRound());
@@ -146,6 +146,7 @@ public sealed partial class TestPair : IAsyncDisposable
 
         // Restart server.
         await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Restarting server again");
+        await Server.WaitPost(() => Server.EntMan.FlushEntities());
         await Server.WaitPost(() => gameTicker.RestartRound());
         await RunTicksSync(1);
 
@@ -189,7 +190,7 @@ public sealed partial class TestPair : IAsyncDisposable
         var sPlayer = Server.ResolveDependency<IPlayerManager>();
         Assert.That(sPlayer.Sessions.Count(), Is.EqualTo(1));
         var session = sPlayer.Sessions.Single();
-        Assert.That(cPlayer.LocalPlayer?.Session.UserId, Is.EqualTo(session.UserId));
+        Assert.That(cPlayer.LocalSession?.UserId, Is.EqualTo(session.UserId));
 
         if (ticker.DummyTicker)
             return;
@@ -203,17 +204,17 @@ public sealed partial class TestPair : IAsyncDisposable
 
         if (settings.InLobby)
         {
-            Assert.Null(session.AttachedEntity);
+            Assert.That(session.AttachedEntity, Is.Null);
             return;
         }
 
-        Assert.NotNull(session.AttachedEntity);
+        Assert.That(session.AttachedEntity, Is.Not.Null);
         Assert.That(entMan.EntityExists(session.AttachedEntity));
         Assert.That(entMan.HasComponent<MindContainerComponent>(session.AttachedEntity));
         var mindCont = entMan.GetComponent<MindContainerComponent>(session.AttachedEntity!.Value);
-        Assert.NotNull(mindCont.Mind);
-        Assert.True(entMan.TryGetComponent(mindCont.Mind, out MindComponent? mind));
-        Assert.Null(mind!.VisitingEntity);
+        Assert.That(mindCont.Mind, Is.Not.Null);
+        Assert.That(entMan.TryGetComponent(mindCont.Mind, out MindComponent? mind));
+        Assert.That(mind!.VisitingEntity, Is.Null);
         Assert.That(mind.OwnedEntity, Is.EqualTo(session.AttachedEntity!.Value));
         Assert.That(mind.UserId, Is.EqualTo(session.UserId));
     }

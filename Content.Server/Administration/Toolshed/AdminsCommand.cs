@@ -1,6 +1,6 @@
 ﻿using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Toolshed;
 
 namespace Content.Server.Administration.Toolshed;
@@ -11,13 +11,13 @@ public sealed class AdminsCommand : ToolshedCommand
     [Dependency] private readonly IAdminManager _admin = default!;
 
     [CommandImplementation("active")]
-    public IEnumerable<IPlayerSession> Active()
+    public IEnumerable<ICommonSession> Active()
     {
         return _admin.ActiveAdmins;
     }
 
     [CommandImplementation("all")]
-    public IEnumerable<IPlayerSession> All()
+    public IEnumerable<ICommonSession> All()
     {
         return _admin.AllAdmins;
     }

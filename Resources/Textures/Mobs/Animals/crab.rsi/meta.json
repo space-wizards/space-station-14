@@ -9,6 +9,10 @@
   "states": [
     {
       "name": "crab",
+      "directions": 4
+    },
+    {
+      "name": "crab-moving",
       "directions": 4,
       "delays": [
         [
@@ -34,12 +38,7 @@
       ]
     },
     {
-      "name": "dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "dead"
     }
   ]
 }

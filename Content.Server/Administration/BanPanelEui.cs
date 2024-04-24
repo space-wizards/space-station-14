@@ -1,19 +1,13 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
+using Content.Server.Administration.Systems;
 using Content.Server.Chat.Managers;
-using Content.Server.Construction.Conditions;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Eui;
-using Microsoft.CodeAnalysis;
 using Robust.Server.Player;
 using Robust.Shared.Network;
 
@@ -22,18 +16,27 @@ namespace Content.Server.Administration;
 public sealed class BanPanelEui : BaseEui
 {
     [Dependency] private readonly IBanManager _banManager = default!;
+    [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly ILogManager _log = default!;
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IAdminManager _admins = default!;
+
+    private readonly ISawmill _sawmill;
 
     private NetUserId? PlayerId { get; set; }
     private string PlayerName { get; set; } = string.Empty;
     private IPAddress? LastAddress { get; set; }
     private ImmutableArray<byte>? LastHwid { get; set; }
+    private const int Ipv4_CIDR = 32;
+    private const int Ipv6_CIDR = 64;
 
     public BanPanelEui()
     {
         IoCManager.InjectDependencies(this);
+
+        _sawmill = _log.GetSawmill("admin.bans_eui");
     }
 
     public override EuiStateBase GetNewState()
@@ -49,7 +52,7 @@ public sealed class BanPanelEui : BaseEui
         switch (msg)
         {
             case BanPanelEuiStateMsg.CreateBanRequest r:
-                BanPlayer(r.Player, r.IpAddress, r.UseLastIp, r.Hwid?.ToImmutableArray(), r.UseLastHwid, r.Minutes, r.Severity, r.Reason, r.Roles);
+                BanPlayer(r.Player, r.IpAddress, r.UseLastIp, r.Hwid?.ToImmutableArray(), r.UseLastHwid, r.Minutes, r.Severity, r.Reason, r.Roles, r.Erase);
                 break;
             case BanPanelEuiStateMsg.GetPlayerInfoRequest r:
                 ChangePlayer(r.PlayerUsername);
@@ -57,11 +60,11 @@ public sealed class BanPanelEui : BaseEui
         }
     }
 
-    private async void BanPlayer(string? target, string? ipAddressString, bool useLastIp, ImmutableArray<byte>? hwid, bool useLastHwid, uint minutes, NoteSeverity severity, string reason, IReadOnlyCollection<string>? roles)
+    private async void BanPlayer(string? target, string? ipAddressString, bool useLastIp, ImmutableArray<byte>? hwid, bool useLastHwid, uint minutes, NoteSeverity severity, string reason, IReadOnlyCollection<string>? roles, bool erase)
     {
         if (!_admins.HasAdminFlag(Player, AdminFlags.Ban))
         {
-            Logger.WarningS("admin.bans_eui", $"{Player.Name} ({Player.UserId}) tried to create a ban with no ban flag");
+            _sawmill.Warning($"{Player.Name} ({Player.UserId}) tried to create a ban with no ban flag");
             return;
         }
         if (target == null && string.IsNullOrWhiteSpace(ipAddressString) && hwid == null)
@@ -79,20 +82,20 @@ public sealed class BanPanelEui : BaseEui
             if (split.Length > 1)
                 hid = split[1];
 
-            if (!IPAddress.TryParse(ipAddressString, out var ipAddress) || !uint.TryParse(hid, out var hidInt) || hidInt > 128 || hidInt > 32 && ipAddress.AddressFamily == AddressFamily.InterNetwork)
+            if (!IPAddress.TryParse(ipAddressString, out var ipAddress) || !uint.TryParse(hid, out var hidInt) || hidInt > Ipv6_CIDR || hidInt > Ipv4_CIDR && ipAddress.AddressFamily == AddressFamily.InterNetwork)
             {
                 _chat.DispatchServerMessage(Player, Loc.GetString("ban-panel-invalid-ip"));
                 return;
             }
 
             if (hidInt == 0)
-                hidInt = (uint) (ipAddress.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32);
+                hidInt = (uint) (ipAddress.AddressFamily == AddressFamily.InterNetworkV6 ? Ipv6_CIDR : Ipv4_CIDR);
 
             addressRange = (ipAddress, (int) hidInt);
         }
 
         var targetUid = target is not null ? PlayerId : null;
-        addressRange = useLastIp && LastAddress is not null ? (LastAddress, LastAddress.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32) : addressRange;
+        addressRange = useLastIp && LastAddress is not null ? (LastAddress, LastAddress.AddressFamily == AddressFamily.InterNetworkV6 ? Ipv6_CIDR : Ipv4_CIDR) : addressRange;
         var targetHWid = useLastHwid ? LastHwid : hwid;
         if (target != null && target != PlayerName || Guid.TryParse(target, out var parsed) && parsed != PlayerId)
         {
@@ -109,8 +112,8 @@ public sealed class BanPanelEui : BaseEui
                 if (targetAddress.IsIPv4MappedToIPv6)
                     targetAddress = targetAddress.MapToIPv4();
 
-                // Ban /128 for IPv6, /32 for IPv4.
-                var hid = targetAddress.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32;
+                // Ban /64 for IPv6, /32 for IPv4.
+                var hid = targetAddress.AddressFamily == AddressFamily.InterNetworkV6 ? Ipv6_CIDR : Ipv4_CIDR;
                 addressRange = (targetAddress, hid);
             }
             targetHWid = useLastHwid ? located.LastHWId : hwid;
@@ -123,10 +126,28 @@ public sealed class BanPanelEui : BaseEui
             {
                 _banManager.CreateRoleBan(targetUid, target, Player.UserId, addressRange, targetHWid, role, minutes, severity, reason, now);
             }
+
+            Close();
             return;
         }
 
+        if (erase &&
+            targetUid != null &&
+            _playerManager.TryGetSessionById(targetUid.Value, out var targetPlayer))
+        {
+            try
+            {
+                if (_entities.TrySystem(out AdminSystem? adminSystem))
+                    adminSystem.Erase(targetPlayer);
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error($"Error while erasing banned player:\n{e}");
+            }
+        }
+
         _banManager.CreateServerBan(targetUid, target, Player.UserId, addressRange, targetHWid, minutes, severity, reason);
+
         Close();
     }
 

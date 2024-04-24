@@ -30,9 +30,6 @@ public sealed partial class WieldableComponent : Component
     public string? WieldedInhandPrefix = "wielded";
 
     public string? OldInhandPrefix = null;
-
-    [DataField("wieldTime")]
-    public float WieldTime = 1.5f;
 }
 
 [Serializable, NetSerializable]

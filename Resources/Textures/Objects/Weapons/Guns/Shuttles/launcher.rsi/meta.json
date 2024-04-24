@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by TheShuEd (github) for Space Station 14",
+    "size": {
+        "x": 64,
+        "y": 64
+    },
+    "states": [
+    {
+        "name": "exp-320g"
+    },
+    {
+        "name": "exp-2100g"
+    },
+    {
+        "name": "mag-1"
+    },
+    {
+        "name": "mag-2"
+    },
+    {
+        "name": "mag-3"
+    },
+    {
+        "name": "mag-4"
+    },
+    {
+        "name": "mag-5"
+    },
+    {
+        "name": "mag-6"
+    },
+    {
+        "name": "mag-7"
+    }
+    ]
+}

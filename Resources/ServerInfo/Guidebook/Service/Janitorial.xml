@@ -20,7 +20,6 @@ You keep things clean, it's a rough job sometimes, but someone's gotta do it. Th
 
 ## Additional Equipment
 <Box>
-<GuideEntityEmbed Entity="VehicleJanicart"/>
 <GuideEntityEmbed Entity="WetFloorSign"/>
 <GuideEntityEmbed Entity="Holoprojector" Caption="holosign projector"/>
 <GuideEntityEmbed Entity="LightReplacer"/>

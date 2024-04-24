@@ -50,8 +50,9 @@ namespace Content.Client.Cargo.BUI
             base.Open();
 
             var spriteSystem = EntMan.System<SpriteSystem>();
-            _menu = new CargoConsoleMenu(IoCManager.Resolve<IPrototypeManager>(), spriteSystem);
-            var localPlayer = IoCManager.Resolve<IPlayerManager>()?.LocalPlayer?.ControlledEntity;
+            var dependencies = IoCManager.Instance!;
+            _menu = new CargoConsoleMenu(Owner, EntMan, dependencies.Resolve<IPrototypeManager>(), spriteSystem);
+            var localPlayer = dependencies.Resolve<IPlayerManager>().LocalEntity;
             var description = new FormattedMessage();
 
             string orderRequester;

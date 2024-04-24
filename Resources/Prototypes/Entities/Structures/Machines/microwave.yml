@@ -5,6 +5,7 @@
   description: It's magic.
   components:
   - type: Microwave
+    capacity: 10
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -33,6 +34,14 @@
           False: { visible: false }
   - type: ActivatableUI
     key: enum.MicrowaveUiKey.Key
+  - type: DeviceLinkSink
+    ports:
+    - On
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
   - type: UserInterface
     interfaces:
     - key: enum.MicrowaveUiKey.Key
@@ -74,6 +83,13 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    totalIntensity: 5
+    intensitySlope: 5
+    canCreateVacuum: false
+    deleteAfterExplosion: false
   - type: ApcPowerReceiver
     powerLoad: 400
   - type: Machine
@@ -83,6 +99,9 @@
       microwave_entity_container: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - microwave_entity_container
   - type: GuideHelp
     guides:
     - Chef

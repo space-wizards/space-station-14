@@ -1,7 +1,0 @@
-﻿epsilon.ogg made by dj-34 (https://github.com/dj-34) taken from https://github.com/ss220-space/Paradise/blob/05043bcfb35c2e7bcf1efbdbfbf976e1a2504bc2/sound/effects/epsilon.ogg
-
-siren.ogg taken from https://github.com/ParadiseSS13/Paradise/blob/master/sound/effects/new_siren.ogg
-
-redalert.ogg was taken from: https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50
-
-bluealert.ogg was taken from: https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50

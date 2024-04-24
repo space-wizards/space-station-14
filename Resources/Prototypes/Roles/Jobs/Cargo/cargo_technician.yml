@@ -9,20 +9,12 @@
   access:
   - Cargo
   - Maintenance
-  - External
   extendedAccess:
   - Salvage
 
 - type: startingGear
   id: CargoTechGear
   equipment:
-    head: ClothingHeadHatCargosoft
-    jumpsuit: ClothingUniformJumpsuitCargo
-    back: ClothingBackpackCargoFilled
-    shoes: ClothingShoesColorBlack
     id: CargoPDA
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
-  innerclothingskirt: ClothingUniformJumpskirtCargo
-  satchel: ClothingBackpackSatchelCargoFilled
-  duffelbag: ClothingBackpackDuffelCargoFilled

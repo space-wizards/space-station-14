@@ -14,12 +14,12 @@ public abstract class SharedStrippableSystem : EntitySystem
         SubscribeLocalEvent<StrippableComponent, DragDropDraggedEvent>(OnDragDrop);
     }
 
-    public (float Time, bool Stealth) GetStripTimeModifiers(EntityUid user, EntityUid target, float initialTime)
+    public (TimeSpan Time, bool Stealth) GetStripTimeModifiers(EntityUid user, EntityUid target, TimeSpan initialTime)
     {
         var userEv = new BeforeStripEvent(initialTime);
-        RaiseLocalEvent(user, userEv);
+        RaiseLocalEvent(user, ref userEv);
         var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
-        RaiseLocalEvent(target, ev);
+        RaiseLocalEvent(target, ref ev);
         return (ev.Time, ev.Stealth);
     }
 
@@ -29,11 +29,11 @@ public abstract class SharedStrippableSystem : EntitySystem
         if (args.Handled || args.Target != args.User)
             return;
 
-        StartOpeningStripper(args.User, component);
+        StartOpeningStripper(args.User, (uid, component));
         args.Handled = true;
     }
 
-    public virtual void StartOpeningStripper(EntityUid user, StrippableComponent component, bool openInCombat = false)
+    public virtual void StartOpeningStripper(EntityUid user, Entity<StrippableComponent> component, bool openInCombat = false)
     {
 
     }
@@ -43,7 +43,8 @@ public abstract class SharedStrippableSystem : EntitySystem
         args.Handled = true;
         args.CanDrop |= uid == args.User &&
                         HasComp<StrippableComponent>(args.Dragged) &&
-                        HasComp<HandsComponent>(args.User);
+                        HasComp<HandsComponent>(args.User) &&
+                        HasComp<StrippingComponent>(args.User);
     }
 
     private void OnCanDrop(EntityUid uid, StrippableComponent component, ref CanDropDraggedEvent args)

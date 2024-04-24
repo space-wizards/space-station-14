@@ -5,6 +5,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -70,7 +71,7 @@ public sealed partial class GatherableSystem : EntitySystem
                     continue;
             }
             var getLoot = _prototypeManager.Index<EntityLootTablePrototype>(table);
-            var spawnLoot = getLoot.GetSpawns();
+            var spawnLoot = getLoot.GetSpawns(_random);
             var spawnPos = pos.Offset(_random.NextVector2(0.3f));
             Spawn(spawnLoot[0], spawnPos);
         }
