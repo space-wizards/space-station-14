@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseItem
   id: ChopSticks
-  name: Chop Sticks
+  name: chop sticks
   description: A very traditional utensil.
   components:
   - type: Sprite
