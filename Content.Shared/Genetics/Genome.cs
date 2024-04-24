@@ -10,7 +10,8 @@ namespace Content.Shared.Genetics;
 /// Other systems can get data using <see cref="GetBool"/> and <see cref="GetInt"/>.
 /// Each bit can either be a boolean or be part of a number, which has its bits stored sequentially.
 /// Each species has its own unique genome layout that maps bits to data, which is randomized roundstart.
-/// Variable length information such as a list of reagents cannot be stored here.
+/// Variable length information such as a list cannot be stored here, so you have to pick a max number of them to support.
+/// Prototype ids have special support with <see cref="GenomeLayout"/> and <see cref="GenomePrototype"/>.
 /// </summary>
 [DataDefinition]
 public sealed partial class Genome

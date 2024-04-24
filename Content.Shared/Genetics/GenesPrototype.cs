@@ -23,4 +23,11 @@ public sealed class GenesPrototype : IPrototype
     /// </summary>
     [DataField]
     public Dictionary<string, ushort> Ints = new();
+
+    /// <summary>
+    /// For each value, the prototype id to give it.
+    /// Requires that the value name be present in a GenomePrototype's Prototypes dictionary, not ValueBits.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, string> Prototypes = new();
 }

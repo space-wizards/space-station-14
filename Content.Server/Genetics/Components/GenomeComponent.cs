@@ -26,11 +26,12 @@ public sealed partial class GenomeComponent : Component
 
     /// <summary>
     /// Genome bits themselves.
-    /// Data can be retrieved with <c>comp.Layout.GetInt(comp.Genome, "name")</c>, etc.
+    /// Data can be retrieved with <c>_genome.GetInt(comp, "name")</c>, etc.
     /// </summary>
     /// <remarks>
-    /// Completely empty by default, another system must use <see cref="GenomeSystem"/> to load genes or copy from a parent.
+    /// Completely zeroed by default, but at the correct length for the layout.
+    /// Another system must use <see cref="GenomeSystem"/> to load genes or copy from a parent.
     /// </remarks>
-    [DataField]
+    [DataField, Access(Other = AccessPermissions.ReadWriteExecute)]
     public Genome Genome = new();
 }

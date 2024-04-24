@@ -1,3 +1,6 @@
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Reflection;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Genetics;
@@ -14,6 +17,12 @@ public sealed class GenomeLayout
     /// </summary>
     [DataField]
     public Dictionary<string, (int, ushort)> Values = new();
+
+    /// <summary>
+    /// Value to store in genome for each prototype.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, GenomePrototypesLayout> Prototypes = new();
 
     /// <summary>
     /// How many bits this genome has total
@@ -65,6 +74,39 @@ public sealed class GenomeLayout
     }
 
     /// <summary>
+    /// Gets a prototype on the genome by name.
+    /// If the genome value is invalid it will return null.
+    /// </summary>
+    public IPrototype? GetPrototype(Genome genome, string typeName, string name, IPrototypeManager proto, IReflectionManager reflection)
+    {
+        var index = GetInt(genome, name);
+        var layout = Prototypes[typeName];
+
+        if (index > layout.Ids.Count)
+            return null;
+
+        if (!reflection.TryLooseGetType(typeName, out var type))
+            return null;
+
+        var id = layout.Ids[index];
+        return proto.Index(type, id);
+    }
+
+    /// <summary>
+    /// Sets an int on the genome by prototype id.
+    /// If the prototype is not listed in the layout nothing is done.
+    /// </summary>
+    public bool SetPrototype(Genome genome, string name, string typeName, string id)
+    {
+        var layout = Prototypes[typeName];
+        if (!layout.Indices.TryGetValue(id, out var index))
+            return false;
+
+        SetInt(genome, name, index);
+        return true;
+    }
+
+    /// <summary>
     /// Add a mapping to the layout.
     /// If length is 1 it will be a bool, int otherwise.
     /// </summary>
@@ -77,5 +119,51 @@ public sealed class GenomeLayout
         var index = TotalBits;
         Values.Add(name, (index, bits));
         TotalBits += bits;
+    }
+
+    public void SetPrototypesLayout(string typeName, GenomePrototypesLayout layout)
+    {
+        Prototypes[typeName] = layout;
+    }
+
+    /// <summary>
+    /// Random picks gene values from a mother and father.
+    /// All 3 genomes must use this layout or Bad Things can happen.
+    /// </summary>
+    public void MixGenes(Genome child, Genome mother, Genome father, IRobustRandom random)
+    {
+        foreach (var (name, (index, bits)) in Values)
+        {
+            var parent = random.Prob(0.5f)
+                ? mother
+                : father;
+            var value = parent.GetInt(index, bits);
+            child.SetInt(index, bits, value);
+        }
+    }
+}
+
+public sealed partial class GenomePrototypesLayout
+{
+    /// <summary>
+    /// Index into <see cref="Ids"/> to store for each prototype id.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, int> Indices = new();
+
+    /// <summary>
+    /// Each prototype id, indexed by the number in <see cref="Indices"/>.
+    /// </summary>
+    [DataField]
+    public List<string> Ids = new();
+
+    /// <summary>
+    /// Add a prototype id to the layout.
+    /// </summary>
+    public void Add(string id)
+    {
+        var index = Ids.Count;
+        Ids.Add(id);
+        Indices[id] = index;
     }
 }
