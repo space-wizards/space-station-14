@@ -361,9 +361,18 @@
     Poison:
       metabolismRate: 0.25
       effects:
+      - !type:PopupMessage
+          type: Local
+          messages: [ "reagent-popup-tranquility" ]
+          probability: 0.2
       - !type:GenericStatusEffect
         key: Muted
         component: Muted
+      - !type:GenericStatusEffect
+        key: Pacified
+        component: Pacified
+        refresh: false
+        type: Add
       - !type:Polymorph
         prototype: Gondola
         conditions:
