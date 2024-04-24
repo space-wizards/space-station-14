@@ -12,10 +12,16 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
+using Robust.Shared.Timing;
 using Content.Shared.Shuttles.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Timer = Robust.Shared.Timing.Timer;
+using System.Net;
+using System.Net.Sockets;
+using Robust.Shared.Network;
+using Content.Server.Explosion.EntitySystems;
+using Content.Server.Chat.Systems;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -30,6 +36,9 @@ public sealed partial class EmergencyShuttleSystem
     /// <summary>
     /// Has the emergency shuttle arrived?
     /// </summary>
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly IEntityManager _entMan = default!;
+
     public bool EmergencyShuttleArrived { get; private set; }
 
     public bool EarlyLaunchAuthorized { get; private set; }
@@ -84,6 +93,10 @@ public sealed partial class EmergencyShuttleSystem
     /// Have we announced the launch?
     /// </summary>
     private bool _announced;
+
+    private EntityUid? _lastRepealUser;
+    private double _repealTimestamp = 0;
+    private int _consoleSpams = 0;
 
     private void InitializeEmergencyConsole()
     {
@@ -260,6 +273,7 @@ public sealed partial class EmergencyShuttleSystem
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL ALL by {args.Session:user}");
         _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-console-auth-revoked", ("remaining", component.AuthorizationsRequired)));
         component.AuthorizedEntities.Clear();
+        SpamChecker(uid, player);
         UpdateAllEmergencyConsoles();
     }
 
@@ -282,8 +296,30 @@ public sealed partial class EmergencyShuttleSystem
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL by {args.Session:user}");
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
         _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-console-auth-revoked", ("remaining", remaining)));
+
+        SpamChecker(uid, player);
         CheckForLaunch(component);
         UpdateAllEmergencyConsoles();
+    }
+
+    private void SpamChecker(EntityUid uid, EntityUid? repealUser)
+    {
+        if (_timing.RealTime.TotalSeconds - _repealTimestamp <= 5 && repealUser == _lastRepealUser)
+        {
+            _consoleSpams += 1;
+            if (_consoleSpams == 5)
+            {
+                _chat.TrySendInGameICMessage(uid, "Error 452: RepealButtonOveruseException", InGameICChatType.Speak, hideChat: true);
+                _chat.TrySendInGameICMessage(uid, "The maximum threshold for pressing the repeal button has been exceeded.", InGameICChatType.Speak, hideChat: true);
+                _chat.TrySendInGameICMessage(uid, "Please refrain from further attempts at repeal at this time.", InGameICChatType.Speak, hideChat: true);
+            } else if (_consoleSpams >= 7) {
+                _entMan.System<ExplosionSystem>().TriggerExplosive(uid);
+                _consoleSpams = 0;
+            }
+        }
+
+        _lastRepealUser = repealUser;
+        _repealTimestamp = _timing.RealTime.TotalSeconds;
     }
 
     private void OnEmergencyAuthorize(EntityUid uid, EmergencyShuttleConsoleComponent component, EmergencyShuttleAuthorizeMessage args)
