@@ -97,3 +97,4 @@ reagent-physical-desc-reflective = reflective
 reagent-physical-desc-holy = holy
 reagent-physical-desc-slimy = slimy
 reagent-physical-desc-neural = neural
+reagent-physical-desc-calming = calming

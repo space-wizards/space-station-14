@@ -122,7 +122,7 @@
   name: uplink-sniper-bundle-name
   description: uplink-sniper-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: base }
-  productEntity: BriefcaseSyndieSniperBundleFilled  
+  productEntity: BriefcaseSyndieSniperBundleFilled
   cost:
     Telecrystal: 12
   categories:
@@ -766,6 +766,16 @@
     Telecrystal: 1
   categories:
   - UplinkDisruption
+
+- type: listing
+  id: UplinkCrateNPCGondola
+  name: uplink-gondola-name
+  description: uplink-gondola-desc
+  productEntity: CrateNPCGondola
+  cost:
+    Telecrystal: 6
+  categories:
+    -  UplinkDisruption
 
 - type: listing
   id: UplinkSlipocalypseClusterSoap
