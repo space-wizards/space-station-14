@@ -1,6 +1,0 @@
-- type: trait
-  id: DogVision
-  name: trait-deuteranopia-name
-  description: trait-deuteranopia-desc
-  components:
-    - type: DogVision
