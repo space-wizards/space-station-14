@@ -7,8 +7,6 @@
     folded: true
   - type: Mask
     isToggled: true
-  - type: IngestionBlocker
-    enabled: false
   - type: IdentityBlocker
     enabled: false
     coverage: MOUTH
