@@ -377,7 +377,7 @@
         prototype: Gondola
         conditions:
         - !type:OrganType
-          type: Animal
-          shouldHave: false
+          type: Human
+          shouldHave: true
         - !type:ReagentThreshold
           min: 30
