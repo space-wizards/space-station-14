@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: icekot8
-  changes:
-  - message: Medical berets added to MediDrobe
-    type: Add
-  id: 5930
-  time: '2024-02-13T21:37:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25176
 - author: PoorMansDreams
   changes:
   - message: Alternate ammo now has the proper appearance when spent.
@@ -3851,3 +3844,11 @@
   id: 6429
   time: '2024-04-23T12:07:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27255
+- author: Plykiya
+  changes:
+  - message: Do-after bars of other players are now shaded and harder to see in the
+      dark.
+    type: Tweak
+  id: 6430
+  time: '2024-04-24T02:42:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27273
