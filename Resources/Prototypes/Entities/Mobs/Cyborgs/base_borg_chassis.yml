@@ -137,9 +137,6 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepBorg
-      params:
-        variation: 0.07
-        volume: -12
   - type: Construction
     graph: Cyborg
     containers:
