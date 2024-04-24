@@ -23,7 +23,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
     }
 
-    private void OnGridSplit(GridSplitEvent args)
+    private void OnGridSplit(ref GridSplitEvent args)
     {
         var rule = QueryActiveRules();
         while (rule.MoveNext(out _, out var mapComp, out _))

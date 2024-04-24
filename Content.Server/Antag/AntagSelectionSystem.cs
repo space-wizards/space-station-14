@@ -263,9 +263,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             var playerXform = Transform(player);
             var pos = RobustRandom.Pick(getPosEv.Coordinates);
             var mapEnt = _map.GetMap(pos.MapId);
-            _transform.SetParent(player, playerXform, mapEnt);
-            _transform.SetWorldPosition(playerXform, pos.Position);
-            _transform.AttachToGridOrMap(player, playerXform);
+            _transform.SetMapCoordinates((player, playerXform), pos);
         }
 
         if (isSpawner)
