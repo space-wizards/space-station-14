@@ -28,12 +28,20 @@ public sealed partial class UseDelayComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class UseDelayInfo(TimeSpan length, TimeSpan startTime = default, TimeSpan endTime = default)
+[DataDefinition]
+public sealed partial class UseDelayInfo
 {
-    [ViewVariables]
-    public TimeSpan Length { get; set; } = length;
-    [ViewVariables]
-    public TimeSpan StartTime { get; set; } = startTime;
-    [ViewVariables]
-    public TimeSpan EndTime { get; set; } = endTime;
+    [DataField]
+    public TimeSpan Length { get; set; }
+    [DataField]
+    public TimeSpan StartTime { get; set; }
+    [DataField]
+    public TimeSpan EndTime { get; set; }
+
+    public UseDelayInfo(TimeSpan length, TimeSpan startTime = default, TimeSpan endTime = default)
+    {
+        Length = length;
+        StartTime = startTime;
+        EndTime = endTime;
+    }
 }
