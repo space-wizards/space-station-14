@@ -73,6 +73,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     {
         ScanButton.Disabled = !state.CanScan;
         PrintButton.Disabled = !state.CanPrint;
+        DownBiasButton.Pressed = state.IsTraversalDown;
 
         var disabled = !state.ServerConnected || !state.CanScan || state.PointAmount <= 0;
 
