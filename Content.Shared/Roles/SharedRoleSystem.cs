@@ -137,11 +137,13 @@ public abstract class SharedRoleSystem : EntitySystem
 
     public bool MindHasRole<T>(EntityUid mindId) where T : IComponent
     {
+        DebugTools.Assert(HasComp<MindComponent>(mindId));
         return HasComp<T>(mindId);
     }
 
     public List<RoleInfo> MindGetAllRoles(EntityUid mindId)
     {
+        DebugTools.Assert(HasComp<MindComponent>(mindId));
         var ev = new MindGetAllRolesEvent(new List<RoleInfo>());
         RaiseLocalEvent(mindId, ref ev);
         return ev.Roles;
@@ -152,6 +154,7 @@ public abstract class SharedRoleSystem : EntitySystem
         if (mindId == null)
             return false;
 
+        DebugTools.Assert(HasComp<MindComponent>(mindId));
         var ev = new MindIsAntagonistEvent();
         RaiseLocalEvent(mindId.Value, ref ev);
         return ev.IsAntagonist;

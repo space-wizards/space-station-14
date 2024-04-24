@@ -6,11 +6,7 @@ using Content.Shared.NPC.Prototypes;
 using Content.Shared.Roles;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
-
 
 namespace Content.Server.GameTicking.Rules.Components;
 
@@ -116,13 +112,14 @@ public sealed partial class NukeopsRuleComponent : Component
     [DataField]
     public List<WinCondition> WinConditions = new ();
 
-    public MapId? NukiePlanet;
-
+    // TODO full game save
     // TODO: use components, don't just cache entity UIDs
     // There have been (and probably still are) bugs where these refer to deleted entities from old rounds.
+    // Whenever this gets fixed, update NukiesTest.
     public EntityUid? NukieOutpost;
     public EntityUid? NukieShuttle;
     public EntityUid? TargetStation;
+    public MapId? NukiePlanet;
 
     /// <summary>
     ///     Data to be used in <see cref="OnMindAdded"/> for an operative once the Mind has been added.
@@ -131,7 +128,7 @@ public sealed partial class NukeopsRuleComponent : Component
     public Dictionary<EntityUid, string> OperativeMindPendingData = new();
 
     [DataField(required: true)]
-    public ProtoId<NpcFactionPrototype> Faction = default!;
+    public ProtoId<NpcFactionPrototype> Faction;
 
     [DataField]
     public NukeopSpawnPreset CommanderSpawnDetails = new() { AntagRoleProto = "NukeopsCommander", GearProto = "SyndicateCommanderGearFull", NamePrefix = "nukeops-role-commander", NameList = "SyndicateNamesElite" };
