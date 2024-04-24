@@ -398,6 +398,13 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: cornrowtail
 - type: marking
+  id: HumanHairCreepylong
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: creepylong
+- type: marking
   id: HumanHairCrewcut
   bodyPart: Hair
   markingCategory: Hair
