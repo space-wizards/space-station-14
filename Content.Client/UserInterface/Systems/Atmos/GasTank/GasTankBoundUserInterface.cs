@@ -1,6 +1,5 @@
 using Content.Shared.Atmos.Components;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 
 namespace Content.Client.UserInterface.Systems.Atmos.GasTank
 {
@@ -9,6 +8,8 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
     {
         [ViewVariables]
         private GasTankWindow? _window;
+
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public GasTankBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -30,7 +31,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
         protected override void Open()
         {
             base.Open();
-            _window = new GasTankWindow(this);
+            _window = new GasTankWindow(this, _entityManager);
             _window.OnClose += Close;
             _window.OpenCentered();
         }

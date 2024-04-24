@@ -15,7 +15,9 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
     public sealed class GasTankWindow
         : BaseWindow
     {
+
         private GasTankBoundUserInterface _owner;
+        private readonly IEntityManager _entityManager;
         private readonly Label _lblName;
         private readonly BoxContainer _topContainer;
         private readonly Control _contentContainer;
@@ -27,12 +29,13 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
         private readonly RichTextLabel _lblInternals;
         private readonly Button _btnInternals;
 
-        public GasTankWindow(GasTankBoundUserInterface owner)
+        public GasTankWindow(GasTankBoundUserInterface owner, IEntityManager entityManager)
         {
             TextureButton btnClose;
             _resourceCache = IoCManager.Resolve<IResourceCache>();
             _owner = owner;
-            var rootContainer = new LayoutContainer {Name = "GasTankRoot"};
+            _entityManager = entityManager;
+            var rootContainer = new LayoutContainer { Name = "GasTankRoot" };
             AddChild(rootContainer);
 
             MouseFilter = MouseFilterMode.Stop;
@@ -94,7 +97,8 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
                 {
                     (_lblName = new Label
                     {
-                        Text = Loc.GetString("gas-tank-window-label"),
+                        Text = Loc.GetString(
+                            _entityManager.GetComponent<MetaDataComponent>(owner.Owner).EntityName),
                         FontOverride = font,
                         FontColorOverride = StyleNano.NanoGold,
                         VerticalAlignment = VAlignment.Center,
@@ -112,7 +116,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
 
             var middle = new PanelContainer
             {
-                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#202025")},
+                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#202025") },
                 Children =
                 {
                     (_contentContainer = new BoxContainer
@@ -127,13 +131,13 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
             _topContainer.AddChild(new PanelContainer
             {
                 MinSize = new Vector2(0, 2),
-                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
+                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#525252ff") }
             });
             _topContainer.AddChild(middle);
             _topContainer.AddChild(new PanelContainer
             {
                 MinSize = new Vector2(0, 2),
-                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
+                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#525252ff") }
             });
 
 
@@ -142,15 +146,15 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
 
             //internals
             _lblInternals = new RichTextLabel
-                {MinSize = new Vector2(200, 0), VerticalAlignment = VAlignment.Center};
-            _btnInternals = new Button {Text = Loc.GetString("gas-tank-window-internals-toggle-button") };
+            { MinSize = new Vector2(200, 0), VerticalAlignment = VAlignment.Center };
+            _btnInternals = new Button { Text = Loc.GetString("gas-tank-window-internals-toggle-button") };
 
             _contentContainer.AddChild(
                 new BoxContainer
                 {
                     Orientation = LayoutOrientation.Horizontal,
                     Margin = new Thickness(0, 7, 0, 0),
-                    Children = {_lblInternals, _btnInternals}
+                    Children = { _lblInternals, _btnInternals }
                 });
 
             // Separator
