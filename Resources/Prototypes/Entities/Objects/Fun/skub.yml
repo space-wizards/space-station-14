@@ -19,4 +19,4 @@
     sound:
       collection: Skub
   - type: UseDelay
-    delay: 2.0
+    delay: 1.5
