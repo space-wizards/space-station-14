@@ -168,13 +168,13 @@
     size: Normal
     storedRotation: 90
   - type: Handcuff
-    breakoutTime: 1.75
+    breakoutTime: 0.75
     cuffedRSI: Objects/Fun/clowncuffs.rsi
     bodyIconState: body-overlay
     startCuffSound:
       path: /Audio/Misc/honkalarm.ogg
       params:
-        volume: -20
+        volume: -15
     endCuffSound:
       path: /Audio/Items/bikehorn.ogg
     startUncuffSound:
@@ -187,4 +187,4 @@
     sprite: Objects/Fun/clowncuffs.rsi
     state: icon
   - type: UseDelay
-    delay: 1.5
+    delay: 3
