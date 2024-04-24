@@ -152,21 +152,5 @@ Entries:
   id: 20
   time: '2024-04-09T15:25:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26771
-- author: Aexxie
-  changes:
-  - message: Removed the bartender's roundstart incendiary shells on Meta.
-    type: Remove
-  id: 21
-  time: '2024-04-20T01:06:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27142
-- author: nikthechampiongr
-  changes:
-  - message: Banpanel default values for ban severities, whether a server ban should
-      be applied with hwid/ip,  whether to use last available details, and whether
-      to erase the player on ban can now be configured through a Cvar.
-    type: Tweak
-  id: 22
-  time: '2024-04-20T16:18:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27168
 Name: Admin
 Order: 1

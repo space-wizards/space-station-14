@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
@@ -91,7 +91,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance
         Color.Black,
         Color.Black,
         Humanoid.SkinColor.ValidHumanSkinTone,
-        new()
+        new ()
     )
     {
     }
@@ -115,7 +115,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance
             Color.Black,
             Color.Black,
             skinColor,
-            new()
+            new ()
         );
     }
 
@@ -159,18 +159,20 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance
         switch (skinType)
         {
             case HumanoidSkinColor.HumanToned:
-                var tone = random.Next(0, 100);
-                newSkinColor = Humanoid.SkinColor.HumanSkinTone(tone);
+                var tone = Math.Round(Humanoid.SkinColor.HumanSkinToneFromColor(newSkinColor));
+                newSkinColor = Humanoid.SkinColor.HumanSkinTone((int)tone);
                 break;
             case HumanoidSkinColor.Hues:
+                break;
             case HumanoidSkinColor.TintedHues:
+                newSkinColor = Humanoid.SkinColor.ValidTintedHuesSkinTone(newSkinColor);
                 break;
             case HumanoidSkinColor.VoxFeathers:
                 newSkinColor = Humanoid.SkinColor.ProportionalVoxColor(newSkinColor);
                 break;
         }
 
-        return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, newEyeColor, newSkinColor, new());
+        return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, newEyeColor, newSkinColor, new ());
 
         float RandomizeColor(float channel)
         {

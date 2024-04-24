@@ -1,22 +1,17 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Rejuvenate;
-using Content.Shared.StatusIcon;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
 public sealed class HungerSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
@@ -24,26 +19,9 @@ public sealed class HungerSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
 
-    [ValidatePrototypeId<StatusIconPrototype>]
-    private const string HungerIconOverfedId = "HungerIconOverfed";
-
-    [ValidatePrototypeId<StatusIconPrototype>]
-    private const string HungerIconPeckishId = "HungerIconPeckish";
-
-    [ValidatePrototypeId<StatusIconPrototype>]
-    private const string HungerIconStarvingId = "HungerIconStarving";
-
-    private StatusIconPrototype? _hungerIconOverfed;
-    private StatusIconPrototype? _hungerIconPeckish;
-    private StatusIconPrototype? _hungerIconStarving;
-
     public override void Initialize()
     {
         base.Initialize();
-
-        DebugTools.Assert(_prototype.TryIndex(HungerIconOverfedId, out _hungerIconOverfed) &&
-                          _prototype.TryIndex(HungerIconPeckishId, out _hungerIconPeckish) &&
-                          _prototype.TryIndex(HungerIconStarvingId, out _hungerIconStarving));
 
         SubscribeLocalEvent<HungerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<HungerComponent, ComponentShutdown>(OnShutdown);
@@ -214,27 +192,6 @@ public sealed class HungerSystem : EntitySystem
             default:
                 throw new ArgumentOutOfRangeException(nameof(threshold), threshold, null);
         }
-    }
-
-    public bool TryGetStatusIconPrototype(HungerComponent component, [NotNullWhen(true)] out StatusIconPrototype? prototype)
-    {
-        switch (component.CurrentThreshold)
-        {
-            case HungerThreshold.Overfed:
-                prototype = _hungerIconOverfed;
-                break;
-            case HungerThreshold.Peckish:
-                prototype = _hungerIconPeckish;
-                break;
-            case HungerThreshold.Starving:
-                prototype = _hungerIconStarving;
-                break;
-            default:
-                prototype = null;
-                break;
-        }
-
-        return prototype != null;
     }
 
     public override void Update(float frameTime)

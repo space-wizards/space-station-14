@@ -15,7 +15,6 @@ using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Components;
-using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
@@ -83,9 +82,9 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
-        SubscribeLocalEvent<StationEmergencyShuttleComponent, StationPostInitEvent>(OnStationStartup);
+        SubscribeLocalEvent<StationEmergencyShuttleComponent, ComponentStartup>(OnStationStartup);
         SubscribeLocalEvent<StationCentcommComponent, ComponentShutdown>(OnCentcommShutdown);
-        SubscribeLocalEvent<StationCentcommComponent, MapInitEvent>(OnStationInit);
+        SubscribeLocalEvent<StationCentcommComponent, ComponentInit>(OnCentcommInit);
 
         SubscribeLocalEvent<EmergencyShuttleComponent, FTLStartedEvent>(OnEmergencyFTL);
         SubscribeLocalEvent<EmergencyShuttleComponent, FTLCompletedEvent>(OnEmergencyFTLComplete);
@@ -259,13 +258,10 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     /// </summary>
     public void CallEmergencyShuttle(EntityUid stationUid, StationEmergencyShuttleComponent? stationShuttle = null)
     {
-        if (!Resolve(stationUid, ref stationShuttle))
-            return;
-
-        if (!TryComp<TransformComponent>(stationShuttle.EmergencyShuttle, out var xform) ||
+        if (!Resolve(stationUid, ref stationShuttle) ||
+            !TryComp<TransformComponent>(stationShuttle.EmergencyShuttle, out var xform) ||
             !TryComp<ShuttleComponent>(stationShuttle.EmergencyShuttle, out var shuttle))
         {
-            Log.Error($"Attempted to call an emergency shuttle for an uninitialized station? Station: {ToPrettyString(stationUid)}. Shuttle: {ToPrettyString(stationShuttle.EmergencyShuttle)}");
             return;
         }
 
@@ -323,10 +319,8 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
     }
 
-    private void OnStationInit(EntityUid uid, StationCentcommComponent component, MapInitEvent args)
+    private void OnCentcommInit(EntityUid uid, StationCentcommComponent component, ComponentInit args)
     {
-        // This is handled on map-init, so that centcomm has finished initializing by the time the StationPostInitEvent
-        // gets raised
         if (!_emergencyShuttleEnabled)
             return;
 
@@ -337,12 +331,12 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             return;
         }
 
-        AddCentcomm(uid, component);
+        AddCentcomm(component);
     }
 
-    private void OnStationStartup(Entity<StationEmergencyShuttleComponent> ent, ref StationPostInitEvent args)
+    private void OnStationStartup(EntityUid uid, StationEmergencyShuttleComponent component, ComponentStartup args)
     {
-        AddEmergencyShuttle((ent, ent));
+        AddEmergencyShuttle(uid, component);
     }
 
     /// <summary>
@@ -379,22 +373,19 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         var centcommQuery = AllEntityQuery<StationCentcommComponent>();
 
-        while (centcommQuery.MoveNext(out var uid, out var centcomm))
+        while (centcommQuery.MoveNext(out var centcomm))
         {
-            AddCentcomm(uid, centcomm);
+            AddCentcomm(centcomm);
         }
 
         var query = AllEntityQuery<StationEmergencyShuttleComponent>();
 
         while (query.MoveNext(out var uid, out var comp))
-        {
-            AddEmergencyShuttle((uid, comp));
-        }
+            AddEmergencyShuttle(uid, comp);
     }
 
-    private void AddCentcomm(EntityUid station, StationCentcommComponent component)
+    private void AddCentcomm(StationCentcommComponent component)
     {
-        DebugTools.Assert(LifeStage(station)>= EntityLifeStage.MapInitialized);
         if (component.MapEntity != null || component.Entity != null)
         {
             Log.Warning("Attempted to re-add an existing centcomm map.");
@@ -410,13 +401,12 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
             if (!Exists(otherComp.MapEntity) || !Exists(otherComp.Entity))
             {
-                Log.Error($"Discovered invalid centcomm component?");
+                Log.Error($"Disconvered invalid centcomm component?");
                 ClearCentcomm(otherComp);
                 continue;
             }
 
             component.MapEntity = otherComp.MapEntity;
-            component.Entity = otherComp.Entity;
             component.ShuttleIndex = otherComp.ShuttleIndex;
             return;
         }
@@ -460,7 +450,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         component.MapEntity = map;
         component.Entity = grid;
         _shuttle.TryAddFTLDestination(mapId, false, out _);
-        Log.Info($"Created centcomm grid {ToPrettyString(grid)} on map {ToPrettyString(map)} for station {ToPrettyString(station)}");
     }
 
     public HashSet<EntityUid> GetCentcommMaps()
@@ -477,67 +466,49 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         return maps;
     }
 
-    private void AddEmergencyShuttle(Entity<StationEmergencyShuttleComponent?, StationCentcommComponent?> ent)
+    private void AddEmergencyShuttle(EntityUid uid, StationEmergencyShuttleComponent component)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2))
-            return;
-
-        if (!_emergencyShuttleEnabled)
-            return;
-
-        if (ent.Comp1.EmergencyShuttle != null )
+        if (!_emergencyShuttleEnabled
+            || component.EmergencyShuttle != null ||
+            !TryComp<StationCentcommComponent>(uid, out var centcomm)
+            || !TryComp(centcomm.MapEntity, out MapComponent? map))
         {
-            if (Exists(ent.Comp1.EmergencyShuttle))
-            {
-                Log.Error($"Attempted to add an emergency shuttle to {ToPrettyString(ent)}, despite a shuttle already existing?");
-                return;
-            }
-
-            Log.Error($"Encountered deleted emergency shuttle during initialization of {ToPrettyString(ent)}");
-            ent.Comp1.EmergencyShuttle = null;
-        }
-
-        if (!TryComp(ent.Comp2.MapEntity, out MapComponent? map))
-        {
-            Log.Error($"Failed to add emergency shuttle - centcomm has not been initialized? {ToPrettyString(ent)}");
             return;
         }
 
         // Load escape shuttle
-        var shuttlePath = ent.Comp1.EmergencyShuttlePath;
+        var shuttlePath = component.EmergencyShuttlePath;
         var shuttle = _map.LoadGrid(map.MapId, shuttlePath.ToString(), new MapLoadOptions()
         {
             // Should be far enough... right? I'm too lazy to bounds check CentCom rn.
-            Offset = new Vector2(500f + ent.Comp2.ShuttleIndex, 0f),
+            Offset = new Vector2(500f + centcomm.ShuttleIndex, 0f),
             // fun fact: if you just fucking yeet centcomm into nullspace anytime you try to spawn the shuttle, then any distance is far enough. so lets not do that
             LoadMap = false,
         });
 
         if (shuttle == null)
         {
-            Log.Error($"Unable to spawn emergency shuttle {shuttlePath} for {ToPrettyString(ent)}");
+            Log.Error($"Unable to spawn emergency shuttle {shuttlePath} for {ToPrettyString(uid)}");
             return;
         }
 
-        ent.Comp2.ShuttleIndex += Comp<MapGridComponent>(shuttle.Value).LocalAABB.Width + ShuttleSpawnBuffer;
+        centcomm.ShuttleIndex += Comp<MapGridComponent>(shuttle.Value).LocalAABB.Width + ShuttleSpawnBuffer;
 
         // Update indices for all centcomm comps pointing to same map
         var query = AllEntityQuery<StationCentcommComponent>();
 
         while (query.MoveNext(out var comp))
         {
-            if (comp == ent.Comp2 || comp.MapEntity != ent.Comp2.MapEntity)
+            if (comp == centcomm || comp.MapEntity != centcomm.MapEntity)
                 continue;
 
-            comp.ShuttleIndex = ent.Comp2.ShuttleIndex;
+            comp.ShuttleIndex = centcomm.ShuttleIndex;
         }
 
-        ent.Comp1.EmergencyShuttle = shuttle;
+        component.EmergencyShuttle = shuttle;
         EnsureComp<ProtectedGridComponent>(shuttle.Value);
         EnsureComp<PreventPilotComponent>(shuttle.Value);
         EnsureComp<EmergencyShuttleComponent>(shuttle.Value);
-
-        Log.Info($"Added emergency shuttle {ToPrettyString(shuttle)} for station {ToPrettyString(ent)} and centcomm {ToPrettyString(ent.Comp2.Entity)}");
     }
 
     /// <summary>

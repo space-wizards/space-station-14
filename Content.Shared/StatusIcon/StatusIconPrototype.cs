@@ -58,7 +58,7 @@ public partial class StatusIconData : IComparable<StatusIconData>
 /// <see cref="StatusIconData"/> but in new convenient prototype form!
 /// </summary>
 [Prototype("statusIcon")]
-public sealed partial class StatusIconPrototype : StatusIconData, IPrototype, IInheritingPrototype
+public sealed class StatusIconPrototype : StatusIconData, IPrototype, IInheritingPrototype
 {
     /// <inheritdoc />
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<StatusIconPrototype>))]

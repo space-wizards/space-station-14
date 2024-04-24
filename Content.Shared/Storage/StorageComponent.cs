@@ -60,11 +60,6 @@ namespace Content.Shared.Storage
         [DataField]
         public bool ClickInsert = true; // Can insert stuff by clicking the storage entity with it
 
-        /// <summary>
-        /// How many entities area pickup can pickup at once.
-        /// </summary>
-        public const int AreaPickupLimit = 10;
-
         [DataField]
         public bool AreaInsert; // Clicking with the storage entity causes it to insert all nearby storables after a delay
 

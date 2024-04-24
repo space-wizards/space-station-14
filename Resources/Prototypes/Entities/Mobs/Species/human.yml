@@ -15,11 +15,6 @@
     spawned:
     - id: FoodMeatHuman
       amount: 5
-  - type: HumanoidAppearance
-    species: Human
-    hideLayersOnEquip:
-    - Hair
-    - Snout
 
 - type: entity
   parent: BaseSpeciesDummy

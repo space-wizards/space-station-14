@@ -78,15 +78,31 @@ public abstract partial class SharedSolutionContainerSystem
         return TryGetSolution((entity.Owner, entity.Comp2), entity.Comp1.Solution, out soln, out solution);
     }
 
-    public bool TryGetMixableSolution(Entity<MixableSolutionComponent?, SolutionContainerManagerComponent?> entity, [NotNullWhen(true)] out Entity<SolutionComponent>? soln, [NotNullWhen(true)] out Solution? solution)
+    public bool TryGetMixableSolution(Entity<SolutionContainerManagerComponent?> container, [NotNullWhen(true)] out Entity<SolutionComponent>? solution)
     {
-        if (!Resolve(entity, ref entity.Comp1, logMissing: false))
+        var getMixableSolutionAttempt = new GetMixableSolutionAttemptEvent(container);
+        RaiseLocalEvent(container, ref getMixableSolutionAttempt);
+        if (getMixableSolutionAttempt.MixedSolution != null)
         {
-            (soln, solution) = (default!, null);
+            solution = getMixableSolutionAttempt.MixedSolution;
+            return true;
+        }
+
+        if (!Resolve(container, ref container.Comp, false))
+        {
+            solution = default!;
             return false;
         }
 
-        return TryGetSolution((entity.Owner, entity.Comp2), entity.Comp1.Solution, out soln, out solution);
+        var tryGetSolution = EnumerateSolutions(container).FirstOrNull(x => x.Solution.Comp.Solution.CanMix);
+        if (tryGetSolution.HasValue)
+        {
+            solution = tryGetSolution.Value.Solution;
+            return true;
+        }
+
+        solution = default!;
+        return false;
     }
 
     #endregion Solution Accessors

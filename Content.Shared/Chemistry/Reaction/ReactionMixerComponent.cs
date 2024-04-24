@@ -25,3 +25,6 @@ public sealed partial class ReactionMixerComponent : Component
 public record struct MixingAttemptEvent(EntityUid Mixed, bool Cancelled = false);
 
 public readonly record struct AfterMixingEvent(EntityUid Mixed, EntityUid Mixer);
+
+[ByRefEvent]
+public record struct GetMixableSolutionAttemptEvent(EntityUid Mixed, Entity<SolutionComponent>? MixedSolution = null);

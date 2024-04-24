@@ -1,10 +1,16 @@
 ﻿- type: entity
   name: basic slime
-  id: BaseMobAdultSlimes
+  id: MobAdultSlimes
   parent: [ SimpleMobBase, MobCombat ]
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/slimes.rsi
@@ -105,19 +111,6 @@
     successChance: 0.5
     interactSuccessString: petting-success-slimes
     interactFailureString: petting-failure-generic
-  - type: Speech
-    speechVerb: Slime
-    speechSounds: Slime
-  - type: TypingIndicator
-    proto: slime
-
-- type: entity
-  name: basic slime
-  id: MobAdultSlimes
-  parent: BaseMobAdultSlimes
-  abstract: true
-  description: It looks so much like jelly. I wonder what it tastes like?
-  components:
   - type: ReplacementAccent
     accent: slimes
   - type: GhostTakeoverAvailable
@@ -125,37 +118,11 @@
     makeSentient: true
     name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
-  - type: NpcFactionMember
-    factions:
-    - SimpleNeutral
-  - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
-
-- type: entity
-  name: geras
-  description: A geras of a slime - the name is ironic, isn't it?
-  id: MobSlimesGeras
-  parent: BaseMobAdultSlimes
-  noSpawn: true
-  components:
-  # they portable...
-  - type: MultiHandedItem
-  - type: Item
-    size: Huge
-  - type: Sprite
-    color: "#FFFFFF55"
-  - type: MeleeWeapon
-    attackRate: 2
-    damage:
-      types:
-        Blunt: 4
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: blue_adult_slime
-      Dead:
-        Base: blue_adult_slime_dead
+  - type: Speech
+    speechVerb: Slime
+    speechSounds: Slime
+  - type: TypingIndicator
+    proto: slime
 
 - type: entity
   name: blue slime

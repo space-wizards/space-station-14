@@ -19,8 +19,6 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Shuttles.Systems;
 
-// TODO full game saves
-// Move state data into the emergency shuttle component
 public sealed partial class EmergencyShuttleSystem
 {
     /*
@@ -57,7 +55,7 @@ public sealed partial class EmergencyShuttleSystem
     /// <summary>
     /// How long it will take for the emergency shuttle to arrive at CentComm.
     /// </summary>
-    public float TransitTime;
+    public float TransitTime { get; private set; }
 
     /// <summary>
     /// <see cref="CCVars.EmergencyShuttleAuthorizeTime"/>
@@ -134,14 +132,6 @@ public sealed partial class EmergencyShuttleSystem
         var minTime = -(TransitTime - (ShuttleSystem.DefaultStartupTime + ShuttleSystem.DefaultTravelTime + 1f));
 
         // TODO: I know this is shit but I already just cleaned up a billion things.
-
-        // This is very cursed spaghetti code. I don't even know what the fuck this is doing or why it exists.
-        // But I think it needs to be less than or equal to zero or the shuttle might never leave???
-        // TODO Shuttle AAAAAAAAAAAAAAAAAAAAAAAAA
-        // Clean this up, just have a single timer with some state system.
-        // I.e., dont infer state from the current interval that the accumulator is in???
-        minTime = Math.Min(0, minTime); // ????
-
         if (_consoleAccumulator < minTime)
         {
             return;

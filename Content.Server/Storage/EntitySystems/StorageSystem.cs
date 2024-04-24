@@ -3,6 +3,8 @@ using Content.Shared.Administration;
 using Content.Shared.Explosion;
 using Content.Shared.Ghost;
 using Content.Shared.Hands;
+using Content.Shared.Input;
+using Content.Shared.Inventory;
 using Content.Shared.Lock;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
@@ -11,6 +13,7 @@ using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -22,6 +25,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
 {
     [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
@@ -37,6 +41,11 @@ public sealed partial class StorageSystem : SharedStorageSystem
         SubscribeLocalEvent<StorageComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
+
+        CommandBinds.Builder
+            .Bind(ContentKeyFunctions.OpenBackpack, InputCmdHandler.FromDelegate(HandleOpenBackpack))
+            .Bind(ContentKeyFunctions.OpenBelt, InputCmdHandler.FromDelegate(HandleOpenBelt))
+            .Register<StorageSystem>();
     }
 
     private void AddUiVerb(EntityUid uid, StorageComponent component, GetVerbsEvent<ActivationVerb> args)
@@ -76,13 +85,13 @@ public sealed partial class StorageSystem : SharedStorageSystem
         };
         if (uiOpen)
         {
-            verb.Text = Loc.GetString("comp-storage-verb-close-storage");
+            verb.Text = Loc.GetString("verb-common-close-ui");
             verb.Icon = new SpriteSpecifier.Texture(
                 new("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
         }
         else
         {
-            verb.Text = Loc.GetString("comp-storage-verb-open-storage");
+            verb.Text = Loc.GetString("verb-common-open-ui");
             verb.Icon = new SpriteSpecifier.Texture(
                 new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
         }
@@ -170,5 +179,32 @@ public sealed partial class StorageSystem : SharedStorageSystem
                 _uiSystem.TryClose(entity, bui.UiKey, session, ui);
             }
         }
+    }
+
+    private void HandleOpenBackpack(ICommonSession? session)
+    {
+        HandleOpenSlotUI(session, "back");
+    }
+
+    private void HandleOpenBelt(ICommonSession? session)
+    {
+        HandleOpenSlotUI(session, "belt");
+    }
+
+    private void HandleOpenSlotUI(ICommonSession? session, string slot)
+    {
+        if (session is not { } playerSession)
+            return;
+
+        if (playerSession.AttachedEntity is not {Valid: true} playerEnt || !Exists(playerEnt))
+            return;
+
+        if (!_inventory.TryGetSlotEntity(playerEnt, slot, out var storageEnt))
+            return;
+
+        if (!ActionBlocker.CanInteract(playerEnt, storageEnt))
+            return;
+
+        OpenStorageUI(storageEnt.Value, playerEnt);
     }
 }

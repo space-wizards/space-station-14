@@ -152,7 +152,7 @@
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsKitchenHydroponics ]
+      board: [ DoorElectronicsFreezer ]
 
 - type: entity
   parent: AirlockFreezer
@@ -251,7 +251,7 @@
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsMedicalResearch ]
+      board: [ DoorElectronicsScience ]
 
 - type: entity
   parent: AirlockCentralCommand
@@ -616,7 +616,7 @@
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsMedicalResearch ]
+      board: [ DoorElectronicsScience ]
 
 - type: entity
   parent: AirlockCentralCommandGlass
@@ -965,7 +965,7 @@
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsMedicalResearch ]
+      board: [ DoorElectronicsRnDMed ]
 
 - type: entity
   parent: AirlockMaint
@@ -1040,15 +1040,6 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsResearchDirector ]
-
-- type: entity
-  parent: AirlockMaintCommandLocked
-  id: AirlockMaintQuartermasterLocked
-  suffix: Quartermaster, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsQuartermaster ]
 
 - type: entity
   parent: AirlockMaint

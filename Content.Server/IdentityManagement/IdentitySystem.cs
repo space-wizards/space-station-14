@@ -62,7 +62,6 @@ public class IdentitySystem : SharedIdentitySystem
     {
         var ident = Spawn(null, Transform(uid).Coordinates);
 
-        _metaData.SetEntityName(ident, "identity");
         QueueIdentityUpdate(uid);
         _container.Insert(ident, component.IdentityEntitySlot);
     }

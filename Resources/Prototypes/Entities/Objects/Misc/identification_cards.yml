@@ -802,7 +802,7 @@
   - type: Unremoveable
 
 - type: entity
-  parent: EngineeringIDCard
+  parent: IDCardStandard
   id: SeniorEngineerIDCard
   name: senior engineer ID card
   components:
@@ -812,7 +812,7 @@
     - state: idseniorengineer
 
 - type: entity
-  parent: ResearchIDCard
+  parent: IDCardStandard
   id: SeniorResearcherIDCard
   name: senior researcher ID card
   components:
@@ -822,7 +822,7 @@
     - state: idseniorresearcher
 
 - type: entity
-  parent: MedicalIDCard
+  parent: IDCardStandard
   id: SeniorPhysicianIDCard
   name: senior physician ID card
   components:
@@ -832,7 +832,7 @@
     - state: idseniorphysician
 
 - type: entity
-  parent: SecurityIDCard
+  parent: IDCardStandard
   id: SeniorOfficerIDCard
   name: senior officer ID card
   components:

@@ -13,21 +13,30 @@ namespace Content.Shared.Mobs.Components
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent]
-    [AutoGenerateComponentState]
     [Access(typeof(MobStateSystem), typeof(MobThresholdSystem))]
     public sealed partial class MobStateComponent : Component
     {
         //default mobstate is always the lowest state level
-        [AutoNetworkedField, ViewVariables]
-        public MobState CurrentState { get; set; } = MobState.Alive;
+        [ViewVariables] public MobState CurrentState { get; set; } = MobState.Alive;
 
-        [DataField]
-        [AutoNetworkedField]
-        public HashSet<MobState> AllowedStates = new()
+        [DataField("allowedStates")] public HashSet<MobState> AllowedStates = new()
             {
                 MobState.Alive,
                 MobState.Critical,
                 MobState.Dead
             };
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class MobStateComponentState : ComponentState
+    {
+        public readonly MobState CurrentState;
+        public readonly HashSet<MobState> AllowedStates;
+
+        public MobStateComponentState(MobState currentState, HashSet<MobState> allowedStates)
+        {
+            CurrentState = currentState;
+            AllowedStates = allowedStates;
+        }
     }
 }

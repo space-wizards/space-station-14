@@ -14,7 +14,7 @@ public sealed partial class EmergencyLightComponent : SharedEmergencyLightCompon
 
     /// <summary>
     ///     Is this emergency light forced on for some reason and cannot be disabled through normal means
-    ///     (i.e. blue alert or higher?)
+    ///     (i.e. delta alert level?)
     /// </summary>
     public bool ForciblyEnabled = false;
 

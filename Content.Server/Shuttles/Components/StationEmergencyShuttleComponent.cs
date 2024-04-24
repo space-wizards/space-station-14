@@ -13,7 +13,7 @@ public sealed partial class StationEmergencyShuttleComponent : Component
     /// <summary>
     /// The emergency shuttle assigned to this station.
     /// </summary>
-    [DataField, Access(typeof(ShuttleSystem), typeof(EmergencyShuttleSystem), Friend = AccessPermissions.ReadWrite)]
+    [ViewVariables, Access(typeof(ShuttleSystem), typeof(EmergencyShuttleSystem), Friend = AccessPermissions.ReadWrite)]
     public EntityUid? EmergencyShuttle;
 
     /// <summary>

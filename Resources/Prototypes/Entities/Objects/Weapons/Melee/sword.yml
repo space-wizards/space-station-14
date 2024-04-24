@@ -18,7 +18,7 @@
         path: /Audio/Weapons/bladeslice.ogg
   - type: Reflect
     enabled: true
-    reflectProb: .1
+    reflectProb: .5
     spread: 90
   - type: Item
     size: Normal

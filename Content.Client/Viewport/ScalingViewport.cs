@@ -32,7 +32,6 @@ namespace Content.Client.Viewport
         private int _curRenderScale;
         private ScalingViewportStretchMode _stretchMode = ScalingViewportStretchMode.Bilinear;
         private ScalingViewportRenderScaleMode _renderScaleMode = ScalingViewportRenderScaleMode.Fixed;
-        private ScalingViewportIgnoreDimension _ignoreDimension = ScalingViewportIgnoreDimension.None;
         private int _fixedRenderScale = 1;
 
         private readonly List<CopyPixelsDelegate<Rgba32>> _queuedScreenshots = new();
@@ -103,17 +102,6 @@ namespace Content.Client.Viewport
             set
             {
                 _fixedRenderScale = value;
-                InvalidateViewport();
-            }
-        }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public ScalingViewportIgnoreDimension IgnoreDimension
-        {
-            get => _ignoreDimension;
-            set
-            {
-                _ignoreDimension = value;
                 InvalidateViewport();
             }
         }
@@ -190,19 +178,7 @@ namespace Content.Client.Viewport
             if (FixedStretchSize == null)
             {
                 var (ratioX, ratioY) = ourSize / vpSize;
-                var ratio = 1f;
-                switch (_ignoreDimension)
-                {
-                    case ScalingViewportIgnoreDimension.None:
-                        ratio = Math.Min(ratioX, ratioY);
-                        break;
-                    case ScalingViewportIgnoreDimension.Vertical:
-                        ratio = ratioX;
-                        break;
-                    case ScalingViewportIgnoreDimension.Horizontal:
-                        ratio = ratioY;
-                        break;
-                }
+                var ratio = Math.Min(ratioX, ratioY);
 
                 var size = vpSize * ratio;
                 // Size
@@ -380,26 +356,5 @@ namespace Content.Client.Viewport
         ///     Ceiling to the closest integer scale possible.
         /// </summary>
         CeilInt
-    }
-
-    /// <summary>
-    ///     If the viewport is allowed to freely scale, this determines which dimensions should be ignored while fitting the viewport
-    /// </summary>
-    public enum ScalingViewportIgnoreDimension
-    {
-        /// <summary>
-        ///     The viewport won't ignore any dimension.
-        /// </summary>
-        None = 0,
-
-        /// <summary>
-        ///     The viewport will ignore the horizontal dimension, and will exclusively consider the vertical dimension for scaling.
-        /// </summary>
-        Horizontal,
-
-        /// <summary>
-        ///     The viewport will ignore the vertical dimension, and will exclusively consider the horizontal dimension for scaling.
-        /// </summary>
-        Vertical
     }
 }

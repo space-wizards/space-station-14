@@ -16,9 +16,9 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// </summary>
 public sealed partial class OpenableSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
+    [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
     public override void Initialize()
     {
@@ -31,8 +31,6 @@ public sealed partial class OpenableSystem : EntitySystem
         SubscribeLocalEvent<OpenableComponent, AfterInteractEvent>(HandleIfClosed);
         SubscribeLocalEvent<OpenableComponent, GetVerbsEvent<Verb>>(AddOpenCloseVerbs);
         SubscribeLocalEvent<OpenableComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
-        SubscribeLocalEvent<OpenableComponent, AttemptShakeEvent>(OnAttemptShake);
-        SubscribeLocalEvent<OpenableComponent, AttemptAddFizzinessEvent>(OnAttemptAddFizziness);
     }
 
     private void OnInit(EntityUid uid, OpenableComponent comp, ComponentInit args)
@@ -102,20 +100,6 @@ public sealed partial class OpenableSystem : EntitySystem
         }
     }
 
-    private void OnAttemptShake(Entity<OpenableComponent> entity, ref AttemptShakeEvent args)
-    {
-        // Prevent shaking open containers
-        if (entity.Comp.Opened)
-            args.Cancelled = true;
-    }
-
-    private void OnAttemptAddFizziness(Entity<OpenableComponent> entity, ref AttemptAddFizzinessEvent args)
-    {
-        // Can't add fizziness to an open container
-        if (entity.Comp.Opened)
-            args.Cancelled = true;
-    }
-
     /// <summary>
     /// Returns true if the entity either does not have OpenableComponent or it is opened.
     /// Drinks that don't have OpenableComponent are automatically open, so it returns true.
@@ -142,7 +126,7 @@ public sealed partial class OpenableSystem : EntitySystem
             return false;
 
         if (user != null)
-            _popup.PopupEntity(Loc.GetString(comp.ClosedPopup, ("owner", uid)), user.Value, user.Value);
+            Popup.PopupEntity(Loc.GetString(comp.ClosedPopup, ("owner", uid)), user.Value, user.Value);
 
         return true;
     }
@@ -155,13 +139,13 @@ public sealed partial class OpenableSystem : EntitySystem
         if (!Resolve(uid, ref comp))
             return;
 
-        _appearance.SetData(uid, OpenableVisuals.Opened, comp.Opened, appearance);
+        Appearance.SetData(uid, OpenableVisuals.Opened, comp.Opened, appearance);
     }
 
     /// <summary>
     /// Sets the opened field and updates open visuals.
     /// </summary>
-    public void SetOpen(EntityUid uid, bool opened = true, OpenableComponent? comp = null, EntityUid? user = null)
+    public void SetOpen(EntityUid uid, bool opened = true, OpenableComponent? comp = null)
     {
         if (!Resolve(uid, ref comp, false) || opened == comp.Opened)
             return;
@@ -171,12 +155,12 @@ public sealed partial class OpenableSystem : EntitySystem
 
         if (opened)
         {
-            var ev = new OpenableOpenedEvent(user);
+            var ev = new OpenableOpenedEvent();
             RaiseLocalEvent(uid, ref ev);
         }
         else
         {
-            var ev = new OpenableClosedEvent(user);
+            var ev = new OpenableClosedEvent();
             RaiseLocalEvent(uid, ref ev);
         }
 
@@ -192,8 +176,8 @@ public sealed partial class OpenableSystem : EntitySystem
         if (!Resolve(uid, ref comp, false) || comp.Opened)
             return false;
 
-        SetOpen(uid, true, comp, user);
-        _audio.PlayPredicted(comp.Sound, uid, user);
+        SetOpen(uid, true, comp);
+        Audio.PlayPredicted(comp.Sound, uid, user);
         return true;
     }
 
@@ -206,9 +190,9 @@ public sealed partial class OpenableSystem : EntitySystem
         if (!Resolve(uid, ref comp, false) || !comp.Opened || !comp.Closeable)
             return false;
 
-        SetOpen(uid, false, comp, user);
+        SetOpen(uid, false, comp);
         if (comp.CloseSound != null)
-            _audio.PlayPredicted(comp.CloseSound, uid, user);
+            Audio.PlayPredicted(comp.CloseSound, uid, user);
         return true;
     }
 }
@@ -217,10 +201,10 @@ public sealed partial class OpenableSystem : EntitySystem
 /// Raised after an Openable is opened.
 /// </summary>
 [ByRefEvent]
-public record struct OpenableOpenedEvent(EntityUid? User = null);
+public record struct OpenableOpenedEvent;
 
 /// <summary>
 /// Raised after an Openable is closed.
 /// </summary>
 [ByRefEvent]
-public record struct OpenableClosedEvent(EntityUid? User = null);
+public record struct OpenableClosedEvent;

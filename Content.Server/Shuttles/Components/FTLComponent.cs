@@ -14,8 +14,6 @@ namespace Content.Server.Shuttles.Components;
 [RegisterComponent]
 public sealed partial class FTLComponent : Component
 {
-    // TODO Full game save / add datafields
-
     [ViewVariables]
     public FTLState State = FTLState.Available;
 
@@ -25,7 +23,6 @@ public sealed partial class FTLComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float StartupTime = 0f;
 
-    // Because of sphagetti, actual travel time is Math.Max(TravelTime, DefaultArrivalTime)
     [ViewVariables(VVAccess.ReadWrite)]
     public float TravelTime = 0f;
 

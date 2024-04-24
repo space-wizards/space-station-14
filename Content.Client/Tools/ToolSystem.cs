@@ -1,8 +1,10 @@
 using Content.Client.Items;
 using Content.Client.Tools.Components;
 using Content.Client.Tools.UI;
+using Content.Shared.Item;
 using Content.Shared.Tools.Components;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameStates;
 using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Client.Tools
@@ -13,7 +15,8 @@ namespace Content.Client.Tools
         {
             base.Initialize();
 
-            Subs.ItemStatus<WelderComponent>(ent => new WelderStatusControl(ent, EntityManager, this));
+            SubscribeLocalEvent<WelderComponent, ComponentHandleState>(OnWelderHandleState);
+            Subs.ItemStatus<WelderComponent>(ent => new WelderStatusControl(ent));
             Subs.ItemStatus<MultipleToolComponent>(ent => new MultipleToolStatusControl(ent));
         }
 
@@ -38,6 +41,21 @@ namespace Content.Client.Tools
                 if (current.Sprite != null)
                     sprite.LayerSetSprite(0, current.Sprite);
             }
+        }
+
+        private void OnWelderHandleState(EntityUid uid, WelderComponent welder, ref ComponentHandleState args)
+        {
+            if (args.Current is not WelderComponentState state)
+                return;
+
+            welder.FuelCapacity = state.FuelCapacity;
+            welder.Fuel = state.Fuel;
+            welder.UiUpdateNeeded = true;
+        }
+
+        protected override bool IsWelder(EntityUid uid)
+        {
+            return HasComp<WelderComponent>(uid);
         }
     }
 }

@@ -185,17 +185,6 @@
     state: snout_sharp
 
 - type: marking
-  id: LizardSnoutSplotch
-  bodyPart: Snout
-  markingCategory: Snout
-  speciesRestriction: [Reptilian]
-  sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi
-    state: snout_splotch_primary
-  - sprite: Mobs/Customization/reptilian_parts.rsi
-    state: snout_splotch_secondary
-
-- type: marking
   id: LizardChestTiger
   bodyPart: Chest
   markingCategory: Chest

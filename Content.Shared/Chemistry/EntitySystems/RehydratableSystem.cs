@@ -1,14 +1,12 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
-using Robust.Shared.Network;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
 public sealed class RehydratableSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
@@ -33,9 +31,6 @@ public sealed class RehydratableSystem : EntitySystem
     // Try not to make this public if you can help it.
     private void Expand(Entity<RehydratableComponent> ent)
     {
-        if (_net.IsClient)
-            return;
-
         var (uid, comp) = ent;
 
         var randomMob = _random.Pick(comp.PossibleSpawns);

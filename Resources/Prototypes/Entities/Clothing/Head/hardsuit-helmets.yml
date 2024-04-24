@@ -17,9 +17,9 @@
     sprite: Clothing/Head/Hardsuits/basic.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/basic.rsi
-  - type: HideLayerClothing
-    slots:
-    - Snout
+  - type: Tag
+    tags:
+    - HidesNose
 
 #Atmospherics Hardsuit
 - type: entity

@@ -24,8 +24,6 @@
     solution: spray
   - type: SolutionTransfer
     canChangeTransferAmount: true
-  - type: SolutionItemStatus
-    solution: spray
   - type: UseDelay
   - type: Spray
     transferAmount: 10

@@ -15,11 +15,10 @@ namespace Content.Client.UserInterface.Controls
         public TextureRect ButtonRect { get; }
         public TextureRect BlockedRect { get; }
         public TextureRect HighlightRect { get; }
+        public SpriteView SpriteView { get; }
         public SpriteView HoverSpriteView { get; }
         public TextureButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
-
-        private SpriteView SpriteView { get; }
 
         public EntityUid? Entity => SpriteView.Entity;
 
@@ -69,18 +68,7 @@ namespace Content.Client.UserInterface.Controls
             set
             {
                 _buttonTexturePath = value;
-                UpdateButtonTexture();
-            }
-        }
-
-        private string? _fullButtonTexturePath;
-        public string? FullButtonTexturePath
-        {
-            get => _fullButtonTexturePath;
-            set
-            {
-                _fullButtonTexturePath = value;
-                UpdateButtonTexture();
+                ButtonRect.Texture = Theme.ResolveTextureOrNull(_buttonTexturePath)?.Texture;
             }
         }
 
@@ -209,21 +197,6 @@ namespace Content.Client.UserInterface.Controls
             HoverSpriteView.SetEntity(null);
         }
 
-        public void SetEntity(EntityUid? ent)
-        {
-            SpriteView.SetEntity(ent);
-            UpdateButtonTexture();
-        }
-
-        private void UpdateButtonTexture()
-        {
-            var fullTexture = Theme.ResolveTextureOrNull(_fullButtonTexturePath);
-            var texture = Entity.HasValue && fullTexture != null
-                ? fullTexture.Texture
-                : Theme.ResolveTextureOrNull(_buttonTexturePath)?.Texture;
-            ButtonRect.Texture = texture;
-        }
-
         private void OnButtonPressed(GUIBoundKeyEventArgs args)
         {
             Pressed?.Invoke(args, this);
@@ -256,8 +229,8 @@ namespace Content.Client.UserInterface.Controls
             base.OnThemeUpdated();
 
             StorageButton.TextureNormal = Theme.ResolveTextureOrNull(_storageTexturePath)?.Texture;
+            ButtonRect.Texture = Theme.ResolveTextureOrNull(_buttonTexturePath)?.Texture;
             HighlightRect.Texture = Theme.ResolveTextureOrNull(_highlightTexturePath)?.Texture;
-            UpdateButtonTexture();
         }
 
         EntityUid? IEntityControl.UiEntity => Entity;

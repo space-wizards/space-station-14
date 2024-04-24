@@ -1,8 +1,11 @@
 using Content.Server.Construction.Components;
 using Content.Server.Stack;
 using Content.Shared.Construction;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Stacks;
+using Content.Shared.Tools;
+using Robust.Shared.Serialization;
 using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Server.Construction
@@ -23,7 +26,7 @@ namespace Content.Server.Construction
             if (args.Handled)
                 return;
 
-            args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, component.RefineTime, component.QualityNeeded, new WelderRefineDoAfterEvent(), fuel: component.RefineFuel);
+            args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, component.RefineTime, component.QualityNeeded, new WelderRefineDoAfterEvent());
         }
 
         private void OnDoAfter(EntityUid uid, WelderRefinableComponent component, WelderRefineDoAfterEvent args)
@@ -38,7 +41,7 @@ namespace Content.Server.Construction
             // spawn each result after refine
             foreach (var result in component.RefineResult!)
             {
-                var droppedEnt = Spawn(result, resultPosition);
+                var droppedEnt = EntityManager.SpawnEntity(result, resultPosition);
 
                 // TODO: If something has a stack... Just use a prototype with a single thing in the stack.
                 // This is not a good way to do it.

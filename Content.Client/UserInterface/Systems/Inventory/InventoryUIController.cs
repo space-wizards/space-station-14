@@ -417,7 +417,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
         if (_strippingWindow?.InventoryButtons.GetButton(update.Name) is { } inventoryButton)
         {
-            inventoryButton.SetEntity(entity);
+            inventoryButton.SpriteView.SetEntity(entity);
             inventoryButton.StorageButton.Visible = showStorage;
         }
 
@@ -426,12 +426,12 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
         if (_entities.TryGetComponent(entity, out VirtualItemComponent? virtb))
         {
-            button.SetEntity(virtb.BlockingEntity);
+            button.SpriteView.SetEntity(virtb.BlockingEntity);
             button.Blocked = true;
         }
         else
         {
-            button.SetEntity(entity);
+            button.SpriteView.SetEntity(entity);
             button.Blocked = false;
             button.StorageButton.Visible = showStorage;
         }

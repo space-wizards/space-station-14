@@ -10,8 +10,6 @@
     solutions:
       drink:
         maxVol: 30
-  - type: MixableSolution
-    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: Drink

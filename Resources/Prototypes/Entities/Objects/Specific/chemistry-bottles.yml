@@ -29,8 +29,7 @@
     solutions:
       drink: # This solution name and target volume is hard-coded in ChemMasterComponent
         maxVol: 30
-  - type: MixableSolution
-    solution: drink
+        canMix: true
   - type: RefillableSolution
     solution: drink
   - type: DrainableSolution

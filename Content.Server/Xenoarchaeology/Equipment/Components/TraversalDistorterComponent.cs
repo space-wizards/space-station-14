@@ -8,7 +8,7 @@
 public sealed partial class TraversalDistorterComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    public BiasDirection BiasDirection = BiasDirection.Up;
+    public BiasDirection BiasDirection = BiasDirection.In;
 
     public TimeSpan NextActivation = default!;
     public TimeSpan ActivationDelay = TimeSpan.FromSeconds(1);
@@ -16,6 +16,6 @@ public sealed partial class TraversalDistorterComponent : Component
 
 public enum BiasDirection : byte
 {
-    Up, //Towards depth 0
-    Down, //Away from depth 0
+    In, //down the tree, towards depth 0
+    Out //up the tree, away from depth 0
 }

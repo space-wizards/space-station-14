@@ -183,7 +183,7 @@ public sealed class MaterialArbitrageTest
                 var spawnedPrice = await GetSpawnedPrice(spawnedEnts);
                 var price = await GetPrice(id);
                 if (spawnedPrice > 0 && price > 0)
-                    Assert.That(spawnedPrice, Is.LessThanOrEqualTo(price), $"{id} increases in price after being destroyed\nEntities spawned on destruction: {string.Join(',', spawnedEnts)}");
+                    Assert.That(spawnedPrice, Is.LessThanOrEqualTo(price), $"{id} increases in price after being destroyed");
 
                 // Check lathe production
                 if (latheRecipes.TryGetValue(id, out var recipe))
@@ -359,7 +359,7 @@ public sealed class MaterialArbitrageTest
                 {
                     var ent = entManager.SpawnEntity(id, testMap.GridCoords);
                     stackSys.SetCount(ent, 1);
-                    priceCache[id] = price = pricing.GetPrice(ent, false);
+                    priceCache[id] = price = pricing.GetPrice(ent);
                     entManager.DeleteEntity(ent);
                 });
             }

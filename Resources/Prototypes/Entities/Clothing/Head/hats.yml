@@ -382,12 +382,9 @@
     sprite: Clothing/Head/Hats/plaguedoctor.rsi
   - type: Tag
     tags:
+    - HidesHair
     - WhitelistChameleon
     - ClothMade
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - Snout
 
 - type: entity
   parent: ClothingHeadBase
@@ -540,11 +537,9 @@
     sprite: Clothing/Head/Hats/witch.rsi
   - type: Tag
     tags:
+    - HidesHair
     - WhitelistChameleon
     - ClothMade
-  - type: HideLayerClothing
-    slots:
-    - Hair
 
 - type: entity
   parent: ClothingHeadBase

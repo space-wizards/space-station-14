@@ -12,7 +12,6 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
         public override void Initialize()
         {
@@ -60,14 +59,12 @@ namespace Content.Server.Atmos.EntitySystems
 
             var gridId = xform.GridUid;
             var coords = xform.Coordinates;
-            var tilePos = _mapSystem.TileIndicesFor(gridId.Value, grid, coords);
+
+            var tilePos = grid.TileIndicesFor(coords);
 
             // Update and invalidate new position.
             airtight.LastPosition = (gridId.Value, tilePos);
             InvalidatePosition(gridId.Value, tilePos);
-
-            var airtightEv = new AirtightChanged(uid, airtight, (gridId.Value, tilePos));
-            RaiseLocalEvent(uid, ref airtightEv, true);
         }
 
         private void OnAirtightReAnchor(EntityUid uid, AirtightComponent airtight, ref ReAnchorEvent args)
@@ -77,9 +74,6 @@ namespace Content.Server.Atmos.EntitySystems
                 // Update and invalidate new position.
                 airtight.LastPosition = (gridId, args.TilePos);
                 InvalidatePosition(gridId, args.TilePos);
-
-                var airtightEv = new AirtightChanged(uid, airtight, (gridId, args.TilePos));
-                RaiseLocalEvent(uid, ref airtightEv, true);
             }
         }
 
@@ -159,5 +153,6 @@ namespace Content.Server.Atmos.EntitySystems
     }
 
     [ByRefEvent]
-    public readonly record struct AirtightChanged(EntityUid Entity, AirtightComponent Airtight, (EntityUid Grid, Vector2i Tile) Position);
+    public readonly record struct AirtightChanged(EntityUid Entity, AirtightComponent Airtight,
+        (EntityUid Grid, Vector2i Tile) Position);
 }

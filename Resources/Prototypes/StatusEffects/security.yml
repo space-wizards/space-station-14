@@ -1,7 +1,7 @@
 - type: statusIcon
   id: SecurityIcon
   abstract: true
-  priority: 3
+  priority: 2
   offset: 1
   locationPreference: Right
   isShaded: true

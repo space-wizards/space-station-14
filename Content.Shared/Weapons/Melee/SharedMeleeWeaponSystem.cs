@@ -277,10 +277,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (EntityManager.TryGetComponent(entity, out HandsComponent? hands) &&
             hands.ActiveHandEntity is { } held)
         {
-            // Make sure the entity is a weapon AND it doesn't need
-            // to be equipped to be used (E.g boxing gloves).
-            if (EntityManager.TryGetComponent(held, out melee) &&
-                !melee.MustBeEquippedToUse)
+            if (EntityManager.TryGetComponent(held, out melee))
             {
                 weaponUid = held;
                 return true;

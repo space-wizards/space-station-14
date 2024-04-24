@@ -1,5 +1,6 @@
 using Content.Server.Speech.Components;
-using Content.Shared.Clothing;
+using Content.Shared.Clothing.Components;
+using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Speech.EntitySystems;
 
@@ -10,20 +11,29 @@ public sealed class AddAccentClothingSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<AddAccentClothingComponent, ClothingGotEquippedEvent>(OnGotEquipped);
-        SubscribeLocalEvent<AddAccentClothingComponent, ClothingGotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<AddAccentClothingComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<AddAccentClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
     }
 
-    private void OnGotEquipped(EntityUid uid, AddAccentClothingComponent component, ref ClothingGotEquippedEvent args)
+    private void OnGotEquipped(EntityUid uid, AddAccentClothingComponent component, GotEquippedEvent args)
     {
+        if (!TryComp(uid, out ClothingComponent? clothing))
+            return;
+
+        // check if entity was actually used as clothing
+        // not just taken in pockets or something
+        var isCorrectSlot = clothing.Slots.HasFlag(args.SlotFlags);
+        if (!isCorrectSlot)
+            return;
+
         // does the user already has this accent?
         var componentType = _componentFactory.GetRegistration(component.Accent).Type;
-        if (HasComp(args.Wearer, componentType))
+        if (HasComp(args.Equipee, componentType))
             return;
 
         // add accent to the user
         var accentComponent = (Component) _componentFactory.GetComponent(componentType);
-        AddComp(args.Wearer, accentComponent);
+        AddComp(args.Equipee, accentComponent);
 
         // snowflake case for replacement accent
         if (accentComponent is ReplacementAccentComponent rep)
@@ -32,16 +42,16 @@ public sealed class AddAccentClothingSystem : EntitySystem
         component.IsActive = true;
     }
 
-    private void OnGotUnequipped(EntityUid uid, AddAccentClothingComponent component, ref ClothingGotUnequippedEvent args)
+    private void OnGotUnequipped(EntityUid uid, AddAccentClothingComponent component, GotUnequippedEvent args)
     {
         if (!component.IsActive)
             return;
 
         // try to remove accent
         var componentType = _componentFactory.GetRegistration(component.Accent).Type;
-        if (EntityManager.HasComponent(args.Wearer, componentType))
+        if (EntityManager.HasComponent(args.Equipee, componentType))
         {
-            EntityManager.RemoveComponent(args.Wearer, componentType);
+            EntityManager.RemoveComponent(args.Equipee, componentType);
         }
 
         component.IsActive = false;

@@ -213,9 +213,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (!IsPowered(uid, electrified, transform))
             return false;
 
-        if (!_random.Prob(electrified.Probability))
-            return false;
-
         EnsureComp<ActivatedElectrifiedComponent>(uid);
         _appearance.SetData(uid, ElectrifiedVisuals.IsPowered, true);
 

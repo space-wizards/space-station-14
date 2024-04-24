@@ -135,7 +135,7 @@
     FoodBreadBun: 1
     FoodMeat: 2
     FoodCheeseSlice: 2
-    FoodChiliPepper: 1
+    FoodChili: 1
     FoodCabbage: 1
     CrayonGreen: 1
     Flare: 1
@@ -177,7 +177,7 @@
   solids:
     FoodBreadBun: 1
     FoodMeat: 1
-    FoodChiliPepper: 3
+    FoodChili: 3
 
 - type: microwaveMealRecipe
   id: RecipeGhostBurger
@@ -675,7 +675,7 @@
   solids:
     FoodRiceBoiled: 1
     FoodMeatCutlet: 3
-    FoodChiliPepper: 2
+    FoodChili: 2
 
 - type: microwaveMealRecipe
   id: RecipeEggRice
@@ -894,7 +894,7 @@
   solids:
     FoodBowlBig: 1
     FoodBungo: 2
-    FoodChiliPepper: 1
+    FoodChili: 1
 
 #Pies
 
@@ -965,7 +965,7 @@
   time: 15
   solids:
     FoodDoughPie: 1
-    FoodChillyPepper: 3
+    FoodChilly: 3
     FoodPlateTin: 1
 
 - type: microwaveMealRecipe
@@ -1063,7 +1063,7 @@
   solids:
     FoodDough: 1
     FoodCheeseSlice: 2
-    FoodChiliPepper: 1
+    FoodChili: 1
     FoodMeatFish: 2
 
 - type: microwaveMealRecipe
@@ -1504,7 +1504,7 @@
   time: 20
   solids:
     FoodBowlBig: 1
-    FoodChiliPepper: 1
+    FoodChili: 1
     FoodMeatCutlet: 1
     FoodOnionSlice: 1
     FoodTomato: 1
@@ -1537,7 +1537,7 @@
   time: 30
   solids:
     FoodBowlBig: 1
-    FoodChiliPepper: 1
+    FoodChili: 1
     FoodMeatCutlet: 1
     FoodOnionSlice: 1
     FoodTomato: 1
@@ -1552,7 +1552,7 @@
   #reagents:
     #blackpepper: 5
   solids:
-    FoodChiliPepper: 1
+    FoodChili: 1
     FoodCheeseSlice: 2
 
 - type: microwaveMealRecipe
@@ -1572,7 +1572,7 @@
   result: FoodMealEnchiladas
   time: 20
   solids:
-    FoodChiliPepper: 2
+    FoodChili: 2
     FoodMeatCutlet: 1
     FoodCorn: 1
 
@@ -1740,7 +1740,7 @@
   result: FoodMeatHawaiianKebab
   time: 5
   solids:
-    FoodChiliPepper: 1
+    FoodChili: 1
     FoodMeatCutlet: 1
     FoodPineappleSlice: 1
     FoodKebabSkewer: 1
@@ -1751,7 +1751,7 @@
   result: FoodMeatFiestaKebab
   time: 5
   solids:
-    FoodChiliPepper: 1
+    FoodChili: 1
     FoodCorn: 1
     FoodMeatCutlet: 1
     FoodTomato: 1

@@ -19,9 +19,6 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-  - type: HideLayerClothing
-    slots:
-    - Snout
 
 - type: entity
   parent: WeldingMaskBase

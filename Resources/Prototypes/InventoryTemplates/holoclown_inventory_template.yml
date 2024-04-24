@@ -3,7 +3,6 @@
   slots:
     - name: pocket1
       slotTexture: pocket
-      fullTextureName: template_small
       slotFlags: POCKET
       slotGroup: MainHotbar
       stripTime: 3
@@ -13,7 +12,6 @@
       stripHidden: true
     - name: pocket2
       slotTexture: pocket
-      fullTextureName: template_small
       slotFlags: POCKET
       slotGroup: MainHotbar
       stripTime: 3

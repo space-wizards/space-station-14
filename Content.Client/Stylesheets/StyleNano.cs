@@ -1234,11 +1234,6 @@ namespace Content.Client.Stylesheets
                     new StyleProperty("font", notoSans10),
                 }),
 
-                Element<RichTextLabel>()
-                    .Class(StyleClassItemStatus)
-                    .Prop(nameof(RichTextLabel.LineHeightScale), 0.7f)
-                    .Prop(nameof(Control.Margin), new Thickness(0, 0, 0, -6)),
-
                 // Slider
                 new StyleRule(SelectorElement.Type(typeof(Slider)), new []
                 {

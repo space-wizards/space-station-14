@@ -3,10 +3,11 @@ using Content.Server.Medical.Components;
 using Content.Server.Medical.Stethoscope.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
-using Content.Shared.Clothing;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Medical;
 using Content.Shared.Medical.Stethoscope;
 using Content.Shared.Mobs.Components;
@@ -25,8 +26,8 @@ namespace Content.Server.Medical.Stethoscope
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<StethoscopeComponent, ClothingGotEquippedEvent>(OnEquipped);
-            SubscribeLocalEvent<StethoscopeComponent, ClothingGotUnequippedEvent>(OnUnequipped);
+            SubscribeLocalEvent<StethoscopeComponent, GotEquippedEvent>(OnEquipped);
+            SubscribeLocalEvent<StethoscopeComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<WearingStethoscopeComponent, GetVerbsEvent<InnateVerb>>(AddStethoscopeVerb);
             SubscribeLocalEvent<StethoscopeComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<StethoscopeComponent, StethoscopeActionEvent>(OnStethoscopeAction);
@@ -36,20 +37,26 @@ namespace Content.Server.Medical.Stethoscope
         /// <summary>
         /// Add the component the verb event subs to if the equippee is wearing the stethoscope.
         /// </summary>
-        private void OnEquipped(EntityUid uid, StethoscopeComponent component, ref ClothingGotEquippedEvent args)
+        private void OnEquipped(EntityUid uid, StethoscopeComponent component, GotEquippedEvent args)
         {
+            if (!TryComp<ClothingComponent>(uid, out var clothing))
+                return;
+            // Is the clothing in its actual slot?
+            if (!clothing.Slots.HasFlag(args.SlotFlags))
+                return;
+
             component.IsActive = true;
 
-            var wearingComp = EnsureComp<WearingStethoscopeComponent>(args.Wearer);
+            var wearingComp = EnsureComp<WearingStethoscopeComponent>(args.Equipee);
             wearingComp.Stethoscope = uid;
         }
 
-        private void OnUnequipped(EntityUid uid, StethoscopeComponent component, ref ClothingGotUnequippedEvent args)
+        private void OnUnequipped(EntityUid uid, StethoscopeComponent component, GotUnequippedEvent args)
         {
             if (!component.IsActive)
                 return;
 
-            RemComp<WearingStethoscopeComponent>(args.Wearer);
+            RemComp<WearingStethoscopeComponent>(args.Equipee);
             component.IsActive = false;
         }
 

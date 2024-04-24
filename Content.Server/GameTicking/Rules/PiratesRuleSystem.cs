@@ -24,7 +24,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -181,7 +180,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
 
             var aabbs = EntityQuery<StationDataComponent>().SelectMany(x =>
                     x.Grids.Select(x =>
-                        xformQuery.GetComponent(x).WorldMatrix.TransformBox(Comp<MapGridComponent>(x).LocalAABB)))
+                        xformQuery.GetComponent(x).WorldMatrix.TransformBox(_mapManager.GetGridComp(x).LocalAABB)))
                 .ToArray();
 
             var aabb = aabbs[0];
@@ -250,7 +249,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
 
                 _mindSystem.TransferTo(newMind, mob);
                 var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
-                _stationSpawningSystem.EquipStartingGear(mob, pirateGear);
+                _stationSpawningSystem.EquipStartingGear(mob, pirateGear, profile);
 
                 _npcFaction.RemoveFaction(mob, EnemyFactionId, false);
                 _npcFaction.AddFaction(mob, PirateFactionId);

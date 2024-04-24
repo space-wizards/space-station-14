@@ -7,7 +7,7 @@ namespace Content.Shared.SprayPainter.Prototypes;
 /// Maps airlock style names to department ids.
 /// </summary>
 [Prototype("airlockDepartments")]
-public sealed partial class AirlockDepartmentsPrototype : IPrototype
+public sealed class AirlockDepartmentsPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

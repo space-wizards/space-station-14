@@ -9,5 +9,4 @@ public sealed partial class FlashOnTriggerComponent : Component
 {
     [DataField] public float Range = 1.0f;
     [DataField] public float Duration = 8.0f;
-    [DataField] public float Probability = 1.0f;
 }

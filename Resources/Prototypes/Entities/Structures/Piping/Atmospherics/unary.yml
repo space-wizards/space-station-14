@@ -457,8 +457,7 @@
     solutions:
       tank:
         maxVol: 400
-  - type: MixableSolution
-    solution: tank
+        canMix: true
   - type: DrainableSolution
     solution: tank
   - type: ExaminableSolution

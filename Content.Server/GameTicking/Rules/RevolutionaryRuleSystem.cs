@@ -217,6 +217,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         _npcFaction.AddFaction(ev.Target, RevolutionaryNpcFaction);
         var revComp = EnsureComp<RevolutionaryComponent>(ev.Target);
+        _stun.TryParalyze(ev.Target, comp.StunTime, true);
 
         if (ev.User != null)
         {

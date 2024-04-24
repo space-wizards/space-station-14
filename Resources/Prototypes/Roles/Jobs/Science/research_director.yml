@@ -32,5 +32,12 @@
 - type: startingGear
   id: ResearchDirectorGear
   equipment:
+    jumpsuit: ClothingUniformJumpsuitResearchDirector
+    back: ClothingBackpackResearchDirectorFilled
+    shoes: ClothingShoesColorBrown
+    outerClothing: ClothingOuterCoatRD
     id: RnDPDA
     ears: ClothingHeadsetRD
+  innerClothingSkirt: ClothingUniformJumpskirtResearchDirector
+  satchel: ClothingBackpackSatchelResearchDirectorFilled
+  duffelbag: ClothingBackpackDuffelResearchDirectorFilled

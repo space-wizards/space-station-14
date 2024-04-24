@@ -28,6 +28,8 @@
 - type: startingGear
   id: SecurityCadetGear
   equipment:
+    jumpsuit: ClothingUniformJumpsuitColorRed
+    back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsCombatFilled
     outerClothing: ClothingOuterArmorBasic
     id: SecurityCadetPDA
@@ -35,3 +37,6 @@
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58
     pocket2: BookSecurity
+  innerClothingSkirt: ClothingUniformJumpskirtColorRed
+  satchel: ClothingBackpackSatchelSecurityFilled
+  duffelbag: ClothingBackpackDuffelSecurityFilled

@@ -149,11 +149,11 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         var relation = new ContainedSolutionComponent() { Container = container.Owner, ContainerName = name };
         AddComp(uid, relation);
 
-        MetaData.SetEntityName(uid, $"solution - {name}");
         ContainerSystem.Insert(uid, container, force: true);
 
         return (uid, solution, relation);
     }
+
 
     #region Event Handlers
 

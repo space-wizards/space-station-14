@@ -64,7 +64,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
             var entOptions = GetValidActions<EntityTargetActionComponent>(component.ActionEntities, args.CanReach);
             for (var i = entOptions.Count - 1; i >= 0; i--)
             {
-                var action = entOptions[i];
+                var action = entOptions[i].Comp;
                 if (!_actions.ValidateEntityTarget(args.User, args.Target.Value, action))
                     entOptions.RemoveAt(i);
             }
@@ -88,7 +88,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
         var options = GetValidActions<WorldTargetActionComponent>(component.ActionEntities, args.CanReach);
         for (var i = options.Count - 1; i >= 0; i--)
         {
-            var action = options[i];
+            var action = options[i].Comp;
             if (!_actions.ValidateWorldTarget(args.User, args.ClickLocation, action))
                 options.RemoveAt(i);
         }

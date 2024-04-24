@@ -151,8 +151,10 @@ namespace Content.Server.Atmos.Portable
         /// </summary>
         private void OnScrubberAnalyzed(EntityUid uid, PortableScrubberComponent component, GasAnalyzerScanEvent args)
         {
-            args.GasMixtures ??= new List<(string, GasMixture?)>();
-            args.GasMixtures.Add((Name(uid), component.Air));
+            args.GasMixtures ??= new Dictionary<string, GasMixture?> { { Name(uid), component.Air } };
+            // If it's connected to a port, include the port side
+            if (_nodeContainer.TryGetNode(uid, component.PortName, out PipeNode? port))
+                args.GasMixtures.Add(component.PortName, port.Air);
         }
     }
 }

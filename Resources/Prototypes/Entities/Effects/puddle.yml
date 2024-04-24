@@ -142,11 +142,8 @@
     mode: CardinalFlags
   - type: SolutionContainerManager
     solutions:
-      puddle:
-        maxVol: 1000
+      puddle: { maxVol: 1000 }
   - type: Puddle
-  - type: MixableSolution
-    solution: puddle
   - type: Appearance
   - type: ActiveEdgeSpreader
   - type: EdgeSpreader

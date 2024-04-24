@@ -126,15 +126,12 @@ namespace Content.Client.Administration.Managers
 
         public AdminData? GetAdminData(EntityUid uid, bool includeDeAdmin = false)
         {
-            if (uid == _player.LocalEntity && (_adminData?.Active ?? includeDeAdmin))
-                return _adminData;
-
-            return null;
+            return uid == _player.LocalEntity ? _adminData : null;
         }
 
         public AdminData? GetAdminData(ICommonSession session, bool includeDeAdmin = false)
         {
-            if (_player.LocalUser == session.UserId && (_adminData?.Active ?? includeDeAdmin))
+            if (_player.LocalUser == session.UserId)
                 return _adminData;
 
             return null;

@@ -23,7 +23,7 @@
           bounds: "-0.49,-0.49,0.49,0.49"
         density: 100
         mask:
-        - Impassable
+        - TabletopMachineMask
         layer:
         - MidImpassable
   - type: Damageable
@@ -61,7 +61,7 @@
           bounds: "-0.49,-0.49,0.49,0.49"
         density: 100
         mask:
-        - Impassable
+        - TabletopMachineMask
         layer:
         - Opaque
         - MidImpassable

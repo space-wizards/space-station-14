@@ -25,9 +25,9 @@
   - type: ItemToggleMeleeWeapon
     activatedDamage:
       types:
-        Shock: 5
+        Blunt: 0
   - type: Stunbaton
-    energyPerUse: 120
+    energyPerUse: 70
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -36,10 +36,10 @@
     angle: 60
     animation: WeaponArcThrust
   - type: StaminaDamageOnHit
-    damage: 35
+    damage: 20
     sound: /Audio/Weapons/egloves.ogg
   - type: StaminaDamageOnCollide
-    damage: 35
+    damage: 20
     sound: /Audio/Weapons/egloves.ogg
   - type: Battery
     maxCharge: 360

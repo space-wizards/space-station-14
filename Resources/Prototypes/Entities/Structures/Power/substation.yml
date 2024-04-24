@@ -241,16 +241,6 @@
   - type: Battery
     maxCharge: 2000000
     startingCharge: 2000000
-  - type: ContainerFill
-    containers:
-      board: [ WallmountSubstationElectronics ]
-      capacitor: [ CapacitorStockPart ]
-      powercell: [ PowerCellSmall ]
-  - type: ContainerContainer
-    containers:
-      board: !type:Container
-      capacitor: !type:Container
-      powercell: !type:Container
 
 # Construction Frame
 - type: entity

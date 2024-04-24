@@ -30,7 +30,7 @@ public sealed partial class ReactionMixerSystem : EntitySystem
             return;
         }
 
-        if (!_solutionContainers.TryGetMixableSolution(args.Target.Value, out var solution, out _))
+        if (!_solutionContainers.TryGetMixableSolution(args.Target.Value, out var solution))
             return;
 
         _popup.PopupEntity(Loc.GetString(entity.Comp.MixMessage, ("mixed", Identity.Entity(args.Target.Value, EntityManager)), ("mixer", Identity.Entity(entity.Owner, EntityManager))), args.User, args.User);

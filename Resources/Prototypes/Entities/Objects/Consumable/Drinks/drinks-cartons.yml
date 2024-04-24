@@ -15,9 +15,6 @@
     solutions:
       drink:
         maxVol: 50
-  - type: PressurizedSolution
-    solution: drink
-  - type: Shakeable
   - type: Sprite
     state: icon
   - type: Item

@@ -3,6 +3,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Shared.Clothing;
 using Content.Shared.Database;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.Preferences;
 using Content.Shared.Speech;
@@ -26,8 +27,8 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeNameMessage>(OnChangeName);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeVerbMessage>(OnChangeVerb);
         SubscribeLocalEvent<VoiceMaskComponent, WearerMaskToggledEvent>(OnMaskToggled);
-        SubscribeLocalEvent<VoiceMaskerComponent, ClothingGotEquippedEvent>(OnEquip);
-        SubscribeLocalEvent<VoiceMaskerComponent, ClothingGotUnequippedEvent>(OnUnequip);
+        SubscribeLocalEvent<VoiceMaskerComponent, GotEquippedEvent>(OnEquip);
+        SubscribeLocalEvent<VoiceMaskerComponent, GotUnequippedEvent>(OnUnequip);
         SubscribeLocalEvent<VoiceMaskSetNameEvent>(OnSetName);
         // SubscribeLocalEvent<VoiceMaskerComponent, GetVerbsEvent<AlternativeVerb>>(GetVerbs);
     }

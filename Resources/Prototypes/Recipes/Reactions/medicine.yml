@@ -299,18 +299,6 @@
     Lipozine: 3
 
 - type: reaction
-  id: Mannitol
-  reactants:
-    Hydrogen:
-      amount: 1
-    Water:
-      amount: 1
-    Sugar:
-      amount: 1
-  products:
-    Mannitol: 3
-
-- type: reaction
   id: MindbreakerToxin
   minTemp: 370
   reactants:
@@ -554,8 +542,11 @@
       amount: 1
     Silicon:
       amount: 1
+    Benzene:
+      amount: 1
   products:
     Insuzine: 3
+    Ash: 1
 
 - type: reaction
   id: Necrosol
@@ -582,44 +573,4 @@
     Sigynate:
       amount: 2
   products:
-    Aloxadone: 4
-
-- type: reaction
-  id: Psicodine
-  impact: Medium
-  reactants:
-    Mannitol:
-      amount: 2
-    Impedrezene:
-      amount: 1
-    Water:
-      amount: 2
-  products:
-      Psicodine: 4
-
-- type: reaction
-  id: Lipolicide
-  reactants:
-    Ephedrine:
-      amount: 1
-    Diethylamine:
-      amount: 1
-    Mercury:
-      amount: 1
-  products:
-    Lipolicide: 3
-
-- type: reaction
-  id: Happiness
-  reactants:
-    Laughter:
-      amount: 2
-    Epinephrine:
-      amount: 1
-    Ethanol:
-      amount: 1
-    Plasma:
-      amount: 5
-      catalyst: true
-  products:
-    Happiness: 4
+      Aloxadone: 4
