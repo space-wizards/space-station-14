@@ -270,11 +270,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         var map = Transform(ent).MapID;
 
         var rules = EntityQueryEnumerator<NukeopsRuleComponent, LoadMapRuleComponent>();
-        while (rules.MoveNext(out _, out var rule, out var mapRule))
+        while (rules.MoveNext(out var uid, out _, out var mapRule))
         {
             if (map != mapRule.Map)
                 continue;
-            rule.NukieShuttle = ent;
+            ent.Comp.AssociatedRule = uid;
             break;
         }
     }
@@ -282,9 +282,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     private void OnShuttleFTLAttempt(ref ConsoleFTLAttemptEvent ev)
     {
         var query = QueryActiveRules();
-        while (query.MoveNext(out _, out _, out var nukeops, out _))
+        while (query.MoveNext(out var uid, out _, out var nukeops, out _))
         {
-            if (ev.Uid != nukeops.NukieShuttle)
+            if (ev.Uid != GetShuttle((uid, nukeops)))
                 continue;
 
             if (nukeops.WarDeclaredTime != null)
@@ -424,8 +424,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 return;
         }
 
-        MapId? shuttleMapId = Exists(nukeops.NukieShuttle)
-            ? Transform(nukeops.NukieShuttle.Value).MapID
+        var shuttle = GetShuttle((ent, ent));
+
+        MapId? shuttleMapId = Exists(shuttle)
+            ? Transform(shuttle.Value).MapID
             : null;
 
         MapId? targetStationMap = null;
@@ -509,5 +511,24 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return null;
 
         return ent.Comp.MapGrids.FirstOrNull();
+    }
+
+    /// <remarks>
+    /// Is this method the shitty glue holding together the last of my sanity? yes.
+    /// Do i have a better solution? not presently.
+    /// </remarks>
+    private EntityUid? GetShuttle(Entity<NukeopsRuleComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return null;
+
+        var query = EntityQueryEnumerator<NukeOpsShuttleComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.AssociatedRule == ent.Owner)
+                return uid;
+        }
+
+        return null;
     }
 }

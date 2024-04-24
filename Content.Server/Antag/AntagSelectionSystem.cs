@@ -6,7 +6,6 @@ using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.Inventory;
 using Content.Server.Mind;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
@@ -18,7 +17,6 @@ using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
-using Content.Shared.Storage;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -32,13 +30,12 @@ namespace Content.Server.Antag;
 public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelectionComponent>
 {
     [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerPreferencesManager _pref = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly ServerInventorySystem _inventory = default!;
     [Dependency] private readonly GhostRoleSystem _ghostRole = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
+    [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
@@ -108,7 +105,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 continue;
 
             if (comp.SelectionsComplete)
-                return;
+                continue;
 
             ChooseAntags((uid, comp));
             comp.SelectionsComplete = true;
@@ -128,7 +125,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         while (query.MoveNext(out var uid, out _, out var antag, out _))
         {
             if (!RobustRandom.Prob(LateJoinRandomChance))
-                return;
+                continue;
 
             if (!antag.Definitions.Any(p => p.LateJoinAdditional))
                 continue;
@@ -263,12 +260,12 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         RaiseLocalEvent(ent, ref getPosEv, true);
         if (getPosEv.Handled)
         {
-            var antagXForm = Transform(player);
+            var playerXform = Transform(player);
             var pos = RobustRandom.Pick(getPosEv.Coordinates);
-            var mapEnt = _mapManager.GetMapEntityId(pos.MapId);
-            _transform.SetParent(player, antagXForm, mapEnt);
-            _transform.SetWorldPosition(antagXForm, pos.Position);
-            _transform.AttachToGridOrMap(player, antagXForm);
+            var mapEnt = _map.GetMap(pos.MapId);
+            _transform.SetParent(player, playerXform, mapEnt);
+            _transform.SetWorldPosition(playerXform, pos.Position);
+            _transform.AttachToGridOrMap(player, playerXform);
         }
 
         if (isSpawner)
@@ -286,7 +283,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         EntityManager.AddComponents(player, def.Components);
         _stationSpawning.EquipStartingGear(player, def.StartingGear);
-        _inventory.SpawnItemsOnEntity(player, EntitySpawnCollection.GetSpawns(def.Equipment));
 
         if (session != null)
         {
@@ -319,14 +315,15 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         var primaryList = new List<ICommonSession>();
         var secondaryList = new List<ICommonSession>();
         var fallbackList = new List<ICommonSession>();
-        var rawList = new List<ICommonSession>(sessions);
+        var rawList = new List<ICommonSession>();
         foreach (var session in sessions)
         {
-            if (!IsSessionValid(ent, session, def))
+            if (!IsSessionValid(ent, session, def) ||
+                !IsEntityValid(session.AttachedEntity, def))
+            {
+                rawList.Add(session);
                 continue;
-
-            if (!IsEntityValid(session.AttachedEntity, def))
-                continue;
+            }
 
             var pref = (HumanoidCharacterProfile) _pref.GetPreferences(session.UserId).SelectedCharacter;
             if (def.PrefRoles.Count == 0 || pref.AntagPreferences.Any(p => def.PrefRoles.Contains(p)))
@@ -341,8 +338,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             {
                 fallbackList.Add(session);
             }
-
-            rawList.Remove(session);
         }
 
         return new AntagSelectionPlayerPool(primaryList, secondaryList, fallbackList, rawList);
@@ -361,7 +356,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (ent.Comp.SelectedSessions.Contains(session))
             return false;
 
-        //todo: we need some way to check that we're not getting the same role twice. (double picking thieves of zombies through midrounds)
+        //todo: we need some way to check that we're not getting the same role twice. (double picking thieves or zombies through midrounds)
 
         switch (def.MultiAntagSetting)
         {

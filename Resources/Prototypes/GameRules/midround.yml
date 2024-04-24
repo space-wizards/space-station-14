@@ -43,14 +43,14 @@
       playerRatio: 1
       allowNonHumans: true
       multiAntagSetting: All
-      equipment:
-      - id: ToolboxThief
-      - id: ClothingHandsChameleonThief
+      startingGear: ThiefGear
       components:
       - type: Pacified
       mindComponents:
       - type: ThiefRole
         prototype: Thief
+      briefing:
+        sound: "/Audio/Misc/thief_greeting.ogg"
 
 - type: entity
   noSpawn: true

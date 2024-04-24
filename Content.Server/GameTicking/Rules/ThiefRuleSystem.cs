@@ -34,8 +34,6 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         //Generate objectives
         GenerateObjectives(mindId, mind, ent);
-        //Send briefing here to account for humanoid/animal
-        _antag.SendBriefing(args.EntityUid, MakeBriefing(ent), null, ent.Comp.GreetingSound);
     }
 
     private void GenerateObjectives(EntityUid mindId, MindComponent mind, ThiefRuleComponent thiefRule)

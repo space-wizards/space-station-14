@@ -4,15 +4,14 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Spawners.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
 
@@ -21,6 +20,20 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         base.Initialize();
 
         SubscribeLocalEvent<LoadMapRuleComponent, AntagSelectLocationEvent>(OnSelectLocation);
+        SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
+    }
+
+    private void OnGridSplit(GridSplitEvent args)
+    {
+        var rule = QueryActiveRules();
+        while (rule.MoveNext(out _, out var mapComp, out _))
+        {
+            if (!mapComp.MapGrids.Contains(args.Grid))
+                continue;
+
+            mapComp.MapGrids.AddRange(args.NewGrids);
+            break;
+        }
     }
 
     protected override void Added(EntityUid uid, LoadMapRuleComponent comp, GameRuleComponent rule, GameRuleAddedEvent args)
@@ -28,7 +41,8 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         if (comp.Map != null)
             return;
 
-        comp.Map = _mapManager.CreateMap();
+        _map.CreateMap(out var mapId);
+        comp.Map = mapId;
 
         if (comp.GameMap != null)
         {
@@ -37,7 +51,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         }
         else if (comp.MapPath != null)
         {
-            if (_mapLoader.TryLoad(comp.Map.Value, comp.MapPath, out var roots, new MapLoadOptions { LoadMap = true}))
+            if (_mapLoader.TryLoad(comp.Map.Value, comp.MapPath.Value.ToString(), out var roots, new MapLoadOptions { LoadMap = true }))
                 comp.MapGrids.AddRange(roots);
         }
         else

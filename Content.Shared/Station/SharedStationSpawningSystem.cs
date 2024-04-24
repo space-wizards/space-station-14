@@ -1,7 +1,6 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
-using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
@@ -25,7 +24,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     /// <param name="startingGear">Starting gear to use.</param>
     public void EquipStartingGear(EntityUid entity, ProtoId<StartingGearPrototype>? startingGear)
     {
-        var gearProto = startingGear != null ? PrototypeManager.Index(startingGear.Value) : null;
+        PrototypeManager.TryIndex(startingGear, out var gearProto);
         EquipStartingGear(entity, gearProto);
     }
 

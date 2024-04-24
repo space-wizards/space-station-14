@@ -27,10 +27,4 @@ public sealed partial class ThiefRuleComponent : Component
 
     [DataField]
     public int MaxStealObjectives = 10;
-
-    /// <summary>
-    /// Sound played when making the player a thief via antag control or ghost role
-    /// </summary>
-    [DataField]
-    public SoundSpecifier? GreetingSound = new SoundPathSpecifier("/Audio/Misc/thief_greeting.ogg");
 }

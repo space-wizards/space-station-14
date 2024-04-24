@@ -141,12 +141,6 @@ public partial struct AntagSelectionDefinition()
     public ComponentRegistry MindComponents = new();
 
     /// <summary>
-    /// A generic set of equipment that is placed in the antag's bag.
-    /// </summary>
-    [DataField]
-    public List<EntitySpawnEntry> Equipment = new();
-
-    /// <summary>
     /// A set of starting gear that's equipped to the player.
     /// </summary>
     [DataField]

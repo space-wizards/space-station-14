@@ -42,8 +42,6 @@ public sealed partial class GameTicker
             string.Empty,
             "cleargamerules",
             ClearGameRulesCommand);
-
-        SubscribeLocalEvent<DelayedStartRuleComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
     private void ShutdownGameRules()
@@ -51,11 +49,6 @@ public sealed partial class GameTicker
         _consoleHost.UnregisterCommand("addgamerule");
         _consoleHost.UnregisterCommand("endgamerule");
         _consoleHost.UnregisterCommand("cleargamerules");
-    }
-
-    private void OnUnpaused(Entity<DelayedStartRuleComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.RuleStartTime += args.PausedTime;
     }
 
     /// <summary>

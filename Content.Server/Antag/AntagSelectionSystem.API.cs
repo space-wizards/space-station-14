@@ -158,7 +158,17 @@ public sealed partial class AntagSelectionSystem
         if (!Resolve(ent, ref ent.Comp, false))
             return 0;
 
-        return GetAliveAntags(ent).Count();
+        var numbah = 0;
+        var minds = GetAntagMinds(ent);
+        foreach (var mind in minds)
+        {
+            if (_mind.IsCharacterDeadIc(mind))
+                continue;
+
+            numbah++;
+        }
+
+        return numbah;
     }
 
     /// <summary>
@@ -224,14 +234,22 @@ public sealed partial class AntagSelectionSystem
     /// <param name="briefing">The briefing text to send</param>
     /// <param name="briefingColor">The color the briefing should be, null for default</param>
     /// <param name="briefingSound">The sound to briefing/greeting sound to play</param>
-    public void SendBriefing(ICommonSession? session, string briefing, Color? briefingColor, SoundSpecifier? briefingSound)
+    public void SendBriefing(
+        ICommonSession? session,
+        string briefing,
+        Color? briefingColor,
+        SoundSpecifier? briefingSound)
     {
         if (session == null)
             return;
 
         _audio.PlayGlobal(briefingSound, session);
-        var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", briefing));
-        _chat.ChatMessageToOne(ChatChannel.Server, briefing, wrappedMessage, default, false, session.Channel, briefingColor);
+        if (!string.IsNullOrEmpty(briefing))
+        {
+            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", briefing));
+            _chat.ChatMessageToOne(ChatChannel.Server, briefing, wrappedMessage, default, false, session.Channel,
+                briefingColor);
+        }
     }
 
     /// <summary>

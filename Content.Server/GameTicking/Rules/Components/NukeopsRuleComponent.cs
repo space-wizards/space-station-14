@@ -1,5 +1,4 @@
 using Content.Server.RoundEnd;
-using Content.Server.StationEvents.Events;
 using Content.Shared.Dataset;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.Roles;
@@ -86,9 +85,6 @@ public sealed partial class NukeopsRuleComponent : Component
 
     [DataField]
     public EntityUid? TargetStation;
-
-    [DataField]
-    public EntityUid? NukieShuttle;
 
     [DataField]
     public ProtoId<NpcFactionPrototype> Faction = "Syndicate";
