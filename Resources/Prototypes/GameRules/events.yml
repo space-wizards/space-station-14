@@ -440,7 +440,7 @@
     reoccurrenceDelay: 30
     duration: 1
   - type: LoadMapRule
-    mapPath: Maps/Shuttles/striker.yml
+    mapPath: /Maps/Shuttles/striker.yml
   - type: NukeopsRule
     roundEndBehavior: Nothing
   - type: AntagSelection
