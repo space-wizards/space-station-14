@@ -1784,12 +1784,31 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 3
+  - type: RandomSprite
+    available:
+        - enum.DamageStateVisualLayers.Base:
+            gondola_body_long: GondolaBrowns
+            gondola_body_medium: GondolaBrowns
+          enum.DamageStateVisualLayers.BaseUnshaded:
+            gondola_moustache_large: ""
+            gondola_moustache_small: ""
+        - enum.DamageStateVisualLayers.Base:
+            gondola_body_medium: GondolaBrowns
+            gondola_body_short: GondolaBrowns
+          enum.DamageStateVisualLayers.BaseUnshaded:
+            gondola_moustache_large_short: ""
+            gondola_moustache_small_short: ""
+
   - type: Sprite
-    drawdepth: Mobs
+    sprite: Mobs/Animals/gondola.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: gondola
-      sprite: Mobs/Animals/gondola.rsi
+      - state: gondola_body_medium
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+        color: "#6e4e40"
+        shader: unshaded
+      - state: gondola_moustache_large
+        map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+        shader: unshaded
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -1804,12 +1823,10 @@
         - MobLayer
   - type: DamageStateVisuals
     states:
-      Alive:
-        Base: gondola
       Critical:
-        Base: dead
+        Base: gondola_dead
       Dead:
-        Base: dead
+        Base: gondola_dead
   - type: Butcherable
     spawned:
     - id: FoodMeatGondola
