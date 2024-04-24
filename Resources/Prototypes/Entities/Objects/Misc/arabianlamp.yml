@@ -7,7 +7,10 @@
   - type: Appearance
   - type: AccessReader
     access: [ [ "CentralCommand" ] ]
+    breakOnEmag: false
   - type: Lock
+    lockOnClick: false
+    breakOnEmag: false
   - type: EntityStorage
     itemCanStoreMobs: false #  just leaving this here explicitly since I know at some point someone will want to use this to hold a mob.
   # - type: StorageFill 
