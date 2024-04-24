@@ -354,7 +354,7 @@
   name: reagent-name-tranquility
   group: Toxins
   desc: reagent-desc-tranquility
-  physicalDesc: reagent-physical-desc-vibrant
+  physicalDesc: reagent-physical-desc-calming
   flavor: calm
   color: "#915E48"
   metabolisms:
