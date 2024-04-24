@@ -1782,8 +1782,8 @@
     factions:
     - Passive
   - type: MovementSpeedModifier
-    baseWalkSpeed: 2
-    baseSprintSpeed: 3
+    baseWalkSpeed: 1
+    baseSprintSpeed: 2
   - type: RandomSprite
     available:
         - enum.DamageStateVisualLayers.Base:
