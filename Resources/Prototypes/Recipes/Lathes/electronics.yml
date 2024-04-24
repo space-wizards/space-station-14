@@ -285,6 +285,7 @@
   result: CircuitImprinterHyperConvectionMachineCircuitboard
   category: Circuitry
   completetime: 4
+  materials:
     Steel: 100
     Glass: 900
     Gold: 100
