@@ -32,6 +32,7 @@ public static partial class PoolManager
         (CCVars.GameLobbyEnabled.Name, "false"),
         (CCVars.ConfigPresetDevelopment.Name, "false"),
         (CCVars.AdminLogsEnabled.Name, "false"),
+        (CCVars.AutosaveEnabled.Name, "false"),
         (CVars.NetBufferSize.Name, "0")
     };
 
