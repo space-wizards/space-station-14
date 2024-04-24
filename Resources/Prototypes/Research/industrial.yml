@@ -52,6 +52,7 @@
   recipeUnlocks:
   - AutolatheHyperConvectionMachineCircuitboard
   - ProtolatheHyperConvectionMachineCircuitboard
+  - CircuitImprinterHyperConvectionMachineCircuitboard
   - SheetifierMachineCircuitboard
 
 - type: technology
