@@ -231,6 +231,22 @@ public sealed partial class AntagSelectionSystem
     /// Helper method to send the briefing text and sound to a session
     /// </summary>
     /// <param name="session">The player chosen to be an antag</param>
+    /// <param name="data">The briefing data</param>
+    public void SendBriefing(
+        ICommonSession? session,
+        BriefingData? data)
+    {
+        if (session == null || data == null)
+            return;
+
+        var text = data.Value.Text == null ? string.Empty : Loc.GetString(data.Value.Text);
+        SendBriefing(session, text, data.Value.Color, data.Value.Sound);
+    }
+
+    /// <summary>
+    /// Helper method to send the briefing text and sound to a session
+    /// </summary>
+    /// <param name="session">The player chosen to be an antag</param>
     /// <param name="briefing">The briefing text to send</param>
     /// <param name="briefingColor">The color the briefing should be, null for default</param>
     /// <param name="briefingSound">The sound to briefing/greeting sound to play</param>

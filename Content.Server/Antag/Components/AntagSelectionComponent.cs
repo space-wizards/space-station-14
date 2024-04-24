@@ -173,7 +173,7 @@ public partial struct BriefingData
     /// The text shown
     /// </summary>
     [DataField]
-    public LocId Text;
+    public LocId? Text;
 
     /// <summary>
     /// The color of the text.

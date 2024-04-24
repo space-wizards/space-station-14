@@ -298,7 +298,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (def.Briefing is { } briefing)
         {
-            SendBriefing(session, Loc.GetString(briefing.Text), briefing.Color, briefing.Sound);
+            SendBriefing(session, briefing);
         }
 
         var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def);
