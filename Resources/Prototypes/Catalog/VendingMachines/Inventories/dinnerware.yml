@@ -6,6 +6,7 @@
     RollingPin: 4
     Spoon: 4
     Fork: 4
+    ChopSticks: 4
     FoodBowlBig: 10
     FoodPlate: 10
     FoodPlateSmall: 10
@@ -24,3 +25,4 @@
     DrinkMugOne: 1
     DrinkMugRainbow: 2
     DrinkMugRed: 2
+    
