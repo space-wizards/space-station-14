@@ -10,3 +10,6 @@
   - type: Item
     sprite: Objects/Misc/chopstick.rsi
     size: Small
+  - type: Utensil
+    types:
+    - Fork
