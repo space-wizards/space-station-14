@@ -56,7 +56,6 @@
         - MobMouse
         - MobMouse1
         - MobMouse2
-        - MobMouseCancer
       # round ~90m
       # one spawner should only spawn ~5 mice for sanity reasons
       # therefore 18m
