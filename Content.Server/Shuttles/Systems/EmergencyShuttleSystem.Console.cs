@@ -273,6 +273,7 @@ public sealed partial class EmergencyShuttleSystem
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL ALL by {args.Session:user}");
         _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-console-auth-revoked", ("remaining", component.AuthorizationsRequired)));
         component.AuthorizedEntities.Clear();
+        SpamChecker(uid, player);
         UpdateAllEmergencyConsoles();
     }
 
