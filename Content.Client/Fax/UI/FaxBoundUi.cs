@@ -52,9 +52,23 @@ public sealed class FaxBoundUi : BoundUserInterface
         }
 
         using var reader = new StreamReader(file);
-        // If the first line begins with '#', consume it as a label.
-        var label = (reader.Peek() == '#') ? (await reader.ReadLineAsync())?[1..].Trim() : null;
+
+        var label = await reader.ReadLineAsync();
         var content = await reader.ReadToEndAsync();
+
+        if (label is { })
+        {
+            if (label.StartsWith('#'))
+            {
+                label = label[1..].Trim();
+            }
+            else
+            {
+                content = label + '\n' + content;
+                label = null;
+            }
+        }
+
         SendMessage(new FaxFileMessage(
             label?[..Math.Min(label.Length, FaxFileMessageValidation.MaxLabelSize)],
             content[..Math.Min(content.Length, FaxFileMessageValidation.MaxContentSize)],
