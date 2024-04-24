@@ -475,6 +475,7 @@
         - CombatKnife
       components:
         - Stunbaton
+        - Truncheon
         - FlashOnTrigger
         - SmokeOnTrigger
         - Flash
