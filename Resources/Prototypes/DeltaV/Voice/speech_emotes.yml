@@ -49,3 +49,15 @@
     - howls!
     - howling.
     - howled.
+
+- type: emote
+  id: Growl
+  category: Vocal
+  chatMessages: [growls.]
+  chatTriggers:
+    - growl.
+    - growl!
+    - growls.
+    - growls!
+    - growling.
+    - growled.
