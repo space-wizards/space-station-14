@@ -1,8 +1,0 @@
-- type: speechVerb
-  id: Vulpkanin
-  name: chat-speech-verb-name-vox
-  speechVerbStrings:
-  - chat-speech-verb-vulpkanin-1
-  - chat-speech-verb-vulpkanin-2
-  - chat-speech-verb-vulpkanin-3
-  - chat-speech-verb-vulpkanin-4
