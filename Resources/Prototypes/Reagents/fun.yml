@@ -368,16 +368,12 @@
       - !type:GenericStatusEffect
         key: Muted
         component: Muted
-        refresh: false
-        type: Add
         conditions:
         - !type:ReagentThreshold
           min: 5
       - !type:GenericStatusEffect
         key: Pacified
         component: Pacified
-        refresh: false
-        type: Add
         conditions:
         - !type:ReagentThreshold
           min: 10
@@ -388,4 +384,4 @@
           type: Animal
           shouldHave: false
         - !type:ReagentThreshold
-          min: 30
+          min: 25
