@@ -2,7 +2,7 @@
   parent: BaseItem
   id: Skub
   name: skub
-  description: Skub is the fifth Chaos God.
+  description: Uh... Skub?
   components:
   - type: Sprite
     sprite: Objects/Misc/skub.rsi
@@ -19,4 +19,4 @@
     sound:
       collection: Skub
   - type: UseDelay
-    delay: 2.0
+    delay: 1.5
