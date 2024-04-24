@@ -340,6 +340,9 @@ uplink-eshield-desc = Exotic energy shield that reflects almost all laser beams,
 uplink-soap-name = Soap
 uplink-soap-desc = An untrustworthy bar of soap. Smells of fear.
 
+uplink-gondola-name = Gondola Crate
+uplink-gondola-desc = Crate containing one standard issue gondola.
+
 uplink-ultrabright-lantern-name = Extra-Bright Lantern
 uplink-ultrabright-lantern-desc = It can be used to blind people like a flash.
 
@@ -426,7 +429,7 @@ uplink-barber-scissors-name = Barber Scissors
 uplink-barber-scissors-desc = A good tool to give your fellow agent a nice haircut, unless you want to give it to yourself.
 
 uplink-throngler-name = The Throngler
-uplink-throngler-desc = You're never gonna get it. You're never gonna get it. Please don't get it... 
+uplink-throngler-desc = You're never gonna get it. You're never gonna get it. Please don't get it...
 
 uplink-backpack-syndicate-name = Syndicate backpack
 uplink-backpack-syndicate-desc = Lightweight explosion-proof а backpack for holding various traitor goods

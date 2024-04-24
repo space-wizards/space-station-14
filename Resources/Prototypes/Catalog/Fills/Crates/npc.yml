@@ -245,7 +245,7 @@
         - id: MobLizard
 
 - type: entity
-  id: CrateNPCLizard
+  id: CrateNPCGondola
   parent: CrateLivestock
   name: gondola crate
   description: A crate containing a gondola.
