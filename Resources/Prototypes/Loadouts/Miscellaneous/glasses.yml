@@ -4,9 +4,9 @@
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
-      !type:DepartmentTimeRequirement
-      department: Science
-      time: 36000 #10 hours of being a NERD
+      !type:RoleTimeRequirement
+      role: JobLibrarian
+      time: 3600 # 1 hour of being the biggest nerd on the station
 
 - type: loadoutEffectGroup
   id: JensenTimer
@@ -27,16 +27,6 @@
   id: Glasses
   equipment:
     eyes: ClothingEyesGlasses
-
-# Cheap Sunglasses
-- type: loadout
-  id: CheapSunglasses
-  equipment: CheapSunglasses
-
-- type: startingGear
-  id: CheapSunglasses
-  equipment:
-    eyes: ClothingEyesGlassesCheapSunglasses
 
 # Special options
 # Jamjar    
