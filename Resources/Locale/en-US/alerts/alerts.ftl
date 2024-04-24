@@ -112,4 +112,4 @@ alerts-revenant-corporeal-name = Corporeal
 alerts-revenant-corporeal-desc = You have manifested physically. People around you can see and hurt you.
 
 alerts-deflecting-name = Deflecting
-alerts-deflecting-desc = You can deflect shots. You have your highest chance of doing so whilst standing still or moving slowly.
+alerts-deflecting-desc = You have a chance to deflect incoming projectiles. Standing still or moving slowly will increase this chance.

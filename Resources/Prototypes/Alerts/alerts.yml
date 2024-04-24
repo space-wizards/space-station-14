@@ -479,7 +479,7 @@
 - type: alert
   id: Deflecting
   icons:
-  - sprite: /Textures/deprecated.rsi
-    state: deprecated
+  - sprite: /Textures/Interface/Alerts/deflecting.rsi
+    state: deflecting0
   name: alerts-deflecting-name
   description: alerts-deflecting-desc
