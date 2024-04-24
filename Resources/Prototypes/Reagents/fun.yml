@@ -355,7 +355,7 @@
   group: Toxins
   desc: reagent-desc-tranquility
   physicalDesc: reagent-physical-desc-calming
-  flavor: calm
+  flavor: holy
   color: "#915E48"
   metabolisms:
     Poison:
@@ -368,16 +368,22 @@
       - !type:GenericStatusEffect
         key: Muted
         component: Muted
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
       - !type:GenericStatusEffect
         key: Pacified
         component: Pacified
         refresh: false
         type: Add
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
       - !type:Polymorph
         prototype: Gondola
         conditions:
         - !type:OrganType
-          type: Human
-          shouldHave: true
+          type: Animal
+          shouldHave: false
         - !type:ReagentThreshold
           min: 30
