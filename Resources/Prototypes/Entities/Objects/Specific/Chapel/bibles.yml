@@ -68,7 +68,6 @@
     failChance: 0
     locPrefix: "necro"
     healSound: "/Audio/Effects/lightburn.ogg"
-    cooldownTime: 1.3
   - type: Summonable
     specialItem: SpawnPointGhostCerberus
     respawnTime: 300
