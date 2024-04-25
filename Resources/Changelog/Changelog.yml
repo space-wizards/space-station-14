@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Advanced topical meds now cost significantly less chemicals
-    type: Tweak
-  id: 5933
-  time: '2024-02-13T22:03:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24948
 - author: Tayrtahn
   changes:
   - message: Drink bottles can now be opened and closed from the verbs menu, and some
@@ -3850,3 +3843,10 @@
   id: 6432
   time: '2024-04-24T13:43:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27281
+- author: pigeonpeas
+  changes:
+  - message: Adds a trash bag to the advanced cleaning module.
+    type: Add
+  id: 6433
+  time: '2024-04-24T21:27:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27226
