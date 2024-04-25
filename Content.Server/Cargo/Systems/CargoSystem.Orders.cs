@@ -180,7 +180,7 @@ namespace Content.Server.Cargo.Systems
 
                 if (ev.FulfillmentEntity == null)
                 {
-                    ConsolePopup(args.Session, Loc.GetString("cargo-console-unfulfilled"));
+                    ConsolePopup(args.Actor, Loc.GetString("cargo-console-unfulfilled"));
                     PlayDenySound(uid, component);
                     return;
                 }
@@ -200,7 +200,7 @@ namespace Content.Server.Cargo.Systems
                 ("approverJob", approverJob),
                 ("cost", cost));
             _radio.SendRadioMessage(uid, message, component.AnnouncementChannel, uid, escapeMarkup: false);
-            ConsolePopup(args.Session, Loc.GetString("cargo-console-trade-station", ("destination", MetaData(ev.FulfillmentEntity.Value).EntityName)));
+            ConsolePopup(args.Actor, Loc.GetString("cargo-console-trade-station", ("destination", MetaData(ev.FulfillmentEntity.Value).EntityName)));
 
             // Log order approval
             _adminLogger.Add(LogType.Action, LogImpact.Low,
