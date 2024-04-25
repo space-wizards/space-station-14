@@ -7,7 +7,7 @@ public sealed class ToggleGhostVisibilityCommand : IConsoleCommand
     [Dependency] private readonly IEntitySystemManager _entSysMan = default!;
 
     public string Command => "toggleghostvisibility";
-    public string Description => "Toggles ghost visibility on the client. Can only be used as a ghost.";
+    public string Description => "Toggles ghost visibility on the client.";
     public string Help => "toggleghostvisibility [bool]";
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
