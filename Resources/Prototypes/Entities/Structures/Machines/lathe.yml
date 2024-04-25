@@ -121,6 +121,7 @@
       - DrinkGlass
       - DrinkShotGlass
       - DrinkGlassCoupeShaped
+      - CustomDrinkJug
       - FoodPlate
       - FoodPlateSmall
       - FoodPlatePlastic
@@ -154,6 +155,7 @@
       - APCElectronics
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
+      - WallmountSubstationElectronics
       - CellRechargerCircuitboard
       - BorgChargerCircuitboard
       - WeaponCapacitorRechargerCircuitboard
@@ -441,7 +443,6 @@
       - AnomalySynchronizerCircuitboard
       - APECircuitboard
       - ArtifactAnalyzerMachineCircuitboard
-      - TraversalDistorterMachineCircuitboard
       - ArtifactCrusherMachineCircuitboard
       - TelecomServerCircuitboard
       - MassMediaCircuitboard
@@ -956,7 +957,8 @@
       - ClothingOuterWinterCE
       - ClothingOuterWinterCMO
       - ClothingOuterWinterHoP
-      - ClothingOuterWinterHoS
+      - ClothingOuterWinterHoSUnarmored
+      - ClothingOuterWinterWardenUnarmored
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
       - ClothingNeckMantleCap

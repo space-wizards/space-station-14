@@ -7,7 +7,7 @@ namespace Content.Shared.Audio.Jukebox;
 /// Soundtrack that's visible on the jukebox list.
 /// </summary>
 [Prototype]
-public sealed class JukeboxPrototype : IPrototype
+public sealed partial class JukeboxPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; } = string.Empty;
