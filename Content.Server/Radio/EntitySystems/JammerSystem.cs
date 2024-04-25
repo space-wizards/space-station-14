@@ -11,11 +11,11 @@ using Content.Shared.RadioJammer;
 using Content.Shared.Radio.EntitySystems;
 
 namespace Content.Server.Radio.EntitySystems;
-public sealed partial class JammerSystem : SharedJammerSystem
+
+public sealed class JammerSystem : SharedJammerSystem
 {
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
@@ -87,7 +87,7 @@ public sealed partial class JammerSystem : SharedJammerSystem
         }
         var state = Loc.GetString(activated ? "radio-jammer-component-on-state" : "radio-jammer-component-off-state");
         var message = Loc.GetString("radio-jammer-component-on-use", ("state", state));
-        _popup.PopupEntity(message, args.User, args.User);
+        Popup.PopupEntity(message, args.User, args.User);
         args.Handled = true;
     }
 

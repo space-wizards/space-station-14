@@ -4,10 +4,12 @@ using Content.Shared.Verbs;
 using Content.Shared.RadioJammer;
 
 namespace Content.Shared.Radio.EntitySystems;
+
 public abstract class SharedJammerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] protected readonly SharedPopupSystem Popup = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -42,7 +44,7 @@ public abstract class SharedJammerSystem : EntitySystem
                         jammerComp.Range = GetCurrentRange(entity.Comp);
                         Dirty(entity.Owner, jammerComp);
                     }
-                    _popup.PopupPredicted(Loc.GetString(setting.Message), user, user);
+                    Popup.PopupPredicted(Loc.GetString(setting.Message), user, user);
                 },
                 Text = Loc.GetString(setting.Name),
             };
@@ -55,19 +57,19 @@ public abstract class SharedJammerSystem : EntitySystem
     {
         return jammer.Settings[jammer.SelectedPowerLevel].Wattage;
     }
-    
+
     public float GetCurrentRange(RadioJammerComponent jammer)
     {
         return jammer.Settings[jammer.SelectedPowerLevel].Range;
     }
-    
-    public void ChangeLEDState(bool isLEDOn, EntityUid uid,
+
+    protected void ChangeLEDState(bool isLEDOn, EntityUid uid,
         AppearanceComponent? appearance = null)
     {
         _appearance.SetData(uid, RadioJammerVisuals.LEDOn, isLEDOn, appearance);
     }
-    
-    public void ChangeChargeLevel(RadioJammerChargeLevel chargeLevel, EntityUid uid,
+
+    protected void ChangeChargeLevel(RadioJammerChargeLevel chargeLevel, EntityUid uid,
         AppearanceComponent? appearance = null)
     {
         _appearance.SetData(uid, RadioJammerVisuals.ChargeLevel, chargeLevel, appearance);
