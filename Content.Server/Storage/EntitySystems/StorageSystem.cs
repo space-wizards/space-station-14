@@ -45,7 +45,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
         base.OnMapInit(entity, ref args);
 
         if (TryComp<UseDelayComponent>(entity, out var useDelay))
-            UseDelay.TryRegisterDelay((entity, useDelay), OpenUiUseDelayID, entity.Comp.OpenUiCooldown);
+            UseDelay.SetLength((entity, useDelay), entity.Comp.OpenUiCooldown, OpenUiUseDelayID);
     }
 
     private void AddUiVerb(EntityUid uid, StorageComponent component, GetVerbsEvent<ActivationVerb> args)

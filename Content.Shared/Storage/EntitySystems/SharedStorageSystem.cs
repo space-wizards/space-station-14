@@ -124,7 +124,7 @@ public abstract class SharedStorageSystem : EntitySystem
     protected virtual void OnMapInit(Entity<StorageComponent> entity, ref MapInitEvent args)
     {
         if (TryComp<UseDelayComponent>(entity, out var useDelayComp))
-            UseDelay.TryRegisterDelay((entity, useDelayComp), QuickInsertUseDelayID, entity.Comp.QuickInsertCooldown);
+            UseDelay.SetLength((entity, useDelayComp), entity.Comp.QuickInsertCooldown, QuickInsertUseDelayID);
     }
 
     private void OnStorageGetState(EntityUid uid, StorageComponent component, ref ComponentGetState args)

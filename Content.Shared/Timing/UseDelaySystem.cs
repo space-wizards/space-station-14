@@ -22,7 +22,7 @@ public sealed class UseDelaySystem : EntitySystem
     {
         // Set default delay length from the prototype
         // This makes it easier for simple use cases that only need a single delay
-        TryRegisterDelay(ent, DefaultId, ent.Comp.Delay);
+        SetLength(ent, ent.Comp.Delay, DefaultId);
     }
 
     private void OnUnpaused(Entity<UseDelayComponent> ent, ref EntityUnpausedEvent args)
@@ -35,34 +35,22 @@ public sealed class UseDelaySystem : EntitySystem
     }
 
     /// <summary>
-    /// Adds an additional delay to be tracked by this component.
-    /// </summary>
-    /// <param name="id">identifier used to refer to the delay in other methods</param>
-    /// <param name="length">duration of the delay</param>
-    /// <returns></returns>
-    public bool TryRegisterDelay(Entity<UseDelayComponent> ent, string id, TimeSpan length)
-    {
-        // Make sure there's not already a delay registered with this ID
-        if (ent.Comp.Delays.ContainsKey(id))
-            return false;
-
-        ent.Comp.Delays.Add(id, new UseDelayInfo(length));
-        Dirty(ent);
-        return true;
-    }
-
-    /// <summary>
     /// Sets the length of the delay with the specified ID.
     /// </summary>
     public bool SetLength(Entity<UseDelayComponent> ent, TimeSpan length, string id = DefaultId)
     {
-        if (!ent.Comp.Delays.TryGetValue(id, out var entry))
-            return false;
+        if (ent.Comp.Delays.TryGetValue(id, out var entry))
+        {
+            if (entry.Length == length)
+                return true;
 
-        if (entry.Length == length)
-            return true;
+            entry.Length = length;
+        }
+        else
+        {
+            ent.Comp.Delays.Add(id, new UseDelayInfo(length));
+        }
 
-        entry.Length = length;
         Dirty(ent);
         return true;
     }
