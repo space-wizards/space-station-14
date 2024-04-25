@@ -34,6 +34,23 @@
   id: Thief
   components:
   - type: ThiefRule
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Thief ]
+      maxRange:
+        min: 1
+        max: 3
+      playerRatio: 1
+      allowNonHumans: true
+      multiAntagSetting: All
+      startingGear: ThiefGear
+      components:
+      - type: Pacified
+      mindComponents:
+      - type: ThiefRole
+        prototype: Thief
+      briefing:
+        sound: "/Audio/Misc/thief_greeting.ogg"
 
 - type: entity
   noSpawn: true
