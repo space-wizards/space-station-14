@@ -608,8 +608,6 @@
     sprite: Clothing/Belt/securitywebbing.rsi
   - type: Clothing
     sprite: Clothing/Belt/securitywebbing.rsi
-  - type: ItemMapper
-    mapLayers:
   - type: Storage
     whitelist:
       tags:
