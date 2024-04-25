@@ -62,6 +62,32 @@ public abstract class SharedRoleSystem : EntitySystem
         _antagTypes.Add(typeof(T));
     }
 
+    public void MindAddRole(EntityUid mindId, Component component, MindComponent? mind = null, bool silent = false)
+    {
+        if (!Resolve(mindId, ref mind))
+            return;
+
+        if (HasComp(mindId, component.GetType()))
+        {
+            throw new ArgumentException($"We already have this role: {component}");
+        }
+
+        EntityManager.AddComponent(mindId, component);
+        var antagonist = IsAntagonistRole(component.GetType());
+
+        var mindEv = new MindRoleAddedEvent(silent);
+        RaiseLocalEvent(mindId, ref mindEv);
+
+        var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
+        if (mind.OwnedEntity != null)
+        {
+            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
+        }
+
+        _adminLogger.Add(LogType.Mind, LogImpact.Low,
+            $"'Role {component}' added to mind of {_minds.MindOwnerLoggingString(mind)}");
+    }
+
     /// <summary>
     ///     Gives this mind a new role.
     /// </summary>
@@ -178,6 +204,11 @@ public abstract class SharedRoleSystem : EntitySystem
     public bool IsAntagonistRole<T>()
     {
         return _antagTypes.Contains(typeof(T));
+    }
+
+    public bool IsAntagonistRole(Type component)
+    {
+        return _antagTypes.Contains(component);
     }
 
     /// <summary>
