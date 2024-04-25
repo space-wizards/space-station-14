@@ -68,6 +68,15 @@
   equipment:
     head: ClothingHeadHatSurgcapPurple
 
+- type: loadout
+  id: NurseHat
+  equipment: NurseHat
+
+- type: startingGear
+  id: NurseHat
+  equipment:
+    head: ClothingHeadNurseHat
+
 # Jumpsuit
 - type: loadout
   id: MedicalDoctorJumpsuit
@@ -219,3 +228,23 @@
   id: SeniorPhysicianPDA
   equipment:
     id: SeniorPhysicianPDA
+
+# Gloves
+- type: loadout
+  id: NitrileGloves
+  equipment: NitrileGloves
+
+- type: startingGear
+  id: NitrileGloves
+  equipment:
+    gloves: ClothingHandsGlovesNitrile
+
+#Masks
+- type: loadout
+  id: SterileMask
+  equipment: SterileMask
+
+- type: startingGear
+  id: SterileMask
+  equipment:
+    mask: ClothingMaskSterile

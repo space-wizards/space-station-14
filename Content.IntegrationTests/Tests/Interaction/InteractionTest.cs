@@ -12,7 +12,6 @@ using Content.Shared.Body.Part;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Server.Item;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Robust.Client.Input;
