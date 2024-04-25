@@ -1,6 +1,6 @@
+using Content.Shared.Access.Components;
 using Content.Shared.Popups;
 using Content.Shared.UserInterface;
-using Content.Shared.Access.Components;
 
 namespace Content.Shared.Access.Systems;
 public sealed class ActivatableUIRequiresAccessSystem : EntitySystem
@@ -24,7 +24,7 @@ public sealed class ActivatableUIRequiresAccessSystem : EntitySystem
         {
             args.Cancel();
             if (activatableUI.Comp.PopupMessage != null)
-                _popup.PopupClient(Loc.GetString(activatableUI.Comp.PopupMessage), activatableUI, args.User);
+                _popup.PopupEntity(Loc.GetString(activatableUI.Comp.PopupMessage), activatableUI, args.User);
         }
     }
 }
