@@ -30,13 +30,13 @@ public sealed class GerasSystem : SharedGerasSystem
 
     private void OnMorphIntoGeras(EntityUid uid, GerasComponent component, MorphIntoGeras args)
     {
+        if (HasComp<ZombieComponent>(uid))
+            return; // i hate zomber.
+
         var ent = _polymorphSystem.PolymorphEntity(uid, component.GerasPolymorphId);
 
         if (!ent.HasValue)
             return;
-
-        if (HasComp<ZombieComponent>(uid))
-            return; // i hate zomber.
 
         var originalFormMeta = MetaData(uid);
 
