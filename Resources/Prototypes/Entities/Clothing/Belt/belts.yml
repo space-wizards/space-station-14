@@ -608,9 +608,26 @@
     sprite: Clothing/Belt/securitywebbing.rsi
   - type: Clothing
     sprite: Clothing/Belt/securitywebbing.rsi
+  whitelist:
+      tags:
+        - CigPack
+        - Taser
+        - SecBeltEquip
+        - Radio
+        - Sidearm
+        - MagazinePistol
+        - MagazineMagnum
+        - CombatKnife
+        - BallisticAmmoProvider
+        - CartridgeAmmo
+      components:
+        - FlashOnTrigger
+        - SmokeOnTrigger
+        - Flash
+        - Handcuff
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: ClothingBeltSecurityWebbing
   id: ClothingBeltMercWebbing
   name: mercenarie webbing
   description: Ideal for storing everything from ammo to weapons and combat essentials.
