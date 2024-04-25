@@ -650,17 +650,13 @@
       - BoxLethalshot
       - BoxShotgunFlare
       - MagazinePistol 
-      - MagazinePistolEmptyLethal
-      - MagazinePistolEmptyNonLethal
-      - MagazinePistolSubMachineGunEmptyLethal
-      - MagazinePistolSubMachineGunEmptyNonLethal
+      - MagazinePistolEmpty
+      - MagazinePistolSubMachineGunEmpty
       - MagazinePistolSubMachineGunTopMountedEmpty
       - MagazineRifle
-      - MagazineRifleEmptyLethal
-      - MagazineRifleEmptyNonLethal
+      - MagazineRifleEmpty
       - MagazineLightRifle
-      - MagazineLightRifleEmptyLethal
-      - MagazineLightRifleEmptyNonLethal
+      - MagazineLightRifleEmpty
       - MagazineShotgunEmpty
       - MagazineShotgun
       - MagazineShotgunSlug

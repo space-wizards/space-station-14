@@ -48,8 +48,8 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineRifleEmptyLethal
-  name: "magazine (.20 rifle)"
+  id: MagazineRifleEmpty
+  name: "magazine (.20 rifle any)"
   suffix: empty
   parent: MagazineRifle
   components:
@@ -91,15 +91,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineRifleEmptyNonLethal
-  name: "magazine (.20 rifle)"
-  suffix: empty
-  parent: MagazineRifleRubber
-  components:
-  - type: BallisticAmmoProvider
-    proto: null
 
 - type: entity
   id: MagazineRifleUranium

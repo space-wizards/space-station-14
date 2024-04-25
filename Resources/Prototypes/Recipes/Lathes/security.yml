@@ -239,16 +239,8 @@
     Steel: 500
 
 - type: latheRecipe
-  id: MagazinePistolEmptyLethal
-  result: MagazinePistolEmptyLethal
-  category: Ammo
-  completetime: 5
-  materials:
-    Steel: 25
-
-- type: latheRecipe
-  id: MagazinePistolEmptyNonLethal
-  result: MagazinePistolEmptyNonLethal
+  id: MagazinePistolEmpty
+  result: MagazinePistolEmpty
   category: Ammo
   completetime: 5
   materials:
@@ -290,16 +282,8 @@
     Plastic: 120
 
 - type: latheRecipe
-  id: MagazinePistolSubMachineGunEmptyLethal
-  result: MagazinePistolSubMachineGunEmptyLethal
-  category: Ammo
-  completetime: 5
-  materials:
-    Steel: 30
-
-- type: latheRecipe
-  id: MagazinePistolSubMachineGunEmptyNonLethal
-  result: MagazinePistolSubMachineGunEmptyNonLethal
+  id: MagazinePistolSubMachineGunEmpty
+  result: MagazinePistolSubMachineGunEmpty
   category: Ammo
   completetime: 5
   materials:
@@ -346,16 +330,8 @@
     Steel: 240
 
 - type: latheRecipe
-  id: MagazineRifleEmptyLethal
-  result: MagazineRifleEmptyLethal
-  category: Ammo
-  completetime: 5
-  materials:
-    Steel: 25
-
-- type: latheRecipe
-  id: MagazineRifleEmptyNonLethal
-  result: MagazineRifleEmptyNonLethal
+  id: MagazineRifleEmpty
+  result: MagazineRifleEmpty
   category: Ammo
   completetime: 5
   materials:
@@ -398,16 +374,8 @@
     Plastic: 450
 
 - type: latheRecipe
-  id: MagazineLightRifleEmptyLethal
-  result: MagazineLightRifleEmptyLethal
-  category: Ammo
-  completetime: 5
-  materials:
-    Steel: 25
-
-- type: latheRecipe
-  id: MagazineLightRifleEmptyNonLethal
-  result: MagazineLightRifleEmptyNonLethal
+  id: MagazineLightRifleEmpty
+  result: MagazineLightRifleEmpty
   category: Ammo
   completetime: 5
   materials:

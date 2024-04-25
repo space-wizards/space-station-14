@@ -49,7 +49,7 @@
 
 - type: entity
   id: MagazineMagnumEmpty
-  name: pistol magazine (.45 magnum)
+  name: pistol magazine (.45 magnum any)
   suffix: empty
   parent: BaseMagazineMagnum
   components:
@@ -128,7 +128,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGunEmpty
-  name: "Vector magazine (.45 magnum)"
+  name: "Vector magazine (.45 magnum any)"
   suffix: empty
   parent: BaseMagazineMagnumSubMachineGun
   components:
