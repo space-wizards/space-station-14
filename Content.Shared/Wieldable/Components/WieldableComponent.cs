@@ -25,6 +25,8 @@ public sealed partial class WieldableComponent : Component
 
     [AutoNetworkedField, DataField("wielded")]
     public bool Wielded = false;
+    [DataField]
+    public bool UnwieldOverride;
 
     [DataField("wieldedInhandPrefix")]
     public string? WieldedInhandPrefix = "wielded";
