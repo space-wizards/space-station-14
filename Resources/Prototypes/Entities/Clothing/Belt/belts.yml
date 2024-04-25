@@ -619,13 +619,13 @@
         - MagazinePistol
         - MagazineMagnum
         - CombatKnife
-        - BallisticAmmoProvider
-        - CartridgeAmmo
       components:
         - FlashOnTrigger
         - SmokeOnTrigger
         - Flash
         - Handcuff
+        - BallisticAmmoProvider
+        - CartridgeAmmo
   
 - type: entity
   parent: ClothingBeltSecurityWebbing
