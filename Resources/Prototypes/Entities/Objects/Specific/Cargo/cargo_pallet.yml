@@ -1,7 +1,7 @@
 - type: entity
   id: CargoPallet
   name: cargo pallet
-  description: Designates valid items to sell to CentCom when a shuttle is recalled.
+  description: Common fixture of logistics and cargo. Subtle reminder where crates go during transport to avoid bruised shins.
   parent: BaseStructure
   components:
   - type: InteractionOutline
@@ -58,17 +58,20 @@
 - type: entity
   id: CargoPalletSell
   name: cargo selling pallet
-  description: Designates valid items to sell with a selling computer, or to CentCom when a shuttle is recalled.
+  description: Designates valid items to sell.
   parent: CargoPallet
   components:
   - type: CargoPallet
     palletType: sell
   - type: Sprite
     drawdepth: FloorTiles
-    layers:
-    - sprite: Structures/cargo_pallets.rsi
-      state: cargo_pallet_sell
-
+    sprite: Structures/cargo_pallets.rsi
+  - type: Icon
+    sprite: Structures/cargo_pallets.rsi
+    state: cargo_pallet_sell
+  - type: IconSmooth
+    key: cargo_pallet_sell
+    base: cargo_pallet_sell_
 
 - type: entity
   id: CargoPalletBuy
@@ -80,7 +83,10 @@
     palletType: buy
   - type: Sprite
     drawdepth: FloorTiles
-    layers:
-    - sprite: Structures/cargo_pallets.rsi
-      state: cargo_pallet_buy
-
+    sprite: Structures/cargo_pallets.rsi
+  - type: Icon
+    sprite: Structures/cargo_pallets.rsi
+    state: cargo_pallet_buy
+  - type: IconSmooth
+    key: cargo_pallet_buy
+    base: cargo_pallet_buy_

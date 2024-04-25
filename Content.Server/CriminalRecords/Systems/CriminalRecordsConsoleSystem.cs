@@ -253,6 +253,8 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     {
         var name = Identity.Name(uid, EntityManager);
         var xform = Transform(uid);
+
+        // TODO use the entity's station? Not the station of the map that it happens to currently be on?
         var station = _station.GetStationInMap(xform.MapID);
 
         if (station != null && _stationRecords.GetRecordByName(station.Value, name) is { } id)
