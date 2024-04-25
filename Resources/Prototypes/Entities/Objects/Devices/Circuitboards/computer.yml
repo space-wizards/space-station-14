@@ -1,22 +1,11 @@
 - type: entity
-  parent: BaseItem
+  parent: BaseMachineCircuitboard
   id: BaseComputerCircuitboard
   name: computer board
   abstract: true
   components:
-    - type: ComputerBoard
     - type: Sprite
-      sprite: Objects/Misc/module.rsi
       state: cpuboard
-    - type: Item
-      storedRotation: -90
-    - type: StaticPrice
-      price: 100
-    - type: PhysicalComposition
-      materialComposition:
-        Glass: 400
-      chemicalComposition:
-        Silicon: 20
 
 - type: entity
   parent: BaseComputerCircuitboard
