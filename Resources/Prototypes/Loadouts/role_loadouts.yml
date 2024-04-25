@@ -88,6 +88,7 @@
   groups:
   - JanitorHead
   - JanitorJumpsuit
+  - JanitorGloves
   - CommonBackpack
   - JanitorOuterClothing
   - Trinkets
@@ -206,6 +207,7 @@
   - ResearchDirectorJumpsuit
   - ResearchDirectorBackpack
   - ResearchDirectorOuterClothing
+  - ScientistGloves
   - ResearchDirectorShoes
   - Trinkets
 
@@ -217,6 +219,7 @@
   - ScientistJumpsuit
   - ScientistBackpack
   - ScientistOuterClothing
+  - ScientistGloves
   - ScientistShoes
   - ScientistPDA
   - Trinkets
@@ -236,6 +239,7 @@
   - HeadofSecurityNeck
   - HeadofSecurityJumpsuit
   - SecurityBackpack
+  - SecurityBelt
   - HeadofSecurityOuterClothing
   - SecurityShoes
   - Trinkets
@@ -246,6 +250,7 @@
   - WardenHead
   - WardenJumpsuit
   - SecurityBackpack
+  - SecurityBelt
   - WardenOuterClothing
   - SecurityShoes
   - Trinkets
@@ -259,6 +264,7 @@
   - SecurityOuterClothing
   - SecurityShoes
   - SecurityPDA
+  - SecurityBelt
   - Trinkets
 
 - type: roleLoadout
@@ -284,7 +290,9 @@
   id: JobChiefMedicalOfficer
   groups:
   - ChiefMedicalOfficerHead
+  - MedicalMask
   - ChiefMedicalOfficerJumpsuit
+  - MedicalGloves
   - ChiefMedicalOfficerBackpack
   - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerNeck
@@ -295,7 +303,9 @@
   id: JobMedicalDoctor
   groups:
   - MedicalDoctorHead
+  - MedicalMask
   - MedicalDoctorJumpsuit
+  - MedicalGloves
   - MedicalBackpack
   - MedicalDoctorOuterClothing
   - MedicalShoes
@@ -312,7 +322,9 @@
 - type: roleLoadout
   id: JobChemist
   groups:
+  - MedicalMask
   - ChemistJumpsuit
+  - MedicalGloves
   - ChemistBackpack
   - ChemistOuterClothing
   - MedicalShoes
@@ -322,7 +334,9 @@
   id: JobParamedic
   groups:
   - ParamedicHead
+  - MedicalMask
   - ParamedicJumpsuit
+  - MedicalGloves
   - ParamedicBackpack
   - ParamedicOuterClothing
   - ParamedicShoes

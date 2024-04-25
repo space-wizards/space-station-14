@@ -25,6 +25,8 @@
     damage:
       types:
         Blunt: 0
+  - type: MixableSolution
+    solution: drink
   - type: Spillable
     solution: drink
   - type: FitsInDispenser
@@ -102,6 +104,8 @@
     solutions:
       drink:
         maxVol: 50
+  - type: MixableSolution
+    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 5

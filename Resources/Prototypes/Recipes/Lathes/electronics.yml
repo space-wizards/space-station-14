@@ -910,6 +910,7 @@
   completetime: 6
   materials:
      Steel: 100
+
      Glass: 500
 
 - type: latheRecipe
