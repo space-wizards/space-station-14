@@ -163,7 +163,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             solutionContainer is ContainerSlot solutionSlot &&
             solutionSlot.ContainedEntity is { } containedSolution
         )
+        {
             uid = containedSolution;
+        }
         else
         {
             entity = null;

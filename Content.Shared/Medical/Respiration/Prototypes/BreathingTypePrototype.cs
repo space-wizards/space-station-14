@@ -7,7 +7,7 @@ namespace Content.Shared.Medical.Respiration.Prototypes;
 /// This is a prototype for...
 /// </summary>
 [Prototype]
-public sealed partial class RespirationType : IPrototype
+public sealed partial class BreathingTypePrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]

@@ -11,6 +11,7 @@ using Content.Shared.Gibbing.Components;
 using Content.Shared.Gibbing.Events;
 using Content.Shared.Gibbing.Systems;
 using Content.Shared.Inventory;
+using Content.Shared.Medical.Blood.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -122,7 +123,20 @@ public partial class SharedBodySystem
         // Setup the rest of the body entities.
         MapInitParts(rootPartUid, prototype);
         SetupOrgans((rootPartUid, rootPart), protoRoot.Organs);
+
         body.Comp.BodyInitialized = true;
+
+        //Raise body initialized events on all bodyParts that are initialized
+        var ev = new BodyInitializedEvent(body);
+        RaiseLocalEvent(body, ref ev);
+        foreach (var (partId, part) in GetBodyPartChildren(rootPartUid, rootPart))
+        {
+            RaiseLocalEvent(partId, ref ev);
+            foreach (var (organId, organ) in GetPartOrgans(partId, part))
+            {
+                RaiseLocalEvent(organId, ref ev);
+            }
+        }
         Dirty(body);
     }
 

@@ -6,6 +6,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using System.Numerics;
+using Content.Server.Body.Systems;
 using Content.Shared.Medical.Blood.Systems;
 using Content.Shared.Medical.Blood.Systems;
 
@@ -17,7 +18,8 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SolutionContainerManagerComponent, MapInitEvent>(OnMapInit, before:[typeof(BloodstreamSystem)]);
+        SubscribeLocalEvent<SolutionContainerManagerComponent, MapInitEvent>(OnMapInit,
+            before:[typeof(BloodstreamSystem), typeof(BodySystem)]);
         SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<ContainedSolutionComponent, ComponentShutdown>(OnComponentShutdown);
     }
