@@ -14,6 +14,7 @@
     requiredLegs: 2
   # they like eat it idk lol
   - type: Storage
+    clickInsert: false
     grid:
     - 0,0,1,2
     maxItemSize: Large

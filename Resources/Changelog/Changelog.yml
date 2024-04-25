@@ -1,96 +1,4 @@
 ﻿Entries:
-- author: PoorMansDreams
-  changes:
-  - message: Buyable Janitorial Trolley!
-    type: Add
-  id: 5922
-  time: '2024-02-12T06:35:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25139
-- author: Plykiya
-  changes:
-  - message: Stun batons and stun prods now display their hits remaining.
-    type: Tweak
-  id: 5923
-  time: '2024-02-12T06:36:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25141
-- author: Ilya246
-  changes:
-  - message: Autolathes may now make empty air tanks.
-    type: Add
-  id: 5924
-  time: '2024-02-12T06:37:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25130
-- author: Ubaser
-  changes:
-  - message: Resprited the CE's jetpack.
-    type: Tweak
-  id: 5925
-  time: '2024-02-12T20:44:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25150
-- author: EdenTheLiznerd
-  changes:
-  - message: Deathnettles are no longer able to bypass armor and don't do as much
-      damage
-    type: Tweak
-  id: 5926
-  time: '2024-02-13T01:20:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25068
-- author: Vasilis
-  changes:
-  - message: You can now inspect peoples id's and health though glass if you are within
-      details range.
-    type: Tweak
-  id: 5927
-  time: '2024-02-13T06:41:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25163
-- author: metalgearsloth
-  changes:
-  - message: Fix decal error spam in console due to a missing overlay.
-    type: Fix
-  id: 5928
-  time: '2024-02-13T07:10:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25170
-- author: jamessimo
-  changes:
-  - message: Can now "wink" with the text emote ;) or ;]
-    type: Add
-  - message: Can now "tearfully smile" with the text emote :') and similar variants
-    type: Add
-  - message: Added more ways to "cry" with the emote :'( and similar variants
-    type: Tweak
-  id: 5929
-  time: '2024-02-13T15:43:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25129
-- author: icekot8
-  changes:
-  - message: Medical berets added to MediDrobe
-    type: Add
-  id: 5930
-  time: '2024-02-13T21:37:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25176
-- author: PoorMansDreams
-  changes:
-  - message: Alternate ammo now has the proper appearance when spent.
-    type: Fix
-  id: 5931
-  time: '2024-02-13T21:40:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25167
-- author: Agoichi
-  changes:
-  - message: All hoods have tag "Hides Hair"
-    type: Tweak
-  - message: Plague Doctor's hat and Witch hat (with red hair) have tag "Hides Hair"
-    type: Tweak
-  id: 5932
-  time: '2024-02-13T21:43:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25142
-- author: Blackern5000
-  changes:
-  - message: Advanced topical meds now cost significantly less chemicals
-    type: Tweak
-  id: 5933
-  time: '2024-02-13T22:03:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24948
 - author: Tayrtahn
   changes:
   - message: Drink bottles can now be opened and closed from the verbs menu, and some
@@ -3855,3 +3763,90 @@
   id: 6421
   time: '2024-04-22T12:18:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27222
+- author: Tayrtahn
+  changes:
+  - message: Ghosts can no longer trigger artifacts by examining them.
+    type: Fix
+  id: 6422
+  time: '2024-04-22T22:46:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27249
+- author: Tyzemol
+  changes:
+  - message: Slimes no longer absorb all items used on them
+    type: Fix
+  id: 6423
+  time: '2024-04-23T08:48:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27260
+- author: Rainbeon
+  changes:
+  - message: Suit sensor vitals now function again.
+    type: Fix
+  id: 6424
+  time: '2024-04-23T08:57:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27259
+- author: Ghagliiarghii
+  changes:
+  - message: Security can now find replacements for their trusty Combat Knife in the
+      SecVend, or craft them with the Sec Lathe.
+    type: Tweak
+  id: 6425
+  time: '2024-04-23T11:24:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27224
+- author: Whisper
+  changes:
+  - message: Fire stack limit reduced from 20 to 10. Fire transfers will be less effective,
+      and fires will not last as long.
+    type: Tweak
+  id: 6426
+  time: '2024-04-23T11:30:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27159
+- author: brainfood1183
+  changes:
+  - message: Directional Exit signs for maints!
+    type: Add
+  id: 6427
+  time: '2024-04-23T11:31:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26831
+- author: pigeonpeas
+  changes:
+  - message: Adds the ability to purchase emitters in cargo.
+    type: Add
+  id: 6428
+  time: '2024-04-23T11:34:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27229
+- author: EmoGarbage404
+  changes:
+  - message: Fixed cargo telepads not teleporting in orders from linked consoles.
+    type: Fix
+  id: 6429
+  time: '2024-04-23T12:07:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27255
+- author: Plykiya
+  changes:
+  - message: Do-after bars of other players are now shaded and harder to see in the
+      dark.
+    type: Tweak
+  id: 6430
+  time: '2024-04-24T02:42:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27273
+- author: Blackern5000
+  changes:
+  - message: The cargo telepad is now tier 2 technology rather than tier 3.
+    type: Tweak
+  id: 6431
+  time: '2024-04-24T13:21:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26270
+- author: FungiFellow
+  changes:
+  - message: Truncheon now fits in SecBelt
+    type: Tweak
+  id: 6432
+  time: '2024-04-24T13:43:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27281
+- author: pigeonpeas
+  changes:
+  - message: Adds a trash bag to the advanced cleaning module.
+    type: Add
+  id: 6433
+  time: '2024-04-24T21:27:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27226

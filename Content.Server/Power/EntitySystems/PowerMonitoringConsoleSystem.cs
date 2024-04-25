@@ -17,6 +17,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.GameTicking.Components;
 
 namespace Content.Server.Power.EntitySystems;
 

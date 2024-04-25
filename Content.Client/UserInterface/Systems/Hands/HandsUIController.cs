@@ -256,7 +256,8 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             _player.LocalSession?.AttachedEntity is { } playerEntity &&
             _handsSystem.TryGetHand(playerEntity, handName, out var hand, _playerHandsComponent))
         {
-            if (hand.Location == HandLocation.Left)
+            var foldedLocation = hand.Location.GetUILocation();
+            if (foldedLocation == HandUILocation.Left)
             {
                 _statusHandLeft = handControl;
                 HandsGui.UpdatePanelEntityLeft(hand.HeldEntity);
@@ -268,7 +269,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
                 HandsGui.UpdatePanelEntityRight(hand.HeldEntity);
             }
 
-            HandsGui.SetHighlightHand(hand.Location);
+            HandsGui.SetHighlightHand(foldedLocation);
         }
     }
 
@@ -299,10 +300,12 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         // If we don't have a status for this hand type yet, set it.
         // This means we have status filled by default in most scenarios,
         // otherwise the user'd need to switch hands to "activate" the hands the first time.
-        if (location == HandLocation.Left)
+        if (location.GetUILocation() == HandUILocation.Left)
             _statusHandLeft ??= button;
         else
             _statusHandRight ??= button;
+
+        UpdateVisibleStatusPanels();
 
         return button;
     }
@@ -369,7 +372,28 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
         _handLookup.Remove(handName);
         handButton.Dispose();
+        UpdateVisibleStatusPanels();
         return true;
+    }
+
+    private void UpdateVisibleStatusPanels()
+    {
+        var leftVisible = false;
+        var rightVisible = false;
+
+        foreach (var hand in _handLookup.Values)
+        {
+            if (hand.HandLocation.GetUILocation() == HandUILocation.Left)
+            {
+                leftVisible = true;
+            }
+            else
+            {
+                rightVisible = true;
+            }
+        }
+
+        HandsGui?.UpdateStatusVisibility(leftVisible, rightVisible);
     }
 
     public string RegisterHandContainer(HandsContainer handContainer)
