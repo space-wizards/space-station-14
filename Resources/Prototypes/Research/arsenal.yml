@@ -64,20 +64,8 @@
   recipeUnlocks:
   - ShellShotgunBeanbag
   - ShellTranquilizer 
-  - CartridgePistolRubber
-  - CartridgeMagnumRubber
-  - CartridgeLightRifleRubber
-  - CartridgeRifleRubber
-  - MagazineRifleRubber
-  - MagazinePistolRubber
-  - MagazineLightRifleRubber
-  - SpeedLoaderMagnumRubber
-  - MagazineShotgunBeanbag
-  - MagazineBoxPistolRubber
-  - MagazineBoxMagnumRubber
-  - MagazineBoxLightRifleRubber
-  - MagazineBoxRifleRubber
   - BoxBeanbag
+  - WeaponDisabler
 
 - type: technology
   id: UraniumMunitions

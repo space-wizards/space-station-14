@@ -177,15 +177,7 @@
        - MagazineBoxLightRifle
        - GrenadeBlast
     emagDynamicRecipes:
-      - CartridgePistolRubber
-      - CartridgeMagnumRubber
       - ShellShotgunBeanbag
-      - CartridgeRifleRubber
-      - CartridgeLightRifleRubber
-      - MagazineBoxPistolRubber
-      - MagazineBoxMagnumRubber
-      - MagazineBoxRifleRubber
-      - MagazineBoxLightRifleRubber
       - ShellShotgunIncendiary
       - CartridgePistolIncendiary
       - CartridgeMagnumIncendiary
@@ -699,10 +691,6 @@
       - SpeedLoaderMagnumUranium
       - MagazinePistolUranium
       - MagazineRifleUranium
-      - MagazineLightRifleRubber
-      - SpeedLoaderMagnumRubber
-      - MagazinePistolRubber
-      - MagazineRifleRubber
       - MagazineShotgunBeanbag
       - ShellTranquilizer
       - ClothingEyesGlassesSecurity
@@ -719,10 +707,6 @@
       - MagazineBoxPistolUranium
       - MagazineBoxRifleUranium
       - BoxShotgunUranium
-      - MagazineBoxLightRifleRubber
-      - MagazineBoxMagnumRubber
-      - MagazineBoxPistolRubber
-      - MagazineBoxRifleRubber
       - BoxBeanbag
       - MagazineGrenadeEmpty
       - GrenadeEMP
@@ -733,8 +717,8 @@
       - TimerTrigger
       - Truncheon
       - VoiceTrigger
-      - WeaponDisablerPractice
       - WeaponAdvancedLaser
+      - WeaponDisabler
       - WeaponDisablerSMG
       - WeaponLaserCannon
       - WeaponLaserCarbine
