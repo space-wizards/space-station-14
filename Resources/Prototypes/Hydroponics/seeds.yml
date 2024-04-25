@@ -421,7 +421,6 @@
   nutrientConsumption: 0.40
   idealLight: 8
   idealHeat: 298
-  juicy: true
   splatPrototype: PuddleSplatter
   chemicals:
     Nutriment:
@@ -456,7 +455,6 @@
   nutrientConsumption: 0.70
   idealLight: 8
   idealHeat: 298
-  juicy: true
   splatPrototype: PuddleSplatter
   chemicals:
     Nutriment:
@@ -481,8 +479,10 @@
   packetPrototype: BloodTomatoSeeds
   productPrototypes:
     - FoodBloodTomato
+  mutationPrototypes:
+    - killerTomato
   harvestRepeat: Repeat
-  lifespan: 25
+  lifespan: 60
   maturation: 8
   production: 6
   yield: 2
@@ -491,7 +491,6 @@
   nutrientConsumption: 0.70
   idealLight: 8
   idealHeat: 298
-  juicy: true
   splatPrototype: PuddleSplatter
   chemicals:
     Blood:
@@ -499,6 +498,37 @@
       Max: 10
       PotencyDivisor: 10
     Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: killerTomato
+  name: seeds-killertomato-name
+  noun: seeds-noun-seeds
+  displayName: seeds-killertomato-display-name
+  plantRsi: Objects/Specific/Hydroponics/tomatokiller.rsi
+  packetPrototype: KillerTomatoSeeds
+  productPrototypes:
+    - MobTomatoKiller
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 15
+  production: 6
+  yield: 2
+  potency: 10
+  waterConsumption: 0.60
+  nutrientConsumption: 0.70
+  idealLight: 8
+  idealHeat: 298
+  growthStages: 2
+  splatPrototype: PuddleSplatter
+  chemicals:
+    Blood:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    JuiceTomato:
       Min: 1
       Max: 4
       PotencyDivisor: 25
@@ -868,7 +898,7 @@
   plantRsi: Objects/Specific/Hydroponics/chili.rsi
   packetPrototype: ChiliSeeds
   productPrototypes:
-    - FoodChili
+    - FoodChiliPepper
   mutationPrototypes:
     - chilly
   harvestRepeat: Repeat
@@ -901,7 +931,7 @@
   plantRsi: Objects/Specific/Hydroponics/chilly.rsi
   packetPrototype: ChillySeeds
   productPrototypes:
-    - FoodChilly
+    - FoodChillyPepper
   harvestRepeat: Repeat
   lifespan: 25
   maturation: 6

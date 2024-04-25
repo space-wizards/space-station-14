@@ -39,7 +39,7 @@ public sealed class PrayerSystem : EntitySystem
             return;
 
         // this is to prevent ghosts from using it
-        if (!args.CanAccess)
+        if (!args.CanInteract)
             return;
 
         var prayerVerb = new ActivationVerb

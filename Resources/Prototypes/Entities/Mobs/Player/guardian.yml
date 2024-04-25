@@ -66,7 +66,7 @@
           mask:
             - FlyingMobMask
           layer:
-            - FlyingMobLayer
+            - Opaque
     - type: Damageable
       damageContainer: Biological
     - type: MobState
@@ -86,6 +86,8 @@
       animation: WeaponArcFist
       attackRate: 1.8
       autoAttack: true
+      soundHit:
+        collection: Punch
       damage:
         types:
           Blunt: 20
@@ -227,6 +229,8 @@
       angle: 30
       animation: WeaponArcFist
       attackRate: 1.8
+      soundHit:
+        collection: BikeHorn
       damage:
         types:
           Blunt: 5
