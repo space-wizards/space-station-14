@@ -1,4 +1,5 @@
-﻿using Content.Shared.Clothing.Components;
+﻿using Content.Shared.Clothing;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Inventory.Events;
 
@@ -10,13 +11,13 @@ public sealed class WaddleClothingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<WaddleWhenWornComponent, GotEquippedEvent>(OnGotEquipped);
-        SubscribeLocalEvent<WaddleWhenWornComponent, GotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<WaddleWhenWornComponent, ClothingGotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<WaddleWhenWornComponent, ClothingGotUnequippedEvent>(OnGotUnequipped);
     }
 
-    private void OnGotEquipped(EntityUid entity, WaddleWhenWornComponent comp, GotEquippedEvent args)
+    private void OnGotEquipped(EntityUid entity, WaddleWhenWornComponent comp, ClothingGotEquippedEvent args)
     {
-        var waddleAnimComp = EnsureComp<WaddleAnimationComponent>(args.Equipee);
+        var waddleAnimComp = EnsureComp<WaddleAnimationComponent>(args.Wearer);
 
         waddleAnimComp.AnimationLength = comp.AnimationLength;
         waddleAnimComp.HopIntensity = comp.HopIntensity;
@@ -24,8 +25,8 @@ public sealed class WaddleClothingSystem : EntitySystem
         waddleAnimComp.TumbleIntensity = comp.TumbleIntensity;
     }
 
-    private void OnGotUnequipped(EntityUid entity, WaddleWhenWornComponent comp, GotUnequippedEvent args)
+    private void OnGotUnequipped(EntityUid entity, WaddleWhenWornComponent comp, ClothingGotUnequippedEvent args)
     {
-        RemComp<WaddleAnimationComponent>(args.Equipee);
+        RemComp<WaddleAnimationComponent>(args.Wearer);
     }
 }
