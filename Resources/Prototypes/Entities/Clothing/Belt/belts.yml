@@ -611,7 +611,6 @@
   - type: Clothing
     sprite: Clothing/Belt/securitywebbing.rsi
   
-  
 - type: entity
   parent: ClothingBeltStorageBase
   id: ClothingBeltMercWebbing
