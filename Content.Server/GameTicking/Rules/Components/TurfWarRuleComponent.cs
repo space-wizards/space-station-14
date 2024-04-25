@@ -32,45 +32,8 @@ public sealed partial class TurfWarRuleComponent : Component
     public ProtoId<AntagPrototype> Antag = "TurfTagger";
 
     /// <summary>
-    /// Greeting sound for turf taggers.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier? GreetingSound;
-
-    /// <summary>
-    /// The gear turf taggers are given on spawn.
-    /// </summary>
-    [DataField]
-    public List<EntProtoId> StartingGear = new()
-    {
-        "SprayPainter",
-        "ClothingHeadBandSkull"
-    };
-
-    /// <summary>
     /// The objective to give each turf tagger.
     /// </summary>
     [DataField]
     public EntProtoId Objective = "TurfTaggingObjective";
-
-    /// <summary>
-    /// When starting the gamemode, the number of departments is the player count divided by this number.
-    /// If it is below <c>Min</c> then the gamemode is cancelled.
-    /// If it is above <c>Max</c> then it is clamped.
-    /// </summary>
-    [DataField(required: true)]
-    public int PlayersPerTagger;
-
-    /// <summary>
-    /// Minimum players to start a turf war with.
-    /// If there were not enough players then the gamemode is cancelled.
-    /// </summary>
-    [DataField(required: true)]
-    public int Min;
-
-    /// <summary>
-    /// Maximum players to start a turf war with.
-    /// </summary>
-    [DataField(required: true)]
-    public int Max;
 }

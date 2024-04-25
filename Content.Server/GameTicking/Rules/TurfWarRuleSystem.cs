@@ -38,121 +38,27 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
-
+        SubscribeLocalEvent<TurfWarRuleComponent, AfterAntagEntitySelectedEvent>(OnSelected);
         SubscribeLocalEvent<TurfWarRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
         SubscribeLocalEvent<TurfWarRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
 
         SubscribeLocalEvent<TurfTaggerRoleComponent, GetBriefingEvent>(OnGetBriefing);
     }
 
-    private void OnPlayersSpawned(RulePlayerJobsAssignedEvent args)
+    private void OnSelected(Entity<TurfWarRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
     {
-        var query = EntityQueryEnumerator<TurfWarRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var rule))
-        {
-            if (!GameTicker.IsGameRuleAdded(uid, rule))
-                continue;
+        ent.Comp.Station ??= _station.GetOwningStation(args.Session.AttachedEntity);
 
-            PickTaggers(uid, comp, rule, ref args);
-        }
-    }
-
-    private void PickTaggers(EntityUid uid, TurfWarRuleComponent comp, GameRuleComponent rule, ref RulePlayerJobsAssignedEvent args)
-    {
-        var target = Math.Min(args.Players.Length / comp.PlayersPerTagger, comp.Max);
-        // if target is below minimum then can't start
-        if (target < comp.Min)
-        {
-            Log.Info($"Not enough players to start a turf war! Only {target} taggers would be selected, minimum is {comp.Min}");
-            GameTicker.EndGameRule(uid, rule);
-            return;
-        }
-
-        // group all players by their department
-        var taggerPool = _antagSelection.GetEligiblePlayers(args.Players, comp.Antag, includeAllJobs: true);
-        var departments = new Dictionary<string, List<EntityUid>>();
-        foreach (var mob in taggerPool)
-        {
-            if (_mind.GetMind(mob) is not {} mind)
-                continue;
-
-            // don't pick antagonists of christmas present
-            if (_role.MindIsAntagonist(mind))
-                continue;
-
-            if (!_job.MindTryGetJob(mind, out _, out var job)
-                || !_job.TryGetPrimaryDepartment(job.ID, out var department))
-                continue;
-
-            var station = _station.GetOwningStation(mob);
-            if (comp.Station == null)
-            {
-                // get the station from the first player
-                comp.Station = station;
-            }
-            else if (station != comp.Station)
-            {
-                // only use players from the same station, if that ever happens
-                continue;
-            }
-
-            if (departments.TryGetValue(department.ID, out var list))
-                list.Add(mind);
-            else
-                departments[department.ID] = new() { mind };
-        }
-
-        // if number of departments is below the minimum then can't start
-        if (departments.Count < comp.Min)
-        {
-            Log.Info($"Not unique departments to start a turf war! Only {departments.Count} were found, minimum is {comp.Min}");
-            GameTicker.EndGameRule(uid, rule);
-            return;
-        }
-
-        // pick a random player from each department until theres enough people
-        target = Math.Min(target, departments.Count);
-        for (int i = 0; i < target; i++)
-        {
-            var department = _random.Pick(departments.Keys);
-            var mind = _random.Pick(departments[department]);
-            departments.Remove(department);
-
-            comp.Minds[department] = mind;
-        }
-
-        var traitorRules = EntityQuery<TraitorRuleComponent>().ToList();
-
-        // make everyone selected a turf tagger!
-        foreach (var (department, mind) in comp.Minds)
-        {
-            MakeTagger((uid, comp), department, mind);
-        }
-
-        Log.Info($"Turf war started on station {comp.Station}");
-    }
-
-    /// <summary>
-    /// Make a mind a turf tagger.
-    /// Not added to a rule's <c>Minds</c> so you have to do that yourself.
-    /// </summary>
-    public void MakeTagger(Entity<TurfWarRuleComponent> rule, string department, EntityUid mindId, MindComponent? mind = null)
-    {
-        if (!Resolve(mindId, ref mind) || mind.Session == null)
+        if (!_mind.TryGetMind(args.Session, out var mindId, out var mind)
+            || !_job.MindTryGetJob(mindId, out _, out var job)
+            || !_job.TryGetPrimaryDepartment(job.ID, out var department))
             return;
 
-        if (mind.OwnedEntity is not {} mob)
-            return;
+        _role.MindAddRole(mindId, new TurfTaggerRoleComponent(ent, department.ID), mind);
 
-        _role.MindAddRole(mindId, new TurfTaggerRoleComponent(rule, department), mind);
+        _mind.TryAddObjective(mindId, mind, ent.Comp.Objective);
 
-        _mind.TryAddObjective(mindId, mind, rule.Comp.Objective);
-
-        _inventory.SpawnItemsOnEntity(mob, rule.Comp.StartingGear);
-
-        _role.MindPlaySound(mindId, rule.Comp.GreetingSound, mind);
-        _chatMan.DispatchServerMessage(mind.Session, Loc.GetString("turf-tagger-role-greeting"));
+        ent.Comp.Minds[department.ID] = mindId;
     }
 
     /// <summary>

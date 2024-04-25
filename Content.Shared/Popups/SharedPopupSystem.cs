@@ -83,10 +83,22 @@ namespace Content.Shared.Popups
         public abstract void PopupEntity(string? message, EntityUid uid, Filter filter, bool recordReplay, PopupType type = PopupType.Small);
 
         /// <summary>
+        /// Variant of <see cref="PopupCursor(string, EntityUid, PopupType)"/> that only runs on the client, outside of prediction.
+        /// Useful for shared code that is always ran by both sides to avoid duplicate popups.
+        /// </summary>
+        public abstract void PopupClient(string? message, EntityUid? recipient, PopupType type = PopupType.Small);
+
+        /// <summary>
         /// Variant of <see cref="PopupEntity(string, EntityUid, EntityUid, PopupType)"/> that only runs on the client, outside of prediction.
         /// Useful for shared code that is always ran by both sides to avoid duplicate popups.
         /// </summary>
         public abstract void PopupClient(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small);
+
+        /// <summary>
+        /// Variant of <see cref="PopupCoordinates(string, EntityCoordinates, PopupType)"/> that only runs on the client, outside of prediction.
+        /// Useful for shared code that is always ran by both sides to avoid duplicate popups.
+        /// </summary>
+        public abstract void PopupClient(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small);
 
         /// <summary>
         /// Variant of <see cref="PopupEntity(string, EntityUid, EntityUid, PopupType)"/> for use with prediction. The local client will show
