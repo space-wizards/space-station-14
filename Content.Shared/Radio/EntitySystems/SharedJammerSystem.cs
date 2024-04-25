@@ -42,7 +42,7 @@ public abstract class SharedJammerSystem : EntitySystem
                         jammerComp.Range = GetCurrentRange(entity.Comp);
                         Dirty(entity.Owner, jammerComp);
                     }
-                    _popup.PopupEntity(Loc.GetString(setting.Message), user, user);
+                    _popup.PopupPredicted(Loc.GetString(setting.Message), user, user);
                 },
                 Text = Loc.GetString(setting.Name),
             };
