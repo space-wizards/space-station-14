@@ -51,19 +51,22 @@ public abstract class SharedJammerSystem : EntitySystem
         }
     }
 
-    public static float GetCurrentWattage(RadioJammerComponent jammer)
+    public float GetCurrentWattage(RadioJammerComponent jammer)
     {
         return jammer.Settings[jammer.SelectedPowerLevel].Wattage;
     }
-    public static float GetCurrentRange(RadioJammerComponent jammer)
+    
+    public float GetCurrentRange(RadioJammerComponent jammer)
     {
         return jammer.Settings[jammer.SelectedPowerLevel].Range;
     }
+    
     public void ChangeLEDState(bool isLEDOn, EntityUid uid,
         AppearanceComponent? appearance = null)
     {
         _appearance.SetData(uid, RadioJammerVisuals.LEDOn, isLEDOn, appearance);
     }
+    
     public void ChangeChargeLevel(RadioJammerChargeLevel chargeLevel, EntityUid uid,
         AppearanceComponent? appearance = null)
     {
