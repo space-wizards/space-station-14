@@ -1,4 +1,3 @@
-/* Commented out to be used as future reference for the role; won't work if uncommented.
 using Content.Server.Terminator.Systems;
 
 namespace Content.Server.Terminator.Components;
@@ -15,4 +14,3 @@ public sealed partial class TerminatorTargetComponent : Component
     [DataField("target")]
     public EntityUid? Target;
 }
-*/

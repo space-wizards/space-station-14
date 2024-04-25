@@ -1,7 +1,5 @@
-/* Was originally used with the Exterminator code. Can be uncommented and utilized if a new use is found.
-using Content.Shared.Popups;
 
-﻿namespace Content.Server.Destructible.Thresholds.Behaviors;
+namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 /// <summary>
 /// Shows a popup for everyone.
@@ -29,4 +27,3 @@ public sealed partial class PopupBehavior : IThresholdBehavior
         popup.PopupCoordinates(Loc.GetString(Popup), coords, PopupType);
     }
 }
-*/

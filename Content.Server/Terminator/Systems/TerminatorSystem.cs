@@ -1,4 +1,3 @@
-/* Commented out to be used as future reference for the role; won't work if uncommented.
 using Content.Server.Body.Components;
 using Content.Server.GenericAntag;
 using Content.Server.Ghost.Roles.Events;
@@ -65,4 +64,3 @@ public sealed class TerminatorSystem : EntitySystem
         return uid;
     }
 }
-*/
