@@ -1,55 +1,45 @@
+using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Shared.FixedPoint;
 using Content.Shared.Tools.Components;
-using Robust.Client.UserInterface;
+using Content.Shared.Tools.Systems;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Tools.UI;
 
-public sealed class WelderStatusControl : Control
+public sealed class WelderStatusControl : PollingItemStatusControl<WelderStatusControl.Data>
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-    private readonly ToolSystem _tool;
-
     private readonly Entity<WelderComponent> _parent;
+    private readonly IEntityManager _entityManager;
+    private readonly SharedToolSystem _toolSystem;
     private readonly RichTextLabel _label;
 
-    public WelderStatusControl(Entity<WelderComponent> parent)
+    public WelderStatusControl(Entity<WelderComponent> parent, IEntityManager entityManager, SharedToolSystem toolSystem)
     {
-        IoCManager.InjectDependencies(this);
-
         _parent = parent;
-        var entMan = IoCManager.Resolve<IEntityManager>();
-        _tool = entMan.System<ToolSystem>();
-
+        _entityManager = entityManager;
+        _toolSystem = toolSystem;
         _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
         AddChild(_label);
 
         UpdateDraw();
     }
 
-    /// <inheritdoc />
-    protected override void FrameUpdate(FrameEventArgs args)
+    protected override Data PollData()
     {
-        base.FrameUpdate(args);
-
-        Update();
+        var (fuel, capacity) = _toolSystem.GetWelderFuelAndCapacity(_parent, _parent.Comp);
+        return new Data(fuel, capacity, _parent.Comp.Enabled);
     }
 
-    public void Update()
+    protected override void Update(in Data data)
     {
-        if (!_gameTiming.IsFirstTimePredicted)
-            return;
-
-        var (fuel, fuelCap) = _tool.GetWelderFuelAndCapacity(_parent, _parent);
-        var lit = _parent.Comp.Enabled;
-
         _label.SetMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
-            ("colorName", fuel < fuelCap / 4f ? "darkorange" : "orange"),
-            ("fuelLeft", Math.Round(fuel.Float(), 1)),
-            ("fuelCapacity", fuelCap),
-            ("status", Loc.GetString(lit ? "welder-component-on-examine-welder-lit-message" : "welder-component-on-examine-welder-not-lit-message"))));
+            ("colorName", data.Fuel < data.FuelCapacity / 4f ? "darkorange" : "orange"),
+            ("fuelLeft", data.Fuel),
+            ("fuelCapacity", data.FuelCapacity),
+            ("status", Loc.GetString(data.Lit ? "welder-component-on-examine-welder-lit-message" : "welder-component-on-examine-welder-not-lit-message"))));
     }
+
+    public record struct Data(FixedPoint2 Fuel, FixedPoint2 FuelCapacity, bool Lit);
 }

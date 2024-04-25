@@ -256,6 +256,20 @@ namespace Content.Server.Preferences.Managers
             return prefs;
         }
 
+        /// <summary>
+        /// Retrieves preferences for the given username from storage or returns null.
+        /// Creates and saves default preferences if they are not found, then returns them.
+        /// </summary>
+        public PlayerPreferences? GetPreferencesOrNull(NetUserId? userId)
+        {
+            if (userId == null)
+                return null;
+
+            if (_cachedPlayerPrefs.TryGetValue(userId.Value, out var pref))
+                return pref.Prefs;
+            return null;
+        }
+
         private async Task<PlayerPreferences> GetOrCreatePreferencesAsync(NetUserId userId)
         {
             var prefs = await _db.GetPlayerPreferencesAsync(userId);
