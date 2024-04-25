@@ -15,8 +15,8 @@
 
 - type: listing
   id: SpellbookRodForm
-  name: rod
-  description: CLANG
+  name: spellbook-polymorph-rod-name
+  description: spellbook-polymorph-rod-desc
   productAction: ActionPolymorphWizardRod
   cost:
     WizCoin: 3
@@ -56,6 +56,19 @@
   name: spellbook-blink-name
   description: spellbook-blink-desc
   productAction: ActionBlink
+  cost:
+    WizCoin: 1
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookCharge
+  name: spellbook-charge-name
+  description: spellbook-charge-desc
+  productAction: ActionChargeSpell
   cost:
     WizCoin: 1
   categories:

@@ -5,6 +5,8 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Lock;
@@ -15,6 +17,8 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Speech.Muting;
 using Content.Shared.Storage;
+using Content.Shared.Tag;
+using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -47,6 +51,8 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly LockSystem _lock = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     public override void Initialize()
     {
@@ -60,6 +66,7 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<ChangeComponentsSpellEvent>(OnChangeComponentsSpell);
         SubscribeLocalEvent<SmiteSpellEvent>(OnSmiteSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
+        SubscribeLocalEvent<ChargeSpellEvent>(OnChargeSpell);
 
         // Spell wishlist
         //  A wishlish of spells that I'd like to implement or planning on implementing in a future PR
@@ -70,8 +77,6 @@ public abstract class SharedMagicSystem : EntitySystem
         //    1 - Event that triggers from the action that starts the doafter
         //    2 - The doafter event itself, which passes the event with it
         //    3 - The event to trigger once the do-after finishes
-
-        // TODO: Eventually make a polymorph spell that first allows you to make
 
         // TODO: Inanimate objects to life ECS
         //  AI sentience
@@ -107,16 +112,18 @@ public abstract class SharedMagicSystem : EntitySystem
         //  List of wizard events to add into the event pool that frequently activate
         //  floor is lava
         //  change places
+        //  ECS that when triggered, will periodically trigger a random GameRule
+        //  Would need a controller/controller entity?
 
         // TODO: Summon Guns
         //  Summon a random gun at peoples feet
         //    Get every alive player (not in cryo, not a simplemob)
-        //  Rare chance of giving gun collector status to people
+        //  TODO: After Antag Rework - Rare chance of giving gun collector status to people
 
         // TODO: Summon Magic
         //  Summon a random magic wand at peoples feet
         //    Get every alive player (not in cryo, not a simplemob)
-        //  Rare chance of giving magic collector status to people
+        //  TODO: After Antag Rework - Rare chance of giving magic collector status to people
 
         // TODO: Bottle of Blood
         //  Summons Slaughter Demon
@@ -453,6 +460,30 @@ public abstract class SharedMagicSystem : EntitySystem
             if (TryComp<LockComponent>(target, out var lockComp) && lockComp.Locked)
                 _lock.Unlock(target, args.Performer, lockComp);
         }
+    }
+
+    // TODO: Future support to charge other items
+    private void OnChargeSpell(ChargeSpellEvent ev)
+    {
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer) || !TryComp<HandsComponent>(ev.Performer, out var handsComp))
+            return;
+
+        EntityUid? wand = null;
+        foreach (var item in _hands.EnumerateHeld(ev.Performer, handsComp))
+        {
+            if (!_tag.HasTag(item, ev.WandTag))
+                continue;
+
+            wand = item;
+        }
+
+        ev.Handled = true;
+        Speak(ev);
+
+        if (wand == null || !TryComp<BasicEntityAmmoProviderComponent>(wand, out var basicAmmoComp) || basicAmmoComp.Count == null)
+            return;
+
+        _gunSystem.UpdateBasicEntityAmmoCount(wand.Value, basicAmmoComp.Count.Value + ev.Charge, basicAmmoComp);
     }
 
     #endregion

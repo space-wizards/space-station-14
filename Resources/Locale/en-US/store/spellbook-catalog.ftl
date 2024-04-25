@@ -11,6 +11,12 @@ spellbook-force-wall-desc = Make three walls of pure force that you can pass thr
 spellbook-polymoprh-spider-name = Spider Polymoprh
 spellbook-polymorph-spider-desc = Transforms you into a spider, man!
 
+spellbook-polymorph-rod-name = Rod Polymorph
+spellbook-polymorph-rod-desc = Change into an Immovable Rod with limited movement.
+
+spellbook-charge-name = Charge
+spellbook-charge-desc = Adds a charge back to your wand!
+
 # Equipment
 
 spellbook-wand-polymorph-door-name = Wand of Entrance
