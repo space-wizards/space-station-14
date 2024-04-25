@@ -47,7 +47,7 @@ public sealed class TurfWarRuleSystem : GameRuleSystem<TurfWarRuleComponent>
 
     private void OnSelected(Entity<TurfWarRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
     {
-        if (args.Session.AttachedEntity is {} mob)
+        if (args.Session?.AttachedEntity is {} mob)
             ent.Comp.Station ??= _station.GetOwningStation(mob);
 
         if (!_mind.TryGetMind(args.Session, out var mindId, out var mind)
