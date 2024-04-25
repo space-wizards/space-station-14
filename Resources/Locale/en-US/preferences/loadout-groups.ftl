@@ -1,5 +1,6 @@
 # Miscellaneous
 loadout-group-trinkets = Trinkets
+loadout-group-glasses = Glasses
 
 # Command
 loadout-group-captain-head = Captain head
