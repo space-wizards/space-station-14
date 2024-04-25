@@ -651,7 +651,9 @@
       - BoxShotgunFlare
       - MagazinePistol 
       - MagazinePistolEmpty
+      - MagazinePistolSubMachineGun
       - MagazinePistolSubMachineGunEmpty
+      - MagazinePistolSubMachineGunTopMounted
       - MagazinePistolSubMachineGunTopMountedEmpty
       - MagazineRifle
       - MagazineRifleEmpty
