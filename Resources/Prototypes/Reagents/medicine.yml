@@ -234,7 +234,7 @@
           types:
             Asphyxiation: 1
             Cold: 2
-        groups:
+          groups:
             Brute: 0.5
       - !type:Jitter
         conditions:
@@ -1041,10 +1041,14 @@
   flavor: holy
   color: "#91C3F7"
   metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
     Medicine:
       effects:
       - !type:HealthChange
-        condition:
+        conditions:
         - !type:TotalDamage
           max: 50
         damage:
@@ -1054,6 +1058,16 @@
             Heat: -0.2
             Shock: -0.2
             Cold: -0.2
+  reactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 1
+  tileReactions:
+  - !type:ExtinguishTileReaction { }
 
 - type: reagent
   id: Pyrazine
@@ -1185,3 +1199,67 @@
             Heat: -3.0
             Shock: -3.0
             Caustic: -1.0
+
+- type: reagent
+  id : Mannitol # currently this is just a way to create psicodine
+  name: reagent-name-mannitol
+  group: Medicine
+  desc: reagent-desc-mannitol
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: sweet
+  color: "#A0A0A0"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
+        type: Local
+        visualType: Medium
+        messages: [ "mannitol-effect-enlightened" ]
+        probability: 0.2
+
+- type: reagent
+  id: Psicodine
+  name: reagent-name-psicodine
+  group: Medicine
+  desc: reagent-desc-psicodine
+  physicalDesc: reagent-physical-desc-shiny
+  flavor: bitter
+  color: "#07E79E"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Poison: 2
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 8
+        refresh: false
+      - !type:GenericStatusEffect
+        key: Jitter
+        time: 2.0
+        type: Remove
+      - !type:GenericStatusEffect
+        key: Drunk
+        time: 6.0
+        type: Remove
+      - !type:PopupMessage # we dont have sanity/mood so this will have to do
+        type: Local
+        visualType: Medium
+        messages:
+        - "psicodine-effect-fearless"
+        - "psicodine-effect-anxieties-wash-away"
+        - "psicodine-effect-at-peace"
+        probability: 0.2

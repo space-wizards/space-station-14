@@ -357,16 +357,17 @@ public sealed class MindSystem : SharedMindSystem
         mind.UserId = userId;
         mind.OriginalOwnerUserId ??= userId;
 
+        // The UserId may not have a current session, but user data may still exist for disconnected players.
+        // So we cannot combine this with the TryGetSessionById() check below.
+        if (_players.GetPlayerData(userId.Value).ContentData() is { } data)
+            data.Mind = mindId;
+
         if (_players.TryGetSessionById(userId.Value, out var ret))
         {
             mind.Session = ret;
             _pvsOverride.AddSessionOverride(netMind, ret);
             _players.SetAttachedEntity(ret, mind.CurrentEntity);
         }
-
-        // session may be null, but user data may still exist for disconnected players.
-        if (_players.GetPlayerData(userId.Value).ContentData() is { } data)
-            data.Mind = mindId;
     }
 
     public void ControlMob(EntityUid user, EntityUid target)

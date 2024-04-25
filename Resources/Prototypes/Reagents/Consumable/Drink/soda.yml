@@ -9,6 +9,23 @@
   recognizable: true
 
 - type: reagent
+  id: RoyRogers
+  name: reagent-name-roy-rogers
+  parent: BaseSoda
+  desc: reagent-desc-roy-rogers
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: cola
+  color: "#262019"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/royrogers.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
+
+- type: reagent
   id: ChangelingSting
   name: reagent-name-changeling-sting
   parent: BaseSoda
@@ -42,6 +59,7 @@
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
+  fizziness: 0.4
 
 - type: reagent
   id: GrapeSoda
@@ -67,6 +85,7 @@
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
+  fizziness: 0
 
 - type: reagent
   id: LemonLime
@@ -85,6 +104,7 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: pwrgamesoda
   color: "#9385bf"
+  fizziness: 0.9 # gamers crave the fizz
 
 - type: reagent
   id: RootBeer
@@ -115,6 +135,36 @@
   metamorphicMaxFillLevels: 7
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  fizziness: 0.4
+
+- type: reagent
+  id: SolDry
+  name: reagent-name-sol-dry
+  parent: BaseSoda
+  desc: reagent-desc-sol-dry
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: gingersoda
+  color: "#ccb87e"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/sol_dry_glass.rsi
+    state: icon
+
+- type: reagent
+  id: ShirleyTemple
+  name: reagent-name-shirley-temple
+  parent: BaseSoda
+  desc: reagent-desc-shirley-temple
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: sweet
+  color: "#af2221"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/shirleytemple.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
 
 - type: reagent
   id: SpaceMountainWind

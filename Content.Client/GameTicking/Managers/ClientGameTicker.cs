@@ -1,3 +1,4 @@
+using Content.Client.Administration.Managers;
 using Content.Client.Gameplay;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
@@ -14,7 +15,9 @@ namespace Content.Client.GameTicking.Managers
     public sealed class ClientGameTicker : SharedGameTicker
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IClientAdminManager _admin = default!;
+        [Dependency] private readonly IClyde _clyde = default!;
+        [Dependency] private readonly SharedMapSystem _map = default!;
 
         [ViewVariables] private bool _initialized;
         private Dictionary<NetEntity, Dictionary<string, uint?>>  _jobsAvailable = new();
@@ -44,8 +47,6 @@ namespace Content.Client.GameTicking.Managers
 
         public override void Initialize()
         {
-            DebugTools.Assert(!_initialized);
-
             SubscribeNetworkEvent<TickerJoinLobbyEvent>(JoinLobby);
             SubscribeNetworkEvent<TickerJoinGameEvent>(JoinGame);
             SubscribeNetworkEvent<TickerConnectionStatusEvent>(ConnectionStatus);
@@ -53,14 +54,33 @@ namespace Content.Client.GameTicking.Managers
             SubscribeNetworkEvent<TickerLobbyInfoEvent>(LobbyInfo);
             SubscribeNetworkEvent<TickerLobbyCountdownEvent>(LobbyCountdown);
             SubscribeNetworkEvent<RoundEndMessageEvent>(RoundEnd);
-            SubscribeNetworkEvent<RequestWindowAttentionEvent>(msg =>
-            {
-                IoCManager.Resolve<IClyde>().RequestWindowAttention();
-            });
+            SubscribeNetworkEvent<RequestWindowAttentionEvent>(OnAttentionRequest);
             SubscribeNetworkEvent<TickerLateJoinStatusEvent>(LateJoinStatus);
             SubscribeNetworkEvent<TickerJobsAvailableEvent>(UpdateJobsAvailable);
 
-            _initialized = true;
+            _admin.AdminStatusUpdated += OnAdminUpdated;
+            OnAdminUpdated();
+        }
+
+        public override void Shutdown()
+        {
+            _admin.AdminStatusUpdated -= OnAdminUpdated;
+            base.Shutdown();
+        }
+
+        private void OnAdminUpdated()
+        {
+            // Hide some map/grid related logs from clients. This is to try prevent some easy metagaming by just
+            // reading the console. E.g., logs like this one could leak the nuke station/grid:
+            // > Grid NT-Arrivals 1101 (122/n25896) changed parent. Old parent: map 10 (121/n25895). New parent: FTL (123/n26470)
+#if !DEBUG
+            _map.Log.Level = _admin.IsAdmin() ? LogLevel.Info : LogLevel.Warning;
+#endif
+        }
+
+        private void OnAttentionRequest(RequestWindowAttentionEvent ev)
+        {
+            _clyde.RequestWindowAttention();
         }
 
         private void LateJoinStatus(TickerLateJoinStatusEvent message)
@@ -137,7 +157,7 @@ namespace Content.Client.GameTicking.Managers
                 return;
 
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
-            _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, _entityManager);
+            _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, EntityManager);
         }
     }
 }
