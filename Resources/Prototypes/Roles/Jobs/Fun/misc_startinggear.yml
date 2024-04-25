@@ -285,6 +285,7 @@
     back:
     - ToolboxThief
     - ClothingHandsChameleonThief
+    - ThiefFultonBeacon
 
 #Gladiator with spear
 - type: startingGear
