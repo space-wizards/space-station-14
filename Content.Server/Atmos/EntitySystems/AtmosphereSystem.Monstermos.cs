@@ -174,7 +174,7 @@ namespace Content.Server.Atmos.EntitySystems
                         var direction = (AtmosDirection) (1 << j);
                         if (!eligibleDirections.IsFlagSet(direction)) continue;
 
-                        var directionTransferRatio = GetTilesTransferRatio(otherTile, otherTile.AdjacentTiles[j]!);
+                        var directionTransferRatio = GetTilesTransferRatio(otherTile, otherTile.AdjacentTiles[j]!); // Will result in 1 unless the tile has modified ratio
                         AdjustEqMovement(otherTile, direction, molesToMove * directionTransferRatio);
                         otherTile.MonstermosInfo.MoleDelta -= molesToMove * directionTransferRatio;
                         otherTile.AdjacentTiles[j]!.MonstermosInfo.MoleDelta += molesToMove * directionTransferRatio;
@@ -236,7 +236,7 @@ namespace Content.Server.Atmos.EntitySystems
                             otherTile2.MonstermosInfo.CurrentTransferAmount = 0;
                             if (otherTile2.MonstermosInfo.MoleDelta < 0)
                             {
-                                var transferRatio = GetTilesTransferRatio(otherTile2, giver);
+                                var transferRatio = GetTilesTransferRatio(otherTile2, giver); // Will result in 1 unless the tile has modified ratio
 
                                 // This tile needs gas. Let's give it to 'em.
                                 if (-otherTile2.MonstermosInfo.MoleDelta > giver.MonstermosInfo.MoleDelta * transferRatio)
@@ -305,7 +305,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                             if (otherTile2.MonstermosInfo.MoleDelta > 0)
                             {
-                                var transferRatio = GetTilesTransferRatio(otherTile2, taker);
+                                var transferRatio = GetTilesTransferRatio(otherTile2, taker); // Will result in 1 unless the tile has modified ratio
 
                                 // This tile has gas we can suck, so let's
                                 if (otherTile2.MonstermosInfo.MoleDelta > -taker.MonstermosInfo.MoleDelta * transferRatio)
@@ -631,7 +631,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!tile.AdjacentBits.IsFlagSet(direction)) continue;
                 var otherTile = tile.AdjacentTiles[i];
                 if (otherTile?.Air == null) continue;
-                var amount = transferDirections[i] * GetTilesTransferRatio(tile, otherTile!);
+                var amount = transferDirections[i] * GetTilesTransferRatio(tile, otherTile!);  // Will result in 1 unless the tile has modified ratio
                 DebugTools.Assert(otherTile.AdjacentBits.IsFlagSet(direction.GetOpposite()));
                 if (amount <= 0) continue;
 
@@ -701,6 +701,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         public float GetTilesTransferRatio(TileAtmosphere tile1, TileAtmosphere tile2)
         {
+            // Contraints the transfer ratio to the lowest of two tiles; simulates a reduced cross section.
             return MathF.Min(tile1.TransferRatio, tile2.TransferRatio);
         }
 

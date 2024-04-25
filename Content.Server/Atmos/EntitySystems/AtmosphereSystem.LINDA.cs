@@ -56,6 +56,7 @@ namespace Content.Server.Atmos.EntitySystems
                     shouldShareAir = true;
                 } else if (CompareExchange(tile.Air, enemyTile.Air) != GasCompareResult.NoExchange)
                 {
+                    // Tiles should only be excited if they're desirable to be equalized immediately, i.e. TransferRatio == 1.0
                     if (ExcitedGroups && tile.TransferRatio == 1.0 && enemyTile.TransferRatio == 1.0)
                     {
                         var excitedGroup = tile.ExcitedGroup;
@@ -217,7 +218,8 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var thisValue = receiver.Moles[i];
                 var sharerValue = sharer.Moles[i];
-                var delta = ((thisValue - sharerValue) / (atmosAdjacentTurfs + 1)) * GetTilesTransferRatio(tileReceiver, tileSharer);
+                // For normal tiles, GetTilesTransferRatio = 1. Used for partial transfer, i.e. leakage.
+                var delta = ((thisValue - sharerValue) / (atmosAdjacentTurfs + 1)) * GetTilesTransferRatio(tileReceiver, tileSharer); 
                 if (!(MathF.Abs(delta) >= Atmospherics.GasMinMoles)) continue;
                 if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
                 {
