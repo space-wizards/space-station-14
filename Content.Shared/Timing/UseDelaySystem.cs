@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Timing;
@@ -16,6 +17,30 @@ public sealed class UseDelaySystem : EntitySystem
 
         SubscribeLocalEvent<UseDelayComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<UseDelayComponent, EntityUnpausedEvent>(OnUnpaused);
+        SubscribeLocalEvent<UseDelayComponent, ComponentGetState>(OnDelayGetState);
+        SubscribeLocalEvent<UseDelayComponent, ComponentHandleState>(OnDelayHandleState);
+    }
+
+    private void OnDelayHandleState(Entity<UseDelayComponent> ent, ref ComponentHandleState args)
+    {
+        if (args.Current is not UseDelayComponentState state)
+            return;
+
+        ent.Comp.Delays.Clear();
+
+        // At time of writing sourcegen networking doesn't deep copy so this will mispredict if you try.
+        foreach (var (key, delay) in state.Delays)
+        {
+            ent.Comp.Delays[key] = new UseDelayInfo(delay.Length, delay.StartTime, delay.EndTime);
+        }
+    }
+
+    private void OnDelayGetState(Entity<UseDelayComponent> ent, ref ComponentGetState args)
+    {
+        args.State = new UseDelayComponentState()
+        {
+            Delays = ent.Comp.Delays
+        };
     }
 
     private void OnMapInit(Entity<UseDelayComponent> ent, ref MapInitEvent args)
