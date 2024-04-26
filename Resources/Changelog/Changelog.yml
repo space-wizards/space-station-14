@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Remote signallers are now limited to a 15-tile radius
-    type: Tweak
-  - message: Added an advanced remote signaler, with a range of 30 tiles.
-    type: Add
-  - message: the anomaly synchronizer consumes much less power, and no longer causes
-      the anomaly pulses when powering down.
-    type: Tweak
-  id: 5937
-  time: '2024-02-13T22:19:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24461
 - author: joshepvodka
   changes:
   - message: Fax machines can now print text files from your computer.
@@ -3851,3 +3839,12 @@
   id: 6436
   time: '2024-04-26T00:25:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27319
+- author: Tayrtahn
+  changes:
+  - message: Fixed Bibles not healing.
+    type: Fix
+  - message: Fixed quick insert and area insert not working on ore/plant/trash bags.
+    type: Fix
+  id: 6437
+  time: '2024-04-26T02:25:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27234
