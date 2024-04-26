@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: liltenhead
-  changes:
-  - message: Reduced energy shield's hp from 150 to 100.
-    type: Tweak
-  id: 5943
-  time: '2024-02-15T20:54:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25258
 - author: PJB3005
   changes:
   - message: Nuke has some more blinkenlights now.
@@ -3850,3 +3843,10 @@
   id: 6442
   time: '2024-04-26T08:01:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27293
+- author: metalgearsloth
+  changes:
+  - message: Add predicted UI opening for storage and PDAs.
+    type: Add
+  id: 6443
+  time: '2024-04-26T08:16:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27214
