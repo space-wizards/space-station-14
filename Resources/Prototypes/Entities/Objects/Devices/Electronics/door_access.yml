@@ -165,8 +165,6 @@
 
 - type: entity
   parent: DoorElectronics
-  id: DoorElectronicsCommand
-  suffix: Command, Locked
   id: DoorElectronicsResearchDirector
   suffix: ResearchDirector, Locked
   components:
