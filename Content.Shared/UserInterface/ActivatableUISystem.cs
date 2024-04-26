@@ -56,10 +56,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (args.Handled || args.Key == null)
             return;
 
-        if (!TryComp(args.Performer, out ActorComponent? actor))
-            return;
-
-        args.Handled = _uiSystem.TryToggleUi(uid, args.Key, actor.PlayerSession);
+        args.Handled = _uiSystem.TryToggleUi(uid, args.Key, args.Performer);
     }
 
     private void AddOpenUiVerb(EntityUid uid, ActivatableUIComponent component, GetVerbsEvent<ActivationVerb> args)
