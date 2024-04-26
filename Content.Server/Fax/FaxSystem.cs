@@ -448,13 +448,11 @@ public sealed class FaxSystem : EntitySystem
             return;
 
         TryComp<LabelComponent>(sendEntity, out var labelComponent);
-        var label = labelComponent?.CurrentLabel;
-        var name = labelComponent?.OriginalName ?? metadata.EntityName;
 
         // TODO: See comment in 'Send()' about not being able to copy whole entities
         var printout = new FaxPrintout(paper.Content,
-                                       name,
-                                       label,
+                                       labelComponent?.OriginalName ?? metadata.EntityName,
+                                       labelComponent?.CurrentLabel,
                                        metadata.EntityPrototype?.ID ?? DefaultPaperPrototypeId,
                                        paper.StampState,
                                        paper.StampedBy);
@@ -497,14 +495,12 @@ public sealed class FaxSystem : EntitySystem
             return;
 
         TryComp<LabelComponent>(sendEntity, out var labelComponent);
-        var label = labelComponent?.CurrentLabel;
-        var name = labelComponent?.OriginalName ?? metadata.EntityName;
 
         var payload = new NetworkPayload()
         {
             { DeviceNetworkConstants.Command, FaxConstants.FaxPrintCommand },
-            { FaxConstants.FaxPaperNameData, name },
-            { FaxConstants.FaxPaperLabelData, label },
+            { FaxConstants.FaxPaperNameData, labelComponent?.OriginalName ?? metadata.EntityName },
+            { FaxConstants.FaxPaperLabelData, labelComponent?.CurrentLabel },
             { FaxConstants.FaxPaperContentData, paper.Content },
         };
 
