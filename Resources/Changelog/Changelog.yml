@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: joshepvodka
-  changes:
-  - message: Fax machines can now print text files from your computer.
-    type: Add
-  id: 5938
-  time: '2024-02-14T01:14:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/23262
 - author: Plykiya
   changes:
   - message: Holosigns can now be placed at range. No more being eaten by forcefields!
@@ -3848,3 +3841,10 @@
   id: 6437
   time: '2024-04-26T02:25:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27234
+- author: SkaldetSkaeg
+  changes:
+  - message: The handheld radio no longer plays a message spoken into it.
+    type: Tweak
+  id: 6438
+  time: '2024-04-26T07:34:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27046
