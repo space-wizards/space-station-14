@@ -239,7 +239,7 @@ public sealed class FaxSystem : EntitySystem
             }
 
             _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(args.User):actor} renamed {ToPrettyString(uid):tool} from \"{component.FaxName}\" to \"{newName}\"");
+                $"{ToPrettyString(args.User):user} renamed {ToPrettyString(uid):tool} from \"{component.FaxName}\" to \"{newName}\"");
             component.FaxName = newName;
             _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-name-set"), uid);
             UpdateUserInterface(uid, component);
