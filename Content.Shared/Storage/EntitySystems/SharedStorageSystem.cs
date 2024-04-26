@@ -77,6 +77,8 @@ public abstract class SharedStorageSystem : EntitySystem
     private readonly List<ItemSizePrototype> _sortedSizes = new();
     private FrozenDictionary<string, ItemSizePrototype> _nextSmallest = FrozenDictionary<string, ItemSizePrototype>.Empty;
 
+    private const string QuickInsertUseDelayID = "quickInsert";
+
     protected readonly List<string> CantFillReasons = [];
 
     /// <inheritdoc />
@@ -127,6 +129,12 @@ public abstract class SharedStorageSystem : EntitySystem
             .Register<SharedStorageSystem>();
 
         UpdatePrototypeCache();
+    }
+
+    protected virtual void OnMapInit(Entity<StorageComponent> entity, ref MapInitEvent args)
+    {
+        if (TryComp<UseDelayComponent>(entity, out var useDelayComp))
+            UseDelay.SetLength((entity, useDelayComp), entity.Comp.QuickInsertCooldown, QuickInsertUseDelayID);
     }
 
     private void OnStorageGetState(EntityUid uid, StorageComponent component, ref ComponentGetState args)
@@ -392,7 +400,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// <returns></returns>
     private void AfterInteract(EntityUid uid, StorageComponent storageComp, AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach || !UseDelay.TryResetDelay(uid, checkDelayed: true))
+        if (args.Handled || !args.CanReach || !UseDelay.TryResetDelay(uid, checkDelayed: true, id: QuickInsertUseDelayID))
             return;
 
         // Pick up all entities in a radius around the clicked location.

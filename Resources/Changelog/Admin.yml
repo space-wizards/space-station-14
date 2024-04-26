@@ -168,5 +168,12 @@ Entries:
   id: 22
   time: '2024-04-20T16:18:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27168
+- author: EmoGarbage404
+  changes:
+  - message: Fixed antag status being broken in overlay and UI.
+    type: Fix
+  id: 23
+  time: '2024-04-26T00:25:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27319
 Name: Admin
 Order: 1
