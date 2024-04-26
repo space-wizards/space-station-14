@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Zadeon
-  changes:
-  - message: Disablers now fit inside the suit storage slot.
-    type: Fix
-  id: 5940
-  time: '2024-02-14T23:07:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25238
 - author: Jezithyr
   changes:
   - message: Death Acidifier implants not deleting items when activated
@@ -3850,3 +3843,10 @@
   id: 6439
   time: '2024-04-26T07:44:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27303
+- author: IlyaElDunaev
+  changes:
+  - message: Ammonia heal blood loss in the Rat King
+    type: Add
+  id: 6440
+  time: '2024-04-26T07:47:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26887
