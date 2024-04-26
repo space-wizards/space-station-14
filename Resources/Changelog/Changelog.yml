@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Krunk
-  changes:
-  - message: Sound effects have been added for writing on paper.
-    type: Add
-  id: 5950
-  time: '2024-02-16T23:48:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25257
 - author: PotentiallyTom
   changes:
   - message: Added new covers for the medical, security, and science guidebooks
@@ -3855,3 +3848,10 @@
   id: 6449
   time: '2024-04-26T18:51:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27333
+- author: Pgriha
+  changes:
+  - message: Increase limit of characters 10 -> 30.
+    type: Tweak
+  id: 6450
+  time: '2024-04-26T22:58:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27361
