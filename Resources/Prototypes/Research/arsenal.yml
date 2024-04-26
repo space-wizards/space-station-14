@@ -24,12 +24,7 @@
   tier: 1
   cost: 10000
   recipeUnlocks:
-  - ShellShotgunIncendiary
   - BoxShotgunIncendiary
-  - CartridgePistolIncendiary
-  - CartridgeMagnumIncendiary
-  - CartridgeLightRifleIncendiary
-  - CartridgeRifleIncendiary
   - MagazineRifleIncendiary
   - MagazinePistolIncendiary
   - MagazineLightRifleIncendiary
@@ -62,9 +57,8 @@
   tier: 1
   cost: 5000
   recipeUnlocks:
-  - ShellShotgunBeanbag
   - ShellTranquilizer 
-  - BoxBeanbag
+  - BoxBeanbag 
   - WeaponDisabler
 
 - type: technology
@@ -77,11 +71,6 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - ShellShotgunUranium
-  - CartridgePistolUranium
-  - CartridgeMagnumUranium
-  - CartridgeLightRifleUranium
-  - CartridgeRifleUranium
   - MagazineRifleUranium
   - MagazinePistolUranium
   - MagazineLightRifleUranium
