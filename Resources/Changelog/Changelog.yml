@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: t-ray scanners can now penetrate carpets and puddles
-    type: Tweak
-  id: 5949
-  time: '2024-02-16T23:37:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25276
 - author: Krunk
   changes:
   - message: Sound effects have been added for writing on paper.
@@ -3854,3 +3847,11 @@
   id: 6448
   time: '2024-04-26T13:06:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25982
+- author: fujiwaranao
+  changes:
+  - message: Players may now select the Creepy Long hairstyle and an appropriately
+      creepy dress to go with it can be found in theatrical performances crates.
+    type: Add
+  id: 6449
+  time: '2024-04-26T18:51:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27333
