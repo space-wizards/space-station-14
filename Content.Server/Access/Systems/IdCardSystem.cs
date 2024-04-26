@@ -7,6 +7,8 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Database;
 using Content.Shared.Popups;
+using Content.Shared.Roles;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -18,11 +20,18 @@ public sealed class IdCardSystem : SharedIdCardSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<IdCardComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<IdCardComponent, BeingMicrowavedEvent>(OnMicrowaved);
+    }
+
+    private void OnMapInit(EntityUid uid, IdCardComponent id, MapInitEvent args)
+    {
+        UpdateEntityName(uid, id);
     }
 
     private void OnMicrowaved(EntityUid uid, IdCardComponent component, BeingMicrowavedEvent args)

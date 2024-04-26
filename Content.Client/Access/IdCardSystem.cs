@@ -2,4 +2,6 @@
 
 namespace Content.Client.Access;
 
-public sealed class IdCardSystem : SharedIdCardSystem;
+public sealed class IdCardSystem : SharedIdCardSystem
+{
+}
