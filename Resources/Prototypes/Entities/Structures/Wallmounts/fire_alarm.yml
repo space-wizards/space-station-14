@@ -60,8 +60,8 @@
       delta: fire_3
   - type: UserInterface
     interfaces:
-    - key: enum.WiresUiKey.Key
-      type: WiresBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
     boardName: wires-board-name-firealarm

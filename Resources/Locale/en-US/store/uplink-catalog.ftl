@@ -367,6 +367,9 @@ uplink-slipocalypse-clustersoap-desc = Scatters arounds small pieces of syndicat
 uplink-mobcat-microbomb-name = SyndiCat
 uplink-mobcat-microbomb-desc = A hand cat equipped with a microbomb implant. Explodes when seriously injured. Can bite painfully
 
+uplink-chameleon-projector-name = Chameleon Projector
+uplink-chameleon-projector-desc = Disappear in plain sight by creating a hologram of an item around you. Do not use this to play the game "Object Search".
+
 # Pointless
 uplink-revolver-cap-gun-name = Cap Gun
 uplink-revolver-cap-gun-desc = Looks almost like the real thing! Ages 8 and up.

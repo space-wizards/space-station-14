@@ -3,6 +3,7 @@
   parent: DrinkBase
   id: DrinkBottlePlasticBaseFull
   abstract: true
+  suffix: Full
   components:
   - type: Tag
     tags:
@@ -38,6 +39,9 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
+  - type: PressurizedSolution
+    solution: drink
+  - type: Shakeable
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -744,7 +748,7 @@
   parent: DrinkBottlePlasticBaseFull
   id: DrinkSugarJug
   name: sugar jug
-  suffix: for drinks
+  suffix: For Drinks, Full
   description: some people put this in their coffee...
   components:
   - type: SolutionContainerManager

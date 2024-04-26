@@ -17,8 +17,8 @@
       visible: false
     - state: open_overlay
       map: ["enum.StorageVisualLayers.Door"]
-    - state: label_overlay
-      map: ["enum.BodyBagVisualLayers.Label"]
+    - state: paper
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     state: bag
@@ -62,9 +62,15 @@
   - type: GenericVisualizer
     visuals:
       enum.PaperLabelVisuals.HasLabel:
-        enum.BodyBagVisualLayers.Label:
+        enum.PaperLabelVisuals.Layer:
           True: {visible: true}
           False: {visible: false}
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
       enum.FoldedVisuals.State:
         foldedLayer:
           True: {visible: true}
