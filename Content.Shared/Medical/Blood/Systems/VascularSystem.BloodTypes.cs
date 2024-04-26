@@ -24,7 +24,7 @@ public sealed partial class VascularSystem
         var oldReagent = solution.GetReagent(bloodCirc.Comp1.BloodReagentId);
 
         solution.RemoveReagent(oldReagent);
-        oldReagent = new ReagentQuantity(newBloodType.WholeBloodReagent, oldReagent.Quantity, new BloodTypeDescriminator(newBloodType));
+        oldReagent = new ReagentQuantity(newBloodType.WholeBloodReagent, oldReagent.Quantity, new BloodTypeDiscriminator(newBloodType));
         solution.AddReagent(oldReagent);
         bloodCirc.Comp2.BloodType = newBloodType.ID;
 
@@ -36,16 +36,16 @@ public sealed partial class VascularSystem
 
     public Solution CreateBloodSolution(BloodTypePrototype bloodType, FixedPoint2 volume)
     {
-        return new Solution(bloodType.WholeBloodReagent, volume, new BloodTypeDescriminator(bloodType));
+        return new Solution(bloodType.WholeBloodReagent, volume, new BloodTypeDiscriminator(bloodType));
     }
     public Solution CreateBloodCellSolution(BloodTypePrototype bloodType, FixedPoint2 volume)
     {
-        return new Solution(bloodType.BloodCellsReagent, volume, new BloodTypeDescriminator(bloodType));
+        return new Solution(bloodType.BloodCellsReagent, volume, new BloodTypeDiscriminator(bloodType));
     }
 
     public Solution CreatePlasmaSolution(BloodTypePrototype bloodType, FixedPoint2 volume)
     {
-        return new Solution(bloodType.BloodPlasmaReagent, volume, new BloodTypeDescriminator(bloodType));
+        return new Solution(bloodType.BloodPlasmaReagent, volume, new BloodTypeDiscriminator(bloodType));
     }
 
     #endregion
