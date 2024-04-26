@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MACMAN2003
-  changes:
-  - message: Thindows no longer duplicate glass when broken.
-    type: Fix
-  id: 5945
-  time: '2024-02-16T04:03:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25304
 - author: Golinth
   changes:
   - message: Mindshields are no longer separate and appear as a border around job
@@ -3851,3 +3844,10 @@
   id: 6444
   time: '2024-04-26T12:17:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27349
+- author: WarMechanic
+  changes:
+  - message: Fixed unwielding overruling gun cycling
+    type: Fix
+  id: 6445
+  time: '2024-04-26T12:31:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27307
