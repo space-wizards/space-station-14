@@ -286,20 +286,17 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             var query = AllEntityQuery<PowerMonitoringConsoleComponent>();
             while (query.MoveNext(out var ent, out var console))
             {
-                if (!_userInterfaceSystem.TryGetUi(ent, PowerMonitoringConsoleUiKey.Key, out var bui))
+                if (!_userInterfaceSystem.IsUiOpen(ent, PowerMonitoringConsoleUiKey.Key))
                     continue;
 
-                foreach (var session in bui.SubscribedSessions)
-                    UpdateUIState(ent, console, session);
+                UpdateUIState(ent, console);
+
             }
         }
     }
 
-    public void UpdateUIState(EntityUid uid, PowerMonitoringConsoleComponent component, ICommonSession session)
+    private void UpdateUIState(EntityUid uid, PowerMonitoringConsoleComponent component)
     {
-        if (!_userInterfaceSystem.TryGetUi(uid, PowerMonitoringConsoleUiKey.Key, out var bui))
-            return;
-
         var consoleXform = Transform(uid);
 
         if (consoleXform?.GridUid == null)
@@ -422,15 +419,15 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         }
 
         // Set the UI state
-        _userInterfaceSystem.SetUiState(bui,
+        _userInterfaceSystem.SetUiState(uid,
+            PowerMonitoringConsoleUiKey.Key,
             new PowerMonitoringConsoleBoundInterfaceState
                 (totalSources,
                 totalBatteryUsage,
                 totalLoads,
                 allEntries.ToArray(),
                 sourcesForFocus.ToArray(),
-                loadsForFocus.ToArray()),
-            session);
+                loadsForFocus.ToArray()));
     }
 
     private double GetPrimaryPowerValues(EntityUid uid, PowerMonitoringDeviceComponent device, out double powerSupplied, out double powerUsage, out double batteryUsage)

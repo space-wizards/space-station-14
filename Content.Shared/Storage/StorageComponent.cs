@@ -19,10 +19,6 @@ namespace Content.Shared.Storage
     {
         public static string ContainerId = "storagebase";
 
-        // TODO: This fucking sucks
-        [ViewVariables(VVAccess.ReadWrite), DataField]
-        public bool IsUiOpen;
-
         [ViewVariables]
         public Container Container = default!;
 
@@ -230,15 +226,6 @@ namespace Content.Shared.Storage
             EntityPositions = entityPositions;
             EntityAngles = entityAngles;
         }
-    }
-
-    /// <summary>
-    /// An extra BUI message that either opens, closes, or focuses the storage window based on context.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class StorageModifyWindowMessage : BoundUserInterfaceMessage
-    {
-
     }
 
     [NetSerializable]

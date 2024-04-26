@@ -1,16 +1,14 @@
 ﻿using Content.Shared.Whitelist;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.Player;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
-namespace Content.Server.UserInterface
+namespace Content.Shared.UserInterface
 {
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed partial class ActivatableUIComponent : Component
     {
-        [DataField(required: true, customTypeSerializer:typeof(EnumSerializer))]
-        public Enum? Key { get; set; }
+        [DataField(required: true, customTypeSerializer: typeof(EnumSerializer))]
+        public Enum Key { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
@@ -70,6 +68,6 @@ namespace Content.Server.UserInterface
         ///     NOTE: DO NOT DIRECTLY SET, USE ActivatableUISystem.SetCurrentSingleUser
         /// </summary>
         [ViewVariables]
-        public ICommonSession? CurrentSingleUser;
+        public EntityUid? CurrentSingleUser;
     }
 }

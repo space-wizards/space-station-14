@@ -66,8 +66,8 @@
     price: 25
   - type: UserInterface
     interfaces:
-    - key: enum.DisposalUnitUiKey.Key
-      type: DisposalUnitBoundUserInterface
+      enum.DisposalUnitUiKey.Key:
+        type: DisposalUnitBoundUserInterface
   - type: RatKingRummageable
   - type: SolutionContainerManager
     solutions:

@@ -90,7 +90,7 @@ namespace Content.Server.Labels
 
         private void OnHandLabelerLabelChanged(EntityUid uid, HandLabelerComponent handLabeler, HandLabelerLabelChangedMessage args)
         {
-            if (args.Session.AttachedEntity is not {Valid: true} player)
+            if (args.Actor is not {Valid: true} player)
                 return;
 
             var label = args.Label.Trim();
@@ -109,7 +109,7 @@ namespace Content.Server.Labels
             if (!Resolve(uid, ref handLabeler))
                 return;
 
-            _userInterfaceSystem.TrySetUiState(uid, HandLabelerUiKey.Key,
+            _userInterfaceSystem.SetUiState(uid, HandLabelerUiKey.Key,
                 new HandLabelerBoundUserInterfaceState(handLabeler.AssignedLabel));
         }
     }

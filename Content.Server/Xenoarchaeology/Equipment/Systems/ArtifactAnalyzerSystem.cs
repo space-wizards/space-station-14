@@ -223,8 +223,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         var state = new AnalysisConsoleUpdateState(GetNetEntity(artifact), analyzerConnected, serverConnected,
             canScan, canPrint, msg, scanning, paused, active?.StartTime, active?.AccumulatedRunTime, totalTime, points, biasDirection == BiasDirection.Down);
 
-        var bui = _ui.GetUi(uid, ArtifactAnalzyerUiKey.Key);
-        _ui.SetUiState(bui, state);
+        _ui.SetUiState(uid, ArtifactAnalzyerUiKey.Key, state);
     }
 
     /// <summary>
@@ -235,7 +234,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     /// <param name="args"></param>
     private void OnServerSelectionMessage(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsoleServerSelectionMessage args)
     {
-        _ui.TryOpen(uid, ResearchClientUiKey.Key, args.Session);
+        _ui.OpenUi(uid, ResearchClientUiKey.Key, args.Actor);
     }
 
     /// <summary>
