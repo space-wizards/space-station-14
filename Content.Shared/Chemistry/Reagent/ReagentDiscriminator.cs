@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Chemistry.Reagent;
 
 [ImplicitDataDefinitionForInheritors, Serializable, NetSerializable]
-public abstract partial class ReagentData : IEquatable<ReagentData>
+public abstract partial class ReagentDiscriminator : IEquatable<ReagentDiscriminator>
 {
     /// <summary>
     /// Convert to a string representation. This if for logging & debugging. This is not localized and should not be
@@ -24,7 +24,7 @@ public abstract partial class ReagentData : IEquatable<ReagentData>
         return $"{prototype}:{GetType().Name}";
     }
 
-    public abstract bool Equals(ReagentData? other);
+    public abstract bool Equals(ReagentDiscriminator? other);
 
     public override bool Equals(object? obj)
     {
@@ -35,10 +35,10 @@ public abstract partial class ReagentData : IEquatable<ReagentData>
         if (obj.GetType() != GetType())
             return false;
 
-        return Equals((ReagentData) obj);
+        return Equals((ReagentDiscriminator) obj);
     }
 
     public abstract override int GetHashCode();
 
-    public abstract ReagentData Clone();
+    public abstract ReagentDiscriminator Clone();
 }

@@ -7,8 +7,8 @@ using Robust.Shared.Utility;
 namespace Content.IntegrationTests.Tests.Chemistry;
 
 [TestFixture]
-[TestOf(typeof(ReagentData))]
-public sealed class ReagentDataTest : InteractionTest
+[TestOf(typeof(ReagentDiscriminator))]
+public sealed class ReagentDiscriminatorTest : InteractionTest
 {
     [Test]
     public async Task ReagentDataIsSerializable()
@@ -18,7 +18,7 @@ public sealed class ReagentDataTest : InteractionTest
 
         Assert.Multiple(() =>
         {
-            foreach (var instance in reflection.GetAllChildren(typeof(ReagentData)))
+            foreach (var instance in reflection.GetAllChildren(typeof(ReagentDiscriminator)))
             {
                 Assert.That(instance.HasCustomAttribute<NetSerializableAttribute>(), $"{instance} must have the NetSerializable attribute.");
                 Assert.That(instance.HasCustomAttribute<SerializableAttribute>(), $"{instance} must have the serializable attribute.");

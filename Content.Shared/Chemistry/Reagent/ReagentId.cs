@@ -20,9 +20,9 @@ public partial struct ReagentId : IEquatable<ReagentId>
     /// Any additional data that is unique to this reagent type. E.g., for blood this could be DNA data.
     /// </summary>
     [DataField("data")]
-    public ReagentData? Data { get; private set; }
+    public ReagentDiscriminator? Data { get; private set; }
 
-    public ReagentId(string prototype, ReagentData? data)
+    public ReagentId(string prototype, ReagentDiscriminator? data)
     {
         Prototype = prototype;
         Data = data;
@@ -50,7 +50,7 @@ public partial struct ReagentId : IEquatable<ReagentId>
         return Data.Equals(other.Data);
     }
 
-    public bool Equals(string prototype, ReagentData? otherData = null)
+    public bool Equals(string prototype, ReagentDiscriminator? otherData = null)
     {
         if (Prototype != prototype)
             return false;
