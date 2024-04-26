@@ -78,6 +78,7 @@ public abstract class SharedStorageSystem : EntitySystem
     private FrozenDictionary<string, ItemSizePrototype> _nextSmallest = FrozenDictionary<string, ItemSizePrototype>.Empty;
 
     private const string QuickInsertUseDelayID = "quickInsert";
+    private const string OpenUiUseDelayID = "storage";
 
     protected readonly List<string> CantFillReasons = [];
 
@@ -96,6 +97,7 @@ public abstract class SharedStorageSystem : EntitySystem
             subs.Event<BoundUIClosedEvent>(OnBoundUIClosed);
         });
 
+        SubscribeLocalEvent<StorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StorageComponent, GetVerbsEvent<ActivationVerb>>(AddUiVerb);
         SubscribeLocalEvent<StorageComponent, ComponentGetState>(OnStorageGetState);
         SubscribeLocalEvent<StorageComponent, ComponentHandleState>(OnStorageHandleState);
@@ -131,10 +133,13 @@ public abstract class SharedStorageSystem : EntitySystem
         UpdatePrototypeCache();
     }
 
-    protected virtual void OnMapInit(Entity<StorageComponent> entity, ref MapInitEvent args)
+    private void OnMapInit(Entity<StorageComponent> entity, ref MapInitEvent args)
     {
         if (TryComp<UseDelayComponent>(entity, out var useDelayComp))
+        {
             UseDelay.SetLength((entity, useDelayComp), entity.Comp.QuickInsertCooldown, QuickInsertUseDelayID);
+            UseDelay.SetLength((entity, useDelayComp), entity.Comp.OpenUiCooldown, OpenUiUseDelayID);
+        }
     }
 
     private void OnStorageGetState(EntityUid uid, StorageComponent component, ref ComponentGetState args)
