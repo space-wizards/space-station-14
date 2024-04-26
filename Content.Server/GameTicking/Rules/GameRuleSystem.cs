@@ -1,6 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules.Components;
+using Content.Server.GameTicking.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -22,9 +22,31 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     {
         base.Initialize();
 
+        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<T, GameRuleAddedEvent>(OnGameRuleAdded);
         SubscribeLocalEvent<T, GameRuleStartedEvent>(OnGameRuleStarted);
         SubscribeLocalEvent<T, GameRuleEndedEvent>(OnGameRuleEnded);
+        SubscribeLocalEvent<T, RoundEndTextAppendEvent>(OnRoundEndTextAppend);
+    }
+
+    private void OnStartAttempt(RoundStartAttemptEvent args)
+    {
+        if (args.Forced || args.Cancelled)
+            return;
+
+        var query = QueryAllRules();
+        while (query.MoveNext(out var uid, out _, out var gameRule))
+        {
+            var minPlayers = gameRule.MinPlayers;
+            if (args.Players.Length >= minPlayers)
+                continue;
+
+            ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
+                ("readyPlayersCount", args.Players.Length),
+                ("minimumPlayers", minPlayers),
+                ("presetName", ToPrettyString(uid))));
+            args.Cancel();
+        }
     }
 
     private void OnGameRuleAdded(EntityUid uid, T component, ref GameRuleAddedEvent args)
@@ -48,6 +70,12 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         Ended(uid, component, ruleData, args);
     }
 
+    private void OnRoundEndTextAppend(Entity<T> ent, ref RoundEndTextAppendEvent args)
+    {
+        if (!TryComp<GameRuleComponent>(ent, out var ruleData))
+            return;
+        AppendRoundEndText(ent, ent, ruleData, ref args);
+    }
 
     /// <summary>
     /// Called when the gamerule is added
@@ -69,6 +97,14 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     /// Called when the gamerule ends
     /// </summary>
     protected virtual void Ended(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleEndedEvent args)
+    {
+
+    }
+
+    /// <summary>
+    /// Called at the end of a round when text needs to be added for a game rule.
+    /// </summary>
+    protected virtual void AppendRoundEndText(EntityUid uid, T component, GameRuleComponent gameRule, ref RoundEndTextAppendEvent args)
     {
 
     }

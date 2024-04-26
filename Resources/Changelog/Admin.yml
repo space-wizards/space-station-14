@@ -144,5 +144,36 @@ Entries:
   id: 19
   time: '2024-03-31T02:05:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26546
+- author: PJB3005
+  changes:
+  - message: The new "grant_connect_bypass" command grants a player the ability to
+      connect, bypassing whitelist, player cap and panic bunker.
+    type: Add
+  id: 20
+  time: '2024-04-09T15:25:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26771
+- author: Aexxie
+  changes:
+  - message: Removed the bartender's roundstart incendiary shells on Meta.
+    type: Remove
+  id: 21
+  time: '2024-04-20T01:06:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27142
+- author: nikthechampiongr
+  changes:
+  - message: Banpanel default values for ban severities, whether a server ban should
+      be applied with hwid/ip,  whether to use last available details, and whether
+      to erase the player on ban can now be configured through a Cvar.
+    type: Tweak
+  id: 22
+  time: '2024-04-20T16:18:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27168
+- author: EmoGarbage404
+  changes:
+  - message: Fixed antag status being broken in overlay and UI.
+    type: Fix
+  id: 23
+  time: '2024-04-26T00:25:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27319
 Name: Admin
 Order: 1
