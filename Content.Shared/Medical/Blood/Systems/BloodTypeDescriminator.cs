@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Medical.Blood.Systems;
 
 [Serializable, NetSerializable]
-public sealed partial class BloodTypeDataDescriminator : ReagentDiscriminator
+public sealed partial class BloodTypeDescriminator : ReagentDiscriminator
 {
     [DataField(required: true)]
     public HashSet<ProtoId<BloodAntigenPrototype>> BloodAntigens;
@@ -19,12 +19,12 @@ public sealed partial class BloodTypeDataDescriminator : ReagentDiscriminator
 
     //TODO: DNA
 
-    public BloodTypeDataDescriminator(BloodTypePrototype bloodType) :
+    public BloodTypeDescriminator(BloodTypePrototype bloodType) :
         this(bloodType.BloodCellAntigens, bloodType.PlasmaAntigens, bloodType.ID)
     {
     }
 
-    public BloodTypeDataDescriminator(IEnumerable<ProtoId<BloodAntigenPrototype>> bloodAntigens,
+    public BloodTypeDescriminator(IEnumerable<ProtoId<BloodAntigenPrototype>> bloodAntigens,
         IEnumerable<ProtoId<BloodAntigenPrototype>> plasmaAntigens,
         ProtoId<BloodTypePrototype>? bloodTypeId = null)
     {
@@ -41,7 +41,7 @@ public sealed partial class BloodTypeDataDescriminator : ReagentDiscriminator
         BloodTypeId = bloodTypeId;
     }
 
-    public BloodTypeDataDescriminator(HashSet<ProtoId<BloodAntigenPrototype>> bloodAntigens,
+    public BloodTypeDescriminator(HashSet<ProtoId<BloodAntigenPrototype>> bloodAntigens,
         HashSet<ProtoId<BloodAntigenPrototype>> plasmaAntigens,
         ProtoId<BloodTypePrototype>? bloodTypeId = null)
     {
@@ -52,7 +52,7 @@ public sealed partial class BloodTypeDataDescriminator : ReagentDiscriminator
 
     public override bool Equals(ReagentDiscriminator? other)
     {
-        var test = other as BloodTypeDataDescriminator;
+        var test = other as BloodTypeDescriminator;
         return test != null
                && BloodAntigens.SetEquals(test.BloodAntigens)
                && PlasmaAntigens.SetEquals(test.PlasmaAntigens)
@@ -66,12 +66,12 @@ public sealed partial class BloodTypeDataDescriminator : ReagentDiscriminator
 
     public override ReagentDiscriminator Clone()
     {
-        return new BloodTypeDataDescriminator(BloodAntigens, PlasmaAntigens, BloodTypeId);
+        return new BloodTypeDescriminator(BloodAntigens, PlasmaAntigens, BloodTypeId);
     }
 
-    public static implicit operator BloodTypeDataDescriminator(BloodTypePrototype bloodType)
+    public static implicit operator BloodTypeDescriminator(BloodTypePrototype bloodType)
     {
-        return new BloodTypeDataDescriminator(bloodType);
+        return new BloodTypeDescriminator(bloodType);
     }
 }
 
