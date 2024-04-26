@@ -157,20 +157,6 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazinePistolRubber
-  name: pistol magazine (.35 auto rubber)
-  parent: BaseMagazinePistol
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolRubber
-  - type: Sprite
-    layers:
-    - state: rubber
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
   id: MagazinePistolHighCapacity
   name: machine pistol magazine (.35 auto)
   parent: BaseMagazinePistolHighCapacity
@@ -242,20 +228,6 @@
   - type: Sprite
     layers:
     - state: practice
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazinePistolSubMachineGunRubber
-  name: SMG magazine (.35 auto rubber)
-  parent: BaseMagazinePistolSubMachineGun
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolRubber
-  - type: Sprite
-    layers:
-    - state: rubber
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
