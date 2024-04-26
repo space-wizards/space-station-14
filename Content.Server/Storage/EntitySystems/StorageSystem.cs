@@ -24,7 +24,8 @@ public sealed partial class StorageSystem : SharedStorageSystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+
+    private const string OpenUiUseDelayID = "storage";
 
     public override void Initialize()
     {
@@ -37,6 +38,14 @@ public sealed partial class StorageSystem : SharedStorageSystem
         SubscribeLocalEvent<StorageComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
+    }
+
+    protected override void OnMapInit(Entity<StorageComponent> entity, ref MapInitEvent args)
+    {
+        base.OnMapInit(entity, ref args);
+
+        if (TryComp<UseDelayComponent>(entity, out var useDelay))
+            UseDelay.SetLength((entity, useDelay), entity.Comp.OpenUiCooldown, OpenUiUseDelayID);
     }
 
     private void AddUiVerb(EntityUid uid, StorageComponent component, GetVerbsEvent<ActivationVerb> args)
@@ -120,13 +129,13 @@ public sealed partial class StorageSystem : SharedStorageSystem
             return;
 
         // prevent spamming bag open / honkerton honk sound
-        silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && _useDelay.IsDelayed((uid, useDelay));
+        silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && UseDelay.IsDelayed((uid, useDelay), OpenUiUseDelayID);
         if (!silent)
         {
             if (!storageComp.IsUiOpen)
                 _audio.PlayPvs(storageComp.StorageOpenSound, uid);
             if (useDelay != null)
-                _useDelay.TryResetDelay((uid, useDelay));
+                UseDelay.TryResetDelay((uid, useDelay), id: OpenUiUseDelayID);
         }
 
         Log.Debug($"Storage (UID {uid}) \"used\" by player session (UID {player.PlayerSession.AttachedEntity}).");
