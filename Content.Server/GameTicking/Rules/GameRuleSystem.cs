@@ -34,8 +34,8 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         if (args.Forced || args.Cancelled)
             return;
 
-        var query = QueryActiveRules();
-        while (query.MoveNext(out var uid, out _, out _, out var gameRule))
+        var query = QueryAllRules();
+        while (query.MoveNext(out var uid, out _, out var gameRule))
         {
             var minPlayers = gameRule.MinPlayers;
             if (args.Players.Length >= minPlayers)
