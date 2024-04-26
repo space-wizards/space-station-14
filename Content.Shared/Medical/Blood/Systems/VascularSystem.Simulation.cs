@@ -7,7 +7,7 @@ namespace Content.Shared.Medical.Blood.Systems;
 
 public sealed partial class VascularSystem
 {
-    public void SetHealthyBloodPressure(Entity<VascularComponent> vascularEntity, BloodPressure healthyPressure)
+    public void SetHealthyBloodPressure(Entity<VascularSystemComponent> vascularEntity, BloodPressure healthyPressure)
     {
 
         if (healthyPressure.High < 0 || healthyPressure.Low < 0)
@@ -30,7 +30,7 @@ public sealed partial class VascularSystem
         Dirty(vascularEntity);
     }
 
-    private void VascularSystemUpdate(Entity<VascularComponent, BloodstreamComponent> vascularEntity)
+    private void VascularSystemUpdate(Entity<VascularSystemComponent, BloodstreamComponent> vascularEntity)
     {
         FixedPoint2 cardiacOutput = 0;
 
@@ -78,10 +78,10 @@ public sealed partial class VascularSystem
         return cardiacOutput * (vascularResistance * vascularConstant);
     }
 
-    private FixedPoint2? GetHighestPulse(VascularComponent vascularComp)
+    private FixedPoint2? GetHighestPulse(VascularSystemComponent vascularSystemComp)
     {
         FixedPoint2? pulse = null;
-        foreach (var circEnt in vascularComp.CirculationEntities)
+        foreach (var circEnt in vascularSystemComp.CirculationEntities)
         {
             if (!TryComp<HeartComponent>(circEnt, out var heart))
                 continue;

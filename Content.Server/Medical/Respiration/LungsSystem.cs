@@ -125,16 +125,12 @@ public sealed class LungsSystem : SharedLungsSystem
 
     private void SetNextPhaseDelay(EntityUid uid, LungsComponent lungsComp)
     {
-        if (lungsComp.Phase == BreathingPhase.Suffocating)
-        {
-            lungsComp.NextPhasedUpdate = GameTiming.CurTime + lungsComp.InhaleTime;
-            return;
-        }
         lungsComp.Phase = lungsComp.Phase switch
         {
             BreathingPhase.Hold or BreathingPhase.Pause => BreathingPhase.Inhale,
             BreathingPhase.Inhale => BreathingPhase.Exhale,
             BreathingPhase.Exhale => BreathingPhase.Pause,
+            BreathingPhase.Suffocating => BreathingPhase.Suffocating,
             _ => lungsComp.Phase
         };
         lungsComp.NextPhasedUpdate = GameTiming.CurTime + lungsComp.NextPhaseDelay;

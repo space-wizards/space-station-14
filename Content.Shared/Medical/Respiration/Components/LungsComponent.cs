@@ -54,6 +54,7 @@ public sealed partial class LungsComponent : Component
             BreathingPhase.Exhale => ExhaleTime,
             BreathingPhase.Pause => PauseTime,
             BreathingPhase.Hold => MaxHoldTime,
+            BreathingPhase.Suffocating => InhaleTime,
             _ => throw new Exception("Unknown phase of breathing cycle. This should not happen!")
         };
 
@@ -105,13 +106,13 @@ public sealed partial class LungsComponent : Component
     /// What solutionId to put absorbed reagents into
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string AbsorbOutputSolution = "bloodstream";
+    public string AbsorbOutputSolution = "bloodReagents";
 
     /// <summary>
     /// What solutionId to take waste reagents out of
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string WasteSourceSolution = "bloodstream";
+    public string WasteSourceSolution = "bloodReagents";
 
     /// <summary>
     /// Cached solution owner entity.

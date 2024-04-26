@@ -14,6 +14,12 @@ public sealed partial class BloodTypePrototype : IPrototype
     public string ID { get; } = default!;
 
     /// <summary>
+    /// What percentage of the blood is plasma, the rest are bloodCells
+    /// </summary>
+    [DataField]
+    public float PlasmaPercentage = 0.55f;
+
+    /// <summary>
     /// Which antigens are present in this blood type's blood cells
     /// </summary>
     [DataField]
@@ -30,7 +36,7 @@ public sealed partial class BloodTypePrototype : IPrototype
     /// This is the reagent used as blood in bloodstream.
     /// </summary>
     [DataField]
-    public ProtoId<ReagentPrototype> WholeBloodReagent;
+    public ProtoId<ReagentPrototype> WholeBloodReagent = "Blood";
 
     /// <summary>
     /// The reagent used for blood cells in this blood definition, this may hold any number of antibodies.

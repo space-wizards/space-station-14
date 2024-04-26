@@ -68,20 +68,23 @@ public sealed class BloodstreamSystem : EntitySystem
         if (!TryGetBloodStreamSolutions(
                 (bloodstreamEnt, bloodstream, Comp<SolutionContainerManagerComponent>(bloodstreamEnt)),
                 out var bloodSolution,
+                out var bloodReagentSolution,
                 out var spillSolution))
             return;
 
-        _solutionSystem.SetCapacity((spillSolution.Value, spillSolution), FixedPoint2.MaxValue);
         _solutionSystem.SetCapacity((bloodSolution.Value, bloodSolution), bloodstream.MaxVolume);
+        _solutionSystem.SetCapacity((bloodReagentSolution.Value, bloodReagentSolution), bloodstream.MaxVolume);
+        _solutionSystem.SetCapacity((spillSolution.Value, spillSolution), FixedPoint2.MaxValue);
+
         var volume = bloodstream.Volume > 0 ? bloodstream.Volume : bloodstream.MaxVolume;
 
         if (bloodstream.RegenCutoffVolume < 0)
             bloodstream.RegenCutoffVolume = bloodstream.MaxVolume;
-        bloodstream.SpillSolution = spillSolution;
-        bloodstream.BloodSolution = bloodSolution;
+        bloodstream.SpillSolutionEnt = spillSolution;
+        bloodstream.BloodSolutionEnt = bloodSolution;
 
         //If we have a circulation comp, call the setup method on bloodCirculationSystem
-        if (TryComp<VascularComponent>(bloodstreamEnt, out var bloodCircComp))
+        if (TryComp<VascularSystemComponent>(bloodstreamEnt, out var bloodCircComp))
         {
             _vascularSystem.SetupCirculation(bloodstreamEnt, bloodstream, bloodCircComp, volume, bloodSolution.Value);
         }
@@ -104,7 +107,8 @@ public sealed class BloodstreamSystem : EntitySystem
         //Don't passively regenerate blood if we are over the "healthy" volume
         if (bloodstream.Comp1.Regen == 0
             || bloodstream.Comp1.Volume >= bloodstream.Comp1.RegenCutoffVolume
-            || !TryGetBloodSolution(bloodstream, out var bloodSolution))
+            || !_solutionSystem.TryGetSolution((bloodstream, bloodstream),
+                BloodstreamComponent.BloodSolutionId, out var bloodSolution, true))
             return;
 
         bloodSolution.Value.Comp.Solution.Volume += bloodstream.Comp1.Regen;
@@ -119,10 +123,19 @@ public sealed class BloodstreamSystem : EntitySystem
     {
         if (bloodstream.Comp1.Bloodloss == 0 || !TryGetBloodStreamSolutions(bloodstream,
                 out var bloodSolution,
+                out var reagentSolution,
                 out var spillSolution))
             return;
 
         var bleedSol = _solutionSystem.SplitSolution(bloodSolution.Value, bloodstream.Comp1.Bloodloss);
+        //Get the disolved reagent loss amount by getting the bleed percentage and then multiplying it by the disolved reagent volume
+        var reagentLossAmount = reagentSolution.Value.Comp.Solution.Volume * (bloodstream.Comp1.Bloodloss / bloodSolution.Value.Comp.Solution.MaxVolume);
+
+        //Not sure if it's the best idea to just spill the dissolved reagents straight into the blood puddle but we don't have
+        //functionality for a reagent holding other dissolved reagents
+        var lostDissolvedReagents = _solutionSystem.SplitSolution(reagentSolution.Value, reagentLossAmount);
+        spillSolution.Value.Comp.Solution.AddSolution(lostDissolvedReagents, _protoManager);
+
         spillSolution.Value.Comp.Solution.AddSolution(bleedSol, _protoManager);
         if (spillSolution.Value.Comp.Solution.Volume > bloodstream.Comp1.BleedPuddleThreshold)
         {
@@ -138,6 +151,8 @@ public sealed class BloodstreamSystem : EntitySystem
     private void CreateBloodPuddle(Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream,
         Solution spillSolution)
     {
+        //TODO: placeholder, clear the reagent to prevent mispredicts
+        spillSolution.RemoveAllSolution();
         //Puddle spill implementation is serverside only so this will be abstract and only implemented on the server
         //TODO: Make sure to transfer DNA as well (serverside only too)
         Log.Debug($"PLACEHOLDER: A blood puddle should have been spawned for {ToPrettyString(bloodstream)}!");
@@ -146,36 +161,25 @@ public sealed class BloodstreamSystem : EntitySystem
 
     public bool TryGetBloodStreamSolutions(Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream,
         [NotNullWhen(true)]out Entity<SolutionComponent>? bloodSolution,
+        [NotNullWhen(true)]out Entity<SolutionComponent>? bloodReagentSolution,
         [NotNullWhen(true)] out Entity<SolutionComponent>? spillSolution)
     {
         bloodSolution = null;
         spillSolution = null;
-        return TryGetBloodSolution(bloodstream, out bloodSolution)
-               && TryGetBloodSolution(bloodstream, out spillSolution);
+        bloodReagentSolution = null;
+        return _solutionSystem.TryGetSolution((bloodstream, bloodstream),
+                   BloodstreamComponent.BloodSolutionId, out bloodSolution, true)
+               && _solutionSystem.TryGetSolution((bloodstream, bloodstream),
+                   BloodstreamComponent.DissolvedReagentSolutionId, out bloodReagentSolution, true)
+               && _solutionSystem.TryGetSolution((bloodstream, bloodstream),
+                   BloodstreamComponent.SpillSolutionId, out spillSolution, true);
     }
 
     public bool TryGetBloodSolution(Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream,
         [NotNullWhen(true)]out Entity<SolutionComponent>? bloodSolution)
     {
-        bloodSolution = null;
-        if (_solutionSystem.TryGetSolution((bloodstream, bloodstream),
-                BloodstreamComponent.BloodSolutionId, out bloodSolution))
-            return true;
-        Log.Error($"{ToPrettyString(bloodstream)} Does not have a solution with ID: {BloodstreamComponent.BloodSolutionId}, " +
-                  $"which is required for bloodstream to function!");
-        return false;
-    }
-
-    public bool TryGetSpillSolution(Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream,
-        [NotNullWhen(true)]out Entity<SolutionComponent>? spillSolution)
-    {
-        spillSolution = null;
-        if (_solutionSystem.TryGetSolution((bloodstream, bloodstream),
-                BloodstreamComponent.SpillSolutionId, out spillSolution))
-            return true;
-        Log.Error($"{ToPrettyString(bloodstream)} Does not have a solution with ID: {BloodstreamComponent.SpillSolutionId}, " +
-                  $"which is required for bloodstream to function!");
-        return false;
+         return _solutionSystem.TryGetSolution((bloodstream, bloodstream),
+                BloodstreamComponent.BloodSolutionId, out bloodSolution, true);
     }
 
 }

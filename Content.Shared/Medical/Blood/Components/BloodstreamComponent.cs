@@ -60,6 +60,8 @@ public sealed partial class BloodstreamComponent : Component
 
     public const string BloodSolutionId = "bloodstream";
 
+    public const string DissolvedReagentSolutionId = "bloodReagents";
+
     public const string SpillSolutionId = "bloodSpill";
 
     /// <summary>
@@ -78,11 +80,17 @@ public sealed partial class BloodstreamComponent : Component
     /// The bloodstream solution
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? BloodSolution = null;
+    public EntityUid? BloodSolutionEnt = null;
+
+    /// <summary>
+    /// The bloodstream solution
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? BloodRegentsSolutionEnt = null;
 
     /// <summary>
     /// The solution to "drip" onto the ground or soak into clothing
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? SpillSolution  = null;
+    public EntityUid? SpillSolutionEnt  = null;
 }

@@ -8,7 +8,7 @@ namespace Content.Shared.Medical.Blood.Components;
 
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class VascularComponent : Component
+public sealed partial class VascularSystemComponent : Component
 {
 
     #region Simulation

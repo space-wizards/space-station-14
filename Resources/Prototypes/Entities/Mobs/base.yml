@@ -245,40 +245,30 @@
 - type: entity
   save: false
   id: MobBloodstream
+  parent: MobSimpleBloodstream
   abstract: true
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      bloodstream:
-        maxVol: 250
-      bloodSpill:
-        maxVol: 250
-  - type: InjectableSolution
-    solution: bloodstream
-  - type: Bloodstream
-    bloodDefinition: HumanBlood
-    #TODO Bloodstream: re-implement this
-#    bloodlossDamage:
-#      types:
-#        Bloodloss: 0.5
-#    bloodlossHealDamage:
-#      types:
-#        Bloodloss: -1
+  #TODO vascular/bloodstream: reimplment this
+#  components:
+#  - type: VascularSystem
+#    bloodDefinition: HumanBlood
 
 # Used for mobs that have a simplified bloodstream
 # this does not track blood types or have logic for pulse/pressure
 # use this for mobs that do not use body system or do not use advanced body/organ simulation
 - type: entity
   save: false
-  id: MobSimplifiedBloodstream
+  id: MobSimpleBloodstream
   abstract: true
   components:
   - type: SolutionContainerManager
     solutions:
       bloodstream:
         maxVol: 250
-      bloodSpill:
+      bloodReagents:
         maxVol: 250
+      bloodSpill:
+        maxVol: 9999
   - type: InjectableSolution
     solution: bloodstream
   - type: Bloodstream
+    maxVolume: 250

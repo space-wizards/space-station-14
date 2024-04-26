@@ -1567,6 +1567,14 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+      bloodstream:
+        maxVol: 50
+      bloodReagents:
+        maxVol: 50
+      bloodSpill:
+        maxVol: 9999
+  - type: Bloodstream
+    maxVolume: 50
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
@@ -1600,7 +1608,6 @@
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
     combatToggleAction: ActionCombatModeToggleOff
-  - type: Bloodstream
     #TODO Bloodstream: re-implement this
 #    bloodMaxVolume: 50
   - type: CanEscapeInventory

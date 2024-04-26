@@ -11,14 +11,14 @@ namespace Content.Shared.Medical.Blood.Systems;
 public sealed partial class VascularSystem
 {
     public void ChangeBloodType(
-        Entity<BloodstreamComponent, VascularComponent, SolutionContainerManagerComponent?> bloodCirc,
+        Entity<BloodstreamComponent, VascularSystemComponent, SolutionContainerManagerComponent?> bloodCirc,
         BloodTypePrototype newBloodType,
         BloodAntigenPolicy bloodAntigenPolicy = BloodAntigenPolicy.Overwrite)
     {
         if (bloodCirc.Comp2.BloodType! == newBloodType.ID
             || !Resolve(bloodCirc, ref bloodCirc.Comp3)
-            || !_bloodstreamSystem.TryGetBloodSolution((bloodCirc.Owner, bloodCirc.Comp1, bloodCirc.Comp3),
-                out var bloodSolution))
+            || !_solutionSystem.TryGetSolution((bloodCirc.Owner, bloodCirc.Comp3),
+                BloodstreamComponent.BloodSolutionId, out var bloodSolution, true))
             return;
         var solution = bloodSolution.Value.Comp.Solution;
         var oldReagent = solution.GetReagent(bloodCirc.Comp1.BloodReagentId);
@@ -40,22 +40,12 @@ public sealed partial class VascularSystem
     }
     public Solution CreateBloodCellSolution(BloodTypePrototype bloodType, FixedPoint2 volume)
     {
-        return new Solution(bloodType.BloodCellsReagent, volume, CreateBloodCellDataForType(bloodType));
-    }
-
-    public BloodReagentData CreateBloodCellDataForType(BloodTypePrototype bloodType)
-    {
-        return new BloodReagentData(GetBloodCellAntigensForBloodType(bloodType));
+        return new Solution(bloodType.BloodCellsReagent, volume, new BloodReagentData(bloodType));
     }
 
     public Solution CreatePlasmaSolution(BloodTypePrototype bloodType, FixedPoint2 volume)
     {
-        return new Solution(bloodType.BloodPlasmaReagent, volume, CreatePlasmaDataForType(bloodType));
-    }
-
-    public BloodReagentData CreatePlasmaDataForType(BloodTypePrototype bloodType)
-    {
-        return new BloodReagentData(GetPlasmaAntigensForBloodType(bloodType));
+        return new Solution(bloodType.BloodPlasmaReagent, volume, new BloodReagentData(bloodType));
     }
 
     #endregion
@@ -90,7 +80,7 @@ public sealed partial class VascularSystem
         }
     }
 
-    public void UpdateAllowedAntigens(Entity<VascularComponent> bloodCirc,
+    public void UpdateAllowedAntigens(Entity<VascularSystemComponent> bloodCirc,
         IEnumerable<ProtoId<BloodAntigenPrototype>> antigens,
         BloodAntigenPolicy antigenPolicy = BloodAntigenPolicy.Overwrite)
     {
@@ -118,7 +108,7 @@ public sealed partial class VascularSystem
 
     #region Setup
 
-    private BloodTypePrototype GetInitialBloodType(Entity<VascularComponent> bloodCirc, BloodDefinitionPrototype bloodDef)
+    private BloodTypePrototype GetInitialBloodType(Entity<VascularSystemComponent> bloodCirc, BloodDefinitionPrototype bloodDef)
     {
         return bloodCirc.Comp.BloodType == null
             ? SelectRandomizedBloodType(bloodDef)
@@ -149,7 +139,7 @@ public sealed partial class VascularSystem
 
     #region SolutionCreationOverloads
 
-    public Solution CreateBloodSolution(Entity<VascularComponent> bloodCirc,
+    public Solution CreateBloodSolution(Entity<VascularSystemComponent> bloodCirc,
         FixedPoint2 volume)
     {
         //We ignore the nullable here because the variable always gets filled during MapInit and you shouldn't be calling
@@ -164,7 +154,7 @@ public sealed partial class VascularSystem
 
 
 
-    public Solution CreatePlasmaSolution(Entity<VascularComponent> bloodCirc,
+    public Solution CreatePlasmaSolution(Entity<VascularSystemComponent> bloodCirc,
         FixedPoint2 volume)
     {
         //We ignore the nullable here because the variable always gets filled during MapInit and you shouldn't be calling
@@ -177,7 +167,7 @@ public sealed partial class VascularSystem
         return CreatePlasmaSolution(_protoManager.Index(bloodType), volume);
     }
 
-    public Solution CreateBloodCellSolution(Entity<VascularComponent> bloodCirc,
+    public Solution CreateBloodCellSolution(Entity<VascularSystemComponent> bloodCirc,
         FixedPoint2 volume)
     {
         //We ignore the nullable here because the variable always gets filled during MapInit and you shouldn't be calling

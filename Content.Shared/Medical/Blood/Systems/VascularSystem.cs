@@ -22,38 +22,38 @@ public sealed partial class VascularSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<VascularComponent, MapInitEvent>(OnVascularMapInit);
-        SubscribeLocalEvent<VascularComponent, BloodstreamUpdatedEvent>(OnBloodstreamUpdate);
+        SubscribeLocalEvent<VascularSystemComponent, MapInitEvent>(OnVascularMapInit);
+        SubscribeLocalEvent<VascularSystemComponent, BloodstreamUpdatedEvent>(OnBloodstreamUpdate);
     }
 
-    private void OnVascularMapInit(EntityUid uid, VascularComponent vascular, ref MapInitEvent args)
+    private void OnVascularMapInit(EntityUid uid, VascularSystemComponent vascularSystem, ref MapInitEvent args)
     {
-        vascular.CurrentBloodPressure ??= vascular.HealthyBloodPressure;
-        Dirty(uid, vascular);
+        vascularSystem.CurrentBloodPressure ??= vascularSystem.HealthyBloodPressure;
+        Dirty(uid, vascularSystem);
     }
 
-    private void OnBloodstreamUpdate(EntityUid uid, VascularComponent vascular, ref BloodstreamUpdatedEvent args)
+    private void OnBloodstreamUpdate(EntityUid uid, VascularSystemComponent vascularSystem, ref BloodstreamUpdatedEvent args)
     {
-        VascularSystemUpdate((uid, vascular, args.Bloodstream));
+        VascularSystemUpdate((uid, vascularSystem, args.Bloodstream));
     }
 
-    public void SetupCirculation(EntityUid uid, BloodstreamComponent bloodstreamComp, VascularComponent vascularComp,
+    public void SetupCirculation(EntityUid uid, BloodstreamComponent bloodstreamComp, VascularSystemComponent vascularSystemComp,
         FixedPoint2 initialVolume, Entity<SolutionComponent> bloodSolution)
     {
 
-        var bloodDef = _protoManager.Index<BloodDefinitionPrototype>(vascularComp.BloodDefinition);
-        var bloodType = GetInitialBloodType((uid, vascularComp), bloodDef);
+        var bloodDef = _protoManager.Index<BloodDefinitionPrototype>(vascularSystemComp.BloodDefinition);
+        var bloodType = GetInitialBloodType((uid, vascularSystemComp), bloodDef);
 
-        vascularComp.BloodType = bloodType.ID;
+        vascularSystemComp.BloodType = bloodType.ID;
         bloodstreamComp.Volume = initialVolume;
         bloodstreamComp.BloodReagentId = new ReagentId(bloodstreamComp.BloodReagent!, new BloodReagentData(bloodType));
 
         _solutionSystem.AddSolution((bloodSolution, bloodSolution),
             new Solution(new []{new ReagentQuantity(bloodstreamComp.BloodReagentId, initialVolume)}));
-        UpdateAllowedAntigens((uid, vascularComp), GetAntigensForBloodType(bloodType));
-        vascularComp.Pulse = GetHighestPulse(vascularComp);
+        UpdateAllowedAntigens((uid, vascularSystemComp), GetAntigensForBloodType(bloodType));
+        vascularSystemComp.Pulse = GetHighestPulse(vascularSystemComp);
 
-        Dirty(uid, vascularComp);
+        Dirty(uid, vascularSystemComp);
     }
 }
 

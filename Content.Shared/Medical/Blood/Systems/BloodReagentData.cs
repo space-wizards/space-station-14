@@ -9,69 +9,77 @@ namespace Content.Shared.Medical.Blood.Systems;
 public sealed partial class BloodReagentData : ReagentData
 {
     [DataField(required: true)]
-    public HashSet<ProtoId<BloodAntigenPrototype>> Antigens;
+    public HashSet<ProtoId<BloodAntigenPrototype>> BloodAntigens;
+
+    [DataField(required: true)]
+    public HashSet<ProtoId<BloodAntigenPrototype>> PlasmaAntigens;
 
     [DataField]
     public ProtoId<BloodTypePrototype>? BloodTypeId;
 
+    [DataField]
+    public float PlasmaPercentage;
+
     //TODO: DNA
 
-    public BloodReagentData(BloodTypePrototype bloodType)
+    public BloodReagentData(BloodTypePrototype bloodType) :
+        this(bloodType.BloodCellAntigens, bloodType.PlasmaAntigens, bloodType.ID, bloodType.PlasmaPercentage)
     {
-        Antigens = [];
-        foreach (var antigen in bloodType.PlasmaAntigens)
-        {
-            Antigens.Add(antigen);
-        }
-        foreach (var antigen in bloodType.BloodCellAntigens)
-        {
-            Antigens.Add(antigen);
-        }
-        BloodTypeId = bloodType.ID;
     }
 
-    public BloodReagentData(IEnumerable<ProtoId<BloodAntigenPrototype>> antigens,
-        ProtoId<BloodTypePrototype>? bloodTypeId = null)
+    public BloodReagentData(IEnumerable<ProtoId<BloodAntigenPrototype>> bloodAntigens,
+        IEnumerable<ProtoId<BloodAntigenPrototype>> plasmaAntigens,
+        ProtoId<BloodTypePrototype>? bloodTypeId = null,
+        float plasmaPercentage = 0.55f)
     {
-        Antigens = [];
-        foreach (var antigen in antigens)
+        BloodAntigens = [];
+        PlasmaAntigens = [];
+        foreach (var antigen in bloodAntigens)
         {
-            Antigens.Add(antigen);
+            BloodAntigens.Add(antigen);
+        }
+        foreach (var antigen in plasmaAntigens)
+        {
+            PlasmaAntigens.Add(antigen);
         }
         BloodTypeId = bloodTypeId;
+        PlasmaPercentage = plasmaPercentage;
     }
 
-    public BloodReagentData(HashSet<ProtoId<BloodAntigenPrototype>> antigens,
-        ProtoId<BloodTypePrototype>? bloodTypeId = null)
+    public BloodReagentData(HashSet<ProtoId<BloodAntigenPrototype>> bloodAntigens,
+        HashSet<ProtoId<BloodAntigenPrototype>> plasmaAntigens,
+        ProtoId<BloodTypePrototype>? bloodTypeId = null,
+        float plasmaPercentage = 0.55f)
     {
-        Antigens = antigens;
+        BloodAntigens = [..bloodAntigens];
+        PlasmaAntigens = [..plasmaAntigens];
         BloodTypeId = bloodTypeId;
-    }
-
-    public BloodReagentData(ProtoId<BloodTypePrototype>? bloodTypeId = null, params ProtoId<BloodAntigenPrototype>[] antigens)
-    {
-        Antigens = [];
-        foreach (var antigen in antigens)
-        {
-            Antigens.Add(antigen);
-        }
-        BloodTypeId = bloodTypeId;
+        PlasmaPercentage = plasmaPercentage;
     }
 
     public override bool Equals(ReagentData? other)
     {
         var test = other as BloodReagentData;
-        return test != null && Antigens.SetEquals(test.Antigens) && BloodTypeId == test.BloodTypeId;
+        //Do not check plasma percentage because it will be changed and should not be used to differentiate between
+        //different blood types. I hate this, but it's the only way to store data that changes on reagents
+        //without rewriting the entire reagents/reagentData api
+        return test != null
+               && BloodAntigens.SetEquals(test.BloodAntigens)
+               && PlasmaAntigens.SetEquals(test.PlasmaAntigens)
+               && BloodTypeId == test.BloodTypeId;
     }
 
     public override int GetHashCode()
     {
-        return (Antigens, BloodType: BloodTypeId).GetHashCode();
+        //Do not check plasma percentage because it will be changed and should not be used to differentiate between
+        //different blood types. I hate this, but it's the only way to store data that changes on reagents
+        //without rewriting the entire reagents/reagentData api
+        return (BloodAntigens, PlasmaAntigens, BloodTypeId).GetHashCode();
     }
 
     public override ReagentData Clone()
     {
-        return new BloodReagentData(Antigens);
+        return new BloodReagentData(BloodAntigens, PlasmaAntigens, BloodTypeId, PlasmaPercentage);
     }
 
     public static implicit operator BloodReagentData(BloodTypePrototype bloodType)
