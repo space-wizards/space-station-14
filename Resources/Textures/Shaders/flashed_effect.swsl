@@ -11,7 +11,7 @@ void fragment() {
 
     highp vec4 textureMix = mix(tex1, tex2, 0.5);
 
-    // Gradually mixes between the texture mix and a full-white texture, causing the "blinding" effect
+    // Gradually mixes between the texture mix and a full-black texture, causing the "blinding" effect
     highp vec4 mixed = mix(vec4(0.0, 0.0, 0.0, 1.0), textureMix, percentComplete);
 
     COLOR = vec4(mixed.rgb, remaining);
