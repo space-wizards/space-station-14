@@ -7,6 +7,7 @@
         <BoxContainer Orientation="Horizontal">
             <LayeredTextureRect
                 Name="RecipeTextures"
+                Margin="0 0 4 0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Stretch="KeepAspectCentered"

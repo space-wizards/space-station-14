@@ -116,8 +116,8 @@ public sealed partial class LatheMenu : DefaultWindow
             else
             {
                 textures = prototype.Icon == null
-                    ? [_spriteSystem.GetPrototypeIcon(prototype.Result).Default]
-                    : [_spriteSystem.Frame0(prototype.Icon)];
+                    ? new List<Texture> { _spriteSystem.GetPrototypeIcon(prototype.Result).Default }
+                    : new List<Texture> { _spriteSystem.Frame0(prototype.Icon) };
             }
 
             var canProduce = _lathe.CanProduce(_owner, prototype, quantity);
