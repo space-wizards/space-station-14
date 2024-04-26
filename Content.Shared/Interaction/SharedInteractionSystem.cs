@@ -1019,7 +1019,6 @@ namespace Content.Shared.Interaction
             }
 
             // else, default to activating the item
-            // Need to re-check usedelay or else we won't reset it properly.
             return InteractionActivate(user, used, false, false, false);
         }
 

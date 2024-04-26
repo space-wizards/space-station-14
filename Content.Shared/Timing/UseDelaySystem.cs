@@ -28,6 +28,7 @@ public sealed class UseDelaySystem : EntitySystem
 
         ent.Comp.Delays.Clear();
 
+        // At time of writing sourcegen networking doesn't deep copy so this will mispredict if you try.
         foreach (var (key, delay) in state.Delays)
         {
             ent.Comp.Delays[key] = new UseDelayInfo(delay.Length, delay.StartTime, delay.EndTime);
