@@ -414,8 +414,8 @@ public sealed class FaxSystem : EntitySystem
         else
             prototype = DefaultPaperPrototypeId;
 
-        var name  = Loc.GetString("fax-machine-printed-paper-name");
-        
+        var name = Loc.GetString("fax-machine-printed-paper-name");
+
         var printout = new FaxPrintout(args.Content, name, args.Label, prototype);
         component.PrintingQueue.Enqueue(printout);
         component.SendTimeoutRemaining += component.SendTimeout;
