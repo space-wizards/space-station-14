@@ -41,7 +41,7 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
     {
         prototype = Reagent.Prototype;
         quantity = Quantity;
-        data = Reagent.Data;
+        data = Reagent.Discriminator;
     }
 
     public void Deconstruct(out ReagentId id, out FixedPoint2 quantity)
