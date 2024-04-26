@@ -89,7 +89,7 @@ public sealed partial class StoreSystem
             return;
 
         // TODO: Why is the state not being set unless this?
-        if (!_ui.IsUiOpen(store, StoreUiKey.Key))
+        if (!_ui.HasUi(store, StoreUiKey.Key))
             return;
 
         //this is the person who will be passed into logic for all listing filtering.
