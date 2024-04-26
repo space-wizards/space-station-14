@@ -262,9 +262,6 @@
   id: CannonBall
 
 - type: Tag
-  id: CannonRestrict
-
-- type: Tag
   id: CannotSuicide
 
 - type: Tag
@@ -1240,6 +1237,9 @@
 
 - type: Tag
   id: TrashBag
+
+- type: Tag
+  id: Truncheon
 
 - type: Tag
   id: Unimplantable

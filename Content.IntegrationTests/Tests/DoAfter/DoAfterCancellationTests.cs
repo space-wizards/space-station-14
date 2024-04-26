@@ -3,8 +3,6 @@ using Content.IntegrationTests.Tests.Construction.Interaction;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.IntegrationTests.Tests.Weldable;
 using Content.Shared.Tools.Components;
-using Content.Server.Tools.Components;
-using Content.Shared.DoAfter;
 
 namespace Content.IntegrationTests.Tests.DoAfter;
 
