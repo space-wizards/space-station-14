@@ -46,7 +46,7 @@ public sealed partial class VascularSystem : EntitySystem
 
         vascularSystemComp.BloodType = bloodType.ID;
         bloodstreamComp.Volume = initialVolume;
-        bloodstreamComp.BloodReagentId = new ReagentId(bloodstreamComp.BloodReagent!, new BloodReagentData(bloodType));
+        bloodstreamComp.BloodReagentId = new ReagentId(bloodstreamComp.BloodReagent!, new BloodTypeDataDescriminator(bloodType));
 
         _solutionSystem.AddSolution((bloodSolution, bloodSolution),
             new Solution(new []{new ReagentQuantity(bloodstreamComp.BloodReagentId, initialVolume)}));
