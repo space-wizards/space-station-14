@@ -20,12 +20,12 @@ public partial struct ReagentId : IEquatable<ReagentId>
     /// Any additional data that is unique to this reagent type. E.g., for blood this could be DNA data.
     /// </summary>
     [DataField("data")]
-    public ReagentDiscriminator? Data { get; private set; }
+    public ReagentDiscriminator? Discriminator { get; private set; }
 
-    public ReagentId(string prototype, ReagentDiscriminator? data)
+    public ReagentId(string prototype, ReagentDiscriminator? discriminator)
     {
         Prototype = prototype;
-        Data = data;
+        Discriminator = discriminator;
     }
 
     public ReagentId()
@@ -38,16 +38,16 @@ public partial struct ReagentId : IEquatable<ReagentId>
         if (Prototype != other.Prototype)
             return false;
 
-        if (Data == null)
-            return other.Data == null;
+        if (Discriminator == null)
+            return other.Discriminator == null;
 
-        if (other.Data == null)
+        if (other.Discriminator == null)
             return false;
 
-        if (Data.GetType() != other.Data.GetType())
+        if (Discriminator.GetType() != other.Discriminator.GetType())
             return false;
 
-        return Data.Equals(other.Data);
+        return Discriminator.Equals(other.Discriminator);
     }
 
     public bool Equals(string prototype, ReagentDiscriminator? otherData = null)
@@ -55,10 +55,10 @@ public partial struct ReagentId : IEquatable<ReagentId>
         if (Prototype != prototype)
             return false;
 
-        if (Data == null)
+        if (Discriminator == null)
             return otherData == null;
 
-        return Data.Equals(otherData);
+        return Discriminator.Equals(otherData);
     }
 
     public override bool Equals(object? obj)
@@ -68,17 +68,17 @@ public partial struct ReagentId : IEquatable<ReagentId>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Prototype, Data);
+        return HashCode.Combine(Prototype, Discriminator);
     }
 
     public string ToString(FixedPoint2 quantity)
     {
-        return Data?.ToString(Prototype, quantity) ?? $"{Prototype}:{quantity}";
+        return Discriminator?.ToString(Prototype, quantity) ?? $"{Prototype}:{quantity}";
     }
 
     public override string ToString()
     {
-        return Data?.ToString(Prototype) ?? Prototype;
+        return Discriminator?.ToString(Prototype) ?? Prototype;
     }
 
     public static bool operator ==(ReagentId left, ReagentId right)
