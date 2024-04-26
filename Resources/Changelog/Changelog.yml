@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Holosigns can now be placed at range. No more being eaten by forcefields!
-    type: Tweak
-  id: 5939
-  time: '2024-02-14T05:25:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25120
 - author: Zadeon
   changes:
   - message: Disablers now fit inside the suit storage slot.
@@ -3848,3 +3841,12 @@
   id: 6438
   time: '2024-04-26T07:34:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27046
+- author: FungiFellow
+  changes:
+  - message: Added SecBelt whitelist to Sec webbing
+    type: Tweak
+  - message: Added more Ammo holders to SecBelt whitelist
+    type: Tweak
+  id: 6439
+  time: '2024-04-26T07:44:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27303
