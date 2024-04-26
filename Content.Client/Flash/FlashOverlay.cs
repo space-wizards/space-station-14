@@ -26,12 +26,13 @@ namespace Content.Client.Flash
         private readonly ShaderInstance _shader;
         private double _startTime = -1;
         private double _lastsFor = 1;
+        private float _percentComplete = 0f;
         private Texture? _screenshotTexture;
 
         public FlashOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").Instance().Duplicate();
+            _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").InstanceUnique();
         }
 
         public void ReceiveFlash(double duration)
@@ -49,21 +50,27 @@ namespace Content.Client.Flash
             _lastsFor = duration;
         }
 
-        protected override void Draw(in OverlayDrawArgs args)
+        protected override bool BeforeDraw(in OverlayDrawArgs args)
         {
             if (!_entityManager.TryGetComponent(_playerManager.LocalEntity, out EyeComponent? eyeComp))
-                return;
-
+                return false;
             if (args.Viewport.Eye != eyeComp.Eye)
-                return;
+                return false;
 
-            var percentComplete = (float) ((_gameTiming.CurTime.TotalSeconds - _startTime) / _lastsFor);
-            if (percentComplete >= 1.0f)
-                return;
+            _percentComplete = (float) ((_gameTiming.CurTime.TotalSeconds - _startTime) / _lastsFor);
+            if (_percentComplete >= 1.0f)
+            {
+                _screenshotTexture = null;
+                return false;
+            }
+            return true;
+        }
 
+        protected override void Draw(in OverlayDrawArgs args)
+        {
             var worldHandle = args.WorldHandle;
+            _shader.SetParameter("percentComplete", _percentComplete);
             worldHandle.UseShader(_shader);
-            _shader.SetParameter("percentComplete", percentComplete);
 
             if (_screenshotTexture != null)
             {
