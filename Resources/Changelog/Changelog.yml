@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lukasz825700516
-  changes:
-  - message: Damaging stacked glass sheets now gives appropriate amount of glass shards
-    type: Fix
-  id: 5947
-  time: '2024-02-16T18:42:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25308
 - author: Plykiya
   changes:
   - message: The firefighting door remote now has access to atmos doors.
@@ -3850,3 +3843,10 @@
   id: 6446
   time: '2024-04-26T12:39:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25884
+- author: DrSmugleaf
+  changes:
+  - message: Fixed the game never starting again if it fails to start once.
+    type: Fix
+  id: 6447
+  time: '2024-04-26T13:02:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27359
