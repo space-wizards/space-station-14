@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Nuke has some more blinkenlights now.
-    type: Tweak
-  id: 5944
-  time: '2024-02-16T00:26:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25297
 - author: MACMAN2003
   changes:
   - message: Thindows no longer duplicate glass when broken.
@@ -3850,3 +3843,11 @@
   id: 6443
   time: '2024-04-26T08:16:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27214
+- author: DrSmugleaf
+  changes:
+  - message: Fixed mobs that are able to pry doors not being able to do so by just
+      left clicking on them.
+    type: Fix
+  id: 6444
+  time: '2024-04-26T12:17:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27349
