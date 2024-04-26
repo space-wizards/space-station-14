@@ -1,13 +1,13 @@
 using Content.Shared.DoAfter;
-using Content.Shared.Humanoid;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.MagicMirror;
+namespace Content.Shared.MagicMirror;
 
 /// <summary>
 /// Allows humanoids to change their appearance mid-round.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MagicMirrorComponent : Component
 {
     [DataField]
@@ -16,7 +16,7 @@ public sealed partial class MagicMirrorComponent : Component
     /// <summary>
     /// Magic mirror target, used for validating UI messages.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? Target;
 
     /// <summary>
