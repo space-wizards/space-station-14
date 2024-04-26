@@ -820,7 +820,7 @@ public abstract partial class InteractionTest
             return false;
         }
 
-        if (!ui.OpenInterfaces.TryGetValue(key, out bui))
+        if (!ui.ClientOpenInterfaces.TryGetValue(key, out bui))
         {
             if (shouldSucceed)
                 Assert.Fail($"Entity {SEntMan.ToPrettyString(SEntMan.GetEntity(target.Value))} does not have an open bui with key {key.GetType()}.{key}.");

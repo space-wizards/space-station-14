@@ -1,13 +1,12 @@
-using Content.Server.PowerCell;
 using Content.Shared.PowerCell;
-using Content.Shared.UserInterface;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.UserInterface;
+namespace Content.Shared.UserInterface;
 
 /// <summary>
 /// Specifies that the attached entity requires <see cref="PowerCellDrawComponent"/> power.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ActivatableUIRequiresPowerCellComponent : Component
 {
 
