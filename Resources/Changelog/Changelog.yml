@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: The firefighting door remote now has access to atmos doors.
-    type: Tweak
-  id: 5948
-  time: '2024-02-16T18:50:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25097
 - author: themias
   changes:
   - message: t-ray scanners can now penetrate carpets and puddles
@@ -3850,3 +3843,14 @@
   id: 6447
   time: '2024-04-26T13:02:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27359
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Monkey reinforcement teleporters can now select between kobold and monkey
+      operative with a verb.
+    type: Tweak
+  - message: Monkey reinforcement teleporters have been renamed to "genetic ancestor
+      reinforcement teleporter".
+    type: Tweak
+  id: 6448
+  time: '2024-04-26T13:06:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25982
