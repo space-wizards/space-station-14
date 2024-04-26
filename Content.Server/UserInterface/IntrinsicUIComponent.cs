@@ -9,18 +9,12 @@ public sealed partial class IntrinsicUIComponent : Component
     /// <summary>
     /// List of UIs and their actions that this entity has.
     /// </summary>
-    [DataField("uis", required: true)] public List<IntrinsicUIEntry> UIs = new();
+    [DataField("uis", required: true)] public Dictionary<Enum, IntrinsicUIEntry> UIs = new();
 }
 
 [DataDefinition]
-public partial class IntrinsicUIEntry
+public sealed partial class IntrinsicUIEntry
 {
-    /// <summary>
-    /// The BUI key that this intrinsic UI should open.
-    /// </summary>
-    [DataField("key", required: true)]
-    public Enum? Key { get; private set; }
-
     [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
     public string? ToggleAction;
 

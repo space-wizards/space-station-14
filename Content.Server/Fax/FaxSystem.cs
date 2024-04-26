@@ -54,7 +54,7 @@ public sealed class FaxSystem : EntitySystem
     /// </summary>
     [ValidatePrototypeId<EntityPrototype>]
     private const string DefaultPaperPrototypeId = "Paper";
-    
+
     [ValidatePrototypeId<EntityPrototype>]
     private const string OfficePaperPrototypeId = "PaperOffice";
 
@@ -363,7 +363,7 @@ public sealed class FaxSystem : EntitySystem
                       component.SendTimeoutRemaining <= 0 &&
                       component.InsertingTimeRemaining <= 0;
         var state = new FaxUiState(component.FaxName, component.KnownFaxes, canSend, canCopy, isPaperInserted, component.DestinationFaxAddress);
-        _userInterface.TrySetUiState(uid, FaxUiKey.Key, state);
+        _userInterface.SetUiState(uid, FaxUiKey.Key, state);
     }
 
     /// <summary>
@@ -425,7 +425,7 @@ public sealed class FaxSystem : EntitySystem
         // Unfortunately, since a paper entity does not yet exist, we have to emulate what LabelSystem will do.
         var nameWithLabel = (args.Label is { } label) ? $"{name} ({label})" : name;
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{ToPrettyString(args.Session.AttachedEntity) ?? "Unknown":actor} " +
+            $"{ToPrettyString(args.Actor):actor} " +
             $"added print job to \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
             $"of {nameWithLabel}: {args.Content}");
     }
@@ -468,7 +468,7 @@ public sealed class FaxSystem : EntitySystem
         UpdateUserInterface(uid, component);
 
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{ToPrettyString(args.Session.AttachedEntity) ?? "Unknown":actor} " +
+            $"{ToPrettyString(args.Actor):actor} " +
             $"added copy job to \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
             $"of {ToPrettyString(sendEntity):subject}: {printout.Content}");
     }
@@ -526,7 +526,7 @@ public sealed class FaxSystem : EntitySystem
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{ToPrettyString(args.Session.AttachedEntity) ?? "Unknown":actor} " +
+            $"{ToPrettyString(args.Actor):actor} " +
             $"sent fax from \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
             $"to \"{faxName}\" ({component.DestinationFaxAddress}) " +
             $"of {ToPrettyString(sendEntity):subject}: {paper.Content}");
