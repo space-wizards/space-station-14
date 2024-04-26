@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Fixed disposals bins not automatically flushing after an item was inserted.
-    type: Fix
-  id: 5942
-  time: '2024-02-15T20:52:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25233
 - author: liltenhead
   changes:
   - message: Reduced energy shield's hp from 150 to 100.
@@ -3850,3 +3843,10 @@
   id: 6441
   time: '2024-04-26T07:48:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27198
+- author: Boaz1111
+  changes:
+  - message: Refactored Cluster's medbay, including cryo in the bottom left room
+    type: Tweak
+  id: 6442
+  time: '2024-04-26T08:01:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27293
