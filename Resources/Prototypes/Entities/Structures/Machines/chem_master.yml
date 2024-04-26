@@ -86,7 +86,7 @@
   - type: SolutionContainerManager
     solutions:
       buffer:
-        maxVol: 300
+        maxVol: 1000
   - type: DumpableSolution
     solution: buffer
     unlimited: true
