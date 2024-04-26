@@ -130,7 +130,7 @@
 
 - type: entity
   id: MagazinePistolSubMachineGunTopMountedEmpty
-  name: WT550 magazine (.35 auto top-mounted)
+  name: WT550 magazine (.35 auto top-mounted any)
   parent: MagazinePistolSubMachineGunTopMounted
   components:
   - type: BallisticAmmoProvider
@@ -158,6 +158,11 @@
   components:
   - type: BallisticAmmoProvider
     proto: null
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+
 
 - type: entity
   id: MagazinePistolIncendiary
@@ -219,8 +224,8 @@
     proto: null
   - type: Sprite
     layers:
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
 
 - type: entity
   id: MagazinePistolHighCapacity
@@ -294,8 +299,8 @@
     proto: null 
   - type: Sprite
     layers:
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
 
 - type: entity
   id: MagazinePistolSubMachineGunPractice

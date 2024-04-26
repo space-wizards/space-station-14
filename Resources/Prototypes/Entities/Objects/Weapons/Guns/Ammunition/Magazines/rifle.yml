@@ -55,6 +55,10 @@
   components:
   - type: BallisticAmmoProvider
     proto: null
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
 
 - type: entity
   id: MagazineRifleIncendiary
