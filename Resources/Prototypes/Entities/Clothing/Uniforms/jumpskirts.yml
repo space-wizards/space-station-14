@@ -769,7 +769,7 @@
 
 - type: entity
   parent: ClothingUniformSkirtBase
-  id: ClothingUniformOldDress
+  id: ClothingUniformJumpskirtOldDress
   name: old dress
   description: A worn-looking dress from a very long time ago.
   components:

@@ -88,7 +88,7 @@
     - id: ClothingNeckCloakVoid
     - id: RevolverCapGun
     - id: BarberScissors
-    - id: OldDress
+    - id: ClothingUniformJumpskirtOldDress
 
 - type: entity
   id: CrateServiceCustomSmokable
