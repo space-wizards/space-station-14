@@ -8,7 +8,7 @@ namespace Content.Shared.Body.Prototypes
         [IdDataField]
         public string ID { get; private set; } = default!;
 
-        [DataField(required: true)]
+        [DataField("name", required: true)]
         private LocId Name { get; set; }
 
         [ViewVariables(VVAccess.ReadOnly)]
