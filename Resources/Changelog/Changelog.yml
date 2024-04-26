@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Golinth
-  changes:
-  - message: Mindshields are no longer separate and appear as a border around job
-      icons on the SecHUD
-    type: Tweak
-  id: 5946
-  time: '2024-02-16T15:58:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25303
 - author: Lukasz825700516
   changes:
   - message: Damaging stacked glass sheets now gives appropriate amount of glass shards
@@ -3851,3 +3843,10 @@
   id: 6445
   time: '2024-04-26T12:31:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27307
+- author: wafehling
+  changes:
+  - message: You can now reopen the end of round summary window with F9.
+    type: Tweak
+  id: 6446
+  time: '2024-04-26T12:39:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25884
