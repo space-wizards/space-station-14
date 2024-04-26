@@ -80,8 +80,10 @@ public sealed class BloodstreamSystem : EntitySystem
 
         if (bloodstream.RegenCutoffVolume < 0)
             bloodstream.RegenCutoffVolume = bloodstream.MaxVolume;
-        bloodstream.SpillSolutionEnt = spillSolution;
+
         bloodstream.BloodSolutionEnt = bloodSolution;
+        bloodstream.SpillSolutionEnt = spillSolution;
+        bloodstream.BloodRegentsSolutionEnt = bloodReagentSolution;
 
         //If we have a circulation comp, call the setup method on bloodCirculationSystem
         if (TryComp<VascularSystemComponent>(bloodstreamEnt, out var bloodCircComp))
@@ -182,4 +184,106 @@ public sealed class BloodstreamSystem : EntitySystem
                 BloodstreamComponent.BloodSolutionId, out bloodSolution, true);
     }
 
+    public void AdjustDissolvedReagent(
+        Entity<SolutionComponent> containingSolution,
+        Entity<SolutionComponent> dissolvedSolution,
+        ReagentId reagent,
+        float concentrationChange,
+        ReagentId? containingReagent = null)
+    {
+        if (concentrationChange == 0)
+            return;
+        var dissolvedSol = dissolvedSolution.Comp.Solution;
+        var amtChange =
+            GetReagentQuantityFromConcentration(containingSolution, dissolvedSolution, MathF.Abs(concentrationChange),
+                containingReagent);
+        if (concentrationChange > 0)
+        {
+            dissolvedSol.AddReagent(reagent, amtChange);
+        }
+        else
+        {
+            dissolvedSol.RemoveReagent(reagent,amtChange);
+        }
+        _solutionSystem.UpdateChemicals(dissolvedSolution);
+    }
+
+    public FixedPoint2 GetReagentQuantityFromConcentration(Entity<SolutionComponent> containingSolution,
+        Entity<SolutionComponent> dissolvedSolution ,float concentration, ReagentId? containingReagent = null)
+    {
+        var containingSol = containingSolution.Comp.Solution;
+        var dissolvedSol = dissolvedSolution.Comp.Solution;
+        if (containingSol.Volume == 0
+            || dissolvedSol.Volume == 0)
+            return 0;
+        var containingVol = containingSol.Volume;
+        if (containingReagent != null)
+            containingSol.TryGetReagentQuantity(containingReagent.Value, out containingVol);
+        return concentration * containingVol;
+    }
+
+    public float GetReagentConcentration(Entity<SolutionComponent> containingSolution,
+        Entity<SolutionComponent> dissolvedSolution ,ReagentId dissolvedReagent, ReagentId? containingReagent = null)
+    {
+        var containingSol = containingSolution.Comp.Solution;
+        var dissolvedSol = dissolvedSolution.Comp.Solution;
+        if (containingSol.Volume == 0
+            || dissolvedSol.Volume == 0
+            || !dissolvedSol.TryGetReagentQuantity(dissolvedReagent, out var dissolvedVol))
+            return 0;
+        var containingVol = containingSol.Volume;
+        if (containingReagent != null)
+            containingSol.TryGetReagentQuantity(containingReagent.Value, out containingVol);
+        return (float)dissolvedVol / (float)containingVol;
+    }
+
+    public FixedPoint2 ClampReagentAmountByConcentration(
+        Entity<SolutionComponent> containingSolution,
+        Entity<SolutionComponent> dissolvedSolution,
+        ReagentId dissolvedReagent,
+        FixedPoint2 dissolvedReagentAmount,
+        ReagentId? containingReagent = null,
+        float maxConcentration = 1f)
+    {
+        var containingSol = containingSolution.Comp.Solution;
+        var dissolvedSol = dissolvedSolution.Comp.Solution;
+        if (containingSol.Volume == 0
+            || dissolvedSol.Volume == 0
+            || !dissolvedSol.TryGetReagentQuantity(dissolvedReagent, out var dissolvedVol))
+            return 0;
+        var containingVol = containingSol.Volume;
+        if (containingReagent != null)
+            containingSol.TryGetReagentQuantity(containingReagent.Value, out containingVol);
+        containingVol *= maxConcentration;
+        dissolvedVol += dissolvedReagentAmount;
+        var overflow = containingVol - dissolvedVol;
+        if (overflow < 0)
+            dissolvedReagentAmount += overflow;
+        return dissolvedReagentAmount;
+    }
+
+    public Entity<SolutionComponent> GetBloodSolution(
+        Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream)
+    {
+        if (!_solutionSystem.TryGetSolution((bloodstream, bloodstream),
+                BloodstreamComponent.BloodSolutionId, out var solEnt, true))
+            throw new Exception($"{BloodstreamComponent.BloodSolutionId}  not defined for Ent {ToPrettyString(bloodstream)}");
+        return solEnt.Value;
+    }
+    public Entity<SolutionComponent> GetSpillSolution(
+        Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream)
+    {
+        if (!_solutionSystem.TryGetSolution((bloodstream, bloodstream),
+                BloodstreamComponent.SpillSolutionId, out var solEnt, true))
+            throw new Exception($"{BloodstreamComponent.SpillSolutionId} not defined for Ent {ToPrettyString(bloodstream)}");
+        return solEnt.Value;
+    }
+    public Entity<SolutionComponent> GetDissolvedSolution(
+        Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream)
+    {
+        if (!_solutionSystem.TryGetSolution((bloodstream, bloodstream),
+                BloodstreamComponent.DissolvedReagentSolutionId, out var solEnt, true))
+            throw new Exception($"{BloodstreamComponent.SpillSolutionId} not defined for Ent {ToPrettyString(bloodstream)}");
+        return solEnt.Value;
+    }
 }

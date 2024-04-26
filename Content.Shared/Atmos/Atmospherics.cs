@@ -14,6 +14,16 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float R = 8.314462618f;
 
+        public static float MolsToVolume(float mols, float pressure = OneAtmosphere, float temp = T20C)
+        {
+            return mols * temp * R / pressure;
+        }
+
+        public static float VolumeToMols(float volume, float pressure = OneAtmosphere, float temp = T20C)
+        {
+            return pressure * volume / (R * temp);
+        }
+
         /// <summary>
         ///     1 ATM in kPA.
         /// </summary>
