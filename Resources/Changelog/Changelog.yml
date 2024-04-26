@@ -1,72 +1,4 @@
 ﻿Entries:
-- author: icekot8
-  changes:
-  - message: Medical berets added to MediDrobe
-    type: Add
-  id: 5930
-  time: '2024-02-13T21:37:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25176
-- author: PoorMansDreams
-  changes:
-  - message: Alternate ammo now has the proper appearance when spent.
-    type: Fix
-  id: 5931
-  time: '2024-02-13T21:40:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25167
-- author: Agoichi
-  changes:
-  - message: All hoods have tag "Hides Hair"
-    type: Tweak
-  - message: Plague Doctor's hat and Witch hat (with red hair) have tag "Hides Hair"
-    type: Tweak
-  id: 5932
-  time: '2024-02-13T21:43:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25142
-- author: Blackern5000
-  changes:
-  - message: Advanced topical meds now cost significantly less chemicals
-    type: Tweak
-  id: 5933
-  time: '2024-02-13T22:03:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24948
-- author: Tayrtahn
-  changes:
-  - message: Drink bottles can now be opened and closed from the verbs menu, and some
-      have been given tamper-evident seals.
-    type: Add
-  id: 5934
-  time: '2024-02-13T22:08:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24780
-- author: TheShuEd
-  changes:
-  - message: Darkness is coming. A new shadow anomaly added.
-    type: Add
-  id: 5935
-  time: '2024-02-13T22:12:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24629
-- author: jamessimo
-  changes:
-  - message: Microwave UI enhancements
-    type: Tweak
-  - message: Microwaves now tell you how much time is left when cooking
-    type: Tweak
-  - message: Microwaves UI now uses prediction for user inputs.
-    type: Fix
-  id: 5936
-  time: '2024-02-13T22:16:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24547
-- author: TheShuEd
-  changes:
-  - message: Remote signallers are now limited to a 15-tile radius
-    type: Tweak
-  - message: Added an advanced remote signaler, with a range of 30 tiles.
-    type: Add
-  - message: the anomaly synchronizer consumes much less power, and no longer causes
-      the anomaly pulses when powering down.
-    type: Tweak
-  id: 5937
-  time: '2024-02-13T22:19:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24461
 - author: joshepvodka
   changes:
   - message: Fax machines can now print text files from your computer.
@@ -3851,3 +3783,68 @@
   id: 6429
   time: '2024-04-23T12:07:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27255
+- author: Plykiya
+  changes:
+  - message: Do-after bars of other players are now shaded and harder to see in the
+      dark.
+    type: Tweak
+  id: 6430
+  time: '2024-04-24T02:42:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27273
+- author: Blackern5000
+  changes:
+  - message: The cargo telepad is now tier 2 technology rather than tier 3.
+    type: Tweak
+  id: 6431
+  time: '2024-04-24T13:21:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26270
+- author: FungiFellow
+  changes:
+  - message: Truncheon now fits in SecBelt
+    type: Tweak
+  id: 6432
+  time: '2024-04-24T13:43:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27281
+- author: pigeonpeas
+  changes:
+  - message: Adds a trash bag to the advanced cleaning module.
+    type: Add
+  id: 6433
+  time: '2024-04-24T21:27:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27226
+- author: Beck Thompson
+  changes:
+  - message: Radio jammer now has 3 selectable power operating levels and a battery
+      level led indicator!
+    type: Tweak
+  id: 6434
+  time: '2024-04-25T02:19:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25912
+- author: cooldolphin
+  changes:
+  - message: Three variants of glasses are now available in the loadout menu.
+    type: Add
+  id: 6435
+  time: '2024-04-25T23:18:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27286
+- author: EmoGarbage404
+  changes:
+  - message: Traitors now have the correct number of objectives.
+    type: Fix
+  - message: Declaring war now gives TC again.
+    type: Fix
+  - message: Latejoining antagonists will now properly exclude command and security
+      staff.
+    type: Fix
+  id: 6436
+  time: '2024-04-26T00:25:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27319
+- author: Tayrtahn
+  changes:
+  - message: Fixed Bibles not healing.
+    type: Fix
+  - message: Fixed quick insert and area insert not working on ore/plant/trash bags.
+    type: Fix
+  id: 6437
+  time: '2024-04-26T02:25:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27234

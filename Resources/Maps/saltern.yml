@@ -3273,12 +3273,13 @@ entities:
     - type: MetaData
     - type: Transform
     - type: Map
+      mapPaused: True
     - type: PhysicsMap
+    - type: GridTree
+    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
     - type: LoadedMap
-    - type: GridTree
-    - type: MovedGrids
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 3146
@@ -6119,8 +6120,6 @@ entities:
           - data: null
             ReagentId: Leporazine
             Quantity: 40
-    - type: MixableSolution
-      solution: beaker
   - uid: 10800
     components:
     - type: Transform
@@ -32842,9 +32841,6 @@ entities:
     - type: Transform
       pos: 38.5,-5.5
       parent: 31
-    - type: Door
-      secondsUntilStateChange: -9978.97
-      state: Closing
   - uid: 4019
     components:
     - type: Transform
@@ -33106,9 +33102,6 @@ entities:
     - type: Transform
       pos: 1.5,-2.5
       parent: 31
-    - type: Door
-      secondsUntilStateChange: -80.957985
-      state: Closing
   - uid: 3944
     components:
     - type: Transform
@@ -58375,6 +58368,11 @@ entities:
     components:
     - type: Transform
       pos: 42.5,-7.5
+      parent: 31
+  - uid: 11452
+    components:
+    - type: Transform
+      pos: -4.5,-3.5
       parent: 31
 - proto: StorageCanister
   entities:
