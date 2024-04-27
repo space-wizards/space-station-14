@@ -88,17 +88,45 @@ dialog:canvas{
 
         local layerDisplacement = findLayer(sprite, dialog.data["displacement-select"])
         local layerTarget = findLayer(sprite, dialog.data["reference-select"])
+        local layerBackground = findLayer(sprite, dialog.data["background-select"])
         -- print(layerDisplacement.name)
         -- print(layerTarget.name)
+
         local celDisplacement = layerDisplacement:cel(1)
         local celTarget = layerTarget:cel(1)
+        local celBackground = layerBackground:cel(1)
+
+        -- Draw background
+        context:drawImage(
+            -- srcImage
+            celBackground.image,
+            -- srcPos
+            0, 0,
+            -- srcSize
+            celBackground.image.width, celBackground.image.height,
+            -- dstPos
+            celBackground.position.x * scale, celBackground.position.y * scale,
+            -- dstSize
+            celBackground.image.width * scale, celBackground.image.height * scale)
+
+        -- Apply displacement map and draw
         local image = applyDisplacementMap(
             sprite.width, sprite.height,
             dialog.data["size"],
             celDisplacement.image, celDisplacement.bounds,
             celTarget.image, celTarget.bounds)
 
-        context:drawImage(image, 0, 0, image.width, image.height, 0, 0, image.width * scale, context.width, context.height)
+        context:drawImage(
+            -- srcImage
+            image,
+            -- srcPos
+            0, 0,
+            -- srcSize
+            image.width, image.height,
+            -- dstPos
+            0, 0,
+            -- dstSize
+            image.width * scale, image.height * scale)
     end
 }
 
@@ -120,6 +148,14 @@ dialog:combobox{
     end
 }
 
+dialog:combobox{
+    id = "background-select",
+    label = "background layer",
+    options = layers,
+    onchange = function(ev)
+        dialog:repaint()
+    end
+}
 
 dialog:slider{
     id = "size",
