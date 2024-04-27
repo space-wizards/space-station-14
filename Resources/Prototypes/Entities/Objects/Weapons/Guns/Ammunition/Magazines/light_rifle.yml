@@ -83,20 +83,6 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineLightRifleRubber
-  name: "magazine (.30 rifle rubber)"
-  parent: BaseMagazineLightRifle
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeLightRifleRubber
-  - type: Sprite
-    layers:
-    - state: rubber
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
   id: MagazineLightRifleUranium
   name: "magazine (.30 rifle uranium)"
   parent: BaseMagazineLightRifle
