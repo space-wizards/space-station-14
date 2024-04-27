@@ -64,6 +64,7 @@
     containers:
       storagebase: !type:Container
         ents: []
+      item: !type:ContainerSlot
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
@@ -79,11 +80,6 @@
           - CaneBlade
         insertSound: /Audio/Items/sheath.ogg
         ejectSound: /Audio/Items/unsheath.ogg
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
-      item: !type:ContainerSlot
   - type: ItemMapper
     mapLayers:
       cane:
