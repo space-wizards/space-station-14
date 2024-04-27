@@ -20,8 +20,8 @@
     closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
-    - key: enum.ForensicScannerUiKey.Key
-      type: ForensicScannerBoundUserInterface
+      enum.ForensicScannerUiKey.Key:
+        type: ForensicScannerBoundUserInterface
   - type: ForensicScanner
   - type: GuideHelp
     guides:

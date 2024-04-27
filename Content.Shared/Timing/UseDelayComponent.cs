@@ -8,11 +8,11 @@ namespace Content.Shared.Timing;
 /// Can support additional, separate cooldown timers on the object by passing a unique ID with the system methods.
 /// </summary>
 [RegisterComponent]
-[NetworkedComponent, AutoGenerateComponentState]
+[NetworkedComponent]
 [Access(typeof(UseDelaySystem))]
 public sealed partial class UseDelayComponent : Component
 {
-    [DataField, AutoNetworkedField]
+    [DataField]
     public Dictionary<string, UseDelayInfo> Delays = [];
 
     /// <summary>
@@ -25,6 +25,12 @@ public sealed partial class UseDelayComponent : Component
     /// </remarks>
     [DataField]
     public TimeSpan Delay = TimeSpan.FromSeconds(1);
+}
+
+[Serializable, NetSerializable]
+public sealed class UseDelayComponentState : IComponentState
+{
+    public Dictionary<string, UseDelayInfo> Delays = new();
 }
 
 [Serializable, NetSerializable]

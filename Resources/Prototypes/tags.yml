@@ -259,6 +259,9 @@
   id: CableCoil
 
 - type: Tag
+  id: CaneBlade
+
+- type: Tag
   id: CannonBall
 
 - type: Tag
@@ -1321,3 +1324,5 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+# ALPHABETICAL
