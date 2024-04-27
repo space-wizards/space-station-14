@@ -69,30 +69,115 @@
   noSpawn: true
   components:
   - type: GameRule
-    minPlayers: 35
+    minPlayers: 20
+  - type: RandomMetadata #this generates the random operation name cuz it's cool.
+    nameSegments:
+    - operationPrefix
+    - operationSuffix
   - type: NukeopsRule
-    faction: Syndicate
-
-- type: entity
-  id: Pirates
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: PiratesRule
+  - type: LoadMapRule
+    gameMap: NukieOutpost
+  - type: AntagSelection
+    selectionTime: PrePlayerSpawn
+    definitions:
+    - prefRoles: [ NukeopsCommander ]
+      fallbackRoles: [ Nukeops, NukeopsMedic ]
+      max: 1
+      playerRatio: 10
+      startingGear: SyndicateCommanderGearFull
+      components:
+      - type: NukeOperative
+      - type: RandomMetadata
+        nameSegments:
+        - nukeops-role-commander
+        - SyndicateNamesElite
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      mindComponents:
+      - type: NukeopsRole
+        prototype: NukeopsCommander
+    - prefRoles: [ NukeopsMedic ]
+      fallbackRoles: [ Nukeops, NukeopsCommander ]
+      max: 1
+      playerRatio: 10
+      startingGear: SyndicateOperativeMedicFull
+      components:
+      - type: NukeOperative
+      - type: RandomMetadata
+        nameSegments:
+        - nukeops-role-agent
+        - SyndicateNamesNormal
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      mindComponents:
+      - type: NukeopsRole
+        prototype: NukeopsMedic
+    - prefRoles: [ Nukeops ]
+      fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
+      min: 0
+      max: 3
+      playerRatio: 10
+      startingGear: SyndicateOperativeGearFull
+      components:
+      - type: NukeOperative
+      - type: RandomMetadata
+        nameSegments:
+        - nukeops-role-operator
+        - SyndicateNamesNormal
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      mindComponents:
+      - type: NukeopsRole
+        prototype: Nukeops
 
 - type: entity
   id: Traitor
   parent: BaseGameRule
   noSpawn: true
   components:
+  - type: GameRule
+    minPlayers: 5
+    delay:
+      min: 240
+      max: 420
   - type: TraitorRule
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      max: 12
+      playerRatio: 10
+      lateJoinAdditional: true
+      mindComponents:
+      - type: TraitorRole
+        prototype: Traitor
 
 - type: entity
   id: Revolutionary
   parent: BaseGameRule
   noSpawn: true
   components:
+  - type: GameRule
+    minPlayers: 15
   - type: RevolutionaryRule
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ HeadRev ]
+      max: 3
+      playerRatio: 15
+      briefing:
+        text: head-rev-role-greeting
+        color: CornflowerBlue
+        sound: "/Audio/Ambience/Antag/headrev_start.ogg"
+      startingGear: HeadRevGear
+      components:
+      - type: Revolutionary
+      - type: HeadRevolutionary
+      mindComponents:
+      - type: RevolutionaryRole
+        prototype: HeadRev
 
 - type: entity
   id: Sandbox
@@ -113,7 +198,32 @@
   parent: BaseGameRule
   noSpawn: true
   components:
+  - type: GameRule
+    minPlayers: 20
+    delay:
+      min: 600
+      max: 900
   - type: ZombieRule
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ InitialInfected ]
+      max: 6
+      playerRatio: 10
+      blacklist:
+        components:
+        - ZombieImmune
+        - InitialInfectedExempt
+      briefing:
+        text: zombie-patientzero-role-greeting
+        color: Plum
+        sound: "/Audio/Ambience/Antag/zombie_start.ogg"
+      components:
+      - type: PendingZombie
+      - type: ZombifyOnDeath
+      - type: IncurableZombie
+      mindComponents:
+      - type: InitialInfectedRole
+        prototype: InitialInfected
 
 # event schedulers
 - type: entity
@@ -142,7 +252,6 @@
     - id: BasicTrashVariationPass
     - id: SolidWallRustingVariationPass
     - id: ReinforcedWallRustingVariationPass
-    - id: CutWireVariationPass
     - id: BasicPuddleMessVariationPass
       prob: 0.99
       orGroup: puddleMess

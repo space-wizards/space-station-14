@@ -105,7 +105,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance
             HumanoidSkinColor.Hues => speciesPrototype.DefaultSkinTone,
             HumanoidSkinColor.TintedHues => Humanoid.SkinColor.TintedHues(speciesPrototype.DefaultSkinTone),
             HumanoidSkinColor.VoxFeathers => Humanoid.SkinColor.ClosestVoxColor(speciesPrototype.DefaultSkinTone),
-            _ => Humanoid.SkinColor.ValidHumanSkinTone
+            _ => Humanoid.SkinColor.ValidHumanSkinTone,
         };
 
         return new(
