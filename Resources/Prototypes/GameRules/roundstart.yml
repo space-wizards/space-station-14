@@ -85,7 +85,7 @@
       max: 1
       playerRatio: 10
       startingGear: SyndicateCommanderGearFull
-      loadout: NukeopsCommander
+      loadout: JobNukeopsCommander
       components:
       - type: NukeOperative
       - type: RandomMetadata
@@ -103,7 +103,7 @@
       max: 1
       playerRatio: 10
       startingGear: SyndicateOperativeMedicFull
-      loadout: NukeopsMedic
+      loadout: JobNukeopsMedic
       components:
       - type: NukeOperative
       - type: RandomMetadata
@@ -122,7 +122,7 @@
       max: 3
       playerRatio: 10
       startingGear: SyndicateOperativeGearFull
-      loadout: Nukeops
+      loadout: JobNukeops
       components:
       - type: NukeOperative
       - type: RandomMetadata
