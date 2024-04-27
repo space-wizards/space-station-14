@@ -1,0 +1,95 @@
+# Jumpsuit
+- type: loadout
+  id: ChiefMedicalOfficerJumpsuit
+  equipment: ChiefMedicalOfficerJumpsuit
+
+- type: startingGear
+  id: ChiefMedicalOfficerJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCMO
+
+- type: loadout
+  id: ChiefMedicalOfficerJumpskirt
+  equipment: ChiefMedicalOfficerJumpskirt
+
+- type: startingGear
+  id: ChiefMedicalOfficerJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCMO
+
+# Head
+- type: loadout
+  id: ChiefMedicalOfficerBeret
+  equipment: ChiefMedicalOfficerBeret
+
+- type: startingGear
+  id: ChiefMedicalOfficerBeret
+  equipment:
+    head: ClothingHeadHatBeretCmo
+
+# Neck
+- type: loadout
+  id: ChiefMedicalOfficerCloak
+  equipment: ChiefMedicalOfficerCloak
+
+- type: startingGear
+  id: ChiefMedicalOfficerCloak
+  equipment:
+    neck: ClothingCloakCmo
+
+- type: loadout
+  id: ChiefMedicalOfficerMantle
+  equipment: ChiefMedicalOfficerMantle
+
+- type: startingGear
+  id: ChiefMedicalOfficerMantle
+  equipment:
+    neck: ClothingNeckMantleCMO
+
+# Back
+- type: loadout
+  id: ChiefMedicalOfficerBackpack
+  equipment: ChiefMedicalOfficerBackpack
+
+- type: startingGear
+  id: ChiefMedicalOfficerBackpack
+  equipment:
+    back: ClothingBackpackCMOFilled
+
+- type: loadout
+  id: ChiefMedicalOfficerSatchel
+  equipment: ChiefMedicalOfficerSatchel
+
+- type: startingGear
+  id: ChiefMedicalOfficerSatchel
+  equipment:
+    back: ClothingBackpackSatchelCMOFilled
+
+- type: loadout
+  id: ChiefMedicalOfficerDuffel
+  equipment: ChiefMedicalOfficerDuffel
+
+- type: startingGear
+  id: ChiefMedicalOfficerDuffel
+  equipment:
+    back: ClothingBackpackDuffelCMOFilled
+
+# Outer clothing
+- type: loadout
+  id: ChiefMedicalOfficerLabCoat
+  equipment: ChiefMedicalOfficerLabCoat
+
+- type: startingGear
+  id: ChiefMedicalOfficerLabCoat
+  equipment:
+    outerClothing: ClothingOuterCoatLabCmo
+
+- type: loadout
+  id: ChiefMedicalOfficerWintercoat
+  equipment: ChiefMedicalOfficerWintercoat
+
+- type: startingGear
+  id: ChiefMedicalOfficerWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterCMO
+

@@ -44,8 +44,8 @@
     range: 200
   - type: UserInterface
     interfaces:
-    - key: enum.MicrowaveUiKey.Key
-      type: MicrowaveBoundUserInterface
+      enum.MicrowaveUiKey.Key:
+        type: MicrowaveBoundUserInterface
   - type: Physics
   - type: Fixtures
     fixtures:

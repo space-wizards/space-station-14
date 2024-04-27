@@ -106,7 +106,7 @@ namespace Content.Server.Decals
                 return;
 
             // Transfer decals over to the new grid.
-            var enumerator = MapManager.GetGrid(ev.Grid).GetAllTilesEnumerator();
+            var enumerator = Comp<MapGridComponent>(ev.Grid).GetAllTilesEnumerator();
 
             var oldChunkCollection = oldComp.ChunkCollection.ChunkCollection;
             var chunkCollection = newComp.ChunkCollection.ChunkCollection;

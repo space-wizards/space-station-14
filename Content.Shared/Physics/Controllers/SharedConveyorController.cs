@@ -3,6 +3,7 @@ using Content.Shared.Conveyor;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
@@ -146,7 +147,7 @@ public abstract class SharedConveyorController : VirtualController
         EntityQuery<PhysicsComponent> bodyQuery)
     {
         // Check if the thing's centre overlaps the grid tile.
-        var grid = MapManager.GetGrid(xform.GridUid!.Value);
+        var grid = Comp<MapGridComponent>(xform.GridUid!.Value);
         var tile = grid.GetTileRef(xform.Coordinates);
         var conveyorBounds = Lookup.GetLocalBounds(tile, grid.TileSize);
 

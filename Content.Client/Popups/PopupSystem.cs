@@ -5,7 +5,6 @@ using Content.Shared.Popups;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -28,6 +27,7 @@ namespace Content.Client.Popups
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
         [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
         [Dependency] private readonly ExamineSystemShared _examine = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public IReadOnlyList<WorldPopupLabel> WorldLabels => _aliveWorldLabels;
         public IReadOnlyList<CursorPopupLabel> CursorLabels => _aliveCursorLabels;
@@ -54,6 +54,7 @@ namespace Content.Client.Popups
                     _uiManager,
                     _uiManager.GetUIController<PopupUIController>(),
                     _examine,
+                    _transform,
                     this));
         }
 
@@ -161,10 +162,31 @@ namespace Content.Client.Popups
             PopupEntity(message, uid, type);
         }
 
-        public override void PopupClient(string? message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
+        public override void PopupClient(string? message, EntityUid? recipient, PopupType type = PopupType.Small)
         {
+            if (recipient == null)
+                return;
+
             if (_timing.IsFirstTimePredicted)
-                PopupEntity(message, uid, recipient, type);
+                PopupCursor(message, recipient.Value, type);
+        }
+
+        public override void PopupClient(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient == null)
+                return;
+
+            if (_timing.IsFirstTimePredicted)
+                PopupEntity(message, uid, recipient.Value, type);
+        }
+
+        public override void PopupClient(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient == null)
+                return;
+
+            if (_timing.IsFirstTimePredicted)
+                PopupCoordinates(message, coordinates, recipient.Value, type);
         }
 
         public override void PopupEntity(string? message, EntityUid uid, PopupType type = PopupType.Small)
@@ -177,6 +199,12 @@ namespace Content.Client.Popups
         {
             if (recipient != null && _timing.IsFirstTimePredicted)
                 PopupEntity(message, uid, recipient.Value, type);
+        }
+
+        public override void PopupPredicted(string? recipientMessage, string? othersMessage, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient != null && _timing.IsFirstTimePredicted)
+                PopupEntity(recipientMessage, uid, recipient.Value, type);
         }
 
         #endregion

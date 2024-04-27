@@ -164,6 +164,9 @@ ghost-role-information-cerberus-rules = You are an intelligent, demonic dog. Try
 ghost-role-information-ert-leader-name = ERT Leader
 ghost-role-information-ert-leader-description = Lead a team of specialists to resolve the station's issues.
 
+ghost-role-information-ert-chaplain-name = ERT Chaplain
+ghost-role-information-ert-chaplain-description = Assist with mourning to resolve the station's crew moral issues.
+
 ghost-role-information-ert-janitor-name = ERT Janitor
 ghost-role-information-ert-janitor-description = Assist with custodial efforts to resolve the station's issues.
 
@@ -224,3 +227,12 @@ ghost-role-information-syndicate-reinforcement-rules = Normal syndicate antagoni
 ghost-role-information-syndicate-monkey-reinforcement-name = Syndicate Monkey Agent
 ghost-role-information-syndicate-monkey-reinforcement-description = Someone needs reinforcements. You, a trained monkey, will help them.
 ghost-role-information-syndicate-monkey-reinforcement-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+
+ghost-role-information-syndicate-kobold-reinforcement-name = Syndicate Kobold Agent
+ghost-role-information-syndicate-kobold-reinforcement-description = Someone needs reinforcements. You, a trained kobold, will help them.
+ghost-role-information-syndicate-kobold-reinforcement-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+
+ghost-role-information-artifact-name = Sentient Artifact
+ghost-role-information-artifact-description =
+      Enact your eldritch whims.
+      Forcibly activate your nodes for good or for evil.

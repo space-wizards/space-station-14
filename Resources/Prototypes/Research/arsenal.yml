@@ -24,11 +24,12 @@
   tier: 1
   cost: 10000
   recipeUnlocks:
-  - ShellShotgunIncendiary
-  - CartridgePistolIncendiary
-  - CartridgeMagnumIncendiary
-  - CartridgeLightRifleIncendiary
-  - CartridgeRifleIncendiary
+  - BoxShotgunIncendiary
+  - MagazineRifleIncendiary
+  - MagazinePistolIncendiary
+  - MagazineLightRifleIncendiary
+  - SpeedLoaderMagnumIncendiary
+  - MagazineShotgunIncendiary
   - MagazineBoxPistolIncendiary
   - MagazineBoxMagnumIncendiary
   - MagazineBoxLightRifleIncendiary
@@ -56,15 +57,9 @@
   tier: 1
   cost: 5000
   recipeUnlocks:
-  - ShellShotgunBeanbag
-  - CartridgePistolRubber
-  - CartridgeMagnumRubber
-  - CartridgeLightRifleRubber
-  - CartridgeRifleRubber
-  - MagazineBoxPistolRubber
-  - MagazineBoxMagnumRubber
-  - MagazineBoxLightRifleRubber
-  - MagazineBoxRifleRubber
+  - ShellTranquilizer 
+  - BoxBeanbag 
+  - WeaponDisabler
 
 - type: technology
   id: UraniumMunitions
@@ -76,15 +71,15 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - ShellShotgunUranium
-  - CartridgePistolUranium
-  - CartridgeMagnumUranium
-  - CartridgeLightRifleUranium
-  - CartridgeRifleUranium
+  - MagazineRifleUranium
+  - MagazinePistolUranium
+  - MagazineLightRifleUranium
+  - SpeedLoaderMagnumUranium
   - MagazineBoxPistolUranium
   - MagazineBoxMagnumUranium
   - MagazineBoxLightRifleUranium
   - MagazineBoxRifleUranium
+  - BoxShotgunUranium
 
 - type: technology
   id: AdvancedRiotControl
@@ -96,7 +91,6 @@
   tier: 1
   cost: 8000
   recipeUnlocks:
-  - ClothingEyesGlassesSecurity
   - Truncheon
   - TelescopicShield
   - HoloprojectorSecurity

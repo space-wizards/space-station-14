@@ -259,10 +259,10 @@
   id: CableCoil
 
 - type: Tag
-  id: CannonBall
+  id: CaneBlade
 
 - type: Tag
-  id: CannonRestrict
+  id: CannonBall
 
 - type: Tag
   id: CannotSuicide
@@ -418,6 +418,9 @@
 - type: Tag
   id: ConveyorAssembly
 
+- type: Tag
+  id: CoordinatesDisk
+
 - type: Tag #Ohioans die happy
   id: Corn
 
@@ -519,6 +522,9 @@
 
 - type: Tag
   id: DoorElectronics
+
+- type: Tag
+  id: DoorElectronicsConfigurator
 
 - type: Tag
   id: DrinkBottle
@@ -672,6 +678,9 @@
 
 - type: Tag
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
+
+- type: Tag
+  id: Haunted
 
 - type: Tag
   id: Head
@@ -909,9 +918,6 @@
   id: NoBlockAnchoring
 
 - type: Tag
-  id: NoPaint
-
-- type: Tag
   id: NozzleBackTank
 
 - type: Tag
@@ -1031,9 +1037,6 @@
 - type: Tag
   id: RawMaterial
 
-- type: Tag
-  id: RCDDeconstructWhitelist
-
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
   id: Recyclable
@@ -1108,6 +1111,9 @@
   id: Sidearm
 
 - type: Tag
+  id: SignalTrigger
+
+- type: Tag
   id: SkeletonMotorcycleKeys
 
 - type: Tag
@@ -1179,6 +1185,9 @@
   id: SuitEVA
 
 - type: Tag
+  id: Sunglasses
+
+- type: Tag
   id: SurgeryTool
 
 - type: Tag
@@ -1231,6 +1240,9 @@
 
 - type: Tag
   id: TrashBag
+
+- type: Tag
+  id: Truncheon
 
 - type: Tag
   id: Unimplantable
@@ -1312,3 +1324,5 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+# ALPHABETICAL

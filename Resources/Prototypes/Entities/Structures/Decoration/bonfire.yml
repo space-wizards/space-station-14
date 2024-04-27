@@ -23,17 +23,14 @@
           !type:DamageTrigger
           damage: 50
         behaviors:
-          - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: AmbientSound
     volume: -5
     range: 5
     sound:
       path: /Audio/Ambience/Objects/fireplace.ogg
   - type: AlwaysHot
-  - type: Tag
-    tags:
-      - NoPaint
 
 - type: entity
   id: LegionnaireBonfire
