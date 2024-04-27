@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lank
-  changes:
-  - message: Nymphs can now open doors and chirp.
-    type: Tweak
-  id: 5966
-  time: '2024-02-19T17:11:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25363
 - author: PotentiallyTom
   changes:
   - message: Gave guidebooks to the 4 learner roles
@@ -3858,3 +3851,11 @@
   id: 6465
   time: '2024-04-27T19:08:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27037
+- author: SlamBamActionman
+  changes:
+  - message: Hardsuits and other helmets/hoods should no longer make you bald after
+      toggling.
+    type: Fix
+  id: 6466
+  time: '2024-04-27T19:10:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27404
