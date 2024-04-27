@@ -4,11 +4,12 @@ using Content.Shared.UserInterface;
 using JetBrains.Annotations;
 using Content.Shared.Wires;
 using Content.Server.UserInterface;
+using Content.Shared.Power.Components;
+using ActivatableUISystem = Content.Shared.UserInterface.ActivatableUISystem;
 
 namespace Content.Server.Power.EntitySystems;
 
-[UsedImplicitly]
-internal sealed class ActivatableUIRequiresPowerSystem : EntitySystem
+public sealed class ActivatableUIRequiresPowerSystem : EntitySystem
 {
     [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
