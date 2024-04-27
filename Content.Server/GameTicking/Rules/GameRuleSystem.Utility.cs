@@ -1,12 +1,20 @@
+using System.Collections;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Components;
 using Content.Shared.Maps;
+using Content.Shared.Random.Helpers;
+using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Map.Enumerators;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
+using Serilog.Debugging;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -98,67 +106,70 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         tile = default;
         targetGrid = EntityUid.Invalid;
         targetCoords = EntityCoordinates.Invalid;
+        var grids = targetStation.Comp.Grids;
+        TileRef? randomTile = null;
 
-        if (!TryFindRandomTilesOnStation(targetStation, numberOfTiles: 1, out var randomTiles) || randomTiles.Count() == 0)
+        var gridCount = grids.Count;
+        if (gridCount == 0)
         {
             return false;
         }
-        var randomTile = randomTiles.First();
 
-        if (!TryComp<MapGridComponent>(randomTile.GridUid, out var gridComp))
+        var weights = new float[gridCount];
+        var mapGrids = new MapGridComponent[gridCount];
+        
+        int mapGridIndex = 0;
+        float weightTotal = 0;
+
+        foreach (var grid in grids)
         {
-            return false;
+            if (TryComp<MapGridComponent>(grid, out var mapGrid))
+            {
+                float curWeight =  mapGrid.LocalAABB.Size.LengthSquared();
+
+                weightTotal += curWeight;
+                weights[mapGridIndex] = curWeight;
+                mapGrids[mapGridIndex] = mapGrid;
+
+                ++mapGridIndex;
+            }
         }
 
-        tile = randomTile.GridIndices;
-        targetGrid = randomTile.GridUid;
-        targetCoords = _map.GridTileToLocal(targetGrid, gridComp, tile);
+        float randomFloat = RobustRandom.NextFloat(weightTotal);
+        MapGridComponent? selectedMapGrid = null;
 
-        return true;
-    }
-    /// <summary>
-    ///     Get [numberOfTiles] random station tiles, with replacement, that are neither space tiles nor air-blocked tiles
-    /// </summary>
-    protected bool TryFindRandomTilesOnStation(Entity<StationDataComponent> station, int numberOfTiles, out List<TileRef> randomStationTiles)
-    {
-        TryGetAllVaildStationTiles(station, out var allValidStationTiles);
-        var allValidStationTilesCount = allValidStationTiles.Count();
-        randomStationTiles = new();
+        for (var i = 0; i < mapGridIndex; ++i)
+        {
+            randomFloat -= weights[i];
+            if (randomFloat <= 0)
+            {
+                selectedMapGrid = mapGrids[i];
+            }
+        }
 
-        if (allValidStationTilesCount == 0)
+        if (selectedMapGrid is null)
         {
-            return false;
+            throw new UnreachableException();
         }
-        for (var i = 0; i < numberOfTiles; i++)
+
+        var found = false;
+        var aabb = selectedMapGrid.LocalAABB;
+        for (var i = 0; i < 10; i++)
         {
-            var randomIndex = RobustRandom.Next(allValidStationTilesCount);
-            var curElement = allValidStationTiles.ElementAt(randomIndex);
-            randomStationTiles.Add(curElement);
-        }
-        return true;
-    }
-    /// <summary>
-    ///     Get all station tiles that are neither space tiles nor air-blocked tiles
-    /// </summary>
-    protected bool TryGetAllVaildStationTiles(Entity<StationDataComponent> station, out List<TileRef> allValidStationTiles)
-    {
-        var stationGrids = station.Comp.Grids;
-        allValidStationTiles = new();
-        foreach (var grid in stationGrids)
-        {
-            if (!TryComp<MapGridComponent>(grid, out var gridComp))
+            var randomX = RobustRandom.Next((int) aabb.Left, (int) aabb.Right);
+            var randomY = RobustRandom.Next((int) aabb.Bottom, (int) aabb.Top);
+
+            tile = new Vector2i(randomX, randomY);
+            if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tile)
+                || _atmosphere.IsTileAirBlocked(targetGrid, tile, mapGridComp: selectedMapGrid))
             {
                 continue;
             }
-            foreach (var tile in _map.GetAllTiles(grid, gridComp))
-            {
-                if (tile.IsSpace() || _atmosphere.IsTileAirBlocked(grid, tile.GridIndices, mapGridComp: gridComp))
-                {
-                    continue;
-                }
-                allValidStationTiles.Add(tile);
-            }
+
+            found = true;
+            targetCoords = _map.GridTileToLocal(targetGrid, selectedMapGrid, tile);
+            break;
         }
-        return true;
+        return found;
     }
 }

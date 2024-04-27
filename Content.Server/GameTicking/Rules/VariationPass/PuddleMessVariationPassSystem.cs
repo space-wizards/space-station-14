@@ -24,19 +24,13 @@ public sealed class PuddleMessVariationPassSystem : VariationPassSystem<PuddleMe
 
         var puddleMod = Random.NextGaussian(ent.Comp.TilesPerSpillAverage, ent.Comp.TilesPerSpillStdDev);
         var puddleTiles = Math.Max((int) (totalTiles * (1 / puddleMod)), 0);
-        if(!TryFindRandomTilesOnStation(args.Station, puddleTiles, out var randomTiles))
-        {
-            return;
-        }
 
         for (var i = 0; i < puddleTiles; i++)
         {
-            var curRandomTile = randomTiles.ElementAt(i);
-            if (!TryComp<MapGridComponent>(curRandomTile.GridUid, out var curGridComp))
+            if (!TryFindRandomTileOnStation(args.Station, out _, out _, out var coords))
             {
                 continue;
             }
-            var coords = Map.GridTileToLocal(curRandomTile.GridUid, curGridComp, curRandomTile.GridIndices);
 
             var sol = proto.Pick(Random);
             _puddle.TrySpillAt(coords, new Solution(sol.reagent, sol.quantity), out _, sound: false);
