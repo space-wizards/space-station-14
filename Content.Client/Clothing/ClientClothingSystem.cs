@@ -315,8 +315,11 @@ public sealed class ClientClothingSystem : ClothingSystem
             if (displacementData != null)
             {
                 if (displacementData.ShaderOverride != null)
+                {
                     layerData.Shader = displacementData.ShaderOverride;
-
+                    sprite.LayerSetData(index, layerData);
+                }
+                
                 var displacementKey = $"{key}-displacement";
                 if (!revealedLayers.Add(displacementKey))
                 {
@@ -333,6 +336,7 @@ public sealed class ClientClothingSystem : ClothingSystem
 
                 revealedLayers.Add(displacementKey);
             }
+
         }
 
         RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers), true);
