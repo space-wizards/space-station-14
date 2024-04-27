@@ -39,7 +39,6 @@
   suffix: Armored, Chameleon
   components:
     - type: Insulated
-    - type: Fiber
     - type: Tag
       tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
