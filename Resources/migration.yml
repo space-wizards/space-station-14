@@ -327,5 +327,8 @@ WeaponPistolN1984Nonlethal: WeaponPistolN1984
 WeaponSubMachineGunVectorRubber: WeaponSubMachineGunVector
 WeaponSubMachineGunDrozdRubber: WeaponSubMachineGunDrozd
 WeaponRifleLecterRubber: WeaponRifleLecter
+
+# 2024-04-26
+GlassBoxLaserBroken: GlassBoxBroken
 ReinforcementRadioSyndicateMonkey: ReinforcementRadioSyndicateAncestor
 ReinforcementRadioSyndicateMonkeyNukeops: ReinforcementRadioSyndicateAncestorNukeops
