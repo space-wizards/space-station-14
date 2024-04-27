@@ -22,8 +22,8 @@
         isBuckled: true
       tasks:
       - !type:HTNPrimitiveTask
-        shutdownState: TaskFinished
         operator: !type:UnbuckleOperator
+          shutdownState: TaskFinished
 
     - preconditions:
       - !type:InContainerPrecondition
@@ -37,8 +37,8 @@
         isPulled: true
       tasks:
       - !type:HTNPrimitiveTask
-        shutdownState: TaskFinished
         operator: !type:UnPullOperator
+          shutdownState: TaskFinished
 
     # Melee combat (unarmed or otherwise)
     - tasks:
@@ -129,9 +129,9 @@
   branches:
   - tasks:
     - !type:HTNPrimitiveTask
-      shutdownState: TaskFinished
       operator: !type:ContainerOperator
         targetKey: Target
+        shutdownState: TaskFinished
     - !type:HTNPrimitiveTask
       operator: !type:EscapeOperator
         targetKey: Target
