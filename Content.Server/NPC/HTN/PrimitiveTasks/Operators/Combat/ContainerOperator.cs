@@ -2,7 +2,7 @@
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 
-public sealed partial class ContainerOperator : HTNOperator, IHtnConditionalShutdown
+public sealed partial class ContainerOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     private ContainerSystem _container = default!;
@@ -36,9 +36,5 @@ public sealed partial class ContainerOperator : HTNOperator, IHtnConditionalShut
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         return HTNOperatorStatus.Finished;
-    }
-
-    public void ConditionalShutdown(NPCBlackboard blackboard)
-    {
     }
 }

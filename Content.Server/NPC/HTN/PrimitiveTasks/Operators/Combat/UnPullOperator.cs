@@ -3,7 +3,7 @@ using Content.Shared.Movement.Pulling.Systems;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 
-public sealed partial class UnPullOperator : HTNOperator, IHtnConditionalShutdown
+public sealed partial class UnPullOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     private PullingSystem _pulling = default!;
@@ -31,9 +31,5 @@ public sealed partial class UnPullOperator : HTNOperator, IHtnConditionalShutdow
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         return HTNOperatorStatus.Finished;
-    }
-
-    public void ConditionalShutdown(NPCBlackboard blackboard)
-    {
     }
 }

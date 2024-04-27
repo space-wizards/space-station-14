@@ -3,7 +3,7 @@ using Content.Shared.Buckle.Components;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 
-public sealed partial class UnbuckleOperator : HTNOperator, IHtnConditionalShutdown
+public sealed partial class UnbuckleOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     private BuckleSystem _buckle = default!;
@@ -30,9 +30,5 @@ public sealed partial class UnbuckleOperator : HTNOperator, IHtnConditionalShutd
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         return HTNOperatorStatus.Finished;
-    }
-
-    public void ConditionalShutdown(NPCBlackboard blackboard)
-    {
     }
 }
