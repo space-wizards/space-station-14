@@ -345,7 +345,8 @@
     bloodMaxVolume: 20
   - type: Food
   - type: Hunger
-    baseDecayRate: 0.25
+    satiation:
+      baseDecayRate: 0.25
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
@@ -1584,23 +1585,31 @@
         Base: splat-0
   - type: Food
   - type: Thirst
-    startingThirst: 25  # spawn with Okay thirst state
-    thresholds:
-      OverHydrated: 35
-      Okay: 25
-      Thirsty: 15
-      Parched: 10
-      Dead: 0
-    baseDecayRate: 0.04
+    satiation:
+      starting: 25  # spawn with Okay thirst state
+      thresholds:
+        Full: 35
+        Okay: 25
+        Concerned: 15
+        Desperate: 10
+        Dead: 0
+      baseDecayRate: 0.04
+      thresholdDecayModifiers:
+        Full: 1.2
+        Okay: 1.0
+        Concerned: 0.8
+        Desperate: 0.6
+        Dead: 0
   - type: Hunger
-    currentHunger: 25   # spawn with Okay hunger state
-    thresholds:
-      Overfed: 35
-      Okay: 25
-      Peckish: 15
-      Starving: 10
-      Dead: 0
-    baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
+    satiation:
+      current: 25   # spawn with Okay hunger state
+      thresholds:
+        Full: 35
+        Okay: 25
+        Concerned: 15
+        Desperate: 10
+        Dead: 0
+      baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
@@ -3143,7 +3152,8 @@
         Base: splat-0
   - type: Food
   - type: Hunger
-    baseDecayRate: 0.3
+    satiation:
+      baseDecayRate: 0.3
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager

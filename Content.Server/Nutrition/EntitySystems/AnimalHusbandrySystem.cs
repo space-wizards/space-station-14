@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.Logs;
+using Content.Server.Administration.Logs;
 using Content.Server.Interaction.Components;
 using Content.Server.Popups;
 using Content.Shared.Database;
@@ -153,10 +153,10 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         if (_mobState.IsIncapacitated(uid))
             return false;
 
-        if (TryComp<HungerComponent>(uid, out var hunger) && _hunger.GetHungerThreshold(hunger) < HungerThreshold.Okay)
+        if (TryComp<HungerComponent>(uid, out var hunger) && _hunger.GetHungerThreshold(hunger) < SatiationThreashold.Okay)
             return false;
 
-        if (TryComp<ThirstComponent>(uid, out var thirst) && thirst.CurrentThirstThreshold < ThirstThreshold.Okay)
+        if (TryComp<ThirstComponent>(uid, out var thirst) && thirst.Satiation.CurrentThreshold < SatiationThreashold.Okay)
             return false;
 
         return true;

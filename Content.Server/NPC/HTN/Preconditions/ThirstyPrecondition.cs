@@ -12,7 +12,7 @@ public sealed partial class ThirstyPrecondition : HTNPrecondition
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     [DataField(required: true)]
-    public ThirstThreshold MinThirstState = ThirstThreshold.Parched;
+    public SatiationThreashold MinThirstState = SatiationThreashold.Desperate;
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
@@ -21,6 +21,6 @@ public sealed partial class ThirstyPrecondition : HTNPrecondition
             return false;
         }
 
-        return _entManager.TryGetComponent<ThirstComponent>(owner, out var thirst) ? thirst.CurrentThirstThreshold <= MinThirstState : false;
+        return _entManager.TryGetComponent<ThirstComponent>(owner, out var thirst) ? thirst.Satiation.CurrentThreshold <= MinThirstState : false;
     }
 }

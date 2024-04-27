@@ -1,6 +1,5 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Nutrition.Components;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions
@@ -17,7 +16,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         {
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out HungerComponent? hunger))
             {
-                var total = hunger.CurrentHunger;
+                var total = hunger.Satiation.Current;
                 if (total > Min && total < Max)
                     return true;
             }

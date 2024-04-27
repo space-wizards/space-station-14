@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Nutrition.Components;
 using Content.Server.Power.Components;
@@ -99,10 +99,10 @@ public sealed class FatExtractorSystem : EntitySystem
         if (!TryComp<HungerComponent>(occupant, out var hunger))
             return false;
 
-        if (hunger.CurrentHunger < component.NutritionPerSecond)
+        if (hunger.Satiation.Current < component.NutritionPerSecond)
             return false;
 
-        if (hunger.CurrentThreshold < component.MinHungerThreshold && !HasComp<EmaggedComponent>(uid))
+        if (hunger.Satiation.CurrentThreshold < component.MinHungerThreshold && !HasComp<EmaggedComponent>(uid))
             return false;
 
         return true;

@@ -12,6 +12,19 @@
     species: Arachnid
   - type: Hunger
   - type: Thirst
+    satiation:
+      thresholds:
+        Full: 600.0
+        Okay: 450.0
+        Concerned: 300.0
+        Desperate: 150.0
+        Dead: 0.0
+      thresholdDecayModifiers:
+        Full: 1.2
+        Okay: 1.0
+        Concerned: 0.8
+        Desperate: 0.6
+        Dead: 0.0
   - type: Sericulture
     action: ActionSericulture
     productionLength: 2

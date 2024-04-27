@@ -59,22 +59,24 @@
   - type: Body
     prototype: Rat
     requiredLegs: 1 # TODO: More than 1 leg
-  - type: Hunger # probably should be prototyped
-    thresholds:
-      Overfed: 200
-      Okay: 150
-      Peckish: 100
-      Starving: 50
-      Dead: 0
-    baseDecayRate: 0.01666666666
+  - type: Hunger
+    satiation: # probably should be prototyped
+      thresholds:
+        Full: 200
+        Okay: 150
+        Concerned: 100
+        Desperate: 50
+        Dead: 0
+      baseDecayRate: 0.01666666666
   - type: Thirst
-    thresholds:
-      OverHydrated: 600
-      Okay: 450
-      Thirsty: 300
-      Parched: 150
-      Dead: 0
-    baseDecayRate: 0.1
+    satiation:
+      thresholds:
+        Full: 600
+        Okay: 450
+        Concerned: 300
+        Desperate: 150
+        Dead: 0
+      baseDecayRate: 0.1
   - type: DamageStateVisuals
     rotate: true
     states:
@@ -238,21 +240,23 @@
     prototype: Rat
     requiredLegs: 1 # TODO: More than 1 leg
   - type: Hunger # probably should be prototyped
-    thresholds:
-      Overfed: 200
-      Okay: 150
-      Peckish: 100
-      Starving: 50
-      Dead: 0
-    baseDecayRate: 0.01666666666
+    satiation:
+      thresholds:
+        Full: 200
+        Okay: 150
+        Concerned: 100
+        Desperate: 50
+        Dead: 0
+      baseDecayRate: 0.01666666666
   - type: Thirst
-    thresholds:
-      OverHydrated: 600
-      Okay: 450
-      Thirsty: 300
-      Parched: 150
-      Dead: 0
-    baseDecayRate: 0.1
+    satiation:
+      thresholds:
+        Full: 600
+        Okay: 450
+        Concerned: 300
+        Desperate: 150
+        Dead: 0
+      baseDecayRate: 0.1
   - type: DamageStateVisuals
     states:
       Alive:

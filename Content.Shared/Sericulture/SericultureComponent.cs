@@ -62,5 +62,5 @@ public sealed partial class SericultureComponent : Component
     [DataField("minHungerThreshold")]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public HungerThreshold MinHungerThreshold = HungerThreshold.Okay;
+    public SatiationThreashold MinHungerThreshold = SatiationThreashold.Okay;
 }

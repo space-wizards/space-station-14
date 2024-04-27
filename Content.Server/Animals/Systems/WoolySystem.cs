@@ -9,7 +9,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Animals.Systems;
 
 /// <summary>
-///     Gives ability to produce fiber reagents, produces endless if the 
+///     Gives ability to produce fiber reagents, produces endless if the
 ///     owner has no HungerComponent
 /// </summary>
 public sealed class WoolySystem : EntitySystem
@@ -46,7 +46,7 @@ public sealed class WoolySystem : EntitySystem
             if (EntityManager.TryGetComponent(uid, out HungerComponent? hunger))
             {
                 // Is there enough nutrition to produce reagent?
-                if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Okay)
+                if (_hunger.GetHungerThreshold(hunger) < SatiationThreashold.Okay)
                     continue;
 
                 _hunger.ModifyHunger(uid, -wooly.HungerUsage, hunger);

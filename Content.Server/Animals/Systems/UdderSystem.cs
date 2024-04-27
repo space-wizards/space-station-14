@@ -55,7 +55,7 @@ internal sealed class UdderSystem : EntitySystem
             if (EntityManager.TryGetComponent(uid, out HungerComponent? hunger))
             {
                 // Is there enough nutrition to produce reagent?
-                if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Okay)
+                if (_hunger.GetHungerThreshold(hunger) < SatiationThreashold.Okay)
                     continue;
 
                 _hunger.ModifyHunger(uid, -udder.HungerUsage, hunger);

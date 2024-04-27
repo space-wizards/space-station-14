@@ -1,6 +1,5 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Nutrition.Components;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 
@@ -12,7 +11,7 @@ public sealed partial class HungryPrecondition : HTNPrecondition
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     [DataField(required: true)]
-    public HungerThreshold MinHungerState = HungerThreshold.Starving;
+    public SatiationThreashold MinHungerState = SatiationThreashold.Desperate;
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
@@ -21,6 +20,6 @@ public sealed partial class HungryPrecondition : HTNPrecondition
             return false;
         }
 
-        return _entManager.TryGetComponent<HungerComponent>(owner, out var hunger) ? hunger.CurrentThreshold <= MinHungerState : false;
+        return _entManager.TryGetComponent<HungerComponent>(owner, out var hunger) ? hunger.Satiation.CurrentThreshold <= MinHungerState : false;
     }
 }

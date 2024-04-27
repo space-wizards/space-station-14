@@ -1,4 +1,4 @@
-﻿using Content.Server.Nutrition.EntitySystems;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -70,5 +70,5 @@ public sealed partial class FatExtractorComponent : Component
     /// Ignored when emagged.
     /// </summary>
     [DataField("minHungerThreshold")]
-    public HungerThreshold MinHungerThreshold = HungerThreshold.Okay;
+    public SatiationThreashold MinHungerThreshold = SatiationThreashold.Okay;
 }
