@@ -232,10 +232,6 @@
         "directions": 4
       },
       {
-        "name": "spookylong",
-        "directions": 4
-      },
-      {
         "name": "crewcut",
         "directions": 4
       },
@@ -669,6 +665,10 @@
       },
       {
         "name": "spikyponytail",
+        "directions": 4
+      },
+      {
+        "name": "spookylong",
         "directions": 4
       },
       {

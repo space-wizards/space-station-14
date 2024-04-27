@@ -186,5 +186,13 @@ Entries:
   id: 24
   time: '2024-04-27T10:33:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26705
+- author: Tainakov
+  changes:
+  - message: +Adminchat flag is added. Now to gain access to the admin chat you will
+      need this flag.
+    type: Add
+  id: 25
+  time: '2024-04-27T11:17:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26930
 Name: Admin
 Order: 1
