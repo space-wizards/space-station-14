@@ -53,19 +53,19 @@ public sealed class FaxBoundUi : BoundUserInterface
 
         using var reader = new StreamReader(file);
 
-        var label = await reader.ReadLineAsync();
+        var firstLine = await reader.ReadLineAsync();
+        string? label = null;
         var content = await reader.ReadToEndAsync();
 
-        if (label is { })
+        if (firstLine is { })
         {
-            if (label.StartsWith('#'))
+            if (firstLine.StartsWith('#'))
             {
-                label = label[1..].Trim();
+                label = firstLine[1..].Trim();
             }
             else
             {
-                content = label + '\n' + content;
-                label = null;
+                content = firstLine + '\n' + content;
             }
         }
 
