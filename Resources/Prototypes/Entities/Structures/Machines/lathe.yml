@@ -165,6 +165,8 @@
     emagStaticRecipes:
       - MagazinePistol 
       - MagazinePistolEmpty
+      - MagazinePistolSubMachineGun
+      - MagazinePistolSubMachineGunEmpty
       - SpeedLoaderMagnum
       - SpeedLoaderMagnumEmpty
       - MagazineShotgunEmpty
