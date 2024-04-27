@@ -91,13 +91,23 @@ dialog:canvas{
         local layerBackground = findLayer(sprite, dialog.data["background-select"])
         -- print(layerDisplacement.name)
         -- print(layerTarget.name)
-        
+
         local celDisplacement = layerDisplacement:cel(1)
         local celTarget = layerTarget:cel(1)
         local celBackground = layerBackground:cel(1)
-        
+
         -- Draw background
-        context:drawImage(celBackground.image, 0, 0, celBackground.image.width, celBackground.image.height, 0, 0, celBackground.image.width * scale, context.width, context.height)
+        context:drawImage(
+            -- srcImage
+            celBackground.image,
+            -- srcPos
+            0, 0,
+            -- srcSize
+            celBackground.image.width, celBackground.image.height,
+            -- dstPos
+            celBackground.position.x * scale, celBackground.position.y * scale,
+            -- dstSize
+            celBackground.image.width * scale, celBackground.image.height * scale)
 
         -- Apply displacement map and draw
         local image = applyDisplacementMap(
@@ -106,7 +116,17 @@ dialog:canvas{
             celDisplacement.image, celDisplacement.bounds,
             celTarget.image, celTarget.bounds)
 
-        context:drawImage(image, 0, 0, image.width, image.height, 0, 0, image.width * scale, context.width, context.height)
+        context:drawImage(
+            -- srcImage
+            image,
+            -- srcPos
+            0, 0,
+            -- srcSize
+            image.width, image.height,
+            -- dstPos
+            0, 0,
+            -- dstSize
+            image.width * scale, image.height * scale)
     end
 }
 
