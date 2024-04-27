@@ -19,45 +19,45 @@ namespace Content.IntegrationTests.Tests.Damageable
 # Define some damage groups
 - type: damageType
   id: TestDamage1
-  name: TestDamage1
+  name: damage-type-blunt
 
 - type: damageType
   id: TestDamage2a
-  name: TestDamage2a
+  name: damage-type-blunt
 
 - type: damageType
   id: TestDamage2b
-  name: TestDamage2b
+  name: damage-type-blunt
 
 - type: damageType
   id: TestDamage3a
-  name: TestDamage3a
+  name: damage-type-blunt
 
 - type: damageType
   id: TestDamage3b
-  name: TestDamage3b
+  name: damage-type-blunt
 
 - type: damageType
   id: TestDamage3c
-  name: TestDamage3c
+  name: damage-type-blunt
 
 # Define damage Groups with 1,2,3 damage types
 - type: damageGroup
   id: TestGroup1
-  name: TestGroup1
+  name: damage-group-brute
   damageTypes:
     - TestDamage1
 
 - type: damageGroup
   id: TestGroup2
-  name: TestGroup2
+  name: damage-group-brute
   damageTypes:
     - TestDamage2a
     - TestDamage2b
 
 - type: damageGroup
   id: TestGroup3
-  name: TestGroup3
+  name: damage-group-brute
   damageTypes:
     - TestDamage3a
     - TestDamage3b
