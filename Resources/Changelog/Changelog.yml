@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Killerqu00
-  changes:
-  - message: EVA and paramedic suits now play sound when putting helmet on.
-    type: Fix
-  id: 5962
-  time: '2024-02-17T22:34:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25349
 - author: musicmanvr
   changes:
   - message: Toned down the newton cradle and added it to the bureaucracy crate for
@@ -3855,3 +3848,11 @@
   id: 6461
   time: '2024-04-27T13:27:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25913
+- author: brainfood1183
+  changes:
+  - message: Centcom advises all crewmembers to please stop putting rodents in the
+      fax machines (rodents can now be inserted into fax machine).
+    type: Add
+  id: 6462
+  time: '2024-04-27T13:50:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/21461
