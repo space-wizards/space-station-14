@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Mind;
@@ -60,6 +61,64 @@ public abstract class SharedRoleSystem : EntitySystem
 
         SubscribeLocalEvent((EntityUid _, T _, ref MindIsAntagonistEvent args) => { args.IsAntagonist = true; args.IsExclusiveAntagonist |= typeof(T).TryGetCustomAttribute<ExclusiveAntagonistAttribute>(out _); });
         _antagTypes.Add(typeof(T));
+    }
+
+    public void MindAddRoles(EntityUid mindId, ComponentRegistry components, MindComponent? mind = null, bool silent = false)
+    {
+        if (!Resolve(mindId, ref mind))
+            return;
+
+        EntityManager.AddComponents(mindId, components);
+        var antagonist = false;
+        foreach (var compReg in components.Values)
+        {
+            var compType = compReg.Component.GetType();
+
+            var comp = EntityManager.ComponentFactory.GetComponent(compType);
+            if (IsAntagonistRole(comp.GetType()))
+            {
+                antagonist = true;
+                break;
+            }
+        }
+
+        var mindEv = new MindRoleAddedEvent(silent);
+        RaiseLocalEvent(mindId, ref mindEv);
+
+        var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
+        if (mind.OwnedEntity != null)
+        {
+            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
+        }
+
+        _adminLogger.Add(LogType.Mind, LogImpact.Low,
+            $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
+    }
+
+    public void MindAddRole(EntityUid mindId, Component component, MindComponent? mind = null, bool silent = false)
+    {
+        if (!Resolve(mindId, ref mind))
+            return;
+
+        if (HasComp(mindId, component.GetType()))
+        {
+            throw new ArgumentException($"We already have this role: {component}");
+        }
+
+        EntityManager.AddComponent(mindId, component);
+        var antagonist = IsAntagonistRole(component.GetType());
+
+        var mindEv = new MindRoleAddedEvent(silent);
+        RaiseLocalEvent(mindId, ref mindEv);
+
+        var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
+        if (mind.OwnedEntity != null)
+        {
+            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
+        }
+
+        _adminLogger.Add(LogType.Mind, LogImpact.Low,
+            $"'Role {component}' added to mind of {_minds.MindOwnerLoggingString(mind)}");
     }
 
     /// <summary>
@@ -137,11 +196,13 @@ public abstract class SharedRoleSystem : EntitySystem
 
     public bool MindHasRole<T>(EntityUid mindId) where T : IComponent
     {
+        DebugTools.Assert(HasComp<MindComponent>(mindId));
         return HasComp<T>(mindId);
     }
 
     public List<RoleInfo> MindGetAllRoles(EntityUid mindId)
     {
+        DebugTools.Assert(HasComp<MindComponent>(mindId));
         var ev = new MindGetAllRolesEvent(new List<RoleInfo>());
         RaiseLocalEvent(mindId, ref ev);
         return ev.Roles;
@@ -152,6 +213,7 @@ public abstract class SharedRoleSystem : EntitySystem
         if (mindId == null)
             return false;
 
+        DebugTools.Assert(HasComp<MindComponent>(mindId));
         var ev = new MindIsAntagonistEvent();
         RaiseLocalEvent(mindId.Value, ref ev);
         return ev.IsAntagonist;
@@ -175,6 +237,11 @@ public abstract class SharedRoleSystem : EntitySystem
     public bool IsAntagonistRole<T>()
     {
         return _antagTypes.Contains(typeof(T));
+    }
+
+    public bool IsAntagonistRole(Type component)
+    {
+        return _antagTypes.Contains(component);
     }
 
     /// <summary>

@@ -66,7 +66,7 @@
     damageContainer: Inorganic
     damageModifierSet: Glass
   - type: ExaminableDamage
-    messages: WindowMessages   
+    messages: WindowMessages
   - type: RCDDeconstructable
     cost: 8
     delay: 8
@@ -93,10 +93,11 @@
             max: 4
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: AccessReader
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]
+  - type: AccessReader
+    containerAccessProvider: board
   - type: ContainerContainer
     containers:
       board: !type:Container
@@ -129,8 +130,8 @@
     layoutId: Airlock
   - type: UserInterface
     interfaces:
-    - key: enum.WiresUiKey.Key
-      type: WiresBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: Appearance
   - type: WiresVisuals
   - type: Airtight

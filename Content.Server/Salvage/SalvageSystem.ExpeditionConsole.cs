@@ -56,7 +56,7 @@ public sealed partial class SalvageSystem
             if (station != component.Owner)
                 continue;
 
-            _ui.TrySetUiState(uid, SalvageConsoleUiKey.Expedition, state, ui: uiComp);
+            _ui.SetUiState((uid, uiComp), SalvageConsoleUiKey.Expedition, state);
         }
     }
 
@@ -74,6 +74,6 @@ public sealed partial class SalvageSystem
             state = new SalvageExpeditionConsoleState(TimeSpan.Zero, false, true, 0, new List<SalvageMissionParams>());
         }
 
-        _ui.TrySetUiState(component, SalvageConsoleUiKey.Expedition, state);
+        _ui.SetUiState(component.Owner, SalvageConsoleUiKey.Expedition, state);
     }
 }

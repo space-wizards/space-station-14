@@ -84,8 +84,7 @@
     name: ghost-role-information-loneop-name
     description: ghost-role-information-loneop-description
     rules: ghost-role-information-loneop-rules
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanLoneNuclearOperative
+  - type: GhostRoleAntagSpawner
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
