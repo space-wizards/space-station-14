@@ -674,45 +674,59 @@ namespace Content.Client.Preferences.UI
             switch (skin)
             {
                 case HumanoidSkinColor.HumanToned:
+                {
+                    if (!_skinColor.Visible)
                     {
-                        if (!_skinColor.Visible)
-                        {
-                            _skinColor.Visible = true;
-                            _rgbSkinColorContainer.Visible = false;
-                        }
-
-                        var color = SkinColor.HumanSkinTone((int) _skinColor.Value);
-
-                        CMarkings.CurrentSkinColor = color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));//
-                        break;
+                        _skinColor.Visible = true;
+                        _rgbSkinColorContainer.Visible = false;
                     }
+
+                    var color = SkinColor.HumanSkinTone((int) _skinColor.Value);
+
+                    CMarkings.CurrentSkinColor = color;
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));//
+                    break;
+                }
                 case HumanoidSkinColor.Hues:
+                {
+                    if (!_rgbSkinColorContainer.Visible)
                     {
-                        if (!_rgbSkinColorContainer.Visible)
-                        {
-                            _skinColor.Visible = false;
-                            _rgbSkinColorContainer.Visible = true;
-                        }
-
-                        CMarkings.CurrentSkinColor = _rgbSkinColorSelector.Color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(_rgbSkinColorSelector.Color));
-                        break;
+                        _skinColor.Visible = false;
+                        _rgbSkinColorContainer.Visible = true;
                     }
+
+                    CMarkings.CurrentSkinColor = _rgbSkinColorSelector.Color;
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(_rgbSkinColorSelector.Color));
+                    break;
+                }
                 case HumanoidSkinColor.TintedHues:
+                {
+                    if (!_rgbSkinColorContainer.Visible)
                     {
-                        if (!_rgbSkinColorContainer.Visible)
-                        {
-                            _skinColor.Visible = false;
-                            _rgbSkinColorContainer.Visible = true;
-                        }
-
-                        var color = SkinColor.TintedHues(_rgbSkinColorSelector.Color);
-
-                        CMarkings.CurrentSkinColor = color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
-                        break;
+                        _skinColor.Visible = false;
+                        _rgbSkinColorContainer.Visible = true;
                     }
+
+                    var color = SkinColor.TintedHues(_rgbSkinColorSelector.Color);
+
+                    CMarkings.CurrentSkinColor = color;
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+                    break;
+                }
+                case HumanoidSkinColor.VoxFeathers:
+                {
+                    if (!_rgbSkinColorContainer.Visible)
+                    {
+                        _skinColor.Visible = false;
+                        _rgbSkinColorContainer.Visible = true;
+                    }
+
+                    var color = SkinColor.ClosestVoxColor(_rgbSkinColorSelector.Color);
+
+                    CMarkings.CurrentSkinColor = color;
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+                    break;
+                }
             }
 
             IsDirty = true;
@@ -886,41 +900,53 @@ namespace Content.Client.Preferences.UI
             switch (skin)
             {
                 case HumanoidSkinColor.HumanToned:
+                {
+                    if (!_skinColor.Visible)
                     {
-                        if (!_skinColor.Visible)
-                        {
-                            _skinColor.Visible = true;
-                            _rgbSkinColorContainer.Visible = false;
-                        }
-
-                        _skinColor.Value = SkinColor.HumanSkinToneFromColor(Profile.Appearance.SkinColor);
-
-                        break;
+                        _skinColor.Visible = true;
+                        _rgbSkinColorContainer.Visible = false;
                     }
+
+                    _skinColor.Value = SkinColor.HumanSkinToneFromColor(Profile.Appearance.SkinColor);
+
+                    break;
+                }
                 case HumanoidSkinColor.Hues:
+                {
+                    if (!_rgbSkinColorContainer.Visible)
                     {
-                        if (!_rgbSkinColorContainer.Visible)
-                        {
-                            _skinColor.Visible = false;
-                            _rgbSkinColorContainer.Visible = true;
-                        }
-
-                        // set the RGB values to the direct values otherwise
-                        _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
-                        break;
+                        _skinColor.Visible = false;
+                        _rgbSkinColorContainer.Visible = true;
                     }
+
+                    // set the RGB values to the direct values otherwise
+                    _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
+                    break;
+                }
                 case HumanoidSkinColor.TintedHues:
+                {
+                    if (!_rgbSkinColorContainer.Visible)
                     {
-                        if (!_rgbSkinColorContainer.Visible)
-                        {
-                            _skinColor.Visible = false;
-                            _rgbSkinColorContainer.Visible = true;
-                        }
-
-                        // set the RGB values to the direct values otherwise
-                        _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
-                        break;
+                        _skinColor.Visible = false;
+                        _rgbSkinColorContainer.Visible = true;
                     }
+
+                    // set the RGB values to the direct values otherwise
+                    _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
+                    break;
+                }
+                case HumanoidSkinColor.VoxFeathers:
+                {
+                    if (!_rgbSkinColorContainer.Visible)
+                    {
+                        _skinColor.Visible = false;
+                        _rgbSkinColorContainer.Visible = true;
+                    }
+
+                    _rgbSkinColorSelector.Color = SkinColor.ClosestVoxColor(Profile.Appearance.SkinColor);
+
+                    break;
+                }
             }
 
         }

@@ -287,6 +287,9 @@ uplink-disposable-turret-desc = Looks and functions like a normal electrical too
 uplink-cluster-banana-peel-name = Cluster Banana
 uplink-cluster-banana-peel-desc = Splits into 6 explosive banana peels after being thrown, the peels detonate automatically after 20 seconds if nobody slips on them.
 
+uplink-cane-blade-name = Cane Blade
+uplink-cane-blade-desc = A cane that has a hidden blade that can be unsheathed.
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
