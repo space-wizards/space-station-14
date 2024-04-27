@@ -34,11 +34,18 @@ public sealed class WelderStatusControl : PollingItemStatusControl<WelderStatusC
 
     protected override void Update(in Data data)
     {
-        _label.SetMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
+        if (_parent.Comp.HiddenInfo) ///this lets glue hide fuel and lit stats
+        {
+            return;
+        }
+        else
+        { 
+            _label.SetMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
             ("colorName", data.Fuel < data.FuelCapacity / 4f ? "darkorange" : "orange"),
             ("fuelLeft", data.Fuel),
             ("fuelCapacity", data.FuelCapacity),
             ("status", Loc.GetString(data.Lit ? "welder-component-on-examine-welder-lit-message" : "welder-component-on-examine-welder-not-lit-message"))));
+        }
     }
 
     public record struct Data(FixedPoint2 Fuel, FixedPoint2 FuelCapacity, bool Lit);

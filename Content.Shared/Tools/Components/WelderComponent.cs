@@ -55,4 +55,10 @@ public sealed partial class WelderComponent : Component
 
     [DataField]
     public float WelderUpdateTimer = 1f;
+
+    /// <summary>
+    ///     Whether you can see the fuel amount or if its lit or not. used for non welders like glue
+    /// </summary>
+    [DataField]
+    public bool HiddenInfo = false;
 }
