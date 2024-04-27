@@ -16,6 +16,17 @@
     #- type: VoxAccent # Not yet coded
   - type: Inventory
     speciesId: vox
+    jumpsuitShader: DisplacedStencilDraw
+    displacements:
+      jumpsuit:
+        layer:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: jumpsuit
+          copyToShaderParameters:
+            # Value required, provide a dummy. Gets overridden when applied.
+            layerKey: dummy
+            parameterTexture: displacementMap
+            parameterUV: displacementUV
   - type: Speech
     speechVerb: Vox
     speechSounds: Vox
