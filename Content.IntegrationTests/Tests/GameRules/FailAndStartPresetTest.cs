@@ -1,4 +1,5 @@
-﻿using Content.Server.GameTicking;
+﻿#nullable enable
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Presets;
 using Content.Shared.CCVar;
