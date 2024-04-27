@@ -27,7 +27,7 @@
   suffix: Armored, Chameleon
   components:
   - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+    tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
       sprite: Clothing/Head/Hats/beret.rsi
     - type: Clothing
