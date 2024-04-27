@@ -95,8 +95,8 @@
     - type: MeleeSpeech
     - type: UserInterface
       interfaces:
-      - key: enum.MeleeSpeechUiKey.Key
-        type: MeleeSpeechBoundUserInterface
+        enum.MeleeSpeechUiKey.Key:
+          type: MeleeSpeechBoundUserInterface
     - type: Actions
     - type: Guardian
     - type: InteractionPopup

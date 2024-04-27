@@ -32,6 +32,15 @@
         Heat: 0.80
 
 - type: entity
+  parent: ClothingOuterCoatDetective
+  id: ClothingOuterCoatDetectiveLoadout
+  components:
+  - type: StorageFill
+    contents:
+    - id: SmokingPipeFilledTobacco
+    - id: FlippoLighter #Not the steal objective, only difference from normal detective trenchcoat
+
+- type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatGentle
   name: gentle coat

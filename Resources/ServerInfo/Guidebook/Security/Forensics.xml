@@ -1,4 +1,4 @@
-﻿<Document>
+<Document>
   # Forensics
 
   There are a lot of tools to help you gather and examine the evidence at your disposal
@@ -40,7 +40,7 @@
   ## Fibers
   Whenenever people wearing gloves touch anything on the station, they are bound to leave behind some fibers. This complicates things, but nothing is unsolvable for a real detective.
 
-  There are up to [color=red]16[/color] different types of fibers possible. Can that stop you from solving the case?
+  There are up to [color=red]25[/color] different types of fibers possible. Can that stop you from solving the case?
 
   <Box>
     <GuideEntityEmbed Entity="ComputerStationRecords"/>
