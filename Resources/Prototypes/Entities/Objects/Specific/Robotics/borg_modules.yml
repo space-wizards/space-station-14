@@ -318,6 +318,7 @@
     - HoloprojectorBorg
     - SprayBottleSpaceCleaner
     - Dropper
+    - TrashBag
 
 # medical modules
 - type: entity

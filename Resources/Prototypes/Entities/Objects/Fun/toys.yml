@@ -1310,9 +1310,7 @@
   components:
     - type: Sprite
       sprite: Objects/Fun/rubber_hammer.rsi
-      layers:
-        - state: icon
-          shader: unshaded
+      state: icon
     - type: WeaponRandom
       damageBonus:
           types:

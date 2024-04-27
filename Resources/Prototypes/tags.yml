@@ -259,10 +259,10 @@
   id: CableCoil
 
 - type: Tag
-  id: CannonBall
+  id: CaneBlade
 
 - type: Tag
-  id: CannonRestrict
+  id: CannonBall
 
 - type: Tag
   id: CannotSuicide
@@ -1114,6 +1114,9 @@
   id: Sidearm
 
 - type: Tag
+  id: SignalTrigger
+
+- type: Tag
   id: SkeletonMotorcycleKeys
 
 - type: Tag
@@ -1242,6 +1245,9 @@
   id: TrashBag
 
 - type: Tag
+  id: Truncheon
+
+- type: Tag
   id: Unimplantable
 
 - type: Tag
@@ -1321,3 +1327,5 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+# ALPHABETICAL
