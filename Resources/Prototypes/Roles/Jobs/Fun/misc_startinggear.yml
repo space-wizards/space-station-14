@@ -312,11 +312,3 @@
     shoes: ClothingShoesClownBanana
     jumpsuit: ClothingUniformJumpsuitClownBanana
     mask: ClothingMaskClownBanana
-
-#Vox Survival Gear
-- type: startingGear
-  id: VoxBreathingGear
-  equipment:
-    outerClothing: ClothingOuterVest
-    mask: ClothingMaskBreath
-    suitstorage: NitrogenTankFilled
