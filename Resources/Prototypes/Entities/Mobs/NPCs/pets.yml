@@ -849,6 +849,10 @@
         - SmallMobLayer
   - type: Stripping
   - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
   - type: GhostRole
     prob: 1
     makeSentient: true
