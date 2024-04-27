@@ -156,6 +156,12 @@
   - type: Drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
+  - type: DrawableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
   - type: Spillable
     solution: drink
   - type: Sprite
