@@ -315,10 +315,7 @@ public sealed class ClientClothingSystem : ClothingSystem
             if (displacementData != null)
             {
                 if (displacementData.ShaderOverride != null)
-                {
-                    layerData.Shader = displacementData.ShaderOverride;
-                    sprite.LayerSetData(index, layerData);
-                }
+                    sprite.LayerSetShader(index, displacementData.ShaderOverride);
 
                 var displacementKey = $"{key}-displacement";
                 if (!revealedLayers.Add(displacementKey))
