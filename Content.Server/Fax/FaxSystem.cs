@@ -352,7 +352,7 @@ public sealed class FaxSystem : EntitySystem
 
         if (component.InsertingTimeRemaining > 0)
         {
-            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, true);
+            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
             Dirty(uid, component);
         }
         else if (component.PrintingTimeRemaining > 0)
