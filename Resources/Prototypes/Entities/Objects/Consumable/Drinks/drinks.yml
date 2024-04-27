@@ -33,8 +33,8 @@
     solution: drink
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: EmitSoundOnPickup # GreyStation - Sound PR
     sound: /Audio/SimpleStation14/Items/Handling/drinkglass_pickup.ogg
   - type: EmitSoundOnDrop

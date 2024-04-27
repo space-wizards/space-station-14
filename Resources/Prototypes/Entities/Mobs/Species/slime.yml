@@ -14,6 +14,7 @@
     requiredLegs: 2
   # they like eat it idk lol
   - type: Storage
+    clickInsert: false
     grid:
     - 0,0,1,2
     maxItemSize: Large
@@ -25,14 +26,14 @@
         ents: []
   - type: UserInterface
     interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
-    - key: enum.VoiceMaskUIKey.Key
-      type: VoiceMaskBoundUserInterface
-    - key: enum.HumanoidMarkingModifierKey.Key
-      type: HumanoidMarkingModifierBoundUserInterface
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.VoiceMaskUIKey.Key:
+        type: VoiceMaskBoundUserInterface
+      enum.HumanoidMarkingModifierKey.Key:
+        type: HumanoidMarkingModifierBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
   # to prevent bag open/honk spam
   - type: UseDelay
     delay: 0.5

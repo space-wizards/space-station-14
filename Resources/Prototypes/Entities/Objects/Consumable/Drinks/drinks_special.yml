@@ -29,8 +29,8 @@
     state: icon
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: PhysicalComposition
     materialComposition:
       Steel: 50

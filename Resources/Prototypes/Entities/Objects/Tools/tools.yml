@@ -236,11 +236,11 @@
     inHandsOnly: true
   - type: UserInterface
     interfaces:
-      - key: enum.NetworkConfiguratorUiKey.List
+      enum.NetworkConfiguratorUiKey.List:
         type: NetworkConfiguratorBoundUserInterface
-      - key: enum.NetworkConfiguratorUiKey.Configure
+      enum.NetworkConfiguratorUiKey.Configure:
         type: NetworkConfiguratorBoundUserInterface
-      - key: enum.NetworkConfiguratorUiKey.Link
+      enum.NetworkConfiguratorUiKey.Link:
         type: NetworkConfiguratorBoundUserInterface
   - type: Tag
     tags:
@@ -292,11 +292,11 @@
         - DoorElectronicsConfigurator
     - type: UserInterface
       interfaces:
-        - key: enum.NetworkConfiguratorUiKey.List
+        enum.NetworkConfiguratorUiKey.List:
           type: NetworkConfiguratorBoundUserInterface
-        - key: enum.NetworkConfiguratorUiKey.Configure
+        enum.NetworkConfiguratorUiKey.Configure:
           type: NetworkConfiguratorBoundUserInterface
-        - key: enum.NetworkConfiguratorUiKey.Link
+        enum.NetworkConfiguratorUiKey.Link:
           type: NetworkConfiguratorBoundUserInterface
     - type: StaticPrice
       price: 56
@@ -409,8 +409,8 @@
     price: 100
   - type: UserInterface
     interfaces:
-    - key: enum.RcdUiKey.Key
-      type: RCDMenuBoundUserInterface
+      enum.RcdUiKey.Key:
+        type: RCDMenuBoundUserInterface
   - type: ActivatableUI
     key: enum.RcdUiKey.Key
 

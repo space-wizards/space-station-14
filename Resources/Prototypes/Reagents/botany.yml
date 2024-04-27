@@ -247,6 +247,8 @@
           groups:
             Brute: -5
             Burn: -5
+          types:
+            Bloodloss: -5
 
 
 - type: reagent

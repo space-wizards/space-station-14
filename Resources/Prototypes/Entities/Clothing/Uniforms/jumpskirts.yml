@@ -766,3 +766,14 @@
       - state: equipped-INNERCLOTHING-jumpskirt
       - state: equipped-INNERCLOTHING-shirt
         color: "#b30000"
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtOldDress
+  name: old dress
+  description: A worn-looking dress from a very long time ago.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/olddress.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/olddress.rsi

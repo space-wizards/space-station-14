@@ -93,27 +93,6 @@
     sound: /Audio/SimpleStation14/Items/Handling/cardboardbox_drop.ogg
 
 - type: entity
-  parent: BaseMagazineBoxLightRifle
-  id: MagazineBoxLightRifleRubber
-  name: ammunition box (.30 rifle rubber)
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeLightRifleRubber
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: rubber
-  - type: EmitSoundOnPickup # GreyStation - Sound PR
-    sound: /Audio/SimpleStation14/Items/Handling/cardboardbox_pickup.ogg
-  - type: EmitSoundOnDrop
-    sound: /Audio/SimpleStation14/Items/Handling/cardboardbox_drop.ogg
-  - type: EmitSoundOnLand
-    sound: /Audio/SimpleStation14/Items/Handling/cardboardbox_drop.ogg
-
-- type: entity
   id: MagazineBoxLightRifleIncendiary
   parent: BaseMagazineBoxLightRifle
   name: ammunition box (.30 rifle incendiary)
