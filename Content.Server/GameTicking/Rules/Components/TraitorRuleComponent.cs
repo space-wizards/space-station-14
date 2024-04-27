@@ -71,5 +71,5 @@ public sealed partial class TraitorRuleComponent : Component
     public int StartingBalance = 20;
 
     [DataField]
-    public int MaxDifficulty = 20;
+    public int MaxDifficulty = 5;
 }

@@ -328,7 +328,7 @@ public sealed class FaxSystem : EntitySystem
         if (HasComp<MobStateComponent>(component.PaperSlot.Item))
             _faxecute.Faxecute(uid, component); /// when button pressed it will hurt the mob.
         else
-            Send(uid, component, args.Session.AttachedEntity);
+            Send(uid, component, args.Actor);
     }
 
     private void OnRefreshButtonPressed(EntityUid uid, FaxMachineComponent component, FaxRefreshMessage args)
@@ -374,7 +374,7 @@ public sealed class FaxSystem : EntitySystem
                       component.SendTimeoutRemaining <= 0 &&
                       component.InsertingTimeRemaining <= 0;
         var state = new FaxUiState(component.FaxName, component.KnownFaxes, canSend, canCopy, isPaperInserted, component.DestinationFaxAddress);
-        _userInterface.TrySetUiState(uid, FaxUiKey.Key, state);
+        _userInterface.SetUiState(uid, FaxUiKey.Key, state);
     }
 
     /// <summary>
@@ -425,7 +425,7 @@ public sealed class FaxSystem : EntitySystem
         else
             prototype = DefaultPaperPrototypeId;
 
-        var name = Loc.GetString("fax-machine-printed-paper-name");
+        var name  = Loc.GetString("fax-machine-printed-paper-name");
 
         var printout = new FaxPrintout(args.Content, name, prototype);
         component.PrintingQueue.Enqueue(printout);
@@ -433,12 +433,8 @@ public sealed class FaxSystem : EntitySystem
 
         UpdateUserInterface(uid, component);
 
-        if (args.Session.AttachedEntity != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} added print job to {ToPrettyString(uid):tool} with text: {args.Content}");
-        else
-            _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"Someone added print job to {ToPrettyString(uid):tool} with text: {args.Content}");
+        _adminLogger.Add(LogType.Action, LogImpact.Low,
+            $"{ToPrettyString(args.Actor):actor} added print job to {ToPrettyString(uid):tool} with text: {args.Content}");
     }
 
     /// <summary>
@@ -473,9 +469,8 @@ public sealed class FaxSystem : EntitySystem
 
         UpdateUserInterface(uid, component);
 
-        if (args.Session.AttachedEntity != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} added copy job to {ToPrettyString(uid):tool} with text: {ToPrettyString(component.PaperSlot.Item):subject}");
+        _adminLogger.Add(LogType.Action, LogImpact.Low,
+            $"{ToPrettyString(args.Actor):actor} added copy job to {ToPrettyString(uid):tool} with text: {ToPrettyString(component.PaperSlot.Item):subject}");
     }
 
     /// <summary>

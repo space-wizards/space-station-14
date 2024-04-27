@@ -55,6 +55,7 @@ marking-HumanHairCornrows2 = Cornrows 2
 marking-HumanHairCornrowbun = Cornrow Bun
 marking-HumanHairCornrowbraid = Cornrow Braid
 marking-HumanHairCornrowtail = Cornrow Tail
+marking-HumanHairSpookyLong = Spooky Long
 marking-HumanHairCrewcut = Crewcut
 marking-HumanHairCrewcut2 = Crewcut 2
 marking-HumanHairCurls = Curls

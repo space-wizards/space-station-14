@@ -34,6 +34,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         //Generate objectives
         GenerateObjectives(mindId, mind, ent);
+        _antag.SendBriefing(args.EntityUid, MakeBriefing(args.EntityUid), null, null);
     }
 
     private void GenerateObjectives(EntityUid mindId, MindComponent mind, ThiefRuleComponent thiefRule)
