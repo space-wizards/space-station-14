@@ -107,7 +107,7 @@ public sealed class PryingSystem : EntitySystem
     {
         BeforePryEvent canev;
 
-        if (comp != null || Resolve(user, ref comp))
+        if (comp != null || Resolve(user, ref comp, false))
         {
             canev = new BeforePryEvent(user, comp.PryPowered, comp.Force);
         }
