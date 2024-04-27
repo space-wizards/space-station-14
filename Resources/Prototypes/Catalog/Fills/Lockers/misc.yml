@@ -68,7 +68,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterSuitEmergency
       - id: ClothingMaskBreath
       - id: EmergencyNitrogenTankFilled
         prob: 0.80
@@ -76,17 +75,15 @@
       - id: NitrogenTankFilled
         prob: 0.20
         orGroup: EmergencyTankOrRegularTank
-      - id: ToolboxEmergencyFilled
-        prob: 0.4
-      - id: WeaponFlareGun
-        prob: 0.05
       - id: BoxMRE
         prob: 0.1
+      - id: ToolboxEmergencyFilled
+        prob: 0.05
 
 - type: entity
-  id: ClosetImprovisedEmergencyN2FilledRandom
-  parent: ClosetImprovisedEmergencyN2
-  suffix: Filled, Random
+  id: ClosetEmergencyN2FancyFilledRandom
+  parent: ClosetEmergencyN2Fancy
+  suffix: Fancy, Filled, Random
   components:
   - type: StorageFill
     contents:
@@ -97,6 +94,10 @@
       - id: NitrogenTankFilled
         prob: 0.20
         orGroup: EmergencyTankOrRegularTank
+      - id: BoxMRE
+        prob: 0.1
+      - id: ToolboxEmergencyFilled
+        prob: 0.05
         
 - type: entity
   id: ClosetWallEmergencyN2FilledRandom
@@ -105,7 +106,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterSuitEmergency
       - id: ClothingMaskBreath
       - id: EmergencyNitrogenTankFilled
         prob: 0.80
@@ -113,13 +113,11 @@
       - id: NitrogenTankFilled
         prob: 0.20
         orGroup: EmergencyTankOrRegularTank
-      - id: ToolboxEmergencyFilled
-        prob: 0.4
-      - id: WeaponFlareGun
-        prob: 0.05
       - id: BoxMRE
         prob: 0.1
- 
+      - id: ToolboxEmergencyFilled
+        prob: 0.05
+
 - type: entity
   id: ClosetFireFilled
   parent: ClosetFire
