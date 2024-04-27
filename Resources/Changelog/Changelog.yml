@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: A new chest scar marking is now available to humans and dwarves.
-    type: Add
-  id: 5960
-  time: '2024-02-17T20:50:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25215
 - author: ArchPigeon
   changes:
   - message: Tails now stop wagging on crit
@@ -3848,3 +3841,17 @@
   id: 6459
   time: '2024-04-27T10:35:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27265
+- author: Plykiya
+  changes:
+  - message: You can no longer print singular bullets at the security techfab.
+    type: Remove
+  - message: The security techfab now has recipes for ammunition boxes and pre-filled
+      magazines of every type of ammo.
+    type: Add
+  - message: You can now print empty magazines at the security techfab.
+    type: Add
+  - message: Material costs for printing all ammo and mags were rebalanced.
+    type: Tweak
+  id: 6460
+  time: '2024-04-27T10:38:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26178
