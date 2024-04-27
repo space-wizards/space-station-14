@@ -7,6 +7,7 @@ admin-verbs-teleport-to = Teleport To
 admin-verbs-teleport-here = Teleport Here
 admin-verbs-freeze = Freeze
 admin-verbs-unfreeze = Unfreeze
+admin-verbs-permban = Perm Ban
 admin-verbs-erase = Erase
 admin-verbs-erase-description = Removes the player from the round and crew manifest and deletes their chat messages.
     Their items are dropped on the ground.

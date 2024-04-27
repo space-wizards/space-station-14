@@ -4,7 +4,6 @@
     entity: MobReptilian
     forced: true
     transferName: true
-    transferHumanoidAppearance: true
     inventory: Transfer
     allowRepeatedMorphs: true
 
@@ -47,3 +46,21 @@
     forced: true
     inventory: Drop
     allowRepeatedMorphs: true
+
+- type: polymorph
+  id: AdminVulpSmite
+  configuration:
+    entity: MobVulpkanin
+    forced: true
+    transferName: true
+    inventory: Transfer
+    allowRepeatedMorphs: true
+
+- type: polymorph
+  id: AdminGondolaSmite
+  configuration:
+    entity: MobGondola
+    forced: true
+    inventory: Drop
+    allowRepeatedMorphs: true
+
