@@ -16,7 +16,7 @@ public sealed partial class PlantSedin : ReagentEffect
     public float SeedRestorationChance = 0.1f;
 
     [DataField]
-    public int PotencyDropAmount = 6; // Ideallly set to 2 times the amount Robust Harvest adds
+    public int PotencyDropAmount = 7; // Ideallly set to 2 times the amount Robust Harvest adds, plus 1
 
     public override void Effect(ReagentEffectArgs args)
     {
