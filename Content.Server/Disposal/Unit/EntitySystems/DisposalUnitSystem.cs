@@ -143,6 +143,9 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             return;
         }
 
+        if (!CanInsert(uid, component, args.User))
+            return;
+
         // Add verb to climb inside of the unit,
         Verb verb = new()
         {
