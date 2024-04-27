@@ -65,7 +65,7 @@ public sealed class FaxBoundUi : BoundUserInterface
             }
             else
             {
-                content = firstLine + '\n' + content;
+                content = firstLine + Environment.NewLine + content;
             }
         }
 
