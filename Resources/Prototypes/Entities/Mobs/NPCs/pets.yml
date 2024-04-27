@@ -932,7 +932,7 @@
       types:
         Blunt: 60 #per second, scales with pressure and other constants.
   - type: Repairable 
-    fuelcost: 15
+    fuelCost: 15
     qualityNeeded: Gluing
     doAfterDelay: 8      
   - type: ZombieImmune   
