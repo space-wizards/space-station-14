@@ -918,7 +918,7 @@
   - type: Body #gives em a body, is needed for organs and hands
     prototype: gnome
     requiredLegs: 0
-  - type: Clumsy #no guns for youuuu
+  - type: Clumsy #no guns for youuuu if they shoot a gun they die >:3
     clumsyDamage:
       types:
         Blunt: 2
