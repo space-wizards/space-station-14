@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: musicmanvr
-  changes:
-  - message: Toned down the newton cradle and added it to the bureaucracy crate for
-      bored accountants.
-    type: Fix
-  id: 5963
-  time: '2024-02-17T23:55:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25357
 - author: genderGeometries
   changes:
   - message: Allicin, nutriment, and vitamin can now be centrifuged. Protein and fat
@@ -3856,3 +3848,14 @@
   id: 6462
   time: '2024-04-27T13:50:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/21461
+- author: MilenVolf
+  changes:
+  - message: Glass Box now can be constructed and deconstructed!
+    type: Add
+  - message: Glass Box now makes an alarm sound on destruction.
+    type: Tweak
+  - message: Now Antique Laser can be put back in the Glass Box.
+    type: Fix
+  id: 6463
+  time: '2024-04-27T13:53:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25365
