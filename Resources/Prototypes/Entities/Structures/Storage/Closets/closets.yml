@@ -49,6 +49,18 @@
     stateBaseClosed: fire
     stateDoorOpen: fire_open
     stateDoorClosed: n2_door
+    
+- type: entity
+  id: ClosetImprovisedEmergencyN2
+  name: improvised emergency nitrogen closet
+  parent: ClosetSteelBase
+  description: It's a storage unit for emergency N2 tanks, at least that's what the taped on sign says.
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: fire
+    stateDoorOpen: fire_open
+    stateDoorClosed: n2_door_improvised
 
 # Fire safety closet
 - type: entity
