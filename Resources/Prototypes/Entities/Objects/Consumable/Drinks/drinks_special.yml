@@ -8,7 +8,10 @@
     solutions:
       drink:
         maxVol: 100
+  - type: MixableSolution
+    solution: drink
   - type: Drink
+  - type: Shakeable # Doesn't do anything, but I mean...
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution
@@ -26,8 +29,8 @@
     state: icon
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: PhysicalComposition
     materialComposition:
       Steel: 50

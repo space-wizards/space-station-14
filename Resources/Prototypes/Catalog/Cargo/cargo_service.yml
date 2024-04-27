@@ -82,7 +82,7 @@
   id: ServiceBooks
   icon:
     sprite: Objects/Misc/books.rsi
-    state: book0
+    state: book_icon
   product: CrateServiceBooks
   cost: 1000
   category: cargoproduct-category-name-service
@@ -92,7 +92,7 @@
   id: ServiceGuidebooks
   icon:
     sprite: Objects/Misc/books.rsi
-    state: book_engineering2
+    state: book_icon
   product: CrateServiceGuidebooks
   cost: 1300
   category: cargoproduct-category-name-service

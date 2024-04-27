@@ -1,15 +1,15 @@
-﻿<Document>
-# Fires & Space
+<Document>
+  # Fires & Space
 
-Fires and spacings are an inevitability due to the highly flammable plasma gas and endless vacuum of space present in and around the station, so it's important to know how to manage them.
+  Fires and spacings are an inevitability due to the highly flammable plasma gas and the endless vacuum of space present in and around the station, so it's important to know how to manage them.
 
-## Spacing
-Space is arguably the easier of the two to handle.
-While it does render an area uninhabitable, it can be trivially solved by simply sealing the hole that resulted in the vacuum. After that, assuming distro vents and pipes have not been destroyed in some unfortunate accident, the room will slowly begin to repressurize.
-Be aware, that active spacings will slowly siphon the air out of the station's air reserves. If you find it impossible to fix structural damage due to some other hazard - make sure to limit the airflow to that room.
+  ## Spacing
+  Space is arguably the easier of the two to handle.
+  While it does render an area uninhabitable, it can be trivially solved by simply sealing the hole that resulted in the vacuum. After that, assuming distro vents and pipes have not been destroyed in some unfortunate accident, the room will slowly begin to repressurize.
+  Be aware; active spacings will slowly siphon the air out of the station's air reserves. If you find it impossible to fix structural damage due to some other hazard, make sure to limit the airflow to that room. (Currently only half-valid due to the Gas Miners infinitely replenishing most of the useful gases)
 
-## Fires
-Fires can be dealt with through a multitude of ways, but some of the most effective methods include:
-  - Spacing the enflamed area if possible. This will destroy all of the gasses in the room, which may be a problem if you're already straining life support.
-  - Dumping a Frezon canister into the enflamed area. This will ice over the flames and halt any ongoing reaction, provided you use enough Frezon. Additionally does not result in destruction of material, so you can simply scrub the room afterwards.
+  ## Fires
+  Fires can be dealt with through a multitude of ways, but some of the most effective methods include:
+    - Spacing the enflamed area if possible. This will destroy all of the gasses in the room, which may be a problem if you're already straining life support.
+    - Dumping a Frezon canister into the enflamed area. This will ice over the flames and halt any ongoing reaction, provided you use enough Frezon. Additionally, this does not result in destruction of material, so you can simply scrub the room afterwards.
 </Document>

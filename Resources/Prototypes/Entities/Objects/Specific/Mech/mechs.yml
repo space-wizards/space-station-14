@@ -39,8 +39,8 @@
     doAfterDelay: 10
   - type: UserInterface
     interfaces:
-    - key: enum.MechUiKey.Key
-      type: MechBoundUserInterface
+      enum.MechUiKey.Key:
+        type: MechBoundUserInterface
   - type: MeleeWeapon
     hidden: true
     attackRate: 0.75
@@ -66,9 +66,6 @@
     bodyType: KinematicController
   - type: Clickable
   - type: WiresPanel
-  - type: Wires #we just want the panel
-    boardName: wires-board-name-mech
-    layoutId: Mech
   - type: Fixtures
     fixtures:
       fix1:
