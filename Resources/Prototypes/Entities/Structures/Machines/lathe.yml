@@ -646,21 +646,28 @@
       - Stunbaton
       - ForensicPad
       - RiotShield
-      - ShellShotgun
-      - ShellShotgunBeanbag
-      - ShellShotgunSlug
-      - ShellShotgunFlare
-      - ShellTranquilizer
-      - MagazinePistol
+      - BoxShotgunSlug
+      - BoxLethalshot
+      - BoxShotgunFlare
+      - MagazinePistol 
+      - MagazinePistolEmpty
       - MagazinePistolSubMachineGun
+      - MagazinePistolSubMachineGunEmpty
       - MagazinePistolSubMachineGunTopMounted
+      - MagazinePistolSubMachineGunTopMountedEmpty
       - MagazineRifle
+      - MagazineRifleEmpty
       - MagazineLightRifle
+      - MagazineLightRifleEmpty
+      - MagazineShotgunEmpty
+      - MagazineShotgun
+      - MagazineShotgunSlug
       - MagazineBoxPistol
       - MagazineBoxMagnum
       - MagazineBoxRifle
       - MagazineBoxLightRifle
       - SpeedLoaderMagnum
+      - SpeedLoaderMagnumEmpty
       - TargetHuman
       - TargetSyndicate
       - TargetClown
@@ -668,18 +675,21 @@
       - MagazineBoxMagnumPractice
       - MagazineBoxPistolPractice
       - MagazineBoxRiflePractice
-      - ShellShotgunPractice
       - WeaponLaserCarbinePractice
       - WeaponDisablerPractice
+      - BoxShotgunPractice 
     dynamicRecipes:
-      - CartridgeLightRifleIncendiary
-      - CartridgeMagnumIncendiary
-      - CartridgePistolIncendiary
-      - CartridgeRifleIncendiary
-      - CartridgeLightRifleUranium
-      - CartridgeMagnumUranium
-      - CartridgePistolUranium
-      - CartridgeRifleUranium
+      - MagazineLightRifleIncendiary
+      - SpeedLoaderMagnumIncendiary
+      - MagazinePistolIncendiary
+      - MagazineRifleIncendiary
+      - MagazineShotgunIncendiary
+      - MagazineLightRifleUranium
+      - SpeedLoaderMagnumUranium
+      - MagazinePistolUranium
+      - MagazineRifleUranium
+      - MagazineShotgunBeanbag
+      - ShellTranquilizer
       - ExplosivePayload
       - FlashPayload
       - HoloprojectorSecurity
@@ -687,23 +697,24 @@
       - MagazineBoxMagnumIncendiary
       - MagazineBoxPistolIncendiary
       - MagazineBoxRifleIncendiary
+      - BoxShotgunIncendiary
       - MagazineBoxLightRifleUranium
       - MagazineBoxMagnumUranium
       - MagazineBoxPistolUranium
       - MagazineBoxRifleUranium
+      - BoxShotgunUranium
+      - BoxBeanbag
       - MagazineGrenadeEmpty
       - GrenadeEMP
       - GrenadeFlash
-      - ShellShotgunIncendiary
-      - ShellShotgunUranium
       - Signaller
       - SignalTrigger
       - TelescopicShield
       - TimerTrigger
       - Truncheon
       - VoiceTrigger
-      - WeaponDisablerPractice
       - WeaponAdvancedLaser
+      - WeaponDisabler
       - WeaponDisablerSMG
       - WeaponLaserCannon
       - WeaponLaserCarbine
