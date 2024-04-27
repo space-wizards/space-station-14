@@ -29,7 +29,7 @@
   id: ClothingMaskGasChameleonArmored
   name: gas mask
   description: A face-covering mask that can be connected to an air supply.
-  suffix:  Armored, Chameleon
+  suffix: Armored, Chameleon
   components:
     - type: Tag
       tags: [] # ignore "WhitelistChameleon" tag
