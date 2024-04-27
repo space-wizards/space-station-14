@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ArchPigeon
-  changes:
-  - message: Tails now stop wagging on crit
-    type: Fix
-  id: 5961
-  time: '2024-02-17T21:33:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25323
 - author: Killerqu00
   changes:
   - message: EVA and paramedic suits now play sound when putting helmet on.
@@ -3855,3 +3848,10 @@
   id: 6460
   time: '2024-04-27T10:38:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26178
+- author: Ramlik
+  changes:
+  - message: Added security walkie talkies to the vendor.
+    type: Add
+  id: 6461
+  time: '2024-04-27T13:27:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25913
