@@ -1182,14 +1182,23 @@
 # Antags
 - type: loadoutGroup
   id: NukieJumpsuit
-  name: loadout-group-boxer-gloves
+  name: loadout-group-nukie-jumpsuit
   loadouts:
   - NukieJumpsuit
   - NukieJumpskirt
 
 - type: loadoutGroup
   id: NukieBackpack
-  name: loadout-group-paramedic-backpack
+  name: loadout-group-nukie-backpack
   loadouts:
   - NukieBackpack
+  - NukieSatchel
   - NukieDuffel
+
+- type: loadoutGroup
+  id: NukieMedicalBackpack
+  name: loadout-group-nukie-backpack
+  loadouts:
+  - NukieMedicBackpack
+  - NukieMedicSatchel
+  - NukieMedicDuffel

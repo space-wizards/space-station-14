@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingBackpackSatchelSyndicate
+  id: ClothingBackpackSatchelSyndicateOperative
+  name: operative satchel
+  description: A robust, explosion-proof satchel for holding various nuclear operative goods.
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSyndicate
+      - id: WeaponPistolViper
+      - id: PinpointerSyndicateNuclear
+      - id: DeathAcidifierImplanter
+
+
+- type: entity
+  parent: ClothingBackpackSatchelSyndicate
+  id: ClothingBackpackSatchelSyndicateOperativeMedic
+  name: operative medic satchel
+  description: A satchel for holding extra medical supplies.
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyndiHypo
+      - id: BoxSurvivalSyndicate
+      - id: SawAdvanced
+      - id: Cautery
+      - id: CombatKnife
+      - id: WeaponPistolViper
+      - id: PinpointerSyndicateNuclear
+      - id: HandheldHealthAnalyzer
+      - id: CombatMedipen
+      - id: DeathAcidifierImplanter

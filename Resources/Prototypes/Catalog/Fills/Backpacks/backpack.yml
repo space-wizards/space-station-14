@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingBackpackSyndicate
+  id: ClothingBackpackSyndicateOperative
+  name: operative backpack
+  description: An explosion-proof backpack for holding various nuclear operative goods.
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSyndicate
+      - id: WeaponPistolViper
+      - id: PinpointerSyndicateNuclear
+      - id: DeathAcidifierImplanter
+
+
+- type: entity
+  parent: ClothingBackpackSyndicate
+  id: ClothingBackpackSyndicateOperativeMedic
+  name: operative medic backpack
+  description: A backpack for holding extra medical supplies.
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyndiHypo
+      - id: BoxSurvivalSyndicate
+      - id: SawAdvanced
+      - id: Cautery
+      - id: CombatKnife
+      - id: WeaponPistolViper
+      - id: PinpointerSyndicateNuclear
+      - id: HandheldHealthAnalyzer
+      - id: CombatMedipen
+      - id: DeathAcidifierImplanter

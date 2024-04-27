@@ -161,6 +161,22 @@
 
 - type: entity
   parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelSyndicate
+  name: syndicate satchel
+  description: A robust, explosion-proof satchel for holding various traitor goods.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/syndicate.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+  - type: Storage
+    grid:
+    - 0,0,1,4
+    - 3,0,6,4
+    - 8,0,9,4
+
+- type: entity
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelHolding
   name: satchel of holding
   description: A satchel that opens into a localized pocket of bluespace.

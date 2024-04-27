@@ -25,7 +25,16 @@
 - type: startingGear
   id: NukieBackpack
   equipment:
-    back: ClothingBackpackSyndicate
+    back: ClothingBackpackSyndicateOperative
+
+- type: loadout
+  id: NukieSatchel
+  equipment: NukieSatchel
+
+- type: startingGear
+  id: NukieSatchel
+  equipment:
+    back: ClothingBackpackSatchelSyndicateOperative
 
 - type: loadout
   id: NukieDuffel
@@ -35,3 +44,31 @@
   id: NukieDuffel
   equipment:
     back: ClothingBackpackDuffelSyndicateOperative
+
+# Medical Backpacks
+- type: loadout
+  id: NukieMedicBackpack
+  equipment: NukieMedicBackpack
+
+- type: startingGear
+  id: NukieMedicBackpack
+  equipment:
+    back: ClothingBackpackSyndicateOperativeMedic
+
+- type: loadout
+  id: NukieMedicSatchel
+  equipment: NukieMedicSatchel
+
+- type: startingGear
+  id: NukieMedicSatchel
+  equipment:
+    back: ClothingBackpackSatchelSyndicateOperativeMedic
+
+- type: loadout
+  id: NukieMedicDuffel
+  equipment: NukieMedicDuffel
+
+- type: startingGear
+  id: NukieMedicDuffel
+  equipment:
+    back: ClothingBackpackDuffelSyndicateOperativeMedic
