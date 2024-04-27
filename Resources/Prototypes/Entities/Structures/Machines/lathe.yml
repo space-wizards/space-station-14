@@ -163,38 +163,47 @@
       - ClothingHeadHatWelding
   - type: EmagLatheRecipes
     emagStaticRecipes:
-       - CartridgePistol
-       - CartridgeMagnum
-       - ShellShotgun
-       - ShellShotgunFlare
-       - ShellTranquilizer
-       - CartridgeLightRifle
-       - CartridgeRifle
-       - MagazineBoxPistol
-       - MagazineBoxMagnum
-       - MagazineBoxRifle
-       - MagazineBoxLightRifle
-       - GrenadeBlast
+      - MagazinePistol 
+      - MagazinePistolEmpty
+      - SpeedLoaderMagnum
+      - SpeedLoaderMagnumEmpty
+      - MagazineShotgunEmpty
+      - MagazineShotgun
+      - MagazineLightRifle
+      - MagazineLightRifleEmpty
+      - MagazineRifle
+      - MagazineRifleEmpty
+      - ShellTranquilizer
+      - BoxLethalshot
+      - BoxShotgunFlare
+      - MagazineBoxPistol
+      - MagazineBoxMagnum
+      - MagazineBoxRifle
+      - MagazineBoxLightRifle
+      - GrenadeBlast
     emagDynamicRecipes:
-      - ShellShotgunBeanbag
-      - ShellShotgunIncendiary
-      - CartridgePistolIncendiary
-      - CartridgeMagnumIncendiary
-      - CartridgeLightRifleIncendiary
-      - CartridgeRifleIncendiary
-      - MagazineBoxPistolIncendiary
-      - MagazineBoxMagnumIncendiary
+      - MagazineShotgunBeanbag
+      - MagazineShotgunIncendiary
+      - MagazineLightRifleIncendiary
+      - SpeedLoaderMagnumIncendiary
+      - MagazinePistolIncendiary
+      - MagazineRifleIncendiary
+      - MagazineShotgunIncendiary
+      - MagazineLightRifleUranium
+      - SpeedLoaderMagnumUranium
+      - MagazinePistolUranium
+      - MagazineRifleUranium
       - MagazineBoxLightRifleIncendiary
+      - MagazineBoxMagnumIncendiary
+      - MagazineBoxPistolIncendiary
       - MagazineBoxRifleIncendiary
-      - ShellShotgunUranium
-      - CartridgePistolUranium
-      - CartridgeMagnumUranium
-      - CartridgeLightRifleUranium
-      - CartridgeRifleUranium
-      - MagazineBoxPistolUranium
-      - MagazineBoxMagnumUranium
+      - BoxShotgunIncendiary
       - MagazineBoxLightRifleUranium
+      - MagazineBoxMagnumUranium
+      - MagazineBoxPistolUranium
       - MagazineBoxRifleUranium
+      - BoxShotgunUranium
+      - BoxBeanbag
       - PowerCageSmall
       - PowerCageMedium
       - PowerCageHigh
@@ -758,14 +767,21 @@
       idleState: icon
       runningState: icon
       staticRecipes:
-        - CartridgePistol
-        - CartridgeMagnum
-        - ShellShotgun
-        - ShellShotgunSlug
-        - ShellShotgunFlare
+        - MagazinePistol 
+        - MagazinePistolEmpty 
+        - SpeedLoaderMagnum
+        - SpeedLoaderMagnumEmpty
+        - MagazineShotgunEmpty
+        - MagazineShotgun
+        - MagazineShotgunSlug
         - ShellTranquilizer
-        - CartridgeLightRifle
-        - CartridgeRifle
+        - MagazineLightRifle
+        - MagazineLightRifleEmpty
+        - MagazineRifle
+        - MagazineRifleEmpty
+        - BoxShotgunSlug
+        - BoxLethalshot
+        - BoxShotgunFlare
         - MagazineBoxPistol
         - MagazineBoxMagnum
         - MagazineBoxRifle
