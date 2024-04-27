@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: Lank
-  changes:
-  - message: Diona nymphs, small cat-like creatures, several of which make up a Diona.
-    type: Add
-  - message: Diona are now able to split into three nymphs on death, and will control
-      one of them. The controlled nymph is able to reform into a new diona after some
-      time.
-    type: Add
-  - message: Diona now combust into flames upon being hit with significant heat damage.
-    type: Tweak
-  id: 5954
-  time: '2024-02-17T02:54:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24630
 - author: PolterTzi
   changes:
   - message: Seeds from sampled plants now inherit the sampled plant's health to discourage
@@ -3856,3 +3843,10 @@
   id: 6453
   time: '2024-04-27T05:47:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27108
+- author: VigersRay
+  changes:
+  - message: Angered NPC now can unbuckle, unpull and escape from containers.
+    type: Fix
+  id: 6454
+  time: '2024-04-27T05:58:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26868
