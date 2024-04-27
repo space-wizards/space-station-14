@@ -151,6 +151,9 @@
   - type: RandomFillSolution
     solution: drink
     weightedRandomId: RandomFillMopwata
+  - type: PressurizedSolution
+    solution: drink
+  - type: Shakeable
   - type: Appearance
   - type: GenericVisualizer
     visuals:

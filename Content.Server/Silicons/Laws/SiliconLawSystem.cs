@@ -93,10 +93,10 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     private void OnBoundUIOpened(EntityUid uid, SiliconLawBoundComponent component, BoundUIOpenedEvent args)
     {
         _entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
-        HashSet<string>? radioChannels = intrinsicRadio?.Channels;
+        var radioChannels = intrinsicRadio?.Channels;
 
         var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels);
-        _userInterface.TrySetUiState(args.Entity, SiliconLawsUiKey.Key, state, args.Session);
+        _userInterface.SetUiState(args.Entity, SiliconLawsUiKey.Key, state);
     }
 
     private void OnPlayerSpawnComplete(EntityUid uid, SiliconLawBoundComponent component, PlayerSpawnCompleteEvent args)
