@@ -254,23 +254,6 @@
         Glass: 5
 
 - type: entity
-  id: TraversalDistorterMachineCircuitboard
-  parent: BaseMachineCircuitboard
-  name: traversal distorter machine board
-  description: A machine printed circuit board for a traversal distorter.
-  components:
-    - type: Sprite
-      state: science
-    - type: MachineBoard
-      prototype: MachineTraversalDistorter
-      requirements:
-        Manipulator: 1
-        Capacitor: 2
-      materialRequirements:
-        Steel: 5
-        Cable: 1
-
-- type: entity
   id: ArtifactCrusherMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: artifact crusher machine board
@@ -1370,3 +1353,17 @@
       Manipulator: 3
     materialRequirements:
       Glass: 1
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: JukeboxCircuitBoard
+  name: jukebox machine board
+  description: A machine printed circuit board for a jukebox.
+  components:
+  - type: MachineBoard
+    prototype: Jukebox
+    materialRequirements:
+      WoodPlank: 5
+      Steel: 2
+      Glass: 5
+      Cable: 2

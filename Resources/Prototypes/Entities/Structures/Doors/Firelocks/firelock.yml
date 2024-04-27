@@ -82,6 +82,7 @@
       openingAnimationTime: 0.6
       closingAnimationTime: 0.6
     - type: Weldable
+      fuel: 5
       time: 3
     - type: Firelock
     - type: Appearance
@@ -89,7 +90,7 @@
     - type: WiresPanel
     - type: UserInterface
       interfaces:
-        - key: enum.WiresUiKey.Key
+        enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
     - type: Physics
       canCollide: false
