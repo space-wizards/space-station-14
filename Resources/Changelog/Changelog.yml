@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Fix some rounding issues with complex chemical reactions.
-    type: Fix
-  id: 5952
-  time: '2024-02-16T23:54:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25199
-- author: data_redacted
-  changes:
-  - message: New lobby art (of an Air Alarm blueprint).
-    type: Add
-  id: 5953
-  time: '2024-02-17T02:52:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25179
 - author: Lank
   changes:
   - message: Diona nymphs, small cat-like creatures, several of which make up a Diona.
@@ -3856,3 +3842,17 @@
   id: 6451
   time: '2024-04-27T05:13:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27379
+- author: Slava0135
+  changes:
+  - message: added cancer mouse! (for real this time)
+    type: Add
+  id: 6452
+  time: '2024-04-27T05:46:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26768
+- author: EmoGarbage404
+  changes:
+  - message: Added the welding gas mask to salvage equipment research.
+    type: Add
+  id: 6453
+  time: '2024-04-27T05:47:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27108
