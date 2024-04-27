@@ -208,9 +208,6 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (!Resolve(uid, ref aui, false))
             return;
 
-        if (!_uiSystem.HasUi(uid, aui.Key))
-            return;
-
         _uiSystem.CloseUi(uid, aui.Key);
     }
 
