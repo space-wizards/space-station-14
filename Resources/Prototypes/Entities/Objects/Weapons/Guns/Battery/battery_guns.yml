@@ -558,7 +558,7 @@
   description: This is an antique laser pistol. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
+    sprite: GreyStation/Objects/Weapons/Guns/Battery/antiquelasergun.rsi # GreyStation
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -566,7 +566,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
+    sprite: GreyStation/Objects/Weapons/Guns/Battery/antiquelasergun.rsi # GreyStation
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
