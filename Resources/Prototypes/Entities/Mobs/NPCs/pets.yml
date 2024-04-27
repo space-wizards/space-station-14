@@ -819,7 +819,7 @@
     stealGroup: AnimalTropico
 
 
-- type: entity
+- type: entity #WHY MUST YOU THROW ERRORS HOW DARE YOU
   name: Gnome #this thing is covered in comments, its for my sanity, ignore them please.
   parent:     #without them id forget what everything does
   - BaseSimpleMob
