@@ -2,7 +2,7 @@ using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
-using Content.Server.Popups;
+using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -12,10 +12,6 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism;
 [DataDefinition]
 public sealed partial class PlantSedin : ReagentEffect
 {
-
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-
-
     [DataField]
     public float SeedRestorationChance = 0.1f;
 
@@ -24,6 +20,7 @@ public sealed partial class PlantSedin : ReagentEffect
 
     public override void Effect(ReagentEffectArgs args)
     {
+
         if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out PlantHolderComponent? plantHolderComp)
                                 || plantHolderComp.Seed == null || plantHolderComp.Dead ||
                                 plantHolderComp.Seed.Immutable)
@@ -32,10 +29,11 @@ public sealed partial class PlantSedin : ReagentEffect
 
         var plantHolder = args.EntityManager.System<PlantHolderSystem>();
         var random = IoCManager.Resolve<IRobustRandom>();
+        var popupSystem = args.EntityManager.System<SharedPopupSystem>();
 
-        if (random.Prob(SeedRestorationChance))
+        if (random.Prob(SeedRestorationChance) && plantHolderComp.Seed.Seedless)
         {
-            _popupSystem.PopupEntity(Loc.GetString("botany-plant-seedsrestored"), args.SolutionEntity);
+            popupSystem.PopupEntity(Loc.GetString("botany-plant-seedsrestored"), args.SolutionEntity);
             plantHolderComp.Seed.Seedless = false;
         }
 
