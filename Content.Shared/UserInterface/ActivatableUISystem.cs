@@ -56,10 +56,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (args.Handled || args.Key == null)
             return;
 
-        if (!TryComp(args.Performer, out ActorComponent? actor))
-            return;
-
-        args.Handled = _uiSystem.TryToggleUi(uid, args.Key, actor.PlayerSession);
+        args.Handled = _uiSystem.TryToggleUi(uid, args.Key, args.Performer);
     }
 
     private void AddOpenUiVerb(EntityUid uid, ActivatableUIComponent component, GetVerbsEvent<ActivationVerb> args)
@@ -139,7 +136,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     private bool InteractUI(EntityUid user, EntityUid uiEntity, ActivatableUIComponent aui)
     {
-        if (!_uiSystem.HasUi(uiEntity, aui.Key))
+        if (aui.Key == null || !_uiSystem.HasUi(uiEntity, aui.Key))
             return false;
 
         if (_uiSystem.IsUiOpen(uiEntity, aui.Key, user))
@@ -208,10 +205,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     public void CloseAll(EntityUid uid, ActivatableUIComponent? aui = null)
     {
-        if (!Resolve(uid, ref aui, false))
-            return;
-
-        if (!_uiSystem.HasUi(uid, aui.Key))
+        if (!Resolve(uid, ref aui, false) || aui.Key == null)
             return;
 
         _uiSystem.CloseUi(uid, aui.Key);

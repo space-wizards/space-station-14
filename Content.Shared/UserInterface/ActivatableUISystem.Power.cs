@@ -21,7 +21,8 @@ public sealed partial class ActivatableUISystem
         _cell.SetPowerCellDrawEnabled(uid, false);
 
         if (HasComp<ActivatableUIRequiresPowerCellComponent>(uid) &&
-            TryComp<ActivatableUIComponent>(uid, out var activatable))
+            TryComp<ActivatableUIComponent>(uid, out var activatable) &&
+            activatable.Key != null)
         {
             _uiSystem.CloseUi(uid, activatable.Key);
         }
@@ -54,7 +55,7 @@ public sealed partial class ActivatableUISystem
     /// </summary>
     public void CheckUsage(EntityUid uid, ActivatableUIComponent? active = null, ActivatableUIRequiresPowerCellComponent? component = null, PowerCellDrawComponent? draw = null)
     {
-        if (!Resolve(uid, ref component, ref draw, ref active, false))
+        if (!Resolve(uid, ref component, ref draw, ref active, false) || active.Key == null)
             return;
 
         if (_cell.HasActivatableCharge(uid))
