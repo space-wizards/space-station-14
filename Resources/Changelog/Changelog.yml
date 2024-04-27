@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PotentiallyTom
-  changes:
-  - message: Added new covers for the medical, security, and science guidebooks
-    type: Add
-  id: 5951
-  time: '2024-02-16T23:50:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25232
 - author: PJB3005
   changes:
   - message: Fix some rounding issues with complex chemical reactions.
@@ -3855,3 +3848,11 @@
   id: 6450
   time: '2024-04-26T22:58:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27361
+- author: AllenTheGreat
+  changes:
+  - message: The Agent ID card will no longer reset the selected job icon between
+      UI loads
+    type: Fix
+  id: 6451
+  time: '2024-04-27T05:13:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27379
