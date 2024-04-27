@@ -1,0 +1,37 @@
+# Jumpsuit
+- type: loadout
+  id: NukieJumpsuit
+  equipment: NukieJumpsuit
+
+- type: startingGear
+  id: NukieJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+
+- type: loadout
+  id: NukieJumpskirt
+  equipment: NukieJumpskirt
+
+- type: startingGear
+  id: NukieJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtOperative
+
+# Back
+- type: loadout
+  id: NukieBackpack
+  equipment: NukieBackpack
+
+- type: startingGear
+  id: NukieBackpack
+  equipment:
+    back: ClothingBackpackSyndicate
+
+- type: loadout
+  id: NukieDuffel
+  equipment: NukieDuffel
+
+- type: startingGear
+  id: NukieDuffel
+  equipment:
+    back: ClothingBackpackDuffelSyndicateOperative

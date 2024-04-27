@@ -1178,3 +1178,18 @@
   - BlueBoxingGloves
   - GreenBoxingGloves
   - YellowBoxingGloves
+
+# Antags
+- type: loadoutGroup
+  id: NukieJumpsuit
+  name: loadout-group-boxer-gloves
+  loadouts:
+  - NukieJumpsuit
+  - NukieJumpskirt
+
+- type: loadoutGroup
+  id: NukieBackpack
+  name: loadout-group-paramedic-backpack
+  loadouts:
+  - NukieBackpack
+  - NukieDuffel

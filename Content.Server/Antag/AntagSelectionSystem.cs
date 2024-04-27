@@ -16,7 +16,9 @@ using Content.Shared.Antag;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Players;
+using Content.Shared.Clothing;
 using Content.Shared.Preferences;
+using Content.Shared.Preferences.Loadouts;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -24,6 +26,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Antag;
 
@@ -39,6 +42,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
@@ -298,6 +302,24 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (session != null)
         {
+            var antagLoadout = LoadoutSystem.GetJobPrototype(def.Loadout);
+            var pref = (HumanoidCharacterProfile) _pref.GetPreferences(session.UserId).SelectedCharacter;
+
+            if (_prototypeManager.TryIndex(antagLoadout, out RoleLoadoutPrototype? roleProto))
+            {
+                RoleLoadout? loadout = null;
+                pref?.Loadouts.TryGetValue(antagLoadout, out loadout);
+
+                // Set to default if not present
+                if (loadout == null)
+                {
+                    loadout = new RoleLoadout(antagLoadout);
+                    loadout.SetDefault(_prototypeManager);
+                }
+
+                _stationSpawning.EquipLoadout(player, roleProto, loadout);
+            }
+
             var curMind = session.GetMind();
             if (curMind == null)
             {
@@ -376,17 +398,17 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         switch (def.MultiAntagSetting)
         {
             case AntagAcceptability.None:
-            {
-                if (_role.MindIsAntagonist(mind))
-                    return false;
-                break;
-            }
+                {
+                    if (_role.MindIsAntagonist(mind))
+                        return false;
+                    break;
+                }
             case AntagAcceptability.NotExclusive:
-            {
-                if (_role.MindIsExclusiveAntagonist(mind))
-                    return false;
-                break;
-            }
+                {
+                    if (_role.MindIsExclusiveAntagonist(mind))
+                        return false;
+                    break;
+                }
         }
 
         // todo: expand this to allow for more fine antag-selection logic for game rules.

@@ -1,0 +1,18 @@
+# Nukeops
+- type: roleLoadout
+  id: JobNukeopsCommander
+  groups:
+  - NukieJumpsuit
+  - NukieBackpack
+
+- type: roleLoadout
+  id: JobNukeops
+  groups:
+  - NukieJumpsuit
+  - NukieBackpack
+
+- type: roleLoadout
+  id: JobNukeopsMedic
+  groups:
+  - NukieJumpsuit
+  - NukieBackpack

@@ -199,27 +199,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
                 loadout.SetDefault(_prototypeManager);
             }
 
-            // Order loadout selections by the order they appear on the prototype.
-            foreach (var group in loadout.SelectedLoadouts.OrderBy(x => roleProto.Groups.FindIndex(e => e == x.Key)))
-            {
-                foreach (var items in group.Value)
-                {
-                    if (!_prototypeManager.TryIndex(items.Prototype, out var loadoutProto))
-                    {
-                        Log.Error($"Unable to find loadout prototype for {items.Prototype}");
-                        continue;
-                    }
-
-                    if (!_prototypeManager.TryIndex(loadoutProto.Equipment, out var startingGear))
-                    {
-                        Log.Error($"Unable to find starting gear {loadoutProto.Equipment} for loadout {loadoutProto}");
-                        continue;
-                    }
-
-                    // Handle any extra data here.
-                    EquipStartingGear(entity.Value, startingGear);
-                }
-            }
+            EquipLoadout(entity.Value, roleProto, loadout);
         }
 
         if (profile != null)
@@ -289,6 +269,37 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
         if (pdaComponent != null)
             _pdaSystem.SetOwner(idUid.Value, pdaComponent, characterName);
+    }
+
+    /// <summary>
+    /// Equips a loadout onto a mob.
+    /// </summary>
+    /// <param name="entity">Mob that equips the loadout.</param>
+    /// <param name="loadoutProto">Loadout prototype to equip.</param>
+    /// <param name="loadout">The loadout to equip.</param>
+    public void EquipLoadout(EntityUid entity, RoleLoadoutPrototype roleProto, RoleLoadout loadout)
+    {
+        // Order loadout selections by the order they appear on the prototype.
+        foreach (var group in loadout.SelectedLoadouts.OrderBy(x => roleProto.Groups.FindIndex(e => e == x.Key)))
+        {
+            foreach (var items in group.Value)
+            {
+                if (!_prototypeManager.TryIndex(items.Prototype, out var loadoutProto))
+                {
+                    Log.Error($"Unable to find loadout prototype for {items.Prototype}");
+                    continue;
+                }
+
+                if (!_prototypeManager.TryIndex(loadoutProto.Equipment, out var startingGear))
+                {
+                    Log.Error($"Unable to find starting gear {loadoutProto.Equipment} for loadout {loadoutProto}");
+                    continue;
+                }
+
+                // Handle any extra data here.
+                EquipStartingGear(entity, startingGear);
+            }
+        }
     }
 
 

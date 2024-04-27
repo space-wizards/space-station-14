@@ -87,8 +87,6 @@
 - type: startingGear
   id: SyndicateOperativeGearFull
   equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackDuffelSyndicateOperative
     mask: ClothingMaskGasSyndicate
     eyes: ClothingEyesHudSyndicate
     ears: ClothingHeadsetAltSyndicate
@@ -104,8 +102,6 @@
 - type: startingGear
   id: SyndicateCommanderGearFull
   equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackDuffelSyndicateOperative
     mask: ClothingMaskGasSyndicate
     eyes: ClothingEyesHudSyndicate
     ears: ClothingHeadsetAltSyndicate
@@ -124,8 +120,6 @@
 - type: startingGear
   id: SyndicateOperativeMedicFull
   equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackDuffelSyndicateOperativeMedic
     mask: ClothingMaskGasSyndicate
     eyes: ClothingEyesHudSyndicateAgent
     ears: ClothingHeadsetAltSyndicate
