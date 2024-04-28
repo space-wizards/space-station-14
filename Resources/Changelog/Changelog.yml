@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Fix actions sometimes disappearing.
-    type: Fix
-  id: 5971
-  time: '2024-02-20T02:08:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25395
 - author: PJB3005
   changes:
   - message: Fixed timezone issues with the admin notes window.
@@ -3862,3 +3855,14 @@
   id: 6470
   time: '2024-04-28T04:19:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26660
+- author: Dezzzix
+  changes:
+  - message: Added bar spoon, jigger and ice bucket
+    type: Add
+  - message: Bartender tools added in boozeomat
+    type: Add
+  - message: Jigger added in Bartender guidebook
+    type: Add
+  id: 6471
+  time: '2024-04-28T04:40:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27406
