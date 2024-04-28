@@ -71,7 +71,7 @@ public sealed partial class AntagSelectionSystem
         var countOffset = 0;
         foreach (var otherDef in ent.Comp.Definitions)
         {
-            countOffset += Math.Clamp(poolSize / otherDef.PlayerRatio, otherDef.Min, otherDef.Max) * otherDef.PlayerRatio;
+            countOffset += Math.Clamp((poolSize - countOffset) / otherDef.PlayerRatio, otherDef.Min, otherDef.Max) * otherDef.PlayerRatio;
         }
         // make sure we don't double-count the current selection
         countOffset -= Math.Clamp(poolSize / def.PlayerRatio, def.Min, def.Max) * def.PlayerRatio;
