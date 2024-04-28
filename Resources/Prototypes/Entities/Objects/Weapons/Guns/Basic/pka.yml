@@ -62,3 +62,30 @@
     slots:
     - suitStorage
     - Belt
+
+- type: entity
+  name: proto-kinetic cannon
+  id: WeaponProtoKineticCannon
+  parent: WeaponProtoKineticAcceleratorBase
+  description: #write new
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/kinetic_cannon.rsi
+    layers:
+    - state: icon
+    - state: animation-icon
+      visible: false
+      map: [ "empty-icon" ]
+  - type: Item
+    sprite: Objects/Weapons/Guns/Basic/kinetic_cannon.rsi
+    size: Normal #change this
+  - type: BasicEntityAmmoProvider
+    proto: BulletKinetic
+    capacity: 1
+    count: 1
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Basic/kinetic_cannon.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
