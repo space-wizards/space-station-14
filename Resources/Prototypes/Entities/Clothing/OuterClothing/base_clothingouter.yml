@@ -134,7 +134,8 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
-  - type: ShoesRequiredStepTriggerImmune
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   abstract: true
@@ -153,7 +154,8 @@
   - type: HeldSpeedModifier
   - type: Item
     size: Huge
-  - type: ShoesRequiredStepTriggerImmune
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBase

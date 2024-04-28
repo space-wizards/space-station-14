@@ -211,7 +211,7 @@
   - type: GuideHelp
     guides:
       - Cyborgs
-  - type: ShoesRequiredStepTriggerImmune
+  - type: StepTriggerImmune
 
 - type: entity
   id: BaseBorgChassisNT

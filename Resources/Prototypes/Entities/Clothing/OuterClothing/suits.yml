@@ -25,7 +25,8 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
-  - type: ShoesRequiredStepTriggerImmune
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterSuitBomb
@@ -64,7 +65,8 @@
     sprintModifier: 0.7
   - type: HeldSpeedModifier
   - type: GroupExamine
-  - type: ShoesRequiredStepTriggerImmune
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -92,7 +94,8 @@
     sprintModifier: 0.8
   - type: HeldSpeedModifier
   - type: GroupExamine
-  - type: ShoesRequiredStepTriggerImmune
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: [ClothingOuterBaseLarge, GeigerCounterClothing]
@@ -116,8 +119,9 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
-  - type: ShoesRequiredStepTriggerImmune
-      
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
+
 - type: entity
   parent: ClothingOuterBaseLarge
   id: ClothingOuterSuitSpaceNinja
@@ -168,7 +172,8 @@
     sprite: Clothing/OuterClothing/Suits/chicken.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/chicken.rsi
-  - type: ShoesRequiredStepTriggerImmune
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBase
@@ -194,7 +199,8 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
-  - type: ShoesRequiredStepTriggerImmune
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBase
@@ -216,7 +222,8 @@
   - type: Construction
     graph: ClothingOuterSuitIan
     node: suit
-  - type: ShoesRequiredStepTriggerImmune
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBase
