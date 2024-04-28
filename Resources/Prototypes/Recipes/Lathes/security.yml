@@ -690,3 +690,14 @@
      Steel: 150
      Plastic: 100
      Glass: 20
+
+- type: latheRecipe
+  id: PortableRecharger
+  result: PortableRecharger
+  completetime: 15
+  materials:
+     Steel: 2000
+     Uranium: 2000
+     Plastic: 1000
+     Plasma: 500
+     Glass: 500
