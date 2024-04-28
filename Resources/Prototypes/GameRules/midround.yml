@@ -42,7 +42,7 @@
         max: 3
       playerRatio: 1
       allowNonHumans: true
-      multiAntagSetting: All
+      multiAntagSetting: NotExclusive
       startingGear: ThiefGear
       components:
       - type: Pacified

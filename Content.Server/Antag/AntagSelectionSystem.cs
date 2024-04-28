@@ -280,11 +280,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             _transform.SetMapCoordinates((player, playerXform), pos);
         }
 
+        // If we want to just do a ghost role spawner, set up data here and then return early.
+        // This could probably be an event in the future if we want to be more refined about it.
         if (isSpawner)
         {
             if (!TryComp<GhostRoleAntagSpawnerComponent>(player, out var spawnerComp))
             {
-                Log.Error("Antag spawner with GhostRoleAntagSpawnerComponent.");
+                Log.Error($"Antag spawner {player} does not have a GhostRoleAntagSpawnerComponent.");
                 return;
             }
 
@@ -293,6 +295,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             return;
         }
 
+        // The following is where we apply components, equipment, and other changes to our antagonist entity.
         EntityManager.AddComponents(player, def.Components);
         _stationSpawning.EquipStartingGear(player, def.StartingGear);
 
@@ -308,11 +311,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             _mind.TransferTo(curMind.Value, antagEnt, ghostCheckOverride: true);
             _role.MindAddRoles(curMind.Value, def.MindComponents);
             ent.Comp.SelectedMinds.Add((curMind.Value, Name(player)));
-        }
-
-        if (def.Briefing is { } briefing)
-        {
-            SendBriefing(session, briefing);
+            SendBriefing(session, def.Briefing);
         }
 
         var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def);
@@ -327,13 +326,11 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         var preferredList = new List<ICommonSession>();
         var secondBestList = new List<ICommonSession>();
         var unwantedList = new List<ICommonSession>();
-        var invalidList = new List<ICommonSession>();
         foreach (var session in sessions)
         {
             if (!IsSessionValid(ent, session, def) ||
                 !IsEntityValid(session.AttachedEntity, def))
             {
-                invalidList.Add(session);
                 continue;
             }
 
@@ -352,7 +349,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             }
         }
 
-        return new AntagSelectionPlayerPool(new() { preferredList, secondBestList, unwantedList, invalidList });
+        return new AntagSelectionPlayerPool(new() { preferredList, secondBestList, unwantedList });
     }
 
     /// <summary>
