@@ -6,6 +6,13 @@
     state: Zombie
 
 - type: statusIcon
+  id: InitialInfectedFaction
+  priority: 11
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: InitialInfected
+
+- type: statusIcon
   id: RevolutionaryFaction
   priority: 11
   icon:
@@ -24,6 +31,7 @@
   priority: 2
   locationPreference: Right
   layer: Mod
+  isShaded: true
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: MindShield

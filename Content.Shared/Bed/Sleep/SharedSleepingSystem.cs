@@ -37,7 +37,7 @@ namespace Content.Server.Bed.Sleep
             _actionsSystem.AddAction(uid, ref component.WakeAction, WakeActionId, uid);
 
             // TODO remove hardcoded time.
-            _actionsSystem.SetCooldown(component.WakeAction, _gameTiming.CurTime, _gameTiming.CurTime + TimeSpan.FromSeconds(15));
+            _actionsSystem.SetCooldown(component.WakeAction, _gameTiming.CurTime, _gameTiming.CurTime + TimeSpan.FromSeconds(2f));
         }
 
         private void OnShutdown(EntityUid uid, SleepingComponent component, ComponentShutdown args)

@@ -288,7 +288,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         component.Activated = true;
         InstallAllModules(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
     }
 
@@ -302,7 +302,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         component.Activated = false;
         DisableAllModules(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
     }
 

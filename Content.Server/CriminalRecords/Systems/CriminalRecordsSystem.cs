@@ -3,7 +3,7 @@ using Content.Server.StationRecords.Systems;
 using Content.Shared.CriminalRecords;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
-using Robust.Shared.Timing;
+using Content.Server.GameTicking;
 
 namespace Content.Server.CriminalRecords.Systems;
 
@@ -17,7 +17,7 @@ namespace Content.Server.CriminalRecords.Systems;
 /// </summary>
 public sealed class CriminalRecordsSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
 
     public override void Initialize()
@@ -71,7 +71,7 @@ public sealed class CriminalRecordsSystem : EntitySystem
     /// </summary>
     public bool TryAddHistory(StationRecordKey key, string line)
     {
-        var entry = new CrimeHistory(_timing.CurTime, line);
+        var entry = new CrimeHistory(_ticker.RoundDuration(), line);
         return TryAddHistory(key, entry);
     }
 
