@@ -50,8 +50,8 @@
     canChangeTransferAmount: true
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Item
     size: Tiny
     sprite: Objects/Specific/Chemistry/vial.rsi

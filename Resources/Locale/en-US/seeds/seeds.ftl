@@ -113,3 +113,5 @@ seeds-pumpkin-name = pumpkin
 seeds-pumpkin-display-name = pumpkins
 seeds-cotton-name = cotton
 seeds-cotton-display-name = cotton plant
+seeds-pyrotton-name = pyrotton
+seeds-pyrotton-display-name = pyrotton plant

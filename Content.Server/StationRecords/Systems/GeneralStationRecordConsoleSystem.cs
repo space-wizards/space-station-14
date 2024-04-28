@@ -57,7 +57,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         if (!TryComp<StationRecordsComponent>(owningStation, out var stationRecords))
         {
-            _ui.TrySetUiState(uid, GeneralStationRecordConsoleKey.Key, new GeneralStationRecordConsoleState());
+            _ui.SetUiState(uid, GeneralStationRecordConsoleKey.Key, new GeneralStationRecordConsoleState());
             return;
         }
 
@@ -66,7 +66,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         switch (listing.Count)
         {
             case 0:
-                _ui.TrySetUiState(uid, GeneralStationRecordConsoleKey.Key, new GeneralStationRecordConsoleState());
+                _ui.SetUiState(uid, GeneralStationRecordConsoleKey.Key, new GeneralStationRecordConsoleState());
                 return;
             case 1:
                 console.ActiveKey = listing.Keys.First();
@@ -80,6 +80,6 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         _stationRecords.TryGetRecord<GeneralStationRecord>(key, out var record, stationRecords);
 
         GeneralStationRecordConsoleState newState = new(id, record, listing, console.Filter);
-        _ui.TrySetUiState(uid, GeneralStationRecordConsoleKey.Key, newState);
+        _ui.SetUiState(uid, GeneralStationRecordConsoleKey.Key, newState);
     }
 }

@@ -28,8 +28,8 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.SalvageMagnetUiKey.Key
-      type: SalvageMagnetBoundUserInterface
+      enum.SalvageMagnetUiKey.Key:
+        type: SalvageMagnetBoundUserInterface
   - type: Transform
     noRot: false
   - type: Appearance
