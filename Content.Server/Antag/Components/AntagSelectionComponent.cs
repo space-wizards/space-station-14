@@ -148,6 +148,12 @@ public partial struct AntagSelectionDefinition()
     public ProtoId<StartingGearPrototype>? StartingGear;
 
     /// <summary>
+    /// The loadout that's equipped to the player.
+    /// </summary>
+    [DataField]
+    public string? Loadout;
+
+    /// <summary>
     /// A briefing shown to the player.
     /// </summary>
     [DataField]
