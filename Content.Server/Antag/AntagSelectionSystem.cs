@@ -18,7 +18,6 @@ using Content.Shared.Humanoid;
 using Content.Shared.Players;
 using Content.Shared.Clothing;
 using Content.Shared.Preferences;
-using Content.Shared.Preferences.Loadouts;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -26,7 +25,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Antag;
 
@@ -42,7 +40,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
