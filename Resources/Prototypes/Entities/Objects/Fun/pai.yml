@@ -133,27 +133,27 @@
     node: potatoai
 
 - type: entity
+  parent: BaseMentalAction
   id: ActionPAIPlayMidi
   name: Play MIDI
   description: Open your portable MIDI interface to soothe your owner.
   noSpawn: true
   components:
-  - type: InstantAction
-    checkCanInteract: false
-    checkConsciousness: false
+  - type: Action
     icon: Interface/Actions/pai-midi.png
+  - type: InstantAction
     event: !type:OpenUiActionEvent
       key: enum.InstrumentUiKey.Key
 
 - type: entity
+  parent: BaseMentalAction
   id: ActionPAIOpenMap
   name: Open Map
   description: Open your map interface and guide your owner.
   noSpawn: true
   components:
-    - type: InstantAction
-      checkCanInteract: false
-      checkConsciousness: false
-      icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
-      event: !type:OpenUiActionEvent
-        key: enum.StationMapUiKey.Key
+  - type: Action
+    icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
+  - type: InstantAction
+    event: !type:OpenUiActionEvent
+      key: enum.StationMapUiKey.Key

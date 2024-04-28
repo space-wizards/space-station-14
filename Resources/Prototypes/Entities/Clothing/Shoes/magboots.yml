@@ -129,21 +129,24 @@
       - WhitelistChameleon
 
 - type: entity
+  parent: BaseAction
   id: ActionBaseToggleMagboots
   name: Toggle Magboots
   description: Toggles the magboots on and off.
   noSpawn: true
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: NoItem
+  - type: InstantAction
     event: !type:ToggleMagbootsEvent
 
+# TODO: why the fuck does this not just use the item icon
 - type: entity
   id: ActionToggleMagboots
   parent: ActionBaseToggleMagboots
   noSpawn: true
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Clothing/Shoes/Boots/magboots.rsi, state: icon }
     iconOn: { sprite : Clothing/Shoes/Boots/magboots.rsi, state: icon-on }
 
@@ -152,7 +155,7 @@
   parent: ActionBaseToggleMagboots
   noSpawn: true
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Clothing/Shoes/Boots/magboots-advanced.rsi, state: icon }
     iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png
 
@@ -161,7 +164,7 @@
   parent: ActionBaseToggleMagboots
   noSpawn: true
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Clothing/Shoes/Boots/magboots-science.rsi, state: icon }
     iconOn: Clothing/Shoes/Boots/magboots-science.rsi/icon-on.png
 
@@ -170,6 +173,6 @@
   parent: ActionBaseToggleMagboots
   noSpawn: true
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi, state: icon }
     iconOn: Clothing/Shoes/Boots/magboots-syndicate.rsi/icon-on.png

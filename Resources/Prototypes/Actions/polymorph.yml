@@ -1,4 +1,5 @@
 ﻿- type: entity
+  parent: BaseAction
   id: ActionRevertPolymorph
   name: Revert
   description: Revert back into your original form.
@@ -8,9 +9,11 @@
     event: !type:RevertPolymorphActionEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionPolymorph
   noSpawn: true
   components:
+  - type: Action
+    itemIconStyle: NoItem
   - type: InstantAction
     event: !type:PolymorphActionEvent
-    itemIconStyle: NoItem

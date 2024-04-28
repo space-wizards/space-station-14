@@ -91,79 +91,72 @@
     prototypes: [ MobAghostGear ]
 
 - type: entity
+  abstract: true
+  parent: BaseAction
+  id: BaseAGhostAction
+  components:
+  - type: Action
+    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
+    iconOn: Structures/Machines/parts.rsi/box_2.png
+    keywords: [ "AI", "console", "interface" ]
+    priority: -10
+
+- type: entity
+  parent: BaseAGhostAction
   id: ActionAGhostShowSolar
   name: Solar Control Interface
   description: View a solar control interface.
   noSpawn: true
   components:
   - type: InstantAction
-    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
-    keywords: [ "AI", "console", "interface" ]
-    priority: -10
     event: !type:ToggleIntrinsicUIEvent { key: enum.SolarControlConsoleUiKey.Key }
 
 - type: entity
+  parent: BaseAGhostAction
   id: ActionAGhostShowCommunications
   name: Communications Interface
   description: View a communications interface.
   noSpawn: true
   components:
   - type: InstantAction
-    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
-    keywords: [ "AI", "console", "interface" ]
-    priority: -10
     event: !type:ToggleIntrinsicUIEvent { key: enum.CommunicationsConsoleUiKey.Key }
 
 - type: entity
+  parent: BaseAGhostAction
   id: ActionAGhostShowRadar
   name: Mass Scanner Interface
   description: View a mass scanner interface.
   noSpawn: true
   components:
   - type: InstantAction
-    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
-    keywords: [ "AI", "console", "interface" ]
-    priority: -10
     event: !type:ToggleIntrinsicUIEvent { key: enum.RadarConsoleUiKey.Key }
 
 - type: entity
+  parent: BaseAGhostAction
   id: ActionAGhostShowCargo
   name: Cargo Ordering Interface
   description: View a cargo ordering interface.
   noSpawn: true
   components:
   - type: InstantAction
-    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
-    keywords: [ "AI", "console", "interface" ]
-    priority: -10
     event: !type:ToggleIntrinsicUIEvent { key: enum.CargoConsoleUiKey.Orders }
 
 - type: entity
+  parent: BaseAGhostAction
   id: ActionAGhostShowCrewMonitoring
   name: Crew Monitoring Interface
   description: View a crew monitoring interface.
   noSpawn: true
   components:
   - type: InstantAction
-    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
-    keywords: [ "AI", "console", "interface" ]
-    priority: -10
     event: !type:ToggleIntrinsicUIEvent { key: enum.CrewMonitoringUIKey.Key }
 
 - type: entity
+  parent: BaseAGhostAction
   id: ActionAGhostShowStationRecords
   name: Station Records Interface
   description: View a station records Interface
   noSpawn: true
   components:
   - type: InstantAction
-    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
-    keywords: [ "AI", "console", "interface" ]
-    priority: -10
     event: !type:ToggleIntrinsicUIEvent { key: enum.GeneralStationRecordConsoleKey.Key }
