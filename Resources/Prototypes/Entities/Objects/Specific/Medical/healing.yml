@@ -443,6 +443,38 @@
       amount: 5
 
 - type: entity
+  name: pill (potassium iodide 10u)
+  parent: Pill
+  id: PillPotassiumIodide
+  components:
+  - type: Pill
+    pillType: 8
+  - type: Sprite
+    state: pill9
+  - type: Label
+    currentLabel: potassium iodide 10u
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: PotassiumIodide
+          Quantity: 10
+
+- type: entity
+  name: pill canister (potassium iodide 10u)
+  parent: PillCanister
+  id: PillCanisterPotassiumIodide
+  suffix: Potassium iodide, 5
+  components:
+  - type: Label
+    currentLabel: potassium iodide 10u
+  - type: StorageFill
+    contents:
+    - id: PillPotassiumIodide
+      amount: 5
+
+- type: entity
   name: pill (iron 10u)
   parent: Pill
   id: PillIron
@@ -738,6 +770,10 @@
       maxAmount: 7
       orGroup: RandomPill
     - id: PillHyronalin
+      prob: 0.10
+      maxAmount: 7
+      orGroup: RandomPill
+    - id: PillPotassiumIodide
       prob: 0.10
       maxAmount: 7
       orGroup: RandomPill

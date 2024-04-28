@@ -334,3 +334,9 @@
   flatReductions:
     # can't punch the endoskeleton to death
     Blunt: 5
+
+# protects against radiation
+- type: damageModifierSet
+  id: PotassiumIodide
+  coefficients:
+    Radiation: 0.1

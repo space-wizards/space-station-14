@@ -25,7 +25,7 @@
     decay: 6
     cooldown: 1
     critThreshold: 400
-  # immune to space drugs, pax, temporary blindness
+  # immune to space drugs, pax, temporary blindness, drowsiness
   - type: StatusEffects
     allowed:
     - Stun
@@ -40,6 +40,7 @@
     - Muted
     - ForcedSleep
     - StaminaModifier
+    - RadiationProtection
   - type: MobState
     allowedStates:
     - Alive

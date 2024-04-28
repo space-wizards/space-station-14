@@ -1,0 +1,17 @@
+﻿uniform sampler2D SCREEN_TEXTURE;
+uniform highp float VisualScale; // between 0 and 1
+const highp float Intensity = 0.2;
+const highp int SampleCount = 8; // multiple of 2
+
+// a simple radial blur
+void fragment() {
+    highp vec2 uv = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
+    highp vec2 direction = vec2(0.5, 0.5) - uv;
+    COLOR = vec4(0.0, 0.0, 0.0, 0.0);
+    highp float test = float(SampleCount);
+    for (int i=1; i <= SampleCount; i++)
+    {
+        COLOR += zTextureSpec(SCREEN_TEXTURE, uv + float(i) * Intensity * VisualScale / float(SampleCount) * direction);
+    }
+    COLOR = COLOR / float(SampleCount);
+}
