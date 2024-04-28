@@ -197,4 +197,3 @@
     forced: true
     revertOnCrit: false
     revertOnDeath: false
-    polymorphedEvent: !type:AfterPolymorphedEvent
