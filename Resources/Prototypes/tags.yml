@@ -864,6 +864,9 @@
   id: Meat
 
 - type: Tag
+  id: Medal
+
+- type: Tag
   id: Medkit
 
 - type: Tag
@@ -1100,9 +1103,6 @@
 
 - type: Tag
   id: Shiv
-
-- type: Tag
-  id: ShoesRequiredStepTriggerImmune
 
 - type: Tag
   id: Shovel
