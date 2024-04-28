@@ -30,7 +30,7 @@
   name: proto-kinetic accelerator
   id: WeaponProtoKineticAccelerator
   parent: WeaponProtoKineticAcceleratorBase
-  description: A salvager’s trusty sidearm. A highly-collapsible cannon that shoots kinetic bolts capable of breaking through rock, ship hulls, and in an emergency, hostile wildlife. To compensate for its recoil, its barrel slides in and pops out like a jackhammer.
+  description: A salvager’s trusty sidearm. Highly collapsible and highly versatile.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
