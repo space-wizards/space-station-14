@@ -360,7 +360,7 @@
     radius: 5
     energy: 0.6
     offset: "0, 0.4"
-    color: "#FF4020"
+    color: "#7CFC00"
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
@@ -377,10 +377,10 @@
       map: [ "enum.EmergencyLightVisualLayers.Base" ]
     - state: emergency_light_off
       map: [ "enum.EmergencyLightVisualLayers.LightOff" ]
-      color: "#FF4020"
+      color: "#7CFC00"
     - state: emergency_light_on
       map: [ "enum.EmergencyLightVisualLayers.LightOn" ]
-      color: "#FF4020"
+      color: "#7CFC00"
       shader: "unshaded"
       visible: false
   - type: Appearance
