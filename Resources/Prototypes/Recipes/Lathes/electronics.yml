@@ -277,8 +277,19 @@
   category: Circuitry
   completetime: 4
   materials:
-     Steel: 100
-     Glass: 500
+    Steel: 100
+    Glass: 500
+
+- type: latheRecipe
+  id: CircuitImprinterHyperConvectionMachineCircuitboard
+  result: CircuitImprinterHyperConvectionMachineCircuitboard
+  category: Circuitry
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
 
 - type: latheRecipe
   id: ExosuitFabricatorMachineCircuitboard
