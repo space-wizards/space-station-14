@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: BaseGlassBox
-  parent: BaseStructureDynamic
+  parent: BaseItemCabinet
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -118,16 +118,15 @@
   - type: Construction
     graph: GlassBox
     node: glassBox
-  - type: ItemCabinet
-    cabinetSlot:
-      ejectOnInteract: true
-      whitelist:
-        tags:
-        - WeaponAntiqueLaser
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: glass-up
-    closedState: glass
+  - type: ItemSlots
+    slots:
+      cabinetSlot:
+        startingItem: WeaponAntiqueLaser
+        ejectOnInteract: true
+        whitelist:
+          tags:
+          - WeaponAntiqueLaser
+        ejectSound: /Audio/Machines/machine_switch.ogg
 
 - type: entity
   id: GlassBoxLaserOpen
@@ -136,21 +135,20 @@
   components:
   - type: Lock
     locked: false
-  - type: ItemCabinet
-    opened: true
 
 - type: entity
   id: GlassBoxLaserFilled
   parent: GlassBoxLaser
   suffix: AntiqueLaser, Filled
   components:
-  - type: ItemCabinet
-    cabinetSlot:
-      startingItem: WeaponAntiqueLaser
-      ejectOnInteract: true
-      whitelist:
-        tags:
-        - WeaponAntiqueLaser
+  - type: ItemSlots
+    slots:
+      cabinetSlot:
+        startingItem: WeaponAntiqueLaser
+        ejectOnInteract: true
+        whitelist:
+          tags:
+          - WeaponAntiqueLaser
 
 - type: entity
   parent: [GlassBoxLaserFilled, GlassBoxLaserOpen]
@@ -159,8 +157,6 @@
   components:
   - type: Lock
     locked: false
-  - type: ItemCabinet
-    opened: true
 
 - type: entity
   id: GlassBoxFrame
