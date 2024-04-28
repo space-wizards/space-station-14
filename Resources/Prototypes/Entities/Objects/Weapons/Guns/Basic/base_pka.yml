@@ -7,6 +7,9 @@
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
+    storedSprite:
+      sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
+      state: storage
     size: Normal
   - type: GunWieldBonus
     minAngle: -43
