@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: jamessimo
-  changes:
-  - message: vending machine UI improved
-    type: Tweak
-  id: 5968
-  time: '2024-02-19T22:18:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25377
-- author: marbow
-  changes:
-  - message: Moths can now eat plushies and with a distinctive sound!
-    type: Add
-  id: 5969
-  time: '2024-02-19T22:35:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25382
-- author: ArchPigeon
-  changes:
-  - message: Liquid Tritium can now be used as a chem in flamethrowers
-    type: Add
-  id: 5970
-  time: '2024-02-19T22:37:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25281
 - author: ElectroJr
   changes:
   - message: Fix actions sometimes disappearing.
@@ -3859,3 +3838,27 @@
   id: 6467
   time: '2024-04-28T02:25:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27415
+- author: Plykiya
+  changes:
+  - message: The emagged autolathe now has recipes for ammunition boxes and pre-filled
+      magazines of every type of ammo.
+    type: Add
+  - message: You can now print empty magazines at the emagged autolathe.
+    type: Add
+  id: 6468
+  time: '2024-04-28T03:02:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27396
+- author: icekot8
+  changes:
+  - message: T3 Portable Microfusion Weaponry research now have a portable charger
+    type: Add
+  id: 6469
+  time: '2024-04-28T03:19:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26655
+- author: osjarw
+  changes:
+  - message: Putting a hand labeler in a belt is now predicted correctly.
+    type: Fix
+  id: 6470
+  time: '2024-04-28T04:19:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26660
