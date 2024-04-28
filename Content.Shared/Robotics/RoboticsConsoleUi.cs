@@ -104,7 +104,7 @@ public record struct CyborgControlData
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan Timeout = TimeSpan.Zero;
 
-    public CyborgControlData(SpriteSpecifier chassisSprite, string chassisName, string name, float charge, int moduleCount, bool hasBrain)
+    public CyborgControlData(SpriteSpecifier? chassisSprite, string chassisName, string name, float charge, int moduleCount, bool hasBrain)
     {
         ChassisSprite = chassisSprite;
         ChassisName = chassisName;
