@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Fixed selection behavior for player lists such as the ban panel or ahelp
-      window.
-    type: Fix
-  id: 5973
-  time: '2024-02-20T09:13:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25248
 - author: Tonydatguy
   changes:
   - message: Ore Crabs will now take structural damage.
@@ -3867,3 +3859,10 @@
   id: 6472
   time: '2024-04-28T04:48:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27368
+- author: Keer-Sar
+  changes:
+  - message: Medal Cases now only hold medals
+    type: Tweak
+  id: 6473
+  time: '2024-04-28T05:04:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27428
