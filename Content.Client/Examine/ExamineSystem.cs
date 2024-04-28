@@ -176,6 +176,9 @@ namespace Content.Client.Examine
         /// </summary>
         public void OpenTooltip(EntityUid player, EntityUid target, bool centeredOnCursor=true, bool openAtOldTooltip=true, bool knowTarget = true)
         {
+            if (!target.Valid || Deleted(target))
+                return;
+
             // Close any examine tooltip that might already be opened
             // Before we do that, save its position. We'll prioritize opening any new popups there if
             // openAtOldTooltip is true.
