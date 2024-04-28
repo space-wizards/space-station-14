@@ -4,13 +4,14 @@ using Content.Shared.Interaction;
 using Content.Shared.Labels.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 
 namespace Content.Shared.Labels.EntitySystems;
 
-public sealed class HandLabelerSystem : EntitySystem
+public abstract class SharedHandLabelerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedUserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] protected readonly SharedUserInterfaceSystem UserInterfaceSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedLabelSystem _labelSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -20,20 +21,19 @@ public sealed class HandLabelerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HandLabelerComponent, AfterAutoHandleStateEvent>(OnAfterState);
         SubscribeLocalEvent<HandLabelerComponent, AfterInteractEvent>(AfterInteractOn);
         SubscribeLocalEvent<HandLabelerComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
         // Bound UI subscriptions
         SubscribeLocalEvent<HandLabelerComponent, HandLabelerLabelChangedMessage>(OnHandLabelerLabelChanged);
+        SubscribeLocalEvent<HandLabelerComponent, ComponentGetState>(OnGetState);
     }
 
-    private void OnAfterState(Entity<HandLabelerComponent> ent, ref AfterAutoHandleStateEvent args)
+    private void OnGetState(Entity<HandLabelerComponent> ent, ref ComponentGetState args)
     {
-        if (!_userInterfaceSystem.TryGetOpenUi(ent.Owner, HandLabelerUiKey.Key, out var bui) ||
-            bui is not HandLabel)
-            return;
-
-        bui.
+        args.State = new HandLabelerComponentState(ent.Comp.AssignedLabel)
+        {
+            MaxLabelChars = ent.Comp.MaxLabelChars,
+        };
     }
 
     private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, EntityUid target, out string? result)
@@ -90,7 +90,6 @@ public sealed class HandLabelerSystem : EntitySystem
             return;
 
         _popupSystem.PopupClient(result, User, User);
-        Dirty(uid, handLabeler);
 
         // Log labeling
         _adminLogger.Add(LogType.Action, LogImpact.Low,

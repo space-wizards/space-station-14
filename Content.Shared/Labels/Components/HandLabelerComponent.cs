@@ -9,7 +9,7 @@ namespace Content.Shared.Labels.Components;
 [Access(typeof(SharedHandLabelerSystem))]
 public sealed partial class HandLabelerComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), Access(Other = AccessPermissions.ReadWriteExecute)]
     [DataField]
     public string AssignedLabel = string.Empty;
 
@@ -19,28 +19,12 @@ public sealed partial class HandLabelerComponent : Component
 
     [DataField]
     public EntityWhitelist Whitelist = new();
-
-    public Dictionary<NetEntity, LabelAction> RecentlyLabeled = new();
 }
 
 [Serializable, NetSerializable]
-public sealed class HandLabelerComponentState : ComponentState
+public sealed class HandLabelerComponentState(string assignedLabel) : IComponentState
 {
-    public string AssignedLabel { get; init; } = String.Empty;
-    public int MaxLabelChars { get; init; }
-    public Dictionary<NetEntity, LabelAction> RecentlyLabeled { get; init; } = new();
-}
+    public string AssignedLabel = assignedLabel;
 
-/// <summary>
-/// Different actions the HandLabeler can do.
-/// </summary>
-/// <remarks>
-/// `invalid` value should never appear anywhere.
-/// <see cref="HandLabelerMessage">
-/// </remarks>
-public enum LabelAction
-{
-    invalid,
-    Removed,
-    Applied
+    public int MaxLabelChars;
 }

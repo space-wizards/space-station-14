@@ -1,6 +1,8 @@
-namespace Content.Server.Labels;
+using Content.Shared.Labels.EntitySystems;
 
-public sealed class HandLabelerSystem
+namespace Content.Server.Labels.Label;
+
+public sealed class HandLabelerSystem : SharedHandLabelerSystem
 {
-    
+
 }

@@ -14,7 +14,6 @@ namespace Content.Client.Labels.UI
             RobustXamlLoader.Load(this);
 
             LabelLineEdit.OnTextEntered += e => OnLabelChanged?.Invoke(e.Text);
-            LabelLineEdit.OnFocusExit += e => OnLabelChanged?.Invoke(e.Text);
         }
 
         public void SetCurrentLabel(string label)
