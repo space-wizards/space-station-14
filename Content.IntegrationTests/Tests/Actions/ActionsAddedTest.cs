@@ -48,9 +48,9 @@ public sealed class ActionsAddedTest
         var evType = typeof(ToggleCombatActionEvent);
 
         var sActions = sActionSystem.GetActions(serverEnt).Where(
-            ent => sEntMan.CompOrNull<InstantActionComponent>(ent)?.Event?.GetType() == evType).ToArray();
+            ent => sEntMan.ComponentOrNull<InstantActionComponent>(ent)?.Event?.GetType() == evType).ToArray();
         var cActions = cActionSystem.GetActions(clientEnt).Where(
-            ent => cEntMan.CompOrNull<InstantActionComponent>(ent)?.Event?.GetType() == evType).ToArray();
+            ent => cEntMan.ComponentOrNull<InstantActionComponent>(ent)?.Event?.GetType() == evType).ToArray();
 
         Assert.That(sActions.Length, Is.EqualTo(1));
         Assert.That(cActions.Length, Is.EqualTo(1));
