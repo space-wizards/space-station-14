@@ -130,7 +130,7 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Minibomb
-    totalIntensity: 800
+    totalIntensity: 400
     intensitySlope: 30
     maxIntensity: 125
     canCreateVacuum: true
