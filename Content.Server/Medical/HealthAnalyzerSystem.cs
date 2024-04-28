@@ -128,10 +128,10 @@ public sealed class HealthAnalyzerSystem : EntitySystem
 
     private void OpenUserInterface(EntityUid user, EntityUid analyzer)
     {
-        if (!TryComp<ActorComponent>(user, out var actor) || !_uiSystem.TryGetUi(analyzer, HealthAnalyzerUiKey.Key, out var ui))
+        if (!_uiSystem.HasUi(analyzer, HealthAnalyzerUiKey.Key))
             return;
 
-        _uiSystem.OpenUi(ui, actor.PlayerSession);
+        _uiSystem.OpenUi(analyzer, HealthAnalyzerUiKey.Key, user);
     }
 
     /// <summary>
@@ -172,7 +172,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     /// <param name="scanMode">True makes the UI show ACTIVE, False makes the UI show INACTIVE</param>
     public void UpdateScannedUser(EntityUid healthAnalyzer, EntityUid target, bool scanMode)
     {
-        if (!_uiSystem.TryGetUi(healthAnalyzer, HealthAnalyzerUiKey.Key, out var ui))
+        if (!_uiSystem.HasUi(healthAnalyzer, HealthAnalyzerUiKey.Key))
             return;
 
         if (!HasComp<DamageableComponent>(target))
@@ -194,9 +194,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             bleeding = bloodstream.BleedAmount > 0;
         }
 
-
-
-        _uiSystem.SendUiMessage(ui, new HealthAnalyzerScannedUserMessage(
+        _uiSystem.ServerSendUiMessage(healthAnalyzer, HealthAnalyzerUiKey.Key, new HealthAnalyzerScannedUserMessage(
             GetNetEntity(target),
             bodyTemperature,
             bloodAmount,

@@ -23,7 +23,7 @@ public sealed class ItemCabinetSystem : EntitySystem
 
         SubscribeLocalEvent<ItemCabinetComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<ItemCabinetComponent, EntInsertedIntoContainerMessage>(OnItemInserted);
-        SubscribeLocalEvent<ItemCabinetComponent, EntRemovedFromContainerMessage>(OnItemRemoved);
+        SubscribeLocalEvent<ItemCabinetComponent, EntRemovedFromContainerMessage>(OnItemInserted);
         SubscribeLocalEvent<ItemCabinetComponent, OpenableOpenedEvent>(OnOpened);
         SubscribeLocalEvent<ItemCabinetComponent, OpenableClosedEvent>(OnClosed);
     }
@@ -41,22 +41,10 @@ public sealed class ItemCabinetSystem : EntitySystem
         _appearance.SetData(uid, ItemCabinetVisuals.ContainsItem, hasItem);
     }
 
-    private void OnItemInserted(Entity<ItemCabinetComponent> ent, ref EntInsertedIntoContainerMessage args)
+    private void OnItemInserted(EntityUid uid, ItemCabinetComponent component, ContainerModifiedMessage args)
     {
-        if (!ent.Comp.Initialized)
-            return;
-
-        if (args.Container.ID == ent.Comp.Slot)
-            UpdateAppearance(ent, true);
-    }
-
-    private void OnItemRemoved(Entity<ItemCabinetComponent> ent, ref EntRemovedFromContainerMessage args)
-    {
-        if (!ent.Comp.Initialized)
-            return;
-
-        if (args.Container.ID == ent.Comp.Slot)
-            UpdateAppearance(ent, false);
+        if (args.Container.ID == component.Slot)
+            UpdateAppearance(uid, true);
     }
 
     private void OnOpened(Entity<ItemCabinetComponent> ent, ref OpenableOpenedEvent args)

@@ -12,6 +12,13 @@ namespace Content.Shared.Flash.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public int FlashDuration { get; set; } = 5000;
 
+        /// <summary>
+        /// How long a target is stunned when a melee flash is used.
+        /// If null, melee flashes will not stun at all
+        /// </summary>
+        [DataField]
+        public TimeSpan? MeleeStunDuration = TimeSpan.FromSeconds(1.5);
+
         [DataField("range")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float Range { get; set; } = 7f;

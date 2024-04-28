@@ -8,7 +8,6 @@
       solutions:
         beaker:
           maxVol: 200
-          canMix: true
     - type: Sprite
       sprite: Objects/Specific/Chemistry/jug.rsi
       layers:
@@ -19,6 +18,8 @@
     - type: Item
       size: Normal
       sprite: Objects/Specific/Chemistry/jug.rsi
+    - type: MixableSolution
+      solution: beaker
     - type: RefillableSolution
       solution: beaker
     - type: DrainableSolution
@@ -31,9 +32,11 @@
       solution: beaker
     - type: SolutionTransfer
       canChangeTransferAmount: true
+    - type: SolutionItemStatus
+      solution: beaker
     - type: UserInterface
       interfaces:
-        - key: enum.TransferAmountUiKey.Key
+        enum.TransferAmountUiKey.Key:
           type: TransferAmountBoundUserInterface
     - type: Drink
       solution: beaker
