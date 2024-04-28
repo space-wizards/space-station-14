@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: A new UI theme, "Ashen", is now available to select in the options menu.
-    type: Add
-  id: 5979
-  time: '2024-02-21T05:26:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25408
 - author: Holinka4ever
   changes:
   - message: Sunglasses were removed from ClothesMate
@@ -3868,3 +3861,11 @@
   id: 6478
   time: '2024-04-28T06:12:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25979
+- author: Plykiya
+  changes:
+  - message: Hardsuits, EVA suits, firesuits and other things now protect your feet
+      from dangerous glass shards.
+    type: Tweak
+  id: 6479
+  time: '2024-04-28T07:11:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26764
