@@ -20,6 +20,12 @@ public sealed class GerasSystem : SharedGerasSystem
     {
         SubscribeLocalEvent<GerasComponent, MorphIntoGeras>(OnMorphIntoGeras);
         SubscribeLocalEvent<GerasComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<GerasComponent, EntityZombifiedEvent>(OnZombification);
+    }
+
+    private void OnZombification(EntityUid uid, GerasComponent component, EntityZombifiedEvent args)
+    {
+        _actionsSystem.RemoveAction(uid, component.GerasActionEntity);
     }
 
     private void OnMapInit(EntityUid uid, GerasComponent component, MapInitEvent args)
