@@ -1101,8 +1101,8 @@
     key: enum.RoboticsConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.RoboticsConsoleUiKey.Key
-      type: RoboticsConsoleBoundUserInterface
+      enum.RoboticsConsoleUiKey.Key:
+        type: RoboticsConsoleBoundUserInterface
   - type: ApcPowerReceiver
     powerLoad: 1000
     priority: Low
