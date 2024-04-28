@@ -40,7 +40,7 @@ public sealed class FaxBoundUi : BoundUserInterface
     {
         if (_dialogIsOpen)
             return;
-            
+
         _dialogIsOpen = true;
         var filters = new FileDialogFilters(new FileDialogFilters.Group("txt"));
         await using var file = await _fileDialogManager.OpenFile(filters);
@@ -65,7 +65,7 @@ public sealed class FaxBoundUi : BoundUserInterface
             }
             else
             {
-                content = firstLine + Environment.NewLine + content;
+                content = firstLine + "\n" + content;
             }
         }
 
