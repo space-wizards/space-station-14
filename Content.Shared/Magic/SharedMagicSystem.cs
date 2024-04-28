@@ -93,11 +93,11 @@ public abstract class SharedMagicSystem : EntitySystem
 
         // TODO: Random projectile ECS for magic-carp, wand of magic
 
-        // TODO: Charge Spell
-        //  recharge wand in active hand
-
         // TODO: Recall Spell
         //  mark any item in hand to recall
+        //    ItemRecallComponent
+        //    Event adds the component if it doesn't exist and the performer isn't stored in the comp
+        //    2nd firing of the event checks to see if the recall comp has this uid, and if it does it calls it
         //  if no free hands, summon at feet
         //  if item deleted, clear stored item
 
