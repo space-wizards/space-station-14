@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Holinka4ever
-  changes:
-  - message: Sunglasses were removed from ClothesMate
-    type: Remove
-  id: 5980
-  time: '2024-02-21T06:11:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25221
 - author: Errant
   changes:
   - message: Rotten food is now less lethal to eat, and has a high chance to induce
@@ -3869,3 +3862,10 @@
   id: 6479
   time: '2024-04-28T07:11:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26764
+- author: FungiFellow
+  changes:
+  - message: Bows now fit in Exosuit slot.
+    type: Tweak
+  id: 6480
+  time: '2024-04-28T08:23:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27433
