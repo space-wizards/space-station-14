@@ -54,6 +54,7 @@
         - Cartridge
         - Cigarette
         - Crayon
+        - Lighter
         - Pen
         - Pill
   - type: StorageFill
@@ -129,6 +130,7 @@
         - Cartridge
         - Cigarette
         - Crayon
+        - Lighter
         - Pen
         - Pill
   - type: StorageFill

@@ -30,6 +30,9 @@
       visible: false
       shader: unshaded
       map: [ "flame" ]
+  - type: Tag
+    tags:
+      - Lighter
   - type: Appearance
   - type: RandomSprite
     available:
@@ -105,6 +108,9 @@
       visible: false
       shader: unshaded
       map: [ "flame" ]
+  - type: Tag
+    tags:
+      - Lighter
   - type: RandomSprite
     available:
       - skin:
@@ -138,6 +144,9 @@
       map: ["flame"]
       visible: false
       shader: unshaded
+  - type: Tag
+    tags:
+      - Lighter
   - type: ItemToggle
     predictable: false
     soundActivate:
@@ -230,5 +239,8 @@
       map: ["flame"]
       visible: false
       shader: unshaded
+  - type: Tag
+    tags:
+      - Lighter
   - type: StealTarget
     stealGroup: FlippoEngravedLighter
