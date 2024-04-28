@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.Popups;
 
 namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
@@ -30,6 +31,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 
             var plantHolder = args.EntityManager.System<PlantHolderSystem>();
             var random = IoCManager.Resolve<IRobustRandom>();
+            var popupSystem = args.EntityManager.System<SharedPopupSystem>();
 
             if (plantHolderComp.Seed.Potency < PotencyLimit)
             {
@@ -38,6 +40,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 
                 if (plantHolderComp.Seed.Potency > PotencySeedlessThreshold)
                 {
+                    popupSystem.PopupEntity(Loc.GetString("botany-plant-seedsdestroyed"), args.SolutionEntity, PopupType.SmallCaution);
                     plantHolderComp.Seed.Seedless = true;
                 }
             }

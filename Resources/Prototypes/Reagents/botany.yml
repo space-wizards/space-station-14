@@ -165,8 +165,12 @@
   physicalDesc: reagent-physical-desc-dark-brown
   plantMetabolism:
     - !type:PlantAdjustHealth
-      amount: -0.1
-    - !type:PlantSedin {}
+      amount: -3
+    - !type:PlantAdjustSeeds
+      prob: 0.1
+      amount: 1
+    - !type:PlantAdjustPotency
+      amount: -7
 
 - type: reagent
   id: WeedKiller
