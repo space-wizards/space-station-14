@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Callmore
-  changes:
-  - message: Shoving other people is now more consistent.
-    type: Fix
-  id: 5978
-  time: '2024-02-21T04:01:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25353
 - author: Ubaser
   changes:
   - message: A new UI theme, "Ashen", is now available to select in the options menu.
@@ -3865,3 +3858,13 @@
   id: 6477
   time: '2024-04-28T05:49:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27283
+- author: exincore
+  changes:
+  - message: Fax machines now copy the labels attached to papers.
+    type: Add
+  - message: Fax machine "Print File" functionality now applies the first line of
+      the file as a label when it begins with `#`.
+    type: Add
+  id: 6478
+  time: '2024-04-28T06:12:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25979
