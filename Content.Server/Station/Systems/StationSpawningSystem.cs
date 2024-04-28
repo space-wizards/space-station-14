@@ -184,26 +184,12 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             EquipStartingGear(entity.Value, startingGear);
         }
 
-        // Run loadouts after so stuff like storage loadouts can get
-        var jobLoadout = LoadoutSystem.GetJobPrototype(prototype?.ID);
-
-        if (_prototypeManager.TryIndex(jobLoadout, out RoleLoadoutPrototype? roleProto))
-        {
-            RoleLoadout? loadout = null;
-            profile?.Loadouts.TryGetValue(jobLoadout, out loadout);
-
-            // Set to default if not present
-            if (loadout == null)
-            {
-                loadout = new RoleLoadout(jobLoadout);
-                loadout.SetDefault(_prototypeManager);
-            }
-
-            EquipLoadout(entity.Value, roleProto, loadout);
-        }
-
         if (profile != null)
         {
+            // Run loadouts after so stuff like storage loadouts can get
+            var jobLoadout = LoadoutSystem.GetJobPrototype(prototype?.ID);
+            EquipLoadout(entity.Value, jobLoadout, profile);
+
             if (prototype != null)
                 SetPdaAndIdCardData(entity.Value, profile.Name, prototype, station);
 
@@ -276,28 +262,41 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     /// </summary>
     /// <param name="entity">Mob that equips the loadout.</param>
     /// <param name="loadoutProto">Loadout prototype to equip.</param>
-    /// <param name="loadout">The loadout to equip.</param>
-    public void EquipLoadout(EntityUid entity, RoleLoadoutPrototype roleProto, RoleLoadout loadout)
+    /// <param name="profile">The humanoid character profile of the equipped entity.</param>
+    public void EquipLoadout(EntityUid entity, string loadoutString, HumanoidCharacterProfile profile)
     {
-        // Order loadout selections by the order they appear on the prototype.
-        foreach (var group in loadout.SelectedLoadouts.OrderBy(x => roleProto.Groups.FindIndex(e => e == x.Key)))
+        if (_prototypeManager.TryIndex(loadoutString, out RoleLoadoutPrototype? roleProto))
         {
-            foreach (var items in group.Value)
+            RoleLoadout? loadout = null;
+            profile?.Loadouts.TryGetValue(loadoutString, out loadout);
+
+            // Set to default if not present
+            if (loadout == null)
             {
-                if (!_prototypeManager.TryIndex(items.Prototype, out var loadoutProto))
-                {
-                    Log.Error($"Unable to find loadout prototype for {items.Prototype}");
-                    continue;
-                }
+                loadout = new RoleLoadout(loadoutString);
+                loadout.SetDefault(_prototypeManager);
+            }
 
-                if (!_prototypeManager.TryIndex(loadoutProto.Equipment, out var startingGear))
+            // Order loadout selections by the order they appear on the prototype.
+            foreach (var group in loadout.SelectedLoadouts.OrderBy(x => roleProto.Groups.FindIndex(e => e == x.Key)))
+            {
+                foreach (var items in group.Value)
                 {
-                    Log.Error($"Unable to find starting gear {loadoutProto.Equipment} for loadout {loadoutProto}");
-                    continue;
-                }
+                    if (!_prototypeManager.TryIndex(items.Prototype, out var loadoutProto))
+                    {
+                        Log.Error($"Unable to find loadout prototype for {items.Prototype}");
+                        continue;
+                    }
 
-                // Handle any extra data here.
-                EquipStartingGear(entity, startingGear);
+                    if (!_prototypeManager.TryIndex(loadoutProto.Equipment, out var startingGear))
+                    {
+                        Log.Error($"Unable to find starting gear {loadoutProto.Equipment} for loadout {loadoutProto}");
+                        continue;
+                    }
+
+                    // Handle any extra data here.
+                    EquipStartingGear(entity, startingGear);
+                }
             }
         }
     }

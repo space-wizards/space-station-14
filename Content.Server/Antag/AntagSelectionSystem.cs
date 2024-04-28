@@ -304,21 +304,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         {
             var antagLoadout = LoadoutSystem.GetJobPrototype(def.PrefRoles.First());
             var pref = (HumanoidCharacterProfile) _pref.GetPreferences(session.UserId).SelectedCharacter;
-
-            if (_prototypeManager.TryIndex(antagLoadout, out RoleLoadoutPrototype? roleProto))
-            {
-                RoleLoadout? loadout = null;
-                pref?.Loadouts.TryGetValue(antagLoadout, out loadout);
-
-                // Set to default if not present
-                if (loadout == null)
-                {
-                    loadout = new RoleLoadout(antagLoadout);
-                    loadout.SetDefault(_prototypeManager);
-                }
-
-                _stationSpawning.EquipLoadout(player, roleProto, loadout);
-            }
+            _stationSpawning.EquipLoadout(player, antagLoadout, pref);
 
             var curMind = session.GetMind();
             if (curMind == null)
