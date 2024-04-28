@@ -94,7 +94,7 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         Cyborgs.Clear();
         foreach (var (address, data) in _cyborgs)
         {
-            var item = Cyborgs.AddItem(data.Name, _sprite.Frame0(data.ChassisSprite), metadata: address);
+            var item = Cyborgs.AddItem(data.Name, _sprite.Frame0(data.ChassisSprite!), metadata: address);
             item.Selected = address == selected;
         }
         _selected = selected;
@@ -115,7 +115,7 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         var data = _cyborgs[selected];
         var model = data.ChassisName;
 
-        BorgSprite.Texture = _sprite.Frame0(data.ChassisSprite);
+        BorgSprite.Texture = _sprite.Frame0(data.ChassisSprite!);
 
         var batteryColor = data.Charge switch {
             < 0.2f => "red",

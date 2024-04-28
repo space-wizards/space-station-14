@@ -14,7 +14,7 @@ public sealed partial class BorgTransponderComponent : Component
     /// Sprite of the chassis to send.
     /// </summary>
     [DataField(required: true)]
-    public SpriteSpecifier Sprite = null;
+    public SpriteSpecifier? Sprite;
 
     /// <summary>
     /// Name of the chassis to send.

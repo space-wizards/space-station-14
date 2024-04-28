@@ -64,7 +64,7 @@ public record struct CyborgControlData
     /// Texture of the borg chassis.
     /// </summary>
     [DataField(required: true)]
-    public SpriteSpecifier ChassisSprite = null;
+    public SpriteSpecifier? ChassisSprite;
 
     /// <summary>
     /// Name of the borg chassis.
