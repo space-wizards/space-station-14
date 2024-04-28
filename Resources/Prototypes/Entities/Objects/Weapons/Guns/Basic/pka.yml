@@ -25,7 +25,6 @@
         empty-icon:
           True: { visible: False }
           False: { visible: True }
-        #todo: add other 'empty' animations
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 0.75
     rechargeSound:
