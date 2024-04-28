@@ -867,6 +867,9 @@
   id: Medkit
 
 - type: Tag
+  id: Medal
+
+- type: Tag
   id: Metal
 
 - type: Tag
