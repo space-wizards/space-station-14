@@ -1,6 +1,7 @@
 ﻿﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Robotics;
 
@@ -60,10 +61,16 @@ public sealed class RoboticsConsoleDestroyMessage : BoundUserInterfaceMessage
 public record struct CyborgControlData
 {
     /// <summary>
-    /// Chassis prototype of the borg.
+    /// Texture of the borg chassis.
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId Chassis = string.Empty;
+    public SpriteSpecifier ChassisSprite = null;
+
+    /// <summary>
+    /// Name of the borg chassis.
+    /// </summary>
+    [DataField(required: true)]
+    public string ChassisName = string.Empty;
 
     /// <summary>
     /// Name of the borg's entity, including its silicon id.
@@ -97,9 +104,10 @@ public record struct CyborgControlData
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan Timeout = TimeSpan.Zero;
 
-    public CyborgControlData(string chassis, string name, float charge, int moduleCount, bool hasBrain)
+    public CyborgControlData(SpriteSpecifier chassisSprite, string chassisName, string name, float charge, int moduleCount, bool hasBrain)
     {
-        Chassis = chassis;
+        ChassisSprite = chassisSprite;
+        ChassisName = chassisName;
         Name = name;
         Charge = charge;
         ModuleCount = moduleCount;

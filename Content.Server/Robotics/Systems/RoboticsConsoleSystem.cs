@@ -96,7 +96,7 @@ public sealed class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
 
     private void OnDisable(Entity<RoboticsConsoleComponent> ent, ref RoboticsConsoleDisableMessage args)
     {
-        if (args.Session.AttachedEntity is not {} user || _lock.IsLocked(ent.Owner))
+        if (_lock.IsLocked(ent.Owner))
             return;
 
         if (!ent.Comp.Cyborgs.TryGetValue(args.Address, out var data))
@@ -108,12 +108,12 @@ public sealed class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
         };
 
         _deviceNetwork.QueuePacket(ent, args.Address, payload);
-        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(user):user} disabled borg {data.Name} with address {args.Address}");
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Actor):user} disabled borg {data.Name} with address {args.Address}");
     }
 
     private void OnDestroy(Entity<RoboticsConsoleComponent> ent, ref RoboticsConsoleDestroyMessage args)
     {
-        if (args.Session.AttachedEntity is not {} user || _lock.IsLocked(ent.Owner))
+        if (_lock.IsLocked(ent.Owner))
             return;
 
         var now = _timing.CurTime;
@@ -132,7 +132,7 @@ public sealed class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
 
         var message = Loc.GetString(ent.Comp.DestroyMessage, ("name", data.Name));
         _radio.SendRadioMessage(ent, message, ent.Comp.RadioChannel, ent);
-        _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(user):user} destroyed borg {data.Name} with address {args.Address}");
+        _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(args.Actor):user} destroyed borg {data.Name} with address {args.Address}");
 
         ent.Comp.NextDestroy = now + ent.Comp.DestroyCooldown;
         Dirty(ent, ent.Comp);
@@ -141,6 +141,6 @@ public sealed class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
     private void UpdateUserInterface(Entity<RoboticsConsoleComponent> ent)
     {
         var state = new RoboticsConsoleState(ent.Comp.Cyborgs);
-        _ui.TrySetUiState(ent, RoboticsConsoleUiKey.Key, state);
+        _ui.SetUiState(ent.Owner, RoboticsConsoleUiKey.Key, state);
     }
 }

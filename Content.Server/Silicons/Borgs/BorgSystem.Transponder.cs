@@ -31,10 +31,11 @@ public sealed partial class BorgSystem
 
             var charge = 0f;
             if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
-                charge = battery.Charge / battery.MaxCharge;
+                charge = battery.CurrentCharge / battery.MaxCharge;
 
             var data = new CyborgControlData(
-                meta.EntityPrototype!.ID,
+                comp.Sprite,
+                comp.Name,
                 meta.EntityName,
                 charge,
                 chassis.ModuleCount,

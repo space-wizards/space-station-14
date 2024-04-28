@@ -1,4 +1,5 @@
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
@@ -9,6 +10,18 @@ namespace Content.Shared.Silicons.Borgs.Components;
 [RegisterComponent, Access(typeof(SharedBorgSystem))]
 public sealed partial class BorgTransponderComponent : Component
 {
+    /// <summary>
+    /// Sprite of the chassis to send.
+    /// </summary>
+    [DataField(required: true)]
+    public SpriteSpecifier Sprite = null;
+
+    /// <summary>
+    /// Name of the chassis to send.
+    /// </summary>
+    [DataField(required: true)]
+    public string Name = string.Empty;
+
     /// <summary>
     /// Popup shown to everyone when a borg is disabled.
     /// Gets passed a string "name".
