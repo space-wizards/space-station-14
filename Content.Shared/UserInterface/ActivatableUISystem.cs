@@ -35,7 +35,11 @@ public sealed partial class ActivatableUISystem : EntitySystem
         SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(GetActivationVerb);
         SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<Verb>>(GetVerb);
 
+        // TODO ActivatableUI
+        // Add UI-user component, and listen for user container changes.
+        // I.e., should lose a computer UI if a player gets shut into a locker.
         SubscribeLocalEvent<ActivatableUIComponent, EntGotInsertedIntoContainerMessage>(OnGotInserted);
+        SubscribeLocalEvent<ActivatableUIComponent, EntGotRemovedFromContainerMessage>(OnGotRemoved);
 
         SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
         SubscribeLocalEvent<UserInterfaceComponent, OpenUiActionEvent>(OnActionPerform);
@@ -265,6 +269,11 @@ public sealed partial class ActivatableUISystem : EntitySystem
     }
 
     private void OnGotInserted(Entity<ActivatableUIComponent> ent, ref EntGotInsertedIntoContainerMessage args)
+    {
+        CheckAccess((ent, ent));
+    }
+
+    private void OnGotRemoved(Entity<ActivatableUIComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
         CheckAccess((ent, ent));
     }
