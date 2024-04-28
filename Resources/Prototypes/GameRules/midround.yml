@@ -52,13 +52,13 @@
       briefing:
         sound: "/Audio/Misc/thief_greeting.ogg"
 
-- type: entity
-  noSpawn: true
-  parent: BaseGameRule
-  id: Exterminator
-  components:
-  - type: GenericAntagRule
-    agentName: terminator-round-end-agent-name
-    objectives:
-    - TerminateObjective
-    - ShutDownObjective
+#- type: entity
+#  noSpawn: true
+#  parent: BaseGameRule
+#  id: Exterminator
+#  components:
+#  - type: GenericAntagRule
+#    agentName: terminator-round-end-agent-name
+#    objectives:
+#    - TerminateObjective
+#    - ShutDownObjective
