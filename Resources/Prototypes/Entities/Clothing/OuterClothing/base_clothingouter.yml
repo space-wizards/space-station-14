@@ -38,8 +38,8 @@
         ents: []
   - type: UserInterface
     interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   - type: StaticPrice
     price: 70
 
@@ -136,6 +136,8 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   abstract: true
@@ -154,6 +156,8 @@
   - type: HeldSpeedModifier
   - type: Item
     size: Huge
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBase

@@ -1,0 +1,160 @@
+﻿- type: constructionGraph
+  id: GlassBox
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DeleteEntity
+      edges:
+        - to: boxMissingWires
+          completed:
+            - !type:SetAnchor
+              value: false
+          steps:
+            - material: WoodPlank
+              amount: 10
+              doAfter: 5
+
+    - node: boxMissingWires
+      entity: GlassBoxFrame
+      edges:
+        - to: boxMissingTrigger
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - material: Cable
+              amount: 2
+              doAfter: 0.5
+
+        - to: start
+          steps:
+            - tool: Prying
+              doAfter: 5
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 10
+
+    - node: boxMissingTrigger
+      edges:
+        - to: boxTriggerUnsecured
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - tag: SignalTrigger
+              name: a Signal Trigger
+              icon:
+                sprite: Objects/Devices/signaltrigger.rsi
+                state: signaltrigger
+              doAfter: 0.5
+
+        - to: boxMissingWires
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - tool: Cutting
+              doAfter: 0.25
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 2
+
+    - node: boxTriggerUnsecured
+      edges:
+        - to: boxMissingRGlass
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+        - to: boxMissingTrigger
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - tool: Prying
+              doAfter: 0.5
+          completed:
+            - !type:SpawnPrototype
+              prototype: SignalTrigger
+              amount: 1
+
+    - node: boxMissingRGlass
+      edges:
+        - to: boxRGlassUnsecured
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - material: ReinforcedGlass
+              amount: 5
+              doAfter: 2.5
+
+        - to: boxTriggerUnsecured
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+    - node: boxRGlassUnsecured
+      edges:
+        - to: glassBox
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+        - to: boxMissingRGlass
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - tool: Prying
+              doAfter: 2
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRGlass1
+              amount: 5
+
+    - node: brokenGlassBox
+      entity: GlassBoxBroken
+      edges:
+        - to: boxMissingWires
+          steps:
+            - tool: Prying
+              doAfter: 2
+          completed:
+            - !type:SpawnPrototype
+              prototype: ShardGlassReinforced
+              amount: 1
+
+    - node: glassBox
+      entity: GlassBoxLaser
+      edges:
+        - to: boxMissingWires
+          steps:
+            - tool: Screwing
+              doAfter: 4
+            - tool: Pulsing
+              doAfter: 2
+            - tool: Cutting
+              doAfter: 2
+            - tool: Screwing
+              doAfter: 2
+            - tool: Welding
+              doAfter: 10
+            - tool: Anchoring
+              doAfter: 2
+            - tool: Prying
+              doAfter: 2
+          completed:
+            - !type:EmptyAllContainers
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: SignalTrigger
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: SheetRGlass1
+              amount: 5

@@ -17,7 +17,16 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
-
+  
+- type: loadoutGroup
+  id: Glasses
+  name: loadout-group-glasses
+  minLimit: 0
+  loadouts:
+  - Glasses
+  - GlassesJamjar
+  - GlassesJensen
+  
 # Command
 - type: loadoutGroup
   id: CaptainHead
@@ -105,6 +114,7 @@
   loadouts:
   - GreyJumpsuit
   - GreyJumpskirt
+  - RainbowJumpsuit
   - AncientJumpsuit
 
 - type: loadoutGroup
@@ -884,6 +894,13 @@
   - SecurityBackpack
   - SecuritySatchel
   - SecurityDuffel
+
+- type: loadoutGroup
+  id: SecurityBelt
+  name: loadout-group-security-belt
+  loadouts:
+  - SecurityBelt
+  - SecurityWebbing
 
 - type: loadoutGroup
   id: SecurityOuterClothing

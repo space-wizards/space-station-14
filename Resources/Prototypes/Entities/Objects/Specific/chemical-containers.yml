@@ -32,9 +32,11 @@
       solution: beaker
     - type: SolutionTransfer
       canChangeTransferAmount: true
+    - type: SolutionItemStatus
+      solution: beaker
     - type: UserInterface
       interfaces:
-        - key: enum.TransferAmountUiKey.Key
+        enum.TransferAmountUiKey.Key:
           type: TransferAmountBoundUserInterface
     - type: Drink
       solution: beaker
