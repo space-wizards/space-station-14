@@ -8,7 +8,7 @@ namespace Content.Shared.UserInterface
     public sealed partial class ActivatableUIComponent : Component
     {
         [DataField(required: true, customTypeSerializer: typeof(EnumSerializer))]
-        public Enum Key { get; set; } = default!;
+        public Enum? Key { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]

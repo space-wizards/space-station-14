@@ -16,7 +16,6 @@
     #- type: VoxAccent # Not yet coded
   - type: Inventory
     speciesId: vox
-    jumpsuitShader: DisplacedStencilDraw
     displacements:
       jumpsuit:
         layer:

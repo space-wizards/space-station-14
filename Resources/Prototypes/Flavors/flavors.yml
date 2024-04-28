@@ -1060,6 +1060,11 @@
   description: flavor-complex-violets
 
 - type: flavor
+  id: pyrotton
+  flavorType: Complex
+  description: flavor-complex-pyrotton
+
+- type: flavor
   id: mothballs
   flavorType: Complex
   description: flavor-complex-mothballs
