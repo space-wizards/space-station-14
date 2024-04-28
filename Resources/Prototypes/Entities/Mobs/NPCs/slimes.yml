@@ -147,8 +147,6 @@
     thresholds:
       0: Alive
       80: Dead # weak af tho
-  - type: NameIdentifier
-    group: ""
   - type: NpcFactionMember
     factions:
     - NanoTrasen
