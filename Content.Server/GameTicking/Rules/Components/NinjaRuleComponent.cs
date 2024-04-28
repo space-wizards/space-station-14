@@ -8,7 +8,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
 /// Stores some configuration used by the ninja system.
-/// Objectives and roundend summary are handled by <see cref="GenericAntagRuleComponent/">.
+/// Objectives and roundend summary are handled by <see cref="GenericAntagRuleComponent"/>.
 /// </summary>
 [RegisterComponent, Access(typeof(SpaceNinjaSystem))]
 public sealed partial class NinjaRuleComponent : Component

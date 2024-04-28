@@ -259,10 +259,10 @@
   id: CableCoil
 
 - type: Tag
-  id: CannonBall
+  id: CaneBlade
 
 - type: Tag
-  id: CannonRestrict
+  id: CannonBall
 
 - type: Tag
   id: CannotSuicide
@@ -522,6 +522,9 @@
 
 - type: Tag
   id: DoorElectronics
+
+- type: Tag
+  id: DoorElectronicsConfigurator
 
 - type: Tag
   id: DrinkBottle
@@ -1108,6 +1111,9 @@
   id: Sidearm
 
 - type: Tag
+  id: SignalTrigger
+
+- type: Tag
   id: SkeletonMotorcycleKeys
 
 - type: Tag
@@ -1177,7 +1183,7 @@
 
 - type: Tag
   id: SuitEVA
-  
+
 - type: Tag
   id: Sunglasses
 
@@ -1234,6 +1240,9 @@
 
 - type: Tag
   id: TrashBag
+
+- type: Tag
+  id: Truncheon
 
 - type: Tag
   id: Unimplantable
@@ -1315,3 +1324,5 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+# ALPHABETICAL

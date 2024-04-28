@@ -222,7 +222,6 @@
   - type: ItemBorgModule
     items:
     - WeaponGrapplingGun
-    - WeaponCrusherDagger
     - HandheldGPSBasic
 
 # engineering modules
@@ -319,6 +318,7 @@
     - HoloprojectorBorg
     - SprayBottleSpaceCleaner
     - Dropper
+    - TrashBag
 
 # medical modules
 - type: entity

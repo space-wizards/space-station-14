@@ -165,7 +165,7 @@ namespace Content.Server.GameTicking
 
             var gridIds = _map.LoadMap(targetMapId, ev.GameMap.MapPath.ToString(), ev.Options);
 
-            _metaData.SetEntityName(_mapManager.GetMapEntityId(targetMapId), "Station map");
+            _metaData.SetEntityName(_mapManager.GetMapEntityId(targetMapId), $"station map - {map.MapName}");
 
             var gridUids = gridIds.ToList();
             RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, gridUids, stationName));
@@ -245,7 +245,10 @@ namespace Content.Server.GameTicking
             var origReadyPlayers = readyPlayers.ToArray();
 
             if (!StartPreset(origReadyPlayers, force))
+            {
+                _startingRound = false;
                 return;
+            }
 
             // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
             _mapManager.DoMapInitialize(DefaultMap);

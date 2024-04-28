@@ -35,6 +35,8 @@ public sealed partial class OpenableSystem : EntitySystem
         SubscribeLocalEvent<OpenableComponent, AfterInteractEvent>(HandleIfClosed);
         SubscribeLocalEvent<OpenableComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<OpenableComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
+        SubscribeLocalEvent<OpenableComponent, AttemptShakeEvent>(OnAttemptShake);
+        SubscribeLocalEvent<OpenableComponent, AttemptAddFizzinessEvent>(OnAttemptAddFizziness);
         SubscribeLocalEvent<OpenableComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
 
 #if DEBUG
@@ -126,6 +128,20 @@ public sealed partial class OpenableSystem : EntitySystem
         }
     }
 
+    private void OnAttemptShake(Entity<OpenableComponent> entity, ref AttemptShakeEvent args)
+    {
+        // Prevent shaking open containers
+        if (entity.Comp.Opened)
+            args.Cancelled = true;
+    }
+
+    private void OnAttemptAddFizziness(Entity<OpenableComponent> entity, ref AttemptAddFizzinessEvent args)
+    {
+        // Can't add fizziness to an open container
+        if (entity.Comp.Opened)
+            args.Cancelled = true;
+    }
+    
     private void OnLockToggleAttempt(Entity<OpenableComponent> ent, ref LockToggleAttemptEvent args)
     {
         // can't lock something while it's open
@@ -178,7 +194,7 @@ public sealed partial class OpenableSystem : EntitySystem
     /// <summary>
     /// Sets the opened field and updates open visuals.
     /// </summary>
-    public void SetOpen(EntityUid uid, bool opened = true, OpenableComponent? comp = null)
+    public void SetOpen(EntityUid uid, bool opened = true, OpenableComponent? comp = null, EntityUid? user = null)
     {
         if (!Resolve(uid, ref comp, false) || opened == comp.Opened)
             return;
@@ -188,12 +204,12 @@ public sealed partial class OpenableSystem : EntitySystem
 
         if (opened)
         {
-            var ev = new OpenableOpenedEvent();
+            var ev = new OpenableOpenedEvent(user);
             RaiseLocalEvent(uid, ref ev);
         }
         else
         {
-            var ev = new OpenableClosedEvent();
+            var ev = new OpenableClosedEvent(user);
             RaiseLocalEvent(uid, ref ev);
         }
 
@@ -214,7 +230,7 @@ public sealed partial class OpenableSystem : EntitySystem
         if (ev.Cancelled)
             return false;
 
-        SetOpen(uid, true, comp);
+        SetOpen(uid, true, comp, user);
         _audio.PlayPredicted(comp.Sound, uid, user);
         return true;
     }
@@ -228,7 +244,7 @@ public sealed partial class OpenableSystem : EntitySystem
         if (!Resolve(uid, ref comp, false) || !comp.Opened || !comp.Closeable)
             return false;
 
-        SetOpen(uid, false, comp);
+        SetOpen(uid, false, comp, user);
         _audio.PlayPredicted(comp.CloseSound, uid, user);
         return true;
     }
@@ -250,13 +266,13 @@ public sealed partial class OpenableSystem : EntitySystem
 /// Raised after an Openable is opened.
 /// </summary>
 [ByRefEvent]
-public record struct OpenableOpenedEvent;
+public record struct OpenableOpenedEvent(EntityUid? User = null);
 
 /// <summary>
 /// Raised after an Openable is closed.
 /// </summary>
 [ByRefEvent]
-public record struct OpenableClosedEvent;
+public record struct OpenableClosedEvent(EntityUid? User = null);
 
 /// <summary>
 /// Raised before trying to open an Openable.
