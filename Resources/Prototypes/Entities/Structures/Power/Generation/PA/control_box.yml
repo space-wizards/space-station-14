@@ -17,10 +17,10 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.ParticleAcceleratorControlBoxUiKey.Key
-      type: ParticleAcceleratorBoundUserInterface
-    - key: enum.WiresUiKey.Key
-      type: WiresBoundUserInterface
+      enum.ParticleAcceleratorControlBoxUiKey.Key:
+        type: ParticleAcceleratorBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
     boardName: wires-board-name-pa

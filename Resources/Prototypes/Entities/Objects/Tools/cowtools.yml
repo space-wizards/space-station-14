@@ -142,8 +142,8 @@
   - type: GasAnalyzer
   - type: UserInterface
     interfaces:
-    - key: enum.GasAnalyzerUiKey.Key
-      type: GasAnalyzerBoundUserInterface
+      enum.GasAnalyzerUiKey.Key:
+        type: GasAnalyzerBoundUserInterface
   - type: Appearance
 
 - type: entity
