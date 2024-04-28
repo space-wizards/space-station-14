@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: jamessimo
-  changes:
-  - message: vending machine UI improved
-    type: Tweak
-  id: 5968
-  time: '2024-02-19T22:18:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25377
 - author: marbow
   changes:
   - message: Moths can now eat plushies and with a distinctive sound!
@@ -3859,3 +3852,13 @@
   id: 6467
   time: '2024-04-28T02:25:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27415
+- author: Plykiya
+  changes:
+  - message: The emagged autolathe now has recipes for ammunition boxes and pre-filled
+      magazines of every type of ammo.
+    type: Add
+  - message: You can now print empty magazines at the emagged autolathe.
+    type: Add
+  id: 6468
+  time: '2024-04-28T03:02:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27396
