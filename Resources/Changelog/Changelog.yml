@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: PJB3005
   changes:
-  - message: Fixed timezone issues with the admin notes window.
-    type: Fix
-  id: 5972
-  time: '2024-02-20T09:13:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25280
-- author: PJB3005
-  changes:
   - message: Fixed selection behavior for player lists such as the ban panel or ahelp
       window.
     type: Fix
@@ -3866,3 +3859,11 @@
   id: 6471
   time: '2024-04-28T04:40:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27406
+- author: KrasnoshchekovPavel
+  changes:
+  - message: Included damage type/group, metabolism type/group localization for weapon
+      damage examination and guidebook reagent effects
+    type: Fix
+  id: 6472
+  time: '2024-04-28T04:48:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27368
