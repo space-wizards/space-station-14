@@ -3,16 +3,10 @@
   abstract: true
   parent: BaseItem
   components:
-  - type: GunWieldBonus
-    minAngle: -43
-    maxAngle: -43
-  - type: Wieldable
+
   - type: Gun
     fireRate: 0.5
     selectedMode: SemiAuto
-    angleDecay: 45
-    minAngle: 44
-    maxAngle: 45
     availableModes:
     - SemiAuto
     soundGunshot:
@@ -79,6 +73,14 @@
   - type: Item
     sprite: Objects/Weapons/Guns/Basic/kinetic_cannon.rsi
     size: Normal #change this
+  - type: GunWieldBonus
+    minAngle: -43
+    maxAngle: -43
+  - type: Wieldable
+  - type: Gun
+    angleDecay: 45
+    minAngle: 44
+    maxAngle: 45
   - type: BasicEntityAmmoProvider
     proto: BulletKinetic
     capacity: 1
