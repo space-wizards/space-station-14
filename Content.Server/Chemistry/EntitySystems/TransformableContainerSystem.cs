@@ -20,7 +20,7 @@ public sealed class TransformableContainerSystem : EntitySystem
         SubscribeLocalEvent<TransformableContainerComponent, SolutionContainerChangedEvent>(OnSolutionChange);
     }
 
-    private void OnMapInit(Entity<TransformableContainerComponent> entity, ref MapInitEvent args)
+    private void OnMapInit(Entity<TransformableContainerComponent> entity, ref MapInitEvent args) 
     {
         var meta = MetaData(entity.Owner);
         if (string.IsNullOrEmpty(entity.Comp.InitialName))
