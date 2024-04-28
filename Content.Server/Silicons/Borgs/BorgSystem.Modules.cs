@@ -60,8 +60,7 @@ public sealed partial class BorgSystem
 
         if (_actions.AddAction(chassis, ref component.ModuleSwapActionEntity, out var action, component.ModuleSwapActionId, uid))
         {
-            action.EntityIcon = uid;
-            Dirty(component.ModuleSwapActionEntity.Value, action);
+            _actions.SetEntityIcon((component.ModuleSwapActionEntity.Value, action), uid);
         }
 
         if (!TryComp(chassis, out BorgChassisComponent? chassisComp))

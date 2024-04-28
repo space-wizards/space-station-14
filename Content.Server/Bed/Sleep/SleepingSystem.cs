@@ -2,6 +2,7 @@ using Content.Server.Popups;
 using Content.Server.Sound;
 using Content.Shared.Sound.Components;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Audio;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;

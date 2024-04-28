@@ -1,11 +1,12 @@
 using Content.Client.Actions;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Mapping;
 using Content.Shared.Maps;
 using Robust.Client.Placement;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using static Robust.Shared.Utility.SpriteSpecifier;
 
 namespace Content.Client.Mapping;
 
@@ -13,20 +14,23 @@ public sealed partial class MappingSystem : EntitySystem
 {
     [Dependency] private readonly IPlacementManager _placementMan = default!;
     [Dependency] private readonly ITileDefinitionManager _tileMan = default!;
-    [Dependency] private readonly ActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     /// <summary>
     ///     The icon to use for space tiles.
     /// </summary>
-    private readonly SpriteSpecifier _spaceIcon = new Texture(new ("Tiles/cropped_parallax.png"));
+    private readonly SpriteSpecifier _spaceIcon = new SpriteSpecifier.Texture(new ("Tiles/cropped_parallax.png"));
 
     /// <summary>
     ///     The icon to use for entity-eraser.
     /// </summary>
-    private readonly SpriteSpecifier _deleteIcon = new Texture(new ("Interface/VerbIcons/delete.svg.192dpi.png"));
+    private readonly SpriteSpecifier _deleteIcon = new SpriteSpecifier.Texture(new ("Interface/VerbIcons/delete.svg.192dpi.png"));
 
     public string DefaultMappingActions = "/mapping_actions.yml";
+
+    [ValidatePrototypeId<EntityPrototype>]
+    public string ActionStartPlacement = "ActionStartPlacement";
 
     public override void Initialize()
     {
@@ -38,7 +42,7 @@ public sealed partial class MappingSystem : EntitySystem
 
     public void LoadMappingActions()
     {
-        _actionsSystem.LoadActionAssignments(DefaultMappingActions, false);
+        _actions.LoadActionAssignments(DefaultMappingActions, false);
     }
 
     /// <summary>
@@ -75,37 +79,23 @@ public sealed partial class MappingSystem : EntitySystem
         else
             return;
 
-        InstantActionComponent action;
         string name;
+        SpriteSpecifier icon;
 
         if (tileDef != null)
         {
             if (tileDef is not ContentTileDefinition contentTileDef)
                 return;
 
-            var tileIcon = contentTileDef.MapAtmosphere
+            icon = contentTileDef.MapAtmosphere
                 ? _spaceIcon
-                : new Texture(contentTileDef.Sprite!.Value);
-
-            action = new InstantActionComponent
-            {
-                ClientExclusive = true,
-                CheckCanInteract = false,
-                Event = actionEvent,
-                Icon = tileIcon
-            };
+                : new SpriteSpecifier.Texture(contentTileDef.Sprite!.Value);
 
             name = Loc.GetString(tileDef.Name);
         }
         else if (actionEvent.Eraser)
         {
-            action = new InstantActionComponent
-            {
-                ClientExclusive = true,
-                CheckCanInteract = false,
-                Event = actionEvent,
-                Icon = _deleteIcon,
-            };
+            icon = _deleteIcon;
 
             name = Loc.GetString("action-name-mapping-erase");
         }
@@ -114,19 +104,15 @@ public sealed partial class MappingSystem : EntitySystem
             if (string.IsNullOrWhiteSpace(actionEvent.EntityType))
                 return;
 
-            action = new InstantActionComponent
-            {
-                ClientExclusive = true,
-                CheckCanInteract = false,
-                Event = actionEvent,
-                Icon = new EntityPrototype(actionEvent.EntityType),
-            };
+            icon = new SpriteSpecifier.EntityPrototype(actionEvent.EntityType);
 
             name = actionEvent.EntityType;
         }
 
-        var actionId = Spawn(null);
-        AddComp<Component>(actionId, action);
+        var actionId = Spawn(ActionStartPlacement);
+        var action = Comp<ActionComponent>(actionId);
+        _actions.SetIcon((actionId, action), icon);
+        _actions.SetEvent(actionId, actionEvent);
         _metaData.SetEntityName(actionId, name);
 
         ev.Action = actionId;

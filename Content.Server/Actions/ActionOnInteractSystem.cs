@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -45,11 +46,11 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (options.Count == 0)
             return;
 
-        var (actId, act) = _random.Pick(options);
-        if (act.Event != null)
-            act.Event.Performer = args.User;
+        var (actId, action, comp) = _random.Pick(options);
+        if (comp.Event != null)
+            comp.Event.Performer = args.User;
 
-        _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
+        _actions.PerformAction(args.User, null, actId, action, comp.Event, _timing.CurTime, false);
         args.Handled = true;
     }
 
@@ -65,20 +66,20 @@ public sealed class ActionOnInteractSystem : EntitySystem
             for (var i = entOptions.Count - 1; i >= 0; i--)
             {
                 var action = entOptions[i];
-                if (!_actions.ValidateEntityTarget(args.User, args.Target.Value, action))
+                if (!_actions.ValidateEntityTarget(args.User, args.Target.Value, (action, action.Comp2)))
                     entOptions.RemoveAt(i);
             }
 
             if (entOptions.Count > 0)
             {
-                var (entActId, entAct) = _random.Pick(entOptions);
+                var (entActId, entBase, entAct) = _random.Pick(entOptions);
                 if (entAct.Event != null)
                 {
                     entAct.Event.Performer = args.User;
                     entAct.Event.Target = args.Target.Value;
                 }
 
-                _actions.PerformAction(args.User, null, entActId, entAct, entAct.Event, _timing.CurTime, false);
+                _actions.PerformAction(args.User, null, entActId, entBase, entAct.Event, _timing.CurTime, false);
                 args.Handled = true;
                 return;
             }
@@ -89,25 +90,25 @@ public sealed class ActionOnInteractSystem : EntitySystem
         for (var i = options.Count - 1; i >= 0; i--)
         {
             var action = options[i];
-            if (!_actions.ValidateWorldTarget(args.User, args.ClickLocation, action))
+            if (!_actions.ValidateWorldTarget(args.User, args.ClickLocation, (action, action.Comp2)))
                 options.RemoveAt(i);
         }
 
         if (options.Count == 0)
             return;
 
-        var (actId, act) = _random.Pick(options);
-        if (act.Event != null)
+        var (actId, comp, world) = _random.Pick(options);
+        if (world.Event != null)
         {
-            act.Event.Performer = args.User;
-            act.Event.Target = args.ClickLocation;
+            world.Event.Performer = args.User;
+            world.Event.Target = args.ClickLocation;
         }
 
-        _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
+        _actions.PerformAction(args.User, null, actId, comp, world.Event, _timing.CurTime, false);
         args.Handled = true;
     }
 
-    private bool ValidAction(BaseActionComponent action, bool canReach = true)
+    private bool ValidAction(EntityUid uid, ActionComponent action, bool canReach = true)
     {
         if (!action.Enabled)
             return false;
@@ -119,26 +120,26 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (action.Cooldown.HasValue && action.Cooldown.Value.End > curTime)
             return false;
 
-        return canReach || action is BaseTargetActionComponent { CheckCanAccess: false };
+        return canReach || (TryComp<TargetActionComponent>(uid, out var target) && !target.CheckCanAccess);
     }
 
-    private List<(EntityUid Id, T Comp)> GetValidActions<T>(List<EntityUid>? actions, bool canReach = true) where T : BaseActionComponent
+    private List<Entity<ActionComponent, T>> GetValidActions<T>(List<EntityUid>? actions, bool canReach = true) where T: Component
     {
-        var valid = new List<(EntityUid Id, T Comp)>();
+        var valid = new List<Entity<ActionComponent, T>>();
 
         if (actions == null)
             return valid;
 
         foreach (var id in actions)
         {
-            if (!_actions.TryGetActionData(id, out var baseAction) ||
-                baseAction as T is not { } action ||
-                !ValidAction(action, canReach))
+            if (!_actions.TryGetActionData(id, out var action) ||
+                !ValidAction(id, action, canReach) ||
+                !TryComp<T>(id, out var comp))
             {
                 continue;
             }
 
-            valid.Add((id, action));
+            valid.Add((id, action, comp));
         }
 
         return valid;
