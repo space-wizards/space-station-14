@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Golinth
-  changes:
-  - message: The mindshield outline now flashes!
-    type: Tweak
-  id: 5975
-  time: '2024-02-20T22:26:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25409
-- author: landwhale
-  changes:
-  - message: Resprited Nettles & Death Nettles.
-    type: Tweak
-  id: 5976
-  time: '2024-02-20T23:58:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25421
 - author: takemysoult
   changes:
   - message: Explosive Technology changed to tier 2 arsenal and the cost has increased
@@ -3866,3 +3852,17 @@
   id: 6474
   time: '2024-04-28T05:26:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27431
+- author: SlamBamActionman
+  changes:
+  - message: "Removed Exterminators pending redesign. \U0001F525\U0001F44D\U0001F525"
+    type: Remove
+  id: 6475
+  time: '2024-04-28T05:45:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26978
+- author: Boaz1111
+  changes:
+  - message: Circuit imprinter recipes now cost less glass
+    type: Tweak
+  id: 6476
+  time: '2024-04-28T05:46:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27310
