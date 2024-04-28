@@ -22,8 +22,8 @@ public sealed class ItemCabinetSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ItemCabinetComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<ItemCabinetComponent, EntInsertedIntoContainerMessage>(OnItemInserted);
-        SubscribeLocalEvent<ItemCabinetComponent, EntRemovedFromContainerMessage>(OnItemInserted);
+        SubscribeLocalEvent<ItemCabinetComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
+        SubscribeLocalEvent<ItemCabinetComponent, EntRemovedFromContainerMessage>(OnContainerModified);
         SubscribeLocalEvent<ItemCabinetComponent, OpenableOpenedEvent>(OnOpened);
         SubscribeLocalEvent<ItemCabinetComponent, OpenableClosedEvent>(OnClosed);
     }
@@ -33,18 +33,18 @@ public sealed class ItemCabinetSystem : EntitySystem
         // update at startup to avoid copy pasting locked: true and locked: false for each closed/open prototype
         SetSlotLock(ent, !_openable.IsOpen(ent));
 
-        UpdateAppearance(ent, HasItem(ent));
+        UpdateAppearance(ent);
     }
 
-    private void UpdateAppearance(EntityUid uid, bool hasItem)
+    private void UpdateAppearance(Entity<ItemCabinetComponent> ent, bool hasItem)
     {
-        _appearance.SetData(uid, ItemCabinetVisuals.ContainsItem, hasItem);
+        _appearance.SetData(ent, ItemCabinetVisuals.ContainsItem, HasItem(ent));
     }
 
-    private void OnItemInserted(EntityUid uid, ItemCabinetComponent component, ContainerModifiedMessage args)
+    private void OnContainerModified(EntityUid uid, ItemCabinetComponent component, ContainerModifiedMessage args)
     {
         if (args.Container.ID == component.Slot)
-            UpdateAppearance(uid, true);
+            UpdateAppearance((uid, component));
     }
 
     private void OnOpened(Entity<ItemCabinetComponent> ent, ref OpenableOpenedEvent args)
