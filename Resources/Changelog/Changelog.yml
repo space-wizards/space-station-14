@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: Holinka4ever
-  changes:
-  - message: Sunglasses were removed from ClothesMate
-    type: Remove
-  id: 5980
-  time: '2024-02-21T06:11:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25221
-- author: Errant
-  changes:
-  - message: Rotten food is now less lethal to eat, and has a high chance to induce
-      vomiting.
-    type: Tweak
-  id: 5981
-  time: '2024-02-21T06:12:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25418
-- author: EdenTheLiznerd
-  changes:
-  - message: Deathnettles no longer penetrate hardsuit armor
-    type: Tweak
-  id: 5982
-  time: '2024-02-21T06:16:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25286
 - author: Tayrtahn
   changes:
   - message: Added fill level visuals to all the drinks. Cheers!
@@ -3869,3 +3847,24 @@
   id: 6479
   time: '2024-04-28T07:11:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26764
+- author: FungiFellow
+  changes:
+  - message: Bows now fit in Exosuit slot.
+    type: Tweak
+  id: 6480
+  time: '2024-04-28T08:23:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27433
+- author: osjarw
+  changes:
+  - message: Fixed some anomaly behaviours pulsing at wrong rates.
+    type: Fix
+  id: 6481
+  time: '2024-04-28T09:28:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27435
+- author: Ubaser
+  changes:
+  - message: Pyrotton can now be mutated from cotton.
+    type: Add
+  id: 6482
+  time: '2024-04-28T11:07:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27200
