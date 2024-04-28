@@ -38,7 +38,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
                 plantHolder.EnsureUniqueSeed(args.SolutionEntity, plantHolderComp);
                 plantHolderComp.Seed.Potency = Math.Min(plantHolderComp.Seed.Potency + PotencyIncrease, PotencyLimit);
 
-                if (plantHolderComp.Seed.Potency > PotencySeedlessThreshold)
+                if (plantHolderComp.Seed.Potency > PotencySeedlessThreshold && plantHolderComp.Seed.Seedless == false)
                 {
                     popupSystem.PopupEntity(Loc.GetString("botany-plant-seedsdestroyed"), args.SolutionEntity, PopupType.SmallCaution);
                     plantHolderComp.Seed.Seedless = true;
