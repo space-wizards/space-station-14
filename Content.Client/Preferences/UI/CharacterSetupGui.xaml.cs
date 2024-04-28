@@ -188,7 +188,7 @@ namespace Content.Client.Preferences.UI
 
                     if (prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
                     {
-                        var loadout = humanoid.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), entityManager, prototypeManager);
+                        var loadout = humanoid.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), humanoid.Species, entityManager, prototypeManager);
                         controller.GiveDummyLoadout(_previewDummy, loadout);
                     }
                 }

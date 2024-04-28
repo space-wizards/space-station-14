@@ -31,7 +31,7 @@ public sealed class LoadoutTests
         // That's right I can't even spawn a dummy profile without station spawning / humanoidappearance code crashing.
         var profile = new HumanoidCharacterProfile();
 
-        profile.SetLoadout(new RoleLoadout("TestRoleLoadout"));
+        profile.SetLoadout(new RoleLoadout("TestRoleLoadout", null));
 
         stationSystem.SpawnPlayerMob(testMap.GridCoords, job: new JobComponent()
         {

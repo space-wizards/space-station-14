@@ -582,7 +582,7 @@ namespace Content.Client.Preferences.UI
                     // Clone so we don't modify the underlying loadout.
                     Profile?.Loadouts.TryGetValue(LoadoutSystem.GetJobPrototype(job.ID), out loadout);
                     loadout = loadout?.Clone();
-                    var selector = new JobPrioritySelector(loadout, job, jobLoadoutGroup, _prototypeManager)
+                    var selector = new JobPrioritySelector(loadout, Profile?.Species, job, jobLoadoutGroup, _prototypeManager)
                     {
                         Margin = new Thickness(3f, 3f, 3f, 0f),
                     };
@@ -1140,7 +1140,7 @@ namespace Content.Client.Preferences.UI
             UpdateAgeEdit();
             UpdateEyePickers();
             UpdateSaveButton();
-            UpdateLoadouts();
+            CloseLoadouts();
             UpdateRoleRequirements();
             UpdateJobPriorities();
             UpdateAntagPreferences();
@@ -1165,7 +1165,7 @@ namespace Content.Client.Preferences.UI
             }
         }
 
-        private void UpdateLoadouts()
+        private void CloseLoadouts()
         {
             foreach (var prioritySelector in _jobPriorities)
             {

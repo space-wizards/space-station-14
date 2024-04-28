@@ -195,7 +195,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             // Set to default if not present
             if (loadout == null)
             {
-                loadout = new RoleLoadout(jobLoadout);
+                loadout = new RoleLoadout(jobLoadout, speciesId);
                 loadout.SetDefault(_prototypeManager);
             }
 

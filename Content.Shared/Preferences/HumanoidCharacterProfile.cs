@@ -583,11 +583,11 @@ namespace Content.Shared.Preferences
             return new(this, _jobPriorities, _antagPreferences, _traitPreferences, copied);
         }
 
-        public RoleLoadout GetLoadoutOrDefault(string id, IEntityManager entManager, IPrototypeManager protoManager)
+        public RoleLoadout GetLoadoutOrDefault(string id, ProtoId<SpeciesPrototype>? species, IEntityManager entManager, IPrototypeManager protoManager)
         {
             if (!_loadouts.TryGetValue(id, out var loadout))
             {
-                loadout = new RoleLoadout(id);
+                loadout = new RoleLoadout(id, species);
                 loadout.SetDefault(protoManager, force: true);
             }
 

@@ -28,7 +28,7 @@ public sealed class AntagPreferenceSelector : RequirementsSelector<AntagPrototyp
         var title = Loc.GetString(proto.Name);
         var description = Loc.GetString(proto.Objective);
         // Not supported yet get fucked.
-        Setup(null, items, title, 250, description);
+        Setup(null, null, items, title, 250, description);
 
         // immediately lock requirements if they arent met.
         // another function checks Disabled after creating the selector so this has to be done now

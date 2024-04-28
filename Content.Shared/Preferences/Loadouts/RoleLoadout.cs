@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Random;
 using Robust.Shared.Collections;
 using Robust.Shared.Player;
@@ -14,6 +15,11 @@ namespace Content.Shared.Preferences.Loadouts;
 [Serializable, NetSerializable]
 public sealed class RoleLoadout
 {
+    /// <summary>
+    /// Species associated with the profile.
+    /// </summary>
+    public readonly ProtoId<SpeciesPrototype>? Species;
+
     public readonly ProtoId<RoleLoadoutPrototype> Role;
 
     public Dictionary<ProtoId<LoadoutGroupPrototype>, List<Loadout>> SelectedLoadouts = new();
@@ -24,14 +30,15 @@ public sealed class RoleLoadout
 
     public int? Points;
 
-    public RoleLoadout(ProtoId<RoleLoadoutPrototype> role)
+    public RoleLoadout(ProtoId<RoleLoadoutPrototype> role, ProtoId<SpeciesPrototype>? species)
     {
         Role = role;
+        Species = species;
     }
 
     public RoleLoadout Clone()
     {
-        var weh = new RoleLoadout(Role);
+        var weh = new RoleLoadout(Role, Species);
 
         foreach (var selected in SelectedLoadouts)
         {

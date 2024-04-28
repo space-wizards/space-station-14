@@ -3,6 +3,7 @@ using Content.Client.Lobby;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Clothing;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Preferences.Loadouts.Effects;
 using Content.Shared.Roles;
@@ -75,7 +76,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
     /// <summary>
     /// Actually adds the controls, must be called in the inheriting class' constructor.
     /// </summary>
-    protected void Setup(RoleLoadout? loadout, (string, int)[] items, string title, int titleSize, string? description, TextureRect? icon = null)
+    protected void Setup(RoleLoadout? loadout, ProtoId<SpeciesPrototype>? species, (string, int)[] items, string title, int titleSize, string? description, TextureRect? icon = null)
     {
         _loadout = loadout;
 
@@ -128,7 +129,7 @@ public abstract class RequirementsSelector<T> : BoxContainer where T : IPrototyp
                 if (args.Button.Pressed)
                 {
                     // We only create a loadout when necessary to avoid unnecessary DB entries.
-                    _loadout ??= new RoleLoadout(LoadoutSystem.GetJobPrototype(Proto.ID));
+                    _loadout ??= new RoleLoadout(LoadoutSystem.GetJobPrototype(Proto.ID), species);
                     _loadout.SetDefault(protoManager);
 
                     _loadoutWindow = new LoadoutWindow(_loadout, protoManager.Index(_loadout.Role), session, collection)
