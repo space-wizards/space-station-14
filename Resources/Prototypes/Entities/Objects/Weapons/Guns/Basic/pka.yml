@@ -3,7 +3,6 @@
   abstract: true
   parent: BaseItem
   components:
-
   - type: Gun
     fireRate: 0.5
     selectedMode: SemiAuto
