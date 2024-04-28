@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: marbow
-  changes:
-  - message: Moths can now eat plushies and with a distinctive sound!
-    type: Add
-  id: 5969
-  time: '2024-02-19T22:35:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25382
 - author: ArchPigeon
   changes:
   - message: Liquid Tritium can now be used as a chem in flamethrowers
@@ -3862,3 +3855,10 @@
   id: 6468
   time: '2024-04-28T03:02:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27396
+- author: icekot8
+  changes:
+  - message: T3 Portable Microfusion Weaponry research now have a portable charger
+    type: Add
+  id: 6469
+  time: '2024-04-28T03:19:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26655
