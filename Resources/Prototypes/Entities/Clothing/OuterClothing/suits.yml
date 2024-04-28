@@ -96,6 +96,8 @@
     sprintModifier: 0.8
   - type: HeldSpeedModifier
   - type: GroupExamine
+  - type: ClothingRequiredStepTriggerImmune
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: [ClothingOuterBaseLarge, GeigerCounterClothing]
