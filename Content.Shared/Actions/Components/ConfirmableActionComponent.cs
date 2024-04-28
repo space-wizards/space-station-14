@@ -1,12 +1,14 @@
+using Content.Shared.Actions;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Actions;
+namespace Content.Shared.Actions.Components;
 
 /// <summary>
 /// An action that must be confirmed before using it.
 /// Using it for the first time primes it, after a delay you can then confirm it.
 /// Used for dangerous actions that cannot be undone (unlike screaming).
+/// Requires <see cref="ActionComponent"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(ConfirmableActionSystem))]
 [AutoGenerateComponentState, AutoGenerateComponentPause]

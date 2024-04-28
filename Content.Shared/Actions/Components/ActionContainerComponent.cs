@@ -1,7 +1,8 @@
+﻿using Content.Shared.Actions;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Actions;
+namespace Content.Shared.Actions.Components;
 
 /// <summary>
 /// This component indicates that this entity contains actions inside of some container.
