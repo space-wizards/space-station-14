@@ -27,7 +27,6 @@ public sealed partial class OpenableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<OpenableComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<OpenableComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<OpenableComponent, UseInHandEvent>(OnUse);
         // always try to unlock first before opening
         SubscribeLocalEvent<OpenableComponent, ActivateInWorldEvent>(OnActivated, after: new[] { typeof(LockSystem) });
@@ -37,17 +36,23 @@ public sealed partial class OpenableSystem : EntitySystem
         SubscribeLocalEvent<OpenableComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<OpenableComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
         SubscribeLocalEvent<OpenableComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
-    }
 
-    private void OnInit(Entity<OpenableComponent> ent, ref ComponentInit args)
-    {
-        UpdateAppearance(ent, ent.Comp);
+#if DEBUG
+        SubscribeLocalEvent<OpenableComponent, MapInitEvent>(OnMapInit);
     }
 
     private void OnMapInit(Entity<OpenableComponent> ent, ref MapInitEvent args)
     {
         if (ent.Comp.Opened && _lock.IsLocked(ent.Owner))
             Log.Error($"Entity {ent} spawned locked open, this is a prototype mistake.");
+    }
+#else
+    }
+#endif
+
+    private void OnInit(Entity<OpenableComponent> ent, ref ComponentInit args)
+    {
+        UpdateAppearance(ent, ent.Comp);
     }
 
     private void OnUse(Entity<OpenableComponent> ent, ref UseInHandEvent args)
