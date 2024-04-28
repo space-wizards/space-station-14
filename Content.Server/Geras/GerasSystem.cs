@@ -38,11 +38,6 @@ public sealed class GerasSystem : SharedGerasSystem
         if (!ent.HasValue)
             return;
 
-        var originalFormMeta = MetaData(uid);
-
-        // Set the name of the Geras to it's form
-        _metaDataSystem.SetEntityName(ent.Value, originalFormMeta.EntityName);
-
         _popupSystem.PopupEntity(Loc.GetString("geras-popup-morph-message-others", ("entity", ent.Value)), ent.Value, Filter.PvsExcept(ent.Value), true);
         _popupSystem.PopupEntity(Loc.GetString("geras-popup-morph-message-user"), ent.Value, ent.Value);
 
