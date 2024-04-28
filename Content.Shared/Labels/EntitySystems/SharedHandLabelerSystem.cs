@@ -26,6 +26,7 @@ public abstract class SharedHandLabelerSystem : EntitySystem
         // Bound UI subscriptions
         SubscribeLocalEvent<HandLabelerComponent, HandLabelerLabelChangedMessage>(OnHandLabelerLabelChanged);
         SubscribeLocalEvent<HandLabelerComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<HandLabelerComponent, ComponentHandleState>(OnHandleState);
     }
 
     private void OnGetState(Entity<HandLabelerComponent> ent, ref ComponentGetState args)
@@ -34,6 +35,24 @@ public abstract class SharedHandLabelerSystem : EntitySystem
         {
             MaxLabelChars = ent.Comp.MaxLabelChars,
         };
+    }
+
+    private void OnHandleState(Entity<HandLabelerComponent> ent, ref ComponentHandleState args)
+    {
+        if (args.Current is not HandLabelerComponentState state)
+            return;
+
+        ent.Comp.MaxLabelChars = state.MaxLabelChars;
+
+        if (ent.Comp.AssignedLabel == state.AssignedLabel)
+            return;
+
+        ent.Comp.AssignedLabel = state.AssignedLabel;
+        UpdateUI(ent);
+    }
+
+    protected virtual void UpdateUI(Entity<HandLabelerComponent> ent)
+    {
     }
 
     private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, EntityUid target, out string? result)
@@ -100,6 +119,7 @@ public abstract class SharedHandLabelerSystem : EntitySystem
     {
         var label = args.Label.Trim();
         handLabeler.AssignedLabel = label[..Math.Min(handLabeler.MaxLabelChars, label.Length)];
+        UpdateUI((uid, handLabeler));
         Dirty(uid, handLabeler);
 
         // Log label change
