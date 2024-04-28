@@ -51,7 +51,11 @@
     - 0,0,4,1
     whitelist:
       tags:
+        - Cartridge
         - Cigarette
+        - Crayon
+        - Pen
+        - Pill
   - type: StorageFill
     contents:
     - id: Cigarette
@@ -122,7 +126,11 @@
     - 0,0,4,1
     whitelist:
       tags:
+        - Cartridge
         - Cigarette
+        - Crayon
+        - Pen
+        - Pill
   - type: StorageFill
     contents:
     - id: CigaretteRandom
