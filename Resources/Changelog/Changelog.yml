@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Rotten food is now less lethal to eat, and has a high chance to induce
-      vomiting.
-    type: Tweak
-  id: 5981
-  time: '2024-02-21T06:12:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25418
 - author: EdenTheLiznerd
   changes:
   - message: Deathnettles no longer penetrate hardsuit armor
@@ -3869,3 +3861,10 @@
   id: 6480
   time: '2024-04-28T08:23:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27433
+- author: osjarw
+  changes:
+  - message: Fixed some anomaly behaviours pulsing at wrong rates.
+    type: Fix
+  id: 6481
+  time: '2024-04-28T09:28:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27435
