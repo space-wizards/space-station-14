@@ -307,13 +307,16 @@ public sealed class ClientClothingSystem : ClothingSystem
             // Sprite layer redactor when
             // Sprite "redactor" just a week away.
             if (slot == Jumpsuit)
-                layerData.Shader ??= inventory.JumpsuitShader;
+                layerData.Shader ??= "StencilDraw";
 
             sprite.LayerSetData(index, layerData);
             layer.Offset += slotDef.Offset;
 
             if (displacementData != null)
             {
+                if (displacementData.ShaderOverride != null)
+                    sprite.LayerSetShader(index, displacementData.ShaderOverride);
+
                 var displacementKey = $"{key}-displacement";
                 if (!revealedLayers.Add(displacementKey))
                 {
