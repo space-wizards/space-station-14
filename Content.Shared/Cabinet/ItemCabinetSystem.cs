@@ -36,7 +36,7 @@ public sealed class ItemCabinetSystem : EntitySystem
         UpdateAppearance(ent);
     }
 
-    private void UpdateAppearance(Entity<ItemCabinetComponent> ent, bool hasItem)
+    private void UpdateAppearance(Entity<ItemCabinetComponent> ent)
     {
         _appearance.SetData(ent, ItemCabinetVisuals.ContainsItem, HasItem(ent));
     }
