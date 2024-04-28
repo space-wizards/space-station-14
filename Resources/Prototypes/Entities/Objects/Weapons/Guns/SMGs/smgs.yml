@@ -20,7 +20,7 @@
     maxAngle: 16
     fireRate: 8
     angleIncrease: 3
-    angleDecay: 16  
+    angleDecay: 16
     selectedMode: FullAuto
     availableModes:
     - SemiAuto
@@ -230,7 +230,7 @@
     minAngle: 1
     maxAngle: 6
     angleIncrease: 1.5
-    angleDecay: 6  
+    angleDecay: 6
     selectedMode: FullAuto
     shotsPerBurst: 5
     availableModes:
@@ -260,55 +260,3 @@
     steps: 6
     zeroVisible: true
   - type: Appearance
-
-# Rubber
-- type: entity
-  name: Drozd
-  parent: WeaponSubMachineGunDrozd
-  id: WeaponSubMachineGunDrozdRubber
-  suffix: Non-Lethal
-  components:
-    - type: ItemSlots
-      slots:
-        gun_magazine:
-          name: Magazine
-          startingItem: MagazinePistolSubMachineGunRubber
-          insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-          ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-          priority: 2
-          whitelist:
-            tags:
-              - MagazinePistolSubMachineGun
-        gun_chamber:
-          name: Chamber
-          startingItem: CartridgePistolRubber
-          priority: 1
-          whitelist:
-            tags:
-              - CartridgePistol
-
-- type: entity
-  name: Vector
-  parent: WeaponSubMachineGunVector
-  id: WeaponSubMachineGunVectorRubber
-  description: An excellent fully automatic Heavy SMG. Uses .45 magnum ammo.
-  suffix: Non-Lethal
-  components:
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineMagnumSubMachineGunRubber
-        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazineMagnumSubMachineGun
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeMagnumRubber
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgeMagnum

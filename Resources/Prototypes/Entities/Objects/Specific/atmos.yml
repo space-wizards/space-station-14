@@ -17,8 +17,8 @@
     key: enum.GasAnalyzerUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.GasAnalyzerUiKey.Key
-      type: GasAnalyzerBoundUserInterface
+      enum.GasAnalyzerUiKey.Key:
+        type: GasAnalyzerBoundUserInterface
   - type: Appearance
   - type: GenericVisualizer
     visuals:

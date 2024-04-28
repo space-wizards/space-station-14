@@ -157,6 +157,14 @@
 # Science
 - type: entity
   parent: DoorElectronics
+  id: DoorElectronicsMorgue
+  suffix: Morgue, Locked
+  components:
+  - type: AccessReader
+    access: [["Medical"], ["Detective"], ["Chapel"]]
+
+- type: entity
+  parent: DoorElectronics
   id: DoorElectronicsResearchDirector
   suffix: ResearchDirector, Locked
   components:

@@ -245,7 +245,10 @@ namespace Content.Server.GameTicking
             var origReadyPlayers = readyPlayers.ToArray();
 
             if (!StartPreset(origReadyPlayers, force))
+            {
+                _startingRound = false;
                 return;
+            }
 
             // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
             _mapManager.DoMapInitialize(DefaultMap);

@@ -57,7 +57,7 @@ public sealed class ReflectSystem : EntitySystem
         if (args.Reflected)
             return;
 
-        foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.All & ~SlotFlags.POCKET))
+        foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.WITHOUT_POCKET))
         {
             if (!TryReflectHitscan(uid, ent, args.Shooter, args.SourceItem, args.Direction, out var dir))
                 continue;
@@ -70,7 +70,7 @@ public sealed class ReflectSystem : EntitySystem
 
     private void OnReflectUserCollide(EntityUid uid, ReflectUserComponent component, ref ProjectileReflectAttemptEvent args)
     {
-        foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.All & ~SlotFlags.POCKET))
+        foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.WITHOUT_POCKET))
         {
             if (!TryReflectProjectile(uid, ent, args.ProjUid))
                 continue;
@@ -222,7 +222,7 @@ public sealed class ReflectSystem : EntitySystem
     /// </summary>
     private void RefreshReflectUser(EntityUid user)
     {
-        foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(user, SlotFlags.All & ~SlotFlags.POCKET))
+        foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(user, SlotFlags.WITHOUT_POCKET))
         {
             if (!HasComp<ReflectComponent>(ent))
                 continue;
