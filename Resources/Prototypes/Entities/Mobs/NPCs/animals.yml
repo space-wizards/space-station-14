@@ -2852,9 +2852,9 @@
   - type: Tag
     tags:
       - DoorBumpOpener
-      - ShoesRequiredStepTriggerImmune
   - type: MovementAlwaysTouching
   - type: PressureImmunity
+  - type: StepTriggerImmune
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-space-cat
