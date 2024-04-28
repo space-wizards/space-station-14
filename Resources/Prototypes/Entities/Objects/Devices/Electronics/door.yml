@@ -18,8 +18,8 @@
       key: enum.DoorElectronicsConfigurationUiKey.Key
       allowedItems:
         tags:
-        - Multitool
+        - DoorElectronicsConfigurator
     - type: UserInterface
       interfaces:
-      - key: enum.DoorElectronicsConfigurationUiKey.Key
-        type: DoorElectronicsBoundUserInterface
+        enum.DoorElectronicsConfigurationUiKey.Key:
+          type: DoorElectronicsBoundUserInterface
