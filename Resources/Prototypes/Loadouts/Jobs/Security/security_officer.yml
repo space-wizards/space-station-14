@@ -61,6 +61,24 @@
     jumpsuit: ClothingUniformJumpskirtSec
 
 - type: loadout
+  id: SecurityJumpsuitGrey
+  equipment: SecurityJumpsuitGrey
+
+- type: startingGear
+  id: SecurityJumpsuitGrey
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSecGrey
+
+- type: loadout
+  id: SecurityJumpskirtGrey
+  equipment: SecurityJumpskirtGrey
+
+- type: startingGear
+  id: SecurityJumpskirtGrey
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSecGrey
+
+- type: loadout
   id: SeniorOfficerJumpsuit
   equipment: SeniorOfficerJumpsuit
   effects:
@@ -111,6 +129,25 @@
   id: SecurityDuffel
   equipment:
     back: ClothingBackpackDuffelSecurityFilled
+
+# Belt
+- type: loadout
+  id: SecurityBelt
+  equipment: SecurityBelt
+
+- type: startingGear
+  id: SecurityBelt
+  equipment:
+    belt: ClothingBeltSecurityFilled
+
+- type: loadout
+  id: SecurityWebbing
+  equipment: SecurityWebbing
+
+- type: startingGear
+  id: SecurityWebbing
+  equipment:
+    belt: ClothingBeltSecurityWebbingFilled
 
 # Outerclothing
 - type: loadout

@@ -182,8 +182,6 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         {
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(prototype.StartingGear);
             EquipStartingGear(entity.Value, startingGear);
-            if (profile != null)
-                EquipIdCard(entity.Value, profile.Name, prototype, station);
         }
 
         // Run loadouts after so stuff like storage loadouts can get
@@ -226,6 +224,9 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
         if (profile != null)
         {
+            if (prototype != null)
+                SetPdaAndIdCardData(entity.Value, profile.Name, prototype, station);
+
             _humanoidSystem.LoadProfile(entity.Value, profile);
             _metaSystem.SetEntityName(entity.Value, profile.Name);
             if (profile.FlavorText != "" && _configurationManager.GetCVar(CCVars.FlavorText))
@@ -251,13 +252,13 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     }
 
     /// <summary>
-    /// Equips an ID card and PDA onto the given entity.
+    /// Sets the ID card and PDA name, job, and access data.
     /// </summary>
     /// <param name="entity">Entity to load out.</param>
     /// <param name="characterName">Character name to use for the ID.</param>
     /// <param name="jobPrototype">Job prototype to use for the PDA and ID.</param>
     /// <param name="station">The station this player is being spawned on.</param>
-    public void EquipIdCard(EntityUid entity, string characterName, JobPrototype jobPrototype, EntityUid? station)
+    public void SetPdaAndIdCardData(EntityUid entity, string characterName, JobPrototype jobPrototype, EntityUid? station)
     {
         if (!InventorySystem.TryGetSlotEntity(entity, "id", out var idUid))
             return;

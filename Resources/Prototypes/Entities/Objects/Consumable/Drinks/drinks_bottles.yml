@@ -39,6 +39,9 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
+  - type: PressurizedSolution
+    solution: drink
+  - type: Shakeable
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull

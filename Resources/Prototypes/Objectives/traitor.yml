@@ -191,6 +191,9 @@
   components:
   - type: StealCondition
     stealGroup: ClothingOuterHardsuitRd
+  - type: Objective
+    # This item must be worn or stored in a slowing duffelbag, very hard to hide.
+    difficulty: 3
 
 - type: entity
   noSpawn: true
