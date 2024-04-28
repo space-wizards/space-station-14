@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: [BaseStructureDynamic, BaseItemCabinet]
+  parent: [BaseStructureDynamic, BaseItemCabinetGlass]
   id: BaseGlassBox
   abstract: true
   components:
@@ -112,7 +112,7 @@
     node: glassBox
   - type: ItemSlots
     slots:
-      cabinetSlot:
+      ItemCabinet:
         ejectOnInteract: true
         whitelist:
           tags:
