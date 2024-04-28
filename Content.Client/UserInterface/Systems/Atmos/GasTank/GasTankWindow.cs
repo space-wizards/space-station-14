@@ -29,12 +29,12 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
         private readonly RichTextLabel _lblInternals;
         private readonly Button _btnInternals;
 
-        public GasTankWindow(GasTankBoundUserInterface owner, IEntityManager entityManager)
+        public GasTankWindow(GasTankBoundUserInterface owner)
         {
             TextureButton btnClose;
             _resourceCache = IoCManager.Resolve<IResourceCache>();
             _owner = owner;
-            _entityManager = entityManager;
+            _entityManager = IoCManager.Resolve<IEntityManager>();
             var rootContainer = new LayoutContainer { Name = "GasTankRoot" };
             AddChild(rootContainer);
 
