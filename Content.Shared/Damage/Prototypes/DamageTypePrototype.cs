@@ -11,7 +11,7 @@ namespace Content.Shared.Damage.Prototypes
         [IdDataField]
         public string ID { get; private set; } = default!;
 
-        [DataField("name", required: true)]
+        [DataField(required: true)]
         private LocId Name { get; set; }
 
         [ViewVariables(VVAccess.ReadOnly)]
