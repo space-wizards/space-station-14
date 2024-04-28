@@ -1,0 +1,102 @@
+# Backpack
+- type: entity
+  parent: ClothingBackpackSyndicate
+  id: ClothingBackpackSyndicateOperative
+  name: operative backpack
+  description: An explosion-proof backpack for holding various nuclear operative goods.
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSyndicate
+      - id: WeaponPistolViper
+      - id: PinpointerSyndicateNuclear
+      - id: DeathAcidifierImplanter
+
+
+- type: entity
+  parent: ClothingBackpackSyndicate
+  id: ClothingBackpackSyndicateOperativeMedic
+  name: operative medic backpack
+  description: A backpack for holding extra medical supplies.
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyndiHypo
+      - id: BoxSurvivalSyndicate
+      - id: SawAdvanced
+      - id: Cautery
+      - id: CombatKnife
+      - id: WeaponPistolViper
+      - id: PinpointerSyndicateNuclear
+      - id: HandheldHealthAnalyzer
+      - id: CombatMedipen
+      - id: DeathAcidifierImplanter
+
+
+# Satchel
+- type: entity
+  parent: ClothingBackpackSatchelSyndicate
+  id: ClothingBackpackSatchelSyndicateOperative
+  name: operative satchel
+  description: A robust, explosion-proof satchel for holding various nuclear operative goods.
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSyndicate
+      - id: WeaponPistolViper
+      - id: PinpointerSyndicateNuclear
+      - id: DeathAcidifierImplanter
+
+
+- type: entity
+  parent: ClothingBackpackSatchelSyndicate
+  id: ClothingBackpackSatchelSyndicateOperativeMedic
+  name: operative medic satchel
+  description: A satchel for holding extra medical supplies.
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyndiHypo
+      - id: BoxSurvivalSyndicate
+      - id: SawAdvanced
+      - id: Cautery
+      - id: CombatKnife
+      - id: WeaponPistolViper
+      - id: PinpointerSyndicateNuclear
+      - id: HandheldHealthAnalyzer
+      - id: CombatMedipen
+      - id: DeathAcidifierImplanter
+
+
+# Duffel
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateOperative
+  name: operative duffelbag
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSyndicate
+      - id: WeaponPistolViper
+      - id: PinpointerSyndicateNuclear
+      - id: DeathAcidifierImplanter
+
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateMedicalBundle
+  id: ClothingBackpackDuffelSyndicateOperativeMedic
+  name: operative medic duffelbag
+  description: A large duffel bag for holding extra medical supplies.
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyndiHypo
+      - id: BoxSurvivalSyndicate
+      - id: SawAdvanced
+      - id: Cautery
+      - id: CombatKnife
+      - id: WeaponPistolViper
+      - id: PinpointerSyndicateNuclear
+      - id: HandheldHealthAnalyzer
+      - id: CombatMedipen
+      - id: DeathAcidifierImplanter
