@@ -23,7 +23,7 @@
   - type: ConfirmableAction
     popup: suicide-action-popup
 
-- type: Entity
+- type: entity
   abstract: true
   parent: BaseAction
   id: BaseImplantAction
