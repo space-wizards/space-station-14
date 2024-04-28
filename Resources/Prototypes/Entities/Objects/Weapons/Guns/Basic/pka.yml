@@ -3,14 +3,6 @@
   abstract: true
   parent: BaseItem
   components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
-  - type: Item
-    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
-    storedSprite:
-      sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
-      state: storage
-    size: Normal
   - type: GunWieldBonus
     minAngle: -43
     maxAngle: -43
@@ -38,16 +30,6 @@
     rechargeCooldown: 0.75
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
-  - type: BasicEntityAmmoProvider
-    proto: BulletKinetic
-    capacity: 1
-    count: 1
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
-    quickEquip: false
-    slots:
-    - suitStorage
-    - Belt
   - type: UseDelay
     delay: 1
 
@@ -65,3 +47,19 @@
     - state: animation-icon
       visible: false
       map: [ "empty-icon" ]
+  - type: Item
+    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
+    storedSprite:
+      sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
+      state: storage
+    size: Normal
+  - type: BasicEntityAmmoProvider
+    proto: BulletKinetic
+    capacity: 1
+    count: 1
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
