@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Labels.Components;
 
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedHandLabelerSystem))]
+[Access(typeof(HandLabelerSystem))]
 public sealed partial class HandLabelerComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), Access(Other = AccessPermissions.ReadWriteExecute)]

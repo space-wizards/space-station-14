@@ -9,9 +9,9 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Labels.EntitySystems;
 
-public abstract class SharedHandLabelerSystem : EntitySystem
+public sealed class HandLabelerSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedUserInterfaceSystem UserInterfaceSystem = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedLabelSystem _labelSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -51,8 +51,9 @@ public abstract class SharedHandLabelerSystem : EntitySystem
         UpdateUI(ent);
     }
 
-    protected virtual void UpdateUI(Entity<HandLabelerComponent> ent)
+    private void UpdateUI(Entity<HandLabelerComponent> ent)
     {
+        _userInterfaceSystem.RefreshBui(ent.Owner, HandLabelerUiKey.Key);
     }
 
     private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, EntityUid target, out string? result)

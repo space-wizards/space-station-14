@@ -21,30 +21,27 @@ namespace Content.Client.Labels.UI
 
         protected override void Open()
         {
-            base.Open();
-
             _window = new HandLabelerWindow();
-            if (State != null)
-                UpdateState(State);
-
             _window.OpenCentered();
 
             _window.OnClose += Close;
             _window.OnLabelChanged += OnLabelChanged;
-            Reload();
+
+            base.Open();
         }
 
         private void OnLabelChanged(string newLabel)
         {
-            // Focus moment
             if (_entManager.TryGetComponent(Owner, out HandLabelerComponent? labeler) &&
                 labeler.AssignedLabel.Equals(newLabel))
+            {
                 return;
+            }
 
             SendPredictedMessage(new HandLabelerLabelChangedMessage(newLabel));
         }
 
-        public void Reload()
+        public override void Refresh()
         {
             if (_window == null || !_entManager.TryGetComponent(Owner, out HandLabelerComponent? component))
                 return;
