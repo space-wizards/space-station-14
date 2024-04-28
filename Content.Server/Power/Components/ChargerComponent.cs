@@ -36,7 +36,7 @@ namespace Content.Server.Power.Components
         /// Indicates whether the charger is portable and thus subject to EMP effects
         /// and bypasses checks for transform, anchored, and ApcPowerReceiverComponent.
         /// </summary>
-        [DataField("portable")]
+        [DataField]
         public bool Portable = false;
     }
 }
