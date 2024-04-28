@@ -1105,7 +1105,6 @@
         type: RoboticsConsoleBoundUserInterface
   - type: ApcPowerReceiver
     powerLoad: 1000
-    priority: Low
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: RoboticsConsole
