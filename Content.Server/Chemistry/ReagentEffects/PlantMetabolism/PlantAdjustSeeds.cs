@@ -27,7 +27,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
             if (Amount > 0) // If it's positive, restore them!
                 if (plantHolderComp.Seed.Seedless)
                 {
-                    popupSystem.PopupEntity(Loc.GetString("botany-plant-seedsrestored"), args.SolutionEntity, PopupType.SmallCaution);
+                    popupSystem.PopupEntity(Loc.GetString("botany-plant-seedsrestored"), args.SolutionEntity);
                     plantHolderComp.Seed.Seedless = false;
                 }
 
