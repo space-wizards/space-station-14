@@ -44,10 +44,10 @@
     layers:
     - state: base
     - state: caplaser # TODO: Remove it after item scaling in cabinets is implemented.
-      map: ["enum.ItemCabinetVisualLayers.ContainsItem"]
+      map: ["enum.ItemCabinetVisuals.Layer"]
       visible: true
     - state: glass
-      map: ["enum.ItemCabinetVisualLayers.Door"]
+      map: ["enum.OpenableVisuals.Layer"]
     - state: locked
       shader: unshaded
       map: ["enum.LockVisualLayers.Lock"]
@@ -130,6 +130,7 @@
     closedState: glass
 
 - type: entity
+  id: GlassBoxLaserOpen
   parent: GlassBoxLaser
   suffix: AntiqueLaser, Open
   components:
@@ -139,6 +140,7 @@
     opened: true
 
 - type: entity
+  id: GlassBoxLaserFilled
   parent: GlassBoxLaser
   suffix: AntiqueLaser, Filled
   components:
