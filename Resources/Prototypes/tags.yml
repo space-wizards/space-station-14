@@ -864,10 +864,10 @@
   id: Meat
 
 - type: Tag
-  id: Medkit
+  id: Medal
 
 - type: Tag
-  id: Medal
+  id: Medkit
 
 - type: Tag
   id: Metal
