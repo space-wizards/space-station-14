@@ -1011,8 +1011,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var manager = EnsureComp<SolutionContainerManagerComponent>(uid);
         if (meta.EntityLifeStage >= EntityLifeStage.MapInitialized)
         {
-            EnsureSolutionEntity((uid, manager), name, maxVol, prototype, out existed,
-                out var solEnt);
+            EnsureSolutionEntity((uid, manager), name, out existed,
+                out var solEnt, maxVol, prototype);
             solution = solEnt!.Value.Comp.Solution;
             return true;
         }
@@ -1030,7 +1030,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         foreach (var (name, prototype) in prototypes)
         {
-            EnsureSolutionEntity((entity.Owner, entity.Comp), name, prototype.MaxVolume, prototype, out _, out _);
+            EnsureSolutionEntity((entity.Owner, entity.Comp), name, out _, out _, prototype.MaxVolume, prototype);
         }
 
         entity.Comp.Solutions = null;
@@ -1040,11 +1040,10 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     public bool EnsureSolutionEntity(
         Entity<SolutionContainerManagerComponent?> entity,
         string name,
-        FixedPoint2 maxVol,
-        Solution? prototype,
         out bool existed,
-        [NotNullWhen(true)] out Entity<SolutionComponent>? solutionEntity
-        )
+        [NotNullWhen(true)] out Entity<SolutionComponent>? solutionEntity,
+        FixedPoint2 maxVol = default,
+        Solution? prototype = null)
     {
         existed = true;
         solutionEntity = null;
