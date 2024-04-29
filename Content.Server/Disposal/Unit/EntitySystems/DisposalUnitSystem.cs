@@ -73,8 +73,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         SubscribeLocalEvent<DisposalUnitComponent, PowerChangedEvent>(OnPowerChange);
         SubscribeLocalEvent<DisposalUnitComponent, ComponentInit>(OnDisposalInit);
 
-        SubscribeLocalEvent<DisposalUnitComponent, ThrowHitByEvent>(OnThrowCollide);
-
         SubscribeLocalEvent<DisposalUnitComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<DisposalUnitComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
         SubscribeLocalEvent<DisposalUnitComponent, DragDropTargetEvent>(OnDragDropOn);
@@ -293,40 +291,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         AfterInsert(uid, component, args.Used, args.User);
         args.Handled = true;
     }
-
-    /// <summary>
-    /// Thrown items have a chance of bouncing off the unit and not going in.
-    /// </summary>
-    private void OnThrowCollide(EntityUid uid, SharedDisposalUnitComponent component, ThrowHitByEvent args)
-    {
-        var canInsert = CanInsert(uid, component, args.Thrown);
-        var randDouble = _robustRandom.NextDouble();
-
-        if (!canInsert)
-        {
-            return;
-        }
-
-        if (randDouble > 0.75)
-        {
-            _popupSystem.PopupEntity(Loc.GetString("disposal-unit-thrown-missed"), uid);
-            return;
-        }
-
-        var inserted = _containerSystem.Insert(args.Thrown, component.Container);
-
-        if (!inserted)
-        {
-            throw new InvalidOperationException("Container insertion failed but CanInsert returned true");
-        }
-
-        if (args.Component.Thrower != null)
-            _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(args.Thrown)} thrown by {ToPrettyString(args.Component.Thrower.Value):player} landed in {ToPrettyString(uid)}");
-
-        AfterInsert(uid, component, args.Thrown);
-    }
-
-
 
     private void OnDisposalInit(EntityUid uid, SharedDisposalUnitComponent component, ComponentInit args)
     {

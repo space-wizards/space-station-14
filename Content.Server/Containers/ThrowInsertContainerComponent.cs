@@ -1,12 +1,11 @@
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
 
 namespace Content.Server.Containers;
 
 /// <summary>
-///
+/// Allows objects to fall inside the Container when thrown
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 [Access(typeof(ThrowInsertContainerSystem))]
 public sealed partial class ThrowInsertContainerComponent : Component
 {
@@ -14,7 +13,7 @@ public sealed partial class ThrowInsertContainerComponent : Component
     public string? ContainerId;
 
     /// <summary>
-    /// Throw chance of hitting the container
+    /// Throw chance of hitting into the container
     /// </summary>
     [DataField]
     public float Probability = 0.75f;
