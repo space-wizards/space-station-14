@@ -179,6 +179,13 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnCreatePillsMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterCreatePillsMessage message)
         {
+            var beaker = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName);
+            if (beaker is null ||
+                !_solutionContainerSystem.TryGetFitsInDispenser(beaker.Value, out var containerSoln, out var containerSolution))
+            {
+                return;
+            }
+
             var user = message.Actor;
             var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.OutputSlotName);
             if (maybeContainer is not { Valid: true } container
@@ -200,7 +207,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return;
 
             var needed = message.Dosage * message.Number;
-            if (!WithdrawFromBuffer(chemMaster, needed, user, out var withdrawal))
+            if (!WithdrawFromBuffer(chemMaster, needed, user, containerSolution, out var withdrawal))
                 return;
 
             _labelSystem.Label(container, message.Label);
@@ -223,12 +230,20 @@ namespace Content.Server.Chemistry.EntitySystems
                     $"{ToPrettyString(user):user} printed {ToPrettyString(item):pill} {SharedSolutionContainerSystem.ToPrettyString(itemSolution.Comp.Solution)}");
             }
 
+            _solutionContainerSystem.UpdateChemicals(containerSoln.Value);
             UpdateUiState(chemMaster);
             ClickSound(chemMaster);
         }
 
         private void OnOutputToBottleMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterOutputToBottleMessage message)
         {
+            var beaker = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName);
+            if (beaker is null ||
+                !_solutionContainerSystem.TryGetFitsInDispenser(beaker.Value, out var containerSoln, out var containerSolution))
+            {
+                return;
+            }
+
             var user = message.Actor;
             var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.OutputSlotName);
             if (maybeContainer is not { Valid: true } container
@@ -245,7 +260,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (message.Label.Length > SharedChemMaster.LabelMaxLength)
                 return;
 
-            if (!WithdrawFromBuffer(chemMaster, message.Dosage, user, out var withdrawal))
+            if (!WithdrawFromBuffer(chemMaster, message.Dosage, user, containerSolution, out var withdrawal))
                 return;
 
             _labelSystem.Label(container, message.Label);
@@ -255,6 +270,7 @@ namespace Content.Server.Chemistry.EntitySystems
             _adminLogger.Add(LogType.Action, LogImpact.Low,
                 $"{ToPrettyString(user):user} bottled {ToPrettyString(container):bottle} {SharedSolutionContainerSystem.ToPrettyString(solution)}");
 
+            _solutionContainerSystem.UpdateChemicals(containerSoln.Value);
             UpdateUiState(chemMaster);
             ClickSound(chemMaster);
         }
@@ -262,14 +278,18 @@ namespace Content.Server.Chemistry.EntitySystems
         private bool WithdrawFromBuffer(
             Entity<ChemMasterComponent> chemMaster,
             FixedPoint2 neededVolume, EntityUid? user,
+            Solution? inputSolution,
             [NotNullWhen(returnValue: true)] out Solution? outputSolution)
         {
             outputSolution = null;
+            Solution? solution = inputSolution;
 
-            if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out var solution))
-            {
-                return false;
-            }
+            // Use inputSolution if supplied, else fall back to using chemMaster buffer
+            if (solution == null)
+                if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out solution))
+                {
+                    return false;
+                }
 
             if (solution.Volume == 0)
             {

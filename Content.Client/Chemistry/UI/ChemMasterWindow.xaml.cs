@@ -138,11 +138,13 @@ namespace Content.Client.Chemistry.UI
         /// <param name="state">State data sent by the server.</param>
         private string GenerateLabel(ChemMasterBoundUserInterfaceState state)
         {
-            if (state.BufferCurrentVolume == 0)
+            if (state.InputContainerInfo == null ||
+                    state.InputContainerInfo.CurrentVolume == 0 ||
+                    state.InputContainerInfo.Reagents == null)
                 return "";
 
-            var reagent = state.BufferReagents.OrderBy(r => r.Quantity).First().Reagent;
-            _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
+            var reagent = state.InputContainerInfo.Reagents.MaxBy(r=>r.Quantity);
+            _prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? proto);
             return proto?.LocalizedName ?? "";
         }
 
