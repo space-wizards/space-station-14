@@ -266,7 +266,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         else
         {
             RemComp<ActiveCryoPodComponent>(entity);
-            _uiSystem.TryCloseAll(entity.Owner, HealthAnalyzerUiKey.Key);
+            _uiSystem.CloseUi(entity.Owner, HealthAnalyzerUiKey.Key);
         }
         UpdateAppearance(entity.Owner, entity.Comp);
     }
@@ -317,7 +317,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         }
 
         // if body is ejected - no need to display health-analyzer
-        _uiSystem.TryCloseAll(cryoPod.Owner, HealthAnalyzerUiKey.Key);
+        _uiSystem.CloseUi(cryoPod.Owner, HealthAnalyzerUiKey.Key);
     }
 
     #endregion

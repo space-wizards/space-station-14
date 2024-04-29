@@ -282,14 +282,14 @@ public sealed class LungsSystem : SharedLungsSystem
 
     private ReagentQuantity GetReagentUnitsFromMol(float gasMols, string reagentId)
     {
-        return new(reagentId, Shared.Chemistry.Constants.RUFromMoles(gasMols), null);
+        return new(reagentId, Shared.Chemistry.Constants.LiquidRUFromMoles(gasMols), null);
     }
 
 
     private float GetMolsOfReagent(Solution solution, string reagentId)
     {
         var reagentAmount = solution.GetReagent(new (reagentId, null)).Quantity;
-        return Shared.Chemistry.Constants.MolesFromRU(reagentAmount);
+        return Shared.Chemistry.Constants.LiquidMolesFromRU(reagentAmount);
     }
 
     private void UpdateLungGasVolume(LungsGasComponent gasComp,LungsComponent lungsComp, float newVolume, bool force = false)
