@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: PoorMansDreams
-  changes:
-  - message: New pirate start sound!
-    type: Add
-  id: 5990
-  time: '2024-02-21T06:39:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25153
-- author: takemysoult
-  changes:
-  - message: Changed uplink catalog - add syndicate hud to nukeops uplink
-    type: Tweak
-  id: 5991
-  time: '2024-02-21T06:41:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25087
 - author: Sphiral
   changes:
   - message: Took the AdminPDA from the backpack and gave it it's own slot on aghosts!
@@ -3868,3 +3854,19 @@
   id: 6489
   time: '2024-04-29T04:16:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25815
+- author: Morb0
+  changes:
+  - message: Added emote panel (by default Y)
+    type: Add
+  id: 6490
+  time: '2024-04-29T04:38:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26702
+- author: MilenVolf
+  changes:
+  - message: Borgs now have brand new voice and walking sounds.
+    type: Add
+  - message: Syndicate assault borgs now have new feature to scare - manic laugher.
+    type: Add
+  id: 6491
+  time: '2024-04-29T04:38:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27205
