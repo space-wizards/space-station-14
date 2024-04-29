@@ -1,10 +1,8 @@
 using Content.Shared.StatusEffect;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Tools.Components;
-using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 
 namespace Content.Server.Eye.Blinding.EyeProtection
@@ -13,7 +11,6 @@ namespace Content.Server.Eye.Blinding.EyeProtection
     {
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
         [Dependency] private readonly BlindableSystem _blindingSystem = default!;
-        [Dependency] private readonly SharedItemToggleSystem _itemToggle = default!;
         
         public override void Initialize()
         {
@@ -60,7 +57,7 @@ namespace Content.Server.Eye.Blinding.EyeProtection
         }
         private void OnWelderToggled(EntityUid uid, RequiresEyeProtectionComponent component, ItemToggledEvent args)
         {
-            component.Toggled = _itemToggle.IsActivated(uid);
+            component.Toggled = args.Activated;
         }
     }
 }

@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Preferences;
 using Robust.Client;
-using Robust.Shared.IoC;
+using Robust.Client.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Preferences
@@ -18,6 +18,7 @@ namespace Content.Client.Preferences
     {
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public event Action? OnServerDataLoaded;
 
@@ -60,7 +61,8 @@ namespace Content.Client.Preferences
 
         public void UpdateCharacter(ICharacterProfile profile, int slot)
         {
-            profile.EnsureValid();
+            var collection = IoCManager.Instance!;
+            profile.EnsureValid(_playerManager.LocalSession!, collection);
             var characters = new Dictionary<int, ICharacterProfile>(Preferences.Characters) {[slot] = profile};
             Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor);
             var msg = new MsgUpdateCharacter

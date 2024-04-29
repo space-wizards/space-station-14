@@ -1,6 +1,7 @@
 - type: latheRecipe
   id: CapacitorStockPart
   result: CapacitorStockPart
+  category: Parts
   completetime: 1
   materials:
     Steel: 50
@@ -9,6 +10,7 @@
 - type: latheRecipe
   id: MatterBinStockPart
   result: MatterBinStockPart
+  category: Parts
   completetime: 1
   materials:
     Steel: 50
@@ -17,6 +19,7 @@
 - type: latheRecipe
   id: MicroManipulatorStockPart
   result: MicroManipulatorStockPart
+  category: Parts
   completetime: 1
   materials:
     Steel: 50

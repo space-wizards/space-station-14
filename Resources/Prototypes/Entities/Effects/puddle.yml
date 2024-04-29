@@ -112,11 +112,6 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepWater
-      params:
-        volume: 6
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: Transform
@@ -147,8 +142,11 @@
     mode: CardinalFlags
   - type: SolutionContainerManager
     solutions:
-      puddle: { maxVol: 1000 }
+      puddle:
+        maxVol: 1000
   - type: Puddle
+  - type: MixableSolution
+    solution: puddle
   - type: Appearance
   - type: ActiveEdgeSpreader
   - type: EdgeSpreader

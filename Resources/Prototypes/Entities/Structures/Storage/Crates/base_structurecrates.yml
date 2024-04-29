@@ -21,6 +21,9 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -31,7 +34,7 @@
           bounds: "-0.4,-0.4,0.4,0.29"
         density: 50
         mask:
-        - SmallMobMask #this is so they can go under plastic flaps
+        - CrateMask #this is so they can go under plastic flaps
         layer:
         - MachineLayer
   - type: EntityStorage
@@ -48,10 +51,25 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Appearance
   - type: EntityStorageVisuals
     stateDoorOpen: open
     stateDoorClosed: closed
+  - type: GenericVisualizer
+    visuals:
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label
@@ -75,6 +93,7 @@
 - type: entity
   parent: CrateGeneric
   id: CrateBaseWeldable
+  noSpawn: true
   components:
   - type: Weldable
   - type: ResistLocker
@@ -82,8 +101,10 @@
 - type: entity
   parent: CrateBaseWeldable
   id: CrateBaseSecure
+  suffix: Secure
   components:
   - type: Lock
+  - type: LockVisuals
   - type: AccessReader
   - type: Icon
     sprite: Structures/Storage/Crates/secure.rsi
@@ -98,8 +119,11 @@
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
@@ -111,6 +135,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Construction
     graph: CrateSecure
     node: cratesecure

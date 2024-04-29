@@ -32,3 +32,5 @@ advertisement-syndiedrobe-31 = You can leave feedback about the convenience of t
 thankyou-syndiedrobe-1 = Put it to good use!
 thankyou-syndiedrobe-2 = Death to NT!
 thankyou-syndiedrobe-3 = Show them the power of style.
+thankyou-syndiedrobe-4 = Happy killing!
+thankyou-syndiedrobe-5 = Enjoy your murderfest!

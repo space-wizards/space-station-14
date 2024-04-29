@@ -2,13 +2,15 @@ using Content.Server.Access.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Emp;
 using Content.Server.GameTicking;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
+using Content.Shared.Clothing;
 using Content.Shared.Damage;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Examine;
-using Content.Shared.Inventory.Events;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -24,31 +26,28 @@ public sealed class SuitSensorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly CrewMonitoringServerSystem _monitoringServerSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly IdCardSystem _idCardSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly SingletonDeviceNetServerSystem _singletonServerSystem = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
         SubscribeLocalEvent<SuitSensorComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<SuitSensorComponent, EntityUnpausedEvent>(OnUnpaused);
-        SubscribeLocalEvent<SuitSensorComponent, GotEquippedEvent>(OnEquipped);
-        SubscribeLocalEvent<SuitSensorComponent, GotUnequippedEvent>(OnUnequipped);
+        SubscribeLocalEvent<SuitSensorComponent, ClothingGotEquippedEvent>(OnEquipped);
+        SubscribeLocalEvent<SuitSensorComponent, ClothingGotUnequippedEvent>(OnUnequipped);
         SubscribeLocalEvent<SuitSensorComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<SuitSensorComponent, GetVerbsEvent<Verb>>(OnVerb);
         SubscribeLocalEvent<SuitSensorComponent, EntGotInsertedIntoContainerMessage>(OnInsert);
         SubscribeLocalEvent<SuitSensorComponent, EntGotRemovedFromContainerMessage>(OnRemove);
-    }
-
-    private void OnUnpaused(EntityUid uid, SuitSensorComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextUpdate += args.PausedTime;
+        SubscribeLocalEvent<SuitSensorComponent, EmpPulseEvent>(OnEmpPulse);
+        SubscribeLocalEvent<SuitSensorComponent, EmpDisabledRemoved>(OnEmpFinished);
     }
 
     public override void Update(float frameTime)
@@ -81,7 +80,7 @@ public sealed class SuitSensorSystem : EntitySystem
             //Retrieve active server address if the sensor isn't connected to a server
             if (sensor.ConnectedServer == null)
             {
-                if (!_monitoringServerSystem.TryGetActiveServerAddress(sensor.StationId!.Value, out var address))
+                if (!_singletonServerSystem.TryGetActiveServerAddress<CrewMonitoringServerComponent>(sensor.StationId!.Value, out var address))
                     continue;
 
                 sensor.ConnectedServer = address;
@@ -161,19 +160,13 @@ public sealed class SuitSensorSystem : EntitySystem
         }
     }
 
-    private void OnEquipped(EntityUid uid, SuitSensorComponent component, GotEquippedEvent args)
+    private void OnEquipped(EntityUid uid, SuitSensorComponent component, ref ClothingGotEquippedEvent args)
     {
-        if (args.Slot != component.ActivationSlot)
-            return;
-
-        component.User = args.Equipee;
+        component.User = args.Wearer;
     }
 
-    private void OnUnequipped(EntityUid uid, SuitSensorComponent component, GotUnequippedEvent args)
+    private void OnUnequipped(EntityUid uid, SuitSensorComponent component, ref ClothingGotUnequippedEvent args)
     {
-        if (args.Slot != component.ActivationSlot)
-            return;
-
         component.User = null;
     }
 
@@ -237,6 +230,24 @@ public sealed class SuitSensorSystem : EntitySystem
             return;
 
         component.User = null;
+    }
+
+    private void OnEmpPulse(EntityUid uid, SuitSensorComponent component, ref EmpPulseEvent args)
+    {
+        args.Affected = true;
+        args.Disabled = true;
+
+        component.PreviousMode = component.Mode;
+        SetSensor(uid, SuitSensorMode.SensorOff, null, component);
+
+        component.PreviousControlsLocked = component.ControlsLocked;
+        component.ControlsLocked = true;
+    }
+
+    private void OnEmpFinished(EntityUid uid, SuitSensorComponent component, ref EmpDisabledRemoved args)
+    {
+        SetSensor(uid, component.PreviousMode, null, component);
+        component.ControlsLocked = component.PreviousControlsLocked;
     }
 
     private Verb CreateVerb(EntityUid uid, SuitSensorComponent component, EntityUid userUid, SuitSensorMode mode)
@@ -328,6 +339,11 @@ public sealed class SuitSensorSystem : EntitySystem
         if (TryComp<DamageableComponent>(sensor.User.Value, out var damageable))
             totalDamage = damageable.TotalDamage.Int();
 
+        // Get mob total damage crit threshold
+        int? totalDamageThreshold = null;
+        if (_mobThresholdSystem.TryGetThresholdForState(sensor.User.Value, Shared.Mobs.MobState.Critical, out var critThreshold))
+            totalDamageThreshold = critThreshold.Value.Int();
+
         // finally, form suit sensor status
         var status = new SuitSensorStatus(GetNetEntity(uid), userName, userJob, userJobIcon, userJobDepartments);
         switch (sensor.Mode)
@@ -338,10 +354,12 @@ public sealed class SuitSensorSystem : EntitySystem
             case SuitSensorMode.SensorVitals:
                 status.IsAlive = isAlive;
                 status.TotalDamage = totalDamage;
+                status.TotalDamageThreshold = totalDamageThreshold;
                 break;
             case SuitSensorMode.SensorCords:
                 status.IsAlive = isAlive;
                 status.TotalDamage = totalDamage;
+                status.TotalDamageThreshold = totalDamageThreshold;
                 EntityCoordinates coordinates;
                 var xformQuery = GetEntityQuery<TransformComponent>();
 
@@ -386,6 +404,8 @@ public sealed class SuitSensorSystem : EntitySystem
 
         if (status.TotalDamage != null)
             payload.Add(SuitSensorConstants.NET_TOTAL_DAMAGE, status.TotalDamage);
+        if (status.TotalDamageThreshold != null)
+            payload.Add(SuitSensorConstants.NET_TOTAL_DAMAGE_THRESHOLD, status.TotalDamageThreshold);
         if (status.Coordinates != null)
             payload.Add(SuitSensorConstants.NET_COORDINATES, status.Coordinates);
 
@@ -413,12 +433,14 @@ public sealed class SuitSensorSystem : EntitySystem
 
         // try get total damage and cords (optionals)
         payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE, out int? totalDamage);
+        payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE_THRESHOLD, out int? totalDamageThreshold);
         payload.TryGetValue(SuitSensorConstants.NET_COORDINATES, out NetCoordinates? coords);
 
         var status = new SuitSensorStatus(suitSensorUid, name, job, jobIcon, jobDepartments)
         {
             IsAlive = isAlive.Value,
             TotalDamage = totalDamage,
+            TotalDamageThreshold = totalDamageThreshold,
             Coordinates = coords,
         };
         return status;

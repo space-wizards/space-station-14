@@ -63,9 +63,9 @@
     key: enum.IntercomUiKey.Key
   - type: UserInterface
     interfaces:
-      - key: enum.IntercomUiKey.Key
+      enum.IntercomUiKey.Key:
         type: IntercomBoundUserInterface
-      - key: enum.WiresUiKey.Key
+      enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Construction
     graph: Intercom
@@ -89,7 +89,7 @@
             acts: [ "Destruction" ]
           - !type:PlaySoundBehavior
             sound:
-              path: /Audio/Effects/metalbreak.ogg
+              collection: MetalGlassBreak
               params:
                 volume: -4
   - type: GenericVisualizer

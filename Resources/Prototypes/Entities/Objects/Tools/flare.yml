@@ -71,3 +71,25 @@
         maxDuration: 15.0
         startValue: 10.0
         endValue: 1.0
+  - type: Extractable
+    grindableSolutionName: flare
+  - type: SolutionContainerManager
+    solutions:
+      flare:
+        maxVol: 20
+        reagents:
+        # flare casing
+        - ReagentId: Iron
+          Quantity: 10
+        # red phosphorus = red flare trust
+        - ReagentId: Phosphorus
+          Quantity: 3
+        - ReagentId: Carbon
+          Quantity: 1
+        - ReagentId: Oxygen
+          Quantity: 2
+        # fuel or something
+        - ReagentId: Charcoal
+          Quantity: 2
+        - ReagentId: Sulfur
+          Quantity: 2

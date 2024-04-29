@@ -23,7 +23,7 @@ public sealed partial class GravitySystem
 
     private void OnShakeInit(EntityUid uid, GravityShakeComponent component, ComponentInit args)
     {
-        var localPlayer = _playerManager.LocalPlayer?.ControlledEntity;
+        var localPlayer = _playerManager.LocalEntity;
 
         if (!TryComp<TransformComponent>(localPlayer, out var xform) ||
             xform.GridUid != uid && xform.MapUid != uid)
@@ -44,7 +44,7 @@ public sealed partial class GravitySystem
         if (!Resolve(uid, ref gravity) || !Timing.IsFirstTimePredicted)
             return;
 
-        var localPlayer = _playerManager.LocalPlayer?.ControlledEntity;
+        var localPlayer = _playerManager.LocalEntity;
 
         if (!TryComp<TransformComponent>(localPlayer, out var xform))
             return;

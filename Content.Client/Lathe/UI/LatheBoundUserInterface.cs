@@ -31,7 +31,7 @@ namespace Content.Client.Lathe.UI
                 SendMessage(new LatheQueueRecipeMessage(recipe, amount));
             };
 
-            _menu.OpenCentered();
+            _menu.OpenCenteredRight();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -43,7 +43,8 @@ namespace Content.Client.Lathe.UI
                 case LatheUpdateState msg:
                     if (_menu != null)
                         _menu.Recipes = msg.Recipes;
-                    _menu?.PopulateRecipes(Owner);
+                    _menu?.PopulateRecipes();
+                    _menu?.UpdateCategories();
                     _menu?.PopulateQueueList(msg.Queue);
                     _menu?.SetQueueInfo(msg.CurrentlyProducing);
                     break;

@@ -100,7 +100,7 @@ namespace Content.Server.GameTicking
             SetGamePreset(LobbyEnabled ? _configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset) : "sandbox");
         }
 
-        public void SetGamePreset(GamePresetPrototype preset, bool force = false)
+        public void SetGamePreset(GamePresetPrototype? preset, bool force = false)
         {
             // Do nothing if this game ticker is a dummy!
             if (DummyTicker)
@@ -188,7 +188,7 @@ namespace Content.Server.GameTicking
             return true;
         }
 
-        private void StartGamePresetRules()
+        public void StartGamePresetRules()
         {
             // May be touched by the preset during init.
             var rules = new List<EntityUid>(GetAddedGameRules());

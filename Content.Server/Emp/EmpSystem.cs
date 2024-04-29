@@ -17,7 +17,6 @@ public sealed class EmpSystem : SharedEmpSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<EmpDisabledComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<EmpDisabledComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<EmpOnTriggerComponent, TriggerEvent>(HandleEmpTrigger);
 
@@ -94,12 +93,6 @@ public sealed class EmpSystem : SharedEmpSystem
                 RaiseLocalEvent(uid, ref ev);
             }
         }
-    }
-
-    private void OnUnpaused(EntityUid uid, EmpDisabledComponent component, ref EntityUnpausedEvent args)
-    {
-        component.DisabledUntil += args.PausedTime;
-        component.TargetTime += args.PausedTime;
     }
 
     private void OnExamine(EntityUid uid, EmpDisabledComponent component, ExaminedEvent args)

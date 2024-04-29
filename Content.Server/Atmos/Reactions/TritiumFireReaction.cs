@@ -60,7 +60,7 @@ namespace Content.Server.Atmos.Reactions
                 temperature = mixture.Temperature;
                 if (temperature > Atmospherics.FireMinimumTemperatureToExist)
                 {
-                    atmosphereSystem.HotspotExpose(location.GridIndex, location.GridIndices, temperature, mixture.Volume);
+                    atmosphereSystem.HotspotExpose(location, temperature, mixture.Volume);
                 }
             }
 

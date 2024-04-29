@@ -7,6 +7,9 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using System.Numerics;
+using Content.Shared.StatusIcon.Components;
+using Content.Client.UserInterface.Systems;
+using Robust.Shared.Prototypes;
 using static Robust.Shared.Maths.Color;
 
 namespace Content.Client.Overlays;
@@ -20,15 +23,17 @@ public sealed class EntityHealthBarOverlay : Overlay
     private readonly SharedTransformSystem _transform;
     private readonly MobStateSystem _mobStateSystem;
     private readonly MobThresholdSystem _mobThresholdSystem;
+    private readonly ProgressColorSystem _progressColor;
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
     public HashSet<string> DamageContainers = new();
 
     public EntityHealthBarOverlay(IEntityManager entManager)
     {
         _entManager = entManager;
-        _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
-        _mobStateSystem = _entManager.EntitySysManager.GetEntitySystem<MobStateSystem>();
-        _mobThresholdSystem = _entManager.EntitySysManager.GetEntitySystem<MobThresholdSystem>();
+        _transform = _entManager.System<SharedTransformSystem>();
+        _mobStateSystem = _entManager.System<MobStateSystem>();
+        _mobThresholdSystem = _entManager.System<MobThresholdSystem>();
+        _progressColor = _entManager.System<ProgressColorSystem>();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -65,7 +70,8 @@ public sealed class EntityHealthBarOverlay : Overlay
                 continue;
             }
 
-            var bounds = spriteComponent.Bounds;
+            // we use the status icon component bounds if specified otherwise use sprite
+            var bounds = _entManager.GetComponentOrNull<StatusIconComponent>(uid)?.Bounds ?? spriteComponent.Bounds;
             var worldPos = _transform.GetWorldPosition(xform, xformQuery);
 
             if (!bounds.Translated(worldPos).Intersects(args.WorldAABB))
@@ -81,8 +87,8 @@ public sealed class EntityHealthBarOverlay : Overlay
 
             handle.SetTransform(matty);
 
-            var yOffset = spriteComponent.Bounds.Height * EyeManager.PixelsPerMeter / 2 - 3f;
-            var widthOfMob = spriteComponent.Bounds.Width * EyeManager.PixelsPerMeter;
+            var yOffset = bounds.Height * EyeManager.PixelsPerMeter / 2 - 3f;
+            var widthOfMob = bounds.Width * EyeManager.PixelsPerMeter;
 
             var position = new Vector2(-widthOfMob / EyeManager.PixelsPerMeter / 2, yOffset / EyeManager.PixelsPerMeter);
 
@@ -110,7 +116,6 @@ public sealed class EntityHealthBarOverlay : Overlay
             handle.DrawRect(pixelDarken, Black.WithAlpha(128));
         }
 
-        handle.UseShader(null);
         handle.SetTransform(Matrix3.Identity);
     }
 
@@ -145,26 +150,11 @@ public sealed class EntityHealthBarOverlay : Overlay
         return (0, true);
     }
 
-    public static Color GetProgressColor(float progress, bool crit)
+    public Color GetProgressColor(float progress, bool crit)
     {
-        if (progress >= 1.0f)
-        {
-            return SeaBlue;
-        }
+        if (crit)
+            progress = 0;
 
-        if (!crit)
-        {
-            switch (progress)
-            {
-                case > 0.90F:
-                    return SeaBlue;
-                case > 0.50F:
-                    return Violet;
-                case > 0.15F:
-                    return Ruber;
-            }
-        }
-
-        return VividGamboge;
+        return _progressColor.GetProgressColor(progress);
     }
 }

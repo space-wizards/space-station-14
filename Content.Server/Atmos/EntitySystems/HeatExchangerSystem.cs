@@ -20,6 +20,7 @@ public sealed class HeatExchangerSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     float tileLoss;
 
@@ -29,13 +30,7 @@ public sealed class HeatExchangerSystem : EntitySystem
         SubscribeLocalEvent<HeatExchangerComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
 
         // Getting CVars is expensive, don't do it every tick
-        _cfg.OnValueChanged(CCVars.SuperconductionTileLoss, CacheTileLoss, true);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _cfg.UnsubValueChanged(CCVars.SuperconductionTileLoss, CacheTileLoss);
+        Subs.CVar(_cfg, CCVars.SuperconductionTileLoss, CacheTileLoss, true);
     }
 
     private void CacheTileLoss(float val)
@@ -45,13 +40,16 @@ public sealed class HeatExchangerSystem : EntitySystem
 
     private void OnAtmosUpdate(EntityUid uid, HeatExchangerComponent comp, ref AtmosDeviceUpdateEvent args)
     {
-        if (!TryComp(uid, out NodeContainerComponent? nodeContainer)
-                || !TryComp(uid, out AtmosDeviceComponent? device)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.InletName, out PipeNode? inlet)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.OutletName, out PipeNode? outlet))
+        // make sure that the tile the device is on isn't blocked by a wall or something similar.
+        if (args.Grid is {} grid
+            && _transform.TryGetGridTilePosition(uid, out var tile)
+            && _atmosphereSystem.IsTileAirBlocked(grid, tile))
         {
             return;
         }
+
+        if (!_nodeContainer.TryGetNodes(uid, comp.InletName, comp.OutletName, out PipeNode? inlet, out PipeNode? outlet))
+            return;
 
         var dt = args.dt;
 

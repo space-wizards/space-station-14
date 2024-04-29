@@ -11,7 +11,6 @@ public sealed class ItemPlacerSystem : EntitySystem
 {
     [Dependency] private readonly CollisionWakeSystem _wake = default!;
     [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {

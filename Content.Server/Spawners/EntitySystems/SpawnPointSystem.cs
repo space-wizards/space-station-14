@@ -15,10 +15,10 @@ public sealed class SpawnPointSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<PlayerSpawningEvent>(OnSpawnPlayer);
+        SubscribeLocalEvent<PlayerSpawningEvent>(OnPlayerSpawning);
     }
 
-    private void OnSpawnPlayer(PlayerSpawningEvent args)
+    private void OnPlayerSpawning(PlayerSpawningEvent args)
     {
         if (args.SpawnResult != null)
             return;
@@ -51,7 +51,7 @@ public sealed class SpawnPointSystem : EntitySystem
             // TODO: Refactor gameticker spawning code so we don't have to do this!
             var points2 = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
 
-            if (points2.MoveNext(out var uid, out var spawnPoint, out var xform))
+            if (points2.MoveNext(out var spawnPoint, out var xform))
             {
                 possiblePositions.Add(xform.Coordinates);
             }

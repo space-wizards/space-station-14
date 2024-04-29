@@ -9,9 +9,6 @@
       sprite: Objects/Misc/stock_parts.rsi
     - type: Item
       size: Tiny
-    - type: GuideHelp
-      guides:
-      - MachineUpgrading
 
 - type: entity
   id: CapacitorStockPart

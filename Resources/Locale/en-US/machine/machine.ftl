@@ -13,11 +13,6 @@ machine-part-name-manipulator = Manipulator
 machine-part-name-matter-bin = Matter Bin
 machine-part-name-power-cell = Power Cell
 
-upgrade-power-draw = power draw
-upgrade-max-charge = max charge
-upgrade-power-supply = power supply
-upgrade-power-supply-ramping = power ramp rate
-
 two-way-lever-left = push left
 two-way-lever-right = push right
 two-way-lever-cant = can't push the lever that way!

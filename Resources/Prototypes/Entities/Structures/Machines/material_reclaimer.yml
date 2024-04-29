@@ -51,6 +51,9 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: machineFrame
       - !type:DoActsBehavior
@@ -58,9 +61,6 @@
   - type: Machine
     board: MaterialReclaimerMachineCircuitboard
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-reclaimer
-    layoutId: Reclaimer
   - type: MaterialReclaimer
     whitelist:
       components:
@@ -74,6 +74,7 @@
       - Material
       - Pda
       - IdCard
+      - Brain
       tags:
       - HighRiskItem
     soundCooldown: 0

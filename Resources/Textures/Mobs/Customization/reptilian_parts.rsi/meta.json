@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297, while Argali, Ayrshire, Myrsore and Bighorn are drawn by Ubaser, and Kobold Ears are drawn by Pigeonpeas. Body_underbelly made by Nairod(github) for SS14. Large drawn by Ubaser. Wagging tail by SonicDC.",
+  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297, while Argali, Ayrshire, Myrsore and Bighorn are drawn by Ubaser, and Kobold Ears are drawn by Pigeonpeas. Body_underbelly made by Nairod(github) for SS14. Large drawn by Ubaser. Wagging tail by SonicDC. Splotch modified from Sharp by KittenColony(github)",
   "size": {
     "x": 32,
     "y": 32
@@ -28,6 +28,14 @@
       "directions": 4
     },
     {
+      "name": "tail_smooth_behind_primary",
+      "directions": 4
+    },
+    {
+      "name": "tail_smooth_behind_secondary",
+      "directions": 4
+    },
+    {
       "name": "tail_smooth_behind",
       "directions": 4
     },
@@ -45,6 +53,14 @@
     },
     {
       "name": "tail_ltiger_behind",
+      "directions": 4
+    },
+    {
+      "name": "tail_smooth_primary",
+      "directions": 4
+    },
+    {
+      "name": "tail_smooth_secondary",
       "directions": 4
     },
     {
@@ -68,7 +84,85 @@
       "directions": 4
     },
     {
-      "name": "tail_smooth_wagging",
+      "name": "tail_smooth_wagging_primary",
+      "directions": 4,
+      "delays": [
+          [
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1
+          ],
+          [
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1
+          ],
+          [
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1
+          ],
+          [
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1
+          ]
+      ]
+    },
+    {
+      "name": "tail_smooth_wagging_secondary",
       "directions": 4,
       "delays": [
           [
@@ -506,6 +600,14 @@
 	{
 	  "name": "body_backspikes",
 	  "directions": 4
-	}
+	},
+    {
+      "name": "snout_splotch_primary",
+      "directions": 4
+    },
+    {
+      "name": "snout_splotch_secondary",
+      "directions": 4
+    }
   ]
 }

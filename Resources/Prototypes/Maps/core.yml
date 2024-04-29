@@ -15,6 +15,8 @@
             prefixCreator: '14'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_rod.yml
+        - type: StationCargoShuttle
+          path: /Maps/Shuttles/cargo_core.yml
         - type: StationJobs
           overflowJobs:
             - Passenger

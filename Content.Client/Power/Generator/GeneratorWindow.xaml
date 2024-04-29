@@ -1,8 +1,8 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                MinSize="450 235"
-                SetSize="450 235"
+                MinSize="450 250"
+                SetSize="450 250"
                 Resizable="False"
                 Title="{Loc 'portable-generator-ui-title'}">
     <BoxContainer Margin="4 0" Orientation="Horizontal">
@@ -32,6 +32,11 @@
                 </BoxContainer>
                 <Label Name="OutputSwitchLabel" Text="{Loc 'portable-generator-ui-switch'}" Visible="False" />
                 <Button Name="OutputSwitchButton" Visible="False" />
+                <!-- Network stats menu -->
+                <Label Text="{Loc 'portable-generator-ui-network-stats'}"/>
+                <Control>
+                    <Label Name="NetworkStats" />
+                </Control>
             </GridContainer>
             <Label Margin="2 0 0 0" Name="CloggedLabel" FontColorOverride="Red" Text="{Loc 'portable-generator-ui-clogged'}" />
         </BoxContainer>

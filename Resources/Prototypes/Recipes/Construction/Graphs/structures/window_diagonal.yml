@@ -34,6 +34,12 @@
               amount: 2
               doAfter: 3
 
+        - to: clockworkWindowDiagonal
+          steps:
+            - material: ClockworkGlass
+              amount: 2
+              doAfter: 3
+
         - to: windowDiagonal
           steps:
             - material: Glass
@@ -62,6 +68,29 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetRGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 1
+            - tool: Prying
+              doAfter: 2
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
+
+    - node: clockworkWindowDiagonal
+      entity: ClockworkWindowDiagonal
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetClockworkGlass1
               amount: 2
             - !type:DeleteEntity {}
           steps:

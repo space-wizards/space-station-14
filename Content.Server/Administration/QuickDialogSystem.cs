@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -40,7 +40,7 @@ public sealed partial class QuickDialogSystem : EntitySystem
     {
         if (!_openDialogs.ContainsKey(msg.DialogId) || !_openDialogsByUser[args.SenderSession.UserId].Contains(msg.DialogId))
         {
-            args.SenderSession.ConnectedClient.Disconnect($"Replied with invalid quick dialog data with id {msg.DialogId}.");
+            args.SenderSession.Channel.Disconnect($"Replied with invalid quick dialog data with id {msg.DialogId}.");
             return;
         }
 

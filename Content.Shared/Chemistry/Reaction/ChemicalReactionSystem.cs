@@ -201,10 +201,10 @@ namespace Content.Shared.Chemistry.Reaction
                 reagent,
                 unitReactions, EntityManager, null, 1f);
 
-            var coordinates = _transformSystem.GetMapCoordinates(soln);
+            var posFound = _transformSystem.TryGetMapOrGridCoordinates(soln, out var gridPos);
 
             _adminLogger.Add(LogType.ChemicalReaction, reaction.Impact,
-                $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(soln):metabolizer} at {coordinates}");
+                $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(soln):metabolizer} at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found]")}");
 
             foreach (var effect in reaction.Effects)
             {
@@ -215,7 +215,7 @@ namespace Content.Shared.Chemistry.Reaction
                 {
                     var entity = args.SolutionEntity;
                     _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
-                        $"Reaction effect {effect.GetType().Name:effect} of reaction {reaction.ID:reaction} applied on entity {ToPrettyString(entity):entity} at {coordinates}");
+                        $"Reaction effect {effect.GetType().Name:effect} of reaction {reaction.ID:reaction} applied on entity {ToPrettyString(entity):entity} at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found")}");
                 }
 
                 effect.Effect(args);

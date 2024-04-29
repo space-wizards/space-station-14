@@ -43,25 +43,27 @@
   result: SheetRGlass
   completetime: 2
   materials:
-    Glass: 3000
-    Steel: 1500
+    RawQuartz: 3000
+    RawIron: 1500
+    Coal: 500
 
 - type: latheRecipe
   id: SheetPGlass30
   result: SheetPGlass
   completetime: 2
   materials:
-    Glass: 3000
-    Plasma: 3000
+    RawQuartz: 3000
+    RawPlasma: 3000
 
 - type: latheRecipe
   id: SheetRPGlass30
   result: SheetRPGlass
   completetime: 2
   materials:
-    Glass: 3000
-    Plasma: 3000
-    Steel: 1500
+    RawQuartz: 3000
+    RawPlasma: 3000
+    RawIron: 1500
+    Coal: 500
 
 - type: latheRecipe
   id: SheetPlasma30
@@ -71,11 +73,38 @@
     RawPlasma: 3000
 
 - type: latheRecipe
+  id: SheetPlasteel30
+  result: SheetPlasteel
+  completetime: 5
+  materials:
+    RawPlasma: 3000
+    RawIron: 6000 #Twice as durable as steel, Twice the material cost
+    Coal: 1000
+
+- type: latheRecipe
   id: SheetUranium30
   result: SheetUranium
   completetime: 2
   materials:
     RawUranium: 3000
+
+- type: latheRecipe
+  id: SheetUGlass30
+  result: SheetUGlass
+  completetime: 2
+  materials:
+    RawUranium: 3000
+    RawQuartz: 3000
+
+- type: latheRecipe
+  id: SheetRUGlass30
+  result: SheetRUGlass
+  completetime: 2
+  materials:
+    RawUranium: 3000
+    RawQuartz: 3000
+    RawIron: 1500
+    Coal: 500
 
 - type: latheRecipe
   id: IngotGold30

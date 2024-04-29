@@ -3,8 +3,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Gravity;
 using Content.Shared.Physics;
-using Content.Shared.Physics.Pull;
-using Robust.Shared.GameStates;
+using Content.Shared.Movement.Pulling.Events;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -35,40 +34,8 @@ namespace Content.Shared.Throwing
             SubscribeLocalEvent<ThrownItemComponent, StartCollideEvent>(HandleCollision);
             SubscribeLocalEvent<ThrownItemComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<ThrownItemComponent, ThrownEvent>(ThrowItem);
-            SubscribeLocalEvent<ThrownItemComponent, EntityUnpausedEvent>(OnThrownUnpaused);
-            SubscribeLocalEvent<ThrownItemComponent, ComponentGetState>(OnThrownGetState);
-            SubscribeLocalEvent<ThrownItemComponent, ComponentHandleState>(OnThrownHandleState);
 
             SubscribeLocalEvent<PullStartedMessage>(HandlePullStarted);
-        }
-
-        private void OnThrownGetState(EntityUid uid, ThrownItemComponent component, ref ComponentGetState args)
-        {
-            // TODO: Throwing needs to handle this properly I just want the bad asserts to stop getting in my way.
-            TryGetNetEntity(component.Thrower, out var nent);
-
-            args.State = new ThrownItemComponentState()
-            {
-                ThrownTime = component.ThrownTime,
-                LandTime = component.LandTime,
-                Thrower = nent,
-                Landed = component.Landed,
-                PlayLandSound = component.PlayLandSound,
-            };
-        }
-
-        private void OnThrownHandleState(EntityUid uid, ThrownItemComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is not ThrownItemComponentState state)
-                return;
-
-            TryGetEntity(state.Thrower, out var thrower);
-
-            component.ThrownTime = state.ThrownTime;
-            component.LandTime = state.LandTime;
-            component.Thrower = thrower;
-            component.Landed = state.Landed;
-            component.PlayLandSound = state.PlayLandSound;
         }
 
         private void OnMapInit(EntityUid uid, ThrownItemComponent component, MapInitEvent args)
@@ -88,14 +55,6 @@ namespace Content.Shared.Throwing
             var fixture = fixturesComponent.Fixtures.Values.First();
             var shape = fixture.Shape;
             _fixtures.TryCreateFixture(uid, shape, ThrowingFixture, hard: false, collisionMask: (int) CollisionGroup.ThrownItem, manager: fixturesComponent, body: body);
-        }
-
-        private void OnThrownUnpaused(EntityUid uid, ThrownItemComponent component, ref EntityUnpausedEvent args)
-        {
-            if (component.LandTime != null)
-            {
-                component.LandTime = component.LandTime.Value + args.PausedTime;
-            }
         }
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, ref StartCollideEvent args)
@@ -125,15 +84,15 @@ namespace Content.Shared.Throwing
         private void HandlePullStarted(PullStartedMessage message)
         {
             // TODO: this isn't directed so things have to be done the bad way
-            if (EntityManager.TryGetComponent(message.Pulled.Owner, out ThrownItemComponent? thrownItemComponent))
-                StopThrow(message.Pulled.Owner, thrownItemComponent);
+            if (EntityManager.TryGetComponent(message.PulledUid, out ThrownItemComponent? thrownItemComponent))
+                StopThrow(message.PulledUid, thrownItemComponent);
         }
 
         public void StopThrow(EntityUid uid, ThrownItemComponent thrownItemComponent)
         {
             if (TryComp<PhysicsComponent>(uid, out var physics))
             {
-                _physics.SetBodyStatus(physics, BodyStatus.OnGround);
+                _physics.SetBodyStatus(uid, physics, BodyStatus.OnGround);
 
                 if (physics.Awake)
                     _broadphase.RegenerateContacts(uid, physics);

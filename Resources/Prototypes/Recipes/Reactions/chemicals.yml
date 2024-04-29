@@ -457,6 +457,7 @@
     SodiumHydroxide: 2
 
 - type: reaction
+  minTemp: 310
   id: Fersilicite
   reactants:
     Iron:

@@ -14,6 +14,8 @@
             prefixCreator: 'B'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_delta.yml
+        - type: StationCargoShuttle
+          path: /Maps/Shuttles/cargo_fland.yml
         - type: StationJobs
           overflowJobs:
             - Passenger

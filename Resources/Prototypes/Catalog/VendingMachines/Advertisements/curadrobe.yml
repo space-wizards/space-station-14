@@ -1,7 +1,6 @@
-- type: advertisementsPack
+- type: messagePack
   id: CuraDrobeAds
-  advertisements:
+  messages:
     - advertisement-curadrobe-1
     - advertisement-curadrobe-2
-  thankyous:
-  -  vending-machine-thanks
+    - advertisement-curadrobe-3

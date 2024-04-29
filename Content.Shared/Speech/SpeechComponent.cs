@@ -41,7 +41,7 @@ namespace Content.Shared.Speech
         };
 
         [DataField]
-        public AudioParams AudioParams = AudioParams.Default.WithVolume(6f).WithRolloffFactor(4.5f);
+        public AudioParams AudioParams = AudioParams.Default.WithVolume(-2f).WithRolloffFactor(4.5f);
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]

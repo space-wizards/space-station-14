@@ -1,4 +1,5 @@
 using Content.Server.Body.Components;
+using Content.Shared.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
@@ -13,7 +14,7 @@ public sealed partial class FoodComponent : Component
     public string Solution = "food";
 
     [DataField]
-    public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
+    public SoundSpecifier UseSound = new SoundCollectionSpecifier("eating");
 
     [DataField]
     public EntProtoId? Trash;

@@ -8,7 +8,10 @@
   },
   "states": [
     {
-      "name": "cow_toolbox"
+      "name": "icon"
+    },
+    {
+      "name": "icon-open"
     },
     {
       "name": "inhand-left",

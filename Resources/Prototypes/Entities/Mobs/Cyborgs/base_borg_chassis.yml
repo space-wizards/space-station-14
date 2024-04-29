@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseMob
   id: BaseBorgChassis
   name: cyborg
@@ -14,7 +14,7 @@
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/hit_kick.ogg
+      collection: MetalThud
   - type: CombatMode
   - type: NoSlip
   - type: StaticPrice
@@ -63,18 +63,19 @@
     locPrefix: silicon
   - type: UserInterface
     interfaces:
-    - key: enum.SiliconLawsUiKey.Key
-      type: SiliconLawBoundUserInterface
-    - key: enum.BorgUiKey.Key
-      type: BorgBoundUserInterface
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+      enum.BorgUiKey.Key:
+        type: BorgBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
   - type: EmagSiliconLaw
     stunTime: 5
-    emagLaws: SyndicateStatic
+  - type: SiliconLawProvider
+    laws: Crewsimov
   - type: IonStormTarget
   - type: Strippable
   - type: InventorySlots
@@ -82,6 +83,7 @@
     templateId: borg
   - type: Hands
     showInHands: false
+    disableExplosionRecursion: true
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
@@ -100,8 +102,6 @@
   - type: BorgChassis
   - type: WiresPanel
   - type: ActivatableUIRequiresPanel
-  - type: Wires
-    layoutId: Borg
   - type: NameIdentifier
     group: Silicon
   - type: ContainerContainer
@@ -130,6 +130,9 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Pai
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
   - type: UnblockableSpeech
   - type: Construction
     graph: Cyborg
@@ -139,6 +142,7 @@
   - type: Lock
     locked: true
   - type: ActivatableUIRequiresLock
+  - type: LockedWiresPanel
   - type: Flashable
   - type: Damageable
     damageContainer: Silicon
@@ -159,7 +163,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:EmptyContainersBehaviour
         containers:
         - borg_brain
@@ -201,13 +205,13 @@
   - type: StandingState
   - type: Tag
     tags:
-    - ShoesRequiredStepTriggerImmune
     - DoorBumpOpener
     - CanPilot
   - type: Emoting
   - type: GuideHelp
     guides:
       - Cyborgs
+  - type: StepTriggerImmune
 
 - type: entity
   id: BaseBorgChassisNT
@@ -223,7 +227,8 @@
     - AllAccess
   - type: AccessReader
     access: [["Command"], ["Research"]]
-  - type: ShowSecurityIcons
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
 
 - type: entity
   id: BaseBorgChassisSyndicate

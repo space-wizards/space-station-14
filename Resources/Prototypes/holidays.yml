@@ -25,12 +25,6 @@
   beginMonth: February
 
 - type: holiday
-  id: TravisScottDay
-  name: holiday-name-travis-scott-day
-  beginDay: 10
-  beginMonth: February
-
-- type: holiday
   id: ValentinesDay
   name: holiday-name-valentines-day
   beginDay: 13

@@ -1,6 +1,8 @@
 - type: entity
   id: CrateSecurityArmor
   parent: CrateSecgear
+  name: armor crate
+  description: Three vests of well-rounded, decently-protective armor. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
@@ -10,6 +12,8 @@
 - type: entity
   id: CrateSecurityHelmet
   parent: CrateSecgear
+  name: helmet crate
+  description: Contains three standard-issue brain buckets. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
@@ -19,6 +23,8 @@
 - type: entity
   id: CrateSecurityNonlethal
   parent: CrateSecgear
+  name: nonlethals crate
+  description: Disabler weapons. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
@@ -35,6 +41,8 @@
 - type: entity
   id: CrateSecurityRiot
   parent: CrateSecgear
+  name: swat crate
+  description: Contains two sets of riot armor, helmets, shields, and enforcers loaded with beanbags. Extra ammo is included. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
@@ -53,6 +61,8 @@
 - type: entity
   id: CrateSecuritySupplies
   parent: CrateSecgear
+  name: security supplies crate
+  description: Contains various supplies for the station's Security team. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
@@ -65,6 +75,8 @@
 - type: entity
   id: CrateRestraints
   parent: CrateSecgear
+  name: restraints crate
+  description: Contains two boxes each of handcuffs and zipties. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
@@ -76,6 +88,8 @@
 - type: entity
   id: CrateSecurityBiosuit
   parent: CrateSecgear
+  name: security bio suit crate
+  description: Contains 2 biohazard suits to ensure that no disease will distract you from your duties. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
@@ -88,7 +102,8 @@
 
 - type: entity
   id: CrateSecurityTrackingMindshieldImplants
-  name: Implanter Crate
+  name: implanter crate
+  description: Contains 4 MindShield implants and 4 tracking implant. Requires Security access to open.
   parent: CrateSecgear
   components:
   - type: StorageFill
@@ -97,5 +112,5 @@
         amount: 4
       - id: TrackingImplanter
         amount: 4
-        
+
 # Cosmetic Crates

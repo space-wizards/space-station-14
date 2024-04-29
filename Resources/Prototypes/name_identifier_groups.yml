@@ -12,13 +12,6 @@
   prefix: HOLO
 
 - type: nameIdentifierGroup
-  id: Drone
-  prefix: DR
-  fullName: true
-  minValue: 10000
-  maxValue: 99999
-
-- type: nameIdentifierGroup
   id: MMI
   prefix: MMI
   minValue: 100
@@ -42,5 +35,11 @@
 
 - type: nameIdentifierGroup
   id: Bounty
+  minValue: 0
+  maxValue: 999
+
+- type: nameIdentifierGroup
+  id: CargoTelepads
+  prefix: TELE
   minValue: 0
   maxValue: 999

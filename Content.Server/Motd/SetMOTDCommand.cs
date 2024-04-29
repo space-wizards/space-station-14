@@ -36,12 +36,12 @@ public sealed class SetMotdCommand : LocalizedCommands
         if (string.IsNullOrEmpty(motd))
         {
             shell.WriteLine(Loc.GetString("cmd-set-motd-cleared-motd-message"));
-            _adminLogManager.Add(LogType.Chat, LogImpact.Low, $"{(player == null ? "LOCALHOST" : player.ConnectedClient.UserName):Player} cleared the MOTD for the server.");
+            _adminLogManager.Add(LogType.Chat, LogImpact.Low, $"{(player == null ? "LOCALHOST" : player.Channel.UserName):Player} cleared the MOTD for the server.");
         }
         else
         {
             shell.WriteLine(Loc.GetString("cmd-set-motd-set-motd-message", ("motd", motd)));
-            _adminLogManager.Add(LogType.Chat, LogImpact.Low, $"{(player == null ? "LOCALHOST" : player.ConnectedClient.UserName):Player} set the MOTD for the server to \"{motd:motd}\"");
+            _adminLogManager.Add(LogType.Chat, LogImpact.Low, $"{(player == null ? "LOCALHOST" : player.Channel.UserName):Player} set the MOTD for the server to \"{motd:motd}\"");
         }
     }
 

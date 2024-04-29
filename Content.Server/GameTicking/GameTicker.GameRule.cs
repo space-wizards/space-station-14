@@ -1,7 +1,8 @@
 using System.Linq;
 using Content.Server.Administration;
-using Content.Server.GameTicking.Rules.Components;
+using Content.Server.GameTicking.Components;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Prototypes;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
@@ -59,6 +60,7 @@ public sealed partial class GameTicker
     {
         var ruleEntity = Spawn(ruleId, MapCoordinates.Nullspace);
         _sawmill.Info($"Added game rule {ToPrettyString(ruleEntity)}");
+        _adminLogger.Add(LogType.EventStarted, $"Added game rule {ToPrettyString(ruleEntity)}");
 
         var ev = new GameRuleAddedEvent(ruleEntity, ruleId);
         RaiseLocalEvent(ruleEntity, ref ev, true);
@@ -100,8 +102,25 @@ public sealed partial class GameTicker
         if (MetaData(ruleEntity).EntityPrototype?.ID is not { } id) // you really fucked up
             return false;
 
+        // If we already have it, then we just skip the delay as it has already happened.
+        if (!RemComp<DelayedStartRuleComponent>(ruleEntity) && ruleData.Delay != null)
+        {
+            var delayTime = TimeSpan.FromSeconds(ruleData.Delay.Value.Next(_robustRandom));
+
+            if (delayTime > TimeSpan.Zero)
+            {
+                _sawmill.Info($"Queued start for game rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
+                _adminLogger.Add(LogType.EventStarted, $"Queued start for game rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
+
+                var delayed = EnsureComp<DelayedStartRuleComponent>(ruleEntity);
+                delayed.RuleStartTime = _gameTiming.CurTime + (delayTime);
+                return true;
+            }
+        }
+
         _allPreviousGameRules.Add((RoundDuration(), id));
         _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
+        _adminLogger.Add(LogType.EventStarted, $"Started game rule {ToPrettyString(ruleEntity)}");
 
         EnsureComp<ActiveGameRuleComponent>(ruleEntity);
         ruleData.ActivatedAt = _gameTiming.CurTime;
@@ -131,10 +150,29 @@ public sealed partial class GameTicker
         EnsureComp<EndedGameRuleComponent>(ruleEntity);
 
         _sawmill.Info($"Ended game rule {ToPrettyString(ruleEntity)}");
+        _adminLogger.Add(LogType.EventStopped, $"Ended game rule {ToPrettyString(ruleEntity)}");
 
         var ev = new GameRuleEndedEvent(ruleEntity, id);
         RaiseLocalEvent(ruleEntity, ref ev, true);
         return true;
+    }
+
+    /// <summary>
+    ///     Returns true if a game rule with the given component has been added.
+    /// </summary>
+    public bool IsGameRuleAdded<T>()
+        where T : IComponent
+    {
+        var query = EntityQueryEnumerator<T, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out _, out _))
+        {
+            if (HasComp<EndedGameRuleComponent>(uid))
+                continue;
+
+            return true;
+        }
+
+        return false;
     }
 
     public bool IsGameRuleAdded(EntityUid ruleEntity, GameRuleComponent? component = null)
@@ -148,6 +186,22 @@ public sealed partial class GameTicker
         {
             if (MetaData(ruleEntity).EntityPrototype?.ID == rule)
                 return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    ///     Returns true if a game rule with the given component is active..
+    /// </summary>
+    public bool IsGameRuleActive<T>()
+        where T : IComponent
+    {
+        var query = EntityQueryEnumerator<T, ActiveGameRuleComponent, GameRuleComponent>();
+        // out, damned underscore!!!
+        while (query.MoveNext(out _, out _, out _, out _))
+        {
+            return true;
         }
 
         return false;
@@ -217,6 +271,18 @@ public sealed partial class GameTicker
         }
     }
 
+    private void UpdateGameRules()
+    {
+        var query = EntityQueryEnumerator<DelayedStartRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var delay, out var rule))
+        {
+            if (_gameTiming.CurTime < delay.RuleStartTime)
+                continue;
+
+            StartGameRule(uid, rule);
+        }
+    }
+
     #region Command Implementations
 
     [AdminCommand(AdminFlags.Fun)]
@@ -227,6 +293,14 @@ public sealed partial class GameTicker
 
         foreach (var rule in args)
         {
+            if (shell.Player != null)
+            {
+                _adminLogger.Add(LogType.EventStarted, $"{shell.Player} tried to add game rule [{rule}] via command");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.EventStarted, $"Unknown tried to add game rule [{rule}] via command");
+            }
             var ent = AddGameRule(rule);
 
             // Start rule if we're already in the middle of a round
@@ -250,6 +324,14 @@ public sealed partial class GameTicker
         {
             if (!NetEntity.TryParse(rule, out var ruleEntNet) || !TryGetEntity(ruleEntNet, out var ruleEnt))
                 continue;
+            if (shell.Player != null)
+            {
+                _adminLogger.Add(LogType.EventStopped, $"{shell.Player} tried to end game rule [{rule}] via command");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.EventStopped, $"Unknown tried to end game rule [{rule}] via command");
+            }
 
             EndGameRule(ruleEnt.Value);
         }
@@ -269,38 +351,3 @@ public sealed partial class GameTicker
 
     #endregion
 }
-
-/*
-/// <summary>
-///     Raised broadcast when a game rule is selected, but not started yet.
-/// </summary>
-public sealed class GameRuleAddedEvent
-{
-    public GameRulePrototype Rule { get; }
-
-    public GameRuleAddedEvent(GameRulePrototype rule)
-    {
-        Rule = rule;
-    }
-}
-
-public sealed class GameRuleStartedEvent
-{
-    public GameRulePrototype Rule { get; }
-
-    public GameRuleStartedEvent(GameRulePrototype rule)
-    {
-        Rule = rule;
-    }
-}
-
-public sealed class GameRuleEndedEvent
-{
-    public GameRulePrototype Rule { get; }
-
-    public GameRuleEndedEvent(GameRulePrototype rule)
-    {
-        Rule = rule;
-    }
-}
-*/

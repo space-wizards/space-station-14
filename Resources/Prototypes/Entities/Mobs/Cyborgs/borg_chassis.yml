@@ -281,6 +281,8 @@
           shader: unshaded
           map: ["light"]
           visible: false
+    - type: PointLight
+      color: "#dd200b"
     - type: BorgChassis
       maxModules: 3
       moduleWhitelist:

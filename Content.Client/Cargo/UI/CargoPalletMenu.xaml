@@ -1,9 +1,9 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
-            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
             SetSize="300 150"
-            MinSize="300 150">
-    <BoxContainer Orientation="Vertical">
+            MinSize="300 150"
+                      Title="{Loc 'cargo-pallet-console-menu-title'}">
+    <BoxContainer Orientation="Vertical" Margin="5">
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'cargo-pallet-menu-appraisal-label'}"
                    StyleClasses="LabelKeyText" />

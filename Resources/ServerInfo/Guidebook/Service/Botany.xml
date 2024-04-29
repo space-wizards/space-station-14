@@ -75,4 +75,13 @@ You can use a [color=cyan]sterile swab[/color] to transfer pollen from one plant
 <GuideEntityEmbed Entity="DiseaseSwab"/>
 </Box>
 
+## Chemicals
+Some chemicals have special effects on plants.
+
+<GuideReagentEmbed Reagent="Dylovene"/>
+<GuideReagentEmbed Reagent="Cryoxadone"/>
+<GuideReagentEmbed Reagent="Necrosol"/>
+<GuideReagentEmbed Reagent="Phalanximine"/>
+<GuideReagentGroupEmbed Group="Botanical"/>
+
 </Document>
