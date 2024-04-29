@@ -187,12 +187,14 @@ public sealed class NukeOpsTest
         var totalSeconds = 30;
         var totalTicks = (int) Math.Ceiling(totalSeconds / server.Timing.TickPeriod.TotalSeconds);
         int increment = 5;
-        var resp = entMan.GetComponent<RespiratorComponent>(player);
+        //TODO respiration: Reimplement this
+        //var resp = entMan.GetComponent<RespiratorComponent>(player);
         var damage = entMan.GetComponent<DamageableComponent>(player);
         for (var tick = 0; tick < totalTicks; tick += increment)
         {
             await pair.RunTicksSync(increment);
-            Assert.That(resp.SuffocationCycles, Is.LessThanOrEqualTo(resp.SuffocationCycleThreshold));
+            //TODO respiration: Reimplement this
+            //Assert.That(resp.SuffocationCycles, Is.LessThanOrEqualTo(resp.SuffocationCycleThreshold));
             Assert.That(damage.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
         }
 
