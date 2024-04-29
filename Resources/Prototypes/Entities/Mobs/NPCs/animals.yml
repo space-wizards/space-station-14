@@ -2826,8 +2826,9 @@
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Piercing: 10
-        Structural: 10
+        Slash: 6
+        Piercing: 6
+        Structural: 15
   - type: Insulated
   
 - type: entity
