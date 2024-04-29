@@ -14,9 +14,9 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
 
         public override bool Condition(ReagentEffectArgs args)
         {
-            if (args.EntityManager.TryGetComponent(args.SolutionEntity, out HungerComponent? hunger))
+            if (args.EntityManager.TryGetComponent(args.SolutionEntity, out SatiationComponent? satiation))
             {
-                var total = hunger.Satiation.Current;
+                var total = satiation.Hunger.Current;
                 if (total > Min && total < Max)
                     return true;
             }

@@ -175,7 +175,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                 var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
 
                 // only eat when hungry or if it will eat anything
-                if (TryComp<HungerComponent>(owner, out var hunger) && hunger.Satiation.CurrentThreshold > SatiationThreashold.Okay && avoidBadFood)
+                if (TryComp<SatiationComponent>(owner, out var satiation) && satiation.Hunger.CurrentThreshold > SatiationThreashold.Okay && avoidBadFood)
                     return 0f;
 
                 // no mouse don't eat the uranium-235
@@ -194,7 +194,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                     return 0f;
 
                 // only drink when thirsty
-                if (TryComp<ThirstComponent>(owner, out var thirst) && thirst.Satiation.CurrentThreshold > SatiationThreashold.Okay)
+                if (TryComp<SatiationComponent>(owner, out var satiation) && satiation.Thirst.CurrentThreshold > SatiationThreashold.Okay)
                     return 0f;
 
                 // no janicow don't drink the blood puddle

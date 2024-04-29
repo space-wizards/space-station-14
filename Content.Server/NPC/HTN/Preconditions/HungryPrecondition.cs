@@ -1,4 +1,3 @@
-using Content.Shared.Hands.Components;
 using Content.Shared.Nutrition.Components;
 
 namespace Content.Server.NPC.HTN.Preconditions;
@@ -20,6 +19,6 @@ public sealed partial class HungryPrecondition : HTNPrecondition
             return false;
         }
 
-        return _entManager.TryGetComponent<HungerComponent>(owner, out var hunger) ? hunger.Satiation.CurrentThreshold <= MinHungerState : false;
+        return _entManager.TryGetComponent<SatiationComponent>(owner, out var satiation) ? satiation.Hunger.CurrentThreshold <= MinHungerState : false;
     }
 }
