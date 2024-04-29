@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Potato1234_x
-  changes:
-  - message: Happy Honk boxes can now hold normal sized items
-    type: Tweak
-  id: 5984
-  time: '2024-02-21T06:21:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25245
 - author: Hanzdegloker
   changes:
   - message: Standardized amount of huds in vendors and added new diagnostics eyeapatch
@@ -3868,3 +3861,12 @@
   id: 6483
   time: '2024-04-29T02:44:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27458
+- author: Beck Thompson, CoffeePoweredPHD
+  changes:
+  - message: Fixed infinite reagent duplication glitch with toilets and drains.
+    type: Fix
+  - message: Dirty water toilets now function correctly as toilets.
+    type: Fix
+  id: 6484
+  time: '2024-04-29T03:08:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27446
