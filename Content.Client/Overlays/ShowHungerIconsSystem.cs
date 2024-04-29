@@ -5,23 +5,25 @@ using Content.Shared.StatusIcon.Components;
 
 namespace Content.Client.Overlays;
 
-public sealed class ShowHungerIconsSystem : EquipmentHudSystem<ShowHungerIconsComponent>
+public sealed class ShowSatiationIconsSystem : EquipmentHudSystem<ShowHungerIconsComponent>
 {
-    [Dependency] private readonly HungerSystem _hunger = default!;
+    [Dependency] private readonly SatiationSystem _satiation = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HungerComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
+        SubscribeLocalEvent<SatiationComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
     }
 
-    private void OnGetStatusIconsEvent(EntityUid uid, HungerComponent component, ref GetStatusIconsEvent ev)
+    private void OnGetStatusIconsEvent(EntityUid uid, SatiationComponent component, ref GetStatusIconsEvent ev)
     {
         if (!IsActive || ev.InContainer)
             return;
 
-        if (_hunger.TryGetStatusIconPrototype(component, out var iconPrototype))
-            ev.StatusIcons.Add(iconPrototype);
+        if (_satiation.TryGetStatusHungerIconPrototype(component, out var hungerIconPrototype))
+            ev.StatusIcons.Add(hungerIconPrototype);
+        if (_satiation.TryGetStatusThirstIconPrototype(component, out var thirstIconPrototype))
+            ev.StatusIcons.Add(thirstIconPrototype);
     }
 }
