@@ -3,7 +3,5 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Extinguisher;
 
-[NetworkedComponent, RegisterComponent]
-public sealed partial class FireExtinguisherComponent : SharedFireExtinguisherComponent
-{
-}
+[RegisterComponent]
+public sealed partial class FireExtinguisherComponent : SharedFireExtinguisherComponent;

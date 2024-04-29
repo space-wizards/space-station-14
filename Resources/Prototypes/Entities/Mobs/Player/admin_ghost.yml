@@ -34,32 +34,32 @@
     - CentralCommand
   - type: UserInterface
     interfaces:
-      - key: enum.SolarControlConsoleUiKey.Key
+      enum.SolarControlConsoleUiKey.Key:
         type: SolarControlConsoleBoundUserInterface
-      - key: enum.CommunicationsConsoleUiKey.Key
+      enum.CommunicationsConsoleUiKey.Key:
         type: CommunicationsConsoleBoundUserInterface
-      - key: enum.RadarConsoleUiKey.Key
+      enum.RadarConsoleUiKey.Key:
         type: RadarConsoleBoundUserInterface
-      - key: enum.CargoConsoleUiKey.Orders
+      enum.CargoConsoleUiKey.Orders:
         type: CargoOrderConsoleBoundUserInterface
-      - key: enum.CrewMonitoringUIKey.Key
+      enum.CrewMonitoringUIKey.Key:
         type: CrewMonitoringBoundUserInterface
-      - key: enum.GeneralStationRecordConsoleKey.Key
-        # who the fuck named this bruh
+      enum.GeneralStationRecordConsoleKey.Key:
+      # who the fuck named this bruh
         type: GeneralStationRecordConsoleBoundUserInterface
   - type: IntrinsicUI
     uis:
-      - key: enum.SolarControlConsoleUiKey.Key
+      enum.SolarControlConsoleUiKey.Key:
         toggleAction: ActionAGhostShowSolar
-      - key: enum.CommunicationsConsoleUiKey.Key
+      enum.CommunicationsConsoleUiKey.Key:
         toggleAction: ActionAGhostShowCommunications
-      - key: enum.RadarConsoleUiKey.Key
+      enum.RadarConsoleUiKey.Key:
         toggleAction: ActionAGhostShowRadar
-      - key: enum.CargoConsoleUiKey.Orders
+      enum.CargoConsoleUiKey.Orders:
         toggleAction: ActionAGhostShowCargo
-      - key: enum.CrewMonitoringUIKey.Key
+      enum.CrewMonitoringUIKey.Key:
         toggleAction: ActionAGhostShowCrewMonitoring
-      - key: enum.GeneralStationRecordConsoleKey.Key
+      enum.GeneralStationRecordConsoleKey.Key:
         toggleAction: ActionAGhostShowStationRecords
   - type: SolarControlConsole # look ma i AM the computer!
   - type: CommunicationsConsole
