@@ -39,7 +39,7 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         Solution? prototype,
         out bool existed)
     {
-        EnsureSolutionEntity(entity, name, maxVol, prototype, out existed, out var solEnt);
+        EnsureSolutionEntity(entity, name, out existed, out var solEnt, maxVol, prototype);
         return solEnt!.Value;//solEnt is only ever null on the client, so we can suppress this
     }
 }
