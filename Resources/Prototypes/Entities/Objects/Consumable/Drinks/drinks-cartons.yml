@@ -193,3 +193,18 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/oatmilk.rsi
+    
+- type: entity
+  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
+  id: DrinkJuiceLemonCarton
+  name: lemon juice
+  description: First it's sour, then it's still sour.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: JuiceLemon
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/lemonjuice.rsi
