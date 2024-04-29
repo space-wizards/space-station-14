@@ -11,9 +11,8 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition;
-using System.Threading;
-using Content.Shared.Medical.Blood.Components;
 using BloodstreamComponent = Content.Shared.Medical.Blood.Components.BloodstreamComponent;
+using Content.Shared.Atmos;
 
 /// <summary>
 /// System for vapes
