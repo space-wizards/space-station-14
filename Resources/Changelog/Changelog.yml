@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: EdenTheLiznerd
-  changes:
-  - message: Nettles are now weaker than their deathnettle counterparts
-    type: Tweak
-  id: 5993
-  time: '2024-02-21T06:42:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25177
-- author: potato1234x
-  changes:
-  - message: Added spaceman's trumpets which come from mutated lilies and can be ground
-      up into Polypyrylium Oligomers which are is just slightly better bic.
-    type: Add
-  - message: Added lilies which are mutated from poppies and are used to create spaceman's
-      trumpets.
-    type: Add
-  id: 5994
-  time: '2024-02-21T06:49:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25090
 - author: FungiFellow
   changes:
   - message: Death Acidifer Price 2->4
@@ -3869,3 +3851,17 @@
   id: 6492
   time: '2024-04-29T04:52:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27441
+- author: mirrorcult
+  changes:
+  - message: Random events should now occur much more frequently
+    type: Tweak
+  id: 6493
+  time: '2024-04-29T06:38:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27469
+- author: Plykiya
+  changes:
+  - message: Latejoin players now have a chance to roll thief.
+    type: Add
+  id: 6494
+  time: '2024-04-29T06:38:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27466
