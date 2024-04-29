@@ -25,6 +25,6 @@ public sealed class ProtodataTag : IMarkupTag
         if (parts.Length > 1 && value is IFormattable formattable)
             return formattable.ToString(parts[1], CultureInfo.CurrentCulture);
 
-        return value.ToString() ?? "NULL";
+        return value?.ToString() ?? "NULL";
     }
 }

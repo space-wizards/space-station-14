@@ -17,10 +17,11 @@ public sealed class GuidebookDataSystem : EntitySystem
 
     private void OnServerUpdated(UpdateGuidebookDataEvent args)
     {
+
         _data = args.Data;
     }
 
-    public bool TryGetValue(string prototype, string component, string field, [NotNullWhen(true)] out object? value)
+    public bool TryGetValue(string prototype, string component, string field, out object? value)
     {
         if (_data == null)
         {
