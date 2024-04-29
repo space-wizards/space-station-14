@@ -8,14 +8,16 @@ namespace Content.Shared.Guidebook;
 [DataDefinition]
 public sealed partial class GuidebookData
 {
-    public Dictionary<string, Dictionary<string, Dictionary<string, string>>> Data = [];
+    public int Count { get; private set; }
+    public Dictionary<string, Dictionary<string, Dictionary<string, object?>>> Data = [];
 
     public void AddData(string prototype, string component, string field, object? value)
     {
-        Data.GetOrNew(prototype).GetOrNew(component).Add(field, value?.ToString() ?? "NULL");
+        Data.GetOrNew(prototype).GetOrNew(component).Add(field, value);
+        Count++;
     }
 
-    public bool TryGetValue(string prototype, string component, string field, [NotNullWhen(true)] out string? value)
+    public bool TryGetValue(string prototype, string component, string field, out object? value)
     {
         if (Data.TryGetValue(prototype, out var p)
             && p.TryGetValue(component, out var c)
@@ -30,5 +32,6 @@ public sealed partial class GuidebookData
     public void Clear()
     {
         Data.Clear();
+        Count = 0;
     }
 }

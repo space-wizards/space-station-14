@@ -37,7 +37,8 @@ public sealed class GuidebookDataSystem : EntitySystem
 
     private void GatherData(ref GuidebookData cache, string? requiredNamespace = null)
     {
-        var tagged = new Dictionary<ComponentRegistration, List<FieldInfo>>();
+        var fieldCount = 0;
+        var tagged = new Dictionary<ComponentRegistration, List<MemberInfo>>();
         foreach (var registration in _componentFactory.GetAllRegistrations())
         {
             if (requiredNamespace != null
@@ -47,30 +48,41 @@ public sealed class GuidebookDataSystem : EntitySystem
                 continue;
             }
 
-            foreach (var field in registration.Type.GetFields())
+            foreach (var member in registration.Type.GetMembers())
             {
-                if (field.HasCustomAttribute<GuidebookDataAttribute>())
+                if (member.HasCustomAttribute<GuidebookDataAttribute>())
                 {
-                    tagged.GetOrNew(registration).Add(field);
+                    tagged.GetOrNew(registration).Add(member);
+                    fieldCount++;
                 }
             }
         }
 
+        var prototypeCount = 0;
         var entityPrototypes = _protoMan.EnumeratePrototypes<EntityPrototype>();
         foreach (var prototype in entityPrototypes)
         {
-            foreach (var (type, fields) in tagged)
+            foreach (var (type, members) in tagged)
             {
                 if (!prototype.TryGetComponent<IComponent>(type.Name, out var component))
                     continue;
 
-                foreach (var field in fields)
+                prototypeCount++;
+
+                foreach (var member in members)
                 {
-                    //Log.Debug($"{prototype.ID}.{type.Name}.{field.Name}");
-                    cache.AddData(prototype.ID, type.Name, field.Name, field.GetValue(component));
+                    var value = member switch
+                    {
+                        FieldInfo field => field.GetValue(component),
+                        PropertyInfo property => property.GetValue(component),
+                        _ => throw new NotImplementedException("Unsupported member type")
+                    };
+                    cache.AddData(prototype.ID, type.Name, member.Name, value);
                 }
             }
         }
+
+        Log.Debug($"Collected {cache.Count} Guidebook Protodata value(s) - {prototypeCount} matched prototype(s), {tagged.Count} component(s), {fieldCount} field(s)");
     }
 
     private void RebuildDataCache()

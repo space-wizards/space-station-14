@@ -17,30 +17,16 @@ public sealed class GuidebookDataSystem : EntitySystem
 
     private void OnServerUpdated(UpdateGuidebookDataEvent args)
     {
-        Log.Debug("Got Server Prototype data");
-        foreach (var (prototype, components) in args.Data.Data)
-        {
-            Log.Debug($"{prototype}");
-            foreach (var (component, fields) in components)
-            {
-                Log.Debug($" -- {component}");
-                foreach (var (field, value) in fields)
-                {
-                    Log.Debug($" -- -- {field} - {value}");
-                }
-            }
-        }
         _data = args.Data;
     }
 
-    public bool TryGetValue(string id, [NotNullWhen(true)] out string? value)
+    public bool TryGetValue(string prototype, string component, string field, [NotNullWhen(true)] out object? value)
     {
         if (_data == null)
         {
-            value = "???";
+            value = null;
             return false;
         }
-        var parts = id.Split('.');
-        return _data.TryGetValue(parts[0], parts[1], parts[2], out value);
+        return _data.TryGetValue(prototype, component, field, out value);
     }
 }
