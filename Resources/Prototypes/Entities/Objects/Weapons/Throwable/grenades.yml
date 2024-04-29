@@ -122,7 +122,7 @@
 
 - type: entity
   name: Self Destruct
-  description: "Go out on your own terms!
+  description: Go out on your own terms!
   parent: GrenadeBase
   id: SelfDestructSeq
   noSpawn: true

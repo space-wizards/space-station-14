@@ -558,8 +558,8 @@
 - type: entity
   id: BorgModuleMartyr
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: Martyr Cyborg Module
-  description: "A module that comes with an explosive you probably don't want you to handle."
+  name: martyr cyborg module
+  description: A module that comes with an explosive you probably don't want to handle yourself.
   components:
     - type: Sprite
       layers:
