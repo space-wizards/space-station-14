@@ -963,6 +963,25 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     public bool EnsureSolution(
         Entity<MetaDataComponent?> entity,
         string name,
+        [NotNullWhen(true)]out Solution? solution,
+        FixedPoint2 maxVol = default)
+    {
+        return EnsureSolution(entity, name, maxVol, null, out _, out solution);
+    }
+
+    public bool EnsureSolution(
+        Entity<MetaDataComponent?> entity,
+        string name,
+        out bool existed,
+        [NotNullWhen(true)]out Solution? solution,
+        FixedPoint2 maxVol = default)
+    {
+        return EnsureSolution(entity, name, maxVol, null, out existed, out solution);
+    }
+
+    public bool EnsureSolution(
+        Entity<MetaDataComponent?> entity,
+        string name,
         FixedPoint2 maxVol,
         Solution? prototype,
         out bool existed,
