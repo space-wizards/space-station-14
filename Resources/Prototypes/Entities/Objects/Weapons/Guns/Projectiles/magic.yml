@@ -304,11 +304,11 @@
       impactEffect: BulletImpactEffect
       damage:
         types:
-          Piercing: 6
+          Piercing: 20
       soundHit:
         path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     - type: StaminaDamageOnCollide
-      damage: 6
+      damage: 25
     - type: TimedDespawn
       lifetime: 10
     - type: SolutionContainerManager
@@ -316,13 +316,13 @@
         ammo:
           reagents:
           - ReagentId: MuteToxin
-            Quantity: 3
+            Quantity: 20
     - type: RefillableSolution
       solution: ammo
     - type: DrainableSolution
       solution: ammo
     - type: SolutionInjectOnProjectileHit
-      transferAmount: 3
+      transferAmount: 20
       solution: ammo
     - type: InjectableSolution
       solution: ammo
