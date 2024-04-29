@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: FungiFellow
-  changes:
-  - message: Death Acidifer Price 2->4
-    type: Tweak
-  - message: Removed Acidifier from Syndie Uplink
-    type: Remove
-  id: 5995
-  time: '2024-02-21T06:51:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25039
 - author: Aquif
   changes:
   - message: Admins can now disable the bwoink sound if they don't want to scare players.
@@ -3865,3 +3856,10 @@
   id: 6494
   time: '2024-04-29T06:38:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27466
+- author: ElectroJr
+  changes:
+  - message: Fixed actions sometimes disappearing from the hotbar when double clicking
+    type: Fix
+  id: 6495
+  time: '2024-04-29T08:36:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27468
