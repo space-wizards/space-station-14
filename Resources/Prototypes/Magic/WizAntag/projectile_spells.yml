@@ -68,9 +68,7 @@
   noSpawn: true
   components:
   - type: WorldTargetAction
-    useDelay: 2.5
-    charges: 2
-    renewCharges: true
+    useDelay: 0.5
     itemIconStyle: BigAction
     checkCanAccess: false
     range: 60

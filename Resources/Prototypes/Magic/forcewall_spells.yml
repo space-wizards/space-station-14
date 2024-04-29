@@ -24,7 +24,7 @@
   noSpawn: true
   components:
   - type: InstantAction
-    useDelay: 10
+    useDelay: 20
     itemIconStyle: BigAction
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/forcewall.ogg
@@ -34,4 +34,3 @@
     event: !type:InstantSpawnSpellEvent
       prototype: WallInvisible
       posData: !type:TargetInFront
-      speech: action-speech-spell-forcewall
