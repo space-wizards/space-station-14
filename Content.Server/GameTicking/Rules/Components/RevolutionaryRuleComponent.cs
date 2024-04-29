@@ -23,43 +23,6 @@ public sealed partial class RevolutionaryRuleComponent : Component
     public TimeSpan TimerWait = TimeSpan.FromSeconds(20);
 
     /// <summary>
-    /// Stores players minds
-    /// </summary>
-    [DataField]
-    public Dictionary<string, EntityUid> HeadRevs = new();
-
-    [DataField]
-    public ProtoId<AntagPrototype> HeadRevPrototypeId = "HeadRev";
-
-    /// <summary>
-    /// Min players needed for Revolutionary gamemode to start.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public int MinPlayers = 15;
-
-    /// <summary>
-    /// Max Head Revs allowed during selection.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public int MaxHeadRevs = 3;
-
-    /// <summary>
-    /// The amount of Head Revs that will spawn per this amount of players.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public int PlayersPerHeadRev = 15;
-
-    /// <summary>
-    /// The gear head revolutionaries are given on spawn.
-    /// </summary>
-    [DataField]
-    public List<EntProtoId> StartingGear = new()
-    {
-        "Flash",
-        "ClothingEyesGlassesSunglasses"
-    };
-
-    /// <summary>
     /// The time it takes after the last head is killed for the shuttle to arrive.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
