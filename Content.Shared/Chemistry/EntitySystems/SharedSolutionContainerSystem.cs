@@ -1027,6 +1027,13 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     public bool EnsureSolutionEntity(
         Entity<SolutionContainerManagerComponent?> entity,
         string name,
+        [NotNullWhen(true)] out Entity<SolutionComponent>? solutionEntity,
+        FixedPoint2 maxVol = default) =>
+        EnsureSolutionEntity(entity, name, out _, out solutionEntity, maxVol);
+
+    public bool EnsureSolutionEntity(
+        Entity<SolutionContainerManagerComponent?> entity,
+        string name,
         out bool existed,
         [NotNullWhen(true)] out Entity<SolutionComponent>? solutionEntity,
         FixedPoint2 maxVol = default,
