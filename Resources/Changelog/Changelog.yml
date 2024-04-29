@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Added fill level visuals to all the drinks. Cheers!
-    type: Add
-  id: 5983
-  time: '2024-02-21T06:17:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25319
 - author: Potato1234_x
   changes:
   - message: Happy Honk boxes can now hold normal sized items
@@ -3868,3 +3861,10 @@
   id: 6482
   time: '2024-04-28T11:07:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27200
+- author: Plykiya
+  changes:
+  - message: You can now pick up Smile and put them in your bag.
+    type: Add
+  id: 6483
+  time: '2024-04-29T02:44:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27458
