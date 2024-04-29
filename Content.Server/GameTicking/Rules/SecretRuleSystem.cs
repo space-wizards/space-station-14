@@ -136,7 +136,6 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
     public bool CanPickAny(IEnumerable<ProtoId<GamePresetPrototype>> protos)
     {
         var players = GameTicker.ReadyPlayerCount();
-        ;
         foreach (var id in protos)
         {
             if (!_prototypeManager.TryIndex(id, out var selectedPreset))
