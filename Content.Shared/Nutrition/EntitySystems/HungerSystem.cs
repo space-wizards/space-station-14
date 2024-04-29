@@ -137,13 +137,13 @@ public sealed class HungerSystem : SatiationSystem
         switch (component.Satiation.CurrentThreshold)
         {
             case SatiationThreashold.Full:
-                prototype = Icons![0].Item2;
+                prototype = Icons?[0].Item2;
                 break;
             case SatiationThreashold.Concerned:
-                prototype = Icons![1].Item2;
+                prototype = Icons?[1].Item2;
                 break;
             case SatiationThreashold.Desperate:
-                prototype = Icons![2].Item2;
+                prototype = Icons?[2].Item2;
                 break;
             default:
                 prototype = null;
