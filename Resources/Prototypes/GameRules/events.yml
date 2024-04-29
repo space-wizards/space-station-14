@@ -460,10 +460,10 @@
   noSpawn: true
   components:
   - type: StationEvent
-    earliestStart: 30
+    earliestStart: 25
     weight: 15
     minimumPlayers: 15
-    maxOccurrences: 1 # can only happen once per round
+    reoccurrenceDelay: 60
     startAnnouncement: station-event-communication-interception
     startAudio:
       path: /Audio/Announcements/intercept.ogg
