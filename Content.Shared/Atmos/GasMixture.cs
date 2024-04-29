@@ -228,10 +228,11 @@ namespace Content.Shared.Atmos
             //TODO: re-enable this when the sandbox actually behaves
             //Array.Resize(ref Moles, Atmospherics.AdjustedNumberOfGases);
             var newMols = new float[Atmospherics.AdjustedNumberOfGases];
-            for (int i = 0; i < Moles.Length; i++)
+            for (var i = 0; i < Moles.Length; i++)
             {
                 newMols[i] = Moles[i];
             }
+            Moles = newMols;
         }
 
         public GasMixtureStringRepresentation ToPrettyString()
