@@ -64,13 +64,13 @@ public sealed class BloodstreamSystem : EntitySystem
 
     private void OnBloodstreamMapInit(EntityUid bloodstreamEnt, BloodstreamComponent bloodstream, ref MapInitEvent args)
     {
-
-        if (!TryGetBloodStreamSolutions(
-                (bloodstreamEnt, bloodstream, Comp<SolutionContainerManagerComponent>(bloodstreamEnt)),
-                out var bloodSolution,
-                out var bloodReagentSolution,
-                out var spillSolution))
-            return;
+        if (!_solutionSystem.EnsureSolutionEntity((bloodstreamEnt, null), BloodstreamComponent.BloodSolutionId,
+                out var bloodSolution, bloodstream.MaxVolume)
+            || !_solutionSystem.EnsureSolutionEntity((bloodstreamEnt, null), BloodstreamComponent.SpillSolutionId,
+                out var spillSolution, bloodstream.MaxVolume)
+            || !_solutionSystem.EnsureSolutionEntity((bloodstreamEnt, null), BloodstreamComponent.DissolvedReagentSolutionId,
+                out var bloodReagentSolution, bloodstream.MaxVolume))
+            return;//this will never get called because ensureSolution only returns false on client and MapInit only runs on server, but this fixes nullables
 
         _solutionSystem.SetCapacity((bloodSolution.Value, bloodSolution), bloodstream.MaxVolume);
         _solutionSystem.SetCapacity((bloodReagentSolution.Value, bloodReagentSolution), bloodstream.MaxVolume);
@@ -84,6 +84,8 @@ public sealed class BloodstreamSystem : EntitySystem
         bloodstream.BloodSolutionEnt = bloodSolution;
         bloodstream.SpillSolutionEnt = spillSolution;
         bloodstream.BloodRegentsSolutionEnt = bloodReagentSolution;
+
+        Dirty(bloodstreamEnt, bloodstream);
 
         //If we have a circulation comp, call the setup method on bloodCirculationSystem
         if (TryComp<VascularSystemComponent>(bloodstreamEnt, out var bloodCircComp))
@@ -101,7 +103,6 @@ public sealed class BloodstreamSystem : EntitySystem
             bloodstream.BloodReagentId = new ReagentId(bloodstream.BloodReagent, null);
             bloodstream.Volume = volume;
         }
-        Dirty(bloodstreamEnt, bloodstream);
     }
 
     private void RegenBlood(Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream)
@@ -263,27 +264,24 @@ public sealed class BloodstreamSystem : EntitySystem
     }
 
     public Entity<SolutionComponent> GetBloodSolution(
-        Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream)
+        Entity<BloodstreamComponent> bloodstream)
     {
-        if (!_solutionSystem.TryGetSolution((bloodstream, bloodstream),
-                BloodstreamComponent.BloodSolutionId, out var solEnt, true))
-            throw new Exception($"{BloodstreamComponent.BloodSolutionId}  not defined for Ent {ToPrettyString(bloodstream)}");
-        return solEnt.Value;
+        if (bloodstream.Comp.BloodSolutionEnt == null)
+            throw new Exception($"{ToPrettyString(bloodstream)} is missing a linked Blood Solution!");
+        return (bloodstream.Comp.BloodSolutionEnt.Value, Comp<SolutionComponent>(bloodstream.Comp.BloodSolutionEnt.Value));
     }
     public Entity<SolutionComponent> GetSpillSolution(
-        Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream)
+        Entity<BloodstreamComponent> bloodstream)
     {
-        if (!_solutionSystem.TryGetSolution((bloodstream, bloodstream),
-                BloodstreamComponent.SpillSolutionId, out var solEnt, true))
-            throw new Exception($"{BloodstreamComponent.SpillSolutionId} not defined for Ent {ToPrettyString(bloodstream)}");
-        return solEnt.Value;
+        if (bloodstream.Comp.SpillSolutionEnt == null)
+            throw new Exception($"{ToPrettyString(bloodstream)} is missing a linked Spill Solution!");
+        return (bloodstream.Comp.SpillSolutionEnt.Value, Comp<SolutionComponent>(bloodstream.Comp.SpillSolutionEnt.Value));
     }
     public Entity<SolutionComponent> GetDissolvedSolution(
-        Entity<BloodstreamComponent, SolutionContainerManagerComponent> bloodstream)
+        Entity<BloodstreamComponent> bloodstream)
     {
-        if (!_solutionSystem.TryGetSolution((bloodstream, bloodstream),
-                BloodstreamComponent.DissolvedReagentSolutionId, out var solEnt, true))
-            throw new Exception($"{BloodstreamComponent.SpillSolutionId} not defined for Ent {ToPrettyString(bloodstream)}");
-        return solEnt.Value;
+        if (bloodstream.Comp.BloodRegentsSolutionEnt == null)
+            throw new Exception($"{ToPrettyString(bloodstream)} is missing a linked DissolvedReagent Solution!");
+        return (bloodstream.Comp.BloodRegentsSolutionEnt.Value, Comp<SolutionComponent>(bloodstream.Comp.BloodRegentsSolutionEnt.Value));
     }
 }
