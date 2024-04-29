@@ -4,22 +4,26 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Shared.UserInterface
 {
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class ActivatableUIComponent : Component
     {
         [DataField(required: true, customTypeSerializer: typeof(EnumSerializer))]
-        public Enum? Key { get; set; } = default!;
+        public Enum? Key;
+
+        /// <summary>
+        /// Whether the item must be held in one of the user's hands to work.
+        /// This is ignored unless <see cref="RequireHands"/> is true.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
+        public bool InHandsOnly;
+
+        [DataField]
+        public bool SingleUser;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
-        public bool InHandsOnly { get; set; } = false;
-
-        [DataField]
-        public bool SingleUser { get; set; } = false;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField]
-        public bool AdminOnly { get; set; } = false;
+        public bool AdminOnly;
 
         [DataField]
         public LocId VerbText = "ui-verb-toggle-open";
@@ -38,16 +42,15 @@ namespace Content.Shared.UserInterface
         /// <summary>
         ///     Entities that are required to open this UI.
         /// </summary>
-        [DataField("allowedItems")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public EntityWhitelist? AllowedItems = null;
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public EntityWhitelist? RequiredItems;
 
         /// <summary>
-        ///     Whether you can activate this ui with activateinhand or not
+        ///     If true, then this UI can only be opened via verbs. I.e., normal interactions/activations will not open
+        ///     the UI.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField]
-        public bool RightClickOnly;
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public bool VerbOnly;
 
         /// <summary>
         ///     Whether spectators (non-admin ghosts) should be allowed to view this UI.
@@ -57,17 +60,18 @@ namespace Content.Shared.UserInterface
         public bool AllowSpectator = true;
 
         /// <summary>
-        ///     Whether the UI should close when the item is deselected due to a hand swap or drop
+        ///     Whether the item must be in the user's currently selected/active hand.
+        ///     This is ignored unless <see cref="InHandsOnly"/> is true.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
-        public bool CloseOnHandDeselect = true;
+        public bool RequireActiveHand = true;
 
         /// <summary>
         ///     The client channel currently using the object, or null if there's none/not single user.
         ///     NOTE: DO NOT DIRECTLY SET, USE ActivatableUISystem.SetCurrentSingleUser
         /// </summary>
-        [ViewVariables]
+        [DataField, AutoNetworkedField]
         public EntityUid? CurrentSingleUser;
     }
 }

@@ -18,7 +18,6 @@
   - type: PaperLabelType
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
-    closeOnHandDeselect: false
     requireHands: false
   - type: UserInterface
     interfaces:
