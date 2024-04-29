@@ -11,5 +11,5 @@ public sealed partial class AlertLevelInterceptionRuleComponent : Component
     /// Alert level to set the station to when the event starts.
     /// </summary>
     [DataField]
-    public ProtoId<AlertLevelPrototype> AlertLevel = "blue";
+    public string AlertLevel = "blue";
 }
