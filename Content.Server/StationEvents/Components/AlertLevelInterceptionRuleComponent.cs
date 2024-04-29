@@ -4,12 +4,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.StationEvents.Components;
 
-[RegisterComponent, Access(typeof(CommunicationInterceptionRule))]
-public sealed partial class CommunicationInterceptionRuleComponent : Component
+[RegisterComponent, Access(typeof(AlertLevelInterceptionRule))]
+public sealed partial class AlertLevelInterceptionRuleComponent : Component
 {
     /// <summary>
     /// Alert level to set the station to when the event starts.
     /// </summary>
     [DataField]
-    public ProtoId<AlertLevelPrototype> AlertLevel = "yellow";
+    public ProtoId<AlertLevelPrototype> AlertLevel = "blue";
 }
