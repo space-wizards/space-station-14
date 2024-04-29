@@ -364,21 +364,3 @@
       itemIconStyle: NoItem
       useDelay: 1 # emote spam
       event: !type:ToggleActionEvent
-
-- type: worldTargetAction
-  id: MimeGun
-  name: Finger Guns
-  description: Shoot muting mime bullets from your fingertips!
-  userPopup: You draw your fingers!
-  useDelay: 5
-  itemIconStyle: BigAction
-  checkCanAccess: false
-  range: 60
-  sound: !type:SoundPathSpecifier
-    path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
-  icon:
-    sprite: Objects/Magic/magicactions.rsi
-    state: finger_guns
-  serverEvent: !type:ProjectileSpellEvent
-    prototype: ProjectileFingerGun
-    posData: !type:TargetCasterPos

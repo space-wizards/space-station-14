@@ -21,14 +21,13 @@
   id: MimeBlockade
   name: Invisible Blockade
   description: Form an invisible three tile wide blockade.
-  userPopup: You form a blockade in front of yourself.
   useDelay: 50
   userPopup: action-popup-spell-blockade
   itemIconStyle: BigAction
   icon:
     sprite: Objects/Magic/magicactions.rsi
     state: invisible_blockade
-  serverEvent: !type:InstantSpawnSpellEvent
+  event: !type:InstantSpawnSpellEvent
     prototype: WallInvisible
     preventCollide: false
     posData: !type:TargetInFront
