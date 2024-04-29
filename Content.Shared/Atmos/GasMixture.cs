@@ -224,7 +224,14 @@ namespace Content.Shared.Atmos
             // TODO add fixed-length-array serializer
 
             // The arrays MUST have a specific length.
-            Array.Resize(ref Moles, Atmospherics.AdjustedNumberOfGases);
+
+            //TODO: re-enable this when the sandbox actually behaves
+            //Array.Resize(ref Moles, Atmospherics.AdjustedNumberOfGases);
+            var newMols = new float[Atmospherics.AdjustedNumberOfGases];
+            for (int i = 0; i < Moles.Length; i++)
+            {
+                newMols[i] = Moles[i];
+            }
         }
 
         public GasMixtureStringRepresentation ToPrettyString()
