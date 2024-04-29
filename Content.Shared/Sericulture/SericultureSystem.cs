@@ -20,7 +20,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     // Systems
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly HungerSystem _hungerSystem = default!;
+    [Dependency] private readonly SatiationSystem _satiationSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedStackSystem _stackSystem = default!;
 
@@ -52,8 +52,8 @@ public abstract partial class SharedSericultureSystem : EntitySystem
 
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)
     {
-        if (TryComp<HungerComponent>(uid, out var hungerComp)
-        && _hungerSystem.IsHungerBelowState(uid, comp.MinHungerThreshold, hungerComp.Satiation.Current- comp.HungerCost, hungerComp))
+        if (TryComp<SatiationComponent>(uid, out var satiationComp)
+        && _satiationSystem.IsHungerBelowState(uid, satiationComp, comp.MinHungerThreshold, satiationComp.Hunger.Current- comp.HungerCost))
         {
             _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
             return;
@@ -76,14 +76,14 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         if (args.Cancelled || args.Handled || comp.Deleted)
             return;
 
-        if (TryComp<HungerComponent>(uid, out var hungerComp) // A check, just incase the doafter is somehow performed when the entity is not in the right hunger state.
-        && _hungerSystem.IsHungerBelowState(uid, comp.MinHungerThreshold, hungerComp.Satiation.Current - comp.HungerCost, hungerComp))
+        if (TryComp<SatiationComponent>(uid, out var satiationComp) // A check, just incase the doafter is somehow performed when the entity is not in the right hunger state.
+        && _satiationSystem.IsHungerBelowState(uid, satiationComp, comp.MinHungerThreshold, satiationComp.Hunger.Current - comp.HungerCost))
         {
             _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
             return;
         }
 
-        _hungerSystem.ModifyHunger(uid, -comp.HungerCost);
+        _satiationSystem.ModifyHunger(uid, -comp.HungerCost);
 
         if (!_netManager.IsClient) // Have to do this because spawning stuff in shared is CBT.
         {

@@ -30,14 +30,14 @@ namespace Content.Server.Nutrition
                 return;
             }
 
-            if (!_entities.TryGetComponent(playerEntity, out HungerComponent? hunger))
+            if (!_entities.TryGetComponent(playerEntity, out SatiationComponent? satiation))
             {
-                shell.WriteLine($"Your entity does not have a {nameof(HungerComponent)} component.");
+                shell.WriteLine($"Your entity does not have a {nameof(SatiationComponent)} component.");
                 return;
             }
 
-            var hungryThreshold = hunger.Satiation.Thresholds[SatiationThreashold.Desperate];
-            _entities.System<HungerSystem>().SetHunger(playerEntity, hungryThreshold, hunger);
+            var hungryThreshold = satiation.Hunger.Thresholds[SatiationThreashold.Desperate];
+            _entities.System<SatiationSystem>().SetHunger(playerEntity, hungryThreshold, satiation);
         }
     }
 }

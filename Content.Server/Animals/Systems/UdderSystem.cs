@@ -20,7 +20,7 @@ namespace Content.Server.Animals.Systems;
 /// </summary>
 internal sealed class UdderSystem : EntitySystem
 {
-    [Dependency] private readonly HungerSystem _hunger = default!;
+    [Dependency] private readonly SatiationSystem _satiation = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -52,13 +52,13 @@ internal sealed class UdderSystem : EntitySystem
                 continue;
 
             // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
-            if (EntityManager.TryGetComponent(uid, out HungerComponent? hunger))
+            if (EntityManager.TryGetComponent(uid, out SatiationComponent? satiation))
             {
                 // Is there enough nutrition to produce reagent?
-                if (_hunger.GetHungerThreshold(hunger) < SatiationThreashold.Okay)
+                if (_satiation.GetHungerThreshold(satiation) < SatiationThreashold.Okay)
                     continue;
 
-                _hunger.ModifyHunger(uid, -udder.HungerUsage, hunger);
+                _satiation.ModifyHunger(uid, -udder.HungerUsage, satiation);
             }
 
             if (!_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution))

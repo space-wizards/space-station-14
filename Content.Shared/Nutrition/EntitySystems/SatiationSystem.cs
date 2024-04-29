@@ -128,7 +128,7 @@ public abstract class SatiationSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="amount"></param>
     /// <param name="component"></param>
-    protected void ModifyThirst(EntityUid uid, float amount, SatiationComponent? component)
+    public void ModifyThirst(EntityUid uid, float amount, SatiationComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -141,7 +141,7 @@ public abstract class SatiationSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="amount"></param>
     /// <param name="component"></param>
-    protected void ModifyHunger(EntityUid uid, float amount, SatiationComponent? component)
+    public void ModifyHunger(EntityUid uid, float amount, SatiationComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -161,7 +161,7 @@ public abstract class SatiationSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="amount"></param>
     /// <param name="component"></param>
-    public void SetThirst(EntityUid uid, float amount, SatiationComponent? component)
+    public void SetThirst(EntityUid uid, float amount, SatiationComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -176,7 +176,7 @@ public abstract class SatiationSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="amount"></param>
     /// <param name="component"></param>
-    public void SetHunger(EntityUid uid, float amount, SatiationComponent? component)
+    public void SetHunger(EntityUid uid, float amount, SatiationComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -197,7 +197,7 @@ public abstract class SatiationSystem : EntitySystem
             satiation.CurrentThresholdDamage = null;
     }
 
-    private void UpdateCurrentThirstThreshold(EntityUid uid, SatiationComponent? component)
+    private void UpdateCurrentThirstThreshold(EntityUid uid, SatiationComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -206,7 +206,7 @@ public abstract class SatiationSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    private void UpdateCurrentHungerThreshold(EntityUid uid, SatiationComponent? component)
+    private void UpdateCurrentHungerThreshold(EntityUid uid, SatiationComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;

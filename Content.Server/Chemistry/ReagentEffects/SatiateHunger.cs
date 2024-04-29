@@ -1,4 +1,4 @@
-﻿using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -23,9 +23,9 @@ namespace Content.Server.Chemistry.ReagentEffects
         public override void Effect(ReagentEffectArgs args)
         {
             var entman = args.EntityManager;
-            if (!entman.TryGetComponent(args.SolutionEntity, out HungerComponent? hunger))
+            if (!entman.TryGetComponent(args.SolutionEntity, out SatiationComponent? satiation))
                 return;
-            entman.System<HungerSystem>().ModifyHunger(args.SolutionEntity, NutritionFactor * (float) args.Quantity, hunger);
+            entman.System<SatiationSystem>().ModifyHunger(args.SolutionEntity, NutritionFactor * (float) args.Quantity, satiation);
         }
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

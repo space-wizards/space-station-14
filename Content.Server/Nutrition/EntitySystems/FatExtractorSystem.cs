@@ -20,7 +20,7 @@ namespace Content.Server.Nutrition.EntitySystems;
 public sealed class FatExtractorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly HungerSystem _hunger = default!;
+    [Dependency] private readonly SatiationSystem _satiation = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -96,13 +96,13 @@ public sealed class FatExtractorSystem : EntitySystem
 
         occupant = storage.Contents.ContainedEntities.FirstOrDefault();
 
-        if (!TryComp<HungerComponent>(occupant, out var hunger))
+        if (!TryComp<SatiationComponent>(occupant, out var satiation))
             return false;
 
-        if (hunger.Satiation.Current < component.NutritionPerSecond)
+        if (satiation.Hunger.Current < component.NutritionPerSecond)
             return false;
 
-        if (hunger.Satiation.CurrentThreshold < component.MinHungerThreshold && !HasComp<EmaggedComponent>(uid))
+        if (satiation.Hunger.CurrentThreshold < component.MinHungerThreshold && !HasComp<EmaggedComponent>(uid))
             return false;
 
         return true;
@@ -133,7 +133,7 @@ public sealed class FatExtractorSystem : EntitySystem
                 continue;
             fat.NextUpdate += fat.UpdateTime;
 
-            _hunger.ModifyHunger(occupant.Value, -fat.NutritionPerSecond);
+            _satiation.ModifyHunger(occupant.Value, -fat.NutritionPerSecond);
             fat.NutrientAccumulator += fat.NutritionPerSecond;
             if (fat.NutrientAccumulator >= fat.NutrientPerMeat)
             {
