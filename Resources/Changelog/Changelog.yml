@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Added Conducting Gloves to the uplink, they make shocks much worse rather
-      than stop them.
-    type: Add
-  id: 5988
-  time: '2024-02-21T06:34:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25227
 - author: veliebm
   changes:
   - message: The guidebook now contains a page for the Radioisotope Thermoelectric
@@ -3868,3 +3860,11 @@
   id: 6487
   time: '2024-04-29T04:06:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25759
+- author: Gotimanga
+  changes:
+  - message: Chemists can now create opporozidone, which reverses the effects of rotting
+      in deceased patients while in cryo.
+    type: Add
+  id: 6488
+  time: '2024-04-29T04:13:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24074
