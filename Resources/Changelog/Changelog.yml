@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: veliebm
-  changes:
-  - message: The guidebook now contains a page for the Radioisotope Thermoelectric
-      Generator (RTG).
-    type: Add
-  id: 5989
-  time: '2024-02-21T06:38:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25040
 - author: PoorMansDreams
   changes:
   - message: New pirate start sound!
@@ -3868,3 +3860,11 @@
   id: 6488
   time: '2024-04-29T04:13:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24074
+- author: Mangohydra
+  changes:
+  - message: Added a new syndicate cyborg module that contains a very dangerous explosive
+      as a 4tc purchase.
+    type: Add
+  id: 6489
+  time: '2024-04-29T04:16:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25815
