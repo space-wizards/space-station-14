@@ -309,8 +309,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         if (randDouble > 0.75)
         {
-            _audioSystem.PlayPvs(component.MissSound, uid);
-
             _popupSystem.PopupEntity(Loc.GetString("disposal-unit-thrown-missed"), uid);
             return;
         }
@@ -327,6 +325,8 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         AfterInsert(uid, component, args.Thrown);
     }
+
+
 
     private void OnDisposalInit(EntityUid uid, SharedDisposalUnitComponent component, ComponentInit args)
     {
