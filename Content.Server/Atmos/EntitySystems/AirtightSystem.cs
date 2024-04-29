@@ -2,7 +2,6 @@ using Content.Server.Atmos.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -10,9 +9,10 @@ namespace Content.Server.Atmos.EntitySystems
     [UsedImplicitly]
     public sealed class AirtightSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
         public override void Initialize()
         {
@@ -60,12 +60,14 @@ namespace Content.Server.Atmos.EntitySystems
 
             var gridId = xform.GridUid;
             var coords = xform.Coordinates;
-
-            var tilePos = grid.TileIndicesFor(coords);
+            var tilePos = _mapSystem.TileIndicesFor(gridId.Value, grid, coords);
 
             // Update and invalidate new position.
             airtight.LastPosition = (gridId.Value, tilePos);
             InvalidatePosition(gridId.Value, tilePos);
+
+            var airtightEv = new AirtightChanged(uid, airtight, (gridId.Value, tilePos));
+            RaiseLocalEvent(uid, ref airtightEv, true);
         }
 
         private void OnAirtightReAnchor(EntityUid uid, AirtightComponent airtight, ref ReAnchorEvent args)
@@ -75,6 +77,9 @@ namespace Content.Server.Atmos.EntitySystems
                 // Update and invalidate new position.
                 airtight.LastPosition = (gridId, args.TilePos);
                 InvalidatePosition(gridId, args.TilePos);
+
+                var airtightEv = new AirtightChanged(uid, airtight, (gridId, args.TilePos));
+                RaiseLocalEvent(uid, ref airtightEv, true);
             }
         }
 
@@ -86,8 +91,6 @@ namespace Content.Server.Atmos.EntitySystems
         private bool AirtightMove(Entity<AirtightComponent> ent, ref MoveEvent ev)
         {
             var (owner, airtight) = ent;
-            if (!airtight.RotateAirBlocked || airtight.InitialAirBlockedDirection == (int)AtmosDirection.Invalid)
-                return false;
 
             airtight.CurrentAirBlockedDirection = (int) Rotate((AtmosDirection)airtight.InitialAirBlockedDirection, ev.NewRotation);
             var pos = airtight.LastPosition;
@@ -121,19 +124,16 @@ namespace Content.Server.Atmos.EntitySystems
             if (!xform.Anchored || !TryComp(xform.GridUid, out MapGridComponent? grid))
                 return;
 
-            airtight.LastPosition = (xform.GridUid.Value, grid.TileIndicesFor(xform.Coordinates));
-            InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum && !airtight.AirBlocked);
+            var indices = _transform.GetGridTilePositionOrDefault((ent, xform), grid);
+            airtight.LastPosition = (xform.GridUid.Value, indices);
+            InvalidatePosition((xform.GridUid.Value, grid), indices);
         }
 
-        public void InvalidatePosition(EntityUid gridId, Vector2i pos, bool fixVacuum = false)
+        public void InvalidatePosition(Entity<MapGridComponent?> grid, Vector2i pos)
         {
-            if (!TryComp(gridId, out MapGridComponent? grid))
-                return;
-
             var query = EntityManager.GetEntityQuery<AirtightComponent>();
-            _explosionSystem.UpdateAirtightMap(gridId, pos, grid, query);
-            // TODO make atmos system use query
-            _atmosphereSystem.InvalidateTile(gridId, pos);
+            _explosionSystem.UpdateAirtightMap(grid, pos, grid, query);
+            _atmosphereSystem.InvalidateTile(grid.Owner, pos);
         }
 
         private AtmosDirection Rotate(AtmosDirection myDirection, Angle myAngle)
@@ -159,6 +159,5 @@ namespace Content.Server.Atmos.EntitySystems
     }
 
     [ByRefEvent]
-    public readonly record struct AirtightChanged(EntityUid Entity, AirtightComponent Airtight,
-        (EntityUid Grid, Vector2i Tile) Position);
+    public readonly record struct AirtightChanged(EntityUid Entity, AirtightComponent Airtight, (EntityUid Grid, Vector2i Tile) Position);
 }

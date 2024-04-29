@@ -52,7 +52,7 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Brute: 5
+        Blunt: 5
         Slash: 10
   - type: Tag
     tags:
@@ -171,8 +171,8 @@
   - type: Strippable
   - type: UserInterface
     interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
 
 - type: entity
   id: MobKangarooSpaceSalvage

@@ -1,40 +1,39 @@
 <Document>
-# Shuttle-craft
+  # Shuttle-craft
 
-Shuttle construction is simple and easy, albeit rather expensive and hard to pull off within an hour. It's a good activity if you have a significant amount of spare time on your hands and want a bit of a challenge.
+  Shuttle construction is simple and easy, albeit rather expensive and hard to pull off within an hour. It's a good activity if you have a significant amount of spare time on your hands and want a bit of a challenge.
 
-## Getting started
-<Box>Required parts:</Box>
-<Box>
-<GuideEntityEmbed Entity="Thruster"/>
-<GuideEntityEmbed Entity="Gyroscope"/>
-<GuideEntityEmbed Entity="ComputerShuttle"/>
-<GuideEntityEmbed Entity="SubstationBasic"/>
-<GuideEntityEmbed Entity="PortableGeneratorPacman" Caption="P.A.C.M.A.N." />
-</Box>
-<Box>
-<GuideEntityEmbed Entity="CableHVStack"/>
-<GuideEntityEmbed Entity="CableMVStack"/>
-<GuideEntityEmbed Entity="CableApcStack"/>
-<GuideEntityEmbed Entity="APCBasic"/>
-</Box>
+  ## Getting started
+  <Box>Required parts:</Box>
+  <Box>
+  <GuideEntityEmbed Entity="Thruster"/>
+  <GuideEntityEmbed Entity="Gyroscope"/>
+  <GuideEntityEmbed Entity="ComputerShuttle"/>
+  <GuideEntityEmbed Entity="SubstationBasic"/>
+  <GuideEntityEmbed Entity="PortableGeneratorPacman" Caption="P.A.C.M.A.N." />
+  </Box>
+  <Box>
+  <GuideEntityEmbed Entity="CableHVStack"/>
+  <GuideEntityEmbed Entity="CableMVStack"/>
+  <GuideEntityEmbed Entity="CableApcStack"/>
+  <GuideEntityEmbed Entity="APCBasic"/>
+  </Box>
 
-<Box>Optional parts:</Box>
-<Box>
-<GuideEntityEmbed Entity="AirCanister"/>
-<GuideEntityEmbed Entity="LightTube"/>
-<GuideEntityEmbed Entity="AirlockGlassShuttle"/>
-<GuideEntityEmbed Entity="SMESBasic"/>
-</Box>
-<Box>
-<GuideEntityEmbed Entity="MobCorgiIan"/>
-<GuideEntityEmbed Entity="NuclearBomb"/>
-</Box>
+  <Box>Optional parts:</Box>
+  <Box>
+  <GuideEntityEmbed Entity="AirCanister"/>
+  <GuideEntityEmbed Entity="LightTube"/>
+  <GuideEntityEmbed Entity="AirlockGlassShuttle"/>
+  <GuideEntityEmbed Entity="SMESBasic"/>
+  </Box>
+  <Box>
+  <GuideEntityEmbed Entity="MobCorgiIan"/>
+  <GuideEntityEmbed Entity="NuclearBomb"/>
+  </Box>
 
-Head out into space with steel sheets and metal rods in hand, and once you're three or more meters away from the station, click near or under you with the rods in hand. This will place some lattice, which can then be turned into plating with the steel sheets. Expand your lattice platform by clicking just off the edge with rods in hand.
+  Head out into space with steel sheets and metal rods in hand, and once you're three or more tiles away from the station, click near or under you with the rods in hand. This will place some lattice, which can then be turned into plating with steel sheets or floor tiles. Expand your lattice platform by clicking just off the edge with some rods in hand.
 
-From there, once you have the shape you want, bring out and install thrusters at the edges. They must be pointing outward into space to function and will not fire if there's a tile in the way of the nozzle. Install a gyroscope where convenient, and use your substation and generator to set up power. Construct a wall on top of an MV cable and then install an APC on that to power the devices onboard.
+  From there, once you have the shape you want, bring out and install thrusters at the edges. They must be pointing outward into space to function and will not fire if there's a tile in the way of the nozzle. Install a gyroscope where convenient, and use your substation and generator to set up power. Construct a wall on top of an MV cable and then install an APC on that to power the devices onboard.
 
-Finally, install the shuttle computer wherever is convenient and ensure all your thrusters and gyroscopes are receiving power. If they are, congratulations, you should have a functional shuttle! Making it livable and good looking is left as an exercise to the reader.
-
+  Finally, install the shuttle computer wherever is convenient and ensure all your thrusters and gyroscopes are receiving power (remember to wire the MV and LV networks!). If they are; congratulations, you should have a functional shuttle! Making it livable and good looking is left as an exercise to the reader.
 </Document>

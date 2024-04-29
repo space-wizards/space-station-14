@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Ensnaring;
 using Content.Shared.CombatMode;
@@ -20,7 +21,6 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Server.Strip
 {
@@ -111,24 +111,21 @@ namespace Content.Server.Strip
             if (TryComp<CombatModeComponent>(user, out var mode) && mode.IsInCombatMode && !openInCombat)
                 return;
 
-            if (TryComp<ActorComponent>(user, out var actor))
+            if (HasComp<StrippingComponent>(user))
             {
-                if (_userInterfaceSystem.SessionHasOpenUi(strippable, StrippingUiKey.Key, actor.PlayerSession))
-                    return;
-                _userInterfaceSystem.TryOpen(strippable, StrippingUiKey.Key, actor.PlayerSession);
+                _userInterfaceSystem.OpenUi(strippable.Owner, StrippingUiKey.Key, user);
             }
         }
 
         private void OnStripButtonPressed(Entity<StrippableComponent> strippable, ref StrippingSlotButtonPressed args)
         {
-            if (args.Session.AttachedEntity is not { Valid: true } user ||
-                !TryComp<HandsComponent>(user, out var userHands) ||
-                !TryComp<HandsComponent>(strippable.Owner, out var targetHands))
+            if (args.Actor is not { Valid: true } user ||
+                !TryComp<HandsComponent>(user, out var userHands))
                 return;
 
             if (args.IsHand)
             {
-                StripHand((user, userHands), (strippable.Owner, targetHands), args.Slot, strippable);
+                StripHand((user, userHands), (strippable.Owner, null), args.Slot, strippable);
                 return;
             }
 
@@ -174,7 +171,7 @@ namespace Content.Server.Strip
 
         private void OnStripEnsnareMessage(EntityUid uid, EnsnareableComponent component, StrippingEnsnareButtonPressed args)
         {
-            if (args.Session.AttachedEntity is not { Valid: true } user)
+            if (args.Actor is not { Valid: true } user)
                 return;
 
             foreach (var entity in component.Container.ContainedEntities)
@@ -263,8 +260,7 @@ namespace Content.Server.Strip
                 Hidden = stealth,
                 AttemptFrequency = AttemptFrequency.EveryTick,
                 BreakOnDamage = true,
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
+                BreakOnMove = true,
                 NeedHand = true,
                 DuplicateCondition = DuplicateConditions.SameTool
             };
@@ -357,8 +353,7 @@ namespace Content.Server.Strip
                 Hidden = stealth,
                 AttemptFrequency = AttemptFrequency.EveryTick,
                 BreakOnDamage = true,
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
+                BreakOnMove = true,
                 NeedHand = true,
                 BreakOnHandChange = false, // Allow simultaneously removing multiple items.
                 DuplicateCondition = DuplicateConditions.SameTool
@@ -455,8 +450,7 @@ namespace Content.Server.Strip
                 Hidden = stealth,
                 AttemptFrequency = AttemptFrequency.EveryTick,
                 BreakOnDamage = true,
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
+                BreakOnMove = true,
                 NeedHand = true,
                 DuplicateCondition = DuplicateConditions.SameTool
             };
@@ -476,6 +470,9 @@ namespace Content.Server.Strip
         {
             if (!Resolve(user, ref user.Comp) ||
                 !Resolve(target, ref target.Comp))
+                return;
+
+            if (!CanStripInsertHand(user, target, held, handName))
                 return;
 
             _handsSystem.TryDrop(user, checkActionBlocker: false, handsComp: user.Comp);
@@ -542,7 +539,7 @@ namespace Content.Server.Strip
             var (time, stealth) = GetStripTimeModifiers(user, target, targetStrippable.HandStripDelay);
 
             if (!stealth)
-                _popupSystem.PopupEntity( Loc.GetString("strippable-component-alert-owner", ("user", Identity.Entity(user, EntityManager)), ("item", item)), target, target);
+                _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner", ("user", Identity.Entity(user, EntityManager)), ("item", item)), target, target);
 
             var prefix = stealth ? "stealthily " : "";
             _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
@@ -552,8 +549,7 @@ namespace Content.Server.Strip
                 Hidden = stealth,
                 AttemptFrequency = AttemptFrequency.EveryTick,
                 BreakOnDamage = true,
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
+                BreakOnMove = true,
                 NeedHand = true,
                 BreakOnHandChange = false, // Allow simultaneously removing multiple items.
                 DuplicateCondition = DuplicateConditions.SameTool
@@ -569,10 +565,14 @@ namespace Content.Server.Strip
             Entity<HandsComponent?> user,
             Entity<HandsComponent?> target,
             EntityUid item,
+            string handName,
             bool stealth)
         {
             if (!Resolve(user, ref user.Comp) ||
                 !Resolve(target, ref target.Comp))
+                return;
+
+            if (!CanStripRemoveHand(user, target, item, handName))
                 return;
 
             _handsSystem.TryDrop(target, item, checkActionBlocker: false, handsComp: target.Comp);
@@ -625,7 +625,7 @@ namespace Content.Server.Strip
             {
                 if (ev.InsertOrRemove)
                         StripInsertHand((entity.Owner, entity.Comp), ev.Target.Value, ev.Used.Value, ev.SlotOrHandName, ev.Args.Hidden);
-                else    StripRemoveHand((entity.Owner, entity.Comp), ev.Target.Value, ev.Used.Value, ev.Args.Hidden);
+                else    StripRemoveHand((entity.Owner, entity.Comp), ev.Target.Value, ev.Used.Value, ev.SlotOrHandName, ev.Args.Hidden);
             }
         }
     }
