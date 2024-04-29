@@ -10,7 +10,7 @@ namespace Content.Server.Containers;
 public sealed partial class ThrowInsertContainerComponent : Component
 {
     [DataField(required: true)]
-    public string? ContainerId;
+    public string ContainerId = string.Empty;
 
     /// <summary>
     /// Throw chance of hitting into the container
