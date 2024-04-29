@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Added fill level visuals to all the drinks. Cheers!
-    type: Add
-  id: 5983
-  time: '2024-02-21T06:17:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25319
-- author: Potato1234_x
-  changes:
-  - message: Happy Honk boxes can now hold normal sized items
-    type: Tweak
-  id: 5984
-  time: '2024-02-21T06:21:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25245
-- author: Hanzdegloker
-  changes:
-  - message: Standardized amount of huds in vendors and added new diagnostics eyeapatch
-      hud
-    type: Tweak
-  id: 5985
-  time: '2024-02-21T06:22:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25208
-- author: DebugOk
-  changes:
-  - message: Drones are now completely removed instead of just being disabled
-    type: Remove
-  id: 5986
-  time: '2024-02-21T06:23:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25372
 - author: Hanzdegloker
   changes:
   - message: Dept. Heads are now guaranteed to have their respective winter coats
@@ -3868,3 +3839,35 @@
   id: 6482
   time: '2024-04-28T11:07:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27200
+- author: Plykiya
+  changes:
+  - message: You can now pick up Smile and put them in your bag.
+    type: Add
+  id: 6483
+  time: '2024-04-29T02:44:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27458
+- author: Beck Thompson, CoffeePoweredPHD
+  changes:
+  - message: Fixed infinite reagent duplication glitch with toilets and drains.
+    type: Fix
+  - message: Dirty water toilets now function correctly as toilets.
+    type: Fix
+  id: 6484
+  time: '2024-04-29T03:08:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27446
+- author: Nopey
+  changes:
+  - message: Many more items can now be recycled, including mops, medkits, and stun
+      batons.
+    type: Tweak
+  id: 6485
+  time: '2024-04-29T03:36:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24435
+- author: Hanzdegloker
+  changes:
+  - message: '"Denied" and "Approved" stamps are now guaranteed to appear in the lockers
+      of the HoP and QM.'
+    type: Tweak
+  id: 6486
+  time: '2024-04-29T03:38:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25604
