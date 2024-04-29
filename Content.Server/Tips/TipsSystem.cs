@@ -115,7 +115,6 @@ public sealed class TipsSystem : EntitySystem
 
         var ev = new TippyEvent(args[1]);
 
-        string proto;
         if (args.Length > 2)
         {
             ev.Proto = args[2];
