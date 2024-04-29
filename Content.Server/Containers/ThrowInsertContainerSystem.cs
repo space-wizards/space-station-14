@@ -25,9 +25,6 @@ public sealed class ThrowInsertContainerSystem : EntitySystem
 
     private void OnThrowCollide(Entity<ThrowInsertContainerComponent> ent, ref ThrowHitByEvent args)
     {
-        if (ent.Comp.ContainerId == null)
-            return;
-
         var container = _containerSystem.GetContainer(ent, ent.Comp.ContainerId);
 
         if (!_containerSystem.CanInsert(args.Thrown, container))
@@ -35,17 +32,17 @@ public sealed class ThrowInsertContainerSystem : EntitySystem
 
 
         var rand = _random.NextFloat();
-        if (rand > ent.Comp.Probability)
+        if (_random.Prob(ent.Comp.Probability))
         {
             _audio.PlayPvs(ent.Comp.MissSound, ent);
             _popup.PopupEntity(Loc.GetString(ent.Comp.MissLocString), ent);
             return;
         }
 
-        if (_containerSystem.Insert(args.Thrown, container))
-            _audio.PlayPvs(ent.Comp.InsertSound, ent);
-        else
+        if (!_containerSystem.Insert(args.Thrown, container))
             throw new InvalidOperationException("Container insertion failed but CanInsert returned true");
+
+        _audio.PlayPvs(ent.Comp.InsertSound, ent);
 
         if (args.Component.Thrower != null)
             _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(args.Thrown)} thrown by {ToPrettyString(args.Component.Thrower.Value):player} landed in {ToPrettyString(ent)}");
