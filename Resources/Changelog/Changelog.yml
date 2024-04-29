@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Sphiral
-  changes:
-  - message: Took the AdminPDA from the backpack and gave it it's own slot on aghosts!
-      Also aghosts can smoke/wear masks now!
-    type: Tweak
-  id: 5992
-  time: '2024-02-21T06:41:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25402
 - author: EdenTheLiznerd
   changes:
   - message: Nettles are now weaker than their deathnettle counterparts
@@ -3870,3 +3862,10 @@
   id: 6491
   time: '2024-04-29T04:38:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27205
+- author: KrasnoshchekovPavel
+  changes:
+  - message: Fixed formatting of floating point numbers during localization
+    type: Fix
+  id: 6492
+  time: '2024-04-29T04:52:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27441
