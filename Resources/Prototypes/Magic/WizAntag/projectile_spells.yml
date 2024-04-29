@@ -68,7 +68,7 @@
   noSpawn: true
   components:
   - type: WorldTargetAction
-    useDelay: 5
+    useDelay: 2.5
     charges: 2
     renewCharges: true
     itemIconStyle: BigAction
@@ -78,7 +78,7 @@
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
-      state: finger_guns
+      state: mimegun
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFingerGun
       posData: !type:TargetCasterPos

@@ -17,17 +17,21 @@
       posData: !type:TargetInFront
       speech: action-speech-spell-forcewall
 
-- type: instantAction
+- type: entity
   id: MimeBlockade
   name: Invisible Blockade
   description: Form an invisible three tile wide blockade.
-  useDelay: 50
-  userPopup: action-popup-spell-blockade
-  itemIconStyle: BigAction
-  icon:
-    sprite: Objects/Magic/magicactions.rsi
-    state: invisible_blockade
-  event: !type:InstantSpawnSpellEvent
-    prototype: WallInvisible
-    preventCollide: false
-    posData: !type:TargetInFront
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 10
+    itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    icon:
+      sprite: Structures/Walls/solid.rsi
+      state: reinf_construct-0
+    event: !type:InstantSpawnSpellEvent
+      prototype: WallInvisible
+      posData: !type:TargetInFront
+      speech: action-speech-spell-forcewall
