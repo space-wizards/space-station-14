@@ -7,7 +7,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Math;
 /// <summary>
 /// Sets a random float from MinAmount to MaxAmount to blackboard
 /// </summary>
-public sealed class SetRandomFloatOperator : HTNOperator
+public sealed partial class SetRandomFloatOperator : HTNOperator
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 

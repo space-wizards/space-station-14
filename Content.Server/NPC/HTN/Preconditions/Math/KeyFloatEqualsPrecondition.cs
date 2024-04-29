@@ -1,6 +1,6 @@
 ﻿namespace Content.Server.NPC.HTN.Preconditions.Math;
 
-public sealed class KeyFloatEqualsPrecondition : HTNPrecondition
+public sealed partial class KeyFloatEqualsPrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 

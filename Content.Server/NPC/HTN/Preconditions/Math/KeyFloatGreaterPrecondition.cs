@@ -1,6 +1,6 @@
 ﻿namespace Content.Server.NPC.HTN.Preconditions.Math;
 
-public sealed class KeyFloatGreaterPrecondition : HTNPrecondition
+public sealed partial class KeyFloatGreaterPrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
