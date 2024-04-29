@@ -311,14 +311,12 @@
       damage: 25
     - type: TimedDespawn
       lifetime: 10
-    - type: SolutionInjectOnCollide
-      transferAmount: 25
-    - type: InjectableSolution
-      solution: toxin
+    - type: ChemicalAmmo
     - type: SolutionContainerManager
       solutions:
-        toxin:
-          maxVol: 25
+        ammo:
           reagents:
           - ReagentId: MuteToxin
             Quantity: 25
+    - type: SolutionTransfer
+      maxTransferAmount: 25
