@@ -12,6 +12,6 @@ public sealed partial class KeyFloatLessPrecondition : HTNPrecondition
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
-        return blackboard.TryGetValue<float>(NPCBlackboard.Owner, out var value, _entManager) && value < Value;
+        return blackboard.TryGetValue<float>(Key, out var value, _entManager) && value < Value;
     }
 }

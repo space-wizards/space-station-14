@@ -12,7 +12,7 @@ public sealed partial class KeyFloatEqualsPrecondition : HTNPrecondition
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
-        return blackboard.TryGetValue<float>(NPCBlackboard.Owner, out var value, _entManager) &&
+        return blackboard.TryGetValue<float>(Key, out var value, _entManager) &&
                MathHelper.CloseTo(value, value);
     }
 }

@@ -15,7 +15,7 @@ public sealed partial class KeyBoolEqualsPrecondition : HTNPrecondition
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
-        if (!blackboard.TryGetValue<bool>(NPCBlackboard.Owner, out var value, _entManager))
+        if (!blackboard.TryGetValue<bool>(Key, out var value, _entManager))
             return false;
 
         return Value == value;

@@ -19,7 +19,7 @@ public sealed partial class AddFloatOperator : HTNOperator
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
         CancellationToken cancelToken)
     {
-        if (!blackboard.TryGetValue<float>(NPCBlackboard.Owner, out var value, _entManager))
+        if (!blackboard.TryGetValue<float>(TargetKey, out var value, _entManager))
             return (false, null);
 
         return (
