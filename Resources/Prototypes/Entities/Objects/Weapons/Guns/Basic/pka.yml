@@ -46,7 +46,7 @@
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
   - type: BasicEntityAmmoProvider
-    proto: BulletKineticLight
+    proto: BulletKineticBurst
     capacity: 3
     count: 3
   - type: Clothing
