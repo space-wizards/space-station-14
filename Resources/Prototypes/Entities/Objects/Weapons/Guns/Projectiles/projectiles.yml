@@ -402,6 +402,21 @@
     lifetime: 0.4
 
 - type: entity
+  id: BulletKineticBurst
+  name: kinetic bolt burst
+  parent: BulletKinetic
+  noSpawn: true
+  components:
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Blunt: 20
+        Structural: 45
+  - type: TimedDespawn
+    lifetime: 0.2
+
+- type: entity
   id: BulletKineticShuttle
   parent: BaseBullet
   noSpawn: true

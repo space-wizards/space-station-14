@@ -11,6 +11,7 @@
       visible: false
       map: [ "empty-icon" ]
   - type: Item
+    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
     size: Normal
   - type: Gun
     fireRate: 0.5

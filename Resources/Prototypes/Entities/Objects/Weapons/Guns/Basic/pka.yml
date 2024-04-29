@@ -18,3 +18,40 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+
+- type: entity
+  name: proto-kinetic burster
+  id: WeaponProtoKineticBurster
+  parent: WeaponProtoKineticAcceleratorBase
+  description: A highly collapsible version-B model of the PKA that compromises recharge speed and stopping power for charge capacity and fire rate.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/kinetic_burster.rsi
+  - type: Item
+    sprite: Objects/Weapons/Guns/Basic/kinetic_burster.rsi
+    size: Small
+    storedSprite:
+      sprite: Objects/Weapons/Guns/Basic/kinetic_burster.rsi
+      state: storage
+  - type: Gun
+    fireRate: 9
+    selectedMode: FullAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 3
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+  - type: BasicEntityAmmoProvider
+    proto: BulletKineticLight
+    capacity: 3
+    count: 3
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Basic/kinetic_burster.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
