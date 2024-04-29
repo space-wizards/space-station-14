@@ -84,6 +84,8 @@ public sealed class SatiationSystem : EntitySystem
             (int) component.Thresholds[SatiationThreashold.Concerned] + 10,
             (int) component.Thresholds[SatiationThreashold.Okay]);
         SetSatiation(component, amount);
+        UpdateCurrentThreshold(component);
+        DoThresholdEffects(uid, component, false);
 
         component.CurrentThreshold = GetThreshold(component, component.Current);
         component.LastThreshold = SatiationThreashold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
