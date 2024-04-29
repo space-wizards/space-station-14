@@ -344,8 +344,8 @@
     bloodReagent: InsectBlood
     bloodMaxVolume: 20
   - type: Food
-  - type: Hunger
-    satiation:
+  - type: Satiation
+    hunger:
       baseDecayRate: 0.25
   - type: Extractable
     grindableSolutionName: food
@@ -1584,8 +1584,8 @@
       Dead:
         Base: splat-0
   - type: Food
-  - type: Thirst
-    satiation:
+  - type: Satiation
+    thirst:
       starting: 25  # spawn with Okay thirst state
       thresholds:
         Full: 35
@@ -1600,8 +1600,7 @@
         Concerned: 0.8
         Desperate: 0.6
         Dead: 0
-  - type: Hunger
-    satiation:
+    hunger:
       current: 25   # spawn with Okay hunger state
       thresholds:
         Full: 35
@@ -3151,8 +3150,8 @@
       Dead:
         Base: splat-0
   - type: Food
-  - type: Hunger
-    satiation:
+  - type: Satiation
+    hunger:
       baseDecayRate: 0.3
   - type: Extractable
     grindableSolutionName: food

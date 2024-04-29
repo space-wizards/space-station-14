@@ -7,11 +7,10 @@
   components:
   - type: HumanoidAppearance
     species: Reptilian
-  - type: Hunger
   - type: Puller
     needsHands: false
-  - type: Thirst
-    satiation:
+  - type: Satiation
+    thirst:
       thresholds:
         Full: 600.0
         Okay: 450.0

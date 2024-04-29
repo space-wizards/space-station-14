@@ -59,8 +59,8 @@
   - type: Body
     prototype: Rat
     requiredLegs: 1 # TODO: More than 1 leg
-  - type: Hunger
-    satiation: # probably should be prototyped
+  - type: Satiation
+    hunger: # probably should be prototyped
       thresholds:
         Full: 200
         Okay: 150
@@ -68,8 +68,7 @@
         Desperate: 50
         Dead: 0
       baseDecayRate: 0.01666666666
-  - type: Thirst
-    satiation:
+    thirst:
       thresholds:
         Full: 600
         Okay: 450
@@ -239,8 +238,8 @@
   - type: Body
     prototype: Rat
     requiredLegs: 1 # TODO: More than 1 leg
-  - type: Hunger # probably should be prototyped
-    satiation:
+  - type: Satiation # probably should be prototyped
+    hunger:
       thresholds:
         Full: 200
         Okay: 150
@@ -248,8 +247,7 @@
         Desperate: 50
         Dead: 0
       baseDecayRate: 0.01666666666
-  - type: Thirst
-    satiation:
+    thirst:
       thresholds:
         Full: 600
         Okay: 450

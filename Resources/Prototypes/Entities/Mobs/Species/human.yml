@@ -5,12 +5,11 @@
   name: Urist McHands
   abstract: true
   components:
-  - type: Hunger
   - type: Icon # It will not have an icon in the adminspawn menu without this. Body parts seem fine for whatever reason.
     sprite: Mobs/Species/Human/parts.rsi
     state: full
-  - type: Thirst
-    satiation:
+  - type: Satiation
+    thirst:
       thresholds:
         Full: 600.0
         Okay: 450.0

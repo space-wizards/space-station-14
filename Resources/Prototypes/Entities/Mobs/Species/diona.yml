@@ -7,11 +7,10 @@
   components:
   - type: HumanoidAppearance
     species: Diona
-  - type: Hunger
-    satiation:
+  - type: Satiation
+    hunger:
       baseDecayRate: 0.0083
-  - type: Thirst
-    satiation:
+    thirst:
       baseDecayRate: 0.0083
       thresholds:
         Full: 600.0

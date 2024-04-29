@@ -7,9 +7,8 @@
   components:
   - type: HumanoidAppearance
     species: Moth
-  - type: Hunger
-  - type: Thirst
-    satiation:
+  - type: Satiation
+    thirst:
       thresholds:
         Full: 600.0
         Okay: 450.0

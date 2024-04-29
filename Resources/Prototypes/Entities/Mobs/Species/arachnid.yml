@@ -10,9 +10,8 @@
     requiredLegs: 2 # It would be funny if arachnids could use their little back limbs to move around once they lose their legs, but just something to consider post-woundmed
   - type: HumanoidAppearance
     species: Arachnid
-  - type: Hunger
-  - type: Thirst
-    satiation:
+  - type: Satiation
+    thirst:
       thresholds:
         Full: 600.0
         Okay: 450.0

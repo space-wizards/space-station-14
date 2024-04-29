@@ -72,8 +72,8 @@
   suffix: AI
   abstract: true
   components:
-  - type: Hunger
-    satiation:
+  - type: Satiation
+    hunger:
       thresholds: # only animals and rats are derived from this prototype so let's override it here and in rats' proto
         Full: 100
         Okay: 50
@@ -81,8 +81,7 @@
         Desperate: 10
         Dead: 0
       baseDecayRate: 0.00925925925926 # it is okay for animals to eat and drink less than humans, but more frequently
-  - type: Thirst
-    satiation:
+    thirst:
       thresholds:
         Full: 200
         Okay: 150
