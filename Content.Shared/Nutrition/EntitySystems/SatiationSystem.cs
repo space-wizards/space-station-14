@@ -78,14 +78,14 @@ public sealed class SatiationSystem : EntitySystem
         SubscribeLocalEvent<SatiationComponent, RejuvenateEvent>(OnRejuvenate);
     }
 
-    private void InitializeSatiation(EntityUid uid, Satiation component, MapInitEvent args)
+    private void InitializeSatiation(EntityUid uid, Satiation component, AlertCategory alertCategory, MapInitEvent args)
     {
         var amount = _random.Next(
             (int) component.Thresholds[SatiationThreashold.Concerned] + 10,
             (int) component.Thresholds[SatiationThreashold.Okay]);
         SetSatiation(component, amount);
         UpdateCurrentThreshold(component);
-        DoThresholdEffects(uid, component, false);
+        DoThresholdEffects(uid, component, alertCategory, false);
 
         component.CurrentThreshold = GetThreshold(component, component.Current);
         component.LastThreshold = SatiationThreashold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
@@ -93,8 +93,8 @@ public sealed class SatiationSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, SatiationComponent component, MapInitEvent args)
     {
-        InitializeSatiation(uid, component.Thirst, args);
-        InitializeSatiation(uid, component.Hunger, args);
+        InitializeSatiation(uid, component.Thirst, ThirstAlertCategory, args);
+        InitializeSatiation(uid, component.Hunger, HungerAlertCategory, args);
         Dirty(uid, component);
 
         TryComp(uid, out MovementSpeedModifierComponent? moveMod);
