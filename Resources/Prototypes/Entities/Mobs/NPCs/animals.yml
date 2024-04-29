@@ -2829,7 +2829,6 @@
         Slash: 6
         Piercing: 6
         Structural: 15
-  - type: Insulated
   
 - type: entity
   name: space cat
@@ -2856,6 +2855,7 @@
   - type: MovementAlwaysTouching
   - type: PressureImmunity
   - type: StepTriggerImmune
+  - type: Insulated
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-space-cat
