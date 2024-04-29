@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DebugOk
-  changes:
-  - message: Drones are now completely removed instead of just being disabled
-    type: Remove
-  id: 5986
-  time: '2024-02-21T06:23:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25372
 - author: Hanzdegloker
   changes:
   - message: Dept. Heads are now guaranteed to have their respective winter coats
@@ -3870,3 +3863,11 @@
   id: 6485
   time: '2024-04-29T03:36:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24435
+- author: Hanzdegloker
+  changes:
+  - message: '"Denied" and "Approved" stamps are now guaranteed to appear in the lockers
+      of the HoP and QM.'
+    type: Tweak
+  id: 6486
+  time: '2024-04-29T03:38:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25604
