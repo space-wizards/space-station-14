@@ -57,4 +57,19 @@ public sealed partial class TraitorRuleComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
+
+    /// <summary>
+    /// The amount of codewords that are selected.
+    /// </summary>
+    [DataField]
+    public int CodewordCount = 4;
+
+    /// <summary>
+    /// The amount of TC traitors start with.
+    /// </summary>
+    [DataField]
+    public int StartingBalance = 20;
+
+    [DataField]
+    public int MaxDifficulty = 5;
 }

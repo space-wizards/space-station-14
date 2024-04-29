@@ -56,13 +56,6 @@ namespace Content.Shared.Chemistry.Components
         public bool CanBeAbsorbed = true;
 
         /// <summary>
-        ///     If reactions can occur via mixing.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("canMix")]
-        public bool CanMix { get; set; } = false;
-
-        /// <summary>
         ///     Volume needed to fill this container.
         /// </summary>
         [ViewVariables]

@@ -767,14 +767,9 @@ public abstract partial class InteractionTest
         await Pair.RunTicksSync(ticks);
     }
 
-    protected int SecondsToTicks(float seconds)
-    {
-        return (int) Math.Ceiling(seconds / TickPeriod);
-    }
-
     protected async Task RunSeconds(float seconds)
     {
-        await RunTicks(SecondsToTicks(seconds));
+        await Pair.RunSeconds(seconds);
     }
 
     #endregion
@@ -825,7 +820,7 @@ public abstract partial class InteractionTest
             return false;
         }
 
-        if (!ui.OpenInterfaces.TryGetValue(key, out bui))
+        if (!ui.ClientOpenInterfaces.TryGetValue(key, out bui))
         {
             if (shouldSucceed)
                 Assert.Fail($"Entity {SEntMan.ToPrettyString(SEntMan.GetEntity(target.Value))} does not have an open bui with key {key.GetType()}.{key}.");
@@ -989,7 +984,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task AddGravity(EntityUid? uid = null)
     {
-        var target = uid ?? MapData.GridUid;
+        var target = uid ?? MapData.Grid;
         await Server.WaitPost(() =>
         {
             var gravity = SEntMan.EnsureComponent<GravityComponent>(target);

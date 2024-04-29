@@ -112,26 +112,12 @@ public sealed class StationSystem : EntitySystem
     {
         var dict = new Dictionary<string, List<EntityUid>>();
 
-        void AddGrid(string station, EntityUid grid)
-        {
-            if (dict.ContainsKey(station))
-            {
-                dict[station].Add(grid);
-            }
-            else
-            {
-                dict[station] = new List<EntityUid> {grid};
-            }
-        }
-
         // Iterate over all BecomesStation
         foreach (var grid in ev.Grids)
         {
             // We still setup the grid
-            if (!TryComp<BecomesStationComponent>(grid, out var becomesStation))
-                continue;
-
-            AddGrid(becomesStation.Id, grid);
+            if (TryComp<BecomesStationComponent>(grid, out var becomesStation))
+                dict.GetOrNew(becomesStation.Id).Add(grid);
         }
 
         if (!dict.Any())

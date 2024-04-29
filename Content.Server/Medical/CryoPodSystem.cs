@@ -199,6 +199,20 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         }
 
         //TODO: re-implement cryopod analyzer UI
+        // TODO: This should be a state my dude
+        // _userInterfaceSystem.ServerSendUiMessage(
+        //     entity.Owner,
+        //     HealthAnalyzerUiKey.Key,
+        //     new HealthAnalyzerScannedUserMessage(GetNetEntity(entity.Comp.BodyContainer.ContainedEntity),
+        //     temp?.CurrentTemperature ?? 0,
+        //     (bloodstream != null && _solutionContainerSystem.ResolveSolution(entity.Comp.BodyContainer.ContainedEntity.Value,
+        //         bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
+        //         ? bloodSolution.FillFraction
+        //         : 0,
+        //     null,
+        //     null
+        // ));
+        //TODO: re-implement cryopod analyzer UI
         // _userInterfaceSystem.TrySendUiMessage(
         //     entity.Owner,
         //     HealthAnalyzerUiKey.Key,

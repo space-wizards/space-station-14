@@ -794,6 +794,8 @@
   packetPrototype: CannabisSeeds
   productPrototypes:
     - LeavesCannabis
+  mutationPrototypes:
+    - rainbowCannabis
   harvestRepeat: Repeat
   lifespan: 75
   maturation: 8
@@ -809,6 +811,51 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+
+- type: seed
+  id: rainbowCannabis
+  name: seeds-rainbow-cannabis-name
+  noun: seeds-noun-seeds
+  displayName: seeds-rainbow-cannabis-display-name
+  plantRsi: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+  packetPrototype: RainbowCannabisSeeds
+  productPrototypes:
+    - LeavesCannabisRainbow
+  harvestRepeat: Repeat
+  lifespan: 75
+  maturation: 8
+  production: 12
+  yield: 2
+  potency: 20
+  growthStages: 3
+  waterConsumption: 0.40
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    SpaceDrugs:
+      Min: 1
+      Max: 15
+      PotencyDivisor: 10
+    Lipolicide:
+      Min: 1
+      Max: 15
+      PotencyDivisor: 10
+    MindbreakerToxin:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Happiness:
+      Min: 1
+      Max: 5
+#     PotencyDivisor: 20
+#   ColorfulReagent:
+#     Min: 0
+#     Max: 5
+#     PotencyDivisor: 20
+    Psicodine:
+      Min: 0
+      Max: 5
+      PotencyDivisor: 33
 
 - type: seed
   id: tobacco
@@ -1520,6 +1567,8 @@
   packetPrototype: CottonSeeds
   productPrototypes:
     - CottonBol
+  mutationPrototypes:
+    - pyrotton
   lifespan: 25
   maturation: 8
   production: 3
@@ -1534,3 +1583,29 @@
       Max: 10
       PotencyDivisor: 20
 
+- type: seed
+  id: pyrotton
+  name: seeds-pyrotton-name
+  noun: seeds-noun-seeds
+  displayName: seeds-pyrotton-display-name
+  plantRsi: Objects/Specific/Hydroponics/pyrotton.rsi
+  packetPrototype: PyrottonSeeds
+  productPrototypes:
+    - PyrottonBol
+  lifespan: 25
+  maturation: 8
+  production: 3
+  yield: 2
+  potency: 5
+  idealLight: 8
+  growthStages: 3
+  waterConsumption: 0.80
+  chemicals:
+    Fiber:
+      Min: 5
+      Max: 10
+      PotencyDivisor: 20
+    Phlogiston:
+      Min: 4
+      Max: 8
+      PotencyDivisor: 30

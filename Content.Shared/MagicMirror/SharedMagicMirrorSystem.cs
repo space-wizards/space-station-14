@@ -1,9 +1,28 @@
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid.Markings;
-using Robust.Shared.Player;
+using Content.Shared.Interaction;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MagicMirror;
+
+public abstract class SharedMagicMirrorSystem : EntitySystem
+{
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<MagicMirrorComponent, BoundUserInterfaceCheckRangeEvent>(OnMirrorRangeCheck);
+    }
+
+    private void OnMirrorRangeCheck(EntityUid uid, MagicMirrorComponent component, ref BoundUserInterfaceCheckRangeEvent args)
+    {
+        if (!Exists(component.Target) || !_interaction.InRangeUnobstructed(uid, component.Target.Value))
+        {
+            args.Result = BoundUserInterfaceRangeResult.Fail;
+        }
+    }
+}
 
 [Serializable, NetSerializable]
 public enum MagicMirrorUiKey : byte
