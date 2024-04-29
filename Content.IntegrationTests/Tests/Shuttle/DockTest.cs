@@ -39,7 +39,7 @@ public sealed class DockTest : ContentUnitTest
 
         await server.WaitAssertion(() =>
         {
-            entManager.DeleteEntity(map.GridUid);
+            entManager.DeleteEntity(map.Grid);
             var grid1 = mapManager.CreateGridEntity(mapId);
             var grid2 = mapManager.CreateGridEntity(mapId);
             var grid1Ent = grid1.Owner;
@@ -104,7 +104,7 @@ public sealed class DockTest : ContentUnitTest
         // Spawn shuttle and affirm no valid docks.
         await server.WaitAssertion(() =>
         {
-            entManager.DeleteEntity(map.GridUid);
+            entManager.DeleteEntity(map.Grid);
             Assert.That(entManager.System<MapLoaderSystem>().TryLoad(otherMap.MapId, "/Maps/Shuttles/emergency.yml", out var rootUids));
             shuttle = rootUids[0];
 

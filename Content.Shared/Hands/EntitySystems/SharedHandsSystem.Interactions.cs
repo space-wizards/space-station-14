@@ -8,6 +8,7 @@ using Content.Shared.Localizations;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Hands.EntitySystems;
 
@@ -181,27 +182,21 @@ public abstract partial class SharedHandsSystem : EntitySystem
     }
 
     //TODO: Actually shows all items/clothing/etc.
-    private void HandleExamined(EntityUid uid, HandsComponent handsComp, ExaminedEvent args)
+    private void HandleExamined(EntityUid examinedUid, HandsComponent handsComp, ExaminedEvent args)
     {
-        var held = EnumerateHeld(uid, handsComp)
-            .Where(x => !HasComp<VirtualItemComponent>(x)).ToList();
+        var heldItemNames = EnumerateHeld(examinedUid, handsComp)
+            .Where(entity => !HasComp<VirtualItemComponent>(entity))
+            .Select(item => FormattedMessage.EscapeText(Identity.Name(item, EntityManager)))
+            .Select(itemName => Loc.GetString("comp-hands-examine-wrapper", ("item", itemName)))
+            .ToList();
+
+        var locKey = heldItemNames.Count != 0 ? "comp-hands-examine" : "comp-hands-examine-empty";
+        var locUser = ("user", Identity.Entity(examinedUid, EntityManager));
+        var locItems = ("items", ContentLocalizationManager.FormatList(heldItemNames));
 
         using (args.PushGroup(nameof(HandsComponent)))
         {
-            if (!held.Any())
-            {
-                args.PushText(Loc.GetString("comp-hands-examine-empty",
-                    ("user", Identity.Entity(uid, EntityManager))));
-                return;
-            }
-
-            var heldList = ContentLocalizationManager.FormatList(held
-                .Select(x => Loc.GetString("comp-hands-examine-wrapper",
-                    ("item", Identity.Entity(x, EntityManager)))).ToList());
-
-            args.PushMarkup(Loc.GetString("comp-hands-examine",
-                ("user", Identity.Entity(uid, EntityManager)),
-                ("items", heldList)));
+            args.PushMarkup(Loc.GetString(locKey, locUser, locItems));
         }
     }
 }

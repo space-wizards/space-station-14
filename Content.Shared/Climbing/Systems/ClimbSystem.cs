@@ -222,7 +222,8 @@ public sealed partial class ClimbSystem : VirtualController
             used: entityToMove)
         {
             BreakOnMove = true,
-            BreakOnDamage = true
+            BreakOnDamage = true,
+            DuplicateCondition = DuplicateConditions.SameTool | DuplicateConditions.SameTarget
         };
 
         _audio.PlayPredicted(comp.StartClimbSound, climbable, user);
@@ -307,8 +308,7 @@ public sealed partial class ClimbSystem : VirtualController
                 ("climbable", climbable));
         }
 
-        _popupSystem.PopupEntity(othersMessage, uid, Filter.PvsExcept(user, entityManager: EntityManager), true);
-        _popupSystem.PopupClient(selfMessage, uid, user);
+        _popupSystem.PopupPredicted(selfMessage, othersMessage, uid, user);
     }
 
     /// <summary>
