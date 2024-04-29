@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Fildrance
-  changes:
-  - message: now cryo pod health analyzer updates atomatically!
-    type: Fix
-  id: 5997
-  time: '2024-02-21T14:47:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25109
 - author: landwhale
   changes:
   - message: Drink jugs can no longer be used by chemistry in place of a beaker.
@@ -3863,3 +3856,11 @@
   id: 6496
   time: '2024-04-29T13:12:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27484
+- author: FungiFellow
+  changes:
+  - message: Syndi-Cats now have a Wideswing, 80% Explosion Resist, 6/6/15 Pierce/Slash/Structural
+      and step over glass shards with trained feline agility.
+    type: Tweak
+  id: 6497
+  time: '2024-04-29T17:09:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27408
