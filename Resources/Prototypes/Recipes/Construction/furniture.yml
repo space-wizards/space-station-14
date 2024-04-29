@@ -606,7 +606,7 @@
   description: A human excrement flushing apparatus.
   icon:
     sprite: Structures/Furniture/toilet.rsi
-    state: closed_toilet_seat_up
+    state: disposal
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -881,6 +881,24 @@
     state: base
   objectType: Structure
   placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: NoticeBoard
+  name: notice board
+  description: Wooden notice board, can store paper inside itself.
+  graph: NoticeBoard
+  startNode: start
+  targetNode: noticeBoard
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Wallmounts/noticeboard.rsi
+    state: noticeboard
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked

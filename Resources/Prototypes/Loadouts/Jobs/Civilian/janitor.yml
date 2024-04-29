@@ -1,0 +1,66 @@
+# Head
+- type: loadout
+  id: JanitorHead
+  equipment: JanitorHead
+
+- type: startingGear
+  id: JanitorHead
+  equipment:
+    head: ClothingHeadHatPurplesoft
+
+# Jumpsuit
+- type: loadout
+  id: JanitorJumpsuit
+  equipment: JanitorJumpsuit
+
+- type: startingGear
+  id: JanitorJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJanitor
+
+- type: loadout
+  id: JanitorJumpskirt
+  equipment: JanitorJumpskirt
+
+- type: startingGear
+  id: JanitorJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtJanitor
+
+# Gloves
+- type: loadout
+  id: JanitorRubberGloves
+  equipment: JanitorRubberGloves
+
+- type: startingGear
+  id: JanitorRubberGloves
+  equipment:
+    gloves: ClothingHandsGlovesJanitor
+
+- type: loadout
+  id: OrangeGloves
+  equipment: OrangeGloves
+
+- type: startingGear
+  id: OrangeGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorOrange
+
+- type: loadout
+  id: PurpleGloves
+  equipment: PurpleGloves
+
+- type: startingGear
+  id: PurpleGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorPurple
+
+# Outer clothing
+- type: loadout
+  id: JanitorWintercoat
+  equipment: JanitorWintercoat
+
+- type: startingGear
+  id: JanitorWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterJani

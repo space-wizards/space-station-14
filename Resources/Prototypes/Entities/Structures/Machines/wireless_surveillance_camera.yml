@@ -33,7 +33,7 @@
       range: 10
     - type: UserInterface
       interfaces:
-        - key: enum.SurveillanceCameraSetupUiKey.Camera
+        enum.SurveillanceCameraSetupUiKey.Camera:
           type: SurveillanceCameraSetupBoundUi
   placement:
     mode: SnapgridCenter

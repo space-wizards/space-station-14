@@ -61,7 +61,7 @@ public sealed partial class AnomalySystem
         var materialAmount = _material.GetMaterialAmount(uid, component.RequiredMaterial);
 
         var state = new AnomalyGeneratorUserInterfaceState(component.CooldownEndTime, materialAmount, component.MaterialPerAnomaly);
-        _ui.TrySetUiState(uid, AnomalyGeneratorUiKey.Key, state);
+        _ui.SetUiState(uid, AnomalyGeneratorUiKey.Key, state);
     }
 
     public void TryGeneratorCreateAnomaly(EntityUid uid, AnomalyGeneratorComponent? component = null)
@@ -103,7 +103,7 @@ public sealed partial class AnomalySystem
             var tile = new Vector2i(randomX, randomY);
 
             // no air-blocked areas.
-            if (_atmosphere.IsTileSpace(grid, xform.MapUid, tile, mapGridComp: gridComp) ||
+            if (_atmosphere.IsTileSpace(grid, xform.MapUid, tile) ||
                 _atmosphere.IsTileAirBlocked(grid, tile, mapGridComp: gridComp))
             {
                 continue;

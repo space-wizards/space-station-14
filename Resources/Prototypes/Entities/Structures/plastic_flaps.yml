@@ -23,7 +23,7 @@
           bounds: "-0.49,-0.49,0.49,0.49"
         density: 100
         mask:
-        - TabletopMachineMask
+        - Impassable
         layer:
         - MidImpassable
   - type: Damageable
@@ -61,17 +61,20 @@
           bounds: "-0.49,-0.49,0.49,0.49"
         density: 100
         mask:
-        - TabletopMachineMask
+        - Impassable
         layer:
         - Opaque
         - MidImpassable
   - type: Occluder
+  - type: Construction
+    graph: PlasticFlapsGraph
+    node: opaqueFlaps
 
 - type: entity
   id: PlasticFlapsAirtightClear
   parent: PlasticFlapsClear
   name: airtight plastic flaps
-  suffix: Airtight Clear
+  suffix: Airtight, Clear
   description: Heavy duty, slightly stronger, airtight plastic flaps. Definitely can't get past those. No way.
   components:
   - type: Destructible
@@ -83,12 +86,17 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Airtight
+  - type: Construction
+    graph: PlasticFlapsGraph
+    node: airtightFlaps
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   id: PlasticFlapsAirtightOpaque
   parent: PlasticFlapsOpaque
   name: airtight plastic flaps
-  suffix: Airtight Opaque
+  suffix: Airtight, Opaque
   description: Heavy duty, slightly stronger, airtight plastic flaps. Definitely can't get past those. No way.
   components:
   - type: Destructible
@@ -100,3 +108,8 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Airtight
+  - type: Construction
+    graph: PlasticFlapsGraph
+    node: airtightopaqueFlaps
+  - type: StaticPrice
+    price: 100

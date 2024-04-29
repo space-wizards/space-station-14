@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
@@ -20,22 +19,11 @@ public sealed partial class AtmosphereSystem
 
         #region Atmos API Subscriptions
 
-        SubscribeLocalEvent<GridAtmosphereComponent, HasAtmosphereMethodEvent>(GridHasAtmosphere);
         SubscribeLocalEvent<GridAtmosphereComponent, IsSimulatedGridMethodEvent>(GridIsSimulated);
         SubscribeLocalEvent<GridAtmosphereComponent, GetAllMixturesMethodEvent>(GridGetAllMixtures);
-        SubscribeLocalEvent<GridAtmosphereComponent, GetTileMixtureMethodEvent>(GridGetTileMixture);
-        SubscribeLocalEvent<GridAtmosphereComponent, GetTileMixturesMethodEvent>(GridGetTileMixtures);
         SubscribeLocalEvent<GridAtmosphereComponent, ReactTileMethodEvent>(GridReactTile);
-        SubscribeLocalEvent<GridAtmosphereComponent, IsTileSpaceMethodEvent>(GridIsTileSpace);
-        SubscribeLocalEvent<GridAtmosphereComponent, GetAdjacentTilesMethodEvent>(GridGetAdjacentTiles);
-        SubscribeLocalEvent<GridAtmosphereComponent, GetAdjacentTileMixturesMethodEvent>(GridGetAdjacentTileMixtures);
-        SubscribeLocalEvent<GridAtmosphereComponent, HotspotExposeMethodEvent>(GridHotspotExpose);
         SubscribeLocalEvent<GridAtmosphereComponent, HotspotExtinguishMethodEvent>(GridHotspotExtinguish);
         SubscribeLocalEvent<GridAtmosphereComponent, IsHotspotActiveMethodEvent>(GridIsHotspotActive);
-        SubscribeLocalEvent<GridAtmosphereComponent, AddPipeNetMethodEvent>(GridAddPipeNet);
-        SubscribeLocalEvent<GridAtmosphereComponent, RemovePipeNetMethodEvent>(GridRemovePipeNet);
-        SubscribeLocalEvent<GridAtmosphereComponent, AddAtmosDeviceMethodEvent>(GridAddAtmosDevice);
-        SubscribeLocalEvent<GridAtmosphereComponent, RemoveAtmosDeviceMethodEvent>(GridRemoveAtmosDevice);
 
         #endregion
     }
@@ -120,15 +108,6 @@ public sealed partial class AtmosphereSystem
         }
     }
 
-    private void GridHasAtmosphere(EntityUid uid, GridAtmosphereComponent component, ref HasAtmosphereMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Result = true;
-        args.Handled = true;
-    }
-
     private void GridIsSimulated(EntityUid uid, GridAtmosphereComponent component, ref IsSimulatedGridMethodEvent args)
     {
         if (args.Handled)
@@ -167,48 +146,6 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
-    private void GridGetTileMixture(EntityUid uid, GridAtmosphereComponent component,
-        ref GetTileMixtureMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!component.Tiles.TryGetValue(args.Tile, out var tile))
-            return; // Do NOT handle the event if we don't have that tile, the map will handle it instead.
-
-        if (args.Excite)
-            component.InvalidatedCoords.Add(args.Tile);
-
-        args.Mixture = tile.Air;
-        args.Handled = true;
-    }
-
-    private void GridGetTileMixtures(EntityUid uid, GridAtmosphereComponent component,
-        ref GetTileMixturesMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Handled = true;
-        args.Mixtures = new GasMixture?[args.Tiles.Count];
-
-        for (var i = 0; i < args.Tiles.Count; i++)
-        {
-            var tile = args.Tiles[i];
-            if (!component.Tiles.TryGetValue(tile, out var atmosTile))
-            {
-                // need to get map atmosphere
-                args.Handled = false;
-                continue;
-            }
-
-            if (args.Excite)
-                component.InvalidatedCoords.Add(tile);
-
-            args.Mixtures[i] = atmosTile.Air;
-        }
-    }
-
     private void GridReactTile(EntityUid uid, GridAtmosphereComponent component, ref ReactTileMethodEvent args)
     {
         if (args.Handled)
@@ -221,69 +158,8 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
-    private void GridIsTileSpace(EntityUid uid, GridAtmosphereComponent component, ref IsTileSpaceMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        // We don't have that tile, so let the map handle it.
-        if (!component.Tiles.TryGetValue(args.Tile, out var tile))
-            return;
-
-        args.Result = tile.Space;
-        args.Handled = true;
-    }
-
-    private void GridGetAdjacentTiles(EntityUid uid, GridAtmosphereComponent component,
-        ref GetAdjacentTilesMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!component.Tiles.TryGetValue(args.Tile, out var tile))
-            return;
-
-        IEnumerable<Vector2i> EnumerateAdjacent(GridAtmosphereComponent grid, TileAtmosphere t)
-        {
-            foreach (var adj in t.AdjacentTiles)
-            {
-                if (adj == null)
-                    continue;
-
-                yield return adj.GridIndices;
-            }
-        }
-
-        args.Result = EnumerateAdjacent(component, tile);
-        args.Handled = true;
-    }
-
-    private void GridGetAdjacentTileMixtures(EntityUid uid, GridAtmosphereComponent component,
-        ref GetAdjacentTileMixturesMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!component.Tiles.TryGetValue(args.Tile, out var tile))
-            return;
-
-        IEnumerable<GasMixture> EnumerateAdjacent(GridAtmosphereComponent grid, TileAtmosphere t)
-        {
-            foreach (var adj in t.AdjacentTiles)
-            {
-                if (adj?.Air == null)
-                    continue;
-
-                yield return adj.Air;
-            }
-        }
-
-        args.Result = EnumerateAdjacent(component, tile);
-        args.Handled = true;
-    }
-
     /// <summary>
-    /// Update array of adjacent tiles and the adjacency flags. Optionally activates all tiles with modified adjacencies.
+    /// Update array of adjacent tiles and the adjacency flags.
     /// </summary>
     private void UpdateAdjacentTiles(
         Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
@@ -318,14 +194,16 @@ public sealed partial class AtmosphereSystem
             if (activate)
                 AddActiveTile(atmos, adjacent);
 
-            var oppositeDirection = direction.GetOpposite();
+            var oppositeIndex = i.ToOppositeIndex();
+            var oppositeDirection = (AtmosDirection) (1 << oppositeIndex);
+
             if (adjBlockDirs.IsFlagSet(oppositeDirection) || blockedDirs.IsFlagSet(direction))
             {
                 // Adjacency is blocked by some airtight entity.
                 tile.AdjacentBits &= ~direction;
                 adjacent.AdjacentBits &= ~oppositeDirection;
                 tile.AdjacentTiles[i] = null;
-                adjacent.AdjacentTiles[oppositeDirection.ToIndex()] = null;
+                adjacent.AdjacentTiles[oppositeIndex] = null;
             }
             else
             {
@@ -333,7 +211,7 @@ public sealed partial class AtmosphereSystem
                 tile.AdjacentBits |= direction;
                 adjacent.AdjacentBits |= oppositeDirection;
                 tile.AdjacentTiles[i] = adjacent;
-                adjacent.AdjacentTiles[oppositeDirection.ToIndex()] = tile;
+                adjacent.AdjacentTiles[oppositeIndex] = tile;
             }
 
             DebugTools.Assert(!(tile.AdjacentBits.IsFlagSet(direction) ^
@@ -355,18 +233,6 @@ public sealed partial class AtmosphereSystem
         var air = map.Mixture;
         DebugTools.Assert(air.Immutable);
         return (air, map.Space);
-    }
-
-    private void GridHotspotExpose(EntityUid uid, GridAtmosphereComponent component, ref HotspotExposeMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!component.Tiles.TryGetValue(args.Tile, out var tile))
-            return;
-
-        HotspotExpose(component, tile, args.ExposedTemperature, args.ExposedVolume, args.soh, args.SparkSourceUid);
-        args.Handled = true;
     }
 
     private void GridHotspotExtinguish(EntityUid uid, GridAtmosphereComponent component,
@@ -443,49 +309,6 @@ public sealed partial class AtmosphereSystem
 
         // New temperature is the arithmetic mean of the sum of the adjacent temperatures...
         tile.Air.Temperature = totalTemperature / count;
-    }
-
-    private void GridAddPipeNet(EntityUid uid, GridAtmosphereComponent component, ref AddPipeNetMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Handled = component.PipeNets.Add(args.PipeNet);
-    }
-
-    private void GridRemovePipeNet(EntityUid uid, GridAtmosphereComponent component, ref RemovePipeNetMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Handled = component.PipeNets.Remove(args.PipeNet);
-    }
-
-    private void GridAddAtmosDevice(Entity<GridAtmosphereComponent> grid, ref AddAtmosDeviceMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!grid.Comp.AtmosDevices.Add((args.Device.Owner, args.Device)))
-            return;
-
-        args.Device.JoinedGrid = grid;
-        args.Handled = true;
-        args.Result = true;
-    }
-
-    private void GridRemoveAtmosDevice(EntityUid uid, GridAtmosphereComponent component,
-        ref RemoveAtmosDeviceMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!component.AtmosDevices.Remove((args.Device.Owner, args.Device)))
-            return;
-
-        args.Device.JoinedGrid = null;
-        args.Handled = true;
-        args.Result = true;
     }
 
     /// <summary>
