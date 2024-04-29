@@ -40,8 +40,8 @@
     - 0,0,0,1
   - type: UserInterface
     interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   - type: Tag
     tags:
     - Book

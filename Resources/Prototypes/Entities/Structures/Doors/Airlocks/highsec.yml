@@ -55,6 +55,7 @@
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
   - type: Weldable
+    fuel: 10
     time: 10
   - type: Airlock
   - type: NavMapDoor
@@ -78,8 +79,8 @@
     alwaysRandomize: true
   - type: UserInterface
     interfaces:
-    - key: enum.WiresUiKey.Key
-      type: WiresBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: Airtight
   - type: Occluder
   - type: Damageable

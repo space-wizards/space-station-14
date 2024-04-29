@@ -13,8 +13,8 @@
     closeOnHandDeselect: true
   - type: UserInterface
     interfaces:
-    - key: enum.MagicMirrorUiKey.Key
-      type: MagicMirrorBoundUserInterface
+      enum.MagicMirrorUiKey.Key:
+        type: MagicMirrorBoundUserInterface
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1

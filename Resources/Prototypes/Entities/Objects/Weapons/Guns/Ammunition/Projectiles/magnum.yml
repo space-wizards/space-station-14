@@ -21,19 +21,6 @@
         Blunt: 1
 
 - type: entity
-  id: BulletMagnumRubber
-  name: bullet (.45 magnum rubber)
-  parent: BaseBulletRubber
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 3
-  - type: StaminaDamageOnCollide
-    damage: 35 # 3 hits to stun cuz revolver
-
-- type: entity
   id: BulletMagnumIncendiary
   parent: BaseBulletIncendiary
   name: bullet (.45 magnum incendiary)
@@ -44,7 +31,7 @@
       types:
         Blunt: 3
         Heat: 32
-        
+
 - type: entity
   id: BulletMagnumAP
   name: bullet (.45 magnum armor-piercing)
