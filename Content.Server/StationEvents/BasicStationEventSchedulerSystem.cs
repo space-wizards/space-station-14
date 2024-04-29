@@ -58,7 +58,8 @@ namespace Content.Server.StationEvents
         /// </summary>
         private void ResetTimer(BasicStationEventSchedulerComponent component)
         {
-            component.TimeUntilNextEvent = _random.Next(3 * 60, 10 * 60);
+            // 5 - 25 minutes. TG does 3-10 but that's pretty frequent
+            component.TimeUntilNextEvent = _random.Next(300, 1500);
         }
     }
 
