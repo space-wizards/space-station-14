@@ -14,6 +14,8 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Content.Shared.Chemistry.Reaction.Components;
+using Content.Shared.Chemistry.Reaction.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Map;
@@ -62,6 +64,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected readonly MetaDataSystem MetaData = default!;
     [Dependency] protected readonly INetManager NetManager = default!;
+    [Dependency] protected readonly ChemicalAbsorptionSystem AbsorptionSystem = default!;
 
     public override void Initialize()
     {
@@ -285,7 +288,13 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="soln"></param>
     /// <param name="needsReactionsProcessing"></param>
     /// <param name="mixerComponent"></param>
-    public void UpdateChemicals(Entity<SolutionComponent> soln, bool needsReactionsProcessing = true, ReactionMixerComponent? mixerComponent = null)
+    public void UpdateChemicals(
+        Entity<SolutionComponent> soln,
+        bool needsReactionsProcessing = true,
+        bool needsAbsorptionProcessing = false,
+        ReactionMixerComponent? mixerComponent = null,
+        Entity<ChemicalAbsorberComponent>? absorber = null
+    )
     {
         Dirty(soln);
 
@@ -295,6 +304,10 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         // Process reactions
         if (needsReactionsProcessing && solution.CanReact)
             ChemicalReactionSystem.FullyReactSolution(soln, mixerComponent);
+
+        // Process absorptions, only processed if there is an absorber
+        if (needsAbsorptionProcessing && solution.CanBeAbsorbed)
+            AbsorptionSystem.AbsorbChemicals(soln, absorber);
 
         var overflow = solution.Volume - solution.MaxVolume;
         if (overflow > FixedPoint2.Zero)
@@ -438,7 +451,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="quantity">The amount of reagent to add.</param>
     /// <returns>If all the reagent could be added.</returns>
     [PublicAPI]
-    public bool TryAddReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, float? temperature = null, ReagentData? data = null)
+    public bool TryAddReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, float? temperature = null, ReagentDiscriminator? data = null)
         => TryAddReagent(soln, new ReagentQuantity(prototype, quantity, data), out _, temperature);
 
     /// <summary>
@@ -450,7 +463,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="quantity">The amount of reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
-    public bool TryAddReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, out FixedPoint2 acceptedQuantity, float? temperature = null, ReagentData? data = null)
+    public bool TryAddReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, out FixedPoint2 acceptedQuantity, float? temperature = null, ReagentDiscriminator? data = null)
     {
         var reagent = new ReagentQuantity(prototype, quantity, data);
         return TryAddReagent(soln, reagent, out acceptedQuantity, temperature);
@@ -499,7 +512,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="prototype">The Id of the reagent to remove.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
     /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, ReagentData? data = null)
+    public bool RemoveReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, ReagentDiscriminator? data = null)
     {
         return RemoveReagent(soln, new ReagentQuantity(prototype, quantity, data));
     }
