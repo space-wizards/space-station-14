@@ -435,6 +435,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> LoginTipsDataset =
             CVarDef.Create("tips.login_dataset", "Tips");
 
+        /// <summary>
+        ///     The chance for Tippy to replace a normal tip message.
+        /// </summary>
+        public static readonly CVarDef<float> TipsTippyChance =
+            CVarDef.Create("tips.tippy_chance", 0.01f);
+
         /*
          * Console
          */
@@ -1985,6 +1991,10 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> GatewayGeneratorEnabled =
             CVarDef.Create("gateway.generator_enabled", true);
 
+        // Clippy!
+        public static readonly CVarDef<string> TippyEntity =
+            CVarDef.Create("tippy.entity", "Tippy", CVar.SERVER | CVar.REPLICATED);
+            
         /*
          * DEBUG
          */
