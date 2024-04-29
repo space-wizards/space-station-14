@@ -7,11 +7,15 @@ namespace Content.Shared.Nutrition.Components;
 [Access(typeof(SatiationSystem))]
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState, AutoGenerateComponentPause]
-public sealed partial class ThirstComponent : Component
+public sealed partial class SatiationComponent : Component
 {
-    [DataField("satiation"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("Hunger"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public Satiation Satiation = new();
+    public Satiation Hunger = new();
+
+    [DataField("thirst"), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public Satiation Thirst = new();
 
     /// <summary>
     /// The time when the thirst will update next.
