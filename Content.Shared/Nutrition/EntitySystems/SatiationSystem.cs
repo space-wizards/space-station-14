@@ -212,13 +212,13 @@ public sealed class SatiationSystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return;
-        UpdateCurrentThreshold(component.Thirst);
+        UpdateCurrentThreshold(component.Hunger);
         DoHungerThresholdEffects(uid, component);
 
         Dirty(uid, component);
     }
 
-    private bool DoThresholdEffects(EntityUid uid, Satiation satiation, bool force)
+    private bool DoThresholdEffects(EntityUid uid, Satiation satiation, AlertCategory alertCategory, bool force)
     {
         if (satiation.CurrentThreshold == satiation.LastThreshold && !force)
             return false;
@@ -233,37 +233,28 @@ public sealed class SatiationSystem : EntitySystem
         }
         satiation.LastThreshold = satiation.CurrentThreshold;
 
+        if (ThirstAlertThresholds.TryGetValue(satiation.CurrentThreshold, out var alertId))
+        {
+            _alerts.ShowAlert(uid, alertId);
+        }
+        else
+        {
+            _alerts.ClearAlertCategory(uid, alertCategory);
+        }
+
         return true;
     }
 
     private void DoThirstThresholdEffects(EntityUid uid, SatiationComponent component, bool force = false)
     {
-        if (!DoThresholdEffects(uid, component.Thirst, force))
+        if (!DoThresholdEffects(uid, component.Thirst, ThirstAlertCategory, force))
             return;
-
-        if (ThirstAlertThresholds.TryGetValue(component.Thirst.CurrentThreshold, out var alertId))
-        {
-            _alerts.ShowAlert(uid, alertId);
-        }
-        else
-        {
-            _alerts.ClearAlertCategory(uid, ThirstAlertCategory);
-        }
     }
 
     private void DoHungerThresholdEffects(EntityUid uid, SatiationComponent component, bool force = false)
     {
-        if (!DoThresholdEffects(uid, component.Hunger, force))
+        if (!DoThresholdEffects(uid, component.Hunger, HungerAlertCategory, force))
             return;
-
-        if (ThirstAlertThresholds.TryGetValue(component.Thirst.CurrentThreshold, out var alertId))
-        {
-            _alerts.ShowAlert(uid, alertId);
-        }
-        else
-        {
-            _alerts.ClearAlertCategory(uid, ThirstAlertCategory);
-        }
     }
 
     private void DoContinuousEffects(EntityUid uid, Satiation satiation)
@@ -353,18 +344,18 @@ public sealed class SatiationSystem : EntitySystem
         }
     }
 
-    public bool TryGetStatusHungerIconPrototype(SatiationComponent component, [NotNullWhen(true)] out StatusIconPrototype? prototype)
+    private bool TryGetStatusIconPrototype(Satiation satiation, (string, StatusIconPrototype?)[] Icons, [NotNullWhen(true)] out StatusIconPrototype? prototype)
     {
-        switch (component.Hunger.CurrentThreshold)
+        switch (satiation.CurrentThreshold)
         {
             case SatiationThreashold.Full:
-                prototype = HungerIcons?[0].Item2;
+                prototype = Icons?[0].Item2;
                 break;
             case SatiationThreashold.Concerned:
-                prototype = HungerIcons?[1].Item2;
+                prototype = Icons?[1].Item2;
                 break;
             case SatiationThreashold.Desperate:
-                prototype = HungerIcons?[2].Item2;
+                prototype = Icons?[2].Item2;
                 break;
             default:
                 prototype = null;
@@ -373,25 +364,15 @@ public sealed class SatiationSystem : EntitySystem
 
         return prototype != null;
     }
+
+    public bool TryGetStatusHungerIconPrototype(SatiationComponent component, [NotNullWhen(true)] out StatusIconPrototype? prototype)
+    {
+        return TryGetStatusIconPrototype(component.Hunger, HungerIcons, out prototype);
+    }
+
     public bool TryGetStatusThirstIconPrototype(SatiationComponent component, [NotNullWhen(true)] out StatusIconPrototype? prototype)
     {
-        switch (component.Thirst.CurrentThreshold)
-        {
-            case SatiationThreashold.Full:
-                prototype = ThirstIcons?[0].Item2;
-                break;
-            case SatiationThreashold.Concerned:
-                prototype = ThirstIcons?[1].Item2;
-                break;
-            case SatiationThreashold.Desperate:
-                prototype = ThirstIcons?[2].Item2;
-                break;
-            default:
-                prototype = null;
-                break;
-        }
-
-        return prototype != null;
+        return TryGetStatusIconPrototype(component.Thirst, ThirstIcons, out prototype);
     }
 
     public override void Update(float frameTime)
