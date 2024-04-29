@@ -101,3 +101,7 @@ marking-LizardChestUnderbelly = Lizard Chest (Underbelly)
 
 marking-LizardChestBackspikes-body_backspikes = Lizard Back spikes (Four)
 marking-LizardChestBackspikes = Lizard Back spikes (Four)
+
+marking-LizardSnoutSplotch = Lizard Snout (Splotch)
+marking-LizardSnoutSplotch-snout_splotch_primary = Muzzle
+marking-LizardSnoutSplotch-snout_splotch_secondary = Snoot

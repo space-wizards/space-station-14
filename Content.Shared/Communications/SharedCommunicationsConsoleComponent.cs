@@ -11,7 +11,7 @@ namespace Content.Shared.Communications
     public sealed class CommunicationsConsoleInterfaceState : BoundUserInterfaceState
     {
         public readonly bool CanAnnounce;
-        public readonly bool CanBroadcast;
+        public readonly bool CanBroadcast = true;
         public readonly bool CanCall;
         public readonly TimeSpan? ExpectedCountdownEnd;
         public readonly bool CountdownStarted;
