@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Hanzdegloker
-  changes:
-  - message: Standardized amount of huds in vendors and added new diagnostics eyeapatch
-      hud
-    type: Tweak
-  id: 5985
-  time: '2024-02-21T06:22:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25208
 - author: DebugOk
   changes:
   - message: Drones are now completely removed instead of just being disabled
@@ -3870,3 +3862,11 @@
   id: 6484
   time: '2024-04-29T03:08:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27446
+- author: Nopey
+  changes:
+  - message: Many more items can now be recycled, including mops, medkits, and stun
+      batons.
+    type: Tweak
+  id: 6485
+  time: '2024-04-29T03:36:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24435
