@@ -55,6 +55,7 @@
       displayName: Head
     - name: id
       slotTexture: id
+      fullTextureName: template_small
       slotFlags: IDCARD
       slotGroup: SecondHotbar
       stripTime: 6
@@ -64,6 +65,7 @@
       displayName: ID
     - name: belt
       slotTexture: belt
+      fullTextureName: template_small
       slotFlags: BELT
       slotGroup: SecondHotbar
       stripTime: 6
@@ -72,6 +74,7 @@
       displayName: Belt
     - name: back
       slotTexture: back
+      fullTextureName: template_small
       slotFlags: BACK
       slotGroup: SecondHotbar
       stripTime: 6
@@ -81,6 +84,7 @@
 
     - name: pocket4
       slotTexture: web
+      fullTextureName: template_small
       slotFlags: POCKET
       slotGroup: MainHotbar
       stripTime: 3
@@ -89,6 +93,7 @@
       displayName: Pocket 4
     - name: pocket3
       slotTexture: web
+      fullTextureName: template_small
       slotFlags: POCKET
       slotGroup: MainHotbar
       stripTime: 3
@@ -104,6 +109,7 @@
       displayName: Suit
     - name: pocket1
       slotTexture: pocket
+      fullTextureName: template_small
       slotFlags: POCKET
       slotGroup: MainHotbar
       stripTime: 3
@@ -114,6 +120,7 @@
       stripHidden: true
     - name: pocket2
       slotTexture: pocket
+      fullTextureName: template_small
       slotFlags: POCKET
       slotGroup: MainHotbar
       stripTime: 3

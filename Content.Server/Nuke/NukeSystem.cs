@@ -21,6 +21,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Nuke;
 
@@ -186,7 +187,7 @@ public sealed class NukeSystem : EntitySystem
                     continue;
 
                 var msg = Loc.GetString("nuke-component-cant-anchor-floor");
-                _popups.PopupEntity(msg, uid, args.Session, PopupType.MediumCaution);
+                _popups.PopupEntity(msg, uid, args.Actor, PopupType.MediumCaution);
 
                 return;
             }
@@ -242,10 +243,7 @@ public sealed class NukeSystem : EntitySystem
 
         else
         {
-            if (args.Session.AttachedEntity is not { } user)
-                return;
-
-            DisarmBombDoafter(uid, user, component);
+            DisarmBombDoafter(uid, args.Actor, component);
         }
     }
 
@@ -365,8 +363,7 @@ public sealed class NukeSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        var ui = _ui.GetUiOrNull(uid, NukeUiKey.Key);
-        if (ui == null)
+        if (!_ui.HasUi(uid, NukeUiKey.Key))
             return;
 
         var anchored = Transform(uid).Anchored;
@@ -387,7 +384,7 @@ public sealed class NukeSystem : EntitySystem
             CooldownTime = (int) component.CooldownTime
         };
 
-        _ui.SetUiState(ui, state);
+        _ui.SetUiState(uid, NukeUiKey.Key, state);
     }
 
     private void PlayNukeKeypadSound(EntityUid uid, int number, NukeComponent? component = null)
@@ -463,7 +460,8 @@ public sealed class NukeSystem : EntitySystem
 
         // warn a crew
         var announcement = Loc.GetString("nuke-component-announcement-armed",
-            ("time", (int) component.RemainingTime), ("position", posText));
+            ("time", (int) component.RemainingTime),
+            ("location", FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString((uid, nukeXform)))));
         var sender = Loc.GetString("nuke-component-announcement-sender");
         _chatSystem.DispatchStationAnnouncement(stationUid ?? uid, announcement, sender, false, null, Color.Red);
 

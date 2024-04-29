@@ -10,9 +10,10 @@ implanter-component-implant-already = {$target} already has the {$implant}!
 implanter-draw-text = Draw
 implanter-inject-text = Inject
 
-implanter-empty-text = None
+implanter-empty-text = Empty
 
-implanter-label = Implant: [color=green]{$implantName}[/color] | [color=white]{$modeString}[/color]{$lineBreak}{$implantDescription}
+implanter-label = [color=green]{$implantName}[/color]
+    Mode: [color=white]{$modeString}[/color]
 
 implanter-contained-implant-text = [color=green]{$desc}[/color]
 
@@ -22,5 +23,5 @@ scramble-implant-activated-popup = Your appearance shifts and changes!
 
 ## Implant Messages
 
-deathrattle-implant-dead-message = {$user} has died at {$position}.
-deathrattle-implant-critical-message = {$user} life signs critical, immediate assistance required at {$position}.
+deathrattle-implant-dead-message = {$user} has died {$position}.
+deathrattle-implant-critical-message = {$user} life signs critical, immediate assistance required {$position}.
