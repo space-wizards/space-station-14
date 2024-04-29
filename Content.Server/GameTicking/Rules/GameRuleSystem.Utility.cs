@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Components;
 using Robust.Shared.Collections;
@@ -15,29 +16,12 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         return EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
     }
 
-    protected bool TryRoundStartAttempt(RoundStartAttemptEvent ev, string localizedPresetName)
+    /// <summary>
+    /// Queries all gamerules, regardless of if they're active or not.
+    /// </summary>
+    protected EntityQueryEnumerator<T, GameRuleComponent> QueryAllRules()
     {
-        var query = EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
-        while (query.MoveNext(out _, out _, out _, out var gameRule))
-        {
-            var minPlayers = gameRule.MinPlayers;
-            if (!ev.Forced && ev.Players.Length < minPlayers)
-            {
-                ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
-                    ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers),
-                    ("presetName", localizedPresetName)));
-                ev.Cancel();
-                continue;
-            }
-
-            if (ev.Players.Length == 0)
-            {
-                ChatManager.DispatchServerAnnouncement(Loc.GetString("preset-no-one-ready"));
-                ev.Cancel();
-            }
-        }
-
-        return !ev.Cancelled;
+        return EntityQueryEnumerator<T, GameRuleComponent>();
     }
 
     /// <summary>

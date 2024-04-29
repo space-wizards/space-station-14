@@ -109,12 +109,12 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (!Resolve(loaderUid, ref loader))
             return;
 
-        if (!_userInterfaceSystem.TryGetUi(loaderUid, loader.UiKey, out var ui))
+        if (!_userInterfaceSystem.HasUi(loaderUid, loader.UiKey))
             return;
 
         var programs = GetAvailablePrograms(loaderUid, loader);
         var state = new CartridgeLoaderUiState(programs, GetNetEntity(loader.ActiveProgram));
-        _userInterfaceSystem.SetUiState(ui, state, session);
+        _userInterfaceSystem.SetUiState(loaderUid, loader.UiKey, state);
     }
 
     /// <summary>
@@ -133,8 +133,8 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (!Resolve(loaderUid, ref loader))
             return;
 
-        if (_userInterfaceSystem.TryGetUi(loaderUid, loader.UiKey, out var ui))
-            _userInterfaceSystem.SetUiState(ui, state, session);
+        if (_userInterfaceSystem.HasUi(loaderUid, loader.UiKey))
+            _userInterfaceSystem.SetUiState(loaderUid, loader.UiKey, state);
     }
 
     /// <summary>

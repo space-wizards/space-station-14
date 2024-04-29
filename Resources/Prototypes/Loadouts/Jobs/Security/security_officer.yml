@@ -130,6 +130,25 @@
   equipment:
     back: ClothingBackpackDuffelSecurityFilled
 
+# Belt
+- type: loadout
+  id: SecurityBelt
+  equipment: SecurityBelt
+
+- type: startingGear
+  id: SecurityBelt
+  equipment:
+    belt: ClothingBeltSecurityFilled
+
+- type: loadout
+  id: SecurityWebbing
+  equipment: SecurityWebbing
+
+- type: startingGear
+  id: SecurityWebbing
+  equipment:
+    belt: ClothingBeltSecurityWebbingFilled
+
 # Outerclothing
 - type: loadout
   id: ArmorVest
