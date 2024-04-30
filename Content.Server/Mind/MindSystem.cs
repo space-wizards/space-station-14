@@ -63,8 +63,8 @@ public sealed class MindSystem : SharedMindSystem
             && !Terminating(visiting))
         {
             TransferTo(mindId, visiting, mind: mind);
-            if (TryComp(visiting, out GhostComponent? ghost))
-                _ghosts.SetCanReturnToBody(ghost, false);
+            if (TryComp(visiting, out GhostComponent? ghostComp))
+                _ghosts.SetCanReturnToBody(ghostComp, false);
             return;
         }
 
@@ -74,24 +74,19 @@ public sealed class MindSystem : SharedMindSystem
         if (!component.GhostOnShutdown || mind.Session == null || _gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
             return;
 
-        var xform = Transform(uid);
-        var gridId = xform.GridUid;
-        var spawnPosition = Transform(uid).Coordinates;
+        if (!_transform.TryGetMapOrGridCoordinates(uid, out var spawnPosition))
+            return;
 
         // Use a regular timer here because the entity has probably been deleted.
-        Timer.Spawn(0, () =>
-        {
+        // Timer.Spawn(0, () =>
+        // {
             // Make extra sure the round didn't end between spawning the timer and it being executed.
             if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
                 return;
 
-            // Async this so that we don't throw if the grid we're on is being deleted.
-            if (!HasComp<MapGridComponent>(gridId))
-                spawnPosition = _gameTicker.GetObserverSpawnPoint();
-
             // TODO refactor observer spawning.
             // please.
-            if (!spawnPosition.IsValid(EntityManager))
+            if (!spawnPosition.Value.IsValid(EntityManager))
             {
                 // This should be an error, if it didn't cause tests to start erroring when they delete a player.
                 Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
@@ -99,7 +94,7 @@ public sealed class MindSystem : SharedMindSystem
                 return;
             }
 
-            var ghost = Spawn(GameTicker.ObserverPrototypeName, spawnPosition);
+            var ghost = Spawn(GameTicker.ObserverPrototypeName, spawnPosition.Value);
             var ghostComponent = Comp<GhostComponent>(ghost);
             _ghosts.SetCanReturnToBody(ghostComponent, false);
 
@@ -107,7 +102,7 @@ public sealed class MindSystem : SharedMindSystem
             Log.Debug($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
             _metaData.SetEntityName(ghost, mind.CharacterName ?? string.Empty);
             TransferTo(mindId, ghost, mind: mind);
-        });
+        // });
     }
 
     public override bool TryGetMind(NetUserId user, [NotNullWhen(true)] out EntityUid? mindId, [NotNullWhen(true)] out MindComponent? mind)
