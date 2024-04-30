@@ -6,7 +6,7 @@ namespace Content.Shared.Preferences.Loadouts.Effects;
 /// Stores a group of loadout effects in a prototype for re-use.
 /// </summary>
 [Prototype]
-public sealed class LoadoutEffectGroupPrototype : IPrototype
+public sealed partial class LoadoutEffectGroupPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; } = string.Empty;

@@ -94,6 +94,9 @@ namespace Content.Shared.Whitelist
                 return RequireAll ? tagSystem.HasAllTags(tags, Tags) : tagSystem.HasAnyTag(tags, Tags);
             }
 
+            if (RequireAll)
+                return true;
+
             return false;
         }
     }
