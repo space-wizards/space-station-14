@@ -77,6 +77,8 @@
     graph: DisposalMachine
     node: disposal_unit
   - type: DisposalUnit
+  - type: ThrowInsertContainer
+    containerId: disposals
   - type: UserInterface
     interfaces:
       enum.DisposalUnitUiKey.Key:
