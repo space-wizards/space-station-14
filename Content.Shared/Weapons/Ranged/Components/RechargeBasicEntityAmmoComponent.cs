@@ -15,6 +15,11 @@ public sealed partial class RechargeBasicEntityAmmoComponent : Component
     [AutoNetworkedField]
     public float RechargeCooldown = 1.5f;
 
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("rechargeCount")]
+    [AutoNetworkedField]
+    public int RechargeCount = 1;
+
     [DataField("rechargeSound")]
     [AutoNetworkedField]
     public SoundSpecifier RechargeSound = new SoundPathSpecifier("/Audio/Magic/forcewall.ogg")

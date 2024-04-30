@@ -1,4 +1,4 @@
-﻿using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.GameStates;
 
@@ -76,7 +76,7 @@ public abstract partial class SharedGunSystem
             return false;
 
         if (count > component.Capacity)
-            return false;
+            count = component.Capacity.Value;
 
         component.Count = count;
         UpdateBasicEntityAppearance(uid, component);
