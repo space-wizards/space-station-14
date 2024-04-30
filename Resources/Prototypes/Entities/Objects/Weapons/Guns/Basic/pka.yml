@@ -34,7 +34,7 @@
       sprite: Objects/Weapons/Guns/Basic/kinetic_burster.rsi
       state: storage
   - type: Gun
-    fireRate: 12
+    fireRate: 6
     selectedMode: Burst
     availableModes:
     - SemiAuto
