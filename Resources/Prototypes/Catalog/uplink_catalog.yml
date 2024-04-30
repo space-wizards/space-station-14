@@ -758,6 +758,17 @@
   - UplinkDisruption
 
 - type: listing
+  id: UplinkSyndicateMartyrModule
+  name: uplink-syndicate-martyr-module-name
+  description: uplink-syndicate-martyr-module-desc
+  productEntity: BorgModuleMartyr
+  icon: { sprite: /Textures/Objects/Specific/Robotics/borgmodule.rsi, state: syndicateborgbomb }
+  cost:
+    Telecrystal: 4
+  categories:
+    - UplinkDisruption
+
+- type: listing
   id: UplinkSoapSyndie
   name: uplink-soap-name
   description: uplink-soap-desc

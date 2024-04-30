@@ -20,11 +20,19 @@ public sealed partial class ActivatableUISystem
     {
         _cell.SetPowerCellDrawEnabled(uid, false);
 
-        if (HasComp<ActivatableUIRequiresPowerCellComponent>(uid) &&
-            TryComp<ActivatableUIComponent>(uid, out var activatable))
+        if (!HasComp<ActivatableUIRequiresPowerCellComponent>(uid) ||
+            !TryComp(uid, out ActivatableUIComponent? activatable))
         {
-            _uiSystem.CloseUi(uid, activatable.Key);
+            return;
         }
+
+        if (activatable.Key == null)
+        {
+            Log.Error($"Encountered null key in activatable ui on entity {ToPrettyString(uid)}");
+            return;
+        }
+
+        _uiSystem.CloseUi(uid, activatable.Key);
     }
 
     private void OnBatteryOpened(EntityUid uid, ActivatableUIRequiresPowerCellComponent component, BoundUIOpenedEvent args)
@@ -56,6 +64,12 @@ public sealed partial class ActivatableUISystem
     {
         if (!Resolve(uid, ref component, ref draw, ref active, false))
             return;
+
+        if (active.Key == null)
+        {
+            Log.Error($"Encountered null key in activatable ui on entity {ToPrettyString(uid)}");
+            return;
+        }
 
         if (_cell.HasActivatableCharge(uid))
             return;

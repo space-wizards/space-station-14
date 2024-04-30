@@ -1,4 +1,5 @@
 # Nouns
+# Nouns
 seeds-noun-seeds = seeds
 seeds-noun-spores = spores
 
@@ -59,6 +60,8 @@ seeds-eggy-name = egg-plant
 seeds-eggy-display-name = egg-plants
 seeds-cannabis-name = cannabis
 seeds-cannabis-display-name = cannabis
+seeds-rainbow-cannabis-name = rainbow cannabis
+seeds-rainbow-cannabis-display-name = rainbow cannabis
 seeds-tobacco-name = tobacco
 seeds-tobacco-display-name = tobacco plant
 seeds-nettle-name = nettle
@@ -115,3 +118,6 @@ seeds-cotton-name = cotton
 seeds-cotton-display-name = cotton plant
 seeds-gome-name = gnome
 seeds-gnome-display-name = gnome plant
+seeds-pyrotton-name = pyrotton
+seeds-pyrotton-display-name = pyrotton plant
+

@@ -316,6 +316,26 @@
     Ping:
       path: /Audio/Effects/Cargo/ping.ogg
 
+- type: emoteSounds
+  id: UnisexSiliconSyndicate
+  params:
+    variation: 0.05
+  sounds:
+    Laugh:
+      path: /Audio/Voice/Silicon/syndieborg_laugh.ogg
+    Beep:
+      path: /Audio/Machines/twobeep.ogg
+    Chime:
+      path: /Audio/Machines/chime.ogg
+    Buzz:
+      path: /Audio/Machines/buzz-sigh.ogg
+    Buzz-Two:
+      path: /Audio/Machines/buzz-two.ogg
+    Honk:
+      path: /Audio/Items/bikehorn.ogg
+    Ping:
+      path: /Audio/Effects/Cargo/ping.ogg
+
 # body emotes
 - type: emoteSounds
   id: GeneralBodyEmotes
