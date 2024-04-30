@@ -8,7 +8,7 @@ namespace Content.Client.CartridgeLoader.Cartridges;
 
 public sealed partial class MessagesUi : UIFragment
 {
-    private MessagesUiFragment? _fragment;
+    private MessagesUiFragment _fragment;
 
 
 

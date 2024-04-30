@@ -16,7 +16,7 @@ public sealed class MessagesServerSystem : EntitySystem
 
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly MessagesCartridgeSystem _messagesCartridgeSystem = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    //[Dependency] private readonly IEntityManager _entManager = default!;
 
     public override void Update(float frameTime)
     {
@@ -26,13 +26,13 @@ public sealed class MessagesServerSystem : EntitySystem
         {
             if (server.NextUpdate <= _gameTiming.CurTime)
             {
-                server.NextUpdate = _gameTiming.CurTime + server.UpdateDelay;
+                server.NextUpdate += server.UpdateDelay;
 
                 Update(uid, server);
             }
             if (server.NextSync <= _gameTiming.CurTime)
             {
-                server.NextSync = _gameTiming.CurTime + server.SyncDelay;
+                server.NextSync += server.SyncDelay;
 
                 Sync(uid, server);
             }
@@ -43,10 +43,10 @@ public sealed class MessagesServerSystem : EntitySystem
     {
         var mapId = Transform(uid).MapID;
 
-        if (!TryComp(uid, out ApcPowerReceiverComponent? powerReceiver) || !(powerReceiver.Powered))
+        if (EntityManager.IsPowered(uid))
             return;
 
-        var query = _entManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();
+        var query = EntityManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();
         List<(int, string)> toUpdate = [];
 
         //Loop iterates over all cartridges on the map when the server is updated
@@ -67,8 +67,7 @@ public sealed class MessagesServerSystem : EntitySystem
                 var messagesToSend = new List<MessagesMessageData>(cartComponent.MessagesQueue);
                 foreach (var message in messagesToSend)
                 {
-                    bool sent = TryToSend(message, mapId);
-                    if (sent)
+                    if (TryToSend(message, mapId))
                     {
                         cartComponent.MessagesQueue.Remove(message);
                         cartComponent.Messages.Add(message);
@@ -97,7 +96,7 @@ public sealed class MessagesServerSystem : EntitySystem
         //If any names were changed or added, the server updates all the carts on its map.
         if (toUpdate.Count > 0)
         {
-            query = _entManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();
+            query = EntityManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();
             while (query.MoveNext(out var cartUid, out var cartComponent))
             {
                 if (Transform(cartUid).MapID != mapId)
@@ -121,7 +120,7 @@ public sealed class MessagesServerSystem : EntitySystem
     public void Sync(EntityUid uid, MessagesServerComponent component)
     {
         var mapId = Transform(uid).MapID;
-        var query = _entManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();
+        var query = EntityManager.AllEntityQueryEnumerator<MessagesCartridgeComponent>();
         while (query.MoveNext(out var cartUid, out var cartComponent))
         {
             if (Transform(cartUid).MapID != mapId)

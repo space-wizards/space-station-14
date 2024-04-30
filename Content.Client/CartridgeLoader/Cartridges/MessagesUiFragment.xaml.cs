@@ -35,11 +35,11 @@ public sealed partial class MessagesUiFragment : BoxContainer
     public void UpdateState(MessagesUiStateMode mode, List<(string, int?)>? contents, string? name)
     {
         MessageContainer.DisposeAllChildren();
-        if (OverContainer.Children.Contains(Input))
-            OverContainer.RemoveChild(Input);
-        if (OverContainer.Children.Contains(HeaderBox))
-            OverContainer.RemoveChild(HeaderBox);
-        if (mode == MessagesUiStateMode.Chat && contents != null)
+        OverContainer.Orphan(Input);
+        OverContainer.Orphan(HeaderBox);
+
+        if (contents == null) return;
+        if (mode == MessagesUiStateMode.Chat)
         {
             HeaderLabel.Text = name;
 
@@ -53,10 +53,6 @@ public sealed partial class MessagesUiFragment : BoxContainer
         }
         else
         {
-            if (contents == null)
-            {
-                return;
-            }
             foreach (var (user, userUid) in contents)
             {
                 AddButton(userUid, user);

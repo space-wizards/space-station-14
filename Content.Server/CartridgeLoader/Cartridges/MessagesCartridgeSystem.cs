@@ -22,7 +22,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    //[Dependency] private readonly IEntityManager _entManager = default!;
 
 
     public override void Initialize()
@@ -75,7 +75,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
     //<Todo> might be better to move this to the server system
     public (EntityUid, MessagesServerComponent)? GetActiveServer(MessagesCartridgeComponent component, MapId mapId)
     {
-        var servers = _entManager.AllEntityQueryEnumerator<MessagesServerComponent, ApcPowerReceiverComponent, TransformComponent>();
+        var servers = EntityManager.AllEntityQueryEnumerator<MessagesServerComponent, ApcPowerReceiverComponent, TransformComponent>();
         while (servers.MoveNext(out var uid, out var messageServer, out var power, out var transform))
         {
             if (messageServer.EncryptionKey != component.EncryptionKey)
@@ -206,7 +206,7 @@ public sealed class MessagesCartridgeSystem : EntitySystem
         if (component.ConnectedId == null)
             return;
 
-        if (!(TryComp(component.ConnectedId, out IdCardComponent? _)))
+        if (!(HasComp<IdCardComponent>(component.ConnectedId)))
             return;
 
         UpdateName(uid, component);

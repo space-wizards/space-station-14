@@ -18,7 +18,7 @@ public enum MessagesUiStateMode : byte
 }
 
 [Serializable, NetSerializable]
-public partial struct MessagesMessageData : byte
+public partial struct MessagesMessageData
 {
     public int SenderId;
     public int ReceiverId;

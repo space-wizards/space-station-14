@@ -18,7 +18,7 @@ public sealed partial class MessagesCartridgeComponent : Component
     public List<MessagesMessageData> MessagesQueue = [];
 
     /// <summary>
-    /// The uid of the current user
+    /// The message system user id of the current user
     /// </summary>
     [DataField]
     public int? UserUid = null;
@@ -30,7 +30,7 @@ public sealed partial class MessagesCartridgeComponent : Component
     public string? UserName = null;
 
     /// <summary>
-    /// The uid of the crew the user is chatting with
+    /// The message system user id of the crew the user is chatting with
     /// </summary>
     [DataField]
     public int? ChatUid = null;
