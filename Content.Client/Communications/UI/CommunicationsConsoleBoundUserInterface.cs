@@ -11,7 +11,6 @@ namespace Content.Client.Communications.UI
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IPrototypeManager _proto = default!;
 
         [ViewVariables]
         private CommunicationsConsoleMenu? _menu;
