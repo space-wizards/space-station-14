@@ -413,7 +413,7 @@
   name: loadout-group-mime-neck
   minLimit: 0
   loadouts:
-  - MimeScarf
+  - ZebraScarf
 
 - type: loadoutGroup
   id: MimeJumpsuit
@@ -550,7 +550,7 @@
   name: loadout-group-salvage-specialist-neck
   minLimit: 0
   loadouts:
-  - OrangeScarf
+  - BrownScarf
   - PurpleScarf
 
 - type: loadoutGroup
