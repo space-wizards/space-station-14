@@ -266,14 +266,14 @@ public sealed class SatiationSystem : EntitySystem
         }
     }
 
-    private SatiationThreashold GetThreshold(Satiation satiation, float? nutrition = null)
+    private SatiationThreashold GetThreshold(Satiation satiation, float? level = null)
     {
-        nutrition ??= satiation.Current;
+        level ??= satiation.Current;
         var result = SatiationThreashold.Dead;
         var value = satiation.Thresholds[SatiationThreashold.Full];
         foreach (var threshold in satiation.Thresholds)
         {
-            if (threshold.Value <= value && threshold.Value >= nutrition)
+            if (threshold.Value <= value && threshold.Value >= level)
             {
                 result = threshold.Key;
                 value = threshold.Value;
@@ -283,15 +283,15 @@ public sealed class SatiationSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets the thirst threshold for an entity based on the amount of water(?) specified.
+    /// Gets the thirst threshold for an entity based on the amount of thirst specified.
     /// If a specific amount isn't specified, just uses the current thirst of the entity
     /// </summary>
     /// <param name="component"></param>
-    /// <param name="nutrition"></param>
+    /// <param name="thirst"></param>
     /// <returns></returns>
-    public SatiationThreashold GetThirstThreshold(SatiationComponent component, float? nutrition = null)
+    public SatiationThreashold GetThirstThreshold(SatiationComponent component, float? thirst = null)
     {
-        return GetThreshold(component.Thirst, nutrition);
+        return GetThreshold(component.Thirst, thirst);
     }
 
     /// <summary>
@@ -299,22 +299,22 @@ public sealed class SatiationSystem : EntitySystem
     /// If a specific amount isn't specified, just uses the current hunger of the entity
     /// </summary>
     /// <param name="component"></param>
-    /// <param name="nutrition"></param>
+    /// <param name="food"></param>
     /// <returns></returns>
-    public SatiationThreashold GetHungerThreshold(SatiationComponent component, float? nutrition = null)
+    public SatiationThreashold GetHungerThreshold(SatiationComponent component, float? food = null)
     {
-        return GetThreshold(component.Hunger, nutrition);
+        return GetThreshold(component.Hunger, food);
     }
 
     /// <summary>
     /// A check that returns if the entity is below a thirst threshold.
     /// </summary>
-    public bool IsThirstBelowState(EntityUid uid, SatiationComponent? component, SatiationThreashold threshold, float? food = null)
+    public bool IsThirstBelowState(EntityUid uid, SatiationComponent? component, SatiationThreashold threshold, float? thirst = null)
     {
         if (!Resolve(uid, ref component))
             return false; // It's never going to go thirsty, so it's probably fine to assume that it's not... you know, thirsty.
 
-        return GetThirstThreshold(component, food) < threshold;
+        return GetThirstThreshold(component, thirst) < threshold;
     }
 
     /// <summary>
