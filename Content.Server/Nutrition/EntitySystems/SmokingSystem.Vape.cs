@@ -14,6 +14,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Nutrition;
 using System.Threading;
 using Content.Shared.Atmos;
+using Content.Shared.Medical.Blood.Components;
 
 /// <summary>
 /// System for vapes
