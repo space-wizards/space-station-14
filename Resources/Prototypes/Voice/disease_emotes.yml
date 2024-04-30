@@ -41,7 +41,7 @@
   id: RobotBeep
   name: chat-emote-name-robotbeep
   category: Vocal
-  chatMessages: ["chat-emote-msg-robotbeep"]
+  chatMessages: ["chat-emote-msg-beep"]
 
 - type: emote
   id: Yawn
