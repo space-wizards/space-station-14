@@ -76,6 +76,8 @@ public abstract class SharedCombatModeSystem : EntitySystem
             return;
 
         component.IsInCombatMode = value;
+        Dirty(entity, component);
+
 
         if (component.CombatToggleActionEntity != null)
             _actionsSystem.SetToggled(component.CombatToggleActionEntity, component.IsInCombatMode);
@@ -85,7 +87,7 @@ public abstract class SharedCombatModeSystem : EntitySystem
             return;
 
         SetMouseRotatorComponents(entity, value);
-        Dirty(entity, component);
+        DirtyEntity(entity);
     }
 
     private void SetMouseRotatorComponents(EntityUid uid, bool value)
