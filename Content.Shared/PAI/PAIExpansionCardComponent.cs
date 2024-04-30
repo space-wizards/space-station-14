@@ -1,3 +1,4 @@
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.PAI;
@@ -35,4 +36,17 @@ public sealed partial class PAIExpansionCardComponent : Component
     /// </summary>
     [DataField(required: true)]
     public ComponentRegistry Components = new();
+
+    /// <summary>
+    /// Whitelist the pAI must match to be installed.
+    /// No whitelist means any pAI can use this card.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// Popup shown when trying to insert this card into a pAI that doesn't match the whitelist.
+    /// </summary>
+    [DataField]
+    public LocId WhitelistFailPopup = "pai-expansion-card-whitelist-fail";
 }

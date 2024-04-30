@@ -12,4 +12,10 @@ public sealed partial class PAIExpansionSlotComponent: Component
     /// </summary>
     [DataField]
     public string SlotId = "expansion";
+
+    /// <summary>
+    /// Popup shown when trying to insert a card when the panel is closed.
+    /// </summary>
+    [DataField]
+    public LocId PanelClosedPopup = "pai-expansion-slot-closed";
 }
