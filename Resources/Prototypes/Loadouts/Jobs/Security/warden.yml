@@ -16,16 +16,6 @@
   id: WardenBeret
   equipment:
     head: ClothingHeadHatBeretWarden
-    
-# Neck
-- type: loadout
-  id: RedScarf
-  equipment: RedScarf
-
-- type: startingGear
-  id: RedScarf
-  equipment:
-    neck: ClothingNeckScarfStripedRed
 
 # Jumpsuit
 - type: loadout

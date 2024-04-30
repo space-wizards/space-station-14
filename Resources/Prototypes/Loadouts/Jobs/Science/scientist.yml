@@ -49,33 +49,6 @@
   id: ScientistTie
   equipment:
     neck: ClothingNeckTieSci
-    
-- type: loadout
-  id: PurpleScarf
-  equipment: PurpleScarf
-
-- type: startingGear
-  id: PurpleScarf
-  equipment:
-    neck: ClothingNeckScarfStripedPurple
-    
-- type: loadout
-  id: BlackScarf
-  equipment: BlackScarf
-
-- type: startingGear
-  id: BlackScarf
-  equipment:
-    neck: ClothingNeckScarfStripedBlack
-    
-- type: loadout
-  id: RedScarf
-  equipment: RedScarf
-
-- type: startingGear
-  id: RedScarf
-  equipment:
-    neck: ClothingNeckScarfStripedRed
 
 # Jumpsuit
 - type: loadout

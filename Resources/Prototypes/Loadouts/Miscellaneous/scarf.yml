@@ -1,0 +1,71 @@
+- type: loadout
+  id: BrownScarf
+  equipment: BrownScarf
+
+- type: startingGear
+  id: BrownScarf
+  storage:
+    back: ClothingNeckScarfStripedBrown
+    
+- type: loadout
+  id: PurpleScarf
+  equipment: PurpleScarf
+
+- type: startingGear
+  id: PurpleScarf
+  storage:
+    back: ClothingNeckScarfStripedPurple
+    
+- type: loadout
+  id: ZebraScarf
+  equipment: ZebraScarf
+
+- type: startingGear
+  id: ZebraScarf
+  storage:
+    back: ClothingNeckScarfStripedZebra
+    
+- type: loadout
+  id: BlueScarf
+  equipment: BlueScarf
+
+- type: startingGear
+  id: BlueScarf
+  storage:
+    back: ClothingNeckScarfStripedBlue
+    
+- type: loadout
+  id: LightBlueScarf
+  equipment: LightBlueScarf
+
+- type: startingGear
+  id: LightBlueScarf
+  storage:
+    back: ClothingNeckScarfStripedLightBlue
+    
+- type: loadout
+  id: BlackScarf
+  equipment: BlackScarf
+
+- type: startingGear
+  id: BlackScarf
+  storage:
+    back: ClothingNeckScarfStripedBlack
+    
+- type: loadout
+  id: RedScarf
+  equipment: RedScarf
+
+- type: startingGear
+  id: RedScarf
+  storage:
+    back: ClothingNeckScarfStripedRed
+    
+- type: loadout
+  id: ZebraScarf
+  equipment: ZebraScarf
+
+- type: startingGear
+  id: ZebraScarf
+  equipment:
+    neck: ClothingNeckScarfStripedZebra

@@ -27,6 +27,19 @@
   - GlassesJamjar
   - GlassesJensen
   
+- type: loadoutGroup
+  id: Scarf
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - ClothingNeckScarfStripedBrown
+  - ClothingNeckScarfStripedOrange
+  - ClothingNeckScarfStripedRed
+  - ClothingNeckScarfStripedBlue
+  - ClothingNeckScarfStripedLightBlue
+  - ClothingNeckScarfStripedPurple
+  - ClothingNeckScarfStripedBlack
+  
 # Command
 - type: loadoutGroup
   id: CaptainHead

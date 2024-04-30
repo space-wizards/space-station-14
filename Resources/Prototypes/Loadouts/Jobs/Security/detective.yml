@@ -16,25 +16,6 @@
   id: DetectiveFedoraGrey
   equipment:
     head: ClothingHeadHatFedoraGrey
-  
-# Neck
-- type: loadout
-  id: DetectiveTie
-  equipment: DetectiveTie
-
-- type: startingGear
-  id: DetectiveTie
-  equipment:
-    neck: ClothingNeckTieDet
-
-- type: loadout
-  id: RedScarf
-  equipment: RedScarf
-
-- type: startingGear
-  id: RedScarf
-  equipment:
-    neck: ClothingNeckScarfStripedRed
 
 # Jumpsuit
 - type: loadout

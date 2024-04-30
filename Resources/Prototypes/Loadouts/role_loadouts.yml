@@ -128,11 +128,11 @@
   groups:
   - MimeHead
   - MimeMask
-  - MimeNeck
   - MimeJumpsuit
   - MimeBackpack
   - MimeOuterClothing
   - Glasses
+  - Scarf
   - Trinkets
 
 - type: roleLoadout
@@ -160,22 +160,22 @@
   id: JobCargoTechnician
   groups:
   - CargoTechnicianHead
-  - CargoTechnicianNeck
   - CargoTechnicianJumpsuit
   - CargoTechnicianBackpack
   - CargoTechnicianOuterClothing
   - CargoTechnicianShoes
   - Glasses
+  - Scarf
   - Trinkets
 
 - type: roleLoadout
   id: JobSalvageSpecialist
   groups:
-  - SalvageSpecialistNeck
   - SalvageSpecialistBackpack
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
   - Glasses
+  - Scarf
   - Trinkets
 
 # Engineering
@@ -201,22 +201,22 @@
   id: JobStationEngineer
   groups:
   - StationEngineerHead
-  - StationEngineerNeck
   - StationEngineerJumpsuit
   - StationEngineerBackpack
   - StationEngineerOuterClothing
   - StationEngineerShoes
   - StationEngineerID
+  - Scarf
   - Trinkets
 
 - type: roleLoadout
   id: JobAtmosphericTechnician
   groups:
-  - AtmosphericTechnicianNeck
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianOuterClothing
   - AtmosphericTechnicianShoes
+  - Scarf
   - Trinkets
 
 # Science
@@ -245,6 +245,7 @@
   - ScientistShoes
   - ScientistPDA
   - Glasses
+  - Scarf
   - Trinkets
 
 - type: roleLoadout
@@ -272,25 +273,25 @@
   id: JobWarden
   groups:
   - WardenHead
-  - WardenNeck
   - WardenJumpsuit
   - SecurityBackpack
   - SecurityBelt
   - WardenOuterClothing
   - SecurityShoes
+  - Scarf
   - Trinkets
 
 - type: roleLoadout
   id: JobSecurityOfficer
   groups:
   - SecurityHead
-  - SecurityNeck
   - SecurityJumpsuit
   - SecurityBackpack
   - SecurityOuterClothing
   - SecurityShoes
   - SecurityPDA
   - SecurityBelt
+  - Scarf
   - Trinkets
 
 - type: roleLoadout
@@ -302,6 +303,7 @@
   - DetectiveBackpack
   - DetectiveOuterClothing
   - SecurityShoes
+  - Scarf
   - Trinkets
 
 - type: roleLoadout
@@ -331,7 +333,6 @@
   groups:
   - MedicalDoctorHead
   - MedicalMask
-  - MedicalDoctorNeck
   - MedicalDoctorJumpsuit
   - MedicalGloves
   - MedicalBackpack
@@ -339,6 +340,7 @@
   - MedicalShoes
   - MedicalDoctorPDA
   - Glasses
+  - Scarf
   - Trinkets
 
 - type: roleLoadout
@@ -353,12 +355,12 @@
   id: JobChemist
   groups:
   - MedicalMask
-  - ChemistNeck
   - ChemistJumpsuit
   - MedicalGloves
   - ChemistBackpack
   - ChemistOuterClothing
   - MedicalShoes
+  - Scarf
   - Trinkets
 
 - type: roleLoadout
@@ -366,13 +368,13 @@
   groups:
   - ParamedicHead
   - MedicalMask
-  - ParamedicNeck
   - ParamedicJumpsuit
   - MedicalGloves
   - ParamedicBackpack
   - ParamedicOuterClothing
   - ParamedicShoes
   - Glasses
+  - Scarf
   - Trinkets
 
 # Wildcards

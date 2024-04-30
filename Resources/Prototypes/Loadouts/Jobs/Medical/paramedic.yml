@@ -8,25 +8,6 @@
   equipment:
     head: ClothingHeadHatParamedicsoft
     
-# Neck
-- type: loadout
-  id: BlueScarf
-  equipment: BlueScarf
-
-- type: startingGear
-  id: BlueScarf
-  equipment:
-    neck: ClothingNeckScarfStripedBlue
-    
-- type: loadout
-  id: LightBlueScarf
-  equipment: LightBlueScarf
-
-- type: startingGear
-  id: LightBlueScarf
-  equipment:
-    neck: ClothingNeckScarfStripedLightBlue
-
 # Jumpsuit
 - type: loadout
   id: ParamedicJumpsuit

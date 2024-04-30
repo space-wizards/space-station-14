@@ -53,16 +53,6 @@
   id: MimeMaskScared
   equipment:
     mask: ClothingMaskScaredMime
-    
-# Neck
-- type: loadout
-  id: ZebraScarf
-  equipment: ZebraScarf
-
-- type: startingGear
-  id: ZebraScarf
-  equipment:
-    neck: ClothingNeckScarfStripedZebra
 
 # Jumpsuit
 - type: loadout

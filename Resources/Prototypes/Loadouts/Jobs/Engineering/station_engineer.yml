@@ -58,16 +58,6 @@
   equipment:
     head: ClothingHeadHatBeretEngineering
     
-# Neck
-- type: loadout
-  id: OrangeScarf
-  equipment: OrangeScarf
-
-- type: startingGear
-  id: OrangeScarf
-  equipment:
-    neck: ClothingNeckScarfStripedOrange
-
 # Jumpsuit
 - type: loadout
   id: StationEngineerJumpsuit

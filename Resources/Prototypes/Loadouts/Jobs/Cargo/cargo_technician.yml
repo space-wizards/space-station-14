@@ -7,25 +7,6 @@
   id: CargoTechnicianHead
   equipment:
     head: ClothingHeadHatCargosoft
-    
-# Neck
-- type: loadout
-  id: BrownScarf
-  equipment: BrownScarf
-
-- type: startingGear
-  id: BrownScarf
-  equipment:
-    neck: ClothingNeckScarfStripedBrown
-    
-- type: loadout
-  id: OrangeScarf
-  equipment: OrangeScarf
-
-- type: startingGear
-  id: OrangeScarf
-  equipment:
-    neck: ClothingNeckScarfStripedOrange
 
 # Jumpsuit
 - type: loadout
