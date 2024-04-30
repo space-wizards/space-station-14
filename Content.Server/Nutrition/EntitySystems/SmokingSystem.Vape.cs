@@ -13,6 +13,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Nutrition;
 using BloodstreamComponent = Content.Shared.Medical.Blood.Components.BloodstreamComponent;
 using Content.Shared.Atmos;
+using Content.Shared.Medical.Blood.Components;
 
 /// <summary>
 /// System for vapes
