@@ -40,15 +40,15 @@
     - SemiAuto
     - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_burster.ogg
   - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 3
+    rechargeCooldown: 5
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
   - type: BasicEntityAmmoProvider
     proto: BulletKineticBurst
-    capacity: 3
-    count: 3
+    capacity: 5
+    count: 5
   - type: Clothing
     sprite: Objects/Weapons/Guns/Basic/kinetic_burster.rsi
     quickEquip: false
