@@ -18,6 +18,14 @@
             "name": "inhand-right",
             "directions": 4
         },
+		{
+            "name": "inhand-left_OFF",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right_OFF",
+            "directions": 4
+        },
         {
             "name": "screen",
             "delays": [
