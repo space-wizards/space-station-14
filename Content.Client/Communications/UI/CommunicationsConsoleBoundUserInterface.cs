@@ -3,6 +3,7 @@ using Content.Shared.Chat;
 using Content.Shared.Communications;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Communications.UI
 {
@@ -10,6 +11,7 @@ namespace Content.Client.Communications.UI
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
 
         [ViewVariables]
         private CommunicationsConsoleMenu? _menu;
@@ -33,6 +35,9 @@ namespace Content.Client.Communications.UI
 
         [ViewVariables]
         private TimeSpan? _expectedCountdownTime;
+
+        [ViewVariables]
+        private CommunicationsEmergencyShuttleWindow? _window;
 
         public int Countdown => _expectedCountdownTime == null ? 0 : Math.Max((int) _expectedCountdownTime.Value.Subtract(_gameTiming.CurTime).TotalSeconds, 0);
 
@@ -63,7 +68,18 @@ namespace Content.Client.Communications.UI
             if (CountdownStarted)
                 RecallShuttle();
             else
-                CallShuttle();
+            {
+                _window = new(_proto);
+
+                _window.OpenCentered();
+                _window.OnEmergency += OnEmergencyReasonSelected;
+            }
+        }
+
+        private void OnEmergencyReasonSelected(string reason)
+        {
+            _window?.Dispose();
+            CallShuttle(reason);
         }
 
         public void AnnounceButtonPressed(string message)
@@ -78,9 +94,9 @@ namespace Content.Client.Communications.UI
             SendMessage(new CommunicationsConsoleBroadcastMessage(message));
         }
 
-        public void CallShuttle()
+        public void CallShuttle(string reason)
         {
-            SendMessage(new CommunicationsConsoleCallEmergencyShuttleMessage());
+            SendMessage(new CommunicationsConsoleCallEmergencyShuttleMessage(reason));
         }
 
         public void RecallShuttle()
@@ -120,6 +136,7 @@ namespace Content.Client.Communications.UI
             if (!disposing) return;
 
             _menu?.Dispose();
+            _window?.Dispose();
         }
     }
 }
