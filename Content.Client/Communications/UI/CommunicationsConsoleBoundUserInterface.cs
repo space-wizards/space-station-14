@@ -60,12 +60,12 @@ namespace Content.Client.Communications.UI
             }
         }
 
-        public void EmergencyShuttleButtonPressed(string reason)
+        public void EmergencyShuttleButtonPressed()
         {
             if (CountdownStarted)
                 RecallShuttle();
             else
-                CallShuttle(reason);
+                CallShuttle();
         }
 
         public void AnnounceButtonPressed(string message)
@@ -80,9 +80,9 @@ namespace Content.Client.Communications.UI
             SendMessage(new CommunicationsConsoleBroadcastMessage(message));
         }
 
-        public void CallShuttle(string reason)
+        public void CallShuttle()
         {
-            SendMessage(new CommunicationsConsoleCallEmergencyShuttleMessage(reason));
+            SendMessage(new CommunicationsConsoleCallEmergencyShuttleMessage());
         }
 
         public void RecallShuttle()

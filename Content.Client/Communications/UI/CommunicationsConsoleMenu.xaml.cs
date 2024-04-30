@@ -58,7 +58,7 @@ namespace Content.Client.Communications.UI
             };
             AlertLevelButton.Disabled = !owner.AlertLevelSelectable;
 
-            EmergencyShuttleButton.OnPressed += (_) => Owner.EmergencyShuttleButtonPressed(Rope.Collapse(MessageInput.TextRope));
+            EmergencyShuttleButton.OnPressed += (_) => Owner.EmergencyShuttleButtonPressed();
             EmergencyShuttleButton.Disabled = !owner.CanCall;
 
             UpdateCountdown();

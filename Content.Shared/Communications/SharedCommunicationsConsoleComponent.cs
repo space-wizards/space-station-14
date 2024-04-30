@@ -66,11 +66,6 @@ namespace Content.Shared.Communications
     [Serializable, NetSerializable]
     public sealed class CommunicationsConsoleCallEmergencyShuttleMessage : BoundUserInterfaceMessage
     {
-        public readonly string Reason;
-        public CommunicationsConsoleCallEmergencyShuttleMessage(string reason)
-        {
-            Reason = reason;
-        }
     }
 
     [Serializable, NetSerializable]
