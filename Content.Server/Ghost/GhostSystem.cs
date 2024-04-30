@@ -375,7 +375,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            var ghost = Spawn(GameTicker.ObserverPrototypeName, spawnPosition);
+            var ghost = SpawnAtPosition(GameTicker.ObserverPrototypeName, spawnPosition);
             var ghostComponent = Comp<GhostComponent>(ghost);
             SetCanReturnToBody(ghostComponent, false);
 
