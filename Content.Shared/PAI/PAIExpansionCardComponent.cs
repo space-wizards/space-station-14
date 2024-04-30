@@ -10,10 +10,16 @@ namespace Content.Shared.PAI;
 public sealed partial class PAIExpansionCardComponent : Component
 {
     /// <summary>
+    /// Key of the UI to add.
+    /// </summary>
+    [DataField(required: true)]
+    public Enum Key;
+
+    /// <summary>
     /// User interface to add that the action opens.
     /// </summary>
     [DataField(required: true)]
-    public PrototypeData Interface = new();
+    public InterfaceData Interface = new();
 
     /// <summary>
     /// Action to give the pAI once installed.
