@@ -332,8 +332,7 @@ namespace Content.Server.GameTicking
                 _roles.MindAddRole(mind.Value, new ObserverRoleComponent());
             }
 
-            var coordinates = GetObserverSpawnPoint();
-            var ghost = _ghost.SpawnGhost(mind.Value, coordinates);
+            var ghost = _ghost.SpawnGhost(mind.Value);
             _adminLogger.Add(LogType.LateJoin, LogImpact.Low, $"{player.Name} late joined the round as an Observer with {ToPrettyString(ghost):entity}.");
         }
 

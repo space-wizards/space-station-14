@@ -274,10 +274,7 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var coords = _transform.GetMoverCoordinates(position, xformQuery);
-
-            var ghost = _ghost.SpawnGhost((mindId, mind), coords, canReturn);
+            var ghost = _ghost.SpawnGhost((mindId, mind), position, canReturn);
             if (ghost == null)
                 return false;
 

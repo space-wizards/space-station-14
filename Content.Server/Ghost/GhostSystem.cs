@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Server.GameTicking;
@@ -366,19 +365,28 @@ namespace Content.Server.Ghost
             return ghostBoo.Handled;
         }
 
-        public EntityUid? SpawnGhost(Entity<MindComponent?> mind, EntityCoordinates spawnPosition,
+        public EntityUid? SpawnGhost(Entity<MindComponent?> mind, EntityUid targetEntity,
+            bool canReturn = false)
+        {
+            _transformSystem.TryGetMapOrGridCoordinates(targetEntity, out var spawnPosition);
+            return SpawnGhost(mind, spawnPosition, canReturn);
+        }
+
+        public EntityUid? SpawnGhost(Entity<MindComponent?> mind, EntityCoordinates? spawnPosition = null,
             bool canReturn = false)
         {
             if (!Resolve(mind, ref mind.Comp))
                 return null;
 
-            if (!spawnPosition.IsValid(EntityManager))
+            spawnPosition ??= _ticker.GetObserverSpawnPoint();
+
+            if (!spawnPosition.Value.IsValid(EntityManager))
             {
                 _minds.TransferTo(mind.Owner, null, createGhost: false, mind: mind.Comp);
                 return null;
             }
 
-            var ghost = SpawnAtPosition(GameTicker.ObserverPrototypeName, spawnPosition);
+            var ghost = SpawnAtPosition(GameTicker.ObserverPrototypeName, spawnPosition.Value);
             var ghostComponent = Comp<GhostComponent>(ghost);
 
             // Try setting the ghost entity name to either the character name or the player name.

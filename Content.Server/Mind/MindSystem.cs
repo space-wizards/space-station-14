@@ -72,10 +72,7 @@ public sealed class MindSystem : SharedMindSystem
         if (!component.GhostOnShutdown || mind.Session == null || _gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
             return;
 
-        if (!_transform.TryGetMapOrGridCoordinates(uid, out var spawnPosition))
-            return;
-
-        var ghost = _ghosts.SpawnGhost((mindId, mind), spawnPosition.Value);
+        var ghost = _ghosts.SpawnGhost((mindId, mind), uid);
         if (ghost != null)
             // Log these to make sure they're not causing the GameTicker round restart bugs...
             Log.Debug($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
