@@ -61,19 +61,19 @@ public abstract class SharedNavMapSystem : EntitySystem
         var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
         var flag = (ushort) GetFlag(relative);
 
-        foreach (var (direction, _) in chunk.TileData)
+        foreach (var direction in chunk.TileData.Keys)
             chunk.TileData[direction] |= flag;
 
         return chunk;
     }
 
-    public NavMapChunk UnsetAllEdgesForChunkTile(NavMapChunk chunk, Vector2i tile)
+    public NavMapChunk UnsetAllEdgesForChunkTile(NavMapChunk chunk, Vector2i tile, NavMapChunkType chunkType)
     {
         var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
         var flag = (ushort) GetFlag(relative);
         var invFlag = (ushort) ~flag;
 
-        foreach (var (direction, _) in chunk.TileData)
+        foreach (var direction in chunk.TileData.Keys)
             chunk.TileData[direction] &= invFlag;
 
         return chunk;
@@ -83,8 +83,10 @@ public abstract class SharedNavMapSystem : EntitySystem
     {
         ushort combined = 0;
 
-        foreach (var kvp in tile)
-            combined |= kvp.Value;
+        foreach (var value in tile.Values)
+        {
+            combined |= value;
+        }
 
         return combined;
     }
@@ -93,9 +95,9 @@ public abstract class SharedNavMapSystem : EntitySystem
     {
         var flag = (ushort) GetFlag(tile);
 
-        foreach (var kvp in tileData)
+        foreach (var value in tileData.Values)
         {
-            if ((kvp.Value & flag) == 0)
+            if ((value & flag) == 0)
                 return false;
         }
 
@@ -208,14 +210,14 @@ public abstract class SharedNavMapSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class NavMapComponentState : ComponentState, IComponentDeltaState
     {
-        public Dictionary<(NavMapChunkType, Vector2i), Dictionary<AtmosDirection, ushort>> Chunks = new();
+        public Dictionary<Vector2i, Dictionary<AtmosDirection, ushort>[]> Chunks = new();
         public HashSet<NavMapBeacon> Beacons = new();
 
         // Required to infer deleted/missing chunks for delta states
         public HashSet<(NavMapChunkType, Vector2i)>? AllChunks;
         public HashSet<NavMapBeacon>? AllBeacons;
 
-        public NavMapComponentState(Dictionary<(NavMapChunkType, Vector2i), Dictionary<AtmosDirection, ushort>> chunks, HashSet<NavMapBeacon> beacons)
+        public NavMapComponentState(Dictionary<Vector2i, Dictionary<AtmosDirection, ushort>[]> chunks, HashSet<NavMapBeacon> beacons)
         {
             Chunks = chunks;
             Beacons = beacons;
@@ -237,7 +239,9 @@ public abstract class SharedNavMapSystem : EntitySystem
             }
 
             foreach (var (chunk, data) in Chunks)
+            {
                 state.Chunks[chunk] = new(data);
+            }
 
             // Update beacons
             foreach (var beacon in state.Beacons)
@@ -247,7 +251,9 @@ public abstract class SharedNavMapSystem : EntitySystem
             }
 
             foreach (var beacon in Beacons)
+            {
                 state.Beacons.Add(beacon);
+            }
         }
 
         public IComponentState CreateNewFullState(IComponentState fullState)
@@ -260,7 +266,9 @@ public abstract class SharedNavMapSystem : EntitySystem
             var beacons = new HashSet<NavMapBeacon>();
 
             foreach (var (chunk, data) in Chunks)
+            {
                 chunks[chunk] = new(data);
+            }
 
             foreach (var (chunk, data) in state.Chunks)
             {
@@ -269,7 +277,9 @@ public abstract class SharedNavMapSystem : EntitySystem
             }
 
             foreach (var beacon in Beacons)
+            {
                 beacons.Add(new NavMapBeacon(beacon.NetEnt, beacon.Color, beacon.Text, beacon.Position));
+            }
 
             foreach (var beacon in state.Beacons)
             {

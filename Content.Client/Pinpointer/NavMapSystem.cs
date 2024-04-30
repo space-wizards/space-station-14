@@ -31,7 +31,6 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
                     component.Beacons.Remove(beacon);
             }
         }
-
         else
         {
             foreach (var index in component.Chunks.Keys)

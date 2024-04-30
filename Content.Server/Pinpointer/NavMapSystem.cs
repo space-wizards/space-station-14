@@ -14,6 +14,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace Content.Server.Pinpointer;
 
@@ -81,9 +82,17 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         RefreshGrid(args.Grid, comp, gridQuery.GetComponent(args.Grid));
     }
 
+    private NavMapChunk EnsureChunk(NavMapComponent component, Vector2i origin)
+    {
+        if (!component.Chunks.TryGetValue(origin, out var chunk))
+            chunk = new(origin);
+
+        return chunk;
+    }
+
     private void OnTileChanged(ref TileChangedEvent ev)
     {
-        if (!TryComp<NavMapComponent>(ev.NewTile.GridUid, out var navMap))
+        if (!ev.EmptyChanged || !TryComp<NavMapComponent>(ev.NewTile.GridUid, out var navMap))
             return;
 
         var tile = ev.NewTile.GridIndices;
@@ -91,6 +100,8 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
 
         if (!navMap.Chunks.TryGetValue((NavMapChunkType.Floor, chunkOrigin), out var chunk))
             chunk = new(chunkOrigin);
+
+        chunk.EnsureType(NavMapChunkType.Floor);
 
         // This could be easily replaced in the future to accommodate diagonal tiles
         if (ev.NewTile.IsSpace())
@@ -267,7 +278,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             if (!component.Chunks.TryGetValue((category, chunkOrigin), out var chunk))
                 continue;
 
-            foreach (var (direction, _) in chunk.TileData)
+            foreach (var direction in chunk.TileData.Keys)
             {
                 if ((direction & entAirtight.AirBlockedDirection) > 0)
                     chunk.TileData[direction] |= flag;
@@ -281,7 +292,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         if (component.Chunks.TryGetValue((NavMapChunkType.Wall, chunkOrigin), out var wallChunk) &&
             component.Chunks.TryGetValue((NavMapChunkType.Airlock, chunkOrigin), out var airlockChunk))
         {
-            foreach (var (direction, _) in wallChunk.TileData)
+            foreach (var direction in wallChunk.TileData.Keys)
             {
                 var airlockInvFlag = (ushort) ~airlockChunk.TileData[direction];
                 wallChunk.TileData[direction] &= airlockInvFlag;

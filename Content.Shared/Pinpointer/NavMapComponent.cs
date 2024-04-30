@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Atmos;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -19,7 +20,7 @@ public sealed partial class NavMapComponent : Component
     /// Bitmasks that represent chunked tiles.
     /// </summary>
     [ViewVariables]
-    public Dictionary<(NavMapChunkType, Vector2i), NavMapChunk> Chunks = new();
+    public Dictionary<Vector2i, NavMapChunk> Chunks = new();
 
     /// <summary>
     /// List of station beacons.
@@ -37,10 +38,11 @@ public sealed class NavMapChunk
     public readonly Vector2i Origin;
 
     /// <summary>
-    /// Bitmask for tiles, 1 for occupied and 0 for empty. There is a bitmask for each cardinal direction,
+    /// Array with each entry corresponding to a <see cref="NavMapChunkType"/>.
+    /// Uses a bitmask for tiles, 1 for occupied and 0 for empty. There is a bitmask for each cardinal direction,
     /// representing each edge of the tile, in case the entities inside it do not entirely fill it
     /// </summary>
-    public Dictionary<AtmosDirection, ushort> TileData;
+    public Dictionary<AtmosDirection, ushort>[] TileData;
 
     /// <summary>
     /// The last game tick that the chunk was updated
@@ -51,8 +53,15 @@ public sealed class NavMapChunk
     public NavMapChunk(Vector2i origin)
     {
         Origin = origin;
+        TileData = new Dictionary<AtmosDirection, ushort>[4];
+    }
 
-        TileData = new()
+    public void EnsureType(NavMapChunkType chunkType)
+    {
+        ref var data = ref TileData[(int) chunkType];
+
+        // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
+        data ??= new Dictionary<AtmosDirection, ushort>()
         {
             [AtmosDirection.North] = 0,
             [AtmosDirection.East] = 0,

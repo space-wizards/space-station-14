@@ -9,9 +9,12 @@ public sealed class TagSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
+    private EntityQuery<TagComponent> _tagQuery;
+
     public override void Initialize()
     {
         base.Initialize();
+        _tagQuery = GetEntityQuery<TagComponent>();
         SubscribeLocalEvent<TagComponent, ComponentGetState>(OnTagGetState);
         SubscribeLocalEvent<TagComponent, ComponentHandleState>(OnTagHandleState);
 
@@ -124,7 +127,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool TryAddTag(EntityUid entity, string id)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
+        return _tagQuery.TryComp(entity, out var component) &&
                AddTag(entity, component, id);
     }
 
@@ -142,7 +145,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool TryAddTags(EntityUid entity, params string[] ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
+        return _tagQuery.TryComp(entity, out var component) &&
                AddTags(entity, component, ids);
     }
 
@@ -160,7 +163,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool TryAddTags(EntityUid entity, IEnumerable<string> ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
+        return _tagQuery.TryComp(entity, out var component) &&
                AddTags(entity, component, ids);
     }
 
@@ -175,7 +178,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasTag(EntityUid entity, string id)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
+        return _tagQuery.TryComp(entity, out var component) &&
                HasTag(component, id);
     }
 
@@ -210,7 +213,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAllTags(EntityUid entity, List<string> ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
+        return _tagQuery.TryComp(entity, out var component) &&
                HasAllTags(component, ids);
     }
 
@@ -225,7 +228,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAllTags(EntityUid entity, IEnumerable<string> ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
+        return _tagQuery.TryComp(entity, out var component) &&
                HasAllTags(component, ids);
     }
 
@@ -240,7 +243,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(EntityUid entity, params string[] ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
+        return _tagQuery.TryComp(entity, out var component) &&
                HasAnyTag(component, ids);
     }
 
@@ -266,7 +269,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(EntityUid entity, List<string> ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
+        return _tagQuery.TryComp(entity, out var component) &&
                HasAnyTag(component, ids);
     }
 
@@ -281,7 +284,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(EntityUid entity, IEnumerable<string> ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
+        return _tagQuery.TryComp(entity, out var component) &&
                HasAnyTag(component, ids);
     }
 
@@ -298,7 +301,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool RemoveTag(EntityUid entity, string id)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
+        return _tagQuery.TryComp(entity, out var component) &&
                RemoveTag(entity, component, id);
     }
 
@@ -315,7 +318,7 @@ public sealed class TagSystem : EntitySystem
     /// </returns>
     public bool RemoveTags(EntityUid entity, params string[] ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
+        return _tagQuery.TryComp(entity, out var component) &&
                RemoveTags(entity, component, ids);
     }
 
@@ -332,7 +335,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool RemoveTags(EntityUid entity, IEnumerable<string> ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
+        return _tagQuery.TryComp(entity, out var component) &&
                RemoveTags(entity, component, ids);
     }
 
