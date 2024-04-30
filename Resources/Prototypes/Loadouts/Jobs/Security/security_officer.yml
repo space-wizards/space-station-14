@@ -42,7 +42,6 @@
     head: ClothingHeadHatBeretSecurity
     
 # Neck
-
 - type: loadout
   id: RedScarf
   equipment: RedScarf

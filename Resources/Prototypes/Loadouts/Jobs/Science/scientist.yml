@@ -41,7 +41,6 @@
     head: ClothingHeadBandSkull
 
 # Neck
-
 - type: loadout
   id: ScientistTie
   equipment: ScientistTie

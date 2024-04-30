@@ -78,7 +78,6 @@
     head: ClothingHeadNurseHat
 
 # Neck
-
 - type: loadout
   id: LightBlueScarf
   equipment: LightBlueScarf
