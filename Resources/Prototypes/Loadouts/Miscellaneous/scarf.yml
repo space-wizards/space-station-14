@@ -6,7 +6,7 @@
   id: BrownScarf
   storage:
     back: ClothingNeckScarfStripedBrown
-    
+
 - type: loadout
   id: PurpleScarf
   equipment: PurpleScarf
@@ -15,7 +15,7 @@
   id: PurpleScarf
   storage:
     back: ClothingNeckScarfStripedPurple
-    
+
 - type: loadout
   id: ZebraScarf
   equipment: ZebraScarf
@@ -24,7 +24,7 @@
   id: ZebraScarf
   storage:
     back: ClothingNeckScarfStripedZebra
-    
+
 - type: loadout
   id: BlueScarf
   equipment: BlueScarf
@@ -33,7 +33,7 @@
   id: BlueScarf
   storage:
     back: ClothingNeckScarfStripedBlue
-    
+
 - type: loadout
   id: LightBlueScarf
   equipment: LightBlueScarf
@@ -42,7 +42,7 @@
   id: LightBlueScarf
   storage:
     back: ClothingNeckScarfStripedLightBlue
-    
+
 - type: loadout
   id: BlackScarf
   equipment: BlackScarf
@@ -51,7 +51,7 @@
   id: BlackScarf
   storage:
     back: ClothingNeckScarfStripedBlack
-    
+
 - type: loadout
   id: RedScarf
   equipment: RedScarf
@@ -60,3 +60,12 @@
   id: RedScarf
   storage:
     back: ClothingNeckScarfStripedRed
+
+- type: loadout
+  id: OrangeScarf
+  equipment: OrangeScarf
+
+- type: startingGear
+  id: OrangeScarf
+  storage:
+    back: ClothingNeckScarfStripedOrange
