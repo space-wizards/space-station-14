@@ -117,6 +117,9 @@ public sealed partial class EntityWhitelist
             return RequireAll ? tagSystem.HasAllTags(tags, Tags) : tagSystem.HasAnyTag(tags, Tags);
         }
 
+        if (RequireAll)
+            return true;
+
         return false;
     }
 }
