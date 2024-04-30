@@ -349,6 +349,12 @@
   - deathgasp
 
 - type: emote
+  id: MonkeyDeathgasp
+  name: chat-emote-name-deathgasp
+  icon: Interface/Actions/scream.png
+  chatMessages: ["chat-emote-msg-deathgasp-monkey"]
+
+- type: emote
   id: Buzz
   name: chat-emote-name-buzz
   category: Vocal

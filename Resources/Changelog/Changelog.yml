@@ -1,44 +1,4 @@
 ﻿Entries:
-- author: landwhale
-  changes:
-  - message: Drink jugs can no longer be used by chemistry in place of a beaker.
-    type: Fix
-  - message: Updated names of several drink jugs to differentiate them from chem-specific
-      variants.
-    type: Tweak
-  id: 5998
-  time: '2024-02-21T23:26:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25450
-- author: Killerqu00
-  changes:
-  - message: EVA helmets are now quick-equippable again
-    type: Fix
-  id: 5999
-  time: '2024-02-21T23:41:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25448
-- author: genderGeometries
-  changes:
-  - message: Crops are now harvested with decimal amounts of nutriment, vitamin, etc.
-    type: Fix
-  id: 6000
-  time: '2024-02-22T00:19:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25453
-- author: Whisper
-  changes:
-  - message: Dragon ichor when eating restores the dragon's blood.
-    type: Add
-  - message: Increased Xenomorph and Dragon blood level to 650u.
-    type: Tweak
-  id: 6001
-  time: '2024-02-22T02:54:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25442
-- author: Beck Thompson
-  changes:
-  - message: Radio jammer now uses 3 times less power.
-    type: Tweak
-  id: 6002
-  time: '2024-02-22T07:32:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25432
 - author: metalgearsloth
   changes:
   - message: Added handheld crew monitor back just for CMO.
@@ -3864,3 +3824,38 @@
   id: 6497
   time: '2024-04-29T17:09:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27408
+- author: ShadowCommander
+  changes:
+  - message: Fixed microwave construction not creating a microwave on completion.
+    type: Fix
+  id: 6498
+  time: '2024-04-30T00:19:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27500
+- author: lzk228
+  changes:
+  - message: Barozine is removed from hydroponics mutatuions.
+    type: Remove
+  id: 6499
+  time: '2024-04-30T03:01:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27512
+- author: DogZeroX
+  changes:
+  - message: Changed the announcement of the immovable rod event.
+    type: Tweak
+  id: 6500
+  time: '2024-04-30T04:05:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27515
+- author: DogZeroX
+  changes:
+  - message: Flares looped sound no longer have a massive range, and are much quieter.
+    type: Fix
+  id: 6501
+  time: '2024-04-30T06:49:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27521
+- author: ERORR404V1
+  changes:
+  - message: Added chameleon projector in thief toolbox!
+    type: Add
+  id: 6502
+  time: '2024-04-30T12:14:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27491
