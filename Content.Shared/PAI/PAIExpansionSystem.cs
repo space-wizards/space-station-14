@@ -56,16 +56,16 @@ public sealed class PAIExpansionSystem : EntitySystem
         if (args.Slot.ID != ent.Comp.SlotId)
             return;
 
-        if (TryComp<PAIExpansionCardComponent>(args.Item, out var card) && card.Whitelist?.IsValid(ent) == false)
+        if (!_wires.IsPanelOpen(ent.Owner))
         {
-            _popup.PopupClient(card.WhitelistFailPopup, ent, args.User);
+            _popup.PopupClient(Loc.GetString(ent.Comp.PanelClosedPopup), ent, args.User);
             args.Cancelled = true;
             return;
         }
 
-        if (!_wires.IsPanelOpen(ent.Owner))
+        if (TryComp<PAIExpansionCardComponent>(args.Item, out var card) && card.Whitelist?.IsValid(ent) == false)
         {
-            _popup.PopupClient(ent.Comp.PanelClosedPopup, ent, args.User);
+            _popup.PopupClient(Loc.GetString(card.WhitelistFailPopup), ent, args.User);
             args.Cancelled = true;
         }
     }
