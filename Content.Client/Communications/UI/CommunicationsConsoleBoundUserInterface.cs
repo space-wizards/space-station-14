@@ -36,9 +36,6 @@ namespace Content.Client.Communications.UI
         [ViewVariables]
         private TimeSpan? _expectedCountdownTime;
 
-        [ViewVariables]
-        private CommunicationsEmergencyShuttleWindow? _window;
-
         public int Countdown => _expectedCountdownTime == null ? 0 : Math.Max((int) _expectedCountdownTime.Value.Subtract(_gameTiming.CurTime).TotalSeconds, 0);
 
         public CommunicationsConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
@@ -63,23 +60,12 @@ namespace Content.Client.Communications.UI
             }
         }
 
-        public void EmergencyShuttleButtonPressed()
+        public void EmergencyShuttleButtonPressed(string reason)
         {
             if (CountdownStarted)
                 RecallShuttle();
             else
-            {
-                _window = new(_proto);
-
-                _window.OpenCentered();
-                _window.OnEmergency += OnEmergencyReasonSelected;
-            }
-        }
-
-        private void OnEmergencyReasonSelected(string reason)
-        {
-            _window?.Dispose();
-            CallShuttle(reason);
+                CallShuttle(reason);
         }
 
         public void AnnounceButtonPressed(string message)
@@ -136,7 +122,6 @@ namespace Content.Client.Communications.UI
             if (!disposing) return;
 
             _menu?.Dispose();
-            _window?.Dispose();
         }
     }
 }

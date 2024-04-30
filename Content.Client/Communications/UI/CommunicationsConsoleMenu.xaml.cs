@@ -39,7 +39,6 @@ namespace Content.Client.Communications.UI
                 {
                     AnnounceButton.Disabled = !owner.CanAnnounce;
                     AnnounceButton.ToolTip = null;
-
                 }
             };
 
@@ -59,7 +58,7 @@ namespace Content.Client.Communications.UI
             };
             AlertLevelButton.Disabled = !owner.AlertLevelSelectable;
 
-            EmergencyShuttleButton.OnPressed += (_) => Owner.EmergencyShuttleButtonPressed();
+            EmergencyShuttleButton.OnPressed += (_) => Owner.EmergencyShuttleButtonPressed(Rope.Collapse(MessageInput.TextRope));
             EmergencyShuttleButton.Disabled = !owner.CanCall;
 
             UpdateCountdown();
