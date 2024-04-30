@@ -87,15 +87,15 @@ public abstract class SharedCombatModeSystem : EntitySystem
             return;
 
         SetMouseRotatorComponents(entity, value);
-        DirtyEntity(entity);
     }
 
-    private void SetMouseRotatorComponents(EntityUid uid, bool value)
+    private void SetMouseRotatorComponents(EntityUid entity, bool value)
     {
         if (value)
         {
-            EnsureComp<MouseRotatorComponent>(uid);
-            EnsureComp<NoRotateOnMoveComponent>(uid);
+            var mouseRotator = EnsureComp<MouseRotatorComponent>(entity);
+            Dirty(entity, mouseRotator);
+            var noRotate = EnsureComp<NoRotateOnMoveComponent>(entity);
         }
         else
         {
