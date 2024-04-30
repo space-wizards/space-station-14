@@ -32,7 +32,7 @@
                 Name="StatusPanelRight"
                 HorizontalAlignment="Center" Margin="0 0 -2 2"
                 SetWidth="125"
-                MaxHeight="60"/>
+                SetHeight="60"/>
             <hands:HandsContainer
                 Name="HandContainer"
                 Access="Public"
@@ -43,7 +43,7 @@
                 Name="StatusPanelLeft"
                 HorizontalAlignment="Center" Margin="-2 0 0 2"
                 SetWidth="125"
-                MaxHeight="60"/>
+                SetHeight="60"/>
             <inventory:ItemSlotButtonContainer
                 Name="MainHotbar"
                 SlotGroup="MainHotbar"

@@ -1,8 +1,10 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Extinguisher;
 
+[NetworkedComponent]
 public abstract partial class SharedFireExtinguisherComponent : Component
 {
     [DataField("refillSound")] public SoundSpecifier RefillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");

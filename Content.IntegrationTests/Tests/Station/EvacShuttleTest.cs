@@ -28,10 +28,11 @@ public sealed class EvacShuttleTest
         // Dummy ticker tests should not have centcomm
         Assert.That(entMan.Count<StationCentcommComponent>(), Is.Zero);
 
-        var shuttleEnabled = pair.Server.CfgMan.GetCVar(CCVars.EmergencyShuttleEnabled);
-        pair.Server.CfgMan.SetCVar(CCVars.GameMap, "Saltern");
-        pair.Server.CfgMan.SetCVar(CCVars.GameDummyTicker, false);
+        Assert.That(pair.Server.CfgMan.GetCVar(CCVars.GridFill), Is.False);
         pair.Server.CfgMan.SetCVar(CCVars.EmergencyShuttleEnabled, true);
+        pair.Server.CfgMan.SetCVar(CCVars.GameDummyTicker, false);
+        var gameMap = pair.Server.CfgMan.GetCVar(CCVars.GameMap);
+        pair.Server.CfgMan.SetCVar(CCVars.GameMap, "Saltern");
 
         await server.WaitPost(() => ticker.RestartRound());
         await pair.RunTicksSync(25);
@@ -71,6 +72,20 @@ public sealed class EvacShuttleTest
         Assert.That(shuttleXform.MapUid, Is.Not.Null);
         Assert.That(shuttleXform.MapUid, Is.EqualTo(centcommMap));
 
+        // All of these should have been map-initialized.
+        var mapSys = entMan.System<SharedMapSystem>();
+        Assert.That(mapSys.IsInitialized(centcommMap), Is.True);
+        Assert.That(mapSys.IsInitialized(salternXform.MapUid), Is.True);
+        Assert.That(mapSys.IsPaused(centcommMap), Is.False);
+        Assert.That(mapSys.IsPaused(salternXform.MapUid!.Value), Is.False);
+
+        EntityLifeStage LifeStage(EntityUid uid) => entMan.GetComponent<MetaDataComponent>(uid).EntityLifeStage;
+        Assert.That(LifeStage(saltern), Is.EqualTo(EntityLifeStage.MapInitialized));
+        Assert.That(LifeStage(shuttle), Is.EqualTo(EntityLifeStage.MapInitialized));
+        Assert.That(LifeStage(centcomm), Is.EqualTo(EntityLifeStage.MapInitialized));
+        Assert.That(LifeStage(centcommMap), Is.EqualTo(EntityLifeStage.MapInitialized));
+        Assert.That(LifeStage(salternXform.MapUid.Value), Is.EqualTo(EntityLifeStage.MapInitialized));
+
         // Set up shuttle timing
         var evacSys = server.System<EmergencyShuttleSystem>();
         evacSys.TransitTime = ShuttleSystem.DefaultTravelTime; // Absolute minimum transit time, so the test has to run for at least this long
@@ -78,19 +93,15 @@ public sealed class EvacShuttleTest
 
         var dockTime = server.CfgMan.GetCVar(CCVars.EmergencyShuttleDockTime);
         server.CfgMan.SetCVar(CCVars.EmergencyShuttleDockTime, 2);
-        async Task RunSeconds(float seconds)
-        {
-            await pair.RunTicksSync((int) Math.Ceiling(seconds / server.Timing.TickPeriod.TotalSeconds));
-        }
 
         // Call evac shuttle.
         await pair.WaitCommand("callshuttle 0:02");
-        await RunSeconds(3);
+        await pair.RunSeconds(3);
 
         // Shuttle should have arrived on the station
         Assert.That(shuttleXform.MapUid, Is.EqualTo(salternXform.MapUid));
 
-        await RunSeconds(2);
+        await pair.RunSeconds(2);
 
         // Shuttle should be FTLing back to centcomm
         Assert.That(entMan.Count<FTLMapComponent>(), Is.EqualTo(1));
@@ -101,14 +112,15 @@ public sealed class EvacShuttleTest
         Assert.That(shuttleXform.MapUid, Is.EqualTo(ftl.Owner));
 
         // Shuttle should have arrived at centcomm
-        await RunSeconds(ShuttleSystem.DefaultTravelTime);
+        await pair.RunSeconds(ShuttleSystem.DefaultTravelTime);
         Assert.That(shuttleXform.MapUid, Is.EqualTo(centcommMap));
 
         // Round should be ending now
         Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.PostRound));
 
         server.CfgMan.SetCVar(CCVars.EmergencyShuttleDockTime, dockTime);
-        pair.Server.CfgMan.SetCVar(CCVars.EmergencyShuttleEnabled, shuttleEnabled);
+        pair.Server.CfgMan.SetCVar(CCVars.EmergencyShuttleEnabled, false);
+        pair.Server.CfgMan.SetCVar(CCVars.GameMap, gameMap);
         await pair.CleanReturnAsync();
     }
 }

@@ -107,3 +107,14 @@
   description: A pair of sunglasses, modified to have a built-in security HUD.
   icon: { sprite: Clothing/Eyes/Glasses/secglasses.rsi, state: icon }
   objectType: Item
+
+- type: construction
+  name: quiver
+  id: ClothingBeltQuiver
+  graph: Quiver
+  startNode: start
+  targetNode: Quiver
+  category: construction-category-clothing
+  description: Can hold up to 15 arrows, and fits snug around your waist.
+  icon: { sprite: Clothing/Belt/quiver.rsi, state: icon }
+  objectType: Item
