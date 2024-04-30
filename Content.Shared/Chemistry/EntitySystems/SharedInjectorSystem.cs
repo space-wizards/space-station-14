@@ -37,10 +37,7 @@ public abstract class SharedInjectorSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
-        if (!HasComp<ActorComponent>(args.User))
-            return;
         var user = args.User;
-
         var (_, component) = entity;
 
         var min = component.MinimumTransferAmount;
@@ -116,7 +113,7 @@ public abstract class SharedInjectorSystem : EntitySystem
         if (injector.Comp.InjectOnly)
             return;
 
-        if (!SolutionContainers.TryGetSolution(injector.Owner, InjectorComponent.SolutionName, out var solEnt, out var solution))
+        if (!SolutionContainers.TryGetSolution(injector.Owner, injector.Comp.SolutionName, out var solEnt, out var solution))
             return;
 
         string msg;

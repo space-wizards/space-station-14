@@ -195,8 +195,15 @@ public sealed partial class ReplaySpectatorSystem
         if (uid != _player.LocalEntity)
             return;
 
-        if (args.Transform.MapUid != null || args.OldMapId == MapId.Nullspace)
+        if (args.Transform.MapUid != null || args.OldMapId == null)
             return;
+
+        if (_spectatorData != null)
+        {
+            // Currently scrubbing/setting the replay tick
+            // the observer will get respawned once the state was applied
+            return;
+        }
 
         // The entity being spectated from was moved to null-space.
         // This was probably because they were spectating some entity in a client-side replay that left PVS range.

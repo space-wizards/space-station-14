@@ -154,7 +154,7 @@ namespace Content.Server.Administration.Managers
             plyData.ExplicitlyDeadminned = false;
             reg.Data.Active = true;
 
-            if (reg.Data.Stealth)
+            if (!reg.Data.Stealth)
             {
                 _chat.SendAdminAnnouncement(Loc.GetString("admin-manager-self-re-admin-message", ("newAdminName", session.Name)));
             }

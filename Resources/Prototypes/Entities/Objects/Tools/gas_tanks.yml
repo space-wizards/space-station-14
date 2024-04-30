@@ -19,8 +19,8 @@
     key: enum.SharedGasTankUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.SharedGasTankUiKey.Key
-      type: GasTankBoundUserInterface
+      enum.SharedGasTankUiKey.Key:
+        type: GasTankBoundUserInterface
   - type: GasTank
     outputPressure: 21.3
     air:

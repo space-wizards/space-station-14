@@ -20,12 +20,6 @@
   text: "/ServerInfo/Guidebook/Survival.xml"
 
 - type: guideEntry
-  id: Chemicals
-  name: guide-entry-chemicals
-  text: "/ServerInfo/Guidebook/Chemicals.xml"
-  filterEnabled: True
-
-- type: guideEntry
   id: Janitorial
   name: guide-entry-janitorial
   text: "/ServerInfo/Guidebook/Service/Janitorial.xml"
@@ -47,4 +41,3 @@
   id: Food Recipes
   name: guide-entry-foodrecipes
   text: "/ServerInfo/Guidebook/Service/FoodRecipes.xml"
-

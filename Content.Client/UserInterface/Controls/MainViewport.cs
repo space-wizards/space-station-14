@@ -51,6 +51,7 @@ namespace Content.Client.UserInterface.Controls
             var stretch = _cfg.GetCVar(CCVars.ViewportStretch);
             var renderScaleUp = _cfg.GetCVar(CCVars.ViewportScaleRender);
             var fixedFactor = _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
+            var verticalFit = _cfg.GetCVar(CCVars.ViewportVerticalFit);
 
             if (stretch)
             {
@@ -60,6 +61,7 @@ namespace Content.Client.UserInterface.Controls
                     // Did not find a snap, enable stretching.
                     Viewport.FixedStretchSize = null;
                     Viewport.StretchMode = ScalingViewportStretchMode.Bilinear;
+                    Viewport.IgnoreDimension = verticalFit ? ScalingViewportIgnoreDimension.Horizontal : ScalingViewportIgnoreDimension.None;
 
                     if (renderScaleUp)
                     {
@@ -104,6 +106,8 @@ namespace Content.Client.UserInterface.Controls
             // where we are clipping the viewport to make it fit.
             var cfgToleranceClip = _cfg.GetCVar(CCVars.ViewportSnapToleranceClip);
 
+            var cfgVerticalFit = _cfg.GetCVar(CCVars.ViewportVerticalFit);
+
             // Calculate if the viewport, when rendered at an integer scale,
             // is close enough to the control size to enable "snapping" to NN,
             // potentially cutting a tiny bit off/leaving a margin.
@@ -123,7 +127,8 @@ namespace Content.Client.UserInterface.Controls
                 // The rule for which snap fits is that at LEAST one axis needs to be in the tolerance size wise.
                 // One axis MAY be larger but not smaller than tolerance.
                 // Obviously if it's too small it's bad, and if it's too big on both axis we should stretch up.
-                if (Fits(dx) && Fits(dy) || Fits(dx) && Larger(dy) || Larger(dx) && Fits(dy))
+                // Additionally, if the viewport's supposed  to be vertically fit, then the horizontal scale should just be ignored where appropriate.
+                if ((Fits(dx) || cfgVerticalFit) && Fits(dy) || !cfgVerticalFit && Fits(dx) && Larger(dy) || Larger(dx) && Fits(dy))
                 {
                     // Found snap that fits.
                     return i;

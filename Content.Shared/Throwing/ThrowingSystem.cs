@@ -49,7 +49,8 @@ public sealed class ThrowingSystem : EntitySystem
         float pushbackRatio = PushbackDefault,
         bool recoil = true,
         bool animated = true,
-        bool playSound = true)
+        bool playSound = true,
+        bool doSpin = true)
     {
         var thrownPos = _transform.GetMapCoordinates(uid);
         var mapPos = _transform.ToMapCoordinates(coordinates);
@@ -57,7 +58,7 @@ public sealed class ThrowingSystem : EntitySystem
         if (mapPos.MapId != thrownPos.MapId)
             return;
 
-        TryThrow(uid, mapPos.Position - thrownPos.Position, strength, user, pushbackRatio, recoil: recoil, animated: animated, playSound: playSound);
+        TryThrow(uid, mapPos.Position - thrownPos.Position, strength, user, pushbackRatio, recoil: recoil, animated: animated, playSound: playSound, doSpin: doSpin);
     }
 
     /// <summary>
@@ -67,6 +68,7 @@ public sealed class ThrowingSystem : EntitySystem
     /// <param name="direction">A vector pointing from the entity to its destination.</param>
     /// <param name="strength">How much the direction vector should be multiplied for velocity.</param>
     /// <param name="pushbackRatio">The ratio of impulse applied to the thrower - defaults to 10 because otherwise it's not enough to properly recover from getting spaced</param>
+    /// <param name="doSpin">Whether spin will be applied to the thrown entity.</param>
     public void TryThrow(EntityUid uid,
         Vector2 direction,
         float strength = 1.0f,
@@ -74,7 +76,8 @@ public sealed class ThrowingSystem : EntitySystem
         float pushbackRatio = PushbackDefault,
         bool recoil = true,
         bool animated = true,
-        bool playSound = true)
+        bool playSound = true,
+        bool doSpin = true)
     {
         var physicsQuery = GetEntityQuery<PhysicsComponent>();
         if (!physicsQuery.TryGetComponent(uid, out var physics))
@@ -90,7 +93,7 @@ public sealed class ThrowingSystem : EntitySystem
             projectileQuery,
             strength,
             user,
-            pushbackRatio, recoil: recoil, animated: animated, playSound: playSound);
+            pushbackRatio, recoil: recoil, animated: animated, playSound: playSound, doSpin: doSpin);
     }
 
     /// <summary>
@@ -100,6 +103,7 @@ public sealed class ThrowingSystem : EntitySystem
     /// <param name="direction">A vector pointing from the entity to its destination.</param>
     /// <param name="strength">How much the direction vector should be multiplied for velocity.</param>
     /// <param name="pushbackRatio">The ratio of impulse applied to the thrower - defaults to 10 because otherwise it's not enough to properly recover from getting spaced</param>
+    /// <param name="doSpin">Whether spin will be applied to the thrown entity.</param>
     public void TryThrow(EntityUid uid,
         Vector2 direction,
         PhysicsComponent physics,
@@ -110,7 +114,8 @@ public sealed class ThrowingSystem : EntitySystem
         float pushbackRatio = PushbackDefault,
         bool recoil = true,
         bool animated = true,
-        bool playSound = true)
+        bool playSound = true,
+        bool doSpin = true)
     {
         if (strength <= 0 || direction == Vector2Helpers.Infinity || direction == Vector2Helpers.NaN || direction == Vector2.Zero)
             return;
@@ -147,17 +152,20 @@ public sealed class ThrowingSystem : EntitySystem
         ThrowingAngleComponent? throwingAngle = null;
 
         // Give it a l'il spin.
-        if (physics.InvI > 0f && (!TryComp(uid, out throwingAngle) || throwingAngle.AngularVelocity))
+        if (doSpin)
         {
-            _physics.ApplyAngularImpulse(uid, ThrowAngularImpulse / physics.InvI, body: physics);
-        }
-        else
-        {
-            Resolve(uid, ref throwingAngle, false);
-            var gridRot = _transform.GetWorldRotation(transform.ParentUid);
-            var angle = direction.ToWorldAngle() - gridRot;
-            var offset = throwingAngle?.Angle ?? Angle.Zero;
-            _transform.SetLocalRotation(uid, angle + offset);
+            if (physics.InvI > 0f && (!TryComp(uid, out throwingAngle) || throwingAngle.AngularVelocity))
+            {
+                _physics.ApplyAngularImpulse(uid, ThrowAngularImpulse / physics.InvI, body: physics);
+            }
+            else
+            {
+                Resolve(uid, ref throwingAngle, false);
+                var gridRot = _transform.GetWorldRotation(transform.ParentUid);
+                var angle = direction.ToWorldAngle() - gridRot;
+                var offset = throwingAngle?.Angle ?? Angle.Zero;
+                _transform.SetLocalRotation(uid, angle + offset);
+            }
         }
 
         var throwEvent = new ThrownEvent(user, uid);
