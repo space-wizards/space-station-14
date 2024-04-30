@@ -384,7 +384,7 @@
   id: Weh
   name: chat-emote-name-weh
   category: Vocal
-  icon: Interface/Actions/weh.png
+  icon: Interface/Emotes/weh.png
   chatMessages: [Wehs!]
 
 - type: emote
