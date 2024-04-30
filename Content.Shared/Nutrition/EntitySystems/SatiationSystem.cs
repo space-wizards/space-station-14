@@ -61,12 +61,12 @@ public sealed class SatiationSystem : EntitySystem
     {
         base.Initialize();
 
-        foreach (var pair in ThirstIcons!)
+        foreach (var pair in ThirstIcons)
         {
             var (iconId, prototype) = pair;
             DebugTools.Assert(_prototype.TryIndex(iconId, out prototype));
         }
-        foreach (var pair in HungerIcons!)
+        foreach (var pair in HungerIcons)
         {
             var (iconId, prototype) = pair;
             DebugTools.Assert(_prototype.TryIndex(iconId, out prototype));
