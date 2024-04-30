@@ -25,6 +25,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - MonkeyWearable
   - type: ClothingRequiredStepTriggerImmune
     slots: WITHOUT_POCKET
 
@@ -67,6 +68,9 @@
   - type: GroupExamine
   - type: ClothingRequiredStepTriggerImmune
     slots: WITHOUT_POCKET
+  - type: Tag
+    tags:
+    - MonkeyWearable
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -201,6 +205,9 @@
       toggleable-clothing: !type:ContainerSlot {}
   - type: ClothingRequiredStepTriggerImmune
     slots: WITHOUT_POCKET
+  - type: Tag
+    tags:
+    - MonkeyWearable
 
 - type: entity
   parent: ClothingOuterBase

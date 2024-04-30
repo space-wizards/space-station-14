@@ -15,6 +15,10 @@
       "directions": 4
     },
     {
+      "name": "equipped-INNERCLOTHING-monkey",
+      "directions": 4
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },
@@ -27,6 +31,10 @@
     },
     {
       "name": "trinkets-equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "trinkets-equipped-INNERCLOTHING-monkey",
       "directions": 4
     },
     {
@@ -50,6 +58,10 @@
     },
     {
       "name": "prisoner-equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "prisoner-equipped-INNERCLOTHING-monkey",
       "directions": 4
     }
   ]
