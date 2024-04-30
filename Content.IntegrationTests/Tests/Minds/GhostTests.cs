@@ -14,84 +14,76 @@ namespace Content.IntegrationTests.Tests.Minds;
 [TestFixture]
 public sealed class GhostTests
 {
-    private TestPair Pair = default!;
+    private TestPair _pair = default!;
 
-    protected TestMapData MapData => Pair.TestMap!;
+    private TestMapData MapData => _pair.TestMap!;
 
-    private RobustIntegrationTest.ServerIntegrationInstance Server => Pair.Server;
-    private RobustIntegrationTest.ClientIntegrationInstance Client => Pair.Client;
+    private RobustIntegrationTest.ServerIntegrationInstance Server => _pair.Server;
+    private RobustIntegrationTest.ClientIntegrationInstance Client => _pair.Client;
 
     /// <summary>
     /// Initial player coordinates. Note that this does not necessarily correspond to the position of the
-    /// <see cref="Player"/> entity.
+    /// <see cref="_player"/> entity.
     /// </summary>
-    protected NetCoordinates PlayerCoords;
+    private NetCoordinates _playerCoords;
 
-    private NetEntity Player;
-    private EntityUid SPlayerEnt;
+    private NetEntity _player;
+    private EntityUid _sPlayerEnt;
 
-    private EntityUid SPlayer => ToServer(Player);
+    private ICommonSession _clientSession = default!;
+    private ICommonSession _serverSession = default!;
 
-    protected ICommonSession ClientSession = default!;
-    protected ICommonSession ServerSession = default!;
+    private IEntityManager _sEntMan;
+    private Robust.Server.Player.IPlayerManager _sPlayerMan;
+    private Server.Mind.MindSystem _sMindSys;
+    private SharedTransformSystem _sTransformSys = default!;
 
-    private IEntityManager SEntMan;
-    private Robust.Server.Player.IPlayerManager SPlayerMan;
-    private Server.Mind.MindSystem SMindSys;
-    private SharedTransformSystem STransformSys = default!;
-
-    #region Networking
-
-    protected EntityUid ToServer(NetEntity nent) => SEntMan.GetEntity(nent);
-
-    #endregion
-
-    [SetUp]
+    // [SetUp]
     public async Task Setup()
     {
         // Client is needed to create a session for the ghost system. Creating a dummy session was too difficult.
-        Pair = await PoolManager.GetServerClient(new PoolSettings
+        _pair = await PoolManager.GetServerClient(new PoolSettings
         {
             DummyTicker = false,
             Connected = true,
             Dirty = true
         });
 
-        SEntMan = Pair.Server.ResolveDependency<IServerEntityManager>();
-        SPlayerMan = Pair.Server.ResolveDependency<Robust.Server.Player.IPlayerManager>();
-        SMindSys = SEntMan.System<Server.Mind.MindSystem>();
-        STransformSys = SEntMan.System<SharedTransformSystem>();
+        _sEntMan = _pair.Server.ResolveDependency<IServerEntityManager>();
+        _sPlayerMan = _pair.Server.ResolveDependency<Robust.Server.Player.IPlayerManager>();
+        _sMindSys = _sEntMan.System<Server.Mind.MindSystem>();
+        _sTransformSys = _sEntMan.System<SharedTransformSystem>();
 
         // Setup map.
-        await Pair.CreateTestMap();
-        PlayerCoords = SEntMan.GetNetCoordinates(MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)).WithEntityId(MapData.MapUid, STransformSys, SEntMan));
+        await _pair.CreateTestMap();
+        _playerCoords = _sEntMan.GetNetCoordinates(MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)).WithEntityId(MapData.MapUid, _sTransformSys, _sEntMan));
 
         if (Client.Session == null)
             Assert.Fail("No player");
-        ClientSession = Client.Session!;
-        ServerSession = SPlayerMan.GetSessionById(ClientSession.UserId);
+        _clientSession = Client.Session!;
+        _serverSession = _sPlayerMan.GetSessionById(_clientSession.UserId);
 
         Entity<MindComponent> mind = default!;
-        await Pair.Server.WaitPost(() =>
+        await _pair.Server.WaitPost(() =>
         {
-            Player = SEntMan.GetNetEntity(SEntMan.SpawnEntity(null, SEntMan.GetCoordinates(PlayerCoords)));
-            mind = SMindSys.CreateMind(ServerSession.UserId, "DummyPlayerEntity");
-            SPlayerEnt = SEntMan.GetEntity(Player);
-            SMindSys.TransferTo(mind, SPlayerEnt, mind: mind.Comp);
-            Server.PlayerMan.SetAttachedEntity(ServerSession, SPlayerEnt);
+            _player = _sEntMan.GetNetEntity(_sEntMan.SpawnEntity(null, _sEntMan.GetCoordinates(_playerCoords)));
+            mind = _sMindSys.CreateMind(_serverSession.UserId, "DummyPlayerEntity");
+            _sPlayerEnt = _sEntMan.GetEntity(_player);
+            _sMindSys.TransferTo(mind, _sPlayerEnt, mind: mind.Comp);
+            Server.PlayerMan.SetAttachedEntity(_serverSession, _sPlayerEnt);
         });
 
-        await Pair.RunTicksSync(5);
+        await _pair.RunTicksSync(5);
 
         Assert.Multiple(() =>
         {
-            Assert.That(ServerSession.ContentData()?.Mind, Is.EqualTo(mind.Owner));
-            Assert.That(ServerSession.AttachedEntity, Is.EqualTo(SPlayerEnt));
-            Assert.That(ServerSession.AttachedEntity, Is.EqualTo(mind.Comp.CurrentEntity),
+            Assert.That(_serverSession.ContentData()?.Mind, Is.EqualTo(mind.Owner));
+            Assert.That(_serverSession.AttachedEntity, Is.EqualTo(_sPlayerEnt));
+            Assert.That(_serverSession.AttachedEntity, Is.EqualTo(mind.Comp.CurrentEntity),
                 "Player is not attached to the mind's current entity.");
-            Assert.That(SEntMan.EntityExists(mind.Comp.OwnedEntity),
+            Assert.That(_sEntMan.EntityExists(mind.Comp.OwnedEntity),
                 "The mind's current entity does not exist");
-            Assert.That(mind.Comp.VisitingEntity == null || SEntMan.EntityExists(mind.Comp.VisitingEntity),
+            Assert.That(mind.Comp.VisitingEntity == null || _sEntMan.EntityExists(mind.Comp.VisitingEntity),
                 "The minds visited entity does not exist.");
         });
     }
@@ -104,23 +96,24 @@ public sealed class GhostTests
     [Test]
     public async Task TestGridGhostOnDelete()
     {
-        Assert.That(SPlayerEnt, Is.Not.EqualTo(null));
-        var oldPosition = SEntMan.GetComponent<TransformComponent>(SPlayerEnt).Coordinates;
+        await Setup();
+        Assert.That(_sPlayerEnt, Is.Not.EqualTo(null));
+        var oldPosition = _sEntMan.GetComponent<TransformComponent>(_sPlayerEnt).Coordinates;
 
-        Assert.That(!SEntMan.HasComponent<GhostComponent>(SPlayerEnt), "Player was initially a ghost?");
+        Assert.That(!_sEntMan.HasComponent<GhostComponent>(_sPlayerEnt), "Player was initially a ghost?");
 
         // Delete entity
-        await Server.WaitPost(() => SEntMan.DeleteEntity(SPlayerEnt));
-        await Pair.RunTicksSync(5);
+        await Server.WaitPost(() => _sEntMan.DeleteEntity(_sPlayerEnt));
+        await _pair.RunTicksSync(5);
 
-        var ghost = ServerSession.AttachedEntity!.Value;
-        Assert.That(SEntMan.HasComponent<GhostComponent>(ghost), "Player did not become a ghost");
+        var ghost = _serverSession.AttachedEntity!.Value;
+        Assert.That(_sEntMan.HasComponent<GhostComponent>(ghost), "Player did not become a ghost");
 
         // Ensure the position is the same
-        var ghostPosition = SEntMan.GetComponent<TransformComponent>(ghost).Coordinates;
+        var ghostPosition = _sEntMan.GetComponent<TransformComponent>(ghost).Coordinates;
         Assert.That(ghostPosition, Is.EqualTo(oldPosition));
 
-        await Pair.CleanReturnAsync();
+        await _pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -131,23 +124,24 @@ public sealed class GhostTests
     [Test]
     public async Task TestGridGhostOnQueueDelete()
     {
-        Assert.That(SPlayerEnt, Is.Not.EqualTo(null));
-        var oldPosition = SEntMan.GetComponent<TransformComponent>(SPlayerEnt).Coordinates;
+        await Setup();
+        Assert.That(_sPlayerEnt, Is.Not.EqualTo(null));
+        var oldPosition = _sEntMan.GetComponent<TransformComponent>(_sPlayerEnt).Coordinates;
 
-        Assert.That(!SEntMan.HasComponent<GhostComponent>(SPlayerEnt), "Player was initially a ghost?");
+        Assert.That(!_sEntMan.HasComponent<GhostComponent>(_sPlayerEnt), "Player was initially a ghost?");
 
         // Delete entity
-        await Server.WaitPost(() => SEntMan.QueueDeleteEntity(SPlayerEnt));
-        await Pair.RunTicksSync(5);
+        await Server.WaitPost(() => _sEntMan.QueueDeleteEntity(_sPlayerEnt));
+        await _pair.RunTicksSync(5);
 
-        var ghost = ServerSession.AttachedEntity!.Value;
-        Assert.That(SEntMan.HasComponent<GhostComponent>(ghost), "Player did not become a ghost");
+        var ghost = _serverSession.AttachedEntity!.Value;
+        Assert.That(_sEntMan.HasComponent<GhostComponent>(ghost), "Player did not become a ghost");
 
         // Ensure the position is the same
-        var ghostPosition = SEntMan.GetComponent<TransformComponent>(ghost).Coordinates;
+        var ghostPosition = _sEntMan.GetComponent<TransformComponent>(ghost).Coordinates;
         Assert.That(ghostPosition, Is.EqualTo(oldPosition));
 
-        await Pair.CleanReturnAsync();
+        await _pair.CleanReturnAsync();
     }
 
 }
