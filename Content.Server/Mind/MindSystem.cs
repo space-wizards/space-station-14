@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
+using Content.Server.Ghost;
 using Content.Server.Mind.Commands;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
@@ -9,10 +10,8 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Players;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Mind;
@@ -22,8 +21,7 @@ public sealed class MindSystem : SharedMindSystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly SharedGhostSystem _ghosts = default!;
+    [Dependency] private readonly GhostSystem _ghosts = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
 
@@ -77,24 +75,7 @@ public sealed class MindSystem : SharedMindSystem
         if (!_transform.TryGetMapOrGridCoordinates(uid, out var spawnPosition))
             return;
 
-        // TODO refactor observer spawning.
-        // please.
-        if (!spawnPosition.Value.IsValid(EntityManager))
-        {
-            // This should be an error, if it didn't cause tests to start erroring when they delete a player.
-            Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
-            TransferTo(mindId, null, createGhost: false, mind: mind);
-            return;
-        }
-
-        var ghost = Spawn(GameTicker.ObserverPrototypeName, spawnPosition.Value);
-        var ghostComponent = Comp<GhostComponent>(ghost);
-        _ghosts.SetCanReturnToBody(ghostComponent, false);
-
-        // Log these to make sure they're not causing the GameTicker round restart bugs...
-        Log.Debug($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
-        _metaData.SetEntityName(ghost, mind.CharacterName ?? string.Empty);
-        TransferTo(mindId, ghost, mind: mind);
+        _ghosts.SpawnGhost(uid, (mindId, mind), spawnPosition.Value);
     }
 
     public override bool TryGetMind(NetUserId user, [NotNullWhen(true)] out EntityUid? mindId, [NotNullWhen(true)] out MindComponent? mind)

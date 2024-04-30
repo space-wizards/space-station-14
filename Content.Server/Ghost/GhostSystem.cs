@@ -19,6 +19,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
@@ -42,6 +43,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         public override void Initialize()
         {
@@ -361,6 +363,26 @@ namespace Content.Server.Ghost
             RaiseLocalEvent(target, ghostBoo, true);
 
             return ghostBoo.Handled;
+        }
+
+        public void SpawnGhost(EntityUid uid, Entity<MindComponent> mind, EntityCoordinates spawnPosition)
+        {
+            if (!spawnPosition.IsValid(EntityManager))
+            {
+                // This should be an error, if it didn't cause tests to start erroring when they delete a player.
+                Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.Comp.CharacterName} was deleted, and no applicable spawn location is available.");
+                _minds.TransferTo(mind.Owner, null, createGhost: false, mind: mind.Comp);
+                return;
+            }
+
+            var ghost = Spawn(GameTicker.ObserverPrototypeName, spawnPosition);
+            var ghostComponent = Comp<GhostComponent>(ghost);
+            SetCanReturnToBody(ghostComponent, false);
+
+            // Log these to make sure they're not causing the GameTicker round restart bugs...
+            Log.Debug($"Entity \"{ToPrettyString(uid)}\" for {mind.Comp.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
+            _metaData.SetEntityName(ghost, mind.Comp.CharacterName ?? string.Empty);
+            _minds.TransferTo(mind.Owner, ghost, mind: mind.Comp);
         }
     }
 }
