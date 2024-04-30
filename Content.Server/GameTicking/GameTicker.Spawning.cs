@@ -8,6 +8,7 @@ using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -321,29 +322,20 @@ namespace Content.Server.GameTicking
             if (DummyTicker)
                 return;
 
-            var mind = player.GetMind();
+            Entity<MindComponent?>? mind = player.GetMind();
             if (mind == null)
             {
-                mind = _mind.CreateMind(player.UserId);
+                var name = GetPlayerProfile(player).Name;
+                var (mindId, mindComp) = _mind.CreateMind(player.UserId, name);
+                mind = (mindId, mindComp);
                 _mind.SetUserId(mind.Value, player.UserId);
                 _roles.MindAddRole(mind.Value, new ObserverRoleComponent());
             }
 
-            var name = GetPlayerProfile(player).Name;
-            var ghost = SpawnObserverMob();
-            _metaData.SetEntityName(ghost, name);
-            _ghost.SetCanReturnToBody(ghost, false);
-            _mind.TransferTo(mind.Value, ghost);
+            var coordinates = GetObserverSpawnPoint();
+            var ghost = _ghost.SpawnGhost(mind.Value, coordinates);
             _adminLogger.Add(LogType.LateJoin, LogImpact.Low, $"{player.Name} late joined the round as an Observer with {ToPrettyString(ghost):entity}.");
         }
-
-        #region Mob Spawning Helpers
-        private EntityUid SpawnObserverMob()
-        {
-            var coordinates = GetObserverSpawnPoint();
-            return EntityManager.SpawnEntity(ObserverPrototypeName, coordinates);
-        }
-        #endregion
 
         #region Spawn Points
         public EntityCoordinates GetObserverSpawnPoint()
