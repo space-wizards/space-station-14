@@ -1,0 +1,54 @@
+- type: entity
+  parent: AnomalyLocatorUnpowered
+  id: NukeLocatorUnpowered
+  name: fissile material scanner
+  description: A device designed to scan for nuclear warheads in the local area. I sure hope it doesn't beep.
+  suffix: Unpowered
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Syndicate/nukelocator.rsi
+    layers:
+      - state: icon
+      - state: screen
+        shader: unshaded
+        visible: false
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: ProximityDetector
+    enabled: false
+    range: 50
+    criteria:
+      components:
+      - NukeLabel # NukeLabel catches the decoy nuke too, which is kinda funny.
+  - type: Beeper
+    enabled: false
+    minBeepInterval: 0.15
+    maxBeepInterval: 3.00
+    beepSound:
+      path: "/Audio/Items/locator_beep.ogg"
+      params:
+        maxDistance: 1.5
+        volume: -6
+
+- type: entity
+  id: NukeLocator
+  parent: [ NukeLocatorUnpowered, PowerCellSlotSmallItem ]
+  suffix: Powered
+  components:
+  - type: PowerCellDraw
+    drawRate: 1
+    useRate: 0
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+
+- type: entity
+  id: NukeLocatorEmpty
+  parent: NukeLocator
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

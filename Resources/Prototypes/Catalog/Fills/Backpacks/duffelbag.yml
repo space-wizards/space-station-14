@@ -330,6 +330,7 @@
       - id: BoxSurvivalSyndicate
       - id: WeaponPistolViper
       - id: PinpointerSyndicateNuclear
+      - id: NukeLocator
       - id: DeathAcidifierImplanter
 
 
@@ -348,6 +349,7 @@
       - id: CombatKnife
       - id: WeaponPistolViper
       - id: PinpointerSyndicateNuclear
+      - id: NukeLocator
       - id: HandheldHealthAnalyzer
       - id: CombatMedipen
       - id: DeathAcidifierImplanter
