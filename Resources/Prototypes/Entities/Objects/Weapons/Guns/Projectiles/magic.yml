@@ -31,6 +31,38 @@
     fireStacks: 0.35
 
 - type: entity
+  id: CaneFireball
+  name: fireball
+  description: You better GITTAH WEIGH.
+  parent: BulletRocket
+  noSpawn: true
+  components:
+  - type: PointLight
+    color: "#E25822"
+    radius: 2.0
+    energy: 5.0
+  - type: Projectile
+    damage:
+      types:
+        Heat: 20
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: blastwave
+      shader: unshaded
+  - type: Explosive
+    explosionType: Default
+    # Cosmetic explosion :)
+    maxIntensity: 0.01
+    intensitySlope: 1
+    totalIntensity: 0.01
+  - type: IgnitionSource
+    temperature: 400
+    ignited: true
+  - type: IgniteOnCollide
+    fireStacks: 0.35
+
+- type: entity
   id: ProjectileAnomalyFireball
   name: fireball
   description: Hovering blob of flame.
