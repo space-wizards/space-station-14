@@ -12,6 +12,8 @@ namespace Content.Shared.Pinpointer;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class NavMapComponent : Component
 {
+    public const int Categories = 4;
+
     /*
      * Don't need DataFields as this can be reconstructed
      */
@@ -42,7 +44,7 @@ public sealed class NavMapChunk
     /// Uses a bitmask for tiles, 1 for occupied and 0 for empty. There is a bitmask for each cardinal direction,
     /// representing each edge of the tile, in case the entities inside it do not entirely fill it
     /// </summary>
-    public Dictionary<AtmosDirection, ushort>[] TileData;
+    public Dictionary<AtmosDirection, ushort>?[] TileData;
 
     /// <summary>
     /// The last game tick that the chunk was updated
@@ -53,21 +55,27 @@ public sealed class NavMapChunk
     public NavMapChunk(Vector2i origin)
     {
         Origin = origin;
-        TileData = new Dictionary<AtmosDirection, ushort>[4];
+        TileData = new Dictionary<AtmosDirection, ushort>?[NavMapComponent.Categories];
     }
 
-    public void EnsureType(NavMapChunkType chunkType)
+    public Dictionary<AtmosDirection, ushort> EnsureType(NavMapChunkType chunkType)
     {
-        ref var data = ref TileData[(int) chunkType];
+        var data = TileData[(int) chunkType];
 
-        // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
-        data ??= new Dictionary<AtmosDirection, ushort>()
+        if (data == null)
         {
-            [AtmosDirection.North] = 0,
-            [AtmosDirection.East] = 0,
-            [AtmosDirection.South] = 0,
-            [AtmosDirection.West] = 0,
-        };
+            data = new Dictionary<AtmosDirection, ushort>()
+            {
+                [AtmosDirection.North] = 0,
+                [AtmosDirection.East] = 0,
+                [AtmosDirection.South] = 0,
+                [AtmosDirection.West] = 0,
+            };
+
+            TileData[(int) chunkType] = data;
+        }
+
+        return data;
     }
 }
 
@@ -77,4 +85,5 @@ public enum NavMapChunkType : byte
     Floor,
     Wall,
     Airlock,
+    // Update the categories const if you update this.
 }

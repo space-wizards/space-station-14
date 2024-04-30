@@ -490,108 +490,143 @@ public partial class NavMapControl : MapGridControl
         VertLinesLookup.Clear();
         VertLinesLookupReversed.Clear();
 
-        foreach ((var (category, chunkOrigin), var chunk) in _navMap.Chunks)
+        foreach (var (chunkOrigin, chunk) in _navMap.Chunks)
         {
-            if (category != NavMapChunkType.Wall)
-                continue;
-
-            for (var i = 0; i < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; i++)
+            for (var j = 0; j < NavMapComponent.Categories; j++)
             {
-                var value = (ushort) Math.Pow(2, i);
-                var mask = _navMapSystem.GetCombinedEdgesForChunk(chunk.TileData) & value;
+                var category = (NavMapChunkType) j;
 
-                if (mask == 0x0)
+                if (category != NavMapChunkType.Wall)
                     continue;
 
-                var relativeTile = SharedNavMapSystem.GetTile(mask);
-                var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relativeTile) * _grid.TileSize;
+                var data = chunk.TileData[j];
 
-                if (!_navMapSystem.AllTileEdgesAreOccupied(chunk.TileData, relativeTile))
-                {
-                    AddRectForThinWall(chunk.TileData, tile);
+                if (data == null)
                     continue;
-                }
 
-                tile = tile with { Y = -tile.Y };
-
-                NavMapChunk? neighborChunk;
-                bool neighbor;
-
-                // North edge
-                if (relativeTile.Y == SharedNavMapSystem.ChunkSize - 1)
+                for (var i = 0; i < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; i++)
                 {
-                    neighbor = _navMap.Chunks.TryGetValue((NavMapChunkType.Wall, chunkOrigin + new Vector2i(0, 1)), out neighborChunk) &&
-                                  (neighborChunk.TileData[AtmosDirection.South] &
-                                   SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, 0))) != 0x0;
-                }
-                else
-                {
-                    var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(0, 1));
-                    neighbor = (chunk.TileData[AtmosDirection.South] & flag) != 0x0;
-                }
+                    var value = (ushort) Math.Pow(2, i);
+                    var mask = _navMapSystem.GetCombinedEdgesForChunk(data) & value;
 
-                if (!neighbor)
-                    AddOrUpdateNavMapLine(tile + new Vector2i(0, -_grid.TileSize), tile + new Vector2i(_grid.TileSize, -_grid.TileSize), HorizLinesLookup, HorizLinesLookupReversed);
+                    if (mask == 0x0)
+                        continue;
 
-                // East edge
-                if (relativeTile.X == SharedNavMapSystem.ChunkSize - 1)
-                {
-                    neighbor = _navMap.Chunks.TryGetValue((NavMapChunkType.Wall, chunkOrigin + new Vector2i(1, 0)), out neighborChunk) &&
-                               (neighborChunk.TileData[AtmosDirection.West] &
-                                SharedNavMapSystem.GetFlag(new Vector2i(0, relativeTile.Y))) != 0x0;
+                    var relativeTile = SharedNavMapSystem.GetTile(mask);
+                    var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relativeTile) * _grid.TileSize;
+
+                    if (!_navMapSystem.AllTileEdgesAreOccupied(data, relativeTile))
+                    {
+                        AddRectForThinWall(data, tile);
+                        continue;
+                    }
+
+                    tile = tile with { Y = -tile.Y };
+
+                    NavMapChunk? neighborChunk;
+                    bool neighbor;
+
+                    // North edge
+                    if (relativeTile.Y == SharedNavMapSystem.ChunkSize - 1)
+                    {
+                        _navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Up, out neighborChunk);
+                        var neighborData = neighborChunk?.TileData[(int) NavMapChunkType.Wall];
+
+                        neighbor = neighborData != null &&
+                                   (neighborData[AtmosDirection.South] & SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, 0))) != 0x0;
+                    }
+                    else
+                    {
+                        var flag = SharedNavMapSystem.GetFlag(relativeTile + Vector2i.Up);
+                        neighbor = (data[AtmosDirection.South] & flag) != 0x0;
+                    }
+
+                    if (!neighbor)
+                    {
+                        AddOrUpdateNavMapLine(tile + new Vector2i(0, -_grid.TileSize),
+                            tile + new Vector2i(_grid.TileSize, -_grid.TileSize), HorizLinesLookup,
+                            HorizLinesLookupReversed);
+                    }
+
+                    // East edge
+                    if (relativeTile.X == SharedNavMapSystem.ChunkSize - 1)
+                    {
+                        _navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Right, out neighborChunk);
+                        var neighborData = neighborChunk?.TileData[(int) NavMapChunkType.Wall];
+
+                        neighbor = neighborData != null &&
+                                   (neighborData[AtmosDirection.West] & SharedNavMapSystem.GetFlag(new Vector2i(0, relativeTile.Y))) != 0x0;
+                    }
+                    else
+                    {
+                        var flag = SharedNavMapSystem.GetFlag(relativeTile + Vector2i.Right);
+                        neighbor = (data[AtmosDirection.West] & flag) != 0x0;
+                    }
+
+                    if (!neighbor)
+                    {
+                        AddOrUpdateNavMapLine(tile + new Vector2i(_grid.TileSize, -_grid.TileSize),
+                            tile + new Vector2i(_grid.TileSize, 0), VertLinesLookup, VertLinesLookupReversed);
+                    }
+
+                    // South edge
+                    if (relativeTile.Y == 0)
+                    {
+                        _navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Down, out neighborChunk);
+                        var neighborData = neighborChunk?.TileData[(int) NavMapChunkType.Wall];
+
+                        neighbor = neighborData != null &&
+                                   (neighborData[AtmosDirection.North] & SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, SharedNavMapSystem.ChunkSize - 1))) != 0x0;
+                    }
+                    else
+                    {
+                        var flag = SharedNavMapSystem.GetFlag(relativeTile + Vector2i.Down);
+                        neighbor = (data[AtmosDirection.North] & flag) != 0x0;
+                    }
+
+                    if (!neighbor)
+                    {
+                        AddOrUpdateNavMapLine(tile, tile + new Vector2i(_grid.TileSize, 0), HorizLinesLookup,
+                            HorizLinesLookupReversed);
+                    }
+
+                    // West edge
+                    if (relativeTile.X == 0)
+                    {
+                        _navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Left, out neighborChunk);
+                        var neighborData = neighborChunk?.TileData[(int) NavMapChunkType.Wall];
+
+                        neighbor = neighborData != null &&
+                                   (neighborData[AtmosDirection.East] & SharedNavMapSystem.GetFlag(new Vector2i(SharedNavMapSystem.ChunkSize - 1, relativeTile.Y))) != 0x0;
+                    }
+                    else
+                    {
+                        var flag = SharedNavMapSystem.GetFlag(relativeTile + Vector2i.Left);
+                        neighbor = (data[AtmosDirection.East] & flag) != 0x0;
+                    }
+
+                    if (!neighbor)
+                    {
+                        AddOrUpdateNavMapLine(tile + new Vector2i(0, -_grid.TileSize), tile, VertLinesLookup,
+                            VertLinesLookupReversed);
+                    }
+
+                    // Add a diagonal line for interiors. Unless there are a lot of double walls, there is no point combining these
+                    TileLines.Add((tile + new Vector2(0, -_grid.TileSize), tile + new Vector2(_grid.TileSize, 0)));
                 }
-                else
-                {
-                    var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(1, 0));
-                    neighbor = (chunk.TileData[AtmosDirection.West] & flag) != 0x0;
-                }
-
-                if (!neighbor)
-                    AddOrUpdateNavMapLine(tile + new Vector2i(_grid.TileSize, -_grid.TileSize), tile + new Vector2i(_grid.TileSize, 0), VertLinesLookup, VertLinesLookupReversed);
-
-                // South edge
-                if (relativeTile.Y == 0)
-                {
-                    neighbor = _navMap.Chunks.TryGetValue((NavMapChunkType.Wall, chunkOrigin + new Vector2i(0, -1)), out neighborChunk) &&
-                               (neighborChunk.TileData[AtmosDirection.North] &
-                                SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, SharedNavMapSystem.ChunkSize - 1))) != 0x0;
-                }
-                else
-                {
-                    var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(0, -1));
-                    neighbor = (chunk.TileData[AtmosDirection.North] & flag) != 0x0;
-                }
-
-                if (!neighbor)
-                    AddOrUpdateNavMapLine(tile, tile + new Vector2i(_grid.TileSize, 0), HorizLinesLookup, HorizLinesLookupReversed);
-
-                // West edge
-                if (relativeTile.X == 0)
-                {
-                    neighbor = _navMap.Chunks.TryGetValue((NavMapChunkType.Wall, chunkOrigin + new Vector2i(-1, 0)), out neighborChunk) &&
-                               (neighborChunk.TileData[AtmosDirection.East] &
-                                SharedNavMapSystem.GetFlag(new Vector2i(SharedNavMapSystem.ChunkSize - 1, relativeTile.Y))) != 0x0;
-                }
-                else
-                {
-                    var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(-1, 0));
-                    neighbor = (chunk.TileData[AtmosDirection.East] & flag) != 0x0;
-                }
-
-                if (!neighbor)
-                    AddOrUpdateNavMapLine(tile + new Vector2i(0, -_grid.TileSize), tile, VertLinesLookup, VertLinesLookupReversed);
-
-                // Add a diagonal line for interiors. Unless there are a lot of double walls, there is no point combining these
-                TileLines.Add((tile + new Vector2(0, -_grid.TileSize), tile + new Vector2(_grid.TileSize, 0)));
             }
         }
 
-        // Record the combined lines 
+        // Record the combined lines
         foreach (var (origin, terminal) in HorizLinesLookup)
+        {
             TileLines.Add((origin.Item2, terminal.Item2));
+        }
 
         foreach (var (origin, terminal) in VertLinesLookup)
+        {
             TileLines.Add((origin.Item2, terminal.Item2));
+        }
     }
 
     private void UpdateNavMapAirlocks()
@@ -599,15 +634,17 @@ public partial class NavMapControl : MapGridControl
         if (_navMap == null || _grid == null)
             return;
 
-        foreach (var ((category, _), chunk) in _navMap.Chunks)
+        foreach (var (chunkOrigin, chunk) in _navMap.Chunks)
         {
-            if (category != NavMapChunkType.Airlock)
+            var data = chunk.TileData[(int) NavMapChunkType.Airlock];
+
+            if (data == null)
                 continue;
 
             for (var i = 0; i < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; i++)
             {
                 var value = (int) Math.Pow(2, i);
-                var mask = _navMapSystem.GetCombinedEdgesForChunk(chunk.TileData) & value;
+                var mask = _navMapSystem.GetCombinedEdgesForChunk(data) & value;
 
                 if (mask == 0x0)
                     continue;
@@ -616,9 +653,9 @@ public partial class NavMapControl : MapGridControl
                 var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relative) * _grid.TileSize;
 
                 // If the edges of an airlock tile are not all occupied, draw a thin airlock for each edge
-                if (!_navMapSystem.AllTileEdgesAreOccupied(chunk.TileData, relative))
+                if (!_navMapSystem.AllTileEdgesAreOccupied(data, relative))
                 {
-                    AddRectForThinAirlock(chunk.TileData, tile);
+                    AddRectForThinAirlock(data, tile);
                     continue;
                 }
 
