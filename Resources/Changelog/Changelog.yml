@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Whisper
-  changes:
-  - message: Dragon ichor when eating restores the dragon's blood.
-    type: Add
-  - message: Increased Xenomorph and Dragon blood level to 650u.
-    type: Tweak
-  id: 6001
-  time: '2024-02-22T02:54:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25442
 - author: Beck Thompson
   changes:
   - message: Radio jammer now uses 3 times less power.
@@ -3861,3 +3852,10 @@
   id: 6500
   time: '2024-04-30T04:05:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27515
+- author: DogZeroX
+  changes:
+  - message: Flares looped sound no longer have a massive range, and are much quieter.
+    type: Fix
+  id: 6501
+  time: '2024-04-30T06:49:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27521
