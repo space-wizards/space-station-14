@@ -1586,7 +1586,7 @@
   - type: Food
   - type: Satiation
     thirst:
-      starting: 25  # spawn with Okay thirst state
+      current: 25  # spawn with Okay thirst state
       thresholds:
         Full: 35
         Okay: 25

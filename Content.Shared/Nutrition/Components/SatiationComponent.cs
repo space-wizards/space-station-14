@@ -9,7 +9,7 @@ namespace Content.Shared.Nutrition.Components;
 [AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class SatiationComponent : Component
 {
-    [DataField("Hunger"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("hunger"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public Satiation Hunger = new();
 
