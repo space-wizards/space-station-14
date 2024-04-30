@@ -16,7 +16,8 @@ public sealed partial class CommunicationsEmergencyShuttleWindow : FancyWindow
 
         ReasonBoxEnter.OnPressed += _ =>
         {
-            OnEmergency?.Invoke(ReasonBox.Text);
+            if (ReasonBox.Text.Length > 5)
+                OnEmergency?.Invoke(ReasonBox.Text);
         };
     }
 }

@@ -11,6 +11,7 @@ comms-console-window-text = Enter the nature of emergency
 comms-console-permission-denied = Permission denied
 comms-console-shuttle-unavailable = Shuttle is currently unavailable
 comms-console-message-too-long = Message is too long
+comms-console-message-too-short = Message is too short
 
 # Placeholder values
 comms-console-announcement-sent-by = Sent by
