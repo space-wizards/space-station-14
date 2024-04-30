@@ -78,14 +78,14 @@ public sealed class SatiationSystem : EntitySystem
         SubscribeLocalEvent<SatiationComponent, RejuvenateEvent>(OnRejuvenate);
     }
 
-    private void InitializeSatiation(EntityUid uid, Satiation component, AlertCategory alertCategory, MapInitEvent args)
+    private void InitializeSatiation(EntityUid uid, Satiation component, Dictionary<SatiationThreashold, AlertType> alertThresholds, AlertCategory alertCategory, MapInitEvent args)
     {
         var amount = _random.Next(
             (int) component.Thresholds[SatiationThreashold.Concerned] + 10,
             (int) component.Thresholds[SatiationThreashold.Okay]);
         SetSatiation(component, amount);
         UpdateCurrentThreshold(component);
-        DoThresholdEffects(uid, component, alertCategory, false);
+        DoThresholdEffects(uid, component, alertThresholds, alertCategory, false);
 
         component.CurrentThreshold = GetThreshold(component, component.Current);
         component.LastThreshold = SatiationThreashold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
@@ -93,8 +93,8 @@ public sealed class SatiationSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, SatiationComponent component, MapInitEvent args)
     {
-        InitializeSatiation(uid, component.Thirst, ThirstAlertCategory, args);
-        InitializeSatiation(uid, component.Hunger, HungerAlertCategory, args);
+        InitializeSatiation(uid, component.Thirst, ThirstAlertThresholds, ThirstAlertCategory, args);
+        InitializeSatiation(uid, component.Hunger, HungerAlertThresholds, HungerAlertCategory, args);
         Dirty(uid, component);
 
         TryComp(uid, out MovementSpeedModifierComponent? moveMod);
@@ -218,7 +218,7 @@ public sealed class SatiationSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    private bool DoThresholdEffects(EntityUid uid, Satiation satiation, AlertCategory alertCategory, bool force)
+    private bool DoThresholdEffects(EntityUid uid, Satiation satiation, Dictionary<SatiationThreashold, AlertType> alertThresholds, AlertCategory alertCategory, bool force)
     {
         if (satiation.CurrentThreshold == satiation.LastThreshold && !force)
             return false;
@@ -233,7 +233,7 @@ public sealed class SatiationSystem : EntitySystem
         }
         satiation.LastThreshold = satiation.CurrentThreshold;
 
-        if (ThirstAlertThresholds.TryGetValue(satiation.CurrentThreshold, out var alertId))
+        if (alertThresholds.TryGetValue(satiation.CurrentThreshold, out var alertId))
         {
             _alerts.ShowAlert(uid, alertId);
         }
@@ -247,13 +247,13 @@ public sealed class SatiationSystem : EntitySystem
 
     private void DoThirstThresholdEffects(EntityUid uid, SatiationComponent component, bool force = false)
     {
-        if (!DoThresholdEffects(uid, component.Thirst, ThirstAlertCategory, force))
+        if (!DoThresholdEffects(uid, component.Thirst, ThirstAlertThresholds, ThirstAlertCategory, force))
             return;
     }
 
     private void DoHungerThresholdEffects(EntityUid uid, SatiationComponent component, bool force = false)
     {
-        if (!DoThresholdEffects(uid, component.Hunger, HungerAlertCategory, force))
+        if (!DoThresholdEffects(uid, component.Hunger, HungerAlertThresholds, HungerAlertCategory, force))
             return;
     }
 
