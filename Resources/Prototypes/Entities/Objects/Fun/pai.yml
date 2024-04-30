@@ -34,7 +34,7 @@
   - type: ItemSlots
     slots:
       expansion:
-        name: Expansion Slot
+        name: pai-expansion-slot-name
         whitelist:
           components:
           - PAIExpansionCard

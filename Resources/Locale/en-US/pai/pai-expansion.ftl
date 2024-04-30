@@ -3,3 +3,5 @@ pai-expansion-slot-empty = The pAI expansion slot is empty.
 pai-expansion-slot-filled = There is a [color=yellow]{$card}[/color] in the pAI expansion slot.
 
 pai-expansion-slot-inserted = You install the expansion card into the pAI.
+
+pai-expansion-slot-name = Expansion Slot
