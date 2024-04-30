@@ -25,7 +25,13 @@
         Blunt: 3
   - type: UseDelay
     delay: 1
-
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/cane.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  
 - type: entity
   name: cane blade
   parent: BaseItem
@@ -41,7 +47,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 16
+        Slash: 14
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
@@ -51,8 +57,6 @@
     tags:
       - CaneBlade
   - type: DisarmMalus
-  - type: Reflect
-    reflectProb: .25
 
 - type: entity
   parent: Cane
@@ -88,7 +92,7 @@
         whitelist:
           tags:
           - CaneBlade
-
+  
 - type: entity
   id: CaneSheathFilled
   parent: CaneSheath
@@ -98,6 +102,28 @@
     containers:
       item:
       - CaneBlade
+  - type: GunRequiresWield
+  - type: Gun
+    fireRate: 0.5
+    selectedMode: SemiAuto
+    angleDecay: 2
+    minAngle: 1
+    maxAngle: 2
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
+  - type: AmmoCounter
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 0.75
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+  - type: BasicEntityAmmoProvider
+    proto: CaneFireball
+    capacity: 1
+    count: 1
+  - type: UseDelay
+    delay: 0.5
 
 - type: entity
   parent: BaseItem
