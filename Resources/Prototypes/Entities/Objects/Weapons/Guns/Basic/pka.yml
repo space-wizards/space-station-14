@@ -29,12 +29,12 @@
     sprite: Objects/Weapons/Guns/Basic/kinetic_burster.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Basic/kinetic_burster.rsi
-    size: Small
+    size: Normal
     storedSprite:
       sprite: Objects/Weapons/Guns/Basic/kinetic_burster.rsi
       state: storage
   - type: Gun
-    fireRate: 9
+    fireRate: 6
     selectedMode: FullAuto
     availableModes:
     - SemiAuto
@@ -42,7 +42,8 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/kinetic_burster.ogg
   - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 5
+    rechargeCooldown: 8
+    rechargeCount: 5
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
   - type: BasicEntityAmmoProvider

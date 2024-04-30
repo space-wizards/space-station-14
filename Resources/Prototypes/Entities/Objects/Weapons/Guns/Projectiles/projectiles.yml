@@ -414,7 +414,7 @@
         Blunt: 12
         Structural: 35
   - type: TimedDespawn
-    lifetime: 0.2
+    lifetime: 0.15
 
 - type: entity
   id: BulletKineticShuttle
