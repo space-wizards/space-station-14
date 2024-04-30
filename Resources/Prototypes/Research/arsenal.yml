@@ -11,6 +11,7 @@
   cost: 5000
   recipeUnlocks:
   - WeaponProtoKineticAccelerator
+  - WeaponProtoKineticBurster
   - ShuttleGunKineticCircuitboard
   # These are roundstart but not replenishable for salvage
 

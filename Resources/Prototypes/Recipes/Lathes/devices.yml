@@ -213,6 +213,16 @@
     Silver: 100
 
 - type: latheRecipe
+  id: WeaponProtoKineticBurster
+  result: WeaponProtoKineticBurster
+  category: Weapons
+  completetime: 5
+  materials:
+    Steel: 1000
+    Glass: 500
+    Silver: 100
+
+- type: latheRecipe
   id: WeaponTetherGun
   result: WeaponTetherGun
   category: Tools
