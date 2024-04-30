@@ -97,6 +97,10 @@ marking-MothWingsLadybug = Wings (Ladybug)
 marking-MothWingsMaple-maple = Wing
 marking-MothWingsMaple = Wings (Maple)
 
+marking-MothWingsMembral-membral_primary = Primary
+marking-MothWingsMembral-membral_secondary = Secondary
+marking-MothWingsMembral = Wings (Membral)
+
 marking-MothWingsMoffra-moffra_primary = Primary
 marking-MothWingsMoffra-moffra_secondary = Secondary
 marking-MothWingsMoffra = Wings (Moffra)

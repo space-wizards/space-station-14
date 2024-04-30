@@ -288,6 +288,17 @@
     state: maple
 
 - type: marking
+  id: MothWingsMembral
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: membral_primary
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: membral_secondary
+
+- type: marking
   id: MothWingsMoffra
   bodyPart: Tail
   markingCategory: Tail
