@@ -225,7 +225,7 @@
   parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLabCmo
   name: chief medical officer's lab coat
-  description: Bluer than the standard model.
+  description: Custom made blue lab coat for the Chief Medical Officer, offers improved protection against chemical spills and minor cuts
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
@@ -234,7 +234,9 @@
   - type: Armor
     modifiers:
       coefficients:
-        Caustic: 0.75
+        Slash: 0.95
+        Heat: 0.95
+        Caustic: 0.65
 
 - type: entity
   parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabCmo]
