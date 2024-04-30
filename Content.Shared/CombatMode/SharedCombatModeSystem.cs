@@ -94,12 +94,12 @@ public abstract class SharedCombatModeSystem : EntitySystem
         {
             var mouseRotator = EnsureComp<MouseRotatorComponent>(entity);
             Dirty(entity, mouseRotator);
-            var noRotate = EnsureComp<NoRotateOnMoveComponent>(entity);
+            EnsureComp<NoRotateOnMoveComponent>(entity);
         }
         else
         {
-            RemComp<MouseRotatorComponent>(uid);
-            RemComp<NoRotateOnMoveComponent>(uid);
+            RemComp<MouseRotatorComponent>(entity);
+            RemComp<NoRotateOnMoveComponent>(entity);
         }
     }
 
