@@ -38,9 +38,10 @@
   - type: ComputerBoard
     prototype: ComputerPowerMonitoring
   - type: PAIExpansionCard
+    key: enum.PowerMonitoringConsoleUiKey.Key
     interface:
-      key: enum.PowerMonitoringConsoleUiKey.Key
       type: PowerMonitoringConsoleBoundUserInterface
+      requireInputValidation: false
     action: ActionPAIOpenPowerMonitor
     components:
     - type: PowerMonitoringConsole
@@ -77,10 +78,34 @@
   name: criminal records computer board
   description: A computer printed circuit board for a criminal records computer.
   components:
-    - type: Sprite
-      state: cpu_security
-    - type: ComputerBoard
-      prototype: ComputerCriminalRecords
+  - type: Sprite
+    state: cpu_security
+  - type: ComputerBoard
+    prototype: ComputerCriminalRecords
+  - type: PAIExpansionCard
+    key: enum.CriminalRecordsConsoleKey.Key
+    interface:
+      type: CriminalRecordsConsoleBoundUserInterface
+      requireInputValidation: false
+    action: ActionPAIOpenCriminalRecords
+    components:
+    - type: CriminalRecordsConsole
+    - type: AccessReader # read-only, unless you emag your little friend
+      access: [["Security"]]
+
+- type: entity
+  noSpawn: true
+  parent: ActionPAIBase
+  id: ActionPAIOpenCriminalRecords
+  name: Open Criminal Records
+  description: View the criminal records of any crewmember.
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Interface/Actions/pai-expansions.rsi
+      state: criminal_records
+    event: !type:OpenUiActionEvent
+      key: enum.CriminalRecordsConsoleKey.Key
 
 - type: entity
   parent: BaseComputerCircuitboard
