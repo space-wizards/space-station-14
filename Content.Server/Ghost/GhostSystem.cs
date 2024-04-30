@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Server.GameTicking;
@@ -365,7 +366,8 @@ namespace Content.Server.Ghost
             return ghostBoo.Handled;
         }
 
-        public EntityUid? SpawnGhost(Entity<MindComponent?> mind, EntityCoordinates spawnPosition)
+        public EntityUid? SpawnGhost(Entity<MindComponent?> mind, EntityCoordinates spawnPosition,
+            bool canReturn = false)
         {
             if (!Resolve(mind, ref mind.Comp))
                 return null;
@@ -378,11 +380,27 @@ namespace Content.Server.Ghost
 
             var ghost = SpawnAtPosition(GameTicker.ObserverPrototypeName, spawnPosition);
             var ghostComponent = Comp<GhostComponent>(ghost);
-            SetCanReturnToBody(ghostComponent, false);
 
+            // Try setting the ghost entity name to either the character name or the player name.
+            // If all else fails, it'll default to the default entity prototype name, "observer".
+            // However, that should rarely happen.
+            if (!string.IsNullOrWhiteSpace(mind.Comp.CharacterName))
+                _metaData.SetEntityName(ghost, mind.Comp.CharacterName);
+            else if (!string.IsNullOrWhiteSpace(mind.Comp.Session?.Name))
+                _metaData.SetEntityName(ghost, mind.Comp.Session.Name);
+
+            if (mind.Comp.TimeOfDeath.HasValue)
+            {
+                SetTimeOfDeath(ghost, mind.Comp.TimeOfDeath!.Value, ghostComponent);
+            }
+
+            SetCanReturnToBody(ghostComponent, canReturn);
+
+            if (canReturn)
+                _minds.Visit(mind.Owner, ghost, mind.Comp);
+            else
+                _minds.TransferTo(mind.Owner, ghost, mind: mind.Comp);
             Log.Debug($"Spawned ghost \"{ToPrettyString(ghost)}\" for {mind.Comp.CharacterName}.");
-            _metaData.SetEntityName(ghost, mind.Comp.CharacterName ?? string.Empty);
-            _minds.TransferTo(mind.Owner, ghost, mind: mind.Comp);
             return ghost;
         }
     }
